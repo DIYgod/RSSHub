@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/music/latest/:area?',
+    categories: ['social-media'],
+    example: '/douban/music/latest/chinese',
+    parameters: { area: '区域类型，默认全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '最新增加的音乐',
+    maintainers: ['fengkx', 'xyqfer'],
+    handler,
+    description: `| 华语    | 欧美    | 日韩        |
+  | ------- | ------- | ----------- |
+  | chinese | western | japankorean |`,
+};
+
+async function handler(ctx) {
     const { area = '' } = ctx.req.param();
     const title = '豆瓣最新增加的音乐';
     let data;
@@ -71,4 +93,4 @@ export default async (ctx) => {
     }
 
     ctx.set('data', data);
-};
+}

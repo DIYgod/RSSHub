@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getHeaders, randomString, decryptAES } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['finance'],
+    example: '/ainvest/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ainvest.com/news'],
+    },
+    name: 'Latest News',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'ainvest.com/news',
+};
+
+async function handler(ctx) {
     const key = randomString(16);
 
     const { data: response } = await got('https://api.ainvest.com/gw/news_f10/v1/newsFlash/getNewsData', {
@@ -30,10 +53,10 @@ export default async (ctx) => {
         comments: item.commentCount,
     }));
 
-    ctx.set('data', {
+    return {
         title: 'AInvest - Latest News',
         link: 'https://www.ainvest.com/news',
         language: 'en',
         item: items,
-    });
-};
+    };
+}

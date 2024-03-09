@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:params{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const params = ctx.req.param('params');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
@@ -84,7 +92,7 @@ export default async (ctx) => {
     const icon = $('link[rel="icon"]').prop('href');
     const title = $('img.logo').prop('alt');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${title} - ${params ? $('h1.term-title').text().split('搜索到')[0] : '最新'}`,
         link: currentUrl,
@@ -95,5 +103,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('p.term-description').text(),
         author: title,
-    });
-};
+    };
+}

@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:section?/:type?/:user?',
+    categories: ['programming'],
+    example: '/hackernews/threads/comments_list/dang',
+    parameters: { section: '内容分区，见上表，默认为 `index`', type: '链接类型，见上表，默认为 `sources`', user: '设定用户，只在 `threads` 和 `submitted` 分区有效' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ycombinator.com/:section', 'ycombinator.com/'],
+    },
+    name: '用户',
+    maintainers: ['nczitzk', 'xie-dongping'],
+    handler,
+    description: `订阅特定用户的内容`,
+};
+
+async function handler(ctx) {
     const section = ctx.req.param('section') ?? 'index';
     const type = ctx.req.param('type') ?? 'sources';
     const user = ctx.req.param('user') ?? '';
@@ -105,9 +128,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

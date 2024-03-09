@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { finishArticleItem } from '@/utils/wechat-mp';
 import { load } from 'cheerio';
 import utils from './utils';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/wechat/:wxid',
+    categories: ['social-media'],
+    example: '/newrank/wechat/chijiread',
+    parameters: { wxid: '微信号，若微信号与新榜信息不一致，以新榜为准' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '微信公众号',
+    maintainers: ['lessmoe'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.newrank || !config.newrank.cookie) {
         throw new Error('newrank RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -57,9 +76,9 @@ export default async (ctx) => {
     }));
     await Promise.all(items.map((item) => finishArticleItem(item)));
 
-    ctx.set('data', {
+    return {
         title: name + ' - 微信公众号',
         link: `https://www.newrank.cn/new/readDetial?account=${uid}`,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/music/djradio/:id',
+    categories: ['multimedia'],
+    example: '/163/music/djradio/347317067',
+    parameters: { id: '节目 id, 可在电台节目页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: '电台节目',
+    maintainers: ['magic-akari'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const ProcessFeed = (limit, offset) =>
@@ -65,7 +84,7 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: radio.name,
         link: `https://music.163.com/djradio?id=${id}`,
         subtitle: radio.desc,
@@ -77,5 +96,5 @@ export default async (ctx) => {
         itunes_author: dj.nickname,
         itunes_category: radio.category,
         item: items.flat(),
-    });
-};
+    };
+}

@@ -1,407 +1,316 @@
-# 🎮 Gaming
+# game
 
 ## 3DMGame {#3dmgame}
 
 ### 新闻中心 {#3dmgame-xin-wen-zhong-xin}
 
-<Route author="zhboner" example="/3dmgame/news" path="/3dmgame/news/:category?" paramsDesc={['分类名或 ID，见下表，默认为新闻推荐，ID 可从分类 URL 中找到，如 Steam 为 `22221`']} radar="1">
-  | 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |
-  | -------- | -------- | -------- | -------- | ----------- |
-  |          | game     | acg      | next     | news\_36\_1 |
-</Route>
+<Route namespace="3dmgame" data={{"path":"/news/:category?","categories":["game"],"example":"/3dmgame/news","parameters":{"category":"分类名或 ID，见下表，默认为新闻推荐，ID 可从分类 URL 中找到，如 Steam 为 `22221`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["3dmgame.com/news/:category?","3dmgame.com/news"]},"name":"新闻中心","maintainers":["zhboner"],"description":"| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |\n  | -------- | -------- | -------- | -------- | ----------- |\n  |          | game     | acg      | next     | news_36_1 |","location":"news-center.ts"}} />
 
-### 游戏资讯 {#3dmgame-you-xi-zi-xun}
-
-<Route author="sinchang jacky2001114 HenryQW" example="/3dmgame/detroitbecomehuman/news" path="/3dm/:name/:type?" paramsDesc={['游戏名字，可以在专题页的 url 中找到', '资讯类型，见下表，默认为 `news`']} radar="1">
-  | 新闻 | 攻略 | 资源     |
-  | ---- | ---- | -------- |
-  | news | gl   | resource |
-</Route>
+| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |
+| -------- | -------- | -------- | -------- | ----------- |
+|          | game     | acg      | next     | news\_36\_1 |
 
 ## 4Gamers {#4gamers}
 
-### 最新消息 {#4gamers-zui-xin-xiao-xi}
-
-<Route author="TonyRL" example="/4gamers" path="/4gamers" radar="1" />
-
-### 分类 {#4gamers-fen-lei}
-
-<Route author="hoilc" example="/4gamers/category/352" path="/4gamers/category/:category" paramsDesc={['分类 ID，可从分类 URL 中找到']} radar="1" />
-
 ### 标签 {#4gamers-biao-qian}
 
-<Route author="hoilc" example="/4gamers/tag/限時免費" path="/4gamers/tag/:tag" paramsDesc={['标签名，可在标签 URL 中找到']} radar="1" />
+<Route namespace="4gamers" data={{"path":"/tag/:tag","categories":["game"],"example":"/4gamers/tag/限時免費","parameters":{"tag":"标签名，可在标签 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.4gamers.com.tw/news/tag/:tag"]},"name":"标签","maintainers":["hoilc"],"url":"www.4gamers.com.tw/news","location":"tag.ts"}} />
 
 ### 主題 {#4gamers-zhu-ti}
 
-<Route author="bestpika" example="/4gamers/topic/gentlemen-topic" path="/4gamers/topic/:topic" paramsDesc={['主题，可在首页上方页面内找到']} radar="1" />
+<Route namespace="4gamers" data={{"path":"/topic/:topic","categories":["game"],"example":"/4gamers/topic/gentlemen-topic","parameters":{"topic":"主题，可在首页上方页面内找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.4gamers.com.tw/news/option-cfg/:topic"]},"name":"主題","maintainers":["bestpika"],"url":"www.4gamers.com.tw/news","location":"topic.ts"}} />
 
 ## 5EPLAY {#5eplay}
 
 ### 新闻列表 {#5eplay-xin-wen-lie-biao}
 
-<Route author="Dlouxgit" example="/5eplay/article" path="/5eplay/article" notOperational="1" />
-
-## A9VG 电玩部落 {#a9vg-dian-wan-bu-luo}
-
-### 游戏新闻 {#a9vg-dian-wan-bu-luo-you-xi-xin-wen}
-
-<Route author="monnerHenster" example="/a9vg" path="/a9vg" radar="1" />
+<Route namespace="5eplay" data={{"path":"/article","categories":["game"],"example":"/5eplay/article","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["csgo.5eplay.com/","csgo.5eplay.com/article"]},"name":"新闻列表","maintainers":["Dlouxgit"],"url":"csgo.5eplay.com/","location":"index.ts"}} />
 
 ## Blizzard {#blizzard}
 
 ### News {#blizzard-news}
 
-<Route author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" paramsDesc={['Language code, see below, en-US by default', 'Category, see below, All News by default']}>
-  Categories
+<Route namespace="blizzard" data={{"path":"/news/:language?/:category?","categories":["game"],"example":"/blizzard/news","parameters":{"language":"Language code, see below, en-US by default","category":"Category, see below, All News by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"News","maintainers":["nczitzk"],"description":"Categories\n\n  | Category               | Slug                |\n  | ---------------------- | ------------------- |\n  | All News               |                     |\n  | Diablo II: Resurrected | diablo2             |\n  | Diablo III             | diablo3             |\n  | Diablo IV              | diablo4             |\n  | Diablo: Immortal       | diablo-immortal     |\n  | Hearthstone            | hearthstone         |\n  | Heroes of the Storm    | heroes-of-the-storm |\n  | Overwatch 2            | overwatch           |\n  | StarCraft: Remastered  | starcraft           |\n  | StarCraft II           | starcraft2          |\n  | World of Warcraft      | world-of-warcraft   |\n  | Warcraft III: Reforged | warcraft3           |\n  | Battle.net             | battlenet           |\n  | BlizzCon               | blizzcon            |\n  | Inside Blizzard        | blizzard            |\n\n  Language codes\n\n  | Language           | Code  |\n  | ------------------ | ----- |\n  | Deutsch            | de-de |\n  | English (US)       | en-us |\n  | English (EU)       | en-gb |\n  | Español (EU)       | es-es |\n  | Español (Latino)   | es-mx |\n  | Français           | fr-fr |\n  | Italiano           | it-it |\n  | Português (Brasil) | pt-br |\n  | Polski             | pl-pl |\n  | Русский            | ru-ru |\n  | 한국어             | ko-kr |\n  | ภาษาไทย            | th-th |\n  | 日本語             | ja-jp |\n  | 繁體中文           | zh-tw |","location":"news.ts"}} />
 
-  | Category               | Slug                |
-  | ---------------------- | ------------------- |
-  | All News               |                     |
-  | Diablo II: Resurrected | diablo2             |
-  | Diablo III             | diablo3             |
-  | Diablo IV              | diablo4             |
-  | Diablo: Immortal       | diablo-immortal     |
-  | Hearthstone            | hearthstone         |
-  | Heroes of the Storm    | heroes-of-the-storm |
-  | Overwatch 2            | overwatch           |
-  | StarCraft: Remastered  | starcraft           |
-  | StarCraft II           | starcraft2          |
-  | World of Warcraft      | world-of-warcraft   |
-  | Warcraft III: Reforged | warcraft3           |
-  | Battle.net             | battlenet           |
-  | BlizzCon               | blizzcon            |
-  | Inside Blizzard        | blizzard            |
+Categories
 
-  Language codes
+| Category               | Slug                |
+| ---------------------- | ------------------- |
+| All News               |                     |
+| Diablo II: Resurrected | diablo2             |
+| Diablo III             | diablo3             |
+| Diablo IV              | diablo4             |
+| Diablo: Immortal       | diablo-immortal     |
+| Hearthstone            | hearthstone         |
+| Heroes of the Storm    | heroes-of-the-storm |
+| Overwatch 2            | overwatch           |
+| StarCraft: Remastered  | starcraft           |
+| StarCraft II           | starcraft2          |
+| World of Warcraft      | world-of-warcraft   |
+| Warcraft III: Reforged | warcraft3           |
+| Battle.net             | battlenet           |
+| BlizzCon               | blizzcon            |
+| Inside Blizzard        | blizzard            |
 
-  | Language           | Code  |
-  | ------------------ | ----- |
-  | Deutsch            | de-de |
-  | English (US)       | en-us |
-  | English (EU)       | en-gb |
-  | Español (EU)       | es-es |
-  | Español (Latino)   | es-mx |
-  | Français           | fr-fr |
-  | Italiano           | it-it |
-  | Português (Brasil) | pt-br |
-  | Polski             | pl-pl |
-  | Русский            | ru-ru |
-  | 한국어             | ko-kr |
-  | ภาษาไทย            | th-th |
-  | 日本語             | ja-jp |
-  | 繁體中文           | zh-tw |
-</Route>
+Language codes
 
-## dekudeals {#dekudeals}
-
-### Category {#dekudeals-category}
-
-<Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" paramsDesc={['Category name']} />
+| Language           | Code  |
+| ------------------ | ----- |
+| Deutsch            | de-de |
+| English (US)       | en-us |
+| English (EU)       | en-gb |
+| Español (EU)       | es-es |
+| Español (Latino)   | es-mx |
+| Français           | fr-fr |
+| Italiano           | it-it |
+| Português (Brasil) | pt-br |
+| Polski             | pl-pl |
+| Русский            | ru-ru |
+| 한국어             | ko-kr |
+| ภาษาไทย            | th-th |
+| 日本語             | ja-jp |
+| 繁體中文           | zh-tw |
 
 ## Dorohedoro {#dorohedoro}
 
 ### News {#dorohedoro-news}
 
-<Route author="nczitzk" example="/dorohedoro/news" path="/dorohedoro/news" />
+<Route namespace="dorohedoro" data={{"path":"/news","categories":["game"],"example":"/dorohedoro/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["dorohedoro.net/news","dorohedoro.net/"]},"name":"News","maintainers":["nczitzk"],"url":"dorohedoro.net/news","location":"news.ts"}} />
 
 ## Epic Games Store {#epic-games-store}
 
 ### Free games {#epic-games-store-free-games}
 
-<Route author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" paramsDesc={['Locale, en_US by default', 'Country, US by default']} />
-
-## Fate Grand Order {#fate-grand-order}
-
-### News {#fate-grand-order-news}
-
-<Route author="nczitzk" example="/fgo/news" path="/fgo/news" />
+<Route namespace="epicgames" data={{"path":"/freegames/:locale?/:country?","categories":["game"],"example":"/epicgames/freegames","parameters":{"locale":"Locale, en_US by default","country":"Country, US by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["store.epicgames.com/:locale/free-games"],"target":"/freegames/:locale"},"name":"Free games","maintainers":["DIYgod","NeverBehave","Zyx-A","junfengP","nczitzk","KotaHv"],"location":"index.ts"}} />
 
 ## FINAL FANTASY XIV 最终幻想 14 {#final-fantasy-xiv-zui-zhong-huan-xiang-14}
 
-### 最终幻想 14 国服 {#final-fantasy-xiv-zui-zhong-huan-xiang-14-zui-zhong-huan-xiang-14-guo-fu}
+### FINAL FANTASY XIV (The Lodestone) {#final-fantasy-xiv-zui-zhong-huan-xiang-14-final-fantasy-xiv-the-lodestone}
 
-<Route author="Kiotlin" example="/ff14/zh/news" path="/ff14/zh/:type?" paramsDesc={['分类名，预设为 `all`']}>
-  | 新闻 | 公告     | 活动   | 广告      | 所有 |
-  | ---- | -------- | ------ | --------- | ---- |
-  | news | announce | events | advertise | all  |
-</Route>
+<Route namespace="ff14" data={{"path":["/global/:lang/:type?","/ff14_global/:lang/:type?"],"categories":["game"],"example":"/ff14/global/na/all","parameters":{"lang":"Region","type":"Category, `all` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"FINAL FANTASY XIV (The Lodestone)","maintainers":["chengyuhui"],"description":"Region\n\n  | North Ameria | Europe | France | Germany | Japan |\n  | ------------ | ------ | ------ | ------- | ----- |\n  | na           | eu     | fr     | de      | jp    |\n\n  Category\n\n  | all | topics | notices | maintenance | updates | status | developers |\n  | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |","location":"ff14-global.ts"}} />
+
+Region
+
+| North Ameria | Europe | France | Germany | Japan |
+| ------------ | ------ | ------ | ------- | ----- |
+| na           | eu     | fr     | de      | jp    |
+
+Category
+
+| all | topics | notices | maintenance | updates | status | developers |
+| --- | ------ | ------- | ----------- | ------- | ------ | ---------- |
 
 ### FINAL FANTASY XIV (The Lodestone) {#final-fantasy-xiv-zui-zhong-huan-xiang-14-final-fantasy-xiv-the-lodestone}
 
-<Route author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" paramsDesc={['Region', 'Category, `all` by default']}>
-  Region
+<Route namespace="ff14" data={{"path":["/global/:lang/:type?","/ff14_global/:lang/:type?"],"categories":["game"],"example":"/ff14/global/na/all","parameters":{"lang":"Region","type":"Category, `all` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"FINAL FANTASY XIV (The Lodestone)","maintainers":["chengyuhui"],"description":"Region\n\n  | North Ameria | Europe | France | Germany | Japan |\n  | ------------ | ------ | ------ | ------- | ----- |\n  | na           | eu     | fr     | de      | jp    |\n\n  Category\n\n  | all | topics | notices | maintenance | updates | status | developers |\n  | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |","location":"ff14-global.ts"}} />
 
-  | North Ameria | Europe | France | Germany | Japan |
-  | ------------ | ------ | ------ | ------- | ----- |
-  | na           | eu     | fr     | de      | jp    |
+Region
 
-  Category
+| North Ameria | Europe | France | Germany | Japan |
+| ------------ | ------ | ------ | ------- | ----- |
+| na           | eu     | fr     | de      | jp    |
 
-  | all | topics | notices | maintenance | updates | status | developers |
-  | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |
-</Route>
+Category
+
+| all | topics | notices | maintenance | updates | status | developers |
+| --- | ------ | ------- | ----------- | ------- | ------ | ---------- |
+
+### 最终幻想 14 国服 {#final-fantasy-xiv-zui-zhong-huan-xiang-14-zui-zhong-huan-xiang-14-guo-fu}
+
+<Route namespace="ff14" data={{"path":["/zh/:type?","/ff14_zh/:type?"],"categories":["game"],"example":"/ff14/zh/news","parameters":{"type":"分类名，预设为 `all`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ff.web.sdo.com/web8/index.html"],"target":"/zh"},"name":"最终幻想 14 国服","maintainers":["Kiotlin","ZeroClad","15x15G"],"url":"ff.web.sdo.com/web8/index.html","description":"| 新闻 | 公告     | 活动   | 广告      | 所有 |\n  | ---- | -------- | ------ | --------- | ---- |\n  | news | announce | events | advertise | all  |","location":"ff14-zh.ts"}} />
+
+| 新闻 | 公告     | 活动   | 广告      | 所有 |
+| ---- | -------- | ------ | --------- | ---- |
+| news | announce | events | advertise | all  |
+
+### 最终幻想 14 国服 {#final-fantasy-xiv-zui-zhong-huan-xiang-14-zui-zhong-huan-xiang-14-guo-fu}
+
+<Route namespace="ff14" data={{"path":["/zh/:type?","/ff14_zh/:type?"],"categories":["game"],"example":"/ff14/zh/news","parameters":{"type":"分类名，预设为 `all`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ff.web.sdo.com/web8/index.html"],"target":"/zh"},"name":"最终幻想 14 国服","maintainers":["Kiotlin","ZeroClad","15x15G"],"url":"ff.web.sdo.com/web8/index.html","description":"| 新闻 | 公告     | 活动   | 广告      | 所有 |\n  | ---- | -------- | ------ | --------- | ---- |\n  | news | announce | events | advertise | all  |","location":"ff14-zh.ts"}} />
+
+| 新闻 | 公告     | 活动   | 广告      | 所有 |
+| ---- | -------- | ------ | --------- | ---- |
+| news | announce | events | advertise | all  |
 
 ## Fortnite {#fortnite}
 
 ### News {#fortnite-news}
 
-<Route author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" paramsDesc={['Params']} radar="1" puppeteer="1">
-  -   `options.lang`, optional, language, eg. `/fortnite/news/lang=en-US`, common languages are listed below, more languages are available one the [official website](https://www.fortnite.com/news)
+<Route namespace="fortnite" data={{"path":"/news/:options?","categories":["game"],"example":"/fortnite/news","parameters":{"options":"Params"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"News","maintainers":["lyqluis"],"description":"-   `options.lang`, optional, language, eg. `/fortnite/news/lang=en-US`, common languages are listed below, more languages are available one the [official website](https://www.fortnite.com/news)\n\n  | English (default) | Spanish | Japanese | French | Korean | Polish |\n  | ----------------- | ------- | -------- | ------ | ------ | ------ |\n  | en-US             | es-ES   | ja       | fr     | ko     | pl     |","location":"news.ts"}} />
 
-  | English (default) | Spanish | Japanese | French | Korean | Polish |
-  | ----------------- | ------- | -------- | ------ | ------ | ------ |
-  | en-US             | es-ES   | ja       | fr     | ko     | pl     |
-</Route>
+-   `options.lang`, optional, language, eg. `/fortnite/news/lang=en-US`, common languages are listed below, more languages are available one the [official website](https://www.fortnite.com/news)
 
-## GameApps.hk 香港手机游戏网 {#gameapps-hk-xiang-gang-shou-ji-you-xi-wang}
-
-### 最新消息 {#gameapps-hk-xiang-gang-shou-ji-you-xi-wang-zui-xin-xiao-xi}
-
-<Route author="TonyRL" example="/gameapps" path="/gameapps" />
+| English (default) | Spanish | Japanese | French | Korean | Polish |
+| ----------------- | ------- | -------- | ------ | ------ | ------ |
+| en-US             | es-ES   | ja       | fr     | ko     | pl     |
 
 ## Gamer Secret {#gamer-secret}
 
-### Latest News {#gamer-secret-latest-news}
-
-<Route author="nczitzk" example="/gamersecret" path="/gamersecret" notOperational="1" />
-
 ### Category {#gamer-secret-category}
 
-<Route author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" paramsDesc={['Type, see below, Latest News by default', 'Category, see below']} notOperational="1">
-  | Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
-  | ----------- | -- | ----------- | -------- | ---- | ------ |
-  | latest-news | pc | playstation | nintendo | xbox | moblie |
+<Route namespace="gamersecret" data={{"path":"/:type?/:category?","categories":["game"],"example":"/gamersecret","parameters":{"type":"Type, see below, Latest News by default","category":"Category, see below"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["gamersecret.com/:type","gamersecret.com/:type/:category","gamersecret.com/"]},"name":"Category","maintainers":["nczitzk"],"description":"| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |\n  | ----------- | -- | ----------- | -------- | ---- | ------ |\n  | latest-news | pc | playstation | nintendo | xbox | moblie |\n\n  Or\n\n  | GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |\n  | ---------------- | ------------------ | --------------- | ----------------- |\n  | category/general | category/generalen | category/mobile | category/mobileen |\n\n  | NINTENDO          | NINTENDO EN         | PC          | PC EN         |\n  | ----------------- | ------------------- | ----------- | ------------- |\n  | category/nintendo | category/nintendoen | category/pc | category/pcen |\n\n  | PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |\n  | -------------------- | ---------------------- | ---------------- |\n  | category/playstation | category/playstationen | category/reviews |\n\n  | XBOX          | XBOX EN         |\n  | ------------- | --------------- |\n  | category/xbox | category/xboxen |","location":"index.ts"}} />
 
-  Or
+| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
+| ----------- | -- | ----------- | -------- | ---- | ------ |
+| latest-news | pc | playstation | nintendo | xbox | moblie |
 
-  | GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
-  | ---------------- | ------------------ | --------------- | ----------------- |
-  | category/general | category/generalen | category/mobile | category/mobileen |
+Or
 
-  | NINTENDO          | NINTENDO EN         | PC          | PC EN         |
-  | ----------------- | ------------------- | ----------- | ------------- |
-  | category/nintendo | category/nintendoen | category/pc | category/pcen |
+| GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
+| ---------------- | ------------------ | --------------- | ----------------- |
+| category/general | category/generalen | category/mobile | category/mobileen |
 
-  | PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |
-  | -------------------- | ---------------------- | ---------------- |
-  | category/playstation | category/playstationen | category/reviews |
+| NINTENDO          | NINTENDO EN         | PC          | PC EN         |
+| ----------------- | ------------------- | ----------- | ------------- |
+| category/nintendo | category/nintendoen | category/pc | category/pcen |
 
-  | XBOX          | XBOX EN         |
-  | ------------- | --------------- |
-  | category/xbox | category/xboxen |
-</Route>
+| PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |
+| -------------------- | ---------------------- | ---------------- |
+| category/playstation | category/playstationen | category/reviews |
 
-## GameRes 游资网 {#gameres-you-zi-wang}
-
-### 热点推荐 {#gameres-you-zi-wang-re-dian-tui-jian}
-
-<Route author="nczitzk" example="/gameres/hot" path="/gameres/hot" />
-
-### 列表 {#gameres-you-zi-wang-lie-biao}
-
-<Route author="nczitzk" example="/gameres/list/26" path="/gameres/list/:id" paramsDesc={['列表 id']}>
-  产业
-
-  | 厂商・专访 | 观察・投资 | 产品 | 政策 | 电子竞技 | 直播 | 区块链 |
-  | ---------- | ---------- | ---- | ---- | -------- | ---- | ------ |
-  | 1          | 11         | 6    | 45   | 14       | 42   | 41     |
-
-  平台
-
-  | 手游 | 页游・H5 | 端游・PC | 主机 | 虚拟・VR・AR | 云游戏 |
-  | ---- | -------- | -------- | ---- | ------------ | ------ |
-  | 5    | 17       | 18       | 21   | 16           | 48     |
-
-  研发
-
-  | 拆解分析 | 策划 | 程序・引擎 | 美术 | 音乐 | 测试 |
-  | -------- | ---- | ---------- | ---- | ---- | ---- |
-  | 24       | 25   | 26         | 27   | 28   | 29   |
-
-  市场
-
-  | 职场・创业 | 运营・渠道 | 海外 | 数据・报告 | App Store | Steam |
-  | ---------- | ---------- | ---- | ---------- | --------- | ----- |
-  | 38         | 34         | 47   | 33         | 46        | 40    |
-
-  其他
-
-  | 原创 | 硬件・周边 | 八卦 | 活动 | 综合 |
-  | ---- | ---------- | ---- | ---- | ---- |
-  | 43   | 44         | 15   | 22   | 39   |
-</Route>
-
-## GNN.tw 游戏新闻 {#gnn-tw-you-xi-xin-wen}
-
-### GNN.tw 游戏新闻 {#gnn-tw-you-xi-xin-wen-gnn-tw-you-xi-xin-wen}
-
-<Route author="monnerHenster" example="/gnn/gnn" path="/gnn/gnn" />
+| XBOX          | XBOX EN         |
+| ------------- | --------------- |
+| category/xbox | category/xboxen |
 
 ## HoYoLAB {#hoyolab}
 
 ### Official Announcement {#hoyolab-official-announcement}
 
-<Route author="ZenoTian" example="/hoyolab/news/zh-cn/2/2" path="/hoyolab/news/:language/:gids/:type" paramsDesc={['Language', 'Game ID', 'Announcement type']} radar="1">
-  | Language         | Code  |
-  | ---------------- | ----- |
-  | 简体中文         | zh-cn |
-  | 繁體中文         | zh-tw |
-  | 日本語           | ja-jp |
-  | 한국어           | ko-kr |
-  | English (US)     | en-us |
-  | Español (EU)     | es-es |
-  | Français         | fr-fr |
-  | Deutsch          | de-de |
-  | Русский          | ru-ru |
-  | Português        | pt-pt |
-  | Español (Latino) | es-mx |
-  | Indonesia        | id-id |
-  | Tiếng Việt       | vi-vn |
-  | ภาษาไทย          | th-th |
+<Route namespace="hoyolab" data={{"path":"/news/:language/:gids/:type","categories":["game"],"example":"/hoyolab/news/zh-cn/2/2","parameters":{"language":"Language","gids":"Game ID","type":"Announcement type"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Official Announcement","maintainers":["ZenoTian"],"description":"| Language         | Code  |\n  | ---------------- | ----- |\n  | 简体中文         | zh-cn |\n  | 繁體中文         | zh-tw |\n  | 日本語           | ja-jp |\n  | 한국어           | ko-kr |\n  | English (US)     | en-us |\n  | Español (EU)     | es-es |\n  | Français         | fr-fr |\n  | Deutsch          | de-de |\n  | Русский          | ru-ru |\n  | Português        | pt-pt |\n  | Español (Latino) | es-mx |\n  | Indonesia        | id-id |\n  | Tiếng Việt       | vi-vn |\n  | ภาษาไทย          | th-th |\n\n  | Honkai Impact 3rd | Genshin Impact | Tears of Themis | HoYoLAB | Honkai: Star Rail | Zenless Zone Zero |\n  | ----------------- | -------------- | --------------- | ------- | ----------------- | ----------------- |\n  | 1                 | 2              | 4               | 5       | 6                 | 8                 |\n\n  | Notices | Events | Info |\n  | ------- | ------ | ---- |\n  | 1       | 2      | 3    |","location":"news.ts"}} />
 
-  | Honkai Impact 3rd | Genshin Impact | Tears of Themis | HoYoLAB | Honkai: Star Rail | Zenless Zone Zero |
-  | ----------------- | -------------- | --------------- | ------- | ----------------- | ----------------- |
-  | 1                 | 2              | 4               | 5       | 6                 | 8                 |
+| Language         | Code  |
+| ---------------- | ----- |
+| 简体中文         | zh-cn |
+| 繁體中文         | zh-tw |
+| 日本語           | ja-jp |
+| 한국어           | ko-kr |
+| English (US)     | en-us |
+| Español (EU)     | es-es |
+| Français         | fr-fr |
+| Deutsch          | de-de |
+| Русский          | ru-ru |
+| Português        | pt-pt |
+| Español (Latino) | es-mx |
+| Indonesia        | id-id |
+| Tiếng Việt       | vi-vn |
+| ภาษาไทย          | th-th |
 
-  | Notices | Events | Info |
-  | ------- | ------ | ---- |
-  | 1       | 2      | 3    |
-</Route>
+| Honkai Impact 3rd | Genshin Impact | Tears of Themis | HoYoLAB | Honkai: Star Rail | Zenless Zone Zero |
+| ----------------- | -------------- | --------------- | ------- | ----------------- | ----------------- |
+| 1                 | 2              | 4               | 5       | 6                 | 8                 |
+
+| Notices | Events | Info |
+| ------- | ------ | ---- |
+| 1       | 2      | 3    |
 
 ## indienova 独立游戏 {#indienova-du-li-you-xi}
 
-### 文章 {#indienova-du-li-you-xi-wen-zhang}
+### Unknown {#indienova-du-li-you-xi-unknown}
 
-<Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" paramsDesc={['类型: `article` 文章，`development` 开发']} radar="1" />
-
-### 专题 {#indienova-du-li-you-xi-zhuan-ti}
-
-<Route author="TonyRL" example="/indienova/column/52" path="/indienova/column/:columnId" paramsDesc={['专题 ID，可在 URL中找到']} radar="1">
-  <details>
-    <summary>专题 ID</summary>
-
-    游戏推荐
-
-    | itch 一周游戏汇 | 一周值得关注的发售作品 | 诺娃速递 | 周末游戏视频集锦 | 每月媒体评分 | 年度最佳游戏 | Indie Focus 近期新游 | indienova Picks 精选 |
-    | --------------- | ---------------------- | -------- | ---------------- | ------------ | ------------ | -------------------- | -------------------- |
-    | 52              | 29                     | 41       | 43               | 45           | 39           | 1                    | 8                    |
-
-    游戏评论
-
-    | 游必有方 Podcast | 独立游戏潮（RED） |
-    | ---------------- | ----------------- |
-    | 6                | 3                 |
-
-    游戏开发
-
-    | 游戏设计模式 | Roguelike 开发 | GMS 中文教程 |
-    | ------------ | -------------- | ------------ |
-    | 15           | 14             | 7            |
-
-    游戏设计
-
-    | 游戏与所有 | 让人眼前一亮的游戏设计 | 游戏音乐分析 | 游戏情感设计 | 游戏相关书籍 | 游戏设计课程笔记 | 游戏设计工具 | 游戏设计灵感 | 设计师谈设计 | 游戏研究方法 | 功能游戏 | 游戏设计专业院校 | 像素课堂 |
-    | ---------- | ---------------------- | ------------ | ------------ | ------------ | ---------------- | ------------ | ------------ | ------------ | ------------ | -------- | ---------------- | -------- |
-    | 10         | 33                     | 17           | 4            | 22           | 11               | 24           | 26           | 27           | 28           | 38       | 9                | 19       |
-
-    游戏文化
-
-    | NOVA 海外独立游戏见闻 | 工作室访谈 | indie Figure 游戏人 | 游戏艺术家 | 独立游戏音乐欣赏 | 游戏瑰宝 | 电脑 RPG 游戏史 | ALT. CTRL. GAMING |
-    | --------------------- | ---------- | ------------------- | ---------- | ---------------- | -------- | --------------- | ----------------- |
-    | 53                    | 23         | 5                   | 44         | 18               | 21       | 16              | 2                 |
-
-    Game Jam
-
-    | Ludum Dare | Global Game Jam |
-    | ---------- | --------------- |
-    | 31         | 13              |
-  </details>
-</Route>
-
-### GameDB 游戏库 {#indienova-du-li-you-xi-gamedb-you-xi-ku}
-
-<Route author="TonyRL" example="/indienova/gamedb/recent" path="/indienova/gamedb/recent/:platform?" paramsDesc={['平台，见下表，留空为 `all`']} radar="1">
-  | 全部 | PS4 | XBOX One | Nintendo Switch |
-  | ---- | --- | -------- | --------------- |
-  | all  | ps4 | xboxone  | nintendo-switch |
-</Route>
+<Route namespace="indienova" data={{"path":"/:type","categories":["game"],"example":"/indienova/article","parameters":{"type":"类型: `article` 文章，`development` 开发"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Unknown","maintainers":["GensouSakuya","kt286"],"location":"article.ts"}} />
 
 ### 会员开发游戏库 {#indienova-du-li-you-xi-hui-yuan-kai-fa-you-xi-ku}
 
-<Route author="TonyRL" example="/indienova/usergames" path="/indienova/usergames" radar="1" />
+<Route namespace="indienova" data={{"path":"/usergames","categories":["game"],"example":"/indienova/usergames","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["indienova.com/usergames","indienova.com/"]},"name":"会员开发游戏库","maintainers":["TonyRL"],"url":"indienova.com/usergames","location":"usergames.ts"}} />
+
+### 专题 {#indienova-du-li-you-xi-zhuan-ti}
+
+<Route namespace="indienova" data={{"path":"/column/:columnId","categories":["game"],"example":"/indienova/column/52","parameters":{"columnId":"专题 ID，可在 URL中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["indienova.com/column/:columnId"]},"name":"专题","maintainers":["TonyRL"],"description":"<details>\n    <summary>专题 ID</summary>\n\n    游戏推荐\n\n    | itch 一周游戏汇 | 一周值得关注的发售作品 | 诺娃速递 | 周末游戏视频集锦 | 每月媒体评分 | 年度最佳游戏 | Indie Focus 近期新游 | indienova Picks 精选 |\n    | --------------- | ---------------------- | -------- | ---------------- | ------------ | ------------ | -------------------- | -------------------- |\n    | 52              | 29                     | 41       | 43               | 45           | 39           | 1                    | 8                    |\n\n    游戏评论\n\n    | 游必有方 Podcast | 独立游戏潮（RED） |\n    | ---------------- | ----------------- |\n    | 6                | 3                 |\n\n    游戏开发\n\n    | 游戏设计模式 | Roguelike 开发 | GMS 中文教程 |\n    | ------------ | -------------- | ------------ |\n    | 15           | 14             | 7            |\n\n    游戏设计\n\n    | 游戏与所有 | 让人眼前一亮的游戏设计 | 游戏音乐分析 | 游戏情感设计 | 游戏相关书籍 | 游戏设计课程笔记 | 游戏设计工具 | 游戏设计灵感 | 设计师谈设计 | 游戏研究方法 | 功能游戏 | 游戏设计专业院校 | 像素课堂 |\n    | ---------- | ---------------------- | ------------ | ------------ | ------------ | ---------------- | ------------ | ------------ | ------------ | ------------ | -------- | ---------------- | -------- |\n    | 10         | 33                     | 17           | 4            | 22           | 11               | 24           | 26           | 27           | 28           | 38       | 9                | 19       |\n\n    游戏文化\n\n    | NOVA 海外独立游戏见闻 | 工作室访谈 | indie Figure 游戏人 | 游戏艺术家 | 独立游戏音乐欣赏 | 游戏瑰宝 | 电脑 RPG 游戏史 | ALT. CTRL. GAMING |\n    | --------------------- | ---------- | ------------------- | ---------- | ---------------- | -------- | --------------- | ----------------- |\n    | 53                    | 23         | 5                   | 44         | 18               | 21       | 16              | 2                 |\n\n    Game Jam\n\n    | Ludum Dare | Global Game Jam |\n    | ---------- | --------------- |\n    | 31         | 13              |\n  </details>","location":"column.ts"}} />
+
+<details>
+  <summary>专题 ID</summary>
+
+  游戏推荐
+
+  | itch 一周游戏汇 | 一周值得关注的发售作品 | 诺娃速递 | 周末游戏视频集锦 | 每月媒体评分 | 年度最佳游戏 | Indie Focus 近期新游 | indienova Picks 精选 |
+  | --------------- | ---------------------- | -------- | ---------------- | ------------ | ------------ | -------------------- | -------------------- |
+  | 52              | 29                     | 41       | 43               | 45           | 39           | 1                    | 8                    |
+
+  游戏评论
+
+  | 游必有方 Podcast | 独立游戏潮（RED） |
+  | ---------------- | ----------------- |
+  | 6                | 3                 |
+
+  游戏开发
+
+  | 游戏设计模式 | Roguelike 开发 | GMS 中文教程 |
+  | ------------ | -------------- | ------------ |
+  | 15           | 14             | 7            |
+
+  游戏设计
+
+  | 游戏与所有 | 让人眼前一亮的游戏设计 | 游戏音乐分析 | 游戏情感设计 | 游戏相关书籍 | 游戏设计课程笔记 | 游戏设计工具 | 游戏设计灵感 | 设计师谈设计 | 游戏研究方法 | 功能游戏 | 游戏设计专业院校 | 像素课堂 |
+  | ---------- | ---------------------- | ------------ | ------------ | ------------ | ---------------- | ------------ | ------------ | ------------ | ------------ | -------- | ---------------- | -------- |
+  | 10         | 33                     | 17           | 4            | 22           | 11               | 24           | 26           | 27           | 28           | 38       | 9                | 19       |
+
+  游戏文化
+
+  | NOVA 海外独立游戏见闻 | 工作室访谈 | indie Figure 游戏人 | 游戏艺术家 | 独立游戏音乐欣赏 | 游戏瑰宝 | 电脑 RPG 游戏史 | ALT. CTRL. GAMING |
+  | --------------------- | ---------- | ------------------- | ---------- | ---------------- | -------- | --------------- | ----------------- |
+  | 53                    | 23         | 5                   | 44         | 18               | 21       | 16              | 2                 |
+
+  Game Jam
+
+  | Ludum Dare | Global Game Jam |
+  | ---------- | --------------- |
+  | 31         | 13              |
+</details>
 
 ## itch.io {#itch-io}
 
-### Browse {#itch-io-browse}
-
-<Route author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" paramsDesc={['Params']}>
-  `params` is the field after `itch.io` in the URL of the corresponding page, e.g. the URL of [Top Rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) is `https://itch.io/games/top-rated/tag-singleplayer`, where the field after `itch.io` is `/games/top-rated/tag-singleplayer`.
-
-  So the route is [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer).
-
-  :::tip
-  You can browse all the tags at [here](https://itch.io/tags).
-  :::
-</Route>
-
 ### Developer Logs {#itch-io-developer-logs}
 
-<Route author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" paramsDesc={['User id, can be found in URL', 'Item id, can be found in URL']}>
-  `User id` is the field before `.itch.io` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is `https://teamterrible.itch.io/the-baby-in-yellow/devlog`, where the field before `.itch.io` is `teamterrible`.
+<Route namespace="itch" data={{"path":"/devlog/:user/:id","categories":["game"],"example":"/itch/devlog/teamterrible/the-baby-in-yellow","parameters":{"user":"User id, can be found in URL","id":"Item id, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Developer Logs","maintainers":["nczitzk"],"description":"`User id` is the field before `.itch.io` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is `https://teamterrible.itch.io/the-baby-in-yellow/devlog`, where the field before `.itch.io` is `teamterrible`.\n\n  `Item id` is the field between `itch.io` and `/devlog` in the URL of the corresponding page, e.g. the URL for [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is `https://teamterrible.itch.io/the-baby-in-yellow/devlog`, where the field between `itch.io` and `/devlog` is `the-baby-in-yellow`.\n\n  So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow).","location":"devlog.ts"}} />
 
-  `Item id` is the field between `itch.io` and `/devlog` in the URL of the corresponding page, e.g. the URL for [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is `https://teamterrible.itch.io/the-baby-in-yellow/devlog`, where the field between `itch.io` and `/devlog` is `the-baby-in-yellow`.
+`User id` is the field before `.itch.io` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is `https://teamterrible.itch.io/the-baby-in-yellow/devlog`, where the field before `.itch.io` is `teamterrible`.
 
-  So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow).
-</Route>
+`Item id` is the field between `itch.io` and `/devlog` in the URL of the corresponding page, e.g. the URL for [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is `https://teamterrible.itch.io/the-baby-in-yellow/devlog`, where the field between `itch.io` and `/devlog` is `the-baby-in-yellow`.
+
+So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow).
 
 ### Posts {#itch-io-posts}
 
-<Route author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" paramsDesc={['Topic id, can be found in URL', 'Topic name, can be found in URL']} />
+<Route namespace="itch" data={{"path":"/posts/:topic/:id","categories":["game"],"example":"/itch/posts/9539/introduce-yourself","parameters":{"topic":"Topic id, can be found in URL","id":"Topic name, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["itch.io/t/:topic/:id"]},"name":"Posts","maintainers":["nczitzk"],"location":"posts.ts"}} />
 
 ## JUMP {#jump}
 
 ### 游戏折扣 {#jump-you-xi-zhe-kou}
 
-<Route author="zytomorrow" path="/jump/discount/:platform/:filter?/:countries?" example="/jump/discount/ps5/all" paramsDesc={['平台:switch,ps4,ps5,xbox,steam,epic', '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', '地区，具体支持较多，可自信查看地区简写']}>
-  | switch | ps4  | ps5  | xbox   | steam | epic   |
-  | ------ | ---- | ---- | ------ | ----- | ------ |
-  | 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |
+<Route namespace="jump" data={{"path":"/discount/:platform/:filter?/:countries?","categories":["game"],"example":"/jump/discount/ps5/all","parameters":{"platform":"平台:switch,ps4,ps5,xbox,steam,epic","filter":"过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员","countries":"地区，具体支持较多，可自信查看地区简写"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"游戏折扣","maintainers":["zytomorrow"],"description":"| switch | ps4  | ps5  | xbox   | steam | epic   |\n  | ------ | ---- | ---- | ------ | ----- | ------ |\n  | 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |\n\n  | filter | switch | ps4 | ps5 | steam |\n  | ------ | ------ | --- | --- | ----- |\n  | all    | ✔     | ✔  | ✔  | ✔    |\n  | jx     | ✔     | ✔  | ❌  | ✔    |\n  | sd     | ✔     | ✔  | ✔  | ✔    |\n  | dl     | ❌     | ✔  | ❌  | ✔    |\n  | vip    | ❌     | ❌  | ✔  | ❌    |\n\n  | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |\n  | ---- | ------------ | ---- | ---- | ---- |\n  | na   | eu           | fr   | de   | jp   |","location":"discount.ts"}} />
 
-  | filter | switch | ps4 | ps5 | steam |
-  | ------ | ------ | --- | --- | ----- |
-  | all    | ✔     | ✔  | ✔  | ✔    |
-  | jx     | ✔     | ✔  | ❌  | ✔    |
-  | sd     | ✔     | ✔  | ✔  | ✔    |
-  | dl     | ❌     | ✔  | ❌  | ✔    |
-  | vip    | ❌     | ❌  | ✔  | ❌    |
+| switch | ps4  | ps5  | xbox   | steam | epic   |
+| ------ | ---- | ---- | ------ | ----- | ------ |
+| 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |
 
-  | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
-  | ---- | ------------ | ---- | ---- | ---- |
-  | na   | eu           | fr   | de   | jp   |
-</Route>
+| filter | switch | ps4 | ps5 | steam |
+| ------ | ------ | --- | --- | ----- |
+| all    | ✔     | ✔  | ✔  | ✔    |
+| jx     | ✔     | ✔  | ❌  | ✔    |
+| sd     | ✔     | ✔  | ✔  | ✔    |
+| dl     | ❌     | ✔  | ❌  | ✔    |
+| vip    | ❌     | ❌  | ✔  | ❌    |
+
+| 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
+| ---- | ------------ | ---- | ---- | ---- |
+| na   | eu           | fr   | de   | jp   |
 
 ## Liquipedia {#liquipedia}
 
 ### Dota2 战队最近比赛结果 {#liquipedia-dota2-zhan-dui-zui-jin-bi-sai-jie-guo}
 
-<Route author="wzekin" example="/liquipedia/dota2/matches/Team_Aster" path="/liquipedia/dota2/matches/:id" paramsDesc={['战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster']} />
-
-### Counter Strike Match Results {#liquipedia-counter-strike-match-results}
-
-<Route author="CookiePieWw" example="/liquipedia/counterstrike/matches/G2_Esports" path="/liquipedia/counterstrike/matches/:id" paramsDesc={['战队名称，可在url中找到。例如:https://liquipedia.net/counterstrike/G2_Esports']} />
+<Route namespace="liquipedia" data={{"path":"/dota2/matches/:id","categories":["game"],"example":"/liquipedia/dota2/matches/Team_Aster","parameters":{"id":"战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["liquipedia.net/dota2/:id"]},"name":"Dota2 战队最近比赛结果","maintainers":["wzekin"],"location":"dota2-matches.ts"}} />
 
 ## Minecraft {#minecraft}
 
 ### Java Game Update {#minecraft-java-game-update}
 
-<Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
+<Route namespace="minecraft" data={{"path":"/version","categories":["game"],"example":"/minecraft/version","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["minecraft.net/"]},"name":"Java Game Update","maintainers":["TheresaQWQ"],"url":"minecraft.net/","location":"version.ts"}} />
 
 ## Modrinth {#modrinth}
 
 ### Project versions {#modrinth-project-versions}
 
-<Route author="SettingDust" example="/modrinth/project/sodium/versions" path="/modrinth/project/:id/versions/:routeParams?" paramsDesc={['Id or slug of the Modrinth project','Extra route params. See the table below for options']} radar="1" />
+<Route namespace="modrinth" data={{"path":"/models","categories":["game"],"example":"/modrinth/project/sodium/versions","parameters":{"id":"Id or slug of the Modrinth project","routeParams":"Extra route params. See the table below for options"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["modrinth.com/mod/:id/*","modrinth.com/plugin/:id/*","modrinth.com/datapack/:id/*","modrinth.com/shader/:id/*","modrinth.com/resourcepack/:id/*","modrinth.com/modpack/:id/*","modrinth.com/mod/:id","modrinth.com/plugin/:id","modrinth.com/datapack/:id","modrinth.com/shader/:id","modrinth.com/resourcepack/:id","modrinth.com/modpack/:id"],"target":"/project/:id/versions"},"description":"| Name           | Example                                      |\n| -------------- | -------------------------------------------- |\n| loaders        | loaders=fabric&loaders=quilt&loaders=forge |\n| game_versions | game_versions=1.20.1&game_versions=1.20.2 |\n| featured       | featured=true                                |","name":"Project versions","maintainers":["SettingDust"],"location":"versions.ts"}} />
 
 | Name           | Example                                      |
 | -------------- | -------------------------------------------- |
@@ -411,679 +320,389 @@
 
 ## Nintendo {#nintendo}
 
-### eShop New Game Releases {#nintendo-eshop-new-game-releases}
+### Nintendo Direct {#nintendo-nintendo-direct}
 
-<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" paramsDesc={['Region, currently supports `hk`(Hong Kong), `jp`(Japan) and `us`(USA)']} notOperational="1" />
+<Route namespace="nintendo" data={{"path":"/direct","categories":["game"],"example":"/nintendo/direct","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nintendo.com/nintendo-direct/archive","nintendo.com/"]},"name":"Nintendo Direct","maintainers":["HFO4"],"url":"nintendo.com/nintendo-direct/archive","location":"direct.ts"}} />
 
 ### News（Hong Kong only） {#nintendo-news-hong-kong-only}
 
-<Route author="HFO4" example="/nintendo/news" path="/nintendo/news" notOperational="1" />
-
-### 首页资讯（中国） {#nintendo-shou-ye-zi-xun-zhong-guo}
-
-<Route author="NeverBehave" example="/nintendo/news/china" path="/nintendo/news/china" />
-
-### Nintendo Direct {#nintendo-nintendo-direct}
-
-<Route author="HFO4" example="/nintendo/direct" path="/nintendo/direct" />
+<Route namespace="nintendo" data={{"path":"/news","categories":["game"],"example":"/nintendo/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nintendo.com.hk/topics","nintendo.com.hk/"]},"name":"News（Hong Kong only）","maintainers":["HFO4"],"url":"nintendo.com.hk/topics","location":"news.ts"}} />
 
 ### Switch System Update（Japan） {#nintendo-switch-system-update-japan}
 
-<Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update" />
+<Route namespace="nintendo" data={{"path":"/system-update","categories":["game"],"example":"/nintendo/system-update","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nintendo.co.jp/support/switch/system_update/index.html","nintendo.co.jp/"]},"name":"Switch System Update（Japan）","maintainers":["hoilc"],"url":"nintendo.co.jp/support/switch/system_update/index.html","location":"system-update.ts"}} />
+
+### 首页资讯（中国） {#nintendo-shou-ye-zi-xun-zhong-guo}
+
+<Route namespace="nintendo" data={{"path":"/news/china","categories":["game"],"example":"/nintendo/news/china","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nintendoswitch.com.cn/"]},"name":"首页资讯（中国）","maintainers":["NeverBehave"],"url":"nintendoswitch.com.cn/","location":"news-china.ts"}} />
 
 ## osu! {#osu}
 
 ### Beatmap Packs {#osu-beatmap-packs}
 
-<Route author="JimenezLi" example="/osu/packs" path="/osu/packs/:type?" paramsDesc={['pack type, default to `standard`, can choose from `featured`, `tournament`, `loved`, `chart`, `theme` and `artist`']} radar="1" />
+<Route namespace="osu" data={{"path":"/packs/:type?","categories":["game"],"example":"/osu/packs","parameters":{"type":"pack type, default to `standard`, can choose from `featured`, `tournament`, `loved`, `chart`, `theme` and `artist`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Beatmap Packs","maintainers":["JimenezLi"],"location":"beatmaps/packs.ts"}} />
 
 ## PlayStation Store {#playstation-store}
 
-### PlayStation Network user trophy {#playstation-store-playstation-network-user-trophy}
-
-<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" paramsDesc={['User ID']} radar="1" anticrawler="1" />
-
 ### PlayStation Monthly Games {#playstation-store-playstation-monthly-games}
 
-<Route author="justjustCC" example="/ps/monthly-games" path="/ps/monthly-games" />
+<Route namespace="ps" data={{"path":"/monthly-games","categories":["game"],"example":"/ps/monthly-games","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.playstation.com/en-sg/ps-plus/whats-new"]},"name":"PlayStation Monthly Games","maintainers":["justjustCC"],"url":"www.playstation.com/en-sg/ps-plus/whats-new","location":"monthly-games.ts"}} />
+
+### PlayStation Network user trophy {#playstation-store-playstation-network-user-trophy}
+
+<Route namespace="ps" data={{"path":"/trophy/:id","categories":["game"],"example":"/ps/trophy/DIYgod_","parameters":{"id":"User ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"PlayStation Network user trophy","maintainers":["DIYgod"],"location":"trophy.ts"}} />
 
 ## PRINCESS CONNECT! Re Dive プリンセスコネクト！Re Dive {#princess-connect-re-dive-%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BB%E3%82%B9%E3%82%B3%E3%83%8D%E3%82%AF%E3%83%88%EF%BC%81re-dive}
 
 ### 日服公告 {#princess-connect-re-dive-%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BB%E3%82%B9%E3%82%B3%E3%83%8D%E3%82%AF%E3%83%88%EF%BC%81re-dive-ri-fu-gong-gao}
 
-<Route author="SayaSS" example="/priconne-redive/news" path="/priconne-redive/news" radar="1" />
-
-### 台服公告 {#princess-connect-re-dive-%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BB%E3%82%B9%E3%82%B3%E3%83%8D%E3%82%AF%E3%83%88%EF%BC%81re-dive-tai-fu-gong-gao}
-
-<Route author="hoilc" example="/pcr/news-tw" path="/pcr/news-tw" />
-
-### 国服公告 {#princess-connect-re-dive-%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BB%E3%82%B9%E3%82%B3%E3%83%8D%E3%82%AF%E3%83%88%EF%BC%81re-dive-guo-fu-gong-gao}
-
-<Route author="KotoriK" example="/pcr/news-cn" path="/pcr/news-cn" />
-
-## PSN 中文站 {#psn-zhong-wen-zhan}
-
-### 首页 - 白金攻略 / 游戏开箱 {#psn-zhong-wen-zhan-shou-ye-bai-jin-gong-lve-you-xi-kai-xiang}
-
-<Route author="LightStrawberry" example="/psnine/index" path="/psnine/index" />
-
-### 节点 {#psn-zhong-wen-zhan-jie-dian}
-
-<Route author="nczitzk" example="/psnine/node/news" path="/psnine/node/:id?/:order?" paramsDesc={['节点 id，见下表，默认为 news', '排序，可选 `date` 即最新，默认为 `obdate` 即综合排序']}>
-  | 站务 | 活动  | 旅记   | 折扣 | 会免 |
-  | ---- | ----- | ------ | ---- | ---- |
-  | p9   | event | travel | off  | plus |
-
-  | 新闻 | 攻略  | 测评   | 心得 | 开箱    |
-  | ---- | ----- | ------ | ---- | ------- |
-  | news | guide | review | exp  | openbox |
-
-  | 游列     | 游计     | Ps4 | Ps5 |
-  | -------- | -------- | --- | --- |
-  | gamelist | planlist | ps4 | ps5 |
-
-  | 发米通  | Ign | Ucg |
-  | ------- | --- | --- |
-  | famitsu | ign | ucg |
-</Route>
-
-### 数折 - 折扣信息推送 {#psn-zhong-wen-zhan-shu-zhe-zhe-kou-xin-xi-tui-song}
-
-<Route author="LightStrawberry" example="/psnine/shuzhe" path="/psnine/shuzhe" />
-
-### 闲游 - 二手盘信息 {#psn-zhong-wen-zhan-xian-you-er-shou-pan-xin-xi}
-
-<Route author="LightStrawberry" example="/psnine/trade" path="/psnine/trade" />
-
-### 游戏 - 新游戏奖杯信息 {#psn-zhong-wen-zhan-you-xi-xin-you-xi-jiang-bei-xin-xi}
-
-<Route author="LightStrawberry" example="/psnine/game" path="/psnine/game" />
-
-## Rockstar Games Social Club {#rockstar-games-social-club}
-
-### 在线活动 {#rockstar-games-social-club-zai-xian-huo-dong}
-
-<Route author="kookxiang" example="/socialclub/events/GTAV" path="/socialclub/events/:game?" paramsDesc={['游戏代码（默认所有）']}>
-  | 游戏代码 | 游戏名称     |
-  | -------- | ------------ |
-  | GTAV     | 侠盗猎车手 5 |
-  | RDR2     | 荒野大镖客 2 |
-</Route>
+<Route namespace="priconne-redive" data={{"path":"/news","categories":["game"],"example":"/priconne-redive/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["priconne-redive.jp/news"]},"name":"日服公告","maintainers":["SayaSS"],"url":"priconne-redive.jp/news","location":"news.ts"}} />
 
 ## SEGA {#sega}
 
 ### 世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ {#sega-shi-jie-ji-hua-duo-cai-wu-tai-projectsekai-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%AB}
 
-<Route author="15x15G" example="/sega/pjsekai/news" path="/sega/pjsekai/news" />
-
-## Steam {#steam}
-
-### Steam search {#steam-steam-search}
-
-<Route author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" paramsDesc={['search parameters']} radar="1">
-  Get serach parameters from the URL.
-
-  For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier`, the parameters are `specials=1&term=atelier`.
-</Route>
-
-## SteamGifts {#steamgifts}
-
-### Discussions {#steamgifts-discussions}
-
-<Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" paramsDesc={['category name, default to All']} />
-
-## TapTap International {#taptap-international}
-
-:::warning
-Due to the regional restrictions, an RSSHub deployment in China Mainland may not work on accessing the TapTap International Website.
-:::
-
-### Game's Changelog {#taptap-international-game-s-changelog}
-
-<Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Language, checkout the table below for possible values, default is `en_US`']} notOperational="1">
-  Language Code
-
-  | English (US) | 繁體中文 | 한국어 | 日本語 |
-  | ------------ | -------- | ------ | ------ |
-  | en\_US       | zh\_TW   | ko\_KR | ja\_JP |
-</Route>
-
-### Ratings & Reviews {#taptap-international-ratings-reviews}
-
-<Route author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new/zh_TW" path="/taptap/intl/review/:id/:order?/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Sort Method, you may use `new` as the **Most Recent**, use `default` or leave it empty for the **Most Relevant**', 'Language, checkout the table below for possible values, default is `en_US`']}>
-  Sort Method
-
-  | Most Relevant | Most Recent |
-  | ------------- | ----------- |
-  | default       | new         |
-
-  Language Code
-
-  | English (US) | 繁體中文 | 한국어 | 日本語 |
-  | ------------ | -------- | ------ | ------ |
-  | en\_US       | zh\_TW   | ko\_KR | ja\_JP |
-</Route>
+<Route namespace="sega" data={{"path":"/pjsekai/news","categories":["game"],"example":"/sega/pjsekai/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["pjsekai.sega.jp/news/index.html"]},"name":"世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ","maintainers":["15x15G"],"url":"pjsekai.sega.jp/news/index.html","location":"pjsekai.ts"}} />
 
 ## TapTap 中国 {#taptap-zhong-guo}
 
 :::warning
-由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS。\
-而对于《TapTap 国际版》则需要部署在具有海外出口的 IP 上才可正常获取 RSS。
+由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS。而对于《TapTap 国际版》则需要部署在具有海外出口的 IP 上才可正常获取 RSS。
 :::
-
-### 游戏论坛 {#taptap-zhong-guo-you-xi-lun-tan}
-
-<Route author="hoilc TonyRL" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:type?/:sort?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed`', '排序，见下表，默认为 `created`', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']} notOperational="1">
-  | 全部 | 精华  | 官方     | 影片  |
-  | ---- | ----- | -------- | ----- |
-  | feed | elite | official | video |
-
-  | 发布时间 | 回复时间  |
-  | -------- | --------- |
-  | created  | commented |
-</Route>
 
 ### 游戏更新 {#taptap-zhong-guo-you-xi-geng-xin}
 
-<Route author="hoilc ETiV" example="/taptap/changelog/60809/en_US" path="/taptap/changelog/:id/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '语言，默认使用 `zh_CN`，亦可使用 `en_US`']} notOperational="1" />
+<Route namespace="taptap" data={{"path":["/changelog/:id/:lang?","/intl/changelog/:id/:lang?"],"categories":["game"],"example":"/taptap/changelog/60809/en_US","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","lang":"语言，默认使用 `zh_CN`，亦可使用 `en_US`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["taptap.com/app/:id"],"target":"/changelog/:id"},"name":"游戏更新","maintainers":["hoilc","ETiV"],"description":"#### 语言代码\n\n  | English (US) | 繁體中文 | 한국어 | 日本語 |\n  | ------------ | -------- | ------ | ------ |\n  | en_US       | zh_TW   | ko_KR | ja_JP |","location":"changelog.ts"}} />
 
-### 游戏更新 - 国际版 {#taptap-zhong-guo-you-xi-geng-xin-guo-ji-ban}
+#### 语言代码 {#taptap-zhong-guo-you-xi-geng-xin-yu-yan-dai-ma}
 
-<Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '语言代码，默认使用 `en_US`，可选项目见下表']} notOperational="1">
-  #### 语言代码
+| English (US) | 繁體中文 | 한국어 | 日本語 |
+| ------------ | -------- | ------ | ------ |
+| en\_US       | zh\_TW   | ko\_KR | ja\_JP |
 
-  | English (US) | 繁體中文 | 한국어 | 日本語 |
-  | ------------ | -------- | ------ | ------ |
-  | en\_US       | zh\_TW   | ko\_KR | ja\_JP |
-</Route>
+### 游戏更新 {#taptap-zhong-guo-you-xi-geng-xin}
+
+<Route namespace="taptap" data={{"path":["/changelog/:id/:lang?","/intl/changelog/:id/:lang?"],"categories":["game"],"example":"/taptap/changelog/60809/en_US","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","lang":"语言，默认使用 `zh_CN`，亦可使用 `en_US`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["taptap.com/app/:id"],"target":"/changelog/:id"},"name":"游戏更新","maintainers":["hoilc","ETiV"],"description":"#### 语言代码\n\n  | English (US) | 繁體中文 | 한국어 | 日本語 |\n  | ------------ | -------- | ------ | ------ |\n  | en_US       | zh_TW   | ko_KR | ja_JP |","location":"changelog.ts"}} />
+
+#### 语言代码 {#taptap-zhong-guo-you-xi-geng-xin-yu-yan-dai-ma}
+
+| English (US) | 繁體中文 | 한국어 | 日本語 |
+| ------------ | -------- | ------ | ------ |
+| en\_US       | zh\_TW   | ko\_KR | ja\_JP |
 
 ### 游戏评价 {#taptap-zhong-guo-you-xi-ping-jia}
 
-<Route author="hoilc TonyRL" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']} notOperational="1">
-  | 最新   | 最热 | 游戏时长 | 默认排序 |
-  | ------ | ---- | -------- | -------- |
-  | update | hot  | spent    | default  |
-</Route>
+<Route namespace="taptap" data={{"path":["/review/:id/:order?/:lang?","/intl/review/:id/:order?/:lang?"],"categories":["game"],"example":"/taptap/review/142793/hot","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","order":"排序方式，空为默认排序，可选如下","lang":"语言，`zh-CN`或`zh-TW`，默认为`zh-CN`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["taptap.com/app/:id/review","taptap.com/app/:id"],"target":"/review/:id"},"name":"游戏评价","maintainers":["hoilc","TonyRL"],"description":"| 最新   | 最热 | 游戏时长 | 默认排序 |\n  | ------ | ---- | -------- | -------- |\n  | update | hot  | spent    | default  |","location":"review.ts"}} />
 
-### 游戏评价 - 国际版 {#taptap-zhong-guo-you-xi-ping-jia-guo-ji-ban}
+| 最新   | 最热 | 游戏时长 | 默认排序 |
+| ------ | ---- | -------- | -------- |
+| update | hot  | spent    | default  |
 
-<Route author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new" path="/taptap/intl/review/:id/:order?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言代码，默认使用 `en_US`，可选项目见下表']}>
-  #### 排序方式
+### 游戏评价 {#taptap-zhong-guo-you-xi-ping-jia}
 
-  | 最相关  | 最新 |
-  | ------- | ---- |
-  | default | new  |
+<Route namespace="taptap" data={{"path":["/review/:id/:order?/:lang?","/intl/review/:id/:order?/:lang?"],"categories":["game"],"example":"/taptap/review/142793/hot","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","order":"排序方式，空为默认排序，可选如下","lang":"语言，`zh-CN`或`zh-TW`，默认为`zh-CN`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["taptap.com/app/:id/review","taptap.com/app/:id"],"target":"/review/:id"},"name":"游戏评价","maintainers":["hoilc","TonyRL"],"description":"| 最新   | 最热 | 游戏时长 | 默认排序 |\n  | ------ | ---- | -------- | -------- |\n  | update | hot  | spent    | default  |","location":"review.ts"}} />
 
-  #### 语言代码
+| 最新   | 最热 | 游戏时长 | 默认排序 |
+| ------ | ---- | -------- | -------- |
+| update | hot  | spent    | default  |
 
-  | English (US) | 繁體中文 | 한국어 | 日本語 |
-  | ------------ | -------- | ------ | ------ |
-  | en\_US       | zh\_TW   | ko\_KR | ja\_JP |
-</Route>
+### 游戏论坛 {#taptap-zhong-guo-you-xi-lun-tan}
+
+<Route namespace="taptap" data={{"path":"/topic/:id/:type?/:sort?/:lang?","categories":["game"],"example":"/taptap/topic/142793/official","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","type":"论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed`","sort":"排序，见下表，默认为 `created`","lang":"语言，`zh-CN`或`zh-TW`，默认为`zh-CN`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["taptap.com/app/:id/topic","taptap.com/app/:id"],"target":"/topic/:id"},"name":"游戏论坛","maintainers":["hoilc","TonyRL"],"description":"| 全部 | 精华  | 官方     | 影片  |\n  | ---- | ----- | -------- | ----- |\n  | feed | elite | official | video |\n\n  | 发布时间 | 回复时间  |\n  | -------- | --------- |\n  | created  | commented |","location":"topic.ts"}} />
+
+| 全部 | 精华  | 官方     | 影片  |
+| ---- | ----- | -------- | ----- |
+| feed | elite | official | video |
+
+| 发布时间 | 回复时间  |
+| -------- | --------- |
+| created  | commented |
 
 ## War Thunder {#war-thunder}
 
 ### News {#war-thunder-news}
 
-<Route author="axojhf" example="/warthunder/news" path="/warthunder/news">
-  News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)
-  The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!
-</Route>
+<Route namespace="warthunder" data={{"path":"/news","categories":["game"],"example":"/warthunder/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["warthunder.com/en/news","warthunder.com/"]},"name":"News","maintainers":["axojhf"],"url":"warthunder.com/en/news","description":"News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)\n  The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!","location":"news.ts"}} />
 
-## 触乐 {#chu-le}
-
-### 栏目 {#chu-le-lan-mu}
-
-<Route author="laampui" example="/chuapp/index/daily" path="/chuapp/index/:category?" paramsDesc={['默认为 night']}>
-  | 每日聚焦 | 最好玩 | 触乐夜话 | 动态资讯 |
-  | -------- | ------ | -------- | -------- |
-  | daily    | pcz    | night    | news     |
-</Route>
+News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)
+The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!
 
 ## 二柄 APP {#er-bing-app}
 
 ### 新闻 {#er-bing-app-xin-wen}
 
-<Route author="wushijishan" example="/diershoubing/news" path="/diershoubing/news" />
-
-## 怪物猎人世界 {#guai-wu-lie-ren-shi-jie}
-
-### 更新情报 {#guai-wu-lie-ren-shi-jie-geng-xin-qing-bao}
-
-<Route author="DIYgod" example="/mhw/update" path="/mhw/update" radar="1" />
-
-### 最新消息 {#guai-wu-lie-ren-shi-jie-zui-xin-xiao-xi}
-
-<Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1" />
+<Route namespace="diershoubing" data={{"path":"/news","categories":["game"],"example":"/diershoubing/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["diershoubing.com/"]},"name":"新闻","maintainers":["wushijishan"],"url":"diershoubing.com/","location":"news.ts"}} />
 
 ## 盒心光环 {#he-xin-guang-huan}
 
 ### 资讯 {#he-xin-guang-huan-zi-xun}
 
-<Route author="XXY233" example="/xboxfan/news" path="/xboxfan/news" radar="1" />
-
-## 剑网 3 {#jian-wang-3}
-
-### 新闻资讯 {#jian-wang-3-xin-wen-zi-xun}
-
-<Route author="nczitzk" example="/jx3" path="/jx3/:caty?" paramsDesc={['分类，见下表，默认为最新']}>
-  | 最新    | 新闻  | 活动 | 公告     |
-  | ------- | ----- | ---- | -------- |
-  | allnews | press | hd   | announce |
-</Route>
+<Route namespace="xboxfan" data={{"path":"/news","categories":["game"],"example":"/xboxfan/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["xboxfan.com/"]},"name":"资讯","maintainers":["XXY233"],"url":"xboxfan.com/","location":"news.ts"}} />
 
 ## 旅法师营地 {#lv-fa-shi-ying-di}
 
 ### 首页 {#lv-fa-shi-ying-di-shou-ye}
 
-<Route author="auto-bot-ty" example="/lfsyd/home" path="/lfsyd/home" radar="1" />
+<Route namespace="lfsyd" data={{"path":"/home","categories":["game"],"example":"/lfsyd/home","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.iyingdi.com/"]},"name":"首页","maintainers":["auto-bot-ty"],"url":"www.iyingdi.com/","location":"home.ts"}} />
 
 ### 首页（旧版） {#lv-fa-shi-ying-di-shou-ye-jiu-ban}
 
-<Route author="auto-bot-ty" example="/lfsyd/old_home" path="/lfsyd/old_home" radar="1" />
-
-### 分区 {#lv-fa-shi-ying-di-fen-qu}
-
-<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tagId" paramsDesc={['订阅分区类型']} radar="1">
-  | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
-  | :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
-  |    17    |   18   |   16   |   19   |   20   |      329     |      221     |
-
-  | 英雄联盟 | 电子游戏 | 桌面游戏 | 卡牌游戏 | 玩家杂谈 | 二次元 |
-  | :------: | :------: | :------: | :------: | :------: | :----: |
-  |    112   |    389   |    24    |    102   |    23    |   117  |
-</Route>
-
-### 用户的帖子 {#lv-fa-shi-ying-di-yong-hu-de-tie-zi}
-
-<Route author="auto-bot-ty" example="/lfsyd/user/55547" path="/lfsyd/user/:id" paramsDesc={['用户 id']} radar="1" />
-
-可以在用户主页的 URL 中找到
-
-Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
+<Route namespace="lfsyd" data={{"path":"/old_home","categories":["game"],"example":"/lfsyd/old_home","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.iyingdi.com/"]},"name":"首页（旧版）","maintainers":["auto-bot-ty"],"url":"www.iyingdi.com/","location":"old-home.ts"}} />
 
 ## 米哈游 {#mi-ha-you}
 
-### 崩坏 2 - 游戏公告 {#mi-ha-you-beng-huai-2-you-xi-gong-gao}
-
-<Route author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" paramsDesc={['公告种类']} notOperational="1">
-  | 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
-  | -------- | -------- | -------- | -------- |
-  | new      | version  | gach     | event    |
-</Route>
-
-### 崩坏 3 - 游戏公告 {#mi-ha-you-beng-huai-3-you-xi-gong-gao}
-
-<Route author="deepred5 nczitzk" example="/mihoyo/bh3/latest" path="/mihoyo/bh3/:type" paramsDesc={['公告种类']}>
-  | 最新   | 动态 | 公告   | 活动     | 补给     |
-  | ------ | ---- | ------ | -------- | -------- |
-  | latest | news | notice | activity | strategy |
-</Route>
-
-### 米游社 - 同人榜 {#mi-ha-you-mi-you-she-tong-ren-bang}
-
-<Route author="CaoMeiYouRen" example="/mihoyo/bbs/img-ranking/ys/forumType=tongren&cateType=illustration&rankingType=daily" path="/mihoyo/bbs/img-ranking/:game/:routeParams?" paramsDesc={['游戏缩写','额外参数；请参阅以下说明和表格']} radar="1">
-  | 键          | 含义                                  | 接受的值                                                             | 默认值       |
-  | ----------- | ------------------------------------- | -------------------------------------------------------------------- | ------------ |
-  | forumType   | 主榜类型（仅原神、大别野有 cos 主榜） | tongren/cos                                                          | tongren      |
-  | cateType    | 子榜类型（仅崩坏三、原神有子榜）      | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |
-  | rankingType | 排行榜类型（崩坏二没有日榜）          | daily/weekly/monthly                                                 | daily        |
-  | lastId      | 当前页 id（用于分页）                 | 数字                                                                 | 1            |
-
-  游戏缩写（目前绝区零还没有同人榜
-
-  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 大别野 |
-  | ------ | ---- | ------ | ---------- | -------- | ------ |
-  | bh3    | ys   | bh2    | wd         | sr       | dby    |
-
-  主榜类型
-
-  | 同人榜  | COS 榜 |
-  | ------- | ------ |
-  | tongren | cos    |
-
-  子榜类型
-
-  崩坏三 子榜
-
-  | 插画         | 漫画  | COS |
-  | ------------ | ----- | --- |
-  | illustration | comic | cos |
-
-  原神 子榜
-
-  | 插画         | 漫画  | Q 版 | 手工   |
-  | ------------ | ----- | ---- | ------ |
-  | illustration | comic | qute | manual |
-
-  排行榜类型
-
-  | 日榜  | 周榜   | 月榜    |
-  | ----- | ------ | ------- |
-  | daily | weekly | monthly |
-</Route>
-
-### 米游社 - 官方公告 {#mi-ha-you-mi-you-she-guan-fang-gong-gao}
-
-<Route author="CaoMeiYouRen" example="/mihoyo/bbs/official/2/3/20/" path="/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?" paramsDesc={['游戏id','公告类型，默认为 2(即 活动)','分页大小，默认为 20 ','跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页']} radar="1">
-  游戏 id
-
-  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 绝区零 |
-  | ------ | ---- | ------ | ---------- | -------- | ------ |
-  | 1      | 2    | 3      | 4          | 6        | 8      |
-
-  公告类型
-
-  | 公告 | 活动 | 资讯 |
-  | ---- | ---- | ---- |
-  | 1    | 2    | 3    |
-</Route>
-
-### 米游社 - 用户关注 {#mi-ha-you-mi-you-she-yong-hu-guan-zhu}
-
-<Route author="CaoMeiYouRen" example="/mihoyo/bbs/follow-list/77005350" path="/mihoyo/bbs/follow-list/:uid" paramsDesc={['用户uid']} radar="1" />
-
-### 米游社 - 用户帖子 {#mi-ha-you-mi-you-she-yong-hu-tie-zi}
-
-<Route author="CaoMeiYouRen" example="/mihoyo/bbs/user-post/77005350" path="/mihoyo/bbs/user-post/:uid" paramsDesc={['用户uid']} radar="1" />
-
-### 米游社 - 用户关注动态 {#mi-ha-you-mi-you-she-yong-hu-guan-zhu-dong-tai}
-
-<Route author="CaoMeiYouRen" example="/mihoyo/bbs/timeline" path="/mihoyo/bbs/timeline" radar="1" configRequired="1">
-  :::warning
-  用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::
-</Route>
-
-### 原神 {#mi-ha-you-yuan-shen}
-
-#### 新闻 {#mi-ha-you-yuan-shen-xin-wen}
-
-<Route author="nczitzk" example="/mihoyo/ys" path="/mihoyo/ys/:location?/:category?" paramsDesc={['区域，可选 `main`（简中）或 `zh-tw`（繁中）', '分类，见下表，默认为最新']}>
-  | 最新   | 新闻 | 公告   | 活动     |
-  | ------ | ---- | ------ | -------- |
-  | latest | news | notice | activity |
-</Route>
-
 ### 崩坏：星穹铁道 {#mi-ha-you-beng-huai-xing-qiong-tie-dao}
+
+<Route namespace="mihoyo" data={{"path":"/sr/:location?/:category?","categories":["game"],"example":"/mihoyo/sr","parameters":{"location":"区域，可选 `zh-cn`（国服，简中）或 `zh-tw`（国际服，繁中）","category":"分类，见下表，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["sr.mihoyo.com/news"],"target":"/sr"},"name":"崩坏：星穹铁道","maintainers":["shinanory"],"url":"sr.mihoyo.com/news","description":"#### 新闻 {#mi-ha-you-beng-huai-xing-qiong-tie-dao-xin-wen}\n\n  | 最新     | 新闻 | 公告   | 活动     |\n  | -------- | ---- | ------ | -------- |\n  | news-all | news | notice | activity |","location":"sr/news.ts"}} />
 
 #### 新闻 {#mi-ha-you-beng-huai-xing-qiong-tie-dao-xin-wen}
 
-<Route author="shinanory" example="/mihoyo/sr" path="/mihoyo/sr/:location?/:category?" paramsDesc={['区域，可选 `zh-cn`（国服，简中）或 `zh-tw`（国际服，繁中）','分类，见下表，默认为最新']}>
-  | 最新     | 新闻 | 公告   | 活动     |
-  | -------- | ---- | ------ | -------- |
-  | news-all | news | notice | activity |
-</Route>
+| 最新     | 新闻 | 公告   | 活动     |
+| -------- | ---- | ------ | -------- |
+| news-all | news | notice | activity |
+
+### 米游社 - 用户关注 {#mi-ha-you-mi-you-she-yong-hu-guan-zhu}
+
+<Route namespace="mihoyo" data={{"path":"/bbs/follow-list/:uid","categories":["game"],"example":"/mihoyo/bbs/follow-list/77005350","parameters":{"uid":"用户uid"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"米游社 - 用户关注","maintainers":["CaoMeiYouRen"],"location":"bbs/follow-list.ts"}} />
+
+### 米游社 - 同人榜 {#mi-ha-you-mi-you-she-tong-ren-bang}
+
+<Route namespace="mihoyo" data={{"path":"/bbs/img-ranking/:game/:routeParams?","categories":["game"],"example":"/mihoyo/bbs/img-ranking/ys/forumType=tongren&cateType=illustration&rankingType=daily","parameters":{"game":"游戏缩写","routeParams":"额外参数；请参阅以下说明和表格"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["miyoushe.com/:game/imgRanking/:forum_id/:ranking_id/:cate_id"],"target":"/bbs/img-ranking/:game"},"name":"米游社 - 同人榜","maintainers":["CaoMeiYouRen"],"description":"| 键          | 含义                                  | 接受的值                                                             | 默认值       |\n  | ----------- | ------------------------------------- | -------------------------------------------------------------------- | ------------ |\n  | forumType   | 主榜类型（仅原神、大别野有 cos 主榜） | tongren/cos                                                          | tongren      |\n  | cateType    | 子榜类型（仅崩坏三、原神有子榜）      | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |\n  | rankingType | 排行榜类型（崩坏二没有日榜）          | daily/weekly/monthly                                                 | daily        |\n  | lastId      | 当前页 id（用于分页）                 | 数字                                                                 | 1            |\n\n  游戏缩写（目前绝区零还没有同人榜\n\n  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 大别野 |\n  | ------ | ---- | ------ | ---------- | -------- | ------ |\n  | bh3    | ys   | bh2    | wd         | sr       | dby    |\n\n  主榜类型\n\n  | 同人榜  | COS 榜 |\n  | ------- | ------ |\n  | tongren | cos    |\n\n  子榜类型\n\n  崩坏三 子榜\n\n  | 插画         | 漫画  | COS |\n  | ------------ | ----- | --- |\n  | illustration | comic | cos |\n\n  原神 子榜\n\n  | 插画         | 漫画  | Q 版 | 手工   |\n  | ------------ | ----- | ---- | ------ |\n  | illustration | comic | qute | manual |\n\n  排行榜类型\n\n  | 日榜  | 周榜   | 月榜    |\n  | ----- | ------ | ------- |\n  | daily | weekly | monthly |","location":"bbs/img-ranking.ts"}} />
+
+| 键          | 含义                                  | 接受的值                                                             | 默认值       |
+| ----------- | ------------------------------------- | -------------------------------------------------------------------- | ------------ |
+| forumType   | 主榜类型（仅原神、大别野有 cos 主榜） | tongren/cos                                                          | tongren      |
+| cateType    | 子榜类型（仅崩坏三、原神有子榜）      | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |
+| rankingType | 排行榜类型（崩坏二没有日榜）          | daily/weekly/monthly                                                 | daily        |
+| lastId      | 当前页 id（用于分页）                 | 数字                                                                 | 1            |
+
+游戏缩写（目前绝区零还没有同人榜
+
+| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 大别野 |
+| ------ | ---- | ------ | ---------- | -------- | ------ |
+| bh3    | ys   | bh2    | wd         | sr       | dby    |
+
+主榜类型
+
+| 同人榜  | COS 榜 |
+| ------- | ------ |
+| tongren | cos    |
+
+子榜类型
+
+崩坏三 子榜
+
+| 插画         | 漫画  | COS |
+| ------------ | ----- | --- |
+| illustration | comic | cos |
+
+原神 子榜
+
+| 插画         | 漫画  | Q 版 | 手工   |
+| ------------ | ----- | ---- | ------ |
+| illustration | comic | qute | manual |
+
+排行榜类型
+
+| 日榜  | 周榜   | 月榜    |
+| ----- | ------ | ------- |
+| daily | weekly | monthly |
+
+### 米游社 - 官方公告 {#mi-ha-you-mi-you-she-guan-fang-gong-gao}
+
+<Route namespace="mihoyo" data={{"path":"/bbs/official/:gids/:type?/:page_size?/:last_id?","categories":["game"],"example":"/mihoyo/bbs/official/2/3/20/","parameters":{"gids":"游戏id","type":"公告类型，默认为 2(即 活动)","page_size":"分页大小，默认为 20 ","last_id":"跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"米游社 - 官方公告","maintainers":["CaoMeiYouRen"],"description":"游戏 id\n\n  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 绝区零 |\n  | ------ | ---- | ------ | ---------- | -------- | ------ |\n  | 1      | 2    | 3      | 4          | 6        | 8      |\n\n  公告类型\n\n  | 公告 | 活动 | 资讯 |\n  | ---- | ---- | ---- |\n  | 1    | 2    | 3    |","location":"bbs/official.ts"}} />
+
+游戏 id
+
+| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 绝区零 |
+| ------ | ---- | ------ | ---------- | -------- | ------ |
+| 1      | 2    | 3      | 4          | 6        | 8      |
+
+公告类型
+
+| 公告 | 活动 | 资讯 |
+| ---- | ---- | ---- |
+| 1    | 2    | 3    |
+
+### 米游社 - 用户关注动态 {#mi-ha-you-mi-you-she-yong-hu-guan-zhu-dong-tai}
+
+<Route namespace="mihoyo" data={{"path":"/bbs/timeline","categories":["game"],"example":"/mihoyo/bbs/timeline","parameters":{},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["miyoushe.com/:game/timeline"]},"name":"米游社 - 用户关注动态","maintainers":["CaoMeiYouRen"],"description":":::warning\n  用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::","location":"bbs/timeline.ts"}} />
+
+:::warning
+用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+:::
+
+### 米游社 - 用户帖子 {#mi-ha-you-mi-you-she-yong-hu-tie-zi}
+
+<Route namespace="mihoyo" data={{"path":"/bbs/user-post/:uid","categories":["game"],"example":"/mihoyo/bbs/user-post/77005350","parameters":{"uid":"用户uid"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"米游社 - 用户帖子","maintainers":["CaoMeiYouRen"],"location":"bbs/user-post.ts"}} />
+
+### 原神 {#mi-ha-you-yuan-shen}
+
+<Route namespace="mihoyo" data={{"path":"/ys/:location?/:category?","categories":["game"],"example":"/mihoyo/ys","parameters":{"location":"区域，可选 `main`（简中）或 `zh-tw`（繁中）","category":"分类，见下表，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["genshin.hoyoverse.com/:location/news"],"target":"/ys/:location"},"name":"原神","maintainers":["nczitzk"],"description":"#### 新闻 {#mi-ha-you-yuan-shen-xin-wen}\n\n  | 最新   | 新闻 | 公告   | 活动     |\n  | ------ | ---- | ------ | -------- |\n  | latest | news | notice | activity |","location":"ys/news.ts"}} />
+
+#### 新闻 {#mi-ha-you-yuan-shen-xin-wen}
+
+| 最新   | 新闻 | 公告   | 活动     |
+| ------ | ---- | ------ | -------- |
+| latest | news | notice | activity |
 
 ## 明日方舟 {#ming-ri-fang-zhou}
 
-### 游戏公告与新闻 {#ming-ri-fang-zhou-you-xi-gong-gao-yu-xin-wen}
-
-<Route author="Astrian" example="/arknights/news" path="/arknights/news" />
-
 ### 游戏内公告 {#ming-ri-fang-zhou-you-xi-nei-gong-gao}
 
-<Route author="swwind" example="/arknights/announce" path="/arknights/announce/:platform?/:group?" paramsDesc={['平台，默认为 Android','分组，默认为 ALL']}>
-  平台
+<Route namespace="arknights" data={{"path":"/announce/:platform?/:group?","categories":["game"],"example":"/arknights/announce","parameters":{"platform":"平台，默认为 Android","group":"分组，默认为 ALL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"游戏内公告","maintainers":["swwind"],"description":"平台\n\n  |  安卓服 | iOS 服 |   B 服   |\n  | :-----: | :----: | :------: |\n  | Android |   IOS  | Bilibili |\n\n  分组\n\n  | 全部 | 系统公告 | 活动公告 |\n  | :--: | :------: | :------: |\n  |  ALL |  SYSTEM  | ACTIVITY |","location":"announce.ts"}} />
 
-  |  安卓服 | iOS 服 |   B 服   |
-  | :-----: | :----: | :------: |
-  | Android |   IOS  | Bilibili |
+平台
 
-  分组
+|  安卓服 | iOS 服 |   B 服   |
+| :-----: | :----: | :------: |
+| Android |   IOS  | Bilibili |
 
-  | 全部 | 系统公告 | 活动公告 |
-  | :--: | :------: | :------: |
-  |  ALL |  SYSTEM  | ACTIVITY |
-</Route>
+分组
+
+| 全部 | 系统公告 | 活动公告 |
+| :--: | :------: | :------: |
+|  ALL |  SYSTEM  | ACTIVITY |
+
+### 游戏公告与新闻 {#ming-ri-fang-zhou-you-xi-gong-gao-yu-xin-wen}
+
+<Route namespace="arknights" data={{"path":"/news","categories":["game"],"example":"/arknights/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ak-conf.hypergryph.com/*"]},"name":"游戏公告与新闻","maintainers":["Astrian"],"url":"ak-conf.hypergryph.com/*","location":"news.ts"}} />
 
 ### アークナイツ (日服新闻) {#ming-ri-fang-zhou-%E3%82%A2%E3%83%BC%E3%82%AF%E3%83%8A%E3%82%A4%E3%83%84-ri-fu-xin-wen}
 
-<Route author="ofyark" example="/arknights/japan" path="/arknights/japan" />
-
-### 塞壬唱片 {#ming-ri-fang-zhou-sai-ren-chang-pian}
-
-<Route author="rikkablue" example="/siren/news" path="/siren/news" />
-
-## 奶牛关 {#nai-niu-guan}
-
-### 元素文章 {#nai-niu-guan-yuan-su-wen-zhang}
-
-<Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" paramsDesc={['元素 ID, 可在 URL 中找到']} radar="1" />
-
-## 其乐 {#qi-le}
-
-### 论坛 {#qi-le-lun-tan}
-
-<Route author="nczitzk" example="/keylol" path="/keylol/:path+" paramsDesc={['路径，默认为热点聚焦']} notOperational="1">
-  :::tip
-  若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 `https://keylol.com/f161-1`。截取 `https://keylol.com/` 到末尾的部分 `f161-1` 作为参数，此时路由为 [`/keylol/f161-1`](https://rsshub.app/keylol/f161-1)。
-
-  若订阅子分类 [试玩免费 - 热点聚焦](https://keylol.com/forum.php?mod=forumdisplay\&fid=161\&filter=typeid\&typeid=459)，网址为 `https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459`。截取 `https://keylol.com/forum.php?mod=forumdisplay&` 到末尾的部分 `fid=161&filter=typeid&typeid=459` 作为参数，此时路由为 [`/keylol/fid=161&filter=typeid&typeid=459`](https://rsshub.app/keylol/fid=161\&filter=typeid\&typeid=459)。
-  :::
-</Route>
+<Route namespace="arknights" data={{"path":"/japan","categories":["game"],"example":"/arknights/japan","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ak.arknights.jp/news","ak.arknights.jp/"]},"name":"アークナイツ (日服新闻)","maintainers":["ofyark"],"url":"ak.arknights.jp/news","location":"japan.ts"}} />
 
 ## 少女前线 {#shao-nv-qian-xian}
 
 ### 情报局 {#shao-nv-qian-xian-qing-bao-ju}
 
-<Route author="nczitzk" example="/gf-cn/news" path="/gf-cn/news/:category?" paramsDesc={['分类，见下表，默认为新闻']}>
-  | 新闻 | 公告 |
-  | ---- | ---- |
-  | 1    | 3    |
-</Route>
+<Route namespace="gf-cn" data={{"path":"/news/:category?","categories":["game"],"example":"/gf-cn/news","parameters":{"category":"分类，见下表，默认为新闻"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["sunborngame.com/:category","sunborngame.com/"]},"name":"情报局","maintainers":["nczitzk"],"description":"| 新闻 | 公告 |\n  | ---- | ---- |\n  | 1    | 3    |","location":"news.ts"}} />
+
+| 新闻 | 公告 |
+| ---- | ---- |
+| 1    | 3    |
 
 ## 完美世界电竞 {#wan-mei-shi-jie-dian-jing}
 
 ### 资讯列表 {#wan-mei-shi-jie-dian-jing-zi-xun-lie-biao}
 
-<Route author="tssujt" example="/wmpvp/news/1" path="/wmpvp/news/:type" paramsDesc={['资讯分类，见下表']}>
-  | DOTA2 | CS2 |
-  | ----- | --- |
-  | 1     | 2   |
-</Route>
+<Route namespace="wmpvp" data={{"path":"/news/:type","categories":["game"],"example":"/wmpvp/news/1","parameters":{"type":"资讯分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"资讯列表","maintainers":["tssujt"],"description":"| DOTA2 | CS2 |\n  | ----- | --- |\n  | 1     | 2   |","location":"index.ts"}} />
+
+| DOTA2 | CS2 |
+| ----- | --- |
+| 1     | 2   |
 
 ## 王者荣耀 {#wang-zhe-rong-yao}
 
 ### 新闻中心 {#wang-zhe-rong-yao-xin-wen-zhong-xin}
 
-<Route author="Jeason0228 HenryQW" example="/tencent/pvp/newsindex/all" path="/tencent/pvp/newsindex/:type" paramsDesc={['栏目分类，见下表']}>
-  | 全部 | 热门 | 新闻 | 公告 | 活动 | 赛事 | 优化 |
-  | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-  | all  | rm   | xw   | gg   | hd   | ss   | yh   |
-</Route>
+<Route namespace="tencent" data={{"path":"/pvp/newsindex/:type","categories":["game"],"example":"/tencent/pvp/newsindex/all","parameters":{"type":"栏目分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"新闻中心","maintainers":["Jeason0228","HenryQW"],"description":"| 全部 | 热门 | 新闻 | 公告 | 活动 | 赛事 | 优化 |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n  | all  | rm   | xw   | gg   | hd   | ss   | yh   |","location":"pvp/newsindex.ts"}} />
 
-## 网易大神 {#wang-yi-da-shen}
+| 全部 | 热门 | 新闻 | 公告 | 活动 | 赛事 | 优化 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| all  | rm   | xw   | gg   | hd   | ss   | yh   |
 
-### 用户发帖 {#wang-yi-da-shen-yong-hu-fa-tie}
+## 网易公开课 {#wang-yi-gong-kai-ke}
 
-<Route author="luyuhuang" example="/163/ds/63dfbaf4117741daaf73404601165843" path="/163/ds/:id" paramsDesc={['用户ID']} />
+:::tip
+部分歌单及听歌排行信息为登陆后可见，自建时将环境变量`NCM_COOKIES`设为登陆后的 Cookie 值，即可正常获取。
+:::
 
-## 小黑盒 {#xiao-hei-he}
+### 用户发帖 {#wang-yi-gong-kai-ke-yong-hu-fa-tie}
 
-### 用户动态 {#xiao-hei-he-yong-hu-dong-tai}
-
-<Route author="auto-bot-ty" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" paramsDesc={['用户 id']} />
-
-### 游戏新闻 {#xiao-hei-he-you-xi-xin-wen}
-
-<Route author="MyFaith" example="/xiaoheihe/news" path="xiaoheihe/news" notOperational="1" />
-
-### 游戏折扣信息 {#xiao-hei-he-you-xi-zhe-kou-xin-xi}
-
-<Route author="MyFaith" example="/xiaoheihe/discount/pc" path="xiaoheihe/discount/:platform?" paramsDesc={['平台，默认为 Steam']}>
-  | Steam | PlatStation4 | Switch |
-  | ----- | ------------ | ------ |
-  | pc    | ps4          | switch |
-</Route>
+<Route namespace="163" data={{"path":"/ds/:id","categories":["game"],"example":"/163/ds/63dfbaf4117741daaf73404601165843","parameters":{"id":"用户ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ds.163.com/user/:id"]},"name":"用户发帖","maintainers":["luyuhuang"],"location":"ds.ts"}} />
 
 ## 英雄联盟 {#ying-xiong-lian-meng}
 
-### 国服新闻 {#ying-xiong-lian-meng-guo-fu-xin-wen}
-
-<Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" paramsDesc={['栏目分类，见下表']}>
-  | 全部 | 综合 | 公告 | 赛事 | 攻略 | 社区 |
-  | ---- | ---- | ---- | ---- | ---- | ---- |
-  | all  | zh   | gg   | ss   | gl   | sq   |
-</Route>
-
 ### 台服新闻 {#ying-xiong-lian-meng-tai-fu-xin-wen}
 
-<Route author="hoilc" example="/loltw/news" path="/loltw/news/:category?" paramsDesc={['新闻分类，置空为全部新闻']} radar="1" notOperational="1">
-  | 活动  | 资讯 | 系统   | 电竞   | 版本资讯 | 战棋资讯 |
-  | ----- | ---- | ------ | ------ | -------- | -------- |
-  | event | info | system | esport | patch    | TFTpatch |
-</Route>
+<Route namespace="loltw" data={{"path":"/news/:category?","categories":["game"],"example":"/loltw/news","parameters":{"category":"新闻分类，置空为全部新闻"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"台服新闻","maintainers":["hoilc"],"description":"| 活动  | 资讯 | 系统   | 电竞   | 版本资讯 | 战棋资讯 |\n  | ----- | ---- | ------ | ------ | -------- | -------- |\n  | event | info | system | esport | patch    | TFTpatch |","location":"news.ts"}} />
 
-## 游民星空 {#you-min-xing-kong}
-
-### 游民星空今日推荐 {#you-min-xing-kong-you-min-xing-kong-jin-ri-tui-jian}
-
-<Route author="LightStrawberry" example="/gamersky/news" path="/gamersky/news" />
-
-### 游民娱乐 {#you-min-xing-kong-you-min-yu-le}
-
-<Route author="LogicJake" example="/gamersky/ent/ymfl" path="/gamersky/ent/:category" paramsDesc={['分类类型']}>
-  | 趣囧时间 | 游民影院 | 游观天下 | 壁纸图库 | 游民盘点 | 游民福利 |
-  | -------- | -------- | -------- | -------- | -------- | -------- |
-  | qysj     | ymyy     | ygtx     | bztk     | ympd     | ymfl     |
-</Route>
+| 活动  | 资讯 | 系统   | 电竞   | 版本资讯 | 战棋资讯 |
+| ----- | ---- | ------ | ------ | -------- | -------- |
+| event | info | system | esport | patch    | TFTpatch |
 
 ## 游戏打折情报 {#you-xi-da-zhe-qing-bao}
 
 ### 游戏折扣 {#you-xi-da-zhe-qing-bao-you-xi-zhe-kou}
 
-<Route author="LogicJake nczitzk" example="/yxdzqb/popular_cn" path="/yxdzqb/:type" paramsDesc={['折扣类型']}>
-  | Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
-  | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
-  | discount       | popular            | popular\_cn            | low            | low\_cn                |
-</Route>
+<Route namespace="yxdzqb" data={{"path":"/:type","categories":["game"],"example":"/yxdzqb/popular_cn","parameters":{"type":"折扣类型"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yxdzqb.com/"]},"name":"游戏折扣","maintainers":["LogicJake","nczitzk"],"url":"yxdzqb.com/","description":"| Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |\n  | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |\n  | discount       | popular            | popular_cn            | low            | low_cn                |","location":"index.ts"}} />
 
-## 游戏动力 {#you-xi-dong-li}
-
-### 游戏资讯 {#you-xi-dong-li-you-xi-zi-xun}
-
-<Route author="wy916787036" example="/vgn" path="/vgn/:platform?" paramsDesc={['平台，见下表，默认为全部']}>
-  | Switch | PS4 | PC | Xbox |
-  | ------ | --- | -- | ---- |
-  | 1      | 2   | 3  | 4    |
-</Route>
+| Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
+| -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
+| discount       | popular            | popular\_cn            | low            | low\_cn                |
 
 ## 游戏基因 {#you-xi-ji-yin}
 
 ### 资讯 {#you-xi-ji-yin-zi-xun}
 
-<Route author="lone1y-51" example="/gamegene/news" path="/gamegene/news" />
-
-## 游戏年轮 {#you-xi-nian-lun}
-
-### 分类 {#you-xi-nian-lun-fen-lei}
-
-<Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" paramsDesc={['分类，见下表，默认为 PC 游戏', '类型，可在各分类页中导航栏中找到']}>
-  | PC 游戏 | PS4 游戏 | Switch 游戏 | NS 其他板块 | galgame | VR 游戏 | 3DS 游戏 | psv 游戏 | xbox360 游戏 | ps3 游戏 | 其他掌机 |
-  | ------- | -------- | ----------- | ----------- | ------- | ------- | -------- | -------- | ------------ | -------- | -------- |
-  | pcgame  | ps4      | sgame       | nsaita      | ps      | bt      | 3ds      | psv      | jiaocheng    | ps3yx    | zhangji  |
-</Route>
+<Route namespace="gamegene" data={{"path":"/news","categories":["game"],"example":"/gamegene/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["news.gamegene.cn/news"]},"name":"资讯","maintainers":["lone1y-51"],"url":"news.gamegene.cn/news","location":"news.ts"}} />
 
 ## 游戏日报 {#you-xi-ri-bao}
 
 ### 分类 {#you-xi-ri-bao-fen-lei}
 
-<Route author="TonyRL" example="/yxrb/info" path="/yxrb/:category?" paramsDesc={['分类，见下表，预设为 `info`']} radar="1">
-  | 资讯 | 访谈    | 服务    | 游理游据 |
-  | ---- | ------- | ------- | -------- |
-  | info | talking | service | comments |
-</Route>
+<Route namespace="yxrb" data={{"path":"/:category?","categories":["game"],"example":"/yxrb/info","parameters":{"category":"分类，见下表，预设为 `info`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["news.yxrb.net/:category","news.yxrb.net/"],"target":"/:category"},"name":"分类","maintainers":["TonyRL"],"description":"| 资讯 | 访谈    | 服务    | 游理游据 |\n  | ---- | ------- | ------- | -------- |\n  | info | talking | service | comments |","location":"home.ts"}} />
 
-## 游戏时光 {#you-xi-shi-guang}
-
-### 游戏时光新闻 {#you-xi-shi-guang-you-xi-shi-guang-xin-wen}
-
-<Route author="MyFaith" example="/vgtime/news" path="/vgtime/news" radar="1" />
-
-### 游戏时光游戏发售表 {#you-xi-shi-guang-you-xi-shi-guang-you-xi-fa-shou-biao}
-
-<Route author="MyFaith" example="/vgtime/release" path="/vgtime/release" radar="1" />
-
-### 关键词资讯 {#you-xi-shi-guang-guan-jian-ci-zi-xun}
-
-<Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1" />
+| 资讯 | 访谈    | 服务    | 游理游据 |
+| ---- | ------- | ------- | -------- |
+| info | talking | service | comments |
 
 ## 游讯网 {#you-xun-wang}
 
-### 资讯 {#you-xun-wang-zi-xun}
-
-<Route author="nczitzk" example="/yxdown/news" path="/yxdown/news/:category?" paramsDesc={['分类，见下表，默认为资讯首页']}>
-  | 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  |          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |
-</Route>
-
 ### 精彩推荐 {#you-xun-wang-jing-cai-tui-jian}
 
-<Route author="nczitzk" example="/yxdown/recommend" path="/yxdown/recommend" />
+<Route namespace="yxdown" data={{"path":"/recommend","categories":["game"],"example":"/yxdown/recommend","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yxdown.com/"]},"name":"精彩推荐","maintainers":["nczitzk"],"url":"yxdown.com/","location":"recommend.ts"}} />
+
+### 资讯 {#you-xun-wang-zi-xun}
+
+<Route namespace="yxdown" data={{"path":"/news/:category?","categories":["game"],"example":"/yxdown/news","parameters":{"category":"分类，见下表，默认为资讯首页"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"资讯","maintainers":["nczitzk"],"description":"| 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  |          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |","location":"news.ts"}} />
+
+| 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+|          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |
 
 ## 游研社 {#you-yan-she}
 
 ### 游研社 - 分类文章 {#you-yan-she-you-yan-she-fen-lei-wen-zhang}
 
-<Route author="LightStrawberry" example="/yystv/category/recommend" path="/yystv/category/:category" paramsDesc={['专栏类型']}>
-  | 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
-  | --------- | ------- | ------ | ------- | ---- | -------- |
-  | recommend | history | big    | culture | news | retro    |
-</Route>
+<Route namespace="yystv" data={{"path":"/category/:category","categories":["game"],"example":"/yystv/category/recommend","parameters":{"category":"专栏类型"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"游研社 - 分类文章","maintainers":["LightStrawberry"],"description":"| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |\n  | --------- | ------- | ------ | ------- | ---- | -------- |\n  | recommend | history | big    | culture | news | retro    |","location":"category.ts"}} />
+
+| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
+| --------- | ------- | ------ | ------- | ---- | -------- |
+| recommend | history | big    | culture | news | retro    |
 
 ### 游研社 - 全部文章 {#you-yan-she-you-yan-she-quan-bu-wen-zhang}
 
-<Route author="HaitianLiu" example="/yystv/docs" path="/yystv/docs" />
+<Route namespace="yystv" data={{"path":"/docs","categories":["game"],"example":"/yystv/docs","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yystv.cn/docs"]},"name":"游研社 - 全部文章","maintainers":["HaitianLiu"],"url":"yystv.cn/docs","location":"docs.ts"}} />
 
 ## 遊戲基地 Gamebase {#you-xi-ji-di-gamebase}
 
 ### 新聞 {#you-xi-ji-di-gamebase-xin-wen}
 
-<Route author="nczitzk" example="/gamebase/news" path="/gamebase/news/:type?/:category?" paramsDesc={['类型，见下表，默认为 newslist', '分类，可在对应分类页 URL 中找到，默认为 `all` 即全部']}>
-  类型
+<Route namespace="gamebase" data={{"path":"/news/:type?/:category?","categories":["game"],"example":"/gamebase/news","parameters":{"type":"类型，见下表，默认为 newslist","category":"分类，可在对应分类页 URL 中找到，默认为 `all` 即全部"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"新聞","maintainers":["nczitzk"],"description":"类型\n\n  | newslist | r18list |\n  | -------- | ------- |","location":"news.ts"}} />
 
-  | newslist | r18list |
-  | -------- | ------- |
-</Route>
+类型
 
-## 掌上英雄联盟 {#zhang-shang-ying-xiong-lian-meng}
-
-### 推荐 {#zhang-shang-ying-xiong-lian-meng-tui-jian}
-
-<Route author="alizeegod" example="/lolapp/recommend" path="/lolapp/recommend" notOperational="1" />
-
-### 用户文章 {#zhang-shang-ying-xiong-lian-meng-yong-hu-wen-zhang}
-
-<Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" paramsDesc={['用户UUID，可在文章html中获取']} />
+| newslist | r18list |
+| -------- | ------- |
 
 ## 掌游宝 {#zhang-you-bao}
 
 ### 推荐 {#zhang-you-bao-tui-jian}
 
-<Route author="ztmzzz" example="/zhangyoubao/lol" path="/zhangyoubao/:category" paramsDesc={['分类，见下表']} notOperational="1">
-  | 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合 | 手游综合 | 云顶之弈 | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗   |
-  | -------- | -------- | --- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
-  | lol      | lscs     | dnf | swxf     | yxzj     | steam    | mobile   | lolchess | blzz     | hszz     | dnfm     | brawlstars |
-</Route>
+<Route namespace="zhangyoubao" data={{"path":"/:category","categories":["game"],"example":"/zhangyoubao/lol","parameters":{"category":"分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["mobile.zhangyoubao.com/:category/"]},"name":"推荐","maintainers":["ztmzzz"],"description":"| 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合 | 手游综合 | 云顶之弈 | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗   |\n  | -------- | -------- | --- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |\n  | lol      | lscs     | dnf | swxf     | yxzj     | steam    | mobile   | lolchess | blzz     | hszz     | dnfm     | brawlstars |","location":"index.ts"}} />
+
+| 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合 | 手游综合 | 云顶之弈 | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗   |
+| -------- | -------- | --- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
+| lol      | lscs     | dnf | swxf     | yxzj     | steam    | mobile   | lolchess | blzz     | hszz     | dnfm     | brawlstars |
 
 ## ファミ通 {#%E3%83%95%E3%82%A1%E3%83%9F-tong}
 
 ### Category {#%E3%83%95%E3%82%A1%E3%83%9F-tong-category}
 
-<Route author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" paramsDesc={['Category, see table below, `new-article` by default']} radar="1">
-  | 新着        | PS5 | Switch | PS4 | ニュース | ゲームニュース | PR TIMES | 動画   | 特集・企画記事  | インタビュー | 取材・リポート | レビュー | インディーゲーム |
-  | ----------- | --- | ------ | --- | -------- | -------------- | -------- | ------ | --------------- | ------------ | -------------- | -------- | ---------------- |
-  | new-article | ps5 | switch | ps4 | news     | news-game      | prtimes  | videos | special-article | interview    | event-report   | review   | indie-game       |
-</Route>
+<Route namespace="famitsu" data={{"path":"/category/:category?","categories":["game"],"example":"/famitsu/category/new-article","parameters":{"category":"Category, see table below, `new-article` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Category","maintainers":["TonyRL"],"description":"| 新着        | PS5 | Switch | PS4 | ニュース | ゲームニュース | PR TIMES | 動画   | 特集・企画記事  | インタビュー | 取材・リポート | レビュー | インディーゲーム |\n  | ----------- | --- | ------ | --- | -------- | -------------- | -------- | ------ | --------------- | ------------ | -------------- | -------- | ---------------- |\n  | new-article | ps5 | switch | ps4 | news     | news-game      | prtimes  | videos | special-article | interview    | event-report   | review   | indie-game       |","location":"category.ts"}} />
 
-## マギアレコード（Magia Record, 魔法纪录） {#%E3%83%9E%E3%82%AE%E3%82%A2%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89-magia-record-mo-fa-ji-lu}
-
-### 游戏公告 {#%E3%83%9E%E3%82%AE%E3%82%A2%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89-magia-record-mo-fa-ji-lu-you-xi-gong-gao}
-
-<Route author="y2361547758" example="/magireco/announcements" path="/magireco/announcements" />
-
-### 游戏横幅 {#%E3%83%9E%E3%82%AE%E3%82%A2%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89-magia-record-mo-fa-ji-lu-you-xi-heng-fu}
-
-<Route author="y2361547758" example="/magireco/event_banner" path="/magireco/event_banner" />
+| 新着        | PS5 | Switch | PS4 | ニュース | ゲームニュース | PR TIMES | 動画   | 特集・企画記事  | インタビュー | 取材・リポート | レビュー | インディーゲーム |
+| ----------- | --- | ------ | --- | -------- | -------------- | -------- | ------ | --------------- | ------------ | -------------- | -------- | ---------------- |
+| new-article | ps5 | switch | ps4 | news     | news-game      | prtimes  | videos | special-article | interview    | event-report   | review   | indie-game       |

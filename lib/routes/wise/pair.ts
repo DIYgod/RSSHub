@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,7 +12,26 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 const renderDesc = (content) => art(path.join(__dirname, 'templates/description.art'), content);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/pair/:source/:target',
+    categories: ['other'],
+    example: '/wise/pair/GBP/USD',
+    parameters: { source: 'Base currency abbreviation', target: 'Quote currency abbreviation' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'FX Pair Yesterday',
+    maintainers: ['HenryQW'],
+    handler,
+    description: `Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate-alerts/).`,
+};
+
+async function handler(ctx) {
     let yesterday = dayjs().subtract(1, 'day');
     const dayBefore = yesterday.subtract(1, 'day').format('YYYY-MM-DD');
     yesterday = yesterday.format('YYYY-MM-DD');
@@ -60,10 +80,10 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `${source} to ${target} by Wise`,
         link,
         description: `Exchange Rate from Wise`,
         item: [single],
-    });
-};
+    };
+}

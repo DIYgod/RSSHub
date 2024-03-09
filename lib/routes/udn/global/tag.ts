@@ -1,9 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/global/tag/:tag?',
+    categories: ['traditional-media'],
+    example: '/udn/global/tag/過去24小時',
+    parameters: { tag: '标签，可在对应标签页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['global.udn.com/search/tagging/1020/:tag', 'global.udn.com/'],
+    },
+    name: '轉角國際 - 標籤',
+    maintainers: ['emdoe', 'nczitzk'],
+    handler,
+    description: `| 過去 24 小時 | 鏡頭背後 | 深度專欄 | 重磅廣播 |
+  | ------------ | -------- | -------- | -------- |`,
+};
+
+async function handler(ctx) {
     const tag = ctx.req.param('tag') ?? '過去24小時';
 
     const rootUrl = 'https://global.udn.com';
@@ -44,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `轉角國際 udn Global - ${tag}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

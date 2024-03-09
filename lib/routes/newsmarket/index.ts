@@ -1,9 +1,38 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/newsmarket',
+    parameters: { category: '分类，见下表，默认为首页' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['newsmarket.com.tw/blog/category/:category', 'newsmarket.com.tw/'],
+    },
+    name: '分類',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 時事。政策  | 食安        | 新知      | 愛地方       | 種好田       | 好吃。好玩    |
+  | ----------- | ----------- | --------- | ------------ | ------------ | ------------- |
+  | news-policy | food-safety | knowledge | country-life | good-farming | good-food-fun |
+
+  | 食農教育       | 人物               | 漁業。畜牧           | 綠生活。國際        | 評論    |
+  | -------------- | ------------------ | -------------------- | ------------------- | ------- |
+  | food-education | people-and-history | raising-and-breeding | living-green-travel | opinion |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'https://www.newsmarket.com.tw';
@@ -56,9 +85,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

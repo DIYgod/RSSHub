@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cat/:cat',
+    categories: ['new-media'],
+    example: '/niaogebiji/cat/103',
+    parameters: { cat: '如 https://www.niaogebiji.com/cat/103，最后的数字就是id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['niaogebiji.com/cat/:cat'],
+    },
+    name: '分类目录',
+    maintainers: ['cKotoriKat'],
+    handler,
+    url: 'niaogebiji.com/',
+};
+
+async function handler(ctx) {
     const categoryId = ctx.req.param('cat');
     const link = `https://www.niaogebiji.com/cat/${categoryId}`;
 
@@ -45,10 +68,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         link,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
@@ -5,7 +6,25 @@ import logger from '@/utils/logger';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topic/:id',
+    categories: ['programming'],
+    example: '/modb/topic/44158',
+    parameters: { id: '合辑序号' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '合辑',
+    maintainers: ['yueneiqi'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://www.modb.pro';
     const topicId = ctx.req.param('id');
     const response = await got({
@@ -52,9 +71,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '墨天轮合辑',
         link: `${baseUrl}/topic/${topicId}`,
         item: items,
-    });
-};
+    };
+}

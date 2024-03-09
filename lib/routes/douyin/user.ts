@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -5,7 +6,29 @@ import { config } from '@/config';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import { templates, resolveUrl, proxyVideo, getOriginAvatar, universalGet } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:uid/:routeParams?',
+    categories: ['social-media'],
+    example: '/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao',
+    parameters: { uid: 'uid，可在用户页面 URL 中找到', routeParams: '额外参数，query string 格式，请参阅上面的表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['douyin.com/user/:uid'],
+        target: '/user/:uid',
+    },
+    name: '博主',
+    maintainers: ['Max-Tortoise', 'Rongronggg9'],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     if (!uid.startsWith('MS4wLjABAAAA')) {
         throw new Error('Invalid UID. UID should start with <b>MS4wLjABAAAA</b>.');
@@ -68,11 +91,11 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: userNickName,
         description: userDescription,
         image: userAvatar,
         link: pageUrl,
         item: items,
-    });
-};
+    };
+}

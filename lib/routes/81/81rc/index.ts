@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -5,7 +6,14 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/81rc/*',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const thePath = getSubPath(ctx).replace(/^\/81rc/, '');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -48,7 +56,7 @@ export default async (ctx) => {
 
     const icon = $('link[rel="icon"]').prop('href');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `军队人才网 - ${$('div.left-word')
             .find('a')
@@ -60,5 +68,5 @@ export default async (ctx) => {
         language: 'zh-cn',
         icon,
         logo: icon,
-    });
-};
+    };
+}

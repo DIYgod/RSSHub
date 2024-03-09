@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -19,7 +20,14 @@ const mapping = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/beijing/bphc/*',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://gycpt.bphc.com.cn';
     const defaultPath = 'announcement';
 
@@ -48,9 +56,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: obj.title,
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

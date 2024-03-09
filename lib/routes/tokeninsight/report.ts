@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,34 @@ const baseURL = 'https://www.tokeninsight.com/';
 const title = 'TokenInsight';
 const link = 'https://www.tokeninsight.com/';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/report/:lang?',
+    categories: ['finance'],
+    example: '/tokeninsight/report/en',
+    parameters: { lang: 'Language, see below, Chinese by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tokeninsight.com/:lang/report'],
+        target: '/report/:lang',
+    },
+    name: 'Research',
+    maintainers: [],
+    handler,
+    description: `Language:
+
+  | Chinese | English |
+  | ------- | ------- |
+  | zh      | en      |`,
+};
+
+async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'zh';
 
     const getReports = async () => {
@@ -45,9 +73,9 @@ export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30;
     const reports = (await getReports()).slice(0, limit);
     const list = await Promise.all(reports.map((element) => getReportInfomation(element)));
-    ctx.set('data', {
+    return {
         title: `${lang === 'zh' ? '报告' : 'Research'} | ${title}`,
         link: `${link}${lang}/report`,
         item: list,
-    });
-};
+    };
+}

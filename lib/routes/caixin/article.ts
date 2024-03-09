@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { parseArticle } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/article',
+    categories: ['traditional-media'],
+    example: '/caixin/article',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['caixin.com/'],
+    },
+    name: '首页新闻',
+    maintainers: ['EsuRt'],
+    handler,
+    url: 'caixin.com/',
+};
+
+async function handler() {
     const { data: response } = await got('https://mapiv5.caixin.com/m/api/getWapIndexListByPage');
 
     const list = response.data.list.map((item) => ({
@@ -19,10 +42,10 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: '财新网 - 首页',
         link: 'https://www.caixin.com',
         description: '财新网 - 首页',
         item: items,
-    });
-};
+    };
+}

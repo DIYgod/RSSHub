@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import buildData from '@/utils/common-config';
 const baseUrl = 'https://www.airchina.com.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/announcement',
+    categories: ['travel'],
+    example: '/airchina/announcement',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.airchina.com.cn/'],
+    },
+    name: '服务公告',
+    maintainers: ['LandonLi'],
+    handler,
+    url: 'www.airchina.com.cn/',
+};
+
+async function handler(ctx) {
     const link = `${baseUrl}/cn/info/new-service/service_announcement.shtml`;
     const data = await buildData({
         link,
@@ -36,4 +59,4 @@ export default async (ctx) => {
     );
 
     ctx.set('data', data);
-};
+}

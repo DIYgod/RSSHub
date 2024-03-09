@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -9,7 +10,33 @@ const titles = {
     joblist2: '招聘公告',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/job/:category?',
+    categories: ['university'],
+    example: '/ustc/job',
+    parameters: { category: '分类，见下表，默认为招聘公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['job.ustc.edu.cn/'],
+        target: '/job',
+    },
+    name: '就业信息网',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'job.ustc.edu.cn/',
+    description: `| 专场招聘会  | 校园双选会   | 空中宣讲  | 招聘公告 |
+  | ----------- | ------------ | --------- | -------- |
+  | RecruitList | Doublechoice | Broadcast | joblist2 |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'joblist2';
 
     const rand = 0.012_345_678_901_234_56;
@@ -186,9 +213,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${titles[category]} - 中国科学技术大学就业信息网`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

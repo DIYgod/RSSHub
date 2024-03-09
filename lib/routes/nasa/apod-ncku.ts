@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/apod-ncku',
+    categories: ['picture'],
+    example: '/nasa/apod-ncku',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['apod.nasa.govundefined'],
+    },
+    name: 'Cheng Kung University Mirror',
+    maintainers: ['nczitzk', 'williamgateszhao'],
+    handler,
+    url: 'apod.nasa.govundefined',
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
     const rootUrl = 'http://sprite.phys.ncku.edu.tw/astrolab/mirrors/apod/archivepix.html';
     const response = await got({
@@ -44,9 +67,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'NASA 每日一天文圖 (成大物理分站) ',
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -29,7 +30,29 @@ const getSingleRecord = async () => {
     );
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cs/pg',
+    categories: ['university'],
+    example: '/hdu/cs/pg',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['computer.hdu.edu.cn/6769/list.htm'],
+    },
+    name: '计算机学院 - 研究生通知',
+    maintainers: ['legr4ndk'],
+    handler,
+    url: 'computer.hdu.edu.cn/6769/list.htm',
+};
+
+async function handler() {
     const items = await getSingleRecord();
     const out = await Promise.all(
         items.map((item) =>
@@ -46,10 +69,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '杭电计算机-研究生通知',
         description: '杭州电子科技大学计算机学院-研究生教学通知',
         link: host,
         item: out,
-    });
-};
+    };
+}

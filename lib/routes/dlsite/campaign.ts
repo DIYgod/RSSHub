@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
@@ -118,7 +119,25 @@ const setUrl = (info) => {
     return paramsPath.slice(1);
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/campaign/:type/:free?',
+    categories: ['anime'],
+    example: '/dlsite/campaign/home',
+    parameters: { type: 'Type, see table above', free: 'Free only, empty means false, other value means true' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Discounted Works',
+    maintainers: ['cssxsh'],
+    handler,
+};
+
+async function handler(ctx) {
     const info = infos[ctx.req.param('type')];
     // 判断参数是否合理
     if (info === undefined) {
@@ -163,12 +182,12 @@ export default async (ctx) => {
         return signle;
     });
 
-    ctx.set('data', {
+    return {
         title,
         link: `${host}/${link}`,
         description,
         language: 'ja-jp',
         allowEmpty: true,
         item,
-    });
-};
+    };
+}

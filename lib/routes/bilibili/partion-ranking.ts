@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 const got_ins = got.extend({
@@ -14,7 +15,25 @@ function formatDate(now) {
     return dateTime;
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/partion/ranking/:tid/:days?/:disableEmbed?',
+    categories: ['social-media'],
+    example: '/bilibili/partion/ranking/171/3',
+    parameters: { tid: '分区 id, 见上方表格', days: '缺省为 7, 指最近多少天内的热度排序', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分区视频排行榜',
+    maintainers: ['lengthmin'],
+    handler,
+};
+
+async function handler(ctx) {
     const tid = ctx.req.param('tid');
     const days = ctx.req.param('days') ?? 7;
     const disableEmbed = ctx.req.param('disableEmbed');
@@ -48,10 +67,10 @@ export default async (ctx) => {
         items.push(item);
     }
 
-    ctx.set('data', {
+    return {
         title: `bilibili ${name} 最热视频`,
         link: 'https://www.bilibili.com',
         description: `bilibili ${name}分区 最热视频`,
         item: items,
-    });
-};
+    };
+}

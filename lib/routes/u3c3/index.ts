@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/search/:keyword/:preview?', '/:type?/:preview?'],
+    categories: ['multimedia'],
+    example: '/u9a9/search/新片速递',
+    parameters: { keyword: 'Search keyword', preview: 'Show image preview, off by default, non empty value means on' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: true,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Search',
+    maintainers: ['storytellerF'],
+    handler,
+};
+
+async function handler(ctx) {
     const { type, keywoard, preview } = ctx.req.param();
     // should be:
     // undefined
@@ -65,10 +84,10 @@ export default async (ctx) => {
           )
         : list;
 
-    ctx.set('data', {
+    return {
         title,
         description: title,
         link: currentURL,
         item: items,
-    });
-};
+    };
+}

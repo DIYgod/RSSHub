@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -5,7 +6,28 @@ import { getCookies, setCookies } from '@/utils/puppeteer-utils';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/journals/current/:journal',
+    categories: ['journal'],
+    example: '/uchicago/journals/current/jpe',
+    parameters: { journal: 'Journal id, can be found in URL. [Browse journals by title](https://www.journals.uchicago.edu/action/showPublications)' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['journals.uchicago.edu/toc/:journal/current', 'journals.uchicago.edu/journal/:journal'],
+    },
+    name: 'Current Issue',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const journal = ctx.req.param('journal');
     const baseUrl = 'https://www.journals.uchicago.edu';
     const link = `${baseUrl}/toc/${journal}/current`;
@@ -72,11 +94,11 @@ export default async (ctx) => {
 
     browser.close();
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('.jumbotron-journal-info').text(),
         link,
         image: $('head meta[property="og:image"]').attr('content'),
         item: items,
-    });
-};
+    };
+}

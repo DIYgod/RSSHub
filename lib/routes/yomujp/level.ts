@@ -1,9 +1,33 @@
+import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:level?',
+    categories: ['reading'],
+    example: '/yomujp/n1',
+    parameters: { level: '等级，n1~n6，为空默认全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yomujp.com/', 'yomujp.com/:level'],
+        target: '/:level',
+    },
+    name: '等级',
+    maintainers: ['eternasuno'],
+    handler,
+    url: 'yomujp.com/',
+};
+
+async function handler(ctx) {
     const level = formatLevel(ctx.req.param('level'));
     const url = new URL('https://yomujp.com/wp-json/wp/v2/posts');
     url.searchParams.append('categories', getLevel(level));
@@ -42,7 +66,7 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: level ? `${level.toUpperCase()} | 日本語多読道場` : '日本語多読道場',
         link: `https://yomujp.com/${level}`,
         description: 'みなさん、こんにちは。 「 日本語多読道場(にほんごたどくどうじょう) Yomujp」は日本語を勉強する人のための読みものサイト（website）です。 日本の地理、食べもの、動物、植物、文化や歴史などを紹介します。',
@@ -50,8 +74,8 @@ export default async (ctx) => {
         itunes_author: 'Yomujp',
         image: 'https://yomujp.com/wp-content/uploads/2023/08/top1-2-300x99-1.png',
         item,
-    });
-};
+    };
+}
 
 const formatLevel = (level) => {
     const lowerCaseLevel = level?.toLowerCase();

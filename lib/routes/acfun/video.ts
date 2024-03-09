@@ -1,8 +1,20 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/video/:uid',
+    radar: {
+        source: ['www.acfun.cn/u/:id'],
+        target: '/user/video/:id',
+    },
+    name: 'Unknown',
+    maintainers: ['wdssmq'],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const url = `https://www.acfun.cn/u/${uid}`;
     const host = 'https://www.acfun.cn';
@@ -21,7 +33,7 @@ export default async (ctx) => {
         .text()
         .match(/.user-photo{\n\s*background:url\((.*)\) 0% 0% \/ 100% no-repeat;/)[1];
 
-    ctx.set('data', {
+    return {
         title,
         link: url,
         description,
@@ -41,5 +53,5 @@ export default async (ctx) => {
                 pubDate: parseDate(itemDate, 'YYYY/MM/DD'),
             };
         }),
-    });
-};
+    };
+}

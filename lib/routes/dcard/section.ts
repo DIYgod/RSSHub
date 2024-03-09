@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import utils from './utils';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:section/:type?',
+    categories: ['bbs'],
+    example: '/dcard/funny/popular',
+    parameters: { section: '板塊名稱，URL 中獲得', type: '排序，popular 熱門；latest 最新，默認為 latest' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '板塊帖子',
+    maintainers: ['HenryQW'],
+    handler,
+};
+
+async function handler(ctx) {
     const { type = 'latest', section = 'posts' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
     const browser = await puppeteer();
@@ -59,10 +78,10 @@ export default async (ctx) => {
     const result = await utils.ProcessFeed(items, cookies, browser, limit, cache);
     await browser.close();
 
-    ctx.set('data', {
+    return {
         title,
         link,
         description: '不想錯過任何有趣的話題嗎？趕快加入我們吧！',
         item: result,
-    });
-};
+    };
+}

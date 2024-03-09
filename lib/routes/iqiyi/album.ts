@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/album/:id',
+    categories: ['multimedia'],
+    example: '/iqiyi/album/神武天尊-2020-1b4lufwxd7h',
+    parameters: { id: '剧集 id, 可在该主页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '剧集',
+    maintainers: ['TonyRL'],
+    handler,
+    description: `:::tip
+  可抓取內容根据服务器所在地区而定
+  :::`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const { data: response } = await got(`https://www.iq.com/album/${id}`);
@@ -54,12 +76,12 @@ export default async (ctx) => {
         pubDate: parseDate(item.initIssueTime),
     }));
 
-    ctx.set('data', {
+    return {
         title: baseInfo.name,
         description: baseInfo.description,
         image: album.videoAlbumInfo.albumFocus1024,
         link: `https://www.iq.com/album/${album.videoAlbumInfo.albumLocSuffix}`,
         item: items,
         allowEmpty: true,
-    });
-};
+    };
+}

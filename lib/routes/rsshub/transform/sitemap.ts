@@ -1,8 +1,16 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/transform/sitemap/:url/:routeParams?',
+    name: 'Unknown',
+    maintainers: ['flrngel'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.feature.allow_user_supply_unsafe_domain) {
         throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
@@ -41,10 +49,10 @@ export default async (ctx) => {
                   .filter(Boolean)
             : [];
 
-    ctx.set('data', {
+    return {
         title: rssTitle,
         link: url,
         description: `Proxy ${url}`,
         item: items,
-    });
-};
+    };
+}

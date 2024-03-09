@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,30 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/shanghai/wgj/:page?',
+    categories: ['government'],
+    example: '/gov/shanghai/wgj',
+    parameters: { page: '页数，默认第 1 页' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['wsbs.wgj.sh.gov.cn/'],
+        target: '/shanghai/wgj',
+    },
+    name: '上海市文旅局审批公告',
+    maintainers: ['gideonsenku'],
+    handler,
+    url: 'wsbs.wgj.sh.gov.cn/',
+};
+
+async function handler(ctx) {
     const baseUrl = 'http://wsbs.wgj.sh.gov.cn';
     const currentUrl = `${baseUrl}/shwgj_ywtb/core/web/welcome/index!toResultNotice.action`;
     const page = ctx.req.param('page') ?? 1;
@@ -68,9 +92,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

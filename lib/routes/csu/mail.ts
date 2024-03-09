@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -10,7 +11,28 @@ async function fetch(address) {
     return $('.tb-ct-info').html();
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/mail/:type?',
+    categories: ['university'],
+    example: '/csu/mail',
+    parameters: { type: '类型' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '校长信箱',
+    maintainers: ['j1g5awi'],
+    handler,
+    description: `| 类型 | 校长信箱 | 党委信箱 |
+  | ---- | -------- | -------- |
+  | 参数 | 01       | 02       |`,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://oa.csu.edu.cn';
     const { type = '01' } = ctx.req.param();
     const link = `${baseUrl}/mailbox/NoAuth/MailList_Pub?tp=${type}`;
@@ -40,9 +62,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `中南大学学校信箱 - ${type === '01' ? '校长信箱' : '党委信箱'}`,
         link,
         item: out,
-    });
-};
+    };
+}

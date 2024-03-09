@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,29 @@ import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://yz.chsi.com.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/kydt',
+    categories: ['study'],
+    example: '/chsi/kydt',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yz.chsi.com.cn/kyzx/kydt'],
+    },
+    name: '考研动态',
+    maintainers: ['SunBK201'],
+    handler,
+    url: 'yz.chsi.com.cn/kyzx/kydt',
+};
+
+async function handler() {
     const response = await got(`${host}/kyzx/kydt`);
 
     const $ = load(response.data);
@@ -38,10 +61,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `中国研究生招生信息网 - 考研动态`,
         link: `${host}/kyzx/kydt/`,
         description: '中国研究生招生信息网 - 考研动态',
         item: items,
-    });
-};
+    };
+}

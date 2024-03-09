@@ -1,10 +1,34 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { baseUrl, headers, fixImages, parseReviews } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/review/:keyword?',
+    categories: ['new-media'],
+    example: '/techpowerup/review/4090',
+    parameters: { keyword: 'Search Keyword' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['techpowerup.com/'],
+        target: '',
+    },
+    name: 'Reviews',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'techpowerup.com/',
+};
+
+async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
 
     const url = new URL(`${baseUrl}/review/${keyword ? 'search/' : ''}`);
@@ -60,11 +84,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Reviews | TechPowerUp',
         link: url.href,
         language: 'en',
         image: 'https://tpucdn.com/apple-touch-icon-v1684568903519.png',
         item: items,
-    });
-};
+    };
+}

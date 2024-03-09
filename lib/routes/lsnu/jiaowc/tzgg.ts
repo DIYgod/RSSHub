@@ -1,8 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jiaowc/tzgg/:category?',
+    categories: ['university'],
+    example: '/lsnu/jiaowc/tzgg',
+    parameters: { category: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['lsnu.edu.cn/'],
+        target: '/jiaowc/tzgg',
+    },
+    name: '教学部通知公告',
+    maintainers: ['nyaShine'],
+    handler,
+    url: 'lsnu.edu.cn/',
+    description: `| 实践教学科 | 教育运行科 | 教研教改科 | 学籍管理科 | 考试科 | 教材建设管理科 |
+  | ---------- | ---------- | ---------- | ---------- | ------ | -------------- |
+  | sjjxk      | jxyxk      | jyjgk      | xjglk      | ksk    | jcjsglk        |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const url = category ? `https://jiaowc.lsnu.edu.cn/tzgg/${category}.htm` : 'https://jiaowc.lsnu.edu.cn/tzgg.htm';
 
@@ -45,9 +72,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: '乐山师范学院教学部通知公告',
         link: 'https://jiaowc.lsnu.edu.cn/tzgg.htm',
         item: out,
-    });
-};
+    };
+}

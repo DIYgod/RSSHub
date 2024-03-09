@@ -1,10 +1,41 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/2yuan/news/:id?',
+    categories: ['university'],
+    example: '/xjtu/2yuan/news',
+    parameters: { id: '编号，见下表，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '第二附属医院新闻',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 分类     | 编号 |
+  | -------- | ---- |
+  | 通知公告 | 110  |
+  | 综合新闻 | 6    |
+  | 科室动态 | 8    |
+  | 教学动态 | 45   |
+  | 科研动态 | 51   |
+  | 护理动态 | 57   |
+  | 党群活动 | 63   |
+  | 外事活动 | 13   |
+  | 媒体二院 | 14   |
+  | 理论政策 | 16   |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '110';
 
     const rootUrl = 'http://2yuan.xjtu.edu.cn';
@@ -54,9 +85,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

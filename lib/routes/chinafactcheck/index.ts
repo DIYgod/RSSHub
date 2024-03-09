@@ -1,9 +1,22 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import utils from './utils';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['chinafactcheck.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['kdanfly'],
+    handler,
+    url: 'chinafactcheck.com/',
+};
+
+async function handler() {
     const response = await got(utils.siteLink, {
         headers: {
             'user-agent': utils.trueUA,
@@ -30,9 +43,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: utils.siteLink,
         item: articles,
-    });
-};
+    };
+}

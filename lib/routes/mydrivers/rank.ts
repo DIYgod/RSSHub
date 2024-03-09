@@ -1,10 +1,37 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 import { rootUrl, getInfo, processItems } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/rank/:range?',
+    categories: ['new-media'],
+    example: '/mydrivers/rank',
+    parameters: { range: '时间范围，见下表，默认为24小时最热' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['m.mydrivers.com/newsclass.aspx'],
+        target: '/rank',
+    },
+    name: '排行',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'm.mydrivers.com/newsclass.aspx',
+    description: `| 24 小时最热 | 本周最热 | 本月最热 |
+  | ----------- | -------- | -------- |
+  | 0           | 1        | 2        |`,
+};
+
+async function handler(ctx) {
     const { range = '0' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -34,8 +61,8 @@ export default async (ctx) => {
 
     items = await processItems(items, cache.tryGet);
 
-    ctx.set('data', {
+    return {
         item: items,
         ...(await getInfo(currentUrl, cache.tryGet, Number.parseInt(range, 10))),
-    });
-};
+    };
+}

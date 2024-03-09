@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ci-en/:id/article',
+    categories: ['anime'],
+    example: '/dlsite/ci-en/7400/article',
+    parameters: { id: 'Creator id, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ci-en.dlsite.com/creator/:id/article/843558', 'ci-en.dlsite.com/'],
+    },
+    name: "Ci-en Creators' Article",
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '7400';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
 
@@ -57,9 +79,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,11 +1,22 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { defaultLanguage, rootUrl, ProcessItems } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/users/:id/:type/:language?', '/:type/:id/:language?'],
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    description: `| Wanted     | Watched     | Owned     |
+  | ---------- | ----------- | --------- |
+  | userwanted | userwatched | userowned |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const type = ctx.req.param('type');
     const language = ctx.req.param('language') ?? defaultLanguage;
     const currentUrl = `${rootUrl}/${language}/${type}.php?list&u=${id}`;
 
     ctx.set('data', await ProcessItems(language, currentUrl, cache.tryGet));
-};
+}

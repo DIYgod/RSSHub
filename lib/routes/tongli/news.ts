@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import * as cheerio from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:type',
+    categories: ['reading'],
+    example: '/tongli/news/6',
+    parameters: { type: '分類，可以在“新聞”鏈接中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新聞',
+    maintainers: ['CokeMine'],
+    handler,
+};
+
+async function handler(ctx) {
     const { type } = ctx.req.param();
     const baseURL = 'https://www.tongli.com.tw/';
     const url = `${baseURL}TNews_List.aspx`;
@@ -48,9 +67,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('.entry_title .n1').text(),
         link,
         item: items,
-    });
-};
+    };
+}

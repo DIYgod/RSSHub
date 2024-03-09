@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/agora0/initium',
+    parameters: { category: '分类，见下表，默认为 initium，即端传媒' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['agora0.gitlab.io/blog/:category', 'agora0.gitlab.io/'],
+        target: '/:category',
+    },
+    name: '零博客',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ | sucoⓋ |
+  | ------- | ------- | -------- | -- | ----- |
+  | initium | inmedia | matters  | pq | vocus |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'initium';
 
     const rootUrl = 'https://agora0.gitlab.io';
@@ -47,9 +73,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

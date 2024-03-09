@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,28 @@ import timezone from '@/utils/timezone';
 
 const host = 'https://www.nowcoder.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/discuss/:type/:order',
+    categories: ['bbs'],
+    example: '/nowcoder/discuss/2/4',
+    parameters: { type: '讨论区分区id 在 URL 中可以找到', order: '排序方式' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '讨论区',
+    maintainers: ['LogicJake'],
+    handler,
+    description: `| 最新回复 | 最新发表 | 最新 | 精华 |
+  | -------- | -------- | ---- | ---- |
+  | 0        | 3        | 1    | 4    |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const order = ctx.req.param('order');
 
@@ -50,9 +72,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `${type_name}${order_name}——牛客网讨论区`,
         link,
         item: out,
-    });
-};
+    };
+}

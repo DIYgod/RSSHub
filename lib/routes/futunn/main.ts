@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,15 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/highlights', '/main', '/'],
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'news.futunn.com/main',
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://news.futunn.com';
@@ -63,9 +72,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Futubull - Headlines',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

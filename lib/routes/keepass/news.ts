@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    name: 'Unknown',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://keepass.info/news/news_all.html';
     const { data: response } = await got(baseUrl);
     const $ = load(response);
@@ -39,9 +47,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').attr('content'),
         link: baseUrl,
         item: items,
-    });
-};
+    };
+}

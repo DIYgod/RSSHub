@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,40 @@ import * as path from 'node:path';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/simpleinfo',
+    parameters: { category: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['blog.simpleinfo.cc/blog/:category'],
+        target: '/:category',
+    },
+    name: '志祺七七',
+    maintainers: ['haukeng'],
+    handler,
+    description: `| 夥伴聊聊 | 專案設計 |
+  | -------- | -------- |
+  | work     | talk     |
+
+  | 國內外新聞 | 政治百分百 | 社會觀察家 | 心理與哲學            |
+  | ---------- | ---------- | ---------- | --------------------- |
+  | news       | politics   | society    | psychology-philosophy |
+
+  | 科學大探索 | 環境與健康         | ACG 快樂聊 | 好書籍分享   | 其它主題     |
+  | ---------- | ------------------ | ---------- | ------------ | ------------ |
+  | science    | environment-health | acg        | book-sharing | other-topics |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const rootUrl = 'https://blog.simpleinfo.cc';
     const link = `${rootUrl}${category ? (category === 'work' || category === 'talk' ? `/blog/${category}` : `/shasha77?category=${category}`) : '/shasha77'}`;
@@ -45,10 +79,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title,
         link,
         language: 'zh-tw',
         item: items,
-    });
-};
+    };
+}

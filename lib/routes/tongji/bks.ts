@@ -1,14 +1,37 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bks',
+    categories: ['university'],
+    example: '/tongji/bks',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bksy.tongji.edu.cn/'],
+    },
+    name: '本科生院通知公告',
+    maintainers: ['shiquda'],
+    handler,
+    url: 'bksy.tongji.edu.cn/',
+};
+
+async function handler() {
     const link = 'https://bksy.tongji.edu.cn/30359/list.htm';
     const response = await got(link);
     const $ = load(response.data);
     const list = $('.wcts-a0018 li');
 
-    ctx.set('data', {
+    return {
         title: '同济大学本科生院',
         link,
         description: '同济大学本科生院通知公告',
@@ -26,5 +49,5 @@ export default async (ctx) => {
                 pubDate: parseDate(date, 'YYYY-MM-DD'),
             };
         }),
-    });
-};
+    };
+}

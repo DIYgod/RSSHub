@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,29 @@ import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zw/projectList',
+    categories: ['other'],
+    example: '/cdzjryb/zw/projectList',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['zw.cdzjryb.com/lottery/accept/projectList', 'zw.cdzjryb.com/'],
+    },
+    name: '商品住房购房登记',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'zw.cdzjryb.com/lottery/accept/projectList',
+};
+
+async function handler() {
     const url = 'https://zw.cdzjryb.com/lottery/accept/projectList';
     const { data: response } = await got(url);
     const $ = load(response);
@@ -45,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: url,
         item: items,
-    });
-};
+    };
+}

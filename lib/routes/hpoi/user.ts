@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
@@ -11,7 +12,28 @@ const titleMap = {
     resell: '有过',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:user_id/:caty',
+    categories: ['anime'],
+    example: '/hpoi/user/116297/buy',
+    parameters: { user_id: '用户ID', caty: '类别, 见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '用户动态',
+    maintainers: ['DIYgod', 'luyuhuang'],
+    handler,
+    description: `| 想买 | 预定     | 已入 | 关注 | 有过   |
+  | ---- | -------- | ---- | ---- | ------ |
+  | want | preorder | buy  | care | resell |`,
+};
+
+async function handler(ctx) {
     const { user_id, caty } = ctx.req.param();
 
     const url = `${root_url}/user/${user_id}/hobby?order=actionDate&view=2&favState=${caty}`;
@@ -34,10 +56,10 @@ export default async (ctx) => {
 
     const title = $('.hpoi-collect-head .info p').eq(0).text() + '的手办 - ' + titleMap[caty];
 
-    ctx.set('data', {
+    return {
         title,
         link: url,
         item: list,
         allowEmpty: true,
-    });
-};
+    };
+}

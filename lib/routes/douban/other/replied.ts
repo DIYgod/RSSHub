@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/replied/:uid',
+    categories: ['social-media'],
+    example: '/douban/replied/xiaoyaxiaoya',
+    parameters: { uid: '用户id，可在用户日记页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '最新回应过的日记',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const currentUrl = `https://www.douban.com/people/${ctx.req.param('uid')}/notes`;
     const response = await got({
         method: 'get',
@@ -79,9 +98,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text() + ' - 最新回应过',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

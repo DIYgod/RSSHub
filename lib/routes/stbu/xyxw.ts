@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,18 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
-export default async (ctx) => {
+export const route: Route = {
+    path: '/xyxw',
+    radar: {
+        source: ['stbu.edu.cn/html/news/xueyuan', 'stbu.edu.cn/'],
+    },
+    name: 'Unknown',
+    maintainers: ['HyperCherry'],
+    handler,
+    url: 'stbu.edu.cn/html/news/xueyuan',
+};
+
+async function handler() {
     const baseUrl = 'https://www.stbu.edu.cn';
     const requestUrl = `${baseUrl}/html/news/xueyuan/`;
     const { data: response } = await got(requestUrl, {
@@ -44,10 +56,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '四川工商学院 - 学院新闻',
         link: requestUrl,
         description: '四川工商学院 - 学院新闻',
         item: items,
-    });
-};
+    };
+}

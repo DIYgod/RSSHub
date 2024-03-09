@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { baseUrl, cookieJar, getArticle } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['journal'],
+    example: '/nature/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: true,
+    },
+    radar: {
+        source: ['nature.com/latest-news', 'nature.com/news', 'nature.com/'],
+    },
+    name: 'Nature News',
+    maintainers: ['y9c', 'TonyRL'],
+    handler,
+    url: 'nature.com/latest-news',
+};
+
+async function handler() {
     const url = `${baseUrl}/latest-news`;
     const res = await got(url, { cookieJar });
     const $ = load(res.data);
@@ -22,10 +45,10 @@ export default async (ctx) => {
 
     items = await Promise.all(items.map((item) => cache.tryGet(item.link, () => getArticle(item))));
 
-    ctx.set('data', {
+    return {
         title: 'Nature | Latest News',
         description: $('meta[name=description]').attr('content'),
         link: url,
         item: items,
-    });
-};
+    };
+}

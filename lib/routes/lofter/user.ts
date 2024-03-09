@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:name?',
+    categories: ['social-media'],
+    example: '/lofter/user/i',
+    parameters: { name: 'Lofter user name, can be found in the URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'User',
+    maintainers: ['hondajojo', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const name = ctx.req.param('name') ?? 'i';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : '50';
     if (!isValidHost(name)) {
@@ -52,10 +71,10 @@ export default async (ctx) => {
         category: item.post.tag.split(','),
     }));
 
-    ctx.set('data', {
+    return {
         title: `${items[0].author} | LOFTER`,
         link: rootUrl,
         item: items,
         description: response.data.response.posts[0].post.blogInfo.selfIntro,
-    });
-};
+    };
+}

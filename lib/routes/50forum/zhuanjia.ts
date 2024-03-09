@@ -1,10 +1,23 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['50forum.org.cn/home/article/index/category/zhuanjia.html', '50forum.org.cn/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['sddiky'],
+    handler,
+    url: '50forum.org.cn/home/article/index/category/zhuanjia.html',
+};
+
+async function handler() {
     const rootUrl = 'http://www.50forum.org.cn';
     const response = await got({
         method: 'get',
@@ -43,10 +56,10 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: `中国经济50人论坛专家文章`,
         link: 'http://www.50forum.org.cn/home/article/index/category/zhuanjia.html',
         description: '中国经济50人论坛专家文章',
         item: out,
-    });
-};
+    };
+}

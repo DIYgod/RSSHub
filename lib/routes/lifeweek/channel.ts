@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import getRssItem from './utils';
@@ -6,7 +7,18 @@ const rootApiUrl = 'https://www.lifeweek.com.cn/api/userWebFollow/getFollowTagCo
 const rootUrl = 'https://www.lifeweek.com.cn/column';
 const articleRootUrl = 'https://www.lifeweek.com.cn/article';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/channel/:id',
+    radar: {
+        source: ['lifeweek.com.cn/column/:channel'],
+        target: '/channel/:channel',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const channel = ctx.req.param('id');
     const url = `${rootApiUrl}=${channel}`;
     const { data } = await got(url);
@@ -18,9 +30,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: data.model.tagName,
         link: `${rootUrl}/${channel}`,
         item: items,
-    });
-};
+    };
+}

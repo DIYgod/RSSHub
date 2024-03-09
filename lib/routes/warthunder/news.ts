@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,31 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/description.art'), desc);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['game'],
+    example: '/warthunder/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['warthunder.com/en/news', 'warthunder.com/'],
+    },
+    name: 'News',
+    maintainers: ['axojhf'],
+    handler,
+    url: 'warthunder.com/en/news',
+    description: `News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)
+  The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!`,
+};
+
+async function handler() {
     const rootUrl = 'https://warthunder.com/en/news/';
 
     const response = await got(rootUrl);
@@ -44,9 +69,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: 'War Thunder News',
         link: 'https://warthunder.com/en/news/',
         item: pageFace,
-    });
-};
+    };
+}

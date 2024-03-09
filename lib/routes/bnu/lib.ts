@@ -1,9 +1,21 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/lib/:category?',
+    radar: {
+        source: ['www.lib.bnu.edu.cn/:category/index.htm'],
+        target: '/lib/:category',
+    },
+    name: 'Unknown',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'http://www.lib.bnu.edu.cn';
     const { category = 'zydt' } = ctx.req.param();
     const link = `${baseUrl}/${category}/index.htm`;
@@ -33,9 +45,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link,
         item: items,
-    });
-};
+    };
+}

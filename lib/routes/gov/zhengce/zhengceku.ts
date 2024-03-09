@@ -1,6 +1,25 @@
+import { Route } from '@/types';
 import buildData from '@/utils/common-config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zhengce/zhengceku/:department',
+    categories: ['government'],
+    example: '/gov/zhengce/zhengceku/bmwj',
+    parameters: { department: '库名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '国务院政策文件库',
+    maintainers: ['zxx-457'],
+    handler,
+};
+
+async function handler(ctx) {
     const department = ctx.req.param('department');
     const link = `http://www.gov.cn/zhengce/zhengceku/${department}/`;
 
@@ -22,4 +41,4 @@ export default async (ctx) => {
             },
         })
     );
-};
+}

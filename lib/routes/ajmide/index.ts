@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id',
+    categories: ['multimedia'],
+    example: '/ajmide/10603594',
+    parameters: { id: '播客 id，可以从播客页面 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '播客',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.param('limit') ?? 25;
     const playListAPI = `https://a.ajmide.com/v3/getBrandContentList.php?brandId=${id}&c=${limit}&i=0`;
@@ -19,11 +38,11 @@ export default async (ctx) => {
         enclosure_type: 'audio/x-m4a',
     }));
 
-    ctx.set('data', {
+    return {
         title: data[0].brandName,
         link: `https://m.ajmide.com/m/brand?id=${id}`,
         itunes_author: data[0].author_info.nick,
         image: data[0].brandImgPath,
         item: items,
-    });
-};
+    };
+}

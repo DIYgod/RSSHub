@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import got from '@/utils/got';
@@ -6,7 +7,30 @@ import { config } from '@/config';
 import weiboUtils from './utils';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/timeline/:uid/:feature?/:routeParams?',
+    categories: ['social-media'],
+    example: '/weibo/timeline/3306934123',
+    parameters: { uid: '用户的uid', feature: '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', routeParams: '额外参数；请参阅上面的说明和表格' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '个人时间线',
+    maintainers: ['zytomorrow', 'DIYgod', 'Rongronggg9'],
+    handler,
+    description: `:::warning
+  需要对应用户打开页面进行授权生成 token 才能生成内容
+
+  自部署需要申请并配置微博 key，具体见部署文档
+  :::`,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const feature = ctx.req.param('feature') || 0;
     const routeParams = ctx.req.param('routeParams') || undefined;
@@ -155,4 +179,4 @@ export default async (ctx) => {
         });
         ctx.redirect(`https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${feature}/${routeParams.replaceAll('&', '%26')}` : ''}`);
     }
-};
+}

@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/podcasts',
+    categories: ['new-media'],
+    example: '/supchina/podcasts',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['supchina.com/podcasts', 'supchina.com/'],
+    },
+    name: 'Podcasts',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'supchina.com/podcasts',
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://supchina.com';
     const currentUrl = `${rootUrl}/feed/podcast`;
 
@@ -57,11 +80,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'SupChina - Podcasts',
         link: `${rootUrl}/podcasts`,
         itunes_author: $('channel itunes\\:author').first().text(),
         image: $('itunes\\:image').attr('href'),
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,5 @@
+import type { Context } from 'hono';
+
 export type DataItem = {
     title: string;
     description?: string;
@@ -43,3 +45,52 @@ export type Data = {
     feedLink?: string;
     lastBuildDate?: string;
 };
+
+interface NamespaceItem {
+    name: string;
+    url?: string;
+    categories?: string[];
+    description?: string;
+}
+
+interface Namespace extends NamespaceItem {
+    ja?: NamespaceItem;
+    zh?: NamespaceItem;
+    'zh-TW'?: NamespaceItem;
+}
+
+export type { Namespace };
+
+interface RouteItem {
+    path: string | string[];
+    name: string;
+    url?: string;
+    maintainers: string[];
+    handler: (ctx: Context) => Promise<Data> | Data;
+    example: string;
+    parameters?: Record<string, string>;
+    description?: string;
+    categories?: string[];
+
+    features: {
+        requireConfig?: string[] | false;
+        requirePuppeteer?: boolean;
+        antiCrawler?: boolean;
+        supportRadar?: boolean;
+        supportBT?: boolean;
+        supportPodcast?: boolean;
+        supportScihub?: boolean;
+    };
+    radar?: {
+        source: string[];
+        target?: string;
+    };
+}
+
+interface Route extends RouteItem {
+    ja?: NamespaceItem;
+    zh?: NamespaceItem;
+    'zh-TW'?: NamespaceItem;
+}
+
+export type { Route };

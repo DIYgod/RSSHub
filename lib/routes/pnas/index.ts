@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,7 +13,19 @@ import { CookieJar } from 'tough-cookie';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:topicPath{.+}?',
+    radar: {
+        source: ['pnas.org/*topicPath'],
+        target: '/:topicPath',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'pnas.org/*topicPath',
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://www.pnas.org';
     const topicPath = ctx.req.param('topicPath');
     const link = `${baseUrl}/${topicPath ?? 'latest'}`;
@@ -95,12 +108,12 @@ export default async (ctx) => {
 
     browser.close();
 
-    ctx.set('data', {
+    return {
         title: `${$('.banner-widget__content h1').text()} - PNAS`,
         description: $('.banner-widget__content p').text(),
         image: 'https://www.pnas.org/favicon.ico',
         language: 'en-US',
         link,
         item: out,
-    });
-};
+    };
+}

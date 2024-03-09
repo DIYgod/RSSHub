@@ -1,6 +1,33 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/projects/:category?',
+    categories: ['other'],
+    example: '/instructables/projects/circuits',
+    parameters: { category: 'Category, empty by default, can be found in URL or see the table below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['instructables.com/projects'],
+        target: '/projects',
+    },
+    name: 'Projects',
+    maintainers: ['wolfg1969'],
+    handler,
+    url: 'instructables.com/projects',
+    description: `| All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
+  | --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
+  |     | circuits | workshop | craft | cooking | living | outside | teachers |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'all';
 
     const siteDomain = 'www.instructables.com';
@@ -39,7 +66,7 @@ export default async (ctx) => {
 
     const data = response.data;
 
-    ctx.set('data', {
+    return {
         title: 'Instructables Projects', // 项目的标题
         link, // 指向项目的链接
         description: 'Instructables Projects', // 描述项目
@@ -52,5 +79,5 @@ export default async (ctx) => {
             pubDate: new Date(item.document.publishDate).toUTCString(),
             category: item.document.primaryClassification,
         })),
-    });
-};
+    };
+}

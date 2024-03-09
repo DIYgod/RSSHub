@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import * as url from 'node:url';
 
 const host = 'https://www.douban.com/explore/column/';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/explore/column/:id',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const link = url.resolve(host, id);
     const response = await got.get(link);
@@ -48,9 +56,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `${title}-豆瓣发现`,
         link,
         item: out,
-    });
-};
+    };
+}

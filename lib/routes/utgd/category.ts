@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,7 +13,32 @@ const md = MarkdownIt({
     html: true,
 });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/utgd/method',
+    parameters: { category: '分类，可在对应分类页的 URL 中找到，默认为方法' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['utgd.net/category/s/:category', 'utgd.net/'],
+        target: '/:category',
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 方法   | 观点    |
+  | ------ | ------- |
+  | method | opinion |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'method';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
 
@@ -64,11 +90,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `UNTAG - ${data.category_name}`,
         link: currentUrl,
         item: items,
         image: data.category_image,
         description: data.category_description,
-    });
-};
+    };
+}

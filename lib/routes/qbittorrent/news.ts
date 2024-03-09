@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['program-update'],
+    example: '/qbittorrent/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['qbittorrent.org/news.php', 'qbittorrent.org/'],
+    },
+    name: 'News',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'qbittorrent.org/news.php',
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://www.qbittorrent.org';
 
     const response = await cache.tryGet(
@@ -46,15 +69,15 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: 'qBittorrent News',
         link: `${baseUrl}/news.php`,
         item,
-    });
+    };
 
     ctx.set('json', {
         title: 'qBittorrent News',
         link: `${baseUrl}/news.php`,
         item,
     });
-};
+}

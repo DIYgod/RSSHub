@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/zhengce/zuixin', '/zhengce/:category{.+}?'],
+    categories: ['government'],
+    example: '/gov/zhengce/zuixin',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.gov.cn/zhengce/zuixin.htm', 'www.gov.cn/'],
+    },
+    name: '最新政策',
+    maintainers: ['SettingDust', 'nczitzk'],
+    handler,
+    url: 'www.gov.cn/zhengce/zuixin.htm',
+};
+
+async function handler(ctx) {
     const { category = 'zuixin' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
@@ -85,7 +108,7 @@ export default async (ctx) => {
     const subtitle = $('meta[name="lanmu"]').prop('content');
     const author = $('div.header_logo a[aria-label]').prop('aria-label');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: author && subtitle ? `${author} - ${subtitle}` : $('title').text(),
         link: currentUrl,
@@ -96,5 +119,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle,
         author,
-    });
-};
+    };
+}

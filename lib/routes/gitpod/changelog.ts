@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { rootUrl } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/changelog',
+    categories: ['programming'],
+    example: '/gitpod/changelog',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gitpod.io/changelog', 'gitpod.io/'],
+    },
+    name: 'Changelog',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'gitpod.io/changelog',
+};
+
+async function handler() {
     const response = await got(rootUrl + '/changelog');
     const $ = load(response.data);
     const items = $('div[class^=changelog-entry]')
@@ -25,11 +48,11 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: rootUrl + '/changelog',
         description: $('meta[name="description"]').attr('content'),
         language: 'en-US',
         item: items,
-    });
-};
+    };
+}

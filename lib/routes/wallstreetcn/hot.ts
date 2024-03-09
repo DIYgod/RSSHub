@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hot/:period?',
+    categories: ['traditional-media'],
+    example: '/wallstreetcn/hot',
+    parameters: { period: '时期，可选 `day` 即 当日 或 `week` 即 当周，默认为当日' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['wallstreetcn.com/'],
+    },
+    name: '最热文章',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'wallstreetcn.com/',
+};
+
+async function handler(ctx) {
     const period = ctx.req.param('period') ?? 'day';
 
     const rootUrl = 'https://wallstreetcn.com';
@@ -47,11 +70,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '华尔街见闻 - 最热文章',
         link: rootUrl,
         item: items,
         itunes_author: '华尔街见闻',
         image: 'https://static-alpha-wscn.awtmt.com/wscn-static/qrcode.jpg',
-    });
-};
+    };
+}

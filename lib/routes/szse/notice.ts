@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import * as url from 'node:url';
 const host = 'http://www.szse.cn/';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/notice',
+    categories: ['finance'],
+    example: '/szse/notice',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['szse.cn/disclosure/notice/company/index.html', 'szse.cn/'],
+    },
+    name: '上市公告 - 可转换债券',
+    maintainers: ['Jeason0228', 'nczitzk'],
+    handler,
+    url: 'szse.cn/disclosure/notice/company/index.html',
+};
+
+async function handler() {
     const link = 'http://www.szse.cn/disclosure/notice/company/index.html';
     const response = await got.get(link, {
         Referer: host,
@@ -64,9 +87,9 @@ export default async (ctx) => {
             return single;
         })
     );
-    ctx.set('data', {
+    return {
         title: '深圳证券交易所——上市公告-可转换债券',
         link,
         item: out,
-    });
-};
+    };
+}

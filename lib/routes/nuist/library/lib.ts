@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,18 @@ import { parseDate } from '@/utils/parse-date';
 const baseTitle = '南京信息工程大学图书馆通知';
 const baseUrl = 'https://lib.nuist.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/lib',
+    radar: {
+        source: ['lib.nuist.edu.cn/', 'lib.nuist.edu.cn/index/tzgg.htm'],
+    },
+    name: 'Unknown',
+    maintainers: ['gylidian'],
+    handler,
+    url: 'lib.nuist.edu.cn/',
+};
+
+async function handler() {
     const link = baseUrl + '/index/tzgg.htm';
 
     const response = await got(link);
@@ -36,9 +48,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: baseTitle,
         link,
         item: items,
-    });
-};
+    };
+}

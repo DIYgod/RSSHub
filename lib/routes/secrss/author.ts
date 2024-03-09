@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/author/:author',
+    categories: ['programming'],
+    example: '/secrss/author/网络安全威胁和漏洞信息共享平台',
+    parameters: { author: 'N' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '作者',
+    maintainers: ['XinRoom', 'SunBK201'],
+    handler,
+};
+
+async function handler(ctx) {
     const api = 'https://www.secrss.com/api/articles/group?author=';
     const author = ctx.req.param('author');
     const host = 'https://www.secrss.com';
@@ -28,9 +47,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `安全内参-${author}`,
         link: 'https://www.secrss.com',
         item: items,
-    });
-};
+    };
+}

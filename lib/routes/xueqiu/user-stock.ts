@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user_stock/:id',
+    categories: ['finance'],
+    example: '/xueqiu/user_stock/1247347556',
+    parameters: { id: '用户 id, 可在用户主页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xueqiu.com/u/:id'],
+    },
+    name: '用户自选动态',
+    maintainers: ['hillerliao'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const res1 = await got({
@@ -34,7 +56,7 @@ export default async (ctx) => {
     });
     const screen_name = res3.data.user.screen_name;
 
-    ctx.set('data', {
+    return {
         title: `${screen_name} 的雪球自选动态`,
         link: `https://xueqiu.com/u/${id}`,
         description: `@${screen_name} 的雪球自选动态`,
@@ -44,5 +66,5 @@ export default async (ctx) => {
             pubDate: parseDate(item.created),
             link: `https://xueqiu.com/s/${item.symbol}`,
         })),
-    });
-};
+    };
+}

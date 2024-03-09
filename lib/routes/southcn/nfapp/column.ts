@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,32 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { parseArticle } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/nfapp/column/:column?',
+    categories: ['traditional-media'],
+    example: '/southcn/nfapp/column/38',
+    parameters: { column: '栏目或南方号 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '南方 +（按栏目 ID）',
+    maintainers: ['TimWu007'],
+    handler,
+    description: `:::tip
+  若此处输入的是栏目 ID（而非南方号 ID），则该接口会返回与输入栏目相关联栏目的文章。例如，输入栏目 ID \`38\`（广州），则返回的结果还会包含 ID 为 \`3547\`（市长报道集）的文章。
+  :::
+
+  1.  \`pc.nfapp.southcn.com\` 下的文章页面，可通过 url 查看，例：\`http://pc.nfapp.southcn.com/13707/7491109.html\` 的栏目 ID 为 \`13707\`。
+  2.  \`static.nfapp.southcn.com\` 下的文章页面，可查看网页源代码，搜索 \`columnid\`。
+  3.  [https://m.nfapp.southcn.com/column/all](https://m.nfapp.southcn.com/column/all) 列出了部分栏目，\`id\` 即为栏目 ID。`,
+};
+
+async function handler(ctx) {
     const columnId = ctx.req.param('column') ?? 38;
 
     const getColumnDetail = `https://api.nfapp.southcn.com/nanfang_if/getColumn?columnId=${columnId}`;
@@ -41,9 +67,9 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: columnName,
         link: columnLink,
         item: items,
-    });
-};
+    };
+}

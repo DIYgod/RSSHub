@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/portrait',
+    categories: ['traditional-media'],
+    example: '/eastday/portrait',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.eastday.com/'],
+    },
+    name: '原创',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'www.eastday.com/',
+};
+
+async function handler() {
     const rootUrl = 'https://apin.eastday.com';
     const currentUrl = `${rootUrl}/api/news/Portrait`;
 
@@ -40,9 +63,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '原创 - 东方网',
         link: 'https://www.eastday.com/eastday/shouye/07index/yc/index.html',
         item: items,
-    });
-};
+    };
+}

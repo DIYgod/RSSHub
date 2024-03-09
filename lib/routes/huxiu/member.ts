@@ -1,9 +1,20 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { rootUrl, apiMemberRootUrl, processItems, fetchData } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/author/:id/:type?', '/member/:id/:type?'],
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    description: `| TA 的文章 | TA 的 24 小时 |
+  | --------- | ------------- |
+  | article   | moment        |`,
+};
+
+async function handler(ctx) {
     const { id, type = 'article' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -21,8 +32,8 @@ export default async (ctx) => {
 
     const data = await fetchData(currentUrl);
 
-    ctx.set('data', {
+    return {
         item: items,
         ...data,
-    });
-};
+    };
+}

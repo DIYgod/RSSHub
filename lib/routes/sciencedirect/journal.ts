@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { decodeCFEmail } from './cf-email';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/journal/:id',
+    categories: ['journal'],
+    example: '/sciencedirect/journal/research-policy',
+    parameters: { id: 'Journal id, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sciencedirect.com/journal/:id', 'sciencedirect.com/'],
+    },
+    name: 'Journal',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://www.sciencedirect.com';
@@ -62,9 +84,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${response.data.match(/\\"displayName\\":\\"(.*?)\\",\\"/)[1]} - ScienceDirect`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

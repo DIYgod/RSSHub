@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,7 +13,32 @@ const md = MarkdownIt({
     html: true,
 });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/subscriptions',
+    categories: ['anime'],
+    example: '/iwara/subscriptions',
+    parameters: {},
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ecchi.iwara.tv/'],
+    },
+    name: 'User Subscriptions',
+    maintainers: ['FeCCC'],
+    handler,
+    url: 'ecchi.iwara.tv/',
+    description: `:::warning
+  This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
+  :::`,
+};
+
+async function handler() {
     if (!config.iwara || !config.iwara.username || !config.iwara.password) {
         throw new Error('Iwara subscription RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -140,9 +166,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `Iwara Subscription`,
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

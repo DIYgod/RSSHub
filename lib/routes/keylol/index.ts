@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -5,7 +6,14 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '*',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     let thePath = getSubPath(ctx).replace(/^\//, '');
 
     if (/^f\d+-\d+/.test(thePath)) {
@@ -70,7 +78,7 @@ export default async (ctx) => {
 
     const icon = $('link[rel="apple-touch-icon"]').prop('href');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
@@ -80,5 +88,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('meta[name="application-name"]').prop('content'),
         author: $('meta[name="author"]').prop('content'),
-    });
-};
+    };
+}

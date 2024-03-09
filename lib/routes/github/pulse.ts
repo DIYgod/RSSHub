@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,32 @@ import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/pulse/:user/:repo/:period?',
+    categories: ['programming'],
+    example: '/github/pulse/DIYgod/RSSHub',
+    parameters: {
+        user: 'User name',
+        repo: 'Repo name',
+        period: "Time frame, selected from a repository's Pulse/Insights page. Possible values are: `daily`, `halfweekly`, `weekly`, or `monthly`. Default: `weekly`. If your RSS client supports it, consider aligning the polling frequency of the feed to the period.",
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['github.com/:user/:repo/pulse', 'github.com/:user/:repo/pulse/:period'],
+    },
+    name: 'Repo Pulse',
+    maintainers: ['jameschensmith'],
+    handler,
+};
+
+async function handler(ctx) {
     const { user, repo, period } = ctx.req.param();
 
     const periods = ['daily', 'halfweekly', 'weekly', 'monthly'];
@@ -71,7 +97,7 @@ export default async (ctx) => {
             .toArray();
     }
 
-    ctx.set('data', {
+    return {
         title: `${user}/${repo} ${pulsePeriod} Pulse`,
         link,
         item: [
@@ -86,5 +112,5 @@ export default async (ctx) => {
                 pubDate: parseDate(periodTo),
             },
         ],
-    });
-};
+    };
+}

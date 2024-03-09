@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import apiKey from './api-key';
 import { handleDescription } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tv/:id/seasons/:seasonNumber/episodes/:lang?',
+    categories: ['multimedia'],
+    example: '/themoviedb/tv/70593/seasons/1/episodes/en-US',
+    parameters: { id: 'TV show ID', seasonNumber: 'Season number', lang: 'Language' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'TV Show Episodes',
+    maintainers: ['x2cf'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id, seasonNumber, lang } = ctx.req.param();
     const searchParams = {
         language: lang,
@@ -12,7 +31,7 @@ export default async (ctx) => {
     const { data: tvShowDetails } = await got(`https://api.themoviedb.org/3/tv/${id}`, { searchParams });
     const { data: seasonDetails } = await got(`https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}`, { searchParams });
 
-    ctx.set('data', {
+    return {
         title: `${tvShowDetails.name} ${seasonDetails.name} — TMDB`,
         description: seasonDetails.overview.trim(),
         image: `https://image.tmdb.org/t/p/original${seasonDetails.poster_path}`,
@@ -23,5 +42,5 @@ export default async (ctx) => {
             description: handleDescription(item),
             pubDate: item.air_date ? parseDate(item.air_date) : undefined,
         })),
-    });
-};
+    };
+}

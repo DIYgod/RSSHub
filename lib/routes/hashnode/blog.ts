@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,32 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseApiUrl = 'https://api.hashnode.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog/:username',
+    categories: ['blog'],
+    example: '/hashnode/blog/inklings',
+    parameters: { username: '博主名称，用户头像 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['hashnode.dev/'],
+    },
+    name: '用户博客',
+    maintainers: ['hnrainll'],
+    handler,
+    url: 'hashnode.dev/',
+    description: `:::tip
+  username 为博主用户名，而非\`xxx.hashnode.dev\`中\`xxx\`所代表的 blog 地址。
+  :::`,
+};
+
+async function handler(ctx) {
     const username = ctx.req.param('username');
     if (!username) {
         return;
@@ -47,7 +73,7 @@ export default async (ctx) => {
     }
 
     const list = publication.posts;
-    ctx.set('data', {
+    return {
         title: `Hashnode by ${username}`,
         link: userUrl,
         item: list
@@ -61,5 +87,5 @@ export default async (ctx) => {
                 link: `${userUrl}/${item.slug}`,
             }))
             .filter((item) => item !== ''),
-    });
-};
+    };
+}

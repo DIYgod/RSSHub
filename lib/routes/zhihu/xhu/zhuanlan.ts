@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import auth from './auth';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/xhu/zhuanlan/:id',
+    categories: ['social-media'],
+    example: '/zhihu/xhu/zhuanlan/githubdaily',
+    parameters: { id: '专栏 id, 可在专栏主页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['zhuanlan.zhihu.com/:id'],
+        target: '/zhuanlan/:id',
+    },
+    name: 'xhu- 专栏',
+    maintainers: ['JimenezLi'],
+    handler,
+};
+
+async function handler(ctx) {
     const xhuCookie = await auth.getCookie(ctx);
     const id = ctx.req.param('id');
     const link = `https://www.zhihu.com/column/${id}`;
@@ -28,7 +51,7 @@ export default async (ctx) => {
 
     const listRes = contentResponse.data.data;
 
-    ctx.set('data', {
+    return {
         title: `知乎专栏-${titleResponse.data.title}`,
         description: titleResponse.data.description,
         link,
@@ -87,5 +110,5 @@ export default async (ctx) => {
                 link,
             };
         }),
-    });
-};
+    };
+}

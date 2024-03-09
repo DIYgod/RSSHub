@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hot/:lang?',
+    categories: ['traditional-media'],
+    example: '/taiwannews/hot',
+    parameters: { lang: 'Language, `en` or `zh`, `en` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['taiwannews.com.tw/:lang/index'],
+        target: '/hot/:lang',
+    },
+    name: 'Hot News',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://www.taiwannews.com.tw';
     const { lang = 'en' } = ctx.req.param();
     const url = `${baseUrl}/${lang}/index`;
@@ -44,11 +67,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('.categories').eq(0).text()} - ${$('head title').text()}`,
         description: $('meta[name="description"]').attr('content'),
         link: url,
         item: items,
         language: lang,
-    });
-};
+    };
+}

@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zbb/:type',
+    categories: ['university'],
+    example: '/nju/zbb/cgxx',
+    parameters: { type: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '招标办公室',
+    maintainers: ['ret-1'],
+    handler,
+    description: `| 采购信息 | 成交公示 | 政府采购意向公开 |
+  | -------- | -------- | ---------------- |
+  | cgxx     | cjgs     | zfcgyxgk         |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     if (type === 'zfcgyxgk') {
         const url = `https://zbb.nju.edu.cn/zfcgyxgk/index.chtml`;
@@ -18,7 +40,7 @@ export default async (ctx) => {
         const $ = load(data);
         const list = $('dd[cid]');
 
-        ctx.set('data', {
+        return {
             title: '政府采购意向公开',
             link: url,
             item: list
@@ -32,7 +54,7 @@ export default async (ctx) => {
                     };
                 })
                 .get(),
-        });
+        };
     } else {
         const title_dict = {
             cgxx: '采购信息',
@@ -70,10 +92,10 @@ export default async (ctx) => {
             })
         );
 
-        ctx.set('data', {
+        return {
             title: title_dict[type],
             link: `https://zbb.nju.edu.cn/${type}hw/index.chtml`,
             item: [...items[0], ...items[1], ...items[2]],
-        });
+        };
     }
-};
+}

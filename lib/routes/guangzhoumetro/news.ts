@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['travel'],
+    example: '/guangzhoumetro/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻',
+    maintainers: ['HankChow'],
+    handler,
+};
+
+async function handler() {
     const newsUrl = 'https://www.gzmtr.com/ygwm/xwzx/gsxw/';
     const response = await got(newsUrl);
     const data = response.data;
@@ -23,7 +42,7 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: '广州地铁新闻',
         url: newsUrl,
         description: '广州地铁新闻',
@@ -33,5 +52,5 @@ export default async (ctx) => {
             link: item.link,
             author: item.author,
         })),
-    });
-};
+    };
+}

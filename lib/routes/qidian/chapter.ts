@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/chapter/:id',
+    categories: ['reading'],
+    example: '/qidian/chapter/1010400217',
+    parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['book.qidian.com/info/:id'],
+    },
+    name: '章节',
+    maintainers: ['fuzy112'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const response = await got(`https://m.qidian.com/book/${id}.html`);
@@ -23,11 +45,11 @@ export default async (ctx) => {
             link: `https://vipreader.qidian.com/chapter/${id}/${c.id}`,
         }));
 
-    ctx.set('data', {
+    return {
         title: `起点 ${name}`,
         link: `https://book.qidian.com/info/${id}`,
         description: $('#bookSummary content').text(),
         image: coverUrl,
         item: chapterItem,
-    });
-};
+    };
+}

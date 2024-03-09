@@ -1,10 +1,34 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const url = 'https://www.ndss-symposium.org';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ndss',
+    categories: ['journal'],
+    example: '/ndss-symposium/ndss',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ndss-symposium.org/'],
+    },
+    name: 'Accepted papers',
+    maintainers: ['ZeddYu'],
+    handler,
+    url: 'ndss-symposium.org/',
+    description: `Return results from 2020`,
+};
+
+async function handler() {
     // use wordpress api to get data
     const { data } = await got(`${url}/wp-json/wp/v2/pages?slug=accepted-papers`);
 
@@ -71,11 +95,11 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: 'NDSS',
         link: url,
         description: 'The Network and Distributed System Security (NDSS) Symposium Accpeted Papers',
         allowEmpty: true,
         item: items.flat(),
-    });
-};
+    };
+}

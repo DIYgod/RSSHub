@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/roll',
+    categories: ['finance'],
+    example: '/caijing/roll',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['roll.caijing.com.cn/index1.html', 'roll.caijing.com.cn/'],
+    },
+    name: '滚动新闻',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'roll.caijing.com.cn/index1.html',
+};
+
+async function handler() {
     const baseUrl = 'https://roll.caijing.com.cn';
     const response = await got(`${baseUrl}/ajax_lists.php`, {
         searchParams: {
@@ -38,10 +61,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '滚动新闻-财经网',
         image: 'https://www.caijing.com.cn/favicon.ico',
         link: response.url,
         item: items,
-    });
-};
+    };
+}

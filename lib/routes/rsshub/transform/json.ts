@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
@@ -14,7 +15,55 @@ function jsonGet(obj, attr) {
     return obj;
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/transform/json/:url/:routeParams',
+    categories: ['other'],
+    example: '/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body',
+    parameters: { url: '`encodeURIComponent`ed URL address', routeParams: 'Transformation rules, requires URL encode' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Transformation - JSON',
+    maintainers: ['ttttmr'],
+    handler,
+    description: `Specify options (in the format of query string) in parameter \`routeParams\` parameter to extract data from JSON.
+
+| Key           | Meaning                                  | Accepted Values | Default                                    |
+| ------------- | ---------------------------------------- | --------------- | ------------------------------------------ |
+| \`title\`       | The title of the RSS                     | \`string\`        | Extracted from home page of current domain |
+| \`item\`        | The JSON Path as \`item\` element          | \`string\`        | Entire JSON response                       |
+| \`itemTitle\`   | The JSON Path as \`title\` in \`item\`       | \`string\`        | None                                       |
+| \`itemLink\`    | The JSON Path as \`link\` in \`item\`        | \`string\`        | None                                       |
+| \`itemDesc\`    | The JSON Path as \`description\` in \`item\` | \`string\`        | None                                       |
+| \`itemPubDate\` | The JSON Path as \`pubDate\` in \`item\`     | \`string\`        | None                                       |
+
+:::tip
+JSON Path only supports format like \`a.b.c\`. if you need to access arrays, like \`a[0].b\`, you can write it as \`a.0.b\`.
+:::
+
+  Parameters parsing in the above example:
+
+  | Parameter     | Value                                                                    |
+  | ------------- | ------------------------------------------------------------------------ |
+  | \`url\`         | \`https://api.github.com/repos/ginuerzh/gost/releases\`                    |
+  | \`routeParams\` | \`title=Gost releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body\` |
+
+  Parsing of \`routeParams\` parameter:
+
+  | Parameter   | Value           |
+  | ----------- | --------------- |
+  | \`title\`     | \`Gost releases\` |
+  | \`itemTitle\` | \`tag_name\`      |
+  | \`itemLink\`  | \`html_url\`      |
+  | \`itemDesc\`  | \`body\`          |`,
+};
+
+async function handler(ctx) {
     if (!config.feature.allow_user_supply_unsafe_domain) {
         throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
@@ -49,10 +98,10 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: rssTitle,
         link: url,
         description: `Proxy ${url}`,
         item: items,
-    });
-};
+    };
+}

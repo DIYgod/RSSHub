@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -10,7 +11,21 @@ const alias = new Map([
     ['policy', 'zcwj'], // 政策文件
 ]);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/jwc/:type?', '/jwb/:type?'],
+    radar: {
+        source: ['www.shu.edu.cn/:type'],
+        target: '/:type',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    description: `| 通知通告 | 新闻 | 政策文件 |
+  | -------- | ---- | -------- |
+  | notice   | news | policy   |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'notice';
     const link = `https://jwb.shu.edu.cn/index/${alias.get(type) || type}.htm`;
     const respond = await got.get(link);
@@ -38,9 +53,9 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title,
         link,
         item: all,
-    });
-};
+    };
+}

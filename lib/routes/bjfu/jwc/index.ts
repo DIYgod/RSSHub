@@ -1,9 +1,34 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import util from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:type',
+    categories: ['university'],
+    example: '/bjfu/jwc/jwkx',
+    parameters: { type: '通知类别' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['jwc.bjfu.edu.cn/:type/index.html'],
+    },
+    name: '教务处通知公告',
+    maintainers: ['markmingjie'],
+    handler,
+    description: `| 教务快讯 | 考试信息 | 课程信息 | 教改动态 | 图片新闻 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | jwkx     | ksxx     | kcxx     | jgdt     | tpxw     |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     let title, path;
     switch (type) {
@@ -42,10 +67,10 @@ export default async (ctx) => {
 
     const result = await util.ProcessFeed(base, list, cache); // 感谢@hoilc指导
 
-    ctx.set('data', {
+    return {
         title: '北林教务处 - ' + title,
         link: 'http://jwc.bjfu.edu.cn/' + path,
         description: '北京林业大学教务处 - ' + title,
         item: result,
-    });
-};
+    };
+}

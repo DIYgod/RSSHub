@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,18 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/eshop/jp',
+    radar: {
+        source: ['nintendo.co.jp/software/switch/index.html', 'nintendo.co.jp/'],
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'nintendo.co.jp/software/switch/index.html',
+};
+
+async function handler(ctx) {
     const response = await got('https://search.nintendo.jp/nintendo_soft/search.json', {
         searchParams: {
             opt_sshow: 1,
@@ -21,7 +33,7 @@ export default async (ctx) => {
     });
     const data = response.data.result.items;
 
-    ctx.set('data', {
+    return {
         title: 'Nintendo eShop（日服）新游戏',
         link: 'https://www.nintendo.co.jp/software/switch/index.html',
         description: 'Nintendo eShop（日服）新上架的游戏',
@@ -33,5 +45,5 @@ export default async (ctx) => {
             link: `https://ec.nintendo.com/JP/ja/titles/${item.id}`,
             pubDate: parseDate(item.pdate),
         })),
-    });
-};
+    };
+}

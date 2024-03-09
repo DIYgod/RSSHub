@@ -1,7 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/system-update',
+    categories: ['game'],
+    example: '/nintendo/system-update',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nintendo.co.jp/support/switch/system_update/index.html', 'nintendo.co.jp/'],
+    },
+    name: 'Switch System Update（Japan）',
+    maintainers: ['hoilc'],
+    handler,
+    url: 'nintendo.co.jp/support/switch/system_update/index.html',
+};
+
+async function handler() {
     const url = 'https://www.nintendo.co.jp/support/switch/system_update/index.html';
 
     const response = await got(url);
@@ -9,7 +32,7 @@ export default async (ctx) => {
 
     const list = $('.c-heading-lv3').toArray().slice(1, -2);
 
-    ctx.set('data', {
+    return {
         title: 'Nintendo Switch 本体更新情報',
         link: url,
         item: list.map((update) => {
@@ -34,5 +57,5 @@ export default async (ctx) => {
                 pubDate: new Date(Number.parseInt(matched_date[1]), Number.parseInt(matched_date[2]) - 1, Number.parseInt(matched_date[3])),
             };
         }),
-    });
-};
+    };
+}

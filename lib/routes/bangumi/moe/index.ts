@@ -1,9 +1,22 @@
+import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/moe/*',
+    radar: {
+        source: ['bangumi.moe/'],
+        target: '/moe',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'bangumi.moe/',
+};
+
+async function handler(ctx) {
     const isLatest = getSubPath(ctx) === '/moe';
     const rootUrl = 'https://bangumi.moe';
 
@@ -85,10 +98,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '萌番组 Bangumi Moe',
         link: isLatest || items.length === 0 ? rootUrl : `${rootUrl}/search/${tag_id.join('+')}`,
         item: items,
         allowEmpty: true,
-    });
-};
+    };
+}

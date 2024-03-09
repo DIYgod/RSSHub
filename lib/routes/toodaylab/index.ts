@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:params{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { params = 'posts' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -85,7 +93,7 @@ export default async (ctx) => {
     const title = $('title').text().split(/\s-/)[0];
     const icon = $('link[rel="apple-touch-icon"]').last().prop('href');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: isHot ? title.replace(/[^|]+/, '最热 ') : title,
         link: currentUrl,
@@ -96,5 +104,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author: $('h3.logo a img').prop('alt'),
-    });
-};
+    };
+}

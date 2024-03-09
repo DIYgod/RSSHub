@@ -1,7 +1,34 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/whpj/:format?',
+    categories: ['other'],
+    example: '/boc/whpj/zs?filter_title=%E8%8B%B1%E9%95%91',
+    parameters: { format: '输出的标题格式，默认为标题 + 所有价格。短格式仅包含货币名称。' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['boc.cn/sourcedb/whpj', 'boc.cn/'],
+        target: '/whpj',
+    },
+    name: '外汇牌价',
+    maintainers: ['LogicJake', 'HenryQW'],
+    handler,
+    url: 'boc.cn/sourcedb/whpj',
+    description: `| 短格式 | 中行折算价 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
+  | ------ | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
+  | short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |`,
+};
+
+async function handler(ctx) {
     const link = 'https://www.boc.cn/sourcedb/whpj/';
     const response = await got(link);
     const $ = load(response.data);
@@ -92,9 +119,9 @@ export default async (ctx) => {
             return info;
         });
 
-    ctx.set('data', {
+    return {
         title: '中国银行外汇牌价',
         link,
         item: out,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,17 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:bookName/book-series/:bookId',
+    radar: {
+        source: ['routledge.com/:bookName/book-series/:bookId'],
+    },
+    name: 'Unknown',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { bookName, bookId } = ctx.req.param();
     const baseUrl = 'https://www.routledge.com';
     const pageUrl = `${baseUrl}/${bookName}/book-series/${bookId}`;
@@ -73,10 +84,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         link: pageUrl,
         item: items,
-    });
-};
+    };
+}

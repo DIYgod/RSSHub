@@ -1,7 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/recent-actions/:minrating?',
+    categories: ['programming'],
+    example: '/codeforces/recent-actions',
+    parameters: { minrating: 'The minimum blog/comment rating required. Default: 1' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['codeforces.com/recent-actions'],
+        target: '/recent-actions',
+    },
+    name: 'Recent actions',
+    maintainers: [],
+    handler,
+    url: 'codeforces.com/recent-actions',
+};
+
+async function handler(ctx) {
     const minRating = ctx.req.param('minrating') || 1;
 
     const rsp = await got.get('https://codeforces.com/api/recentActions?maxCount=100').json();
@@ -32,7 +56,7 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: 'Codeforces - Recent actions',
         link: 'https://codeforces.com/recent-actions',
         item: actions
@@ -43,5 +67,5 @@ export default async (ctx) => {
                 pubDate: a.pubDate,
                 link: a.link,
             })),
-    });
-};
+    };
+}

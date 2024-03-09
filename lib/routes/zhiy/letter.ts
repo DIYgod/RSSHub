@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { baseUrl, fetchUserDate } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/letters/:author',
+    categories: ['new-media'],
+    example: '/zhiy/letters/messy',
+    parameters: { author: '作者 ID，可在URL中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['zhiy.cc/:author'],
+    },
+    name: 'Newsletter',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const author = ctx.req.param('author');
 
     const userData = await fetchUserDate(author);
@@ -24,11 +46,11 @@ export default async (ctx) => {
         link: `${baseUrl}/letter/${item.id}`,
     }));
 
-    ctx.set('data', {
+    return {
         title: authorName,
         link: `${baseUrl}/${author}`,
         description: authorSignature,
         image: authorAvatarUrl,
         item: items,
-    });
-};
+    };
+}

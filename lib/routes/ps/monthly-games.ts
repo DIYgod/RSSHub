@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,29 @@ import { load } from 'cheerio';
 import * as path from 'node:path';
 import { art } from '@/utils/render';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/monthly-games',
+    categories: ['game'],
+    example: '/ps/monthly-games',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.playstation.com/en-sg/ps-plus/whats-new'],
+    },
+    name: 'PlayStation Monthly Games',
+    maintainers: ['justjustCC'],
+    handler,
+    url: 'www.playstation.com/en-sg/ps-plus/whats-new',
+};
+
+async function handler() {
     const baseUrl = 'https://www.playstation.com/en-sg/ps-plus/whats-new/';
 
     const { data: response } = await got(baseUrl);
@@ -26,9 +49,9 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: 'PlayStation Plus Monthly Games',
         link: baseUrl,
         item: list,
-    });
-};
+    };
+}
