@@ -13,7 +13,7 @@ export default function Route({
   data: Route;
   children?: JSX.Element | JSX.Element[];
 }): JSX.Element {
-  const demoUrl = 'https://rsshub.app' + data.example;
+  const demoUrl = data.example ? ('https://rsshub.app' + data.example) : null;
   const paramMatch = data.path.match?.(/(?<=:).*?(?=\/|$)/g);
 
     const renderMarkdown = (item, inline = true) => {
@@ -26,16 +26,16 @@ export default function Route({
     return (
         <div className='routeBlock' id={namespace + JSON.stringify(data.path)}>
             <p className="badges">
-                {data.features.antiCrawler && (
+                {data.features?.antiCrawler && (
                     <Link to="/faq">
                         <Badge type="caution"><Translate id="badge.anticrawler" /></Badge>
                     </Link>
                 )}
-                {data.features.supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
-                {data.features.supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
-                {data.features.supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
-                {data.features.requirePuppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
-                {data.features.requireConfig && (
+                {data.features?.supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
+                {data.features?.supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
+                {data.features?.supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
+                {data.features?.requirePuppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
+                {data.features?.requireConfig && (
                     <Link to="/install/config#route-specific-configurations">
                         <Badge type="warning"><Translate id="badge.configRequired" /></Badge>
                     </Link>
@@ -48,19 +48,21 @@ export default function Route({
             </p>
             <p className="author">
                 <Translate id="route.author" />
-                {data.maintainers.map((uid) => (
+                {data.maintainers?.map((uid) => (
                     <Link to={`https://github.com/${uid}`} key={uid}>
                         @{uid}{' '}
                     </Link>
                 ))}
             </p>
-            <p className="example">
+            {demoUrl && (
+                <p className="example">
                 <span><Translate id="route.example" /></span>
                 <Link to={demoUrl}>
                     {demoUrl}
                 </Link>
                 <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${encodeURIComponent(demoUrl)}&cacheSeconds=7200`} />
             </p>
+            )}
             <p className="path">
                 <Translate id="route.path" /><code>{data.path}</code>
             </p>
@@ -76,7 +78,7 @@ export default function Route({
                                     '*': <Translate id="route.parameter.zeroOrMore" />,
                                     '+': <Translate id="route.parameter.oneOrMore" />,
                                 }[item[item.length - 1]] || <Translate id="route.parameter.required" /> }
-                                <Translate id="route.dash" /><span dangerouslySetInnerHTML={{ __html: renderMarkdown(data.parameters[item.replace(/:|\?|\+|\*/g, '')] || '') }}></span>
+                                <Translate id="route.dash" /><span dangerouslySetInnerHTML={{ __html: renderMarkdown(data.parameters?.[item.replace(/:|\?|\+|\*/g, '')] || '') }}></span>
                             </li>
                         ))}
                     </ul>
