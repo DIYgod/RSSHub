@@ -123,6 +123,8 @@ for (const category in docs) {
 }
 
 fs.writeFileSync(path.join(__dirname, '../../assets/build/docs.json'), JSON.stringify(docs, null, 2));
-for (const category in md) {
-    fs.writeFileSync(path.join(__dirname, `../../website/docs/routes/${category}.mdx`), md[category]);
+if (fs.existsSync(path.join(__dirname, '../../website'))) {
+    for (const category in md) {
+        fs.writeFileSync(path.join(__dirname, `../../website/docs/routes/${category}.mdx`), md[category]);
+    }
 }
