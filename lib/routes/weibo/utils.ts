@@ -86,7 +86,7 @@ const weiboUtils = {
         htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/"https:\/\/weibo\.cn\/sinaurl.*?[&?]u=(http.*?)"/g, (match, p1) => `"${decodeURIComponent(p1)}"`);
 
         // 处理图片的链接
-        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a\s+href="https?:\/\/.+\.(jpg|png|gif)"/g, (match) => `${match} data-rsshub-image="href"`);
+        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a\s+href="https?:\/\/[^"]+\.(jpg|png|gif)"/g, (match) => `${match} data-rsshub-image="href"`);
 
         let html = htmlNewLineUnreplaced.replaceAll('\n', '<br>');
 
