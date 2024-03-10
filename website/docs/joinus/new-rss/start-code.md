@@ -2,7 +2,107 @@
 sidebar_position: 3
 ---
 
-# Create Your Own RSSHub Route
+# Create Route
+
+## Creating Namespace
+
+The first step to making a new RSS route is to create a namespace. In principle, the namespace should be **the same** as the secondary domain of the main website where you are making the RSS feed. For example, if you are making an RSS feed for [https://github.com/DIYgod/RSSHub/issues](https://github.com/DIYgod/RSSHub/issues), the secondary domain is `github`. Therefore, you should create a folder named `github` under `lib/routes` as the namespace for your RSS route.
+
+:::tip
+
+When creating a namespace, avoid creating multiple variations for the same namespace. For example, if you are making RSS feeds for `yahoo.co.jp` and `yahoo.com`, you should use a single namespace `yahoo` rather than creating multiple namespaces like `yahoo-jp`, `yahoojp`, `yahoo.jp`, `jp.yahoo`, `yahoocojp` and so on.
+
+:::
+
+Once you have created a namespace for the RSS route, the next step is to create the file `namespace.ts` to define the namespace.
+
+The file should return an object that conforms to the Namespace type through a namespace. The definition of Namespace is at [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L49)
+
+- name: The human-readable name of the namespace, which will be used as the title of the document
+- url: The website URL without protocol that corresponds
+- description: Optional, hints and additional explanations for users using this namespace, it will be inserted into the document
+- zh, zh-TW, ja: optional, support for languages other than English, it will be used to generate multilingual documents
+
+Here is a complete example:
+
+```ts
+import type { Namespace } from '@/types';
+
+export const namespace: Namespace = {
+    name: 'GitHub',
+    url: 'github.com',
+    description: `
+:::tip
+GitHub provides some official RSS feeds:
+
+-   Repo releases: \`https://github.com/:owner/:repo/releases.atom\`
+-   Repo commits: \`https://github.com/:owner/:repo/commits.atom\`
+-   User activities: \`https://github.com/:user.atom\`
+-   Private feed: \`https://github.com/:user.private.atom?token=:secret\` (You can find **Subscribe to your news feed** in [dashboard](https://github.com) page after login)
+-   Wiki history: \`https://github.com/:owner/:repo/wiki.atom\`
+:::`,
+
+    zh: {
+        name: '给他哈不',
+    },
+};
+```
+
+## Creating Route
+
+Once you have created a namespace for the route, the next step is to create a route file to register the route.
+
+For example, if you are making an RSS feed for [GitHub Repo Issues]((/routes/programming#github-yong-hu-cang-ku)), and assume that you want users to enter the GitHub username and repo name, if they do not enter the repo name, they will return to RSSHub. You can register your new RSS route in /lib/routes/github/issue.ts, the file needs to return an object that conforms to the Route type through route. The definition of Route is at [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L64)
+
+- path: The route path, using [Hono routing](https://hono.dev/api/routing) syntax
+- name: The human-readable name of the route, which will be used as the title of the document
+- url: The website URL without protocol that corresponds
+- maintainers: The GitHub handle of the people responsible for maintaining this route
+- example: An example URL of the route
+- parameters: The description of the route parameters
+- description: Optional, hints and additional explanations for users using this route, it will be inserted into the document
+- categories: The classification of the route, which will be written into the corresponding classification document
+- features: Some features of the route, such as what configuration items it depends on, whether it is strict anti-crawl, whether it supports a certain function and so on
+- radar: Can help users subscribe to your new RSS route when using [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) or other software compatible with its format, we will introduce it more in the following sections
+- handler: The handler function of the route, we will introduce it more in the following sections
+
+Here is a complete example:
+
+```ts
+import { Route } from '@/types';
+
+export const route: Route = {
+    path: '/issue/:user/:repo/:state?/:labels?',
+    categories: ['programming'],
+    example: '/github/issue/vuejs/core/all/wontfix',
+    parameters: { user: 'GitHub username', repo: 'GitHub repo name', state: 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', labels: 'a list of comma separated label names' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['github.com/:user/:repo/issues', 'github.com/:user/:repo/issues/:id', 'github.com/:user/:repo'],
+        target: '/issue/:user/:repo',
+    },
+    name: 'Repo Issues',
+    maintainers: ['HenryQW', 'AndreyMZ'],
+    handler,
+};
+```
+
+In the above example, `issue` is an exact match, `:user` is a required parameter, `:repo?` is an optional parameter. `?` after `:repo` indicates that the parameter is optional
+
+## Writing Route Handler Function
+
+The handler function will be passed a parameter ctx. By the end of the function, it needs to return an object that contains the information required for RSS.
+
+You can see the APIs available for ctx to use in the [Hono context documentation]((https://hono.dev/api/context))
+
+The type of the return value is defined here: [/lib/types.ts#L36](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L36)
 
 As mentioned earlier, we will create an RSS feed for [GitHub Repo Issues](/routes/programming#github-repo-issues) as an example. We will show all four data collection methods mentioned:
 
@@ -10,6 +110,15 @@ As mentioned earlier, we will create an RSS feed for [GitHub Repo Issues](/route
 2.  [Via HTML web page using got](#via-html-web-page-using-got)
 3.  [Using the Common Configured Route](#using-the-common-configured-route)
 4.  [Using puppeteer](#using-puppeteer)
+
+:::warning
+
+The following example code is based on an old standard, the differences are:
+
+- Previously, the handler function would be returned as a whole, now it is only returned as a part of the route object.
+- Previously, the handler function would save the RSS information in ctx.set('data') without a return value, now the RSS information needs to be returned as the return value of the handler function.
+
+:::
 
 ## Via API
 

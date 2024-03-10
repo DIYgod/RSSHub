@@ -4,6 +4,12 @@ sidebar_position: 3
 
 # New RSSHub Radar Rules
 
+:::warning
+
+The following document is the old version standard, please refer [/lib/types.ts#L84](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L84) to the new version standard
+
+:::
+
 If you want to see the results, we suggest you install the browser extension. You can download it for your browser on the [Join Us](/joinus/quick-start#submit-new-rsshub-radar-rules-before-you-start) page.
 
 ## Code the rule
@@ -196,10 +202,6 @@ Both the above examples will return the same RSSHub subscription address as the 
 
 -   Use `'.'` subdomain allows RSSBud to support common mobile domains such as `m` / `mobile`
 -   Use `document` in `target` does not apply to RSSBud: RSSBud is not a browser extension, it only fetches and analyzes the URL of a website, it cannot run JavaScript
-
-### Update the Documentation
-
-As mentioned earlier in [Other components](/joinus/new-rss/add-docs#documentation-examples-other-components), adding `radar="1"` in the RSSHub docs will show a `Support Radar` badge.
 
 ## Debugging Radar Rules
 

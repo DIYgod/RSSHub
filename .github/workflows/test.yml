@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20, 21 ]
+        node-version: [ 20, 21 ]
     name: Vitest on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
@@ -59,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20, 21 ]
+        node-version: [ 20, 21 ]
         chromium:
           - name: bundled Chromium
             dependency: ''
@@ -108,7 +108,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20, 21 ]
+        node-version: [ 20, 21 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4

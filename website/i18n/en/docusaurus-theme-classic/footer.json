@@ -47,10 +47,6 @@
     "message": "RSSHub Radar - Discover and subscribe to RSS quickly",
     "description": "The label of footer link with label=RSSHub Radar - Discover and subscribe to RSS quickly linking to https://github.com/DIYgod/RSSHub-Radar"
   },
-  "link.item.label.xLog - Open source creation community written on the blockchain": {
-    "message": "xLog - Open source creation community written on the blockchain",
-    "description": "The label of footer link with label=xLog - Open source creation community written on the blockchain linking to https://xlog.app"
-  },
   "copyright": {
     "message": "Copyright © 2023 RSSHub.",
     "description": "The footer copyright"
