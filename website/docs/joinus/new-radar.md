@@ -203,10 +203,6 @@ Both the above examples will return the same RSSHub subscription address as the 
 -   Use `'.'` subdomain allows RSSBud to support common mobile domains such as `m` / `mobile`
 -   Use `document` in `target` does not apply to RSSBud: RSSBud is not a browser extension, it only fetches and analyzes the URL of a website, it cannot run JavaScript
 
-### Update the Documentation
-
-As mentioned earlier in [Other components](/joinus/new-rss/add-docs#documentation-examples-other-components), adding `radar="1"` in the RSSHub docs will show a `Support Radar` badge.
-
 ## Debugging Radar Rules
 
 You can debug your radar rules in the RSSHub Radar extension settings of your browser. First, open the settings and switch to the "List of rules" tab. Then scroll down to the bottom of the page and you will see a text field. Here, you can replace the old rules with your new rules for debugging.

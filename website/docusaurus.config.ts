@@ -9,7 +9,7 @@ import type { DocSearchOptions } from 'meilisearch-docsearch';
 
 const config: Config = {
     title: 'RSSHub',
-    tagline: '🍰 Everything is RSSible',
+    tagline: '🧡 Everything is RSSible',
     favicon: 'img/logo.png',
 
     // Set the production url of your site here
@@ -123,7 +123,7 @@ const config: Config = {
     themeConfig: {
         // Replace with your project's social card
         image: 'img/logo.png',
-        metadata: [{ name: 'description', content: '🍰 Everything is RSSible' }],
+        metadata: [{ name: 'description', content: '🧡 Everything is RSSible' }],
         navbar: {
             title: 'RSSHub',
             logo: {

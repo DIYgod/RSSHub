@@ -5,7 +5,7 @@
 </p>
 <h1 align="center" class="logo-text">RSSHub</h1>
 
-> 🍰 Everything is RSSible
+> 🧡 Everything is RSSible
 
 [![](https://img.shields.io/badge/dynamic/json?url=https://rsshub-analytics.diygod.workers.dev/&query=requests&color=F38020&label=requests&logo=cloudflare&style=flat-square&suffix=/month)](https://rsshub.app)
 [![docker publish](https://img.shields.io/docker/pulls/diygod/rsshub?label=docker%20pulls&logo=docker&style=flat-square)](https://hub.docker.com/r/diygod/rsshub)

@@ -199,10 +199,6 @@ export default {
 -   使用 `'.'` 子域名可以使 RSSBud 支持常见的移动端子域名，例如 `m`/`mobile`。
 -   在 `target` 中使用 `document` 的规则并不适用于 RSSBud：RSSBud 不是浏览器扩展程序，它只能获取和分析网站的 URL，不能运行 JavaScript。
 
-### 补充文档
-
-[如前所述](/zh/joinus/new-rss/add-docs#其他组件)，在 RSSHub 文档添加 radar="1" 将显示“支持 Radar”的徽章。
-
 ## 调试 Radar 规则
 
 你可以在浏览器中的 RSSHub Radar 扩展设置中调试你的 radar 规则。首先，打开设置并切换到 “规则列表” 选项页。然后滚动到页面底部，您会看到一个文本框。在这里，您可以使用您的新规则替换旧规则以进行调试。
