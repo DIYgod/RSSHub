@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.106.1
     version: 7.106.1
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.53
-    version: 2.0.53
+    specifier: 2.0.54
+    version: 2.0.54
   '@types/node':
     specifier: 20.11.25
     version: 20.11.25
@@ -2411,8 +2411,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.53:
-    resolution: {integrity: sha512-HZa8ntKPI3wPc9ehDlD6gg4qGidlaFCQxm5CWSj8iMKn0mrLyOy+TzYBtKx1656MUzlBC3hxBMe3tkGjAlxg0Q==}
+  /@tonyrl/rand-user-agent@2.0.54:
+    resolution: {integrity: sha512-nylU2geUVz7jsynr0PqaUtiHeyO6DsrT1S+6Y76b00tFjn5j4QTsdcXuLIC0moynMtQkJg8FPkjhSsbPz5OVag==}
     engines: {node: '>=14.16'}
     dev: false
 
