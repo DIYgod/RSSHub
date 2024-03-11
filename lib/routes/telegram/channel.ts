@@ -130,8 +130,8 @@ async function handler(ctx) {
     if (routeParams && routeParams.search(/(^|&)(show(LinkPreview|ViaBot|ReplyTo|FwdFrom(Author)?|InlineButtons|MediaTag(InTitle|AsEmoji))|include(Fwd|Reply|(Service|Unsupported)Msg)|searchQuery)=/) !== -1) {
         routeParams = querystring.parse(ctx.req.param('routeParams'));
         showLinkPreview = !!fallback(undefined, queryToBoolean(routeParams.showLinkPreview), showLinkPreview);
-        showViaBot = !!fallback(undefined, queryToBoolean(routeParams.showReplyTo), showViaBot);
-        showReplyTo = !!fallback(undefined, queryToBoolean(routeParams.showViaBot), showReplyTo);
+        showViaBot = !!fallback(undefined, queryToBoolean(routeParams.showViaBot), showViaBot);
+        showReplyTo = !!fallback(undefined, queryToBoolean(routeParams.showReplyTo), showReplyTo);
         showFwdFrom = !!fallback(undefined, queryToBoolean(routeParams.showFwdFrom), showFwdFrom);
         showFwdFromAuthor = !!fallback(undefined, queryToBoolean(routeParams.showFwdFromAuthor), showFwdFromAuthor);
         showInlineButtons = !!fallback(undefined, queryToBoolean(routeParams.showInlineButtons), showInlineButtons);
