@@ -5444,7 +5444,12 @@
           "loginUid": "用于登入的用户id,需要配置对应的 Cookie 值"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "BILIBILI_COOKIE_*",
+              "description": "BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n2.  打开控制台，切换到 Network 面板，刷新\n3.  点击 dynamic_new 请求，找到 Cookie\n4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -5474,7 +5479,12 @@
           "uid": "用户 id"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "BILIBILI_COOKIE_*",
+              "description": "BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n    1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n    2.  打开控制台，切换到 Network 面板，刷新\n    3.  点击 dynamic_new 请求，找到 Cookie\n    4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -5499,7 +5509,12 @@
           "routeParams": "额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "BILIBILI_COOKIE_*",
+              "description": "BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n    1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n    2.  打开控制台，切换到 Network 面板，刷新\n    3.  点击 dynamic_new 请求，找到 Cookie\n    4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -5525,7 +5540,12 @@
           "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "BILIBILI_COOKIE_*",
+              "description": "BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n    1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n    2.  打开控制台，切换到 Network 面板，刷新\n    3.  点击 dynamic_new 请求，找到 Cookie\n    4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -5550,7 +5570,12 @@
           "loginUid": "用于登入的用户id,需要配置对应的 Cookie 值"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "BILIBILI_COOKIE_*",
+              "description": "BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n    1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n    2.  打开控制台，切换到 Network 面板，刷新\n    3.  点击 dynamic_new 请求，找到 Cookie\n    4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -5785,7 +5810,12 @@
           "limits": "抓取最近更新前多少本漫画，默认为10"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "BILIBILI_COOKIE_*",
+              "description": "BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n    1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n    2.  打开控制台，切换到 Network 面板，刷新\n    3.  点击 dynamic_new 请求，找到 Cookie\n    4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -6194,7 +6224,12 @@
           "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "BILIBILI_COOKIE_*",
+              "description": "BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n    1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n    2.  打开控制台，切换到 Network 面板，刷新\n    3.  点击 dynamic_new 请求，找到 Cookie\n    4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -10084,7 +10119,12 @@
           "modelId": "N"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "CIVITAI_COOKIE",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -13472,7 +13512,12 @@
           "channelId": "Channel ID"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "DISCORD_AUTHORIZATION",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -13508,7 +13553,12 @@
           "fulltext": "Fetch the content if the notification points to a post. This is disabled by default, set it to `1` to enable it."
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "DISCOURSE_CONFIG_*",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -13530,7 +13580,12 @@
           "configId": "Environment variable configuration id, see above"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "DISCOURSE_CONFIG_*",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -18125,7 +18180,7 @@
           "key": "the last part of myFT personal RSS address"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -19511,7 +19566,12 @@
         "example": "/github/notifications",
         "parameters": {},
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "GITHUB_ACCESS_TOKEN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -19748,7 +19808,12 @@
           "spoken_language": "natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "GITHUB_ACCESS_TOKEN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -20176,7 +20241,12 @@
           "sort": "Sorting type, see below, default to `date`"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "GOOGLE_FONTS_API_KEY",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -26871,7 +26941,13 @@
           "key": "Username / Hashtag name"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "IG_PROXY",
+              "optional": true,
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -27372,7 +27448,16 @@
         "example": "/iwara/subscriptions",
         "parameters": {},
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "IWARA_USERNAME",
+              "description": ""
+            },
+            {
+              "name": "IWARA_PASSWORD",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -29999,7 +30084,12 @@
           "sort": "Sort by, defaut to Active"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -31344,7 +31434,12 @@
         "example": "/manhuagui/subscribe",
         "parameters": {},
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "MHGUI_COOKIE",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -31555,7 +31650,12 @@
           "user": "Username"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "MEDIUM_COOKIE_*",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -31579,7 +31679,12 @@
           "user": "Username"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "MEDIUM_COOKIE_*",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -31629,7 +31734,12 @@
           "tag": "Subscribed Tag"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "MEDIUM_COOKIE_*",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -31884,7 +31994,12 @@
         "example": "/mihoyo/bbs/timeline",
         "parameters": {},
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "MIHOYO_COOKIE",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -33772,7 +33887,12 @@
           "dyid": "抖音ID，可在新榜账号详情 URL 中找到"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "NEWRANK_COOKIE",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -33796,7 +33916,12 @@
           "wxid": "微信号，若微信号与新榜信息不一致，以新榜为准"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "NEWRANK_COOKIE",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -35730,7 +35855,12 @@
           "databaseId": "Database ID"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "NOTION_TOKEN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -37859,7 +37989,7 @@
         "example": "/ouc/jwgl",
         "parameters": {},
         "features": {
-          "requireConfig": true,
+          "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -38586,7 +38716,12 @@
           "media": "类别，见下表，默认为首页"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "PIANYUAN_COOKIE",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -38901,7 +39036,13 @@
           "order": "Order, `popular` or `latest`, `latest` by default"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "PIXABAY_KEY",
+              "optional": true,
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -38962,7 +39103,12 @@
         "example": "/pixiv/user/illustfollows",
         "parameters": {},
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "PIXIV_REFRESHTOKEN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -41446,7 +41592,12 @@
           "location": "N"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "HEFENG_KEY",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -41471,7 +41622,12 @@
           "location": "N"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "HEFENG_KEY",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -42106,7 +42262,12 @@
           "routeParams": "Transformation rules, requires URL encode"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -42131,7 +42292,12 @@
           "routeParams": "Transformation rules, requires URL encode"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -43869,7 +44035,12 @@
           "uid": "用户 uid, 可在用户主页 URL 中找到"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "SEHUATANG_COOKIE",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -45830,7 +46001,16 @@
           "id": "Artist ID"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "SPOTIFY_CLIENT_ID",
+              "description": ""
+            },
+            {
+              "name": "SPOTIFY_CLIENT_SECRET",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -45856,7 +46036,20 @@
         "example": "/spotify/top/artists",
         "parameters": {},
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "SPOTIFY_CLIENT_ID",
+              "description": ""
+            },
+            {
+              "name": "SPOTIFY_CLIENT_SECRET",
+              "description": ""
+            },
+            {
+              "name": "SPOTIFY_REFRESHTOKEN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -45885,7 +46078,16 @@
           "id": "Playlist ID"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "SPOTIFY_CLIENT_ID",
+              "description": ""
+            },
+            {
+              "name": "SPOTIFY_CLIENT_SECRET",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -45913,7 +46115,20 @@
           "limit": "Track count, 50 by default"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "SPOTIFY_CLIENT_ID",
+              "description": ""
+            },
+            {
+              "name": "SPOTIFY_CLIENT_SECRET",
+              "description": ""
+            },
+            {
+              "name": "SPOTIFY_REFRESHTOKEN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -45943,7 +46158,16 @@
           "id": "Show ID"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "SPOTIFY_CLIENT_ID",
+              "description": ""
+            },
+            {
+              "name": "SPOTIFY_CLIENT_SECRET",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -45969,7 +46193,20 @@
         "example": "/spotify/top/tracks",
         "parameters": {},
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "SPOTIFY_CLIENT_ID",
+              "description": ""
+            },
+            {
+              "name": "SPOTIFY_CLIENT_SECRET",
+              "description": ""
+            },
+            {
+              "name": "SPOTIFY_REFRESHTOKEN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -50198,7 +50435,13 @@
           "id": "榜单id，可在 URL 中找到"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "TOPHUB_COOKIE",
+              "optional": true,
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -50226,7 +50469,13 @@
           "id": "榜单id，可在 URL 中找到"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "TOPHUB_COOKIE",
+              "optional": true,
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -50643,7 +50892,16 @@
           "routeParams": "extra parameters, see the table above"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "TWITTER_USERNAME",
+              "description": ""
+            },
+            {
+              "name": "TWITTER_PASSWORD",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -50668,7 +50926,16 @@
           "routeParams": "extra parameters, see the table above"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "TWITTER_USERNAME",
+              "description": ""
+            },
+            {
+              "name": "TWITTER_PASSWORD",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -50693,7 +50960,16 @@
           "routeParams": "extra parameters, see the table above"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "TWITTER_USERNAME",
+              "description": ""
+            },
+            {
+              "name": "TWITTER_PASSWORD",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -50768,7 +51044,16 @@
           "routeParams": "extra parameters, see the table above."
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "TWITTER_USERNAME",
+              "description": ""
+            },
+            {
+              "name": "TWITTER_PASSWORD",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -50817,7 +51102,16 @@
           "original": "extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "TWITTER_USERNAME",
+              "description": ""
+            },
+            {
+              "name": "TWITTER_PASSWORD",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -50842,7 +51136,16 @@
           "routeParams": "extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all."
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "TWITTER_USERNAME",
+              "description": ""
+            },
+            {
+              "name": "TWITTER_PASSWORD",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -53460,7 +53763,12 @@
           "routeParams": "额外参数；请参阅上面的说明和表格"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "WEIBO_COOKIES",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -53493,7 +53801,12 @@
           "routeParams": "额外参数；请参阅上面的说明和表格"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "WEIBO_COOKIES",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -53578,7 +53891,16 @@
           "routeParams": "额外参数；请参阅上面的说明和表格"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "WEIBO_APP_KEY",
+              "description": ""
+            },
+            {
+              "name": "WEIBO_REDIRECT_URL",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -55124,7 +55446,12 @@
           "all": "是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "XIMALAYA_TOKEN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -55155,7 +55482,12 @@
           "all": "是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "XIMALAYA_TOKEN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -56769,7 +57101,24 @@
           "embed": "Default to embed the video, set to any value to disable embedding"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": ""
+            },
+            {
+              "name": "YOUTUBE_CLIENT_ID",
+              "description": ""
+            },
+            {
+              "name": "YOUTUBE_CLIENT_SECRET",
+              "description": ""
+            },
+            {
+              "name": "YOUTUBE_REFRESH_TOKEN",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -57875,7 +58224,12 @@
         "example": "/zhihu/timeline",
         "parameters": {},
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "ZHIHU_COOKIES",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -58772,7 +59126,12 @@
           "fid": "forum id, can be found in URL"
         },
         "features": {
-          "requireConfig": true,
+          "requireConfig": [
+            {
+              "name": "ZODGAME_COOKIE",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
