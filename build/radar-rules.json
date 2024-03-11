@@ -2105,6 +2105,20 @@
       }
     ]
   },
+  "cast.org.cn": {
+    "_name": "中国科学技术协会",
+    ".": [
+      {
+        "title": "通用",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/:column/:subColumn/:category/index.html",
+          "/:column/:subColumn/index.html"
+        ],
+        "target": "/cast/:column/:subColumn/:category?"
+      }
+    ]
+  },
   "cau.edu.cn": {
     "_name": "中国农业大学",
     "ciee": [
