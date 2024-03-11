@@ -146,12 +146,9 @@ async function handler(ctx) {
         })
     );
 
-    ctx.set(
-        'data',
-        weiboUtils.sinaimgTvax({
-            title,
-            link: `https://weibo.com`,
-            item: resultItems,
-        })
-    );
+    return weiboUtils.sinaimgTvax({
+        title,
+        link: `https://weibo.com`,
+        item: resultItems,
+    });
 }

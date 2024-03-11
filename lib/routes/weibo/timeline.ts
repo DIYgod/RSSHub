@@ -142,16 +142,13 @@ async function handler(ctx) {
             })
         );
 
-        ctx.set(
-            'data',
-            weiboUtils.sinaimgTvax({
-                title: `个人微博时间线--${name}`,
-                link: `http://weibo.com/${uid}/`,
-                description,
-                image: profileImageUrl,
-                item: resultItem,
-            })
-        );
+        return weiboUtils.sinaimgTvax({
+            title: `个人微博时间线--${name}`,
+            link: `http://weibo.com/${uid}/`,
+            description,
+            image: profileImageUrl,
+            item: resultItem,
+        });
     } else if (uid === '0' || ctx.req.query()) {
         const { app_key = '', redirect_url = ctx.req.origin + '/weibo/timeline/0', app_secret = '' } = config.weibo;
 
