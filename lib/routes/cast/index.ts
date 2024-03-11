@@ -51,6 +51,10 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: {
+        source: ['/:column/:subColumn/:category/index.html', '/:column/:subColumn/index.html'],
+        target: '/cast/:column/:subColumn/:category?',
+    },
     name: '通用',
     maintainers: ['KarasuShin', 'TonyRL'],
     handler,
