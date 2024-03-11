@@ -4,7 +4,29 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { URL } from 'url';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/newlist',
+    categories: ['government'],
+    example: '/ncpssd/newlist',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ncpssd.cn/', 'ncpssd.cn/newlist?type=0'],
+    },
+    name: '国家哲学社会科学文献中心最新文献',
+    maintainers: ['LyleLee'],
+    handler,
+    url: 'ncpssd.cn/',
+};
+
+async function handler() {
     const baseUrl = 'https://www.ncpssd.cn';
     const argument = '/newlist?type=0';
 
@@ -74,12 +96,12 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         // 源标题
         title: `国家哲学社会科学文献中心`,
         // 源链接
         link: String(baseUrl),
         // 源文章
         item: paper,
-    });
-};
+    };
+}
