@@ -103,13 +103,10 @@ async function handler(ctx) {
         })
     );
 
-    ctx.set(
-        'data',
-        weiboUtils.sinaimgTvax({
-            title: groupName,
-            link: `https://weibo.com/mygroups?gid=${gid}`,
-            description: '微博自定义分组',
-            item: resultItems,
-        })
-    );
+    return weiboUtils.sinaimgTvax({
+        title: groupName,
+        link: `https://weibo.com/mygroups?gid=${gid}`,
+        description: '微博自定义分组',
+        item: resultItems,
+    });
 }
