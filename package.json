@@ -50,7 +50,7 @@
     "@notionhq/client": "2.2.14",
     "@postlight/parser": "2.2.3",
     "@sentry/node": "7.106.1",
-    "@tonyrl/rand-user-agent": "2.0.53",
+    "@tonyrl/rand-user-agent": "2.0.54",
     "@types/node": "20.11.25",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
