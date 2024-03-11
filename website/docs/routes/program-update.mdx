@@ -96,7 +96,7 @@
 
 ### Model discussions
 
-<Route namespace="civitai" data={{"path":"/discussions/:modelId","categories":["program-update"],"example":"/civitai/discussions/4384","parameters":{"modelId":"N"},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["civitai.com/models/:modelId"]},"name":"Model discussions","maintainers":["DIYgod"],"description":":::warning\nNeed to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.\n:::","location":"discussions.ts"}} />
+<Route namespace="civitai" data={{"path":"/discussions/:modelId","categories":["program-update"],"example":"/civitai/discussions/4384","parameters":{"modelId":"N"},"features":{"requireConfig":[{"name":"CIVITAI_COOKIE","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["civitai.com/models/:modelId"]},"name":"Model discussions","maintainers":["DIYgod"],"description":":::warning\nNeed to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.\n:::","location":"discussions.ts"}} />
 
 :::warning
 Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.

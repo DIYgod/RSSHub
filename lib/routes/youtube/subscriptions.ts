@@ -11,7 +11,24 @@ export const route: Route = {
     example: '/youtube/subscriptions',
     parameters: { embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'YOUTUBE_KEY',
+                description: '',
+            },
+            {
+                name: 'YOUTUBE_CLIENT_ID',
+                description: '',
+            },
+            {
+                name: 'YOUTUBE_CLIENT_SECRET',
+                description: '',
+            },
+            {
+                name: 'YOUTUBE_REFRESH_TOKEN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

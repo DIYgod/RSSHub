@@ -169,14 +169,11 @@ async function handler(ctx) {
         }
     }
 
-    ctx.set(
-        'data',
-        weiboUtils.sinaimgTvax({
-            title: `${name}的微博`,
-            link: `https://weibo.com/${uid}/`,
-            description,
-            image: profileImageUrl,
-            item: resultItems,
-        })
-    );
+    return weiboUtils.sinaimgTvax({
+        title: `${name}的微博`,
+        link: `https://weibo.com/${uid}/`,
+        description,
+        image: profileImageUrl,
+        item: resultItems,
+    });
 }
