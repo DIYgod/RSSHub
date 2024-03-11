@@ -9,7 +9,7 @@ export const route: Route = {
     example: '/newrank/douyin/110266463747',
     parameters: { dyid: '抖音ID，可在新榜账号详情 URL 中找到' },
     features: {
-        requireConfig: true,
+        requireConfig: ['NEWRANK_COOKIE'],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,

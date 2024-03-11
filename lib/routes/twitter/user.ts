@@ -11,7 +11,7 @@ export const route: Route = {
             'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.',
     },
     features: {
-        requireConfig: true,
+        requireConfig: ['TWITTER_USERNAME', 'TWITTER_PASSWORD'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

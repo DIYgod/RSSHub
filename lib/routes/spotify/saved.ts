@@ -9,7 +9,7 @@ export const route: Route = {
     example: '/spotify/saved/50',
     parameters: { limit: 'Track count, 50 by default' },
     features: {
-        requireConfig: true,
+        requireConfig: ['SPOTIFY_CLIENT_ID', 'SPOTIFY_CLIENT_SECRET', 'SPOTIFY_REFRESHTOKEN'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

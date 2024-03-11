@@ -9,7 +9,7 @@ export const route: Route = {
     example: '/bilibili/manga/followings/26009',
     parameters: { uid: '用户 id', limits: '抓取最近更新前多少本漫画，默认为10' },
     features: {
-        requireConfig: true,
+        requireConfig: ['BILIBILI_COOKIE_*'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

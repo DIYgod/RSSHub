@@ -10,7 +10,7 @@ export const route: Route = {
     example: '/medium/for-you/imsingee',
     parameters: { user: 'Username' },
     features: {
-        requireConfig: true,
+        requireConfig: ['MEDIUM_COOKIE_*'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

@@ -18,7 +18,7 @@ export const route: Route = {
         spoken_language: "natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL",
     },
     features: {
-        requireConfig: true,
+        requireConfig: ['GITHUB_ACCESS_TOKEN'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

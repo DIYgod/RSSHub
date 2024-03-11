@@ -22,7 +22,7 @@ export const route: Route = {
     example: '/google/fonts/date',
     parameters: { sort: 'Sorting type, see below, default to `date`' },
     features: {
-        requireConfig: true,
+        requireConfig: ['GOOGLE_FONTS_API_KEY'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

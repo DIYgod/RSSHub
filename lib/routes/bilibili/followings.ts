@@ -9,7 +9,7 @@ export const route: Route = {
     example: '/bilibili/user/followings/2267573/3',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', loginUid: '用于登入的用户id,需要配置对应的 Cookie 值' },
     features: {
-        requireConfig: true,
+        requireConfig: ['BILIBILI_COOKIE_*'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

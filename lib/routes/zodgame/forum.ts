@@ -17,7 +17,7 @@ export const route: Route = {
     example: '/zodgame/forum/13',
     parameters: { fid: 'forum id, can be found in URL' },
     features: {
-        requireConfig: true,
+        requireConfig: ['ZODGAME_COOKIE'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

@@ -19,7 +19,7 @@ export const route: Route = {
     example: '/notion/database/a7cc133b68454f138011f1530a13531e',
     parameters: { databaseId: 'Database ID' },
     features: {
-        requireConfig: true,
+        requireConfig: ['NOTION_TOKEN'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

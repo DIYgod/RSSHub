@@ -8,7 +8,7 @@ export const route: Route = {
     example: '/spotify/top/artists',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: ['SPOTIFY_CLIENT_ID', 'SPOTIFY_CLIENT_SECRET', 'SPOTIFY_REFRESHTOKEN'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

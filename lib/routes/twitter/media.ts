@@ -7,7 +7,7 @@ export const route: Route = {
     example: '/twitter/media/DIYgod',
     parameters: { id: 'username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', routeParams: 'extra parameters, see the table above.' },
     features: {
-        requireConfig: true,
+        requireConfig: ['TWITTER_USERNAME', 'TWITTER_PASSWORD'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

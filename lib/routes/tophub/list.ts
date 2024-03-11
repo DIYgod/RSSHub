@@ -14,7 +14,7 @@ export const route: Route = {
     example: '/tophub/list/Om4ejxvxEN',
     parameters: { id: '榜单id，可在 URL 中找到' },
     features: {
-        requireConfig: true,
+        requireConfig: ['TOPHUB_COOKIE?'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

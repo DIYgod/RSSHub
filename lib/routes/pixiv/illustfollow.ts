@@ -12,7 +12,7 @@ export const route: Route = {
     example: '/pixiv/user/illustfollows',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: ['PIXIV_REFRESHTOKEN'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

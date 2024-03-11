@@ -13,7 +13,7 @@ export const route: Route = {
     example: '/bilibili/followings/dynamic/109937383',
     parameters: { uid: '用户 id', routeParams: '额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格' },
     features: {
-        requireConfig: true,
+        requireConfig: ['BILIBILI_COOKIE_*'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

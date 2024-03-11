@@ -73,7 +73,7 @@ interface RouteItem {
     categories?: string[];
 
     features: {
-        requireConfig?: string[] | false;
+        requireConfig?: (`${string}?` | `${string}*` | string)[] | false;
         requirePuppeteer?: boolean;
         antiCrawler?: boolean;
         supportRadar?: boolean;

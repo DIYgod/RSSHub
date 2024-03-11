@@ -9,7 +9,7 @@ export const route: Route = {
     example: '/pianyuan/index',
     parameters: { media: '类别，见下表，默认为首页' },
     features: {
-        requireConfig: true,
+        requireConfig: ['PIANYUAN_COOKIE'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

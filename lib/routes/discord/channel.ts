@@ -15,7 +15,7 @@ export const route: Route = {
     example: '/discord/channel/950465850056536084',
     parameters: { channelId: 'Channel ID' },
     features: {
-        requireConfig: true,
+        requireConfig: ['DISCORD_AUTHORIZATION'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

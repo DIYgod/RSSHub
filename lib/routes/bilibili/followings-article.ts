@@ -9,7 +9,7 @@ export const route: Route = {
     example: '/bilibili/followings/article/99800931',
     parameters: { uid: '用户 id' },
     features: {
-        requireConfig: true,
+        requireConfig: ['BILIBILI_COOKIE_*'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

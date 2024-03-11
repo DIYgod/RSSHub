@@ -7,7 +7,7 @@ export const route: Route = {
     example: '/twitter/keyword/RSSHub',
     parameters: { keyword: 'keyword', routeParams: 'extra parameters, see the table above' },
     features: {
-        requireConfig: true,
+        requireConfig: ['TWITTER_USERNAME', 'TWITTER_PASSWORD'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

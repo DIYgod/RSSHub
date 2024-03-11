@@ -11,7 +11,7 @@ export const route: Route = {
     example: '/bilibili/watchlater/2267573',
     parameters: { uid: '用户 id', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {
-        requireConfig: true,
+        requireConfig: ['BILIBILI_COOKIE_*'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

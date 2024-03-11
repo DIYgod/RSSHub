@@ -14,7 +14,7 @@ export const route: Route = {
     example: '/pixabay/search/cat',
     parameters: { q: 'Search term', order: 'Order, `popular` or `latest`, `latest` by default' },
     features: {
-        requireConfig: true,
+        requireConfig: ['PIXABAY_KEY?'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

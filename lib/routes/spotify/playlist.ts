@@ -9,7 +9,7 @@ export const route: Route = {
     example: '/spotify/playlist/4UBVy1LttvodwivPUuwJk2',
     parameters: { id: 'Playlist ID' },
     features: {
-        requireConfig: true,
+        requireConfig: ['SPOTIFY_CLIENT_ID', 'SPOTIFY_CLIENT_SECRET'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

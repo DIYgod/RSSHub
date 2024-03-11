@@ -11,7 +11,7 @@ export const route: Route = {
     example: '/twitter/followings/DIYgod',
     parameters: { id: 'username', routeParams: 'extra parameters, see the table above' },
     features: {
-        requireConfig: true,
+        requireConfig: ['TWITTER_USERNAME', 'TWITTER_PASSWORD'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

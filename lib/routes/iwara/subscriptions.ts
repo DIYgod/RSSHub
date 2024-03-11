@@ -19,7 +19,7 @@ export const route: Route = {
     example: '/iwara/subscriptions',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: ['IWARA_USERNAME', 'IWARA_PASSWORD'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

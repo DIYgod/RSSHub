@@ -11,7 +11,7 @@ export const route: Route = {
         original: 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter',
     },
     features: {
-        requireConfig: true,
+        requireConfig: ['TWITTER_USERNAME', 'TWITTER_PASSWORD'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

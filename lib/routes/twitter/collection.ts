@@ -11,7 +11,7 @@ export const route: Route = {
     example: '/twitter/collection/DIYgod/1527857429467172864',
     parameters: { uid: 'username, should match the generated token', collectionId: 'collection ID, can be found in URL', routeParams: 'extra parameters, see the table above' },
     features: {
-        requireConfig: true,
+        requireConfig: ['TWITTER_USERNAME', 'TWITTER_PASSWORD'],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
