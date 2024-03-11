@@ -1,7 +1,6 @@
 # fly.toml app configuration file generated for lindenhub on 2024-03-11T19:28:57+08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
 
 app = 'lindenhub'
 primary_region = 'iad'
