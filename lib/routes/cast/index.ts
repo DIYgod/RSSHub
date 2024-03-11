@@ -52,7 +52,7 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: {
-        source: ['/:column/:subColumn/:category/index.html', '/:column/:subColumn/index.html'],
+        source: ['cast.org.cn/:column/:subColumn/:category/index.html', 'cast.org.cn/:column/:subColumn/index.html'],
         target: '/cast/:column/:subColumn/:category?',
     },
     name: '通用',
