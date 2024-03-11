@@ -142,7 +142,7 @@
     "@types/supertest": "6.0.2",
     "@types/tiny-async-pool": "2.0.3",
     "@types/tough-cookie": "4.0.5",
-    "@typescript-eslint/eslint-plugin": "7.1.1",
+    "@typescript-eslint/eslint-plugin": "7.2.0",
     "@typescript-eslint/parser": "7.1.1",
     "@vercel/nft": "0.26.4",
     "@vitest/coverage-v8": "1.3.1",
