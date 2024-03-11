@@ -104,11 +104,11 @@ You need to set the environment variable `DISCOURSE_CONFIG_{id}` before using it
 
 ### Latest posts
 
-<Route namespace="discourse" data={{"path":"/:configId/posts","categories":["bbs"],"example":"/discourse/0/posts","parameters":{"configId":"Environment variable configuration id, see above"},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Latest posts","maintainers":["dzx-dzx"],"location":"posts.ts"}} />
+<Route namespace="discourse" data={{"path":"/:configId/posts","categories":["bbs"],"example":"/discourse/0/posts","parameters":{"configId":"Environment variable configuration id, see above"},"features":{"requireConfig":[{"name":"DISCOURSE_CONFIG_*","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Latest posts","maintainers":["dzx-dzx"],"location":"posts.ts"}} />
 
 ### Notifications
 
-<Route namespace="discourse" data={{"path":"/:configId/notifications/:fulltext?","categories":["bbs"],"example":"/discourse/0/notifications","parameters":{"configId":"Environment variable configuration id, see above","fulltext":"Fetch the content if the notification points to a post. This is disabled by default, set it to `1` to enable it."},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Notifications","maintainers":[],"description":":::warning\nIf you opt to enable `fulltext` feature, consider adding `limit` parameter to your query to avoid sending too many request.\n:::","location":"notifications.ts"}} />
+<Route namespace="discourse" data={{"path":"/:configId/notifications/:fulltext?","categories":["bbs"],"example":"/discourse/0/notifications","parameters":{"configId":"Environment variable configuration id, see above","fulltext":"Fetch the content if the notification points to a post. This is disabled by default, set it to `1` to enable it."},"features":{"requireConfig":[{"name":"DISCOURSE_CONFIG_*","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Notifications","maintainers":[],"description":":::warning\nIf you opt to enable `fulltext` feature, consider adding `limit` parameter to your query to avoid sending too many request.\n:::","location":"notifications.ts"}} />
 
 :::warning
 If you opt to enable `fulltext` feature, consider adding `limit` parameter to your query to avoid sending too many request.
@@ -226,7 +226,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### forum
 
-<Route namespace="zodgame" data={{"path":"/forum/:fid?","categories":["bbs"],"example":"/zodgame/forum/13","parameters":{"fid":"forum id, can be found in URL"},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"forum","maintainers":["FeCCC"],"location":"forum.ts"}} />
+<Route namespace="zodgame" data={{"path":"/forum/:fid?","categories":["bbs"],"example":"/zodgame/forum/13","parameters":{"fid":"forum id, can be found in URL"},"features":{"requireConfig":[{"name":"ZODGAME_COOKIE","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"forum","maintainers":["FeCCC"],"location":"forum.ts"}} />
 
 ## Zuvio
 

@@ -526,7 +526,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 米游社 - 用户关注动态
 
-<Route namespace="mihoyo" data={{"path":"/bbs/timeline","categories":["game"],"example":"/mihoyo/bbs/timeline","parameters":{},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["miyoushe.com/:game/timeline"]},"name":"米游社 - 用户关注动态","maintainers":["CaoMeiYouRen"],"description":":::warning\n  用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::","location":"bbs/timeline.ts"}} />
+<Route namespace="mihoyo" data={{"path":"/bbs/timeline","categories":["game"],"example":"/mihoyo/bbs/timeline","parameters":{},"features":{"requireConfig":[{"name":"MIHOYO_COOKIE","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["miyoushe.com/:game/timeline"]},"name":"米游社 - 用户关注动态","maintainers":["CaoMeiYouRen"],"description":":::warning\n  用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::","location":"bbs/timeline.ts"}} />
 
 :::warning
   用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
