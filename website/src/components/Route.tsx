@@ -100,6 +100,12 @@ export default function Route({
                     </ul>
                 </div>
             )}
+            <p className="path">
+                <Translate id="route.sourcecode" />
+                <code>
+                    <a target='_blank' href={`https://github.com/DIYgod/RSSHub/blob/master/lib/routes/${namespace}/${data.location}`} >{`/${namespace}/${data.location}`}</a>
+                </code>
+            </p>
             {children}
         </div>
     );

@@ -33,7 +33,10 @@
     "message": "💡 Example: "
   },
   "route.path": {
-    "message": "🚏 Route: "
+    "message": "🛎️ Route: "
+  },
+  "route.sourcecode": {
+    "message": "🐙 Source Code: "
   },
   "route.parameter": {
     "message": "🔗 Parameters: "
