@@ -19,7 +19,12 @@ export const route: Route = {
     example: '/qweather/3days/广州',
     parameters: { location: 'N' },
     features: {
-        requireConfig: ['HEFENG_KEY'],
+        requireConfig: [
+            {
+                name: 'HEFENG_KEY',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

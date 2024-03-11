@@ -12,7 +12,12 @@ export const route: Route = {
     example: '/weibo/friends',
     parameters: { routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {
-        requireConfig: ['WEIBO_COOKIES'],
+        requireConfig: [
+            {
+                name: 'WEIBO_COOKIES',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
