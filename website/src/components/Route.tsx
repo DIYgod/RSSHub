@@ -85,7 +85,7 @@ export default function Route({
                     </ul>
                 </div>
             )}
-            {data.features.requireConfig && (
+            {data.features?.requireConfig && (
                 <div>
                     <p><Translate id="route.config" /></p>
                     <ul>
