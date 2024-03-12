@@ -1909,11 +1909,11 @@ Member ID
 
 ### 榜单
 
-<Route namespace="tophub" data={{"path":"/:id","categories":["new-media"],"example":"/tophub/Om4ejxvxEN","parameters":{"id":"榜单id，可在 URL 中找到"},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["tophub.today/n/:id"]},"name":"榜单","maintainers":["LogicJake"],"location":"index.ts"}} />
+<Route namespace="tophub" data={{"path":"/:id","categories":["new-media"],"example":"/tophub/Om4ejxvxEN","parameters":{"id":"榜单id，可在 URL 中找到"},"features":{"requireConfig":[{"name":"TOPHUB_COOKIE","optional":true,"description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["tophub.today/n/:id"]},"name":"榜单","maintainers":["LogicJake"],"location":"index.ts"}} />
 
 ### 榜单列表
 
-<Route namespace="tophub" data={{"path":"/list/:id","categories":["new-media"],"example":"/tophub/list/Om4ejxvxEN","parameters":{"id":"榜单id，可在 URL 中找到"},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["tophub.today/n/:id"]},"name":"榜单列表","maintainers":["akynazh"],"description":":::tip\n将榜单条目集合到一个列表中，可避免推送大量条目，更符合阅读习惯且有热度排序，推荐使用。\n:::","location":"list.ts"}} />
+<Route namespace="tophub" data={{"path":"/list/:id","categories":["new-media"],"example":"/tophub/list/Om4ejxvxEN","parameters":{"id":"榜单id，可在 URL 中找到"},"features":{"requireConfig":[{"name":"TOPHUB_COOKIE","optional":true,"description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["tophub.today/n/:id"]},"name":"榜单列表","maintainers":["akynazh"],"description":":::tip\n将榜单条目集合到一个列表中，可避免推送大量条目，更符合阅读习惯且有热度排序，推荐使用。\n:::","location":"list.ts"}} />
 
 :::tip
 将榜单条目集合到一个列表中，可避免推送大量条目，更符合阅读习惯且有热度排序，推荐使用。

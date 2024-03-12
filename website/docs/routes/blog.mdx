@@ -98,7 +98,7 @@ The List ID is the last part of the URL after `-`, for example, the username in 
 
 ### Personalized Recommendations - Following
 
-<Route namespace="medium" data={{"path":"/following/:user","categories":["blog"],"example":"/medium/following/imsingee","parameters":{"user":"Username"},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Personalized Recommendations - Following","maintainers":["ImSingee"],"description":":::warning\n  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.\n  :::","location":"following.ts"}} />
+<Route namespace="medium" data={{"path":"/following/:user","categories":["blog"],"example":"/medium/following/imsingee","parameters":{"user":"Username"},"features":{"requireConfig":[{"name":"MEDIUM_COOKIE_*","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Personalized Recommendations - Following","maintainers":["ImSingee"],"description":":::warning\n  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.\n  :::","location":"following.ts"}} />
 
 :::warning
   Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
@@ -106,7 +106,7 @@ The List ID is the last part of the URL after `-`, for example, the username in 
 
 ### Personalized Recommendations - For You
 
-<Route namespace="medium" data={{"path":"/for-you/:user","categories":["blog"],"example":"/medium/for-you/imsingee","parameters":{"user":"Username"},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Personalized Recommendations - For You","maintainers":["ImSingee"],"description":":::warning\n  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.\n  :::","location":"for-you.ts"}} />
+<Route namespace="medium" data={{"path":"/for-you/:user","categories":["blog"],"example":"/medium/for-you/imsingee","parameters":{"user":"Username"},"features":{"requireConfig":[{"name":"MEDIUM_COOKIE_*","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Personalized Recommendations - For You","maintainers":["ImSingee"],"description":":::warning\n  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.\n  :::","location":"for-you.ts"}} />
 
 :::warning
   Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
@@ -114,7 +114,7 @@ The List ID is the last part of the URL after `-`, for example, the username in 
 
 ### Personalized Recommendations - Tag
 
-<Route namespace="medium" data={{"path":"/tag/:user/:tag","categories":["blog"],"example":"/medium/tag/imsingee/cybersecurity","parameters":{"user":"Username","tag":"Subscribed Tag"},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Personalized Recommendations - Tag","maintainers":["ImSingee"],"description":"There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.\n\n  :::warning\n  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.\n  :::","location":"tag.ts"}} />
+<Route namespace="medium" data={{"path":"/tag/:user/:tag","categories":["blog"],"example":"/medium/tag/imsingee/cybersecurity","parameters":{"user":"Username","tag":"Subscribed Tag"},"features":{"requireConfig":[{"name":"MEDIUM_COOKIE_*","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Personalized Recommendations - Tag","maintainers":["ImSingee"],"description":"There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.\n\n  :::warning\n  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.\n  :::","location":"tag.ts"}} />
 
 There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.
 

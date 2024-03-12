@@ -173,7 +173,7 @@ Type
 
 ### Search
 
-<Route namespace="pixabay" data={{"path":"/search/:q/:order?","categories":["picture"],"example":"/pixabay/search/cat","parameters":{"q":"Search term","order":"Order, `popular` or `latest`, `latest` by default"},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["pixabay.com/:searchType/search/:q"],"target":"/search/:q"},"name":"Search","maintainers":["TonyRL"],"location":"search.ts"}} />
+<Route namespace="pixabay" data={{"path":"/search/:q/:order?","categories":["picture"],"example":"/pixabay/search/cat","parameters":{"q":"Search term","order":"Order, `popular` or `latest`, `latest` by default"},"features":{"requireConfig":[{"name":"PIXABAY_KEY","optional":true,"description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["pixabay.com/:searchType/search/:q"],"target":"/search/:q"},"name":"Search","maintainers":["TonyRL"],"location":"search.ts"}} />
 
 ## wallhaven
 

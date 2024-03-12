@@ -12,7 +12,12 @@ export const route: Route = {
     example: '/lemmy/technology@lemmy.world/Hot',
     parameters: { community: 'Lemmmy community, for example technology@lemmy.world', sort: 'Sort by, defaut to Active' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

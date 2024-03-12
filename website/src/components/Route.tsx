@@ -13,8 +13,8 @@ export default function Route({
   data: Route;
   children?: JSX.Element | JSX.Element[];
 }): JSX.Element {
-  const demoUrl = data.example ? ('https://rsshub.app' + data.example) : null;
-  const paramMatch = data.path.match?.(/(?<=:).*?(?=\/|$)/g);
+    const demoUrl = data.example ? ('https://rsshub.app' + data.example) : null;
+    const paramMatch = data.path.match?.(/(?<=:).*?(?=\/|$)/g);
 
     const renderMarkdown = (item, inline = true) => {
         const md = new MarkdownIt({
@@ -66,7 +66,7 @@ export default function Route({
             <p className="path">
                 <Translate id="route.path" /><code>{data.path}</code>
             </p>
-            {paramMatch ? (
+            {paramMatch && (
                 <div>
                     <p><Translate id="route.parameter" /></p>
                     <ul>
@@ -78,14 +78,34 @@ export default function Route({
                                     '*': <Translate id="route.parameter.zeroOrMore" />,
                                     '+': <Translate id="route.parameter.oneOrMore" />,
                                 }[item[item.length - 1]] || <Translate id="route.parameter.required" /> }
-                                <Translate id="route.dash" /><span dangerouslySetInnerHTML={{ __html: renderMarkdown(data.parameters?.[item.replace(/:|\?|\+|\*/g, '')] || '') }}></span>
+                                <Translate id="route.dash" />
+                                <span dangerouslySetInnerHTML={{ __html: renderMarkdown(data.parameters?.[item.replace(/:|\?|\+|\*/g, '')] || '') }}></span>
                             </li>
                         ))}
                     </ul>
                 </div>
-            ) : (
-                <p><Translate id="route.parameter.na" /></p>
             )}
+            {data.features?.requireConfig && (
+                <div>
+                    <p><Translate id="route.config" /></p>
+                    <ul>
+                        {data.features.requireConfig.map?.((item, index) => (
+                            <li className="params" key={index}>
+                                <code>{item.name}</code><Translate id="route.comma" />
+                                {item.optional ? <Translate id="route.parameter.optional" /> : <Translate id="route.parameter.required" />}
+                                <Translate id="route.dash" />
+                                <span dangerouslySetInnerHTML={{ __html: renderMarkdown(item.description) }}></span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+            <p className="path">
+                <Translate id="route.sourcecode" />
+                <code>
+                    <a target='_blank' href={`https://github.com/DIYgod/RSSHub/blob/master/lib/routes/${namespace}/${data.location}`} >{`/${namespace}/${data.location}`}</a>
+                </code>
+            </p>
             {children}
         </div>
     );
