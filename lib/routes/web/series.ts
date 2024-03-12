@@ -3,6 +3,7 @@ import { fetchItems, hyphen2Pascal } from './utils';
 
 export const route: Route = {
     path: '/series/:seriesName',
+    parameters: { seriesName: 'topic name in the series section' },
     categories: ['programming'],
     example: '/web/series/new-to-the-web',
     features: {
@@ -20,6 +21,9 @@ export const route: Route = {
     name: 'Series',
     maintainers: ['KarasuShin'],
     handler,
+    description: `:::tip
+    The \`seriesName\` can be extracted from the Series page URL: \`https://web.dev/series/:seriesName\`
+    :::`,
 };
 
 async function handler(ctx): Promise<Data> {
