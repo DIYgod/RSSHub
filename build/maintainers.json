@@ -3421,7 +3421,7 @@
   "/modelscope/studios": [
     "TonyRL"
   ],
-  "/modrinth/models": [
+  "/modrinth/project/:id/versions/:routeParams?": [
     "SettingDust"
   ],
   "/mohw/clarification": [

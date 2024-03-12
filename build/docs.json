@@ -8547,8 +8547,8 @@
     },
     "modrinth": {
       "routes": {
-        "/modrinth/models": {
-          "path": "/models",
+        "/modrinth/project/:id/versions/:routeParams?": {
+          "path": "/project/:id/versions/:routeParams?",
           "categories": [
             "game"
           ],
@@ -8582,11 +8582,11 @@
             ],
             "target": "/project/:id/versions"
           },
-          "description": "| Name           | Example                                      |\n| -------------- | -------------------------------------------- |\n| loaders        | loaders=fabric&loaders=quilt&loaders=forge |\n| game_versions | game_versions=1.20.1&game_versions=1.20.2 |\n| featured       | featured=true                                |",
           "name": "Project versions",
           "maintainers": [
             "SettingDust"
           ],
+          "description": "| Name           | Example                                      |\n| -------------- | -------------------------------------------- |\n| loaders        | loaders=fabric&loaders=quilt&loaders=forge |\n| game_versions | game_versions=1.20.1&game_versions=1.20.2 |\n| featured       | featured=true                                |",
           "location": "versions.ts"
         }
       },
