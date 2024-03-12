@@ -46,6 +46,9 @@
     ],
     "*.yml": "eslint --cache --fix"
   },
+  "_moduleAliases": {
+    "@/" : "lib"
+  },
   "dependencies": {
     "@hono/node-server": "1.8.2",
     "@notionhq/client": "2.2.14",

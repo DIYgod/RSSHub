@@ -1,3 +1,5 @@
+require('module-alias/register');
+
 import { setConfig } from '@/config';
 import { handle } from 'hono/vercel';
 import app from '@/app';
