@@ -18,7 +18,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler() {
     const link = 'https://app.market.xiaomi.com/apm/subject/169449?os=1.1.1&sdk=19';
     const response = await got({
         method: 'get',

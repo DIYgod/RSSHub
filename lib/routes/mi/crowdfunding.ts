@@ -18,7 +18,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler() {
     const response = await got({
         method: 'post',
         url: 'http://api.m.mi.com/v1/microwd/home',
@@ -29,7 +29,7 @@ async function handler(ctx) {
             'IOS-Version': 'system=12.0.1&device=iPhone10,3',
         },
     });
-    const list = response.data.data.list.flatMap(a=>a.items || []);
+    const list = response.data.data.list.flatMap(a => a.items || []);
 
     return {
         title: '小米众筹',
