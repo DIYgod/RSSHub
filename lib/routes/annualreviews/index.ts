@@ -92,5 +92,6 @@ async function handler(ctx) {
         description: $('subtitle').first().text(),
         link: currentUrl,
         item: items,
+        language: $('html').attr('lang'),
     };
 }

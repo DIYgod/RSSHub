@@ -108,5 +108,6 @@ async function handler(ctx) {
         description,
         link: currentUrl,
         item: items,
+        language: $('html').attr('lang'),
     };
 }
