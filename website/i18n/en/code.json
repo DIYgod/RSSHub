@@ -33,10 +33,13 @@
     "message": "💡 Example: "
   },
   "route.path": {
-    "message": "🚏 Route: "
+    "message": "🛎️ Route: "
+  },
+  "route.sourcecode": {
+    "message": "🐙 Source Code: "
   },
   "route.parameter": {
-    "message": "⚙️ Parameters: "
+    "message": "🔗 Parameters: "
   },
   "route.parameter.optional": {
     "message": "optional"
@@ -52,6 +55,9 @@
   },
   "route.parameter.na": {
     "message": "Parameters: N/A"
+  },
+  "route.config": {
+    "message": "⚙️ Deployment Configs: "
   },
   "route.comma": {
     "message": ", "

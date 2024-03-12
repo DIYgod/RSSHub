@@ -10,7 +10,12 @@ export const route: Route = {
     example: '/civitai/discussions/4384',
     parameters: { modelId: 'N' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'CIVITAI_COOKIE',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

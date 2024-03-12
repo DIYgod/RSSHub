@@ -10,7 +10,7 @@ export const route: Route = {
     example: '/ouc/jwgl',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

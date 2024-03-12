@@ -188,7 +188,7 @@ GitHub provides some official RSS feeds:
 
 ### Notifications
 
-<Route namespace="github" data={{"path":"/notifications","categories":["programming"],"example":"/github/notifications","parameters":{},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["github.com/notifications"]},"name":"Notifications","maintainers":["zhzy0077"],"url":"github.com/notifications","location":"notifications.ts"}} />
+<Route namespace="github" data={{"path":"/notifications","categories":["programming"],"example":"/github/notifications","parameters":{},"features":{"requireConfig":[{"name":"GITHUB_ACCESS_TOKEN","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["github.com/notifications"]},"name":"Notifications","maintainers":["zhzy0077"],"url":"github.com/notifications","location":"notifications.ts"}} />
 
 ### Repo Branches
 
@@ -239,7 +239,7 @@ GitHub provides some official RSS feeds:
 
 ### Trending
 
-<Route namespace="github" data={{"path":"/trending/:since/:language/:spoken_language?","categories":["programming"],"example":"/github/trending/daily/javascript/en","parameters":{"since":"time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, possible values are: `daily`, `weekly` or `monthly`","language":"the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, don't filter option is `any`","spoken_language":"natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL"},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["github.com/trending"],"target":"/trending/:since"},"name":"Trending","maintainers":["DIYgod","jameschensmith"],"url":"github.com/trending","location":"trending.ts"}} />
+<Route namespace="github" data={{"path":"/trending/:since/:language/:spoken_language?","categories":["programming"],"example":"/github/trending/daily/javascript/en","parameters":{"since":"time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, possible values are: `daily`, `weekly` or `monthly`","language":"the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, don't filter option is `any`","spoken_language":"natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL"},"features":{"requireConfig":[{"name":"GITHUB_ACCESS_TOKEN","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["github.com/trending"],"target":"/trending/:since"},"name":"Trending","maintainers":["DIYgod","jameschensmith"],"url":"github.com/trending","location":"trending.ts"}} />
 
 ### User Followers
 

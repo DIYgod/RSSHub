@@ -14,7 +14,12 @@ export const route: Route = {
     example: '/sehuatang/user/411096',
     parameters: { uid: '用户 uid, 可在用户主页 URL 中找到' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'SEHUATANG_COOKIE',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
