@@ -11,8 +11,8 @@
         },
         "esModuleInterop": true,
         "noImplicitAny": false,
-        "outDir": "./dist"
+        "outDir": "./dist",
     },
     "include": ["./lib/**/*", "./api/vercel.ts"],
-    "exclude": ["node_modules", "*.test.*"]
+    "exclude": ["node_modules", "*.test.*"],
 }

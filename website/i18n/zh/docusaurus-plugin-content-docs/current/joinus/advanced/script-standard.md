@@ -107,7 +107,7 @@ RSSHub 会将所有路由命名空间的文件夹名附加到路由前面。路�
 -   键: 对应的路由
 -   值：一个字符串数组，包括所有维护者的 GitHub ID。
 
-要生成维护者列表，可使用以下命令：`pnpm run build`，它将在 `assets/build/` 目录下一份维护者列表。
+要生成维护者列表，可使用以下命令：`pnpm run build:assets`，它将在 `assets/build/` 目录下一份维护者列表。
 
 :::danger
 

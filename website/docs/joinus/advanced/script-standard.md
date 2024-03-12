@@ -109,7 +109,7 @@ The `maintainer.ts` file should export an object that provides maintainer inform
 -   Key: Corresponding route path
 -   Value: Array of string, including all maintainers' GitHub ID.
 
-To generate a list of maintainers, use the following command: `pnpm run build`, which will create the list under `assets/build/`.
+To generate a list of maintainers, use the following command: `pnpm run build:assets`, which will create the list under `assets/build/`.
 
 :::danger
 

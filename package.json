@@ -20,7 +20,7 @@
     "lib"
   ],
   "scripts": {
-    "build": "tsx scripts/workflow/build-routes.ts",
+    "build:assets": "tsx scripts/workflow/build-routes.ts",
     "dev": "cross-env NODE_ENV=dev tsx watch --no-cache lib/index.ts",
     "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
