@@ -100,5 +100,6 @@ async function handler(ctx) {
         link,
         image: $('head meta[property="og:image"]').attr('content'),
         item: items,
+        language: $('html').attr('lang'),
     };
 }
