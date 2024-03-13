@@ -625,6 +625,8 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 
 Used for some pages that require login, data retrieval may fail.
 
+Due to the authentication policy of javdb, this SESSION may become invalid when the user logs out. It is recommended to keep the login status.
+
 -   `JAVDB_SESSION`: After logging in, the value of the cookie, acquisition method:
     1.  After logging in, open the homepage of the website.
     2.  Open the console, refresh the page.
