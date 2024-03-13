@@ -3,7 +3,6 @@ import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     const rootUrl = 'https://fst.uic.edu.cn/news_events/news.htm';
 
     const response = await got.get(rootUrl);

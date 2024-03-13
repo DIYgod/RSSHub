@@ -6,7 +6,6 @@ export default async (ctx) => {
     const sub = ctx.req.param('sub');
     const rootUrl = 'https://uic.edu.cn/news/' + sub + '.htm';
 
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     const response = await got.get(rootUrl);
     const $ = cheerio.load(response.data);
     const items = await Promise.all(

@@ -4,7 +4,6 @@ import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {
     const tag = ctx.req.param('tag');
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     const rootUrl = 'https://career.uic.edu.cn/news/index/tag/' + tag;
 
     const browser = await puppeteer();
