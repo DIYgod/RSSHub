@@ -284,6 +284,9 @@ export type Config = {
     zodgame: {
         cookie?: string;
     };
+    javdb: {
+        session?: string;
+    };
 };
 
 const value: Config | Record<string, any> = {};
@@ -623,6 +626,9 @@ const calculateValue = () => {
         },
         zodgame: {
             cookie: envs.ZODGAME_COOKIE,
+        },
+        javdb: {
+            session: envs.JAVDB_SESSION,
         },
     };
 
