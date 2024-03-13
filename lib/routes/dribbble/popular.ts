@@ -30,5 +30,5 @@ async function handler(ctx) {
 
     const title = 'Dribbble - Popular Shots';
 
-    ctx.set('data', await utils.getData(ctx, url, title));
+    return await utils.getData(ctx, url, title);
 }

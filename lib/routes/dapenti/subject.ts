@@ -20,5 +20,5 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    ctx.set('data', await utils.parseFeed({ subjectid: ctx.req.param('id') }));
+    return await utils.parseFeed({ subjectid: ctx.req.param('id') });
 }

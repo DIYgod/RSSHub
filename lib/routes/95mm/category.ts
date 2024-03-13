@@ -42,5 +42,5 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/category-${category}/list-1/index.html?page=1`;
 
-    ctx.set('data', await ProcessItems(ctx, categories[category], currentUrl));
+    return await ProcessItems(ctx, categories[category], currentUrl);
 }

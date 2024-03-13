@@ -30,5 +30,5 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/home-ajax/index.html?tabcid=${tab}&page=1`;
 
-    ctx.set('data', await ProcessItems(ctx, tab, currentUrl));
+    return await ProcessItems(ctx, tab, currentUrl);
 }

@@ -258,5 +258,5 @@ async function handler(ctx) {
         )
     );
 
-    ctx.set('data', feed);
+    return feed;
 }

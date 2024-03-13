@@ -43,5 +43,5 @@ async function handler(ctx) {
 
     const title = `JavDB${query === '' ? '' : ` - ${query}`} `;
 
-    ctx.set('data', await utils.ProcessItems(ctx, currentUrl, title));
+    return await utils.ProcessItems(ctx, currentUrl, title);
 }

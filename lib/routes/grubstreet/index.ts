@@ -18,5 +18,5 @@ async function handler(ctx) {
     const title = `Grub Street`;
     const description = `New York Magazine's Food and Restaurant Blog`;
 
-    ctx.set('data', await utils.getData(ctx, url, title, description));
+    return await utils.getData(ctx, url, title, description);
 }

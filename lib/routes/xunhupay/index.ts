@@ -24,27 +24,24 @@ export const route: Route = {
     url: 'www.xunhupay.com/blog',
 };
 
-async function handler(ctx) {
+async function handler() {
     const link = `${baseUrl}/blog.html`;
-    ctx.set(
-        'data',
-        await buildData({
-            link,
-            url: link,
-            title: `%title%`,
-            description: `%description%`,
-            params: {
-                title: '博客',
-                description: '虎皮椒-博客',
-            },
-            item: {
-                item: '.blog-post > article',
-                title: `$('h5').text()`,
-                link: `$('a').attr('href')`,
-                description: `$('.content').text()`,
-                pubDate: `parseDate($('.date').text(), 'YYYY-MM-DD')`,
-                guid: Buffer.from(`$('a').attr('href')`).toString('base64'),
-            },
-        })
-    );
+    return await buildData({
+        link,
+        url: link,
+        title: `%title%`,
+        description: `%description%`,
+        params: {
+            title: '博客',
+            description: '虎皮椒-博客',
+        },
+        item: {
+            item: '.blog-post > article',
+            title: `$('h5').text()`,
+            link: `$('a').attr('href')`,
+            description: `$('.content').text()`,
+            pubDate: `parseDate($('.date').text(), 'YYYY-MM-DD')`,
+            guid: Buffer.from(`$('a').attr('href')`).toString('base64'),
+        },
+    });
 }

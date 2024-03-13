@@ -23,5 +23,5 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    ctx.set('data', await ProcessFeed('work', ctx.req.param('id'), ctx.req.param('order')));
+    return await ProcessFeed('work', ctx.req.param('id'), ctx.req.param('order'));
 }
