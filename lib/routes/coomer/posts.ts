@@ -26,5 +26,5 @@ export const route: Route = {
 async function handler(ctx) {
     const currentUrl = 'posts';
 
-    ctx.set('data', await fetchItems(ctx, currentUrl));
+    return await fetchItems(ctx, currentUrl);
 }

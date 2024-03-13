@@ -40,6 +40,6 @@ async function handler(ctx) {
                 link: `https://m.okjike.com/originalPosts/${item.id}`,
             };
         });
-        ctx.set('data', result);
+        return result;
     }
 }

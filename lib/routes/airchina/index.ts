@@ -27,7 +27,7 @@ export const route: Route = {
     url: 'www.airchina.com.cn/',
 };
 
-async function handler(ctx) {
+async function handler() {
     const link = `${baseUrl}/cn/info/new-service/service_announcement.shtml`;
     const data = await buildData({
         link,
@@ -58,5 +58,5 @@ async function handler(ctx) {
         })
     );
 
-    ctx.set('data', data);
+    return data;
 }

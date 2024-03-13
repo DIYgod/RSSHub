@@ -27,5 +27,5 @@ async function handler(ctx) {
 
     const currentUrl = `onlyfans/user/${id}`;
 
-    ctx.set('data', await fetchItems(ctx, currentUrl));
+    return await fetchItems(ctx, currentUrl);
 }

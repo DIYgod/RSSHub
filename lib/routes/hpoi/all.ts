@@ -28,5 +28,5 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    ctx.set('data', await ProcessFeed('all', 0, ctx.req.param('order')));
+    return await ProcessFeed('all', 0, ctx.req.param('order'));
 }

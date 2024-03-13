@@ -45,5 +45,5 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/Rank/comicRank/type/${type}`;
 
-    ctx.set('data', await ProcessItems(ctx, currentUrl, time, titles[type]));
+    return await ProcessItems(ctx, currentUrl, time, titles[type]);
 }

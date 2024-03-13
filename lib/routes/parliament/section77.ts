@@ -186,5 +186,5 @@ async function handler(ctx) {
 
     result.item = actListFull;
 
-    ctx.set('data', result);
+    return result;
 }

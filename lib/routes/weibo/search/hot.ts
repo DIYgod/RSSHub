@@ -93,14 +93,12 @@ async function handler(ctx) {
         });
     }
 
-    // Update ctx
     return {
         title: '微博热搜榜',
         link: 'https://s.weibo.com/top/summary?cate=realtimehot',
         description: '实时热点，每分钟更新一次',
         item: resultItems,
     };
-    // ctx.set('data', weiboUtils.sinaimgTvax(ctx.state.data)); // no image in the route
 }
 
 async function fetchContent(url) {

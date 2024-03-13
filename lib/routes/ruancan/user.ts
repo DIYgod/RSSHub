@@ -16,5 +16,5 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const currentUrl = `/i/${id}`;
 
-    ctx.set('data', await fetchFeed(ctx, currentUrl));
+    return await fetchFeed(ctx, currentUrl);
 }

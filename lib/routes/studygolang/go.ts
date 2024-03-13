@@ -23,5 +23,5 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    ctx.set('data', await FetchGoItems(ctx));
+    return await FetchGoItems(ctx);
 }

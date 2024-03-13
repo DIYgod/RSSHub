@@ -28,5 +28,5 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/tag-${tag}/page-1/index.html`;
 
-    ctx.set('data', await ProcessItems(ctx, tag, currentUrl));
+    return await ProcessItems(ctx, tag, currentUrl);
 }

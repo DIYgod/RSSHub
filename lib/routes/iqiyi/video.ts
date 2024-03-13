@@ -73,5 +73,5 @@ async function handler(ctx) {
     );
     browser.close();
 
-    ctx.set('data', data);
+    return data;
 }

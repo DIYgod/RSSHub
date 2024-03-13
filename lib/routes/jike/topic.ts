@@ -65,6 +65,6 @@ async function handler(ctx) {
                 })
             );
         }
-        ctx.set('data', result);
+        return result;
     }
 }

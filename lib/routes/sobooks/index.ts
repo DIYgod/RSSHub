@@ -36,5 +36,5 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
-    ctx.set('data', await utils(ctx, category));
+    return await utils(ctx, category);
 }

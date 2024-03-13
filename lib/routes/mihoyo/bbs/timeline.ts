@@ -67,5 +67,5 @@ async function handler(ctx) {
         link,
         item: items,
     };
-    ctx.set('data', data);
+    return data;
 }

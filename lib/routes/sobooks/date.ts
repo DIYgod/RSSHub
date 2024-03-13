@@ -26,5 +26,5 @@ export const route: Route = {
 async function handler(ctx) {
     const date = ctx.req.param('date') ?? `${new Date().getFullYear()}/${new Date().getMonth()}`;
 
-    ctx.set('data', await utils(ctx, `books/date/${date.replace('-', '/')}`));
+    return await utils(ctx, `books/date/${date.replace('-', '/')}`);
 }

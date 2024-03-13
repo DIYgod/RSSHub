@@ -55,5 +55,5 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/albums${category === 'all' ? '' : `/${category}`}${keyword ? `?screen=${keyword}` : '?'}${time === 'a' ? '' : `&t=${time}`}${order === 'mr' ? '' : `&o=${order}`}`;
 
-    ctx.set('data', await ProcessItems(ctx, currentUrl, rootUrl));
+    return await ProcessItems(ctx, currentUrl, rootUrl);
 }

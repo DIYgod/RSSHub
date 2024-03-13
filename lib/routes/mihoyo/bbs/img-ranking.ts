@@ -138,5 +138,5 @@ async function handler(ctx) {
         link: url,
         item: items,
     };
-    ctx.set('data', data);
+    return data;
 }

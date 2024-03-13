@@ -28,5 +28,5 @@ async function handler(ctx) {
 
     const title = `Dribbble - user ${name}`;
 
-    ctx.set('data', await utils.getData(ctx, url, title));
+    return await utils.getData(ctx, url, title);
 }

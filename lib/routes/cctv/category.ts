@@ -42,5 +42,5 @@ async function handler(ctx) {
         responseData = await getNews(category);
     }
 
-    ctx.set('data', responseData);
+    return responseData;
 }
