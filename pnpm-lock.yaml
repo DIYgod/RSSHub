@@ -201,8 +201,8 @@ dependencies:
     specifier: 4.7.1
     version: 4.7.1
   twitter-api-v2:
-    specifier: 1.16.0
-    version: 1.16.0
+    specifier: 1.16.1
+    version: 1.16.1
   uuid:
     specifier: 9.0.1
     version: 9.0.1
@@ -2092,7 +2092,7 @@ packages:
       '@babel/runtime-corejs2': 7.23.9
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -9607,8 +9607,8 @@ packages:
     resolution: {integrity: sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==}
     dev: false
 
-  /twitter-api-v2@1.16.0:
-    resolution: {integrity: sha512-e7wzWqx5oQZ9IUc2xt8JiJ84ioVGlmjmca1h0NwCKx2AFfKXDePmQa42gcBDe0qau9YaHsIpzO9z5SX1fmb+IQ==}
+  /twitter-api-v2@1.16.1:
+    resolution: {integrity: sha512-76hZsRmVdFQu2MvN2oBw0RjTsYmgqnef1bWb4/Ds54CrcTXvtTZFCp3d6FMdeKp9m2PIx2l9MIJWvs5PjQN/Dw==}
     dev: false
 
   /type-check@0.3.2:
@@ -10447,8 +10447,8 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
