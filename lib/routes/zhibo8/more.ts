@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -11,7 +12,29 @@ const categories = {
     other: '综合',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/more/:category?',
+    categories: ['bbs'],
+    example: '/zhibo8/more/nba',
+    parameters: { category: '分类，见下表，默认为 NBA' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.zhibo8.cc/:category'],
+        target: '/more/:category',
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'nba';
 
     const rootUrl = 'https://news.zhibo8.cc';
@@ -67,9 +90,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${categories[category]} - 直播吧`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

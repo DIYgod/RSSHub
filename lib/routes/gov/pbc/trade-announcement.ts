@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/pbc/tradeAnnouncement',
+    categories: ['finance'],
+    example: '/gov/pbc/tradeAnnouncement',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '货币政策司公开市场交易公告',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler() {
     const link = 'http://www.pbc.gov.cn/zhengcehuobisi/125207/125213/125431/125475/index.html';
 
     const browser = await puppeteer();
@@ -51,9 +70,9 @@ export default async (ctx) => {
 
     browser.close();
 
-    ctx.set('data', {
+    return {
         title: '中国人民银行 - 货币政策司公开市场交易公告',
         link,
         item: items,
-    });
-};
+    };
+}

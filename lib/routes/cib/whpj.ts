@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,33 @@ import https from 'https';
 import crypto from 'crypto';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/whpj/:format?',
+    categories: ['other'],
+    example: '/cib/whpj/xh?filter_title=USD',
+    parameters: { format: '输出的标题格式，默认为标题 + 所有价格。短格式仅包含货币名称。' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['cib.com.cn/'],
+        target: '/whpj',
+    },
+    name: '外汇牌价',
+    maintainers: ['Qixingchen'],
+    handler,
+    url: 'cib.com.cn/',
+    description: `| 短格式 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
+  | ------ | -------- | -------- | -------- | -------- | -------- | -------- |
+  | short  | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |`,
+};
+
+async function handler(ctx) {
     // fix unsafe legacy renegotiation disabled
     const agent = new https.Agent({
         secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
@@ -38,7 +65,7 @@ export default async (ctx) => {
 
     const format = ctx.req.param('format');
 
-    ctx.set('data', {
+    return {
         title: '中国兴业银行外汇牌价',
         link: 'https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do',
         item: data.rows.map((item) => {
@@ -61,8 +88,8 @@ export default async (ctx) => {
                 guid: `${item.cell[0]} ${item.cell[1]} ${date}`,
             };
         }),
-    });
-};
+    };
+}
 
 function formatTitle(name, xhmr, xcmr, xhmc, xcmc, content, format) {
     switch (format) {

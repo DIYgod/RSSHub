@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -11,7 +12,33 @@ const map = new Map([
 
 const host = 'https://sist.ustc.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/sist/:type?',
+    categories: ['university'],
+    example: '/ustc/sist/tzgg',
+    parameters: { type: '分类，见下表，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sist.ustc.edu.cn/'],
+        target: '/sist',
+    },
+    name: '信息科学技术学院',
+    maintainers: ['jasongzy'],
+    handler,
+    url: 'sist.ustc.edu.cn/',
+    description: `| 通知公告 | 招生工作 |
+  | -------- | -------- |
+  | tzgg     | zsgz     |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'tzgg';
     const info = map.get(type);
     if (!info) {
@@ -53,9 +80,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: info.title,
         link: `${host}/${id}/list.htm`,
         item: items,
-    });
-};
+    };
+}

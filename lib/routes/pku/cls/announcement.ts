@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,7 +8,29 @@ const homeUrl = 'https://bio.pku.edu.cn/homes/Index/news/21/21.html';
 
 const baseUrl = 'https://bio.pku.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cls/announcement',
+    categories: ['university'],
+    example: '/pku/cls/announcement',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bio.pku.edu.cn/homes/Index/news/21/21.html', 'bio.pku.edu.cn/'],
+    },
+    name: '生命科学学院通知公告',
+    maintainers: ['william-swl'],
+    handler,
+    url: 'bio.pku.edu.cn/homes/Index/news/21/21.html',
+};
+
+async function handler() {
     const response = await got(homeUrl);
 
     const $ = load(response.data);
@@ -35,9 +58,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '北京大学生命科学学院通知公告',
         link: homeUrl,
         item: items,
-    });
-};
+    };
+}

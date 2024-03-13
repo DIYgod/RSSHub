@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,19 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    radar: {
+        source: ['xyzrank.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'xyzrank.com/',
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'https://xyzrank.com';
@@ -105,10 +118,10 @@ export default async (ctx) => {
         }),
     }));
 
-    ctx.set('data', {
+    return {
         title: `${$('title').text()} - ${categories[category].title}`,
         link: currentUrl,
         item: items,
         description: $('meta[property="og:description"]').attr('content'),
-    });
-};
+    };
+}

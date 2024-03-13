@@ -1,10 +1,46 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?',
+    categories: ['traditional-media'],
+    example: '/hnrb',
+    parameters: { id: '编号，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['voc.com.cn/'],
+        target: '/:id',
+    },
+    name: '电子刊物',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'voc.com.cn/',
+    description: `| 版                   | 编号 |
+  | -------------------- | ---- |
+  | 全部                 |      |
+  | 第 01 版：头版       | 1    |
+  | 第 02 版：要闻       | 2    |
+  | 第 03 版：要闻       | 3    |
+  | 第 04 版：深度       | 4    |
+  | 第 05 版：市州       | 5    |
+  | 第 06 版：理论・学习 | 6    |
+  | 第 07 版：观察       | 7    |
+  | 第 08 版：时事       | 8    |
+  | 第 09 版：中缝       | 9    |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://hnrb.voc.com.cn';
@@ -78,9 +114,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `湖南日报${id ? ` - ${$('strong').first().parent().text()}` : ''}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

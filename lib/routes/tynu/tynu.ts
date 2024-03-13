@@ -1,10 +1,23 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'http://www.tynu.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['tynu.edu.cn/index/tzgg.htm', 'tynu.edu.cn/index.htm', 'tynu.edu.cn/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['2PoL'],
+    handler,
+    url: 'tynu.edu.cn/index/tzgg.htm',
+};
+
+async function handler() {
     const link = `${baseUrl}/index/tzgg.htm`;
     const response = await got(link);
     const data = response.data;
@@ -32,9 +45,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '太原师范学院通知公告',
         link,
         item: list,
-    });
-};
+    };
+}

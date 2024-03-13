@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 const HOME_PAGE = 'https://apnews.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topics/:topic?',
+    categories: ['traditional-media'],
+    example: '/apnews/topics/apf-topnews',
+    parameters: { topic: 'Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['apnews.com/hub/:topic'],
+        target: '/topics/:topic',
+    },
+    name: 'Topics',
+    maintainers: ['zoenglinghou', 'mjysci', 'TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { topic = 'trending-news' } = ctx.req.param();
     const url = `${HOME_PAGE}/hub/${topic}`;
     const response = await got(url);
@@ -35,11 +58,11 @@ export default async (ctx) => {
             )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         description: $("meta[property='og:description']").text(),
         link: url,
         item: items,
         language: $('html').attr('lang'),
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -19,7 +20,33 @@ const categories = {
     hk: '港股',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/telegraph/:category?',
+    categories: ['finance'],
+    example: '/cls/telegraph',
+    parameters: { category: '分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['cls.cn/telegraph', 'cls.cn/'],
+        target: '/telegraph',
+    },
+    name: '电报',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'cls.cn/telegraph',
+    description: `| 看盘  | 公司         | 解读    | 加红 | 推送  | 提醒   | 基金 | 港股 |
+  | ----- | ------------ | ------- | ---- | ----- | ------ | ---- | ---- |
+  | watch | announcement | explain | red  | jpush | remind | fund | hk   |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 
@@ -49,9 +76,9 @@ export default async (ctx) => {
         category: item.subjects?.map((s) => s.subject_name),
     }));
 
-    ctx.set('data', {
+    return {
         title: `财联社 - 电报${category === '' ? '' : ` - ${categories[category]}`}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

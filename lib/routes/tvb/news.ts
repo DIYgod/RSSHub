@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -45,7 +46,39 @@ const titles = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?/:language?',
+    categories: ['traditional-media'],
+    example: '/tvb/news',
+    parameters: { category: '分类，见下表，默认为要聞', language: '语言，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tvb.com/:language/:category', 'tvb.com/'],
+    },
+    name: '新闻',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `分类
+
+  | 要聞  | 快訊    | 港澳  | 兩岸         | 國際  | 財經    | 體育   | 法庭       | 天氣    |
+  | ----- | ------- | ----- | ------------ | ----- | ------- | ------ | ---------- | ------- |
+  | focus | instant | local | greaterchina | world | finance | sports | parliament | weather |
+
+  语言
+
+  | 繁 | 简 |
+  | -- | -- |
+  | tc | sc |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'focus';
     const language = ctx.req.param('language') ?? 'tc';
 
@@ -75,9 +108,9 @@ export default async (ctx) => {
         }),
     }));
 
-    ctx.set('data', {
+    return {
         title: `${response.data.meta.title} - ${titles[category][language]}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

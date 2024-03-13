@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -24,7 +25,28 @@ const config = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/shenzhen/xxgk/zfxxgj/:caty',
+    categories: ['government'],
+    example: '/gov/shenzhen/xxgk/zfxxgj/tzgg',
+    parameters: { caty: '信息类别' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '深圳市人民政府',
+    maintainers: ['laoxua'],
+    handler,
+    description: `| 通知公告 | 政府采购 | 资金信息 | 重大项目 |
+  | :------: | :------: | :------: | :------: |
+  |   tzgg   |   zfcg   |   zjxx   |   zdxm   |`,
+};
+
+async function handler(ctx) {
     const cfg = config[ctx.req.param('caty')];
     if (!cfg) {
         throw new Error('Bad category. See <a href="https://docs.rsshub.app/routes/government#guang-dong-sheng-ren-min-zheng-fu-guang-dong-sheng-shen-zhen-shi-ren-min-zheng-fu">docs</a>');
@@ -65,9 +87,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '广东省深圳市人民政府 - ' + cfg.title,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

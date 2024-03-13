@@ -96,12 +96,12 @@ export default async function handler(ctx: Context) {
         }
     }
 
-    ctx.set('data', {
+    return {
         title: getDisplayName(entity),
         language: null,
         link: `https://t.me/${username}`,
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',
         description: `@${username} on Telegram`,
-    });
-}
+    };
+};

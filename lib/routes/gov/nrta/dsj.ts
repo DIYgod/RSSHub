@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import asyncPool from 'tiny-async-pool';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/nrta/dsj/:category?',
+    categories: ['government'],
+    example: '/gov/nrta/dsj',
+    parameters: { category: '分类，见下表，默认为备案公示' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '电视剧政务平台',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 备案公示 | 发行许可通告 | 重大题材立项     | 重大题材摄制    | 变更通报 |
+  | -------- | ------------ | ---------------- | --------------- | -------- |
+  | note     | announce     | importantLixiang | importantShezhi | changing |`,
+};
+
+async function handler(ctx) {
     const { category = 'note' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
@@ -48,7 +70,7 @@ export default async (ctx) => {
         results.push(item);
     }
 
-    ctx.set('data', {
+    return {
         item: results,
         title: `${$('title').text()}-${$('div.headbottom_menu_selected').text()}`,
         link: currentUrl,
@@ -56,5 +78,5 @@ export default async (ctx) => {
         language: 'zh-cn',
         image: $('img').first().prop('src'),
         author: '国家广播电影电视总局电视剧管理司',
-    });
-};
+    };
+}

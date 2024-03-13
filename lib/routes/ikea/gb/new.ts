@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -5,7 +6,29 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/gb/new',
+    categories: ['shopping'],
+    example: '/ikea/gb/new',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ikea.com/gb/en/new/new-products/', 'ikea.com/'],
+    },
+    name: 'UK - New Product Release',
+    maintainers: ['HenryQW'],
+    handler,
+    url: 'ikea.com/gb/en/new/new-products/',
+};
+
+async function handler() {
     const link = 'https://www.ikea.com/gb/en/new/new-products/';
 
     const {
@@ -48,10 +71,10 @@ export default async (ctx) => {
         category: p.categoryPath.map((c) => c.name),
     }));
 
-    ctx.set('data', {
+    return {
         title: 'New Products - Browse All New Furniture & Home Decor  - IKEA',
         link,
         description: 'New products released by IKEA UK.',
         item: items,
-    });
-};
+    };
+}

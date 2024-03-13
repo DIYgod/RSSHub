@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,29 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 const renderDesc = (data) => art(path.join(__dirname, 'templates/news.art'), data);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['game'],
+    example: '/diershoubing/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['diershoubing.com/'],
+    },
+    name: '新闻',
+    maintainers: ['wushijishan'],
+    handler,
+    url: 'diershoubing.com/',
+};
+
+async function handler(ctx) {
     const { data } = await got(`https://api.diershoubing.com:5001/feed/tag/?pn=0&rn=${ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20}&tag_type=0&src=ios`);
 
     const items = data.feeds.map((item) => {
@@ -44,10 +67,10 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `二柄APP`,
         link: `https://www.diershoubing.com`,
         description: `二柄APP新闻`,
         item: items,
-    });
-};
+    };
+}

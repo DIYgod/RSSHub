@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,28 @@ import { parseDate } from '@/utils/parse-date';
 const baseTitle = 'NUIST ESE（南信大环科院）';
 const baseUrl = 'https://sese.nuist.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/sese/:category?',
+    categories: ['university'],
+    example: '/nuist/sese/tzgg1',
+    parameters: { category: '默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'NUIST ESE（南信大环科院）',
+    maintainers: ['gylidian'],
+    handler,
+    description: `| 通知公告 | 新闻快讯 | 学术动态 | 学生工作 | 研究生教育 | 本科教育 |
+  | -------- | -------- | -------- | -------- | ---------- | -------- |
+  | tzgg1    | xwkx     | xsdt1    | xsgz1    | yjsjy1     | bkjy1    |`,
+};
+
+async function handler(ctx) {
     const { category = 'tzgg1' } = ctx.req.param();
     const link = `${baseUrl}/${category}.htm`;
 
@@ -37,10 +59,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: baseTitle + '：' + $('.lmtitle').text(),
         description: $('meta[name=description]').attr('content'),
         link,
         item: items,
-    });
-};
+    };
+}

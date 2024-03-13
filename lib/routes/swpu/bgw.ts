@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { joinUrl } from './utils';
 import { parseDate } from '@/utils/parse-date';
@@ -5,7 +6,33 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bgw/:code',
+    categories: ['university'],
+    example: '/swpu/bgw/zytzgg',
+    parameters: { code: '栏目代码' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['swpu.edu.cn/'],
+        target: '',
+    },
+    name: '办公网',
+    maintainers: ['CYTMWIA'],
+    handler,
+    url: 'swpu.edu.cn/',
+    description: `| 栏目 | 重要通知公告 | 部门通知公告 | 本周活动 | 学术报告 |
+  | ---- | ------------ | ------------ | -------- | -------- |
+  | 代码 | zytzgg       | bmtzgg       | bzhd     | xsbg     |`,
+};
+
+async function handler(ctx) {
     const url = `https://www.swpu.edu.cn/bgw2/${ctx.req.param('code')}.htm`;
 
     const res = await got.get(url);
@@ -49,11 +76,11 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `西南石油大学办公网 ${title}`,
         link: url,
         description: `西南石油大学办公网 ${title} 列表`,
         language: 'zh-CN',
         item: out,
-    });
-};
+    };
+}

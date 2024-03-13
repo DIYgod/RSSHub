@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/rule',
+    categories: ['finance'],
+    example: '/szse/rule',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['szse.cn/lawrules/rule/new', 'szse.cn/'],
+    },
+    name: '最新规则',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'szse.cn/lawrules/rule/new',
+};
+
+async function handler() {
     const rootUrl = 'http://www.szse.cn';
     const currentUrl = `${rootUrl}/api/search/content`;
 
@@ -44,9 +67,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '最新规则 - 深圳证券交易所',
         link: `${rootUrl}/lawrules/rule/new`,
         item: items,
-    });
-};
+    };
+}

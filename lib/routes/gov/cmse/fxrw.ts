@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,29 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cmse/fxrw',
+    categories: ['government'],
+    example: '/gov/cmse/fxrw',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.cmse.gov.cn/fxrw'],
+    },
+    name: '飞行任务',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'www.cmse.gov.cn/fxrw',
+};
+
+async function handler() {
     const rootUrl = 'http://www.cmse.gov.cn';
     const currentUrl = `${rootUrl}/fxrw/`;
 
@@ -35,9 +58,9 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/knowledge/:topic?/:type?',
+    categories: ['new-media'],
+    example: '/dedao/knowledge',
+    parameters: { topic: '话题 id，可在对应话题页 URL 中找到', type: '分享类型，`true` 指精选，`false` 指最新，默认为精选' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['dedao.cn/knowledge/topic/:topic', 'dedao.cn/knowledge', 'dedao.cn/'],
+    },
+    name: '知识城邦',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const topic = ctx.req.param('topic') ?? '';
     const type = /t|y/i.test(ctx.req.param('type') ?? 'true');
     const count = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
@@ -58,10 +80,10 @@ export default async (ctx) => {
         }),
     }));
 
-    ctx.set('data', {
+    return {
         title: `得到 - 知识城邦${title === '' ? '' : ' - ' + title}`,
         link: currentUrl,
         item: items,
         description,
-    });
-};
+    };
+}

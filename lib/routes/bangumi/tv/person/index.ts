@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tv/person/:id',
+    categories: ['anime'],
+    example: '/bangumi/tv/person/32943',
+    parameters: { id: '人物 id, 在人物页面的地址栏查看' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bgm.tv/person/:id'],
+    },
+    name: '现实人物的新作品',
+    maintainers: ['ylc395'],
+    handler,
+};
+
+async function handler(ctx) {
     // bangumi.tv未提供获取“人物信息”的API，因此仍需要通过抓取网页来获取
     const personID = ctx.req.param('id');
     const link = `https://bgm.tv/person/${personID}/works?sort=date`;
@@ -22,7 +44,7 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `${personName}参与的作品`,
         link,
         item: works.map((c) => {
@@ -34,5 +56,5 @@ export default async (ctx) => {
                 pubDate: match ? parseDate(match[1], ['YYYY-MM-DD', 'YYYY-M-D']) : null,
             };
         }),
-    });
-};
+    };
+}

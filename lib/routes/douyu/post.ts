@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/post/:id',
+    categories: ['bbs'],
+    example: '/douyu/post/631737151576473201',
+    parameters: { id: '帖子 id，可在帖子页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yuba.douyu.com/p/:id', 'yuba.douyu.com/'],
+    },
+    name: '鱼吧跟帖',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://yuba.douyu.com';
@@ -52,10 +74,10 @@ export default async (ctx) => {
         }),
     }));
 
-    ctx.set('data', {
+    return {
         title: `斗鱼鱼吧 - ${data.title}`,
         link: currentUrl,
         item: items,
         description: data.content,
-    });
-};
+    };
+}

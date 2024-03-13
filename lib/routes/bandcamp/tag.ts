@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tag/:tag?',
+    categories: ['multimedia'],
+    example: '/bandcamp/tag/united-kingdom',
+    parameters: { tag: 'Tag, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bandcamp.com/tag/:tag'],
+        target: '/tag/:tag',
+    },
+    name: 'Tag',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const tag = ctx.req.param('tag');
 
     const rootUrl = 'https://bandcamp.com';
@@ -39,9 +62,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

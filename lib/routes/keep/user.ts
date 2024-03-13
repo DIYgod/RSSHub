@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -5,7 +6,28 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:id',
+    categories: ['social-media'],
+    example: '/keep/user/556b02c1ab59390afea671ea',
+    parameters: { id: 'Keep 用户 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gotokeep.com/users/:id'],
+    },
+    name: '运动日记',
+    maintainers: ['Dectinc', 'DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const response = await got({
@@ -24,7 +46,7 @@ export default async (ctx) => {
     response.data.data.entries[0] = response.data.data.entries[0].entries;
     const data = response.data.data.entries.reduce((all, current) => [...all, ...current.entries]);
 
-    ctx.set('data', {
+    return {
         title: `${data[0].author.username} 的 Keep 动态`,
         link: `https://show.gotokeep.com/users/${id}`,
         language: 'zh-cn',
@@ -56,5 +78,5 @@ export default async (ctx) => {
                     }),
                 };
             }),
-    });
-};
+    };
+}

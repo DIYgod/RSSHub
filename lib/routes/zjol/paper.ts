@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/paper/:id?',
+    categories: ['traditional-media'],
+    example: '/zjol/paper/zjrb',
+    parameters: { id: '报纸 id，见下表，默认为 `zjrb`，即浙江日报' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '浙报集团系列报刊',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 浙江日报 | 钱江晚报 | 美术报 | 浙江老年报 | 浙江法制报 | 江南游报 |
+  | -------- | -------- | ------ | ---------- | ---------- | -------- |
+  | zjrb     | qjwb     | msb    | zjlnb      | zjfzb      | jnyb     |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'zjrb';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
 
@@ -86,9 +108,9 @@ export default async (ctx) => {
             )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

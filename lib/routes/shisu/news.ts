@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,7 +8,31 @@ import timezone from '@/utils/timezone';
 const url = 'https://news.shisu.edu.cn';
 const banner = 'https://news.shisu.edu.cn/news/index/39adf3d9ae414bc39c6d3b9316ae531f.png';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category',
+    categories: ['university'],
+    example: '/shisu/news/notice',
+    parameters: { category: '新闻的分类可根据自己的需要选择，首页为全部新闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.shisu.edu.cn/:category/index.html'],
+    },
+    name: '上外新闻',
+    maintainers: ['Duuckjing'],
+    handler,
+    description: `| 首页 | 特稿    | 学术      | 教学       | 国际          | 校园   | 人物   | 视讯       | 公告   |
+  | ---- | ------- | --------- | ---------- | ------------- | ------ | ------ | ---------- | ------ |
+  | news | gazette | research- | academics- | international | campus | people | multimedia | notice |`,
+};
+
+async function handler(ctx) {
     const { section = 'news' } = ctx.req.param();
     const { data: r } = await got(`${url}/${section}/index.html`);
     const $ = load(r);
@@ -56,10 +81,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `上外新闻|SISU TODAY -${section.charAt(0).toUpperCase() + section.slice(1)}`,
         image: 'https://bkimg.cdn.bcebos.com/pic/8d5494eef01f3a296b70affa9825bc315c607c4d?x-bce-process=image/resize,m_lfit,w_536,limit_1/quality,Q_70',
         link: `${url}/${section}/index.html`,
         item: items,
-    });
-};
+    };
+}

@@ -1,8 +1,43 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ceic/:type?',
+    categories: ['forecast'],
+    example: '/earthquake/ceic/1',
+    parameters: { type: '类型，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.cea.gov.cn/cea/xwzx/zqsd/index.html', 'www.cea.gov.cn/'],
+        target: '',
+    },
+    name: '中国地震台',
+    maintainers: ['SettingDust'],
+    handler,
+    url: 'www.cea.gov.cn/cea/xwzx/zqsd/index.html',
+    description: `| 参数 | 类型                        |
+  | ---- | --------------------------- |
+  | 1    | 最近 24 小时地震信息        |
+  | 2    | 最近 48 小时地震信息        |
+  | 5    | 最近一年 3.0 级以上地震信息 |
+  | 7    | 最近一年 3.0 级以下地震     |
+  | 8    | 最近一年 4.0 级以上地震信息 |
+  | 9    | 最近一年 5.0 级以上地震信息 |
+  | 0    | 最近一年 6.0 级以上地震信息 |
+
+  可通过全局过滤参数订阅您感兴趣的地区.`,
+};
+
+async function handler(ctx) {
     let type = Number(ctx.req.param('type'));
     type = type ?? 1;
     const baseUrl = 'http://www.ceic.ac.cn';
@@ -45,7 +80,7 @@ export default async (ctx) => {
         json = json.slice(0, 20);
     }
 
-    ctx.set('data', {
+    return {
         title: typeName,
         link: `${baseUrl}/speedsearch`,
         allowEmpty: true,
@@ -64,5 +99,5 @@ export default async (ctx) => {
                 guid: NEW_DID,
             };
         }),
-    });
-};
+    };
+}

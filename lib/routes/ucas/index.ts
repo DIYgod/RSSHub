@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -19,7 +20,28 @@ const titleMap = {
     bsh: '博士后',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/job/:type?',
+    categories: ['university'],
+    example: '/ucas/job',
+    parameters: { type: '招聘类型，默认为博士后' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '招聘信息',
+    maintainers: ['Fatpandac'],
+    handler,
+    description: `| 招聘类型 | 博士后 | 课题项目聘用 | 管理支撑人才 | 教学科研人才 |
+  | :------: | :----: | :----------: | :----------: | :----------: |
+  |   参数   |   bsh  |    ktxmpy    |    glzcrc    |    jxkyrc    |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'bsh';
     const url = `${rootUrl}/gjob/login.do?method=contentList&t=zhaopin&c=${idMap[type]}`;
     const response = await got.get(url);
@@ -52,9 +74,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `中国科学院大学招聘 - ${titleMap[type]}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/feeds/following/:characterId',
+    categories: ['social-media'],
+    example: '/crossbell/feeds/following/10',
+    parameters: { characterId: 'N' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Feeds of following',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const characterId = ctx.req.param('characterId');
     const response = await got(`https://indexer.crossbell.io/v1/characters/${characterId}/feed/follow`);
-    ctx.set('data', {
+    return {
         title: 'Crossbell Feeds of ' + characterId,
         link: 'https://crossbell.io/',
         item: response.data?.list?.map((item) => {
@@ -25,5 +44,5 @@ export default async (ctx) => {
                 category: [...(item.note?.metadata?.content?.sources || []), ...(item.note?.metadata?.content?.tags || [])],
             };
         }),
-    });
-};
+    };
+}

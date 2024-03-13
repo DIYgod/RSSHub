@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,29 @@ import { rootUrl } from './utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog',
+    categories: ['programming'],
+    example: '/gitpod/blog',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gitpod.io/blog', 'gitpod.io/'],
+    },
+    name: 'Blog',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'gitpod.io/blog',
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
     const response = await got(rootUrl + '/blog');
     const $ = load(response.data);
@@ -46,13 +69,13 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: rootUrl + '/blog',
         description: $('meta[name="description"]').attr('content'),
         language: 'en-US',
         item: items,
-    });
+    };
 
     ctx.set('json', {
         title: $('title').text(),
@@ -61,4 +84,4 @@ export default async (ctx) => {
         language: 'en-US',
         item: items,
     });
-};
+}

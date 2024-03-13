@@ -32,10 +32,10 @@ export default function (meta, extract) {
             })
         );
 
-        ctx.set('data', {
+        return {
             title,
             link,
             item: out,
-        });
+        };
     };
 }

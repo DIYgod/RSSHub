@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,38 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/app/:column?',
+    categories: ['traditional-media'],
+    example: '/gzdaily/app/74',
+    parameters: { column: '栏目 ID，点击对应栏目后在地址栏找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '客户端',
+    maintainers: ['TimWu007'],
+    handler,
+    description: `:::tip
+  在北京时间深夜可能无法获取内容。
+  :::
+
+  常用栏目 ID：
+
+  | 栏目名 | ID   |
+  | ------ | ---- |
+  | 首页   | 74   |
+  | 时局   | 374  |
+  | 广州   | 371  |
+  | 大湾区 | 397  |
+  | 城区   | 2980 |`,
+};
+
+async function handler(ctx) {
     const column = ctx.req.param('column') ?? 74;
     const currentUrl = `https://app.gzdaily.cn/app_if/getArticles?columnId=${column}&page=1`;
 
@@ -49,9 +81,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `广州日报客户端 - ${colName}`,
         link: `https://www.gzdaily.cn/amucsite/web/index.html#/home/${column}`,
         item: items,
-    });
-};
+    };
+}

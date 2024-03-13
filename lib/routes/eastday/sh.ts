@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,29 @@ import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/sh',
+    categories: ['traditional-media'],
+    example: '/eastday/sh',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sh.eastday.com/'],
+    },
+    name: '上海新闻',
+    maintainers: ['saury'],
+    handler,
+    url: 'sh.eastday.com/',
+};
+
+async function handler() {
     const domain = 'http://wap.eastday.com';
 
     const response = await got({
@@ -42,9 +65,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `东方网-上海`,
         link: `${domain}/wap/sh.html`,
         item: result,
-    });
-};
+    };
+}

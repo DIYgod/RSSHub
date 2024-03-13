@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 import MarkdownIt from 'markdown-it';
@@ -8,7 +9,29 @@ const md = MarkdownIt({
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/issue/:user/:repo/:state?/:labels?',
+    categories: ['programming'],
+    example: '/github/issue/vuejs/core/all/wontfix',
+    parameters: { user: 'GitHub username', repo: 'GitHub repo name', state: 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', labels: 'a list of comma separated label names' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['github.com/:user/:repo/issues', 'github.com/:user/:repo/issues/:id', 'github.com/:user/:repo'],
+        target: '/issue/:user/:repo',
+    },
+    name: 'Repo Issues',
+    maintainers: ['HenryQW', 'AndreyMZ'],
+    handler,
+};
+
+async function handler(ctx) {
     const user = ctx.req.param('user');
     const repo = ctx.req.param('repo');
     const state = ctx.req.param('state');
@@ -36,7 +59,7 @@ export default async (ctx) => {
     });
     const data = response.data;
 
-    ctx.set('data', {
+    return {
         allowEmpty: true,
         title: `${user}/${repo}${state ? ' ' + state.replace(/^\S/, (s) => s.toUpperCase()) : ''} Issues${labels ? ' - ' + labels : ''}`,
         link: host,
@@ -49,5 +72,5 @@ export default async (ctx) => {
                 author: item.user.login,
                 link: `${host}/${item.number}`,
             })),
-    });
-};
+    };
+}

@@ -1,9 +1,22 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const currentURL = 'https://bytes.dev/archives';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['bytes.dev/archives', 'bytes.dev/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['meixger'],
+    handler,
+    url: 'bytes.dev/archives',
+};
+
+async function handler() {
     const resp = await got(currentURL);
     const $ = load(resp.data);
     const text = $('script#__NEXT_DATA__').text();
@@ -16,10 +29,10 @@ export default async (ctx) => {
         link: `/archives/${item.slug}`,
     }));
 
-    ctx.set('data', {
+    return {
         title: 'bytes.dev',
         description: 'Your weekly dose of JS',
         link: currentURL,
         item: items,
-    });
-};
+    };
+}

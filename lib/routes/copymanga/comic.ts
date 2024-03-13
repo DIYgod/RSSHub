@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,25 @@ import * as path from 'node:path';
 import { config } from '@/config';
 import asyncPool from 'tiny-async-pool';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/comic/:id/:chapterCnt?',
+    categories: ['anime'],
+    example: '/copymanga/comic/dianjuren/5',
+    parameters: { id: '漫画ID', chapterCnt: '返回章节的数量，默认为 `10`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '漫画更新',
+    maintainers: ['btdwv', 'marvolo666', 'yan12125'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     // 用于控制返回的章节数量
     const chapterCnt = Number(ctx.req.param('chapterCnt') || 10);
@@ -118,10 +137,10 @@ export default async (ctx) => {
     const result = await asyncPoolAll(3, chapterArray.slice(0, chapterCnt), (chapter) => cache.tryGet(chapter.link, () => genResult(chapter)));
     const items = [...result, ...chapterArray.slice(chapterCnt)];
 
-    ctx.set('data', {
+    return {
         title: `拷贝漫画 - ${bookTitle}`,
         link: `${baseUrl}/comic/${id}`,
         description: bookIntro,
         item: items,
-    });
-};
+    };
+}

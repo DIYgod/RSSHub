@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { parseItem } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category_id',
+    categories: ['traditional-media'],
+    example: '/scmp/3',
+    parameters: { category_id: 'Category' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['scmp.com/rss/:category_id/feed'],
+    },
+    name: 'News',
+    maintainers: ['proletarius101'],
+    handler,
+    description: `See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.`,
+};
+
+async function handler(ctx) {
     const categoryId = ctx.req.param('category_id');
     const rssUrl = `https://www.scmp.com/rss/${categoryId}/feed`;
     const { data: response } = await got(rssUrl);
@@ -49,7 +72,7 @@ export default async (ctx) => {
         items,
     });
 
-    ctx.set('data', {
+    return {
         title: $('channel > title').text(),
         link: $('channel > link').text(),
         description: $('channel > description').text(),
@@ -58,5 +81,5 @@ export default async (ctx) => {
         icon: 'https://assets.i-scmp.com/static/img/icons/scmp-icon-256x256.png',
         logo: 'https://customerservice.scmp.com/img/logo_scmp@2x.png',
         image: $('channel > image > url').text(),
-    });
-};
+    };
+}

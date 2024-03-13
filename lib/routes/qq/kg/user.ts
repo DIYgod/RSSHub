@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { JSDOM } from 'jsdom';
 import cache from './cache';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/kg/:userId',
+    categories: ['social-media'],
+    example: '/qq/kg/639a9a86272c308e33',
+    parameters: { userId: '用户 ID, 可在对应页面的 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: '用户作品列表',
+    maintainers: ['zhangxiang012'],
+    handler,
+};
+
+async function handler(ctx) {
     const userId = ctx.req.param('userId');
     const url = `https://node.kg.qq.com/personal?uid=${userId}`;
     const response = await got(url);
@@ -37,7 +56,7 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `${author} - 全民K歌`,
         link: url,
         description: data.share.content,
@@ -46,5 +65,5 @@ export default async (ctx) => {
         image: authorimg,
         itunes_author: author,
         itunes_category: '全民K歌',
-    });
-};
+    };
+}

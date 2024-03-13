@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,30 @@ import { parseJSONP } from './jsonp-helper';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/info/:category?',
+    categories: ['live'],
+    example: '/yoasobi-music/info/news',
+    parameters: { category: '`news`, `biography`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/:category'],
+        target: '/info/:category',
+    },
+    name: 'News & Biography',
+    maintainers: [],
+    handler,
+    url: 'www.yoasobi-music.jp/',
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
 
     const ARTIST = 'YOASOBI',
@@ -42,7 +66,7 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         // the source title
         title,
         // the source url
@@ -67,5 +91,5 @@ export default async (ctx) => {
             link: i.id ? `${officialUrl}/${i.id}` : officialUrl,
             category: i.category,
         })),
-    });
-};
+    };
+}

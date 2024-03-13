@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,28 @@ import timezone from '@/utils/timezone';
 import { fixArticleContent } from '@/utils/wechat-mp';
 const baseUrl = 'https://freewechat.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/profile/:id',
+    categories: ['new-media'],
+    example: '/freewechat/profile/MzI5NTUxNzk3OA==',
+    parameters: { id: '公众号 ID，可在URL中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['freewechat.com/profile/:id'],
+    },
+    name: 'Unknown',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const url = `${baseUrl}/profile/${id}`;
     const { data: response } = await got(url);
@@ -55,10 +77,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: url,
         image: 'https://freewechat.com/favicon.ico',
         item: items,
-    });
-};
+    };
+}

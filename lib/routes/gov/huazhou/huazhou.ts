@@ -1,6 +1,14 @@
+import { Route } from '@/types';
 import { gdgov } from '../general/general';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/huazhou/*',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const info = {
         defaultPath: 'syzl/zcjd/',
         list_element: '.list-content li a',
@@ -16,4 +24,4 @@ export default async (ctx) => {
         pubDate_format: undefined,
     };
     await gdgov(info, ctx);
-};
+}

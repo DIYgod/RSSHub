@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hitgs',
+    categories: ['university'],
+    example: '/hit/hitgs',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['hitgs.hit.edu.cn/*'],
+    },
+    name: '研究生院通知公告',
+    maintainers: ['hlmu'],
+    handler,
+    url: 'hitgs.hit.edu.cn/*',
+};
+
+async function handler() {
     const host = 'https://hitgs.hit.edu.cn';
 
     const response = await got(host + '/tzgg/list.htm', {
@@ -38,10 +61,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '哈工大研究生院通知公告',
         link: host + '/tzgg/list.htm',
         description: '哈尔滨工业大学研究生院通知公告',
         item: out,
-    });
-};
+    };
+}

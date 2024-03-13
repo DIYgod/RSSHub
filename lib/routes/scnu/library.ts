@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/library',
+    categories: ['university'],
+    example: '/scnu/library',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['lib.scnu.edu.cn/news/zuixingonggao', 'lib.scnu.edu.cn/'],
+    },
+    name: '图书馆通知',
+    maintainers: ['fengkx'],
+    handler,
+    url: 'lib.scnu.edu.cn/news/zuixingonggao',
+};
+
+async function handler() {
     const baseUrl = 'https://lib.scnu.edu.cn';
     const url = `${baseUrl}/news/zuixingonggao/`;
     const res = await got({
@@ -15,7 +38,7 @@ export default async (ctx) => {
     const $ = load(res.data);
     const list = $('.article-list').find('li');
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: url,
         description: '华南师范大学图书馆 - 通知公告',
@@ -29,5 +52,5 @@ export default async (ctx) => {
                     link: item.find('a').attr('href'),
                 };
             }),
-    });
-};
+    };
+}

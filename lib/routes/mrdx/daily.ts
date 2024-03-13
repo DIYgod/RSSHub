@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -8,7 +9,29 @@ dayjs.extend(utc);
 
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/today',
+    categories: ['traditional-media'],
+    example: '/mrdx/today',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['mrdx.cn*'],
+    },
+    name: '今日',
+    maintainers: ['Dustin-Jiang'],
+    handler,
+    url: 'mrdx.cn*',
+};
+
+async function handler() {
     const dateFormatted = dayjs().utcOffset(8).format('YYYYMMDD');
 
     const baseUrl = `http://mrdx.cn/content/${dateFormatted}`;
@@ -70,11 +93,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '新华每日电讯',
         link,
         item: passages,
         description:
             '中国报纸发行前三强。位列《人民日报》，《参考消息》之后。《新华每日电讯》是新华社出版的一份新闻电讯报，1993年创办，具有很高的权威性和准确性，有“一报在手，便知天下”之美誉。《新华每日电讯》为对开八版日报，集中刊登[新华社]每天向国内播发的电讯稿及图片稿。打开《新华每日电讯》，中国和全世界每天发生的重大事件便将一目了然。在人类生活节奏日益加快的当今世界，《新华每日电讯》以最便捷、最醒目的方式为公众提供最重要的新闻报道，受到公众的喜爱和拥护。',
-    });
-};
+    };
+}

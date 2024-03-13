@@ -1,12 +1,15 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { config } from '@/config';
 import got from '@/utils/got';
 import MarkdownIt from 'markdown-it';
+import type { Author, Project, Version } from '@/routes/modrinth/api';
+import type { Context } from 'hono';
+
+const __dirname = getCurrentPath(import.meta.url);
 
 const customGot = got.extend({
     headers: {
@@ -18,16 +21,56 @@ const md = MarkdownIt({
     html: true,
 });
 
-export default async (
-    /** @type {import('koa').Context} */
-    ctx
-) => {
-    const {
-        /** @type string */
-        id,
-        /** @type {string | undefined} */
-        routeParams,
-    } = ctx.req.param();
+export const route: Route = {
+    path: '/project/:id/versions/:routeParams?',
+    categories: ['game'],
+    example: '/modrinth/project/sodium/versions',
+    parameters: {
+        id: 'Id or slug of the Modrinth project',
+        routeParams: 'Extra route params. See the table below for options',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: [
+            'modrinth.com/mod/:id/*',
+            'modrinth.com/plugin/:id/*',
+            'modrinth.com/datapack/:id/*',
+            'modrinth.com/shader/:id/*',
+            'modrinth.com/resourcepack/:id/*',
+            'modrinth.com/modpack/:id/*',
+            'modrinth.com/mod/:id',
+            'modrinth.com/plugin/:id',
+            'modrinth.com/datapack/:id',
+            'modrinth.com/shader/:id',
+            'modrinth.com/resourcepack/:id',
+            'modrinth.com/modpack/:id',
+        ],
+        target: '/project/:id/versions',
+    },
+    name: 'Project versions',
+    maintainers: ['SettingDust'],
+    handler,
+    description: `| Name           | Example                                      |
+| -------------- | -------------------------------------------- |
+| loaders        | loaders=fabric&loaders=quilt&loaders=forge |
+| game_versions | game_versions=1.20.1&game_versions=1.20.2 |
+| featured       | featured=true                                |`,
+};
+
+async function handler(ctx: Context) {
+    const { id, routeParams } = <
+        {
+            id: string;
+            routeParams?: string;
+        }
+    >ctx.req.param();
 
     /**
      * /@type {{
@@ -42,20 +85,17 @@ export default async (
     parsedQuery.set('game_versions', parsedQuery.has('game_versions') ? JSON.stringify(parsedQuery.getAll('game_versions')) : '');
 
     try {
-        /** @type {import('./api').Project} */
-        const project = await customGot(`https://api.modrinth.com/v2/project/${id}`).json();
-        /** @type {import('./api').Version[]} */
+        const project = await customGot(`https://api.modrinth.com/v2/project/${id}`).json<Project>();
         const versions = await customGot(`https://api.modrinth.com/v2/project/${id}/version`, {
             searchParams: parsedQuery,
-        }).json();
-        /** @type {import('./api').Author[]} */
+        }).json<Version[]>();
         const authors = await customGot(`https://api.modrinth.com/v2/users`, {
             searchParams: {
                 ids: JSON.stringify(versions.map((it) => it.author_id)),
             },
-        }).json();
+        }).json<Author[]>();
 
-        ctx.set('data', {
+        return {
             title: `${project.title} Modrinth versions`,
             description: project.description,
             link: `https://modrinth.com/project/${id}`,
@@ -70,11 +110,11 @@ export default async (
                 guid: it.id,
                 author: authors[index].name,
             })),
-        });
-    } catch (error) {
+        };
+    } catch (error: any) {
         if (error?.response?.statusCode === 404) {
             throw new Error(`${error.message}: Project ${id} not found`);
         }
         throw error;
     }
-};
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,29 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/xhsxw', '/whxw'],
+    categories: ['new-media'],
+    example: '/news/xhsxw',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.cn/xhsxw.htm'],
+    },
+    name: '新华社新闻',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'news.cn/xhsxw.htm',
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
 
     const rootUrl = 'http://www.news.cn';
@@ -70,7 +93,7 @@ export default async (ctx) => {
     const image = new URL('20141223_xhsxw_logo_v1.png', rootUrl).href;
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title,
         link: currentUrl,
@@ -81,5 +104,5 @@ export default async (ctx) => {
         logo: icon,
         author: title.split(/_/).pop(),
         allowEmpty: true,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,27 @@ import { parseDate } from '@/utils/parse-date';
 import * as path from 'node:path';
 import { art } from '@/utils/render';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/mp/:id',
+    categories: ['new-media'],
+    example: '/sohu/mp/119097',
+    parameters: { id: '搜狐号 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '更新',
+    maintainers: ['HenryQW'],
+    handler,
+    description: `1.  通过浏览器搜索相关搜狐号 \`果壳 site: mp.sohu.com\`。
+  2.  通过浏览器控制台执行 \`contentData.mkey\`，返回的即为搜狐号 ID。`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const authorArticleAPI = `https://v2.sohu.com/author-page-api/author-articles/pc/${id}`;
 
@@ -61,9 +82,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `搜狐号 - ${author}`,
         link,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,14 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://is.cas.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/is/:path{.+}',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const path = ctx.req.param('path');
     const response = await got(`${baseUrl}/${path}/`);
 
@@ -37,9 +45,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: `${baseUrl}/${path}`,
         item: items,
-    });
-};
+    };
+}

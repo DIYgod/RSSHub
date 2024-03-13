@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,14 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cac/*',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const path = ctx.params[0];
     const host = 'http://www.cac.gov.cn';
     const homepage = `${host}/index.htm`;
@@ -57,9 +65,9 @@ export default async (ctx) => {
                 description: title,
             };
         });
-    ctx.set('data', {
+    return {
         title: $1('head title').text(),
         link: completeUrl,
         item: items,
-    });
-};
+    };
+}

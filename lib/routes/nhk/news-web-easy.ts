@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,29 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news_web_easy',
+    categories: ['traditional-media'],
+    example: '/nhk/news_web_easy',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www3.nhk.or.jp/news/easy/', 'www3.nhk.or.jp/'],
+    },
+    name: 'News Web Easy',
+    maintainers: ['Andiedie'],
+    handler,
+    url: 'www3.nhk.or.jp/news/easy/',
+};
+
+async function handler(ctx) {
     const { data } = await got('https://www3.nhk.or.jp/news/easy/news-list.json');
     const dates = data[0];
 
@@ -44,10 +67,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'NEWS WEB EASY',
         link: 'https://www3.nhk.or.jp/news/easy/',
         description: 'NEWS WEB EASYは、小学生・中学生の皆さんや、日本に住んでいる外国人のみなさんに、わかりやすいことば　でニュースを伝えるウェブサイトです。',
         item: items,
-    });
-};
+    };
+}

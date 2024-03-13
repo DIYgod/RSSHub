@@ -1,53 +1,60 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import iconv from 'iconv-lite';
+import { decode } from 'iconv-lite';
 
-export default async (ctx) => {
-    const aid = ctx.req.param('id');
-    const novel_url = `https://www.wenku8.net/novel/${Number.parseInt(aid / 1000)}/${aid}/index.htm`;
-    const $ = load(await get(novel_url));
-
-    const novel_name = $('#title').text();
-
-    const volume_list = $('.vcss');
-    const last_volume = $(volume_list.at(-1));
-    const vid = last_volume.parent().next().find('a')[0].attribs.href.replace('.htm', '');
-
-    const volume_url = `https://dl.wenku8.com/packtxt.php?aid=${aid}&vid=${vid}&charset=gbk`;
-    const item_list = await cache.tryGet(volume_url, async () => {
-        const result = await get(volume_url);
-        const chapter_list = [...result.matchAll(/ {2}(\S.*)\r\n([\S\s]+?)\r\n\r\n/g)];
-        return chapter_list
-            .filter((chapter) => chapter[2].trim())
-            .reverse()
-            .map((chapter) => ({
-                title: chapter[1],
-                description: format_description(chapter[2]),
-                guid: Buffer.from(`${vid}${chapter[1]}`).toString('base64'),
-            }));
-    });
-
-    ctx.set('data', {
-        title: `轻小说文库 ${novel_name} 最新卷`,
-        link: novel_url,
-        item: item_list,
-    });
+export const route: Route = {
+    path: '/volume/:id',
+    categories: ['reading'],
+    example: '/wenku8/volume/1163',
+    parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '最新卷',
+    maintainers: ['huangliangshusheng'],
+    handler,
 };
 
-const get = async (url) => {
-    const response = await got({
-        method: 'get',
-        url,
-        responseType: 'buffer',
-    });
+async function handler(ctx) {
+    const aid = Number.parseInt(ctx.req.param('id'));
+    const link = `https://www.wenku8.net/novel/${Math.floor(aid / 1000)}/${aid}/index.htm`;
+    const $ = load(await get(link));
+    const vid = $('.vcss').last().parent().next().find('a')[0].attribs.href.replace('.htm', '');
+    const volumeUrl = `https://dl.wenku8.com/packtxt.php?aid=${aid}&vid=${vid}&charset=gbk`;
+    const lastestChapters = $('.vcss')
+        .last()
+        .parent()
+        .nextAll()
+        .find('a')
+        .toArray()
+        .map((a) => ({ link: a.attribs.href }));
 
-    return iconv.decode(response.data, 'gbk');
-};
+    return {
+        title: `轻小说文库 ${$('#title').text()} 最新卷`,
+        link,
+        item: await cache.tryGet(volumeUrl, async () =>
+            [...(await get(volumeUrl)).matchAll(/\s{2}(\S.*)\r?\n([\S\s]+?)\r?\n\r?\n/g)]
+                .map((chapter, index) => ({
+                    title: chapter[1],
+                    description: chapter[2]
+                        .split('\r\n')
+                        .filter((line) => line.trim())
+                        .map((line) => `<p>${line.trim()}</p>`)
+                        .join(''),
+                    guid: Buffer.from(`${vid}${chapter[1]}`).toString('base64'),
+                    link: lastestChapters[index]?.link,
+                }))
+                .filter((chapter) => chapter.description)
+                .toReversed()
+        ),
+    };
+}
 
-const format_description = (str) =>
-    str
-        .split('\r\n')
-        .filter((line) => line.trim())
-        .map((line) => `<p>${line.trim()}</p>`)
-        .join('');
+const get = async (url: string) => decode(await got(url).buffer(), 'gbk');

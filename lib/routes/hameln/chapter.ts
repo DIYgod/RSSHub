@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/chapter/:id',
+    categories: ['reading'],
+    example: '/hameln/chapter/264928',
+    parameters: { id: 'Novel id, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['syosetu.org/novel/:id'],
+    },
+    name: 'chapter',
+    maintainers: ['huangliangshusheng'],
+    handler,
+    description: `Eg: [https://syosetu.org/novel/264928](https://syosetu.org/novel/264928)`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = Number.parseInt(ctx.req.query('limit')) || 5;
     const link = `https://syosetu.org/novel/${id}`;
@@ -38,14 +61,14 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title,
         description,
         link,
         language: 'ja',
         item: item_list,
-    });
-};
+    };
+}
 
 const get = async (url) => {
     const response = await got({

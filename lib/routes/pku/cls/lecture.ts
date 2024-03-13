@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -5,11 +6,33 @@ import { parseDate } from '@/utils/parse-date';
 const homeUrl = 'http://bio.pku.edu.cn/homes/Index/news_jz/7/7.html';
 const baseUrl = 'http://bio.pku.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cls/lecture',
+    categories: ['university'],
+    example: '/pku/cls/lecture',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bio.pku.edu.cn/homes/Index/news_jz/7/7.html', 'bio.pku.edu.cn/'],
+    },
+    name: '生命科学学院近期讲座',
+    maintainers: ['TPOB'],
+    handler,
+    url: 'bio.pku.edu.cn/homes/Index/news_jz/7/7.html',
+};
+
+async function handler() {
     const response = await got(homeUrl);
 
     const $ = load(response.data);
-    ctx.set('data', {
+    return {
         title: `北京大学生命科学学院近期讲座`,
         link: homeUrl,
         description: `北京大学生命科学学院近期讲座`,
@@ -21,5 +44,5 @@ export default async (ctx) => {
                 link: baseUrl + $('a.clearfix').attr('href'),
             }))
             .get(),
-    });
-};
+    };
+}

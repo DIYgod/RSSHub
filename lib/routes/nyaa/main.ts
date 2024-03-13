@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import { config } from '@/config';
 import Parser from 'rss-parser';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/search/:query?', '/user/:username?', '/user/:username/search/:query?', '/sukebei/search/:query?', '/sukebei/user/:username?', '/sukebei/user/:username/search/:query?'],
+    categories: ['multimedia'],
+    example: '/nyaa/search/psycho-pass',
+    parameters: { query: 'Search keyword' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: true,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Search Result',
+    maintainers: ['Lava-Swimmer', 'noname1776'],
+    handler,
+};
+
+async function handler(ctx) {
     const parser = new Parser({
         customFields: {
             item: ['magnet', ['nyaa:infoHash', 'infoHash']],
@@ -36,10 +55,10 @@ export default async (ctx) => {
         return item;
     });
 
-    ctx.set('data', {
+    return {
         title: feed.title,
         link: currentLink,
         description: feed.description,
         item: feed.items,
-    });
-};
+    };
+}

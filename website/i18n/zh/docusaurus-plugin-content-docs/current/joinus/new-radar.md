@@ -4,6 +4,12 @@ sidebar_position: 3
 
 # 提交新的 RSSHub Radar 规则
 
+:::warning
+
+以下文档为旧版标准，新版标准请使用参考 [/lib/types.ts#L84](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L84)
+
+:::
+
 如果需要查看新规则的结果，建议您安装浏览器扩展程序。您可以在 [参与我们](/zh/joinus/quick-start#提交新的-rsshub-radar-规则) 页面下载适合您浏览器的扩展程序。
 
 ## 编写规则
@@ -192,10 +198,6 @@ export default {
 
 -   使用 `'.'` 子域名可以使 RSSBud 支持常见的移动端子域名，例如 `m`/`mobile`。
 -   在 `target` 中使用 `document` 的规则并不适用于 RSSBud：RSSBud 不是浏览器扩展程序，它只能获取和分析网站的 URL，不能运行 JavaScript。
-
-### 补充文档
-
-[如前所述](/zh/joinus/new-rss/add-docs#其他组件)，在 RSSHub 文档添加 radar="1" 将显示“支持 Radar”的徽章。
 
 ## 调试 Radar 规则
 

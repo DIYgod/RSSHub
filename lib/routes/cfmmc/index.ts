@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { id = 'main/noticeannouncement/cfmmcnotice' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -59,7 +67,7 @@ export default async (ctx) => {
     const author = '中国期货市场监控中心';
     const image = new URL($('a.logo img').prop('src'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author} - ${$('h3.SubPage_t3').text()}`,
         link: currentUrl,
@@ -69,5 +77,5 @@ export default async (ctx) => {
         subtitle: $('meta[name="Keywords"]').prop('content'),
         author,
         allowEmpty: true,
-    });
-};
+    };
+}

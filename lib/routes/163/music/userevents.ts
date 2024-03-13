@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,14 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 const renderDescription = (info) => art(path.join(__dirname, '../templates/music/userevents.art'), info);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/music/user/events/:id',
+    name: 'Unknown',
+    maintainers: ['Master-Hash'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const response = await got(`https://music.163.com/api/event/get/${id}`, {
@@ -18,7 +26,7 @@ export default async (ctx) => {
     const { data } = response;
     const { nickname, signature, avatarUrl } = data.events[0].user;
 
-    ctx.set('data', {
+    return {
         title: `${nickname}的云村动态`,
         link: `https://music.163.com/#/user/event?id=${id}`,
         description: `网易云音乐用户动态 - ${signature}`,
@@ -51,5 +59,5 @@ export default async (ctx) => {
                 comments: item.info.commentCount,
             };
         }),
-    });
-};
+    };
+}

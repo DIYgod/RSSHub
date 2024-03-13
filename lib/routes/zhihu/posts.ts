@@ -1,9 +1,34 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/posts/:usertype/:id',
+    categories: ['social-media'],
+    example: '/zhihu/posts/people/frederchen',
+    parameters: { usertype: '作者 id，可在用户主页 URL 中找到', id: '用户类型usertype，参考用户主页的URL。目前有两种，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.zhihu.com/:usertype/:id/posts'],
+    },
+    name: '用户文章',
+    maintainers: ['whtsky', 'Colin-XKL'],
+    handler,
+    description: `| 普通用户 | 机构用户 |
+| -------- | -------- |
+| people   | org      |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const usertype = ctx.req.param('usertype');
 
@@ -44,10 +69,10 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `${authorname} 的知乎文章`,
         link: `https://www.zhihu.com/${usertype}/${id}/posts`,
         description: authordescription,
         item: list,
-    });
-};
+    };
+}

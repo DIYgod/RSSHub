@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -10,7 +11,28 @@ const map = {
     news: '/1596',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:type?',
+    categories: ['university'],
+    example: '/njupt/jwc/notice',
+    parameters: { type: '默认为 `notice`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '教务处通知与新闻',
+    maintainers: ['shaoye'],
+    handler,
+    description: `| 通知公告 | 教务快讯 |
+  | -------- | -------- |
+  | notice   | news     |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'notice';
     const link = host + map[type] + '/list.htm';
     const response = await got({
@@ -83,9 +105,9 @@ export default async (ctx) => {
     if (type === 'news') {
         info = '教务快讯';
     }
-    ctx.set('data', {
+    return {
         title: '南京邮电大学 -- ' + info,
         link,
         item: out,
-    });
-};
+    };
+}

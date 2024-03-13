@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getData, getList, getRedirectedLink } from './utils.js';
 
 const variables = {
@@ -56,12 +57,35 @@ const graphqlQuery = {
     variables,
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/discussed',
+    categories: ['social-media'],
+    example: '/daily/discussed',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['daily.dev/popular'],
+        target: '',
+    },
+    name: 'Most Discussed',
+    maintainers: ['Rjnishant530'],
+    handler,
+    url: 'daily.dev/popular',
+};
+
+async function handler() {
     const baseUrl = 'https://app.daily.dev/discussed';
     const data = await getData(graphqlQuery);
     const list = getList(data);
     const items = await getRedirectedLink(list);
-    ctx.set('data', {
+    return {
         title: 'Most Discussed',
         link: baseUrl,
         item: items,
@@ -69,5 +93,5 @@ export default async (ctx) => {
         logo: 'https://app.daily.dev/favicon-32x32.png',
         icon: 'https://app.daily.dev/favicon-32x32.png',
         language: 'en-us',
-    });
-};
+    };
+}

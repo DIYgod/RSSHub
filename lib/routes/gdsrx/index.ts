@@ -1,9 +1,37 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?',
+    categories: ['other'],
+    example: '/gdsrx',
+    parameters: { id: '栏目 id，可在对应栏目页 URL 中找到，见下表，默认为法规文库' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '栏目',
+    maintainers: [],
+    handler,
+    description: `| 栏目名称          | 栏目 id |
+  | ----------------- | ------- |
+  | 法规文库          | 10      |
+  | 法规资讯          | 12      |
+  | 专家供稿          | 13      |
+  | 协会动态 会员动态 | 20      |
+  | 协会动态          | 37      |
+  | 协会通知公告      | 38      |
+  | 会员动态          | 39      |`,
+};
+
+async function handler(ctx) {
     const { id = '10' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
@@ -58,7 +86,7 @@ export default async (ctx) => {
         .map((c) => $(c).text())
         .pop();
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
@@ -69,5 +97,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle,
         author,
-    });
-};
+    };
+}

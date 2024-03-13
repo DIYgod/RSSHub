@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,31 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import MarkdownIt from 'markdown-it';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/release/:user/:app/:distribution_group',
+    categories: ['program-update'],
+    example: '/app-center/release/cloudflare/1.1.1.1-windows/beta',
+    parameters: { user: 'User', app: 'App name', distribution_group: 'Distribution group' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group', 'install.appcenter.ms/orgs/:user/apps/:app/distribution_groups/:distribution_group'],
+    },
+    name: 'Release',
+    maintainers: ['Rongronggg9'],
+    handler,
+    description: `:::tip
+  The parameters can be extracted from the Release page URL: \`https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group\`
+  :::`,
+};
+
+async function handler(ctx) {
     const user = ctx.req.param('user');
     const app = ctx.req.param('app');
     const distribution_group = ctx.req.param('distribution_group');
@@ -114,11 +139,11 @@ export default async (ctx) => {
     const icon = items && items[0]._feed_icon; // if it is an empty feed, would not raise an error here
     const title = items && items[0]._feed_title;
 
-    ctx.set('data', {
+    return {
         title,
         link,
         description: title,
         image: icon,
         item: items,
-    });
-};
+    };
+}

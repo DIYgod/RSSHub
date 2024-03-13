@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { hash } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tag/:owner/:image/:limits?',
+    categories: ['program-update'],
+    example: '/dockerhub/tag/library/mariadb',
+    parameters: { owner: 'Image owner', image: 'Image name', limits: 'Tag count, 10 by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Image New Tag',
+    maintainers: [],
+    handler,
+    description: `:::warning
+  Use \`library\` as the \`owner\` for official images, such as [https://rsshub.app/dockerhub/tag/library/mysql](https://rsshub.app/dockerhub/tag/library/mysql)
+  :::`,
+};
+
+async function handler(ctx) {
     const { owner, image, limits } = ctx.req.param();
 
     const namespace = `${owner}/${image}`;
@@ -15,7 +37,7 @@ export default async (ctx) => {
 
     const tags = data.data.results;
 
-    ctx.set('data', {
+    return {
         title: `${namespace} tags`,
         description: metadata.data.description,
         link,
@@ -29,5 +51,5 @@ export default async (ctx) => {
             // check for (1) different tag names and (2) different image hashes, considering varients of all arches
             guid: `${namespace}:${item.name}@${hash(item.images)}`,
         })),
-    });
-};
+    };
+}

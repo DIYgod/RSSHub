@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -11,7 +12,28 @@ const map = new Map([
 
 const host = 'https://dgxg.njust.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/dgxg/:type?',
+    categories: ['university'],
+    example: '/njust/dgxg/gstz',
+    parameters: { type: '分类名，见下表，默认为公示通知' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '电光学院研学网',
+    maintainers: ['jasongzy'],
+    handler,
+    description: `| 公示通知 | 学术文化 | 就业指导 |
+  | -------- | -------- | -------- |
+  | gstz     | xswh     | jyzd     |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'gstz';
     const info = map.get(type);
     if (!info) {
@@ -24,7 +46,7 @@ export default async (ctx) => {
     const $ = load(html);
     const list = $('ul.wp_article_list').find('li');
 
-    ctx.set('data', {
+    return {
         title: info.title,
         link: siteUrl,
         item:
@@ -36,5 +58,5 @@ export default async (ctx) => {
                     link: $(item).find('a').attr('href'),
                 }))
                 .get(),
-    });
-};
+    };
+}

@@ -1,9 +1,52 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import * as url from 'node:url';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?',
+    categories: ['bbs'],
+    example: '/nowcoder/jobcenter/1/北京/1/1/true',
+    parameters: {
+        recruitType: '招聘分类，`1` 指 实习广场，`2` 指 社招广场，默认为 `1`',
+        city: '所在城市，可选城市见下表，若空则为 `全国`',
+        type: '职位类型，可选职位代码见下表，若空则为 `全部`',
+        order: '排序参数，可选排序参数代码见下表，若空则为 `默认`',
+        latest: '是否仅查看最近一周，可选 `true` 和 `false`，默认为 `false`',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nowcoder.com/'],
+        target: '/jobcenter',
+    },
+    name: '实习广场 & 社招广场',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'nowcoder.com/',
+    description: `可选城市有：北京、上海、广州、深圳、杭州、南京、成都、厦门、武汉、西安、长沙、哈尔滨、合肥、其他
+
+  职位类型代码见下表：
+
+  | 研发 | 测试 | 数据 | 算法 | 前端 | 产品 | 运营 | 其他 |
+  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 0    |
+
+  排序参数见下表：
+
+  | 最新发布 | 最快处理 | 处理率最高 |
+  | -------- | -------- | ---------- |
+  | 1        | 2        | 3          |`,
+};
+
+async function handler(ctx) {
     const rootUrl = `https://www.nowcoder.com/job/center/`;
     const currentUrl = `${rootUrl}?${ctx.req.param('type') ? 'type=' + ctx.req.param('type') : ''}${ctx.req.param('city') ? '&city=' + ctx.req.param('city') : ''}${ctx.req.param('order') ? '&order=' + ctx.req.param('order') : ''}${
         ctx.req.param('recruitType') ? '&recruitType=' + ctx.req.param('recruitType') : ''
@@ -50,9 +93,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${ctx.req.param('recruitType') ? (ctx.req.param('recruitType') === '2' ? '社招广场' : '实习广场') : '实习广场'} - 牛客网`,
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

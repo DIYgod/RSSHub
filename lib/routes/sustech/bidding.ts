@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bidding',
+    categories: ['university'],
+    example: '/sustech/bidding',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['biddingoffice.sustech.edu.cn/'],
+    },
+    name: '采购与招标管理部',
+    maintainers: ['sparkcyf'],
+    handler,
+    url: 'biddingoffice.sustech.edu.cn/',
+};
+
+async function handler() {
     const link = 'http://biddingoffice.sustech.edu.cn';
     const response = await got({
         method: 'get',
@@ -15,7 +38,7 @@ export default async (ctx) => {
 
     const list = $('.index-wrap.index-2 ul li');
 
-    ctx.set('data', {
+    return {
         title: '南方科技大学采购与招标管理部',
         link,
         item:
@@ -30,5 +53,5 @@ export default async (ctx) => {
                     link: a.attr('href'),
                 };
             }),
-    });
-};
+    };
+}

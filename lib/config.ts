@@ -184,6 +184,9 @@ export type Config = {
         cookies: Record<string, string | undefined>;
         articleCookie?: string;
     };
+    mihoyo: {
+        cookie?: string;
+    };
     miniflux: {
         instance?: string;
         token?: string;

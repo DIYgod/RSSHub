@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/pbc/goutongjiaoliu',
+    categories: ['finance'],
+    example: '/gov/pbc/goutongjiaoliu',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['pbc.gov.cn/goutongjiaoliu/113456/113469/index.html'],
+    },
+    name: '沟通交流',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'pbc.gov.cn/goutongjiaoliu/113456/113469/index.html',
+};
+
+async function handler() {
     const link = 'http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html';
 
     const browser = await puppeteer({ stealth: true });
@@ -52,9 +75,9 @@ export default async (ctx) => {
 
     browser.close();
 
-    ctx.set('data', {
+    return {
         title: '中国人民银行 - 沟通交流',
         link,
         item: items,
-    });
-};
+    };
+}

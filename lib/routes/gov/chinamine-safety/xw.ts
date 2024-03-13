@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,14 @@ import { parseDate } from '@/utils/parse-date';
 
 import { rootUrl, processItems, fetchData } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/chinamine-safety/xw/:category{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'yjglbyw' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -31,8 +39,8 @@ export default async (ctx) => {
 
     items = await processItems(items, cache.tryGet);
 
-    ctx.set('data', {
+    return {
         item: items,
         ...fetchData($, currentUrl),
-    });
-};
+    };
+}

@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/portal',
+    categories: ['bbs'],
+    example: '/trow/portal',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['trow.cc/'],
+    },
+    name: '首页更新',
+    maintainers: ['shiningdracon'],
+    handler,
+    url: 'trow.cc/',
+};
+
+async function handler() {
     let data;
     const response = await got.extend({ followRedirect: false }).get({
         url: `https://trow.cc`,
@@ -23,7 +46,7 @@ export default async (ctx) => {
     const $ = load(data);
     const list = $('#portal_content .borderwrap[style="display:show"]');
 
-    ctx.set('data', {
+    return {
         title: `The Ring of Wonder - Portal`,
         link: `https://trow.cc`,
         description: `The Ring of Wonder 首页更新`,
@@ -42,5 +65,5 @@ export default async (ctx) => {
                     };
                 })
                 .get(),
-    });
-};
+    };
+}

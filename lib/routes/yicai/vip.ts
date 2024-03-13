@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 import { rootUrl, ProcessItems } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/vip/:id?',
+    categories: ['traditional-media'],
+    example: '/yicai/vip/428',
+    parameters: { id: '频道 id，可在对应频道页中找到，默认为一元点金' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yicai.com/vip/product/:id', 'yicai.com/'],
+        target: '/vip/:id',
+    },
+    name: 'VIP 频道',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '428';
 
     const currentUrl = `${rootUrl}/vip/product/${id}`;
@@ -19,9 +42,9 @@ export default async (ctx) => {
 
     const items = await ProcessItems(apiUrl, cache.tryGet);
 
-    ctx.set('data', {
+    return {
         title: `第一财经VIP频道 - ${$('title').text()}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

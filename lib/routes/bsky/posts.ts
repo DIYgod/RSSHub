@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,28 @@ import { resolveHandle, getProfile, getAuthorFeed } from './utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/profile/:handle',
+    categories: ['social-media'],
+    example: '/bsky/profile/bsky.app',
+    parameters: { handle: 'User handle, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bsky.app/profile/:handle'],
+    },
+    name: 'Post',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const handle = ctx.req.param('handle');
     const DID = await resolveHandle(handle, cache.tryGet);
     const profile = await getProfile(DID, cache.tryGet);
@@ -28,7 +50,7 @@ export default async (ctx) => {
         comments: post.replyCount,
     }));
 
-    ctx.set('data', {
+    return {
         title: `${profile.displayName} (@${profile.handle}) — Bluesky`,
         description: profile.description?.replaceAll('\n', ' '),
         link: `https://bsky.app/profile/${profile.handle}`,
@@ -36,11 +58,11 @@ export default async (ctx) => {
         icon: profile.avatar,
         logo: profile.avatar,
         item: items,
-    });
+    };
 
     ctx.set('json', {
         DID,
         profile,
         authorFeed,
     });
-};
+}

@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const HOME_PAGE = 'http://www.jlwater.com/';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/nanjing',
+    categories: ['forecast'],
+    example: '/tingshuitz/nanjing',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['jlwater.com/portal/10000013', 'jlwater.com/'],
+    },
+    name: '南京市',
+    maintainers: ['ocleo1'],
+    handler,
+    url: 'jlwater.com/portal/10000013',
+};
+
+async function handler() {
     const url = `${HOME_PAGE}portal/10000013`;
     const response = await got(url);
 
@@ -11,7 +34,7 @@ export default async (ctx) => {
     const $ = load(data);
     const list = $('.list-content ul li');
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: url,
         item: list
@@ -29,5 +52,5 @@ export default async (ctx) => {
                 };
             })
             .get(),
-    });
-};
+    };
+}

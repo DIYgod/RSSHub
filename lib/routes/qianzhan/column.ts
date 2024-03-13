@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/analyst/column/:type?',
+    categories: ['finance'],
+    example: '/qianzhan/analyst/column/all',
+    parameters: { type: '分类，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '文章列表',
+    maintainers: ['moke8'],
+    handler,
+    description: `| 全部 | 研究员专栏 | 规划师专栏 | 观察家专栏 |
+  | ---- | ---------- | ---------- | ---------- |
+  | all  | 220        | 627        | 329        |`,
+};
+
+async function handler(ctx) {
     let rootUrl = 'https://www.qianzhan.com/analyst/';
     const titles = {
         all: '最新文章',
@@ -43,9 +65,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `前瞻经济学人 - ${titles[type]}`,
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

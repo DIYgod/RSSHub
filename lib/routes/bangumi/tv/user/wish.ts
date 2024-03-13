@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tv/user/wish/:id',
+    categories: ['anime'],
+    example: '/bangumi/tv/user/wish/sai',
+    parameters: { id: '用户 id, 在用户页面地址栏查看' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bgm.tv/anime/list/:id/wish'],
+    },
+    name: '用户想看',
+    maintainers: ['honue'],
+    handler,
+};
+
+async function handler(ctx) {
     const userid = ctx.req.param('id');
     const url = `https://bgm.tv/anime/list/${userid}/wish`;
     const response = await got({
@@ -29,10 +51,10 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `${username}想看的动画`,
         link: url,
         item: items,
         description: `${username}想看的动画列表`,
-    });
-};
+    };
+}

@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['study'],
+    example: '/ccf/news',
+    parameters: { category: '分类，见下表，默认为 CCF 新闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ccf.org.cn/:category', 'ccf.org.cn/'],
+        target: '/news/:category',
+    },
+    name: '新闻',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| CCF 新闻    | CCF 聚焦 | ACM 信息  |
+  | ----------- | -------- | --------- |
+  | Media\_list | Focus    | ACM\_News |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') || 'Media_list';
 
     const rootUrl = 'https://www.ccf.org.cn';
@@ -38,9 +64,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

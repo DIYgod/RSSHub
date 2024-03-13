@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
@@ -15,7 +16,43 @@ const categoryList = {
     'young-adult-hardcover': '青少年',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/book/:category?',
+    categories: ['traditional-media'],
+    example: '/nytimes/book/combined-print-and-e-book-nonfiction',
+    parameters: { category: 'N' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nytimes.com/'],
+        target: '',
+    },
+    name: 'Best Seller Books',
+    maintainers: ['melvinto'],
+    handler,
+    url: 'nytimes.com/',
+    description: `| Category                             |
+| ------------------------------------ |
+| combined-print-and-e-book-nonfiction |
+| hardcover-nonfiction                 |
+| paperback-nonfiction                 |
+| advice-how-to-and-miscellaneous      |
+| combined-print-and-e-book-fiction    |
+| hardcover-fiction                    |
+| trade-fiction-paperback              |
+| childrens-middle-grade-hardcover     |
+| picture-books                        |
+| series-books                         |
+| young-adult-hardcover                |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'combined-print-and-e-book-nonfiction';
 
     const url = `https://www.nytimes.com/books/best-sellers/${category}`;
@@ -63,9 +100,9 @@ export default async (ctx) => {
             .get();
     }
 
-    ctx.set('data', {
+    return {
         title: `The New York Times Best Sellers - ${dataTitle}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import utils from './utils';
 import { config } from '@/config';
@@ -5,7 +6,25 @@ import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/live/:username/:embed?',
+    categories: ['live'],
+    example: '/youtube/live/@GawrGura',
+    parameters: { username: 'YouTuber id', embed: 'Default to embed the video, set to any value to disable embedding' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Live',
+    maintainers: ['sussurr127'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.youtube || !config.youtube.key) {
         throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -29,7 +48,7 @@ export default async (ctx) => {
 
     const data = (await utils.getLive(channelId, cache)).data.items;
 
-    ctx.set('data', {
+    return {
         title: `${channelName || username}'s Live Status`,
         link: `https://www.youtube.com/channel/${channelId}`,
         description: `$${channelName || username}'s live streaming status`,
@@ -46,5 +65,5 @@ export default async (ctx) => {
             };
         }),
         allowEmpty: true,
-    });
-};
+    };
+}

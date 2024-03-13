@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,29 @@ import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/new',
+    categories: ['blog'],
+    example: '/xys/new',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xys.org/', 'xys.org/new.html'],
+    },
+    name: '新到资料',
+    maintainers: ['wenzhenl'],
+    handler,
+    url: 'xys.org/',
+};
+
+async function handler(ctx) {
     const rootUrl = 'http://www.xys.org';
     const currentUrl = `${rootUrl}/new.html`;
 
@@ -70,9 +93,9 @@ export default async (ctx) => {
             )
     );
 
-    ctx.set('data', {
+    return {
         title: '新语丝 - 新到资料',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['game'],
+    example: '/loltw/news',
+    parameters: { category: '新闻分类，置空为全部新闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '台服新闻',
+    maintainers: ['hoilc'],
+    handler,
+    description: `| 活动  | 资讯 | 系统   | 电竞   | 版本资讯 | 战棋资讯 |
+  | ----- | ---- | ------ | ------ | -------- | -------- |
+  | event | info | system | esport | patch    | TFTpatch |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const baseUrl = 'https://lol.garena.tw';
@@ -32,9 +54,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '英雄联盟 - 台服新闻',
         link: category ? `${baseUrl}/news/${category}` : `${baseUrl}/news`,
         item: items,
-    });
-};
+    };
+}

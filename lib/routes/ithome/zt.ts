@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zt/:id',
+    categories: ['new-media'],
+    example: '/ithome/zt/xijiayi',
+    parameters: { id: '专题 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ithome.com/zt/:id'],
+    },
+    name: '专题',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `所有专题请见[此处](https://www.ithome.com/zt)`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://www.ithome.com';
@@ -55,9 +78,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('title').text()} - IT之家`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

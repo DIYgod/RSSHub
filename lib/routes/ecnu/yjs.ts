@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yjs',
+    categories: ['university'],
+    example: '/ecnu/yjs',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yz.kaoyan.com/ecnu/tiaoji', 'yz.kaoyan.com/'],
+    },
+    name: '研究生院',
+    maintainers: ['shengmaosu'],
+    handler,
+    url: 'yz.kaoyan.com/ecnu/tiaoji',
+};
+
+async function handler() {
     const link = 'https://yz.kaoyan.com/ecnu/tiaoji/';
     const response = await got(link);
     const $ = load(response.data);
@@ -29,10 +52,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '华东师范大学研究生院',
         link,
         description: '华东师范大学研究生调剂信息',
         item: items,
-    });
-};
+    };
+}

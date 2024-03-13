@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 import MarkdownIt from 'markdown-it';
@@ -7,7 +8,29 @@ const md = MarkdownIt({
 });
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/pull/:user/:repo/:state?/:labels?',
+    categories: ['programming'],
+    example: '/github/pull/DIYgod/RSSHub',
+    parameters: { user: 'User name', repo: 'Repo name', state: 'the state of pull requests. Can be either `open`, `closed`, or `all`. Default: `open`.', labels: 'a list of comma separated label names' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['github.com/:user/:repo/pulls', 'github.com/:user/:repo/pulls/:id', 'github.com/:user/:repo'],
+        target: '/pull/:user/:repo',
+    },
+    name: 'Repo Pull Requests',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const user = ctx.req.param('user');
     const repo = ctx.req.param('repo');
     const state = ctx.req.param('state') ?? 'open';
@@ -32,7 +55,7 @@ export default async (ctx) => {
     });
     const data = response.data.filter((item) => item.pull_request);
 
-    ctx.set('data', {
+    return {
         allowEmpty: true,
         title: `${user}/${repo} Pull requests`,
         link: host,
@@ -43,5 +66,5 @@ export default async (ctx) => {
             pubDate: parseDate(item.created_at),
             link: item.html_url,
         })),
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,7 +8,50 @@ import iconv from 'iconv-lite';
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 const host = 'https://www.flyert.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/creditcard/:bank',
+    categories: ['travel'],
+    example: '/flyert/creditcard/zhongxin',
+    parameters: { bank: '信用卡板块各银行的拼音简称' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['flyert.com/'],
+    },
+    name: '信用卡',
+    maintainers: ['nicolaszf'],
+    handler,
+    url: 'flyert.com/',
+    description: `| 信用卡模块 | bank          |
+  | ---------- | ------------- |
+  | 国内信用卡 | creditcard    |
+  | 浦发银行   | pufa          |
+  | 招商银行   | zhaoshang     |
+  | 中信银行   | zhongxin      |
+  | 交通银行   | jiaotong      |
+  | 中国银行   | zhonghang     |
+  | 工商银行   | gongshang     |
+  | 广发银行   | guangfa       |
+  | 农业银行   | nongye        |
+  | 建设银行   | jianshe       |
+  | 汇丰银行   | huifeng       |
+  | 民生银行   | mingsheng     |
+  | 兴业银行   | xingye        |
+  | 花旗银行   | huaqi         |
+  | 上海银行   | shanghai      |
+  | 无卡支付   | wuka          |
+  | 投资理财   | 137           |
+  | 网站权益汇 | 145           |
+  | 境外信用卡 | intcreditcard |`,
+};
+
+async function handler(ctx) {
     const bank = ctx.req.param('bank');
     const target = `${host}/forum-${bank}-1.html`;
     let bankname = '';
@@ -81,10 +125,10 @@ export default async (ctx) => {
 
     const result = await util.ProcessFeed(list, cache);
 
-    ctx.set('data', {
+    return {
         title: `飞客茶馆信用卡 - ${bankname}`,
         link: 'https://www.flyert.com/',
         description: `飞客茶馆信用卡 - ${bankname}`,
         item: result,
-    });
-};
+    };
+}

@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { phoneBaseUrl, webBaseUrl, generateNonce, sign, getPost } from './utils';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bbs/special/:specialId',
+    categories: ['bbs'],
+    example: '/dxy/bbs/special/72',
+    parameters: { specialId: '专题 ID，可在对应专题页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '专题',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const specialId = ctx.req.param('specialId');
     const { limit = '10' } = ctx.req.query();
 
@@ -70,11 +89,11 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => getPost(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: specialDetail.name,
         description: `${specialDetail.content} ${specialDetail.postCount} 內容 ${specialDetail.followCount} 关注`,
         link: `${phoneBaseUrl}/bbs/special?specialId=${specialId}`,
         image: specialDetail.specialAvatar,
         item: items,
-    });
-};
+    };
+}

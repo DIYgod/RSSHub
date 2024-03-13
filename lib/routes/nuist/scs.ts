@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,32 @@ import { parseDate } from '@/utils/parse-date';
 const baseTitle = 'NUIST CS（南信大计软院）';
 const baseUrl = 'https://scs.nuist.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/scs/:category?',
+    categories: ['university'],
+    example: '/nuist/scs/xwkx',
+    parameters: { category: '默认为新闻快讯' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['scs.nuist.edu.cn/:category/list.htm'],
+        target: '/scs/:category',
+    },
+    name: 'NUIST CS（南信大计软院）',
+    maintainers: ['gylidian'],
+    handler,
+    description: `| 新闻快讯 | 通知公告 | 教务信息 | 科研动态 | 学子风采 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | xwkx     | tzgg     | jwxx     | kydt     | xzfc     |`,
+};
+
+async function handler(ctx) {
     const { category = 'xwkx' } = ctx.req.param();
     const link = `${baseUrl}/${category}/list.htm`;
 
@@ -41,10 +67,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: baseTitle + '：' + $('head title').text(),
         description: $('meta[name=description]').attr('content'),
         link,
         item: items,
-    });
-};
+    };
+}

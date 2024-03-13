@@ -1,10 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/uae/:id',
+    categories: ['university'],
+    example: '/hrbeu/uae/xwdt',
+    parameters: { id: '栏目编号，在 `URL` 中获取，如果有多级编号，将 `/` 替换为 `-`。' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['uae.hrbeu.edu.cn/:id.htm'],
+    },
+    name: '水声工程学院',
+    maintainers: [],
+    handler,
+    description: `| 新闻动态 | 通知公告 | 科学研究 / 科研动态 |
+  | :------: | :------: | :-----------------: |
+  |   xwdt   |   tzgg   |      kxyj-kydt      |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id').replaceAll('-', '/');
     const host = 'http://uae.hrbeu.edu.cn';
     const url = `${host}/${id}.htm`;
@@ -59,9 +84,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `水声工程学院 - ${title}`,
         link: url,
         item,
-    });
-};
+    };
+}

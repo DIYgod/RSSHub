@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -5,7 +6,25 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/music/artist/:id',
+    categories: ['multimedia'],
+    example: '/163/music/artist/2116',
+    parameters: { id: '歌手 id, 可在歌手详情页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '歌手专辑',
+    maintainers: ['metowolf'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const response = await got(`https://music.163.com/api/artist/albums/${id}`, {
@@ -16,7 +35,7 @@ export default async (ctx) => {
 
     const data = response.data;
 
-    ctx.set('data', {
+    return {
         title: data.artist.name,
         link: `https://music.163.com/#/artist/album?id=${id}`,
         description: `网易云音乐歌手专辑 - ${data.artist.name}`,
@@ -38,5 +57,5 @@ export default async (ctx) => {
                 author: singer,
             };
         }),
-    });
-};
+    };
+}

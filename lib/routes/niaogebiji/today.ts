@@ -1,7 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/today',
+    categories: ['new-media'],
+    example: '/niaogebiji/today',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['niaogebiji.com/', 'niaogebiji.com/bulletin'],
+        target: '',
+    },
+    name: '今日事',
+    maintainers: ['KotoriK'],
+    handler,
+    url: 'niaogebiji.com/',
+};
+
+async function handler() {
     const response = await got({
         method: 'post',
         url: 'https://www.niaogebiji.com/pc/bulletin/index',
@@ -18,7 +42,7 @@ export default async (ctx) => {
 
     const data = response.data.return_data;
 
-    ctx.set('data', {
+    return {
         title: '鸟哥笔记-今日事',
         link: 'https://www.niaogebiji.com/bulletin',
         item: data.map((item) => ({
@@ -30,5 +54,5 @@ export default async (ctx) => {
             category: item.seo_keywords.split(','),
             author: item.user_info.nickname,
         })),
-    });
-};
+    };
+}

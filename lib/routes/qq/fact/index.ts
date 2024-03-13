@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -17,7 +18,29 @@ const getRequestToken = () => {
 
 const baseUrl = 'https://vp.fact.qq.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/fact',
+    categories: ['other'],
+    example: '/qq/fact',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['vp.fact.qq.com/home', 'vp.fact.qq.com/'],
+    },
+    name: '最新辟谣',
+    maintainers: ['hoilc'],
+    handler,
+    url: 'vp.fact.qq.com/home',
+};
+
+async function handler() {
     const { data: response } = await got(`${baseUrl}/api/article/list`, {
         headers: {
             Referer: `${baseUrl}/home`,
@@ -57,9 +80,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '较真查证平台 - 腾讯新闻',
         link: `${baseUrl}/home`,
         item: items,
-    });
-};
+    };
+}

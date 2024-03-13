@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,7 +9,28 @@ const map = new Map([
     [2, { title: '博士招生 - 深圳大学研究生招生网' }],
 ]);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yz/:type?',
+    categories: ['university'],
+    example: '/szu/yz/1',
+    parameters: { type: '默认为 `1`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '研究生招生网',
+    maintainers: ['NagaruZ'],
+    handler,
+    description: `| 研究生 | 博士生 |
+  | ------ | ------ |
+  | 1      | 2      |`,
+};
+
+async function handler(ctx) {
     let type = Number.parseInt(ctx.req.param('type'));
     const struct = {
         1: {
@@ -43,10 +65,10 @@ export default async (ctx) => {
     const name = $('title').text();
     const result = await util.ProcessFeed(list, cache, struct[type]);
 
-    ctx.set('data', {
+    return {
         title: map.get(type).title,
         link: url,
         description: name,
         item: result,
-    });
-};
+    };
+}

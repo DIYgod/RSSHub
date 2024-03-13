@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/nifdc/:path{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { path = 'bshff/ylqxbzhgl/qxggtzh' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -64,7 +72,7 @@ export default async (ctx) => {
     const image = new URL($('div.logo img').prop('src'), currentUrl).href;
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), currentUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: $('title').text().replace(/----/, ' - '),
         link: currentUrl,
@@ -75,5 +83,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('meta[ name="ColumnName"]').prop('content'),
         author: $('meta[name="SiteName"]').prop('content'),
-    });
-};
+    };
+}

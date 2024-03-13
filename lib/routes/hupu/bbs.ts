@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,32 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/bbs/:id?/:order?', '/bxj/:id?/:order?'],
+    categories: ['bbs'],
+    example: '/hupu/bbs/topic-daily',
+    parameters: { id: '编号，可在对应社区 URL 中找到，默认为#步行街主干道', order: '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['m.hupu.com/:category', 'm.hupu.com/'],
+        target: '/:category',
+    },
+    name: '社区',
+    maintainers: ['LogicJake', 'nczitzk'],
+    handler,
+    description: `:::tip
+  更多社区参见 [社区](https://bbs.hupu.com)
+  :::`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '34';
     const order = ctx.req.param('order') ?? '1';
 
@@ -80,10 +106,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `虎扑社区 - ${$('.bbs-sl-web-intro-detail-title').text()}`,
         link: currentUrl,
         item: items,
         description: $('.bbs-sl-web-intro-detail-desc-text').first().text(),
-    });
-};
+    };
+}

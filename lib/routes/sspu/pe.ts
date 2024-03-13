@@ -1,9 +1,21 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/pe/:id?',
+    radar: {
+        source: ['pe2016.sspu.edu.cn/:id/list.htm'],
+        target: '/pe/:id',
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id = '342' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -52,7 +64,7 @@ export default async (ctx) => {
     const subtitle = $('title').text();
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
@@ -62,5 +74,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle,
         author,
-    });
-};
+    };
+}

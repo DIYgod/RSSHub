@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,25 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { isYouTubeChannelId } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/community/:handle',
+    categories: ['social-media'],
+    example: '/youtube/community/@JFlaMusic',
+    parameters: { handle: 'YouTube handles or channel id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Community',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const handle = ctx.req.param('handle');
 
     let urlPath = handle;
@@ -50,10 +69,10 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `${username} - Community - YouTube`,
         link: channelMetadata.channelUrl,
         description: channelMetadata.description,
         item: items,
-    });
-};
+    };
+}

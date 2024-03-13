@@ -1,9 +1,21 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { ProcessForm, ProcessFeed } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:id?',
+    radar: {
+        source: ['www.iyingdi.com/tz/people/:id', 'www.iyingdi.com/tz/people/:id/*'],
+        target: '/user/:id',
+    },
+    name: 'Unknown',
+    maintainers: ['auto-bot-ty'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const rootUrl = 'https://www.iyingdi.com';
     const listUrl = 'https://api.iyingdi.com/web/user/event-list';
@@ -41,9 +53,9 @@ export default async (ctx) => {
 
     const items = await ProcessFeed(cache, articleList);
 
-    ctx.set('data', {
+    return {
         title: `${nickname} - 旅法师营地 `,
         link: `${rootUrl}/tz/people/${id}`,
         item: items,
-    });
-};
+    };
+}

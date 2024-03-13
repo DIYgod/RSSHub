@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -11,7 +12,29 @@ const md = MarkdownIt({
 const host = 'https://leetcode.com';
 const gqlEndpoint = `${host}/graphql`;
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/articles',
+    categories: ['programming'],
+    example: '/leetcode/articles',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['leetcode.com/articles'],
+    },
+    name: 'Articles',
+    maintainers: ['LogicJake'],
+    handler,
+    url: 'leetcode.com/articles',
+};
+
+async function handler() {
     const link = new URL('/articles/', host).href;
     const response = await got(link);
     const $ = load(response.data);
@@ -76,11 +99,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('meta[property="og:description"]').attr('content'),
         image: 'https://assets.leetcode.com/static_assets/public/icons/favicon-192x192.png',
         link,
         item: out,
-    });
-};
+    };
+}

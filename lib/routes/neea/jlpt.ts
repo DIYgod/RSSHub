@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jlpt',
+    categories: ['study'],
+    example: '/neea/jlpt',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['jlpt.neea.cn/'],
+    },
+    name: '教育部考试中心日本语能力测试重要通知',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'jlpt.neea.cn/',
+};
+
+async function handler() {
     const rootUrl = 'https://news.neea.cn';
     const currentUrl = `${rootUrl}/JLPT/1/newslist.htm`;
 
@@ -45,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '重要通知 - 教育部考试中心日本语能力测试',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

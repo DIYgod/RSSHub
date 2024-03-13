@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -34,7 +35,31 @@ function decodeData(str) {
     return content.toString('utf8').substring(substr2Num);
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/job/:type',
+    categories: ['university'],
+    example: '/wtu/job/xxtz',
+    parameters: { type: '信息类型' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['wtu.91wllm.com/news/index/tag/:type'],
+    },
+    name: '就业信息',
+    maintainers: ['ticks-tan'],
+    handler,
+    description: `| 信息类型 | 消息通知 | 通知公告 | 新闻快递 |
+  | -------- | -------- | -------- | -------- |
+  | 参数     | xxtz     | tzgg     | xwkd     |`,
+};
+
+async function handler(ctx) {
     // 获取参数 type
     const type = ctx.req.param('type');
     const mapItem = typeMap.get(type);
@@ -72,10 +97,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: msgTitle,
         link,
         description: msgTitle,
         item: items,
-    });
-};
+    };
+}

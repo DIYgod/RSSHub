@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,62 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/projectdynamic/:type?/:stage?/:status?',
+    categories: ['finance'],
+    example: '/szse/projectdynamic',
+    parameters: { type: '类型，见下表，默认为IPO', stage: '阶段，见下表，默认为全部', status: '状态，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['listing.szse.cn/projectdynamic/1/index.html', 'listing.szse.cn/projectdynamic/2/index.html', 'listing.szse.cn/projectdynamic/3/index.html', 'listing.szse.cn/'],
+    },
+    name: '创业板项目动态',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'listing.szse.cn/projectdynamic/1/index.html',
+    description: `类型
+
+  | IPO | 再融资 | 重大资产重组 |
+  | --- | ------ | ------------ |
+  | 1   | 2      | 3            |
+
+  阶段
+
+  | 全部 | 受理 | 问询 | 上市委会议 |
+  | ---- | ---- | ---- | ---------- |
+  | 0    | 10   | 20   | 30         |
+
+  | 提交注册 | 注册结果 | 中止 | 终止 |
+  | -------- | -------- | ---- | ---- |
+  | 35       | 40       | 50   | 60   |
+
+  状态
+
+  | 全部 | 新受理 | 已问询 | 通过 | 未通过 |
+  | ---- | ------ | ------ | ---- | ------ |
+  | 0    | 20     | 30     | 45   | 44     |
+
+  | 暂缓审议 | 复审通过 | 复审不通过 | 提交注册 |
+  | -------- | -------- | ---------- | -------- |
+  | 46       | 56       | 54         | 60       |
+
+  | 注册生效 | 不予注册 | 补充审核 | 终止注册 |
+  | -------- | -------- | -------- | -------- |
+  | 70       | 74       | 78       | 76       |
+
+  | 中止 | 审核不通过 | 撤回 |
+  | ---- | ---------- | ---- |
+  | 80   | 90         | 95   |`,
+};
+
+async function handler(ctx) {
     const typeMap = {
         1: 'IPO',
         2: '再融资',
@@ -86,9 +142,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${typeMap[type]}项目动态${status === '0' ? (stage === '0' ? '' : ` (${stageMap[stage]}) `) : ` (${statusMap[status]}) `} - 创业板发行上市审核信息公开网站 - 深圳证券交易所`,
         link: `${rootUrl}/projectdynamic/${type}/index.html`,
         item: items,
-    });
-};
+    };
+}

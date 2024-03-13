@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -119,13 +120,39 @@ const getInfoContent = (item) =>
         };
     });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/sichuan/deyang/mztoday/:infoType?',
+    categories: ['government'],
+    example: '/gov/sichuan/deyang/mztoday/zx',
+    parameters: { infoType: '信息栏目名称。默认最新(zx)' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.mztoday.gov.cn/*'],
+        target: '/sichuan/deyang/mztoday',
+    },
+    name: '今日绵竹',
+    maintainers: ['zytomorrow'],
+    handler,
+    url: 'www.mztoday.gov.cn/*',
+    description: `| 最新 | 推荐 | 时政 | 教育 | 民生 | 文旅 | 经济 | 文明创建 | 部门 | 镇（街道） | 健康绵竹 | 南轩讲堂 | 视频 | 文明实践 | 领航中国 | 绵竹年画 | 绵竹历史 | 绵竹旅游 | 外媒看绵竹 |
+  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | -------- | ---- | ---------- | -------- | -------- | ---- | -------- | -------- | -------- | -------- | -------- | ---------- |
+  | zx   | tj   | sz   | jy   | ms   | wl   | jj   | wmcj     | bm   | zj         | jkmz     | nxjt     | sp   | wmsj     | lhzg     | mznh     | mzls     | mzly     | wmkmz      |`,
+};
+
+async function handler(ctx) {
     const infoType = ctx.req.param('infoType') || 'zx';
     const infoBasicUrl = `${rootUrl}${basicInfoDict[infoType].url}`;
     const infoUrlList = await getInfoUrlList(infoBasicUrl);
     const items = await Promise.all(infoUrlList.map((item) => getInfoContent(item)));
 
-    ctx.set('data', {
+    return {
         title: `今日绵竹-${basicInfoDict[infoType].name}`,
         link: `${infoBasicUrl}1`,
         item: items.map((item) => ({
@@ -134,5 +161,5 @@ export default async (ctx) => {
             link: item.link,
             pubDate: item.pubDate,
         })),
-    });
-};
+    };
+}

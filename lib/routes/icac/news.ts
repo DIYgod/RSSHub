@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:lang?',
+    categories: ['government'],
+    example: '/icac/news/sc',
+    parameters: { lang: 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['icac.org.hk/:lang/press/index.html'],
+        target: '/news/:lang',
+    },
+    name: 'Press Releases',
+    maintainers: ['linbuxiao, TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const BASE_WITH_LANG = utils.langBase(ctx.req.param('lang'));
     const res = await got.get(`${BASE_WITH_LANG}/press/index.html`);
     const $ = load(res.data);
@@ -37,11 +60,11 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: 'ICAC 新闻公布',
         link: `${BASE_WITH_LANG}/press/index.html`,
         description: 'ICAC 新闻公布',
         language: ctx.req.param('lang') ? utils.LANG_TYPE[ctx.req.param('lang')] : utils.LANG_TYPE.sc,
         item: items,
-    });
-};
+    };
+}

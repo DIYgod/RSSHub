@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog',
+    categories: ['blog'],
+    example: '/deltaio/blog',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['delta.io/blog'],
+    },
+    name: 'Blogs',
+    maintainers: ['RengarLee'],
+    handler,
+    url: 'delta.io/blog',
+};
+
+async function handler() {
     const baseUrl = 'https://delta.io';
     const dataUrl = `${baseUrl}/page-data/blog/page-data.json`;
 
@@ -26,9 +49,9 @@ export default async (ctx) => {
         itunes_item_image: `${baseUrl}${node.frontmatter.thumbnail.childImageSharp.gatsbyImageData.images.fallback.src}`,
     }));
 
-    ctx.set('data', {
+    return {
         title: 'delta.io blog',
         link: `${baseUrl}/blog`,
         item: items,
-    });
-};
+    };
+}

@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import cache from './cache';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/live/search/:key/:order',
+    categories: ['live'],
+    example: '/bilibili/live/search/dota/online',
+    parameters: { key: '搜索关键字', order: '排序方式, live_time 开播时间, online 人气' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '直播搜索',
+    maintainers: ['Qixingchen'],
+    handler,
+};
+
+async function handler(ctx) {
     const key = ctx.req.param('key');
     const order = ctx.req.param('order');
 
@@ -31,7 +50,7 @@ export default async (ctx) => {
     });
     const data = response.data.data.result.live_room;
 
-    ctx.set('data', {
+    return {
         title: `哔哩哔哩直播-${key}-${orderTitle}`,
         link: `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live`,
         description: `哔哩哔哩直播-${key}-${orderTitle}`,
@@ -44,5 +63,5 @@ export default async (ctx) => {
                 guid: `https://live.bilibili.com/${item.roomid} ${item.live_time}`,
                 link: `https://live.bilibili.com/${item.roomid}`,
             })),
-    });
-};
+    };
+}

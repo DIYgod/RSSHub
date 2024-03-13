@@ -1,10 +1,37 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 import { rootUrl, getItems, getItemInfo, processItems } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?/:downLinkType?',
+    categories: ['multimedia'],
+    example: '/newzmz/qEzRyY3v',
+    parameters: { id: '剧集 id，可在剧集下载页 URL 中找到', downLinkType: '下载链接类型，默认为磁力链' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['newzmz.com/'],
+        target: '',
+    },
+    name: '指定剧集',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'newzmz.com/',
+    description: `:::tip
+  [雪国列车 (剧版)](https://nzmz.xyz/details-qEzRyY3v.html) 的下载页 URL 为 \`https://v.ys99.xyz/view/qEzRyY3v.html\`，即剧集 id 为 \`qEzRyY3v\`
+  :::`,
+};
+
+async function handler(ctx) {
     const { id = '1', downLinkType = '磁力链' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -51,7 +78,7 @@ export default async (ctx) => {
     const title = `${$('title').text()}${headerTitle ? ` - ${headerTitle}` : ''}`;
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
-    ctx.set('data', {
+    return {
         item: isCategory ? items : items.slice(0, limit),
         title,
         link: currentUrl,
@@ -63,5 +90,5 @@ export default async (ctx) => {
         subtitle: $('meta[name="keywords"]').prop('content'),
         author: title,
         allowEmpty: true,
-    });
-};
+    };
+}

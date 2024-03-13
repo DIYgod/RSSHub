@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import parser from '@/utils/rss-parser';
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:domain/:category?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { domain = 'news', category } = ctx.req.param();
     if (!isValidHost(domain)) {
         throw new Error('Invalid domain');
@@ -41,11 +49,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: feed.title,
         link: feed.link,
         image: domain === 'news' ? `${baseUrl}/blogico.ico` : `${baseUrl}/favicon.ico`,
         description: feed.description,
         item: items,
-    });
-};
+    };
+}

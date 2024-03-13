@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tv/topic/:id',
+    categories: ['anime'],
+    example: '/bangumi/tv/topic/367032',
+    parameters: { id: '话题 id, 在话题页面地址栏查看' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bgm.tv/group/topic/:id'],
+    },
+    name: '小组话题的新回复',
+    maintainers: ['ylc395'],
+    handler,
+};
+
+async function handler(ctx) {
     // bangumi.tv未提供获取小组话题的API，因此仍需要通过抓取网页来获取
     const topicID = ctx.req.param('id');
     const link = `https://bgm.tv/group/topic/${topicID}`;
@@ -42,7 +64,7 @@ export default async (ctx) => {
         link,
     };
 
-    ctx.set('data', {
+    return {
         title: `${title}的最新回复`,
         link,
         item: [
@@ -55,5 +77,5 @@ export default async (ctx) => {
             })),
             postTopic,
         ],
-    });
-};
+    };
+}

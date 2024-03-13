@@ -1,9 +1,22 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['supchina.com/feed', 'supchina.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'supchina.com/feed',
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://supchina.com';
     const currentUrl = `${rootUrl}/feed/`;
 
@@ -60,9 +73,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').first().text(),
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

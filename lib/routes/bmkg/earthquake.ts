@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/earthquake',
+    categories: ['forecast'],
+    example: '/bmkg/earthquake',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bmkg.go.id/', 'bmkg.go.id/gempabumi-terkini.html'],
+    },
+    name: 'Recent Earthquakes',
+    maintainers: ['Shinanory'],
+    handler,
+    url: 'bmkg.go.id/',
+};
+
+async function handler() {
     const url = 'https://www.bmkg.go.id/gempabumi-terkini.html';
     const response = await got(url);
     const $ = load(response.data);
@@ -19,11 +42,11 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: url,
         description: '印尼气象气候和地球物理局 最近的地震(M ≥ 5.0) | BMKG earthquake',
         item: items,
         language: 'in',
-    });
-};
+    };
+}

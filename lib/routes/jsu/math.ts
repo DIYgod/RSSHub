@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
@@ -5,7 +6,25 @@ import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析
 import { parseDate } from '@/utils/parse-date';
 import { getPageItemAndDate } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/stxy',
+    categories: ['university'],
+    example: '/jsu/stxy',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '数学与统计学院 - 通知公告',
+    maintainers: ['wenjia03'],
+    handler,
+};
+
+async function handler() {
     const baseUrl = 'https://stxy.jsu.edu.cn/';
 
     const response = await got({
@@ -33,10 +52,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: '吉首大学数学与统计学院 - 通知公告',
         link: 'https://stxy.jsu.edu.cn/index/tzgg1.htm',
         description: '吉首大学数学与统计学院 - 通知公告',
         item: out,
-    });
-};
+    };
+}

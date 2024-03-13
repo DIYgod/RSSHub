@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,28 @@ import iconv from 'iconv-lite';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:id',
+    categories: ['new-media'],
+    example: '/sciencenet/user/tony8310',
+    parameters: { id: '用户 id，可在对用户博客页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['blog.sciencenet.cn/u/:id', 'blog.sciencenet.cn/'],
+    },
+    name: '用户博客',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://blog.sciencenet.cn';
@@ -58,9 +80,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `科学网 - ${items[0].author}的博文`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

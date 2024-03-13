@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:uid',
+    categories: ['anime'],
+    example: '/xmanhua/73xm',
+    parameters: { uid: '漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xmanhua.com/:uid'],
+    },
+    name: '最新动态',
+    maintainers: ['Ye11'],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const host = 'https://xmanhua.com';
     const url = `https://xmanhua.com/${uid}/`;
@@ -54,11 +76,11 @@ export default async (ctx) => {
         .get();
     const name = $('body > div.detail-info-1 > div > div > p.detail-info-title').text();
     const description_ = finished ? '已完结' : '连载中';
-    ctx.set('data', {
+    return {
         title: `x漫画  ${name}`,
         link: `https://xmanhua.com/${uid}`,
         description: description_,
         allowEmpty: true,
         item: items,
-    });
-};
+    };
+}
