@@ -72,7 +72,11 @@ async function handler(ctx) {
                 link: `${baseUrl}/${a.attr('href')}`,
                 image: imageSrc,
                 author: user,
-                description: `<img src="${imageSrc}" />`,
+                description: art(path.join(__dirname, 'templates/description.art'), {
+                    title,
+                    image: imageSrc,
+                    by: user,
+                }),
             };
         });
 
@@ -94,13 +98,17 @@ async function handler(ctx) {
                     result[key.trim().toLocaleLowerCase()] = value.trim();
                 }
 
+                // 获取大图
+                const bigImage = $('#image').attr('src');
+
+                // 获取发布时间
                 if (result.posted) {
                     item.pubDate = parseDate(result.posted);
                 }
 
                 item.description = art(path.join(__dirname, 'templates/description.art'), {
                     title: item.title,
-                    image: item.image,
+                    image: bigImage ?? item.image,
                     posted: item.pubDate ?? '',
                     by: result.by,
                     source: result.source,
