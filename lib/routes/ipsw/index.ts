@@ -2,7 +2,6 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import * as url from 'node:url';
 
 const host = 'https://ipsw.me/';
 
@@ -23,6 +22,21 @@ export const route: Route = {
     maintainers: ['Jeason0228'],
     handler,
 };
+
+function replaceurl(e) {
+    e = e.replace("';", '');
+    e = e.replace("window.location = '/", host);
+    return e;
+}
+// 处理发布日期,以表格第一行的日期为最新的发布日期
+function cdate(e) {
+    const removeString = e.replace('th', '');
+    const removend = removeString.replace('nd', '');
+    const replacest = removend.replace('st', '');
+    const rdate = replacest.replaceAll(' ', ',');
+    // console.log(rdate);
+    return rdate;
+}
 
 async function handler(ctx) {
     const { pname, ptype } = ctx.req.param();
@@ -72,24 +86,10 @@ async function handler(ctx) {
                 })
                 .get();
 
-    function replaceurl(e) {
-        e = e.replace("';", '');
-        e = e.replace("window.location = '/", host);
-        return e;
-    }
-    // 处理发布日期,以表格第一行的日期为最新的发布日期
-    function cdate(e) {
-        const removeString = e.replace('th', '');
-        const removend = removeString.replace('nd', '');
-        const replacest = removend.replace('st', '');
-        const rdate = replacest.replaceAll(' ', ',');
-        // console.log(rdate);
-        return rdate;
-    }
     const out = await Promise.all(
         list.map((info) => {
             const title = info.title;
-            const itemUrl = url.resolve(host, info.link);
+            const itemUrl = new URL(info.link, host).href;
 
             return cache.tryGet(itemUrl, async () => {
                 const response = await got({
