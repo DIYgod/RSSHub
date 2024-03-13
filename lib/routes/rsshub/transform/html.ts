@@ -9,7 +9,12 @@ export const route: Route = {
     example: '/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a',
     parameters: { url: '`encodeURIComponent`ed URL address', routeParams: 'Transformation rules, requires URL encode' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

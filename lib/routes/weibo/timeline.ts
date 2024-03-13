@@ -13,7 +13,16 @@ export const route: Route = {
     example: '/weibo/timeline/3306934123',
     parameters: { uid: '用户的uid', feature: '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'WEIBO_APP_KEY',
+                description: '',
+            },
+            {
+                name: 'WEIBO_REDIRECT_URL',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -142,16 +151,13 @@ async function handler(ctx) {
             })
         );
 
-        ctx.set(
-            'data',
-            weiboUtils.sinaimgTvax({
-                title: `个人微博时间线--${name}`,
-                link: `http://weibo.com/${uid}/`,
-                description,
-                image: profileImageUrl,
-                item: resultItem,
-            })
-        );
+        return weiboUtils.sinaimgTvax({
+            title: `个人微博时间线--${name}`,
+            link: `http://weibo.com/${uid}/`,
+            description,
+            image: profileImageUrl,
+            item: resultItem,
+        });
     } else if (uid === '0' || ctx.req.query()) {
         const { app_key = '', redirect_url = ctx.req.origin + '/weibo/timeline/0', app_secret = '' } = config.weibo;
 

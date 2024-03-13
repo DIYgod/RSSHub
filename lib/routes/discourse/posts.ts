@@ -9,7 +9,12 @@ export const route: Route = {
     example: '/discourse/0/posts',
     parameters: { configId: 'Environment variable configuration id, see above' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'DISCOURSE_CONFIG_*',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

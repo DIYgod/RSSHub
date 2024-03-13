@@ -10,7 +10,7 @@ export const route: Route = {
     example: '/ft/myft/rss-key',
     parameters: { key: 'the last part of myFT personal RSS address' },
     features: {
-        requireConfig: true,
+        requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

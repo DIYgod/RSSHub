@@ -11,7 +11,12 @@ export const route: Route = {
     example: '/newrank/wechat/chijiread',
     parameters: { wxid: '微信号，若微信号与新榜信息不一致，以新榜为准' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'NEWRANK_COOKIE',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,

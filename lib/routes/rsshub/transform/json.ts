@@ -21,7 +21,12 @@ export const route: Route = {
     example: '/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body',
     parameters: { url: '`encodeURIComponent`ed URL address', routeParams: 'Transformation rules, requires URL encode' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

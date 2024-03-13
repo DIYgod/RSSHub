@@ -77,5 +77,6 @@ async function handler(ctx) {
         title: `OUP - ${name}`,
         link: url,
         item: items,
+        language: $('html').attr('lang'),
     };
 }

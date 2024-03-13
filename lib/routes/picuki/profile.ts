@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import chrono from 'chrono-node';
+import * as chrono from 'chrono-node';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { config } from '@/config';

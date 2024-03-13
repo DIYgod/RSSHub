@@ -16,7 +16,12 @@ export const route: Route = {
     example: '/manhuagui/subscribe',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'MHGUI_COOKIE',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

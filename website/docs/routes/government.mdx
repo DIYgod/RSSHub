@@ -220,7 +220,7 @@ Language
 
 ### 通用
 
-<Route namespace="cast" data={{"path":"/:column/:subColumn/:category?","categories":["government"],"example":"/cast/xw/tzgg/ZH","parameters":{"column":"栏目编号，见下表","subColumn":"二级栏目编号","category":"分类"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"通用","maintainers":["KarasuShin","TonyRL"],"description":":::tip\n  在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`\n  :::\n\n  | 分类     | 编码 |\n  | -------- | ---- |\n  | 全景科协 | qjkx |\n  | 智库     | zk   |\n  | 学术     | xs   |\n  | 科普     | kp   |\n  | 党建     | dj   |\n  | 数据     | sj   |\n  | 新闻     | xw   |","location":"index.ts"}} />
+<Route namespace="cast" data={{"path":"/:column/:subColumn/:category?","categories":["government"],"example":"/cast/xw/tzgg/ZH","parameters":{"column":"栏目编号，见下表","subColumn":"二级栏目编号","category":"分类"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["cast.org.cn/:column/:subColumn/:category/index.html","cast.org.cn/:column/:subColumn/index.html"],"target":"/cast/:column/:subColumn/:category?"},"name":"通用","maintainers":["KarasuShin","TonyRL"],"description":":::tip\n  在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`\n  :::\n\n  | 分类     | 编码 |\n  | -------- | ---- |\n  | 全景科协 | qjkx |\n  | 智库     | zk   |\n  | 学术     | xs   |\n  | 科普     | kp   |\n  | 党建     | dj   |\n  | 数据     | sj   |\n  | 新闻     | xw   |","location":"index.ts"}} />
 
 :::tip
   在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`
