@@ -1,9 +1,23 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
-    const sub = ctx.req.param('sub');
+export const route: Route = {
+    path: '/news/:sub',
+    parameters: {
+        sub: 'sub',
+    },
+    categories: ['university'],
+    example: '/uic/news/xw',
+    name: 'UIC News',
+    maintainers: ['heimoshuiyu'],
+    features: {},
+    handler,
+};
+
+async function handler() {
+    const { sub } = ctx.req.param();
     const rootUrl = 'https://uic.edu.cn/news/' + sub + '.htm';
 
     const response = await got.get(rootUrl);
@@ -20,15 +34,15 @@ export default async (ctx) => {
                 return {
                     title: $(item).find('a').text(),
                     link,
-                    description,
+                    description: description || '',
                     pubDate,
                 };
             })
             .get()
     );
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

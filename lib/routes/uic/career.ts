@@ -1,8 +1,22 @@
+import { Route } from '@/types';
 import puppeteer from '@/utils/puppeteer';
 import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/career/:tag',
+    categories: ['university'],
+    example: '/uic/career/ygtz',
+    parameters: {
+        tag: 'tag, ygtz, xsfx, gg, xngs, msjq, sjzxx',
+    },
+    features: {},
+    name: 'UIC Career',
+    maintainers: ['heimoshuiyu'],
+    handler,
+};
+
+async function handler(ctx) {
     const tag = ctx.req.param('tag');
     const rootUrl = 'https://career.uic.edu.cn/news/index/tag/' + tag;
 
@@ -48,9 +62,9 @@ export default async (ctx) => {
 
     await browser.close();
 
-    ctx.set('data', {
+    return {
         title: $('title').text() + $('div.breadcrumb').text(),
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

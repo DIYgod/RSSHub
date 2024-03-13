@@ -1,8 +1,19 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/fst',
+    categories: ['university'],
+    example: '/uic/fst',
+    name: 'UIC FST',
+    maintainers: ['heimoshuiyu'],
+    features: {},
+    handler,
+};
+
+async function handler() {
     const rootUrl = 'https://fst.uic.edu.cn/news_events/news.htm';
 
     const response = await got.get(rootUrl);
@@ -25,9 +36,9 @@ export default async (ctx) => {
             .get()
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text() + $('div.breadcrumb').text(),
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}
