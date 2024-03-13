@@ -609,3 +609,12 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 
 -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值。
     1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值。
+
+### JavDB
+
+用于有些页面需要登录,会获取数据失败
+
+-   `JAVDB_SESSION`: 登陆后的 cookie 值，获取方式：
+    1.  登陆后打开网站首页
+    2.  打开控制台，刷新
+    3.  查找名称为`_jdb_session`的`cookie`，其内容即为`JAVDB_SESSION`的值（即在`cookie` 中查找 `_jdb_session=***;`，并设置 `JAVDB_SESSION = ***`）
