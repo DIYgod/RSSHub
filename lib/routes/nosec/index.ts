@@ -1,5 +1,6 @@
-const got = require('@/utils/got');
-const cheerio = require('cheerio');
+import { Route } from '@/types';
+import got from '@/utils/got';
+import { load } from 'cheerio';
 
 const baseUrl = 'https://nosec.org/home/ajaxindexdata';
 const keykinds = {
@@ -12,15 +13,34 @@ const keykinds = {
     tool: '安全工具',
 };
 
-module.exports = async (ctx) => {
+export const route: Route = {
+    path: '/:keykind?',
+    categories: ['programming'],
+    example: '/nosec/hole',
+    parameters: { keykind: '对应文章分类' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Posts',
+    maintainers: ['hellodword'],
+    description: "  | 分类     | 标识       |\n  | :------- | :--------- |\n  | 威胁情报 | `threaten` |\n  | 安全动态 | `security` |\n  | 漏洞预警 | `hole`     |\n  | 数据泄露 | `leakage`  |\n  | 专题报告 | `speech`   |\n  | 技术分析 | `skill`    |\n  | 安全工具 | `tool`     |",
+    handler,
+};
+
+async function handler(ctx) {
     const csrfresponse = await got.get('https://nosec.org/home/index');
-    const $ = cheerio.load(csrfresponse.data);
+    const $ = load(csrfresponse.data);
     const token = $('meta[name="csrf-token"]').attr('content');
     const cookies = csrfresponse.headers['set-cookie'].toString();
     const xsrf_token = cookies.match(/XSRF-TOKEN=[^\s;]+/)[0];
     const laravel_session = cookies.match(/laravel_session[^\s;]+/)[0];
 
-    const keykind = ctx.params.keykind || '';
+    const keykind = ctx.req.param('keykind') || '';
     let formdata;
     let title;
     let link;
@@ -50,7 +70,7 @@ module.exports = async (ctx) => {
 
     const data = response.data.data.threatData.data;
 
-    ctx.state.data = {
+    return {
         // 源标题
         title,
         // 源链接
