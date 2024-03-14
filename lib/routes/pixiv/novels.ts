@@ -1,7 +1,14 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { config } from '@/config';
+import cache from '@/utils/cache';
+import { getToken } from './token';
+import getUserNovels from './api/get-user-novels';
+import getNovelContent from './api/get-novel-content';
+
 const baseUrl = 'https://www.pixiv.net';
+const novelTextRe = /"text":"(.+?)"/;
 
 export const route: Route = {
     path: '/user/novels/:id',
@@ -25,6 +32,55 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    if (!config.pixiv || !config.pixiv.refreshToken) {
+        return handleWeb(ctx);
+    }
+
+    const id = ctx.req.param('id');
+    const limit = Number.parseInt(ctx.req.query('limit')) || 10;
+    const token = await getToken(cache.tryGet);
+    if (!token) {
+        throw new Error('pixiv not login');
+    }
+
+    const userNovelsResponse = await getUserNovels(id, token);
+    const username = userNovelsResponse.data.user.name;
+    const novels = userNovelsResponse.data.novels.slice(0, limit).map((novel) => {
+        let title = novel.title;
+        if (novel.series.id) {
+            title = `${novel.series.title} - ${novel.title}`;
+        }
+        return {
+            novelId: novel.id,
+            title,
+            author: username,
+            pubDate: parseDate(novel.create_date),
+            link: `https://www.pixiv.net/novel/show.php?id=${novel.id}`,
+        };
+    });
+
+    const items = await Promise.all(
+        novels.map((novel) =>
+            cache.tryGet(novel.link, async () => {
+                const content = await getNovelContent(novel.novelId, token);
+                const res = novelTextRe.exec(content.data);
+                if (res) {
+                    novel.description = unescape(res[1].replaceAll('\\u', '%u')).replaceAll('\\n', '<br>');
+                }
+                return novel;
+            })
+        )
+    );
+
+    return {
+        title: `${username}'s Novels`,
+        link: `https://www.pixiv.net/users/${id}/novels`,
+        description: `${username}'s Novels`,
+        item: items,
+    };
+}
+
+async function handleWeb(ctx) {
     const id = ctx.req.param('id');
     const { limit = 100 } = ctx.req.query();
     const url = `${baseUrl}/users/${id}/novels`;
