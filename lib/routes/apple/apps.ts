@@ -65,8 +65,6 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const subtitle = $('h2.whats-new__headline').text() || "What's New";
-
     const appData = JSON.parse(Object.values(JSON.parse($('script#shoebox-media-api-cache-apps').text()))[0]);
     const attributes = appData.d[0].attributes;
 
@@ -84,10 +82,10 @@ async function handler(ctx) {
         const platformAttribute = platformAttributes[platformId];
 
         items = platformAttribute.versionHistory;
-        title = `${appName}${platform ? ` for ${platform} ` : ' '}${subtitle}`;
+        title = `${appName}${platform ? ` for ${platform} ` : ' '}`;
         description = platformAttribute.description.standard;
     } else {
-        title = `${appName} ${subtitle}`;
+        title = appName;
         for (const pid of Object.keys(platformAttributes)) {
             const platformAttribute = platformAttributes[pid];
             items = [
@@ -119,7 +117,7 @@ async function handler(ctx) {
 
     return {
         item: items,
-        title,
+        title: `${title} - Apple App Stroe`,
         link: currentUrl,
         description: description?.replace(/\n/g, ' '),
         language: $('html').prop('lang'),

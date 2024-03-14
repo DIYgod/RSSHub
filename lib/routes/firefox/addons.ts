@@ -35,7 +35,7 @@ async function handler(ctx) {
     const versionIds = data.versions.bySlug[id].versionIds;
 
     return {
-        title: `${info.name} 附加组件更新 - Firefox`,
+        title: `${info.name} - Firefox Add-on`,
         description: info.summary || info.description,
         link: `https://addons.mozilla.org/zh-CN/firefox/addon/${id}/versions/`,
         item:
