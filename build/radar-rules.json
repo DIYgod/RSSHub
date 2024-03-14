@@ -12729,6 +12729,35 @@
       }
     ]
   },
+  "twitter.com": {
+    "_name": "Twitter",
+    ".": [
+      {
+        "title": "Keyword",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/search"
+        ],
+        "target": "/twitter/keyword/:keyword/:routeParams?"
+      },
+      {
+        "title": "User media",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:id/media"
+        ],
+        "target": "/twitter/media/:id"
+      },
+      {
+        "title": "User timeline",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:id"
+        ],
+        "target": "/twitter/user/:id"
+      }
+    ]
+  },
   "twreporter.org": {
     "_name": "報導者",
     ".": [

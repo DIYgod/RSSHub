@@ -50982,6 +50982,11 @@
           "yindaheng98",
           "Rongronggg9"
         ],
+        "radar": {
+          "source": [
+            "twitter.com/search"
+          ]
+        },
         "location": "keyword.ts"
       },
       "/likes/:id/:routeParams?": {
@@ -51065,6 +51070,12 @@
           "yindaheng98",
           "Rongronggg9"
         ],
+        "radar": {
+          "source": [
+            "twitter.com/:id/media"
+          ],
+          "target": "/twitter/media/:id"
+        },
         "location": "media.ts"
       },
       "/trends/:woeid?": {
@@ -51158,6 +51169,12 @@
           "yindaheng98",
           "Rongronggg9"
         ],
+        "radar": {
+          "source": [
+            "twitter.com/:id"
+          ],
+          "target": "/twitter/user/:id"
+        },
         "location": "user.ts"
       }
     },
