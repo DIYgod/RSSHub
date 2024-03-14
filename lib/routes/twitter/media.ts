@@ -26,6 +26,10 @@ export const route: Route = {
     name: 'User media',
     maintainers: ['yindaheng98', 'Rongronggg9'],
     handler,
+    radar: {
+        source: ['twitter.com/:id/media'],
+        target: '/twitter/media/:id',
+    },
 };
 
 async function handler(ctx) {

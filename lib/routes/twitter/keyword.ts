@@ -26,6 +26,9 @@ export const route: Route = {
     name: 'Keyword',
     maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9'],
     handler,
+    radar: {
+        source: ['twitter.com/search'],
+    },
 };
 
 async function handler(ctx) {
