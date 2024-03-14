@@ -42,7 +42,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Subscriptions',
+    name: 'Feed entry',
     maintainers: ['emdoe', 'DIYgod'],
     handler,
 };
