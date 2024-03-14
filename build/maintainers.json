@@ -3388,6 +3388,14 @@
   "/mingpao/:type?/:category?": [
     "TonyRL"
   ],
+  "/miniflux/entry/:feeds/:parameters?": [
+    "emdoe",
+    "DIYgod"
+  ],
+  "/miniflux/subscription/:parameters?": [
+    "emdoe",
+    "DIYgod"
+  ],
   "/mirror/:id": [
     "fifteen42",
     "rde9",
