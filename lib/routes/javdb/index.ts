@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import utils from './utils';
 
 export const route: Route = {
-    path: ['/home/:category?/:sort?/:filter?', '/:category?/:sort?/:filter?'],
+    path: ['/home/:category?/:sort?/:filter?'],
     radar: {
         source: ['javdb.com/'],
         target: '',
