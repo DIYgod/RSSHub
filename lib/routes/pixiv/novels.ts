@@ -68,14 +68,8 @@ async function handler(ctx) {
                     .replaceAll('\\n', '</p><p>')
                     .replaceAll('\\t', '\t')
                     .replaceAll('\\', '')
-                    .replaceAll(/\[\[jump:(.+?)]]/g, '<a href="#$1">JumpToPage$1</a>')
                     .replaceAll(/\[\[rb:(.+?) > (.+?)]]/g, '<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>')
                     .replaceAll(/\[pixivimage:(\d+-\d+)]/g, `<p><img src="${config.pixiv.imgProxy}/$1.jpg"></p>`);
-                let pageCount = 1;
-                novel.description = novel.description.replaceAll('newpage', () => {
-                    pageCount++;
-                    return '<div id="' + pageCount + '"></div>';
-                });
                 return novel;
             })
         )
