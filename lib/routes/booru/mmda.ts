@@ -80,7 +80,7 @@ async function handler(ctx) {
             };
         });
 
-    await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
@@ -115,6 +115,8 @@ async function handler(ctx) {
                     rating: result.rating,
                     score: result.score,
                 });
+
+                return item;
             })
         )
     );
@@ -122,6 +124,6 @@ async function handler(ctx) {
     return {
         title: tags,
         link: `${baseUrl}/index.php?${query}`,
-        item: list,
+        item: items,
     };
 }
