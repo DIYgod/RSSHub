@@ -183,7 +183,7 @@ const constructTopicEntry = async (ctx, url) => {
 
     const topic = data.topic;
 
-    return {
+    data.result = {
         title: `${topic.content} - 即刻圈子`,
         link: url,
         description: topic.briefIntro,

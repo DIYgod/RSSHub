@@ -36,7 +36,7 @@ async function handler(ctx) {
     const data = await constructTopicEntry(ctx, topicUrl);
 
     if (data) {
-        const result = ctx.get('data');
+        const result = data.result;
         result.item = topicDataHanding(data, ctx);
         if (id === '553870e8e4b0cafb0a1bef68' || id === '55963702e4b0d84d2c30ce6f') {
             result.item = await Promise.all(
