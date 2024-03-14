@@ -1,23 +1,12 @@
 import { namespaces } from '../../lib/registry';
+import { Radar } from '../../lib/types';
 import { parse } from 'tldts';
 import fs from 'node:fs';
 import * as path from 'node:path';
 import toSource from 'tosource';
 
 const maintainers: Record<string, string[]> = {};
-const radar: {
-    [domain: string]: {
-        _name: string;
-        [subdomain: string]:
-            | {
-                  title: string;
-                  docs: string;
-                  source: string[];
-                  target: string | ((params: any, url: string) => string);
-              }[]
-            | string;
-    };
-} = {};
+const radar: Radar = {};
 const docs = {};
 
 for (const namespace in namespaces) {

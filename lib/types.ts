@@ -1,5 +1,6 @@
 import type { Context } from 'hono';
 
+// rss
 export type DataItem = {
     title: string;
     description?: string;
@@ -46,6 +47,7 @@ export type Data = {
     lastBuildDate?: string;
 };
 
+// namespace
 interface NamespaceItem {
     name: string;
     url?: string;
@@ -61,6 +63,7 @@ interface Namespace extends NamespaceItem {
 
 export type { Namespace };
 
+// route
 interface RouteItem {
     path: string | string[];
     name: string;
@@ -100,3 +103,19 @@ interface Route extends RouteItem {
 }
 
 export type { Route };
+
+// radar
+export type Radar = {
+    [domain: string]:
+        | {
+              [subdomain: string]: {
+                  title: string;
+                  docs: string;
+                  source: string[];
+                  target: string | ((params: any, url: string) => string);
+              }[];
+          }
+        | {
+              _name: string;
+          };
+};
