@@ -186,8 +186,8 @@ dependencies:
     specifier: 0.7.4
     version: 0.7.4
   telegram:
-    specifier: 2.19.20
-    version: 2.19.20
+    specifier: 2.20.2
+    version: 2.20.2
   tiny-async-pool:
     specifier: 2.1.0
     version: 2.1.0
@@ -9347,8 +9347,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /telegram@2.19.20:
-    resolution: {integrity: sha512-/2Wbml0K8ojLJBQXleakh81TkIwF91gls3HURagEJ8nge84wf+dTe/mBYqa4OSLk546S1VeXFTZL2S4SIYQsfw==}
+  /telegram@2.20.2:
+    resolution: {integrity: sha512-pvJ9tjyTRkQqQS0efkOOzLzCpgNBrtLu/FduzFpXocSZ/ivDDPNJt1B8yDwWicGK2GVLjEUgsmp9fPTScwFA1g==}
     dependencies:
       '@cryptography/aes': 0.1.1
       async-mutex: 0.3.2
