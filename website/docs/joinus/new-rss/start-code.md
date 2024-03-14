@@ -362,7 +362,7 @@ export default async (ctx) => {
 
 ## Via HTML web page using got
 
-### Creat the main file
+### Create the main file
 
 To start, open your code editor and create a new file. Since we are going to create an RSS feed for GitHub issues, it is suggested that you save the file as `issue.ts`. However, you can also name it whatever you like.
 
@@ -698,7 +698,7 @@ You can see that the above code is very similar to the [previous section](#bette
 
 Using puppeteer is another approach to obtain data from websites. However, it is recommended that you try the [above methods](#via-html-web-page-using-got) first. It is also recommended that you read [via HTML web page using got](#via-html-web-page-using-got) first since this section is an extension of the previous section and will not explain some basic concepts.
 
-### Creat the main file
+### Create the main file
 
 To get started with puppeteer, create a new file in your code editor and save it with an appropriate name, such as `issue.ts`. Then, require the necessary modules and set up the basic structure of the function:
 
