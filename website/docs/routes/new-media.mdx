@@ -1592,11 +1592,11 @@ Member ID
 
 ### 球员新闻
 
-<Route namespace="dongqiudi" data={{"path":"/player_news/:id","categories":["new-media"],"example":"/dongqiudi/player_news/50000339","parameters":{"id":"球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"球员新闻","maintainers":["HenryQW"],"location":"player-news.ts"}} />
+<Route namespace="dongqiudi" data={{"path":"/player_news/:id","categories":["new-media"],"example":"/dongqiudi/player_news/50000339","parameters":{"id":"球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到"},"radar":[{"source":["www.dongqiudi.com/player/*id"]}],"name":"球员新闻","maintainers":["HenryQW"],"location":"player-news.ts"}} />
 
 ### 球队新闻
 
-<Route namespace="dongqiudi" data={{"path":"/team_news/:team","categories":["new-media"],"example":"/dongqiudi/team_news/50001755","parameters":{"team":"球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"球队新闻","maintainers":["HenryQW"],"location":"team-news.ts"}} />
+<Route namespace="dongqiudi" data={{"path":"/team_news/:team","categories":["new-media"],"example":"/dongqiudi/team_news/50001755","parameters":{"team":"球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到"},"radar":[{"source":["www.dongqiudi.com/team/*team"]}],"name":"球队新闻","maintainers":["HenryQW"],"location":"team-news.ts"}} />
 
 ### 新闻
 
@@ -1608,7 +1608,7 @@ Member ID
 
 ### 早报
 
-<Route namespace="dongqiudi" data={{"path":"/daily","categories":["new-media"],"example":"/dongqiudi/daily","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.dongqiudi.com/special/48"]}],"name":"早报","maintainers":["HenryQW"],"url":"www.dongqiudi.com/special/48","description":":::tip\n部分球队和球员可能会有两个 id, 正确 id 应该由 `5000` 开头.\n:::","location":"daily.ts"}} />
+<Route namespace="dongqiudi" data={{"path":"/daily","categories":["new-media"],"example":"/dongqiudi/daily","radar":[{"source":["www.dongqiudi.com/special/48"]}],"name":"早报","maintainers":["HenryQW"],"url":"www.dongqiudi.com/special/48","description":":::tip\n部分球队和球员可能会有两个 id, 正确 id 应该由 `5000` 开头.\n:::","location":"daily.ts"}} />
 
 :::tip
 部分球队和球员可能会有两个 id, 正确 id 应该由 `5000` 开头.
@@ -1616,7 +1616,7 @@ Member ID
 
 ### 专题
 
-<Route namespace="dongqiudi" data={{"path":"/special/:id","categories":["new-media"],"example":"/dongqiudi/special/41","parameters":{"id":"专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.dongqiudi.com/special/:id"]}],"name":"专题","maintainers":["dxmpalb"],"description":"| 新闻大爆炸 | 懂球帝十佳球 | 懂球帝本周 MVP |\n  | ---------- | ------------ | -------------- |\n  | 41         | 52           | 53             |","location":"special.ts"}} />
+<Route namespace="dongqiudi" data={{"path":"/special/:id","categories":["new-media"],"example":"/dongqiudi/special/41","parameters":{"id":"专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配"},"radar":[{"source":["www.dongqiudi.com/special/:id"]}],"name":"专题","maintainers":["dxmpalb"],"description":"| 新闻大爆炸 | 懂球帝十佳球 | 懂球帝本周 MVP |\n  | ---------- | ------------ | -------------- |\n  | 41         | 52           | 53             |","location":"special.ts"}} />
 
 | 新闻大爆炸 | 懂球帝十佳球 | 懂球帝本周 MVP |
   | ---------- | ------------ | -------------- |
@@ -1624,7 +1624,7 @@ Member ID
 
 ### 足球赛果
 
-<Route namespace="dongqiudi" data={{"path":"/result/:team","categories":["new-media"],"example":"/dongqiudi/result/50001755","parameters":{"team":"球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"足球赛果","maintainers":["HenryQW"],"location":"result.ts"}} />
+<Route namespace="dongqiudi" data={{"path":"/result/:team","categories":["new-media"],"example":"/dongqiudi/result/50001755","parameters":{"team":"球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到"},"radar":[{"source":["www.dongqiudi.com/team/*team"]}],"name":"足球赛果","maintainers":["HenryQW"],"location":"result.ts"}} />
 
 ## 樊登读书
 
