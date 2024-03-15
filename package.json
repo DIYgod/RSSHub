@@ -22,6 +22,7 @@
   "scripts": {
     "build": "tsx scripts/workflow/build-routes.ts",
     "dev": "cross-env NODE_ENV=dev tsx watch --no-cache lib/index.ts",
+    "dev:cache": "cross-env NODE_ENV=production tsx watch lib/index.ts",
     "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
     "format:staged": "lint-staged",
@@ -47,6 +48,8 @@
   },
   "dependencies": {
     "@hono/node-server": "1.8.2",
+    "@hono/swagger-ui": "0.2.1",
+    "@hono/zod-openapi": "0.9.8",
     "@notionhq/client": "2.2.14",
     "@postlight/parser": "2.2.3",
     "@sentry/node": "7.106.1",
@@ -115,7 +118,8 @@
     "twitter-api-v2": "1.16.1",
     "uuid": "9.0.1",
     "winston": "3.12.0",
-    "xxhash-wasm": "1.0.2"
+    "xxhash-wasm": "1.0.2",
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@babel/preset-env": "7.24.0",

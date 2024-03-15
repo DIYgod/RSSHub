@@ -1,7 +1,7 @@
-import type { Handler } from 'hono';
 import { namespaces } from '@/registry';
 import { parse } from 'tldts';
 import { Radar } from '@/types';
+import { createRoute, RouteHandler } from '@hono/zod-openapi';
 
 const radar: Radar = {};
 
@@ -36,6 +36,17 @@ for (const namespace in namespaces) {
     }
 }
 
-const handler: Handler = (ctx) => ctx.json(radar);
+const route = createRoute({
+    method: 'get',
+    path: '/radar/rules',
+    tags: ['Radar'],
+    responses: {
+        200: {
+            description: 'All radar rules',
+        },
+    },
+});
 
-export default handler;
+const handler: RouteHandler<typeof route> = (ctx) => ctx.json(radar);
+
+export { route, handler };
