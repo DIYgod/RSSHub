@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ruancan.com/cat/:category', 'ruancan.com/'],
-        target: '/category/:category',
-    },
+    radar: [
+        {
+            source: ['ruancan.com/cat/:category', 'ruancan.com/'],
+            target: '/category/:category',
+        },
+    ],
     name: '分类',
     maintainers: [],
     handler,

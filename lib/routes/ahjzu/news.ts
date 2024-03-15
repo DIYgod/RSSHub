@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.ahjzu.edu.cn/20/list.htm'],
-    },
+    radar: [
+        {
+            source: ['news.ahjzu.edu.cn/20/list.htm'],
+        },
+    ],
     name: '通知公告',
     maintainers: ['Yuk-0v0'],
     handler,

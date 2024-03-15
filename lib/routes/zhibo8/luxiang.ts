@@ -6,10 +6,12 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/luxiang/:category?',
-    radar: {
-        source: ['zhibo8.cc/:category/luxiang.htm'],
-        target: '/luxiang/:category',
-    },
+    radar: [
+        {
+            source: ['zhibo8.cc/:category/luxiang.htm'],
+            target: '/luxiang/:category',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,

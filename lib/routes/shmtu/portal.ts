@@ -55,9 +55,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['portal.shmtu.edu.cn/:type'],
-    },
+    radar: [
+        {
+            source: ['portal.shmtu.edu.cn/:type'],
+        },
+    ],
     name: '数字平台',
     maintainers: ['imbytecat'],
     handler,

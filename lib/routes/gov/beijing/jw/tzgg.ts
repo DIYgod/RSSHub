@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jw.beijing.gov.cn/tzgg'],
-    },
+    radar: [
+        {
+            source: ['jw.beijing.gov.cn/tzgg'],
+        },
+    ],
     name: '通知公告',
     maintainers: ['nczitzk'],
     handler,

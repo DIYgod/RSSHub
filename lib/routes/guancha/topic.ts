@@ -6,10 +6,12 @@ import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topic/:id/:order?',
-    radar: {
-        source: ['guancha.cn/'],
-        target: '/:category?',
-    },
+    radar: [
+        {
+            source: ['guancha.cn/'],
+            target: '/:category?',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['occupy5', 'nczitzk'],
     handler,

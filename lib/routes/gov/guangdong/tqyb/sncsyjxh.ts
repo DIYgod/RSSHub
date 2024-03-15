@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.tqyb.com.cn/gz/weatherAlarm/otherCity/'],
-    },
+    radar: [
+        {
+            source: ['www.tqyb.com.cn/gz/weatherAlarm/otherCity/'],
+        },
+    ],
     name: '广东省内城市预警信号',
     maintainers: ['Fatpandac'],
     handler,

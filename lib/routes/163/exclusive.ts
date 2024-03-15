@@ -90,9 +90,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['3g.163.com/touch/exclusive/sub/:id'],
-    },
+    radar: [
+        {
+            source: ['3g.163.com/touch/exclusive/sub/:id'],
+        },
+    ],
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,

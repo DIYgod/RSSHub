@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['thecatcity.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['thecatcity.com/'],
+            target: '',
+        },
+    ],
     name: '分類',
     maintainers: ['TonyRL'],
     handler,

@@ -5,10 +5,12 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: ['/all', '/'],
-    radar: {
-        source: ['darwinawards.com/darwin', 'darwinawards.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['darwinawards.com/darwin', 'darwinawards.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['zoenglinghou', 'nczitzk'],
     handler,

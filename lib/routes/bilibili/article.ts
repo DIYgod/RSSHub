@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['space.bilibili.com/:uid'],
-    },
+    radar: [
+        {
+            source: ['space.bilibili.com/:uid'],
+        },
+    ],
     name: 'UP 主专栏',
     maintainers: ['lengthmin', 'Qixingchen'],
     handler,

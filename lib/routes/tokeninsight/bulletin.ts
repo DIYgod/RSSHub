@@ -26,10 +26,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tokeninsight.com/:lang/latest'],
-        target: '/bulletin/:lang',
-    },
+    radar: [
+        {
+            source: ['tokeninsight.com/:lang/latest'],
+            target: '/bulletin/:lang',
+        },
+    ],
     name: 'Latest',
     maintainers: [],
     handler,

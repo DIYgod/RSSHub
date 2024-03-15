@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/:user/:repo/pulse', 'github.com/:user/:repo/pulse/:period'],
-    },
+    radar: [
+        {
+            source: ['github.com/:user/:repo/pulse', 'github.com/:user/:repo/pulse/:period'],
+        },
+    ],
     name: 'Repo Pulse',
     maintainers: ['jameschensmith'],
     handler,

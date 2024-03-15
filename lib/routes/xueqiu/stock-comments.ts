@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xueqiu.com/S/:id'],
-    },
+    radar: [
+        {
+            source: ['xueqiu.com/S/:id'],
+        },
+    ],
     name: '股票评论',
     maintainers: [],
     handler,

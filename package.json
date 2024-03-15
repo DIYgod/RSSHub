@@ -22,6 +22,7 @@
   "scripts": {
     "build": "tsx scripts/workflow/build-routes.ts",
     "dev": "cross-env NODE_ENV=dev tsx watch --no-cache lib/index.ts",
+    "dev:cache": "cross-env NODE_ENV=production tsx watch lib/index.ts",
     "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
     "format:staged": "lint-staged",
@@ -47,9 +48,11 @@
   },
   "dependencies": {
     "@hono/node-server": "1.8.2",
+    "@hono/swagger-ui": "0.2.1",
+    "@hono/zod-openapi": "0.9.8",
     "@notionhq/client": "2.2.14",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.106.1",
+    "@sentry/node": "7.107.0",
     "@tonyrl/rand-user-agent": "2.0.54",
     "@types/node": "20.11.27",
     "aes-js": "3.1.2",
@@ -115,7 +118,8 @@
     "twitter-api-v2": "1.16.1",
     "uuid": "9.0.1",
     "winston": "3.12.0",
-    "xxhash-wasm": "1.0.2"
+    "xxhash-wasm": "1.0.2",
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@babel/preset-env": "7.24.0",
@@ -179,7 +183,7 @@
     "unified": "9.2.2",
     "unist-util-visit": "4.1.2",
     "unist-util-visit-parents": "5.1.3",
-    "vite-tsconfig-paths": "4.3.1",
+    "vite-tsconfig-paths": "4.3.2",
     "vitest": "1.3.1"
   },
   "engines": {

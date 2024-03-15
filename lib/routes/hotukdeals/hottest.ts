@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.hotukdeals.com/'],
-    },
+    radar: [
+        {
+            source: ['www.hotukdeals.com/'],
+        },
+    ],
     name: 'hottest',
     maintainers: ['DIYgod'],
     handler,

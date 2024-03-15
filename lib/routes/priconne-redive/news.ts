@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['priconne-redive.jp/news'],
-    },
+    radar: [
+        {
+            source: ['priconne-redive.jp/news'],
+        },
+    ],
     name: '日服公告',
     maintainers: ['SayaSS'],
     handler,

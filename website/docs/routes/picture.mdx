@@ -8,23 +8,23 @@
 
 ### 摄影师作品
 
-<Route namespace="500px" data={{"path":"/user/works/:id","categories":["picture"],"example":"/500px/user/works/hujunli","parameters":{"id":"摄影师 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["500px.com.cn/:id","500px.com.cn/community/user-details/:id","500px.com.cn/community/user-details/:id/*"]},"name":"摄影师作品","maintainers":["TonyRL"],"location":"user.ts"}} />
+<Route namespace="500px" data={{"path":"/user/works/:id","categories":["picture"],"example":"/500px/user/works/hujunli","parameters":{"id":"摄影师 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["500px.com.cn/:id","500px.com.cn/community/user-details/:id","500px.com.cn/community/user-details/:id/*"]}],"name":"摄影师作品","maintainers":["TonyRL"],"location":"user.ts"}} />
 
 ## 8KCosplay
 
 ### 标签
 
-<Route namespace="8kcos" data={{"path":"/tag/:tag","categories":["picture"],"example":"/8kcos/tag/cosplay","parameters":{"tag":"标签名"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["8kcosplay.com/tag/:tag"]},"name":"标签","maintainers":["KotoriK"],"url":"8kcosplay.com/","location":"tag.ts"}} />
+<Route namespace="8kcos" data={{"path":"/tag/:tag","categories":["picture"],"example":"/8kcos/tag/cosplay","parameters":{"tag":"标签名"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["8kcosplay.com/tag/:tag"]}],"name":"标签","maintainers":["KotoriK"],"url":"8kcosplay.com/","location":"tag.ts"}} />
 
 ### 最新
 
-<Route namespace="8kcos" data={{"path":"/","categories":["picture"],"example":"/8kcos/","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["8kcosplay.com/"],"target":""},"name":"最新","maintainers":["KotoriK"],"url":"8kcosplay.com/","location":"latest.ts"}} />
+<Route namespace="8kcos" data={{"path":"/","categories":["picture"],"example":"/8kcos/","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["8kcosplay.com/"],"target":""}],"name":"最新","maintainers":["KotoriK"],"url":"8kcosplay.com/","location":"latest.ts"}} />
 
 ## ArtStation
 
 ### Artist Profolio
 
-<Route namespace="artstation" data={{"path":"/:handle","categories":["picture"],"example":"/artstation/wlop","parameters":{"handle":"Artist handle, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.artstation.com/:handle"]},"name":"Artist Profolio","maintainers":["TonyRL"],"location":"user.ts"}} />
+<Route namespace="artstation" data={{"path":"/:handle","categories":["picture"],"example":"/artstation/wlop","parameters":{"handle":"Artist handle, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.artstation.com/:handle"]}],"name":"Artist Profolio","maintainers":["TonyRL"],"location":"user.ts"}} />
 
 ## Booru
 
@@ -118,7 +118,7 @@ Type
 
 ### User Posts
 
-<Route namespace="fantia" data={{"path":"/user/:id","categories":["picture"],"example":"/fantia/user/3498","parameters":{"id":"User id, can be found in user profile URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["fantia.jp/fanclubs/:id"]},"name":"User Posts","maintainers":["nczitzk"],"location":"user.ts"}} />
+<Route namespace="fantia" data={{"path":"/user/:id","categories":["picture"],"example":"/fantia/user/3498","parameters":{"id":"User id, can be found in user profile URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["fantia.jp/fanclubs/:id"]}],"name":"User Posts","maintainers":["nczitzk"],"location":"user.ts"}} />
 
 ## Google
 
@@ -134,18 +134,18 @@ Type
 
 ### 标签
 
-<Route namespace="95mm" data={{"path":"/tag/:tag","categories":["picture"],"example":"/95mm/tag/黑丝","parameters":{"tag":"标签，可在对应标签页中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["95mm.org/"]},"name":"标签","maintainers":["nczitzk"],"url":"95mm.org/","location":"tag.ts"}} />
+<Route namespace="95mm" data={{"path":"/tag/:tag","categories":["picture"],"example":"/95mm/tag/黑丝","parameters":{"tag":"标签，可在对应标签页中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["95mm.org/"]}],"name":"标签","maintainers":["nczitzk"],"url":"95mm.org/","location":"tag.ts"}} />
 
 ### 分类
 
-<Route namespace="95mm" data={{"path":"/tab/:tab?","categories":["picture"],"example":"/95mm/tab/热门","parameters":{"tab":"分类，见下表，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["95mm.org/"]},"name":"分类","maintainers":["nczitzk"],"url":"95mm.org/","description":"| 最新 | 热门 | 校花 | 森系 | 清纯 | 童颜 | 嫩模 | 少女 |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |","location":"tab.ts"}} />
+<Route namespace="95mm" data={{"path":"/tab/:tab?","categories":["picture"],"example":"/95mm/tab/热门","parameters":{"tab":"分类，见下表，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["95mm.org/"]}],"name":"分类","maintainers":["nczitzk"],"url":"95mm.org/","description":"| 最新 | 热门 | 校花 | 森系 | 清纯 | 童颜 | 嫩模 | 少女 |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |","location":"tab.ts"}} />
 
 | 最新 | 热门 | 校花 | 森系 | 清纯 | 童颜 | 嫩模 | 少女 |
   | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 
 ### 集合
 
-<Route namespace="95mm" data={{"path":"/category/:category","categories":["picture"],"example":"/95mm/category/1","parameters":{"category":"集合，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["95mm.org/"]},"name":"集合","maintainers":["nczitzk"],"url":"95mm.org/","description":"| 清纯唯美 | 摄影私房 | 明星写真 | 三次元 | 异域美景 | 性感妖姬 | 游戏主题 | 美女壁纸 |\n  | -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- |\n  | 1        | 2        | 4        | 5      | 6        | 7        | 9        | 11       |","location":"category.ts"}} />
+<Route namespace="95mm" data={{"path":"/category/:category","categories":["picture"],"example":"/95mm/category/1","parameters":{"category":"集合，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["95mm.org/"]}],"name":"集合","maintainers":["nczitzk"],"url":"95mm.org/","description":"| 清纯唯美 | 摄影私房 | 明星写真 | 三次元 | 异域美景 | 性感妖姬 | 游戏主题 | 美女壁纸 |\n  | -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- |\n  | 1        | 2        | 4        | 5      | 6        | 7        | 9        | 11       |","location":"category.ts"}} />
 
 | 清纯唯美 | 摄影私房 | 明星写真 | 三次元 | 异域美景 | 性感妖姬 | 游戏主题 | 美女壁纸 |
   | -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- |
@@ -155,11 +155,11 @@ Type
 
 ### Cheng Kung University Mirror
 
-<Route namespace="nasa" data={{"path":"/apod-ncku","categories":["picture"],"example":"/nasa/apod-ncku","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["apod.nasa.govundefined"]},"name":"Cheng Kung University Mirror","maintainers":["nczitzk","williamgateszhao"],"url":"apod.nasa.govundefined","location":"apod-ncku.ts"}} />
+<Route namespace="nasa" data={{"path":"/apod-ncku","categories":["picture"],"example":"/nasa/apod-ncku","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["apod.nasa.govundefined"]}],"name":"Cheng Kung University Mirror","maintainers":["nczitzk","williamgateszhao"],"url":"apod.nasa.govundefined","location":"apod-ncku.ts"}} />
 
 ### NASA 中文
 
-<Route namespace="nasa" data={{"path":"/apod-cn","categories":["picture"],"example":"/nasa/apod-cn","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["apod.nasa.govundefined"]},"name":"NASA 中文","maintainers":["nczitzk","williamgateszhao"],"url":"apod.nasa.govundefined","description":":::tip\n  [NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。\n  :::","location":"apod-cn.ts"}} />
+<Route namespace="nasa" data={{"path":"/apod-cn","categories":["picture"],"example":"/nasa/apod-cn","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["apod.nasa.govundefined"]}],"name":"NASA 中文","maintainers":["nczitzk","williamgateszhao"],"url":"apod.nasa.govundefined","description":":::tip\n  [NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。\n  :::","location":"apod-cn.ts"}} />
 
 :::tip
   [NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。
@@ -167,13 +167,13 @@ Type
 
 ### NASA
 
-<Route namespace="nasa" data={{"path":"/apod","categories":["picture"],"example":"/nasa/apod","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["apod.nasa.govundefined"]},"name":"NASA","maintainers":["nczitzk","williamgateszhao"],"url":"apod.nasa.govundefined","location":"apod.ts"}} />
+<Route namespace="nasa" data={{"path":"/apod","categories":["picture"],"example":"/nasa/apod","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["apod.nasa.govundefined"]}],"name":"NASA","maintainers":["nczitzk","williamgateszhao"],"url":"apod.nasa.govundefined","location":"apod.ts"}} />
 
 ## Pixabay
 
 ### Search
 
-<Route namespace="pixabay" data={{"path":"/search/:q/:order?","categories":["picture"],"example":"/pixabay/search/cat","parameters":{"q":"Search term","order":"Order, `popular` or `latest`, `latest` by default"},"features":{"requireConfig":[{"name":"PIXABAY_KEY","optional":true,"description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["pixabay.com/:searchType/search/:q"],"target":"/search/:q"},"name":"Search","maintainers":["TonyRL"],"location":"search.ts"}} />
+<Route namespace="pixabay" data={{"path":"/search/:q/:order?","categories":["picture"],"example":"/pixabay/search/cat","parameters":{"q":"Search term","order":"Order, `popular` or `latest`, `latest` by default"},"features":{"requireConfig":[{"name":"PIXABAY_KEY","optional":true,"description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["pixabay.com/:searchType/search/:q"],"target":"/search/:q"}],"name":"Search","maintainers":["TonyRL"],"location":"search.ts"}} />
 
 ## wallhaven
 
@@ -187,7 +187,7 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 ### Search
 
-<Route namespace="wallhaven" data={{"path":["/search/:filter?/:needDetails?","/:filter?/:needDetails?"],"categories":["picture"],"example":"/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc","parameters":{"filter":"Filter, empty by default","needDetails":"Need Details, `true`/`yes` as yes, no by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["wallhaven.cc/"]},"name":"Search","maintainers":["nczitzk","Fatpandac"],"url":"wallhaven.cc/","description":":::tip\n  Subscribe pages starting with `https://wallhaven.cc/search`, fill the text after `?` as `filter` in the route. The following is an example:\n\n  The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd), so the route is [/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)\n  :::","location":"index.ts"}} />
+<Route namespace="wallhaven" data={{"path":["/search/:filter?/:needDetails?","/:filter?/:needDetails?"],"categories":["picture"],"example":"/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc","parameters":{"filter":"Filter, empty by default","needDetails":"Need Details, `true`/`yes` as yes, no by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["wallhaven.cc/"]}],"name":"Search","maintainers":["nczitzk","Fatpandac"],"url":"wallhaven.cc/","description":":::tip\n  Subscribe pages starting with `https://wallhaven.cc/search`, fill the text after `?` as `filter` in the route. The following is an example:\n\n  The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd), so the route is [/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)\n  :::","location":"index.ts"}} />
 
 :::tip
   Subscribe pages starting with `https://wallhaven.cc/search`, fill the text after `?` as `filter` in the route. The following is an example:
@@ -197,7 +197,7 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 ### Search
 
-<Route namespace="wallhaven" data={{"path":["/search/:filter?/:needDetails?","/:filter?/:needDetails?"],"categories":["picture"],"example":"/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc","parameters":{"filter":"Filter, empty by default","needDetails":"Need Details, `true`/`yes` as yes, no by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["wallhaven.cc/"]},"name":"Search","maintainers":["nczitzk","Fatpandac"],"url":"wallhaven.cc/","description":":::tip\n  Subscribe pages starting with `https://wallhaven.cc/search`, fill the text after `?` as `filter` in the route. The following is an example:\n\n  The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd), so the route is [/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)\n  :::","location":"index.ts"}} />
+<Route namespace="wallhaven" data={{"path":["/search/:filter?/:needDetails?","/:filter?/:needDetails?"],"categories":["picture"],"example":"/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc","parameters":{"filter":"Filter, empty by default","needDetails":"Need Details, `true`/`yes` as yes, no by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["wallhaven.cc/"]}],"name":"Search","maintainers":["nczitzk","Fatpandac"],"url":"wallhaven.cc/","description":":::tip\n  Subscribe pages starting with `https://wallhaven.cc/search`, fill the text after `?` as `filter` in the route. The following is an example:\n\n  The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd), so the route is [/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)\n  :::","location":"index.ts"}} />
 
 :::tip
   Subscribe pages starting with `https://wallhaven.cc/search`, fill the text after `?` as `filter` in the route. The following is an example:
@@ -209,13 +209,13 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 ### 每日一图
 
-<Route namespace="bjp" data={{"path":"/apod","categories":["picture"],"example":"/bjp/apod","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bjp.org.cn/APOD/today.shtml","bjp.org.cn/APOD/list.shtml","bjp.org.cn/"]},"name":"每日一图","maintainers":["HenryQW"],"url":"bjp.org.cn/APOD/today.shtml","location":"apod.ts"}} />
+<Route namespace="bjp" data={{"path":"/apod","categories":["picture"],"example":"/bjp/apod","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bjp.org.cn/APOD/today.shtml","bjp.org.cn/APOD/list.shtml","bjp.org.cn/"]}],"name":"每日一图","maintainers":["HenryQW"],"url":"bjp.org.cn/APOD/today.shtml","location":"apod.ts"}} />
 
 ## 国家地理
 
 ### 每日一图
 
-<Route namespace="natgeo" data={{"path":"/dailyphoto","categories":["picture"],"example":"/natgeo/dailyphoto","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nationalgeographic.com/photo-of-the-day/*","nationalgeographic.com/"]},"name":"每日一图","maintainers":["LogicJake","OrangeEd1t","TonyRL"],"url":"nationalgeographic.com/photo-of-the-day/*","location":"dailyphoto.ts"}} />
+<Route namespace="natgeo" data={{"path":"/dailyphoto","categories":["picture"],"example":"/natgeo/dailyphoto","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nationalgeographic.com/photo-of-the-day/*","nationalgeographic.com/"]}],"name":"每日一图","maintainers":["LogicJake","OrangeEd1t","TonyRL"],"url":"nationalgeographic.com/photo-of-the-day/*","location":"dailyphoto.ts"}} />
 
 ## 喷嚏
 
@@ -231,5 +231,5 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 ### Unknown
 
-<Route namespace="qipamaijia" data={{"path":"/:cate?","categories":["picture"],"example":"/qipamaijia/fuli","parameters":{"cate":"频道名，可在对应网址中找到，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["qipamaijia.com/","qipamaijia.com/:cate"],"target":"/:cate"},"name":"Unknown","maintainers":["Fatpandac","nczitzk"],"url":"qipamaijia.com/","location":"index.ts"}} />
+<Route namespace="qipamaijia" data={{"path":"/:cate?","categories":["picture"],"example":"/qipamaijia/fuli","parameters":{"cate":"频道名，可在对应网址中找到，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["qipamaijia.com/","qipamaijia.com/:cate"],"target":"/:cate"}],"name":"Unknown","maintainers":["Fatpandac","nczitzk"],"url":"qipamaijia.com/","location":"index.ts"}} />
 

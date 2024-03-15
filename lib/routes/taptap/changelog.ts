@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['taptap.com/app/:id'],
-        target: '/changelog/:id',
-    },
+    radar: [
+        {
+            source: ['taptap.com/app/:id'],
+            target: '/changelog/:id',
+        },
+    ],
     name: '游戏更新',
     maintainers: ['hoilc', 'ETiV'],
     handler,

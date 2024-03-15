@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bandcamp.com/'],
-    },
+    radar: [
+        {
+            source: ['bandcamp.com/'],
+        },
+    ],
     name: 'Weekly',
     maintainers: ['nczitzk'],
     handler,

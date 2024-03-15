@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['diershoubing.com/'],
-    },
+    radar: [
+        {
+            source: ['diershoubing.com/'],
+        },
+    ],
     name: '新闻',
     maintainers: ['wushijishan'],
     handler,

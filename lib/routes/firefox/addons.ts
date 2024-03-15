@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['addons.mozilla.org/:lang/firefox/addon/:id/versions', 'addons.mozilla.org/:lang/firefox/addon/:id'],
-    },
+    radar: [
+        {
+            source: ['addons.mozilla.org/:lang/firefox/addon/:id/versions', 'addons.mozilla.org/:lang/firefox/addon/:id'],
+        },
+    ],
     name: 'Add-ons Update',
     maintainers: ['DIYgod'],
     handler,

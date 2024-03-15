@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['weibo.com/p/:id/super_index'],
-        target: '/super_index/:id',
-    },
+    radar: [
+        {
+            source: ['weibo.com/p/:id/super_index'],
+            target: '/super_index/:id',
+        },
+    ],
     name: '超话',
     maintainers: ['zengxs', 'Rongronggg9'],
     handler,

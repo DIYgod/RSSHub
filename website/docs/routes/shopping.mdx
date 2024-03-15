@@ -14,7 +14,7 @@
 
 ### New Arrivals
 
-<Route namespace="arcteryx" data={{"path":"/new-arrivals/:country/:gender","categories":["shopping"],"example":"/arcteryx/new-arrivals/us/mens","parameters":{"country":"country","gender":"gender"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["arcteryx.com/:country/en/c/:gender/new-arrivals"]},"name":"New Arrivals","maintainers":["EthanWng97"],"description":"Country\n\n  | United States | Canada | United Kingdom |\n  | ------------- | ------ | -------------- |\n  | us            | ca     | gb             |\n\n  gender\n\n  | male | female |\n  | ---- | ------ |\n  | mens | womens |\n\n  :::tip\n  Parameter `country` can be found within the url of `Arcteryx` website.\n  :::","location":"new-arrivals.ts"}} />
+<Route namespace="arcteryx" data={{"path":"/new-arrivals/:country/:gender","categories":["shopping"],"example":"/arcteryx/new-arrivals/us/mens","parameters":{"country":"country","gender":"gender"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["arcteryx.com/:country/en/c/:gender/new-arrivals"]}],"name":"New Arrivals","maintainers":["EthanWng97"],"description":"Country\n\n  | United States | Canada | United Kingdom |\n  | ------------- | ------ | -------------- |\n  | us            | ca     | gb             |\n\n  gender\n\n  | male | female |\n  | ---- | ------ |\n  | mens | womens |\n\n  :::tip\n  Parameter `country` can be found within the url of `Arcteryx` website.\n  :::","location":"new-arrivals.ts"}} />
 
 Country
 
@@ -34,7 +34,7 @@ Country
 
 ### Outlet
 
-<Route namespace="arcteryx" data={{"path":"/outlet/:country/:gender","categories":["shopping"],"example":"/arcteryx/outlet/us/mens","parameters":{"country":"country","gender":"gender"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["outlet.arcteryx.com/:country/en/c/:gender"]},"name":"Outlet","maintainers":["EthanWng97"],"description":"Country\n\n  | United States | Canada | United Kingdom |\n  | ------------- | ------ | -------------- |\n  | us            | ca     | gb             |\n\n  gender\n\n  | male | female |\n  | ---- | ------ |\n  | mens | womens |\n\n  :::tip\n  Parameter `country` can be found within the url of `Arcteryx` website.\n  :::","location":"outlet.ts"}} />
+<Route namespace="arcteryx" data={{"path":"/outlet/:country/:gender","categories":["shopping"],"example":"/arcteryx/outlet/us/mens","parameters":{"country":"country","gender":"gender"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["outlet.arcteryx.com/:country/en/c/:gender"]}],"name":"Outlet","maintainers":["EthanWng97"],"description":"Country\n\n  | United States | Canada | United Kingdom |\n  | ------------- | ------ | -------------- |\n  | us            | ca     | gb             |\n\n  gender\n\n  | male | female |\n  | ---- | ------ |\n  | mens | womens |\n\n  :::tip\n  Parameter `country` can be found within the url of `Arcteryx` website.\n  :::","location":"outlet.ts"}} />
 
 Country
 
@@ -54,27 +54,27 @@ Country
 
 ### Regear New Arrivals
 
-<Route namespace="arcteryx" data={{"path":"/regear/new-arrivals","categories":["shopping"],"example":"/arcteryx/regear/new-arrivals","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["regear.arcteryx.com/shop/new-arrivals","regear.arcteryx.com/"]},"name":"Regear New Arrivals","maintainers":["EthanWng97"],"url":"regear.arcteryx.com/shop/new-arrivals","location":"regear-new-arrivals.ts"}} />
+<Route namespace="arcteryx" data={{"path":"/regear/new-arrivals","categories":["shopping"],"example":"/arcteryx/regear/new-arrivals","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["regear.arcteryx.com/shop/new-arrivals","regear.arcteryx.com/"]}],"name":"Regear New Arrivals","maintainers":["EthanWng97"],"url":"regear.arcteryx.com/shop/new-arrivals","location":"regear-new-arrivals.ts"}} />
 
 ## Bellroy
 
 ### New Releases
 
-<Route namespace="bellroy" data={{"path":"/new-releases","categories":["shopping"],"example":"/bellroy/new-releases","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bellroy.com/collection/new-releases","bellroy.com/"]},"name":"New Releases","maintainers":["EthanWng97"],"url":"bellroy.com/collection/new-releases","location":"new-releases.ts"}} />
+<Route namespace="bellroy" data={{"path":"/new-releases","categories":["shopping"],"example":"/bellroy/new-releases","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bellroy.com/collection/new-releases","bellroy.com/"]}],"name":"New Releases","maintainers":["EthanWng97"],"url":"bellroy.com/collection/new-releases","location":"new-releases.ts"}} />
 
 ## Furstar
 
 ### 画师列表
 
-<Route namespace="furstar" data={{"path":"/artists/:lang?","categories":["shopping"],"example":"/furstar/artists/cn","parameters":{"lang":"语言, 留空为jp, 支持cn, en"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["furstar.jp/"],"target":"/artists"},"name":"画师列表","maintainers":["NeverBehave"],"url":"furstar.jp/","location":"artists.ts"}} />
+<Route namespace="furstar" data={{"path":"/artists/:lang?","categories":["shopping"],"example":"/furstar/artists/cn","parameters":{"lang":"语言, 留空为jp, 支持cn, en"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["furstar.jp/"],"target":"/artists"}],"name":"画师列表","maintainers":["NeverBehave"],"url":"furstar.jp/","location":"artists.ts"}} />
 
 ### 已经出售的角色列表
 
-<Route namespace="furstar" data={{"path":"/archive/:lang?","categories":["shopping"],"example":"/furstar/archive/cn","parameters":{"lang":"语言, 留空为jp, 支持cn, en"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["furstar.jp/:lang/archive.php","furstar.jp/archive.php"],"target":"/archive/:lang"},"name":"已经出售的角色列表","maintainers":["NeverBehave"],"location":"archive.ts"}} />
+<Route namespace="furstar" data={{"path":"/archive/:lang?","categories":["shopping"],"example":"/furstar/archive/cn","parameters":{"lang":"语言, 留空为jp, 支持cn, en"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["furstar.jp/:lang/archive.php","furstar.jp/archive.php"],"target":"/archive/:lang"}],"name":"已经出售的角色列表","maintainers":["NeverBehave"],"location":"archive.ts"}} />
 
 ### 最新售卖角色列表
 
-<Route namespace="furstar" data={{"path":"/characters/:lang?","categories":["shopping"],"example":"/furstar/characters/cn","parameters":{"lang":"语言, 留空为jp, 支持cn, en"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["furstar.jp/:lang","furstar.jp/"],"target":"/characters/:lang"},"name":"最新售卖角色列表","maintainers":["NeverBehave"],"location":"index.ts"}} />
+<Route namespace="furstar" data={{"path":"/characters/:lang?","categories":["shopping"],"example":"/furstar/characters/cn","parameters":{"lang":"语言, 留空为jp, 支持cn, en"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["furstar.jp/:lang","furstar.jp/"],"target":"/characters/:lang"}],"name":"最新售卖角色列表","maintainers":["NeverBehave"],"location":"index.ts"}} />
 
 ## Gumroad
 
@@ -88,7 +88,7 @@ Country
 
 ### hottest
 
-<Route namespace="hotukdeals" data={{"path":"/hottest","categories":["shopping"],"example":"/hotukdeals/hottest","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.hotukdeals.com/"]},"name":"hottest","maintainers":["DIYgod"],"url":"www.hotukdeals.com/","location":"hottest.ts"}} />
+<Route namespace="hotukdeals" data={{"path":"/hottest","categories":["shopping"],"example":"/hotukdeals/hottest","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.hotukdeals.com/"]}],"name":"hottest","maintainers":["DIYgod"],"url":"www.hotukdeals.com/","location":"hottest.ts"}} />
 
 ### thread
 
@@ -98,29 +98,29 @@ Country
 
 ### UK - New Product Release
 
-<Route namespace="ikea" data={{"path":"/gb/new","categories":["shopping"],"example":"/ikea/gb/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ikea.com/gb/en/new/new-products/","ikea.com/"]},"name":"UK - New Product Release","maintainers":["HenryQW"],"url":"ikea.com/gb/en/new/new-products/","location":"gb/new.ts"}} />
+<Route namespace="ikea" data={{"path":"/gb/new","categories":["shopping"],"example":"/ikea/gb/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ikea.com/gb/en/new/new-products/","ikea.com/"]}],"name":"UK - New Product Release","maintainers":["HenryQW"],"url":"ikea.com/gb/en/new/new-products/","location":"gb/new.ts"}} />
 
 ### UK - Offers
 
-<Route namespace="ikea" data={{"path":"/gb/offer","categories":["shopping"],"example":"/ikea/gb/offer","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ikea.com/gb/en/offers","ikea.com/"]},"name":"UK - Offers","maintainers":["HenryQW"],"url":"ikea.com/gb/en/offers","location":"gb/offer.ts"}} />
+<Route namespace="ikea" data={{"path":"/gb/offer","categories":["shopping"],"example":"/ikea/gb/offer","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ikea.com/gb/en/offers","ikea.com/"]}],"name":"UK - Offers","maintainers":["HenryQW"],"url":"ikea.com/gb/en/offers","location":"gb/offer.ts"}} />
 
 ### 中国 - 会员特惠
 
-<Route namespace="ikea" data={{"path":"/cn/family_offers","categories":["shopping"],"example":"/ikea/cn/family_offers","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ikea.cn/cn/zh/offers/family-offers","ikea.cn/"]},"name":"中国 - 会员特惠","maintainers":["jzhangdev"],"url":"ikea.cn/cn/zh/offers/family-offers","location":"cn/family-offers.ts"}} />
+<Route namespace="ikea" data={{"path":"/cn/family_offers","categories":["shopping"],"example":"/ikea/cn/family_offers","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ikea.cn/cn/zh/offers/family-offers","ikea.cn/"]}],"name":"中国 - 会员特惠","maintainers":["jzhangdev"],"url":"ikea.cn/cn/zh/offers/family-offers","location":"cn/family-offers.ts"}} />
 
 ### 中国 - 低价优选
 
-<Route namespace="ikea" data={{"path":"/cn/low_price","categories":["shopping"],"example":"/ikea/cn/low_price","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ikea.cn/cn/zh/campaigns/wo3-men2-de-chao1-zhi2-di1-jia4-pub8b08af40","ikea.cn/"]},"name":"中国 - 低价优选","maintainers":["jzhangdev"],"url":"ikea.cn/cn/zh/campaigns/wo3-men2-de-chao1-zhi2-di1-jia4-pub8b08af40","location":"cn/low-price.ts"}} />
+<Route namespace="ikea" data={{"path":"/cn/low_price","categories":["shopping"],"example":"/ikea/cn/low_price","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ikea.cn/cn/zh/campaigns/wo3-men2-de-chao1-zhi2-di1-jia4-pub8b08af40","ikea.cn/"]}],"name":"中国 - 低价优选","maintainers":["jzhangdev"],"url":"ikea.cn/cn/zh/campaigns/wo3-men2-de-chao1-zhi2-di1-jia4-pub8b08af40","location":"cn/low-price.ts"}} />
 
 ### 中国 - 当季新品推荐
 
-<Route namespace="ikea" data={{"path":"/cn/new","categories":["shopping"],"example":"/ikea/cn/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ikea.cn/cn/zh/new/","ikea.cn/"]},"name":"中国 - 当季新品推荐","maintainers":["jzhangdev"],"url":"ikea.cn/cn/zh/new/","location":"cn/new.ts"}} />
+<Route namespace="ikea" data={{"path":"/cn/new","categories":["shopping"],"example":"/ikea/cn/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ikea.cn/cn/zh/new/","ikea.cn/"]}],"name":"中国 - 当季新品推荐","maintainers":["jzhangdev"],"url":"ikea.cn/cn/zh/new/","location":"cn/new.ts"}} />
 
 ## MyFigureCollection
 
 ### Activity
 
-<Route namespace="myfigurecollection" data={{"path":"/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?","categories":["shopping"],"example":"/myfigurecollection/activity","parameters":{"category":"Category, Figures by default","language":"Language, as above, `en` by default","latestAdditions":"Latest Additions, on as `1` by default, off as `0`","latestEdits":"Changes, on as `1` by default, off as `0`","latestAlerts":"Alerts, on as `1` by default, off as `0`","latestPictures":"Pictures, on as `1` by default, off as `0`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zh.myfigurecollection.net/browse","zh.myfigurecollection.net/"],"target":"/:category?/:language?"},"name":"Activity","maintainers":["nczitzk"],"url":"zh.myfigurecollection.net/browse","description":"Category\n\n  | Figures | Goods | Media |\n  | ------- | ----- | ----- |\n  | 0       | 1     | 2     |\n\n  Language\n\n  | Id | Language   |\n  | -- | ---------- |\n  |    | en         |\n  | de | Deutsch    |\n  | es | Español    |\n  | fi | Suomeksi   |\n  | fr | Français   |\n  | it | Italiano   |\n  | ja | 日本語     |\n  | nl | Nederlands |\n  | no | Norsk      |\n  | pl | Polski     |\n  | pt | Português  |\n  | ru | Русский    |\n  | sv | Svenska    |\n  | zh | 中文       |","location":"activity.ts"}} />
+<Route namespace="myfigurecollection" data={{"path":"/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?","categories":["shopping"],"example":"/myfigurecollection/activity","parameters":{"category":"Category, Figures by default","language":"Language, as above, `en` by default","latestAdditions":"Latest Additions, on as `1` by default, off as `0`","latestEdits":"Changes, on as `1` by default, off as `0`","latestAlerts":"Alerts, on as `1` by default, off as `0`","latestPictures":"Pictures, on as `1` by default, off as `0`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["zh.myfigurecollection.net/browse","zh.myfigurecollection.net/"],"target":"/:category?/:language?"}],"name":"Activity","maintainers":["nczitzk"],"url":"zh.myfigurecollection.net/browse","description":"Category\n\n  | Figures | Goods | Media |\n  | ------- | ----- | ----- |\n  | 0       | 1     | 2     |\n\n  Language\n\n  | Id | Language   |\n  | -- | ---------- |\n  |    | en         |\n  | de | Deutsch    |\n  | es | Español    |\n  | fi | Suomeksi   |\n  | fr | Français   |\n  | it | Italiano   |\n  | ja | 日本語     |\n  | nl | Nederlands |\n  | no | Norsk      |\n  | pl | Polski     |\n  | pt | Português  |\n  | ru | Русский    |\n  | sv | Svenska    |\n  | zh | 中文       |","location":"activity.ts"}} />
 
 Category
 
@@ -149,7 +149,7 @@ Category
 
 ### 圖片
 
-<Route namespace="myfigurecollection" data={{"path":"/:category?/:language?","categories":["shopping"],"example":"/myfigurecollection/potd","parameters":{"category":"分类，默认为每日圖片","language":"语言，见上表，默认为空，即 `en`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zh.myfigurecollection.net/browse","zh.myfigurecollection.net/"]},"name":"圖片","maintainers":["nczitzk"],"url":"zh.myfigurecollection.net/browse","description":"| 每日圖片 | 每週圖片 | 每月圖片 |\n  | -------- | -------- | -------- |\n  | potd     | potw     | potm     |","location":"index.ts"}} />
+<Route namespace="myfigurecollection" data={{"path":"/:category?/:language?","categories":["shopping"],"example":"/myfigurecollection/potd","parameters":{"category":"分类，默认为每日圖片","language":"语言，见上表，默认为空，即 `en`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["zh.myfigurecollection.net/browse","zh.myfigurecollection.net/"]}],"name":"圖片","maintainers":["nczitzk"],"url":"zh.myfigurecollection.net/browse","description":"| 每日圖片 | 每週圖片 | 每月圖片 |\n  | -------- | -------- | -------- |\n  | potd     | potw     | potm     |","location":"index.ts"}} />
 
 | 每日圖片 | 每週圖片 | 每月圖片 |
   | -------- | -------- | -------- |
@@ -159,7 +159,7 @@ Category
 
 ### User Sheets
 
-<Route namespace="mymusicsheet" data={{"path":"/user/sheets/:username/:iso?/:freeOnly?","categories":["shopping"],"example":"/mymusicsheet/user/sheets/HalcyonMusic/USD/1","parameters":{"username":"用户名，可在URL中找到","iso":"用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`","freeOnly":"只返回免费谱, 任意值为开启"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["mymusicsheet.com/:username/*","mymusicsheet.com/:username"],"target":"/user/sheets/:username"},"name":"User Sheets","maintainers":["Freddd13"],"description":"关于 ISO 4217，请参考[维基百科](https://zh.wikipedia.org/zh-cn/ISO_4217#%E7%8E%B0%E8%A1%8C%E4%BB%A3%E7%A0%81)","location":"usersheets.ts"}} />
+<Route namespace="mymusicsheet" data={{"path":"/user/sheets/:username/:iso?/:freeOnly?","categories":["shopping"],"example":"/mymusicsheet/user/sheets/HalcyonMusic/USD/1","parameters":{"username":"用户名，可在URL中找到","iso":"用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`","freeOnly":"只返回免费谱, 任意值为开启"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["mymusicsheet.com/:username/*","mymusicsheet.com/:username"],"target":"/user/sheets/:username"}],"name":"User Sheets","maintainers":["Freddd13"],"description":"关于 ISO 4217，请参考[维基百科](https://zh.wikipedia.org/zh-cn/ISO_4217#%E7%8E%B0%E8%A1%8C%E4%BB%A3%E7%A0%81)","location":"usersheets.ts"}} />
 
 关于 ISO 4217，请参考[维基百科](https://zh.wikipedia.org/zh-cn/ISO_4217#%E7%8E%B0%E8%A1%8C%E4%BB%A3%E7%A0%81)
 
@@ -177,13 +177,13 @@ Category
 
 ### Store
 
-<Route namespace="shopback" data={{"path":"/:store","categories":["shopping"],"example":"/shopback/shopee-mart","parameters":{"store":"Store, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["shopback.com.tw/:category","shopback.com.tw/"]},"name":"Store","maintainers":["nczitzk"],"location":"store.ts"}} />
+<Route namespace="shopback" data={{"path":"/:store","categories":["shopping"],"example":"/shopback/shopee-mart","parameters":{"store":"Store, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["shopback.com.tw/:category","shopback.com.tw/"]}],"name":"Store","maintainers":["nczitzk"],"location":"store.ts"}} />
 
 ## Snow Peak
 
 ### New Arrivals(USA)
 
-<Route namespace="snowpeak" data={{"path":"/us/new-arrivals","categories":["shopping"],"example":"/snowpeak/us/new-arrivals","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["snowpeak.com/collections/new-arrivals","snowpeak.com/"]},"name":"New Arrivals(USA)","maintainers":["EthanWng97"],"url":"snowpeak.com/collections/new-arrivals","location":"us-new-arrivals.ts"}} />
+<Route namespace="snowpeak" data={{"path":"/us/new-arrivals","categories":["shopping"],"example":"/snowpeak/us/new-arrivals","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["snowpeak.com/collections/new-arrivals","snowpeak.com/"]}],"name":"New Arrivals(USA)","maintainers":["EthanWng97"],"url":"snowpeak.com/collections/new-arrivals","location":"us-new-arrivals.ts"}} />
 
 ## Uniqlo
 
@@ -211,7 +211,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 搜索结果
 
-<Route namespace="duozhuayu" data={{"path":"/search/:wd","categories":["shopping"],"example":"/duozhuayu/search/JavaScript","parameters":{"wd":"搜索关键词"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["duozhuayu.com/search/book/:wd"]},"name":"搜索结果","maintainers":["fengkx"],"location":"search.ts"}} />
+<Route namespace="duozhuayu" data={{"path":"/search/:wd","categories":["shopping"],"example":"/duozhuayu/search/JavaScript","parameters":{"wd":"搜索关键词"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["duozhuayu.com/search/book/:wd"]}],"name":"搜索结果","maintainers":["fengkx"],"location":"search.ts"}} />
 
 ## 逛丢
 
@@ -233,7 +233,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 一小时风云榜
 
-<Route namespace="guangdiu" data={{"path":"/rank","categories":["shopping"],"example":"/guangdiu/rank","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["guangdiu.com/rank"]},"name":"一小时风云榜","maintainers":["fatpandac"],"url":"guangdiu.com/rank","location":"rank.ts"}} />
+<Route namespace="guangdiu" data={{"path":"/rank","categories":["shopping"],"example":"/guangdiu/rank","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["guangdiu.com/rank"]}],"name":"一小时风云榜","maintainers":["fatpandac"],"url":"guangdiu.com/rank","location":"rank.ts"}} />
 
 ## 京东
 
@@ -249,13 +249,13 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 节目列表
 
-<Route namespace="shcstheatre" data={{"path":"/programs","categories":["shopping"],"example":"/shcstheatre/programs","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.shcstheatre.com/Program/programList.aspx"]},"name":"节目列表","maintainers":["fuzy112"],"url":"www.shcstheatre.com/Program/programList.aspx","location":"programs.ts"}} />
+<Route namespace="shcstheatre" data={{"path":"/programs","categories":["shopping"],"example":"/shcstheatre/programs","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.shcstheatre.com/Program/programList.aspx"]}],"name":"节目列表","maintainers":["fuzy112"],"url":"www.shcstheatre.com/Program/programList.aspx","location":"programs.ts"}} />
 
 ## 上海东方艺术中心
 
 ### 演出月历
 
-<Route namespace="shoac" data={{"path":"/recent-show","categories":["shopping"],"example":"/shoac/recent-show","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["shoac.com.cn/"]},"name":"演出月历","maintainers":["TonyRL"],"url":"shoac.com.cn/","location":"recent-show.ts"}} />
+<Route namespace="shoac" data={{"path":"/recent-show","categories":["shopping"],"example":"/shoac/recent-show","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["shoac.com.cn/"]}],"name":"演出月历","maintainers":["TonyRL"],"url":"shoac.com.cn/","location":"recent-show.ts"}} />
 
 ## 什么值得买
 
@@ -269,7 +269,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 好文分类
 
-<Route namespace="smzdm" data={{"path":"/haowen/fenlei/:name/:sort?","categories":["shopping"],"example":"/smzdm/haowen/fenlei/shenghuodianqi","parameters":{"name":"分类名，可在 URL 中查看","sort":"排序方式，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["post.smzdm.com/fenlei/:name"],"target":"/haowen/fenlei/:name"},"name":"好文分类","maintainers":["LogicJake"],"description":"| 最新 | 周排行 | 月排行 |\n  | ---- | ------ | ------ |\n  | 0    | 7      | 30     |","location":"haowen-fenlei.ts"}} />
+<Route namespace="smzdm" data={{"path":"/haowen/fenlei/:name/:sort?","categories":["shopping"],"example":"/smzdm/haowen/fenlei/shenghuodianqi","parameters":{"name":"分类名，可在 URL 中查看","sort":"排序方式，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["post.smzdm.com/fenlei/:name"],"target":"/haowen/fenlei/:name"}],"name":"好文分类","maintainers":["LogicJake"],"description":"| 最新 | 周排行 | 月排行 |\n  | ---- | ------ | ------ |\n  | 0    | 7      | 30     |","location":"haowen-fenlei.ts"}} />
 
 | 最新 | 周排行 | 月排行 |
   | ---- | ------ | ------ |
@@ -329,11 +329,11 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 用户文章
 
-<Route namespace="smzdm" data={{"path":"/article/:uid","categories":["shopping"],"example":"/smzdm/article/6902738986","parameters":{"uid":"用户id，网址上直接可以看到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zhiyou.smzdm.com/member/:uid/article"]},"name":"用户文章","maintainers":["xfangbao"],"location":"article.ts"}} />
+<Route namespace="smzdm" data={{"path":"/article/:uid","categories":["shopping"],"example":"/smzdm/article/6902738986","parameters":{"uid":"用户id，网址上直接可以看到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["zhiyou.smzdm.com/member/:uid/article"]}],"name":"用户文章","maintainers":["xfangbao"],"location":"article.ts"}} />
 
 ### 用户爆料
 
-<Route namespace="smzdm" data={{"path":"/baoliao/:uid","categories":["shopping"],"example":"/smzdm/baoliao/7367111021","parameters":{"uid":"用户id，网址上直接可以看到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zhiyou.smzdm.com/member/:uid/baoliao"]},"name":"用户爆料","maintainers":["nczitzk"],"location":"baoliao.ts"}} />
+<Route namespace="smzdm" data={{"path":"/baoliao/:uid","categories":["shopping"],"example":"/smzdm/baoliao/7367111021","parameters":{"uid":"用户id，网址上直接可以看到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["zhiyou.smzdm.com/member/:uid/baoliao"]}],"name":"用户爆料","maintainers":["nczitzk"],"location":"baoliao.ts"}} />
 
 ## 淘宝众筹
 
@@ -349,7 +349,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 价格
 
-<Route namespace="tesla" data={{"path":"/price","categories":["shopping"],"example":"/tesla/price","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["tesla.cn/model3/design","tesla.cn/"]},"name":"价格","maintainers":["xiaokyo"],"url":"tesla.cn/model3/design","location":"price/index.ts"}} />
+<Route namespace="tesla" data={{"path":"/price","categories":["shopping"],"example":"/tesla/price","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["tesla.cn/model3/design","tesla.cn/"]}],"name":"价格","maintainers":["xiaokyo"],"url":"tesla.cn/model3/design","location":"price/index.ts"}} />
 
 ### 权益中心
 
@@ -436,23 +436,23 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 要闻
 
-<Route namespace="ccreports" data={{"path":"/article","categories":["shopping"],"example":"/ccreports/article","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.ccreports.com.cn/"]},"name":"要闻","maintainers":["EsuRt","Fatpandac"],"url":"www.ccreports.com.cn/","location":"index.ts"}} />
+<Route namespace="ccreports" data={{"path":"/article","categories":["shopping"],"example":"/ccreports/article","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.ccreports.com.cn/"]}],"name":"要闻","maintainers":["EsuRt","Fatpandac"],"url":"www.ccreports.com.cn/","location":"index.ts"}} />
 
 ## 小米有品
 
 ### 小米有品众筹
 
-<Route namespace="xiaomiyoupin" data={{"path":"/crowdfunding","categories":["shopping"],"example":"/xiaomiyoupin/crowdfunding","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["xiaomiyoupin.com/"]},"name":"小米有品众筹","maintainers":["bigfei"],"url":"xiaomiyoupin.com/","location":"crowdfunding.ts"}} />
+<Route namespace="xiaomiyoupin" data={{"path":"/crowdfunding","categories":["shopping"],"example":"/xiaomiyoupin/crowdfunding","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["xiaomiyoupin.com/"]}],"name":"小米有品众筹","maintainers":["bigfei"],"url":"xiaomiyoupin.com/","location":"crowdfunding.ts"}} />
 
 ### 小米有品每日上新
 
-<Route namespace="xiaomiyoupin" data={{"path":"/latest","categories":["shopping"],"example":"/xiaomiyoupin/latest","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["xiaomiyoupin.com/"]},"name":"小米有品每日上新","maintainers":["xyqfer","DIYgod","bigfei"],"url":"xiaomiyoupin.com/","location":"latest.ts"}} />
+<Route namespace="xiaomiyoupin" data={{"path":"/latest","categories":["shopping"],"example":"/xiaomiyoupin/latest","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["xiaomiyoupin.com/"]}],"name":"小米有品每日上新","maintainers":["xyqfer","DIYgod","bigfei"],"url":"xiaomiyoupin.com/","location":"latest.ts"}} />
 
 ## 秀动网
 
 ### 厂牌 - 演出更新
 
-<Route namespace="showstart" data={{"path":"/brand/:id","categories":["shopping"],"example":"/showstart/brand/34707","parameters":{"id":"厂牌 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.showstart.com/host/:id"]},"name":"厂牌 - 演出更新","maintainers":["lchtao26"],"description":":::tip\n厂牌 ID 查询: `/showstart/search/brand/:keyword`，如: [https://rsshub.app/showstart/search/brand/ 声场](https://rsshub.app/showstart/search/brand/声场)\n:::","location":"brand.ts"}} />
+<Route namespace="showstart" data={{"path":"/brand/:id","categories":["shopping"],"example":"/showstart/brand/34707","parameters":{"id":"厂牌 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.showstart.com/host/:id"]}],"name":"厂牌 - 演出更新","maintainers":["lchtao26"],"description":":::tip\n厂牌 ID 查询: `/showstart/search/brand/:keyword`，如: [https://rsshub.app/showstart/search/brand/ 声场](https://rsshub.app/showstart/search/brand/声场)\n:::","location":"brand.ts"}} />
 
 :::tip
 厂牌 ID 查询: `/showstart/search/brand/:keyword`，如: [https://rsshub.app/showstart/search/brand/ 声场](https://rsshub.app/showstart/search/brand/声场)
@@ -474,7 +474,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 音乐人 - 演出更新
 
-<Route namespace="showstart" data={{"path":"/artist/:id","categories":["shopping"],"example":"/showstart/artist/301783","parameters":{"id":"音乐人 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.showstart.com/artist/:id"]},"name":"音乐人 - 演出更新","maintainers":["lchtao26"],"description":":::tip\n音乐人 ID 查询: `/showstart/search/artist/:keyword`，如: [https://rsshub.app/showstart/search/artist/ 周杰伦](https://rsshub.app/showstart/search/artist/周杰伦)\n:::","location":"artist.ts"}} />
+<Route namespace="showstart" data={{"path":"/artist/:id","categories":["shopping"],"example":"/showstart/artist/301783","parameters":{"id":"音乐人 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.showstart.com/artist/:id"]}],"name":"音乐人 - 演出更新","maintainers":["lchtao26"],"description":":::tip\n音乐人 ID 查询: `/showstart/search/artist/:keyword`，如: [https://rsshub.app/showstart/search/artist/ 周杰伦](https://rsshub.app/showstart/search/artist/周杰伦)\n:::","location":"artist.ts"}} />
 
 :::tip
 音乐人 ID 查询: `/showstart/search/artist/:keyword`，如: [https://rsshub.app/showstart/search/artist/ 周杰伦](https://rsshub.app/showstart/search/artist/周杰伦)
@@ -484,5 +484,5 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### Unknown
 
-<Route namespace="zhuwang" data={{"path":"/zhujia","categories":["shopping"],"example":"/zhuwang/zhujia","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zhujia.zhuwang.cc/"]},"name":"Unknown","maintainers":[],"url":"zhujia.zhuwang.cc/","location":"index.ts"}} />
+<Route namespace="zhuwang" data={{"path":"/zhujia","categories":["shopping"],"example":"/zhuwang/zhujia","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["zhujia.zhuwang.cc/"]}],"name":"Unknown","maintainers":[],"url":"zhujia.zhuwang.cc/","location":"index.ts"}} />
 

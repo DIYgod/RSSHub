@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/u/:id/updates'],
-        target: '/activity/:id',
-    },
+    radar: [
+        {
+            source: ['sspai.com/u/:id/updates'],
+            target: '/activity/:id',
+        },
+    ],
     name: '作者动态',
     maintainers: ['umm233'],
     handler,

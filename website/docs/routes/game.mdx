@@ -4,7 +4,7 @@
 
 ### 新闻中心
 
-<Route namespace="3dmgame" data={{"path":"/news/:category?","categories":["game"],"example":"/3dmgame/news","parameters":{"category":"分类名或 ID，见下表，默认为新闻推荐，ID 可从分类 URL 中找到，如 Steam 为 `22221`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["3dmgame.com/news/:category?","3dmgame.com/news"]},"name":"新闻中心","maintainers":["zhboner"],"description":"| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |\n  | -------- | -------- | -------- | -------- | ----------- |\n  |          | game     | acg      | next     | news_36_1 |","location":"news-center.ts"}} />
+<Route namespace="3dmgame" data={{"path":"/news/:category?","categories":["game"],"example":"/3dmgame/news","parameters":{"category":"分类名或 ID，见下表，默认为新闻推荐，ID 可从分类 URL 中找到，如 Steam 为 `22221`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["3dmgame.com/news/:category?","3dmgame.com/news"]}],"name":"新闻中心","maintainers":["zhboner"],"description":"| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |\n  | -------- | -------- | -------- | -------- | ----------- |\n  |          | game     | acg      | next     | news_36_1 |","location":"news-center.ts"}} />
 
 | 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |
   | -------- | -------- | -------- | -------- | ----------- |
@@ -14,17 +14,17 @@
 
 ### 标签
 
-<Route namespace="4gamers" data={{"path":"/tag/:tag","categories":["game"],"example":"/4gamers/tag/限時免費","parameters":{"tag":"标签名，可在标签 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.4gamers.com.tw/news/tag/:tag"]},"name":"标签","maintainers":["hoilc"],"url":"www.4gamers.com.tw/news","location":"tag.ts"}} />
+<Route namespace="4gamers" data={{"path":"/tag/:tag","categories":["game"],"example":"/4gamers/tag/限時免費","parameters":{"tag":"标签名，可在标签 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.4gamers.com.tw/news/tag/:tag"]}],"name":"标签","maintainers":["hoilc"],"url":"www.4gamers.com.tw/news","location":"tag.ts"}} />
 
 ### 主題
 
-<Route namespace="4gamers" data={{"path":"/topic/:topic","categories":["game"],"example":"/4gamers/topic/gentlemen-topic","parameters":{"topic":"主题，可在首页上方页面内找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.4gamers.com.tw/news/option-cfg/:topic"]},"name":"主題","maintainers":["bestpika"],"url":"www.4gamers.com.tw/news","location":"topic.ts"}} />
+<Route namespace="4gamers" data={{"path":"/topic/:topic","categories":["game"],"example":"/4gamers/topic/gentlemen-topic","parameters":{"topic":"主题，可在首页上方页面内找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.4gamers.com.tw/news/option-cfg/:topic"]}],"name":"主題","maintainers":["bestpika"],"url":"www.4gamers.com.tw/news","location":"topic.ts"}} />
 
 ## 5EPLAY
 
 ### 新闻列表
 
-<Route namespace="5eplay" data={{"path":"/article","categories":["game"],"example":"/5eplay/article","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["csgo.5eplay.com/","csgo.5eplay.com/article"]},"name":"新闻列表","maintainers":["Dlouxgit"],"url":"csgo.5eplay.com/","location":"index.ts"}} />
+<Route namespace="5eplay" data={{"path":"/article","categories":["game"],"example":"/5eplay/article","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["csgo.5eplay.com/","csgo.5eplay.com/article"]}],"name":"新闻列表","maintainers":["Dlouxgit"],"url":"csgo.5eplay.com/","location":"index.ts"}} />
 
 ## Blizzard
 
@@ -75,13 +75,13 @@ Categories
 
 ### News
 
-<Route namespace="dorohedoro" data={{"path":"/news","categories":["game"],"example":"/dorohedoro/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["dorohedoro.net/news","dorohedoro.net/"]},"name":"News","maintainers":["nczitzk"],"url":"dorohedoro.net/news","location":"news.ts"}} />
+<Route namespace="dorohedoro" data={{"path":"/news","categories":["game"],"example":"/dorohedoro/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["dorohedoro.net/news","dorohedoro.net/"]}],"name":"News","maintainers":["nczitzk"],"url":"dorohedoro.net/news","location":"news.ts"}} />
 
 ## Epic Games Store
 
 ### Free games
 
-<Route namespace="epicgames" data={{"path":"/freegames/:locale?/:country?","categories":["game"],"example":"/epicgames/freegames","parameters":{"locale":"Locale, en_US by default","country":"Country, US by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["store.epicgames.com/:locale/free-games"],"target":"/freegames/:locale"},"name":"Free games","maintainers":["DIYgod","NeverBehave","Zyx-A","junfengP","nczitzk","KotaHv"],"location":"index.ts"}} />
+<Route namespace="epicgames" data={{"path":"/freegames/:locale?/:country?","categories":["game"],"example":"/epicgames/freegames","parameters":{"locale":"Locale, en_US by default","country":"Country, US by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["store.epicgames.com/:locale/free-games"],"target":"/freegames/:locale"}],"name":"Free games","maintainers":["DIYgod","NeverBehave","Zyx-A","junfengP","nczitzk","KotaHv"],"location":"index.ts"}} />
 
 ## FINAL FANTASY XIV 最终幻想 14
 
@@ -117,7 +117,7 @@ Region
 
 ### 最终幻想 14 国服
 
-<Route namespace="ff14" data={{"path":["/zh/:type?","/ff14_zh/:type?"],"categories":["game"],"example":"/ff14/zh/news","parameters":{"type":"分类名，预设为 `all`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ff.web.sdo.com/web8/index.html"],"target":"/zh"},"name":"最终幻想 14 国服","maintainers":["Kiotlin","ZeroClad","15x15G"],"url":"ff.web.sdo.com/web8/index.html","description":"| 新闻 | 公告     | 活动   | 广告      | 所有 |\n  | ---- | -------- | ------ | --------- | ---- |\n  | news | announce | events | advertise | all  |","location":"ff14-zh.ts"}} />
+<Route namespace="ff14" data={{"path":["/zh/:type?","/ff14_zh/:type?"],"categories":["game"],"example":"/ff14/zh/news","parameters":{"type":"分类名，预设为 `all`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ff.web.sdo.com/web8/index.html"],"target":"/zh"}],"name":"最终幻想 14 国服","maintainers":["Kiotlin","ZeroClad","15x15G"],"url":"ff.web.sdo.com/web8/index.html","description":"| 新闻 | 公告     | 活动   | 广告      | 所有 |\n  | ---- | -------- | ------ | --------- | ---- |\n  | news | announce | events | advertise | all  |","location":"ff14-zh.ts"}} />
 
 | 新闻 | 公告     | 活动   | 广告      | 所有 |
   | ---- | -------- | ------ | --------- | ---- |
@@ -125,7 +125,7 @@ Region
 
 ### 最终幻想 14 国服
 
-<Route namespace="ff14" data={{"path":["/zh/:type?","/ff14_zh/:type?"],"categories":["game"],"example":"/ff14/zh/news","parameters":{"type":"分类名，预设为 `all`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ff.web.sdo.com/web8/index.html"],"target":"/zh"},"name":"最终幻想 14 国服","maintainers":["Kiotlin","ZeroClad","15x15G"],"url":"ff.web.sdo.com/web8/index.html","description":"| 新闻 | 公告     | 活动   | 广告      | 所有 |\n  | ---- | -------- | ------ | --------- | ---- |\n  | news | announce | events | advertise | all  |","location":"ff14-zh.ts"}} />
+<Route namespace="ff14" data={{"path":["/zh/:type?","/ff14_zh/:type?"],"categories":["game"],"example":"/ff14/zh/news","parameters":{"type":"分类名，预设为 `all`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ff.web.sdo.com/web8/index.html"],"target":"/zh"}],"name":"最终幻想 14 国服","maintainers":["Kiotlin","ZeroClad","15x15G"],"url":"ff.web.sdo.com/web8/index.html","description":"| 新闻 | 公告     | 活动   | 广告      | 所有 |\n  | ---- | -------- | ------ | --------- | ---- |\n  | news | announce | events | advertise | all  |","location":"ff14-zh.ts"}} />
 
 | 新闻 | 公告     | 活动   | 广告      | 所有 |
   | ---- | -------- | ------ | --------- | ---- |
@@ -147,7 +147,7 @@ Region
 
 ### Category
 
-<Route namespace="gamersecret" data={{"path":"/:type?/:category?","categories":["game"],"example":"/gamersecret","parameters":{"type":"Type, see below, Latest News by default","category":"Category, see below"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["gamersecret.com/:type","gamersecret.com/:type/:category","gamersecret.com/"]},"name":"Category","maintainers":["nczitzk"],"description":"| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |\n  | ----------- | -- | ----------- | -------- | ---- | ------ |\n  | latest-news | pc | playstation | nintendo | xbox | moblie |\n\n  Or\n\n  | GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |\n  | ---------------- | ------------------ | --------------- | ----------------- |\n  | category/general | category/generalen | category/mobile | category/mobileen |\n\n  | NINTENDO          | NINTENDO EN         | PC          | PC EN         |\n  | ----------------- | ------------------- | ----------- | ------------- |\n  | category/nintendo | category/nintendoen | category/pc | category/pcen |\n\n  | PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |\n  | -------------------- | ---------------------- | ---------------- |\n  | category/playstation | category/playstationen | category/reviews |\n\n  | XBOX          | XBOX EN         |\n  | ------------- | --------------- |\n  | category/xbox | category/xboxen |","location":"index.ts"}} />
+<Route namespace="gamersecret" data={{"path":"/:type?/:category?","categories":["game"],"example":"/gamersecret","parameters":{"type":"Type, see below, Latest News by default","category":"Category, see below"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["gamersecret.com/:type","gamersecret.com/:type/:category","gamersecret.com/"]}],"name":"Category","maintainers":["nczitzk"],"description":"| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |\n  | ----------- | -- | ----------- | -------- | ---- | ------ |\n  | latest-news | pc | playstation | nintendo | xbox | moblie |\n\n  Or\n\n  | GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |\n  | ---------------- | ------------------ | --------------- | ----------------- |\n  | category/general | category/generalen | category/mobile | category/mobileen |\n\n  | NINTENDO          | NINTENDO EN         | PC          | PC EN         |\n  | ----------------- | ------------------- | ----------- | ------------- |\n  | category/nintendo | category/nintendoen | category/pc | category/pcen |\n\n  | PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |\n  | -------------------- | ---------------------- | ---------------- |\n  | category/playstation | category/playstationen | category/reviews |\n\n  | XBOX          | XBOX EN         |\n  | ------------- | --------------- |\n  | category/xbox | category/xboxen |","location":"index.ts"}} />
 
 | Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
   | ----------- | -- | ----------- | -------- | ---- | ------ |
@@ -210,11 +210,11 @@ Region
 
 ### 会员开发游戏库
 
-<Route namespace="indienova" data={{"path":"/usergames","categories":["game"],"example":"/indienova/usergames","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["indienova.com/usergames","indienova.com/"]},"name":"会员开发游戏库","maintainers":["TonyRL"],"url":"indienova.com/usergames","location":"usergames.ts"}} />
+<Route namespace="indienova" data={{"path":"/usergames","categories":["game"],"example":"/indienova/usergames","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["indienova.com/usergames","indienova.com/"]}],"name":"会员开发游戏库","maintainers":["TonyRL"],"url":"indienova.com/usergames","location":"usergames.ts"}} />
 
 ### 专题
 
-<Route namespace="indienova" data={{"path":"/column/:columnId","categories":["game"],"example":"/indienova/column/52","parameters":{"columnId":"专题 ID，可在 URL中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["indienova.com/column/:columnId"]},"name":"专题","maintainers":["TonyRL"],"description":"<details>\n    <summary>专题 ID</summary>\n\n    游戏推荐\n\n    | itch 一周游戏汇 | 一周值得关注的发售作品 | 诺娃速递 | 周末游戏视频集锦 | 每月媒体评分 | 年度最佳游戏 | Indie Focus 近期新游 | indienova Picks 精选 |\n    | --------------- | ---------------------- | -------- | ---------------- | ------------ | ------------ | -------------------- | -------------------- |\n    | 52              | 29                     | 41       | 43               | 45           | 39           | 1                    | 8                    |\n\n    游戏评论\n\n    | 游必有方 Podcast | 独立游戏潮（RED） |\n    | ---------------- | ----------------- |\n    | 6                | 3                 |\n\n    游戏开发\n\n    | 游戏设计模式 | Roguelike 开发 | GMS 中文教程 |\n    | ------------ | -------------- | ------------ |\n    | 15           | 14             | 7            |\n\n    游戏设计\n\n    | 游戏与所有 | 让人眼前一亮的游戏设计 | 游戏音乐分析 | 游戏情感设计 | 游戏相关书籍 | 游戏设计课程笔记 | 游戏设计工具 | 游戏设计灵感 | 设计师谈设计 | 游戏研究方法 | 功能游戏 | 游戏设计专业院校 | 像素课堂 |\n    | ---------- | ---------------------- | ------------ | ------------ | ------------ | ---------------- | ------------ | ------------ | ------------ | ------------ | -------- | ---------------- | -------- |\n    | 10         | 33                     | 17           | 4            | 22           | 11               | 24           | 26           | 27           | 28           | 38       | 9                | 19       |\n\n    游戏文化\n\n    | NOVA 海外独立游戏见闻 | 工作室访谈 | indie Figure 游戏人 | 游戏艺术家 | 独立游戏音乐欣赏 | 游戏瑰宝 | 电脑 RPG 游戏史 | ALT. CTRL. GAMING |\n    | --------------------- | ---------- | ------------------- | ---------- | ---------------- | -------- | --------------- | ----------------- |\n    | 53                    | 23         | 5                   | 44         | 18               | 21       | 16              | 2                 |\n\n    Game Jam\n\n    | Ludum Dare | Global Game Jam |\n    | ---------- | --------------- |\n    | 31         | 13              |\n  </details>","location":"column.ts"}} />
+<Route namespace="indienova" data={{"path":"/column/:columnId","categories":["game"],"example":"/indienova/column/52","parameters":{"columnId":"专题 ID，可在 URL中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["indienova.com/column/:columnId"]}],"name":"专题","maintainers":["TonyRL"],"description":"<details>\n    <summary>专题 ID</summary>\n\n    游戏推荐\n\n    | itch 一周游戏汇 | 一周值得关注的发售作品 | 诺娃速递 | 周末游戏视频集锦 | 每月媒体评分 | 年度最佳游戏 | Indie Focus 近期新游 | indienova Picks 精选 |\n    | --------------- | ---------------------- | -------- | ---------------- | ------------ | ------------ | -------------------- | -------------------- |\n    | 52              | 29                     | 41       | 43               | 45           | 39           | 1                    | 8                    |\n\n    游戏评论\n\n    | 游必有方 Podcast | 独立游戏潮（RED） |\n    | ---------------- | ----------------- |\n    | 6                | 3                 |\n\n    游戏开发\n\n    | 游戏设计模式 | Roguelike 开发 | GMS 中文教程 |\n    | ------------ | -------------- | ------------ |\n    | 15           | 14             | 7            |\n\n    游戏设计\n\n    | 游戏与所有 | 让人眼前一亮的游戏设计 | 游戏音乐分析 | 游戏情感设计 | 游戏相关书籍 | 游戏设计课程笔记 | 游戏设计工具 | 游戏设计灵感 | 设计师谈设计 | 游戏研究方法 | 功能游戏 | 游戏设计专业院校 | 像素课堂 |\n    | ---------- | ---------------------- | ------------ | ------------ | ------------ | ---------------- | ------------ | ------------ | ------------ | ------------ | -------- | ---------------- | -------- |\n    | 10         | 33                     | 17           | 4            | 22           | 11               | 24           | 26           | 27           | 28           | 38       | 9                | 19       |\n\n    游戏文化\n\n    | NOVA 海外独立游戏见闻 | 工作室访谈 | indie Figure 游戏人 | 游戏艺术家 | 独立游戏音乐欣赏 | 游戏瑰宝 | 电脑 RPG 游戏史 | ALT. CTRL. GAMING |\n    | --------------------- | ---------- | ------------------- | ---------- | ---------------- | -------- | --------------- | ----------------- |\n    | 53                    | 23         | 5                   | 44         | 18               | 21       | 16              | 2                 |\n\n    Game Jam\n\n    | Ludum Dare | Global Game Jam |\n    | ---------- | --------------- |\n    | 31         | 13              |\n  </details>","location":"column.ts"}} />
 
 <details>
     <summary>专题 ID</summary>
@@ -270,7 +270,7 @@ Region
 
 ### Posts
 
-<Route namespace="itch" data={{"path":"/posts/:topic/:id","categories":["game"],"example":"/itch/posts/9539/introduce-yourself","parameters":{"topic":"Topic id, can be found in URL","id":"Topic name, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["itch.io/t/:topic/:id"]},"name":"Posts","maintainers":["nczitzk"],"location":"posts.ts"}} />
+<Route namespace="itch" data={{"path":"/posts/:topic/:id","categories":["game"],"example":"/itch/posts/9539/introduce-yourself","parameters":{"topic":"Topic id, can be found in URL","id":"Topic name, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["itch.io/t/:topic/:id"]}],"name":"Posts","maintainers":["nczitzk"],"location":"posts.ts"}} />
 
 ## JUMP
 
@@ -298,13 +298,13 @@ Region
 
 ### Dota2 战队最近比赛结果
 
-<Route namespace="liquipedia" data={{"path":"/dota2/matches/:id","categories":["game"],"example":"/liquipedia/dota2/matches/Team_Aster","parameters":{"id":"战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["liquipedia.net/dota2/:id"]},"name":"Dota2 战队最近比赛结果","maintainers":["wzekin"],"location":"dota2-matches.ts"}} />
+<Route namespace="liquipedia" data={{"path":"/dota2/matches/:id","categories":["game"],"example":"/liquipedia/dota2/matches/Team_Aster","parameters":{"id":"战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["liquipedia.net/dota2/:id"]}],"name":"Dota2 战队最近比赛结果","maintainers":["wzekin"],"location":"dota2-matches.ts"}} />
 
 ## Minecraft
 
 ### Java Game Update
 
-<Route namespace="minecraft" data={{"path":"/version","categories":["game"],"example":"/minecraft/version","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["minecraft.net/"]},"name":"Java Game Update","maintainers":["TheresaQWQ"],"url":"minecraft.net/","location":"version.ts"}} />
+<Route namespace="minecraft" data={{"path":"/version","categories":["game"],"example":"/minecraft/version","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["minecraft.net/"]}],"name":"Java Game Update","maintainers":["TheresaQWQ"],"url":"minecraft.net/","location":"version.ts"}} />
 
 ## Modrinth
 
@@ -322,19 +322,19 @@ Region
 
 ### Nintendo Direct
 
-<Route namespace="nintendo" data={{"path":"/direct","categories":["game"],"example":"/nintendo/direct","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nintendo.com/nintendo-direct/archive","nintendo.com/"]},"name":"Nintendo Direct","maintainers":["HFO4"],"url":"nintendo.com/nintendo-direct/archive","location":"direct.ts"}} />
+<Route namespace="nintendo" data={{"path":"/direct","categories":["game"],"example":"/nintendo/direct","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nintendo.com/nintendo-direct/archive","nintendo.com/"]}],"name":"Nintendo Direct","maintainers":["HFO4"],"url":"nintendo.com/nintendo-direct/archive","location":"direct.ts"}} />
 
 ### News（Hong Kong only）
 
-<Route namespace="nintendo" data={{"path":"/news","categories":["game"],"example":"/nintendo/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nintendo.com.hk/topics","nintendo.com.hk/"]},"name":"News（Hong Kong only）","maintainers":["HFO4"],"url":"nintendo.com.hk/topics","location":"news.ts"}} />
+<Route namespace="nintendo" data={{"path":"/news","categories":["game"],"example":"/nintendo/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nintendo.com.hk/topics","nintendo.com.hk/"]}],"name":"News（Hong Kong only）","maintainers":["HFO4"],"url":"nintendo.com.hk/topics","location":"news.ts"}} />
 
 ### Switch System Update（Japan）
 
-<Route namespace="nintendo" data={{"path":"/system-update","categories":["game"],"example":"/nintendo/system-update","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nintendo.co.jp/support/switch/system_update/index.html","nintendo.co.jp/"]},"name":"Switch System Update（Japan）","maintainers":["hoilc"],"url":"nintendo.co.jp/support/switch/system_update/index.html","location":"system-update.ts"}} />
+<Route namespace="nintendo" data={{"path":"/system-update","categories":["game"],"example":"/nintendo/system-update","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nintendo.co.jp/support/switch/system_update/index.html","nintendo.co.jp/"]}],"name":"Switch System Update（Japan）","maintainers":["hoilc"],"url":"nintendo.co.jp/support/switch/system_update/index.html","location":"system-update.ts"}} />
 
 ### 首页资讯（中国）
 
-<Route namespace="nintendo" data={{"path":"/news/china","categories":["game"],"example":"/nintendo/news/china","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nintendoswitch.com.cn/"]},"name":"首页资讯（中国）","maintainers":["NeverBehave"],"url":"nintendoswitch.com.cn/","location":"news-china.ts"}} />
+<Route namespace="nintendo" data={{"path":"/news/china","categories":["game"],"example":"/nintendo/news/china","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nintendoswitch.com.cn/"]}],"name":"首页资讯（中国）","maintainers":["NeverBehave"],"url":"nintendoswitch.com.cn/","location":"news-china.ts"}} />
 
 ## osu!
 
@@ -346,13 +346,13 @@ Region
 
 ### 日服公告
 
-<Route namespace="priconne-redive" data={{"path":"/news","categories":["game"],"example":"/priconne-redive/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["priconne-redive.jp/news"]},"name":"日服公告","maintainers":["SayaSS"],"url":"priconne-redive.jp/news","location":"news.ts"}} />
+<Route namespace="priconne-redive" data={{"path":"/news","categories":["game"],"example":"/priconne-redive/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["priconne-redive.jp/news"]}],"name":"日服公告","maintainers":["SayaSS"],"url":"priconne-redive.jp/news","location":"news.ts"}} />
 
 ## PlayStation Store
 
 ### PlayStation Monthly Games
 
-<Route namespace="ps" data={{"path":"/monthly-games","categories":["game"],"example":"/ps/monthly-games","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.playstation.com/en-sg/ps-plus/whats-new"]},"name":"PlayStation Monthly Games","maintainers":["justjustCC"],"url":"www.playstation.com/en-sg/ps-plus/whats-new","location":"monthly-games.ts"}} />
+<Route namespace="ps" data={{"path":"/monthly-games","categories":["game"],"example":"/ps/monthly-games","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.playstation.com/en-sg/ps-plus/whats-new"]}],"name":"PlayStation Monthly Games","maintainers":["justjustCC"],"url":"www.playstation.com/en-sg/ps-plus/whats-new","location":"monthly-games.ts"}} />
 
 ### PlayStation Network user trophy
 
@@ -360,9 +360,13 @@ Region
 
 ## SEGA
 
+### maimai DX Japanese Ver. News
+
+<Route namespace="sega" data={{"path":"/maimaidx/news","categories":["game"],"example":"/sega/maimaidx/news","radar":[{"source":["info-maimai.sega.jp/"]}],"name":"maimai DX Japanese Ver. News","maintainers":["randompasser"],"url":"info-maimai.sega.jp/","location":"maimaidx.ts"}} />
+
 ### 世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ
 
-<Route namespace="sega" data={{"path":"/pjsekai/news","categories":["game"],"example":"/sega/pjsekai/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["pjsekai.sega.jp/news/index.html"]},"name":"世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ","maintainers":["15x15G"],"url":"pjsekai.sega.jp/news/index.html","location":"pjsekai.ts"}} />
+<Route namespace="sega" data={{"path":"/pjsekai/news","categories":["game"],"example":"/sega/pjsekai/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["pjsekai.sega.jp/news/index.html"]}],"name":"世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ","maintainers":["15x15G"],"url":"pjsekai.sega.jp/news/index.html","location":"pjsekai.ts"}} />
 
 ## TapTap 中国
 
@@ -372,7 +376,7 @@ Region
 
 ### 游戏更新
 
-<Route namespace="taptap" data={{"path":["/changelog/:id/:lang?","/intl/changelog/:id/:lang?"],"categories":["game"],"example":"/taptap/changelog/60809/en_US","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","lang":"语言，默认使用 `zh_CN`，亦可使用 `en_US`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["taptap.com/app/:id"],"target":"/changelog/:id"},"name":"游戏更新","maintainers":["hoilc","ETiV"],"description":"#### 语言代码\n\n  | English (US) | 繁體中文 | 한국어 | 日本語 |\n  | ------------ | -------- | ------ | ------ |\n  | en_US       | zh_TW   | ko_KR | ja_JP |","location":"changelog.ts"}} />
+<Route namespace="taptap" data={{"path":["/changelog/:id/:lang?","/intl/changelog/:id/:lang?"],"categories":["game"],"example":"/taptap/changelog/60809/en_US","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","lang":"语言，默认使用 `zh_CN`，亦可使用 `en_US`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["taptap.com/app/:id"],"target":"/changelog/:id"}],"name":"游戏更新","maintainers":["hoilc","ETiV"],"description":"#### 语言代码\n\n  | English (US) | 繁體中文 | 한국어 | 日本語 |\n  | ------------ | -------- | ------ | ------ |\n  | en_US       | zh_TW   | ko_KR | ja_JP |","location":"changelog.ts"}} />
 
 #### 语言代码
 
@@ -382,7 +386,7 @@ Region
 
 ### 游戏更新
 
-<Route namespace="taptap" data={{"path":["/changelog/:id/:lang?","/intl/changelog/:id/:lang?"],"categories":["game"],"example":"/taptap/changelog/60809/en_US","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","lang":"语言，默认使用 `zh_CN`，亦可使用 `en_US`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["taptap.com/app/:id"],"target":"/changelog/:id"},"name":"游戏更新","maintainers":["hoilc","ETiV"],"description":"#### 语言代码\n\n  | English (US) | 繁體中文 | 한국어 | 日本語 |\n  | ------------ | -------- | ------ | ------ |\n  | en_US       | zh_TW   | ko_KR | ja_JP |","location":"changelog.ts"}} />
+<Route namespace="taptap" data={{"path":["/changelog/:id/:lang?","/intl/changelog/:id/:lang?"],"categories":["game"],"example":"/taptap/changelog/60809/en_US","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","lang":"语言，默认使用 `zh_CN`，亦可使用 `en_US`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["taptap.com/app/:id"],"target":"/changelog/:id"}],"name":"游戏更新","maintainers":["hoilc","ETiV"],"description":"#### 语言代码\n\n  | English (US) | 繁體中文 | 한국어 | 日本語 |\n  | ------------ | -------- | ------ | ------ |\n  | en_US       | zh_TW   | ko_KR | ja_JP |","location":"changelog.ts"}} />
 
 #### 语言代码
 
@@ -392,7 +396,7 @@ Region
 
 ### 游戏评价
 
-<Route namespace="taptap" data={{"path":["/review/:id/:order?/:lang?","/intl/review/:id/:order?/:lang?"],"categories":["game"],"example":"/taptap/review/142793/hot","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","order":"排序方式，空为默认排序，可选如下","lang":"语言，`zh-CN`或`zh-TW`，默认为`zh-CN`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["taptap.com/app/:id/review","taptap.com/app/:id"],"target":"/review/:id"},"name":"游戏评价","maintainers":["hoilc","TonyRL"],"description":"| 最新   | 最热 | 游戏时长 | 默认排序 |\n  | ------ | ---- | -------- | -------- |\n  | update | hot  | spent    | default  |","location":"review.ts"}} />
+<Route namespace="taptap" data={{"path":["/review/:id/:order?/:lang?","/intl/review/:id/:order?/:lang?"],"categories":["game"],"example":"/taptap/review/142793/hot","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","order":"排序方式，空为默认排序，可选如下","lang":"语言，`zh-CN`或`zh-TW`，默认为`zh-CN`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["taptap.com/app/:id/review","taptap.com/app/:id"],"target":"/review/:id"}],"name":"游戏评价","maintainers":["hoilc","TonyRL"],"description":"| 最新   | 最热 | 游戏时长 | 默认排序 |\n  | ------ | ---- | -------- | -------- |\n  | update | hot  | spent    | default  |","location":"review.ts"}} />
 
 | 最新   | 最热 | 游戏时长 | 默认排序 |
   | ------ | ---- | -------- | -------- |
@@ -400,7 +404,7 @@ Region
 
 ### 游戏评价
 
-<Route namespace="taptap" data={{"path":["/review/:id/:order?/:lang?","/intl/review/:id/:order?/:lang?"],"categories":["game"],"example":"/taptap/review/142793/hot","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","order":"排序方式，空为默认排序，可选如下","lang":"语言，`zh-CN`或`zh-TW`，默认为`zh-CN`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["taptap.com/app/:id/review","taptap.com/app/:id"],"target":"/review/:id"},"name":"游戏评价","maintainers":["hoilc","TonyRL"],"description":"| 最新   | 最热 | 游戏时长 | 默认排序 |\n  | ------ | ---- | -------- | -------- |\n  | update | hot  | spent    | default  |","location":"review.ts"}} />
+<Route namespace="taptap" data={{"path":["/review/:id/:order?/:lang?","/intl/review/:id/:order?/:lang?"],"categories":["game"],"example":"/taptap/review/142793/hot","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","order":"排序方式，空为默认排序，可选如下","lang":"语言，`zh-CN`或`zh-TW`，默认为`zh-CN`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["taptap.com/app/:id/review","taptap.com/app/:id"],"target":"/review/:id"}],"name":"游戏评价","maintainers":["hoilc","TonyRL"],"description":"| 最新   | 最热 | 游戏时长 | 默认排序 |\n  | ------ | ---- | -------- | -------- |\n  | update | hot  | spent    | default  |","location":"review.ts"}} />
 
 | 最新   | 最热 | 游戏时长 | 默认排序 |
   | ------ | ---- | -------- | -------- |
@@ -408,7 +412,7 @@ Region
 
 ### 游戏论坛
 
-<Route namespace="taptap" data={{"path":"/topic/:id/:type?/:sort?/:lang?","categories":["game"],"example":"/taptap/topic/142793/official","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","type":"论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed`","sort":"排序，见下表，默认为 `created`","lang":"语言，`zh-CN`或`zh-TW`，默认为`zh-CN`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["taptap.com/app/:id/topic","taptap.com/app/:id"],"target":"/topic/:id"},"name":"游戏论坛","maintainers":["hoilc","TonyRL"],"description":"| 全部 | 精华  | 官方     | 影片  |\n  | ---- | ----- | -------- | ----- |\n  | feed | elite | official | video |\n\n  | 发布时间 | 回复时间  |\n  | -------- | --------- |\n  | created  | commented |","location":"topic.ts"}} />
+<Route namespace="taptap" data={{"path":"/topic/:id/:type?/:sort?/:lang?","categories":["game"],"example":"/taptap/topic/142793/official","parameters":{"id":"游戏 ID，游戏主页 URL 中获取","type":"论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed`","sort":"排序，见下表，默认为 `created`","lang":"语言，`zh-CN`或`zh-TW`，默认为`zh-CN`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["taptap.com/app/:id/topic","taptap.com/app/:id"],"target":"/topic/:id"}],"name":"游戏论坛","maintainers":["hoilc","TonyRL"],"description":"| 全部 | 精华  | 官方     | 影片  |\n  | ---- | ----- | -------- | ----- |\n  | feed | elite | official | video |\n\n  | 发布时间 | 回复时间  |\n  | -------- | --------- |\n  | created  | commented |","location":"topic.ts"}} />
 
 | 全部 | 精华  | 官方     | 影片  |
   | ---- | ----- | -------- | ----- |
@@ -422,7 +426,7 @@ Region
 
 ### News
 
-<Route namespace="warthunder" data={{"path":"/news","categories":["game"],"example":"/warthunder/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["warthunder.com/en/news","warthunder.com/"]},"name":"News","maintainers":["axojhf"],"url":"warthunder.com/en/news","description":"News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)\n  The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!","location":"news.ts"}} />
+<Route namespace="warthunder" data={{"path":"/news","categories":["game"],"example":"/warthunder/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["warthunder.com/en/news","warthunder.com/"]}],"name":"News","maintainers":["axojhf"],"url":"warthunder.com/en/news","description":"News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)\n  The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!","location":"news.ts"}} />
 
 News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)
   The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!
@@ -431,29 +435,29 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 新闻
 
-<Route namespace="diershoubing" data={{"path":"/news","categories":["game"],"example":"/diershoubing/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["diershoubing.com/"]},"name":"新闻","maintainers":["wushijishan"],"url":"diershoubing.com/","location":"news.ts"}} />
+<Route namespace="diershoubing" data={{"path":"/news","categories":["game"],"example":"/diershoubing/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["diershoubing.com/"]}],"name":"新闻","maintainers":["wushijishan"],"url":"diershoubing.com/","location":"news.ts"}} />
 
 ## 盒心光环
 
 ### 资讯
 
-<Route namespace="xboxfan" data={{"path":"/news","categories":["game"],"example":"/xboxfan/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["xboxfan.com/"]},"name":"资讯","maintainers":["XXY233"],"url":"xboxfan.com/","location":"news.ts"}} />
+<Route namespace="xboxfan" data={{"path":"/news","categories":["game"],"example":"/xboxfan/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["xboxfan.com/"]}],"name":"资讯","maintainers":["XXY233"],"url":"xboxfan.com/","location":"news.ts"}} />
 
 ## 旅法师营地
 
 ### 首页
 
-<Route namespace="lfsyd" data={{"path":"/home","categories":["game"],"example":"/lfsyd/home","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.iyingdi.com/"]},"name":"首页","maintainers":["auto-bot-ty"],"url":"www.iyingdi.com/","location":"home.ts"}} />
+<Route namespace="lfsyd" data={{"path":"/home","categories":["game"],"example":"/lfsyd/home","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.iyingdi.com/"]}],"name":"首页","maintainers":["auto-bot-ty"],"url":"www.iyingdi.com/","location":"home.ts"}} />
 
 ### 首页（旧版）
 
-<Route namespace="lfsyd" data={{"path":"/old_home","categories":["game"],"example":"/lfsyd/old_home","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.iyingdi.com/"]},"name":"首页（旧版）","maintainers":["auto-bot-ty"],"url":"www.iyingdi.com/","location":"old-home.ts"}} />
+<Route namespace="lfsyd" data={{"path":"/old_home","categories":["game"],"example":"/lfsyd/old_home","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.iyingdi.com/"]}],"name":"首页（旧版）","maintainers":["auto-bot-ty"],"url":"www.iyingdi.com/","location":"old-home.ts"}} />
 
 ## 米哈游
 
 ### 崩坏：星穹铁道
 
-<Route namespace="mihoyo" data={{"path":"/sr/:location?/:category?","categories":["game"],"example":"/mihoyo/sr","parameters":{"location":"区域，可选 `zh-cn`（国服，简中）或 `zh-tw`（国际服，繁中）","category":"分类，见下表，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["sr.mihoyo.com/news"],"target":"/sr"},"name":"崩坏：星穹铁道","maintainers":["shinanory"],"url":"sr.mihoyo.com/news","description":"#### 新闻 {#mi-ha-you-beng-huai-xing-qiong-tie-dao-xin-wen}\n\n  | 最新     | 新闻 | 公告   | 活动     |\n  | -------- | ---- | ------ | -------- |\n  | news-all | news | notice | activity |","location":"sr/news.ts"}} />
+<Route namespace="mihoyo" data={{"path":"/sr/:location?/:category?","categories":["game"],"example":"/mihoyo/sr","parameters":{"location":"区域，可选 `zh-cn`（国服，简中）或 `zh-tw`（国际服，繁中）","category":"分类，见下表，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sr.mihoyo.com/news"],"target":"/sr"}],"name":"崩坏：星穹铁道","maintainers":["shinanory"],"url":"sr.mihoyo.com/news","description":"#### 新闻 {#mi-ha-you-beng-huai-xing-qiong-tie-dao-xin-wen}\n\n  | 最新     | 新闻 | 公告   | 活动     |\n  | -------- | ---- | ------ | -------- |\n  | news-all | news | notice | activity |","location":"sr/news.ts"}} />
 
 #### 新闻 {#mi-ha-you-beng-huai-xing-qiong-tie-dao-xin-wen}
 
@@ -467,7 +471,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 米游社 - 同人榜
 
-<Route namespace="mihoyo" data={{"path":"/bbs/img-ranking/:game/:routeParams?","categories":["game"],"example":"/mihoyo/bbs/img-ranking/ys/forumType=tongren&cateType=illustration&rankingType=daily","parameters":{"game":"游戏缩写","routeParams":"额外参数；请参阅以下说明和表格"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["miyoushe.com/:game/imgRanking/:forum_id/:ranking_id/:cate_id"],"target":"/bbs/img-ranking/:game"},"name":"米游社 - 同人榜","maintainers":["CaoMeiYouRen"],"description":"| 键          | 含义                                  | 接受的值                                                             | 默认值       |\n  | ----------- | ------------------------------------- | -------------------------------------------------------------------- | ------------ |\n  | forumType   | 主榜类型（仅原神、大别野有 cos 主榜） | tongren/cos                                                          | tongren      |\n  | cateType    | 子榜类型（仅崩坏三、原神有子榜）      | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |\n  | rankingType | 排行榜类型（崩坏二没有日榜）          | daily/weekly/monthly                                                 | daily        |\n  | lastId      | 当前页 id（用于分页）                 | 数字                                                                 | 1            |\n\n  游戏缩写（目前绝区零还没有同人榜\n\n  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 大别野 |\n  | ------ | ---- | ------ | ---------- | -------- | ------ |\n  | bh3    | ys   | bh2    | wd         | sr       | dby    |\n\n  主榜类型\n\n  | 同人榜  | COS 榜 |\n  | ------- | ------ |\n  | tongren | cos    |\n\n  子榜类型\n\n  崩坏三 子榜\n\n  | 插画         | 漫画  | COS |\n  | ------------ | ----- | --- |\n  | illustration | comic | cos |\n\n  原神 子榜\n\n  | 插画         | 漫画  | Q 版 | 手工   |\n  | ------------ | ----- | ---- | ------ |\n  | illustration | comic | qute | manual |\n\n  排行榜类型\n\n  | 日榜  | 周榜   | 月榜    |\n  | ----- | ------ | ------- |\n  | daily | weekly | monthly |","location":"bbs/img-ranking.ts"}} />
+<Route namespace="mihoyo" data={{"path":"/bbs/img-ranking/:game/:routeParams?","categories":["game"],"example":"/mihoyo/bbs/img-ranking/ys/forumType=tongren&cateType=illustration&rankingType=daily","parameters":{"game":"游戏缩写","routeParams":"额外参数；请参阅以下说明和表格"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["miyoushe.com/:game/imgRanking/:forum_id/:ranking_id/:cate_id"],"target":"/bbs/img-ranking/:game"}],"name":"米游社 - 同人榜","maintainers":["CaoMeiYouRen"],"description":"| 键          | 含义                                  | 接受的值                                                             | 默认值       |\n  | ----------- | ------------------------------------- | -------------------------------------------------------------------- | ------------ |\n  | forumType   | 主榜类型（仅原神、大别野有 cos 主榜） | tongren/cos                                                          | tongren      |\n  | cateType    | 子榜类型（仅崩坏三、原神有子榜）      | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |\n  | rankingType | 排行榜类型（崩坏二没有日榜）          | daily/weekly/monthly                                                 | daily        |\n  | lastId      | 当前页 id（用于分页）                 | 数字                                                                 | 1            |\n\n  游戏缩写（目前绝区零还没有同人榜\n\n  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 大别野 |\n  | ------ | ---- | ------ | ---------- | -------- | ------ |\n  | bh3    | ys   | bh2    | wd         | sr       | dby    |\n\n  主榜类型\n\n  | 同人榜  | COS 榜 |\n  | ------- | ------ |\n  | tongren | cos    |\n\n  子榜类型\n\n  崩坏三 子榜\n\n  | 插画         | 漫画  | COS |\n  | ------------ | ----- | --- |\n  | illustration | comic | cos |\n\n  原神 子榜\n\n  | 插画         | 漫画  | Q 版 | 手工   |\n  | ------------ | ----- | ---- | ------ |\n  | illustration | comic | qute | manual |\n\n  排行榜类型\n\n  | 日榜  | 周榜   | 月榜    |\n  | ----- | ------ | ------- |\n  | daily | weekly | monthly |","location":"bbs/img-ranking.ts"}} />
 
 | 键          | 含义                                  | 接受的值                                                             | 默认值       |
   | ----------- | ------------------------------------- | -------------------------------------------------------------------- | ------------ |
@@ -526,7 +530,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 米游社 - 用户关注动态
 
-<Route namespace="mihoyo" data={{"path":"/bbs/timeline","categories":["game"],"example":"/mihoyo/bbs/timeline","parameters":{},"features":{"requireConfig":[{"name":"MIHOYO_COOKIE","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["miyoushe.com/:game/timeline"]},"name":"米游社 - 用户关注动态","maintainers":["CaoMeiYouRen"],"description":":::warning\n  用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::","location":"bbs/timeline.ts"}} />
+<Route namespace="mihoyo" data={{"path":"/bbs/timeline","categories":["game"],"example":"/mihoyo/bbs/timeline","parameters":{},"features":{"requireConfig":[{"name":"MIHOYO_COOKIE","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["miyoushe.com/:game/timeline"]}],"name":"米游社 - 用户关注动态","maintainers":["CaoMeiYouRen"],"description":":::warning\n  用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::","location":"bbs/timeline.ts"}} />
 
 :::warning
   用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
@@ -538,7 +542,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 原神
 
-<Route namespace="mihoyo" data={{"path":"/ys/:location?/:category?","categories":["game"],"example":"/mihoyo/ys","parameters":{"location":"区域，可选 `main`（简中）或 `zh-tw`（繁中）","category":"分类，见下表，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["genshin.hoyoverse.com/:location/news"],"target":"/ys/:location"},"name":"原神","maintainers":["nczitzk"],"description":"#### 新闻 {#mi-ha-you-yuan-shen-xin-wen}\n\n  | 最新   | 新闻 | 公告   | 活动     |\n  | ------ | ---- | ------ | -------- |\n  | latest | news | notice | activity |","location":"ys/news.ts"}} />
+<Route namespace="mihoyo" data={{"path":"/ys/:location?/:category?","categories":["game"],"example":"/mihoyo/ys","parameters":{"location":"区域，可选 `main`（简中）或 `zh-tw`（繁中）","category":"分类，见下表，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["genshin.hoyoverse.com/:location/news"],"target":"/ys/:location"}],"name":"原神","maintainers":["nczitzk"],"description":"#### 新闻 {#mi-ha-you-yuan-shen-xin-wen}\n\n  | 最新   | 新闻 | 公告   | 活动     |\n  | ------ | ---- | ------ | -------- |\n  | latest | news | notice | activity |","location":"ys/news.ts"}} />
 
 #### 新闻 {#mi-ha-you-yuan-shen-xin-wen}
 
@@ -566,17 +570,17 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 游戏公告与新闻
 
-<Route namespace="arknights" data={{"path":"/news","categories":["game"],"example":"/arknights/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ak-conf.hypergryph.com/*"]},"name":"游戏公告与新闻","maintainers":["Astrian"],"url":"ak-conf.hypergryph.com/*","location":"news.ts"}} />
+<Route namespace="arknights" data={{"path":"/news","categories":["game"],"example":"/arknights/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ak-conf.hypergryph.com/*"]}],"name":"游戏公告与新闻","maintainers":["Astrian"],"url":"ak-conf.hypergryph.com/*","location":"news.ts"}} />
 
 ### アークナイツ (日服新闻)
 
-<Route namespace="arknights" data={{"path":"/japan","categories":["game"],"example":"/arknights/japan","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ak.arknights.jp/news","ak.arknights.jp/"]},"name":"アークナイツ (日服新闻)","maintainers":["ofyark"],"url":"ak.arknights.jp/news","location":"japan.ts"}} />
+<Route namespace="arknights" data={{"path":"/japan","categories":["game"],"example":"/arknights/japan","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ak.arknights.jp/news","ak.arknights.jp/"]}],"name":"アークナイツ (日服新闻)","maintainers":["ofyark"],"url":"ak.arknights.jp/news","location":"japan.ts"}} />
 
 ## 少女前线
 
 ### 情报局
 
-<Route namespace="gf-cn" data={{"path":"/news/:category?","categories":["game"],"example":"/gf-cn/news","parameters":{"category":"分类，见下表，默认为新闻"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["sunborngame.com/:category","sunborngame.com/"]},"name":"情报局","maintainers":["nczitzk"],"description":"| 新闻 | 公告 |\n  | ---- | ---- |\n  | 1    | 3    |","location":"news.ts"}} />
+<Route namespace="gf-cn" data={{"path":"/news/:category?","categories":["game"],"example":"/gf-cn/news","parameters":{"category":"分类，见下表，默认为新闻"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sunborngame.com/:category","sunborngame.com/"]}],"name":"情报局","maintainers":["nczitzk"],"description":"| 新闻 | 公告 |\n  | ---- | ---- |\n  | 1    | 3    |","location":"news.ts"}} />
 
 | 新闻 | 公告 |
   | ---- | ---- |
@@ -610,7 +614,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 用户发帖
 
-<Route namespace="163" data={{"path":"/ds/:id","categories":["game"],"example":"/163/ds/63dfbaf4117741daaf73404601165843","parameters":{"id":"用户ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ds.163.com/user/:id"]},"name":"用户发帖","maintainers":["luyuhuang"],"location":"ds.ts"}} />
+<Route namespace="163" data={{"path":"/ds/:id","categories":["game"],"example":"/163/ds/63dfbaf4117741daaf73404601165843","parameters":{"id":"用户ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ds.163.com/user/:id"]}],"name":"用户发帖","maintainers":["luyuhuang"],"location":"ds.ts"}} />
 
 ## 英雄联盟
 
@@ -626,13 +630,13 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 资讯
 
-<Route namespace="gamegene" data={{"path":"/news","categories":["game"],"example":"/gamegene/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["news.gamegene.cn/news"]},"name":"资讯","maintainers":["lone1y-51"],"url":"news.gamegene.cn/news","location":"news.ts"}} />
+<Route namespace="gamegene" data={{"path":"/news","categories":["game"],"example":"/gamegene/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["news.gamegene.cn/news"]}],"name":"资讯","maintainers":["lone1y-51"],"url":"news.gamegene.cn/news","location":"news.ts"}} />
 
 ## 游讯网
 
 ### 精彩推荐
 
-<Route namespace="yxdown" data={{"path":"/recommend","categories":["game"],"example":"/yxdown/recommend","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yxdown.com/"]},"name":"精彩推荐","maintainers":["nczitzk"],"url":"yxdown.com/","location":"recommend.ts"}} />
+<Route namespace="yxdown" data={{"path":"/recommend","categories":["game"],"example":"/yxdown/recommend","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["yxdown.com/"]}],"name":"精彩推荐","maintainers":["nczitzk"],"url":"yxdown.com/","location":"recommend.ts"}} />
 
 ### 资讯
 
@@ -646,7 +650,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 游戏折扣
 
-<Route namespace="yxdzqb" data={{"path":"/:type","categories":["game"],"example":"/yxdzqb/popular_cn","parameters":{"type":"折扣类型"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yxdzqb.com/"]},"name":"游戏折扣","maintainers":["LogicJake","nczitzk"],"url":"yxdzqb.com/","description":"| Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |\n  | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |\n  | discount       | popular            | popular_cn            | low            | low_cn                |","location":"index.ts"}} />
+<Route namespace="yxdzqb" data={{"path":"/:type","categories":["game"],"example":"/yxdzqb/popular_cn","parameters":{"type":"折扣类型"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["yxdzqb.com/"]}],"name":"游戏折扣","maintainers":["LogicJake","nczitzk"],"url":"yxdzqb.com/","description":"| Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |\n  | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |\n  | discount       | popular            | popular_cn            | low            | low_cn                |","location":"index.ts"}} />
 
 | Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
   | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
@@ -656,7 +660,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 分类
 
-<Route namespace="yxrb" data={{"path":"/:category?","categories":["game"],"example":"/yxrb/info","parameters":{"category":"分类，见下表，预设为 `info`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["news.yxrb.net/:category","news.yxrb.net/"],"target":"/:category"},"name":"分类","maintainers":["TonyRL"],"description":"| 资讯 | 访谈    | 服务    | 游理游据 |\n  | ---- | ------- | ------- | -------- |\n  | info | talking | service | comments |","location":"home.ts"}} />
+<Route namespace="yxrb" data={{"path":"/:category?","categories":["game"],"example":"/yxrb/info","parameters":{"category":"分类，见下表，预设为 `info`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["news.yxrb.net/:category","news.yxrb.net/"],"target":"/:category"}],"name":"分类","maintainers":["TonyRL"],"description":"| 资讯 | 访谈    | 服务    | 游理游据 |\n  | ---- | ------- | ------- | -------- |\n  | info | talking | service | comments |","location":"home.ts"}} />
 
 | 资讯 | 访谈    | 服务    | 游理游据 |
   | ---- | ------- | ------- | -------- |
@@ -674,7 +678,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 游研社 - 全部文章
 
-<Route namespace="yystv" data={{"path":"/docs","categories":["game"],"example":"/yystv/docs","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yystv.cn/docs"]},"name":"游研社 - 全部文章","maintainers":["HaitianLiu"],"url":"yystv.cn/docs","location":"docs.ts"}} />
+<Route namespace="yystv" data={{"path":"/docs","categories":["game"],"example":"/yystv/docs","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["yystv.cn/docs"]}],"name":"游研社 - 全部文章","maintainers":["HaitianLiu"],"url":"yystv.cn/docs","location":"docs.ts"}} />
 
 ## 遊戲基地 Gamebase
 
@@ -691,7 +695,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 推荐
 
-<Route namespace="zhangyoubao" data={{"path":"/:category","categories":["game"],"example":"/zhangyoubao/lol","parameters":{"category":"分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["mobile.zhangyoubao.com/:category/"]},"name":"推荐","maintainers":["ztmzzz"],"description":"| 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合 | 手游综合 | 云顶之弈 | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗   |\n  | -------- | -------- | --- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |\n  | lol      | lscs     | dnf | swxf     | yxzj     | steam    | mobile   | lolchess | blzz     | hszz     | dnfm     | brawlstars |","location":"index.ts"}} />
+<Route namespace="zhangyoubao" data={{"path":"/:category","categories":["game"],"example":"/zhangyoubao/lol","parameters":{"category":"分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["mobile.zhangyoubao.com/:category/"]}],"name":"推荐","maintainers":["ztmzzz"],"description":"| 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合 | 手游综合 | 云顶之弈 | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗   |\n  | -------- | -------- | --- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |\n  | lol      | lscs     | dnf | swxf     | yxzj     | steam    | mobile   | lolchess | blzz     | hszz     | dnfm     | brawlstars |","location":"index.ts"}} />
 
 | 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合 | 手游综合 | 云顶之弈 | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗   |
   | -------- | -------- | --- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nintendoswitch.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['nintendoswitch.com.cn/'],
+        },
+    ],
     name: '首页资讯（中国）',
     maintainers: ['NeverBehave'],
     handler,

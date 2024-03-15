@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['greasyfork.org/:language/scripts/:script/versions'],
-    },
+    radar: [
+        {
+            source: ['greasyfork.org/:language/scripts/:script/versions'],
+        },
+    ],
     name: 'Script Version History',
     maintainers: ['miles170'],
     handler,

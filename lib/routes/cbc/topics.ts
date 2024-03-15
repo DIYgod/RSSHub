@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cbc.ca/news'],
-        target: '/topics',
-    },
+    radar: [
+        {
+            source: ['cbc.ca/news'],
+            target: '/topics',
+        },
+    ],
     name: 'News',
     maintainers: ['wb14123'],
     handler,

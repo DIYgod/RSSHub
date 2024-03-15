@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yuque.com/:name/:book'],
-    },
+    radar: [
+        {
+            source: ['yuque.com/:name/:book'],
+        },
+    ],
     name: '知识库',
     maintainers: ['aha2mao', 'ltaoo'],
     handler,

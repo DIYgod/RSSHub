@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['arcteryx.com/:country/en/c/:gender/new-arrivals'],
-    },
+    radar: [
+        {
+            source: ['arcteryx.com/:country/en/c/:gender/new-arrivals'],
+        },
+    ],
     name: 'New Arrivals',
     maintainers: ['EthanWng97'],
     handler,

@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['people.com.cn/'],
-        target: '/:site?/:category?',
-    },
+    radar: [
+        {
+            source: ['people.com.cn/'],
+            target: '/:site?/:category?',
+        },
+    ],
     name: '习近平系列重要讲话',
     maintainers: [],
     handler,

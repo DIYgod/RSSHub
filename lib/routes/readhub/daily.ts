@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['readhub.cn/daily'],
-    },
+    radar: [
+        {
+            source: ['readhub.cn/daily'],
+        },
+    ],
     name: '每日早报',
     maintainers: ['nczitzk'],
     handler,

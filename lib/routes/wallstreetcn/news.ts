@@ -19,9 +19,11 @@ const titles = {
 
 export const route: Route = {
     path: ['/news/:category?', '/:category?'],
-    radar: {
-        source: ['wallstreetcn.com/news/:category', 'wallstreetcn.com/'],
-    },
+    radar: [
+        {
+            source: ['wallstreetcn.com/news/:category', 'wallstreetcn.com/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

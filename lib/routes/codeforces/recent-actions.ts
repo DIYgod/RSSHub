@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['codeforces.com/recent-actions'],
-        target: '/recent-actions',
-    },
+    radar: [
+        {
+            source: ['codeforces.com/recent-actions'],
+            target: '/recent-actions',
+        },
+    ],
     name: 'Recent actions',
     maintainers: [],
     handler,

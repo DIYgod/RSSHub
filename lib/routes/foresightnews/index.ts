@@ -3,10 +3,12 @@ import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['foresightnews.pro/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['foresightnews.pro/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

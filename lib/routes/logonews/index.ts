@@ -12,9 +12,11 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: ['/work/tags/:tag', '/tag/:tag', '*'],
-    radar: {
-        source: ['logonews.cn/work/tags/:tag'],
-    },
+    radar: [
+        {
+            source: ['logonews.cn/work/tags/:tag'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

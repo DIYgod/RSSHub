@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['imiker.com/explore/find'],
-    },
+    radar: [
+        {
+            source: ['imiker.com/explore/find'],
+        },
+    ],
     name: '米课圈精华',
     maintainers: ['nczitzk'],
     handler,

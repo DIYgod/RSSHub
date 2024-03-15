@@ -47,9 +47,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cartoonmad.com/comic/:id'],
-    },
+    radar: [
+        {
+            source: ['cartoonmad.com/comic/:id'],
+        },
+    ],
     name: '漫画更新',
     maintainers: ['KellyHwong'],
     handler,

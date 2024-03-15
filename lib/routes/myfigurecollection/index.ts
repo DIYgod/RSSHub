@@ -28,9 +28,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
-    },
+    radar: [
+        {
+            source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
+        },
+    ],
     name: '圖片',
     maintainers: ['nczitzk'],
     handler,

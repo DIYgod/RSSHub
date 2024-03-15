@@ -30,10 +30,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
-        target: '/:category?/:language?',
-    },
+    radar: [
+        {
+            source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
+            target: '/:category?/:language?',
+        },
+    ],
     name: 'Activity',
     maintainers: ['nczitzk'],
     handler,

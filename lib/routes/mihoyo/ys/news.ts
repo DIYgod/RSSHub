@@ -93,10 +93,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['genshin.hoyoverse.com/:location/news'],
-        target: '/ys/:location',
-    },
+    radar: [
+        {
+            source: ['genshin.hoyoverse.com/:location/news'],
+            target: '/ys/:location',
+        },
+    ],
     name: '原神',
     maintainers: ['nczitzk'],
     handler,

@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['web.okjike.com/topic/:id'],
-        target: '/topic/:id',
-    },
+    radar: [
+        {
+            source: ['web.okjike.com/topic/:id'],
+            target: '/topic/:id',
+        },
+    ],
     name: '圈子',
     maintainers: ['DIYgod', 'prnake'],
     handler,

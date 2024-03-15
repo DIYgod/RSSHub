@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yomujp.com/', 'yomujp.com/:level'],
-        target: '/:level',
-    },
+    radar: [
+        {
+            source: ['yomujp.com/', 'yomujp.com/:level'],
+            target: '/:level',
+        },
+    ],
     name: '等级',
     maintainers: ['eternasuno'],
     handler,

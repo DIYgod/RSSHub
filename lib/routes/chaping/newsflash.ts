@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['chaping.cn/newsflash'],
-    },
+    radar: [
+        {
+            source: ['chaping.cn/newsflash'],
+        },
+    ],
     name: '快讯',
     maintainers: ['Fatpandac'],
     handler,

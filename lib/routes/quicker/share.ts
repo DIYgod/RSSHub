@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['getquicker.net/Share/:category', 'getquicker.net/'],
-    },
+    radar: [
+        {
+            source: ['getquicker.net/Share/:category', 'getquicker.net/'],
+        },
+    ],
     name: '动作分享',
     maintainers: ['nczitzk'],
     handler,

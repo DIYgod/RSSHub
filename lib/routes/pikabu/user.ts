@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pikabu.ru/:name'],
-    },
+    radar: [
+        {
+            source: ['pikabu.ru/:name'],
+        },
+    ],
     name: 'User',
     maintainers: ['TonyRL'],
     handler,
