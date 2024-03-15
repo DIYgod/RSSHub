@@ -15,7 +15,6 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     url: 'www.4gamers.com.tw/news',
-    url: 'www.4gamers.com.tw/news',
 };
 
 async function handler(ctx) {

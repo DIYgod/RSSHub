@@ -21,7 +21,7 @@ export const route: Route = {
     radar: [
         {
             source: ['github.com/:user/:repo/wiki/:page/_history', 'github.com/:user/:repo/wiki/:page', 'github.com/:user/:repo/wiki/_history', 'github.com/:user/:repo/wiki'],
-            target: '/github/wiki/:user/:repo/:page',
+            target: '/wiki/:user/:repo/:page',
         },
     ],
     name: 'Wiki History',

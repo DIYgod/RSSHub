@@ -17,7 +17,7 @@ export const route: Route = {
     radar: [
         {
             source: ['github.com/:user/:repo/issues', 'github.com/:user/:repo/issues/:id', 'github.com/:user/:repo'],
-            target: '/github/issue/:user/:repo',
+            target: '/issue/:user/:repo',
         },
     ],
     name: 'Repo Issues',

@@ -35,7 +35,7 @@ for (const namespace in namespaces) {
                             const sourceURL = new URL('https://' + source);
                             return sourceURL.pathname + sourceURL.search + sourceURL.hash;
                         }),
-                        target: radarItem.target || realPath,
+                        target: radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
                     });
                 }
             }

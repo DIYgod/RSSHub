@@ -54,7 +54,7 @@ export const route: Route = {
     radar: [
         {
             source: ['cast.org.cn/:column/:subColumn/:category/index.html', 'cast.org.cn/:column/:subColumn/index.html'],
-            target: '/cast/:column/:subColumn/:category?',
+            target: '/:column/:subColumn/:category?',
         },
     ],
     name: '通用',

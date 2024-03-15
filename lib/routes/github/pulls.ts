@@ -24,7 +24,7 @@ export const route: Route = {
     radar: [
         {
             source: ['github.com/:user/:repo/pulls', 'github.com/:user/:repo/pulls/:id', 'github.com/:user/:repo'],
-            target: '/github/pull/:user/:repo',
+            target: '/pull/:user/:repo',
         },
     ],
     name: 'Repo Pull Requests',

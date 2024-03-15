@@ -32,7 +32,7 @@ export const route: Route = {
     radar: [
         {
             source: ['github.com/:user/:repo/:type'],
-            target: '/github/comments/:user/:repo',
+            target: '/comments/:user/:repo',
         },
     ],
     name: 'Issue / Pull Request comments',

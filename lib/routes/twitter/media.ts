@@ -29,7 +29,7 @@ export const route: Route = {
     radar: [
         {
             source: ['twitter.com/:id/media'],
-            target: '/twitter/media/:id',
+            target: '/media/:id',
         },
     ],
 };

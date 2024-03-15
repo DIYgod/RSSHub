@@ -33,7 +33,7 @@ export const route: Route = {
     radar: [
         {
             source: ['github.com/trending'],
-            target: '/github/trending/:since',
+            target: '/trending/:since',
         },
     ],
     name: 'Trending',
