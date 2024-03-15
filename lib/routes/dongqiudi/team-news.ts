@@ -22,5 +22,5 @@ export const route: Route = {
 async function handler(ctx) {
     const teamId = ctx.req.param('team');
 
-    await utils.ProcessFeed(ctx, 'team', teamId);
+    return await utils.ProcessFeed(ctx, 'team', teamId);
 }
