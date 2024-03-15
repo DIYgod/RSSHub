@@ -5,10 +5,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/video/:uid',
-    radar: {
-        source: ['www.acfun.cn/u/:id'],
-        target: '/user/video/:id',
-    },
+    radar: [
+        {
+            source: ['www.acfun.cn/u/:id'],
+            target: '/user/video/:id',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['wdssmq'],
     handler,

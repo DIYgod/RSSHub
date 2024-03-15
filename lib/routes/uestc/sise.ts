@@ -43,10 +43,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sise.uestc.edu.cn/'],
-        target: '/sise',
-    },
+    radar: [
+        {
+            source: ['sise.uestc.edu.cn/'],
+            target: '/sise',
+        },
+    ],
     name: '信息与软件工程学院',
     maintainers: ['Yadomin', 'mobyw'],
     handler,

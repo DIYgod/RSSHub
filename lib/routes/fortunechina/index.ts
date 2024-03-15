@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fortunechina.com/:category', 'fortunechina.com/'],
-    },
+    radar: [
+        {
+            source: ['fortunechina.com/:category', 'fortunechina.com/'],
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,

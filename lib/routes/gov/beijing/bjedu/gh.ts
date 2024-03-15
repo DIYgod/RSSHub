@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gh.bjedu.gov.cn/ghsite/:urlPath/index.html', 'gh.bjedu.gov.cn/ghsite/:urlPath'],
-        target: '/beijing/bjedu/gh/:urlPath',
-    },
+    radar: [
+        {
+            source: ['gh.bjedu.gov.cn/ghsite/:urlPath/index.html', 'gh.bjedu.gov.cn/ghsite/:urlPath'],
+            target: '/beijing/bjedu/gh/:urlPath',
+        },
+    ],
     name: '通用',
     maintainers: ['TonyRL'],
     handler,

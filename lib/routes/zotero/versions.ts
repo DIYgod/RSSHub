@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zotero.org/', 'zotero.org/support/changelog'],
-    },
+    radar: [
+        {
+            source: ['zotero.org/', 'zotero.org/support/changelog'],
+        },
+    ],
     name: 'Version History',
     maintainers: ['jasongzy'],
     handler,

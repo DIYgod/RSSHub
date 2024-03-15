@@ -6,9 +6,11 @@ import { baseUrl, puppeteerGet } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
-    radar: {
-        source: ['pincong.rocks/topic/:topic'],
-    },
+    radar: [
+        {
+            source: ['pincong.rocks/topic/:topic'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['zphw'],
     handler,

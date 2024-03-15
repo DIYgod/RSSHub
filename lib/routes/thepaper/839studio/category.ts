@@ -4,9 +4,11 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/839studio/:id',
-    radar: {
-        source: ['thepaper.cn/'],
-    },
+    radar: [
+        {
+            source: ['thepaper.cn/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['umm233'],
     handler,

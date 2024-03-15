@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['disinfo.eu/'],
-    },
+    radar: [
+        {
+            source: ['disinfo.eu/'],
+        },
+    ],
     name: 'Publications',
     maintainers: ['nczitzk'],
     handler,

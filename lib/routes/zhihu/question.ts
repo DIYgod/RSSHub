@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/question/:questionId'],
-        target: '/question/:questionId',
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/question/:questionId'],
+            target: '/question/:questionId',
+        },
+    ],
     name: '问题',
     maintainers: [],
     handler,

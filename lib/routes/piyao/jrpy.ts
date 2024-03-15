@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['piyao.org.cn/jrpy/index.htm'],
-    },
+    radar: [
+        {
+            source: ['piyao.org.cn/jrpy/index.htm'],
+        },
+    ],
     name: '今日辟谣',
     maintainers: ['Fatpandac'],
     handler,

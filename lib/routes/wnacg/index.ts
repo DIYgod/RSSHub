@@ -32,10 +32,12 @@ const baseUrl = 'https://www.wnacg.com';
 
 export const route: Route = {
     path: ['/', '/category/:cid', '/tag/:tag'],
-    radar: {
-        source: ['wnacg.org/albums.html', 'wnacg.org/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['wnacg.org/albums.html', 'wnacg.org/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['KenMizz'],
     handler,

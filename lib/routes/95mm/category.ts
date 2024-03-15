@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['95mm.org/'],
-    },
+    radar: [
+        {
+            source: ['95mm.org/'],
+        },
+    ],
     name: '集合',
     maintainers: ['nczitzk'],
     handler,

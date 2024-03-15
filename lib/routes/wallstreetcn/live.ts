@@ -30,10 +30,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wallstreetcn.com/live/:category', 'wallstreetcn.com/'],
-        target: '/live/:category?',
-    },
+    radar: [
+        {
+            source: ['wallstreetcn.com/live/:category', 'wallstreetcn.com/'],
+            target: '/live/:category?',
+        },
+    ],
     name: '实时快讯',
     maintainers: ['nczitzk'],
     handler,

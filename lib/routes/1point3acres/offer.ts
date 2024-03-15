@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['offer.1point3acres.com/'],
-        target: '/offer',
-    },
+    radar: [
+        {
+            source: ['offer.1point3acres.com/'],
+            target: '/offer',
+        },
+    ],
     name: '录取结果',
     maintainers: ['EthanWng97'],
     handler,

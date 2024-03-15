@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.dhu.edu.cn/6410'],
-    },
+    radar: [
+        {
+            source: ['news.dhu.edu.cn/6410'],
+        },
+    ],
     name: '学术信息',
     maintainers: ['fox2049'],
     handler,

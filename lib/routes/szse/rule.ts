@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['szse.cn/lawrules/rule/new', 'szse.cn/'],
-    },
+    radar: [
+        {
+            source: ['szse.cn/lawrules/rule/new', 'szse.cn/'],
+        },
+    ],
     name: '最新规则',
     maintainers: ['nczitzk'],
     handler,

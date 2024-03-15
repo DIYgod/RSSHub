@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.alternativeto.net/software/:name'],
-        target: '/software/:name',
-    },
+    radar: [
+        {
+            source: ['www.alternativeto.net/software/:name'],
+            target: '/software/:name',
+        },
+    ],
     name: 'Software Alternatives',
     maintainers: ['JimenezLi'],
     handler,

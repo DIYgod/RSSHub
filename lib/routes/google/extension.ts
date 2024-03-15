@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['chromewebstore.google.com/detail/:name/:id'],
-    },
+    radar: [
+        {
+            source: ['chromewebstore.google.com/detail/:name/:id'],
+        },
+    ],
     name: 'Extension Update',
     maintainers: ['DIYgod'],
     handler,

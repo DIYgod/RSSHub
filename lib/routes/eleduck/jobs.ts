@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['eleduck.com/categories/5', 'eleduck.com/'],
-    },
+    radar: [
+        {
+            source: ['eleduck.com/categories/5', 'eleduck.com/'],
+        },
+    ],
     name: '工作机会',
     maintainers: ['sfyumi'],
     handler,

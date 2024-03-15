@@ -37,10 +37,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['36kr.com/hot-list/:category', '36kr.com/'],
-        target: '/hot-list/:category',
-    },
+    radar: [
+        {
+            source: ['36kr.com/hot-list/:category', '36kr.com/'],
+            target: '/hot-list/:category',
+        },
+    ],
     name: '资讯热榜',
     maintainers: ['nczitzk'],
     handler,

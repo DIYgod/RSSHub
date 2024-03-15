@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['appleinsider.com/:category', 'appleinsider.com/'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['appleinsider.com/:category', 'appleinsider.com/'],
+            target: '/:category',
+        },
+    ],
     name: 'Category',
     maintainers: ['nczitzk'],
     handler,

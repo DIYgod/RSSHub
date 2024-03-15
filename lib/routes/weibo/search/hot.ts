@@ -27,9 +27,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['s.weibo.com/top/summary'],
-    },
+    radar: [
+        {
+            source: ['s.weibo.com/top/summary'],
+        },
+    ],
     name: '热搜榜',
     maintainers: ['xyqfer', 'shinemoon'],
     handler,

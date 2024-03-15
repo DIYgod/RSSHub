@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mobile.zhangyoubao.com/:category/'],
-    },
+    radar: [
+        {
+            source: ['mobile.zhangyoubao.com/:category/'],
+        },
+    ],
     name: '推荐',
     maintainers: ['ztmzzz'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.rccp.pku.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.rccp.pku.edu.cn/'],
+        },
+    ],
     name: '每周一推 - 中国政治学研究中心',
     maintainers: ['vhxubo'],
     handler,

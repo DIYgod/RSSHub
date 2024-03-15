@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['weekly.caixin.com/', 'weekly.caixin.com/*'],
-    },
+    radar: [
+        {
+            source: ['weekly.caixin.com/', 'weekly.caixin.com/*'],
+        },
+    ],
     name: '财新周刊',
     maintainers: ['TonyRL'],
     handler,

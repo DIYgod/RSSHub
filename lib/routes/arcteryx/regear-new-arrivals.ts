@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['regear.arcteryx.com/shop/new-arrivals', 'regear.arcteryx.com/'],
-    },
+    radar: [
+        {
+            source: ['regear.arcteryx.com/shop/new-arrivals', 'regear.arcteryx.com/'],
+        },
+    ],
     name: 'Regear New Arrivals',
     maintainers: ['EthanWng97'],
     handler,

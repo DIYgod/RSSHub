@@ -29,10 +29,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nytimes.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['nytimes.com/'],
+            target: '',
+        },
+    ],
     name: 'Best Seller Books',
     maintainers: ['melvinto'],
     handler,

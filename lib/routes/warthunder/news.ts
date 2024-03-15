@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['warthunder.com/en/news', 'warthunder.com/'],
-    },
+    radar: [
+        {
+            source: ['warthunder.com/en/news', 'warthunder.com/'],
+        },
+    ],
     name: 'News',
     maintainers: ['axojhf'],
     handler,

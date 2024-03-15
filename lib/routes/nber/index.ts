@@ -29,9 +29,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['nber.org/papers'],
-    },
+    radar: [
+        {
+            source: ['nber.org/papers'],
+        },
+    ],
     name: 'All Papers',
     maintainers: [],
     handler,

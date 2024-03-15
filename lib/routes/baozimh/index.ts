@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.baozimh.com/comic/:name'],
-    },
+    radar: [
+        {
+            source: ['www.baozimh.com/comic/:name'],
+        },
+    ],
     name: '订阅漫画',
     maintainers: ['Fatpandac'],
     handler,

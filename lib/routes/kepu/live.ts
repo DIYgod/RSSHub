@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['live.kepu.net.cn/replay/index'],
-    },
+    radar: [
+        {
+            source: ['live.kepu.net.cn/replay/index'],
+        },
+    ],
     name: '直播回看',
     maintainers: ['nczitzk'],
     handler,

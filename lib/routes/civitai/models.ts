@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['civitai.com/'],
-    },
+    radar: [
+        {
+            source: ['civitai.com/'],
+        },
+    ],
     name: 'Latest models',
     maintainers: ['DIYgod'],
     handler,

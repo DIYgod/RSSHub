@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['acm.ecnu.edu.cn/contest/', 'acm.ecnu.edu.cn/'],
-        target: '/acm/contest/',
-    },
+    radar: [
+        {
+            source: ['acm.ecnu.edu.cn/contest/', 'acm.ecnu.edu.cn/'],
+            target: '/acm/contest/',
+        },
+    ],
     name: 'ACM Online-Judge contests list',
     maintainers: ['a180285'],
     handler,
