@@ -10928,6 +10928,16 @@
   },
   "sega.jp": {
     "_name": "SEGA",
+    "info-maimai": [
+      {
+        "title": "maimai DX Japanese Ver. News",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/sega/maimaidx/news"
+      }
+    ],
     "pjsekai": [
       {
         "title": "世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ",

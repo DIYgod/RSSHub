@@ -9323,6 +9323,26 @@
     },
     "sega": {
       "routes": {
+        "/sega/maimaidx/news": {
+          "path": "/maimaidx/news",
+          "categories": [
+            "game"
+          ],
+          "example": "/sega/maimaidx/news",
+          "radar": [
+            {
+              "source": [
+                "info-maimai.sega.jp/"
+              ]
+            }
+          ],
+          "name": "maimai DX Japanese Ver. News",
+          "maintainers": [
+            "randompasser"
+          ],
+          "url": "info-maimai.sega.jp/",
+          "location": "maimaidx.ts"
+        },
         "/sega/pjsekai/news": {
           "path": "/pjsekai/news",
           "categories": [

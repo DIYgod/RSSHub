@@ -4620,6 +4620,9 @@
   "/seekingalpha/:symbol/:category?": [
     "TonyRL"
   ],
+  "/sega/maimaidx/news": [
+    "randompasser"
+  ],
   "/sega/pjsekai/news": [
     "15x15G"
   ],
