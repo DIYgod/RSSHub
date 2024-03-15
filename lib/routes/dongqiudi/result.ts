@@ -8,14 +8,12 @@ export const route: Route = {
     categories: ['new-media'],
     example: '/dongqiudi/result/50001755',
     parameters: { team: '球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
+    radar: [
+        {
+            source: ['www.dongqiudi.com/team/*team'],
+            target: (params) => `/dongqiudi/result/${params.team.replace('.html', '')}`,
+        },
+    ],
     name: '足球赛果',
     maintainers: ['HenryQW'],
     handler,
