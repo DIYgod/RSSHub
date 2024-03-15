@@ -20,10 +20,12 @@ const allowDomain = new Set(['javbus.com', 'javbus.org', 'javsee.icu', 'javsee.o
 
 export const route: Route = {
     path: '*',
-    radar: {
-        source: ['www.seejav.pw/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['www.seejav.pw/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

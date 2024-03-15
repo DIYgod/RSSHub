@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ymgal.games/'],
-    },
+    radar: [
+        {
+            source: ['ymgal.games/'],
+        },
+    ],
     name: '本月新作',
     maintainers: ['SunBK201'],
     handler,

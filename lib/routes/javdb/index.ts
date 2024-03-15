@@ -3,10 +3,12 @@ import utils from './utils';
 
 export const route: Route = {
     path: ['/home/:category?/:sort?/:filter?', '/:category?/:sort?/:filter?'],
-    radar: {
-        source: ['javdb.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['javdb.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['freebuf.com/articles/:type/*.html', 'freebuf.com/articles/:type'],
-    },
+    radar: [
+        {
+            source: ['freebuf.com/articles/:type/*.html', 'freebuf.com/articles/:type'],
+        },
+    ],
     name: '文章',
     maintainers: ['trganda'],
     handler,

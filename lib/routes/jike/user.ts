@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['web.okjike.com/u/:uid'],
-        target: '/user/:uid',
-    },
+    radar: [
+        {
+            source: ['web.okjike.com/u/:uid'],
+            target: '/user/:uid',
+        },
+    ],
     name: '用户动态',
     maintainers: ['DIYgod', 'prnake'],
     handler,

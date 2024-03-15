@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jwc.ouc.edu.cn/', 'jwc.ouc.edu.cn/6517/list.htm'],
-    },
+    radar: [
+        {
+            source: ['jwc.ouc.edu.cn/', 'jwc.ouc.edu.cn/6517/list.htm'],
+        },
+    ],
     name: '教务处',
     maintainers: ['3401797899'],
     handler,

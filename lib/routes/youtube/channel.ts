@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.youtube.com/channel/:id'],
-        target: '/channel/:id',
-    },
+    radar: [
+        {
+            source: ['www.youtube.com/channel/:id'],
+            target: '/channel/:id',
+        },
+    ],
     name: 'Channel',
     maintainers: ['DIYgod'],
     handler,

@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.mdpi.com/journal/:journal'],
-    },
+    radar: [
+        {
+            source: ['www.mdpi.com/journal/:journal'],
+        },
+    ],
     name: 'Journal',
     maintainers: ['Derekmini'],
     handler,

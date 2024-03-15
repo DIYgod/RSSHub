@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.shoppingdesign.com.tw/post'],
-    },
+    radar: [
+        {
+            source: ['www.shoppingdesign.com.tw/post'],
+        },
+    ],
     name: '文章列表',
     maintainers: ['miles170'],
     handler,

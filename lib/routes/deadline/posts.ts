@@ -10,10 +10,12 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['deadline.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['deadline.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,

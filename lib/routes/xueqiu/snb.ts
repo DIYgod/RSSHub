@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xueqiu.com/P/:id', 'xueqiu.com/p/:id'],
-    },
+    radar: [
+        {
+            source: ['xueqiu.com/P/:id', 'xueqiu.com/p/:id'],
+        },
+    ],
     name: '组合最新调仓信息',
     maintainers: ['ZhishanZhang'],
     handler,

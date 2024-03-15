@@ -28,10 +28,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cqe.uestc.edu.cn/'],
-        target: '/cqe',
-    },
+    radar: [
+        {
+            source: ['cqe.uestc.edu.cn/'],
+            target: '/cqe',
+        },
+    ],
     name: '文化素质教育中心',
     maintainers: ['truobel', 'mobyw'],
     handler,

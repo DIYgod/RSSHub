@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['0daily.com/search/:keyword'],
-    },
+    radar: [
+        {
+            source: ['0daily.com/search/:keyword'],
+        },
+    ],
     name: '搜索快讯',
     maintainers: ['snowraincloud'],
     handler,

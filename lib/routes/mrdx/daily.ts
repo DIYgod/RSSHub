@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mrdx.cn*'],
-    },
+    radar: [
+        {
+            source: ['mrdx.cn*'],
+        },
+    ],
     name: '今日',
     maintainers: ['Dustin-Jiang'],
     handler,

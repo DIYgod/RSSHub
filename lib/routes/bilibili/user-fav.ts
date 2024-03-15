@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['space.bilibili.com/:uid', 'space.bilibili.com/:uid/favlist'],
-        target: '/user/fav/:uid',
-    },
+    radar: [
+        {
+            source: ['space.bilibili.com/:uid', 'space.bilibili.com/:uid/favlist'],
+            target: '/user/fav/:uid',
+        },
+    ],
     name: 'UP 主默认收藏夹',
     maintainers: ['DIYgod'],
     handler,

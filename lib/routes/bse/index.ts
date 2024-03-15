@@ -133,9 +133,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bse.cn/'],
-    },
+    radar: [
+        {
+            source: ['bse.cn/'],
+        },
+    ],
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,

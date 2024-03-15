@@ -6,7 +6,7 @@ sidebar_position: 3
 
 :::warning
 
-以下文档为旧版标准，新版标准请使用参考 [/lib/types.ts#L84](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L84)
+以下文档为旧版标准，新版标准请使用参考 [/lib/types.ts#L183](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L183)
 
 :::
 

@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rustcc.cn/'],
-    },
+    radar: [
+        {
+            source: ['rustcc.cn/'],
+        },
+    ],
     name: '招聘',
     maintainers: ['CcccFz'],
     handler,

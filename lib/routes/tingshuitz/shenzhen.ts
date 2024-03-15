@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sz-water.com.cn/*'],
-    },
+    radar: [
+        {
+            source: ['sz-water.com.cn/*'],
+        },
+    ],
     name: '深圳市',
     maintainers: ['lilPiper'],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['igetget.com/'],
-    },
+    radar: [
+        {
+            source: ['igetget.com/'],
+        },
+    ],
     name: '首页',
     maintainers: ['nczitzk'],
     handler,

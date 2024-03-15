@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['modelscope.cn/studios'],
-    },
+    radar: [
+        {
+            source: ['modelscope.cn/studios'],
+        },
+    ],
     name: '创空间',
     maintainers: ['TonyRL'],
     handler,

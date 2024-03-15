@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cn.bing.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['cn.bing.com/'],
+            target: '',
+        },
+    ],
     name: '搜索',
     maintainers: ['CaoMeiYouRen'],
     handler,

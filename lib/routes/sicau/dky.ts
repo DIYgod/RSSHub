@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dky.sicau.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['dky.sicau.edu.cn/'],
+        },
+    ],
     name: '动物科技学院',
     maintainers: ['nczitzk'],
     handler,

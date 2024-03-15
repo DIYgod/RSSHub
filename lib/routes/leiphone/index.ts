@@ -6,10 +6,12 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/:do?/:keyword?',
-    radar: {
-        source: ['leiphone.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['leiphone.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

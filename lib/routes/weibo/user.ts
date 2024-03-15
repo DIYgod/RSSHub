@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['m.weibo.cn/u/:uid', 'm.weibo.cn/profile/:uid'],
-        target: '/user/:uid',
-    },
+    radar: [
+        {
+            source: ['m.weibo.cn/u/:uid', 'm.weibo.cn/profile/:uid'],
+            target: '/user/:uid',
+        },
+    ],
     name: '博主',
     maintainers: ['DIYgod', 'iplusx', 'Rongronggg9'],
     handler,

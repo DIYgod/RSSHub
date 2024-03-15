@@ -10,10 +10,12 @@ const sections = {
 
 export const route: Route = {
     path: '/sidebar/:sec?',
-    radar: {
-        source: ['thepaper.cn/'],
-        target: '/sidebar',
-    },
+    radar: [
+        {
+            source: ['thepaper.cn/'],
+            target: '/sidebar',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['bigfei'],
     handler,

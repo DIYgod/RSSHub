@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wp.m.163.com/163/html/newsapp/todayFocus/index.html', 'wp.m.163.com/'],
-        target: '/today',
-    },
+    radar: [
+        {
+            source: ['wp.m.163.com/163/html/newsapp/todayFocus/index.html', 'wp.m.163.com/'],
+            target: '/today',
+        },
+    ],
     name: '今日关注',
     maintainers: ['nczitzk'],
     handler,

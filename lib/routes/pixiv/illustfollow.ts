@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.pixiv.net/bookmark_new_illust.php'],
-    },
+    radar: [
+        {
+            source: ['www.pixiv.net/bookmark_new_illust.php'],
+        },
+    ],
     name: 'Following timeline',
     maintainers: ['ClarkeCheng'],
     handler,

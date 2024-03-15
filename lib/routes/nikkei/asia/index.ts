@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['asia.nikkei.com/'],
-    },
+    radar: [
+        {
+            source: ['asia.nikkei.com/'],
+        },
+    ],
     name: 'Nikkei Asia Latest News',
     maintainers: ['rainrdx'],
     handler,

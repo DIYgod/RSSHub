@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ainvest.com/news'],
-    },
+    radar: [
+        {
+            source: ['ainvest.com/news'],
+        },
+    ],
     name: 'Latest Article',
     maintainers: ['TonyRL'],
     handler,

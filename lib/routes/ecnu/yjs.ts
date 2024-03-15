@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yz.kaoyan.com/ecnu/tiaoji', 'yz.kaoyan.com/'],
-    },
+    radar: [
+        {
+            source: ['yz.kaoyan.com/ecnu/tiaoji', 'yz.kaoyan.com/'],
+        },
+    ],
     name: '研究生院',
     maintainers: ['shengmaosu'],
     handler,

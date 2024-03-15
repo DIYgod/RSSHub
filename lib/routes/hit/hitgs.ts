@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hitgs.hit.edu.cn/*'],
-    },
+    radar: [
+        {
+            source: ['hitgs.hit.edu.cn/*'],
+        },
+    ],
     name: '研究生院通知公告',
     maintainers: ['hlmu'],
     handler,

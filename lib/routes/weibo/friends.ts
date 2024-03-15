@@ -24,10 +24,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['weibo.com/'],
-        target: '/friends',
-    },
+    radar: [
+        {
+            source: ['weibo.com/'],
+            target: '/friends',
+        },
+    ],
     name: '最新关注时间线',
     maintainers: ['CaoMeiYouRen'],
     handler,

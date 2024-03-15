@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['creative-comic.tw/book/:id/*'],
-        target: '/:id',
-    },
+    radar: [
+        {
+            source: ['creative-comic.tw/book/:id/*'],
+            target: '/:id',
+        },
+    ],
     name: '漫畫',
     maintainers: ['TonyRL'],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['byteclicks.com/tag/:tag'],
-    },
+    radar: [
+        {
+            source: ['byteclicks.com/tag/:tag'],
+        },
+    ],
     name: '标签',
     maintainers: ['TonyRL'],
     handler,

@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dtcj.com/insighttopic/:id'],
-        target: '/datainsight/:id',
-    },
+    radar: [
+        {
+            source: ['dtcj.com/insighttopic/:id'],
+            target: '/datainsight/:id',
+        },
+    ],
     name: '数据洞察',
     maintainers: ['nczitzk'],
     handler,

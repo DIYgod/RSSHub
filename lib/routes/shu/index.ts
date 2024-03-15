@@ -26,10 +26,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.shu.edu.cn/:type'],
-        target: '/:type',
-    },
+    radar: [
+        {
+            source: ['www.shu.edu.cn/:type'],
+            target: '/:type',
+        },
+    ],
     name: '官网信息',
     maintainers: ['lonelyion'],
     handler,

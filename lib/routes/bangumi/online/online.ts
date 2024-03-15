@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bangumi.online/'],
-    },
+    radar: [
+        {
+            source: ['bangumi.online/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['devinmugen'],
     handler,

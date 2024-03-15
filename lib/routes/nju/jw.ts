@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jw.nju.edu.cn/:type/list.htm'],
-    },
+    radar: [
+        {
+            source: ['jw.nju.edu.cn/:type/list.htm'],
+        },
+    ],
     name: '本科生院',
     maintainers: ['cqjjjzr'],
     handler,

@@ -25,10 +25,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sist.ustc.edu.cn/'],
-        target: '/sist',
-    },
+    radar: [
+        {
+            source: ['sist.ustc.edu.cn/'],
+            target: '/sist',
+        },
+    ],
     name: '信息科学技术学院',
     maintainers: ['jasongzy'],
     handler,

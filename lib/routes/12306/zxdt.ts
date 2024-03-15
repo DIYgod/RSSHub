@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.12306.cn/', 'www.12306.cn/mormhweb/1/:id/index_fl.html'],
-        target: '/zxdt/:id',
-    },
+    radar: [
+        {
+            source: ['www.12306.cn/', 'www.12306.cn/mormhweb/1/:id/index_fl.html'],
+            target: '/zxdt/:id',
+        },
+    ],
     name: '最新动态',
     maintainers: ['LogicJake'],
     handler,

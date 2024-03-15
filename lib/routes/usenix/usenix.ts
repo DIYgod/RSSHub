@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['usenix.org/conferences/all', 'usenix.org/conferences', 'usenix.org/'],
-    },
+    radar: [
+        {
+            source: ['usenix.org/conferences/all', 'usenix.org/conferences', 'usenix.org/'],
+        },
+    ],
     name: 'Security Symposia',
     maintainers: ['ZeddYu'],
     handler,

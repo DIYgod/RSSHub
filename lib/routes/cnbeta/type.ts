@@ -9,10 +9,12 @@ import { rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: ['/:type/:id', '/'],
-    radar: {
-        source: ['cnbeta.com.tw/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['cnbeta.com.tw/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

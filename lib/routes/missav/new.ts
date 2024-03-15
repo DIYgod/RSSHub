@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['missav.com/dm397/new', 'missav.com/new', 'missav.com/'],
-    },
+    radar: [
+        {
+            source: ['missav.com/dm397/new', 'missav.com/new', 'missav.com/'],
+        },
+    ],
     name: '最近更新',
     maintainers: ['TonyRL'],
     handler,

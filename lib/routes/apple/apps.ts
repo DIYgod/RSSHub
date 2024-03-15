@@ -28,10 +28,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['apps.apple.com/:country/app/:appSlug/:id', 'apps.apple.com/:country/app/:id'],
-        target: '/apps/update/:country/:id',
-    },
+    radar: [
+        {
+            source: ['apps.apple.com/:country/app/:appSlug/:id', 'apps.apple.com/:country/app/:id'],
+            target: '/apps/update/:country/:id',
+        },
+    ],
     name: 'App Update',
     maintainers: ['EkkoG', 'nczitzk'],
     handler,

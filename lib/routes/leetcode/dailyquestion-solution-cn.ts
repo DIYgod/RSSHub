@@ -9,9 +9,11 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/dailyquestion/solution/cn',
-    radar: {
-        source: ['leetcode.cn/'],
-    },
+    radar: [
+        {
+            source: ['leetcode.cn/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

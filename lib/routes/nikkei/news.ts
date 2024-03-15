@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.nikkei.com/:category/archive', 'www.nikkei.com/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['www.nikkei.com/:category/archive', 'www.nikkei.com/:category'],
+            target: '/:category',
+        },
+    ],
     name: 'News',
     maintainers: ['Arracc'],
     handler,

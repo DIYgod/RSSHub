@@ -6,10 +6,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/moe/*',
-    radar: {
-        source: ['bangumi.moe/'],
-        target: '/moe',
-    },
+    radar: [
+        {
+            source: ['bangumi.moe/'],
+            target: '/moe',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

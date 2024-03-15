@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dc.nua.edu.cn/:type/list.htm'],
-    },
+    radar: [
+        {
+            source: ['dc.nua.edu.cn/:type/list.htm'],
+        },
+    ],
     name: 'School of Design',
     maintainers: ['evnydd0sf'],
     handler,

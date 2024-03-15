@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['kimlaw.or.kr/67', 'kimlaw.or.kr/'],
-    },
+    radar: [
+        {
+            source: ['kimlaw.or.kr/67', 'kimlaw.or.kr/'],
+        },
+    ],
     name: 'Thesis',
     maintainers: ['TonyRL'],
     handler,

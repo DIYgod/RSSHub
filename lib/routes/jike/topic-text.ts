@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['web.okjike.com/topic/:id'],
-    },
+    radar: [
+        {
+            source: ['web.okjike.com/topic/:id'],
+        },
+    ],
     name: '圈子 - 纯文字',
     maintainers: ['HenryQW'],
     handler,

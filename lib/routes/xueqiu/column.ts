@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xueqiu.com/:id/column'],
-    },
+    radar: [
+        {
+            source: ['xueqiu.com/:id/column'],
+        },
+    ],
     name: '用户专栏',
     maintainers: ['TonyRL'],
     handler,

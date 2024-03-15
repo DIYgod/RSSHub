@@ -30,9 +30,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['lanqiao.cn/users/:uid'],
-    },
+    radar: [
+        {
+            source: ['lanqiao.cn/users/:uid'],
+        },
+    ],
     name: '作者发布的课程',
     maintainers: ['huhuhang'],
     handler,

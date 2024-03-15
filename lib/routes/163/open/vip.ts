@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['vip.open.163.com/'],
-    },
+    radar: [
+        {
+            source: ['vip.open.163.com/'],
+        },
+    ],
     name: '精品课程',
     maintainers: ['hoilc'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['live.douyin.com/:rid'],
-    },
+    radar: [
+        {
+            source: ['live.douyin.com/:rid'],
+        },
+    ],
     name: '直播间开播',
     maintainers: ['TonyRL'],
     handler,

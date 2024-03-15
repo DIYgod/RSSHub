@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gist.github.com/:owner/:gistId/revisions', 'gist.github.com/:owner/:gistId/stargazers', 'gist.github.com/:owner/:gistId/forks', 'gist.github.com/:owner/:gistId'],
-    },
+    radar: [
+        {
+            source: ['gist.github.com/:owner/:gistId/revisions', 'gist.github.com/:owner/:gistId/stargazers', 'gist.github.com/:owner/:gistId/forks', 'gist.github.com/:owner/:gistId'],
+        },
+    ],
     name: 'Gist Commits',
     maintainers: ['TonyRL'],
     handler,
