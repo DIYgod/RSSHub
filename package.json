@@ -52,7 +52,7 @@
     "@hono/zod-openapi": "0.9.8",
     "@notionhq/client": "2.2.14",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.106.1",
+    "@sentry/node": "7.107.0",
     "@tonyrl/rand-user-agent": "2.0.54",
     "@types/node": "20.11.27",
     "aes-js": "3.1.2",
@@ -183,7 +183,7 @@
     "unified": "9.2.2",
     "unist-util-visit": "4.1.2",
     "unist-util-visit-parents": "5.1.3",
-    "vite-tsconfig-paths": "4.3.1",
+    "vite-tsconfig-paths": "4.3.2",
     "vitest": "1.3.1"
   },
   "engines": {
