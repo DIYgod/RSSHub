@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/versions/:pkg/:region?',
+    categories: ['program-update'],
+    example: '/apkpure/versions/jp.co.craftegg.band/jp',
+    parameters: { pkg: 'Package name', region: 'Region code, `en` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Versions',
+    maintainers: ['maple3142'],
+    handler,
+};
+
+async function handler(ctx) {
     const { pkg, region = 'en' } = ctx.req.param();
     const baseUrl = 'https://apkpure.com';
     const link = `${baseUrl}/${region}/${pkg}/versions`;
@@ -38,12 +57,12 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('.ver-top-h1').text(),
         description: $('.ver-top-title p').text(),
         image: img.href,
         language: region ?? 'en',
         link,
         item: items,
-    });
-};
+    };
+}

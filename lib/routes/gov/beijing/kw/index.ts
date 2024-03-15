@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,14 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'http://kw.beijing.gov.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/beijing/kw/:channel',
+    name: 'Unknown',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const channel = ctx.req.param('channel');
     const url = `${rootUrl}/col/${channel}/index.html`;
 
@@ -37,9 +45,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `北京市科学技术委员会、中关村科技园区管理委员会 - ${title}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

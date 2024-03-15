@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cn/news',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 35;
 
     const rootUrl = 'https://www.aqara.cn';
@@ -40,7 +48,7 @@ export default async (ctx) => {
 
     const icon = $('link[rel="shortcut icon"]').prop('href').split('?')[0];
 
-    ctx.set('data', {
+    return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
@@ -50,5 +58,5 @@ export default async (ctx) => {
         icon,
         logo: icon,
         author: $('meta[name="author"]').prop('content'),
-    });
-};
+    };
+}

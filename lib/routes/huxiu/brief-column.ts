@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiBriefRootUrl, processItems, fetchBriefColumnData } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/briefcolumn/:id',
+    categories: ['new-media'],
+    example: '/huxiu/briefcolumn/1',
+    parameters: { id: '简报 id，可在对应简报页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: true,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: '简报',
+    maintainers: ['Fatpandac', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
@@ -23,8 +42,8 @@ export default async (ctx) => {
 
     const data = await fetchBriefColumnData(id);
 
-    ctx.set('data', {
+    return {
         item: items,
         ...data,
-    });
-};
+    };
+}

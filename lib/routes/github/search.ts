@@ -1,10 +1,35 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import * as url from 'node:url';
 
 const host = 'https://github.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/search/:query/:sort?/:order?',
+    categories: ['programming'],
+    example: '/github/search/RSSHub/bestmatch/desc',
+    parameters: { query: 'search keyword', sort: 'Sort options (default to bestmatch)', order: 'Sort order, desc and asc (desc descending by default)' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Search Result',
+    maintainers: ['LogicJake'],
+    handler,
+    description: `| Sort options     | sort      |
+  | ---------------- | --------- |
+  | Best match       | bestmatch |
+  | Most stars       | stars     |
+  | Most forks       | forks     |
+  | Recently updated | updated   |`,
+};
+
+async function handler(ctx) {
     const query = ctx.req.param('query');
     let sort = ctx.req.param('sort') || 'bestmatch';
     const order = ctx.req.param('order') || 'desc';
@@ -32,10 +57,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         allowEmpty: true,
         title: `${query}的搜索结果`,
         link,
         item: out,
-    });
-};
+    };
+}

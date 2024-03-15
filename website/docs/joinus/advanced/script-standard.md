@@ -109,7 +109,7 @@ The `maintainer.ts` file should export an object that provides maintainer inform
 -   Key: Corresponding route path
 -   Value: Array of string, including all maintainers' GitHub ID.
 
-To generate a list of maintainers, use the following command: `pnpm run build:maintainer`, which will create the list under `assets/build/`.
+To generate a list of maintainers, use the following command: `pnpm run build`, which will create the list under `assets/build/`.
 
 :::danger
 
@@ -121,7 +121,7 @@ The path should be the same as the `path` in the corresponding documentation bef
 
 All routes are required to include the `radar.ts` file, which includes the corresponding domain name. The minimum requirement for a successful match is for the rule to show up on the corresponding site which requires filling in the `title` and `docs` fields.
 
-To generate a complete `radar-rules.ts` file, use the following command: `yarn build:radar`, which will create the file under `assets/build/`.
+To generate a complete `radar-rules.ts` file, use the following command: `yarn build`, which will create the file under `assets/build/`.
 
 :::tip
 

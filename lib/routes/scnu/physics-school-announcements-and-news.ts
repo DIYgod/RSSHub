@@ -44,7 +44,7 @@ const getItemsFromURLs = async (URLs, cache) => {
     return items;
 };
 
-export const announcementsRouter = async (ctx) => {
+export const announcementsRouter = async () => {
     const URLs = {
         党政: 'https://physics.scnu.edu.cn/NEWS/Notices/PartyAndGovernment/',
         教务: 'https://physics.scnu.edu.cn/NEWS/Notices/Education/',
@@ -54,14 +54,14 @@ export const announcementsRouter = async (ctx) => {
         学工: 'https://physics.scnu.edu.cn/NEWS/Notices/Students/',
     };
     const items = await getItemsFromURLs(URLs, cache);
-    ctx.set('data', {
+    return {
         title: '华南师范大学物理与电信工程学院通知',
         link: 'https://physics.scnu.edu.cn/NEWS/Notices/',
         item: items,
-    });
+    };
 };
 
-export const newsRouter = async (ctx) => {
+export const newsRouter = async () => {
     const URLs = {
         学院新闻: 'https://physics.scnu.edu.cn/NEWS/News/College/',
         教务新闻: 'https://physics.scnu.edu.cn/NEWS/News/Education/',
@@ -70,14 +70,14 @@ export const newsRouter = async (ctx) => {
         院友新闻: 'https://physics.scnu.edu.cn/NEWS/News/People/',
     };
     const items = await getItemsFromURLs(URLs, cache);
-    ctx.set('data', {
+    return {
         title: '华南师范大学物理与电信工程学院新闻动态',
         link: 'https://physics.scnu.edu.cn/NEWS/News/',
         item: items,
-    });
+    };
 };
 
-export const researchNewsRouter = async (ctx) => {
+export const researchNewsRouter = async () => {
     const URLs = {
         学术报告: 'https://physics.scnu.edu.cn/RESEARCH/EVENTS/Seminars/',
         学术会议: 'https://physics.scnu.edu.cn/RESEARCH/EVENTS/Conferences/',
@@ -87,9 +87,9 @@ export const researchNewsRouter = async (ctx) => {
         科研成果: 'https://physics.scnu.edu.cn/RESEARCH/Achievements/',
     };
     const items = await getItemsFromURLs(URLs, cache);
-    ctx.set('data', {
+    return {
         title: '华南师范大学物理与电信工程学院科学研究动态',
         link: 'https://physics.scnu.edu.cn/RESEARCH/',
         item: items,
-    });
+    };
 };

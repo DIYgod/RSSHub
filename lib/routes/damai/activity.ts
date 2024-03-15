@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,26 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/activity/:city/:category/:subcategory/:keyword?',
+    categories: ['shopping'],
+    example: '/damai/activity/上海/音乐会/全部/柴可夫斯基',
+    parameters: { city: '城市，如果不需要限制，请填入`全部`', category: '分类，如果不需要限制，请填入`全部`', subcategory: '子分类，如果不需要限制，请填入`全部`', keyword: '搜索关键字，置空为不限制' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '票务更新',
+    maintainers: ['hoilc'],
+    handler,
+    description: `城市、分类名、子分类名，请参见[大麦网搜索页面](https://search.damai.cn/search.htm)`,
+};
+
+async function handler(ctx) {
     const city = ctx.req.param('city') === '全部' ? '' : ctx.req.param('city');
     const category = ctx.req.param('category') === '全部' ? '' : ctx.req.param('category');
     const subcategory = ctx.req.param('subcategory') === '全部' ? '' : ctx.req.param('subcategory');
@@ -32,7 +52,7 @@ export default async (ctx) => {
     const data = response.data;
     const list = data.pageData.resultData || [];
 
-    ctx.set('data', {
+    return {
         title: `大麦网票务 - ${city || '全国'} - ${category || '全部分类'}${subcategory ? ' - ' + subcategory : ''}${keyword ? ' - ' + keyword : ''}`,
         link: 'https://search.damai.cn/search.htm',
         item: list.map((item) => ({
@@ -43,5 +63,5 @@ export default async (ctx) => {
             }),
             link: `https://detail.damai.cn/item.htm?id=${item.projectid}`,
         })),
-    });
-};
+    };
+}

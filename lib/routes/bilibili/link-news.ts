@@ -1,6 +1,25 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/link/news/:product',
+    categories: ['social-media'],
+    example: '/bilibili/link/news/live',
+    parameters: { product: '公告分类, 包括 直播:live 小视频:vc 相簿:wh' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'link 公告',
+    maintainers: ['Qixingchen'],
+    handler,
+};
+
+async function handler(ctx) {
     const product = ctx.req.param('product');
 
     let productTitle = '';
@@ -26,7 +45,7 @@ export default async (ctx) => {
     });
     const data = response.data.data.items;
 
-    ctx.set('data', {
+    return {
         title: `bilibili ${productTitle}公告`,
         link: `https://link.bilibili.com/p/eden/news#/?tab=${product}&tag=all&page_no=1`,
         description: `bilibili ${productTitle}公告`,
@@ -38,5 +57,5 @@ export default async (ctx) => {
                 pubDate: new Date(item.ctime.replace(' ', 'T') + '+08:00').toUTCString(),
                 link: item.announce_link ?? `https://link.bilibili.com/p/eden/news#/newsdetail?id=${item.id}`,
             })),
-    });
-};
+    };
+}

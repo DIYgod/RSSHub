@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['multimedia'],
+    example: '/zimuxia',
+    parameters: { category: '分类，见下表，默认为 ALL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| ALL | FIX 德语社 | 欧美剧集 | 欧美电影 | 综艺 & 纪录 | FIX 日语社 | FIX 韩语社 | FIX 法语社 |
+  | --- | ---------- | -------- | -------- | ----------- | ---------- | ---------- | ---------- |
+  |     | 昆仑德语社 | 欧美剧集 | 欧美电影 | 综艺纪录    | fix 日语社 | fix 韩语社 | fix 法语社 |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
 
     const rootUrl = 'https://www.zimuxia.cn';
@@ -57,9 +79,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${category || 'ALL'} - FIX字幕侠`,
         link: response.url,
         item: items,
-    });
-};
+    };
+}

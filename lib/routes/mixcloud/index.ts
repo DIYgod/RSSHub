@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import CryptoJS from 'crypto-js';
 import { parseDate } from '@/utils/parse-date';
 import { queries } from './queries';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:username/:type?',
+    categories: ['multimedia'],
+    example: '/mixcloud/dholbach/uploads',
+    parameters: { username: 'Username, can be found in URL', type: 'Type, see below, uploads by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: 'User',
+    maintainers: ['Misaka13514'],
+    handler,
+    description: `| Shows   | Favorites | History | Stream |
+  | ------- | --------- | ------- | ------ |
+  | uploads | favorites | listens | stream |`,
+};
+
+async function handler(ctx) {
     const host = 'https://www.mixcloud.com';
     const imageBaseURL = 'https://thumbnailer.mixcloud.com/unsafe/480x480/';
     const graphqlURL = 'https://app.mixcloud.com/graphql';
@@ -102,12 +124,12 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `Mixcloud - ${data.user.displayName}'s ${config[type].name}`,
         description: biog.replaceAll('\n', '<br>'),
         itunes_author: data.user.displayName,
         image,
         link: `${host}/${username}/${type}/`,
         item: items,
-    });
-};
+    };
+}

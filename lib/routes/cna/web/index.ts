@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/web/:id?',
+    categories: ['traditional-media'],
+    example: '/cna/web/aall',
+    parameters: { id: '分类 id，见上表。此參數默认为 aall' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Unknown',
+    maintainers: ['dzx-dzx'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') || 'aall';
 
     const rootUrl = /^\d+$/.test(id) ? `https://www.cna.com.tw/topic/newstopic/${id}.aspx` : `https://www.cna.com.tw/list/${id}.aspx`;
@@ -49,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

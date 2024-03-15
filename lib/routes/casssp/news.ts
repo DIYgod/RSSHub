@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['government'],
+    example: '/casssp/news/3',
+    parameters: { category: '分类，见下表，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '研究会动态',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 通知公告 | 新闻动态 | 信息公开 | 时政要闻 |
+  | -------- | -------- | -------- | -------- |
+  | 3        | 2        | 92       | 93       |`,
+};
+
+async function handler(ctx) {
     const { category = '3' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
@@ -44,7 +66,7 @@ export default async (ctx) => {
     const image = $('img[la="la"]').first().prop('src');
     const icon = new URL($('link[rel="shortcut icon "]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
@@ -56,5 +78,5 @@ export default async (ctx) => {
         subtitle: $('meta[name="keywords"]').prop('content'),
         author: $('img[la="la"]').first().prop('title'),
         allowEmpty: true,
-    });
-};
+    };
+}

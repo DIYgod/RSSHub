@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,26 @@ import { isValidHost } from '@/utils/valid-host';
 import { parseDate } from '@/utils/parse-date';
 import { parseBlogArticle } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog/:column?',
+    categories: ['blog'],
+    example: '/caixin/blog/zhangwuchang',
+    parameters: { column: '博客名称，可在博客主页的 URL 找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '用户博客',
+    maintainers: [],
+    handler,
+    description: `通过提取文章全文，以提供比官方源更佳的阅读体验.`,
+};
+
+async function handler(ctx) {
     const column = ctx.req.param('column');
     const { limit = 20 } = ctx.req.query();
     if (column) {
@@ -48,13 +68,13 @@ export default async (ctx) => {
 
         const items = await Promise.all(posts.map((item) => parseBlogArticle(item, cache.tryGet)));
 
-        ctx.set('data', {
+        return {
             title: `财新博客 - ${authorName}`,
             link,
             description: introduce,
             image: avatar,
             item: items,
-        });
+        };
     } else {
         const { data } = await got('https://blog.caixin.com/blog-api/post/index', {
             searchParams: {
@@ -71,12 +91,12 @@ export default async (ctx) => {
         }));
         const items = await Promise.all(posts.map((item) => parseBlogArticle(item, cache.tryGet)));
 
-        ctx.set('data', {
+        return {
             title: `财新博客 - 全部`,
             link: 'https://blog.caixin.com',
             // description: introduce,
             // image: avatar,
             item: items,
-        });
+        };
     }
-};
+}

@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/doulist/:id',
+    categories: ['social-media'],
+    example: '/douban/doulist/37716774',
+    parameters: { id: '豆列id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Unknown',
+    maintainers: ['LogicJake', 'honue'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const url = `https://www.douban.com/doulist/${id}`;
@@ -56,10 +75,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title,
         link: url,
         description,
         item: out,
-    });
-};
+    };
+}

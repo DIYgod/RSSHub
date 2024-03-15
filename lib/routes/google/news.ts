@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,25 @@ import * as path from 'node:path';
 
 const baseUrl = 'https://news.google.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category/:locale',
+    categories: ['new-media'],
+    example: '/google/news/Top stories/hl=en-US&gl=US&ceid=US:en',
+    parameters: { category: 'Category Title', locale: 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'News',
+    maintainers: ['zoenglinghou'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const locale = ctx.req.param('locale');
 
@@ -62,9 +81,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: categoryUrl,
         item: items,
-    });
-};
+    };
+}

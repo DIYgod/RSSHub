@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
@@ -5,7 +6,25 @@ import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析
 import { parseDate } from '@/utils/parse-date';
 import { getPageItemAndDate } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/rjxy',
+    categories: ['university'],
+    example: '/jsu/rjxy',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '计算机科学与工程学院 - 通知公告',
+    maintainers: ['wenjia03'],
+    handler,
+};
+
+async function handler() {
     const baseUrl = 'https://rjxy.jsu.edu.cn/';
 
     const response = await got({
@@ -34,11 +53,11 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         // 在此处输出您的 RSS
         title: '吉首大学计算机科学与工程学院 - 通知公告',
         link: 'https://rjxy.jsu.edu.cn/index/tzgg1.htm',
         description: '吉首大学计算机科学与工程学院 - 通知公告',
         item: out,
-    });
-};
+    };
+}

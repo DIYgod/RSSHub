@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,28 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 const baseUrl = 'https://www.aac.moj.gov.tw';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/moj/aac/news/:type?',
+    categories: ['government'],
+    example: '/gov/moj/aac/news',
+    parameters: { type: '資料大類，留空為全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '最新消息',
+    maintainers: ['TonyRL'],
+    handler,
+    description: `| 全部 | 其他 | 採購公告 | 新聞稿 | 肅貪 | 預防 | 綜合 | 防疫專區 |
+  | ---- | ---- | -------- | ------ | ---- | ---- | ---- | -------- |
+  |      | 02   | 01       | 06     | 05   | 04   | 03   | 99       |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const url = `${baseUrl}/7204/7246/?Page=1&PageSize=40${type ? `&type=${type}` : ''}`;
     const response = await got(url);
@@ -41,10 +63,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: url,
         item: items,
         language: 'zh-TW',
-    });
-};
+    };
+}

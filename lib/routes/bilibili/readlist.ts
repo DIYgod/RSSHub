@@ -1,6 +1,25 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/readlist/:listid',
+    categories: ['social-media'],
+    example: '/bilibili/readlist/25611',
+    parameters: { listid: '文集 id, 可在专栏文集 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '专栏文集',
+    maintainers: ['hoilc'],
+    handler,
+};
+
+async function handler(ctx) {
     const listid = ctx.req.param('listid');
     const listurl = `https://www.bilibili.com/read/readlist/rl${listid}`;
 
@@ -13,7 +32,7 @@ export default async (ctx) => {
     });
     const data = response.data.data;
 
-    ctx.set('data', {
+    return {
         title: `bilibili 专栏文集 - ${data.list.name}`,
         link: listurl,
         image: data.list.image_url,
@@ -27,5 +46,5 @@ export default async (ctx) => {
                 pubDate: new Date(item.publish_time * 1000).toUTCString(),
                 link: `https://www.bilibili.com/read/cv${item.id}/?from=readlist`,
             })),
-    });
-};
+    };
+}

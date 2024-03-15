@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { baseUrl, fixImage, fixVideo } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type/:name',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { type, name, sort = 'new' } = ctx.req.param();
     const sortString = sort === 'default' || type === 'tag' ? '' : `/${sort}`;
     const { data: response } = await got(`${baseUrl}/ajax/${type}/${name}${sortString}`);
@@ -28,10 +36,10 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: response.data.title,
         link: `${baseUrl}/${type}/${name}`,
         language: 'ru-RU',
         item: items,
-    });
-};
+    };
+}

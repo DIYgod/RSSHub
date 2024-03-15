@@ -2,38 +2,19 @@ import MarkdownIt from 'markdown-it';
 import Badge from './Badge';
 import Translate from '@docusaurus/Translate';
 import Link from '@docusaurus/Link';
+import type { Route } from '../../../lib/types';
 
 export default function Route({
-  author = 'DIYgod',
-  path = '',
-  example = '',
-  paramsDesc = 'N/A',
-  anticrawler = null,
-  supportBT = null,
-  supportPodcast = null,
-  supportScihub = null,
-  radar = null,
-  configRequired = null,
-  puppeteer = null,
-  notOperational = null,
+  namespace,
+  data,
   children = null,
 }: {
-  author?: string;
-  path: string;
-  example?: string;
-  paramsDesc?: string;
-  anticrawler?: boolean;
-  supportBT?: boolean;
-  supportPodcast?: boolean;
-  supportScihub?: boolean;
-  radar?: boolean;
-  configRequired?: boolean;
-  puppeteer?: boolean;
-  notOperational?: boolean;
+  namespace: string,
+  data: Route;
   children?: JSX.Element | JSX.Element[];
 }): JSX.Element {
-    const demoUrl = 'https://rsshub.app' + example;
-    const paramMatch = path.match(/(?<=:).*?(?=\/|$)/g);
+    const demoUrl = data.example ? ('https://rsshub.app' + data.example) : null;
+    const paramMatch = data.path.match?.(/(?<=:).*?(?=\/|$)/g);
 
     const renderMarkdown = (item, inline = true) => {
         const md = new MarkdownIt({
@@ -43,28 +24,23 @@ export default function Route({
     };
 
     return (
-        <div className={`routeBlock ${notOperational ? "notOperational" : ""}`} id={path}>
+        <div className='routeBlock' id={namespace + JSON.stringify(data.path)}>
             <p className="badges">
-                {notOperational && (
-                    <Link to={`https://github.com/search?q=${encodeURIComponent('repo:DIYgod/RSSHub')}+${encodeURIComponent(`"${path}"`)}&type=issues`}>
-                        <Badge type="caution"><Translate id="badge.notOperational" /></Badge>
-                    </Link>
-                )}
-                {anticrawler && (
+                {data.features?.antiCrawler && (
                     <Link to="/faq">
                         <Badge type="caution"><Translate id="badge.anticrawler" /></Badge>
                     </Link>
                 )}
-                {supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
-                {supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
-                {supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
-                {puppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
-                {configRequired && (
+                {data.features?.supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
+                {data.features?.supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
+                {data.features?.supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
+                {data.features?.requirePuppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
+                {data.features?.requireConfig && (
                     <Link to="/install/config#route-specific-configurations">
                         <Badge type="warning"><Translate id="badge.configRequired" /></Badge>
                     </Link>
                 )}
-                {radar && (
+                {data.radar && (
                     <Link to="/usage#radar">
                         <Badge type="tip"><Translate id="badge.radar" /></Badge>
                     </Link>
@@ -72,23 +48,25 @@ export default function Route({
             </p>
             <p className="author">
                 <Translate id="route.author" />
-                {author.split(' ').map((uid) => (
+                {data.maintainers?.map((uid) => (
                     <Link to={`https://github.com/${uid}`} key={uid}>
                         @{uid}{' '}
                     </Link>
                 ))}
             </p>
-            <p className="example">
+            {demoUrl && (
+                <p className="example">
                 <span><Translate id="route.example" /></span>
                 <Link to={demoUrl}>
                     {demoUrl}
                 </Link>
                 <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${encodeURIComponent(demoUrl)}&cacheSeconds=7200`} />
             </p>
+            )}
             <p className="path">
-                <Translate id="route.path" /><code>{path}</code>
+                <Translate id="route.path" /><code>/{namespace + data.path}</code>
             </p>
-            {paramMatch ? (
+            {paramMatch && (
                 <div>
                     <p><Translate id="route.parameter" /></p>
                     <ul>
@@ -100,14 +78,34 @@ export default function Route({
                                     '*': <Translate id="route.parameter.zeroOrMore" />,
                                     '+': <Translate id="route.parameter.oneOrMore" />,
                                 }[item[item.length - 1]] || <Translate id="route.parameter.required" /> }
-                                <Translate id="route.dash" /><span dangerouslySetInnerHTML={{ __html: renderMarkdown(paramsDesc[index]) }}></span>
+                                <Translate id="route.dash" />
+                                <span dangerouslySetInnerHTML={{ __html: renderMarkdown(data.parameters?.[item.replace(/:|\?|\+|\*/g, '')] || '') }}></span>
                             </li>
                         ))}
                     </ul>
                 </div>
-            ) : (
-                <p><Translate id="route.parameter.na" /></p>
             )}
+            {data.features?.requireConfig && (
+                <div>
+                    <p><Translate id="route.config" /></p>
+                    <ul>
+                        {data.features.requireConfig.map?.((item, index) => (
+                            <li className="params" key={index}>
+                                <code>{item.name}</code><Translate id="route.comma" />
+                                {item.optional ? <Translate id="route.parameter.optional" /> : <Translate id="route.parameter.required" />}
+                                <Translate id="route.dash" />
+                                <span dangerouslySetInnerHTML={{ __html: renderMarkdown(item.description) }}></span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+            <p className="path">
+                <Translate id="route.sourcecode" />
+                <code>
+                    <a target='_blank' href={`https://github.com/DIYgod/RSSHub/blob/master/lib/routes/${namespace}/${data.location}`} >{`/${namespace}/${data.location}`}</a>
+                </code>
+            </p>
             {children}
         </div>
     );

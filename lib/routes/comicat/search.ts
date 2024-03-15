@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,25 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://comicat.org';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/search/:keyword',
+    categories: ['anime'],
+    example: '/comicat/search/喵萌奶茶屋+跃动青春+720P+简日',
+    parameters: { keyword: '关键词，请用`+`号连接' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: true,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '搜索关键词',
+    maintainers: ['Cyang39'],
+    handler,
+};
+
+async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
     const { data: response } = await got(`${baseUrl}/search.php?keyword=${encodeURIComponent(keyword)}`);
     const $ = load(response);
@@ -35,9 +54,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `Comicat - ${keyword}`,
         link: `${baseUrl}/search.php?keyword=${encodeURIComponent(keyword)}`,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -52,7 +53,14 @@ async function loadContent(itemLink, charset, header) {
     return { description };
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/:ver{[7x]}/:cid{[0-9]{2}}/:link{.+}', '/:ver{[7x]}/:link{.+}', '/:link{.+}'],
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     let link = ctx.req.param('link');
     const ver = ctx.req.param('ver') ? ctx.req.param('ver').toUpperCase() : undefined;
     const cid = ctx.req.param('cid');
@@ -144,10 +152,10 @@ export default async (ctx) => {
         throw new Error('不支持当前Discuz版本.');
     }
 
-    ctx.set('data', {
+    return {
         title: $('head > title').text(),
         description: $('head > meta[name=description]').attr('content'),
         link,
         item: items,
-    });
-};
+    };
+}

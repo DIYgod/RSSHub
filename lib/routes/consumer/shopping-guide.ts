@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/shopping-guide/:category?/:language?',
+    categories: ['new-media'],
+    example: '/consumer/shopping-guide',
+    parameters: { category: '分类，见下表，默认为 `trivia`', language: '语言，见上表，默认为 `tc`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '消費全攻略',
+    maintainers: ['TonyRL'],
+    handler,
+    description: `| 冷知識 | 懶人包 | 特集     | 銀髮一族           | 飲食煮意         | 科技達人   | 健康美容          | 規劃人生                    | 消閒娛樂                  | 家品家電        | 親子時光        | 綠色生活     |
+  | ------ | ------ | -------- | ------------------ | ---------------- | ---------- | ----------------- | --------------------------- | ------------------------- | --------------- | --------------- | ------------ |
+  | trivia | tips   | features | silver-hair-market | food-and-cooking | tech-savvy | health-and-beauty | life-and-financial-planning | leisure-and-entertainment | home-appliances | family-and-kids | green-living |`,
+};
+
+async function handler(ctx) {
     const { category = 'trivia', language = 'tc' } = ctx.req.param();
     const rootUrl = 'https://www.consumer.org.hk';
     const currentUrl = `${rootUrl}/${language}/shopping-guide/${category}`;
@@ -56,12 +78,12 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: currentUrl,
         image: $('meta[property="og:image"]').attr('content'),
         logo: $('link[rel="apple-touch-icon"]').attr('href'),
         icon: $('link[rel="apple-touch-icon"]').attr('href'),
         item: items,
-    });
-};
+    };
+}

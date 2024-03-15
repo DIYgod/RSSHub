@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/std/:category?',
+    categories: ['university'],
+    example: '/xjtu/std/zytz',
+    parameters: { category: '分类，见下表，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '科技在线',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 通知公告 | 重要通知 | 项目申报 | 成果申报 | 信息快讯 |
+  | -------- | -------- | -------- | -------- | -------- |
+  |          | zytz     | xmsb     | cgsb     | xxkx     |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'http://std.xjtu.edu.cn';
@@ -54,9 +76,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:subsite/:tag?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     let title = '9To5',
         link,
         description;
@@ -62,10 +70,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title,
         link,
         description,
         item: items,
-    });
-};
+    };
+}

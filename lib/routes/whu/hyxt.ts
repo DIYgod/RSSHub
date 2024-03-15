@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,14 @@ import { parseDate } from '@/utils/parse-date';
 
 import { domain, processMeta, getMeta, processItems } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hyxt/:category{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'tzgg' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -37,7 +45,7 @@ export default async (ctx) => {
     const siteName = getMeta(meta, 'SiteName');
     const columnName = getMeta(meta, 'ColumnName');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${siteName} - ${columnName}`,
         link: currentUrl,
@@ -47,5 +55,5 @@ export default async (ctx) => {
         subtitle: columnName,
         author: siteName,
         allowEmpty: true,
-    });
-};
+    };
+}

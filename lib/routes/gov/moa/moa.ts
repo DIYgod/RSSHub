@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,45 +7,50 @@ import { parseRelativeDate } from '@/utils/parse-date';
 const hostUrl = 'http://www.moa.gov.cn/';
 const hostUrlObj = new URL(hostUrl); // 用于在下面判断host
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/moa/:suburl{.+}',
+    radar: [
+        {
+            source: ['moa.gov.cn/'],
+            target: '/moa/:suburl',
+        },
+    ],
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'moa.gov.cn/',
+};
+
+async function handler(ctx) {
     const rawSuburl = ctx.req.param('suburl');
     const suburl = rawSuburl.slice(-1) === '/' ? rawSuburl : rawSuburl + '/';
 
     // 特殊处理两个, 其他的栏目都可以找到那种一个列表下去的目录
     if (suburl === 'xw/tpxw/') {
         // 图片新闻
-        ctx.set(
-            'data',
-            await dealChannel(suburl, {
-                channelTitleSelector: '.pub-media2-head',
-                listSelector: '.tupian_list li',
-                titleSelector: 'a[class="block w_fill ellipsis adc ahc"]',
-                dateSelector: 'span',
-            })
-        );
+        return await dealChannel(suburl, {
+            channelTitleSelector: '.pub-media2-head',
+            listSelector: '.tupian_list li',
+            titleSelector: 'a[class="block w_fill ellipsis adc ahc"]',
+            dateSelector: 'span',
+        });
     } else if (suburl === 'govpublic/') {
         // 公开公告
-        ctx.set(
-            'data',
-            await dealChannel('govpublic/1/index.htm', {
-                channelTitleSelector: 'title',
-                listSelector: '.gongkai_centerRList li',
-                titleSelector: 'a',
-                dateSelector: 'span',
-            })
-        );
+        return await dealChannel('govpublic/1/index.htm', {
+            channelTitleSelector: 'title',
+            listSelector: '.gongkai_centerRList li',
+            titleSelector: 'a',
+            dateSelector: 'span',
+        });
     } else {
-        ctx.set(
-            'data',
-            await dealChannel(suburl, {
-                channelTitleSelector: '.pub-media1-head-title',
-                listSelector: '.ztlb',
-                titleSelector: 'a',
-                dateSelector: 'span',
-            })
-        );
+        return await dealChannel(suburl, {
+            channelTitleSelector: '.pub-media1-head-title',
+            listSelector: '.ztlb',
+            titleSelector: 'a',
+            dateSelector: 'span',
+        });
     }
-};
+}
 
 // 处理文章列表, 从那里获得一堆要爬取的页面, 然后爬取
 async function dealChannel(suburl, selectors) {

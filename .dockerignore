@@ -8,7 +8,6 @@ Dockerfile*
 LICENSE
 Procfile
 app-minimal
-assets
 coverage
 node_modules
 test
@@ -37,7 +36,6 @@ vercel.json
 
 # git but keep the git commit hash
 .git/logs
-.git/objects
 .git/index
 .git/info
 .git/hooks

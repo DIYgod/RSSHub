@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,25 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/explore',
+    categories: ['social-media'],
+    example: '/douban/explore',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '浏览发现',
+    maintainers: ['clarkzsd'],
+    handler,
+};
+
+async function handler() {
     const response = await got({
         method: 'get',
         url: 'https://www.douban.com/explore',
@@ -17,7 +36,7 @@ export default async (ctx) => {
     const $ = load(data);
     const list = $('div.item');
 
-    ctx.set('data', {
+    return {
         title: '豆瓣-浏览发现',
         link: 'https://www.douban.com/explore',
         item:
@@ -49,5 +68,5 @@ export default async (ctx) => {
                     };
                 })
                 .get(),
-    });
-};
+    };
+}

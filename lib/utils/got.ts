@@ -1,6 +1,6 @@
 import logger from '@/utils/logger';
 import { config } from '@/config';
-import got, { CancelableRequest, Response as GotResponse, NormalizedOptions, Options } from 'got';
+import got, { CancelableRequest, Response as GotResponse, NormalizedOptions, Options, Got } from 'got';
 
 type Response<T> = GotResponse<string> & {
     data: T;
@@ -23,7 +23,8 @@ const custom: {
     patch: GotRequestFunction;
     head: GotRequestFunction;
     delete: GotRequestFunction;
-} & GotRequestFunction = got.extend({
+} & GotRequestFunction &
+    Got = got.extend({
     get: got.get,
     retry: {
         limit: config.requestRetry,

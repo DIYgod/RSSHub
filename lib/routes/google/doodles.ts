@@ -1,6 +1,25 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/doodles/:language?',
+    categories: ['picture'],
+    example: '/google/doodles/zh-CN',
+    parameters: { language: 'Language, default to `zh-CN`, for other language values, you can get it from [Google Doodles official website](https://www.google.com/doodles)' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Update',
+    maintainers: ['xyqfer'],
+    handler,
+};
+
+async function handler(ctx) {
     const { language = 'zh-CN' } = ctx.req.param();
     const current = new Date();
     const year = current.getFullYear();
@@ -15,7 +34,7 @@ export default async (ctx) => {
         },
     });
 
-    ctx.set('data', {
+    return {
         title: 'Google Doodles',
         link,
         item:
@@ -31,5 +50,5 @@ export default async (ctx) => {
                     link: `https://www.google.com/search?q=${encodeURIComponent(item.query)}`,
                 };
             }),
-    });
-};
+    };
+}

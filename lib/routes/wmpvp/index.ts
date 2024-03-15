@@ -1,7 +1,34 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:type',
+    categories: ['game'],
+    example: '/wmpvp/news/1',
+    parameters: { type: '资讯分类，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '资讯列表',
+    maintainers: ['tssujt'],
+    handler,
+    description: `| DOTA2 | CS2 |
+  | ----- | --- |
+  | 1     | 2   |`,
+};
+
+const TYPE_MAP = {
+    '1': 'DOTA2',
+    '2': 'CS2',
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
 
     const response = await got({
@@ -26,9 +53,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
-        title: `完美世界电竞`,
+    return {
+        title: `完美世界电竞 - ${TYPE_MAP[type]} 资讯`,
         link: `https://news.wmpvp.com/`,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -20,7 +21,28 @@ const channelMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:channel?',
+    categories: ['finance'],
+    example: '/theblockbeats/newsflash',
+    parameters: { channel: '类型，见下表，默认为快讯' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻快讯',
+    maintainers: ['Fatpandac', 'jameshih'],
+    handler,
+    description: `|    快讯   |   文章  |
+  | :-------: | :-----: |
+  | newsflash | article |`,
+};
+
+async function handler(ctx) {
     const { channel = 'newsflash' } = ctx.req.param();
 
     const { data: response } = await got(channelMap[channel].api);
@@ -46,9 +68,9 @@ export default async (ctx) => {
         );
     }
 
-    ctx.set('data', {
+    return {
         title: `TheBlockBeats - ${channelMap[channel].title}`,
         link: channelMap[channel].link,
         item: list,
-    });
-};
+    };
+}

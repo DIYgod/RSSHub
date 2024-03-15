@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 import got from '@/utils/got';
@@ -58,7 +59,26 @@ const getArticleDetail = (link) =>
         return { article, categories };
     });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:endpoint?',
+    categories: ['traditional-media'],
+    example: '/npr/1001',
+    parameters: { endpoint: 'Channel ID, can be found in Official RSS URL, `1001` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'News',
+    maintainers: ['bennyyip'],
+    handler,
+    description: `Provide full article RSS for CBC topics.`,
+};
+
+async function handler(ctx) {
     const endpoint = ctx.req.param('endpoint') || '1001';
     const feed = await parser.parseURL(`https://feeds.npr.org/${endpoint}/rss.xml`);
 
@@ -78,11 +98,11 @@ export default async (ctx) => {
         )
     ).filter(Boolean);
 
-    ctx.set('data', {
+    return {
         title: feed.title,
         link: feed.link,
         description: feed.description,
         icon: 'https://media.npr.org/images/podcasts/primary/npr_generic_image_300.jpg?s=200',
         item: items,
-    });
-};
+    };
+}

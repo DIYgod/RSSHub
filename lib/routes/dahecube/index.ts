@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import utils from './utils';
 const { TYPE, parseUrl } = utils;
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?',
+    categories: ['new-media'],
+    example: '/dahecube',
+    parameters: { type: '板块，见下表，默认为推荐' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻',
+    maintainers: ['linbuxiao'],
+    handler,
+    description: `| 推荐      | 党史    | 豫股  | 财经     | 投教      | 金融    | 科创    | 投融   | 专栏   |
+  | --------- | ------- | ----- | -------- | --------- | ------- | ------- | ------ | ------ |
+  | recommend | history | stock | business | education | finance | science | invest | column |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'recommend';
     const params = JSON.stringify({
         channelid: TYPE[type].id,
@@ -50,13 +72,13 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '大河财立方',
         link: parseUrl(type),
         description: `大河财立方 ${TYPE[type].name}`,
         language: 'zh-cn',
         item: items,
-    });
+    };
 
     ctx.set('json', {
         title: '大河财立方',
@@ -64,4 +86,4 @@ export default async (ctx) => {
         description: `大河财立方 ${TYPE[type].name}`,
         items,
     });
-};
+}
