@@ -12,7 +12,7 @@
 
 ### 直播开播
 
-<Route namespace="bilibili" data={{"path":"/live/room/:roomID","categories":["live"],"example":"/bilibili/live/room/3","parameters":{"roomID":"房间号, 可在直播间 URL 中找到, 长短号均可"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["live.bilibili.com/:roomID"]},"name":"直播开播","maintainers":["Qixingchen"],"location":"live-room.ts"}} />
+<Route namespace="bilibili" data={{"path":"/live/room/:roomID","categories":["live"],"example":"/bilibili/live/room/3","parameters":{"roomID":"房间号, 可在直播间 URL 中找到, 长短号均可"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["live.bilibili.com/:roomID"]}],"name":"直播开播","maintainers":["Qixingchen"],"location":"live-room.ts"}} />
 
 ### 直播搜索
 
@@ -22,17 +22,17 @@
 
 ### Latest Discography
 
-<Route namespace="lxixsxa" data={{"path":"/disco","categories":["live"],"example":"/lxixsxa/disco","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.lxixsxa.com/","www.lxixsxa.com/discography"]},"name":"Latest Discography","maintainers":["Kiotlin"],"url":"www.lxixsxa.com/","location":"discography.ts"}} />
+<Route namespace="lxixsxa" data={{"path":"/disco","categories":["live"],"example":"/lxixsxa/disco","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.lxixsxa.com/","www.lxixsxa.com/discography"]}],"name":"Latest Discography","maintainers":["Kiotlin"],"url":"www.lxixsxa.com/","location":"discography.ts"}} />
 
 ### News
 
-<Route namespace="lxixsxa" data={{"path":"/info","categories":["live"],"example":"/lxixsxa/info","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.lxixsxa.com/","www.lxixsxa.com/info"]},"name":"News","maintainers":["Kiotlin"],"url":"www.lxixsxa.com/","location":"information.ts"}} />
+<Route namespace="lxixsxa" data={{"path":"/info","categories":["live"],"example":"/lxixsxa/info","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.lxixsxa.com/","www.lxixsxa.com/info"]}],"name":"News","maintainers":["Kiotlin"],"url":"www.lxixsxa.com/","location":"information.ts"}} />
 
 ## Twitch
 
 ### Channel Video
 
-<Route namespace="twitch" data={{"path":"/video/:login/:filter?","categories":["live"],"example":"/twitch/video/riotgames/highlights","parameters":{"login":"Twitch username","filter":"Video type, Default to all"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.twitch.tv/:login/videos"],"target":"/video/:login"},"name":"Channel Video","maintainers":["hoilc"],"description":"| archive           | highlights                    | all        |\n| ----------------- | ----------------------------- | ---------- |\n| Recent broadcasts | Recent highlights and uploads | All videos |","location":"video.ts"}} />
+<Route namespace="twitch" data={{"path":"/video/:login/:filter?","categories":["live"],"example":"/twitch/video/riotgames/highlights","parameters":{"login":"Twitch username","filter":"Video type, Default to all"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.twitch.tv/:login/videos"],"target":"/video/:login"}],"name":"Channel Video","maintainers":["hoilc"],"description":"| archive           | highlights                    | all        |\n| ----------------- | ----------------------------- | ---------- |\n| Recent broadcasts | Recent highlights and uploads | All videos |","location":"video.ts"}} />
 
 | archive           | highlights                    | all        |
 | ----------------- | ----------------------------- | ---------- |
@@ -44,21 +44,21 @@
 
 ### Stream Schedule
 
-<Route namespace="twitch" data={{"path":"/schedule/:login","categories":["live"],"example":"/twitch/schedule/riotgames","parameters":{"login":"Twitch username"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.twitch.tv/:login/schedule"]},"name":"Stream Schedule","maintainers":["hoilc"],"location":"schedule.ts"}} />
+<Route namespace="twitch" data={{"path":"/schedule/:login","categories":["live"],"example":"/twitch/schedule/riotgames","parameters":{"login":"Twitch username"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.twitch.tv/:login/schedule"]}],"name":"Stream Schedule","maintainers":["hoilc"],"location":"schedule.ts"}} />
 
 ## Yoasobi Official
 
 ### Live
 
-<Route namespace="yoasobi-music" data={{"path":"/live","categories":["live"],"example":"/yoasobi-music/live","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.yoasobi-music.jp/","www.yoasobi-music.jp/live"]},"name":"Live","maintainers":["Kiotlin"],"url":"www.yoasobi-music.jp/","location":"live.ts"}} />
+<Route namespace="yoasobi-music" data={{"path":"/live","categories":["live"],"example":"/yoasobi-music/live","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.yoasobi-music.jp/","www.yoasobi-music.jp/live"]}],"name":"Live","maintainers":["Kiotlin"],"url":"www.yoasobi-music.jp/","location":"live.ts"}} />
 
 ### Media
 
-<Route namespace="yoasobi-music" data={{"path":"/media","categories":["live"],"example":"/yoasobi-music/media","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.yoasobi-music.jp/","www.yoasobi-music.jp/media"]},"name":"Media","maintainers":["Kiotlin"],"url":"www.yoasobi-music.jp/","location":"media.ts"}} />
+<Route namespace="yoasobi-music" data={{"path":"/media","categories":["live"],"example":"/yoasobi-music/media","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.yoasobi-music.jp/","www.yoasobi-music.jp/media"]}],"name":"Media","maintainers":["Kiotlin"],"url":"www.yoasobi-music.jp/","location":"media.ts"}} />
 
 ### News & Biography
 
-<Route namespace="yoasobi-music" data={{"path":"/info/:category?","categories":["live"],"example":"/yoasobi-music/info/news","parameters":{"category":"`news`, `biography`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.yoasobi-music.jp/","www.yoasobi-music.jp/:category"],"target":"/info/:category"},"name":"News & Biography","maintainers":[],"url":"www.yoasobi-music.jp/","location":"info.ts"}} />
+<Route namespace="yoasobi-music" data={{"path":"/info/:category?","categories":["live"],"example":"/yoasobi-music/info/news","parameters":{"category":"`news`, `biography`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.yoasobi-music.jp/","www.yoasobi-music.jp/:category"],"target":"/info/:category"}],"name":"News & Biography","maintainers":[],"url":"www.yoasobi-music.jp/","location":"info.ts"}} />
 
 ## YouTube Live
 
@@ -84,17 +84,17 @@
 
 ### 直播间开播
 
-<Route namespace="douyin" data={{"path":"/live/:rid","categories":["live"],"example":"/douyin/live/685317364746","parameters":{"rid":"直播间 id, 可在主播直播间页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["live.douyin.com/:rid"]},"name":"直播间开播","maintainers":["TonyRL"],"location":"live.ts"}} />
+<Route namespace="douyin" data={{"path":"/live/:rid","categories":["live"],"example":"/douyin/live/685317364746","parameters":{"rid":"直播间 id, 可在主播直播间页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["live.douyin.com/:rid"]}],"name":"直播间开播","maintainers":["TonyRL"],"location":"live.ts"}} />
 
 ## 斗鱼直播
 
 ### 直播间开播
 
-<Route namespace="douyu" data={{"path":"/room/:id","categories":["live"],"example":"/douyu/room/24422","parameters":{"id":"直播间 id, 可在主播直播间页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.douyu.com/:id","www.douyu.com/"]},"name":"直播间开播","maintainers":["DIYgod"],"location":"room.ts"}} />
+<Route namespace="douyu" data={{"path":"/room/:id","categories":["live"],"example":"/douyu/room/24422","parameters":{"id":"直播间 id, 可在主播直播间页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.douyu.com/:id","www.douyu.com/"]}],"name":"直播间开播","maintainers":["DIYgod"],"location":"room.ts"}} />
 
 ## 浪 Play 直播
 
 ### Unknown
 
-<Route namespace="lang" data={{"path":"/live/room/:id","categories":["live"],"example":"/lang/live/room/1352360","parameters":{"id":"直播间 id, 可在主播直播间页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["lang.live/room/:id"]},"name":"Unknown","maintainers":["MittWillson"],"location":"room.ts"}} />
+<Route namespace="lang" data={{"path":"/live/room/:id","categories":["live"],"example":"/lang/live/room/1352360","parameters":{"id":"直播间 id, 可在主播直播间页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["lang.live/room/:id"]}],"name":"Unknown","maintainers":["MittWillson"],"location":"room.ts"}} />
 

@@ -26,17 +26,17 @@ Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://
 
 ### Popular
 
-<Route namespace="dribbble" data={{"path":"/popular/:timeframe?","categories":["design"],"example":"/dribbble/popular","parameters":{"timeframe":"support the following values: week, month, year and ever"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["dribbble.com/"],"target":"/popular"},"name":"Popular","maintainers":["DIYgod","loganrockmore"],"url":"dribbble.com/","location":"popular.ts"}} />
+<Route namespace="dribbble" data={{"path":"/popular/:timeframe?","categories":["design"],"example":"/dribbble/popular","parameters":{"timeframe":"support the following values: week, month, year and ever"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["dribbble.com/"],"target":"/popular"}],"name":"Popular","maintainers":["DIYgod","loganrockmore"],"url":"dribbble.com/","location":"popular.ts"}} />
 
 ### User (or team)
 
-<Route namespace="dribbble" data={{"path":"/user/:name","categories":["design"],"example":"/dribbble/user/google","parameters":{"name":"username, available in user's homepage URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["dribbble.com/:name"]},"name":"User (or team)","maintainers":["DIYgod","loganrockmore"],"location":"user.ts"}} />
+<Route namespace="dribbble" data={{"path":"/user/:name","categories":["design"],"example":"/dribbble/user/google","parameters":{"name":"username, available in user's homepage URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["dribbble.com/:name"]}],"name":"User (or team)","maintainers":["DIYgod","loganrockmore"],"location":"user.ts"}} />
 
 ## Eagle
 
 ### Blog
 
-<Route namespace="eagle" data={{"path":"/blog/:cate?/:language?","categories":["design"],"example":"/eagle/blog/en","parameters":{"cate":"Category, get by URL, `all` by default","language":"Language, `cn`, `tw`, `en`, `en` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["cn.eagle.cool/blog"],"target":"/blog"},"name":"Blog","maintainers":["Fatpandac"],"url":"cn.eagle.cool/blog","location":"blog.ts"}} />
+<Route namespace="eagle" data={{"path":"/blog/:cate?/:language?","categories":["design"],"example":"/eagle/blog/en","parameters":{"cate":"Category, get by URL, `all` by default","language":"Language, `cn`, `tw`, `en`, `en` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["cn.eagle.cool/blog"],"target":"/blog"}],"name":"Blog","maintainers":["Fatpandac"],"url":"cn.eagle.cool/blog","location":"blog.ts"}} />
 
 ## Google
 
@@ -56,7 +56,7 @@ Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://
 
 ### Works
 
-<Route namespace="notefolio" data={{"path":"/search/:category?/:order?/:time?/:query?","categories":["design"],"example":"/notefolio/search/1/pick/all/life","parameters":{"category":"Category, see below, `all` by default","order":"Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default","time":"Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default","query":"Keyword, empty by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["notefolio.net/search"]},"name":"Works","maintainers":["BianTan"],"url":"notefolio.net/search","description":"| Category | Name in Korean     | Name in English         |\n  | -------- | ------------------ | ----------------------- |\n  | all      | 전체               | All                     |\n  | 1        | 영상/모션그래픽    | Video / Motion Graphics |\n  | 2        | 그래픽 디자인      | Graphic Design          |\n  | 3        | 브랜딩/편집        | Branding / Editing      |\n  | 4        | UI/UX              | UI/UX                   |\n  | 5        | 일러스트레이션     | Illustration            |\n  | 6        | 디지털 아트        | Digital Art             |\n  | 7        | 캐릭터 디자인      | Character Design        |\n  | 8        | 제품/패키지 디자인 | Product Package Design  |\n  | 9        | 포토그래피         | Photography             |\n  | 10       | 타이포그래피       | Typography              |\n  | 11       | 공예               | Crafts                  |\n  | 12       | 파인아트           | Fine Art                |","location":"search.ts"}} />
+<Route namespace="notefolio" data={{"path":"/search/:category?/:order?/:time?/:query?","categories":["design"],"example":"/notefolio/search/1/pick/all/life","parameters":{"category":"Category, see below, `all` by default","order":"Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default","time":"Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default","query":"Keyword, empty by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["notefolio.net/search"]}],"name":"Works","maintainers":["BianTan"],"url":"notefolio.net/search","description":"| Category | Name in Korean     | Name in English         |\n  | -------- | ------------------ | ----------------------- |\n  | all      | 전체               | All                     |\n  | 1        | 영상/모션그래픽    | Video / Motion Graphics |\n  | 2        | 그래픽 디자인      | Graphic Design          |\n  | 3        | 브랜딩/편집        | Branding / Editing      |\n  | 4        | UI/UX              | UI/UX                   |\n  | 5        | 일러스트레이션     | Illustration            |\n  | 6        | 디지털 아트        | Digital Art             |\n  | 7        | 캐릭터 디자인      | Character Design        |\n  | 8        | 제품/패키지 디자인 | Product Package Design  |\n  | 9        | 포토그래피         | Photography             |\n  | 10       | 타이포그래피       | Typography              |\n  | 11       | 공예               | Crafts                  |\n  | 12       | 파인아트           | Fine Art                |","location":"search.ts"}} />
 
 | Category | Name in Korean     | Name in English         |
   | -------- | ------------------ | ----------------------- |
@@ -78,7 +78,7 @@ Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://
 
 ### 文章列表
 
-<Route namespace="shoppingdesign" data={{"path":"/posts","categories":["design"],"example":"/shoppingdesign/posts","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.shoppingdesign.com.tw/post"]},"name":"文章列表","maintainers":["miles170"],"url":"www.shoppingdesign.com.tw/post","location":"posts.ts"}} />
+<Route namespace="shoppingdesign" data={{"path":"/posts","categories":["design"],"example":"/shoppingdesign/posts","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.shoppingdesign.com.tw/post"]}],"name":"文章列表","maintainers":["miles170"],"url":"www.shoppingdesign.com.tw/post","location":"posts.ts"}} />
 
 ## 爱果果
 
@@ -90,7 +90,7 @@ Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://
 
 ### Unknown
 
-<Route namespace="zcool" data={{"path":"/user/:uid","categories":["design"],"example":"/zcool/user/baiyong","parameters":{"uid":"个性域名前缀或者用户ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zcool.com.cn/u/:id"],"target":"/user/:id"},"name":"Unknown","maintainers":["junbaor"],"location":"user.ts"}} />
+<Route namespace="zcool" data={{"path":"/user/:uid","categories":["design"],"example":"/zcool/user/baiyong","parameters":{"uid":"个性域名前缀或者用户ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zcool.com.cn/u/:id"],"target":"/user/:id"}],"name":"Unknown","maintainers":["junbaor"],"location":"user.ts"}} />
 
 ### 发现
 

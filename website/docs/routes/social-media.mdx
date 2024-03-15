@@ -12,15 +12,15 @@
 
 ### UP 主专栏
 
-<Route namespace="bilibili" data={{"path":"/user/article/:uid","categories":["social-media"],"example":"/bilibili/user/article/334958638","parameters":{"uid":"用户 id, 可在 UP 主主页中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["space.bilibili.com/:uid"]},"name":"UP 主专栏","maintainers":["lengthmin","Qixingchen"],"location":"article.ts"}} />
+<Route namespace="bilibili" data={{"path":"/user/article/:uid","categories":["social-media"],"example":"/bilibili/user/article/334958638","parameters":{"uid":"用户 id, 可在 UP 主主页中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["space.bilibili.com/:uid"]}],"name":"UP 主专栏","maintainers":["lengthmin","Qixingchen"],"location":"article.ts"}} />
 
 ### UP 主投币视频
 
-<Route namespace="bilibili" data={{"path":"/user/coin/:uid/:disableEmbed?","categories":["social-media"],"example":"/bilibili/user/coin/208259","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["space.bilibili.com/:uid"],"target":"/user/coin/:uid"},"name":"UP 主投币视频","maintainers":["DIYgod"],"location":"coin.ts"}} />
+<Route namespace="bilibili" data={{"path":"/user/coin/:uid/:disableEmbed?","categories":["social-media"],"example":"/bilibili/user/coin/208259","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["space.bilibili.com/:uid"],"target":"/user/coin/:uid"}],"name":"UP 主投币视频","maintainers":["DIYgod"],"location":"coin.ts"}} />
 
 ### UP 主动态
 
-<Route namespace="bilibili" data={{"path":"/user/dynamic/:uid/:routeParams?","categories":["social-media"],"example":"/bilibili/user/dynamic/2267573","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","routeParams":"额外参数；请参阅以下说明和表格"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["space.bilibili.com/:uid"],"target":"/user/dynamic/:uid"},"name":"UP 主动态","maintainers":["DIYgod","zytomorrow","CaoMeiYouRen","JimenezLi"],"description":"| 键           | 含义                              | 接受的值       | 默认值 |\n  | ------------ | --------------------------------- | -------------- | ------ |\n  | showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |\n  | disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |\n  | useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |\n  | directLink   | 使用内容直链                      | 0/1/true/false | false  |\n\n  用例：`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1`\n\n  :::tip[动态的专栏显示全文]\n  动态的专栏显示全文请使用通用参数里的 `mode=fulltext`\n\n  举例: bilibili 专栏全文输出 /bilibili/user/dynamic/2267573/?mode=fulltext\n  :::","location":"dynamic.ts"}} />
+<Route namespace="bilibili" data={{"path":"/user/dynamic/:uid/:routeParams?","categories":["social-media"],"example":"/bilibili/user/dynamic/2267573","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","routeParams":"额外参数；请参阅以下说明和表格"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["space.bilibili.com/:uid"],"target":"/user/dynamic/:uid"}],"name":"UP 主动态","maintainers":["DIYgod","zytomorrow","CaoMeiYouRen","JimenezLi"],"description":"| 键           | 含义                              | 接受的值       | 默认值 |\n  | ------------ | --------------------------------- | -------------- | ------ |\n  | showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |\n  | disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |\n  | useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |\n  | directLink   | 使用内容直链                      | 0/1/true/false | false  |\n\n  用例：`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1`\n\n  :::tip[动态的专栏显示全文]\n  动态的专栏显示全文请使用通用参数里的 `mode=fulltext`\n\n  举例: bilibili 专栏全文输出 /bilibili/user/dynamic/2267573/?mode=fulltext\n  :::","location":"dynamic.ts"}} />
 
 | 键           | 含义                              | 接受的值       | 默认值 |
   | ------------ | --------------------------------- | -------------- | ------ |
@@ -43,7 +43,7 @@
 
 ### UP 主粉丝
 
-<Route namespace="bilibili" data={{"path":"/user/followers/:uid/:loginUid","categories":["social-media"],"example":"/bilibili/user/followers/2267573/3","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","loginUid":"用于登入的用户id,需要配置对应的 Cookie 值"},"features":{"requireConfig":[{"name":"BILIBILI_COOKIE_*","description":"BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n2.  打开控制台，切换到 Network 面板，刷新\n3.  点击 dynamic_new 请求，找到 Cookie\n4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["space.bilibili.com/:uid"],"target":"/user/followers/:uid"},"name":"UP 主粉丝","maintainers":["Qixingchen"],"description":":::warning\n  UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::","location":"followers.ts"}} />
+<Route namespace="bilibili" data={{"path":"/user/followers/:uid/:loginUid","categories":["social-media"],"example":"/bilibili/user/followers/2267573/3","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","loginUid":"用于登入的用户id,需要配置对应的 Cookie 值"},"features":{"requireConfig":[{"name":"BILIBILI_COOKIE_*","description":"BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n2.  打开控制台，切换到 Network 面板，刷新\n3.  点击 dynamic_new 请求，找到 Cookie\n4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["space.bilibili.com/:uid"],"target":"/user/followers/:uid"}],"name":"UP 主粉丝","maintainers":["Qixingchen"],"description":":::warning\n  UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::","location":"followers.ts"}} />
 
 :::warning
   UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
@@ -51,7 +51,7 @@
 
 ### UP 主关注用户
 
-<Route namespace="bilibili" data={{"path":"/user/followings/:uid/:loginUid","categories":["social-media"],"example":"/bilibili/user/followings/2267573/3","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","loginUid":"用于登入的用户id,需要配置对应的 Cookie 值"},"features":{"requireConfig":[{"name":"BILIBILI_COOKIE_*","description":"BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n    1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n    2.  打开控制台，切换到 Network 面板，刷新\n    3.  点击 dynamic_new 请求，找到 Cookie\n    4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["space.bilibili.com/:uid"],"target":"/user/followings/:uid"},"name":"UP 主关注用户","maintainers":["Qixingchen"],"description":":::warning\n  UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::","location":"followings.ts"}} />
+<Route namespace="bilibili" data={{"path":"/user/followings/:uid/:loginUid","categories":["social-media"],"example":"/bilibili/user/followings/2267573/3","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","loginUid":"用于登入的用户id,需要配置对应的 Cookie 值"},"features":{"requireConfig":[{"name":"BILIBILI_COOKIE_*","description":"BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n    1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n    2.  打开控制台，切换到 Network 面板，刷新\n    3.  点击 dynamic_new 请求，找到 Cookie\n    4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["space.bilibili.com/:uid"],"target":"/user/followings/:uid"}],"name":"UP 主关注用户","maintainers":["Qixingchen"],"description":":::warning\n  UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::","location":"followings.ts"}} />
 
 :::warning
   UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
@@ -59,7 +59,7 @@
 
 ### UP 主点赞视频
 
-<Route namespace="bilibili" data={{"path":"/user/like/:uid/:disableEmbed?","categories":["social-media"],"example":"/bilibili/user/like/208259","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["space.bilibili.com/:uid"],"target":"/user/like/:uid"},"name":"UP 主点赞视频","maintainers":["ygguorun"],"location":"like.ts"}} />
+<Route namespace="bilibili" data={{"path":"/user/like/:uid/:disableEmbed?","categories":["social-media"],"example":"/bilibili/user/like/208259","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["space.bilibili.com/:uid"],"target":"/user/like/:uid"}],"name":"UP 主点赞视频","maintainers":["ygguorun"],"location":"like.ts"}} />
 
 ### UP 主频道的视频列表
 
@@ -71,11 +71,11 @@
 
 ### UP 主默认收藏夹
 
-<Route namespace="bilibili" data={{"path":"/user/fav/:uid/:disableEmbed?","categories":["social-media"],"example":"/bilibili/user/fav/2267573","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["space.bilibili.com/:uid","space.bilibili.com/:uid/favlist"],"target":"/user/fav/:uid"},"name":"UP 主默认收藏夹","maintainers":["DIYgod"],"location":"user-fav.ts"}} />
+<Route namespace="bilibili" data={{"path":"/user/fav/:uid/:disableEmbed?","categories":["social-media"],"example":"/bilibili/user/fav/2267573","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["space.bilibili.com/:uid","space.bilibili.com/:uid/favlist"],"target":"/user/fav/:uid"}],"name":"UP 主默认收藏夹","maintainers":["DIYgod"],"location":"user-fav.ts"}} />
 
 ### UP 主投稿
 
-<Route namespace="bilibili" data={{"path":"/user/video/:uid/:disableEmbed?","categories":["social-media"],"example":"/bilibili/user/video/2267573","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["space.bilibili.com/:uid"],"target":"/user/video/:uid"},"name":"UP 主投稿","maintainers":["DIYgod"],"description":":::tip[动态的专栏显示全文]\n  可以使用 [UP 主动态](#bilibili-up-zhu-dong-tai)路由作为代替绕过反爬限制\n  :::","location":"video.ts"}} />
+<Route namespace="bilibili" data={{"path":"/user/video/:uid/:disableEmbed?","categories":["social-media"],"example":"/bilibili/user/video/2267573","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["space.bilibili.com/:uid"],"target":"/user/video/:uid"}],"name":"UP 主投稿","maintainers":["DIYgod"],"description":":::tip[动态的专栏显示全文]\n  可以使用 [UP 主动态](#bilibili-up-zhu-dong-tai)路由作为代替绕过反爬限制\n  :::","location":"video.ts"}} />
 
 :::tip[动态的专栏显示全文]
   可以使用 [UP 主动态](#bilibili-up-zhu-dong-tai)路由作为代替绕过反爬限制
@@ -221,7 +221,7 @@
 
 ### 会员购票务
 
-<Route namespace="bilibili" data={{"path":"/platform/:area?/:p_type?/:uid?","categories":["social-media"],"example":"/bilibili/platform/-1","parameters":{"area":"省市-国标码,默认为-1即全国","p_type":"类型：见下表，默认为全部类型","uid":"用户id，可以不填，不过不填不设置cookie，搜索结果与登入账号后搜索结果不一样。可以在url中找到，需要配置cookie值，只需要SESSDATA的值即可"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["show.bilibili.com/platform"]},"name":"会员购票务","maintainers":["nightmare-mio"],"url":"show.bilibili.com/platform","description":"| 类型     |\n| -------- |\n| 演出     |\n| 展览     |\n| 本地生活 |","location":"platform.ts"}} />
+<Route namespace="bilibili" data={{"path":"/platform/:area?/:p_type?/:uid?","categories":["social-media"],"example":"/bilibili/platform/-1","parameters":{"area":"省市-国标码,默认为-1即全国","p_type":"类型：见下表，默认为全部类型","uid":"用户id，可以不填，不过不填不设置cookie，搜索结果与登入账号后搜索结果不一样。可以在url中找到，需要配置cookie值，只需要SESSDATA的值即可"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["show.bilibili.com/platform"]}],"name":"会员购票务","maintainers":["nightmare-mio"],"url":"show.bilibili.com/platform","description":"| 类型     |\n| -------- |\n| 演出     |\n| 展览     |\n| 本地生活 |","location":"platform.ts"}} />
 
 | 类型     |
 | -------- |
@@ -231,11 +231,11 @@
 
 ### 漫画更新
 
-<Route namespace="bilibili" data={{"path":"/manga/update/:comicid","categories":["social-media"],"example":"/bilibili/manga/update/26009","parameters":{"comicid":"漫画 id, 可在 URL 中找到, 支持带有`mc`前缀"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["manga.bilibili.com/detail/:comicid"]},"name":"漫画更新","maintainers":["hoilc"],"location":"manga-update.ts"}} />
+<Route namespace="bilibili" data={{"path":"/manga/update/:comicid","categories":["social-media"],"example":"/bilibili/manga/update/26009","parameters":{"comicid":"漫画 id, 可在 URL 中找到, 支持带有`mc`前缀"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["manga.bilibili.com/detail/:comicid"]}],"name":"漫画更新","maintainers":["hoilc"],"location":"manga-update.ts"}} />
 
 ### 热搜
 
-<Route namespace="bilibili" data={{"path":"/hot-search","categories":["social-media"],"example":"/bilibili/hot-search","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.bilibili.com/"]},"name":"热搜","maintainers":["CaoMeiYouRen"],"url":"www.bilibili.com/","location":"hot-search.ts"}} />
+<Route namespace="bilibili" data={{"path":"/hot-search","categories":["social-media"],"example":"/bilibili/hot-search","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.bilibili.com/"]}],"name":"热搜","maintainers":["CaoMeiYouRen"],"url":"www.bilibili.com/","location":"hot-search.ts"}} />
 
 ### 视频弹幕
 
@@ -293,7 +293,7 @@
 
 ### 用户追番列表
 
-<Route namespace="bilibili" data={{"path":"/user/bangumi/:uid/:type?","categories":["social-media"],"example":"/bilibili/user/bangumi/208259","parameters":{"uid":"用户 id","type":"1为番，2为剧，留空为1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["space.bilibili.com/:uid"],"target":"/user/bangumi/:uid"},"name":"用户追番列表","maintainers":["wdssmq"],"location":"user-bangumi.ts"}} />
+<Route namespace="bilibili" data={{"path":"/user/bangumi/:uid/:type?","categories":["social-media"],"example":"/bilibili/user/bangumi/208259","parameters":{"uid":"用户 id","type":"1为番，2为剧，留空为1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["space.bilibili.com/:uid"],"target":"/user/bangumi/:uid"}],"name":"用户追番列表","maintainers":["wdssmq"],"location":"user-bangumi.ts"}} />
 
 ### 用户稍后再看
 
@@ -319,7 +319,7 @@
 
 ### Post
 
-<Route namespace="bsky" data={{"path":"/profile/:handle","categories":["social-media"],"example":"/bsky/profile/bsky.app","parameters":{"handle":"User handle, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bsky.app/profile/:handle"]},"name":"Post","maintainers":["TonyRL"],"location":"posts.ts"}} />
+<Route namespace="bsky" data={{"path":"/profile/:handle","categories":["social-media"],"example":"/bsky/profile/bsky.app","parameters":{"handle":"User handle, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bsky.app/profile/:handle"]}],"name":"Post","maintainers":["TonyRL"],"location":"posts.ts"}} />
 
 ## Crossbell
 
@@ -329,53 +329,53 @@
 
 ### Notes of character
 
-<Route namespace="crossbell" data={{"path":"/notes/character/:characterId","categories":["social-media"],"example":"/crossbell/notes/character/10","parameters":{"characterId":"N"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["crossbell.io/*"],"target":"/notes"},"name":"Notes of character","maintainers":["DIYgod"],"url":"crossbell.io/*","location":"notes/character.ts"}} />
+<Route namespace="crossbell" data={{"path":"/notes/character/:characterId","categories":["social-media"],"example":"/crossbell/notes/character/10","parameters":{"characterId":"N"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["crossbell.io/*"],"target":"/notes"}],"name":"Notes of character","maintainers":["DIYgod"],"url":"crossbell.io/*","location":"notes/character.ts"}} />
 
 ### Notes
 
-<Route namespace="crossbell" data={{"path":"/notes","categories":["social-media"],"example":"/crossbell/notes","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["crossbell.io/*"]},"name":"Notes","maintainers":["DIYgod"],"url":"crossbell.io/*","location":"notes/index.ts"}} />
+<Route namespace="crossbell" data={{"path":"/notes","categories":["social-media"],"example":"/crossbell/notes","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["crossbell.io/*"]}],"name":"Notes","maintainers":["DIYgod"],"url":"crossbell.io/*","location":"notes/index.ts"}} />
 
 ### Notes of source
 
-<Route namespace="crossbell" data={{"path":"/notes/source/:source","categories":["social-media"],"example":"/crossbell/notes/source/xlog","parameters":{"source":"N"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["crossbell.io/*"],"target":"/notes"},"name":"Notes of source","maintainers":["DIYgod"],"url":"crossbell.io/*","location":"notes/source.ts"}} />
+<Route namespace="crossbell" data={{"path":"/notes/source/:source","categories":["social-media"],"example":"/crossbell/notes/source/xlog","parameters":{"source":"N"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["crossbell.io/*"],"target":"/notes"}],"name":"Notes of source","maintainers":["DIYgod"],"url":"crossbell.io/*","location":"notes/source.ts"}} />
 
 ## Curius
 
 ### User
 
-<Route namespace="curius" data={{"path":"/links/:name","categories":["social-media"],"example":"/curius/links/yuu-yuu","parameters":{"name":"Username, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["curius.app/:name"]},"name":"User","maintainers":["Ovler-Young"],"location":"links.ts"}} />
+<Route namespace="curius" data={{"path":"/links/:name","categories":["social-media"],"example":"/curius/links/yuu-yuu","parameters":{"name":"Username, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["curius.app/:name"]}],"name":"User","maintainers":["Ovler-Young"],"location":"links.ts"}} />
 
 ## Daily.dev
 
 ### Most Discussed
 
-<Route namespace="daily" data={{"path":"/discussed","categories":["social-media"],"example":"/daily/discussed","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["daily.dev/popular"],"target":""},"name":"Most Discussed","maintainers":["Rjnishant530"],"url":"daily.dev/popular","location":"discussed.ts"}} />
+<Route namespace="daily" data={{"path":"/discussed","categories":["social-media"],"example":"/daily/discussed","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["daily.dev/popular"],"target":""}],"name":"Most Discussed","maintainers":["Rjnishant530"],"url":"daily.dev/popular","location":"discussed.ts"}} />
 
 ### Most upvoted
 
-<Route namespace="daily" data={{"path":"/upvoted","categories":["social-media"],"example":"/daily/upvoted","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["daily.dev/popular"],"target":""},"name":"Most upvoted","maintainers":["Rjnishant530"],"url":"daily.dev/popular","location":"upvoted.ts"}} />
+<Route namespace="daily" data={{"path":"/upvoted","categories":["social-media"],"example":"/daily/upvoted","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["daily.dev/popular"],"target":""}],"name":"Most upvoted","maintainers":["Rjnishant530"],"url":"daily.dev/popular","location":"upvoted.ts"}} />
 
 ## Discord
 
 ### Channel Messages
 
-<Route namespace="discord" data={{"path":"/channel/:channelId","categories":["social-media"],"example":"/discord/channel/950465850056536084","parameters":{"channelId":"Channel ID"},"features":{"requireConfig":[{"name":"DISCORD_AUTHORIZATION","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["discord.com/channels/:guildId/:channelId/:messageID","discord.com/channels/:guildId/:channelId"]},"name":"Channel Messages","maintainers":["TonyRL"],"location":"channel.ts"}} />
+<Route namespace="discord" data={{"path":"/channel/:channelId","categories":["social-media"],"example":"/discord/channel/950465850056536084","parameters":{"channelId":"Channel ID"},"features":{"requireConfig":[{"name":"DISCORD_AUTHORIZATION","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["discord.com/channels/:guildId/:channelId/:messageID","discord.com/channels/:guildId/:channelId"]}],"name":"Channel Messages","maintainers":["TonyRL"],"location":"channel.ts"}} />
 
 ## Fansly
 
 ### Hashtag
 
-<Route namespace="fansly" data={{"path":"/tag/:tag","categories":["social-media"],"example":"/fansly/tag/free","parameters":{"tag":"Hashtag"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["fansly.com/explore/tag/:tag"]},"name":"Hashtag","maintainers":["TonyRL"],"location":"tag.ts"}} />
+<Route namespace="fansly" data={{"path":"/tag/:tag","categories":["social-media"],"example":"/fansly/tag/free","parameters":{"tag":"Hashtag"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["fansly.com/explore/tag/:tag"]}],"name":"Hashtag","maintainers":["TonyRL"],"location":"tag.ts"}} />
 
 ### User Timeline
 
-<Route namespace="fansly" data={{"path":"/user/:username","categories":["social-media"],"example":"/fansly/user/AeriGoMoo","parameters":{"username":"User ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["fansly.com/:username/posts","fansly.com/:username/media"]},"name":"User Timeline","maintainers":["TonyRL"],"location":"post.ts"}} />
+<Route namespace="fansly" data={{"path":"/user/:username","categories":["social-media"],"example":"/fansly/user/AeriGoMoo","parameters":{"username":"User ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["fansly.com/:username/posts","fansly.com/:username/media"]}],"name":"User Timeline","maintainers":["TonyRL"],"location":"post.ts"}} />
 
 ## GETTR
 
 ### User timeline
 
-<Route namespace="gettr" data={{"path":"/user/:id","categories":["social-media"],"example":"/gettr/user/jasonmillerindc","parameters":{"id":"User id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["gettr.com/user/:id"]},"name":"User timeline","maintainers":["TonyRL"],"location":"user.ts"}} />
+<Route namespace="gettr" data={{"path":"/user/:id","categories":["social-media"],"example":"/gettr/user/jasonmillerindc","parameters":{"id":"User id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["gettr.com/user/:id"]}],"name":"User timeline","maintainers":["TonyRL"],"location":"user.ts"}} />
 
 ## Instagram
 
@@ -412,7 +412,7 @@ It's highly recommended to deploy with Redis cache enabled.
 
 ### User Profile - Picuki
 
-<Route namespace="picuki" data={{"path":"/profile/:id/:functionalFlag?","categories":["social-media"],"example":"/picuki/profile/stefaniejoosten","parameters":{"id":"Instagram id","functionalFlag":"functional flag, see the table below"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.picuki.com/profile/:id"],"target":"/profile/:id"},"name":"User Profile - Picuki","maintainers":["hoilc","Rongronggg9","devinmugen"],"description":"| functionalFlag | Video embedding                         | Fetching Instagram Stories |\n  | -------------- | --------------------------------------- | -------------------------- |\n  | 0              | off, only show video poster as an image | off                        |\n  | 1 (default)    | on                                      | off                        |\n  | 10             | on                                      | on                         |\n\n  :::warning\n  Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.\n  Though, every Story expires after 24 hours, so it may be not so serious.\n  :::","location":"profile.ts"}} />
+<Route namespace="picuki" data={{"path":"/profile/:id/:functionalFlag?","categories":["social-media"],"example":"/picuki/profile/stefaniejoosten","parameters":{"id":"Instagram id","functionalFlag":"functional flag, see the table below"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.picuki.com/profile/:id"],"target":"/profile/:id"}],"name":"User Profile - Picuki","maintainers":["hoilc","Rongronggg9","devinmugen"],"description":"| functionalFlag | Video embedding                         | Fetching Instagram Stories |\n  | -------------- | --------------------------------------- | -------------------------- |\n  | 0              | off, only show video poster as an image | off                        |\n  | 1 (default)    | on                                      | off                        |\n  | 10             | on                                      | on                         |\n\n  :::warning\n  Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.\n  Though, every Story expires after 24 hours, so it may be not so serious.\n  :::","location":"profile.ts"}} />
 
 | functionalFlag | Video embedding                         | Fetching Instagram Stories |
   | -------------- | --------------------------------------- | -------------------------- |
@@ -429,7 +429,7 @@ It's highly recommended to deploy with Redis cache enabled.
 
 ### 运动日记
 
-<Route namespace="keep" data={{"path":"/user/:id","categories":["social-media"],"example":"/keep/user/556b02c1ab59390afea671ea","parameters":{"id":"Keep 用户 id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["gotokeep.com/users/:id"]},"name":"运动日记","maintainers":["Dectinc","DIYgod"],"location":"user.ts"}} />
+<Route namespace="keep" data={{"path":"/user/:id","categories":["social-media"],"example":"/keep/user/556b02c1ab59390afea671ea","parameters":{"id":"Keep 用户 id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["gotokeep.com/users/:id"]}],"name":"运动日记","maintainers":["Dectinc","DIYgod"],"location":"user.ts"}} />
 
 ## Lemmy
 
@@ -492,7 +492,7 @@ However, you can still specify these route-specific configurations if you need t
 
 ### Following timeline
 
-<Route namespace="pixiv" data={{"path":"/user/illustfollows","categories":["social-media"],"example":"/pixiv/user/illustfollows","parameters":{},"features":{"requireConfig":[{"name":"PIXIV_REFRESHTOKEN","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.pixiv.net/bookmark_new_illust.php"]},"name":"Following timeline","maintainers":["ClarkeCheng"],"url":"www.pixiv.net/bookmark_new_illust.php","description":":::warning\n  Only for self-hosted\n  :::","location":"illustfollow.ts"}} />
+<Route namespace="pixiv" data={{"path":"/user/illustfollows","categories":["social-media"],"example":"/pixiv/user/illustfollows","parameters":{},"features":{"requireConfig":[{"name":"PIXIV_REFRESHTOKEN","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.pixiv.net/bookmark_new_illust.php"]}],"name":"Following timeline","maintainers":["ClarkeCheng"],"url":"www.pixiv.net/bookmark_new_illust.php","description":":::warning\n  Only for self-hosted\n  :::","location":"illustfollow.ts"}} />
 
 :::warning
   Only for self-hosted
@@ -520,29 +520,29 @@ However, you can still specify these route-specific configurations if you need t
 
 ### User Bookmark
 
-<Route namespace="pixiv" data={{"path":"/user/bookmarks/:id","categories":["social-media"],"example":"/pixiv/user/bookmarks/15288095","parameters":{"id":"user id, available in user's homepage URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.pixiv.net/users/:id/bookmarks/artworks"]},"name":"User Bookmark","maintainers":["EYHN"],"location":"bookmarks.ts"}} />
+<Route namespace="pixiv" data={{"path":"/user/bookmarks/:id","categories":["social-media"],"example":"/pixiv/user/bookmarks/15288095","parameters":{"id":"user id, available in user's homepage URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.pixiv.net/users/:id/bookmarks/artworks"]}],"name":"User Bookmark","maintainers":["EYHN"],"location":"bookmarks.ts"}} />
 
 ### User Novels
 
-<Route namespace="pixiv" data={{"path":"/user/novels/:id","categories":["social-media"],"example":"/pixiv/user/novels/27104704","parameters":{"id":"User id, available in user's homepage URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.pixiv.net/users/:id/novels"]},"name":"User Novels","maintainers":["TonyRL"],"location":"novels.ts"}} />
+<Route namespace="pixiv" data={{"path":"/user/novels/:id","categories":["social-media"],"example":"/pixiv/user/novels/27104704","parameters":{"id":"User id, available in user's homepage URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.pixiv.net/users/:id/novels"]}],"name":"User Novels","maintainers":["TonyRL"],"location":"novels.ts"}} />
 
 ### User Activity
 
-<Route namespace="pixiv" data={{"path":"/user/:id","categories":["social-media"],"example":"/pixiv/user/15288095","parameters":{"id":"user id, available in user's homepage URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.pixiv.net/users/:id"]},"name":"User Activity","maintainers":["DIYgod"],"location":"user.ts"}} />
+<Route namespace="pixiv" data={{"path":"/user/:id","categories":["social-media"],"example":"/pixiv/user/15288095","parameters":{"id":"user id, available in user's homepage URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.pixiv.net/users/:id"]}],"name":"User Activity","maintainers":["DIYgod"],"location":"user.ts"}} />
 
 ## Plurk
 
 ### Anonymous
 
-<Route namespace="plurk" data={{"path":"/anonymous","categories":["social-media"],"example":"/plurk/anonymous","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["plurk.com/anonymous"]},"name":"Anonymous","maintainers":["TonyRL"],"url":"plurk.com/anonymous","location":"anonymous.ts"}} />
+<Route namespace="plurk" data={{"path":"/anonymous","categories":["social-media"],"example":"/plurk/anonymous","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["plurk.com/anonymous"]}],"name":"Anonymous","maintainers":["TonyRL"],"url":"plurk.com/anonymous","location":"anonymous.ts"}} />
 
 ### Hotlinks
 
-<Route namespace="plurk" data={{"path":"/hotlinks","categories":["social-media"],"example":"/plurk/hotlinks","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["plurk.com/hotlinks"]},"name":"Hotlinks","maintainers":["TonyRL"],"url":"plurk.com/hotlinks","location":"hotlinks.ts"}} />
+<Route namespace="plurk" data={{"path":"/hotlinks","categories":["social-media"],"example":"/plurk/hotlinks","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["plurk.com/hotlinks"]}],"name":"Hotlinks","maintainers":["TonyRL"],"url":"plurk.com/hotlinks","location":"hotlinks.ts"}} />
 
 ### Plurk News
 
-<Route namespace="plurk" data={{"path":"/news/:lang?","categories":["social-media"],"example":"/plurk/news/:lang?","parameters":{"lang":"Language, see the table above, `en` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["plurk.com/news"],"target":"/news"},"name":"Plurk News","maintainers":["TonyRL"],"url":"plurk.com/news","location":"news.ts"}} />
+<Route namespace="plurk" data={{"path":"/news/:lang?","categories":["social-media"],"example":"/plurk/news/:lang?","parameters":{"lang":"Language, see the table above, `en` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["plurk.com/news"],"target":"/news"}],"name":"Plurk News","maintainers":["TonyRL"],"url":"plurk.com/news","location":"news.ts"}} />
 
 ### Search
 
@@ -562,7 +562,7 @@ However, you can still specify these route-specific configurations if you need t
 
 ### Topic
 
-<Route namespace="plurk" data={{"path":"/topic/:topic","categories":["social-media"],"example":"/plurk/topic/standwithukraine","parameters":{"topic":"Topic ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["plurk.com/topic/:topic"]},"name":"Topic","maintainers":["TonyRL"],"location":"topic.ts"}} />
+<Route namespace="plurk" data={{"path":"/topic/:topic","categories":["social-media"],"example":"/plurk/topic/standwithukraine","parameters":{"topic":"Topic ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["plurk.com/topic/:topic"]}],"name":"Topic","maintainers":["TonyRL"],"location":"topic.ts"}} />
 
 ### User
 
@@ -572,13 +572,13 @@ However, you can still specify these route-specific configurations if you need t
 
 ### User Threads
 
-<Route namespace="rattibha" data={{"path":"/user/:user","categories":["social-media"],"example":"/rattibha/user/elonmusk","parameters":{"user":"Twitter username, without @"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["rattibha.com/:user"]},"name":"User Threads","maintainers":["yshalsager"],"location":"user.ts"}} />
+<Route namespace="rattibha" data={{"path":"/user/:user","categories":["social-media"],"example":"/rattibha/user/elonmusk","parameters":{"user":"Twitter username, without @"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["rattibha.com/:user"]}],"name":"User Threads","maintainers":["yshalsager"],"location":"user.ts"}} />
 
 ## Telegram
 
 ### Channel
 
-<Route namespace="telegram" data={{"path":"/channel/:username/:routeParams?","categories":["social-media"],"example":"/telegram/channel/awesomeDIYgod/searchQuery=twitter","parameters":{"username":"channel username","routeParams":"extra parameters, see the table below"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["t.me/s/:username"],"target":"/channel/:username"},"name":"Channel","maintainers":["DIYgod","Rongronggg9"],"description":"| Key                   | Description                                                           | Accepts                                              | Defaults to       |\n  | --------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ----------------- |\n  | showLinkPreview       | Show the link preview from Telegram                                   | 0/1/true/false                                       | true              |\n  | showViaBot            | For messages sent via bot, show the bot                               | 0/1/true/false                                       | true              |\n  | showReplyTo           | For reply messages, show the target of the reply                      | 0/1/true/false                                       | true              |\n  | showFwdFrom           | For forwarded messages, show the forwarding source                    | 0/1/true/false                                       | true              |\n  | showFwdFromAuthor     | For forwarded messages, show the author of the forwarding source      | 0/1/true/false                                       | true              |\n  | showInlineButtons     | Show inline buttons                                                   | 0/1/true/false                                       | false             |\n  | showMediaTagInTitle   | Show media tags in the title                                          | 0/1/true/false                                       | true              |\n  | showMediaTagAsEmoji   | Show media tags as emoji                                              | 0/1/true/false                                       | true              |\n  | includeFwd            | Include forwarded messages                                            | 0/1/true/false                                       | true              |\n  | includeReply          | Include reply messages                                                | 0/1/true/false                                       | true              |\n  | includeServiceMsg     | Include service messages (e.g. message pinned, channel photo updated) | 0/1/true/false                                       | true              |\n  | includeUnsupportedMsg | Include messages unsupported by t.me                                  | 0/1/true/false                                       | false             |\n  | searchQuery           | search query                                                          | keywords; replace `#` by `%23` for hashtag searching | (search disabled) |\n\n  Specify different option values than default values can meet different needs, URL\n\n  ```\n  https://rsshub.app/telegram/channel/NewlearnerChannel/showLinkPreview=0&showViaBot=0&showReplyTo=0&showFwdFrom=0&showFwdFromAuthor=0&showInlineButtons=0&showMediaTagInTitle=1&showMediaTagAsEmoji=1&includeFwd=0&includeReply=1&includeServiceMsg=0&includeUnsupportedMsg=0\n  ```\n\n  generates an RSS without any link previews and annoying metadata, with emoji media tags in the title, without forwarded messages (but with reply messages), and without messages you don't care about (service messages and unsupported messages), for people who prefer pure subscriptions.\n\n  :::tip\n  For backward compatibility reasons, invalid `routeParams` will be treated as `searchQuery` .\n\n  Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting `https://t.me/s/:username`.\n  :::","location":"channel.ts"}} />
+<Route namespace="telegram" data={{"path":"/channel/:username/:routeParams?","categories":["social-media"],"example":"/telegram/channel/awesomeDIYgod/searchQuery=twitter","parameters":{"username":"channel username","routeParams":"extra parameters, see the table below"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["t.me/s/:username"],"target":"/channel/:username"}],"name":"Channel","maintainers":["DIYgod","Rongronggg9"],"description":"| Key                   | Description                                                           | Accepts                                              | Defaults to       |\n  | --------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ----------------- |\n  | showLinkPreview       | Show the link preview from Telegram                                   | 0/1/true/false                                       | true              |\n  | showViaBot            | For messages sent via bot, show the bot                               | 0/1/true/false                                       | true              |\n  | showReplyTo           | For reply messages, show the target of the reply                      | 0/1/true/false                                       | true              |\n  | showFwdFrom           | For forwarded messages, show the forwarding source                    | 0/1/true/false                                       | true              |\n  | showFwdFromAuthor     | For forwarded messages, show the author of the forwarding source      | 0/1/true/false                                       | true              |\n  | showInlineButtons     | Show inline buttons                                                   | 0/1/true/false                                       | false             |\n  | showMediaTagInTitle   | Show media tags in the title                                          | 0/1/true/false                                       | true              |\n  | showMediaTagAsEmoji   | Show media tags as emoji                                              | 0/1/true/false                                       | true              |\n  | includeFwd            | Include forwarded messages                                            | 0/1/true/false                                       | true              |\n  | includeReply          | Include reply messages                                                | 0/1/true/false                                       | true              |\n  | includeServiceMsg     | Include service messages (e.g. message pinned, channel photo updated) | 0/1/true/false                                       | true              |\n  | includeUnsupportedMsg | Include messages unsupported by t.me                                  | 0/1/true/false                                       | false             |\n  | searchQuery           | search query                                                          | keywords; replace `#` by `%23` for hashtag searching | (search disabled) |\n\n  Specify different option values than default values can meet different needs, URL\n\n  ```\n  https://rsshub.app/telegram/channel/NewlearnerChannel/showLinkPreview=0&showViaBot=0&showReplyTo=0&showFwdFrom=0&showFwdFromAuthor=0&showInlineButtons=0&showMediaTagInTitle=1&showMediaTagAsEmoji=1&includeFwd=0&includeReply=1&includeServiceMsg=0&includeUnsupportedMsg=0\n  ```\n\n  generates an RSS without any link previews and annoying metadata, with emoji media tags in the title, without forwarded messages (but with reply messages), and without messages you don't care about (service messages and unsupported messages), for people who prefer pure subscriptions.\n\n  :::tip\n  For backward compatibility reasons, invalid `routeParams` will be treated as `searchQuery` .\n\n  Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting `https://t.me/s/:username`.\n  :::","location":"channel.ts"}} />
 
 | Key                   | Description                                                           | Accepts                                              | Defaults to       |
   | --------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ----------------- |
@@ -616,7 +616,7 @@ However, you can still specify these route-specific configurations if you need t
 
 ### Telegram Blog
 
-<Route namespace="telegram" data={{"path":"/blog","categories":["social-media"],"example":"/telegram/blog","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["telegram.org/blog"]},"name":"Telegram Blog","maintainers":["fengkx"],"url":"telegram.org/blog","location":"blog.ts"}} />
+<Route namespace="telegram" data={{"path":"/blog","categories":["social-media"],"example":"/telegram/blog","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["telegram.org/blog"]}],"name":"Telegram Blog","maintainers":["fengkx"],"url":"telegram.org/blog","location":"blog.ts"}} />
 
 ## Threads
 
@@ -646,7 +646,7 @@ Specify options (in the format of query string) in parameter `routeParams` to co
 
 ### User
 
-<Route namespace="tiktok" data={{"path":"/user/:user/:iframe?","categories":["social-media"],"example":"/tiktok/user/@linustech/true","parameters":{"user":"User ID, including @","iframe":"Use the official iframe to embed the video, which allows you to view the video if the default option does not work. Default to `false`"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["tiktok.com/:user"],"target":"/user/:user"},"name":"User","maintainers":["TonyRL"],"location":"user.ts"}} />
+<Route namespace="tiktok" data={{"path":"/user/:user/:iframe?","categories":["social-media"],"example":"/tiktok/user/@linustech/true","parameters":{"user":"User ID, including @","iframe":"Use the official iframe to embed the video, which allows you to view the video if the default option does not work. Default to `false`"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["tiktok.com/:user"],"target":"/user/:user"}],"name":"User","maintainers":["TonyRL"],"location":"user.ts"}} />
 
 ## Twitter
 
@@ -695,7 +695,7 @@ generates
 
 ### Keyword
 
-<Route namespace="twitter" data={{"path":"/keyword/:keyword/:routeParams?","categories":["social-media"],"example":"/twitter/keyword/RSSHub","parameters":{"keyword":"keyword","routeParams":"extra parameters, see the table above"},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Keyword","maintainers":["DIYgod","yindaheng98","Rongronggg9"],"radar":{"source":["twitter.com/search"]},"location":"keyword.ts"}} />
+<Route namespace="twitter" data={{"path":"/keyword/:keyword/:routeParams?","categories":["social-media"],"example":"/twitter/keyword/RSSHub","parameters":{"keyword":"keyword","routeParams":"extra parameters, see the table above"},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Keyword","maintainers":["DIYgod","yindaheng98","Rongronggg9"],"radar":[{"source":["twitter.com/search"]}],"location":"keyword.ts"}} />
 
 ### List timeline
 
@@ -723,11 +723,11 @@ generates
 
 ### User media
 
-<Route namespace="twitter" data={{"path":"/media/:id/:routeParams?","categories":["social-media"],"example":"/twitter/media/DIYgod","parameters":{"id":"username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`","routeParams":"extra parameters, see the table above."},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User media","maintainers":["yindaheng98","Rongronggg9"],"radar":{"source":["twitter.com/:id/media"],"target":"/twitter/media/:id"},"location":"media.ts"}} />
+<Route namespace="twitter" data={{"path":"/media/:id/:routeParams?","categories":["social-media"],"example":"/twitter/media/DIYgod","parameters":{"id":"username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`","routeParams":"extra parameters, see the table above."},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User media","maintainers":["yindaheng98","Rongronggg9"],"radar":[{"source":["twitter.com/:id/media"],"target":"/media/:id"}],"location":"media.ts"}} />
 
 ### User timeline
 
-<Route namespace="twitter" data={{"path":"/user/:id/:routeParams?","categories":["social-media"],"example":"/twitter/user/DIYgod","parameters":{"id":"username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`","routeParams":"extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all."},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User timeline","maintainers":["DIYgod","yindaheng98","Rongronggg9"],"radar":{"source":["twitter.com/:id"],"target":"/twitter/user/:id"},"location":"user.ts"}} />
+<Route namespace="twitter" data={{"path":"/user/:id/:routeParams?","categories":["social-media"],"example":"/twitter/user/DIYgod","parameters":{"id":"username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`","routeParams":"extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all."},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User timeline","maintainers":["DIYgod","yindaheng98","Rongronggg9"],"radar":[{"source":["twitter.com/:id"],"target":"/user/:id"}],"location":"user.ts"}} />
 
 ## Vimeo
 
@@ -737,7 +737,7 @@ generates
 
 ### Channel
 
-<Route namespace="vimeo" data={{"path":"/channel/:channel","categories":["social-media"],"example":"/vimeo/channel/bestoftheyear","parameters":{"channel":"channel name can get from url like `bestoftheyear` in  [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) ."},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["vimeo.com/channels/:channel","vimeo.com/channels/:channel/videos","vimeo.com/channels/:channel/videos/:sort/:format"]},"name":"Channel","maintainers":["MisteryMonster"],"location":"channel.ts"}} />
+<Route namespace="vimeo" data={{"path":"/channel/:channel","categories":["social-media"],"example":"/vimeo/channel/bestoftheyear","parameters":{"channel":"channel name can get from url like `bestoftheyear` in  [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) ."},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["vimeo.com/channels/:channel","vimeo.com/channels/:channel/videos","vimeo.com/channels/:channel/videos/:sort/:format"]}],"name":"Channel","maintainers":["MisteryMonster"],"location":"channel.ts"}} />
 
 ### User Profile
 
@@ -751,7 +751,7 @@ generates
 
 ### Channel
 
-<Route namespace="youtube" data={{"path":"/channel/:id/:embed?","categories":["social-media"],"example":"/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ","parameters":{"id":"YouTube channel id","embed":"Default to embed the video, set to any value to disable embedding"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.youtube.com/channel/:id"],"target":"/channel/:id"},"name":"Channel","maintainers":["DIYgod"],"description":":::tip\nYouTube provides official RSS feeds for channels, for instance [https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ](https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ).\n:::","location":"channel.ts"}} />
+<Route namespace="youtube" data={{"path":"/channel/:id/:embed?","categories":["social-media"],"example":"/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ","parameters":{"id":"YouTube channel id","embed":"Default to embed the video, set to any value to disable embedding"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.youtube.com/channel/:id"],"target":"/channel/:id"}],"name":"Channel","maintainers":["DIYgod"],"description":":::tip\nYouTube provides official RSS feeds for channels, for instance [https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ](https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ).\n:::","location":"channel.ts"}} />
 
 :::tip
 YouTube provides official RSS feeds for channels, for instance [https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ](https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ).
@@ -815,17 +815,17 @@ Chart
 
 ### Subscriptions
 
-<Route namespace="youtube" data={{"path":"/subscriptions/:embed?","categories":["social-media"],"example":"/youtube/subscriptions","parameters":{"embed":"Default to embed the video, set to any value to disable embedding"},"features":{"requireConfig":[{"name":"YOUTUBE_KEY","description":""},{"name":"YOUTUBE_CLIENT_ID","description":""},{"name":"YOUTUBE_CLIENT_SECRET","description":""},{"name":"YOUTUBE_REFRESH_TOKEN","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.youtube.com/feed/subscriptions","www.youtube.com/feed/channels"],"target":"/subscriptions"},"name":"Subscriptions","maintainers":["TonyRL"],"url":"www.youtube.com/feed/subscriptions","location":"subscriptions.ts"}} />
+<Route namespace="youtube" data={{"path":"/subscriptions/:embed?","categories":["social-media"],"example":"/youtube/subscriptions","parameters":{"embed":"Default to embed the video, set to any value to disable embedding"},"features":{"requireConfig":[{"name":"YOUTUBE_KEY","description":""},{"name":"YOUTUBE_CLIENT_ID","description":""},{"name":"YOUTUBE_CLIENT_SECRET","description":""},{"name":"YOUTUBE_REFRESH_TOKEN","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.youtube.com/feed/subscriptions","www.youtube.com/feed/channels"],"target":"/subscriptions"}],"name":"Subscriptions","maintainers":["TonyRL"],"url":"www.youtube.com/feed/subscriptions","location":"subscriptions.ts"}} />
 
 ### User
 
-<Route namespace="youtube" data={{"path":"/user/:username/:embed?","categories":["social-media"],"example":"/youtube/user/JFlaMusic","parameters":{"username":"YouTuber id","embed":"Default to embed the video, set to any value to disable embedding"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.youtube.com/user/:username"],"target":"/user/:username"},"name":"User","maintainers":["DIYgod"],"location":"user.ts"}} />
+<Route namespace="youtube" data={{"path":"/user/:username/:embed?","categories":["social-media"],"example":"/youtube/user/JFlaMusic","parameters":{"username":"YouTuber id","embed":"Default to embed the video, set to any value to disable embedding"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.youtube.com/user/:username"],"target":"/user/:username"}],"name":"User","maintainers":["DIYgod"],"location":"user.ts"}} />
 
 ## 唱吧
 
 ### 用户
 
-<Route namespace="changba" data={{"path":"/:userid","categories":["social-media"],"example":"/changba/skp6hhF59n48R-UpqO3izw","parameters":{"userid":"用户ID, 可在对应分享页面的 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":true,"supportScihub":false},"radar":{"source":["changba.com/s/:userid"]},"name":"用户","maintainers":[],"location":"user.ts"}} />
+<Route namespace="changba" data={{"path":"/:userid","categories":["social-media"],"example":"/changba/skp6hhF59n48R-UpqO3izw","parameters":{"userid":"用户ID, 可在对应分享页面的 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":true,"supportScihub":false},"radar":[{"source":["changba.com/s/:userid"]}],"name":"用户","maintainers":[],"location":"user.ts"}} />
 
 ## 抖音直播
 
@@ -845,11 +845,11 @@ Chart
 
 ### 标签
 
-<Route namespace="douyin" data={{"path":"/hashtag/:cid/:routeParams?","categories":["social-media"],"example":"/douyin/hashtag/1592824105719812","parameters":{"cid":"标签 ID，可在标签页面 URL 中找到","routeParams":"额外参数，query string 格式，请参阅上面的表格"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["douyin.com/hashtag/:cid"],"target":"/hashtag/:cid"},"name":"标签","maintainers":["TonyRL"],"location":"hashtag.ts"}} />
+<Route namespace="douyin" data={{"path":"/hashtag/:cid/:routeParams?","categories":["social-media"],"example":"/douyin/hashtag/1592824105719812","parameters":{"cid":"标签 ID，可在标签页面 URL 中找到","routeParams":"额外参数，query string 格式，请参阅上面的表格"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["douyin.com/hashtag/:cid"],"target":"/hashtag/:cid"}],"name":"标签","maintainers":["TonyRL"],"location":"hashtag.ts"}} />
 
 ### 博主
 
-<Route namespace="douyin" data={{"path":"/user/:uid/:routeParams?","categories":["social-media"],"example":"/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao","parameters":{"uid":"uid，可在用户页面 URL 中找到","routeParams":"额外参数，query string 格式，请参阅上面的表格"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["douyin.com/user/:uid"],"target":"/user/:uid"},"name":"博主","maintainers":["Max-Tortoise","Rongronggg9"],"location":"user.ts"}} />
+<Route namespace="douyin" data={{"path":"/user/:uid/:routeParams?","categories":["social-media"],"example":"/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao","parameters":{"uid":"uid，可在用户页面 URL 中找到","routeParams":"额外参数，query string 格式，请参阅上面的表格"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["douyin.com/user/:uid"],"target":"/user/:uid"}],"name":"博主","maintainers":["Max-Tortoise","Rongronggg9"],"location":"user.ts"}} />
 
 ## 豆瓣
 
@@ -885,11 +885,11 @@ Chart
 
 ### 豆瓣读书论坛
 
-<Route namespace="douban" data={{"path":"/:id/discussion","categories":["social-media"],"example":"/douban/36328704/discussion","parameters":{"id":"书本id;默认论坛文章使用\"按回应时间排序\",仅第一页文章"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["book.douban.com/:id/discussion"]},"name":"豆瓣读书论坛","maintainers":["nightmare-mio"],"location":"other/discussion.ts"}} />
+<Route namespace="douban" data={{"path":"/:id/discussion","categories":["social-media"],"example":"/douban/36328704/discussion","parameters":{"id":"书本id;默认论坛文章使用\"按回应时间排序\",仅第一页文章"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["book.douban.com/:id/discussion"]}],"name":"豆瓣读书论坛","maintainers":["nightmare-mio"],"location":"other/discussion.ts"}} />
 
 ### 豆瓣小组
 
-<Route namespace="douban" data={{"path":"/group/:groupid/:type?","categories":["social-media"],"example":"/douban/group/648102","parameters":{"groupid":"豆瓣小组的 id","type":"缺省 最新，essence 最热，elite 精华"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.douban.com/group/:groupid"],"target":"/group/:groupid"},"name":"豆瓣小组","maintainers":["DIYgod"],"location":"other/group.ts"}} />
+<Route namespace="douban" data={{"path":"/group/:groupid/:type?","categories":["social-media"],"example":"/douban/group/648102","parameters":{"groupid":"豆瓣小组的 id","type":"缺省 最新，essence 最热，elite 精华"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.douban.com/group/:groupid"],"target":"/group/:groupid"}],"name":"豆瓣小组","maintainers":["DIYgod"],"location":"other/group.ts"}} />
 
 ### 豆瓣招聘
 
@@ -901,7 +901,7 @@ Chart
 
 ### 豆瓣榜单与集合
 
-<Route namespace="douban" data={{"path":"/list/:type?/:routeParams?","categories":["social-media"],"example":"/douban/list/subject_real_time_hotest","parameters":{"type":"榜单类型，见下表。默认为实时热门书影音","routeParams":"额外参数；请参阅以下说明和表格"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.douban.com/subject_collection/:type"],"target":"/list/:type"},"name":"豆瓣榜单与集合","maintainers":["5upernova-heng","honue"],"description":"| 榜单 / 集合        | 路由                          |\n  | ------------------ | ----------------------------- |\n  | 实时热门书影音     | subject_real_time_hotest   |\n  | 影院热映           | movie_showing                |\n  | 实时热门电影       | movie_real_time_hotest     |\n  | 实时热门电视       | tv_real_time_hotest        |\n  | 一周口碑电影榜     | movie_weekly_best           |\n  | 华语口碑剧集榜     | tv_chinese_best_weekly     |\n  | 全球口碑剧集榜     | tv_global_best_weekly      |\n  | 国内口碑综艺榜     | show_chinese_best_weekly   |\n  | 国外口碑综艺榜     | show_global_best_weekly    |\n  | 热播新剧国产剧     | tv_domestic                  |\n  | 热播新剧欧美剧     | tv_american                  |\n  | 热播新剧日剧       | tv_japanese                  |\n  | 热播新剧韩剧       | tv_korean                    |\n  | 热播新剧动画       | tv_animation                 |\n  | 虚构类小说热门榜   | book_fiction_hot_weekly    |\n  | 非虚构类小说热门榜 | book_nonfiction_hot_weekly |\n  | 热门单曲榜         | music_single                 |\n  | 华语新碟榜         | music_chinese                |\n  | ...                | ...                           |\n\n  | 额外参数 | 含义                   | 接受的值 | 默认值 |\n  | -------- | ---------------------- | -------- | ------ |\n  | playable | 仅看有可播放片源的影片 | 0/1      | 0      |\n  | score    | 筛选评分               | 0-10     | 0      |\n\n  用例：`/douban/list/tv_korean/playable=1&score=8`\n\n  > 上面的榜单 / 集合并没有列举完整。\n  >\n  > 如何找到榜单对应的路由参数：\n  > 在豆瓣手机 APP 中，对应地榜单页面右上角，点击分享链接。链接路径 `subject_collection` 后的路径就是路由参数 `type`。\n  > 如：小说热门榜的分享链接为：`https://m.douban.com/subject_collection/ECDIHUN4A`，其对应本 RSS 路由的 `type` 为 `ECDIHUN4A`，对应的订阅链接路由：[`/douban/list/ECDIHUN4A`](https://rsshub.app/douban/list/ECDIHUN4A)","location":"other/list.ts"}} />
+<Route namespace="douban" data={{"path":"/list/:type?/:routeParams?","categories":["social-media"],"example":"/douban/list/subject_real_time_hotest","parameters":{"type":"榜单类型，见下表。默认为实时热门书影音","routeParams":"额外参数；请参阅以下说明和表格"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.douban.com/subject_collection/:type"],"target":"/list/:type"}],"name":"豆瓣榜单与集合","maintainers":["5upernova-heng","honue"],"description":"| 榜单 / 集合        | 路由                          |\n  | ------------------ | ----------------------------- |\n  | 实时热门书影音     | subject_real_time_hotest   |\n  | 影院热映           | movie_showing                |\n  | 实时热门电影       | movie_real_time_hotest     |\n  | 实时热门电视       | tv_real_time_hotest        |\n  | 一周口碑电影榜     | movie_weekly_best           |\n  | 华语口碑剧集榜     | tv_chinese_best_weekly     |\n  | 全球口碑剧集榜     | tv_global_best_weekly      |\n  | 国内口碑综艺榜     | show_chinese_best_weekly   |\n  | 国外口碑综艺榜     | show_global_best_weekly    |\n  | 热播新剧国产剧     | tv_domestic                  |\n  | 热播新剧欧美剧     | tv_american                  |\n  | 热播新剧日剧       | tv_japanese                  |\n  | 热播新剧韩剧       | tv_korean                    |\n  | 热播新剧动画       | tv_animation                 |\n  | 虚构类小说热门榜   | book_fiction_hot_weekly    |\n  | 非虚构类小说热门榜 | book_nonfiction_hot_weekly |\n  | 热门单曲榜         | music_single                 |\n  | 华语新碟榜         | music_chinese                |\n  | ...                | ...                           |\n\n  | 额外参数 | 含义                   | 接受的值 | 默认值 |\n  | -------- | ---------------------- | -------- | ------ |\n  | playable | 仅看有可播放片源的影片 | 0/1      | 0      |\n  | score    | 筛选评分               | 0-10     | 0      |\n\n  用例：`/douban/list/tv_korean/playable=1&score=8`\n\n  > 上面的榜单 / 集合并没有列举完整。\n  >\n  > 如何找到榜单对应的路由参数：\n  > 在豆瓣手机 APP 中，对应地榜单页面右上角，点击分享链接。链接路径 `subject_collection` 后的路径就是路由参数 `type`。\n  > 如：小说热门榜的分享链接为：`https://m.douban.com/subject_collection/ECDIHUN4A`，其对应本 RSS 路由的 `type` 为 `ECDIHUN4A`，对应的订阅链接路由：[`/douban/list/ECDIHUN4A`](https://rsshub.app/douban/list/ECDIHUN4A)","location":"other/list.ts"}} />
 
 | 榜单 / 集合        | 路由                          |
   | ------------------ | ----------------------------- |
@@ -1043,7 +1043,7 @@ Chart
 
 ### 出版專題
 
-<Route namespace="vocus" data={{"path":"/publication/:id","categories":["social-media"],"example":"/vocus/publication/bass","parameters":{"id":"出版專題 id，可在出版專題主页的 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["vocus.cc/:id/home","vocus.cc/:id/introduce"]},"name":"出版專題","maintainers":["Maecenas"],"location":"publication.ts"}} />
+<Route namespace="vocus" data={{"path":"/publication/:id","categories":["social-media"],"example":"/vocus/publication/bass","parameters":{"id":"出版專題 id，可在出版專題主页的 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["vocus.cc/:id/home","vocus.cc/:id/introduce"]}],"name":"出版專題","maintainers":["Maecenas"],"location":"publication.ts"}} />
 
 ### 用户个人文章
 
@@ -1053,29 +1053,29 @@ Chart
 
 ### 圈子 - 纯文字
 
-<Route namespace="jike" data={{"path":"/topic/text/:id","categories":["social-media"],"example":"/jike/topic/text/553870e8e4b0cafb0a1bef68","parameters":{"id":"圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["web.okjike.com/topic/:id"]},"name":"圈子 - 纯文字","maintainers":["HenryQW"],"location":"topic-text.ts"}} />
+<Route namespace="jike" data={{"path":"/topic/text/:id","categories":["social-media"],"example":"/jike/topic/text/553870e8e4b0cafb0a1bef68","parameters":{"id":"圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["web.okjike.com/topic/:id"]}],"name":"圈子 - 纯文字","maintainers":["HenryQW"],"location":"topic-text.ts"}} />
 
 ### 圈子
 
-<Route namespace="jike" data={{"path":"/topic/:id/:showUid?","categories":["social-media"],"example":"/jike/topic/556688fae4b00c57d9dd46ee","parameters":{"id":"圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到","showUid":"是否在内容中显示用户信息，设置为 1 则开启"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["web.okjike.com/topic/:id"],"target":"/topic/:id"},"name":"圈子","maintainers":["DIYgod","prnake"],"location":"topic.ts"}} />
+<Route namespace="jike" data={{"path":"/topic/:id/:showUid?","categories":["social-media"],"example":"/jike/topic/556688fae4b00c57d9dd46ee","parameters":{"id":"圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到","showUid":"是否在内容中显示用户信息，设置为 1 则开启"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["web.okjike.com/topic/:id"],"target":"/topic/:id"}],"name":"圈子","maintainers":["DIYgod","prnake"],"location":"topic.ts"}} />
 
 ### 用户动态
 
-<Route namespace="jike" data={{"path":"/user/:id","categories":["social-media"],"example":"/jike/user/3EE02BC9-C5B3-4209-8750-4ED1EE0F67BB","parameters":{"id":"用户 id, 可在即刻分享出来的单条动态页点击用户头像进入个人主页，然后在个人主页的 URL 中找到，或者在单条动态页使用 RSSHub Radar 插件"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["web.okjike.com/u/:uid"],"target":"/user/:uid"},"name":"用户动态","maintainers":["DIYgod","prnake"],"location":"user.ts"}} />
+<Route namespace="jike" data={{"path":"/user/:id","categories":["social-media"],"example":"/jike/user/3EE02BC9-C5B3-4209-8750-4ED1EE0F67BB","parameters":{"id":"用户 id, 可在即刻分享出来的单条动态页点击用户头像进入个人主页，然后在个人主页的 URL 中找到，或者在单条动态页使用 RSSHub Radar 插件"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["web.okjike.com/u/:uid"],"target":"/user/:uid"}],"name":"用户动态","maintainers":["DIYgod","prnake"],"location":"user.ts"}} />
 
 ## 简书
 
 ### 首页
 
-<Route namespace="jianshu" data={{"path":"/home","categories":["social-media"],"example":"/jianshu/home","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.jianshu.com/"]},"name":"首页","maintainers":["DIYgod","HenryQW","JimenezLi"],"url":"www.jianshu.com/","location":"home.ts"}} />
+<Route namespace="jianshu" data={{"path":"/home","categories":["social-media"],"example":"/jianshu/home","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.jianshu.com/"]}],"name":"首页","maintainers":["DIYgod","HenryQW","JimenezLi"],"url":"www.jianshu.com/","location":"home.ts"}} />
 
 ### 专题
 
-<Route namespace="jianshu" data={{"path":"/collection/:id","categories":["social-media"],"example":"/jianshu/collection/xYuZYD","parameters":{"id":"专题 id, 可在专题页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.jianshu.com/c/:id"]},"name":"专题","maintainers":["DIYgod","HenryQW","JimenezLi"],"location":"collection.ts"}} />
+<Route namespace="jianshu" data={{"path":"/collection/:id","categories":["social-media"],"example":"/jianshu/collection/xYuZYD","parameters":{"id":"专题 id, 可在专题页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.jianshu.com/c/:id"]}],"name":"专题","maintainers":["DIYgod","HenryQW","JimenezLi"],"location":"collection.ts"}} />
 
 ### 作者
 
-<Route namespace="jianshu" data={{"path":"/user/:id","categories":["social-media"],"example":"/jianshu/user/yZq3ZV","parameters":{"id":"作者 id, 可在作者主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.jianshu.com/u/:id"]},"name":"作者","maintainers":["DIYgod","HenryQW","JimenezLi"],"location":"user.ts"}} />
+<Route namespace="jianshu" data={{"path":"/user/:id","categories":["social-media"],"example":"/jianshu/user/yZq3ZV","parameters":{"id":"作者 id, 可在作者主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.jianshu.com/u/:id"]}],"name":"作者","maintainers":["DIYgod","HenryQW","JimenezLi"],"location":"user.ts"}} />
 
 ## 酷安
 
@@ -1184,7 +1184,7 @@ Chart
 
 ### 博主
 
-<Route namespace="weibo" data={{"path":"/user/:uid/:routeParams?","categories":["social-media"],"example":"/weibo/user/1195230310","parameters":{"uid":"用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取","routeParams":"额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["m.weibo.cn/u/:uid","m.weibo.cn/profile/:uid"],"target":"/user/:uid"},"name":"博主","maintainers":["DIYgod","iplusx","Rongronggg9"],"description":":::warning\n  部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证。如需要订阅该部分博主，可配置 Cookie 后订阅。\n\n  未提供 Cookie 的情况下偶尔会触发反爬限制，提供 Cookie 可缓解该情况。\n\n  微博用户 Cookie 的配置可参照部署文档\n  :::","location":"user.ts"}} />
+<Route namespace="weibo" data={{"path":"/user/:uid/:routeParams?","categories":["social-media"],"example":"/weibo/user/1195230310","parameters":{"uid":"用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取","routeParams":"额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["m.weibo.cn/u/:uid","m.weibo.cn/profile/:uid"],"target":"/user/:uid"}],"name":"博主","maintainers":["DIYgod","iplusx","Rongronggg9"],"description":":::warning\n  部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证。如需要订阅该部分博主，可配置 Cookie 后订阅。\n\n  未提供 Cookie 的情况下偶尔会触发反爬限制，提供 Cookie 可缓解该情况。\n\n  微博用户 Cookie 的配置可参照部署文档\n  :::","location":"user.ts"}} />
 
 :::warning
   部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证。如需要订阅该部分博主，可配置 Cookie 后订阅。
@@ -1196,7 +1196,7 @@ Chart
 
 ### 超话
 
-<Route namespace="weibo" data={{"path":"/super_index/:id/:type?/:routeParams?","categories":["social-media"],"example":"/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time","parameters":{"id":"超话ID","type":"类型：见下表","routeParams":"额外参数；请参阅上面的说明和表格"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["weibo.com/p/:id/super_index"],"target":"/super_index/:id"},"name":"超话","maintainers":["zengxs","Rongronggg9"],"description":"| type       | 备注             |\n| ---------- | ---------------- |\n| soul       | 精华             |\n| video      | 视频（暂不支持） |\n| album      | 相册（暂不支持） |\n| hot_sort  | 热门             |\n| sort_time | 最新帖子         |\n| feed       | 最新评论         |","location":"super-index.ts"}} />
+<Route namespace="weibo" data={{"path":"/super_index/:id/:type?/:routeParams?","categories":["social-media"],"example":"/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time","parameters":{"id":"超话ID","type":"类型：见下表","routeParams":"额外参数；请参阅上面的说明和表格"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["weibo.com/p/:id/super_index"],"target":"/super_index/:id"}],"name":"超话","maintainers":["zengxs","Rongronggg9"],"description":"| type       | 备注             |\n| ---------- | ---------------- |\n| soul       | 精华             |\n| video      | 视频（暂不支持） |\n| album      | 相册（暂不支持） |\n| hot_sort  | 热门             |\n| sort_time | 最新帖子         |\n| feed       | 最新评论         |","location":"super-index.ts"}} />
 
 | type       | 备注             |
 | ---------- | ---------------- |
@@ -1223,7 +1223,7 @@ Chart
 
 ### 热搜榜
 
-<Route namespace="weibo" data={{"path":"/search/hot/:fulltext?","categories":["social-media"],"example":"/weibo/search/hot","parameters":{"fulltext":"N"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["s.weibo.com/top/summary"]},"name":"热搜榜","maintainers":["xyqfer","shinemoon"],"url":"s.weibo.com/top/summary","description":"-   使用`/weibo/search/hot`可以获取热搜条目列表；\n-   使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；\n-   使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）\n-   使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）","location":"search/hot.ts"}} />
+<Route namespace="weibo" data={{"path":"/search/hot/:fulltext?","categories":["social-media"],"example":"/weibo/search/hot","parameters":{"fulltext":"N"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["s.weibo.com/top/summary"]}],"name":"热搜榜","maintainers":["xyqfer","shinemoon"],"url":"s.weibo.com/top/summary","description":"-   使用`/weibo/search/hot`可以获取热搜条目列表；\n-   使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；\n-   使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）\n-   使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）","location":"search/hot.ts"}} />
 
 -   使用`/weibo/search/hot`可以获取热搜条目列表；
 -   使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
@@ -1232,7 +1232,7 @@ Chart
 
 ### 用户
 
-<Route namespace="weibo" data={{"path":"/oasis/user/:userid","categories":["social-media"],"example":"/weibo/oasis/user/1990895721","parameters":{"userid":"用户 id, 可在用户主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["m.weibo.cn/u/:uid","m.weibo.cn/profile/:uid"],"target":"/user/:uid"},"name":"用户","maintainers":["kt286"],"location":"oasis/user.ts"}} />
+<Route namespace="weibo" data={{"path":"/oasis/user/:userid","categories":["social-media"],"example":"/weibo/oasis/user/1990895721","parameters":{"userid":"用户 id, 可在用户主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["m.weibo.cn/u/:uid","m.weibo.cn/profile/:uid"],"target":"/user/:uid"}],"name":"用户","maintainers":["kt286"],"location":"oasis/user.ts"}} />
 
 ### 自定义分组
 
@@ -1248,7 +1248,7 @@ Chart
 
 ### 最新关注时间线
 
-<Route namespace="weibo" data={{"path":"/friends/:routeParams?","categories":["social-media"],"example":"/weibo/friends","parameters":{"routeParams":"额外参数；请参阅上面的说明和表格"},"features":{"requireConfig":[{"name":"WEIBO_COOKIES","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["weibo.com/"],"target":"/friends"},"name":"最新关注时间线","maintainers":["CaoMeiYouRen"],"url":"weibo.com/","description":":::warning\n  此方案必须使用用户`Cookie`进行抓取\n\n  因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知\n\n  微博用户 Cookie 的配置可参照部署文档\n  :::","location":"friends.ts"}} />
+<Route namespace="weibo" data={{"path":"/friends/:routeParams?","categories":["social-media"],"example":"/weibo/friends","parameters":{"routeParams":"额外参数；请参阅上面的说明和表格"},"features":{"requireConfig":[{"name":"WEIBO_COOKIES","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["weibo.com/"],"target":"/friends"}],"name":"最新关注时间线","maintainers":["CaoMeiYouRen"],"url":"weibo.com/","description":":::warning\n  此方案必须使用用户`Cookie`进行抓取\n\n  因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知\n\n  微博用户 Cookie 的配置可参照部署文档\n  :::","location":"friends.ts"}} />
 
 :::warning
   此方案必须使用用户`Cookie`进行抓取
@@ -1262,7 +1262,7 @@ Chart
 
 ### 专辑
 
-<Route namespace="xiaohongshu" data={{"path":"/board/:board_id","categories":["social-media"],"example":"/xiaohongshu/board/5db6f79200000000020032df","parameters":{"board_id":"专辑 ID"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["xiaohongshu.com/board/:board_id"]},"name":"专辑","maintainers":["lotosbin"],"location":"board.ts"}} />
+<Route namespace="xiaohongshu" data={{"path":"/board/:board_id","categories":["social-media"],"example":"/xiaohongshu/board/5db6f79200000000020032df","parameters":{"board_id":"专辑 ID"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["xiaohongshu.com/board/:board_id"]}],"name":"专辑","maintainers":["lotosbin"],"location":"board.ts"}} />
 
 ## 新榜
 
@@ -1287,11 +1287,11 @@ Chart
 
 ### Unknown
 
-<Route namespace="zhihu" data={{"path":"/xhu/topic/:topicId","categories":["social-media"],"example":"/zhihu/xhu/topic/19566035","parameters":{"topicId":"话题ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/topic/:topicId/:type"]},"name":"Unknown","maintainers":["JimenezLi"],"location":"xhu/topic.ts"}} />
+<Route namespace="zhihu" data={{"path":"/xhu/topic/:topicId","categories":["social-media"],"example":"/zhihu/xhu/topic/19566035","parameters":{"topicId":"话题ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/topic/:topicId/:type"]}],"name":"Unknown","maintainers":["JimenezLi"],"location":"xhu/topic.ts"}} />
 
 ### xhu - 用户动态
 
-<Route namespace="zhihu" data={{"path":"/xhu/people/activities/:hexId","categories":["social-media"],"example":"/zhihu/xhu/people/activities/246e6cf44e94cefbf4b959cb5042bc91","parameters":{"hexId":"用户的 16 进制 id，获取方式见下方说明"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/people/:id"],"target":"/people/activities/:id"},"name":"xhu - 用户动态","maintainers":["JimenezLi"],"description":"[xhu](https://github.com/REToys/xhu)\n\n  :::tip\n  用户的 16 进制 id 获取方式：\n\n  1.  可以通过 RSSHub Radar 扩展获取；\n  2.  或者在用户主页打开 F12 控制台，执行以下代码：`console.log(/\"id\":\"([0-9a-f]*?)\",\"urlToken\"/.exec(document.getElementById('js-initialData').innerHTML)[1]);` 即可获取用户的 16 进制 id。\n  :::","location":"xhu/activities.ts"}} />
+<Route namespace="zhihu" data={{"path":"/xhu/people/activities/:hexId","categories":["social-media"],"example":"/zhihu/xhu/people/activities/246e6cf44e94cefbf4b959cb5042bc91","parameters":{"hexId":"用户的 16 进制 id，获取方式见下方说明"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/people/:id"],"target":"/people/activities/:id"}],"name":"xhu - 用户动态","maintainers":["JimenezLi"],"description":"[xhu](https://github.com/REToys/xhu)\n\n  :::tip\n  用户的 16 进制 id 获取方式：\n\n  1.  可以通过 RSSHub Radar 扩展获取；\n  2.  或者在用户主页打开 F12 控制台，执行以下代码：`console.log(/\"id\":\"([0-9a-f]*?)\",\"urlToken\"/.exec(document.getElementById('js-initialData').innerHTML)[1]);` 即可获取用户的 16 进制 id。\n  :::","location":"xhu/activities.ts"}} />
 
 [xhu](https://github.com/REToys/xhu)
 
@@ -1304,11 +1304,11 @@ Chart
 
 ### xhu - 用户回答
 
-<Route namespace="zhihu" data={{"path":"/xhu/people/answers/:hexId","categories":["social-media"],"example":"/zhihu/xhu/people/answers/246e6cf44e94cefbf4b959cb5042bc91","parameters":{"hexId":"用户的 16 进制 id，获取方式同 [xhu - 用户动态](#zhi-hu-xhu-yong-hu-dong-tai)"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/people/:id/answers"],"target":"/people/answers/:id"},"name":"xhu - 用户回答","maintainers":["JimenezLi"],"location":"xhu/answers.ts"}} />
+<Route namespace="zhihu" data={{"path":"/xhu/people/answers/:hexId","categories":["social-media"],"example":"/zhihu/xhu/people/answers/246e6cf44e94cefbf4b959cb5042bc91","parameters":{"hexId":"用户的 16 进制 id，获取方式同 [xhu - 用户动态](#zhi-hu-xhu-yong-hu-dong-tai)"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/people/:id/answers"],"target":"/people/answers/:id"}],"name":"xhu - 用户回答","maintainers":["JimenezLi"],"location":"xhu/answers.ts"}} />
 
 ### xhu - 收藏夹
 
-<Route namespace="zhihu" data={{"path":"/xhu/collection/:id","categories":["social-media"],"example":"/zhihu/xhu/collection/26444956","parameters":{"id":"收藏夹 id, 可在收藏夹页面 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/collection/:id"]},"name":"xhu - 收藏夹","maintainers":["JimenezLi"],"location":"xhu/collection.ts"}} />
+<Route namespace="zhihu" data={{"path":"/xhu/collection/:id","categories":["social-media"],"example":"/zhihu/xhu/collection/26444956","parameters":{"id":"收藏夹 id, 可在收藏夹页面 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/collection/:id"]}],"name":"xhu - 收藏夹","maintainers":["JimenezLi"],"location":"xhu/collection.ts"}} />
 
 ### xhu - 用户文章
 
@@ -1316,35 +1316,35 @@ Chart
 
 ### xhu - 问题
 
-<Route namespace="zhihu" data={{"path":"/xhu/question/:questionId/:sortBy?","categories":["social-media"],"example":"/zhihu/xhu/question/264051433","parameters":{"questionId":"问题 id","sortBy":"排序方式：`default`, `created`, `updated`。默认为 `default`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/question/:questionId"],"target":"/xhu/question/:questionId"},"name":"xhu - 问题","maintainers":["JimenezLi"],"location":"xhu/question.ts"}} />
+<Route namespace="zhihu" data={{"path":"/xhu/question/:questionId/:sortBy?","categories":["social-media"],"example":"/zhihu/xhu/question/264051433","parameters":{"questionId":"问题 id","sortBy":"排序方式：`default`, `created`, `updated`。默认为 `default`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/question/:questionId"],"target":"/xhu/question/:questionId"}],"name":"xhu - 问题","maintainers":["JimenezLi"],"location":"xhu/question.ts"}} />
 
 ### xhu- 专栏
 
-<Route namespace="zhihu" data={{"path":"/xhu/zhuanlan/:id","categories":["social-media"],"example":"/zhihu/xhu/zhuanlan/githubdaily","parameters":{"id":"专栏 id, 可在专栏主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zhuanlan.zhihu.com/:id"],"target":"/zhuanlan/:id"},"name":"xhu- 专栏","maintainers":["JimenezLi"],"location":"xhu/zhuanlan.ts"}} />
+<Route namespace="zhihu" data={{"path":"/xhu/zhuanlan/:id","categories":["social-media"],"example":"/zhihu/xhu/zhuanlan/githubdaily","parameters":{"id":"专栏 id, 可在专栏主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["zhuanlan.zhihu.com/:id"],"target":"/zhuanlan/:id"}],"name":"xhu- 专栏","maintainers":["JimenezLi"],"location":"xhu/zhuanlan.ts"}} />
 
 ### 话题
 
-<Route namespace="zhihu" data={{"path":"/topic/:topicId/:isTop?","categories":["social-media"],"example":"/zhihu/topic/19828946","parameters":{"topicId":"话题 id","isTop":"仅精华，默认为否，其他值为是"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/topic/:topicId/:type"],"target":"/topic/:topicId"},"name":"话题","maintainers":["xyqfer"],"location":"topic.ts"}} />
+<Route namespace="zhihu" data={{"path":"/topic/:topicId/:isTop?","categories":["social-media"],"example":"/zhihu/topic/19828946","parameters":{"topicId":"话题 id","isTop":"仅精华，默认为否，其他值为是"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/topic/:topicId/:type"],"target":"/topic/:topicId"}],"name":"话题","maintainers":["xyqfer"],"location":"topic.ts"}} />
 
 ### 收藏夹
 
-<Route namespace="zhihu" data={{"path":"/collection/:id/:getAll?","categories":["social-media"],"example":"/zhihu/collection/26444956","parameters":{"id":"收藏夹 id，可在收藏夹页面 URL 中找到","getAll":"获取全部收藏内容，任意值为打开"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/collection/:id"],"target":"/collection/:id"},"name":"收藏夹","maintainers":["huruji","Colin-XKL","Fatpandac"],"location":"collection.ts"}} />
+<Route namespace="zhihu" data={{"path":"/collection/:id/:getAll?","categories":["social-media"],"example":"/zhihu/collection/26444956","parameters":{"id":"收藏夹 id，可在收藏夹页面 URL 中找到","getAll":"获取全部收藏内容，任意值为打开"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/collection/:id"],"target":"/collection/:id"}],"name":"收藏夹","maintainers":["huruji","Colin-XKL","Fatpandac"],"location":"collection.ts"}} />
 
 ### 问题
 
-<Route namespace="zhihu" data={{"path":"/question/:questionId/:sortBy?","categories":["social-media"],"example":"/zhihu/question/59895982","parameters":{"questionId":"问题 id","sortBy":"排序方式：`default`, `created`, `updated`。默认为 `default`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/question/:questionId"],"target":"/question/:questionId"},"name":"问题","maintainers":[],"location":"question.ts"}} />
+<Route namespace="zhihu" data={{"path":"/question/:questionId/:sortBy?","categories":["social-media"],"example":"/zhihu/question/59895982","parameters":{"questionId":"问题 id","sortBy":"排序方式：`default`, `created`, `updated`。默认为 `default`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/question/:questionId"],"target":"/question/:questionId"}],"name":"问题","maintainers":[],"location":"question.ts"}} />
 
 ### 用户动态
 
-<Route namespace="zhihu" data={{"path":"/people/activities/:id","categories":["social-media"],"example":"/zhihu/people/activities/diygod","parameters":{"id":"作者 id，可在用户主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/people/:id"]},"name":"用户动态","maintainers":["DIYgod"],"location":"activities.ts"}} />
+<Route namespace="zhihu" data={{"path":"/people/activities/:id","categories":["social-media"],"example":"/zhihu/people/activities/diygod","parameters":{"id":"作者 id，可在用户主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/people/:id"]}],"name":"用户动态","maintainers":["DIYgod"],"location":"activities.ts"}} />
 
 ### 用户回答
 
-<Route namespace="zhihu" data={{"path":"/people/answers/:id","categories":["social-media"],"example":"/zhihu/people/answers/diygod","parameters":{"id":"作者 id，可在用户主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/people/:id/answers"]},"name":"用户回答","maintainers":["DIYgod","prnake"],"location":"answers.ts"}} />
+<Route namespace="zhihu" data={{"path":"/people/answers/:id","categories":["social-media"],"example":"/zhihu/people/answers/diygod","parameters":{"id":"作者 id，可在用户主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/people/:id/answers"]}],"name":"用户回答","maintainers":["DIYgod","prnake"],"location":"answers.ts"}} />
 
 ### 用户文章
 
-<Route namespace="zhihu" data={{"path":"/posts/:usertype/:id","categories":["social-media"],"example":"/zhihu/posts/people/frederchen","parameters":{"usertype":"作者 id，可在用户主页 URL 中找到","id":"用户类型usertype，参考用户主页的URL。目前有两种，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/:usertype/:id/posts"]},"name":"用户文章","maintainers":["whtsky","Colin-XKL"],"description":"| 普通用户 | 机构用户 |\n| -------- | -------- |\n| people   | org      |","location":"posts.ts"}} />
+<Route namespace="zhihu" data={{"path":"/posts/:usertype/:id","categories":["social-media"],"example":"/zhihu/posts/people/frederchen","parameters":{"usertype":"作者 id，可在用户主页 URL 中找到","id":"用户类型usertype，参考用户主页的URL。目前有两种，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/:usertype/:id/posts"]}],"name":"用户文章","maintainers":["whtsky","Colin-XKL"],"description":"| 普通用户 | 机构用户 |\n| -------- | -------- |\n| people   | org      |","location":"posts.ts"}} />
 
 | 普通用户 | 机构用户 |
 | -------- | -------- |
@@ -1360,15 +1360,15 @@ Chart
 
 ### 用户想法
 
-<Route namespace="zhihu" data={{"path":"/people/pins/:id","categories":["social-media"],"example":"/zhihu/people/pins/kan-dan-45","parameters":{"id":"作者 id，可在用户主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/people/:id/pins"]},"name":"用户想法","maintainers":["xyqfer"],"location":"pin/people.ts"}} />
+<Route namespace="zhihu" data={{"path":"/people/pins/:id","categories":["social-media"],"example":"/zhihu/people/pins/kan-dan-45","parameters":{"id":"作者 id，可在用户主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/people/:id/pins"]}],"name":"用户想法","maintainers":["xyqfer"],"location":"pin/people.ts"}} />
 
 ### 知乎日报 - 合集
 
-<Route namespace="zhihu" data={{"path":"/daily/section/:sectionId","categories":["social-media"],"example":"/zhihu/daily/section/2","parameters":{"sectionId":"合集 id，可在 https://news-at.zhihu.com/api/7/sections 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["daily.zhihu.com/*"],"target":"/daily"},"name":"知乎日报 - 合集","maintainers":["ccbikai"],"url":"daily.zhihu.com/*","location":"daily-section.ts"}} />
+<Route namespace="zhihu" data={{"path":"/daily/section/:sectionId","categories":["social-media"],"example":"/zhihu/daily/section/2","parameters":{"sectionId":"合集 id，可在 https://news-at.zhihu.com/api/7/sections 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["daily.zhihu.com/*"],"target":"/daily"}],"name":"知乎日报 - 合集","maintainers":["ccbikai"],"url":"daily.zhihu.com/*","location":"daily-section.ts"}} />
 
 ### 知乎日报
 
-<Route namespace="zhihu" data={{"path":"/daily","categories":["social-media"],"example":"/zhihu/daily","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["daily.zhihu.com/*"]},"name":"知乎日报","maintainers":["DHPO"],"url":"daily.zhihu.com/*","location":"daily.ts"}} />
+<Route namespace="zhihu" data={{"path":"/daily","categories":["social-media"],"example":"/zhihu/daily","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["daily.zhihu.com/*"]}],"name":"知乎日报","maintainers":["DHPO"],"url":"daily.zhihu.com/*","location":"daily.ts"}} />
 
 ### 知乎分类热榜
 
@@ -1380,11 +1380,11 @@ Chart
 
 ### 知乎热榜
 
-<Route namespace="zhihu" data={{"path":"/hotlist","categories":["social-media"],"example":"/zhihu/hotlist","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/hot"]},"name":"知乎热榜","maintainers":["DIYgod"],"url":"www.zhihu.com/hot","location":"hotlist.ts"}} />
+<Route namespace="zhihu" data={{"path":"/hotlist","categories":["social-media"],"example":"/zhihu/hotlist","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/hot"]}],"name":"知乎热榜","maintainers":["DIYgod"],"url":"www.zhihu.com/hot","location":"hotlist.ts"}} />
 
 ### 知乎书店 - 知乎周刊
 
-<Route namespace="zhihu" data={{"path":"/weekly","categories":["social-media"],"example":"/zhihu/weekly","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/pub/weekly"]},"name":"知乎书店 - 知乎周刊","maintainers":["LogicJake"],"url":"www.zhihu.com/pub/weekly","location":"weekly.ts"}} />
+<Route namespace="zhihu" data={{"path":"/weekly","categories":["social-media"],"example":"/zhihu/weekly","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/pub/weekly"]}],"name":"知乎书店 - 知乎周刊","maintainers":["LogicJake"],"url":"www.zhihu.com/pub/weekly","location":"weekly.ts"}} />
 
 ### 知乎书店 - 新书
 
@@ -1392,13 +1392,13 @@ Chart
 
 ### 知乎想法 - 24 小时新闻汇总
 
-<Route namespace="zhihu" data={{"path":"/pin/daily","categories":["social-media"],"example":"/zhihu/pin/daily","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["daily.zhihu.com/*"],"target":"/daily"},"name":"知乎想法 - 24 小时新闻汇总","maintainers":["xyqfer"],"url":"daily.zhihu.com/*","location":"pin/daily.ts"}} />
+<Route namespace="zhihu" data={{"path":"/pin/daily","categories":["social-media"],"example":"/zhihu/pin/daily","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["daily.zhihu.com/*"],"target":"/daily"}],"name":"知乎想法 - 24 小时新闻汇总","maintainers":["xyqfer"],"url":"daily.zhihu.com/*","location":"pin/daily.ts"}} />
 
 ### 知乎想法热榜
 
-<Route namespace="zhihu" data={{"path":"/pin/hotlist","categories":["social-media"],"example":"/zhihu/pin/hotlist","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.zhihu.com/zhihu/bookstore/newest"]},"name":"知乎想法热榜","maintainers":["xyqfer"],"url":"www.zhihu.com/zhihu/bookstore/newest","location":"pin/hotlist.ts"}} />
+<Route namespace="zhihu" data={{"path":"/pin/hotlist","categories":["social-media"],"example":"/zhihu/pin/hotlist","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/zhihu/bookstore/newest"]}],"name":"知乎想法热榜","maintainers":["xyqfer"],"url":"www.zhihu.com/zhihu/bookstore/newest","location":"pin/hotlist.ts"}} />
 
 ### 专栏
 
-<Route namespace="zhihu" data={{"path":"/zhuanlan/:id","categories":["social-media"],"example":"/zhihu/zhuanlan/googledevelopers","parameters":{"id":"专栏 id，可在专栏主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zhuanlan.zhihu.com/:id"]},"name":"专栏","maintainers":["DIYgod"],"location":"zhuanlan.ts"}} />
+<Route namespace="zhihu" data={{"path":"/zhuanlan/:id","categories":["social-media"],"example":"/zhihu/zhuanlan/googledevelopers","parameters":{"id":"专栏 id，可在专栏主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["zhuanlan.zhihu.com/:id"]}],"name":"专栏","maintainers":["DIYgod"],"location":"zhuanlan.ts"}} />
 
