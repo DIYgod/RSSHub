@@ -40,7 +40,7 @@
           "/163/html/newsapp/todayFocus/index.html",
           "/"
         ],
-        "target": "/today"
+        "target": "/163/today"
       }
     ],
     "vip.open": [
@@ -64,7 +64,7 @@
           "/",
           "/mormhweb/1/:id/index_fl.html"
         ],
-        "target": "/zxdt/:id"
+        "target": "/12306/zxdt/:id"
       }
     ]
   },
@@ -101,7 +101,7 @@
         "source": [
           "/"
         ],
-        "target": "/:category?/:time?/:order?/:keyword?"
+        "target": "/18comic/:category?/:time?/:order?/:keyword?"
       }
     ]
   },
@@ -114,7 +114,7 @@
         "source": [
           "/:path"
         ],
-        "target": "/:path"
+        "target": "/1lou/:path"
       }
     ]
   },
@@ -175,7 +175,7 @@
         "source": [
           "/"
         ],
-        "target": "/offer"
+        "target": "/1point3acres/offer"
       }
     ]
   },
@@ -189,7 +189,7 @@
           "/hot-list/:category",
           "/"
         ],
-        "target": "/hot-list/:category"
+        "target": "/36kr/hot-list/:category"
       }
     ]
   },
@@ -292,7 +292,7 @@
         "source": [
           "/global/n/w/symposium/:id"
         ],
-        "target": "/symposium/:id"
+        "target": "/52hrtt/symposium/:id"
       }
     ]
   },
@@ -320,7 +320,7 @@
           "/:id/index.php",
           "/"
         ],
-        "target": "/:id?"
+        "target": "/6park/:id?"
       },
       {
         "title": "Unknown",
@@ -329,7 +329,7 @@
           "/:id/index.php",
           "/"
         ],
-        "target": "/:id?"
+        "target": "/6park/:id?"
       }
     ]
   },
@@ -471,7 +471,7 @@
         "source": [
           "/:category*"
         ],
-        "target": "/:category"
+        "target": "/abc/:category"
       }
     ]
   },
@@ -484,7 +484,7 @@
         "source": [
           "/category/:catehory"
         ],
-        "target": "/:category"
+        "target": "/abmedia/:category"
       },
       {
         "title": "首页最新新闻",
@@ -526,7 +526,7 @@
         "source": [
           "/u/:id"
         ],
-        "target": "/user/video/:id"
+        "target": "/acfun/user/video/:id"
       }
     ]
   },
@@ -623,7 +623,7 @@
         "source": [
           "/posts/:category"
         ],
-        "target": "/:category"
+        "target": "/agirls/:category"
       },
       {
         "title": "当前精选主题列表",
@@ -654,7 +654,7 @@
           "/blog/:category",
           "/"
         ],
-        "target": "/:category"
+        "target": "/agora0/:category"
       }
     ]
   },
@@ -741,7 +741,7 @@
           "/cn/information",
           "/"
         ],
-        "target": "/information"
+        "target": "/aliresearch/information"
       }
     ]
   },
@@ -816,7 +816,7 @@
         "source": [
           "/platform/:name"
         ],
-        "target": "/platform/:name"
+        "target": "/alternativeto/platform/:name"
       },
       {
         "title": "Software Alternatives",
@@ -824,7 +824,7 @@
         "source": [
           "/software/:name"
         ],
-        "target": "/software/:name"
+        "target": "/alternativeto/software/:name"
       }
     ]
   },
@@ -865,7 +865,7 @@
         "source": [
           "/hub/:topic"
         ],
-        "target": "/topics/:topic"
+        "target": "/apnews/topics/:topic"
       }
     ]
   },
@@ -893,7 +893,7 @@
           "/:country/app/:appSlug/:id",
           "/:country/app/:id"
         ],
-        "target": "/apps/update/:country/:id"
+        "target": "/apple/apps/update/:country/:id"
       },
       {
         "title": "Price Drop",
@@ -911,7 +911,7 @@
         "source": [
           "/:country/service-programs"
         ],
-        "target": "/exchange_repair/:country"
+        "target": "/apple/exchange_repair/:country"
       }
     ]
   },
@@ -925,7 +925,7 @@
           "/:category",
           "/"
         ],
-        "target": "/:category"
+        "target": "/appleinsider/:category"
       }
     ]
   },
@@ -1141,7 +1141,7 @@
         "source": [
           "/tag/:tag"
         ],
-        "target": "/tag/:tag"
+        "target": "/bandcamp/tag/:tag"
       },
       {
         "title": "Weekly",
@@ -1162,7 +1162,7 @@
         "source": [
           "/"
         ],
-        "target": "/moe"
+        "target": "/bangumi/moe"
       }
     ]
   },
@@ -1228,7 +1228,7 @@
         "source": [
           "/subject/:id"
         ],
-        "target": "/tv/subject/:id"
+        "target": "/bangumi/tv/subject/:id"
       },
       {
         "title": "用户日志",
@@ -1270,7 +1270,7 @@
         "source": [
           "/"
         ],
-        "target": "/:category?"
+        "target": "/barronschina/:category?"
       }
     ]
   },
@@ -1344,7 +1344,7 @@
         "source": [
           "/:uid"
         ],
-        "target": "/user/coin/:uid"
+        "target": "/bilibili/user/coin/:uid"
       },
       {
         "title": "UP 主动态",
@@ -1352,7 +1352,7 @@
         "source": [
           "/:uid"
         ],
-        "target": "/user/dynamic/:uid"
+        "target": "/bilibili/user/dynamic/:uid"
       },
       {
         "title": "UP 主粉丝",
@@ -1360,7 +1360,7 @@
         "source": [
           "/:uid"
         ],
-        "target": "/user/followers/:uid"
+        "target": "/bilibili/user/followers/:uid"
       },
       {
         "title": "UP 主关注用户",
@@ -1368,7 +1368,7 @@
         "source": [
           "/:uid"
         ],
-        "target": "/user/followings/:uid"
+        "target": "/bilibili/user/followings/:uid"
       },
       {
         "title": "UP 主点赞视频",
@@ -1376,7 +1376,7 @@
         "source": [
           "/:uid"
         ],
-        "target": "/user/like/:uid"
+        "target": "/bilibili/user/like/:uid"
       },
       {
         "title": "用户追番列表",
@@ -1384,7 +1384,7 @@
         "source": [
           "/:uid"
         ],
-        "target": "/user/bangumi/:uid"
+        "target": "/bilibili/user/bangumi/:uid"
       },
       {
         "title": "UP 主默认收藏夹",
@@ -1393,7 +1393,7 @@
           "/:uid",
           "/:uid/favlist"
         ],
-        "target": "/user/fav/:uid"
+        "target": "/bilibili/user/fav/:uid"
       },
       {
         "title": "UP 主投稿",
@@ -1401,7 +1401,7 @@
         "source": [
           "/:uid"
         ],
-        "target": "/user/video/:uid"
+        "target": "/bilibili/user/video/:uid"
       }
     ],
     "www": [
@@ -1475,7 +1475,7 @@
         "source": [
           "/:channel"
         ],
-        "target": "/:channel"
+        "target": "/biodiscover/:channel"
       }
     ]
   },
@@ -1497,7 +1497,7 @@
           "/journals/:journal",
           "/"
         ],
-        "target": "/journals/:journal"
+        "target": "/bioone/journals/:journal"
       }
     ]
   },
@@ -1652,7 +1652,7 @@
           "/indexAction!to_index.action",
           "/"
         ],
-        "target": "/keti/:id"
+        "target": "/bjsk/keti/:id"
       }
     ]
   },
@@ -1680,7 +1680,7 @@
           "/*/authors/:id/:slug",
           "/authors/:id/:slug"
         ],
-        "target": "/authors/:id/:slug"
+        "target": "/bloomberg/authors/:id/:slug"
       }
     ]
   },
@@ -1730,7 +1730,7 @@
         "source": [
           "/:category/index.html"
         ],
-        "target": "/bs/:category"
+        "target": "/bnu/bs/:category"
       }
     ],
     "dwxgb": [
@@ -1750,7 +1750,7 @@
         "source": [
           "/:category/index.htm"
         ],
-        "target": "/lib/:category"
+        "target": "/bnu/lib/:category"
       }
     ]
   },
@@ -1764,7 +1764,7 @@
           "/sourcedb/whpj",
           "/"
         ],
-        "target": "/whpj"
+        "target": "/boc/whpj"
       }
     ]
   },
@@ -2153,7 +2153,7 @@
         "source": [
           "/news"
         ],
-        "target": "/topics"
+        "target": "/cbc/topics"
       }
     ]
   },
@@ -2194,7 +2194,7 @@
           "/:category",
           "/"
         ],
-        "target": "/news/:category"
+        "target": "/ccf/news/:category"
       }
     ],
     "tfbd": [
@@ -2299,7 +2299,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/:category"
+        "target": "/cctv/:category"
       }
     ],
     "photo": [
@@ -2570,7 +2570,7 @@
         "source": [
           "/"
         ],
-        "target": "/whpj"
+        "target": "/cib/whpj"
       }
     ]
   },
@@ -2626,7 +2626,7 @@
           "/telegraph",
           "/"
         ],
-        "target": "/telegraph"
+        "target": "/cls/telegraph"
       }
     ]
   },
@@ -2665,7 +2665,7 @@
         "source": [
           "/id/:id/device/rss/rss.html"
         ],
-        "target": "/rss/:id"
+        "target": "/cnbc/rss/:id"
       }
     ]
   },
@@ -2767,7 +2767,7 @@
           "/yjxx",
           "/"
         ],
-        "target": "/yjxx"
+        "target": "/cneb/yjxx"
       }
     ]
   },
@@ -2833,7 +2833,7 @@
         "source": [
           "/recent-actions"
         ],
-        "target": "/recent-actions"
+        "target": "/codeforces/recent-actions"
       }
     ]
   },
@@ -2949,7 +2949,7 @@
         "source": [
           "/book/:id/*"
         ],
-        "target": "/:id"
+        "target": "/creative-comic/:id"
       }
     ]
   },
@@ -2962,7 +2962,7 @@
         "source": [
           "/*"
         ],
-        "target": "/notes"
+        "target": "/crossbell/notes"
       },
       {
         "title": "Notes",
@@ -2978,7 +2978,7 @@
         "source": [
           "/*"
         ],
-        "target": "/notes"
+        "target": "/crossbell/notes"
       }
     ]
   },
@@ -3104,7 +3104,7 @@
           "/channel/:id",
           "/"
         ],
-        "target": "/:id"
+        "target": "/cyzone/:id"
       },
       {
         "title": "Unknown",
@@ -3113,7 +3113,7 @@
           "/channel/:id",
           "/"
         ],
-        "target": "/:id"
+        "target": "/cyzone/:id"
       },
       {
         "title": "标签",
@@ -3211,7 +3211,7 @@
           "/:category",
           "/:category/*"
         ],
-        "target": "/:category"
+        "target": "/dayanzai/:category"
       }
     ]
   },
@@ -3237,7 +3237,7 @@
         "source": [
           "/:type/reviews.php"
         ],
-        "target": "/reviews/:type"
+        "target": "/dcfever/reviews/:type"
       }
     ]
   },
@@ -3250,7 +3250,7 @@
         "source": [
           "/category/:category/"
         ],
-        "target": "/category/:category"
+        "target": "/ddosi/category/:category"
       },
       {
         "title": "Unknown",
@@ -3379,7 +3379,7 @@
         "source": [
           "/news"
         ],
-        "target": "/news/:cate"
+        "target": "/diandong/news/:cate"
       }
     ]
   },
@@ -3459,7 +3459,7 @@
         "source": [
           "/articles/:category"
         ],
-        "target": "/:category"
+        "target": "/dlnews/:category"
       }
     ]
   },
@@ -3486,7 +3486,7 @@
         "source": [
           "/"
         ],
-        "target": "/news"
+        "target": "/dmzj/news"
       }
     ]
   },
@@ -3560,7 +3560,7 @@
         "source": [
           "/home/:id"
         ],
-        "target": "/top_news/:id"
+        "target": "/dongqiudi/top_news/:id"
       }
     ]
   },
@@ -3597,7 +3597,7 @@
         "source": [
           "/group/:groupid"
         ],
-        "target": "/group/:groupid"
+        "target": "/douban/group/:groupid"
       },
       {
         "title": "豆瓣榜单与集合",
@@ -3605,7 +3605,7 @@
         "source": [
           "/subject_collection/:type"
         ],
-        "target": "/list/:type"
+        "target": "/douban/list/:type"
       }
     ]
   },
@@ -3618,7 +3618,7 @@
         "source": [
           "/hashtag/:cid"
         ],
-        "target": "/hashtag/:cid"
+        "target": "/douyin/hashtag/:cid"
       },
       {
         "title": "博主",
@@ -3626,7 +3626,7 @@
         "source": [
           "/user/:uid"
         ],
-        "target": "/user/:uid"
+        "target": "/douyin/user/:uid"
       }
     ],
     "live": [
@@ -3652,7 +3652,7 @@
           "/group/newall/:id",
           "/"
         ],
-        "target": "/group/:id"
+        "target": "/douyu/group/:id"
       },
       {
         "title": "鱼吧跟帖",
@@ -3685,7 +3685,7 @@
         "source": [
           "/"
         ],
-        "target": "/popular"
+        "target": "/dribbble/popular"
       },
       {
         "title": "User (or team)",
@@ -3706,7 +3706,7 @@
         "source": [
           "/insighttopic/:id"
         ],
-        "target": "/datainsight/:id"
+        "target": "/dtcj/datainsight/:id"
       }
     ]
   },
@@ -3746,7 +3746,7 @@
         "source": [
           "/blog"
         ],
-        "target": "/blog"
+        "target": "/eagle/blog"
       }
     ]
   },
@@ -3782,7 +3782,7 @@
         "source": [
           "/"
         ],
-        "target": "/24"
+        "target": "/eastday/24"
       }
     ],
     "www": [
@@ -3829,7 +3829,7 @@
           "/contest/",
           "/"
         ],
-        "target": "/acm/contest/"
+        "target": "/ecnu/acm/contest/"
       }
     ]
   },
@@ -3878,7 +3878,7 @@
         "source": [
           "/"
         ],
-        "target": "/global-business-review"
+        "target": "/economist/global-business-review"
       }
     ]
   },
@@ -3929,7 +3929,7 @@
         "source": [
           "/:channel"
         ],
-        "target": "/:channel"
+        "target": "/ekantipur/:channel"
       }
     ]
   },
@@ -3943,7 +3943,7 @@
           "/:params",
           "/"
         ],
-        "target": "/:params"
+        "target": "/elasticsearch-cn/:params"
       }
     ]
   },
@@ -3970,7 +3970,7 @@
         "source": [
           "/journal/:journal/*"
         ],
-        "target": "/:journal"
+        "target": "/elsevier/:journal"
       },
       {
         "title": "Unknown",
@@ -3978,7 +3978,7 @@
         "source": [
           "/journal/:journal/*"
         ],
-        "target": "/:journal"
+        "target": "/elsevier/:journal"
       },
       {
         "title": "Unknown",
@@ -3986,7 +3986,7 @@
         "source": [
           "/journal/:journal/*"
         ],
-        "target": "/:journal"
+        "target": "/elsevier/:journal"
       },
       {
         "title": "Unknown",
@@ -3994,7 +3994,7 @@
         "source": [
           "/journal/:journal/*"
         ],
-        "target": "/:journal"
+        "target": "/elsevier/:journal"
       }
     ],
     ".": [
@@ -4018,7 +4018,7 @@
         "source": [
           "/:locale/free-games"
         ],
-        "target": "/freegames/:locale"
+        "target": "/epicgames/freegames/:locale"
       }
     ]
   },
@@ -4092,7 +4092,7 @@
         "source": [
           "/exclusive"
         ],
-        "target": "/exclusive"
+        "target": "/farmatters/exclusive"
       },
       {
         "title": "Exclusive",
@@ -4100,7 +4100,7 @@
         "source": [
           "/exclusive"
         ],
-        "target": "/exclusive"
+        "target": "/farmatters/exclusive"
       },
       {
         "title": "Exclusive",
@@ -4108,7 +4108,7 @@
         "source": [
           "/exclusive"
         ],
-        "target": "/exclusive"
+        "target": "/farmatters/exclusive"
       },
       {
         "title": "Exclusive",
@@ -4116,7 +4116,7 @@
         "source": [
           "/exclusive"
         ],
-        "target": "/exclusive"
+        "target": "/farmatters/exclusive"
       }
     ]
   },
@@ -4162,7 +4162,7 @@
           "/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates",
           "/"
         ],
-        "target": "/cdrh/:titleOnly"
+        "target": "/fda/cdrh/:titleOnly"
       }
     ]
   },
@@ -4176,7 +4176,7 @@
           "/forum/photo/:id",
           "/forum/:id"
         ],
-        "target": "/forum/:id"
+        "target": "/feng/forum/:id"
       }
     ]
   },
@@ -4189,7 +4189,7 @@
         "source": [
           "/web8/index.html"
         ],
-        "target": "/zh"
+        "target": "/ff14/zh"
       },
       {
         "title": "最终幻想 14 国服",
@@ -4197,7 +4197,7 @@
         "source": [
           "/web8/index.html"
         ],
-        "target": "/zh"
+        "target": "/ff14/zh"
       }
     ]
   },
@@ -4211,7 +4211,7 @@
           "/manhua/:id",
           "/:id"
         ],
-        "target": "/manhua/:id"
+        "target": "/fffdm/manhua/:id"
       }
     ]
   },
@@ -4232,7 +4232,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/:category"
+        "target": "/finology/:category"
       },
       {
         "title": "Category",
@@ -4539,7 +4539,7 @@
           "/:lang/archive.php",
           "/archive.php"
         ],
-        "target": "/archive/:lang"
+        "target": "/furstar/archive/:lang"
       },
       {
         "title": "画师列表",
@@ -4547,7 +4547,7 @@
         "source": [
           "/"
         ],
-        "target": "/artists"
+        "target": "/furstar/artists"
       },
       {
         "title": "最新售卖角色列表",
@@ -4556,7 +4556,7 @@
           "/:lang",
           "/"
         ],
-        "target": "/characters/:lang"
+        "target": "/furstar/characters/:lang"
       }
     ]
   },
@@ -4608,7 +4608,7 @@
         "source": [
           "/"
         ],
-        "target": "/new_anime"
+        "target": "/gamer/new_anime"
       }
     ]
   },
@@ -4652,7 +4652,7 @@
         "source": [
           "/categories/:category"
         ],
-        "target": "/radios/:category"
+        "target": "/gcores/radios/:category"
       },
       {
         "title": "标签",
@@ -4661,7 +4661,7 @@
           "/categories/:tag",
           "/"
         ],
-        "target": "/tag/:tag"
+        "target": "/gcores/tag/:tag"
       }
     ]
   },
@@ -4674,7 +4674,7 @@
         "source": [
           "/seeyon"
         ],
-        "target": "/oa_news/"
+        "target": "/gdut/oa_news/"
       }
     ]
   },
@@ -4687,7 +4687,7 @@
         "source": [
           "/"
         ],
-        "target": "/hot-article"
+        "target": "/gelonghui/hot-article"
       },
       {
         "title": "实时快讯",
@@ -4833,20 +4833,12 @@
         "target": "/github/branches/:user/:repo"
       },
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Issue / Pull Request comments",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/:user/:repo/:type"
         ],
-        "target": "/comments/:user/:repo"
-      },
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/:user/:repo/:type"
-        ],
-        "target": "/comments/:user/:repo"
+        "target": "/github/comments/:user/:repo"
       },
       {
         "title": "Repo Contributors",
@@ -4855,7 +4847,7 @@
           "/:user/:repo/graphs/contributors",
           "/:user/:repo"
         ],
-        "target": "/contributors/:user/:repo"
+        "target": "/github/contributors/:user/:repo"
       },
       {
         "title": "Unknown",
@@ -4863,7 +4855,7 @@
         "source": [
           "/:user/:repo/blob/:branch/*filepath"
         ],
-        "target": "/file/:user/:repo/:branch/:filepath"
+        "target": "/github/file/:user/:repo/:branch/:filepath"
       },
       {
         "title": "User Followers",
@@ -4881,7 +4873,7 @@
           "/:user/:repo/issues/:id",
           "/:user/:repo"
         ],
-        "target": "/issue/:user/:repo"
+        "target": "/github/issue/:user/:repo"
       },
       {
         "title": "Notifications",
@@ -4899,7 +4891,7 @@
           "/:user/:repo/pulls/:id",
           "/:user/:repo"
         ],
-        "target": "/pull/:user/:repo"
+        "target": "/github/pull/:user/:repo"
       },
       {
         "title": "Repo Pulse",
@@ -4949,7 +4941,7 @@
         "source": [
           "/trending"
         ],
-        "target": "/trending/:since"
+        "target": "/github/trending/:since"
       },
       {
         "title": "Wiki History",
@@ -4960,7 +4952,7 @@
           "/:user/:repo/wiki/_history",
           "/:user/:repo/wiki"
         ],
-        "target": "/wiki/:user/:repo/:page"
+        "target": "/github/wiki/:user/:repo/:page"
       }
     ],
     "gist": [
@@ -5071,7 +5063,7 @@
           "/ghsite/:urlPath/index.html",
           "/ghsite/:urlPath"
         ],
-        "target": "/beijing/bjedu/gh/:urlPath"
+        "target": "/gov/beijing/bjedu/gh/:urlPath"
       }
     ]
   },
@@ -5097,7 +5089,7 @@
         "source": [
           "/HDJL/"
         ],
-        "target": "/caac/cjwt"
+        "target": "/gov/caac/cjwt"
       }
     ]
   },
@@ -5157,7 +5149,7 @@
         "source": [
           "/"
         ],
-        "target": "/customs/list"
+        "target": "/gov/customs/list"
       }
     ]
   },
@@ -5217,7 +5209,7 @@
         "source": [
           "/ywdt/:category"
         ],
-        "target": "/mee/ywdt/:category"
+        "target": "/gov/mee/ywdt/:category"
       }
     ]
   },
@@ -5230,7 +5222,7 @@
         "source": [
           "/gk/sgcc/:category"
         ],
-        "target": "/mem/gk/sgcc/:category"
+        "target": "/gov/mem/gk/sgcc/:category"
       }
     ]
   },
@@ -5264,7 +5256,7 @@
         "source": [
           "/"
         ],
-        "target": "/moa/:suburl"
+        "target": "/gov/moa/:suburl"
       }
     ]
   },
@@ -5383,7 +5375,7 @@
         "source": [
           "/"
         ],
-        "target": "/shanghai/wgj"
+        "target": "/gov/shanghai/wgj"
       }
     ],
     "wsjkw": [
@@ -5439,7 +5431,7 @@
         "source": [
           "/*"
         ],
-        "target": "/sichuan/deyang/mztoday"
+        "target": "/gov/sichuan/deyang/mztoday"
       }
     ]
   },
@@ -5504,7 +5496,7 @@
           "/zjgwy/website/queryDetail.htm",
           "/zjgwy/website/queryMore.htm"
         ],
-        "target": "/zhejiang/gwy"
+        "target": "/gov/zhejiang/gwy"
       }
     ]
   },
@@ -5517,7 +5509,7 @@
         "source": [
           "/"
         ],
-        "target": "/zhengce/govall"
+        "target": "/gov/zhengce/govall"
       },
       {
         "title": "最新政策",
@@ -5543,7 +5535,7 @@
         "source": [
           "/"
         ],
-        "target": "/zhengce/wenjian"
+        "target": "/gov/zhengce/wenjian"
       }
     ]
   },
@@ -5662,7 +5654,7 @@
         "source": [
           "/"
         ],
-        "target": "/:category?"
+        "target": "/guancha/:category?"
       },
       {
         "title": "Unknown",
@@ -5670,7 +5662,7 @@
         "source": [
           "/"
         ],
-        "target": "/:category?"
+        "target": "/guancha/:category?"
       }
     ]
   },
@@ -5831,7 +5823,7 @@
           "/index/:category",
           "/"
         ],
-        "target": "/:category?"
+        "target": "/hacking8/:category?"
       }
     ]
   },
@@ -5857,7 +5849,7 @@
         "source": [
           "/news"
         ],
-        "target": "/news"
+        "target": "/hakkatv/news"
       }
     ]
   },
@@ -6195,7 +6187,7 @@
         "source": [
           "/"
         ],
-        "target": "/:id"
+        "target": "/hnrb/:id"
       }
     ]
   },
@@ -6324,7 +6316,7 @@
         "source": [
           "/hobby/all"
         ],
-        "target": "/items/all"
+        "target": "/hpoi/items/all"
       },
       {
         "title": "热门推荐",
@@ -6373,7 +6365,7 @@
         "source": [
           "/:author/list.htm"
         ],
-        "target": "/ugs/news/:author"
+        "target": "/hrbeu/ugs/news/:author"
       }
     ],
     "yjsy": [
@@ -6447,7 +6439,7 @@
           "/",
           "/:category"
         ],
-        "target": "/:category"
+        "target": "/hunau/:category"
       },
       {
         "title": "教务处",
@@ -6457,7 +6449,7 @@
           "/",
           "/:category"
         ],
-        "target": "/:category"
+        "target": "/hunau/:category"
       },
       {
         "title": "公共管理与法学学院",
@@ -6467,7 +6459,7 @@
           "/",
           "/:category"
         ],
-        "target": "/:category"
+        "target": "/hunau/:category"
       },
       {
         "title": "信息与智能科学学院",
@@ -6477,7 +6469,7 @@
           "/",
           "/:category"
         ],
-        "target": "/:category"
+        "target": "/hunau/:category"
       }
     ]
   },
@@ -6491,7 +6483,7 @@
           "/:category",
           "/"
         ],
-        "target": "/:category"
+        "target": "/hupu/:category"
       },
       {
         "title": "社区",
@@ -6500,7 +6492,7 @@
           "/:category",
           "/"
         ],
-        "target": "/:category"
+        "target": "/hupu/:category"
       },
       {
         "title": "社区",
@@ -6509,7 +6501,7 @@
           "/:category",
           "/"
         ],
-        "target": "/:category"
+        "target": "/hupu/:category"
       },
       {
         "title": "Unknown",
@@ -6518,7 +6510,7 @@
           "/:category",
           "/"
         ],
-        "target": "/:category"
+        "target": "/hupu/:category"
       },
       {
         "title": "Unknown",
@@ -6527,7 +6519,7 @@
           "/:category",
           "/"
         ],
-        "target": "/:category"
+        "target": "/hupu/:category"
       }
     ]
   },
@@ -6611,7 +6603,7 @@
         "source": [
           "/:lang/press/index.html"
         ],
-        "target": "/news/:lang"
+        "target": "/icac/news/:lang"
       }
     ]
   },
@@ -6624,7 +6616,7 @@
         "source": [
           "/column/1438058341489590354.html"
         ],
-        "target": "/whpj"
+        "target": "/icbc/whpj"
       }
     ]
   },
@@ -6854,7 +6846,7 @@
         "source": [
           "/projects"
         ],
-        "target": "/projects"
+        "target": "/instructables/projects"
       }
     ]
   },
@@ -6968,7 +6960,7 @@
         "source": [
           "/home/:uid"
         ],
-        "target": "/user/video/:uid"
+        "target": "/ixigua/user/video/:uid"
       }
     ]
   },
@@ -7121,7 +7113,7 @@
         "source": [
           "/topic/:id"
         ],
-        "target": "/topic/:id"
+        "target": "/jike/topic/:id"
       },
       {
         "title": "用户动态",
@@ -7129,7 +7121,7 @@
         "source": [
           "/u/:uid"
         ],
-        "target": "/user/:uid"
+        "target": "/jike/user/:uid"
       }
     ]
   },
@@ -7205,7 +7197,7 @@
         "source": [
           "/webfile/news/:type"
         ],
-        "target": "/news/:type"
+        "target": "/jseea/news/:type"
       }
     ]
   },
@@ -7243,7 +7235,7 @@
           "/user/:id",
           "/user/:id/collections"
         ],
-        "target": "/collections/:id"
+        "target": "/juejin/collections/:id"
       },
       {
         "title": "用户文章",
@@ -7273,7 +7265,7 @@
         "source": [
           "/"
         ],
-        "target": "/news"
+        "target": "/kbs/news"
       },
       {
         "title": "Today",
@@ -7281,7 +7273,7 @@
         "source": [
           "/"
         ],
-        "target": "/today"
+        "target": "/kbs/today"
       }
     ]
   },
@@ -7296,7 +7288,7 @@
           "/:lang/category/articles/q/1ee9bdb7186944f765208f34ecfb5407.kcmsf",
           "/:lang/category/articles.kcmsf"
         ],
-        "target": "/:lang"
+        "target": "/kcna/:lang"
       }
     ]
   },
@@ -7415,7 +7407,7 @@
         "source": [
           "/news/categories/:category"
         ],
-        "target": "/:category"
+        "target": "/kuwaitlocal/:category"
       }
     ]
   },
@@ -7515,7 +7507,7 @@
         "source": [
           "/:community"
         ],
-        "target": "/:community"
+        "target": "/learnku/:community"
       }
     ]
   },
@@ -7616,7 +7608,7 @@
           "/tz/people/:id",
           "/tz/people/:id/*"
         ],
-        "target": "/user/:id"
+        "target": "/lfsyd/user/:id"
       }
     ],
     "mob": [
@@ -7626,7 +7618,7 @@
         "source": [
           "/fine/:tagId"
         ],
-        "target": "/tag/:tagId"
+        "target": "/lfsyd/tag/:tagId"
       }
     ]
   },
@@ -7639,7 +7631,7 @@
         "source": [
           "/column/:channel"
         ],
-        "target": "/channel/:channel"
+        "target": "/lifeweek/channel/:channel"
       },
       {
         "title": "Unknown",
@@ -7647,7 +7639,7 @@
         "source": [
           "/articleList/:tag"
         ],
-        "target": "/tag/:tag"
+        "target": "/lifeweek/tag/:tag"
       }
     ]
   },
@@ -7660,7 +7652,7 @@
         "source": [
           "/"
         ],
-        "target": "/:keywords/:security_key"
+        "target": "/lightnovel/:keywords/:security_key"
       }
     ]
   },
@@ -7695,7 +7687,7 @@
           "/counterstrike/:id/Matches",
           "/dota2/:id"
         ],
-        "target": "/counterstrike/matches/:id"
+        "target": "/liquipedia/counterstrike/matches/:id"
       },
       {
         "title": "Dota2 战队最近比赛结果",
@@ -7738,7 +7730,7 @@
         "source": [
           "/:region*"
         ],
-        "target": "/:region"
+        "target": "/liveuamap/:region"
       }
     ]
   },
@@ -7804,7 +7796,7 @@
           "/",
           "/news"
         ],
-        "target": "/news"
+        "target": "/lovelive-anime/news"
       }
     ]
   },
@@ -7817,7 +7809,7 @@
         "source": [
           "/"
         ],
-        "target": "/jiaowc/tzgg"
+        "target": "/lsnu/jiaowc/tzgg"
       }
     ]
   },
@@ -7840,7 +7832,7 @@
           "/discuss/47327",
           "/"
         ],
-        "target": "/daily"
+        "target": "/luogu/daily"
       },
       {
         "title": "用户博客",
@@ -7933,7 +7925,7 @@
           "/title/:id/*",
           "/title/:id"
         ],
-        "target": "/:id"
+        "target": "/mangadex/:id"
       }
     ]
   },
@@ -7946,7 +7938,7 @@
         "source": [
           "/comic/:id/"
         ],
-        "target": "/comic/:id"
+        "target": "/manhuagui/comic/:id"
       },
       {
         "title": "漫画更新",
@@ -7954,7 +7946,7 @@
         "source": [
           "/comic/:id/"
         ],
-        "target": "/comic/:id"
+        "target": "/manhuagui/comic/:id"
       },
       {
         "title": "漫画个人订阅",
@@ -8027,7 +8019,7 @@
         "source": [
           "/:game/imgRanking/:forum_id/:ranking_id/:cate_id"
         ],
-        "target": "/bbs/img-ranking/:game"
+        "target": "/mihoyo/bbs/img-ranking/:game"
       },
       {
         "title": "米游社 - 用户关注动态",
@@ -8048,7 +8040,7 @@
         "source": [
           "/news"
         ],
-        "target": "/sr"
+        "target": "/mihoyo/sr"
       }
     ]
   },
@@ -8061,7 +8053,7 @@
         "source": [
           "/:location/news"
         ],
-        "target": "/ys/:location"
+        "target": "/mihoyo/ys/:location"
       }
     ]
   },
@@ -8132,30 +8124,6 @@
       }
     ]
   },
-  "modrinth.com": {
-    "_name": "Modrinth",
-    ".": [
-      {
-        "title": "Project versions",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/mod/:id/*",
-          "/plugin/:id/*",
-          "/datapack/:id/*",
-          "/shader/:id/*",
-          "/resourcepack/:id/*",
-          "/modpack/:id/*",
-          "/mod/:id",
-          "/plugin/:id",
-          "/datapack/:id",
-          "/shader/:id",
-          "/resourcepack/:id",
-          "/modpack/:id"
-        ],
-        "target": "/project/:id/versions"
-      }
-    ]
-  },
   "mohw.gov.tw": {
     "_name": "台灣衛生福利部",
     ".": [
@@ -8219,7 +8187,7 @@
         "source": [
           "/newsclass.aspx"
         ],
-        "target": "/rank"
+        "target": "/mydrivers/rank"
       }
     ]
   },
@@ -8233,7 +8201,7 @@
           "/browse",
           "/"
         ],
-        "target": "/:category?/:language?"
+        "target": "/myfigurecollection/:category?/:language?"
       },
       {
         "title": "圖片",
@@ -8270,7 +8238,7 @@
           "/:username/*",
           "/:username"
         ],
-        "target": "/user/sheets/:username"
+        "target": "/mymusicsheet/user/sheets/:username"
       }
     ]
   },
@@ -8337,7 +8305,7 @@
           "/:cat/:type",
           "/"
         ],
-        "target": "/:cat/:type"
+        "target": "/natgeo/:cat/:type"
       }
     ]
   },
@@ -8360,7 +8328,7 @@
           "/:journal",
           "/"
         ],
-        "target": "/highlight/:journal"
+        "target": "/nature/highlight/:journal"
       },
       {
         "title": "Unknown",
@@ -8370,7 +8338,7 @@
           "/news",
           "/"
         ],
-        "target": "/news"
+        "target": "/nature/news"
       },
       {
         "title": "Nature News",
@@ -8390,7 +8358,7 @@
           "/:journal",
           "/"
         ],
-        "target": "/research/:journal"
+        "target": "/nature/research/:journal"
       }
     ]
   },
@@ -8615,7 +8583,7 @@
         "source": [
           "/:key/:keyword"
         ],
-        "target": "/:key/:keyword"
+        "target": "/nhentai/:key/:keyword"
       },
       {
         "title": "Advanced Search",
@@ -8623,7 +8591,7 @@
         "source": [
           "/:key/:keyword"
         ],
-        "target": "/:key/:keyword"
+        "target": "/nhentai/:key/:keyword"
       }
     ]
   },
@@ -8646,7 +8614,7 @@
           "/nhkworld/:lang/news/list/",
           "/nhkworld/:lang/news/"
         ],
-        "target": "/news/:lang"
+        "target": "/nhk/news/:lang"
       }
     ]
   },
@@ -8691,7 +8659,7 @@
           "/:category/archive",
           "/:category"
         ],
-        "target": "/:category"
+        "target": "/nikkei/:category"
       }
     ],
     "asia": [
@@ -8970,7 +8938,7 @@
         "source": [
           "/:type/list.htm"
         ],
-        "target": "/gs/:type"
+        "target": "/njust/gs/:type"
       }
     ]
   },
@@ -9008,7 +8976,7 @@
         "source": [
           "/categories/:category"
         ],
-        "target": "/news/:category"
+        "target": "/nltimes/news/:category"
       }
     ]
   },
@@ -9022,7 +8990,7 @@
           "/publish/alarm.html",
           "/"
         ],
-        "target": "/weatheralarm"
+        "target": "/nmc/weatheralarm"
       }
     ]
   },
@@ -9049,7 +9017,7 @@
         "source": [
           "/s/n46/diary/MEMBER"
         ],
-        "target": "/blog"
+        "target": "/nogizaka46/blog"
       }
     ],
     "news": [
@@ -9100,7 +9068,7 @@
         "source": [
           "/:id"
         ],
-        "target": "/database/:id"
+        "target": "/notion/database/:id"
       }
     ]
   },
@@ -9126,7 +9094,7 @@
         "source": [
           "/"
         ],
-        "target": "/experience"
+        "target": "/nowcoder/experience"
       },
       {
         "title": "实习广场 & 社招广场",
@@ -9134,7 +9102,7 @@
         "source": [
           "/"
         ],
-        "target": "/jobcenter"
+        "target": "/nowcoder/jobcenter"
       },
       {
         "title": "求职推荐",
@@ -9150,7 +9118,7 @@
         "source": [
           "/"
         ],
-        "target": "/schedule"
+        "target": "/nowcoder/schedule"
       }
     ]
   },
@@ -9229,7 +9197,7 @@
         "source": [
           "/:category/list.htm"
         ],
-        "target": "/bulletin/:category"
+        "target": "/nuist/bulletin/:category"
       }
     ],
     "scs": [
@@ -9239,7 +9207,7 @@
         "source": [
           "/:category/list.htm"
         ],
-        "target": "/scs/:category"
+        "target": "/nuist/scs/:category"
       }
     ],
     "xgc": [
@@ -9364,7 +9332,7 @@
         "source": [
           "/toh/:band/:model"
         ],
-        "target": "/releases/:model"
+        "target": "/openwrt/releases/:model"
       }
     ]
   },
@@ -9377,7 +9345,7 @@
         "source": [
           "/news/:category"
         ],
-        "target": "/news/:category"
+        "target": "/oschina/news/:category"
       },
       {
         "title": "问答主题",
@@ -9457,7 +9425,7 @@
         "source": [
           "/tx/:id/list.htm"
         ],
-        "target": "/it/tx/:id"
+        "target": "/ouc/it/tx/:id"
       },
       {
         "title": "信息科学与工程学院",
@@ -9465,7 +9433,7 @@
         "source": [
           "/"
         ],
-        "target": "/it"
+        "target": "/ouc/it"
       }
     ],
     "jwc": [
@@ -9650,7 +9618,7 @@
         "source": [
           "/"
         ],
-        "target": "/:site?/:category?"
+        "target": "/people/:site?/:category?"
       }
     ]
   },
@@ -9663,7 +9631,7 @@
         "source": [
           "/topic/:topicId"
         ],
-        "target": "/topic/:topicId"
+        "target": "/peopo/topic/:topicId"
       }
     ]
   },
@@ -9689,7 +9657,7 @@
         "source": [
           "/"
         ],
-        "target": "/index"
+        "target": "/pianyuan/index"
       },
       {
         "title": "Unknown",
@@ -9697,7 +9665,7 @@
         "source": [
           "/"
         ],
-        "target": "/index"
+        "target": "/pianyuan/index"
       }
     ]
   },
@@ -9723,7 +9691,7 @@
         "source": [
           "/profile/:id"
         ],
-        "target": "/profile/:id"
+        "target": "/picuki/profile/:id"
       }
     ]
   },
@@ -9772,7 +9740,7 @@
           "/user/:uid/:type",
           "/"
         ],
-        "target": "/user/:uid/:type"
+        "target": "/pingwest/user/:uid/:type"
       }
     ]
   },
@@ -9785,7 +9753,7 @@
         "source": [
           "/:searchType/search/:q"
         ],
-        "target": "/search/:q"
+        "target": "/pixabay/search/:q"
       }
     ]
   },
@@ -9965,7 +9933,7 @@
         "source": [
           "/stno1/:catid/"
         ],
-        "target": "/st/:catid"
+        "target": "/playno1/st/:catid"
       }
     ]
   },
@@ -10007,7 +9975,7 @@
         "source": [
           "/news"
         ],
-        "target": "/news"
+        "target": "/plurk/news"
       },
       {
         "title": "Topic",
@@ -10028,7 +9996,7 @@
         "source": [
           "/*topicPath"
         ],
-        "target": "/:topicPath"
+        "target": "/pnas/:topicPath"
       }
     ]
   },
@@ -10041,7 +10009,7 @@
         "source": [
           "/model/:username/*"
         ],
-        "target": "/model/:username"
+        "target": "/pornhub/model/:username"
       },
       {
         "title": "Verified model / Pornstar",
@@ -10049,7 +10017,7 @@
         "source": [
           "/pornstar/:username/*"
         ],
-        "target": "/pornstar/:username"
+        "target": "/pornhub/pornstar/:username"
       },
       {
         "title": "Users",
@@ -10057,7 +10025,7 @@
         "source": [
           "/users/:username/*"
         ],
-        "target": "/users/:username"
+        "target": "/pornhub/users/:username"
       }
     ]
   },
@@ -10258,7 +10226,7 @@
           "/analyst",
           "/"
         ],
-        "target": "/analyst/rank"
+        "target": "/qianzhan/analyst/rank"
       }
     ]
   },
@@ -10299,7 +10267,7 @@
         "source": [
           "/free"
         ],
-        "target": "/free"
+        "target": "/qidian/free"
       },
       {
         "title": "限时免费",
@@ -10307,7 +10275,7 @@
         "source": [
           "/free"
         ],
-        "target": "/free"
+        "target": "/qidian/free"
       }
     ]
   },
@@ -10334,7 +10302,7 @@
           "/",
           "/:cate"
         ],
-        "target": "/:cate"
+        "target": "/qipamaijia/:cate"
       }
     ]
   },
@@ -10374,7 +10342,7 @@
           "/Comic/ComicInfo/id/:id",
           "/"
         ],
-        "target": "/ac/comic/:id"
+        "target": "/qq/ac/comic/:id"
       },
       {
         "title": "排行榜",
@@ -10558,7 +10526,7 @@
         "source": [
           "/profile/:username"
         ],
-        "target": "/publications/:username"
+        "target": "/researchgate/publications/:username"
       }
     ]
   },
@@ -10585,7 +10553,7 @@
         "source": [
           "/*path"
         ],
-        "target": "/:path"
+        "target": "/rfi/:path"
       }
     ]
   },
@@ -10603,7 +10571,7 @@
           "/en",
           "/ko"
         ],
-        "target": "/news"
+        "target": "/rodong/news"
       }
     ]
   },
@@ -10629,7 +10597,7 @@
         "source": [
           "/*"
         ],
-        "target": "/routes"
+        "target": "/rsshub/routes"
       }
     ]
   },
@@ -10643,7 +10611,7 @@
           "/cat/:category",
           "/"
         ],
-        "target": "/category/:category"
+        "target": "/ruancan/category/:category"
       },
       {
         "title": "Unknown",
@@ -10786,7 +10754,7 @@
         "source": [
           "/blogs/:name"
         ],
-        "target": "/blogs/:name"
+        "target": "/science/blogs/:name"
       },
       {
         "title": "Cover Story",
@@ -10803,7 +10771,7 @@
           "/journal/:journal",
           "/toc/:journal/current"
         ],
-        "target": "/current/:journal"
+        "target": "/science/current/:journal"
       },
       {
         "title": "First Release",
@@ -10812,7 +10780,7 @@
           "/journal/:journal",
           "/toc/:journal/0/0"
         ],
-        "target": "/early/:journal"
+        "target": "/science/early/:journal"
       }
     ]
   },
@@ -10954,7 +10922,7 @@
           "/symbol/:symbol/:category",
           "/symbol/:symbol/earnings/:category"
         ],
-        "target": "/:symbol/:category"
+        "target": "/seekingalpha/:symbol/:category"
       }
     ]
   },
@@ -11013,7 +10981,7 @@
           "/ko/blog",
           "/"
         ],
-        "target": "/blog"
+        "target": "/sensortower/blog"
       }
     ]
   },
@@ -11233,7 +11201,7 @@
         "source": [
           "/:type"
         ],
-        "target": "/:type"
+        "target": "/shu/:type"
       },
       {
         "title": "Unknown",
@@ -11241,7 +11209,7 @@
         "source": [
           "/:type"
         ],
-        "target": "/:type"
+        "target": "/shu/:type"
       },
       {
         "title": "Unknown",
@@ -11249,7 +11217,7 @@
         "source": [
           "/:type"
         ],
-        "target": "/:type"
+        "target": "/shu/:type"
       }
     ]
   },
@@ -11320,7 +11288,7 @@
         "source": [
           "/blog/:category"
         ],
-        "target": "/:category"
+        "target": "/simpleinfo/:category"
       }
     ]
   },
@@ -11345,7 +11313,7 @@
           "/china",
           "/"
         ],
-        "target": "/finance/china"
+        "target": "/sina/finance/china"
       },
       {
         "title": "美股",
@@ -11354,7 +11322,7 @@
           "/stock/usstock",
           "/"
         ],
-        "target": "/finance/stock/usstock"
+        "target": "/sina/finance/stock/usstock"
       }
     ]
   },
@@ -11380,7 +11348,7 @@
         "source": [
           "/announcement/:type"
         ],
-        "target": "/gs/:type"
+        "target": "/sjtu/gs/:type"
       }
     ]
   },
@@ -11406,7 +11374,7 @@
         "source": [
           "/category/:category"
         ],
-        "target": "/:category"
+        "target": "/smashingmagazine/:category"
       }
     ]
   },
@@ -11437,7 +11405,7 @@
         "source": [
           "/fenlei/:name"
         ],
-        "target": "/haowen/fenlei/:name"
+        "target": "/smzdm/haowen/fenlei/:name"
       }
     ]
   },
@@ -11464,7 +11432,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/:category"
+        "target": "/sobooks/:category"
       },
       {
         "title": "首页",
@@ -11472,7 +11440,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/:category"
+        "target": "/sobooks/:category"
       },
       {
         "title": "标签",
@@ -11480,7 +11448,7 @@
         "source": [
           "/books/tag/:tag"
         ],
-        "target": "/tag/:tag"
+        "target": "/sobooks/tag/:tag"
       }
     ]
   },
@@ -11543,7 +11511,7 @@
         "source": [
           "/collection/tracks"
         ],
-        "target": "/saved"
+        "target": "/spotify/saved"
       },
       {
         "title": "Show",
@@ -11637,7 +11605,7 @@
         "source": [
           "/u/:id/updates"
         ],
-        "target": "/activity/:id"
+        "target": "/sspai/activity/:id"
       },
       {
         "title": "作者",
@@ -11752,7 +11720,7 @@
         "source": [
           "/:id/list.htm"
         ],
-        "target": "/pe/:id"
+        "target": "/sspu/pe/:id"
       }
     ]
   },
@@ -11962,7 +11930,7 @@
           "/web/Publicity/List",
           "/"
         ],
-        "target": "/xg"
+        "target": "/swjtu/xg"
       }
     ]
   },
@@ -12065,7 +12033,7 @@
           "/disclosure/supervision/inquire/index.html",
           "/"
         ],
-        "target": "/inquire"
+        "target": "/szse/inquire"
       },
       {
         "title": "上市公告 - 可转换债券",
@@ -12109,7 +12077,7 @@
         "source": [
           "/:lang/index"
         ],
-        "target": "/hot/:lang"
+        "target": "/taiwannews/hot/:lang"
       }
     ]
   },
@@ -12159,7 +12127,7 @@
         "source": [
           "/app/:id"
         ],
-        "target": "/changelog/:id"
+        "target": "/taptap/changelog/:id"
       },
       {
         "title": "游戏更新",
@@ -12167,7 +12135,7 @@
         "source": [
           "/app/:id"
         ],
-        "target": "/changelog/:id"
+        "target": "/taptap/changelog/:id"
       },
       {
         "title": "游戏评价",
@@ -12176,7 +12144,7 @@
           "/app/:id/review",
           "/app/:id"
         ],
-        "target": "/review/:id"
+        "target": "/taptap/review/:id"
       },
       {
         "title": "游戏评价",
@@ -12185,7 +12153,7 @@
           "/app/:id/review",
           "/app/:id"
         ],
-        "target": "/review/:id"
+        "target": "/taptap/review/:id"
       },
       {
         "title": "游戏论坛",
@@ -12194,7 +12162,7 @@
           "/app/:id/topic",
           "/app/:id"
         ],
-        "target": "/topic/:id"
+        "target": "/taptap/topic/:id"
       }
     ]
   },
@@ -12207,7 +12175,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/:category"
+        "target": "/tass/:category"
       }
     ]
   },
@@ -12296,7 +12264,7 @@
         "source": [
           "/s/:username"
         ],
-        "target": "/channel/:username"
+        "target": "/telegram/channel/:username"
       }
     ]
   },
@@ -12362,7 +12330,7 @@
         "source": [
           "/"
         ],
-        "target": "/factpaper/:status"
+        "target": "/thepaper/factpaper/:status"
       }
     ]
   },
@@ -12383,7 +12351,7 @@
         "source": [
           "/"
         ],
-        "target": "/sidebar"
+        "target": "/thepaper/sidebar"
       },
       {
         "title": "Unknown",
@@ -12419,7 +12387,7 @@
           "/",
           "/%E6%97%A5%E7%A8%8B%E8%A1%A8"
         ],
-        "target": "/calendar"
+        "target": "/thwiki/calendar"
       }
     ]
   },
@@ -12432,7 +12400,7 @@
         "source": [
           "/:user"
         ],
-        "target": "/user/:user"
+        "target": "/tiktok/user/:user"
       }
     ]
   },
@@ -12501,7 +12469,7 @@
           "/IWater.shtml",
           "/"
         ],
-        "target": "/wuhan"
+        "target": "/tingshuitz/wuhan"
       }
     ]
   },
@@ -12555,7 +12523,7 @@
         "source": [
           "/:lang/blogs"
         ],
-        "target": "/blog/:lang"
+        "target": "/tokeninsight/blog/:lang"
       },
       {
         "title": "Latest",
@@ -12563,7 +12531,7 @@
         "source": [
           "/:lang/latest"
         ],
-        "target": "/bulletin/:lang"
+        "target": "/tokeninsight/bulletin/:lang"
       },
       {
         "title": "Research",
@@ -12571,7 +12539,7 @@
         "source": [
           "/:lang/report"
         ],
-        "target": "/report/:lang"
+        "target": "/tokeninsight/report/:lang"
       }
     ]
   },
@@ -12651,7 +12619,7 @@
         "source": [
           "/pine-script-docs/en/:version/Release_notes.html"
         ],
-        "target": "/pine/:version"
+        "target": "/tradingview/pine/:version"
       }
     ]
   },
@@ -12725,7 +12693,7 @@
         "source": [
           "/:login/videos"
         ],
-        "target": "/video/:login"
+        "target": "/twitch/video/:login"
       }
     ]
   },
@@ -12795,7 +12763,7 @@
         "source": [
           "/"
         ],
-        "target": "/changelog"
+        "target": "/typora/changelog"
       },
       {
         "title": "Changelog",
@@ -12837,7 +12805,7 @@
         "source": [
           "/blog/pittsburgh/engineering"
         ],
-        "target": "/blog"
+        "target": "/uber/blog"
       }
     ]
   },
@@ -12922,7 +12890,7 @@
         "source": [
           "/"
         ],
-        "target": "/cqe"
+        "target": "/uestc/cqe"
       }
     ],
     "gr": [
@@ -12942,7 +12910,7 @@
         "source": [
           "/"
         ],
-        "target": "/jwc"
+        "target": "/uestc/jwc"
       }
     ],
     "news": [
@@ -12952,7 +12920,7 @@
         "source": [
           "/"
         ],
-        "target": "/news"
+        "target": "/uestc/news"
       }
     ],
     "scse": [
@@ -12982,7 +12950,7 @@
         "source": [
           "/"
         ],
-        "target": "/sise"
+        "target": "/uestc/sise"
       }
     ]
   },
@@ -13064,7 +13032,7 @@
         "source": [
           "/:id"
         ],
-        "target": "/rss/:id"
+        "target": "/uptimerobot/rss/:id"
       }
     ]
   },
@@ -13150,7 +13118,7 @@
         "source": [
           "/"
         ],
-        "target": "/eeis"
+        "target": "/ustc/eeis"
       }
     ],
     "gradschool": [
@@ -13160,7 +13128,7 @@
         "source": [
           "/"
         ],
-        "target": "/gs"
+        "target": "/ustc/gs"
       }
     ],
     ".": [
@@ -13170,7 +13138,7 @@
         "source": [
           "/"
         ],
-        "target": "/news"
+        "target": "/ustc/news"
       }
     ],
     "job": [
@@ -13180,7 +13148,7 @@
         "source": [
           "/"
         ],
-        "target": "/job"
+        "target": "/ustc/job"
       }
     ],
     "www.teach": [
@@ -13190,7 +13158,7 @@
         "source": [
           "/"
         ],
-        "target": "/jwc"
+        "target": "/ustc/jwc"
       }
     ],
     "sist": [
@@ -13200,7 +13168,7 @@
         "source": [
           "/"
         ],
-        "target": "/sist"
+        "target": "/ustc/sist"
       }
     ]
   },
@@ -13214,7 +13182,7 @@
           "/category/s/:category",
           "/"
         ],
-        "target": "/:category"
+        "target": "/utgd/:category"
       },
       {
         "title": "时间线",
@@ -13231,7 +13199,7 @@
           "/topic",
           "/"
         ],
-        "target": "/topic/:topic"
+        "target": "/utgd/topic/:topic"
       }
     ]
   },
@@ -13317,7 +13285,7 @@
         "source": [
           "/de/presse-und-service/pressemitteilungen/"
         ],
-        "target": "/press"
+        "target": "/verfghbw/press"
       }
     ]
   },
@@ -13360,7 +13328,7 @@
           "/:lang",
           "/"
         ],
-        "target": "/featured/:lang"
+        "target": "/vom/featured/:lang"
       }
     ]
   },
@@ -13417,7 +13385,7 @@
           "/live/:category",
           "/"
         ],
-        "target": "/live/:category?"
+        "target": "/wallstreetcn/live/:category?"
       },
       {
         "title": "Unknown",
@@ -13515,7 +13483,7 @@
         "source": [
           "/"
         ],
-        "target": "/friends"
+        "target": "/weibo/friends"
       },
       {
         "title": "超话",
@@ -13523,7 +13491,7 @@
         "source": [
           "/p/:id/super_index"
         ],
-        "target": "/super_index/:id"
+        "target": "/weibo/super_index/:id"
       }
     ],
     "s": [
@@ -13547,7 +13515,7 @@
           "/u/:uid",
           "/profile/:uid"
         ],
-        "target": "/user/:uid"
+        "target": "/weibo/user/:uid"
       },
       {
         "title": "用户",
@@ -13556,7 +13524,7 @@
           "/u/:uid",
           "/profile/:uid"
         ],
-        "target": "/user/:uid"
+        "target": "/weibo/user/:uid"
       }
     ]
   },
@@ -13593,7 +13561,7 @@
         "source": [
           "/"
         ],
-        "target": "/news"
+        "target": "/wfu/news"
       }
     ]
   },
@@ -13607,7 +13575,7 @@
           "/briefing-room/:category",
           "/"
         ],
-        "target": "/briefing-room/:category"
+        "target": "/whitehouse/briefing-room/:category"
       },
       {
         "title": "Office of Science and Technology Policy",
@@ -13629,7 +13597,7 @@
         "source": [
           "/news-room/:type"
         ],
-        "target": "/news-room/:type"
+        "target": "/who/news-room/:type"
       },
       {
         "title": "News",
@@ -13637,7 +13605,7 @@
         "source": [
           "/news"
         ],
-        "target": "/news"
+        "target": "/who/news"
       },
       {
         "title": "Speeches",
@@ -13645,7 +13613,7 @@
         "source": [
           "/director-general/speeches"
         ],
-        "target": "/speeches"
+        "target": "/who/speeches"
       }
     ]
   },
@@ -13659,7 +13627,7 @@
           "/index.htm",
           "/"
         ],
-        "target": "/gs"
+        "target": "/whu/gs"
       }
     ]
   },
@@ -13743,7 +13711,7 @@
         "source": [
           "/wj/*path"
         ],
-        "target": "/:path"
+        "target": "/worldjournal/:path"
       }
     ]
   },
@@ -13756,7 +13724,7 @@
         "source": [
           "/"
         ],
-        "target": "/popular"
+        "target": "/woshipm/popular"
       },
       {
         "title": "用户文章",
@@ -13801,7 +13769,7 @@
         "source": [
           "/news/index"
         ],
-        "target": "/news"
+        "target": "/x-mol/news"
       }
     ]
   },
@@ -13835,7 +13803,7 @@
         "source": [
           "/user/profile/:user_id"
         ],
-        "target": "/user/:user_id/notes"
+        "target": "/xiaohongshu/user/:user_id/notes"
       }
     ]
   },
@@ -13952,7 +13920,7 @@
         "source": [
           "/:id"
         ],
-        "target": "/epaper/:id"
+        "target": "/xmnn/epaper/:id"
       }
     ]
   },
@@ -14007,7 +13975,7 @@
           "/S/:id",
           "/s/:id"
         ],
-        "target": "/stock_info/:id"
+        "target": "/xueqiu/stock_info/:id"
       },
       {
         "title": "今日话题",
@@ -14031,7 +13999,7 @@
         "source": [
           "/u/:id"
         ],
-        "target": "/user/:id"
+        "target": "/xueqiu/user/:id"
       }
     ]
   },
@@ -14098,7 +14066,7 @@
           "/author/:id",
           "/author"
         ],
-        "target": "/author/:id"
+        "target": "/yicai/author/:id"
       },
       {
         "title": "正在",
@@ -14115,7 +14083,7 @@
           "/feed/:id",
           "/feed"
         ],
-        "target": "/feed/:id"
+        "target": "/yicai/feed/:id"
       },
       {
         "title": "头条",
@@ -14140,7 +14108,7 @@
           "/news/:id",
           "/news"
         ],
-        "target": "/news/:id"
+        "target": "/yicai/news/:id"
       },
       {
         "title": "视听",
@@ -14149,7 +14117,7 @@
           "/video/:id",
           "/video"
         ],
-        "target": "/video/:id"
+        "target": "/yicai/video/:id"
       },
       {
         "title": "VIP 频道",
@@ -14158,7 +14126,7 @@
           "/vip/product/:id",
           "/"
         ],
-        "target": "/vip/:id"
+        "target": "/yicai/vip/:id"
       }
     ]
   },
@@ -14185,7 +14153,7 @@
           "/",
           "/:category"
         ],
-        "target": "/info/:category"
+        "target": "/yoasobi-music/info/:category"
       },
       {
         "title": "Live",
@@ -14230,7 +14198,7 @@
           "/",
           "/:level"
         ],
-        "target": "/:level"
+        "target": "/yomujp/:level"
       }
     ]
   },
@@ -14243,7 +14211,7 @@
         "source": [
           "/i/:id"
         ],
-        "target": "/channel/:id"
+        "target": "/youku/channel/:id"
       }
     ]
   },
@@ -14256,7 +14224,7 @@
         "source": [
           "/channel/:id"
         ],
-        "target": "/channel/:id"
+        "target": "/youtube/channel/:id"
       },
       {
         "title": "Unknown",
@@ -14264,7 +14232,7 @@
         "source": [
           "/c/:id"
         ],
-        "target": "/c/:id"
+        "target": "/youtube/c/:id"
       },
       {
         "title": "Subscriptions",
@@ -14273,7 +14241,7 @@
           "/feed/subscriptions",
           "/feed/channels"
         ],
-        "target": "/subscriptions"
+        "target": "/youtube/subscriptions"
       },
       {
         "title": "User",
@@ -14281,7 +14249,7 @@
         "source": [
           "/user/:username"
         ],
-        "target": "/user/:username"
+        "target": "/youtube/user/:username"
       }
     ]
   },
@@ -14294,7 +14262,7 @@
         "source": [
           "/materials"
         ],
-        "target": "/materials"
+        "target": "/youzhiyouxing/materials"
       }
     ]
   },
@@ -14347,7 +14315,7 @@
           "/:category",
           "/"
         ],
-        "target": "/:category"
+        "target": "/yxrb/:category"
       }
     ]
   },
@@ -14387,7 +14355,7 @@
         "source": [
           "/:type/:id"
         ],
-        "target": "/:type/:id"
+        "target": "/zaker/:type/:id"
       }
     ]
   },
@@ -14400,7 +14368,7 @@
         "source": [
           "/article/:type"
         ],
-        "target": "/article/:type"
+        "target": "/zaozao/article/:type"
       }
     ]
   },
@@ -14413,7 +14381,7 @@
         "source": [
           "/u/:id"
         ],
-        "target": "/user/:id"
+        "target": "/zcool/user/:id"
       }
     ]
   },
@@ -14439,7 +14407,7 @@
         "source": [
           "/:category/luxiang.htm"
         ],
-        "target": "/luxiang/:category"
+        "target": "/zhibo8/luxiang/:category"
       }
     ],
     "news": [
@@ -14449,7 +14417,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/more/:category"
+        "target": "/zhibo8/more/:category"
       }
     ]
   },
@@ -14478,7 +14446,7 @@
         "source": [
           "/collection/:id"
         ],
-        "target": "/collection/:id"
+        "target": "/zhihu/collection/:id"
       },
       {
         "title": "知乎热榜",
@@ -14502,7 +14470,7 @@
         "source": [
           "/question/:questionId"
         ],
-        "target": "/question/:questionId"
+        "target": "/zhihu/question/:questionId"
       },
       {
         "title": "话题",
@@ -14510,7 +14478,7 @@
         "source": [
           "/topic/:topicId/:type"
         ],
-        "target": "/topic/:topicId"
+        "target": "/zhihu/topic/:topicId"
       },
       {
         "title": "知乎书店 - 知乎周刊",
@@ -14542,7 +14510,7 @@
         "source": [
           "/people/:id"
         ],
-        "target": "/people/activities/:id"
+        "target": "/zhihu/people/activities/:id"
       },
       {
         "title": "xhu - 用户回答",
@@ -14550,7 +14518,7 @@
         "source": [
           "/people/:id/answers"
         ],
-        "target": "/people/answers/:id"
+        "target": "/zhihu/people/answers/:id"
       },
       {
         "title": "xhu - 收藏夹",
@@ -14566,7 +14534,7 @@
         "source": [
           "/question/:questionId"
         ],
-        "target": "/xhu/question/:questionId"
+        "target": "/zhihu/xhu/question/:questionId"
       },
       {
         "title": "Unknown",
@@ -14584,7 +14552,7 @@
         "source": [
           "/*"
         ],
-        "target": "/daily"
+        "target": "/zhihu/daily"
       },
       {
         "title": "知乎日报",
@@ -14600,7 +14568,7 @@
         "source": [
           "/*"
         ],
-        "target": "/daily"
+        "target": "/zhihu/daily"
       }
     ],
     "zhuanlan": [
@@ -14618,7 +14586,7 @@
         "source": [
           "/:id"
         ],
-        "target": "/zhuanlan/:id"
+        "target": "/zhihu/zhuanlan/:id"
       }
     ]
   },
