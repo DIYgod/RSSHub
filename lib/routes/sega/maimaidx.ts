@@ -1,9 +1,25 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/maimaidx/news',
+    categories: ['game'],
+    example: '/sega/maimaidx/news',
+    radar: [
+        {
+            source: ['info-maimai.sega.jp/'],
+        },
+    ],
+    name: 'maimai DX Japanese Ver. News',
+    maintainers: ['randompasser'],
+    handler,
+    url: 'info-maimai.sega.jp/',
+};
+
+async function handler() {
     const baseUrl = 'https://info-maimai.sega.jp/';
 
     const parseContent = (htmlString: string, image: cheerio.Cheerio<cheerio.Element>) => {
@@ -39,10 +55,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: 'maimai DX - Japanese Ver. News',
         link: baseUrl,
         language: 'ja',
         item,
-    });
-};
+    };
+}
