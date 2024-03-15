@@ -16,7 +16,7 @@ When creating a namespace, avoid creating multiple variations for the same names
 
 Once you have created a namespace for the RSS route, the next step is to create the file `namespace.ts` to define the namespace.
 
-The file should return an object that conforms to the Namespace type through a namespace. The definition of Namespace is at [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L49)
+The file should return an object that conforms to the Namespace type through a namespace. The definition of Namespace is at [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L51)
 
 - name: The human-readable name of the namespace, which will be used as the title of the document
 - url: The website URL without protocol that corresponds
@@ -52,7 +52,7 @@ GitHub provides some official RSS feeds:
 
 Once you have created a namespace for the route, the next step is to create a route file to register the route.
 
-For example, if you are making an RSS feed for [GitHub Repo Issues]((/routes/programming#github-yong-hu-cang-ku)), and assume that you want users to enter the GitHub username and repo name, if they do not enter the repo name, they will return to RSSHub. You can register your new RSS route in /lib/routes/github/issue.ts, the file needs to return an object that conforms to the Route type through route. The definition of Route is at [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L64)
+For example, if you are making an RSS feed for [GitHub Repo Issues]((/routes/programming#github-yong-hu-cang-ku)), and assume that you want users to enter the GitHub username and repo name, if they do not enter the repo name, they will return to RSSHub. You can register your new RSS route in /lib/routes/github/issue.ts, the file needs to return an object that conforms to the Route type through route. The definition of Route is at [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L86)
 
 - path: The route path, using [Hono routing](https://hono.dev/api/routing) syntax
 - name: The human-readable name of the route, which will be used as the title of the document
@@ -102,7 +102,7 @@ The handler function will be passed a parameter ctx. By the end of the function,
 
 You can see the APIs available for ctx to use in the [Hono context documentation]((https://hono.dev/api/context))
 
-The type of the return value is defined here: [/lib/types.ts#L36](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L36)
+The type of the return value is defined here: [/lib/types.ts#L37](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L37)
 
 As mentioned earlier, we will create an RSS feed for [GitHub Repo Issues](/routes/programming#github-repo-issues) as an example. We will show all four data collection methods mentioned:
 
