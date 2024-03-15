@@ -17,8 +17,7 @@ export const route: Route = {
     name: '周刊 - JavaScript',
     maintainers: ['daijinru', 'hestudy'],
     handler,
-    description: `
-    | javascript | node | react |
+    description: `| javascript | node | react |
     | ---------- | ---- | ----- |
     | js         | node | react |`,
     radar: [
