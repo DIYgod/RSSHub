@@ -10,7 +10,12 @@ export const route: Route = {
     example: '/zhihu/timeline',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'ZHIHU_COOKIES',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,

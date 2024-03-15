@@ -12,17 +12,24 @@ export const route: Route = {
     example: '/weibo/friends',
     parameters: { routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'WEIBO_COOKIES',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['weibo.com/'],
-        target: '/friends',
-    },
+    radar: [
+        {
+            source: ['weibo.com/'],
+            target: '/friends',
+        },
+    ],
     name: '最新关注时间线',
     maintainers: ['CaoMeiYouRen'],
     handler,
@@ -146,12 +153,9 @@ async function handler(ctx) {
         })
     );
 
-    ctx.set(
-        'data',
-        weiboUtils.sinaimgTvax({
-            title,
-            link: `https://weibo.com`,
-            item: resultItems,
-        })
-    );
+    return weiboUtils.sinaimgTvax({
+        title,
+        link: `https://weibo.com`,
+        item: resultItems,
+    });
 }

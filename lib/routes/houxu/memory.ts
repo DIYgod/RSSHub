@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['houxu.app/memory', 'houxu.app/'],
-    },
+    radar: [
+        {
+            source: ['houxu.app/memory', 'houxu.app/'],
+        },
+    ],
     name: '跟踪',
     maintainers: ['nczitzk'],
     handler,

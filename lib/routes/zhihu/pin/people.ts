@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/people/:id/pins'],
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/people/:id/pins'],
+        },
+    ],
     name: '用户想法',
     maintainers: ['xyqfer'],
     handler,

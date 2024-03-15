@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tech.sina.com.cn/chuangshiji', 'tech.sina.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['tech.sina.com.cn/chuangshiji', 'tech.sina.com.cn/'],
+        },
+    ],
     name: '专栏 - 创事记',
     maintainers: ['xapool'],
     handler,

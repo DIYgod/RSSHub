@@ -33,10 +33,13 @@
     "message": "💡 举例："
   },
   "route.path": {
-    "message": "🚏 路由："
+    "message": "🛎️ 路由："
+  },
+  "route.sourcecode": {
+    "message": "🐙 源代码："
   },
   "route.parameter": {
-    "message": "⚙️ 参数："
+    "message": "🔗 参数："
   },
   "route.parameter.optional": {
     "message": "可选"
@@ -52,6 +55,9 @@
   },
   "route.parameter.na": {
     "message": "参数：无"
+  },
+  "route.config": {
+    "message": "⚙️ 部署配置："
   },
   "route.comma": {
     "message": "，"

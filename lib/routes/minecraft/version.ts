@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['minecraft.net/'],
-    },
+    radar: [
+        {
+            source: ['minecraft.net/'],
+        },
+    ],
     name: 'Java Game Update',
     maintainers: ['TheresaQWQ'],
     handler,

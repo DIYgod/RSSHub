@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zzb.sz.gov.cn/*'],
-    },
+    radar: [
+        {
+            source: ['zzb.sz.gov.cn/*'],
+        },
+    ],
     name: '深圳市委组织部',
     maintainers: ['zlasd'],
     handler,

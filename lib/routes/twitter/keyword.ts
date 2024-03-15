@@ -7,7 +7,16 @@ export const route: Route = {
     example: '/twitter/keyword/RSSHub',
     parameters: { keyword: 'keyword', routeParams: 'extra parameters, see the table above' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'TWITTER_USERNAME',
+                description: '',
+            },
+            {
+                name: 'TWITTER_PASSWORD',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -17,6 +26,11 @@ export const route: Route = {
     name: 'Keyword',
     maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9'],
     handler,
+    radar: [
+        {
+            source: ['twitter.com/search'],
+        },
+    ],
 };
 
 async function handler(ctx) {

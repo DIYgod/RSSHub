@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rsj.sh.gov.cn/'],
-    },
+    radar: [
+        {
+            source: ['rsj.sh.gov.cn/'],
+        },
+    ],
     name: '上海市职业能力考试院 考试项目',
     maintainers: ['Fatpandac'],
     handler,

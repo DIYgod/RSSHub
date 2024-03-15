@@ -29,5 +29,5 @@ async function handler(ctx) {
     const language = ctx.req.param('language') ?? defaultLanguage;
     const currentUrl = `${rootUrl}/${language}/vl_maker.php?list&m=${maker}&mode=${mode}`;
 
-    ctx.set('data', await ProcessItems(language, currentUrl, cache.tryGet));
+    return await ProcessItems(language, currentUrl, cache.tryGet);
 }

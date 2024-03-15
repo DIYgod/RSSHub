@@ -5,14 +5,15 @@ import { parseList, parseItem, getCategories } from './utils';
 
 export const route: Route = {
     path: ['/', '/category/:category'],
-    radar: {
-        source: ['www.4gamers.com.tw/news', 'www.4gamers.com.tw/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['www.4gamers.com.tw/news', 'www.4gamers.com.tw/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,
-    url: 'www.4gamers.com.tw/news',
     url: 'www.4gamers.com.tw/news',
 };
 

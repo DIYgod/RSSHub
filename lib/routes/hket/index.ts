@@ -38,10 +38,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.hket.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['www.hket.com/'],
+            target: '',
+        },
+    ],
     name: '新闻',
     maintainers: ['TonyRL'],
     handler,

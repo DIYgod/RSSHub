@@ -13,10 +13,12 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '*',
-    radar: {
-        source: ['sinchew.com.my/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['sinchew.com.my/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

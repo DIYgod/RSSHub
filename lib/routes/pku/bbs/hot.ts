@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bbs.pku.edu.cn/v2/hot-topic.php', 'bbs.pku.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['bbs.pku.edu.cn/v2/hot-topic.php', 'bbs.pku.edu.cn/'],
+        },
+    ],
     name: '北大未名 BBS 全站十大',
     maintainers: ['wooddance'],
     handler,

@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.producthunt.com/'],
-    },
+    radar: [
+        {
+            source: ['www.producthunt.com/'],
+        },
+    ],
     name: 'Today Popular',
     maintainers: ['miaoyafeng', 'Fatpandac'],
     handler,

@@ -9,17 +9,32 @@ export const route: Route = {
     example: '/spotify/saved/50',
     parameters: { limit: 'Track count, 50 by default' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'SPOTIFY_CLIENT_ID',
+                description: '',
+            },
+            {
+                name: 'SPOTIFY_CLIENT_SECRET',
+                description: '',
+            },
+            {
+                name: 'SPOTIFY_REFRESHTOKEN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['open.spotify.com/collection/tracks'],
-        target: '/saved',
-    },
+    radar: [
+        {
+            source: ['open.spotify.com/collection/tracks'],
+            target: '/saved',
+        },
+    ],
     name: 'Personal Saved Tracks',
     maintainers: ['outloudvi'],
     handler,

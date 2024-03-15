@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zhiyou.smzdm.com/member/:uid/article'],
-    },
+    radar: [
+        {
+            source: ['zhiyou.smzdm.com/member/:uid/article'],
+        },
+    ],
     name: '用户文章',
     maintainers: ['xfangbao'],
     handler,

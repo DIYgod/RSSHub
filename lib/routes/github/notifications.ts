@@ -11,16 +11,23 @@ export const route: Route = {
     example: '/github/notifications',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'GITHUB_ACCESS_TOKEN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/notifications'],
-    },
+    radar: [
+        {
+            source: ['github.com/notifications'],
+        },
+    ],
     name: 'Notifications',
     maintainers: ['zhzy0077'],
     handler,

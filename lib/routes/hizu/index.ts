@@ -44,9 +44,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hizh.cn/'],
-    },
+    radar: [
+        {
+            source: ['hizh.cn/'],
+        },
+    ],
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,

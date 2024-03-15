@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wallstreetcn.com/'],
-    },
+    radar: [
+        {
+            source: ['wallstreetcn.com/'],
+        },
+    ],
     name: '最热文章',
     maintainers: ['nczitzk'],
     handler,

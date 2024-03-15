@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['live.bilibili.com/:roomID'],
-    },
+    radar: [
+        {
+            source: ['live.bilibili.com/:roomID'],
+        },
+    ],
     name: '直播开播',
     maintainers: ['Qixingchen'],
     handler,

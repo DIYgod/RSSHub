@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.dongqiudi.com/special/:id'],
-    },
+    radar: [
+        {
+            source: ['www.dongqiudi.com/special/:id'],
+        },
+    ],
     name: '专题',
     maintainers: ['dxmpalb'],
     handler,

@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.abmedia.io/category/:catehory'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['www.abmedia.io/category/:catehory'],
+            target: '/:category',
+        },
+    ],
     name: '类别',
     maintainers: [],
     handler,

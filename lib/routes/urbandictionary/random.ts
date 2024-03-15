@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['urbandictionary.com/random.php', 'urbandictionary.com/'],
-    },
+    radar: [
+        {
+            source: ['urbandictionary.com/random.php', 'urbandictionary.com/'],
+        },
+    ],
     name: 'Random words',
     maintainers: ['TonyRL'],
     handler,

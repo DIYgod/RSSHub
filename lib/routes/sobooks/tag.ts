@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sobooks.net/books/tag/:tag'],
-        target: '/tag/:tag',
-    },
+    radar: [
+        {
+            source: ['sobooks.net/books/tag/:tag'],
+            target: '/tag/:tag',
+        },
+    ],
     name: '标签',
     maintainers: ['nczitzk'],
     handler,
@@ -35,5 +37,5 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '小说';
 
-    ctx.set('data', await utils(ctx, `books/tag/${id}`));
+    return await utils(ctx, `books/tag/${id}`);
 }

@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['storyfm.cn/'],
-    },
+    radar: [
+        {
+            source: ['storyfm.cn/'],
+        },
+    ],
     name: '首页',
     maintainers: ['sanmmm'],
     handler,

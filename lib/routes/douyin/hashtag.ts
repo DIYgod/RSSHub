@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['douyin.com/hashtag/:cid'],
-        target: '/hashtag/:cid',
-    },
+    radar: [
+        {
+            source: ['douyin.com/hashtag/:cid'],
+            target: '/hashtag/:cid',
+        },
+    ],
     name: '标签',
     maintainers: ['TonyRL'],
     handler,

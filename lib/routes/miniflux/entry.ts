@@ -1,18 +1,64 @@
-const got = require('@/utils/got');
-const config = require('@/config').value;
+import { Route, Data } from '@/types';
+import got from '@/utils/got';
+import { config } from '@/config';
 
-// Unchanged entries status after fetching.
-// mark = unchanged | read | removed | unread
-let mark = 'unchanged';
-// Return shared link as default behavior
-// link = shared | original
-// let link = 'shared';
-// Add feed's name to each article, default is off.
-let addFeedName = 0;
-// Here we use `limit` to temporarily store the limit number.
-let limit = 0;
+export const route: Route = {
+    path: '/entry/:feeds/:parameters?',
+    description: `
+1. Support to get all content: You can obtain the content of all subscription sources by using keywords such as \`/miniflux/all\` or \`/miniflux/default\`.
+2. Support to get the subscription content of a specific subscription source by its ID. Please obtain the subscription source ID on the page where it is located under \`Sources\` (shortcut keys \`g\` \`f\`). The URL for each category (or subscription source) displays its ID information. There are several format options available:
+    1. Support \`/miniflux/feed=[feed_id]\`, please replace \`[feed_id]\` with the actual ID of the subscribed feed (note that it should be just a number without brackets).
+    2. Support subscribing to multiple feeds using \`/miniflux/feed=[feed1_id]&feed=[feed2_id]\` or \`/miniflux/feeds=[feed1_id]&[feed2_id]\`.
+    3. Additionally, you can use shorthand notation by directly using feed IDs: \`/miniflux/[feed1_id]&[feed2_id]\`.
+3. Further customization options are available based on your needs:
+    1. All parameters/options provided by MiniFlux are supported ([link](https://miniflux.app/docs/api.html#endpoint-get-feed-entries)). As noted in their documentation, multiple filtering options should be connected with \`&\`. Except for \`status\`, only the first occurrence of duplicate filter options will be considered.
+    2. Specifically, this route defaults to sorting entries from new to old (\`direction=desc\`).
+    3. Moreover, this route supports additional options including:
+        - Using the \`feed_name\` parameter to control title formatting; setting \`feed_name=1\` will display each title as "Article Title | Feed Name," while default is set at \`0\`, showing only article titles.
+        - Utilizing the \`mark\` parameter to specify actions after fetching subscriptions in RSSHub, such as maintaining unchanged state (\`unchanged\`, default), marking as read (\`read\`), removing (\`removed\`) or marking as unread (\`unread\`). Note that marking as read should not simply be understood as a means for implementing synchronization services; rather, it functions more like an aid for MiniFlux's automatic cleaning feature.
+        - Future support may include utilizing the \`link\` parameter to control output URLs (this functionality requires corresponding interfaces from MiniFlux). It could involve generating URLs through MiniFlux entity sharing features or original content links.
+        - The output content quantity can be controlled via the 'limit' parameter; although all matching contents are typically outputted by default, **it is recommended that users set this parameter**.
+    `,
+    categories: ['other'],
+    example: '/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread',
+    parameters: {
+        feeds: 'Subscribe source ID or get all.',
+        parameters: 'Filter and set parameters, use `&` to connect multiple.',
+    },
+    features: {
+        requireConfig: [
+            {
+                name: 'MINIFLUX_INSTANCE',
+                description: 'The instance used by the user, by default, is the official MiniFlux [paid service address](https://reader.miniflux.app)',
+            },
+            {
+                name: 'MINIFLUX_TOKEN',
+                description: "User's API key, please log in to the instance used and go to `Settings` -> `API Key` -> `Create a new API key` to obtain.",
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Feed entry',
+    maintainers: ['emdoe', 'DIYgod'],
+    handler,
+};
 
-module.exports = async (ctx) => {
+async function handler(ctx) {
+    // Unchanged entries status after fetching.
+    // mark = unchanged | read | removed | unread
+    let mark = 'unchanged';
+    // Return shared link as default behavior
+    // link = shared | original
+    // let link = 'shared';
+    // Add feed's name to each article, default is off.
+    let addFeedName = 0;
+    // Here we use `limit` to temporarily store the limit number.
+    let limit = 0;
+
     const instance = config.miniflux.instance;
     const token = config.miniflux.token;
 
@@ -94,9 +140,9 @@ module.exports = async (ctx) => {
     const setMark = [];
     const setFeedName = [];
 
-    const feeds = ctx.params.feeds;
+    const feeds = ctx.req.param('feeds');
 
-    let parameters = ctx.params.parameters;
+    let parameters = ctx.req.param('parameters');
     // Set default direction
     if (parameters.search('direction=') === -1) {
         parameters += '&direction=desc';
@@ -108,32 +154,34 @@ module.exports = async (ctx) => {
         .filter(Boolean)
         .join('&');
 
+    let queryLimit = ctx.req.query('limit');
+    let result: Data;
     if (feeds.search(/feeds?=/g) !== -1 || !isNaN(Number.parseInt(feeds.split('&').join('')))) {
         const feedsID = feeds.replaceAll(/feeds?=/g, '');
         const feedsList = [feedsID.split('&')].flat();
 
-        if (limit && ctx.query.limit) {
-            if (limit < ctx.query.limit) {
-                ctx.query.limit = limit * feedsList.length;
+        if (limit && queryLimit) {
+            if (limit < queryLimit) {
+                queryLimit = limit * feedsList.length;
             } else {
-                const eachLimit = Number.parseInt(ctx.query.limit / feedsList.length);
+                const eachLimit = Number.parseInt(queryLimit / feedsList.length);
                 if (eachLimit) {
                     limit = eachLimit;
                 } else {
                     limit = 1;
-                    ctx.query.limit = feedsList.length;
+                    queryLimit = feedsList.length;
                 }
             }
             parameters += `&limit=${limit}`;
         } else if (limit) {
             parameters += `&limit=${limit}`;
-        } else if (ctx.query.limit) {
-            const eachLimit = Number.parseInt(ctx.query.limit / feedsList.length);
+        } else if (queryLimit) {
+            const eachLimit = Number.parseInt(queryLimit / feedsList.length);
             if (eachLimit) {
                 limit = eachLimit;
             } else {
                 limit = 1;
-                ctx.query.limit = feedsList.length;
+                queryLimit = feedsList.length;
             }
             parameters += `&limit=${limit}`;
         }
@@ -193,7 +241,7 @@ module.exports = async (ctx) => {
             agInfo = 'An aggregator powered by MiniFlux and RSSHub ' + 'with empty content. If this is not your intention, ' + `please double-check your setting for parameters.`;
         }
 
-        ctx.state.data = {
+        result = {
             title: agTitle,
             link: instance,
             description: agInfo,
@@ -201,14 +249,14 @@ module.exports = async (ctx) => {
             allowEmpty: true,
         };
     } else {
-        if (limit && ctx.query.limit) {
-            if (limit < ctx.query.limit) {
-                ctx.query.limit = limit;
+        if (limit && queryLimit) {
+            if (limit < queryLimit) {
+                queryLimit = limit;
             }
             // Here we could add a '&' since parameter(s) list must not empty.
-            parameters += `&limit=${ctx.query.limit}`;
-        } else if (ctx.query.limit) {
-            parameters += `&limit=${ctx.query.limit}`;
+            parameters += `&limit=${queryLimit}`;
+        } else if (queryLimit) {
+            parameters += `&limit=${queryLimit}`;
         } else if (limit) {
             parameters += `&limit=${limit}`;
         }
@@ -238,7 +286,7 @@ module.exports = async (ctx) => {
             });
         }
 
-        ctx.state.data = {
+        result = {
             title: `MiniFlux | All`,
             link: instance,
             description: `All feeds on ${instance} powered by MiniFlux`,
@@ -261,4 +309,6 @@ module.exports = async (ctx) => {
             },
         });
     }
-};
+
+    return result;
+}

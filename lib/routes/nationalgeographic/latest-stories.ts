@@ -29,9 +29,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.nationalgeographic.com/pages/topic/latest-stories'],
-    },
+    radar: [
+        {
+            source: ['www.nationalgeographic.com/pages/topic/latest-stories'],
+        },
+    ],
     name: 'Latest Stories',
     maintainers: ['miles170'],
     handler,

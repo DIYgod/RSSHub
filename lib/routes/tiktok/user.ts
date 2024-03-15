@@ -25,10 +25,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tiktok.com/:user'],
-        target: '/user/:user',
-    },
+    radar: [
+        {
+            source: ['tiktok.com/:user'],
+            target: '/user/:user',
+        },
+    ],
     name: 'User',
     maintainers: ['TonyRL'],
     handler,

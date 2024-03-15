@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['blog.simpleinfo.cc/blog/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['blog.simpleinfo.cc/blog/:category'],
+            target: '/:category',
+        },
+    ],
     name: '志祺七七',
     maintainers: ['haukeng'],
     handler,

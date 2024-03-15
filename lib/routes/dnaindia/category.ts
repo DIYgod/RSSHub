@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dnaindia.com/:category'],
-    },
+    radar: [
+        {
+            source: ['dnaindia.com/:category'],
+        },
+    ],
     name: 'News',
     maintainers: ['Rjnishant530'],
     handler,

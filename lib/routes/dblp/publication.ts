@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dblp.org/:field'],
-    },
+    radar: [
+        {
+            source: ['dblp.org/:field'],
+        },
+    ],
     name: 'Keyword Search',
     maintainers: ['ytno1'],
     handler,

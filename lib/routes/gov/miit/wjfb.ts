@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['miit.gov.cn/jgsj/:ministry/wjfb/index.html'],
-    },
+    radar: [
+        {
+            source: ['miit.gov.cn/jgsj/:ministry/wjfb/index.html'],
+        },
+    ],
     name: '文件发布',
     maintainers: ['Fatpandac'],
     handler,

@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['stno1.playno1.com/stno1/:catid/'],
-        target: '/st/:catid',
-    },
+    radar: [
+        {
+            source: ['stno1.playno1.com/stno1/:catid/'],
+            target: '/st/:catid',
+        },
+    ],
     name: '情趣',
     maintainers: ['TonyRL'],
     handler,

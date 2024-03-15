@@ -16,16 +16,23 @@ export const route: Route = {
     example: '/manhuagui/subscribe',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'MHGUI_COOKIE',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.mhgui.com/user/book/shelf'],
-    },
+    radar: [
+        {
+            source: ['www.mhgui.com/user/book/shelf'],
+        },
+    ],
     name: '漫画个人订阅',
     maintainers: ['shininome'],
     handler,

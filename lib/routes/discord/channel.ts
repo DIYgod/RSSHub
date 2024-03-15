@@ -15,16 +15,23 @@ export const route: Route = {
     example: '/discord/channel/950465850056536084',
     parameters: { channelId: 'Channel ID' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'DISCORD_AUTHORIZATION',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['discord.com/channels/:guildId/:channelId/:messageID', 'discord.com/channels/:guildId/:channelId'],
-    },
+    radar: [
+        {
+            source: ['discord.com/channels/:guildId/:channelId/:messageID', 'discord.com/channels/:guildId/:channelId'],
+        },
+    ],
     name: 'Channel Messages',
     maintainers: ['TonyRL'],
     handler,

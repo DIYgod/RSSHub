@@ -11,7 +11,16 @@ export const route: Route = {
             'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.',
     },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'TWITTER_USERNAME',
+                description: '',
+            },
+            {
+                name: 'TWITTER_PASSWORD',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -21,6 +30,12 @@ export const route: Route = {
     name: 'User timeline',
     maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9'],
     handler,
+    radar: [
+        {
+            source: ['twitter.com/:id'],
+            target: '/user/:id',
+        },
+    ],
 };
 
 async function handler(ctx) {

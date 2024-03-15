@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/topic/:id'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/topic/:id'],
+        },
+    ],
     name: '专题内文章更新',
     maintainers: ['SunShinenny'],
     handler,

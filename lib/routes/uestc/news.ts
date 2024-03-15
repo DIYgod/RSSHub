@@ -26,10 +26,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.uestc.edu.cn/'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['news.uestc.edu.cn/'],
+            target: '/news',
+        },
+    ],
     name: '新闻中心',
     maintainers: ['achjqz', 'mobyw'],
     handler,

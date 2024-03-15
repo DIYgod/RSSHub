@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['trow.cc/'],
-    },
+    radar: [
+        {
+            source: ['trow.cc/'],
+        },
+    ],
     name: '首页更新',
     maintainers: ['shiningdracon'],
     handler,

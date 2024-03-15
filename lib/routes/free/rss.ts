@@ -4,10 +4,12 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['free.com.tw/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['free.com.tw/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['cnkmmk'],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gschool.ecust.edu.cn/12753/list.htm', 'gschool.ecust.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['gschool.ecust.edu.cn/12753/list.htm', 'gschool.ecust.edu.cn/'],
+        },
+    ],
     name: '研究生院通知公告',
     maintainers: ['shengmaosu'],
     handler,

@@ -36,8 +36,8 @@
     "@docusaurus/types": "3.1.1",
     "@types/markdown-it": "^13.0.7",
     "@types/mdx-js__react": "^1.5.8",
-    "@types/react": "^18.2.64",
-    "@types/react-dom": "^18.2.21",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
     "typescript": "^5.4.2"
   },
   "browserslist": {

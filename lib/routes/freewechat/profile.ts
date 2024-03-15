@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['freewechat.com/profile/:id'],
-    },
+    radar: [
+        {
+            source: ['freewechat.com/profile/:id'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,

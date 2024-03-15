@@ -19,16 +19,27 @@ export const route: Route = {
     example: '/iwara/subscriptions',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'IWARA_USERNAME',
+                description: '',
+            },
+            {
+                name: 'IWARA_PASSWORD',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ecchi.iwara.tv/'],
-    },
+    radar: [
+        {
+            source: ['ecchi.iwara.tv/'],
+        },
+    ],
     name: 'User Subscriptions',
     maintainers: ['FeCCC'],
     handler,

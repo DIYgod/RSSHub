@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['twreporter.org/'],
-    },
+    radar: [
+        {
+            source: ['twreporter.org/'],
+        },
+    ],
     name: '最新',
     maintainers: ['emdoe'],
     handler,

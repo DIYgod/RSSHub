@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['finviz.com/news.ashx', 'finviz.com/'],
-    },
+    radar: [
+        {
+            source: ['finviz.com/news.ashx', 'finviz.com/'],
+        },
+    ],
     name: 'News',
     maintainers: ['nczitzk'],
     handler,

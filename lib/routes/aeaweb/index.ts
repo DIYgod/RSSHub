@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['aeaweb.org/journals/:id', 'aeaweb.org/'],
-    },
+    radar: [
+        {
+            source: ['aeaweb.org/journals/:id', 'aeaweb.org/'],
+        },
+    ],
     name: 'Journal',
     maintainers: ['nczitzk'],
     handler,
@@ -108,5 +110,6 @@ async function handler(ctx) {
         description,
         link: currentUrl,
         item: items,
+        language: $('html').attr('lang'),
     };
 }

@@ -14,17 +14,25 @@ export const route: Route = {
     example: '/pixabay/search/cat',
     parameters: { q: 'Search term', order: 'Order, `popular` or `latest`, `latest` by default' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'PIXABAY_KEY',
+                optional: true,
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pixabay.com/:searchType/search/:q'],
-        target: '/search/:q',
-    },
+    radar: [
+        {
+            source: ['pixabay.com/:searchType/search/:q'],
+            target: '/search/:q',
+        },
+    ],
     name: 'Search',
     maintainers: ['TonyRL'],
     handler,

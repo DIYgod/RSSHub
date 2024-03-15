@@ -12,7 +12,12 @@ export const route: Route = {
     example: '/weibo/group/4541216424989965',
     parameters: { gid: '分组id, 在网页版分组地址栏末尾`?gid=`处获取', gname: '分组显示名称; 默认为: `微博分组`', routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'WEIBO_COOKIES',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -103,13 +108,10 @@ async function handler(ctx) {
         })
     );
 
-    ctx.set(
-        'data',
-        weiboUtils.sinaimgTvax({
-            title: groupName,
-            link: `https://weibo.com/mygroups?gid=${gid}`,
-            description: '微博自定义分组',
-            item: resultItems,
-        })
-    );
+    return weiboUtils.sinaimgTvax({
+        title: groupName,
+        link: `https://weibo.com/mygroups?gid=${gid}`,
+        description: '微博自定义分组',
+        item: resultItems,
+    });
 }

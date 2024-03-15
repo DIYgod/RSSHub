@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nautil.us/topics/:tid'],
-    },
+    radar: [
+        {
+            source: ['nautil.us/topics/:tid'],
+        },
+    ],
     name: 'Topics',
     maintainers: ['emdoe'],
     handler,

@@ -29,9 +29,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['nber.org/papers'],
-    },
+    radar: [
+        {
+            source: ['nber.org/papers'],
+        },
+    ],
     name: 'All Papers',
     maintainers: [],
     handler,
@@ -74,5 +76,6 @@ async function handler(ctx) {
         link: 'https://www.nber.org/papers',
         item: items,
         description: `National Bureau of Economic Research Working Papers articles`,
+        language: $('html').attr('lang'),
     };
 }

@@ -12,9 +12,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.dongqiudi.com/special/48'],
-    },
+    radar: [
+        {
+            source: ['www.dongqiudi.com/special/48'],
+        },
+    ],
     name: '早报',
     maintainers: ['HenryQW'],
     handler,

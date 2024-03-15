@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['weibo.com/p/:id/super_index'],
-        target: '/super_index/:id',
-    },
+    radar: [
+        {
+            source: ['weibo.com/p/:id/super_index'],
+            target: '/super_index/:id',
+        },
+    ],
     name: '超话',
     maintainers: ['zengxs', 'Rongronggg9'],
     handler,
@@ -76,13 +78,10 @@ async function handler(ctx) {
         }
     }
 
-    ctx.set(
-        'data',
-        weiboUtils.sinaimgTvax({
-            title: `微博超话 - ${containerData.pageInfo.page_title}`,
-            link: `https://weibo.com/p/${id}/super_index`,
-            description: `#${containerData.pageInfo.page_title}# 的超话`,
-            item: resultItems,
-        })
-    );
+    return weiboUtils.sinaimgTvax({
+        title: `微博超话 - ${containerData.pageInfo.page_title}`,
+        link: `https://weibo.com/p/${id}/super_index`,
+        description: `#${containerData.pageInfo.page_title}# 的超话`,
+        item: resultItems,
+    });
 }

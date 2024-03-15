@@ -8,16 +8,31 @@ export const route: Route = {
     example: '/spotify/top/tracks',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'SPOTIFY_CLIENT_ID',
+                description: '',
+            },
+            {
+                name: 'SPOTIFY_CLIENT_SECRET',
+                description: '',
+            },
+            {
+                name: 'SPOTIFY_REFRESHTOKEN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['open.spotify.com/'],
-    },
+    radar: [
+        {
+            source: ['open.spotify.com/'],
+        },
+    ],
     name: 'Personal Top Tracks',
     maintainers: ['outloudvi'],
     handler,

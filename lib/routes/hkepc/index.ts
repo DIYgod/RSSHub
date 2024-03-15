@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hkepc.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['hkepc.com/'],
+            target: '',
+        },
+    ],
     name: 'HKEPC 电脑领域',
     maintainers: ['TonyRL'],
     handler,

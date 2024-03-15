@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/:user/:repo/graphs/contributors', 'github.com/:user/:repo'],
-        target: '/contributors/:user/:repo',
-    },
+    radar: [
+        {
+            source: ['github.com/:user/:repo/graphs/contributors', 'github.com/:user/:repo'],
+            target: '/contributors/:user/:repo',
+        },
+    ],
     name: 'Repo Contributors',
     maintainers: ['zoenglinghou'],
     handler,

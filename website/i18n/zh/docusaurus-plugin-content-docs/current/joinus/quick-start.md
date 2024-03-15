@@ -8,7 +8,7 @@ sidebar_position: 1
 
 ## 参与讨论
 
-[![Telegram 群组](https://img.shields.io/badge/chat-telegram-brightgreen.svg?logo=telegram&style=for-the-badge)](https://t.me/rsshub) [![GitHub Issues](https://img.shields.io/github/issues/DIYgod/RSSHub?color=bright-green&logo=github&style=for-the-badge)](https://github.com/DIYgod/RSSHub/issues) [![GitHub 讨论](https://img.shields.io/github/discussions/DIYgod/RSSHub?logo=github&style=for-the-badge)](https://github.com/DIYgod/RSSHub/discussions)
+[![Telegram 群组](https://img.shields.io/badge/chat-telegram-brightgreen.svg?logo=telegram&style=for-the-badge)](https://t.me/rsshub) [![GitHub Issues](https://img.shields.io/github/issues/DIYgod/RSSHub?color=bright-green&logo=github&style=for-the-badge)](https://github.com/DIYgod/RSSHub/issues)
 
 ## 开始之前
 

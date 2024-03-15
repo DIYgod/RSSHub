@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wsbs.wgj.sh.gov.cn/'],
-        target: '/shanghai/wgj',
-    },
+    radar: [
+        {
+            source: ['wsbs.wgj.sh.gov.cn/'],
+            target: '/shanghai/wgj',
+        },
+    ],
     name: '上海市文旅局审批公告',
     maintainers: ['gideonsenku'],
     handler,

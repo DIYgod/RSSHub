@@ -9,16 +9,27 @@ export const route: Route = {
     example: '/spotify/playlist/4UBVy1LttvodwivPUuwJk2',
     parameters: { id: 'Playlist ID' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'SPOTIFY_CLIENT_ID',
+                description: '',
+            },
+            {
+                name: 'SPOTIFY_CLIENT_SECRET',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['open.spotify.com/playlist/:id'],
-    },
+    radar: [
+        {
+            source: ['open.spotify.com/playlist/:id'],
+        },
+    ],
     name: 'Playlist',
     maintainers: ['outloudvi'],
     handler,

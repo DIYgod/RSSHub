@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['kyc.bjfu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['kyc.bjfu.edu.cn/'],
+        },
+    ],
     name: '科技处通知公告',
     maintainers: ['markmingjie'],
     handler,

@@ -25,9 +25,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['chuanliu.org/nice'],
-    },
+    radar: [
+        {
+            source: ['chuanliu.org/nice'],
+        },
+    ],
     name: '严选',
     maintainers: ['nczitzk'],
     handler,

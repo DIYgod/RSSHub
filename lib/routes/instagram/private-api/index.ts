@@ -61,7 +61,13 @@ export const route: Route = {
     example: '/instagram/user/stefaniejoosten',
     parameters: { category: 'Feed category, see table above', key: 'Username / Hashtag name' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'IG_PROXY',
+                optional: true,
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,

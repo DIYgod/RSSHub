@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['javdb.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['javdb.com/'],
+            target: '',
+        },
+    ],
     name: '演員',
     maintainers: ['nczitzk'],
     handler,
@@ -45,5 +47,5 @@ async function handler(ctx) {
 
     const title = `JavDB${filters[filter] === '' ? '' : ` - ${filters[filter]}`} `;
 
-    ctx.set('data', await utils.ProcessItems(ctx, currentUrl, title));
+    return await utils.ProcessItems(ctx, currentUrl, title);
 }

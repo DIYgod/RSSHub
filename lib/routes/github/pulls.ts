@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/:user/:repo/pulls', 'github.com/:user/:repo/pulls/:id', 'github.com/:user/:repo'],
-        target: '/pull/:user/:repo',
-    },
+    radar: [
+        {
+            source: ['github.com/:user/:repo/pulls', 'github.com/:user/:repo/pulls/:id', 'github.com/:user/:repo'],
+            target: '/pull/:user/:repo',
+        },
+    ],
     name: 'Repo Pull Requests',
     maintainers: [],
     handler,

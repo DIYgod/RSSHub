@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yahoo.com/'],
-    },
+    radar: [
+        {
+            source: ['yahoo.com/'],
+        },
+    ],
     name: 'News',
     maintainers: ['KeiLongW'],
     handler,

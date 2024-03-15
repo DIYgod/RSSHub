@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.cmse.gov.cn/fxrw'],
-    },
+    radar: [
+        {
+            source: ['www.cmse.gov.cn/fxrw'],
+        },
+    ],
     name: '飞行任务',
     maintainers: ['nczitzk'],
     handler,

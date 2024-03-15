@@ -10,7 +10,12 @@ export const route: Route = {
     example: '/medium/tag/imsingee/cybersecurity',
     parameters: { user: 'Username', tag: 'Subscribed Tag' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'MEDIUM_COOKIE_*',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

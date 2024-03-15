@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['e.ecust.edu.cn/engine2/m/38F638B77773ADD3', 'e.ecust.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['e.ecust.edu.cn/engine2/m/38F638B77773ADD3', 'e.ecust.edu.cn/'],
+        },
+    ],
     name: '继续教育学院 - 学院公告',
     maintainers: ['jialinghui'],
     handler,

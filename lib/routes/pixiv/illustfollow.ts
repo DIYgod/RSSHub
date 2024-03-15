@@ -12,16 +12,23 @@ export const route: Route = {
     example: '/pixiv/user/illustfollows',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'PIXIV_REFRESHTOKEN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.pixiv.net/bookmark_new_illust.php'],
-    },
+    radar: [
+        {
+            source: ['www.pixiv.net/bookmark_new_illust.php'],
+        },
+    ],
     name: 'Following timeline',
     maintainers: ['ClarkeCheng'],
     handler,
