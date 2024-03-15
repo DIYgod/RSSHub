@@ -9,10 +9,13 @@ import getNovelContent from './api/get-novel-content';
 const novelTextRe = /"text":"(.+?[^\\])"/;
 
 export const route: Route = {
-    path: '/novel/series/:id',
+    path: '/novel/series/:id/:lang?',
     categories: ['social-media'],
     example: '/pixiv/user/novels/1394738',
-    parameters: { id: "Novel series id, available in novel series' homepage URL" },
+    parameters: {
+        id: "Novel series id, available in novel series' homepage URL",
+        lang: 'IETF BCP 47 language tag that helps RSS readers choose the right font',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -58,12 +61,19 @@ async function handler(ctx) {
         link: `https://www.pixiv.net/novel/show.php?id=${novel.id}`,
     }));
 
+    let langDivLeft = '';
+    let langDivRight = '';
+    const lang = ctx.req.param('lang');
+    if (lang) {
+        langDivLeft = `<div lang="${lang}">`;
+        langDivRight = '</div>';
+    }
     const items = await Promise.all(
         novels.map((novel) =>
             cache.tryGet(novel.link, async () => {
                 const content = await getNovelContent(novel.novelId, token);
                 const rawText = novelTextRe.exec(content.data)[1];
-                novel.description = `<p>${unescape(rawText.replaceAll('\\u', '%u'))}</p>`
+                novel.description = `${langDivLeft}<p>${unescape(rawText.replaceAll('\\u', '%u'))}</p>${langDivRight}`
                     .replaceAll('\\n', '</p><p>')
                     .replaceAll('\\t', '\t')
                     .replaceAll('\\', '')
