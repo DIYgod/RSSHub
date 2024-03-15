@@ -14645,7 +14645,7 @@
           "daijinru",
           "hestudy"
         ],
-        "description": "\n    | javascript | node | react |\n    | ---------- | ---- | ----- |\n    | js         | node | react |",
+        "description": "| javascript | node | react |\n    | ---------- | ---- | ----- |\n    | js         | node | react |",
         "radar": [
           {
             "source": [
@@ -14771,15 +14771,6 @@
           "new-media"
         ],
         "example": "/dongqiudi/daily",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -14804,14 +14795,13 @@
         "parameters": {
           "id": "球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
+        "radar": [
+          {
+            "source": [
+              "www.dongqiudi.com/player/*id"
+            ]
+          }
+        ],
         "name": "球员新闻",
         "maintainers": [
           "HenryQW"
@@ -14827,14 +14817,13 @@
         "parameters": {
           "team": "球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
+        "radar": [
+          {
+            "source": [
+              "www.dongqiudi.com/team/*team"
+            ]
+          }
+        ],
         "name": "足球赛果",
         "maintainers": [
           "HenryQW"
@@ -14849,14 +14838,6 @@
         "example": "/dongqiudi/special/41",
         "parameters": {
           "id": "专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
         },
         "radar": [
           {
@@ -14881,14 +14862,13 @@
         "parameters": {
           "team": "球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
+        "radar": [
+          {
+            "source": [
+              "www.dongqiudi.com/team/*team"
+            ]
+          }
+        ],
         "name": "球队新闻",
         "maintainers": [
           "HenryQW"
