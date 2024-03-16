@@ -20,11 +20,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15;
-
-    const defaultPath = '/sj/zxfb/';
-
     const rootUrl = 'http://www.stats.gov.cn';
-    const currentUrl = `${rootUrl}${getSubPath(ctx) === '/stats' ? defaultPath : getSubPath(ctx).replace(/^\/stats(.*)/, '$1/')}`;
+
+    const pathname = getSubPath(ctx) === '/stats' ? '/sj/zxfb/' : getSubPath(ctx).replace(/^\/stats(.*)/, '$1');
+    const currentUrl = `${rootUrl}${pathname.endsWith('/') ? pathname : pathname + '/'}`;
 
     let response = await got({
         method: 'get',
