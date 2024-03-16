@@ -30,7 +30,7 @@ async function handler(ctx) {
     const uid = Number.parseInt(ctx.req.param('uid'));
     const sid = Number.parseInt(ctx.req.param('sid'));
     const disableEmbed = ctx.req.param('disableEmbed');
-    const page = Number.parseInt(ctx.req.param('page')) ?? 1;
+    const page = ctx.req.param('page') ? Number.parseInt(ctx.req.param('page')) : 1;
     const limit = ctx.req.query('limit') ?? 25;
 
     const link = `https://space.bilibili.com/${uid}/channel/collectiondetail?sid=${sid}`;
