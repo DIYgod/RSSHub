@@ -8,17 +8,37 @@ export const route: Route = {
     categories: ['new-media'],
     example: '/modian/zhongchou',
     parameters: { category: '分类，见下表，默认为全部', sort: '排序，见下表，默认为最新上线', status: '状态，见下表，默认为全部' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: '众筹',
     maintainers: ['nczitzk'],
-    description: "分类\n\n  | 全部 | 游戏  | 动漫   | 出版       | 桌游       |\n  | ---- | ----- | ------ | ---------- | ---------- |\n  | all  | games | comics | publishing | tablegames |\n\n  | 卡牌  | 潮玩模型 | 影视       | 音乐  | 活动       |\n  | ----- | -------- | ---------- | ----- | ---------- |\n  | cards | toys     | film-video | music | activities |\n\n  | 设计   | 科技       | 食品 | 爱心通道 | 动物救助 |\n  | ------ | ---------- | ---- | -------- | -------- |\n  | design | technology | food | charity  | animals  |\n\n  | 个人愿望 | 其他   |\n  | -------- | ------ |\n  | wishes   | others |\n\n  排序\n\n  | 最新上线  | 金额最高   | 评论最多     |\n  | --------- | ---------- | ------------ |\n  | top\_time | top\_money | top\_comment |\n\n  状态\n\n  | 全部 | 创意 | 预热    | 众筹中 | 众筹成功 |\n  | ---- | ---- | ------- | ------ | -------- |\n  | all  | idea | preheat | going  | success  |",
+    description: `分类
+
+    | 全部 | 游戏  | 动漫   | 出版       | 桌游       |
+    | ---- | ----- | ------ | ---------- | ---------- |
+    | all  | games | comics | publishing | tablegames |
+  
+    | 卡牌  | 潮玩模型 | 影视       | 音乐  | 活动       |
+    | ----- | -------- | ---------- | ----- | ---------- |
+    | cards | toys     | film-video | music | activities |
+  
+    | 设计   | 科技       | 食品 | 爱心通道 | 动物救助 |
+    | ------ | ---------- | ---- | -------- | -------- |
+    | design | technology | food | charity  | animals  |
+  
+    | 个人愿望 | 其他   |
+    | -------- | ------ |
+    | wishes   | others |
+  
+    排序
+  
+    | 最新上线  | 金额最高   | 评论最多     |
+    | --------- | ---------- | ------------ |
+    | top\_time | top\_money | top\_comment |
+  
+    状态
+  
+    | 全部 | 创意 | 预热    | 众筹中 | 众筹成功 |
+    | ---- | ---- | ------- | ------ | -------- |
+    | all  | idea | preheat | going  | success  |`,
     handler,
 };
 
