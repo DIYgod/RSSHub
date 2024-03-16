@@ -47,7 +47,8 @@ async function handler() {
     const out = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got('https://jwc.ouc.edu.cn' + item.link);
+                const link = item.link.startsWith('http') ? item.link : 'https://jwc.ouc.edu.cn' + item.link;
+                const response = await got(link);
                 const $ = load(response.data);
                 item.author = '中国海洋大学教务处';
                 item.description = $('.wp_articlecontent').html();
