@@ -24,10 +24,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['x-mol.com/news/index'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['x-mol.com/news/index'],
+            target: '/news',
+        },
+    ],
     name: 'News',
     maintainers: ['cssxsh'],
     handler,

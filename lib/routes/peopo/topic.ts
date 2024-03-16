@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['peopo.org/topic/:topicId'],
-        target: '/topic/:topicId',
-    },
+    radar: [
+        {
+            source: ['peopo.org/topic/:topicId'],
+            target: '/topic/:topicId',
+        },
+    ],
     name: '新聞分類',
     maintainers: [],
     handler,

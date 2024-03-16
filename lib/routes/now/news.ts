@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.now.com/'],
-    },
+    radar: [
+        {
+            source: ['news.now.com/'],
+        },
+    ],
     name: '新聞',
     maintainers: ['nczitzk'],
     handler,

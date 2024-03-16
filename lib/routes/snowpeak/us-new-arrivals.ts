@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['snowpeak.com/collections/new-arrivals', 'snowpeak.com/'],
-    },
+    radar: [
+        {
+            source: ['snowpeak.com/collections/new-arrivals', 'snowpeak.com/'],
+        },
+    ],
     name: 'New Arrivals(USA)',
     maintainers: ['EthanWng97'],
     handler,

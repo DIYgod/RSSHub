@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sigsac.org/ccs.html', 'sigsac.org/'],
-    },
+    radar: [
+        {
+            source: ['sigsac.org/ccs.html', 'sigsac.org/'],
+        },
+    ],
     name: 'The ACM Conference on Computer and Communications Security',
     maintainers: [],
     handler,

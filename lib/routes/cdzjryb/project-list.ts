@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zw.cdzjryb.com/lottery/accept/projectList', 'zw.cdzjryb.com/'],
-    },
+    radar: [
+        {
+            source: ['zw.cdzjryb.com/lottery/accept/projectList', 'zw.cdzjryb.com/'],
+        },
+    ],
     name: '商品住房购房登记',
     maintainers: ['TonyRL'],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['today.line.me/:edition/v2/publisher/:id'],
-    },
+    radar: [
+        {
+            source: ['today.line.me/:edition/v2/publisher/:id'],
+        },
+    ],
     name: 'TODAY - Channel',
     maintainers: ['TonyRL'],
     handler,

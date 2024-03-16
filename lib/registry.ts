@@ -1,6 +1,6 @@
 import type { Namespace, Route } from '@/types';
 import { directoryImport } from 'directory-import';
-import type { Hono, Handler } from 'hono';
+import { Hono, type Handler } from 'hono';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { serveStatic } from '@hono/node-server/serve-static';
@@ -91,32 +91,31 @@ if (Object.keys(modules).length) {
 
 export { namespaces };
 
-export default function (app: Hono) {
-    for (const namespace in namespaces) {
-        const subApp = app.basePath(`/${namespace}`);
-        for (const path in namespaces[namespace].routes) {
-            const wrapedHandler: Handler = async (ctx) => {
-                if (!ctx.get('data')) {
-                    if (typeof namespaces[namespace].routes[path].handler !== 'function') {
-                        const { route } = await import(`./routes/${namespace}/${namespaces[namespace].routes[path].location}`);
-                        namespaces[namespace].routes[path].handler = route.handler;
-                    }
-                    ctx.set('data', await namespaces[namespace].routes[path].handler(ctx));
+const app = new Hono();
+for (const namespace in namespaces) {
+    const subApp = app.basePath(`/${namespace}`);
+    for (const path in namespaces[namespace].routes) {
+        const wrapedHandler: Handler = async (ctx) => {
+            if (!ctx.get('data')) {
+                if (typeof namespaces[namespace].routes[path].handler !== 'function') {
+                    const { route } = await import(`./routes/${namespace}/${namespaces[namespace].routes[path].location}`);
+                    namespaces[namespace].routes[path].handler = route.handler;
                 }
-            };
-            subApp.get(path, wrapedHandler);
-        }
+                ctx.set('data', await namespaces[namespace].routes[path].handler(ctx));
+            }
+        };
+        subApp.get(path, wrapedHandler);
     }
-
-    // routes without rss data
-    app.get('/', index);
-    app.get('/robots.txt', robotstxt);
-
-    app.use(
-        '/*',
-        serveStatic({
-            root: './lib/assets',
-            rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
-        })
-    );
 }
+
+app.get('/', index);
+app.get('/robots.txt', robotstxt);
+app.use(
+    '/*',
+    serveStatic({
+        root: './lib/assets',
+        rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
+    })
+);
+
+export default app;

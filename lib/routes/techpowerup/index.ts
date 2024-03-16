@@ -7,10 +7,12 @@ import { baseUrl, headers, fixImages, parseReviews } from './utils';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['techpowerup.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['techpowerup.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,

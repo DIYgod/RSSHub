@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wap.ciweimao.com/book/:id'],
-    },
+    radar: [
+        {
+            source: ['wap.ciweimao.com/book/:id'],
+        },
+    ],
     name: '章节',
     maintainers: ['keocheung'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['supchina.com/podcasts', 'supchina.com/'],
-    },
+    radar: [
+        {
+            source: ['supchina.com/podcasts', 'supchina.com/'],
+        },
+    ],
     name: 'Podcasts',
     maintainers: ['nczitzk'],
     handler,

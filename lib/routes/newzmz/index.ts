@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['newzmz.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['newzmz.com/'],
+            target: '',
+        },
+    ],
     name: '指定剧集',
     maintainers: ['nczitzk'],
     handler,

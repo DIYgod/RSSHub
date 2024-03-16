@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['backlinko.com/blog', 'backlinko.com/'],
-    },
+    radar: [
+        {
+            source: ['backlinko.com/blog', 'backlinko.com/'],
+        },
+    ],
     name: 'Blog',
     maintainers: ['TonyRL'],
     handler,

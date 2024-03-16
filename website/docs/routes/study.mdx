@@ -22,7 +22,7 @@
 
 ### Keyword Search
 
-<Route namespace="dblp" data={{"path":"/:field","categories":["study"],"example":"/dblp/knowledge%20tracing","parameters":{"field":"Research field"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["dblp.org/:field"]},"name":"Keyword Search","maintainers":["ytno1"],"location":"publication.ts"}} />
+<Route namespace="dblp" data={{"path":"/:field","categories":["study"],"example":"/dblp/knowledge%20tracing","parameters":{"field":"Research field"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["dblp.org/:field"]}],"name":"Keyword Search","maintainers":["ytno1"],"location":"publication.ts"}} />
 
 ## MindMeister
 
@@ -64,7 +64,7 @@
 
 ### 教育部考试中心日本语能力测试重要通知
 
-<Route namespace="neea" data={{"path":"/jlpt","categories":["study"],"example":"/neea/jlpt","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["jlpt.neea.cn/"]},"name":"教育部考试中心日本语能力测试重要通知","maintainers":["nczitzk"],"url":"jlpt.neea.cn/","location":"jlpt.ts"}} />
+<Route namespace="neea" data={{"path":"/jlpt","categories":["study"],"example":"/neea/jlpt","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["jlpt.neea.cn/"]}],"name":"教育部考试中心日本语能力测试重要通知","maintainers":["nczitzk"],"url":"jlpt.neea.cn/","location":"jlpt.ts"}} />
 
 ## ORCID
 
@@ -76,7 +76,7 @@
 
 ### Thesis
 
-<Route namespace="kimlaw" data={{"path":"/thesis","categories":["study"],"example":"/kimlaw/thesis","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["kimlaw.or.kr/67","kimlaw.or.kr/"]},"name":"Thesis","maintainers":["TonyRL"],"url":"kimlaw.or.kr/67","location":"thesis.ts"}} />
+<Route namespace="kimlaw" data={{"path":"/thesis","categories":["study"],"example":"/kimlaw/thesis","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["kimlaw.or.kr/67","kimlaw.or.kr/"]}],"name":"Thesis","maintainers":["TonyRL"],"url":"kimlaw.or.kr/67","location":"thesis.ts"}} />
 
 ## Tableau
 
@@ -88,13 +88,13 @@
 
 ### News
 
-<Route namespace="x-mol" data={{"path":"/news/:tag?","categories":["study"],"example":"/x-mol/news/3","parameters":{"tag":"Tag number, can be obtained from news list URL. Empty value means news index."},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["x-mol.com/news/index"],"target":"/news"},"name":"News","maintainers":["cssxsh"],"url":"x-mol.com/news/index","location":"news.ts"}} />
+<Route namespace="x-mol" data={{"path":"/news/:tag?","categories":["study"],"example":"/x-mol/news/3","parameters":{"tag":"Tag number, can be obtained from news list URL. Empty value means news index."},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["x-mol.com/news/index"],"target":"/news"}],"name":"News","maintainers":["cssxsh"],"url":"x-mol.com/news/index","location":"news.ts"}} />
 
 ## 福建考试报名网
 
 ### 分类
 
-<Route namespace="fjksbm" data={{"path":"/:category?","categories":["study"],"example":"/fjksbm","parameters":{"category":"分类，见下表，默认为网络报名进行中"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["fjksbm.com/portal/:category?","fjksbm.com/portal"]},"name":"分类","maintainers":["nczitzk"],"description":"| 已发布公告 (方案)，即将开始 | 网络报名进行中 | 网络报名结束等待打印准考证 | 正在打印准考证 | 考试结束，等待发布成绩 | 已发布成绩 | 新闻动态 | 政策法规 |\n  | --------------------------- | -------------- | -------------------------- | -------------- | ---------------------- | ---------- | -------- | -------- |\n  | 0                           | 1              | 2                          | 3              | 4                      | 5          | news     | policy   |","location":"index.ts"}} />
+<Route namespace="fjksbm" data={{"path":"/:category?","categories":["study"],"example":"/fjksbm","parameters":{"category":"分类，见下表，默认为网络报名进行中"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["fjksbm.com/portal/:category?","fjksbm.com/portal"]}],"name":"分类","maintainers":["nczitzk"],"description":"| 已发布公告 (方案)，即将开始 | 网络报名进行中 | 网络报名结束等待打印准考证 | 正在打印准考证 | 考试结束，等待发布成绩 | 已发布成绩 | 新闻动态 | 政策法规 |\n  | --------------------------- | -------------- | -------------------------- | -------------- | ---------------------- | ---------- | -------- | -------- |\n  | 0                           | 1              | 2                          | 3              | 4                      | 5          | news     | policy   |","location":"index.ts"}} />
 
 | 已发布公告 (方案)，即将开始 | 网络报名进行中 | 网络报名结束等待打印准考证 | 正在打印准考证 | 考试结束，等待发布成绩 | 已发布成绩 | 新闻动态 | 政策法规 |
   | --------------------------- | -------------- | -------------------------- | -------------- | ---------------------- | ---------- | -------- | -------- |
@@ -104,7 +104,7 @@
 
 ### 公告
 
-<Route namespace="hunanpea" data={{"path":"/rsks/:guid","categories":["study"],"example":"/hunanpea/rsks/2f1a6239-b4dc-491b-92af-7d95e0f0543e","parameters":{"guid":"分类 id，可在 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["rsks.hunanpea.com/Category/:guid/ArticlesByCategory.do"]},"name":"公告","maintainers":["TonyRL"],"location":"rsks.ts"}} />
+<Route namespace="hunanpea" data={{"path":"/rsks/:guid","categories":["study"],"example":"/hunanpea/rsks/2f1a6239-b4dc-491b-92af-7d95e0f0543e","parameters":{"guid":"分类 id，可在 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["rsks.hunanpea.com/Category/:guid/ArticlesByCategory.do"]}],"name":"公告","maintainers":["TonyRL"],"location":"rsks.ts"}} />
 
 ## 山东省教育招生考试院
 
@@ -136,7 +136,7 @@
 
 ### 自学考试通知公告
 
-<Route namespace="shmeea" data={{"path":"/self-study","categories":["study"],"example":"/shmeea/self-study","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.shmeea.edu.cn/page/04000/index.html","www.shmeea.edu.cn/"]},"name":"自学考试通知公告","maintainers":["h2ws"],"url":"www.shmeea.edu.cn/page/04000/index.html","location":"self-study.ts"}} />
+<Route namespace="shmeea" data={{"path":"/self-study","categories":["study"],"example":"/shmeea/self-study","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.shmeea.edu.cn/page/04000/index.html","www.shmeea.edu.cn/"]}],"name":"自学考试通知公告","maintainers":["h2ws"],"url":"www.shmeea.edu.cn/page/04000/index.html","location":"self-study.ts"}} />
 
 ## 网易公开课
 
@@ -146,13 +146,13 @@
 
 ### 精品课程
 
-<Route namespace="163" data={{"path":"/open/vip","categories":["study"],"example":"/163/open/vip","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["vip.open.163.com/"]},"name":"精品课程","maintainers":["hoilc"],"url":"vip.open.163.com/","location":"open/vip.ts"}} />
+<Route namespace="163" data={{"path":"/open/vip","categories":["study"],"example":"/163/open/vip","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["vip.open.163.com/"]}],"name":"精品课程","maintainers":["hoilc"],"url":"vip.open.163.com/","location":"open/vip.ts"}} />
 
 ## 语雀
 
 ### 知识库
 
-<Route namespace="yuque" data={{"path":"/:name/:book","categories":["study"],"example":"/yuque/ruanyf/weekly","parameters":{"name":"用戶名","book":"知识库 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yuque.com/:name/:book"]},"name":"知识库","maintainers":["aha2mao","ltaoo"],"description":"| Node.js 专栏                                             | 阮一峰每周分享                                                 | 语雀使用手册                                             |\n  | -------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------- |\n  | [/yuque/egg/nodejs](https://rsshub.app/yuque/egg/nodejs) | [/yuque/ruanyf/weekly](https://rsshub.app/yuque/ruanyf/weekly) | [/yuque/yuque/help](https://rsshub.app/yuque/yuque/help) |","location":"book.ts"}} />
+<Route namespace="yuque" data={{"path":"/:name/:book","categories":["study"],"example":"/yuque/ruanyf/weekly","parameters":{"name":"用戶名","book":"知识库 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["yuque.com/:name/:book"]}],"name":"知识库","maintainers":["aha2mao","ltaoo"],"description":"| Node.js 专栏                                             | 阮一峰每周分享                                                 | 语雀使用手册                                             |\n  | -------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------- |\n  | [/yuque/egg/nodejs](https://rsshub.app/yuque/egg/nodejs) | [/yuque/ruanyf/weekly](https://rsshub.app/yuque/ruanyf/weekly) | [/yuque/yuque/help](https://rsshub.app/yuque/yuque/help) |","location":"book.ts"}} />
 
 | Node.js 专栏                                             | 阮一峰每周分享                                                 | 语雀使用手册                                             |
   | -------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------- |
@@ -168,7 +168,7 @@
 
 ### 栏目
 
-<Route namespace="camchina" data={{"path":"/:id?","categories":["study"],"example":"/camchina","parameters":{"id":"分类，见下表，默认为 1，即新闻"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["cste.org.cn/categories/:id","cste.org.cn/"]},"name":"栏目","maintainers":["nczitzk"],"description":"| 新闻 | 通告栏 |\n  | ---- | ------ |\n  | 1    | 2      |","location":"index.ts"}} />
+<Route namespace="camchina" data={{"path":"/:id?","categories":["study"],"example":"/camchina","parameters":{"id":"分类，见下表，默认为 1，即新闻"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["cste.org.cn/categories/:id","cste.org.cn/"]}],"name":"栏目","maintainers":["nczitzk"],"description":"| 新闻 | 通告栏 |\n  | ---- | ------ |\n  | 1    | 2      |","location":"index.ts"}} />
 
 | 新闻 | 通告栏 |
   | ---- | ------ |
@@ -178,7 +178,7 @@
 
 ### 大数据专家委员会
 
-<Route namespace="ccf" data={{"path":"/tfbd/:caty/:id","categories":["study"],"example":"/ccf/tfbd/xwdt/tzgg","parameters":{"caty":"主分类，可在 URL 找到","id":"子分类，可在 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["tfbd.ccf.org.cn/tfbd/:caty/:id","tfbd.ccf.org.cn/"]},"name":"大数据专家委员会","maintainers":["tudou027"],"location":"tfbd/index.ts"}} />
+<Route namespace="ccf" data={{"path":"/tfbd/:caty/:id","categories":["study"],"example":"/ccf/tfbd/xwdt/tzgg","parameters":{"caty":"主分类，可在 URL 找到","id":"子分类，可在 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["tfbd.ccf.org.cn/tfbd/:caty/:id","tfbd.ccf.org.cn/"]}],"name":"大数据专家委员会","maintainers":["tudou027"],"location":"tfbd/index.ts"}} />
 
 ### 计算机视觉专委会 - 学术动态 - 分类
 
@@ -190,7 +190,7 @@
 
 ### 新闻
 
-<Route namespace="ccf" data={{"path":"/news/:category?","categories":["study"],"example":"/ccf/news","parameters":{"category":"分类，见下表，默认为 CCF 新闻"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ccf.org.cn/:category","ccf.org.cn/"],"target":"/news/:category"},"name":"新闻","maintainers":["nczitzk"],"description":"| CCF 新闻    | CCF 聚焦 | ACM 信息  |\n  | ----------- | -------- | --------- |\n  | Media_list | Focus    | ACM_News |","location":"news.ts"}} />
+<Route namespace="ccf" data={{"path":"/news/:category?","categories":["study"],"example":"/ccf/news","parameters":{"category":"分类，见下表，默认为 CCF 新闻"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ccf.org.cn/:category","ccf.org.cn/"],"target":"/news/:category"}],"name":"新闻","maintainers":["nczitzk"],"description":"| CCF 新闻    | CCF 聚焦 | ACM 信息  |\n  | ----------- | -------- | --------- |\n  | Media_list | Focus    | ACM_News |","location":"news.ts"}} />
 
 | CCF 新闻    | CCF 聚焦 | ACM 信息  |
   | ----------- | -------- | --------- |
@@ -260,15 +260,15 @@
 
 ### 考研热点新闻
 
-<Route namespace="chsi" data={{"path":"/hotnews","categories":["study"],"example":"/chsi/hotnews","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yz.chsi.com.cn/"]},"name":"考研热点新闻","maintainers":["yanbot-team"],"url":"yz.chsi.com.cn/","location":"hotnews.ts"}} />
+<Route namespace="chsi" data={{"path":"/hotnews","categories":["study"],"example":"/chsi/hotnews","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["yz.chsi.com.cn/"]}],"name":"考研热点新闻","maintainers":["yanbot-team"],"url":"yz.chsi.com.cn/","location":"hotnews.ts"}} />
 
 ### 考研动态
 
-<Route namespace="chsi" data={{"path":"/kydt","categories":["study"],"example":"/chsi/kydt","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yz.chsi.com.cn/kyzx/kydt"]},"name":"考研动态","maintainers":["SunBK201"],"url":"yz.chsi.com.cn/kyzx/kydt","location":"kydt.ts"}} />
+<Route namespace="chsi" data={{"path":"/kydt","categories":["study"],"example":"/chsi/kydt","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["yz.chsi.com.cn/kyzx/kydt"]}],"name":"考研动态","maintainers":["SunBK201"],"url":"yz.chsi.com.cn/kyzx/kydt","location":"kydt.ts"}} />
 
 ### 考研资讯
 
-<Route namespace="chsi" data={{"path":"/kyzx/:type","categories":["study"],"example":"/chsi/kyzx/fstj","parameters":{"type":" type 见下表，亦可在网站 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yz.chsi.com.cn/kyzx/:type"]},"name":"考研资讯","maintainers":["yanbot-team"],"description":"| `:type` | 专题名称 |\n  | ------- | -------- |\n  | fstj    | 复试调剂 |\n  | kydt    | 考研动态 |\n  | zcdh    | 政策导航 |\n  | kyrw    | 考研人物 |\n  | jyxd    | 经验心得 |","location":"kyzx.ts"}} />
+<Route namespace="chsi" data={{"path":"/kyzx/:type","categories":["study"],"example":"/chsi/kyzx/fstj","parameters":{"type":" type 见下表，亦可在网站 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["yz.chsi.com.cn/kyzx/:type"]}],"name":"考研资讯","maintainers":["yanbot-team"],"description":"| `:type` | 专题名称 |\n  | ------- | -------- |\n  | fstj    | 复试调剂 |\n  | kydt    | 考研动态 |\n  | zcdh    | 政策导航 |\n  | kyrw    | 考研人物 |\n  | jyxd    | 经验心得 |","location":"kyzx.ts"}} />
 
 | `:type` | 专题名称 |
   | ------- | -------- |

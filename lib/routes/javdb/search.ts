@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['javdb.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['javdb.com/'],
+            target: '',
+        },
+    ],
     name: '搜索',
     maintainers: ['nczitzk'],
     handler,
@@ -64,5 +66,5 @@ async function handler(ctx) {
 
     const title = `關鍵字 ${keyword} ${filters[filter] === '' ? '' : `+ ${filters[filter]}`} ${sorts[sort]} 搜索結果 - JavDB`;
 
-    ctx.set('data', await utils.ProcessItems(ctx, currentUrl, title));
+    return await utils.ProcessItems(ctx, currentUrl, title);
 }

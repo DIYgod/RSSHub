@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pianyuan.org/'],
-        target: '/index',
-    },
+    radar: [
+        {
+            source: ['pianyuan.org/'],
+            target: '/index',
+        },
+    ],
     name: '最新资源',
     maintainers: ['greatcodeeer', 'jerry1119'],
     handler,

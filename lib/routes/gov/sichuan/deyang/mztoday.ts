@@ -133,10 +133,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.mztoday.gov.cn/*'],
-        target: '/sichuan/deyang/mztoday',
-    },
+    radar: [
+        {
+            source: ['www.mztoday.gov.cn/*'],
+            target: '/sichuan/deyang/mztoday',
+        },
+    ],
     name: '今日绵竹',
     maintainers: ['zytomorrow'],
     handler,

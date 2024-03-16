@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['shoac.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['shoac.com.cn/'],
+        },
+    ],
     name: '演出月历',
     maintainers: ['TonyRL'],
     handler,

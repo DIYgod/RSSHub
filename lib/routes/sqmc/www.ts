@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sqmc.edu.cn/:category/list.htm'],
-    },
+    radar: [
+        {
+            source: ['sqmc.edu.cn/:category/list.htm'],
+        },
+    ],
     name: '官网信息',
     maintainers: ['nyaShine'],
     handler,

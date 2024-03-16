@@ -44,8 +44,7 @@ async function handler(ctx) {
 
     const data = response.data.data;
     if (!data.archives) {
-        ctx.set('data', notFoundData);
-        return;
+        return notFoundData;
     }
 
     return {

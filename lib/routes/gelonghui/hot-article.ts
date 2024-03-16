@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gelonghui.com/'],
-        target: '/hot-article',
-    },
+    radar: [
+        {
+            source: ['gelonghui.com/'],
+            target: '/hot-article',
+        },
+    ],
     name: '最热文章',
     maintainers: [],
     handler,

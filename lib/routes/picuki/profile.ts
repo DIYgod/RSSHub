@@ -37,10 +37,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.picuki.com/profile/:id'],
-        target: '/profile/:id',
-    },
+    radar: [
+        {
+            source: ['www.picuki.com/profile/:id'],
+            target: '/profile/:id',
+        },
+    ],
     name: 'User Profile - Picuki',
     maintainers: ['hoilc', 'Rongronggg9', 'devinmugen'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jiuye.swjtu.edu.cn/career', 'jiuye.swjtu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['jiuye.swjtu.edu.cn/career', 'jiuye.swjtu.edu.cn/'],
+        },
+    ],
     name: '就业招聘信息',
     maintainers: ['qizidog'],
     handler,

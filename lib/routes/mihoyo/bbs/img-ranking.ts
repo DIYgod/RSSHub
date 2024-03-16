@@ -52,10 +52,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['miyoushe.com/:game/imgRanking/:forum_id/:ranking_id/:cate_id'],
-        target: '/bbs/img-ranking/:game',
-    },
+    radar: [
+        {
+            source: ['miyoushe.com/:game/imgRanking/:forum_id/:ranking_id/:cate_id'],
+            target: '/bbs/img-ranking/:game',
+        },
+    ],
     name: '米游社 - 同人榜',
     maintainers: ['CaoMeiYouRen'],
     handler,
@@ -138,5 +140,5 @@ async function handler(ctx) {
         link: url,
         item: items,
     };
-    ctx.set('data', data);
+    return data;
 }

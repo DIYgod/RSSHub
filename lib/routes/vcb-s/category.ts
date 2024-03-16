@@ -25,9 +25,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['vcb-s.com/archives/category/:cate'],
-    },
+    radar: [
+        {
+            source: ['vcb-s.com/archives/category/:cate'],
+        },
+    ],
     name: '分类文章',
     maintainers: ['cxfksword'],
     handler,

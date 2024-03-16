@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fisher.spb.ru/news'],
-    },
+    radar: [
+        {
+            source: ['fisher.spb.ru/news'],
+        },
+    ],
     name: 'News',
     maintainers: ['denis-ya'],
     handler,

@@ -64,7 +64,7 @@ export default function Route({
             </p>
             )}
             <p className="path">
-                <Translate id="route.path" /><code>{data.path}</code>
+                <Translate id="route.path" /><code>/{namespace + data.path}</code>
             </p>
             {paramMatch && (
                 <div>

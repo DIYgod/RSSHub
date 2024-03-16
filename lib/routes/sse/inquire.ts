@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.sse.com.cn/disclosure/credibility/supervision/inquiries', 'www.sse.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.sse.com.cn/disclosure/credibility/supervision/inquiries', 'www.sse.com.cn/'],
+        },
+    ],
     name: '监管问询',
     maintainers: ['Jeason0228'],
     handler,

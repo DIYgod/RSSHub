@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.jianshu.com/c/:id'],
-    },
+    radar: [
+        {
+            source: ['www.jianshu.com/c/:id'],
+        },
+    ],
     name: '专题',
     maintainers: ['DIYgod', 'HenryQW', 'JimenezLi'],
     handler,

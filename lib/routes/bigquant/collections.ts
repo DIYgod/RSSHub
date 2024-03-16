@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bigquant.com/'],
-    },
+    radar: [
+        {
+            source: ['bigquant.com/'],
+        },
+    ],
     name: '专题报告',
     maintainers: ['nczitzk'],
     handler,

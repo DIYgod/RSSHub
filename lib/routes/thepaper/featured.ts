@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['thepaper.cn/'],
-    },
+    radar: [
+        {
+            source: ['thepaper.cn/'],
+        },
+    ],
     name: '首页头条',
     maintainers: ['HenryQW', 'nczitzk', 'bigfei'],
     handler,

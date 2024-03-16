@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yuba.douyu.com/group/:id', 'yuba.douyu.com/group/newself/:id', 'yuba.douyu.com/group/newall/:id', 'yuba.douyu.com/'],
-        target: '/group/:id',
-    },
+    radar: [
+        {
+            source: ['yuba.douyu.com/group/:id', 'yuba.douyu.com/group/newself/:id', 'yuba.douyu.com/group/newall/:id', 'yuba.douyu.com/'],
+            target: '/group/:id',
+        },
+    ],
     name: '鱼吧帖子',
     maintainers: ['nczitzk'],
     handler,

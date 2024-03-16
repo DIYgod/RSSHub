@@ -20,5 +20,5 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    ctx.set('data', await FetchGoItems(ctx, 'weekly'));
+    return await FetchGoItems(ctx, 'weekly');
 }

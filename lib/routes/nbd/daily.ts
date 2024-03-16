@@ -12,9 +12,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nbd.com.cn/', 'nbd.com.cn/columns/332'],
-    },
+    radar: [
+        {
+            source: ['nbd.com.cn/', 'nbd.com.cn/columns/332'],
+        },
+    ],
     name: '重磅原创',
     maintainers: ['yuuow'],
     handler,

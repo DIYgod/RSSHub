@@ -13,10 +13,12 @@ const rootUrl = 'https://www.chaincatcher.com';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['chaincatcher.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['chaincatcher.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,

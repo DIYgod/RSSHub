@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yz.chsi.com.cn/kyzx/:type'],
-    },
+    radar: [
+        {
+            source: ['yz.chsi.com.cn/kyzx/:type'],
+        },
+    ],
     name: '考研资讯',
     maintainers: ['yanbot-team'],
     handler,

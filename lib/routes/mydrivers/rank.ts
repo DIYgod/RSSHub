@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['m.mydrivers.com/newsclass.aspx'],
-        target: '/rank',
-    },
+    radar: [
+        {
+            source: ['m.mydrivers.com/newsclass.aspx'],
+            target: '/rank',
+        },
+    ],
     name: '排行',
     maintainers: ['nczitzk'],
     handler,

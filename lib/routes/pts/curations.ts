@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.pts.org.tw/curations', 'news.pts.org.tw/'],
-    },
+    radar: [
+        {
+            source: ['news.pts.org.tw/curations', 'news.pts.org.tw/'],
+        },
+    ],
     name: '專題策展',
     maintainers: ['nczitzk'],
     handler,

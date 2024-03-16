@@ -33,5 +33,5 @@ async function handler(ctx) {
 
     const currentUrl = new URL(`class/${category}.html`, rootUrl).href;
 
-    ctx.set('data', await fetchItems(limit, currentUrl, cache.tryGet));
+    return await fetchItems(limit, currentUrl, cache.tryGet);
 }

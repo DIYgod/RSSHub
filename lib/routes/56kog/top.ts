@@ -29,5 +29,5 @@ async function handler(ctx) {
 
     const currentUrl = new URL(`top/${category.split(/_/)[0]}_1.html`, rootUrl).href;
 
-    ctx.set('data', await fetchItems(limit, currentUrl, cache.tryGet));
+    return await fetchItems(limit, currentUrl, cache.tryGet);
 }

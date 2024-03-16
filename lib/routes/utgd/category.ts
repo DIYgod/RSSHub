@@ -26,10 +26,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['utgd.net/category/s/:category', 'utgd.net/'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['utgd.net/category/s/:category', 'utgd.net/'],
+            target: '/:category',
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,

@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['microsoftedge.microsoft.com/addons/detail/:name/:crxid'],
-    },
+    radar: [
+        {
+            source: ['microsoftedge.microsoft.com/addons/detail/:name/:crxid'],
+        },
+    ],
     name: 'Addons Update',
     maintainers: ['hoilc', 'DIYgod'],
     handler,

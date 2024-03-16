@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.bjfu.edu.cn/:type/index.html'],
-    },
+    radar: [
+        {
+            source: ['news.bjfu.edu.cn/:type/index.html'],
+        },
+    ],
     name: '绿色新闻网',
     maintainers: ['markmingjie'],
     handler,

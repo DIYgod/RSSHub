@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cs.bit.edu.cn/tzgg', 'cs.bit.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['cs.bit.edu.cn/tzgg', 'cs.bit.edu.cn/'],
+        },
+    ],
     name: '计院通知',
     maintainers: ['sinofp'],
     handler,

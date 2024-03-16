@@ -3,10 +3,12 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['grubstreet.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['grubstreet.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['loganrockmore'],
     handler,
@@ -18,5 +20,5 @@ async function handler(ctx) {
     const title = `Grub Street`;
     const description = `New York Magazine's Food and Restaurant Blog`;
 
-    ctx.set('data', await utils.getData(ctx, url, title, description));
+    return await utils.getData(ctx, url, title, description);
 }
