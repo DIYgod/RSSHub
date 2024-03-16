@@ -20,8 +20,6 @@ export const route: Route = {
     handler,
 };
 
-const cacheLength = 5;
-
 async function handler(ctx) {
     const { type = 'release', device, region = 'cn' } = ctx.req.param();
     const releaseType = type === 'release' ? 'F' : 'X';
