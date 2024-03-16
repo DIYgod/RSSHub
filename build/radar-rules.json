@@ -7227,6 +7227,27 @@
       }
     ]
   },
+  "12356782.xyz": {
+    "_name": "极品性感美女",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/:tab"
+        ],
+        "target": "/jpxgmn/:tab"
+      },
+      {
+        "title": "本周热门",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/"
+        ],
+        "target": "/jpxgmn/weekly"
+      }
+    ]
+  },
   "jseea.cn": {
     "_name": "Unknown",
     ".": [

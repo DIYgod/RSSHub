@@ -28904,6 +28904,69 @@
       },
       "name": "Google"
     },
+    "jpxgmn": {
+      "routes": {
+        "/jpxgmn/search/:kw": {
+          "path": "/search/:kw",
+          "categories": [
+            "picture"
+          ],
+          "example": "/jpxgmn/search/candy",
+          "parameters": {
+            "kw": "搜索关键词"
+          },
+          "name": "搜索",
+          "maintainers": [
+            "Urabartin"
+          ],
+          "location": "search.ts"
+        },
+        "/jpxgmn/tab/:tab?": {
+          "path": "/tab/:tab?",
+          "categories": [
+            "picture"
+          ],
+          "example": "/jpxgmn/tab",
+          "parameters": {
+            "tab": "分类，默认为`top`，包括`top`、`new`、`hot`，以及[源网站](http://www.jpxgmn.com/)所包含的其他相对路径，比如`Xiuren`、`XiaoYu`等"
+          },
+          "radar": [
+            {
+              "source": [
+                "www.12356782.xyz/:tab"
+              ],
+              "target": "/:tab"
+            }
+          ],
+          "name": "分类",
+          "maintainers": [
+            "Urabartin"
+          ],
+          "location": "tab.ts"
+        },
+        "/jpxgmn/weekly": {
+          "path": "/weekly",
+          "categories": [
+            "picture"
+          ],
+          "example": "/jpxgmn/weekly",
+          "radar": [
+            {
+              "source": [
+                "www.12356782.xyz/"
+              ],
+              "target": "/weekly"
+            }
+          ],
+          "name": "本周热门",
+          "maintainers": [
+            "Urabartin"
+          ],
+          "location": "weekly.ts"
+        }
+      },
+      "name": "极品性感美女"
+    },
     "nasa": {
       "routes": {
         "/nasa/apod-cn": {

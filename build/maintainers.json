@@ -3019,6 +3019,15 @@
   "/jou/yztzgg": [
     "real-jiakai"
   ],
+  "/jpxgmn/search/:kw": [
+    "Urabartin"
+  ],
+  "/jpxgmn/tab/:tab?": [
+    "Urabartin"
+  ],
+  "/jpxgmn/weekly": [
+    "Urabartin"
+  ],
   "/jseea/news/:type?": [
     "schen1024"
   ],
