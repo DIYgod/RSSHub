@@ -4,11 +4,11 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/',
-    radar: {
+    categories: ['blog'],
+    radar: [{
         source: ['pianyivps.com/'],
-        target: '',
-    },
-    name: 'Unknown',
+    }],
+    name: '最新发布',
     maintainers: ['cnkmmk'],
     handler,
     url: 'pianyivps.com/',
