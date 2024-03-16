@@ -18,17 +18,17 @@ export const route: Route = {
     categories: ['programming'],
     example: '/nosec/hole',
     parameters: { keykind: '对应文章分类' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: 'Posts',
     maintainers: ['hellodword'],
-    description: "  | 分类     | 标识       |\n  | :------- | :--------- |\n  | 威胁情报 | `threaten` |\n  | 安全动态 | `security` |\n  | 漏洞预警 | `hole`     |\n  | 数据泄露 | `leakage`  |\n  | 专题报告 | `speech`   |\n  | 技术分析 | `skill`    |\n  | 安全工具 | `tool`     |",
+    description: `  | 分类     | 标识       |
+    | :------- | :--------- |
+    | 威胁情报 | \`threaten\` |
+    | 安全动态 | \`security\` |
+    | 漏洞预警 | \`hole\`     |
+    | 数据泄露 | \`leakage\`  |
+    | 专题报告 | \`speech\`   |
+    | 技术分析 | \`skill\`    |
+    | 安全工具 | \`tool\`     |`,
     handler,
 };
 
