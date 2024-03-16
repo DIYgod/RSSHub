@@ -15088,19 +15088,6 @@
       }
     ]
   },
-  "zhangyoubao.com": {
-    "_name": "掌游宝",
-    "mobile": [
-      {
-        "title": "推荐",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/:category/"
-        ],
-        "target": "/zhangyoubao/:category"
-      }
-    ]
-  },
   "zhibo8.cc": {
     "_name": "直播吧",
     ".": [
