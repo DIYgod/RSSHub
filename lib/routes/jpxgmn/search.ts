@@ -10,14 +10,6 @@ export const route: Route = {
     categories: ['picture'],
     example: '/jpxgmn/search/candy',
     parameters: { kw: '搜索关键词' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: '搜索',
     maintainers: ['Urabartin'],
     handler,
@@ -34,11 +26,10 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('b').text(),
             link: new URL($(item).find('a').attr('href'), baseUrl).href,
+            pubDate: parseDate($(item).next().next().next().find('span').first().text()),
         }))
         .filter((item) => item.title.length !== 0);
-    for (const [index, info] of $('div.list div.node div.info').toArray().entries()) {
-        items.at(index).pubDate = parseDate($(info).find('span').first().text());
-    }
+
     return {
         title: `极品性感美女搜索 - ${kw}`,
         link: response.url,

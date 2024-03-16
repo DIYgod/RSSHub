@@ -10,14 +10,10 @@ export const route: Route = {
     categories: ['picture'],
     example: '/jpxgmn/tab',
     parameters: { tab: '分类，默认为`top`，包括`top`、`new`、`hot`，以及[源网站](http://www.jpxgmn.com/)所包含的其他相对路径，比如`Xiuren`、`XiaoYu`等' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
+    radar: [{
+        source: ['www.12356782.xyz/:tab'],
+        target: '/:tab',
+    }],
     name: '分类',
     maintainers: ['Urabartin'],
     handler,

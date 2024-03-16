@@ -9,14 +9,10 @@ export const route: Route = {
     path: '/weekly',
     categories: ['picture'],
     example: '/jpxgmn/weekly',
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
+    radar: [{
+        source: ['www.12356782.xyz/'],
+        target: '/weekly',
+    }],
     name: '本周热门',
     maintainers: ['Urabartin'],
     handler,
