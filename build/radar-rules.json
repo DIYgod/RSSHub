@@ -9708,6 +9708,19 @@
       }
     ]
   },
+  "pianyivps.com": {
+    "_name": "便宜VPS网",
+    ".": [
+      {
+        "title": "最新发布",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/pianyivps/"
+      }
+    ]
+  },
   "pianyuan.org": {
     "_name": "片源网",
     ".": [

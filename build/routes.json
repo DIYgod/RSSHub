@@ -40494,6 +40494,31 @@
     "name": "Phoronix",
     "url": "phoronix.com"
   },
+  "pianyivps": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "blog"
+        ],
+        "radar": [
+          {
+            "source": [
+              "pianyivps.com/"
+            ]
+          }
+        ],
+        "name": "最新发布",
+        "maintainers": [
+          "cnkmmk"
+        ],
+        "url": "pianyivps.com/",
+        "location": "rss.ts"
+      }
+    },
+    "name": "便宜VPS网",
+    "url": "pianyivps.com"
+  },
   "pianyuan": {
     "routes": {
       "/index/:media?": {
