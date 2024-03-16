@@ -28607,9 +28607,15 @@
             "requireConfig": false,
             "requirePuppeteer": false,
             "antiCrawler": false,
+            "supportRadar": true,
             "supportBT": false,
             "supportPodcast": false,
             "supportScihub": false
+          },
+          "radar": {
+            "source": [
+              "mmda.booru.org/index.php"
+            ]
           },
           "name": "MMDArchive 标签查询",
           "maintainers": [
