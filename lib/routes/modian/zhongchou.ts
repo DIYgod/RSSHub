@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/zhongchou/:category?/:sort?/:status?',
-    categories: ['new-media'],
+    categories: ['shopping'],
     example: '/modian/zhongchou',
     parameters: { category: '分类，见下表，默认为全部', sort: '排序，见下表，默认为最新上线', status: '状态，见下表，默认为全部' },
     name: '众筹',
@@ -15,31 +15,36 @@ export const route: Route = {
     | 全部 | 游戏  | 动漫   | 出版       | 桌游       |
     | ---- | ----- | ------ | ---------- | ---------- |
     | all  | games | comics | publishing | tablegames |
-  
+
     | 卡牌  | 潮玩模型 | 影视       | 音乐  | 活动       |
     | ----- | -------- | ---------- | ----- | ---------- |
     | cards | toys     | film-video | music | activities |
-  
+
     | 设计   | 科技       | 食品 | 爱心通道 | 动物救助 |
     | ------ | ---------- | ---- | -------- | -------- |
     | design | technology | food | charity  | animals  |
-  
+
     | 个人愿望 | 其他   |
     | -------- | ------ |
     | wishes   | others |
-  
+
     排序
-  
+
     | 最新上线  | 金额最高   | 评论最多     |
     | --------- | ---------- | ------------ |
     | top\_time | top\_money | top\_comment |
-  
+
     状态
-  
+
     | 全部 | 创意 | 预热    | 众筹中 | 众筹成功 |
     | ---- | ---- | ------- | ------ | -------- |
     | all  | idea | preheat | going  | success  |`,
     handler,
+    radar: [
+        {
+            source: ['zhongchou.modian.com/:category/:sort/:status'],
+        },
+    ],
 };
 
 async function handler(ctx) {
@@ -93,4 +98,4 @@ async function handler(ctx) {
         link: currentUrl,
         item: items,
     };
-};
+}
