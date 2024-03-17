@@ -16,19 +16,10 @@ export const route: Route = {
     example: '/fanxinzhui',
     categories: ['multimedia'],
 
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportRadar: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
+    radar: [{
         source: ['fanxinzhui.com/lastest'],
-        target: '/fanxinzhui',
-    },
+        target: '/',
+    }],
 };
 
 async function handler(ctx) {
