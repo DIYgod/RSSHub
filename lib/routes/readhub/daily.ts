@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-import { rootUrl, processItems } from './util';
+import { rootUrl, apiRootUrl, processItems } from './util';
 
 export const route: Route = {
     path: '/daily',
@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '每日早报',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'fashioncj'],
     handler,
     url: 'readhub.cn/daily',
 };
@@ -32,21 +32,24 @@ export const route: Route = {
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
 
-    const currentUrl = new URL('daily', rootUrl).href;
+    const currentUrl = new URL('daily', apiRootUrl).href;
+    const infoUrl = new URL('daily', rootUrl).href;
 
     const { data: currentResponse } = await got(currentUrl);
 
-    const dailyItems = JSON.parse(currentResponse.match(/{\\"daily\\":(.*?),\\"ts\\":\d+/)[1].replaceAll('\\"', '"'));
+    const dailyItems = currentResponse.data.items;
 
     let items = dailyItems.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(`topic/${item.uid}`, rootUrl).href,
+        description: `<p>${item.summary}</p>`,
         guid: item.uid,
     }));
 
     items = await processItems(items, cache.tryGet);
 
-    const $ = load(currentResponse);
+    const { data: currentHTMLResponse } = await got(infoUrl);
+    const $ = load(currentHTMLResponse);
 
     const author = $('meta[name="application-name"]').prop('content');
     const subtitle = $('meta[property="og:title"]').prop('content');
