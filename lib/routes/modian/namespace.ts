@@ -1,6 +1,6 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'NOSEC 安全讯息平台',
-    url: 'nosec.org',
+    name: '摩点',
+    url: 'modian.com',
 };
