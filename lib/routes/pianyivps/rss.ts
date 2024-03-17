@@ -5,9 +5,11 @@ import got from '@/utils/got';
 export const route: Route = {
     path: '/',
     categories: ['blog'],
-    radar: [{
-        source: ['pianyivps.com/'],
-    }],
+    radar: [
+        {
+            source: ['pianyivps.com/'],
+        },
+    ],
     name: '最新发布',
     maintainers: ['cnkmmk'],
     handler,
