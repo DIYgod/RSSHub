@@ -90,4 +90,4 @@ async function handler(ctx) {
             author: item.username,
         })),
     };
-};
+}
