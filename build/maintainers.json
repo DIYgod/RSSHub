@@ -5665,6 +5665,15 @@
     "axojhf"
   ],
   "/wdc/download/:id?": [],
+  "/web/articles": [
+    "KarasuShin"
+  ],
+  "/web/blog": [
+    "KarasuShin"
+  ],
+  "/web/series/:seriesName": [
+    "KarasuShin"
+  ],
   "/web3caff*": [],
   "/wechat/announce": [
     "xyqfer"

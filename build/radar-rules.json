@@ -14150,6 +14150,35 @@
       }
     ]
   },
+  "web.dev": {
+    "_name": "web.dev",
+    ".": [
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/articles"
+        ],
+        "target": "/web/articles"
+      },
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blog"
+        ],
+        "target": "/web/blog"
+      },
+      {
+        "title": "Series",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/series/:seriesName"
+        ],
+        "target": "/web/series/:seriesName"
+      }
+    ]
+  },
   "cimidata.com": {
     "_name": "微信小程序",
     ".": [

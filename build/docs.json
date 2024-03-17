@@ -43106,6 +43106,73 @@
       },
       "name": "Go 语言中文网"
     },
+    "web": {
+      "routes": {
+        "/web/articles": {
+          "path": "/articles",
+          "categories": [
+            "programming"
+          ],
+          "example": "/web/articles",
+          "radar": [
+            {
+              "source": [
+                "web.dev/articles"
+              ]
+            }
+          ],
+          "name": "Articles",
+          "maintainers": [
+            "KarasuShin"
+          ],
+          "location": "articles.ts"
+        },
+        "/web/blog": {
+          "path": "/blog",
+          "categories": [
+            "programming"
+          ],
+          "example": "/web/blog",
+          "radar": [
+            {
+              "source": [
+                "web.dev/blog"
+              ]
+            }
+          ],
+          "name": "Blog",
+          "maintainers": [
+            "KarasuShin"
+          ],
+          "location": "blog.ts"
+        },
+        "/web/series/:seriesName": {
+          "path": "/series/:seriesName",
+          "parameters": {
+            "seriesName": "topic name in the series section"
+          },
+          "categories": [
+            "programming"
+          ],
+          "example": "/web/series/new-to-the-web",
+          "radar": [
+            {
+              "source": [
+                "web.dev/series/:seriesName"
+              ],
+              "target": "/series/:seriesName"
+            }
+          ],
+          "name": "Series",
+          "maintainers": [
+            "KarasuShin"
+          ],
+          "description": ":::tip\n    The `seriesName` can be extracted from the Series page URL: `https://web.dev/series/:seriesName`\n    :::",
+          "location": "series.ts"
+        }
+      },
+      "name": "web.dev"
+    },
     "wechat": {
       "routes": {
         "/wechat/announce": {

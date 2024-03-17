@@ -56421,6 +56421,74 @@
     "name": "Western Digital",
     "url": "support.wdc.com"
   },
+  "web": {
+    "routes": {
+      "/articles": {
+        "path": "/articles",
+        "categories": [
+          "programming"
+        ],
+        "example": "/web/articles",
+        "radar": [
+          {
+            "source": [
+              "web.dev/articles"
+            ]
+          }
+        ],
+        "name": "Articles",
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "location": "articles.ts"
+      },
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/web/blog",
+        "radar": [
+          {
+            "source": [
+              "web.dev/blog"
+            ]
+          }
+        ],
+        "name": "Blog",
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "location": "blog.ts"
+      },
+      "/series/:seriesName": {
+        "path": "/series/:seriesName",
+        "parameters": {
+          "seriesName": "topic name in the series section"
+        },
+        "categories": [
+          "programming"
+        ],
+        "example": "/web/series/new-to-the-web",
+        "radar": [
+          {
+            "source": [
+              "web.dev/series/:seriesName"
+            ],
+            "target": "/series/:seriesName"
+          }
+        ],
+        "name": "Series",
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "description": ":::tip\n    The `seriesName` can be extracted from the Series page URL: `https://web.dev/series/:seriesName`\n    :::",
+        "location": "series.ts"
+      }
+    },
+    "name": "web.dev",
+    "url": "web.dev"
+  },
   "web3caff": {
     "routes": {
       "*": {
