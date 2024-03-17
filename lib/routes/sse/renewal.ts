@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['kcb.sse.com.cn/home', 'kcb.sse.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['kcb.sse.com.cn/home', 'kcb.sse.com.cn/'],
+        },
+    ],
     name: '科创板项目动态',
     maintainers: ['Jeason0228'],
     handler,

@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['docs.rsshub.app/*'],
-        target: '/routes',
-    },
+    radar: [
+        {
+            source: ['docs.rsshub.app/*'],
+            target: '/routes',
+        },
+    ],
     name: 'New routes',
     maintainers: ['DIYgod'],
     handler,

@@ -29,9 +29,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['analy.zhubai.love/'],
-    },
+    radar: [
+        {
+            source: ['analy.zhubai.love/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

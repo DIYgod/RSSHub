@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.douyu.com/:id', 'www.douyu.com/'],
-    },
+    radar: [
+        {
+            source: ['www.douyu.com/:id', 'www.douyu.com/'],
+        },
+    ],
     name: '直播间开播',
     maintainers: ['DIYgod'],
     handler,

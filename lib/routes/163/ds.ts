@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ds.163.com/user/:id'],
-    },
+    radar: [
+        {
+            source: ['ds.163.com/user/:id'],
+        },
+    ],
     name: '用户发帖',
     maintainers: ['luyuhuang'],
     handler,

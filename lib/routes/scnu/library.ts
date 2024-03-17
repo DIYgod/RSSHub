@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['lib.scnu.edu.cn/news/zuixingonggao', 'lib.scnu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['lib.scnu.edu.cn/news/zuixingonggao', 'lib.scnu.edu.cn/'],
+        },
+    ],
     name: '图书馆通知',
     maintainers: ['fengkx'],
     handler,

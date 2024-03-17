@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['utgd.net/'],
-    },
+    radar: [
+        {
+            source: ['utgd.net/'],
+        },
+    ],
     name: '时间线',
     maintainers: ['nczitzk'],
     handler,

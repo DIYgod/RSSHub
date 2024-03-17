@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['shortcuts.sspai.com/*'],
-    },
+    radar: [
+        {
+            source: ['shortcuts.sspai.com/*'],
+        },
+    ],
     name: 'Shortcuts Gallery',
     maintainers: ['Andiedie'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['nature.com/latest-news', 'nature.com/news', 'nature.com/'],
-    },
+    radar: [
+        {
+            source: ['nature.com/latest-news', 'nature.com/news', 'nature.com/'],
+        },
+    ],
     name: 'Nature News',
     maintainers: ['y9c', 'TonyRL'],
     handler,

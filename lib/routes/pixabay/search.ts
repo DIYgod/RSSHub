@@ -27,10 +27,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pixabay.com/:searchType/search/:q'],
-        target: '/search/:q',
-    },
+    radar: [
+        {
+            source: ['pixabay.com/:searchType/search/:q'],
+            target: '/search/:q',
+        },
+    ],
     name: 'Search',
     maintainers: ['TonyRL'],
     handler,

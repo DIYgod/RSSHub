@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['lang.live/room/:id'],
-    },
+    radar: [
+        {
+            source: ['lang.live/room/:id'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['MittWillson'],
     handler,

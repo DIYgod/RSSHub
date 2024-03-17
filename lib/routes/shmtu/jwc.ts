@@ -36,9 +36,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jwc.shmtu.edu.cn/:type'],
-    },
+    radar: [
+        {
+            source: ['jwc.shmtu.edu.cn/:type'],
+        },
+    ],
     name: '教务信息',
     maintainers: ['imbytecat', 'simonsmh'],
     handler,

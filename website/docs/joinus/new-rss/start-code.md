@@ -16,7 +16,7 @@ When creating a namespace, avoid creating multiple variations for the same names
 
 Once you have created a namespace for the RSS route, the next step is to create the file `namespace.ts` to define the namespace.
 
-The file should return an object that conforms to the Namespace type through a namespace. The definition of Namespace is at [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L49)
+The file should return an object that conforms to the Namespace type through a namespace. The definition of Namespace is at [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L51)
 
 - name: The human-readable name of the namespace, which will be used as the title of the document
 - url: The website URL without protocol that corresponds
@@ -52,7 +52,7 @@ GitHub provides some official RSS feeds:
 
 Once you have created a namespace for the route, the next step is to create a route file to register the route.
 
-For example, if you are making an RSS feed for [GitHub Repo Issues]((/routes/programming#github-yong-hu-cang-ku)), and assume that you want users to enter the GitHub username and repo name, if they do not enter the repo name, they will return to RSSHub. You can register your new RSS route in /lib/routes/github/issue.ts, the file needs to return an object that conforms to the Route type through route. The definition of Route is at [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L64)
+For example, if you are making an RSS feed for [GitHub Repo Issues]((/routes/programming#github-yong-hu-cang-ku)), and assume that you want users to enter the GitHub username and repo name, if they do not enter the repo name, they will return to RSSHub. You can register your new RSS route in /lib/routes/github/issue.ts, the file needs to return an object that conforms to the Route type through route. The definition of Route is at [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L86)
 
 - path: The route path, using [Hono routing](https://hono.dev/api/routing) syntax
 - name: The human-readable name of the route, which will be used as the title of the document
@@ -102,7 +102,7 @@ The handler function will be passed a parameter ctx. By the end of the function,
 
 You can see the APIs available for ctx to use in the [Hono context documentation]((https://hono.dev/api/context))
 
-The type of the return value is defined here: [/lib/types.ts#L36](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L36)
+The type of the return value is defined here: [/lib/types.ts#L37](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L37)
 
 As mentioned earlier, we will create an RSS feed for [GitHub Repo Issues](/routes/programming#github-repo-issues) as an example. We will show all four data collection methods mentioned:
 
@@ -362,7 +362,7 @@ export default async (ctx) => {
 
 ## Via HTML web page using got
 
-### Creat the main file
+### Create the main file
 
 To start, open your code editor and create a new file. Since we are going to create an RSS feed for GitHub issues, it is suggested that you save the file as `issue.ts`. However, you can also name it whatever you like.
 
@@ -698,7 +698,7 @@ You can see that the above code is very similar to the [previous section](#bette
 
 Using puppeteer is another approach to obtain data from websites. However, it is recommended that you try the [above methods](#via-html-web-page-using-got) first. It is also recommended that you read [via HTML web page using got](#via-html-web-page-using-got) first since this section is an extension of the previous section and will not explain some basic concepts.
 
-### Creat the main file
+### Create the main file
 
 To get started with puppeteer, create a new file in your code editor and save it with an appropriate name, such as `issue.ts`. Then, require the necessary modules and set up the basic structure of the function:
 

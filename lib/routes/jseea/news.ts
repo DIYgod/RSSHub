@@ -25,10 +25,12 @@ async function loadContent(link) {
 
 export const route: Route = {
     path: '/news/:type?',
-    radar: {
-        source: ['jseea.cn/webfile/news/:type'],
-        target: '/news/:type',
-    },
+    radar: [
+        {
+            source: ['jseea.cn/webfile/news/:type'],
+            target: '/news/:type',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['schen1024'],
     handler,

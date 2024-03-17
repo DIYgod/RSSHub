@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['data.eastmoney.com/report/:category'],
-    },
+    radar: [
+        {
+            source: ['data.eastmoney.com/report/:category'],
+        },
+    ],
     name: '研究报告',
     maintainers: ['syzq'],
     handler,

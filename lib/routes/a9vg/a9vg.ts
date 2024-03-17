@@ -6,10 +6,12 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['a9vg.com/list/news', 'a9vg.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['a9vg.com/list/news', 'a9vg.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['monnerHenster'],
     handler,

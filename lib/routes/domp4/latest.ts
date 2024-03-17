@@ -30,9 +30,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['domp4.cc/', 'domp4.cc/custom/update.html'],
-    },
+    radar: [
+        {
+            source: ['domp4.cc/', 'domp4.cc/custom/update.html'],
+        },
+    ],
     name: '最近更新',
     maintainers: ['savokiss'],
     handler,

@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.ccreports.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.ccreports.com.cn/'],
+        },
+    ],
     name: '要闻',
     maintainers: ['EsuRt', 'Fatpandac'],
     handler,

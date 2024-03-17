@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['instant.1point3acres.com/profile/:id', 'instant.1point3acres.com/'],
-    },
+    radar: [
+        {
+            source: ['instant.1point3acres.com/profile/:id', 'instant.1point3acres.com/'],
+        },
+    ],
     name: '用户回帖',
     maintainers: ['Maecenas'],
     handler,

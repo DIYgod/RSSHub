@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group', 'install.appcenter.ms/orgs/:user/apps/:app/distribution_groups/:distribution_group'],
-    },
+    radar: [
+        {
+            source: ['install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group', 'install.appcenter.ms/orgs/:user/apps/:app/distribution_groups/:distribution_group'],
+        },
+    ],
     name: 'Release',
     maintainers: ['Rongronggg9'],
     handler,

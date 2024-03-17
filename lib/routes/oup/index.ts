@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['academic.oup.com/', 'academic.oup.com/:name/issue'],
-    },
+    radar: [
+        {
+            source: ['academic.oup.com/', 'academic.oup.com/:name/issue'],
+        },
+    ],
     name: 'Oxford Academic',
     maintainers: [],
     handler,

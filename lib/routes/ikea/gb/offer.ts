@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ikea.com/gb/en/offers', 'ikea.com/'],
-    },
+    radar: [
+        {
+            source: ['ikea.com/gb/en/offers', 'ikea.com/'],
+        },
+    ],
     name: 'UK - Offers',
     maintainers: ['HenryQW'],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bgm.tv/person/:id'],
-    },
+    radar: [
+        {
+            source: ['bgm.tv/person/:id'],
+        },
+    ],
     name: '现实人物的新作品',
     maintainers: ['ylc395'],
     handler,

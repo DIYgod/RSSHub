@@ -25,10 +25,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.zhibo8.cc/:category'],
-        target: '/more/:category',
-    },
+    radar: [
+        {
+            source: ['news.zhibo8.cc/:category'],
+            target: '/more/:category',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

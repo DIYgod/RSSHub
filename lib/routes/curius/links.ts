@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['curius.app/:name'],
-    },
+    radar: [
+        {
+            source: ['curius.app/:name'],
+        },
+    ],
     name: 'User',
     maintainers: ['Ovler-Young'],
     handler,

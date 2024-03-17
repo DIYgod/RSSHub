@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['taoguba.com.cn/blog/:id', 'taoguba.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['taoguba.com.cn/blog/:id', 'taoguba.com.cn/'],
+        },
+    ],
     name: '用户博客',
     maintainers: ['nczitzk'],
     handler,

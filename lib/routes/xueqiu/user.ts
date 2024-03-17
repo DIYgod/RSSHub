@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xueqiu.com/u/:id'],
-        target: '/user/:id',
-    },
+    radar: [
+        {
+            source: ['xueqiu.com/u/:id'],
+            target: '/user/:id',
+        },
+    ],
     name: '用户动态',
     maintainers: ['imlonghao'],
     handler,

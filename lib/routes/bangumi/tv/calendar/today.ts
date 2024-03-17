@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bgm.tv/calendar'],
-    },
+    radar: [
+        {
+            source: ['bgm.tv/calendar'],
+        },
+    ],
     name: '放送列表',
     maintainers: ['magic-akari'],
     handler,

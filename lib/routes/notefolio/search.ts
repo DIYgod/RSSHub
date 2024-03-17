@@ -86,9 +86,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['notefolio.net/search'],
-    },
+    radar: [
+        {
+            source: ['notefolio.net/search'],
+        },
+    ],
     name: 'Works',
     maintainers: ['BianTan'],
     handler,

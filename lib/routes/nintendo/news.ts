@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nintendo.com.hk/topics', 'nintendo.com.hk/'],
-    },
+    radar: [
+        {
+            source: ['nintendo.com.hk/topics', 'nintendo.com.hk/'],
+        },
+    ],
     name: 'News（Hong Kong only）',
     maintainers: ['HFO4'],
     handler,

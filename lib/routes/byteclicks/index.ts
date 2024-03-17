@@ -5,10 +5,12 @@ const baseUrl = 'https://byteclicks.com';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['byteclicks.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['byteclicks.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,

@@ -70,10 +70,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rss.uptimerobot.com/:id'],
-        target: '/rss/:id',
-    },
+    radar: [
+        {
+            source: ['rss.uptimerobot.com/:id'],
+            target: '/rss/:id',
+        },
+    ],
     name: 'RSS',
     maintainers: ['Rongronggg9'],
     handler,

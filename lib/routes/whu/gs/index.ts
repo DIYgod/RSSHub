@@ -29,10 +29,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gs.whu.edu.cn/index.htm', 'gs.whu.edu.cn/'],
-        target: '/gs',
-    },
+    radar: [
+        {
+            source: ['gs.whu.edu.cn/index.htm', 'gs.whu.edu.cn/'],
+            target: '/gs',
+        },
+    ],
     name: '研究生院',
     maintainers: ['Delreyaa'],
     handler,

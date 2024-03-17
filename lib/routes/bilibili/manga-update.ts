@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['manga.bilibili.com/detail/:comicid'],
-    },
+    radar: [
+        {
+            source: ['manga.bilibili.com/detail/:comicid'],
+        },
+    ],
     name: '漫画更新',
     maintainers: ['hoilc'],
     handler,

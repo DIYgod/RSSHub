@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['elasticsearch.cn/:params', 'elasticsearch.cn/'],
-        target: '/:params',
-    },
+    radar: [
+        {
+            source: ['elasticsearch.cn/:params', 'elasticsearch.cn/'],
+            target: '/:params',
+        },
+    ],
     name: '发现',
     maintainers: ['nczitzk'],
     handler,

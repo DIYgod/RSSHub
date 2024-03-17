@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/zhihu/bookstore/newest'],
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/zhihu/bookstore/newest'],
+        },
+    ],
     name: '知乎想法热榜',
     maintainers: ['xyqfer'],
     handler,

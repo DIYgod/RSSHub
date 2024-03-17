@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['qbitai.com/tag/:tag'],
-    },
+    radar: [
+        {
+            source: ['qbitai.com/tag/:tag'],
+        },
+    ],
     name: '标签',
     maintainers: ['FuryMartin'],
     handler,

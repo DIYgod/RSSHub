@@ -11,9 +11,11 @@ import { viewThread, countReplies } from './query';
 
 export const route: Route = {
     path: '/thread/:id',
-    radar: {
-        source: ['lkong.com/thread/:id', 'lkong.com/'],
-    },
+    radar: [
+        {
+            source: ['lkong.com/thread/:id', 'lkong.com/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk', 'ma6254'],
     handler,

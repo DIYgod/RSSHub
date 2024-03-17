@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www3.nhk.or.jp/news/easy/', 'www3.nhk.or.jp/'],
-    },
+    radar: [
+        {
+            source: ['www3.nhk.or.jp/news/easy/', 'www3.nhk.or.jp/'],
+        },
+    ],
     name: 'News Web Easy',
     maintainers: ['Andiedie'],
     handler,

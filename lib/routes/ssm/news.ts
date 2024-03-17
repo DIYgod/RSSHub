@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.ssm.gov.mo/', 'www.ssm.gov.mo/portal'],
-    },
+    radar: [
+        {
+            source: ['www.ssm.gov.mo/', 'www.ssm.gov.mo/portal'],
+        },
+    ],
     name: '最新消息',
     maintainers: ['Fatpandac'],
     handler,

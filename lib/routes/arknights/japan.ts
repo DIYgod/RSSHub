@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ak.arknights.jp/news', 'ak.arknights.jp/'],
-    },
+    radar: [
+        {
+            source: ['ak.arknights.jp/news', 'ak.arknights.jp/'],
+        },
+    ],
     name: 'アークナイツ (日服新闻)',
     maintainers: ['ofyark'],
     handler,

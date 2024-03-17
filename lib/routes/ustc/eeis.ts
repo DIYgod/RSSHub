@@ -25,10 +25,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['eeis.ustc.edu.cn/'],
-        target: '/eeis',
-    },
+    radar: [
+        {
+            source: ['eeis.ustc.edu.cn/'],
+            target: '/eeis',
+        },
+    ],
     name: '电子工程与信息科学系',
     maintainers: ['jasongzy'],
     handler,
