@@ -10749,6 +10749,14 @@
           "/"
         ],
         "target": "/rustcc/jobs"
+      },
+      {
+        "title": "新闻/聚合",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/rustcc/news"
       }
     ]
   },

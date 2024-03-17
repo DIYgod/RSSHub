@@ -44491,6 +44491,26 @@
         ],
         "url": "rustcc.cn/",
         "location": "jobs.ts"
+      },
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "programming"
+        ],
+        "example": "/rustcc/news",
+        "radar": [
+          {
+            "source": [
+              "rustcc.cn/"
+            ]
+          }
+        ],
+        "name": "新闻/聚合",
+        "maintainers": [
+          "zhenlohuang"
+        ],
+        "url": "rustcc.cn/",
+        "location": "news.ts"
       }
     },
     "name": "Rust 语言中文社区",

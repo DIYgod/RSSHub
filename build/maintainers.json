@@ -4486,6 +4486,9 @@
   "/rustcc/jobs": [
     "CcccFz"
   ],
+  "/rustcc/news": [
+    "zhenlohuang"
+  ],
   "/sakurazaka46/blog/:id?/:page?": [
     "victor21813",
     "nczitzk",
