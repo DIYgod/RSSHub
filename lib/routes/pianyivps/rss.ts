@@ -5,6 +5,7 @@ import got from '@/utils/got';
 export const route: Route = {
     path: '/',
     categories: ['blog'],
+    example: '/pianyivps',
     radar: [{
         source: ['pianyivps.com/'],
     }],
