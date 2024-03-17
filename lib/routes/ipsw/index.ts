@@ -20,31 +20,22 @@ function replaceurl(e) {
     e = e.replace("window.location = '/", host);
     return e;
 }
-// 处理发布日期,以表格第一行的日期为最新的发布日期
-function cdate(e) {
-    const removeString = e.replace('th', '');
-    const removend = removeString.replace('nd', '');
-    const replacest = removend.replace('st', '');
-    const rdate = replacest.replaceAll(' ', ',');
-    // console.log(rdate);
-    return rdate;
-}
 
 async function handler(ctx) {
     const { pname, ptype } = ctx.req.param();
-    let link = `https://ipsw.me/product/` + pname;
-    if (pname.search(',') === -1) {
-        // console.log('产品线');
-        link = `https://ipsw.me/product/` + pname;
-    } else {
+    let link = `https://ipsw.me/product/${pname}`;
+    if (pname.includes(',')) {
         // console.log('具体产品');
         if (ptype === 'otas') {
             // console.log('otas');
-            link = `https://ipsw.me/` + ptype + `/` + pname;
+            link = `https://ipsw.me/${ptype}/${pname}`;
         } else if (ptype === 'ipsws') {
             // console.log('ipsw');
-            link = `https://ipsw.me/` + pname;
+            link = `https://ipsw.me/${pname}`;
         }
+    } else {
+        // console.log('产品线');
+        link = `https://ipsw.me/product/${pname}`;
     }
     // console.log(link);
     const response = await got({
@@ -57,22 +48,21 @@ async function handler(ctx) {
     const $ = load(response.data);
     let list = {};
     list =
-        pname.search(',') === -1
-            ? $('.products a')
-                .map(function () {
-                    const info = {
-                        title: $(this).find('img').attr('alt'),
-                        link: $(this).attr('href'),
-                    };
-                    return info;
-                })
-                .get()
-            : $('.firmware')
+        pname.includes(',')
+            ? $('.firmware')
                 .map(function () {
                     const info = {
                         title: $(this).find('td').eq(1).text(),
                         link: replaceurl($(this).attr('onclick')),
-                        date: cdate($(this).find('td').eq(2).text().trim()),
+                    };
+                    return info;
+                })
+                .get()
+            : $('.products a')
+                .map(function () {
+                    const info = {
+                        title: $(this).find('img').attr('alt'),
+                        link: $(this).attr('href'),
                     };
                     return info;
                 })
@@ -94,7 +84,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const description = $('div.selector__wizard').html();
                 let removeString;
-                removeString = pname.search(',') === -1 ? $('tr.firmware').first().find('td').eq(2).text().trim() : $('div.table-responsive table tr').first().find('td').text().trim();
+                removeString = pname.includes(',') ? $('div.table-responsive table tr').first().find('td').text().trim() : $('tr.firmware').first().find('td').eq(2).text().trim();
                 // 处理发布日期,以表格第一行的日期为最新的发布日期
                 removeString = removeString.replace('th', '').replace('nd', '').replace('st', '').replace('rd', '');
                 const rdate = removeString.replaceAll(' ', ',');
