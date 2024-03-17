@@ -14,8 +14,6 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     example: '/fanxinzhui',
-    parameters: undefined,
-    description: undefined,
     categories: ['multimedia'],
 
     features: {
