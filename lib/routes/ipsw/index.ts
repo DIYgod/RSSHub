@@ -9,7 +9,10 @@ export const route: Route = {
     path: '/index/:ptype/:pname',
     categories: ['program-update'],
     example: '/ipsw/index/ipsws/iPad8,11',
-    parameters: { ptype: 'Fill in ipsws or otas to get different versions of firmware', pname: 'Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model' },
+    parameters: {
+        ptype: 'Fill in ipsws or otas to get different versions of firmware',
+        pname: 'Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model',
+    },
     name: 'Apple Firmware Update-IPSWs/OTAs version',
     maintainers: ['Jeason0228'],
     handler,
@@ -47,26 +50,25 @@ async function handler(ctx) {
     });
     const $ = load(response.data);
     let list = {};
-    list =
-        pname.includes(',')
-            ? $('.firmware')
-                .map(function () {
-                    const info = {
-                        title: $(this).find('td').eq(1).text(),
-                        link: replaceurl($(this).attr('onclick')),
-                    };
-                    return info;
-                })
-                .get()
-            : $('.products a')
-                .map(function () {
-                    const info = {
-                        title: $(this).find('img').attr('alt'),
-                        link: $(this).attr('href'),
-                    };
-                    return info;
-                })
-                .get();
+    list = pname.includes(',')
+        ? $('.firmware')
+              .map(function () {
+                  const info = {
+                      title: $(this).find('td').eq(1).text(),
+                      link: replaceurl($(this).attr('onclick')),
+                  };
+                  return info;
+              })
+              .get()
+        : $('.products a')
+              .map(function () {
+                  const info = {
+                      title: $(this).find('img').attr('alt'),
+                      link: $(this).attr('href'),
+                  };
+                  return info;
+              })
+              .get();
 
     const out = await Promise.all(
         list.map((info) => {
@@ -104,4 +106,4 @@ async function handler(ctx) {
         description: `查看Apple-${pname}- ${ptype} 固件-是否关闭验证`,
         item: out,
     };
-};
+}
