@@ -11,23 +11,13 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     example: '/reactiflux/transcripts',
-    parameters: undefined,
-    description: '',
     categories: ['programming'],
-
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportRadar: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['/transcripts'],
-        target: '/reactiflux/transcripts',
-    },
+    radar: [
+        {
+            source: ['www.reactiflux.com/transcripts'],
+            target: '/transcripts',
+        },
+    ],
 };
 
 export async function handler(ctx) {
