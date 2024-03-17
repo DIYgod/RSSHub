@@ -15832,7 +15832,8 @@
           ],
           "name": "每日早报",
           "maintainers": [
-            "nczitzk"
+            "nczitzk",
+            "fashioncj"
           ],
           "url": "readhub.cn/daily",
           "location": "daily.ts"
