@@ -5,14 +5,6 @@ export const route: Route = {
     path: '/articles',
     categories: ['programming'],
     example: '/web/articles',
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: {
         source: ['web.dev/articles'],
         target: '/web/articles',
