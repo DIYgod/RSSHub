@@ -42602,6 +42602,27 @@
       },
       "name": "Node.js"
     },
+    "nosec": {
+      "routes": {
+        "/nosec/:keykind?": {
+          "path": "/:keykind?",
+          "categories": [
+            "programming"
+          ],
+          "example": "/nosec/hole",
+          "parameters": {
+            "keykind": "对应文章分类"
+          },
+          "name": "Posts",
+          "maintainers": [
+            "hellodword"
+          ],
+          "description": "  | 分类     | 标识       |\n    | :------- | :--------- |\n    | 威胁情报 | `threaten` |\n    | 安全动态 | `security` |\n    | 漏洞预警 | `hole`     |\n    | 数据泄露 | `leakage`  |\n    | 专题报告 | `speech`   |\n    | 技术分析 | `skill`    |\n    | 安全工具 | `tool`     |",
+          "location": "index.ts"
+        }
+      },
+      "name": "NOSEC.org"
+    },
     "oschina": {
       "routes": {
         "/oschina/news/:category?": {

@@ -3784,6 +3784,9 @@
     "crispgm",
     "Fatpandac"
   ],
+  "/nosec/:keykind?": [
+    "hellodword"
+  ],
   "/notateslaapp/ota": [
     "mrbruce516"
   ],
