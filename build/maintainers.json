@@ -3368,6 +3368,12 @@
     "TonyRL"
   ],
   "/metmuseum/exhibitions/:state?": [],
+  "/mi/crowdfunding": [
+    "DIYgod"
+  ],
+  "/mi/golden": [
+    "nczitzk"
+  ],
   "/microsoft/edge/addon/:crxid": [
     "hoilc",
     "DIYgod"
@@ -3424,6 +3430,9 @@
   "/mittrchina/:type?": [
     "EsuRt",
     "queensferryme"
+  ],
+  "/miui/:device/:type?/:region?": [
+    "Indexyz"
   ],
   "/mixcloud/:username/:type?": [
     "Misaka13514"

@@ -33322,6 +33322,36 @@
     "name": "Unknown",
     "url": "www.metmuseum.org"
   },
+  "mi": {
+    "routes": {
+      "/crowdfunding": {
+        "path": "/crowdfunding",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/mi/crowdfunding",
+        "name": "小米众筹",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "crowdfunding.ts"
+      },
+      "/golden": {
+        "path": "/golden",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/mi/golden",
+        "name": "小米应用商店金米奖",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "location": "golden.ts"
+      }
+    },
+    "name": "小米",
+    "url": "mi.com"
+  },
   "microsoft": {
     "routes": {
       "/edge/addon/:crxid": {
@@ -33854,6 +33884,30 @@
     },
     "name": "麻省理工科技评论",
     "url": "mittrchina.com"
+  },
+  "miui": {
+    "routes": {
+      "/:device/:type?/:region?": {
+        "path": "/:device/:type?/:region?",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/miui/aries",
+        "parameters": {
+          "device": "the device `codename` eg. `aries` for Mi 2S",
+          "type": "type",
+          "region": "Region, default to `cn`"
+        },
+        "name": "New firmware",
+        "maintainers": [
+          "Indexyz"
+        ],
+        "description": "  | stable  | development |\n    | ------- | ----------- |\n    | release | dev         |\n  \n    | region | region |\n    | ------ | ------ |\n    | China  | cn     |\n    | Global | global |",
+        "location": "index.ts"
+      }
+    },
+    "name": "MIUI",
+    "url": "miui.com"
   },
   "mixcloud": {
     "routes": {
