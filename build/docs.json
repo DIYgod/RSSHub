@@ -42880,6 +42880,32 @@
       },
       "name": "Quicker"
     },
+    "reactiflux": {
+      "routes": {
+        "/reactiflux/transcripts": {
+          "path": "/transcripts",
+          "name": "Transcripts",
+          "url": "reactiflux.com/transcripts",
+          "maintainers": [
+            "nczitzk"
+          ],
+          "example": "/reactiflux/transcripts",
+          "categories": [
+            "programming"
+          ],
+          "radar": [
+            {
+              "source": [
+                "www.reactiflux.com/transcripts"
+              ],
+              "target": "/transcripts"
+            }
+          ],
+          "location": "transcripts.ts"
+        }
+      },
+      "name": "Reactiflux"
+    },
     "rustcc": {
       "routes": {
         "/rustcc/jobs": {

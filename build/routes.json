@@ -43976,6 +43976,36 @@
     "name": "Rawkuma",
     "url": "rawkuma.com"
   },
+  "reactiflux": {
+    "routes": {
+      "/transcripts": {
+        "path": "/transcripts",
+        "name": "Transcripts",
+        "url": "reactiflux.com/transcripts",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/reactiflux/transcripts",
+        "categories": [
+          "programming"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.reactiflux.com/transcripts"
+            ],
+            "target": "/transcripts"
+          }
+        ],
+        "location": "transcripts.ts"
+      }
+    },
+    "name": "Reactiflux",
+    "url": "reactiflux.com",
+    "categories": [
+      "programming"
+    ]
+  },
   "reactnewsletter": {
     "routes": {
       "/": {

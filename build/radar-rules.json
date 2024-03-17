@@ -10603,6 +10603,19 @@
       }
     ]
   },
+  "reactiflux.com": {
+    "_name": "Reactiflux",
+    "www": [
+      {
+        "title": "Transcripts",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/transcripts"
+        ],
+        "target": "/reactiflux/transcripts"
+      }
+    ]
+  },
   "readhub.cn": {
     "_name": "Readhub",
     ".": [
