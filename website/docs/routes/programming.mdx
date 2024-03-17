@@ -540,6 +540,24 @@ GitHub provides some official RSS feeds:
   | Web Design         | web-design         |
   | Workflow           | workflow           |
 
+## web.dev
+
+### Articles
+
+<Route namespace="web" data={{"path":"/articles","categories":["programming"],"example":"/web/articles","radar":[{"source":["web.dev/articles"]}],"name":"Articles","maintainers":["KarasuShin"],"location":"articles.ts"}} />
+
+### Blog
+
+<Route namespace="web" data={{"path":"/blog","categories":["programming"],"example":"/web/blog","radar":[{"source":["web.dev/blog"]}],"name":"Blog","maintainers":["KarasuShin"],"location":"blog.ts"}} />
+
+### Series
+
+<Route namespace="web" data={{"path":"/series/:seriesName","parameters":{"seriesName":"topic name in the series section"},"categories":["programming"],"example":"/web/series/new-to-the-web","radar":[{"source":["web.dev/series/:seriesName"],"target":"/series/:seriesName"}],"name":"Series","maintainers":["KarasuShin"],"description":":::tip\n    The `seriesName` can be extracted from the Series page URL: `https://web.dev/series/:seriesName`\n    :::","location":"series.ts"}} />
+
+:::tip
+    The `seriesName` can be extracted from the Series page URL: `https://web.dev/series/:seriesName`
+    :::
+
 ## 阿里云
 
 ### 公告
