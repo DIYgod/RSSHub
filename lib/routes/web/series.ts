@@ -6,18 +6,10 @@ export const route: Route = {
     parameters: { seriesName: 'topic name in the series section' },
     categories: ['programming'],
     example: '/web/series/new-to-the-web',
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
+    radar: [{
         source: ['web.dev/series/:seriesName'],
-        target: '/web/articles/:seriesName',
-    },
+        target: '/series/:seriesName',
+    }],
     name: 'Series',
     maintainers: ['KarasuShin'],
     handler,
