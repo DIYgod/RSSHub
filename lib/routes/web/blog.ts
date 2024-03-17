@@ -5,18 +5,9 @@ export const route: Route = {
     path: '/blog',
     categories: ['programming'],
     example: '/web/blog',
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
+    radar: [{
         source: ['web.dev/blog'],
-        target: '/web/blog',
-    },
+    }],
     name: 'Blog',
     maintainers: ['KarasuShin'],
     handler,
