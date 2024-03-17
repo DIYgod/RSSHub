@@ -30,6 +30,12 @@ export const route: Route = {
     | 技术分析 | \`skill\`    |
     | 安全工具 | \`tool\`     |`,
     handler,
+    radar: [
+        {
+            source: ['nosec.org/home/index/:keykind', 'nosec.org/home/index'],
+            target: (params) => `/nosec${params.keykind ? `/${params.keybind.replace('.html', '')}` : ''}`,
+        },
+    ],
 };
 
 async function handler(ctx) {
