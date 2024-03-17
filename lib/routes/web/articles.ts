@@ -5,10 +5,9 @@ export const route: Route = {
     path: '/articles',
     categories: ['programming'],
     example: '/web/articles',
-    radar: {
+    radar: [{
         source: ['web.dev/articles'],
-        target: '/web/articles',
-    },
+    }],
     name: 'Articles',
     maintainers: ['KarasuShin'],
     handler,
