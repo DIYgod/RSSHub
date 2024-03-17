@@ -6,10 +6,12 @@ export const route: Route = {
     parameters: { seriesName: 'topic name in the series section' },
     categories: ['programming'],
     example: '/web/series/new-to-the-web',
-    radar: [{
-        source: ['web.dev/series/:seriesName'],
-        target: '/series/:seriesName',
-    }],
+    radar: [
+        {
+            source: ['web.dev/series/:seriesName'],
+            target: '/series/:seriesName',
+        },
+    ],
     name: 'Series',
     maintainers: ['KarasuShin'],
     handler,

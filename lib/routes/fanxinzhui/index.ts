@@ -16,10 +16,12 @@ export const route: Route = {
     example: '/fanxinzhui',
     categories: ['multimedia'],
 
-    radar: [{
-        source: ['fanxinzhui.com/lastest'],
-        target: '/',
-    }],
+    radar: [
+        {
+            source: ['fanxinzhui.com/lastest'],
+            target: '/',
+        },
+    ],
 };
 
 async function handler(ctx) {

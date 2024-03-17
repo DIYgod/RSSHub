@@ -43,11 +43,13 @@ async function handler(ctx) {
     return {
         title: `MIUI 更新 - ${device} - ${type === 'release' ? '稳定版' : '开发版'}`,
         link: 'http://www.miui.com/download.html',
-        item: [{
-            title: `${device} 有新的 ${localeTypeName}本: ${responseData.LatestFullRom.version}`,
-            guid: responseData.LatestFullRom.md5,
-            description: responseData.LatestFullRom.filename,
-            link: responseData.LatestFullRom.descriptionUrl,
-        }],
+        item: [
+            {
+                title: `${device} 有新的 ${localeTypeName}本: ${responseData.LatestFullRom.version}`,
+                guid: responseData.LatestFullRom.md5,
+                description: responseData.LatestFullRom.filename,
+                link: responseData.LatestFullRom.descriptionUrl,
+            },
+        ],
     };
-};
+}

@@ -29,4 +29,4 @@ async function handler() {
         item: list,
         description: response.data.description,
     };
-};
+}

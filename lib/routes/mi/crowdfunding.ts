@@ -34,4 +34,4 @@ async function handler() {
                 description: `<img src="${item.img_url}"><br>价格：${item.product_price}元`,
             })),
     };
-};
+}

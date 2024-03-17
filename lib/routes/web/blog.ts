@@ -5,9 +5,11 @@ export const route: Route = {
     path: '/blog',
     categories: ['programming'],
     example: '/web/blog',
-    radar: [{
-        source: ['web.dev/blog'],
-    }],
+    radar: [
+        {
+            source: ['web.dev/blog'],
+        },
+    ],
     name: 'Blog',
     maintainers: ['KarasuShin'],
     handler,

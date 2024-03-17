@@ -10,9 +10,11 @@ export const route: Route = {
     path: '/news',
     categories: ['programming'],
     example: '/rustcc/news',
-    radar: [{
-        source: ['rustcc.cn/'],
-    }],
+    radar: [
+        {
+            source: ['rustcc.cn/'],
+        },
+    ],
     name: '新闻/聚合',
     maintainers: ['zhenlohuang'],
     handler,
