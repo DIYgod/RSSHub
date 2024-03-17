@@ -4122,6 +4122,19 @@
       }
     ]
   },
+  "fanxinzhui.com": {
+    "_name": "追新番",
+    ".": [
+      {
+        "title": "最近更新",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/lastest"
+        ],
+        "target": "/fanxinzhui/"
+      }
+    ]
+  },
   "farmatters.com": {
     "_name": "Farmatters",
     ".": [

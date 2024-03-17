@@ -19023,6 +19023,32 @@
       "name": "DoMP4 影视",
       "description": ":::tip\n由于网站有多个备用域名，默认使用 `mp4us.com`，可以通过在路由最后加上 `?domain=<域名>` 切换域名。\n\n目前可用域名有：\n\n```javascript\n['domp4.cc', 'mp4kan.com', 'mp4us.com', 'wemp4.com', 'dbmp4.com']\n```\n:::"
     },
+    "fanxinzhui": {
+      "routes": {
+        "/fanxinzhui/": {
+          "path": "/",
+          "name": "最近更新",
+          "url": "fanxinzhui.com/lastest",
+          "maintainers": [
+            "nczitzk"
+          ],
+          "example": "/fanxinzhui",
+          "categories": [
+            "multimedia"
+          ],
+          "radar": [
+            {
+              "source": [
+                "fanxinzhui.com/lastest"
+              ],
+              "target": "/"
+            }
+          ],
+          "location": "index.ts"
+        }
+      },
+      "name": "追新番"
+    },
     "iqiyi": {
       "routes": {
         "/iqiyi/album/:id": {
