@@ -24,7 +24,7 @@ export const route: Route = {
             source: ['lang.live/room/:id'],
         },
     ],
-    name: 'Unknown',
+    name: '直播间开播',
     maintainers: ['MittWillson'],
     handler,
 };

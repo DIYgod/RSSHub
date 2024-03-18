@@ -25,7 +25,7 @@ export const route: Route = {
             source: ['bangumi.online/'],
         },
     ],
-    name: 'Unknown',
+    name: '當季新番',
     maintainers: ['devinmugen'],
     handler,
     url: 'bangumi.online/',
