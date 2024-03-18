@@ -56,8 +56,8 @@ jobs:
           target-directory: './src/routes'
           destination-github-username: 'RSSNext'
           destination-repository-name: 'rsshub-docs'
-          user-email: '41898282+github-actions[bot]@users.noreply.github.com'
-          user-name: 'github-actions[bot]'
+          user-email: 'bot@diygod.me'
+          user-name: 'DIYbot[bot]'
           target-branch: 'main'
       - name: Pushes to docs repository - zh
         uses: cpina/github-action-push-to-another-repository@main
@@ -68,6 +68,6 @@ jobs:
           target-directory: './src/zh/routes'
           destination-github-username: 'RSSNext'
           destination-repository-name: 'rsshub-docs'
-          user-email: '41898282+github-actions[bot]@users.noreply.github.com'
-          user-name: 'github-actions[bot]'
+          user-email: 'bot@diygod.me'
+          user-name: 'DIYbot[bot]'
           target-branch: 'main'
