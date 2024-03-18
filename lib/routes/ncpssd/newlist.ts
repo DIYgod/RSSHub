@@ -60,8 +60,6 @@ async function handler() {
                 const headers = {
                     Accept: 'application/json, text/javascript, */*; q=0.01',
                     'Content-Type': 'application/json; charset=UTF-8',
-                    Cookie: 'Your-Cookie-Here', // Replace with your actual cookie value
-                    // Add other headers as needed
                 };
 
                 const requestBody = {
