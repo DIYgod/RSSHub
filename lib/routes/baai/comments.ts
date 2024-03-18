@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hub.baai.ac.cn/comments', 'hub.baai.ac.cn/'],
-    },
+    radar: [
+        {
+            source: ['hub.baai.ac.cn/comments', 'hub.baai.ac.cn/'],
+        },
+    ],
     name: '智源社区 - 评论',
     maintainers: ['TonyRL'],
     handler,

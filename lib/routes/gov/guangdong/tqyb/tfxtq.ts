@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.tqyb.com.cn/gz/weatherAlarm/suddenWeather/'],
-    },
+    radar: [
+        {
+            source: ['www.tqyb.com.cn/gz/weatherAlarm/suddenWeather/'],
+        },
+    ],
     name: '突发性天气提示',
     maintainers: ['Fatpandac'],
     handler,

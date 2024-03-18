@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dorohedoro.net/news', 'dorohedoro.net/'],
-    },
+    radar: [
+        {
+            source: ['dorohedoro.net/news', 'dorohedoro.net/'],
+        },
+    ],
     name: 'News',
     maintainers: ['nczitzk'],
     handler,

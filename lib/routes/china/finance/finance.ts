@@ -29,9 +29,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['finance.china.com/:category'],
-    },
+    radar: [
+        {
+            source: ['finance.china.com/:category'],
+        },
+    ],
     name: 'Finance News 财经 - 财经新闻',
     maintainers: ['KingJem'],
     handler,

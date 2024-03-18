@@ -117,10 +117,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['taptap.com/app/:id/review', 'taptap.com/app/:id'],
-        target: '/review/:id',
-    },
+    radar: [
+        {
+            source: ['taptap.com/app/:id/review', 'taptap.com/app/:id'],
+            target: '/review/:id',
+        },
+    ],
     name: '游戏评价',
     maintainers: ['hoilc', 'TonyRL'],
     handler,

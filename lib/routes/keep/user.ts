@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gotokeep.com/users/:id'],
-    },
+    radar: [
+        {
+            source: ['gotokeep.com/users/:id'],
+        },
+    ],
     name: '运动日记',
     maintainers: ['Dectinc', 'DIYgod'],
     handler,

@@ -26,10 +26,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['utgd.net/topic', 'utgd.net/'],
-        target: '/topic/:topic',
-    },
+    radar: [
+        {
+            source: ['utgd.net/topic', 'utgd.net/'],
+            target: '/topic/:topic',
+        },
+    ],
     name: '专题',
     maintainers: ['nczitzk'],
     handler,

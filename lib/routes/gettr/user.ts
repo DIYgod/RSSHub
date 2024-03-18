@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gettr.com/user/:id'],
-    },
+    radar: [
+        {
+            source: ['gettr.com/user/:id'],
+        },
+    ],
     name: 'User timeline',
     maintainers: ['TonyRL'],
     handler,

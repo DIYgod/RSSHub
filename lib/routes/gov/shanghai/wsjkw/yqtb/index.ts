@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wsjkw.sh.gov.cn/'],
-    },
+    radar: [
+        {
+            source: ['wsjkw.sh.gov.cn/'],
+        },
+    ],
     name: '上海卫健委 疫情通报',
     maintainers: ['zcf0508'],
     handler,

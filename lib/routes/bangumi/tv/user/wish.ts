@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bgm.tv/anime/list/:id/wish'],
-    },
+    radar: [
+        {
+            source: ['bgm.tv/anime/list/:id/wish'],
+        },
+    ],
     name: '用户想看',
     maintainers: ['honue'],
     handler,

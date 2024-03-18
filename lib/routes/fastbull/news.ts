@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fastbull.cn/news', 'fastbull.cn/'],
-    },
+    radar: [
+        {
+            source: ['fastbull.cn/news', 'fastbull.cn/'],
+        },
+    ],
     name: '新闻',
     maintainers: ['nczitzk'],
     handler,

@@ -6,10 +6,12 @@ import { ProcessForm, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/tag/:tagId?',
-    radar: {
-        source: ['mob.iyingdi.com/fine/:tagId'],
-        target: '/tag/:tagId',
-    },
+    radar: [
+        {
+            source: ['mob.iyingdi.com/fine/:tagId'],
+            target: '/tag/:tagId',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['auto-bot-ty'],
     handler,

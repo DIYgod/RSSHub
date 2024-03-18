@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.playstation.com/en-sg/ps-plus/whats-new'],
-    },
+    radar: [
+        {
+            source: ['www.playstation.com/en-sg/ps-plus/whats-new'],
+        },
+    ],
     name: 'PlayStation Monthly Games',
     maintainers: ['justjustCC'],
     handler,

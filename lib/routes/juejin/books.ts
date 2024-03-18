@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['juejin.cn/books'],
-    },
+    radar: [
+        {
+            source: ['juejin.cn/books'],
+        },
+    ],
     name: '小册',
     maintainers: ['xyqfer'],
     handler,

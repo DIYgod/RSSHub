@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.health.harvard.edu/blog'],
-    },
+    radar: [
+        {
+            source: ['www.health.harvard.edu/blog'],
+        },
+    ],
     name: 'Health Blog',
     maintainers: ['nczitzk'],
     handler,

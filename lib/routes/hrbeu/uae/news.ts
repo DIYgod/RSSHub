@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['uae.hrbeu.edu.cn/:id.htm'],
-    },
+    radar: [
+        {
+            source: ['uae.hrbeu.edu.cn/:id.htm'],
+        },
+    ],
     name: '水声工程学院',
     maintainers: [],
     handler,

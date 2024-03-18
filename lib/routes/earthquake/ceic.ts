@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.cea.gov.cn/cea/xwzx/zqsd/index.html', 'www.cea.gov.cn/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['www.cea.gov.cn/cea/xwzx/zqsd/index.html', 'www.cea.gov.cn/'],
+            target: '',
+        },
+    ],
     name: '中国地震台',
     maintainers: ['SettingDust'],
     handler,

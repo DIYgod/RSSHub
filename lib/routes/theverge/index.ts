@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['theverge.com/:hub', 'theverge.com/'],
-    },
+    radar: [
+        {
+            source: ['theverge.com/:hub', 'theverge.com/'],
+        },
+    ],
     name: 'The Verge',
     maintainers: ['HenryQW', 'vbali'],
     handler,

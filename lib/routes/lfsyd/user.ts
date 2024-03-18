@@ -6,10 +6,12 @@ import { ProcessForm, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/user/:id?',
-    radar: {
-        source: ['www.iyingdi.com/tz/people/:id', 'www.iyingdi.com/tz/people/:id/*'],
-        target: '/user/:id',
-    },
+    radar: [
+        {
+            source: ['www.iyingdi.com/tz/people/:id', 'www.iyingdi.com/tz/people/:id/*'],
+            target: '/user/:id',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['auto-bot-ty'],
     handler,

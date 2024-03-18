@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mwm.net.cn/web/:category', 'mwm.net.cn/'],
-    },
+    radar: [
+        {
+            source: ['mwm.net.cn/web/:category', 'mwm.net.cn/'],
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,

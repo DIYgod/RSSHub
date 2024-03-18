@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['1lou.me/:path'],
-        target: '/:path',
-    },
+    radar: [
+        {
+            source: ['1lou.me/:path'],
+            target: '/:path',
+        },
+    ],
     name: '搜索',
     maintainers: ['falling'],
     handler,

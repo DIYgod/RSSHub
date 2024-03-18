@@ -22,10 +22,12 @@ const categories = {
 
 export const route: Route = {
     path: ['/dept/:category?', '/:category?'],
-    radar: {
-        source: ['m.hupu.com/:category', 'm.hupu.com/'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['m.hupu.com/:category', 'm.hupu.com/'],
+            target: '/:category',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ccnu.91wllm.com/news/index/tag/tzgg', 'ccnu.91wllm.com/'],
-    },
+    radar: [
+        {
+            source: ['ccnu.91wllm.com/news/index/tag/tzgg', 'ccnu.91wllm.com/'],
+        },
+    ],
     name: '就业信息',
     maintainers: ['jackyu1996'],
     handler,

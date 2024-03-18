@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dribbble.com/:name'],
-    },
+    radar: [
+        {
+            source: ['dribbble.com/:name'],
+        },
+    ],
     name: 'User (or team)',
     maintainers: ['DIYgod', 'loganrockmore'],
     handler,

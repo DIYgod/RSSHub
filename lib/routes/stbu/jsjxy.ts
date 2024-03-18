@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jsjxy.stbu.edu.cn/news', 'jsjxy.stbu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['jsjxy.stbu.edu.cn/news', 'jsjxy.stbu.edu.cn/'],
+        },
+    ],
     name: '计算机学院通知公告',
     maintainers: ['HyperCherry'],
     handler,

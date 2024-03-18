@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tophub.today/n/:id'],
-    },
+    radar: [
+        {
+            source: ['tophub.today/n/:id'],
+        },
+    ],
     name: '榜单',
     maintainers: ['LogicJake'],
     handler,

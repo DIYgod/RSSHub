@@ -13,9 +13,11 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/user/:id',
-    radar: {
-        source: ['picnob.com/profile/:id/*'],
-    },
+    radar: [
+        {
+            source: ['picnob.com/profile/:id/*'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL', 'micheal-death'],
     handler,

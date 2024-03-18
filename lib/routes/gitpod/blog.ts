@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gitpod.io/blog', 'gitpod.io/'],
-    },
+    radar: [
+        {
+            source: ['gitpod.io/blog', 'gitpod.io/'],
+        },
+    ],
     name: 'Blog',
     maintainers: ['TonyRL'],
     handler,

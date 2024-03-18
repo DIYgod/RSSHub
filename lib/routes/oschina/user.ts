@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['my.oschina.net/u/:uid'],
-    },
+    radar: [
+        {
+            source: ['my.oschina.net/u/:uid'],
+        },
+    ],
     name: '数字型账号用户博客',
     maintainers: [],
     handler,

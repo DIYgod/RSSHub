@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jnmhc.jinan.gov.cn/*'],
-    },
+    radar: [
+        {
+            source: ['jnmhc.jinan.gov.cn/*'],
+        },
+    ],
     name: '获取国家医师资格考试通知',
     maintainers: ['tzjyxb'],
     handler,

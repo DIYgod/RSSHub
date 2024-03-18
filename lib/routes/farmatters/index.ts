@@ -32,10 +32,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['farmatters.com/exclusive'],
-        target: '/exclusive',
-    },
+    radar: [
+        {
+            source: ['farmatters.com/exclusive'],
+            target: '/exclusive',
+        },
+    ],
     name: 'Exclusive',
     maintainers: ['nczitzk'],
     handler,

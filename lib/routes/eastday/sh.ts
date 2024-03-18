@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sh.eastday.com/'],
-    },
+    radar: [
+        {
+            source: ['sh.eastday.com/'],
+        },
+    ],
     name: '上海新闻',
     maintainers: ['saury'],
     handler,

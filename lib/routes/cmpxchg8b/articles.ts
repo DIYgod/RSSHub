@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['lock.cmpxchg8b.com/articles'],
-    },
+    radar: [
+        {
+            source: ['lock.cmpxchg8b.com/articles'],
+        },
+    ],
     name: 'Articles',
     maintainers: ['yuguorui'],
     handler,

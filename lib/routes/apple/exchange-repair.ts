@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['support.apple.com/:country/service-programs'],
-        target: '/exchange_repair/:country',
-    },
+    radar: [
+        {
+            source: ['support.apple.com/:country/service-programs'],
+            target: '/exchange_repair/:country',
+        },
+    ],
     name: 'Exchange and Repair Extension Programs',
     maintainers: ['metowolf', 'HenryQW', 'kt286'],
     handler,

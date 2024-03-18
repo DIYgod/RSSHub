@@ -9,10 +9,12 @@ const hostUrlObj = new URL(hostUrl); // 用于在下面判断host
 
 export const route: Route = {
     path: '/moa/:suburl{.+}',
-    radar: {
-        source: ['moa.gov.cn/'],
-        target: '/moa/:suburl',
-    },
+    radar: [
+        {
+            source: ['moa.gov.cn/'],
+            target: '/moa/:suburl',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

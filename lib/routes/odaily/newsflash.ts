@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['0daily.com/newsflash', '0daily.com/'],
-    },
+    radar: [
+        {
+            source: ['0daily.com/newsflash', '0daily.com/'],
+        },
+    ],
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,

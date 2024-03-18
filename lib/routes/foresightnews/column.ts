@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['foresightnews.pro/column/detail/:id', 'foresightnews.pro/'],
-    },
+    radar: [
+        {
+            source: ['foresightnews.pro/column/detail/:id', 'foresightnews.pro/'],
+        },
+    ],
     name: '专栏',
     maintainers: ['nczitzk'],
     handler,

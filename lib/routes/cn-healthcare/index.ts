@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cn-healthcare.com/'],
-    },
+    radar: [
+        {
+            source: ['cn-healthcare.com/'],
+        },
+    ],
     name: '首页',
     maintainers: ['qnloft'],
     handler,

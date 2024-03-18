@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.pixiv.net/users/:id/novels'],
-    },
+    radar: [
+        {
+            source: ['www.pixiv.net/users/:id/novels'],
+        },
+    ],
     name: 'User Novels',
     maintainers: ['TonyRL'],
     handler,

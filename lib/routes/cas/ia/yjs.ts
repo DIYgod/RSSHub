@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.ia.cas.cn/yjsjy/zs/sszs', 'www.ia.cas.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.ia.cas.cn/yjsjy/zs/sszs', 'www.ia.cas.cn/'],
+        },
+    ],
     name: '自动化所',
     maintainers: ['shengmaosu'],
     handler,

@@ -6,7 +6,7 @@ sidebar_position: 3
 
 :::warning
 
-The following document is the old version standard, please refer [/lib/types.ts#L84](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L84) to the new version standard
+The following document is the old version standard, please refer [/lib/types.ts#L183](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L183) to the new version standard
 
 :::
 

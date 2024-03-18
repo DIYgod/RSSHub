@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mox.moe/l/:category', 'mox.moe/'],
-    },
+    radar: [
+        {
+            source: ['mox.moe/l/:category', 'mox.moe/'],
+        },
+    ],
     name: '首頁',
     maintainers: ['nczitzk'],
     handler,

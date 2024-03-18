@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/notifications'],
-    },
+    radar: [
+        {
+            source: ['github.com/notifications'],
+        },
+    ],
     name: 'Notifications',
     maintainers: ['zhzy0077'],
     handler,

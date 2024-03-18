@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['thwiki.cc/', 'thwiki.cc/日程表'],
-        target: '/calendar',
-    },
+    radar: [
+        {
+            source: ['thwiki.cc/', 'thwiki.cc/日程表'],
+            target: '/calendar',
+        },
+    ],
     name: 'Calendar',
     maintainers: ['aether17'],
     handler,

@@ -80,7 +80,7 @@ In addition to the two functions of generating RSS and obtaining data, RSSHub al
 
 ### Configuration file
 
-Radar has two types of configuration files, one is a full-featured [js file](https://github.com/DIYgod/RSSHub/blob/gh-pages/build/radar-rules.js), and the other is a simplified [json file]((https://github.com/DIYgod/RSSHub/blob/gh-pages/build/radar-rules.json)).
+Radar has two types of configuration files, one is a full-featured [js file](https://github.com/DIYgod/RSSHub/blob/gh-pages/build/radar-rules.js), and the other is a simplified [json file](https://github.com/DIYgod/RSSHub/blob/gh-pages/build/radar-rules.json).
 
 ### Usage
 

@@ -36,10 +36,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['taptap.com/app/:id/topic', 'taptap.com/app/:id'],
-        target: '/topic/:id',
-    },
+    radar: [
+        {
+            source: ['taptap.com/app/:id/topic', 'taptap.com/app/:id'],
+            target: '/topic/:id',
+        },
+    ],
     name: '游戏论坛',
     maintainers: ['hoilc', 'TonyRL'],
     handler,

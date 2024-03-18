@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xys.org/', 'xys.org/new.html'],
-    },
+    radar: [
+        {
+            source: ['xys.org/', 'xys.org/new.html'],
+        },
+    ],
     name: '新到资料',
     maintainers: ['wenzhenl'],
     handler,

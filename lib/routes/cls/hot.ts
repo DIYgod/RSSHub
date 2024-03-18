@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cls.cn/'],
-    },
+    radar: [
+        {
+            source: ['cls.cn/'],
+        },
+    ],
     name: '热门文章排行榜',
     maintainers: ['5upernova-heng', 'nczitzk'],
     handler,

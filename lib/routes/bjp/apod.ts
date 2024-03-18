@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bjp.org.cn/APOD/today.shtml', 'bjp.org.cn/APOD/list.shtml', 'bjp.org.cn/'],
-    },
+    radar: [
+        {
+            source: ['bjp.org.cn/APOD/today.shtml', 'bjp.org.cn/APOD/list.shtml', 'bjp.org.cn/'],
+        },
+    ],
     name: '每日一图',
     maintainers: ['HenryQW'],
     handler,

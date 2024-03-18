@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rszhaopin.bit.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['rszhaopin.bit.edu.cn/'],
+        },
+    ],
     name: '人才招聘',
     maintainers: ['nczitzk'],
     handler,

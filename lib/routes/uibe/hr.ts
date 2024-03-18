@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hr.uibe.edu.cn/:category/:type', 'hr.uibe.edu.cn/:category', 'hr.uibe.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['hr.uibe.edu.cn/:category/:type', 'hr.uibe.edu.cn/:category', 'hr.uibe.edu.cn/'],
+        },
+    ],
     name: '人力资源处',
     maintainers: ['nczitzk'],
     handler,

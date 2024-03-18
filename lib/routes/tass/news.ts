@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tass.com/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['tass.com/:category'],
+            target: '/:category',
+        },
+    ],
     name: 'News',
     maintainers: ['TonyRL'],
     handler,

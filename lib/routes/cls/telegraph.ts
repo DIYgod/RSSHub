@@ -33,10 +33,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cls.cn/telegraph', 'cls.cn/'],
-        target: '/telegraph',
-    },
+    radar: [
+        {
+            source: ['cls.cn/telegraph', 'cls.cn/'],
+            target: '/telegraph',
+        },
+    ],
     name: '电报',
     maintainers: ['nczitzk'],
     handler,

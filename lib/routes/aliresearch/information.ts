@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['aliresearch.com/cn/information', 'aliresearch.com/'],
-        target: '/information',
-    },
+    radar: [
+        {
+            source: ['aliresearch.com/cn/information', 'aliresearch.com/'],
+            target: '/information',
+        },
+    ],
     name: '资讯',
     maintainers: ['nczitzk'],
     handler,

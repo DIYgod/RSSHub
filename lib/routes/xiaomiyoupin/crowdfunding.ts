@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xiaomiyoupin.com/'],
-    },
+    radar: [
+        {
+            source: ['xiaomiyoupin.com/'],
+        },
+    ],
     name: '小米有品众筹',
     maintainers: ['bigfei'],
     handler,

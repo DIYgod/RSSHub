@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hashnode.dev/'],
-    },
+    radar: [
+        {
+            source: ['hashnode.dev/'],
+        },
+    ],
     name: '用户博客',
     maintainers: ['hnrainll'],
     handler,

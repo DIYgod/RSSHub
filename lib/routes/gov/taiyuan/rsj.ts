@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rsj.taiyuan.gov.cn/*'],
-    },
+    radar: [
+        {
+            source: ['rsj.taiyuan.gov.cn/*'],
+        },
+    ],
     name: '太原市人力资源和社会保障局政府公开信息',
     maintainers: ['2PoL'],
     handler,

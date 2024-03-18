@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['community.modelscope.cn/'],
-    },
+    radar: [
+        {
+            source: ['community.modelscope.cn/'],
+        },
+    ],
     name: 'DevPress 官方社区',
     maintainers: ['TonyRL'],
     handler,

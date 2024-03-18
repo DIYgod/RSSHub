@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wlwz.changsha.gov.cn/webapp/cs2020/email/*'],
-    },
+    radar: [
+        {
+            source: ['wlwz.changsha.gov.cn/webapp/cs2020/email/*'],
+        },
+    ],
     name: '长沙市人民政府',
     maintainers: ['shansing'],
     handler,

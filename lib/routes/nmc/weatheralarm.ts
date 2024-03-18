@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nmc.cn/publish/alarm.html', 'nmc.cn/'],
-        target: '/weatheralarm',
-    },
+    radar: [
+        {
+            source: ['nmc.cn/publish/alarm.html', 'nmc.cn/'],
+            target: '/weatheralarm',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['ylc395'],
     handler,

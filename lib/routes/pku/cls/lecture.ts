@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bio.pku.edu.cn/homes/Index/news_jz/7/7.html', 'bio.pku.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['bio.pku.edu.cn/homes/Index/news_jz/7/7.html', 'bio.pku.edu.cn/'],
+        },
+    ],
     name: '生命科学学院近期讲座',
     maintainers: ['TPOB'],
     handler,

@@ -30,10 +30,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/trending'],
-        target: '/trending/:since',
-    },
+    radar: [
+        {
+            source: ['github.com/trending'],
+            target: '/trending/:since',
+        },
+    ],
     name: 'Trending',
     maintainers: ['DIYgod', 'jameschensmith'],
     handler,

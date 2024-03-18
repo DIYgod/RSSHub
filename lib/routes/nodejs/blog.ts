@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nodejs.org/:language/blog', 'nodejs.org/'],
-    },
+    radar: [
+        {
+            source: ['nodejs.org/:language/blog', 'nodejs.org/'],
+        },
+    ],
     name: 'News',
     maintainers: ['nczitzk'],
     handler,

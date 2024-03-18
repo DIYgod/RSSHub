@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['techflowpost.com/newsletter/index.html'],
-    },
+    radar: [
+        {
+            source: ['techflowpost.com/newsletter/index.html'],
+        },
+    ],
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,

@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dribbble.com/'],
-        target: '/popular',
-    },
+    radar: [
+        {
+            source: ['dribbble.com/'],
+            target: '/popular',
+        },
+    ],
     name: 'Popular',
     maintainers: ['DIYgod', 'loganrockmore'],
     handler,

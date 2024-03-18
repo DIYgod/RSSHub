@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.yxrb.net/:category', 'news.yxrb.net/'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['news.yxrb.net/:category', 'news.yxrb.net/'],
+            target: '/:category',
+        },
+    ],
     name: '分类',
     maintainers: ['TonyRL'],
     handler,

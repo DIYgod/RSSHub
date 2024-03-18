@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sensortower.com/blog', 'sensortower.com/zh-CN/blog', 'sensortower.com/ja/blog', 'sensortower.com/ko/blog', 'sensortower.com/'],
-        target: '/blog',
-    },
+    radar: [
+        {
+            source: ['sensortower.com/blog', 'sensortower.com/zh-CN/blog', 'sensortower.com/ja/blog', 'sensortower.com/ko/blog', 'sensortower.com/'],
+            target: '/blog',
+        },
+    ],
     name: 'Blog',
     maintainers: ['nczitzk'],
     handler,

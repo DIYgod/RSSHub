@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.cn/xhsxw.htm'],
-    },
+    radar: [
+        {
+            source: ['news.cn/xhsxw.htm'],
+        },
+    ],
     name: '新华社新闻',
     maintainers: ['nczitzk'],
     handler,

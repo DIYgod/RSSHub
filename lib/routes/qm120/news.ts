@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['qm120.com/'],
-    },
+    radar: [
+        {
+            source: ['qm120.com/'],
+        },
+    ],
     name: '新闻',
     maintainers: ['nczitzk'],
     handler,

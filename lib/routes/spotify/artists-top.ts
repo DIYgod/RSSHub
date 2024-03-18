@@ -28,9 +28,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['open.spotify.com/'],
-    },
+    radar: [
+        {
+            source: ['open.spotify.com/'],
+        },
+    ],
     name: 'Personal Top Artists',
     maintainers: ['outloudvi'],
     handler,

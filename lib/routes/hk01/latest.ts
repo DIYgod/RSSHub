@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hk01.com/latest', 'hk01.com/'],
-    },
+    radar: [
+        {
+            source: ['hk01.com/latest', 'hk01.com/'],
+        },
+    ],
     name: '即時',
     maintainers: ['5upernova-heng'],
     handler,

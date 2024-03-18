@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['who.int/news'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['who.int/news'],
+            target: '/news',
+        },
+    ],
     name: 'News',
     maintainers: ['nczitzk'],
     handler,

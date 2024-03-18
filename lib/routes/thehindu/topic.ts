@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['thehindu.com/topic/:topic'],
-    },
+    radar: [
+        {
+            source: ['thehindu.com/topic/:topic'],
+        },
+    ],
     name: 'Topic',
     maintainers: ['TonyRL'],
     handler,

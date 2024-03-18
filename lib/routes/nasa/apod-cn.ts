@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['apod.nasa.govundefined'],
-    },
+    radar: [
+        {
+            source: ['apod.nasa.govundefined'],
+        },
+    ],
     name: 'NASA 中文',
     maintainers: ['nczitzk', 'williamgateszhao'],
     handler,

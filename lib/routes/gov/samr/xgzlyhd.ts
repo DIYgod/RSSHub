@@ -51,9 +51,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xgzlyhd.samr.gov.cn/gjjly/index'],
-    },
+    radar: [
+        {
+            source: ['xgzlyhd.samr.gov.cn/gjjly/index'],
+        },
+    ],
     name: '留言咨询',
     maintainers: ['nczitzk'],
     handler,

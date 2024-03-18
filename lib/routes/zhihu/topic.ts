@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/topic/:topicId/:type'],
-        target: '/topic/:topicId',
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/topic/:topicId/:type'],
+            target: '/topic/:topicId',
+        },
+    ],
     name: '话题',
     maintainers: ['xyqfer'],
     handler,

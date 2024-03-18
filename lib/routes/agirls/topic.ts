@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['agirls.aotter.net/topic/:topic'],
-    },
+    radar: [
+        {
+            source: ['agirls.aotter.net/topic/:topic'],
+        },
+    ],
     name: '精选主题',
     maintainers: ['TonyRL'],
     handler,

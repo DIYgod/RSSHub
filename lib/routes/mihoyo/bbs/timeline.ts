@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['miyoushe.com/:game/timeline'],
-    },
+    radar: [
+        {
+            source: ['miyoushe.com/:game/timeline'],
+        },
+    ],
     name: '米游社 - 用户关注动态',
     maintainers: ['CaoMeiYouRen'],
     handler,

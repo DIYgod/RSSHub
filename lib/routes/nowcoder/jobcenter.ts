@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nowcoder.com/'],
-        target: '/jobcenter',
-    },
+    radar: [
+        {
+            source: ['nowcoder.com/'],
+            target: '/jobcenter',
+        },
+    ],
     name: '实习广场 & 社招广场',
     maintainers: ['nczitzk'],
     handler,

@@ -36,9 +36,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cahkms.org/'],
-    },
+    radar: [
+        {
+            source: ['cahkms.org/'],
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,

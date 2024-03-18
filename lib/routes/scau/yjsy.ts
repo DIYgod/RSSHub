@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yjsy.scau.edu.cn/208/list.htm', 'yjsy.scau.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['yjsy.scau.edu.cn/208/list.htm', 'yjsy.scau.edu.cn/'],
+        },
+    ],
     name: '研究生院通知',
     maintainers: ['Chunssu'],
     handler,

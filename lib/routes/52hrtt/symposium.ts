@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['52hrtt.com/global/n/w/symposium/:id'],
-        target: '/symposium/:id',
-    },
+    radar: [
+        {
+            source: ['52hrtt.com/global/n/w/symposium/:id'],
+            target: '/symposium/:id',
+        },
+    ],
     name: '专题',
     maintainers: ['nczitzk'],
     handler,

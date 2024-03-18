@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['luogu.com.cn/discuss/47327', 'luogu.com.cn/'],
-        target: '/daily',
-    },
+    radar: [
+        {
+            source: ['luogu.com.cn/discuss/47327', 'luogu.com.cn/'],
+            target: '/daily',
+        },
+    ],
     name: '日报',
     maintainers: ['LogicJake ', 'prnake ', 'nczitzk'],
     handler,

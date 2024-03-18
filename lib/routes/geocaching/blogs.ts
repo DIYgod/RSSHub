@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['geocaching.com/blog/', 'geocaching.com/'],
-    },
+    radar: [
+        {
+            source: ['geocaching.com/blog/', 'geocaching.com/'],
+        },
+    ],
     name: 'Official Blogs',
     maintainers: ['HankChow'],
     handler,

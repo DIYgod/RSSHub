@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['soundofhope.org/:channel/:id'],
-    },
+    radar: [
+        {
+            source: ['soundofhope.org/:channel/:id'],
+        },
+    ],
     name: '频道',
     maintainers: ['Fatpandac'],
     handler,

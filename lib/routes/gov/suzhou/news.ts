@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.suzhou.gov.cn/szsrmzf/:uid/nav_list.shtml'],
-    },
+    radar: [
+        {
+            source: ['www.suzhou.gov.cn/szsrmzf/:uid/nav_list.shtml'],
+        },
+    ],
     name: '政府新闻',
     maintainers: ['EsuRt', 'luyuhuang'],
     handler,

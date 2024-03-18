@@ -29,9 +29,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['huanqiu.com/'],
-    },
+    radar: [
+        {
+            source: ['huanqiu.com/'],
+        },
+    ],
     name: '分类',
     maintainers: ['yuxinliu-alex'],
     handler,

@@ -68,10 +68,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['t.me/s/:username'],
-        target: '/channel/:username',
-    },
+    radar: [
+        {
+            source: ['t.me/s/:username'],
+            target: '/channel/:username',
+        },
+    ],
     name: 'Channel',
     maintainers: ['DIYgod', 'Rongronggg9'],
     handler,

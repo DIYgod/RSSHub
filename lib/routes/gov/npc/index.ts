@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['npc.gov.cn/npc/c2/:caty'],
-    },
+    radar: [
+        {
+            source: ['npc.gov.cn/npc/c2/:caty'],
+        },
+    ],
     name: '通用',
     maintainers: ['233yeee'],
     handler,

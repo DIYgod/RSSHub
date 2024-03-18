@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['techpowerup.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['techpowerup.com/'],
+            target: '',
+        },
+    ],
     name: 'Reviews',
     maintainers: ['TonyRL'],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['developer.aliyun.com/group/:type'],
-    },
+    radar: [
+        {
+            source: ['developer.aliyun.com/group/:type'],
+        },
+    ],
     name: '开发者社区 - 主题',
     maintainers: ['umm233'],
     handler,

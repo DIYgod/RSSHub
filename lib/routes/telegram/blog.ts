@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['telegram.org/blog'],
-    },
+    radar: [
+        {
+            source: ['telegram.org/blog'],
+        },
+    ],
     name: 'Telegram Blog',
     maintainers: ['fengkx'],
     handler,

@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['outlet.arcteryx.com/:country/en/c/:gender'],
-    },
+    radar: [
+        {
+            source: ['outlet.arcteryx.com/:country/en/c/:gender'],
+        },
+    ],
     name: 'Outlet',
     maintainers: ['EthanWng97'],
     handler,

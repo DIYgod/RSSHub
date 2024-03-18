@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zcc.nju.edu.cn/tzgg/gyfytdglk/index.html', 'zcc.nju.edu.cn/tzgg/index.html', 'zcc.nju.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['zcc.nju.edu.cn/tzgg/gyfytdglk/index.html', 'zcc.nju.edu.cn/tzgg/index.html', 'zcc.nju.edu.cn/'],
+        },
+    ],
     name: '资产管理处',
     maintainers: ['ret-1'],
     handler,

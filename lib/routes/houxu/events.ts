@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['houxu.app/events', 'houxu.app/'],
-    },
+    radar: [
+        {
+            source: ['houxu.app/events', 'houxu.app/'],
+        },
+    ],
     name: '专栏',
     maintainers: ['nczitzk'],
     handler,

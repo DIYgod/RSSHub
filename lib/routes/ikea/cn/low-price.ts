@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ikea.cn/cn/zh/campaigns/wo3-men2-de-chao1-zhi2-di1-jia4-pub8b08af40', 'ikea.cn/'],
-    },
+    radar: [
+        {
+            source: ['ikea.cn/cn/zh/campaigns/wo3-men2-de-chao1-zhi2-di1-jia4-pub8b08af40', 'ikea.cn/'],
+        },
+    ],
     name: '中国 - 低价优选',
     maintainers: ['jzhangdev'],
     handler,

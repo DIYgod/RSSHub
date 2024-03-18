@@ -9,9 +9,11 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/news/coronavirus/total',
-    radar: {
-        source: ['new.qq.com/zt2020/page/feiyan.htm'],
-    },
+    radar: [
+        {
+            source: ['new.qq.com/zt2020/page/feiyan.htm'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['CaoMeiYouRen'],
     handler,

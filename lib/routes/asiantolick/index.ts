@@ -11,10 +11,12 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:category{.+}?',
-    radar: {
-        source: ['asiantolick.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['asiantolick.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['factpaper.cn/'],
-        target: '/factpaper/:status',
-    },
+    radar: [
+        {
+            source: ['factpaper.cn/'],
+            target: '/factpaper/:status',
+        },
+    ],
     name: '明查',
     maintainers: ['nczitzk'],
     handler,

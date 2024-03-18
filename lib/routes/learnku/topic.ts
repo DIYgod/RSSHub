@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['learnku.com/:community'],
-        target: '/:community',
-    },
+    radar: [
+        {
+            source: ['learnku.com/:community'],
+            target: '/:community',
+        },
+    ],
     name: '社区',
     maintainers: ['kayw-geek'],
     handler,

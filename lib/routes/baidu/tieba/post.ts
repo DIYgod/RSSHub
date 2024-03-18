@@ -45,9 +45,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tieba.baidu.com/p/:id'],
-    },
+    radar: [
+        {
+            source: ['tieba.baidu.com/p/:id'],
+        },
+    ],
     name: '帖子动态',
     maintainers: ['u3u'],
     handler,

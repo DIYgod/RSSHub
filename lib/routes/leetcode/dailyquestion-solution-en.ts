@@ -10,9 +10,11 @@ import timezone from '@/utils/timezone';
 import * as path from 'node:path';
 export const route: Route = {
     path: '/dailyquestion/solution/en',
-    radar: {
-        source: ['leetcode.com/'],
-    },
+    radar: [
+        {
+            source: ['leetcode.com/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

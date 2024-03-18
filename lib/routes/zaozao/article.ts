@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zaozao.run/article/:type'],
-        target: '/article/:type',
-    },
+    radar: [
+        {
+            source: ['www.zaozao.run/article/:type'],
+            target: '/article/:type',
+        },
+    ],
     name: '文章',
     maintainers: ['shaomingbo'],
     handler,

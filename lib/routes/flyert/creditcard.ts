@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['flyert.com/'],
-    },
+    radar: [
+        {
+            source: ['flyert.com/'],
+        },
+    ],
     name: '信用卡',
     maintainers: ['nicolaszf'],
     handler,

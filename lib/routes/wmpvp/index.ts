@@ -23,6 +23,11 @@ export const route: Route = {
   | 1     | 2   |`,
 };
 
+const TYPE_MAP = {
+    '1': 'DOTA2',
+    '2': 'CS2',
+};
+
 async function handler(ctx) {
     const type = ctx.req.param('type');
 
@@ -49,7 +54,7 @@ async function handler(ctx) {
     });
 
     return {
-        title: `完美世界电竞`,
+        title: `完美世界电竞 - ${TYPE_MAP[type]} 资讯`,
         link: `https://news.wmpvp.com/`,
         item: items,
     };

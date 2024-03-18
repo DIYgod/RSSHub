@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dxy.cn/bbs/newweb/pc/profile/:userId/threads', 'dxy.cn/bbs/newweb/pc/profile/:userId'],
-    },
+    radar: [
+        {
+            source: ['dxy.cn/bbs/newweb/pc/profile/:userId/threads', 'dxy.cn/bbs/newweb/pc/profile/:userId'],
+        },
+    ],
     name: '个人帖子',
     maintainers: ['TonyRL'],
     handler,

@@ -40,10 +40,12 @@ const getMappings = function (obj) {
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['layoffs.fyi/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['layoffs.fyi/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['BrandNewLifeJackie26'],
     handler,

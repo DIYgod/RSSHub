@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['liuyan.people.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['liuyan.people.com.cn/'],
+        },
+    ],
     name: '领导留言板',
     maintainers: ['nczitzk'],
     handler,

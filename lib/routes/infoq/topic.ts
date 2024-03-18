@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['infoq.cn/topic/:id'],
-    },
+    radar: [
+        {
+            source: ['infoq.cn/topic/:id'],
+        },
+    ],
     name: '话题',
     maintainers: ['brilon'],
     handler,

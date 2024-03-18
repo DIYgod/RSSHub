@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['caac.gov.cn/HDJL/'],
-        target: '/caac/cjwt',
-    },
+    radar: [
+        {
+            source: ['caac.gov.cn/HDJL/'],
+            target: '/caac/cjwt',
+        },
+    ],
     name: '公众留言',
     maintainers: ['nczitzk'],
     handler,

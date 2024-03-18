@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/tag/:keyword'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/tag/:keyword'],
+        },
+    ],
     name: '标签订阅',
     maintainers: ['Jeason0228'],
     handler,

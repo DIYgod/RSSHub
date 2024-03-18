@@ -8,10 +8,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/c/:username/:embed?',
-    radar: {
-        source: ['www.youtube.com/c/:id'],
-        target: '/c/:id',
-    },
+    radar: [
+        {
+            source: ['www.youtube.com/c/:id'],
+            target: '/c/:id',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

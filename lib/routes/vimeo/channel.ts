@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['vimeo.com/channels/:channel', 'vimeo.com/channels/:channel/videos', 'vimeo.com/channels/:channel/videos/:sort/:format'],
-    },
+    radar: [
+        {
+            source: ['vimeo.com/channels/:channel', 'vimeo.com/channels/:channel/videos', 'vimeo.com/channels/:channel/videos/:sort/:format'],
+        },
+    ],
     name: 'Channel',
     maintainers: ['MisteryMonster'],
     handler,

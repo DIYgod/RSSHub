@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/index'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/index'],
+        },
+    ],
     name: '首页',
     maintainers: ['HenryQW'],
     handler,

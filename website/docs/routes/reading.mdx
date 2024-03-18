@@ -4,7 +4,7 @@
 
 ### chapter
 
-<Route namespace="hameln" data={{"path":"/chapter/:id","categories":["reading"],"example":"/hameln/chapter/264928","parameters":{"id":"Novel id, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["syosetu.org/novel/:id"]},"name":"chapter","maintainers":["huangliangshusheng"],"description":"Eg: [https://syosetu.org/novel/264928](https://syosetu.org/novel/264928)","location":"chapter.ts"}} />
+<Route namespace="hameln" data={{"path":"/chapter/:id","categories":["reading"],"example":"/hameln/chapter/264928","parameters":{"id":"Novel id, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["syosetu.org/novel/:id"]}],"name":"chapter","maintainers":["huangliangshusheng"],"description":"Eg: [https://syosetu.org/novel/264928](https://syosetu.org/novel/264928)","location":"chapter.ts"}} />
 
 Eg: [https://syosetu.org/novel/264928](https://syosetu.org/novel/264928)
 
@@ -18,7 +18,7 @@ Eg: [https://syosetu.org/novel/264928](https://syosetu.org/novel/264928)
 
 ### New Stories
 
-<Route namespace="literotica" data={{"path":"/new","categories":["reading"],"example":"/literotica/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["literotica.com/"]},"name":"New Stories","maintainers":["nczitzk"],"url":"literotica.com/","location":"new.ts"}} />
+<Route namespace="literotica" data={{"path":"/new","categories":["reading"],"example":"/literotica/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["literotica.com/"]}],"name":"New Stories","maintainers":["nczitzk"],"url":"literotica.com/","location":"new.ts"}} />
 
 ## MagazineLib
 
@@ -32,23 +32,23 @@ For instance, when doing search at [https://magazinelib.com](https://magazinelib
 
 ### Articles
 
-<Route namespace="penguin-random-house" data={{"path":"/articles","categories":["reading"],"example":"/penguin-random-house/articles","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["penguinrandomhouse.com/articles"]},"name":"Articles","maintainers":["StevenRCE0"],"url":"penguinrandomhouse.com/articles","location":"articles.ts"}} />
+<Route namespace="penguin-random-house" data={{"path":"/articles","categories":["reading"],"example":"/penguin-random-house/articles","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["penguinrandomhouse.com/articles"]}],"name":"Articles","maintainers":["StevenRCE0"],"url":"penguinrandomhouse.com/articles","location":"articles.ts"}} />
 
 ### Book Lists
 
-<Route namespace="penguin-random-house" data={{"path":"/the-read-down","categories":["reading"],"example":"/penguin-random-house/the-read-down","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["penguinrandomhouse.com/the-read-down"]},"name":"Book Lists","maintainers":["StevenRCE0"],"url":"penguinrandomhouse.com/the-read-down","location":"thereaddown.ts"}} />
+<Route namespace="penguin-random-house" data={{"path":"/the-read-down","categories":["reading"],"example":"/penguin-random-house/the-read-down","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["penguinrandomhouse.com/the-read-down"]}],"name":"Book Lists","maintainers":["StevenRCE0"],"url":"penguinrandomhouse.com/the-read-down","location":"thereaddown.ts"}} />
 
 ## SF 轻小说
 
 ### 章节
 
-<Route namespace="sfacg" data={{"path":"/novel/chapter/:id","categories":["reading"],"example":"/sfacg/novel/chapter/672431","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["book.sfacg.com/Novel/:id/*"]},"name":"章节","maintainers":["keocheung"],"location":"novel-chapter.ts"}} />
+<Route namespace="sfacg" data={{"path":"/novel/chapter/:id","categories":["reading"],"example":"/sfacg/novel/chapter/672431","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["book.sfacg.com/Novel/:id/*"]}],"name":"章节","maintainers":["keocheung"],"location":"novel-chapter.ts"}} />
 
 ## SoBooks
 
 ### 标签
 
-<Route namespace="sobooks" data={{"path":"/tag/:id?","categories":["reading"],"example":"/sobooks/tag/小说","parameters":{"id":"标签, 见下表，默认为小说"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["sobooks.net/books/tag/:tag"],"target":"/tag/:tag"},"name":"标签","maintainers":["nczitzk"],"description":"热门标签\n\n  | 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济   |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |\n  | 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典   |\n  | 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治   |\n  | 漫画 | 纪实 | 艺术 | 科学 | 生活 | 职场 | 散文 | 法国 | 互联网 |\n  | 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业   |\n  | 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通   |","location":"tag.ts"}} />
+<Route namespace="sobooks" data={{"path":"/tag/:id?","categories":["reading"],"example":"/sobooks/tag/小说","parameters":{"id":"标签, 见下表，默认为小说"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sobooks.net/books/tag/:tag"],"target":"/tag/:tag"}],"name":"标签","maintainers":["nczitzk"],"description":"热门标签\n\n  | 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济   |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |\n  | 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典   |\n  | 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治   |\n  | 漫画 | 纪实 | 艺术 | 科学 | 生活 | 职场 | 散文 | 法国 | 互联网 |\n  | 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业   |\n  | 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通   |","location":"tag.ts"}} />
 
 热门标签
 
@@ -62,11 +62,11 @@ For instance, when doing search at [https://magazinelib.com](https://magazinelib
 
 ### 归档
 
-<Route namespace="sobooks" data={{"path":"/date/:date?","categories":["reading"],"example":"/sobooks/date/2020-11","parameters":{"date":"日期，见例子，默认为当前年月"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["sobooks.net/:category"],"target":"/:category"},"name":"归档","maintainers":["nczitzk"],"location":"date.ts"}} />
+<Route namespace="sobooks" data={{"path":"/date/:date?","categories":["reading"],"example":"/sobooks/date/2020-11","parameters":{"date":"日期，见例子，默认为当前年月"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sobooks.net/:category"],"target":"/:category"}],"name":"归档","maintainers":["nczitzk"],"location":"date.ts"}} />
 
 ### 首页
 
-<Route namespace="sobooks" data={{"path":"/:category?","categories":["reading"],"example":"/sobooks","parameters":{"category":"分类, 见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["sobooks.net/:category"],"target":"/:category"},"name":"首页","maintainers":["nczitzk"],"description":"| 分类     | 分类名           |\n  | -------- | ---------------- |\n  | 小说文学 | xiaoshuowenxue   |\n  | 历史传记 | lishizhuanji     |\n  | 人文社科 | renwensheke      |\n  | 励志成功 | lizhichenggong   |\n  | 经济管理 | jingjiguanli     |\n  | 学习教育 | xuexijiaoyu      |\n  | 生活时尚 | shenghuoshishang |\n  | 英文原版 | yingwenyuanban   |","location":"index.ts"}} />
+<Route namespace="sobooks" data={{"path":"/:category?","categories":["reading"],"example":"/sobooks","parameters":{"category":"分类, 见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sobooks.net/:category"],"target":"/:category"}],"name":"首页","maintainers":["nczitzk"],"description":"| 分类     | 分类名           |\n  | -------- | ---------------- |\n  | 小说文学 | xiaoshuowenxue   |\n  | 历史传记 | lishizhuanji     |\n  | 人文社科 | renwensheke      |\n  | 励志成功 | lizhichenggong   |\n  | 经济管理 | jingjiguanli     |\n  | 学习教育 | xuexijiaoyu      |\n  | 生活时尚 | shenghuoshishang |\n  | 英文原版 | yingwenyuanban   |","location":"index.ts"}} />
 
 | 分类     | 分类名           |
   | -------- | ---------------- |
@@ -83,7 +83,7 @@ For instance, when doing search at [https://magazinelib.com](https://magazinelib
 
 ### chapter
 
-<Route namespace="syosetu" data={{"path":"/chapter/:id","categories":["reading"],"example":"/syosetu/chapter/n1976ey","parameters":{"id":"Novel id, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["novel18.syosetu.com/:id"]},"name":"chapter","maintainers":["huangliangshusheng"],"description":"Eg: `https://ncode.syosetu.com/n1976ey/`","location":"chapter.ts"}} />
+<Route namespace="syosetu" data={{"path":"/chapter/:id","categories":["reading"],"example":"/syosetu/chapter/n1976ey","parameters":{"id":"Novel id, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["novel18.syosetu.com/:id"]}],"name":"chapter","maintainers":["huangliangshusheng"],"description":"Eg: `https://ncode.syosetu.com/n1976ey/`","location":"chapter.ts"}} />
 
 Eg: `https://ncode.syosetu.com/n1976ey/`
 
@@ -132,7 +132,7 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 ### 章节
 
-<Route namespace="ciweimao" data={{"path":"/chapter/:id","categories":["reading"],"example":"/ciweimao/chapter/100043404","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["wap.ciweimao.com/book/:id"]},"name":"章节","maintainers":["keocheung"],"location":"chapter.ts"}} />
+<Route namespace="ciweimao" data={{"path":"/chapter/:id","categories":["reading"],"example":"/ciweimao/chapter/100043404","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["wap.ciweimao.com/book/:id"]}],"name":"章节","maintainers":["keocheung"],"location":"chapter.ts"}} />
 
 ## 東立出版社
 
@@ -144,7 +144,7 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 ### 章节
 
-<Route namespace="hbooker" data={{"path":"/chapter/:id","categories":["reading"],"example":"/hbooker/chapter/100113279","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["hbooker.com/book/:id"]},"name":"章节","maintainers":["keocheung"],"location":"chapter.ts"}} />
+<Route namespace="hbooker" data={{"path":"/chapter/:id","categories":["reading"],"example":"/hbooker/chapter/100113279","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["hbooker.com/book/:id"]}],"name":"章节","maintainers":["keocheung"],"location":"chapter.ts"}} />
 
 ## 晋江文学城
 
@@ -188,23 +188,23 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 ### 讨论区
 
-<Route namespace="qidian" data={{"path":"/forum/:id","categories":["reading"],"example":"/qidian/forum/1010400217","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["book.qidian.com/info/:id"]},"name":"讨论区","maintainers":["fuzy112"],"location":"forum.ts"}} />
+<Route namespace="qidian" data={{"path":"/forum/:id","categories":["reading"],"example":"/qidian/forum/1010400217","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["book.qidian.com/info/:id"]}],"name":"讨论区","maintainers":["fuzy112"],"location":"forum.ts"}} />
 
 ### 限时免费下期预告
 
-<Route namespace="qidian" data={{"path":"/free-next/:type?","categories":["reading"],"example":"/qidian/free-next","parameters":{"type":"默认不填为起点中文网，填 mm 为起点女生网"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.qidian.com/free"],"target":"/free"},"name":"限时免费下期预告","maintainers":["LogicJake"],"url":"www.qidian.com/free","location":"free-next.ts"}} />
+<Route namespace="qidian" data={{"path":"/free-next/:type?","categories":["reading"],"example":"/qidian/free-next","parameters":{"type":"默认不填为起点中文网，填 mm 为起点女生网"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.qidian.com/free"],"target":"/free"}],"name":"限时免费下期预告","maintainers":["LogicJake"],"url":"www.qidian.com/free","location":"free-next.ts"}} />
 
 ### 限时免费
 
-<Route namespace="qidian" data={{"path":"/free/:type?","categories":["reading"],"example":"/qidian/free","parameters":{"type":"默认不填为起点中文网，填 mm 为起点女生网"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.qidian.com/free"],"target":"/free"},"name":"限时免费","maintainers":["LogicJake"],"url":"www.qidian.com/free","location":"free.ts"}} />
+<Route namespace="qidian" data={{"path":"/free/:type?","categories":["reading"],"example":"/qidian/free","parameters":{"type":"默认不填为起点中文网，填 mm 为起点女生网"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.qidian.com/free"],"target":"/free"}],"name":"限时免费","maintainers":["LogicJake"],"url":"www.qidian.com/free","location":"free.ts"}} />
 
 ### 章节
 
-<Route namespace="qidian" data={{"path":"/chapter/:id","categories":["reading"],"example":"/qidian/chapter/1010400217","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["book.qidian.com/info/:id"]},"name":"章节","maintainers":["fuzy112"],"location":"chapter.ts"}} />
+<Route namespace="qidian" data={{"path":"/chapter/:id","categories":["reading"],"example":"/qidian/chapter/1010400217","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["book.qidian.com/info/:id"]}],"name":"章节","maintainers":["fuzy112"],"location":"chapter.ts"}} />
 
 ### 作者
 
-<Route namespace="qidian" data={{"path":"/author/:id","categories":["reading"],"example":"/qidian/author/9639927","parameters":{"id":"作者 id, 可在作者页面 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["my.qidian.com/author/:id"]},"name":"作者","maintainers":["miles170"],"location":"author.ts"}} />
+<Route namespace="qidian" data={{"path":"/author/:id","categories":["reading"],"example":"/qidian/author/9639927","parameters":{"id":"作者 id, 可在作者页面 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["my.qidian.com/author/:id"]}],"name":"作者","maintainers":["miles170"],"location":"author.ts"}} />
 
 ## 轻小说文库
 
@@ -220,7 +220,7 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 ### 等级
 
-<Route namespace="yomujp" data={{"path":"/:level?","categories":["reading"],"example":"/yomujp/n1","parameters":{"level":"等级，n1~n6，为空默认全部"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yomujp.com/","yomujp.com/:level"],"target":"/:level"},"name":"等级","maintainers":["eternasuno"],"url":"yomujp.com/","location":"level.ts"}} />
+<Route namespace="yomujp" data={{"path":"/:level?","categories":["reading"],"example":"/yomujp/n1","parameters":{"level":"等级，n1~n6，为空默认全部"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["yomujp.com/","yomujp.com/:level"],"target":"/:level"}],"name":"等级","maintainers":["eternasuno"],"url":"yomujp.com/","location":"level.ts"}} />
 
 ## 书伴
 

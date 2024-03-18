@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.showstart.com/artist/:id'],
-    },
+    radar: [
+        {
+            source: ['www.showstart.com/artist/:id'],
+        },
+    ],
     name: '音乐人 - 演出更新',
     maintainers: ['lchtao26'],
     handler,

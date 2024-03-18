@@ -57,10 +57,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.mhgui.com/comic/:id/'],
-        target: '/comic/:id',
-    },
+    radar: [
+        {
+            source: ['www.mhgui.com/comic/:id/'],
+            target: '/comic/:id',
+        },
+    ],
     name: '漫画更新',
     maintainers: ['MegrezZhu'],
     handler,

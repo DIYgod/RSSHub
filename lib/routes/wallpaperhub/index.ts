@@ -9,10 +9,12 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['wallpaperhub.app/wallpaperhub', 'wallpaperhub.app/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['wallpaperhub.app/wallpaperhub', 'wallpaperhub.app/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

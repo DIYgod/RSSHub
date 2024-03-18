@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.sim.cas.cn/xwzx2016/kyjz', 'www.sim.cas.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.sim.cas.cn/xwzx2016/kyjz', 'www.sim.cas.cn/'],
+        },
+    ],
     name: '上海微系统与信息技术研究所 科技进展',
     maintainers: ['HenryQW'],
     handler,

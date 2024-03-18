@@ -44,9 +44,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['data.guduodata.com/'],
-    },
+    radar: [
+        {
+            source: ['data.guduodata.com/'],
+        },
+    ],
     name: '日榜',
     maintainers: ['Gem1ni'],
     handler,

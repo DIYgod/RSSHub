@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tw.nextapple.com/', 'tw.nextapple.com/realtime/:category'],
-    },
+    radar: [
+        {
+            source: ['tw.nextapple.com/', 'tw.nextapple.com/realtime/:category'],
+        },
+    ],
     name: '最新新聞',
     maintainers: ['miles170'],
     handler,

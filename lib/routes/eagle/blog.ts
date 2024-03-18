@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cn.eagle.cool/blog'],
-        target: '/blog',
-    },
+    radar: [
+        {
+            source: ['cn.eagle.cool/blog'],
+            target: '/blog',
+        },
+    ],
     name: 'Blog',
     maintainers: ['Fatpandac'],
     handler,

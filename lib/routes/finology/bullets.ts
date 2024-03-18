@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['insider.finology.in/bullets'],
-    },
+    radar: [
+        {
+            source: ['insider.finology.in/bullets'],
+        },
+    ],
     name: 'Bullets',
     maintainers: ['Rjnishant530'],
     handler,

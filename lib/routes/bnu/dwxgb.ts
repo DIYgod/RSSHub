@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dwxgb.bnu.edu.cn/:category/:type/index.html'],
-    },
+    radar: [
+        {
+            source: ['dwxgb.bnu.edu.cn/:category/:type/index.html'],
+        },
+    ],
     name: '党委学生工作部',
     maintainers: ['Fatpandac'],
     handler,

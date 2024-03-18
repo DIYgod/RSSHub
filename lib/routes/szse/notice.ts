@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['szse.cn/disclosure/notice/company/index.html', 'szse.cn/'],
-    },
+    radar: [
+        {
+            source: ['szse.cn/disclosure/notice/company/index.html', 'szse.cn/'],
+        },
+    ],
     name: '上市公告 - 可转换债券',
     maintainers: ['Jeason0228', 'nczitzk'],
     handler,

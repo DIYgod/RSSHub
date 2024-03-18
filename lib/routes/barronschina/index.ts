@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['barronschina.com.cn/'],
-        target: '/:category?',
-    },
+    radar: [
+        {
+            source: ['barronschina.com.cn/'],
+            target: '/:category?',
+        },
+    ],
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,

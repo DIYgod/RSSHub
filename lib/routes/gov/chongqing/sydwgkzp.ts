@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rlsbj.cq.gov.cn/'],
-    },
+    radar: [
+        {
+            source: ['rlsbj.cq.gov.cn/'],
+        },
+    ],
     name: '人力社保局',
     maintainers: ['MajexH'],
     handler,

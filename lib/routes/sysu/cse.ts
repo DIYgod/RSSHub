@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cse.sysu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['cse.sysu.edu.cn/'],
+        },
+    ],
     name: '数据科学与计算机学院动态',
     maintainers: [],
     handler,

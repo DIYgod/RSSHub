@@ -9,10 +9,12 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: ['/featured', '/index', '/'],
-    radar: {
-        source: ['houxu.app/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['houxu.app/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

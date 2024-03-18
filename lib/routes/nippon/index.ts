@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.nippon.com/nippon/:category?', 'www.nippon.com/cn'],
-    },
+    radar: [
+        {
+            source: ['www.nippon.com/nippon/:category?', 'www.nippon.com/cn'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['laampui'],
     handler,

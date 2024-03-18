@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hospital.nju.edu.cn/ggtz/index.html'],
-    },
+    radar: [
+        {
+            source: ['hospital.nju.edu.cn/ggtz/index.html'],
+        },
+    ],
     name: '校医院',
     maintainers: ['ret-1'],
     handler,

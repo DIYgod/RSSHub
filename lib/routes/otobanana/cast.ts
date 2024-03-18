@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['otobanana.com/user/:id/cast', 'otobanana.com/user/:id'],
-    },
+    radar: [
+        {
+            source: ['otobanana.com/user/:id/cast', 'otobanana.com/user/:id'],
+        },
+    ],
     name: 'Cast 音声投稿',
     maintainers: ['TonyRL'],
     handler,

@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['reuters.com/:category/:topic?', 'reuters.com/'],
-    },
+    radar: [
+        {
+            source: ['reuters.com/:category/:topic?', 'reuters.com/'],
+        },
+    ],
     name: 'Category/Topic/Author',
     maintainers: ['LyleLee', 'HenryQW', 'proletarius101', 'black-desk', 'nczitzk'],
     handler,

@@ -5,10 +5,12 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['zhujiceping.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['zhujiceping.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['cnkmmk'],
     handler,

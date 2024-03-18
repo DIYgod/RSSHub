@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yz.jou.edu.cn/index/zxgg.htm', 'yz.jou.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['yz.jou.edu.cn/index/zxgg.htm', 'yz.jou.edu.cn/'],
+        },
+    ],
     name: '研招网通知公告',
     maintainers: ['real-jiakai'],
     handler,

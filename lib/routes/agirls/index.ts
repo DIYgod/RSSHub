@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['agirls.aotter.net/posts/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['agirls.aotter.net/posts/:category'],
+            target: '/:category',
+        },
+    ],
     name: '分类',
     maintainers: ['TonyRL'],
     handler,

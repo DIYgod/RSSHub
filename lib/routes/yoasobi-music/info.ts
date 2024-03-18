@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/:category'],
-        target: '/info/:category',
-    },
+    radar: [
+        {
+            source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/:category'],
+            target: '/info/:category',
+        },
+    ],
     name: 'News & Biography',
     maintainers: [],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/people/:id/answers'],
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/people/:id/answers'],
+        },
+    ],
     name: '用户回答',
     maintainers: ['DIYgod', 'prnake'],
     handler,

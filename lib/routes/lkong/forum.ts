@@ -12,9 +12,11 @@ import { viewForum, viewThread } from './query';
 
 export const route: Route = {
     path: '/forum/:id?/:digest?',
-    radar: {
-        source: ['lkong.com/forum/:id', 'lkong.com/'],
-    },
+    radar: [
+        {
+            source: ['lkong.com/forum/:id', 'lkong.com/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk', 'ma6254'],
     handler,

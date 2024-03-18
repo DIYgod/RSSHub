@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hao6v.com/', 'hao6v.com/gvod/dsj.html'],
-    },
+    radar: [
+        {
+            source: ['hao6v.com/', 'hao6v.com/gvod/dsj.html'],
+        },
+    ],
     name: '最新电视剧',
     maintainers: ['tc9011'],
     handler,

@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hacking8.com/index/:category', 'hacking8.com/'],
-        target: '/:category?',
-    },
+    radar: [
+        {
+            source: ['hacking8.com/index/:category', 'hacking8.com/'],
+            target: '/:category?',
+        },
+    ],
     name: '搜索',
     maintainers: ['nczitzk'],
     handler,

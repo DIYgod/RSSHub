@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['guangdiu.com/rank'],
-    },
+    radar: [
+        {
+            source: ['guangdiu.com/rank'],
+        },
+    ],
     name: '一小时风云榜',
     maintainers: ['fatpandac'],
     handler,

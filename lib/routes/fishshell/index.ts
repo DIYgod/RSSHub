@@ -7,10 +7,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['fishshell.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['fishshell.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['x2cf'],
     handler,

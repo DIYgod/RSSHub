@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['newshub.sustech.edu.cn/news'],
-    },
+    radar: [
+        {
+            source: ['newshub.sustech.edu.cn/news'],
+        },
+    ],
     name: '新闻网（中文）',
     maintainers: ['sparkcyf'],
     handler,

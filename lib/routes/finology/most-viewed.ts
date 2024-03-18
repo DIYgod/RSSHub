@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['insider.finology.in/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['insider.finology.in/:category'],
+            target: '/:category',
+        },
+    ],
     name: 'Most Viewed',
     maintainers: ['Rjnishant530'],
     handler,

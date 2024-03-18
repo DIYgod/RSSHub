@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.njit.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.njit.edu.cn/'],
+        },
+    ],
     name: '南京工程学院通知公告',
     maintainers: ['zefengdaguo'],
     handler,

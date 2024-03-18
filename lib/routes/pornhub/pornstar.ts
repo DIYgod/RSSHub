@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pornhub.com/pornstar/:username/*'],
-        target: '/pornstar/:username',
-    },
+    radar: [
+        {
+            source: ['pornhub.com/pornstar/:username/*'],
+            target: '/pornstar/:username',
+        },
+    ],
     name: 'Verified model / Pornstar',
     maintainers: ['I2IMk', 'queensferryme'],
     handler,

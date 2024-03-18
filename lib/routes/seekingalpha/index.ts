@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['seekingalpha.com/symbol/:symbol/:category', 'seekingalpha.com/symbol/:symbol/earnings/:category'],
-        target: '/:symbol/:category',
-    },
+    radar: [
+        {
+            source: ['seekingalpha.com/symbol/:symbol/:category', 'seekingalpha.com/symbol/:symbol/earnings/:category'],
+            target: '/:symbol/:category',
+        },
+    ],
     name: 'Summary',
     maintainers: ['TonyRL'],
     handler,

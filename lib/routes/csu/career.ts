@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['career.csu.edu.cn/campus/index/category/1', 'career.csu.edu.cn/campus', 'career.csu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['career.csu.edu.cn/campus/index/category/1', 'career.csu.edu.cn/campus', 'career.csu.edu.cn/'],
+        },
+    ],
     name: '就业信息网招聘信息',
     maintainers: ['TonyRL'],
     handler,

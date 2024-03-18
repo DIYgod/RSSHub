@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tv.cctv.com/lm/xwlb', 'tv.cctv.com/'],
-    },
+    radar: [
+        {
+            source: ['tv.cctv.com/lm/xwlb', 'tv.cctv.com/'],
+        },
+    ],
     name: '新闻联播',
     maintainers: ['zengxs'],
     handler,

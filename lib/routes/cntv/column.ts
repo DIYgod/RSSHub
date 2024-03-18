@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['navi.cctv.com/'],
-    },
+    radar: [
+        {
+            source: ['navi.cctv.com/'],
+        },
+    ],
     name: '栏目',
     maintainers: ['WhoIsSure', 'Fatpandac'],
     handler,

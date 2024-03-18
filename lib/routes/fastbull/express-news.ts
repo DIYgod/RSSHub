@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fastbull.cn/express-news', 'fastbull.cn/'],
-    },
+    radar: [
+        {
+            source: ['fastbull.cn/express-news', 'fastbull.cn/'],
+        },
+    ],
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,

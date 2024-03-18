@@ -21,9 +21,11 @@ const parsePage = ($item, hyperlinkSelector, timeSelector) => {
 
 export const route: Route = {
     path: '/data258/:id?',
-    radar: {
-        source: ['mp.data258.com/', 'mp.data258.com/article/category/:id'],
-    },
+    radar: [
+        {
+            source: ['mp.data258.com/', 'mp.data258.com/article/category/:id'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['Rongronggg9'],
     handler,

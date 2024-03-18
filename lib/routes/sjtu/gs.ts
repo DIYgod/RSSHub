@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gs.sjtu.edu.cn/announcement/:type'],
-        target: '/gs/:type',
-    },
+    radar: [
+        {
+            source: ['gs.sjtu.edu.cn/announcement/:type'],
+            target: '/gs/:type',
+        },
+    ],
     name: '研究生通知公告',
     maintainers: ['dzx-dzx'],
     handler,

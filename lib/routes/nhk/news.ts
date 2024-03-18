@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www3.nhk.or.jp/nhkworld/:lang/news/list/', 'www3.nhk.or.jp/nhkworld/:lang/news/'],
-        target: '/news/:lang',
-    },
+    radar: [
+        {
+            source: ['www3.nhk.or.jp/nhkworld/:lang/news/list/', 'www3.nhk.or.jp/nhkworld/:lang/news/'],
+            target: '/news/:lang',
+        },
+    ],
     name: 'WORLD-JAPAN - Top Stories',
     maintainers: ['TonyRL'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ngocn2.org/'],
-    },
+    radar: [
+        {
+            source: ['ngocn2.org/'],
+        },
+    ],
     name: '首页',
     maintainers: ['nczitzk'],
     handler,

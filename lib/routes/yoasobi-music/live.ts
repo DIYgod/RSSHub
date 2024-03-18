@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/live'],
-    },
+    radar: [
+        {
+            source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/live'],
+        },
+    ],
     name: 'Live',
     maintainers: ['Kiotlin'],
     handler,

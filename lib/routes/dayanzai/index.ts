@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dayanzai.me/:category', 'dayanzai.me/:category/*'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['dayanzai.me/:category', 'dayanzai.me/:category/*'],
+            target: '/:category',
+        },
+    ],
     name: '分类',
     maintainers: [],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['brave.com/latest', 'brave.com/'],
-    },
+    radar: [
+        {
+            source: ['brave.com/latest', 'brave.com/'],
+        },
+    ],
     name: 'Release Notes',
     maintainers: ['nczitzk'],
     handler,

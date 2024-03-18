@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bandcamp.com/live_schedule'],
-    },
+    radar: [
+        {
+            source: ['bandcamp.com/live_schedule'],
+        },
+    ],
     name: 'Upcoming Live Streams',
     maintainers: ['nczitzk'],
     handler,

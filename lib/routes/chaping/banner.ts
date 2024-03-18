@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['chaping.cn/'],
-    },
+    radar: [
+        {
+            source: ['chaping.cn/'],
+        },
+    ],
     name: '图片墙',
     maintainers: ['nczitzk'],
     handler,

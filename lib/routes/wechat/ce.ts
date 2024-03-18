@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cimidata.com/a/:id'],
-    },
+    radar: [
+        {
+            source: ['cimidata.com/a/:id'],
+        },
+    ],
     name: '公众号（CareerEngine 来源）',
     maintainers: ['HenryQW'],
     handler,

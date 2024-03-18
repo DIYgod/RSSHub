@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nationalgeographic.com/photo-of-the-day/*', 'nationalgeographic.com/'],
-    },
+    radar: [
+        {
+            source: ['nationalgeographic.com/photo-of-the-day/*', 'nationalgeographic.com/'],
+        },
+    ],
     name: '每日一图',
     maintainers: ['LogicJake', 'OrangeEd1t', 'TonyRL'],
     handler,

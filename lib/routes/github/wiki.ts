@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/:user/:repo/wiki/:page/_history', 'github.com/:user/:repo/wiki/:page', 'github.com/:user/:repo/wiki/_history', 'github.com/:user/:repo/wiki'],
-        target: '/wiki/:user/:repo/:page',
-    },
+    radar: [
+        {
+            source: ['github.com/:user/:repo/wiki/:page/_history', 'github.com/:user/:repo/wiki/:page', 'github.com/:user/:repo/wiki/_history', 'github.com/:user/:repo/wiki'],
+            target: '/wiki/:user/:repo/:page',
+        },
+    ],
     name: 'Wiki History',
     maintainers: ['TonyRL'],
     handler,

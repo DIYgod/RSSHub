@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bandcamp.com/tag/:tag'],
-        target: '/tag/:tag',
-    },
+    radar: [
+        {
+            source: ['bandcamp.com/tag/:tag'],
+            target: '/tag/:tag',
+        },
+    ],
     name: 'Tag',
     maintainers: ['nczitzk'],
     handler,

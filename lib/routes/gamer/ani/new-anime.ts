@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ani.gamer.com.tw/'],
-        target: '/new_anime',
-    },
+    radar: [
+        {
+            source: ['ani.gamer.com.tw/'],
+            target: '/new_anime',
+        },
+    ],
     name: '動畫瘋 - 最後更新',
     maintainers: [],
     handler,

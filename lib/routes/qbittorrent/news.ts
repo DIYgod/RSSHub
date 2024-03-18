@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['qbittorrent.org/news.php', 'qbittorrent.org/'],
-    },
+    radar: [
+        {
+            source: ['qbittorrent.org/news.php', 'qbittorrent.org/'],
+        },
+    ],
     name: 'News',
     maintainers: ['TonyRL'],
     handler,

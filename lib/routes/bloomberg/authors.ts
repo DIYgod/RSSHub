@@ -41,10 +41,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.bloomberg.com/*/authors/:id/:slug', 'www.bloomberg.com/authors/:id/:slug'],
-        target: '/authors/:id/:slug',
-    },
+    radar: [
+        {
+            source: ['www.bloomberg.com/*/authors/:id/:slug', 'www.bloomberg.com/authors/:id/:slug'],
+            target: '/authors/:id/:slug',
+        },
+    ],
     name: 'Authors',
     maintainers: ['josh'],
     handler,

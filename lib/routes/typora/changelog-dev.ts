@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['support.typora.io/'],
-        target: '/changelog',
-    },
+    radar: [
+        {
+            source: ['support.typora.io/'],
+            target: '/changelog',
+        },
+    ],
     name: 'Dev Release Changelog',
     maintainers: ['nczitzk'],
     handler,

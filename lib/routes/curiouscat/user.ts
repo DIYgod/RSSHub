@@ -9,9 +9,11 @@ const fetchAPIByUser = async (user) => {
 
 export const route: Route = {
     path: '/user/:id',
-    radar: {
-        source: ['curiouscat.live/:id'],
-    },
+    radar: [
+        {
+            source: ['curiouscat.live/:id'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['lucasew'],
     handler,

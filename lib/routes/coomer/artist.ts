@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['coomer.party/onlyfans/user/:id', 'coomer.party/'],
-    },
+    radar: [
+        {
+            source: ['coomer.party/onlyfans/user/:id', 'coomer.party/'],
+        },
+    ],
     name: 'Artist',
     maintainers: ['nczitzk'],
     handler,

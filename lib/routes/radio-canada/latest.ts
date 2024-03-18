@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ici.radio-canada.ca/rci/:lang', 'ici.radio-canada.ca/'],
-    },
+    radar: [
+        {
+            source: ['ici.radio-canada.ca/rci/:lang', 'ici.radio-canada.ca/'],
+        },
+    ],
     name: 'Latest News',
     maintainers: ['nczitzk'],
     handler,

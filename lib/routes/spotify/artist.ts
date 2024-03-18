@@ -25,9 +25,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['open.spotify.com/artist/:id'],
-    },
+    radar: [
+        {
+            source: ['open.spotify.com/artist/:id'],
+        },
+    ],
     name: 'Artist Albums',
     maintainers: ['outloudvi'],
     handler,

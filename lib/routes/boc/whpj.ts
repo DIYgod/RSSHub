@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['boc.cn/sourcedb/whpj', 'boc.cn/'],
-        target: '/whpj',
-    },
+    radar: [
+        {
+            source: ['boc.cn/sourcedb/whpj', 'boc.cn/'],
+            target: '/whpj',
+        },
+    ],
     name: '外汇牌价',
     maintainers: ['LogicJake', 'HenryQW'],
     handler,

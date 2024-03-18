@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['otobanana.com/user/:id/livestream', 'otobanana.com/user/:id'],
-    },
+    radar: [
+        {
+            source: ['otobanana.com/user/:id/livestream', 'otobanana.com/user/:id'],
+        },
+    ],
     name: 'Livestream ライブ配信',
     maintainers: ['TonyRL'],
     handler,

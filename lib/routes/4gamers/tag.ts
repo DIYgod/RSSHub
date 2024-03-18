@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.4gamers.com.tw/news/tag/:tag'],
-    },
+    radar: [
+        {
+            source: ['www.4gamers.com.tw/news/tag/:tag'],
+        },
+    ],
     name: '标签',
     maintainers: ['hoilc'],
     handler,

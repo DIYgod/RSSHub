@@ -4,10 +4,12 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/counterstrike/matches/:team',
-    radar: {
-        source: ['liquipedia.net/counterstrike/:id/Matches', 'liquipedia.net/dota2/:id'],
-        target: '/counterstrike/matches/:id',
-    },
+    radar: [
+        {
+            source: ['liquipedia.net/counterstrike/:id/Matches', 'liquipedia.net/dota2/:id'],
+            target: '/counterstrike/matches/:id',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['CookiePieWw'],
     handler,

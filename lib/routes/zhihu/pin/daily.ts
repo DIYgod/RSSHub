@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['daily.zhihu.com/*'],
-        target: '/daily',
-    },
+    radar: [
+        {
+            source: ['daily.zhihu.com/*'],
+            target: '/daily',
+        },
+    ],
     name: '知乎想法 - 24 小时新闻汇总',
     maintainers: ['xyqfer'],
     handler,

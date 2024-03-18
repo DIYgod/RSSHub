@@ -28,10 +28,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.mee.gov.cn/ywdt/:category'],
-        target: '/mee/ywdt/:category',
-    },
+    radar: [
+        {
+            source: ['www.mee.gov.cn/ywdt/:category'],
+            target: '/mee/ywdt/:category',
+        },
+    ],
     name: '要闻动态',
     maintainers: ['liuxsdev'],
     handler,

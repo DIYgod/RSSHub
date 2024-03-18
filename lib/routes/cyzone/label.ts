@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cyzone.cn/label/:name', 'cyzone.cn/'],
-    },
+    radar: [
+        {
+            source: ['cyzone.cn/label/:name', 'cyzone.cn/'],
+        },
+    ],
     name: '标签',
     maintainers: ['nczitzk'],
     handler,

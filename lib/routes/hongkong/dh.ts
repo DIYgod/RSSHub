@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dh.gov.hk/'],
-    },
+    radar: [
+        {
+            source: ['dh.gov.hk/'],
+        },
+    ],
     name: 'Press Release',
     maintainers: ['nczitzk'],
     handler,

@@ -48,9 +48,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['guancha.cn/'],
-    },
+    radar: [
+        {
+            source: ['guancha.cn/'],
+        },
+    ],
     name: '首页',
     maintainers: ['nczitzk', 'Jeason0228'],
     handler,

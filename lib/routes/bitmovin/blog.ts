@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bitmovin.com/blog', 'bitmovin.com/'],
-    },
+    radar: [
+        {
+            source: ['bitmovin.com/blog', 'bitmovin.com/'],
+        },
+    ],
     name: 'Blog',
     maintainers: ['elxy'],
     handler,

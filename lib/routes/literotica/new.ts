@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['literotica.com/'],
-    },
+    radar: [
+        {
+            source: ['literotica.com/'],
+        },
+    ],
     name: 'New Stories',
     maintainers: ['nczitzk'],
     handler,

@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zhiy.cc/:author'],
-    },
+    radar: [
+        {
+            source: ['zhiy.cc/:author'],
+        },
+    ],
     name: '笔记',
     maintainers: ['TonyRL'],
     handler,

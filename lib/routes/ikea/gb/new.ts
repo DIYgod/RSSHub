@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ikea.com/gb/en/new/new-products/', 'ikea.com/'],
-    },
+    radar: [
+        {
+            source: ['ikea.com/gb/en/new/new-products/', 'ikea.com/'],
+        },
+    ],
     name: 'UK - New Product Release',
     maintainers: ['HenryQW'],
     handler,

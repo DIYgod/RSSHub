@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/people/:id/answers'],
-        target: '/people/answers/:id',
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/people/:id/answers'],
+            target: '/people/answers/:id',
+        },
+    ],
     name: 'xhu - 用户回答',
     maintainers: ['JimenezLi'],
     handler,

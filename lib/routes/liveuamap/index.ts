@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['liveuamap.com/:region*'],
-        target: '/:region',
-    },
+    radar: [
+        {
+            source: ['liveuamap.com/:region*'],
+            target: '/:region',
+        },
+    ],
     name: '实时消息',
     maintainers: ['CoderSherlock'],
     handler,

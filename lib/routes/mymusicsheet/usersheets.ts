@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mymusicsheet.com/:username/*', 'mymusicsheet.com/:username'],
-        target: '/user/sheets/:username',
-    },
+    radar: [
+        {
+            source: ['mymusicsheet.com/:username/*', 'mymusicsheet.com/:username'],
+            target: '/user/sheets/:username',
+        },
+    ],
     name: 'User Sheets',
     maintainers: ['Freddd13'],
     handler,

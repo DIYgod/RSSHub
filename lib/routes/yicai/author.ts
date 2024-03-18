@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yicai.com/author/:id', 'yicai.com/author'],
-        target: '/author/:id',
-    },
+    radar: [
+        {
+            source: ['yicai.com/author/:id', 'yicai.com/author'],
+            target: '/author/:id',
+        },
+    ],
     name: '一财号',
     maintainers: ['nczitzk'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['photo.cctv.com/jx', 'photo.cctv.com/'],
-    },
+    radar: [
+        {
+            source: ['photo.cctv.com/jx', 'photo.cctv.com/'],
+        },
+    ],
     name: '央视网图片《镜象》',
     maintainers: ['nczitzk'],
     handler,

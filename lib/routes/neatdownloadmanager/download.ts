@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['neatdownloadmanager.com/index.php', 'neatdownloadmanager.com/'],
-    },
+    radar: [
+        {
+            source: ['neatdownloadmanager.com/index.php', 'neatdownloadmanager.com/'],
+        },
+    ],
     name: 'Download',
     maintainers: ['nczitzk'],
     handler,

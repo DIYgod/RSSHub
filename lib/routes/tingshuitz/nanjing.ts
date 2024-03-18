@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jlwater.com/portal/10000013', 'jlwater.com/'],
-    },
+    radar: [
+        {
+            source: ['jlwater.com/portal/10000013', 'jlwater.com/'],
+        },
+    ],
     name: '南京市',
     maintainers: ['ocleo1'],
     handler,

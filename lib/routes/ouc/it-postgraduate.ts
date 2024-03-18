@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['it.ouc.edu.cn/_s381/16619/list.psp', 'it.ouc.edu.cn/16619/list.htm', 'it.ouc.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['it.ouc.edu.cn/_s381/16619/list.psp', 'it.ouc.edu.cn/16619/list.htm', 'it.ouc.edu.cn/'],
+        },
+    ],
     name: '信息科学与工程学院研究生招生通知公告',
     maintainers: ['shengmaosu'],
     handler,

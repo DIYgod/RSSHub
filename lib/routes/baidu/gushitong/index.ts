@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gushitong.baidu.com/'],
-    },
+    radar: [
+        {
+            source: ['gushitong.baidu.com/'],
+        },
+    ],
     name: '首页指数',
     maintainers: ['CaoMeiYouRen'],
     handler,

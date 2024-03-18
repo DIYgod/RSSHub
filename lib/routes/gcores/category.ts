@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gcores.com/:category'],
-    },
+    radar: [
+        {
+            source: ['gcores.com/:category'],
+        },
+    ],
     name: '分类',
     maintainers: ['MoguCloud', 'StevenRCE0'],
     handler,

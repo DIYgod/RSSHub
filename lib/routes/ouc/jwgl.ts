@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jwgl.ouc.edu.cn/cas/login.action', 'jwgl.ouc.edu.cn/public/SchoolNotice.jsp'],
-    },
+    radar: [
+        {
+            source: ['jwgl.ouc.edu.cn/cas/login.action', 'jwgl.ouc.edu.cn/public/SchoolNotice.jsp'],
+        },
+    ],
     name: '选课信息教务通知',
     maintainers: ['3401797899'],
     handler,

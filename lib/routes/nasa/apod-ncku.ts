@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['apod.nasa.govundefined'],
-    },
+    radar: [
+        {
+            source: ['apod.nasa.govundefined'],
+        },
+    ],
     name: 'Cheng Kung University Mirror',
     maintainers: ['nczitzk', 'williamgateszhao'],
     handler,

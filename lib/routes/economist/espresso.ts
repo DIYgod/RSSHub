@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['economist.com/the-world-in-brief', 'economist.com/espresso'],
-    },
+    radar: [
+        {
+            source: ['economist.com/the-world-in-brief', 'economist.com/espresso'],
+        },
+    ],
     name: 'Espresso',
     maintainers: ['TonyRL'],
     handler,

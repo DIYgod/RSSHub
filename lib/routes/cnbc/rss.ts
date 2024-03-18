@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.cnbc.com/id/:id/device/rss/rss.html'],
-        target: '/rss/:id',
-    },
+    radar: [
+        {
+            source: ['www.cnbc.com/id/:id/device/rss/rss.html'],
+            target: '/rss/:id',
+        },
+    ],
     name: 'Full article RSS',
     maintainers: ['TonyRL'],
     handler,

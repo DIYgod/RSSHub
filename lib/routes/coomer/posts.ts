@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['coomer.party/posts', 'coomer.party/'],
-    },
+    radar: [
+        {
+            source: ['coomer.party/posts', 'coomer.party/'],
+        },
+    ],
     name: 'Recent Posts',
     maintainers: ['nczitzk'],
     handler,

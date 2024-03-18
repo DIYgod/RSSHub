@@ -24,10 +24,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.twitch.tv/:login/videos'],
-        target: '/video/:login',
-    },
+    radar: [
+        {
+            source: ['www.twitch.tv/:login/videos'],
+            target: '/video/:login',
+        },
+    ],
     name: 'Channel Video',
     maintainers: ['hoilc'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['scvtc.edu.cn/ggfw1/xygg.htm', 'scvtc.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['scvtc.edu.cn/ggfw1/xygg.htm', 'scvtc.edu.cn/'],
+        },
+    ],
     name: '学院公告',
     maintainers: ['nczitzk'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['neunews.neu.edu.cn/:type/list.htm'],
-    },
+    radar: [
+        {
+            source: ['neunews.neu.edu.cn/:type/list.htm'],
+        },
+    ],
     name: '新闻网',
     maintainers: ['JeasonLau'],
     handler,

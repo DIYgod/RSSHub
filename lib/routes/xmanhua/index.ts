@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xmanhua.com/:uid'],
-    },
+    radar: [
+        {
+            source: ['xmanhua.com/:uid'],
+        },
+    ],
     name: '最新动态',
     maintainers: ['Ye11'],
     handler,

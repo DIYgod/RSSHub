@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yuba.douyu.com/p/:id', 'yuba.douyu.com/'],
-    },
+    radar: [
+        {
+            source: ['yuba.douyu.com/p/:id', 'yuba.douyu.com/'],
+        },
+    ],
     name: '鱼吧跟帖',
     maintainers: ['nczitzk'],
     handler,

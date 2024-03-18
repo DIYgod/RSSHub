@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rsks.hunanpea.com/Category/:guid/ArticlesByCategory.do'],
-    },
+    radar: [
+        {
+            source: ['rsks.hunanpea.com/Category/:guid/ArticlesByCategory.do'],
+        },
+    ],
     name: '公告',
     maintainers: ['TonyRL'],
     handler,

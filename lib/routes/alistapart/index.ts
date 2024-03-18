@@ -3,10 +3,12 @@ import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['alistapart.com/articles/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['alistapart.com/articles/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['Rjnishant530'],
     handler,

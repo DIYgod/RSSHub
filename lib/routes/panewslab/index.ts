@@ -32,9 +32,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['panewslab.com/'],
-    },
+    radar: [
+        {
+            source: ['panewslab.com/'],
+        },
+    ],
     name: '深度',
     maintainers: ['nczitzk'],
     handler,

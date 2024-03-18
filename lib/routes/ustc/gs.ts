@@ -25,10 +25,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gradschool.ustc.edu.cn/'],
-        target: '/gs',
-    },
+    radar: [
+        {
+            source: ['gradschool.ustc.edu.cn/'],
+            target: '/gs',
+        },
+    ],
     name: '研究生院',
     maintainers: ['jasongzy'],
     handler,

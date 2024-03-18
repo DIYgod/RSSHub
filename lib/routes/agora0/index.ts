@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['agora0.gitlab.io/blog/:category', 'agora0.gitlab.io/'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['agora0.gitlab.io/blog/:category', 'agora0.gitlab.io/'],
+            target: '/:category',
+        },
+    ],
     name: '零博客',
     maintainers: ['nczitzk'],
     handler,

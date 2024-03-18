@@ -3,18 +3,11 @@ export const route: Route = {
     path: '/daily',
     categories: ['new-media'],
     example: '/dongqiudi/daily',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.dongqiudi.com/special/48'],
-    },
+    radar: [
+        {
+            source: ['www.dongqiudi.com/special/48'],
+        },
+    ],
     name: '早报',
     maintainers: ['HenryQW'],
     handler,

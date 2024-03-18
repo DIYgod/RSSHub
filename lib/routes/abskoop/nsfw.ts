@@ -4,10 +4,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/nsfw',
-    radar: {
-        source: ['ahhhhfs.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['ahhhhfs.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

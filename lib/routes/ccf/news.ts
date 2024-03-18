@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ccf.org.cn/:category', 'ccf.org.cn/'],
-        target: '/news/:category',
-    },
+    radar: [
+        {
+            source: ['ccf.org.cn/:category', 'ccf.org.cn/'],
+            target: '/news/:category',
+        },
+    ],
     name: '新闻',
     maintainers: ['nczitzk'],
     handler,

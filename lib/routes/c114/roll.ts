@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['c114.com.cn/news/roll.asp', 'c114.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['c114.com.cn/news/roll.asp', 'c114.com.cn/'],
+        },
+    ],
     name: '滚动新闻',
     maintainers: ['nczitzk'],
     handler,

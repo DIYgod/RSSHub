@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gihyo.jp/list/group/:id'],
-    },
+    radar: [
+        {
+            source: ['gihyo.jp/list/group/:id'],
+        },
+    ],
     name: 'Series',
     maintainers: ['masakichi'],
     handler,

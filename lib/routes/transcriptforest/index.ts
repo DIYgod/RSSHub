@@ -23,10 +23,12 @@ const bakeTimestamp = (seconds) => {
 
 export const route: Route = {
     path: '/:channel?',
-    radar: {
-        source: ['www.transcriptforest.com/en/channel'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['www.transcriptforest.com/en/channel'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.deeplearning.ai/thebatch', 'www.deeplearning.ai/'],
-    },
+    radar: [
+        {
+            source: ['www.deeplearning.ai/thebatch', 'www.deeplearning.ai/'],
+        },
+    ],
     name: 'TheBatch 周报',
     maintainers: ['nczitzk', 'juvenn'],
     handler,

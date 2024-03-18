@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/matrix'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/matrix'],
+        },
+    ],
     name: 'Matrix',
     maintainers: ['feigaoxyz'],
     handler,

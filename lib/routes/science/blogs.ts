@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['science.org/blogs/:name'],
-        target: '/blogs/:name',
-    },
+    radar: [
+        {
+            source: ['science.org/blogs/:name'],
+            target: '/blogs/:name',
+        },
+    ],
     name: 'Blogs',
     maintainers: ['TomHodson'],
     handler,

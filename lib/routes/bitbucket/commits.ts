@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bitbucket.com/commits/:workspace/:repo_slug'],
-    },
+    radar: [
+        {
+            source: ['bitbucket.com/commits/:workspace/:repo_slug'],
+        },
+    ],
     name: 'Commits',
     maintainers: ['AuroraDysis'],
     handler,

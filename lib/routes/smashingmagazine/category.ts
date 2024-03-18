@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['smashingmagazine.com/category/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['smashingmagazine.com/category/:category'],
+            target: '/:category',
+        },
+    ],
     name: 'Category',
     maintainers: ['Rjnishant530'],
     handler,

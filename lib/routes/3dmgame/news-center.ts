@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['3dmgame.com/news/:category?', '3dmgame.com/news'],
-    },
+    radar: [
+        {
+            source: ['3dmgame.com/news/:category?', '3dmgame.com/news'],
+        },
+    ],
     name: '新闻中心',
     maintainers: ['zhboner'],
     handler,

@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/collection/:id'],
-        target: '/collection/:id',
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/collection/:id'],
+            target: '/collection/:id',
+        },
+    ],
     name: '收藏夹',
     maintainers: ['huruji', 'Colin-XKL', 'Fatpandac'],
     handler,

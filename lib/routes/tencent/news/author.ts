@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['new.qq.com/omn/author/:mid'],
-    },
+    radar: [
+        {
+            source: ['new.qq.com/omn/author/:mid'],
+        },
+    ],
     name: '更新',
     maintainers: ['LogicJake', 'miles170'],
     handler,

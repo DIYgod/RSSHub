@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.moj.gov.cn/lfyjzj/lflfyjzj/*', 'www.moj.gov.cn/pub/sfbgw/lfyjzj/lflfyjzj/*'],
-    },
+    radar: [
+        {
+            source: ['www.moj.gov.cn/lfyjzj/lflfyjzj/*', 'www.moj.gov.cn/pub/sfbgw/lfyjzj/lflfyjzj/*'],
+        },
+    ],
     name: '立法意见征集',
     maintainers: ['la3rence'],
     handler,

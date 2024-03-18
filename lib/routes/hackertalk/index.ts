@@ -6,10 +6,12 @@ const md = MarkdownIt();
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['hackertalk.net/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['hackertalk.net/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['hyoban'],
     handler,

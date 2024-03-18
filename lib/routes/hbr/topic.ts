@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hbr.org/topic/:topic?', 'hbr.org/'],
-    },
+    radar: [
+        {
+            source: ['hbr.org/topic/:topic?', 'hbr.org/'],
+        },
+    ],
     name: 'Topic',
     maintainers: ['nczitzk'],
     handler,

@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['notateslaapp.com/software-updates/history', 'notateslaapp.com/software-updates', 'notateslaapp.com/'],
-    },
+    radar: [
+        {
+            source: ['notateslaapp.com/software-updates/history', 'notateslaapp.com/software-updates', 'notateslaapp.com/'],
+        },
+    ],
     name: 'Tesla Software Updates',
     maintainers: ['mrbruce516'],
     handler,

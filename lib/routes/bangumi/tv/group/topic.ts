@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bgm.tv/group/:id'],
-    },
+    radar: [
+        {
+            source: ['bgm.tv/group/:id'],
+        },
+    ],
     name: '小组话题',
     maintainers: ['SettingDust'],
     handler,

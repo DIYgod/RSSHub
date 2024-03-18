@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['qbitai.com/category/:category'],
-    },
+    radar: [
+        {
+            source: ['qbitai.com/category/:category'],
+        },
+    ],
     name: '分类',
     maintainers: ['FuryMartin'],
     handler,

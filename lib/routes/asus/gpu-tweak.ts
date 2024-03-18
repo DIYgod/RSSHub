@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['asus.com/campaign/GPU-Tweak-III/*', 'asus.com/'],
-    },
+    radar: [
+        {
+            source: ['asus.com/campaign/GPU-Tweak-III/*', 'asus.com/'],
+        },
+    ],
     name: 'GPU Tweak',
     maintainers: ['TonyRL'],
     handler,

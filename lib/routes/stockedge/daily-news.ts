@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['web.stockedge.com/daily-updates/news'],
-    },
+    radar: [
+        {
+            source: ['web.stockedge.com/daily-updates/news'],
+        },
+    ],
     name: 'Daily Updates News',
     maintainers: ['Rjnishant530'],
     handler,

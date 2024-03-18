@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['epaper.xmnn.cn/:id'],
-        target: '/epaper/:id',
-    },
+    radar: [
+        {
+            source: ['epaper.xmnn.cn/:id'],
+            target: '/epaper/:id',
+        },
+    ],
     name: '数字媒体',
     maintainers: ['nczitzk'],
     handler,

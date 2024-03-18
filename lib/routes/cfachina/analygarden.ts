@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cfachina.org/servicesupport/analygarden/:program?', 'cfachina.org/'],
-    },
+    radar: [
+        {
+            source: ['cfachina.org/servicesupport/analygarden/:program?', 'cfachina.org/'],
+        },
+    ],
     name: '分析师园地',
     maintainers: ['TonyRL'],
     handler,

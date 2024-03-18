@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gelonghui.com/user/:id'],
-    },
+    radar: [
+        {
+            source: ['gelonghui.com/user/:id'],
+        },
+    ],
     name: '用户文章',
     maintainers: ['nczitzk'],
     handler,

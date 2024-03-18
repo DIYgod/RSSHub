@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hub.baai.ac.cn/events', 'hub.baai.ac.cn/'],
-    },
+    radar: [
+        {
+            source: ['hub.baai.ac.cn/events', 'hub.baai.ac.cn/'],
+        },
+    ],
     name: '智源社区 - 活动',
     maintainers: ['TonyRL'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['startuplatte.com/category/:category', 'startuplatte.com/'],
-    },
+    radar: [
+        {
+            source: ['startuplatte.com/category/:category', 'startuplatte.com/'],
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,

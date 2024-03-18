@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.lxixsxa.com/', 'www.lxixsxa.com/discography'],
-    },
+    radar: [
+        {
+            source: ['www.lxixsxa.com/', 'www.lxixsxa.com/discography'],
+        },
+    ],
     name: 'Latest Discography',
     maintainers: ['Kiotlin'],
     handler,

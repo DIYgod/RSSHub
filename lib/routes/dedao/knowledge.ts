@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dedao.cn/knowledge/topic/:topic', 'dedao.cn/knowledge', 'dedao.cn/'],
-    },
+    radar: [
+        {
+            source: ['dedao.cn/knowledge/topic/:topic', 'dedao.cn/knowledge', 'dedao.cn/'],
+        },
+    ],
     name: '知识城邦',
     maintainers: ['nczitzk'],
     handler,

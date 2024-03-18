@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['today.line.me/'],
-    },
+    radar: [
+        {
+            source: ['today.line.me/'],
+        },
+    ],
     name: 'TODAY',
     maintainers: ['nczitzk'],
     handler,

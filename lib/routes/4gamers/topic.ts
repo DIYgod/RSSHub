@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.4gamers.com.tw/news/option-cfg/:topic'],
-    },
+    radar: [
+        {
+            source: ['www.4gamers.com.tw/news/option-cfg/:topic'],
+        },
+    ],
     name: '主題',
     maintainers: ['bestpika'],
     handler,

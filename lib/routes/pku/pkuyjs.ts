@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['admission.pku.edu.cn/zsxx/sszs/index.htm', 'admission.pku.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['admission.pku.edu.cn/zsxx/sszs/index.htm', 'admission.pku.edu.cn/'],
+        },
+    ],
     name: '研究生招生网',
     maintainers: ['pkuyjs'],
     handler,

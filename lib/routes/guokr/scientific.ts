@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['guokr.com/scientific', 'guokr.com/'],
-    },
+    radar: [
+        {
+            source: ['guokr.com/scientific', 'guokr.com/'],
+        },
+    ],
     name: '科学人',
     maintainers: ['alphardex', 'nczitzk'],
     handler,

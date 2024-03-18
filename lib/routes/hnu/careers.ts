@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['scc.hnu.edu.cnundefined'],
-    },
+    radar: [
+        {
+            source: ['scc.hnu.edu.cnundefined'],
+        },
+    ],
     name: '校园招聘',
     maintainers: ['ningyougan'],
     handler,

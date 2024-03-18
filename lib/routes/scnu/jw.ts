@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jw.scnu.edu.cn/ann/index.html', 'jw.scnu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['jw.scnu.edu.cn/ann/index.html', 'jw.scnu.edu.cn/'],
+        },
+    ],
     name: '教务处通知',
     maintainers: ['fengkx'],
     handler,

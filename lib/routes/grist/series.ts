@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['grist.org/series/:series'],
-    },
+    radar: [
+        {
+            source: ['grist.org/series/:series'],
+        },
+    ],
     name: 'Series',
     maintainers: ['Rjnishant530'],
     handler,

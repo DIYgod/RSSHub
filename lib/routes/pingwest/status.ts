@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pingwest.com/status', 'pingwest.com/'],
-    },
+    radar: [
+        {
+            source: ['pingwest.com/status', 'pingwest.com/'],
+        },
+    ],
     name: '实时要闻',
     maintainers: ['sanmmm'],
     handler,

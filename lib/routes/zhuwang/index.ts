@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zhujia.zhuwang.cc/'],
-    },
+    radar: [
+        {
+            source: ['zhujia.zhuwang.cc/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

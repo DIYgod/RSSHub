@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ci-en.dlsite.com/creator/:id/article/843558', 'ci-en.dlsite.com/'],
-    },
+    radar: [
+        {
+            source: ['ci-en.dlsite.com/creator/:id/article/843558', 'ci-en.dlsite.com/'],
+        },
+    ],
     name: "Ci-en Creators' Article",
     maintainers: ['nczitzk'],
     handler,

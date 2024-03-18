@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pjsekai.sega.jp/news/index.html'],
-    },
+    radar: [
+        {
+            source: ['pjsekai.sega.jp/news/index.html'],
+        },
+    ],
     name: '世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ',
     maintainers: ['15x15G'],
     handler,

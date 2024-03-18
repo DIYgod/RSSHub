@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.gov.cn/zhengce/zuixin.htm', 'www.gov.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.gov.cn/zhengce/zuixin.htm', 'www.gov.cn/'],
+        },
+    ],
     name: '最新政策',
     maintainers: ['SettingDust', 'nczitzk'],
     handler,

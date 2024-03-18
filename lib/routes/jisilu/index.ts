@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jisilu.cn/home/explore', 'jisilu.cn/explore', 'jisilu.cn/'],
-    },
+    radar: [
+        {
+            source: ['jisilu.cn/home/explore', 'jisilu.cn/explore', 'jisilu.cn/'],
+        },
+    ],
     name: '广场',
     maintainers: ['nczitzk'],
     handler,

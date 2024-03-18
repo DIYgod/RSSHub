@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['aeon.aeon.co/:category'],
-    },
+    radar: [
+        {
+            source: ['aeon.aeon.co/:category'],
+        },
+    ],
     name: 'Categories',
     maintainers: ['emdoe'],
     handler,

@@ -40,10 +40,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['natgeomedia.com/:cat/:type', 'natgeomedia.com/'],
-        target: '/:cat/:type',
-    },
+    radar: [
+        {
+            source: ['natgeomedia.com/:cat/:type', 'natgeomedia.com/'],
+            target: '/:cat/:type',
+        },
+    ],
     name: '分类',
     maintainers: ['fengkx'],
     handler,

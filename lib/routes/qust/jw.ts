@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jw.qust.edu.cn/jwtz.htm', 'jw.qust.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['jw.qust.edu.cn/jwtz.htm', 'jw.qust.edu.cn/'],
+        },
+    ],
     name: '教务通知',
     maintainers: ['Silent-wqh'],
     handler,

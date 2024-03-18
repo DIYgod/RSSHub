@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gcores.com/categories/:tag', 'gcores.com/'],
-        target: '/tag/:tag',
-    },
+    radar: [
+        {
+            source: ['gcores.com/categories/:tag', 'gcores.com/'],
+            target: '/tag/:tag',
+        },
+    ],
     name: '标签',
     maintainers: ['StevenRCE0'],
     handler,

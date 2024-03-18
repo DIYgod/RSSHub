@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.douban.com/subject_collection/:type'],
-        target: '/list/:type',
-    },
+    radar: [
+        {
+            source: ['www.douban.com/subject_collection/:type'],
+            target: '/list/:type',
+        },
+    ],
     name: '豆瓣榜单与集合',
     maintainers: ['5upernova-heng', 'honue'],
     handler,

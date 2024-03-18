@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['icbc.com.cn/column/1438058341489590354.html'],
-        target: '/whpj',
-    },
+    radar: [
+        {
+            source: ['icbc.com.cn/column/1438058341489590354.html'],
+            target: '/whpj',
+        },
+    ],
     name: '外汇牌价',
     maintainers: ['leoleoasd'],
     handler,

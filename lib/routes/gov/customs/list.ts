@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.customs.gov.cn/'],
-        target: '/customs/list',
-    },
+    radar: [
+        {
+            source: ['www.customs.gov.cn/'],
+            target: '/customs/list',
+        },
+    ],
     name: '拍卖信息 / 海关法规',
     maintainers: ['Jeason0228', 'TonyRL', 'he1q'],
     handler,

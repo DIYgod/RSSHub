@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yysub.net/tv/schedule', 'yysub.net/'],
-    },
+    radar: [
+        {
+            source: ['yysub.net/tv/schedule', 'yysub.net/'],
+        },
+    ],
     name: '今日播出',
     maintainers: ['bao1991213'],
     handler,

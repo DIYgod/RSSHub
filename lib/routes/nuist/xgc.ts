@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xgc.nuist.edu.cn/', 'xgc.nuist.edu.cn/419/list.htm'],
-    },
+    radar: [
+        {
+            source: ['xgc.nuist.edu.cn/', 'xgc.nuist.edu.cn/419/list.htm'],
+        },
+    ],
     name: '南信大学生工作处',
     maintainers: ['gylidian'],
     handler,

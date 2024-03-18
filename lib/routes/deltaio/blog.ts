@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['delta.io/blog'],
-    },
+    radar: [
+        {
+            source: ['delta.io/blog'],
+        },
+    ],
     name: 'Blogs',
     maintainers: ['RengarLee'],
     handler,

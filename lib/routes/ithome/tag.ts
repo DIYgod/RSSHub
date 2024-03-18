@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ithome.com/tag/:name'],
-    },
+    radar: [
+        {
+            source: ['ithome.com/tag/:name'],
+        },
+    ],
     name: '标签',
     maintainers: ['Fatpandac'],
     handler,

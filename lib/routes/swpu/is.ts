@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['swpu.edu.cn/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['swpu.edu.cn/'],
+            target: '',
+        },
+    ],
     name: '信息学院',
     maintainers: ['RiverTwilight'],
     handler,

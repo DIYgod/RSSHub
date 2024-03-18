@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jmcomic.group/'],
-        target: '/:category?/:time?/:order?/:keyword?',
-    },
+    radar: [
+        {
+            source: ['jmcomic.group/'],
+            target: '/:category?/:time?/:order?/:keyword?',
+        },
+    ],
     name: '搜索',
     maintainers: [],
     handler,

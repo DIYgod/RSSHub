@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['apnews.com/hub/:topic'],
-        target: '/topics/:topic',
-    },
+    radar: [
+        {
+            source: ['apnews.com/hub/:topic'],
+            target: '/topics/:topic',
+        },
+    ],
     name: 'Topics',
     maintainers: ['zoenglinghou', 'mjysci', 'TonyRL'],
     handler,

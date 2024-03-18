@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.foreverblog.cn/feeds.html'],
-    },
+    radar: [
+        {
+            source: ['www.foreverblog.cn/feeds.html'],
+        },
+    ],
     name: '专题展示 - 文章',
     maintainers: ['7Wate', 'a180285'],
     handler,

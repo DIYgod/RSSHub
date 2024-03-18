@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bbcnewslabs.co.uk/'],
-    },
+    radar: [
+        {
+            source: ['bbcnewslabs.co.uk/'],
+        },
+    ],
     name: 'News',
     maintainers: ['elxy'],
     handler,

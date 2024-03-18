@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['daily.zhihu.com/*'],
-        target: '/daily',
-    },
+    radar: [
+        {
+            source: ['daily.zhihu.com/*'],
+            target: '/daily',
+        },
+    ],
     name: '知乎日报 - 合集',
     maintainers: ['ccbikai'],
     handler,

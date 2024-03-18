@@ -25,10 +25,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['space.bilibili.com/:uid'],
-        target: '/user/followings/:uid',
-    },
+    radar: [
+        {
+            source: ['space.bilibili.com/:uid'],
+            target: '/user/followings/:uid',
+        },
+    ],
     name: 'UP 主关注用户',
     maintainers: ['Qixingchen'],
     handler,

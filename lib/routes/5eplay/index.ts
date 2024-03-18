@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['csgo.5eplay.com/', 'csgo.5eplay.com/article'],
-    },
+    radar: [
+        {
+            source: ['csgo.5eplay.com/', 'csgo.5eplay.com/article'],
+        },
+    ],
     name: '新闻列表',
     maintainers: ['Dlouxgit'],
     handler,

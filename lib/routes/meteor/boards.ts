@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['meteor.today/'],
-    },
+    radar: [
+        {
+            source: ['meteor.today/'],
+        },
+    ],
     name: '看板列表',
     maintainers: ['TonyRL'],
     handler,

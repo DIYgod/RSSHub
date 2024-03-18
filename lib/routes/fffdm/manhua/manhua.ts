@@ -34,10 +34,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.fffdm.com/manhua/:id', 'www.fffdm.com/:id'],
-        target: '/manhua/:id',
-    },
+    radar: [
+        {
+            source: ['www.fffdm.com/manhua/:id', 'www.fffdm.com/:id'],
+            target: '/manhua/:id',
+        },
+    ],
     name: '在线漫画',
     maintainers: ['zytomorrow'],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gcores.com/collections/:collection'],
-    },
+    radar: [
+        {
+            source: ['gcores.com/collections/:collection'],
+        },
+    ],
     name: '专题文章',
     maintainers: ['kudryavka1013'],
     handler,

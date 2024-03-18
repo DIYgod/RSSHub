@@ -30,9 +30,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.dushu365.com*'],
-    },
+    radar: [
+        {
+            source: ['www.dushu365.com*'],
+        },
+    ],
     name: '樊登福州运营中心',
     maintainers: ['Fatpandac'],
     handler,

@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['caareviews.org/reviews/book'],
-    },
+    radar: [
+        {
+            source: ['caareviews.org/reviews/book'],
+        },
+    ],
     name: 'Book Reviews',
     maintainers: ['Fatpandac'],
     handler,

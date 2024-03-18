@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.artstation.com/:handle'],
-    },
+    radar: [
+        {
+            source: ['www.artstation.com/:handle'],
+        },
+    ],
     name: 'Artist Profolio',
     maintainers: ['TonyRL'],
     handler,

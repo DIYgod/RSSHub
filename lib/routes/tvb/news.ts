@@ -59,9 +59,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tvb.com/:language/:category', 'tvb.com/'],
-    },
+    radar: [
+        {
+            source: ['tvb.com/:language/:category', 'tvb.com/'],
+        },
+    ],
     name: '新闻',
     maintainers: ['nczitzk'],
     handler,

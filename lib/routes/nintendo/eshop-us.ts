@@ -8,9 +8,11 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/eshop/us',
-    radar: {
-        source: ['nintendo.com/store/games', 'nintendo.com/'],
-    },
+    radar: [
+        {
+            source: ['nintendo.com/store/games', 'nintendo.com/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

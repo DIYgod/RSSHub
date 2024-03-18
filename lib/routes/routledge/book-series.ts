@@ -11,9 +11,11 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:bookName/book-series/:bookId',
-    radar: {
-        source: ['routledge.com/:bookName/book-series/:bookId'],
-    },
+    radar: [
+        {
+            source: ['routledge.com/:bookName/book-series/:bookId'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,

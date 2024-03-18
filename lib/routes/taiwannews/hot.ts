@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['taiwannews.com.tw/:lang/index'],
-        target: '/hot/:lang',
-    },
+    radar: [
+        {
+            source: ['taiwannews.com.tw/:lang/index'],
+            target: '/hot/:lang',
+        },
+    ],
     name: 'Hot News',
     maintainers: ['TonyRL'],
     handler,

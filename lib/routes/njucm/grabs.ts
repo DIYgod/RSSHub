@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['lib.njucm.edu.cn/2899/list.htm', 'lib.njucm.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['lib.njucm.edu.cn/2899/list.htm', 'lib.njucm.edu.cn/'],
+        },
+    ],
     name: '研究生院博士招生',
     maintainers: ['real-jiakai'],
     handler,

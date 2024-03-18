@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jmcomic.group/'],
-    },
+    radar: [
+        {
+            source: ['jmcomic.group/'],
+        },
+    ],
     name: '专辑',
     maintainers: ['nczitzk'],
     handler,

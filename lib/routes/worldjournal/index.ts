@@ -9,10 +9,12 @@ const baseUrl = 'https://www.worldjournal.com';
 
 export const route: Route = {
     path: '/:path{.+}?',
-    radar: {
-        source: ['worldjournal.com/wj/*path'],
-        target: '/:path',
-    },
+    radar: [
+        {
+            source: ['worldjournal.com/wj/*path'],
+            target: '/:path',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

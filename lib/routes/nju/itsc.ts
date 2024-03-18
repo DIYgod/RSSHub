@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['itsc.nju.edu.cn/tzgg/list.htm'],
-    },
+    radar: [
+        {
+            source: ['itsc.nju.edu.cn/tzgg/list.htm'],
+        },
+    ],
     name: 'ITSC 信息中心',
     maintainers: ['ret-1'],
     handler,

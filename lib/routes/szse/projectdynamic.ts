@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['listing.szse.cn/projectdynamic/1/index.html', 'listing.szse.cn/projectdynamic/2/index.html', 'listing.szse.cn/projectdynamic/3/index.html', 'listing.szse.cn/'],
-    },
+    radar: [
+        {
+            source: ['listing.szse.cn/projectdynamic/1/index.html', 'listing.szse.cn/projectdynamic/2/index.html', 'listing.szse.cn/projectdynamic/3/index.html', 'listing.szse.cn/'],
+        },
+    ],
     name: '创业板项目动态',
     maintainers: ['nczitzk'],
     handler,

@@ -30,9 +30,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['asus.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['asus.com.cn/'],
+        },
+    ],
     name: 'BIOS',
     maintainers: ['Fatpandac'],
     handler,

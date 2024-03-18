@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.theatlantic.com/:category'],
-    },
+    radar: [
+        {
+            source: ['www.theatlantic.com/:category'],
+        },
+    ],
     name: 'News',
     maintainers: ['EthanWng97'],
     handler,

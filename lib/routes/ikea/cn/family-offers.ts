@@ -46,9 +46,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ikea.cn/cn/zh/offers/family-offers', 'ikea.cn/'],
-    },
+    radar: [
+        {
+            source: ['ikea.cn/cn/zh/offers/family-offers', 'ikea.cn/'],
+        },
+    ],
     name: '中国 - 会员特惠',
     maintainers: ['jzhangdev'],
     handler,

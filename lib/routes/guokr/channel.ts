@@ -31,9 +31,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['guokr.com/'],
-    },
+    radar: [
+        {
+            source: ['guokr.com/'],
+        },
+    ],
     name: '果壳网专栏',
     maintainers: ['DHPO', 'hoilc'],
     handler,

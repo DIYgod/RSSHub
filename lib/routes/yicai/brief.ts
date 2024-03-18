@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yicai.com/brief'],
-    },
+    radar: [
+        {
+            source: ['yicai.com/brief'],
+        },
+    ],
     name: '正在',
     maintainers: ['sanmmm', 'nczitzk'],
     handler,

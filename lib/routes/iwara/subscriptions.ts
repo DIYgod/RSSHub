@@ -35,9 +35,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ecchi.iwara.tv/'],
-    },
+    radar: [
+        {
+            source: ['ecchi.iwara.tv/'],
+        },
+    ],
     name: 'User Subscriptions',
     maintainers: ['FeCCC'],
     handler,

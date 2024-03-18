@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yicai.com/feed/:id', 'yicai.com/feed'],
-        target: '/feed/:id',
-    },
+    radar: [
+        {
+            source: ['yicai.com/feed/:id', 'yicai.com/feed'],
+            target: '/feed/:id',
+        },
+    ],
     name: '关注',
     maintainers: ['nczitzk'],
     handler,

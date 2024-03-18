@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.cngal.org/', 'www.cngal.org/weeklynews'],
-    },
+    radar: [
+        {
+            source: ['www.cngal.org/', 'www.cngal.org/weeklynews'],
+        },
+    ],
     name: '每周速报',
     maintainers: ['chengyuhui'],
     handler,

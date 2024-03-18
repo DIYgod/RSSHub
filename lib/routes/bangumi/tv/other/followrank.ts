@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bgm.tv/anime'],
-    },
+    radar: [
+        {
+            source: ['bgm.tv/anime'],
+        },
+    ],
     name: '成员关注动画榜',
     maintainers: ['honue'],
     handler,

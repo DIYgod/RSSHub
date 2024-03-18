@@ -34,9 +34,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.codeforces.com/contests'],
-    },
+    radar: [
+        {
+            source: ['www.codeforces.com/contests'],
+        },
+    ],
     name: 'Latest contests',
     maintainers: ['Fatpandac'],
     handler,

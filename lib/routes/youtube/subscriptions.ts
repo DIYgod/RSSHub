@@ -35,10 +35,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.youtube.com/feed/subscriptions', 'www.youtube.com/feed/channels'],
-        target: '/subscriptions',
-    },
+    radar: [
+        {
+            source: ['www.youtube.com/feed/subscriptions', 'www.youtube.com/feed/channels'],
+            target: '/subscriptions',
+        },
+    ],
     name: 'Subscriptions',
     maintainers: ['TonyRL'],
     handler,

@@ -7,10 +7,12 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:type/:id?',
-    radar: {
-        source: ['myzaker.com/:type/:id'],
-        target: '/:type/:id',
-    },
+    radar: [
+        {
+            source: ['myzaker.com/:type/:id'],
+            target: '/:type/:id',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['LogicJake', 'kt286', 'AlexdanerZe', 'TonyRL'],
     handler,

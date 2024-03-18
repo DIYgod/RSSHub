@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.cnblogs.com/aggsite/topdiggs'],
-    },
+    radar: [
+        {
+            source: ['www.cnblogs.com/aggsite/topdiggs'],
+        },
+    ],
     name: '10 天推荐排行榜',
     maintainers: ['hujingnb'],
     handler,

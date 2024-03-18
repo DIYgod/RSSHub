@@ -9,9 +9,11 @@ import timezone from '@/utils/timezone';
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 export const route: Route = {
     path: '/xyxw',
-    radar: {
-        source: ['stbu.edu.cn/html/news/xueyuan', 'stbu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['stbu.edu.cn/html/news/xueyuan', 'stbu.edu.cn/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['HyperCherry'],
     handler,

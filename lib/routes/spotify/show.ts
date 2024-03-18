@@ -25,9 +25,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['open.spotify.com/show/:id'],
-    },
+    radar: [
+        {
+            source: ['open.spotify.com/show/:id'],
+        },
+    ],
     name: 'Show',
     maintainers: ['caiohsramos'],
     handler,

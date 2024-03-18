@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jin10.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['jin10.com/'],
+            target: '',
+        },
+    ],
     name: '市场快讯',
     maintainers: ['laampui'],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gocn.vip/'],
-    },
+    radar: [
+        {
+            source: ['gocn.vip/'],
+        },
+    ],
     name: '每日新闻',
     maintainers: ['AtlanCI', 'CcccFz'],
     handler,

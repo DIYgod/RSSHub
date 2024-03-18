@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['unraid.net/community/apps'],
-    },
+    radar: [
+        {
+            source: ['unraid.net/community/apps'],
+        },
+    ],
     name: 'Community Apps',
     maintainers: ['KTachibanaM'],
     handler,

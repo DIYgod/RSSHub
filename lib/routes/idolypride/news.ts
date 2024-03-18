@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['idolypride.jp/news'],
-    },
+    radar: [
+        {
+            source: ['idolypride.jp/news'],
+        },
+    ],
     name: 'News',
     maintainers: ['Mingxia1'],
     handler,

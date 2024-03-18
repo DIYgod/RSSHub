@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['comicskingdom.com/:name/*', 'comicskingdom.com/:name'],
-    },
+    radar: [
+        {
+            source: ['comicskingdom.com/:name/*', 'comicskingdom.com/:name'],
+        },
+    ],
     name: 'Archive',
     maintainers: ['stjohnjohnson'],
     handler,

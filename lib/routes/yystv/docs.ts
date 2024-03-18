@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yystv.cn/docs'],
-    },
+    radar: [
+        {
+            source: ['yystv.cn/docs'],
+        },
+    ],
     name: '游研社 - 全部文章',
     maintainers: ['HaitianLiu'],
     handler,

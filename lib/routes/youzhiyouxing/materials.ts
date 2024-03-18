@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['youzhiyouxing.cn/materials'],
-        target: '/materials',
-    },
+    radar: [
+        {
+            source: ['youzhiyouxing.cn/materials'],
+            target: '/materials',
+        },
+    ],
     name: '有知文章',
     maintainers: ['broven', 'Fatpandac', 'nczitzk'],
     handler,

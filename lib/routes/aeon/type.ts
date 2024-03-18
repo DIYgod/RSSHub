@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['aeon.aeon.co/:type'],
-    },
+    radar: [
+        {
+            source: ['aeon.aeon.co/:type'],
+        },
+    ],
     name: 'Types',
     maintainers: ['emdoe'],
     handler,

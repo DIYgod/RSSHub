@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['lib.nua.edu.cn/:type/list.htm'],
-    },
+    radar: [
+        {
+            source: ['lib.nua.edu.cn/:type/list.htm'],
+        },
+    ],
     name: 'Library',
     maintainers: ['evnydd0sf'],
     handler,

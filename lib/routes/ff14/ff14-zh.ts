@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ff.web.sdo.com/web8/index.html'],
-        target: '/zh',
-    },
+    radar: [
+        {
+            source: ['ff.web.sdo.com/web8/index.html'],
+            target: '/zh',
+        },
+    ],
     name: '最终幻想 14 国服',
     maintainers: ['Kiotlin', 'ZeroClad', '15x15G'],
     handler,

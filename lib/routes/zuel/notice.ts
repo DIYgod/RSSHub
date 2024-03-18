@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wap.zuel.edu.cn/', 'wap.zuel.edu.cn/notice/list.htm'],
-    },
+    radar: [
+        {
+            source: ['wap.zuel.edu.cn/', 'wap.zuel.edu.cn/notice/list.htm'],
+        },
+    ],
     name: '通知公告',
     maintainers: ['nczitzk'],
     handler,

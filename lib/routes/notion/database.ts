@@ -31,10 +31,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['notion.so/:id'],
-        target: '/database/:id',
-    },
+    radar: [
+        {
+            source: ['notion.so/:id'],
+            target: '/database/:id',
+        },
+    ],
     name: 'Database',
     maintainers: ['curly210102'],
     handler,

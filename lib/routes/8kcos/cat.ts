@@ -6,10 +6,12 @@ import { SUB_NAME_PREFIX, SUB_URL } from './const';
 import loadArticle from './article';
 export const route: Route = {
     path: '/cat/:cat{.+}?',
-    radar: {
-        source: ['8kcosplay.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['8kcosplay.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['syosetu.org/novel/:id'],
-    },
+    radar: [
+        {
+            source: ['syosetu.org/novel/:id'],
+        },
+    ],
     name: 'chapter',
     maintainers: ['huangliangshusheng'],
     handler,

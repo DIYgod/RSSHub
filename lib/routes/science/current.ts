@@ -27,10 +27,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['science.org/journal/:journal', 'science.org/toc/:journal/current'],
-        target: '/current/:journal',
-    },
+    radar: [
+        {
+            source: ['science.org/journal/:journal', 'science.org/toc/:journal/current'],
+            target: '/current/:journal',
+        },
+    ],
     name: 'Current Issue',
     maintainers: ['y9c', 'TonyRL'],
     handler,

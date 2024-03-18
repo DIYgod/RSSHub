@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gs.ccnu.edu.cn/zsgz/ssyjs.htm', 'gs.ccnu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['gs.ccnu.edu.cn/zsgz/ssyjs.htm', 'gs.ccnu.edu.cn/'],
+        },
+    ],
     name: '研究生通知公告',
     maintainers: ['shengmaosu'],
     handler,

@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zcool.com.cn/u/:id'],
-        target: '/user/:id',
-    },
+    radar: [
+        {
+            source: ['www.zcool.com.cn/u/:id'],
+            target: '/user/:id',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['junbaor'],
     handler,

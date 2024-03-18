@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cib.com.cn/'],
-        target: '/whpj',
-    },
+    radar: [
+        {
+            source: ['cib.com.cn/'],
+            target: '/whpj',
+        },
+    ],
     name: '外汇牌价',
     maintainers: ['Qixingchen'],
     handler,

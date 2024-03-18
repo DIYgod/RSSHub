@@ -13,10 +13,12 @@ const rssUrl = 'https://www.tribalfootball.com/rss/mediafed/general/rss.xml';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['tribalfootball.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['tribalfootball.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['Rongronggg9'],
     handler,

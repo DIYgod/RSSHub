@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['who.int/director-general/speeches'],
-        target: '/speeches',
-    },
+    radar: [
+        {
+            source: ['who.int/director-general/speeches'],
+            target: '/speeches',
+        },
+    ],
     name: 'Speeches',
     maintainers: ['nczitzk'],
     handler,

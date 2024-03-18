@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['radio.seu.edu.cn/_s29/15986/list.psp', 'radio.seu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['radio.seu.edu.cn/_s29/15986/list.psp', 'radio.seu.edu.cn/'],
+        },
+    ],
     name: '信息科学与工程学院学术活动',
     maintainers: ['HenryQW'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['book.sfacg.com/Novel/:id/*'],
-    },
+    radar: [
+        {
+            source: ['book.sfacg.com/Novel/:id/*'],
+        },
+    ],
     name: '章节',
     maintainers: ['keocheung'],
     handler,

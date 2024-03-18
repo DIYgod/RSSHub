@@ -79,10 +79,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['businessreview.global/'],
-        target: '/global-business-review',
-    },
+    radar: [
+        {
+            source: ['businessreview.global/'],
+            target: '/global-business-review',
+        },
+    ],
     name: 'Global Business Review',
     maintainers: ['prnake'],
     handler,

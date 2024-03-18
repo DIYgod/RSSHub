@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bendibao.com/'],
-    },
+    radar: [
+        {
+            source: ['bendibao.com/'],
+        },
+    ],
     name: '焦点资讯',
     maintainers: ['nczitzk'],
     handler,

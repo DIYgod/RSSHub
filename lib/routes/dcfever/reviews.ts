@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dcfever.com/:type/reviews.php'],
-        target: '/reviews/:type',
-    },
+    radar: [
+        {
+            source: ['dcfever.com/:type/reviews.php'],
+            target: '/reviews/:type',
+        },
+    ],
     name: '測試報告',
     maintainers: ['TonyRL'],
     handler,

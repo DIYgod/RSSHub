@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['annualreviews.org/journal/:id', 'annualreviews.org/'],
-    },
+    radar: [
+        {
+            source: ['annualreviews.org/journal/:id', 'annualreviews.org/'],
+        },
+    ],
     name: 'Journal',
     maintainers: ['nczitzk'],
     handler,

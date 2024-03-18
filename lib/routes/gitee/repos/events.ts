@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gitee.com/:owner/:repo'],
-    },
+    radar: [
+        {
+            source: ['gitee.com/:owner/:repo'],
+        },
+    ],
     name: '仓库动态',
     maintainers: ['TonyRL'],
     handler,

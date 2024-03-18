@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rail.ally.net.cn/', 'rail.ally.net.cn/html/:category?/:topic?'],
-    },
+    radar: [
+        {
+            source: ['rail.ally.net.cn/', 'rail.ally.net.cn/html/:category?/:topic?'],
+        },
+    ],
     name: '世界轨道交通资讯网',
     maintainers: ['Rongronggg9'],
     handler,

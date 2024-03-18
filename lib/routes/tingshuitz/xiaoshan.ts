@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.xswater.com/gongshui/channels/227.html', 'www.xswater.com/'],
-    },
+    radar: [
+        {
+            source: ['www.xswater.com/gongshui/channels/227.html', 'www.xswater.com/'],
+        },
+    ],
     name: '萧山区',
     maintainers: ['znhocn'],
     handler,

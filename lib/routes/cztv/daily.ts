@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cztv.com/videos/zjxwlb', 'cztv.com/'],
-    },
+    radar: [
+        {
+            source: ['cztv.com/videos/zjxwlb', 'cztv.com/'],
+        },
+    ],
     name: '浙江新闻联播 - 每日合集',
     maintainers: ['yhkang'],
     handler,

@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wallhaven.cc/'],
-    },
+    radar: [
+        {
+            source: ['wallhaven.cc/'],
+        },
+    ],
     name: 'Search',
     maintainers: ['nczitzk', 'Fatpandac'],
     handler,

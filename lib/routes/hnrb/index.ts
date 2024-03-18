@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['voc.com.cn/'],
-        target: '/:id',
-    },
+    radar: [
+        {
+            source: ['voc.com.cn/'],
+            target: '/:id',
+        },
+    ],
     name: '电子刊物',
     maintainers: ['nczitzk'],
     handler,

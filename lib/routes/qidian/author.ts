@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['my.qidian.com/author/:id'],
-    },
+    radar: [
+        {
+            source: ['my.qidian.com/author/:id'],
+        },
+    ],
     name: '作者',
     maintainers: ['miles170'],
     handler,

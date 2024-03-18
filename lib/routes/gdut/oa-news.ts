@@ -74,10 +74,12 @@ function getArg(type) {
 
 export const route: Route = {
     path: '/oa_news/:type?',
-    radar: {
-        source: ['oas.gdut.edu.cn/seeyon'],
-        target: '/oa_news/',
-    },
+    radar: [
+        {
+            source: ['oas.gdut.edu.cn/seeyon'],
+            target: '/oa_news/',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['Jim Kirisame'],
     handler,

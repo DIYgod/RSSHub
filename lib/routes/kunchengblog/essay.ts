@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['kunchengblog.com/essay'],
-    },
+    radar: [
+        {
+            source: ['kunchengblog.com/essay'],
+        },
+    ],
     name: 'Essay',
     maintainers: ['nczitzk'],
     handler,

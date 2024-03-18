@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wiadomosci.onet.pl/'],
-    },
+    radar: [
+        {
+            source: ['wiadomosci.onet.pl/'],
+        },
+    ],
     name: 'News',
     maintainers: ['Vegann'],
     handler,

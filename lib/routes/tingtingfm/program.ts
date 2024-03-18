@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['mobile.tingtingfm.com/v3/program/:programId'],
-    },
+    radar: [
+        {
+            source: ['mobile.tingtingfm.com/v3/program/:programId'],
+        },
+    ],
     name: '节目',
     maintainers: ['TonyRL'],
     handler,

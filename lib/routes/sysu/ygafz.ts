@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ygafz.sysu.edu.cn/:type?'],
-    },
+    radar: [
+        {
+            source: ['ygafz.sysu.edu.cn/:type?'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xueqiu.com/'],
-    },
+    radar: [
+        {
+            source: ['xueqiu.com/'],
+        },
+    ],
     name: '热帖',
     maintainers: ['hillerliao'],
     handler,

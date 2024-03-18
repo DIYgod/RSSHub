@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/pub/weekly'],
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/pub/weekly'],
+        },
+    ],
     name: '知乎书店 - 知乎周刊',
     maintainers: ['LogicJake'],
     handler,

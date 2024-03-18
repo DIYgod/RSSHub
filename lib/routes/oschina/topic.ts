@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['oschina.net/question/topic/:topic'],
-    },
+    radar: [
+        {
+            source: ['oschina.net/question/topic/:topic'],
+        },
+    ],
     name: '问答主题',
     maintainers: ['loveely7'],
     handler,

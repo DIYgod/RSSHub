@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bgm.tv/subject/:id'],
-        target: '/tv/subject/:id',
-    },
+    radar: [
+        {
+            source: ['bgm.tv/subject/:id'],
+            target: '/tv/subject/:id',
+        },
+    ],
     name: '条目的通用路由格式',
     maintainers: ['JimenezLi'],
     handler,

@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['changba.com/s/:userid'],
-    },
+    radar: [
+        {
+            source: ['changba.com/s/:userid'],
+        },
+    ],
     name: '用户',
     maintainers: [],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['slowmist.com/zh/news.html'],
-    },
+    radar: [
+        {
+            source: ['slowmist.com/zh/news.html'],
+        },
+    ],
     name: '动态',
     maintainers: ['AtlasQuan'],
     handler,

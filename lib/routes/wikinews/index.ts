@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zh.wikinews.org/wiki/Special:新闻订阅'],
-    },
+    radar: [
+        {
+            source: ['zh.wikinews.org/wiki/Special:新闻订阅'],
+        },
+    ],
     name: '最新新闻',
     maintainers: ['KotoriK'],
     handler,

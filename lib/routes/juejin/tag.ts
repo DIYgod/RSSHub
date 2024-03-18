@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['juejin.cn/tag/:tag'],
-    },
+    radar: [
+        {
+            source: ['juejin.cn/tag/:tag'],
+        },
+    ],
     name: '标签',
     maintainers: ['isheng5'],
     handler,

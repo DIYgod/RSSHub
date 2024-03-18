@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xueqiu.com/S/:id', 'xueqiu.com/s/:id'],
-        target: '/stock_info/:id',
-    },
+    radar: [
+        {
+            source: ['xueqiu.com/S/:id', 'xueqiu.com/s/:id'],
+            target: '/stock_info/:id',
+        },
+    ],
     name: '股票信息',
     maintainers: ['YuYang'],
     handler,

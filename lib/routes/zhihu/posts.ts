@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/:usertype/:id/posts'],
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/:usertype/:id/posts'],
+        },
+    ],
     name: '用户文章',
     maintainers: ['whtsky', 'Colin-XKL'],
     handler,

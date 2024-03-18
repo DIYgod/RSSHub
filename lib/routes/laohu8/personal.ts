@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['laohu8.com/personal/:id'],
-    },
+    radar: [
+        {
+            source: ['laohu8.com/personal/:id'],
+        },
+    ],
     name: '个人主页',
     maintainers: ['Fatpandac'],
     handler,

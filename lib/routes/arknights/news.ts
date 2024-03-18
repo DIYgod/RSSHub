@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ak-conf.hypergryph.com/*'],
-    },
+    radar: [
+        {
+            source: ['ak-conf.hypergryph.com/*'],
+        },
+    ],
     name: '游戏公告与新闻',
     maintainers: ['Astrian'],
     handler,

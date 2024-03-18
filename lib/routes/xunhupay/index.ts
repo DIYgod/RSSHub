@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.xunhupay.com/blog'],
-    },
+    radar: [
+        {
+            source: ['www.xunhupay.com/blog'],
+        },
+    ],
     name: '文章',
     maintainers: ['Joey'],
     handler,

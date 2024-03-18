@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['segmentfault.com/t/:tag/blogs'],
-    },
+    radar: [
+        {
+            source: ['segmentfault.com/t/:tag/blogs'],
+        },
+    ],
     name: '博客',
     maintainers: ['shiluanzzz'],
     handler,

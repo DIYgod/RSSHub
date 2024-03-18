@@ -8,9 +8,11 @@ const rootURL = 'https://www.cncf.io';
 
 export const route: Route = {
     path: '/reports',
-    radar: {
-        source: ['cncf.io/reports'],
-    },
+    radar: [
+        {
+            source: ['cncf.io/reports'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

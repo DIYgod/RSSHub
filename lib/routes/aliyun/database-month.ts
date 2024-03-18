@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mysql.taobao.org/monthly', 'mysql.taobao.org/'],
-    },
+    radar: [
+        {
+            source: ['mysql.taobao.org/monthly', 'mysql.taobao.org/'],
+        },
+    ],
     name: '数据库内核月报',
     maintainers: ['junbaor'],
     handler,

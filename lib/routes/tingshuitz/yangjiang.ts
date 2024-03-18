@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yjsswjt.com/zxdt_list.jsp', 'yjsswjt.com/'],
-    },
+    radar: [
+        {
+            source: ['yjsswjt.com/zxdt_list.jsp', 'yjsswjt.com/'],
+        },
+    ],
     name: '阳江市',
     maintainers: ['ciaranchen'],
     handler,

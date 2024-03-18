@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cneb.gov.cn/yjxw/:category?', 'cneb.gov.cn/'],
-    },
+    radar: [
+        {
+            source: ['cneb.gov.cn/yjxw/:category?', 'cneb.gov.cn/'],
+        },
+    ],
     name: '应急新闻',
     maintainers: ['nczitzk'],
     handler,

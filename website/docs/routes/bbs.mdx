@@ -118,7 +118,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 发现
 
-<Route namespace="elasticsearch-cn" data={{"path":"/:params?","categories":["bbs"],"example":"/elasticsearch-cn","parameters":{"params":"分类，可在对应分类页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["elasticsearch.cn/:params","elasticsearch.cn/"],"target":"/:params"},"name":"发现","maintainers":["nczitzk"],"description":"如 [Elasticsearch 最新](https://elasticsearch.cn/category-2) 的 URL 为 `https://elasticsearch.cn/category-2`，则分类参数处填写 `category-2`，最后得到路由地址 [`/elasticsearch-cn/category-2`](https://rsshub.app/elasticsearch-cn/category-2)。\n\n  又如 [求职招聘 30 天热门](https://elasticsearch.cn/sort_type-hot____category-12__day-30) 的 URL 为 `https://elasticsearch.cn/sort_type-hot____category-12__day-30`，则分类参数处填写 `sort_type-hot____category-12__day-30`，最后得到路由地址 [`/elasticsearch-cn/sort_type-hot____category-12__day-30`](https://rsshub.app/elasticsearch-cn/sort_type-hot____category-12__day-30)。","location":"index.ts"}} />
+<Route namespace="elasticsearch-cn" data={{"path":"/:params?","categories":["bbs"],"example":"/elasticsearch-cn","parameters":{"params":"分类，可在对应分类页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["elasticsearch.cn/:params","elasticsearch.cn/"],"target":"/:params"}],"name":"发现","maintainers":["nczitzk"],"description":"如 [Elasticsearch 最新](https://elasticsearch.cn/category-2) 的 URL 为 `https://elasticsearch.cn/category-2`，则分类参数处填写 `category-2`，最后得到路由地址 [`/elasticsearch-cn/category-2`](https://rsshub.app/elasticsearch-cn/category-2)。\n\n  又如 [求职招聘 30 天热门](https://elasticsearch.cn/sort_type-hot____category-12__day-30) 的 URL 为 `https://elasticsearch.cn/sort_type-hot____category-12__day-30`，则分类参数处填写 `sort_type-hot____category-12__day-30`，最后得到路由地址 [`/elasticsearch-cn/sort_type-hot____category-12__day-30`](https://rsshub.app/elasticsearch-cn/sort_type-hot____category-12__day-30)。","location":"index.ts"}} />
 
 如 [Elasticsearch 最新](https://elasticsearch.cn/category-2) 的 URL 为 `https://elasticsearch.cn/category-2`，则分类参数处填写 `category-2`，最后得到路由地址 [`/elasticsearch-cn/category-2`](https://rsshub.app/elasticsearch-cn/category-2)。
 
@@ -128,7 +128,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 社区
 
-<Route namespace="learnku" data={{"path":"/:community/:category?","categories":["bbs"],"example":"/learnku/laravel/qa","parameters":{"community":"社区 标识，可在 <https://learnku.com/communities> 找到","category":"分类，如果不传 `category` 则获取全部分类"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["learnku.com/:community"],"target":"/:community"},"name":"社区","maintainers":["kayw-geek"],"description":"| 招聘 | 翻译         | 问答 | 链接  |\n| ---- | ------------ | ---- | ----- |\n| jobs | translations | qa   | links |","location":"topic.ts"}} />
+<Route namespace="learnku" data={{"path":"/:community/:category?","categories":["bbs"],"example":"/learnku/laravel/qa","parameters":{"community":"社区 标识，可在 <https://learnku.com/communities> 找到","category":"分类，如果不传 `category` 则获取全部分类"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["learnku.com/:community"],"target":"/:community"}],"name":"社区","maintainers":["kayw-geek"],"description":"| 招聘 | 翻译         | 问答 | 链接  |\n| ---- | ------------ | ---- | ----- |\n| jobs | translations | qa   | links |","location":"topic.ts"}} />
 
 | 招聘 | 翻译         | 问答 | 链接  |
 | ---- | ------------ | ---- | ----- |
@@ -138,7 +138,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 看板列表
 
-<Route namespace="meteor" data={{"path":"/boards","categories":["bbs"],"example":"/meteor/boards","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["meteor.today/"]},"name":"看板列表","maintainers":["TonyRL"],"url":"meteor.today/","location":"boards.ts"}} />
+<Route namespace="meteor" data={{"path":"/boards","categories":["bbs"],"example":"/meteor/boards","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["meteor.today/"]}],"name":"看板列表","maintainers":["TonyRL"],"url":"meteor.today/","location":"boards.ts"}} />
 
 ### 看板
 
@@ -158,13 +158,13 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### User
 
-<Route namespace="pikabu" data={{"path":"/user/:name","categories":["bbs"],"example":"/pikabu/user/@bula.dragon","parameters":{"name":"User name"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["pikabu.ru/:name"]},"name":"User","maintainers":["TonyRL"],"location":"user.ts"}} />
+<Route namespace="pikabu" data={{"path":"/user/:name","categories":["bbs"],"example":"/pikabu/user/@bula.dragon","parameters":{"name":"User name"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["pikabu.ru/:name"]}],"name":"User","maintainers":["TonyRL"],"location":"user.ts"}} />
 
 ## PKMer
 
 ### 最近更新
 
-<Route namespace="pkmer" data={{"path":"/recent","categories":["bbs"],"example":"/pkmer/recent","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["pkmer.cn/page/*"]},"name":"最近更新","maintainers":["Gnoyong"],"url":"pkmer.cn/page/*","location":"recent.ts"}} />
+<Route namespace="pkmer" data={{"path":"/recent","categories":["bbs"],"example":"/pkmer/recent","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["pkmer.cn/page/*"]}],"name":"最近更新","maintainers":["Gnoyong"],"url":"pkmer.cn/page/*","location":"recent.ts"}} />
 
 ## PLAYNO.1 玩樂達人
 
@@ -182,7 +182,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 情趣
 
-<Route namespace="playno1" data={{"path":"/st/:catid?","categories":["bbs"],"example":"/playno1/st","parameters":{"catid":"分类，见下表，默认为全部文章"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["stno1.playno1.com/stno1/:catid/"],"target":"/st/:catid"},"name":"情趣","maintainers":["TonyRL"],"description":"| 全部文章 | 情趣體驗報告 | 情趣新聞 | 情趣研究所 |\n  | -------- | ------------ | -------- | ---------- |\n  | all      | experience   | news     | graduate   |","location":"st.ts"}} />
+<Route namespace="playno1" data={{"path":"/st/:catid?","categories":["bbs"],"example":"/playno1/st","parameters":{"catid":"分类，见下表，默认为全部文章"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["stno1.playno1.com/stno1/:catid/"],"target":"/st/:catid"}],"name":"情趣","maintainers":["TonyRL"],"description":"| 全部文章 | 情趣體驗報告 | 情趣新聞 | 情趣研究所 |\n  | -------- | ------------ | -------- | ---------- |\n  | all      | experience   | news     | graduate   |","location":"st.ts"}} />
 
 | 全部文章 | 情趣體驗報告 | 情趣新聞 | 情趣研究所 |
   | -------- | ------------ | -------- | ---------- |
@@ -206,7 +206,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 首页更新
 
-<Route namespace="trow" data={{"path":"/portal","categories":["bbs"],"example":"/trow/portal","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["trow.cc/"]},"name":"首页更新","maintainers":["shiningdracon"],"url":"trow.cc/","location":"portal.ts"}} />
+<Route namespace="trow" data={{"path":"/portal","categories":["bbs"],"example":"/trow/portal","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["trow.cc/"]}],"name":"首页更新","maintainers":["shiningdracon"],"url":"trow.cc/","location":"portal.ts"}} />
 
 ## V2EX
 
@@ -216,7 +216,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 帖子
 
-<Route namespace="v2ex" data={{"path":"/post/:postid","categories":["bbs"],"example":"/v2ex/post/584403","parameters":{"postid":"帖子ID，在 URL 可以找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["v2ex.com/t/:postid"]},"name":"帖子","maintainers":["kt286"],"location":"post.ts"}} />
+<Route namespace="v2ex" data={{"path":"/post/:postid","categories":["bbs"],"example":"/v2ex/post/584403","parameters":{"postid":"帖子ID，在 URL 可以找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["v2ex.com/t/:postid"]}],"name":"帖子","maintainers":["kt286"],"location":"post.ts"}} />
 
 ### 最热 / 最新主题
 
@@ -250,11 +250,11 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 帖子动态
 
-<Route namespace="baidu" data={{"path":["/tieba/post/:id","/tieba/post/lz/:id"],"categories":["bbs"],"example":"/baidu/tieba/post/686961453","parameters":{"id":"帖子 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["tieba.baidu.com/p/:id"]},"name":"帖子动态","maintainers":["u3u"],"location":"tieba/post.ts"}} />
+<Route namespace="baidu" data={{"path":["/tieba/post/:id","/tieba/post/lz/:id"],"categories":["bbs"],"example":"/baidu/tieba/post/686961453","parameters":{"id":"帖子 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["tieba.baidu.com/p/:id"]}],"name":"帖子动态","maintainers":["u3u"],"location":"tieba/post.ts"}} />
 
 ### 帖子动态
 
-<Route namespace="baidu" data={{"path":["/tieba/post/:id","/tieba/post/lz/:id"],"categories":["bbs"],"example":"/baidu/tieba/post/686961453","parameters":{"id":"帖子 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["tieba.baidu.com/p/:id"]},"name":"帖子动态","maintainers":["u3u"],"location":"tieba/post.ts"}} />
+<Route namespace="baidu" data={{"path":["/tieba/post/:id","/tieba/post/lz/:id"],"categories":["bbs"],"example":"/baidu/tieba/post/686961453","parameters":{"id":"帖子 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["tieba.baidu.com/p/:id"]}],"name":"帖子动态","maintainers":["u3u"],"location":"tieba/post.ts"}} />
 
 ### 贴吧搜索
 
@@ -308,13 +308,13 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 工作机会
 
-<Route namespace="eleduck" data={{"path":"/jobs","categories":["bbs"],"example":"/eleduck/jobs","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["eleduck.com/categories/5","eleduck.com/"]},"name":"工作机会","maintainers":["sfyumi"],"url":"eleduck.com/categories/5","location":"jobs.ts"}} />
+<Route namespace="eleduck" data={{"path":"/jobs","categories":["bbs"],"example":"/eleduck/jobs","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["eleduck.com/categories/5","eleduck.com/"]}],"name":"工作机会","maintainers":["sfyumi"],"url":"eleduck.com/categories/5","location":"jobs.ts"}} />
 
 ## 丁香园
 
 ### 个人帖子
 
-<Route namespace="dxy" data={{"path":"/bbs/profile/thread/:userId","categories":["bbs"],"example":"/dxy/bbs/profile/thread/8335054","parameters":{"userId":"个人 ID，可在 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["dxy.cn/bbs/newweb/pc/profile/:userId/threads","dxy.cn/bbs/newweb/pc/profile/:userId"]},"name":"个人帖子","maintainers":["TonyRL"],"location":"profile/thread.ts"}} />
+<Route namespace="dxy" data={{"path":"/bbs/profile/thread/:userId","categories":["bbs"],"example":"/dxy/bbs/profile/thread/8335054","parameters":{"userId":"个人 ID，可在 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["dxy.cn/bbs/newweb/pc/profile/:userId/threads","dxy.cn/bbs/newweb/pc/profile/:userId"]}],"name":"个人帖子","maintainers":["TonyRL"],"location":"profile/thread.ts"}} />
 
 ### 专题
 
@@ -324,7 +324,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 鱼吧帖子
 
-<Route namespace="douyu" data={{"path":"/group/:id/:sort?","categories":["bbs"],"example":"/douyu/group/1011","parameters":{"id":"鱼吧 id，可在鱼吧页 URL 中找到","sort":"排序方式，见下表，默认为发布时间排序"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yuba.douyu.com/group/:id","yuba.douyu.com/group/newself/:id","yuba.douyu.com/group/newall/:id","yuba.douyu.com/"],"target":"/group/:id"},"name":"鱼吧帖子","maintainers":["nczitzk"],"description":"| 回复时间排序 | 发布时间排序 |\n  | ------------ | ------------ |\n  | 1            | 2            |","location":"group.ts"}} />
+<Route namespace="douyu" data={{"path":"/group/:id/:sort?","categories":["bbs"],"example":"/douyu/group/1011","parameters":{"id":"鱼吧 id，可在鱼吧页 URL 中找到","sort":"排序方式，见下表，默认为发布时间排序"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["yuba.douyu.com/group/:id","yuba.douyu.com/group/newself/:id","yuba.douyu.com/group/newall/:id","yuba.douyu.com/"],"target":"/group/:id"}],"name":"鱼吧帖子","maintainers":["nczitzk"],"description":"| 回复时间排序 | 发布时间排序 |\n  | ------------ | ------------ |\n  | 1            | 2            |","location":"group.ts"}} />
 
 | 回复时间排序 | 发布时间排序 |
   | ------------ | ------------ |
@@ -332,7 +332,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 鱼吧跟帖
 
-<Route namespace="douyu" data={{"path":"/post/:id","categories":["bbs"],"example":"/douyu/post/631737151576473201","parameters":{"id":"帖子 id，可在帖子页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["yuba.douyu.com/p/:id","yuba.douyu.com/"]},"name":"鱼吧跟帖","maintainers":["nczitzk"],"location":"post.ts"}} />
+<Route namespace="douyu" data={{"path":"/post/:id","categories":["bbs"],"example":"/douyu/post/631737151576473201","parameters":{"id":"帖子 id，可在帖子页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["yuba.douyu.com/p/:id","yuba.douyu.com/"]}],"name":"鱼吧跟帖","maintainers":["nczitzk"],"location":"post.ts"}} />
 
 ## 恩山无线论坛
 
@@ -344,7 +344,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 热帖
 
-<Route namespace="hupu" data={{"path":"/all/:id?","categories":["bbs"],"example":"/hupu/all/topic-daily","parameters":{"id":"编号，可在对应热帖版面 URL 中找到，默认为步行街每日话题"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["m.hupu.com/:category","m.hupu.com/"],"target":"/:category"},"name":"热帖","maintainers":["nczitzk"],"description":":::tip\n  更多热帖版面参见 [论坛](https://bbs.hupu.com)\n  :::","location":"all.ts"}} />
+<Route namespace="hupu" data={{"path":"/all/:id?","categories":["bbs"],"example":"/hupu/all/topic-daily","parameters":{"id":"编号，可在对应热帖版面 URL 中找到，默认为步行街每日话题"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["m.hupu.com/:category","m.hupu.com/"],"target":"/:category"}],"name":"热帖","maintainers":["nczitzk"],"description":":::tip\n  更多热帖版面参见 [论坛](https://bbs.hupu.com)\n  :::","location":"all.ts"}} />
 
 :::tip
   更多热帖版面参见 [论坛](https://bbs.hupu.com)
@@ -352,7 +352,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 社区
 
-<Route namespace="hupu" data={{"path":["/bbs/:id?/:order?","/bxj/:id?/:order?"],"categories":["bbs"],"example":"/hupu/bbs/topic-daily","parameters":{"id":"编号，可在对应社区 URL 中找到，默认为#步行街主干道","order":"排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["m.hupu.com/:category","m.hupu.com/"],"target":"/:category"},"name":"社区","maintainers":["LogicJake","nczitzk"],"description":":::tip\n  更多社区参见 [社区](https://bbs.hupu.com)\n  :::","location":"bbs.ts"}} />
+<Route namespace="hupu" data={{"path":["/bbs/:id?/:order?","/bxj/:id?/:order?"],"categories":["bbs"],"example":"/hupu/bbs/topic-daily","parameters":{"id":"编号，可在对应社区 URL 中找到，默认为#步行街主干道","order":"排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["m.hupu.com/:category","m.hupu.com/"],"target":"/:category"}],"name":"社区","maintainers":["LogicJake","nczitzk"],"description":":::tip\n  更多社区参见 [社区](https://bbs.hupu.com)\n  :::","location":"bbs.ts"}} />
 
 :::tip
   更多社区参见 [社区](https://bbs.hupu.com)
@@ -360,7 +360,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 社区
 
-<Route namespace="hupu" data={{"path":["/bbs/:id?/:order?","/bxj/:id?/:order?"],"categories":["bbs"],"example":"/hupu/bbs/topic-daily","parameters":{"id":"编号，可在对应社区 URL 中找到，默认为#步行街主干道","order":"排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["m.hupu.com/:category","m.hupu.com/"],"target":"/:category"},"name":"社区","maintainers":["LogicJake","nczitzk"],"description":":::tip\n  更多社区参见 [社区](https://bbs.hupu.com)\n  :::","location":"bbs.ts"}} />
+<Route namespace="hupu" data={{"path":["/bbs/:id?/:order?","/bxj/:id?/:order?"],"categories":["bbs"],"example":"/hupu/bbs/topic-daily","parameters":{"id":"编号，可在对应社区 URL 中找到，默认为#步行街主干道","order":"排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["m.hupu.com/:category","m.hupu.com/"],"target":"/:category"}],"name":"社区","maintainers":["LogicJake","nczitzk"],"description":":::tip\n  更多社区参见 [社区](https://bbs.hupu.com)\n  :::","location":"bbs.ts"}} />
 
 :::tip
   更多社区参见 [社区](https://bbs.hupu.com)
@@ -376,7 +376,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 广场
 
-<Route namespace="jisilu" data={{"path":"/:category?/:sort?/:day?","categories":["bbs"],"example":"/jisilu","parameters":{"category":"分类，见下表，默认为全部，可在 URL 中找到","sort":"排序，见下表，默认为最新，可在 URL 中找到","day":"几天内，见下表，默认为30天，本参数仅在排序参数设定为 `热门` 后才可生效"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["jisilu.cn/home/explore","jisilu.cn/explore","jisilu.cn/"]},"name":"广场","maintainers":["nczitzk"],"url":"jisilu.cn/home/explore","description":"分类\n\n  | 全部 | 债券 / 可转债 | 基金 | 套利 | 新股 |\n  | ---- | ------------- | ---- | ---- | ---- |\n  |      | 4             | 7    | 5    | 3    |\n\n  排序\n\n  | 最新 | 热门 | 按发表时间 |\n  | ---- | ---- | ---------- |\n  |      | hot  | add_time  |\n\n  几天内\n\n  | 30 天 | 7 天 | 当天 |\n  | ----- | ---- | ---- |\n  | 30    | 7    | 1    |","location":"index.ts"}} />
+<Route namespace="jisilu" data={{"path":"/:category?/:sort?/:day?","categories":["bbs"],"example":"/jisilu","parameters":{"category":"分类，见下表，默认为全部，可在 URL 中找到","sort":"排序，见下表，默认为最新，可在 URL 中找到","day":"几天内，见下表，默认为30天，本参数仅在排序参数设定为 `热门` 后才可生效"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["jisilu.cn/home/explore","jisilu.cn/explore","jisilu.cn/"]}],"name":"广场","maintainers":["nczitzk"],"url":"jisilu.cn/home/explore","description":"分类\n\n  | 全部 | 债券 / 可转债 | 基金 | 套利 | 新股 |\n  | ---- | ------------- | ---- | ---- | ---- |\n  |      | 4             | 7    | 5    | 3    |\n\n  排序\n\n  | 最新 | 热门 | 按发表时间 |\n  | ---- | ---- | ---------- |\n  |      | hot  | add_time  |\n\n  几天内\n\n  | 30 天 | 7 天 | 当天 |\n  | ----- | ---- | ---- |\n  | 30    | 7    | 1    |","location":"index.ts"}} />
 
 分类
 
@@ -400,7 +400,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 面经
 
-<Route namespace="nowcoder" data={{"path":"/experience/:tagId","categories":["bbs"],"example":"/nowcoder/experience/639?order=3&companyId=665&phaseId=0","parameters":{"tagId":"职位id [🔗查询链接](https://www.nowcoder.com/profile/all-jobs)复制打开"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nowcoder.com/"],"target":"/experience"},"name":"面经","maintainers":["huyyi"],"url":"nowcoder.com/","description":"可选参数：\n\n  -   companyId：公司 id，[🔗查询链接](https://www.nowcoder.com/discuss/tag/exp), 复制打开\n  -   order：3 - 最新；1 - 最热\n  -   phaseId：0 - 所有；1 - 校招；2 - 实习；3 - 社招","location":"experience.ts"}} />
+<Route namespace="nowcoder" data={{"path":"/experience/:tagId","categories":["bbs"],"example":"/nowcoder/experience/639?order=3&companyId=665&phaseId=0","parameters":{"tagId":"职位id [🔗查询链接](https://www.nowcoder.com/profile/all-jobs)复制打开"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nowcoder.com/"],"target":"/experience"}],"name":"面经","maintainers":["huyyi"],"url":"nowcoder.com/","description":"可选参数：\n\n  -   companyId：公司 id，[🔗查询链接](https://www.nowcoder.com/discuss/tag/exp), 复制打开\n  -   order：3 - 最新；1 - 最热\n  -   phaseId：0 - 所有；1 - 校招；2 - 实习；3 - 社招","location":"experience.ts"}} />
 
 可选参数：
 
@@ -410,11 +410,11 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 求职推荐
 
-<Route namespace="nowcoder" data={{"path":"/recommend","categories":["bbs"],"example":"/nowcoder/recommend","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nowcoder.com/"]},"name":"求职推荐","maintainers":["junfengP"],"url":"nowcoder.com/","location":"recommend.ts"}} />
+<Route namespace="nowcoder" data={{"path":"/recommend","categories":["bbs"],"example":"/nowcoder/recommend","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nowcoder.com/"]}],"name":"求职推荐","maintainers":["junfengP"],"url":"nowcoder.com/","location":"recommend.ts"}} />
 
 ### 实习广场 & 社招广场
 
-<Route namespace="nowcoder" data={{"path":"/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?","categories":["bbs"],"example":"/nowcoder/jobcenter/1/北京/1/1/true","parameters":{"recruitType":"招聘分类，`1` 指 实习广场，`2` 指 社招广场，默认为 `1`","city":"所在城市，可选城市见下表，若空则为 `全国`","type":"职位类型，可选职位代码见下表，若空则为 `全部`","order":"排序参数，可选排序参数代码见下表，若空则为 `默认`","latest":"是否仅查看最近一周，可选 `true` 和 `false`，默认为 `false`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nowcoder.com/"],"target":"/jobcenter"},"name":"实习广场 & 社招广场","maintainers":["nczitzk"],"url":"nowcoder.com/","description":"可选城市有：北京、上海、广州、深圳、杭州、南京、成都、厦门、武汉、西安、长沙、哈尔滨、合肥、其他\n\n  职位类型代码见下表：\n\n  | 研发 | 测试 | 数据 | 算法 | 前端 | 产品 | 运营 | 其他 |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n  | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 0    |\n\n  排序参数见下表：\n\n  | 最新发布 | 最快处理 | 处理率最高 |\n  | -------- | -------- | ---------- |\n  | 1        | 2        | 3          |","location":"jobcenter.ts"}} />
+<Route namespace="nowcoder" data={{"path":"/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?","categories":["bbs"],"example":"/nowcoder/jobcenter/1/北京/1/1/true","parameters":{"recruitType":"招聘分类，`1` 指 实习广场，`2` 指 社招广场，默认为 `1`","city":"所在城市，可选城市见下表，若空则为 `全国`","type":"职位类型，可选职位代码见下表，若空则为 `全部`","order":"排序参数，可选排序参数代码见下表，若空则为 `默认`","latest":"是否仅查看最近一周，可选 `true` 和 `false`，默认为 `false`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nowcoder.com/"],"target":"/jobcenter"}],"name":"实习广场 & 社招广场","maintainers":["nczitzk"],"url":"nowcoder.com/","description":"可选城市有：北京、上海、广州、深圳、杭州、南京、成都、厦门、武汉、西安、长沙、哈尔滨、合肥、其他\n\n  职位类型代码见下表：\n\n  | 研发 | 测试 | 数据 | 算法 | 前端 | 产品 | 运营 | 其他 |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n  | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 0    |\n\n  排序参数见下表：\n\n  | 最新发布 | 最快处理 | 处理率最高 |\n  | -------- | -------- | ---------- |\n  | 1        | 2        | 3          |","location":"jobcenter.ts"}} />
 
 可选城市有：北京、上海、广州、深圳、杭州、南京、成都、厦门、武汉、西安、长沙、哈尔滨、合肥、其他
 
@@ -440,7 +440,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 校招日程
 
-<Route namespace="nowcoder" data={{"path":"/schedule/:propertyId?/:typeId?","categories":["bbs"],"example":"/nowcoder/schedule","parameters":{"propertyId":"行业, 在控制台中抓取接口，可获得行业id，默认0","typeId":"类别，同上"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nowcoder.com/"],"target":"/schedule"},"name":"校招日程","maintainers":["junfengP"],"url":"nowcoder.com/","location":"schedule.ts"}} />
+<Route namespace="nowcoder" data={{"path":"/schedule/:propertyId?/:typeId?","categories":["bbs"],"example":"/nowcoder/schedule","parameters":{"propertyId":"行业, 在控制台中抓取接口，可获得行业id，默认0","typeId":"类别，同上"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nowcoder.com/"],"target":"/schedule"}],"name":"校招日程","maintainers":["junfengP"],"url":"nowcoder.com/","location":"schedule.ts"}} />
 
 ## 品葱
 
@@ -484,7 +484,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 社区
 
-<Route namespace="feng" data={{"path":"/forum/:id/:type?","categories":["bbs"],"example":"/feng/forum/1","parameters":{"id":"版块 ID，可在版块 URL 找到","type":"排序，见下表，默认为 `all`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["feng.com/forum/photo/:id","feng.com/forum/:id"],"target":"/forum/:id"},"name":"社区","maintainers":["TonyRL"],"description":"| 最新回复 | 最新发布 | 热门 | 精华    |\n  | -------- | -------- | ---- | ------- |\n  | newest   | all      | hot  | essence |","location":"forum.ts"}} />
+<Route namespace="feng" data={{"path":"/forum/:id/:type?","categories":["bbs"],"example":"/feng/forum/1","parameters":{"id":"版块 ID，可在版块 URL 找到","type":"排序，见下表，默认为 `all`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["feng.com/forum/photo/:id","feng.com/forum/:id"],"target":"/forum/:id"}],"name":"社区","maintainers":["TonyRL"],"description":"| 最新回复 | 最新发布 | 热门 | 精华    |\n  | -------- | -------- | ---- | ------- |\n  | newest   | all      | hot  | essence |","location":"forum.ts"}} />
 
 | 最新回复 | 最新发布 | 热门 | 精华    |
   | -------- | -------- | ---- | ------- |
@@ -494,13 +494,13 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 首页帖子
 
-<Route namespace="xiaote" data={{"path":"/news","categories":["bbs"],"example":"/xiaote/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["xiaote.com/"]},"name":"首页帖子","maintainers":["wxsimon"],"url":"xiaote.com/","location":"index.ts"}} />
+<Route namespace="xiaote" data={{"path":"/news","categories":["bbs"],"example":"/xiaote/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["xiaote.com/"]}],"name":"首页帖子","maintainers":["wxsimon"],"url":"xiaote.com/","location":"index.ts"}} />
 
 ## 一亩三分地
 
 ### 标签
 
-<Route namespace="1point3acres" data={{"path":"/category/:id?/:type?/:order?","categories":["bbs"],"example":"/1point3acres/category/h1b","parameters":{"id":"标签 id，默认为全部","type":"帖子分类, 见下表，默认为 hot，即热门帖子","order":"排序方式，见下表，默认为空，即最新回复"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["instant.1point3acres.com/section/:id","instant.1point3acres.com/"]},"name":"标签","maintainers":["nczitzk"],"description":":::tip\n  更多标签可以在 [标签列表](https://instant.1point3acres.com/tags) 中找到。\n  :::\n\n  分类\n\n  | 热门帖子 | 最新帖子 |\n  | -------- | -------- |\n  | hot      | new      |\n\n  排序方式\n\n  | 最新回复 | 最新发布 |\n  | -------- | -------- |\n  |          | post     |","location":"category.ts"}} />
+<Route namespace="1point3acres" data={{"path":"/category/:id?/:type?/:order?","categories":["bbs"],"example":"/1point3acres/category/h1b","parameters":{"id":"标签 id，默认为全部","type":"帖子分类, 见下表，默认为 hot，即热门帖子","order":"排序方式，见下表，默认为空，即最新回复"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["instant.1point3acres.com/section/:id","instant.1point3acres.com/"]}],"name":"标签","maintainers":["nczitzk"],"description":":::tip\n  更多标签可以在 [标签列表](https://instant.1point3acres.com/tags) 中找到。\n  :::\n\n  分类\n\n  | 热门帖子 | 最新帖子 |\n  | -------- | -------- |\n  | hot      | new      |\n\n  排序方式\n\n  | 最新回复 | 最新发布 |\n  | -------- | -------- |\n  |          | post     |","location":"category.ts"}} />
 
 :::tip
   更多标签可以在 [标签列表](https://instant.1point3acres.com/tags) 中找到。
@@ -520,7 +520,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 博客
 
-<Route namespace="1point3acres" data={{"path":"/blog/:category?","categories":["bbs"],"example":"/1point3acres/blog","parameters":{"category":"分类，见下表，可在对应分类页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["blog.1point3acres.com/:category"]},"name":"博客","maintainers":["nczitzk"],"description":"| 留学申请   | 找工求职 | 生活攻略  | 投资理财 | 签证移民 | 时政要闻 |\n  | ---------- | -------- | --------- | -------- | -------- | -------- |\n  | studyinusa | career   | lifestyle | invest   | visa     | news     |","location":"blog.ts"}} />
+<Route namespace="1point3acres" data={{"path":"/blog/:category?","categories":["bbs"],"example":"/1point3acres/blog","parameters":{"category":"分类，见下表，可在对应分类页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["blog.1point3acres.com/:category"]}],"name":"博客","maintainers":["nczitzk"],"description":"| 留学申请   | 找工求职 | 生活攻略  | 投资理财 | 签证移民 | 时政要闻 |\n  | ---------- | -------- | --------- | -------- | -------- | -------- |\n  | studyinusa | career   | lifestyle | invest   | visa     | news     |","location":"blog.ts"}} />
 
 | 留学申请   | 找工求职 | 生活攻略  | 投资理财 | 签证移民 | 时政要闻 |
   | ---------- | -------- | --------- | -------- | -------- | -------- |
@@ -528,7 +528,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 分区
 
-<Route namespace="1point3acres" data={{"path":"/section/:id?/:type?/:order?","categories":["bbs"],"example":"/1point3acres/section/345","parameters":{"id":"分区 id，见下表，默认为全部","type":"帖子分类, 见下表，默认为 hot，即热门帖子","order":"排序方式，见下表，默认为空，即最新回复"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["instant.1point3acres.com/section/:id","instant.1point3acres.com/"]},"name":"分区","maintainers":["nczitzk"],"description":"分区\n\n  | 分区     | id  |\n  | -------- | --- |\n  | 留学申请 | 257 |\n  | 世界公民 | 379 |\n  | 投资理财 | 400 |\n  | 生活干货 | 31  |\n  | 职场达人 | 345 |\n  | 人际关系 | 391 |\n  | 海外求职 | 38  |\n  | 签证移民 | 265 |\n\n  分类\n\n  | 热门帖子 | 最新帖子 |\n  | -------- | -------- |\n  | hot      | new      |\n\n  排序方式\n\n  | 最新回复 | 最新发布 |\n  | -------- | -------- |\n  |          | post     |","location":"section.ts"}} />
+<Route namespace="1point3acres" data={{"path":"/section/:id?/:type?/:order?","categories":["bbs"],"example":"/1point3acres/section/345","parameters":{"id":"分区 id，见下表，默认为全部","type":"帖子分类, 见下表，默认为 hot，即热门帖子","order":"排序方式，见下表，默认为空，即最新回复"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["instant.1point3acres.com/section/:id","instant.1point3acres.com/"]}],"name":"分区","maintainers":["nczitzk"],"description":"分区\n\n  | 分区     | id  |\n  | -------- | --- |\n  | 留学申请 | 257 |\n  | 世界公民 | 379 |\n  | 投资理财 | 400 |\n  | 生活干货 | 31  |\n  | 职场达人 | 345 |\n  | 人际关系 | 391 |\n  | 海外求职 | 38  |\n  | 签证移民 | 265 |\n\n  分类\n\n  | 热门帖子 | 最新帖子 |\n  | -------- | -------- |\n  | hot      | new      |\n\n  排序方式\n\n  | 最新回复 | 最新发布 |\n  | -------- | -------- |\n  |          | post     |","location":"section.ts"}} />
 
 分区
 
@@ -557,7 +557,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 录取结果
 
-<Route namespace="1point3acres" data={{"path":"/offer/:year?/:major?/:school?","categories":["bbs"],"example":"/1point3acres/offer/12/null/CMU","parameters":{"year":"录取年份  id，空为null","major":"录取专业 id，空为null","school":"录取学校 id，空为null"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["offer.1point3acres.com/"],"target":"/offer"},"name":"录取结果","maintainers":["EthanWng97"],"url":"offer.1point3acres.com/","description":":::tip[三个 id 获取方式]\n  1.  打开 [https://offer.1point3acres.com](https://offer.1point3acres.com)\n  2.  打开控制台\n  3.  切换到 Network 面板\n  4.  点击 搜索 按钮\n  5.  点击 results?ps=15&pg=1 POST 请求\n  6.  找到 Request Payload 请求参数，例如 `filters: {planyr: \"13\", planmajor: \"1\", outname_w: \"ACADIAU\"}` ，则三个 id 分别为: 13,1,ACADIAU\n  :::","location":"offer.ts"}} />
+<Route namespace="1point3acres" data={{"path":"/offer/:year?/:major?/:school?","categories":["bbs"],"example":"/1point3acres/offer/12/null/CMU","parameters":{"year":"录取年份  id，空为null","major":"录取专业 id，空为null","school":"录取学校 id，空为null"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["offer.1point3acres.com/"],"target":"/offer"}],"name":"录取结果","maintainers":["EthanWng97"],"url":"offer.1point3acres.com/","description":":::tip[三个 id 获取方式]\n  1.  打开 [https://offer.1point3acres.com](https://offer.1point3acres.com)\n  2.  打开控制台\n  3.  切换到 Network 面板\n  4.  点击 搜索 按钮\n  5.  点击 results?ps=15&pg=1 POST 请求\n  6.  找到 Request Payload 请求参数，例如 `filters: {planyr: \"13\", planmajor: \"1\", outname_w: \"ACADIAU\"}` ，则三个 id 分别为: 13,1,ACADIAU\n  :::","location":"offer.ts"}} />
 
 :::tip[三个 id 获取方式]
   1.  打开 [https://offer.1point3acres.com](https://offer.1point3acres.com)
@@ -570,17 +570,17 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 用户回帖
 
-<Route namespace="1point3acres" data={{"path":"/user/:id/posts","categories":["bbs"],"example":"/1point3acres/user/1/posts","parameters":{"id":"用户 id，可在 Instant 版网站的个人主页 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["instant.1point3acres.com/profile/:id","instant.1point3acres.com/"]},"name":"用户回帖","maintainers":["Maecenas"],"location":"user/post.ts"}} />
+<Route namespace="1point3acres" data={{"path":"/user/:id/posts","categories":["bbs"],"example":"/1point3acres/user/1/posts","parameters":{"id":"用户 id，可在 Instant 版网站的个人主页 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["instant.1point3acres.com/profile/:id","instant.1point3acres.com/"]}],"name":"用户回帖","maintainers":["Maecenas"],"location":"user/post.ts"}} />
 
 ### 用户主题帖
 
-<Route namespace="1point3acres" data={{"path":"/user/:id/threads","categories":["bbs"],"example":"/1point3acres/user/1/threads","parameters":{"id":"用户 id，可在 Instant 版网站的个人主页 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["instant.1point3acres.com/profile/:id","instant.1point3acres.com/"]},"name":"用户主题帖","maintainers":["Maecenas"],"location":"user/thread.ts"}} />
+<Route namespace="1point3acres" data={{"path":"/user/:id/threads","categories":["bbs"],"example":"/1point3acres/user/1/threads","parameters":{"id":"用户 id，可在 Instant 版网站的个人主页 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["instant.1point3acres.com/profile/:id","instant.1point3acres.com/"]}],"name":"用户主题帖","maintainers":["Maecenas"],"location":"user/thread.ts"}} />
 
 ## 直播吧
 
 ### Unknown
 
-<Route namespace="zhibo8" data={{"path":"/more/:category?","categories":["bbs"],"example":"/zhibo8/more/nba","parameters":{"category":"分类，见下表，默认为 NBA"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["news.zhibo8.cc/:category"],"target":"/more/:category"},"name":"Unknown","maintainers":["nczitzk"],"location":"more.ts"}} />
+<Route namespace="zhibo8" data={{"path":"/more/:category?","categories":["bbs"],"example":"/zhibo8/more/nba","parameters":{"category":"分类，见下表，默认为 NBA"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["news.zhibo8.cc/:category"],"target":"/more/:category"}],"name":"Unknown","maintainers":["nczitzk"],"location":"more.ts"}} />
 
 ### 回帖
 

@@ -16,7 +16,7 @@ sidebar_position: 3
 
 一旦您为 RSS 路由创建了命名空间，下一步就是创建文件 `namespace.ts` 来定义命名空间。
 
-文件应该通过 namespace 返回一个符合 Namespace 类型的对象。Namespace 的定义在 [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L49)
+文件应该通过 namespace 返回一个符合 Namespace 类型的对象。Namespace 的定义在 [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L51)
 
 - name：供人类阅读的命名空间的名称，它会被用作文档的标题
 - url：对应网站的不包含 protocol 的网址
@@ -52,7 +52,7 @@ GitHub provides some official RSS feeds:
 
 一旦您为路由创建了命名空间，下一步创建一个路由文件注册路由。
 
-例如，如果您为 [GitHub 仓库 Issues](/zh/routes/programming#github-yong-hu-cang-ku) 制作 RSS 源，并且假设您希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，您可以在 `/lib/routes/github/issue.ts` 中注册您的新 RSS 路由，文件需要通过 route 返回一个符合 Route 类型的对象。Route 的定义在 [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L64)
+例如，如果您为 [GitHub 仓库 Issues](/zh/routes/programming#github-yong-hu-cang-ku) 制作 RSS 源，并且假设您希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，您可以在 `/lib/routes/github/issue.ts` 中注册您的新 RSS 路由，文件需要通过 route 返回一个符合 Route 类型的对象。Route 的定义在 [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L86)
 
 - path: 路由路径，使用 [Hono 路由](https://hono.dev/api/routing) 语法
 - name: 供人类阅读的路由名称，它会被用作文档的标题
@@ -102,7 +102,7 @@ export const route: Route = {
 
 ctx 可以使用的 API 可以在 [Hono context 文档](https://hono.dev/api/context)中查看
 
-返回值的类型在这里定义：[/lib/types.ts#L36](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L36)
+返回值的类型在这里定义：[/lib/types.ts#L37](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L37)
 
 如前所述，我们以 [GitHub 仓库 Issues](/zh/routes/programming#github-yong-hu-cang-ku) 为例制作 RSS 源。我们将展示前面提到的四种数据获取方法：
 

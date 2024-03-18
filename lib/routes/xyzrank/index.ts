@@ -10,10 +10,12 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:category?',
-    radar: {
-        source: ['xyzrank.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['xyzrank.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

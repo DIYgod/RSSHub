@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.lxixsxa.com/', 'www.lxixsxa.com/info'],
-    },
+    radar: [
+        {
+            source: ['www.lxixsxa.com/', 'www.lxixsxa.com/info'],
+        },
+    ],
     name: 'News',
     maintainers: ['Kiotlin'],
     handler,

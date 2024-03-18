@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['greasyfork.org/:language/scripts/:script/feedback'],
-    },
+    radar: [
+        {
+            source: ['greasyfork.org/:language/scripts/:script/feedback'],
+        },
+    ],
     name: 'Script Feedback',
     maintainers: ['miles170'],
     handler,

@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.cctv.com/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['news.cctv.com/:category'],
+            target: '/:category',
+        },
+    ],
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,

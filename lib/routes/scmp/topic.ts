@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['scmp.com/topics/:topic'],
-    },
+    radar: [
+        {
+            source: ['scmp.com/topics/:topic'],
+        },
+    ],
     name: 'Topics',
     maintainers: ['TonyRL'],
     handler,

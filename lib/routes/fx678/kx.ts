@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fx678.com/kx'],
-    },
+    radar: [
+        {
+            source: ['fx678.com/kx'],
+        },
+    ],
     name: '7x24 小时快讯',
     maintainers: ['occupy5', 'dousha'],
     handler,

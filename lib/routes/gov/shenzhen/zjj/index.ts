@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zjj.sz.gov.cn/xxgk/:caty'],
-    },
+    radar: [
+        {
+            source: ['zjj.sz.gov.cn/xxgk/:caty'],
+        },
+    ],
     name: '深圳市住房和建设局',
     maintainers: ['lonn'],
     handler,

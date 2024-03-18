@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['qlu.edu.cn/tzggsh/list1.htm'],
-    },
+    radar: [
+        {
+            source: ['qlu.edu.cn/tzggsh/list1.htm'],
+        },
+    ],
     name: '通知公告',
     maintainers: ['SunBK201'],
     handler,

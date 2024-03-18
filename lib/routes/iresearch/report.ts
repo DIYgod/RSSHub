@@ -45,9 +45,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.iresearch.com.cn/report.shtml'],
-    },
+    radar: [
+        {
+            source: ['www.iresearch.com.cn/report.shtml'],
+        },
+    ],
     name: '产业研究报告',
     maintainers: ['brilon', 'Fatpandac'],
     handler,

@@ -59,10 +59,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.wfu.edu.cn/'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['news.wfu.edu.cn/'],
+            target: '/news',
+        },
+    ],
     name: '新闻',
     maintainers: ['cccht'],
     handler,

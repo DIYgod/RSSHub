@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['luogu.com.cn/blog/:name'],
-    },
+    radar: [
+        {
+            source: ['luogu.com.cn/blog/:name'],
+        },
+    ],
     name: '用户博客',
     maintainers: [],
     handler,

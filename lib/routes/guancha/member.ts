@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['guancha.cn/'],
-        target: '/:category?',
-    },
+    radar: [
+        {
+            source: ['guancha.cn/'],
+            target: '/:category?',
+        },
+    ],
     name: '观学院',
     maintainers: ['nczitzk'],
     handler,

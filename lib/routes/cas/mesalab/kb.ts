@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.mesalab.cn/f/article/articleList', 'www.mesalab.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.mesalab.cn/f/article/articleList', 'www.mesalab.cn/'],
+        },
+    ],
     name: '信息工程研究所 第二研究室 处理架构组 知识库',
     maintainers: ['renzhexigua'],
     handler,

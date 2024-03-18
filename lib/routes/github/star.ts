@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/:user/:repo/stargazers', 'github.com/:user/:repo'],
-    },
+    radar: [
+        {
+            source: ['github.com/:user/:repo/stargazers', 'github.com/:user/:repo'],
+        },
+    ],
     name: 'Repo Stars',
     maintainers: ['HenryQW'],
     handler,

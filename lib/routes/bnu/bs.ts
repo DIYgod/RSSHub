@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bs.bnu.edu.cn/:category/index.html'],
-        target: '/bs/:category',
-    },
+    radar: [
+        {
+            source: ['bs.bnu.edu.cn/:category/index.html'],
+            target: '/bs/:category',
+        },
+    ],
     name: '经济与工商管理学院',
     maintainers: ['nczitzk'],
     handler,

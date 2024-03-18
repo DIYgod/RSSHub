@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['luogu.com.cn/user/:uid'],
-    },
+    radar: [
+        {
+            source: ['luogu.com.cn/user/:uid'],
+        },
+    ],
     name: '用户动态',
     maintainers: ['solstice23'],
     handler,

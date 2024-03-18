@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['today.hit.edu.cn/category/:category'],
-    },
+    radar: [
+        {
+            source: ['today.hit.edu.cn/category/:category'],
+        },
+    ],
     name: '今日哈工大',
     maintainers: ['ranpox'],
     handler,

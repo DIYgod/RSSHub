@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['douyin.com/user/:uid'],
-        target: '/user/:uid',
-    },
+    radar: [
+        {
+            source: ['douyin.com/user/:uid'],
+            target: '/user/:uid',
+        },
+    ],
     name: '博主',
     maintainers: ['Max-Tortoise', 'Rongronggg9'],
     handler,

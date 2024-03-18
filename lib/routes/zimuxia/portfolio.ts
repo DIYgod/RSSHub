@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zimuxia.cn/portfolio/:id'],
-    },
+    radar: [
+        {
+            source: ['zimuxia.cn/portfolio/:id'],
+        },
+    ],
     name: '剧集',
     maintainers: ['nczitzk'],
     handler,

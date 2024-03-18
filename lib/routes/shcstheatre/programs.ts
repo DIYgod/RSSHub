@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.shcstheatre.com/Program/programList.aspx'],
-    },
+    radar: [
+        {
+            source: ['www.shcstheatre.com/Program/programList.aspx'],
+        },
+    ],
     name: '节目列表',
     maintainers: ['fuzy112'],
     handler,

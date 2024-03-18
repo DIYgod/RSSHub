@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['devolverdigital.com/blog'],
-    },
+    radar: [
+        {
+            source: ['devolverdigital.com/blog'],
+        },
+    ],
     name: 'Official Blogs',
     maintainers: ['XXY233'],
     handler,

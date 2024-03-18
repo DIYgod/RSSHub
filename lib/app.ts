@@ -17,6 +17,7 @@ import logger from '@/utils/logger';
 
 import { notFoundHandler, errorHandler } from '@/errors';
 import registry from '@/registry';
+import api from '@/api';
 
 process.on('uncaughtException', (e) => {
     logger.error('uncaughtException: ' + e);
@@ -36,7 +37,8 @@ app.use(antiHotlink);
 app.use(parameter);
 app.use(cache);
 
-registry(app);
+app.route('/', registry);
+app.route('/api', api);
 
 app.notFound(notFoundHandler);
 app.onError(errorHandler);

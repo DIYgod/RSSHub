@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ac.qq.com/Rank/comicRank/type/:type', 'ac.qq.com/'],
-    },
+    radar: [
+        {
+            source: ['ac.qq.com/Rank/comicRank/type/:type', 'ac.qq.com/'],
+        },
+    ],
     name: '排行榜',
     maintainers: ['nczitzk'],
     handler,

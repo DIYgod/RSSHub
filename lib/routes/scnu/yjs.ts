@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yz.scnu.edu.cn/tongzhigonggao/ssgg', 'yz.scnu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['yz.scnu.edu.cn/tongzhigonggao/ssgg', 'yz.scnu.edu.cn/'],
+        },
+    ],
     name: '研究生院通知公告',
     maintainers: ['shengmaosu'],
     handler,

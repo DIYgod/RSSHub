@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jwc.wfu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['jwc.wfu.edu.cn/'],
+        },
+    ],
     name: '教务处通知',
     maintainers: ['cccht'],
     handler,

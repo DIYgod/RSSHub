@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.shisu.edu.cn/:category/index.html'],
-    },
+    radar: [
+        {
+            source: ['news.shisu.edu.cn/:category/index.html'],
+        },
+    ],
     name: '上外新闻',
     maintainers: ['Duuckjing'],
     handler,

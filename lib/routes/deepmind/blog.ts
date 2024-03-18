@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['deepmind.com/blog', 'deepmind.com/'],
-    },
+    radar: [
+        {
+            source: ['deepmind.com/blog', 'deepmind.com/'],
+        },
+    ],
     name: 'Blog',
     maintainers: ['nczitzk', 'TonyRL'],
     handler,

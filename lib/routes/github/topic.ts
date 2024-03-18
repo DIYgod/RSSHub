@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/topics'],
-    },
+    radar: [
+        {
+            source: ['github.com/topics'],
+        },
+    ],
     name: 'Topics',
     maintainers: ['queensferryme'],
     handler,

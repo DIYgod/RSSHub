@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['vocus.cc/:id/home', 'vocus.cc/:id/introduce'],
-    },
+    radar: [
+        {
+            source: ['vocus.cc/:id/home', 'vocus.cc/:id/introduce'],
+        },
+    ],
     name: '出版專題',
     maintainers: ['Maecenas'],
     handler,

@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['instructables.com/projects'],
-        target: '/projects',
-    },
+    radar: [
+        {
+            source: ['instructables.com/projects'],
+            target: '/projects',
+        },
+    ],
     name: 'Projects',
     maintainers: ['wolfg1969'],
     handler,

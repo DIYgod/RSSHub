@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.yomiuri.co.jp/:category?'],
-    },
+    radar: [
+        {
+            source: ['www.yomiuri.co.jp/:category?'],
+        },
+    ],
     name: 'News',
     maintainers: ['Arracc'],
     handler,

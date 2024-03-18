@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gelonghui.com/live', 'gelonghui.com/'],
-    },
+    radar: [
+        {
+            source: ['gelonghui.com/live', 'gelonghui.com/'],
+        },
+    ],
     name: '实时快讯',
     maintainers: [],
     handler,

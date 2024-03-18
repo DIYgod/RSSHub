@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['plurk.com/hotlinks'],
-    },
+    radar: [
+        {
+            source: ['plurk.com/hotlinks'],
+        },
+    ],
     name: 'Hotlinks',
     maintainers: ['TonyRL'],
     handler,

@@ -5,10 +5,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/pine/:version?',
-    radar: {
-        source: ['tradingview.com/pine-script-docs/en/:version/Release_notes.html'],
-        target: '/pine/:version',
-    },
+    radar: [
+        {
+            source: ['tradingview.com/pine-script-docs/en/:version/Release_notes.html'],
+            target: '/pine/:version',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

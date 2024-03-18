@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['indienova.com/usergames', 'indienova.com/'],
-    },
+    radar: [
+        {
+            source: ['indienova.com/usergames', 'indienova.com/'],
+        },
+    ],
     name: '会员开发游戏库',
     maintainers: ['TonyRL'],
     handler,

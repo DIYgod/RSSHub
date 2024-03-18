@@ -32,9 +32,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['economist.com/:endpoint'],
-    },
+    radar: [
+        {
+            source: ['economist.com/:endpoint'],
+        },
+    ],
     name: 'Category',
     maintainers: ['ImSingee'],
     handler,

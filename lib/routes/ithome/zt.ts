@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ithome.com/zt/:id'],
-    },
+    radar: [
+        {
+            source: ['ithome.com/zt/:id'],
+        },
+    ],
     name: '专题',
     maintainers: ['nczitzk'],
     handler,

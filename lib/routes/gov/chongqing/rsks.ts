@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rlsbj.cq.gov.cn/'],
-    },
+    radar: [
+        {
+            source: ['rlsbj.cq.gov.cn/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['Mai19930513'],
     handler,

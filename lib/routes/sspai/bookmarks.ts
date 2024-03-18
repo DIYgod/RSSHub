@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/u/:slug/bookmark_posts'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/u/:slug/bookmark_posts'],
+        },
+    ],
     name: '用户收藏',
     maintainers: ['curly210102'],
     handler,

@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ixigua.com/home/:uid'],
-        target: '/user/video/:uid',
-    },
+    radar: [
+        {
+            source: ['ixigua.com/home/:uid'],
+            target: '/user/video/:uid',
+        },
+    ],
     name: '用户视频投稿',
     maintainers: [],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xiaoyuzhoufm.com/podcast/:id'],
-    },
+    radar: [
+        {
+            source: ['xiaoyuzhoufm.com/podcast/:id'],
+        },
+    ],
     name: '播客',
     maintainers: ['hondajojo', 'jtsang4'],
     handler,

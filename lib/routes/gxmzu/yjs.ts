@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yjs.gxmzu.edu.cn/tzgg/zsgg.htm', 'yjs.gxmzu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['yjs.gxmzu.edu.cn/tzgg/zsgg.htm', 'yjs.gxmzu.edu.cn/'],
+        },
+    ],
     name: '研究生院招生公告',
     maintainers: ['real-jiakai'],
     handler,

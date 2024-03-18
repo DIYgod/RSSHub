@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.pixiv.net/users/:id'],
-    },
+    radar: [
+        {
+            source: ['www.pixiv.net/users/:id'],
+        },
+    ],
     name: 'User Activity',
     maintainers: ['DIYgod'],
     handler,

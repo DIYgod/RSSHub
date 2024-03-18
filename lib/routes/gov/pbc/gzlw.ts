@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pbc.gov.cn/redianzhuanti/118742/4122386/4122692/index.html'],
-    },
+    radar: [
+        {
+            source: ['pbc.gov.cn/redianzhuanti/118742/4122386/4122692/index.html'],
+        },
+    ],
     name: '工作论文',
     maintainers: ['Fatpandac'],
     handler,

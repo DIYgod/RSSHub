@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['followin.io/:lang/topic/:topicId', 'followin.io/topic/:topicId'],
-    },
+    radar: [
+        {
+            source: ['followin.io/:lang/topic/:topicId', 'followin.io/topic/:topicId'],
+        },
+    ],
     name: 'Topic',
     maintainers: ['TonyRL'],
     handler,

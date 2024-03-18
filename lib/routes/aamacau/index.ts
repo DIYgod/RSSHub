@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['aamacau.com/'],
-    },
+    radar: [
+        {
+            source: ['aamacau.com/'],
+        },
+    ],
     name: '话题',
     maintainers: [],
     handler,

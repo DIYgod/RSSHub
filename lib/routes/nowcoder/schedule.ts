@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nowcoder.com/'],
-        target: '/schedule',
-    },
+    radar: [
+        {
+            source: ['nowcoder.com/'],
+            target: '/schedule',
+        },
+    ],
     name: '校招日程',
     maintainers: ['junfengP'],
     handler,

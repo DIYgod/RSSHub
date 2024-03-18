@@ -83,9 +83,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['domp4.cc/detail/:id'],
-    },
+    radar: [
+        {
+            source: ['domp4.cc/detail/:id'],
+        },
+    ],
     name: '剧集订阅',
     maintainers: ['savokiss'],
     handler,

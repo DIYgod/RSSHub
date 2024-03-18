@@ -18,10 +18,12 @@ async function cheerioLoad(url) {
 
 export const route: Route = {
     path: '/:category?',
-    radar: {
-        source: ['freecomputerbooks.com/', 'freecomputerbooks.com/index.html'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['freecomputerbooks.com/', 'freecomputerbooks.com/index.html'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

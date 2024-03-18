@@ -10,20 +10,14 @@ import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import { config } from './config';
+import { radar } from './radar';
 
 export const route: Route = {
     path: '/:type/:id?',
     categories: ['university'],
     example: '/shiep/news/notice',
     parameters: { type: '类型名称，见下表', id: '页面 ID，默认为通知公告或学院公告所对应的 ID' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
+    radar,
     name: '新闻网与学院通知',
     maintainers: ['gumibea', 'TeamSUEP'],
     handler,
@@ -34,7 +28,7 @@ export const route: Route = {
   | 能源与机械工程学院 | 环境与化学工程学院 | 电气工程学院 | 自动化工程学院 | 计算机科学与技术学院 | 电子与信息工程学院 | 经济与管理学院 | 数理学院 | 外国语学院 | 体育学院 | 马克思主义学院 | 人文艺术学院 | 继续教育学院（国际教育学院） |
   | ------------------ | ------------------ | ------------ | -------------- | -------------------- | ------------------ | -------------- | -------- | ---------- | -------- | -------------- | ------------ | ---------------------------- |
   | energy             | hhxy               | dqxy         | zdhxy          | jsjxy                | dxxy               | jgxy           | slxy     | wgyxy      | tyb      | skb            | rwysxy       | jjxy                         |
-  | 892                | 1231               | 2462         | 2002           | xygg                 | tzgg               | 3633           | 2063     | tzgg       | 2891     | 1736           | 3089         | 2582                         |
+  | 892                | 5559               | 2462         | 2002           | xygg                 | tzgg               | 3633           | 2063     | tzgg       | 2891     | 1736           | 3089         | 2582                         |
 
   党群部门：
 
@@ -54,7 +48,7 @@ export const route: Route = {
 
   | 新闻网 | Shanghai University of Electric Power | 信息公开网 | 本科招生网 | 本科就业信息网 | 妇工委 | 文明办  | 学习路上 | 上海热交换系统节能工程技术研究中心 | 上海新能源人才技术教育交流中心 | 上海绿色能源并网技术研究中心 | 能源化学实验教学中心 | 教师教学发展中心 | 电力装备设计与制造虚拟仿真中心 | 上海市电力材料防护与新材料重点实验室 | 能源电力智库 | 国家新能源电力系统实验教学示范中心 | 智能发电实验教学中心 |
   | ------ | ------------------------------------- | ---------- | ---------- | -------------- | ------ | ------- | -------- | ---------------------------------- | ------------------------------ | ---------------------------- | -------------------- | ---------------- | ------------------------------ | ------------------------------------ | ------------ | ---------------------------------- | -------------------- |
-  | news   | english                               | xxgk       | zs         | career         | fgw    | wenming | ztjy     | energy-saving                      | gec                            | green-energy                 | hhsyzx               | jsjxfzzx         | jxfz                           | mpep                                 | nydlzk       | restec                             | spgc                 |
+  | news   | english                               | xxgk       | zs         | career         | fgw    | wenming | ztjy     | energy-saving                      | gec                            | green-energy                 | hhsyzx               | jsjxfzzx         | jxfz                           | mpep                                 | nydlzk       | rpstec                             | spgc                 |
   | notice | events                                | zxgkxx     | zxxx       | tzgg           | 1411   | 2202    | 5575     | tzgg                               | 1959                           | 118                          | 3709                 | 3909             | 3330                           | 1134                                 | tzgg         | 1366                               | 4449                 |
 
   参数与来源页面对应规则为：\`https://\${type}.shiep.edu.cn/\${id}/list.htm\``,

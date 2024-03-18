@@ -12,9 +12,11 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/journal/:id',
-    radar: {
-        source: ['pubs.acs.org/journal/:id', 'pubs.acs.org/'],
-    },
+    radar: [
+        {
+            source: ['pubs.acs.org/journal/:id', 'pubs.acs.org/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

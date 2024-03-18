@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fansly.com/:username/posts', 'fansly.com/:username/media'],
-    },
+    radar: [
+        {
+            source: ['fansly.com/:username/posts', 'fansly.com/:username/media'],
+        },
+    ],
     name: 'User Timeline',
     maintainers: ['TonyRL'],
     handler,
