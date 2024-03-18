@@ -335,8 +335,8 @@ devDependencies:
     specifier: 51.0.1
     version: 51.0.1(eslint@8.57.0)
   eslint-plugin-yml:
-    specifier: 1.12.2
-    version: 1.12.2(eslint@8.57.0)
+    specifier: 1.13.0
+    version: 1.13.0(eslint@8.57.0)
   fs-extra:
     specifier: 11.2.0
     version: 11.2.0
@@ -4521,8 +4521,8 @@ packages:
       eslint: 8.57.0
     dev: true
 
-  /eslint-compat-utils@0.4.1(eslint@8.57.0):
-    resolution: {integrity: sha512-5N7ZaJG5pZxUeNNJfUchurLVrunD1xJvyg5kYOIVF8kg1f3ajTikmAu/5fZ9w100omNPOoMjngRszh/Q/uFGMg==}
+  /eslint-compat-utils@0.5.0(eslint@8.57.0):
+    resolution: {integrity: sha512-dc6Y8tzEcSYZMHa+CMPLi/hyo1FzNeonbhJL7Ol0ccuKQkwopJcJBA9YL/xmMTLU1eKigXo9vj9nALElWYSowg==}
     engines: {node: '>=12'}
     peerDependencies:
       eslint: '>=6.0.0'
@@ -4659,15 +4659,15 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-yml@1.12.2(eslint@8.57.0):
-    resolution: {integrity: sha512-hvS9p08FhPT7i/ynwl7/Wt7ke7Rf4P2D6fT8lZlL43peZDTsHtH2A0SIFQ7Kt7+mJ6if6P+FX3iJhMkdnxQwpg==}
+  /eslint-plugin-yml@1.13.0(eslint@8.57.0):
+    resolution: {integrity: sha512-B87P32E8ugeeUnFxZvPsn72TyeZauA5ZXe6XmWDf0CKwN+9iLaepi6matyvikMWZf1ZeH9xdKggxQvQzLXlfzw==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
     dependencies:
       debug: 4.3.4
       eslint: 8.57.0
-      eslint-compat-utils: 0.4.1(eslint@8.57.0)
+      eslint-compat-utils: 0.5.0(eslint@8.57.0)
       lodash: 4.17.21
       natural-compare: 1.4.0
       yaml-eslint-parser: 1.2.2
