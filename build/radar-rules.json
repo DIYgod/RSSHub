@@ -1170,7 +1170,7 @@
     "_name": "アニメ新番組",
     ".": [
       {
-        "title": "Unknown",
+        "title": "當季新番",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/"
@@ -2134,7 +2134,7 @@
     ],
     "yz": [
       {
-        "title": "Unknown",
+        "title": "研招网通知公告",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/col/col41740/index.html",
@@ -4559,7 +4559,7 @@
     "_name": "自由微信",
     ".": [
       {
-        "title": "Unknown",
+        "title": "公众号",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/profile/:id"
@@ -5163,7 +5163,7 @@
     "_name": "中国人民银行",
     "rlsbj": [
       {
-        "title": "Unknown",
+        "title": "重庆人事考试通知公告",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
           "/"
@@ -6385,7 +6385,7 @@
     "_name": "哈尔滨工程大学",
     "job": [
       {
-        "title": "Unknown",
+        "title": "大型招聘会",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/*"
@@ -7515,7 +7515,7 @@
     "_name": "浪 Play 直播",
     ".": [
       {
-        "title": "Unknown",
+        "title": "直播间开播",
         "docs": "https://docs.rsshub.app/routes/live",
         "source": [
           "/room/:id"
@@ -8855,7 +8855,7 @@
     "_name": "走进日本",
     "www": [
       {
-        "title": "Unknown",
+        "title": "政治外交",
         "docs": "https://docs.rsshub.app/routes/travel",
         "source": [
           "/nippon/:category",
@@ -9071,7 +9071,7 @@
     "_name": "中央气象台",
     ".": [
       {
-        "title": "Unknown",
+        "title": "全国气象预警",
         "docs": "https://docs.rsshub.app/routes/forecast",
         "source": [
           "/publish/alarm.html",
@@ -10410,7 +10410,7 @@
     "_name": "奇葩买家秀",
     ".": [
       {
-        "title": "Unknown",
+        "title": "频道",
         "docs": "https://docs.rsshub.app/routes/picture",
         "source": [
           "/",
@@ -12792,7 +12792,7 @@
     ],
     "ygafz": [
       {
-        "title": "Unknown",
+        "title": "粤港澳发展研究院",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/:type"
@@ -15183,7 +15183,7 @@
     "_name": "站酷",
     "www": [
       {
-        "title": "Unknown",
+        "title": "用户作品",
         "docs": "https://docs.rsshub.app/routes/design",
         "source": [
           "/u/:id"
@@ -15206,7 +15206,7 @@
     ],
     "news": [
       {
-        "title": "Unknown",
+        "title": "滚动新闻",
         "docs": "https://docs.rsshub.app/routes/bbs",
         "source": [
           "/:category"
@@ -15331,7 +15331,7 @@
         "target": "/zhihu/xhu/question/:questionId"
       },
       {
-        "title": "Unknown",
+        "title": "xhu - 话题",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/topic/:topicId/:type"
@@ -15409,7 +15409,7 @@
     "_name": "竹白",
     "analy": [
       {
-        "title": "Unknown",
+        "title": "上周热门 TOP 20",
         "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
           "/"
@@ -15435,7 +15435,7 @@
     "_name": "中国养猪网",
     "zhujia": [
       {
-        "title": "Unknown",
+        "title": "全国今日生猪价格",
         "docs": "https://docs.rsshub.app/routes/shopping",
         "source": [
           "/"

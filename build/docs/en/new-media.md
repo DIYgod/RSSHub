@@ -2765,9 +2765,9 @@ Member ID
 
 ## 移动支付网 <Site url="mpaypass.com.cn"/>
 
-### Unknown <Site url="mpaypass.com.cn" size="sm" />
+### 分类 <Site url="mpaypass.com.cn" size="sm" />
 
-<Route namespace="mpaypass" :data='{"path":"/main/:type?","categories":["new-media"],"example":"/mpaypass/main/policy","parameters":{"type":"新闻类型，类型可在URL中找到，类似`policy`，`eye`等，空或其他任意值展示最新新闻"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Unknown","maintainers":["zhuan-zhu"],"location":"main.ts"}' />
+<Route namespace="mpaypass" :data='{"path":"/main/:type?","categories":["new-media"],"example":"/mpaypass/main/policy","parameters":{"type":"新闻类型，类型可在URL中找到，类似`policy`，`eye`等，空或其他任意值展示最新新闻"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"分类","maintainers":["zhuan-zhu"],"location":"main.ts"}' />
 
 ### 新闻 <Site url="mpaypass.com.cn/" size="sm" />
 
@@ -2995,7 +2995,7 @@ Member ID
 
 ## 自由微信 <Site url="freewechat.com"/>
 
-### Unknown <Site url="freewechat.com" size="sm" />
+### 公众号 <Site url="freewechat.com" size="sm" />
 
-<Route namespace="freewechat" :data='{"path":"/profile/:id","categories":["new-media"],"example":"/freewechat/profile/MzI5NTUxNzk3OA==","parameters":{"id":"公众号 ID，可在URL中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["freewechat.com/profile/:id"]}],"name":"Unknown","maintainers":["TonyRL"],"location":"profile.ts"}' />
+<Route namespace="freewechat" :data='{"path":"/profile/:id","categories":["new-media"],"example":"/freewechat/profile/MzI5NTUxNzk3OA==","parameters":{"id":"公众号 ID，可在URL中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["freewechat.com/profile/:id"]}],"name":"公众号","maintainers":["TonyRL"],"location":"profile.ts"}' />
 

@@ -578,9 +578,14 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ## 直播吧 <Site url="zhibo8.cc"/>
 
-### Unknown <Site url="zhibo8.cc" size="sm" />
+### 滚动新闻 <Site url="zhibo8.cc" size="sm" />
 
-<Route namespace="zhibo8" :data='{"path":"/more/:category?","categories":["bbs"],"example":"/zhibo8/more/nba","parameters":{"category":"分类，见下表，默认为 NBA"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["news.zhibo8.cc/:category"],"target":"/more/:category"}],"name":"Unknown","maintainers":["nczitzk"],"location":"more.ts"}' />
+<Route namespace="zhibo8" :data='{"path":"/more/:category?","categories":["bbs"],"example":"/zhibo8/more/nba","parameters":{"category":"分类，见下表，默认为 NBA"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["news.zhibo8.cc/:category"],"target":"/more/:category"}],"name":"滚动新闻","description":"\n| NBA | 足球  | 电竞     | 综合   |\n| --- | ----- | -------- | ------ |\n| nba | zuqiu | dianjing | zonghe |","maintainers":["nczitzk"],"location":"more.ts"}' />
+
+
+| NBA | 足球  | 电竞     | 综合   |
+| --- | ----- | -------- | ------ |
+| nba | zuqiu | dianjing | zonghe |
 
 ### 回帖 <Site url="zhibo8.cc" size="sm" />
 

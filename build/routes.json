@@ -4861,7 +4861,7 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "當季新番",
         "maintainers": [
           "devinmugen"
         ],
@@ -8957,7 +8957,7 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "研招网通知公告",
         "maintainers": [
           "shengmaosu"
         ],
@@ -10159,7 +10159,8 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Unknown",
+        "name": "各学位授予单位学位证书上网进度",
+        "description": "| 省市             | 代号 |\n    | ---------------- | ---- |\n    | 北京市           | 11   |\n    | 天津市           | 12   |\n    | 河北省           | 13   |\n    | 山西省           | 14   |\n    | 内蒙古自治区     | 15   |\n    | 辽宁省           | 21   |\n    | 吉林省           | 22   |\n    | 黑龙江省         | 23   |\n    | 上海市           | 31   |\n    | 江苏省           | 32   |\n    | 浙江省           | 33   |\n    | 安徽省           | 34   |\n    | 福建省           | 35   |\n    | 江西省           | 36   |\n    | 山东省           | 37   |\n    | 河南省           | 41   |\n    | 湖北省           | 42   |\n    | 湖南省           | 43   |\n    | 广东省           | 44   |\n    | 广西壮族自治区   | 45   |\n    | 海南省           | 46   |\n    | 重庆市           | 50   |\n    | 四川省           | 51   |\n    | 贵州省           | 52   |\n    | 云南省           | 53   |\n    | 西藏自治区       | 54   |\n    | 陕西省           | 61   |\n    | 甘肃省           | 62   |\n    | 青海省           | 63   |\n    | 宁夏回族自治区   | 64   |\n    | 新疆维吾尔自治区 | 65   |\n    | 台湾             | 71   |",
         "maintainers": [
           "TonyRL"
         ],
@@ -10969,7 +10970,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Unknown",
+        "name": "分类 (网页爬虫方法)",
         "maintainers": [
           "dzx-dzx"
         ],
@@ -11440,7 +11441,8 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Unknown",
+        "name": "作者期刊文献",
+        "description": ":::tip\n    可能仅限中国大陆服务器访问，以实际情况为准。\n    :::",
         "maintainers": [
           "harveyqiu",
           "Derekmini"
@@ -12446,10 +12448,16 @@
   },
   "cs": {
     "routes": {
-      "/:category{.+}?": {
-        "path": "/:category{.+}?",
-        "name": "Unknown",
-        "maintainers": [],
+      "/:category?": {
+        "path": "/:category?",
+        "name": "栏目",
+        "parameters": {
+          "category": "分类，见下表，默认为首页"
+        },
+        "maintainers": [
+          "nczitzk"
+        ],
+        "description": "| 要闻 | 公司 | 市场 | 基金 |\n    | ---- | ---- | ---- | ---- |\n    | xwzx | ssgs | gppd | tzjj |\n\n    | 科创 | 产经   | 期货     | 海外   |\n    | ---- | ------ | -------- | ------ |\n    | 5g   | cj2020 | zzqh2020 | hw2020 |\n\n    <details>\n      <summary>更多栏目</summary>\n\n      #### 要闻\n\n      | 财经要闻 | 观点评论 | 民生消费  |\n      | -------- | -------- | --------- |\n      | xwzx/hg  | xwzx/jr  | xwzx/msxf |\n\n      #### 公司\n\n      | 公司要闻  | 公司深度  | 公司巡礼  |\n      | --------- | --------- | --------- |\n      | ssgs/gsxw | ssgs/gssd | ssgs/gsxl |\n\n      #### 市场\n\n      | A 股市场  | 港股资讯  | 债市研究  | 海外报道  | 期货报道  |\n      | --------- | --------- | --------- | --------- | --------- |\n      | gppd/gsyj | gppd/ggzx | gppd/zqxw | gppd/hwbd | gppd/qhbd |\n\n      #### 基金\n\n      | 基金动态  | 基金视点  | 基金持仓  | 私募基金  | 基民学苑  |\n      | --------- | --------- | --------- | --------- | --------- |\n      | tzjj/jjdt | tzjj/jjks | tzjj/jjcs | tzjj/smjj | tzjj/tjdh |\n\n      #### 机构\n\n      | 券商 | 银行 | 保险 |\n      | ---- | ---- | ---- |\n      | qs   | yh   | bx   |\n\n      #### 其他\n\n      | 中证快讯 7x24 | IPO 鉴真 | 公司能见度 |\n      | ------------- | -------- | ---------- |\n      | sylm/jsbd     | yc/ipojz | yc/gsnjd   |\n    </details>",
         "location": "index.ts"
       },
       "/video/:category?": {
@@ -12469,7 +12477,8 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Unknown",
+        "name": "中证视频",
+        "description": "| 今日聚焦 | 传闻求证 | 高端访谈 | 投教课堂 | 直播汇 |\n    | -------- | -------- | -------- | -------- | ------ |",
         "maintainers": [
           "nczitzk"
         ],
@@ -15195,7 +15204,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Unknown",
+        "name": "豆瓣豆列",
         "maintainers": [
           "LogicJake",
           "honue"
@@ -15321,7 +15330,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Unknown",
+        "name": "新书速递",
         "maintainers": [
           "fengkx"
         ],
@@ -18927,7 +18936,7 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "公众号",
         "maintainers": [
           "TonyRL"
         ],
@@ -21417,7 +21426,7 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "重庆人事考试通知公告",
         "maintainers": [
           "Mai19930513"
         ],
@@ -26124,7 +26133,7 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "大型招聘会",
         "maintainers": [
           "Derekmini"
         ],
@@ -26178,10 +26187,11 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Unknown",
+        "name": "就业服务平台",
         "maintainers": [
           "Derekmini"
         ],
+        "description": "| 通知公告 | 热点新闻 |\n    | :------: | :------: |\n    |   tzgg   |   rdxw   |",
         "location": "job/list.ts"
       },
       "/uae/:id": {
@@ -27870,7 +27880,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Unknown",
+        "name": "文章",
         "maintainers": [
           "GensouSakuya",
           "kt286"
@@ -31079,7 +31089,7 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "直播间开播",
         "maintainers": [
           "MittWillson"
         ],
@@ -34290,7 +34300,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Unknown",
+        "name": "分类",
         "maintainers": [
           "zhuan-zhu"
         ],
@@ -36514,7 +36524,8 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "政治外交",
+        "description": "| 政治     | 经济    | 社会    | 展览预告 | 焦点专题           | 深度报道 | 话题         | 日本信息库 | 日本一蹩      | 人物访谈 | 编辑部通告    |\n    | -------- | ------- | ------- | -------- | ------------------ | -------- | ------------ | ---------- | ------------- | -------- | ------------- |\n    | Politics | Economy | Society | Culture  | Science,Technology | In-depth | japan-topics | japan-data | japan-glances | People   | Announcements |",
         "maintainers": [
           "laampui"
         ],
@@ -37440,7 +37451,7 @@
             "target": "/weatheralarm"
           }
         ],
-        "name": "Unknown",
+        "name": "全国气象预警",
         "maintainers": [
           "ylc395"
         ],
@@ -43019,7 +43030,7 @@
             "target": "/:cate"
           }
         ],
-        "name": "Unknown",
+        "name": "频道",
         "maintainers": [
           "Fatpandac",
           "nczitzk"
@@ -50753,7 +50764,8 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "粤港澳发展研究院",
+        "description": "| 人才招聘   | 人才培养      | 新闻动态 | 通知公告 | 专家观点 |\n    | ---------- | ------------- | -------- | -------- | -------- |\n    | jobopening | personnelplan | news     | notice   | opinion  |\n\n    | 研究成果 | 研究论文 | 学术著作 | 形势政策 |\n    | -------- | -------- | -------- | -------- |\n    | results  | papers   | writings | policy   |",
         "maintainers": [
           "TonyRL"
         ],
@@ -61229,7 +61241,8 @@
             "target": "/user/:id"
           }
         ],
-        "name": "Unknown",
+        "name": "用户作品",
+        "description": "  例如:\n\n    站酷的个人主页 `https://baiyong.zcool.com.cn` 对应 rss 路径 `/zcool/user/baiyong`\n\n    站酷的个人主页 `https://www.zcool.com.cn/u/568339` 对应 rss 路径 `/zcool/user/568339`",
         "maintainers": [
           "junbaor"
         ],
@@ -61305,7 +61318,8 @@
             "target": "/more/:category"
           }
         ],
-        "name": "Unknown",
+        "name": "滚动新闻",
+        "description": "\n| NBA | 足球  | 电竞     | 综合   |\n| --- | ----- | -------- | ------ |\n| nba | zuqiu | dianjing | zonghe |",
         "maintainers": [
           "nczitzk"
         ],
@@ -62012,7 +62026,7 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "xhu - 话题",
         "maintainers": [
           "JimenezLi"
         ],
@@ -62198,7 +62212,7 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "上周热门 TOP 20",
         "maintainers": [
           "nczitzk"
         ],
@@ -62256,7 +62270,7 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "全国今日生猪价格",
         "maintainers": [],
         "url": "zhujia.zhuwang.cc/",
         "location": "index.ts"
@@ -62460,7 +62474,8 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Unknown",
+        "name": "软件学院",
+        "description": "| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国际实习 | 国内合作科研 | 国际合作科研 | 校园服务 |\n    | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | -------- |\n    | 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8            | 9            | 10       |",
         "maintainers": [
           "yonvenne",
           "zwithz"

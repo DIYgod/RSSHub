@@ -853,14 +853,6 @@ Chart
 
 ## 豆瓣 <Site url="www.douban.com"/>
 
-### Unknown <Site url="www.douban.com" size="sm" />
-
-<Route namespace="douban" :data='{"path":"/doulist/:id","categories":["social-media"],"example":"/douban/doulist/37716774","parameters":{"id":"豆列id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Unknown","maintainers":["LogicJake","honue"],"location":"other/doulist.ts"}' />
-
-### Unknown <Site url="www.douban.com" size="sm" />
-
-<Route namespace="douban" :data='{"path":"/book/latest","categories":["social-media"],"example":"/douban/book/latest","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Unknown","maintainers":["fengkx"],"location":"other/latest-book.ts"}' />
-
 ### 北美票房榜 <Site url="www.douban.com" size="sm" />
 
 <Route namespace="douban" :data='{"path":"/movie/ustop","categories":["social-media"],"example":"/douban/movie/ustop","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"北美票房榜","maintainers":["DIYgod"],"location":"other/ustop.ts"}' />
@@ -886,6 +878,10 @@ Chart
 ### 豆瓣读书论坛 <Site url="www.douban.com" size="sm" />
 
 <Route namespace="douban" :data='{"path":"/:id/discussion","categories":["social-media"],"example":"/douban/36328704/discussion","parameters":{"id":"书本id;默认论坛文章使用\"按回应时间排序\",仅第一页文章"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["book.douban.com/:id/discussion"]}],"name":"豆瓣读书论坛","maintainers":["nightmare-mio"],"location":"other/discussion.ts"}' />
+
+### 豆瓣豆列 <Site url="www.douban.com" size="sm" />
+
+<Route namespace="douban" :data='{"path":"/doulist/:id","categories":["social-media"],"example":"/douban/doulist/37716774","parameters":{"id":"豆列id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"豆瓣豆列","maintainers":["LogicJake","honue"],"location":"other/doulist.ts"}' />
 
 ### 豆瓣小组 <Site url="www.douban.com" size="sm" />
 
@@ -1000,6 +996,10 @@ Chart
 ### 商务印书馆新书速递 <Site url="www.douban.com" size="sm" />
 
 <Route namespace="douban" :data='{"path":"/commercialpress/latest","categories":["social-media"],"example":"/douban/commercialpress/latest","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"商务印书馆新书速递","maintainers":["xyqfer"],"location":"commercialpress/latest.ts"}' />
+
+### 新书速递 <Site url="www.douban.com" size="sm" />
+
+<Route namespace="douban" :data='{"path":"/book/latest","categories":["social-media"],"example":"/douban/book/latest","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"新书速递","maintainers":["fengkx"],"location":"other/latest-book.ts"}' />
 
 ### 一周口碑榜 <Site url="www.douban.com" size="sm" />
 
@@ -1285,10 +1285,6 @@ Chart
 
 ## 知乎 <Site url="www.zhihu.com"/>
 
-### Unknown <Site url="www.zhihu.com" size="sm" />
-
-<Route namespace="zhihu" :data='{"path":"/xhu/topic/:topicId","categories":["social-media"],"example":"/zhihu/xhu/topic/19566035","parameters":{"topicId":"话题ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/topic/:topicId/:type"]}],"name":"Unknown","maintainers":["JimenezLi"],"location":"xhu/topic.ts"}' />
-
 ### xhu - 用户动态 <Site url="www.zhihu.com" size="sm" />
 
 <Route namespace="zhihu" :data='{"path":"/xhu/people/activities/:hexId","categories":["social-media"],"example":"/zhihu/xhu/people/activities/246e6cf44e94cefbf4b959cb5042bc91","parameters":{"hexId":"用户的 16 进制 id，获取方式见下方说明"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/people/:id"],"target":"/people/activities/:id"}],"name":"xhu - 用户动态","maintainers":["JimenezLi"],"description":"[xhu](https://github.com/REToys/xhu)\n\n  :::tip\n  用户的 16 进制 id 获取方式：\n\n  1.  可以通过 RSSHub Radar 扩展获取；\n  2.  或者在用户主页打开 F12 控制台，执行以下代码：`console.log(/\"id\":\"([0-9a-f]*?)\",\"urlToken\"/.exec(document.getElementById(&#39;js-initialData&#39;).innerHTML)[1]);` 即可获取用户的 16 进制 id。\n  :::","location":"xhu/activities.ts"}' />
@@ -1317,6 +1313,10 @@ Chart
 ### xhu - 问题 <Site url="www.zhihu.com" size="sm" />
 
 <Route namespace="zhihu" :data='{"path":"/xhu/question/:questionId/:sortBy?","categories":["social-media"],"example":"/zhihu/xhu/question/264051433","parameters":{"questionId":"问题 id","sortBy":"排序方式：`default`, `created`, `updated`。默认为 `default`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/question/:questionId"],"target":"/xhu/question/:questionId"}],"name":"xhu - 问题","maintainers":["JimenezLi"],"location":"xhu/question.ts"}' />
+
+### xhu - 话题 <Site url="www.zhihu.com" size="sm" />
+
+<Route namespace="zhihu" :data='{"path":"/xhu/topic/:topicId","categories":["social-media"],"example":"/zhihu/xhu/topic/19566035","parameters":{"topicId":"话题ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.zhihu.com/topic/:topicId/:type"]}],"name":"xhu - 话题","maintainers":["JimenezLi"],"location":"xhu/topic.ts"}' />
 
 ### xhu- 专栏 <Site url="www.zhihu.com" size="sm" />
 

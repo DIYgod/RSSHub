@@ -772,9 +772,12 @@ Language:
 
 ## 中证网 <Site url="cs.com.cn"/>
 
-### Unknown <Site url="cs.com.cn" size="sm" />
+### 中证视频 <Site url="cs.com.cn" size="sm" />
 
-<Route namespace="cs" :data='{"path":"/video/:category?","categories":["finance"],"example":"/cs/video/今日聚焦","parameters":{"category":"分类，见下表，默认为今日聚焦"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Unknown","maintainers":["nczitzk"],"location":"video.ts"}' />
+<Route namespace="cs" :data='{"path":"/video/:category?","categories":["finance"],"example":"/cs/video/今日聚焦","parameters":{"category":"分类，见下表，默认为今日聚焦"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"中证视频","description":"| 今日聚焦 | 传闻求证 | 高端访谈 | 投教课堂 | 直播汇 |\n    | -------- | -------- | -------- | -------- | ------ |","maintainers":["nczitzk"],"location":"video.ts"}' />
+
+| 今日聚焦 | 传闻求证 | 高端访谈 | 投教课堂 | 直播汇 |
+    | -------- | -------- | -------- | -------- | ------ |
 
 ## 中国人民银行 <Site url="kjt.ah.gov.cn"/>
 

@@ -1227,7 +1227,9 @@
   "/crossbell/notes/source/:source": [
     "DIYgod"
   ],
-  "/cs/:category{.+}?": [],
+  "/cs/:category?": [
+    "nczitzk"
+  ],
   "/cs/video/:category?": [
     "nczitzk"
   ],

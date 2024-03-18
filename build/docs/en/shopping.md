@@ -524,7 +524,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ## 中国养猪网 <Site url="zhujia.zhuwang.cc"/>
 
-### Unknown <Site url="zhujia.zhuwang.cc/" size="sm" />
+### 全国今日生猪价格 <Site url="zhujia.zhuwang.cc/" size="sm" />
 
-<Route namespace="zhuwang" :data='{"path":"/zhujia","categories":["shopping"],"example":"/zhuwang/zhujia","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["zhujia.zhuwang.cc/"]}],"name":"Unknown","maintainers":[],"url":"zhujia.zhuwang.cc/","location":"index.ts"}' />
+<Route namespace="zhuwang" :data='{"path":"/zhujia","categories":["shopping"],"example":"/zhuwang/zhujia","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["zhujia.zhuwang.cc/"]}],"name":"全国今日生猪价格","maintainers":[],"url":"zhujia.zhuwang.cc/","location":"index.ts"}' />
 

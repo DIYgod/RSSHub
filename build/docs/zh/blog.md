@@ -278,9 +278,9 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
 
 ## 竹白 <Site url="zhubai.love"/>
 
-### Unknown <Site url="analy.zhubai.love/" size="sm" />
+### 上周热门 TOP 20 <Site url="analy.zhubai.love/" size="sm" />
 
-<Route namespace="zhubai" :data='{"path":"/top20","categories":["blog"],"example":"/zhubai/top20","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["analy.zhubai.love/"]}],"name":"Unknown","maintainers":["nczitzk"],"url":"analy.zhubai.love/","location":"top20.ts"}' />
+<Route namespace="zhubai" :data='{"path":"/top20","categories":["blog"],"example":"/zhubai/top20","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["analy.zhubai.love/"]}],"name":"上周热门 TOP 20","maintainers":["nczitzk"],"url":"analy.zhubai.love/","location":"top20.ts"}' />
 
 ### 文章 <Site url="zhubai.love" size="sm" />
 

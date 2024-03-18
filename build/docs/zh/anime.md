@@ -517,13 +517,13 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ## アニメ新番組 <Site url="bangumi.moe"/>
 
-### Unknown <Site url="bangumi.online/" size="sm" />
-
-<Route namespace="bangumi" :data='{"path":"/online","categories":["anime"],"example":"/bangumi/online","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bangumi.online/"]}],"name":"Unknown","maintainers":["devinmugen"],"url":"bangumi.online/","location":"online/online.ts"}' />
-
 ### 成员关注动画榜 <Site url="bgm.tv/anime" size="sm" />
 
 <Route namespace="bangumi" :data='{"path":"/tv/followrank","categories":["anime"],"example":"/bangumi/tv/followrank","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bgm.tv/anime"]}],"name":"成员关注动画榜","maintainers":["honue"],"url":"bgm.tv/anime","location":"tv/other/followrank.ts"}' />
+
+### 當季新番 <Site url="bangumi.online/" size="sm" />
+
+<Route namespace="bangumi" :data='{"path":"/online","categories":["anime"],"example":"/bangumi/online","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bangumi.online/"]}],"name":"當季新番","maintainers":["devinmugen"],"url":"bangumi.online/","location":"online/online.ts"}' />
 
 ### 放送列表 <Site url="bgm.tv/calendar" size="sm" />
 
