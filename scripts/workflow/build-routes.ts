@@ -16,9 +16,22 @@ const radar: {
 const docs = {};
 
 for (const namespace in namespaces) {
+    let defaultCategory = namespaces[namespace].categories?.[0];
+    if (!defaultCategory) {
+        for (const path in namespaces[namespace].routes) {
+            if (namespaces[namespace].routes[path].categories) {
+                defaultCategory = namespaces[namespace].routes[path].categories[0];
+                break;
+            }
+        }
+    }
+    if (!defaultCategory) {
+        defaultCategory = 'other';
+    }
     for (const path in namespaces[namespace].routes) {
         const realPath = `/${namespace}${path}`;
         const data = namespaces[namespace].routes[path];
+        const categories = data.categories || namespaces[namespace].categories || [defaultCategory];
         // maintainers
         if (data.maintainers) {
             maintainers[realPath] = data.maintainers;
@@ -40,7 +53,7 @@ for (const namespace in namespaces) {
                     }
                     radar[domain][subdomain].push({
                         title: radarItem.title || data.name,
-                        docs: `https://docs.rsshub.app/routes/${data.categories?.[0] || 'other'}`,
+                        docs: `https://docs.rsshub.app/routes/${categories[0]}`,
                         source: radarItem.source.map((source) => {
                             const sourceURL = new URL('https://' + source);
                             return sourceURL.pathname + sourceURL.search + sourceURL.hash;
@@ -51,7 +64,6 @@ for (const namespace in namespaces) {
             }
         }
         // docs.json
-        const categories = data.categories || namespaces[namespace].categories || ['other'];
         for (const category of categories) {
             if (!docs[category]) {
                 docs[category] = {};
@@ -98,7 +110,10 @@ function generateMd(lang) {
             }
         });
         for (const namespace of namespaces) {
-            md[category] += `## ${docs[category][namespace].name} ${docs[category][namespace].url ? `<Site url="${docs[category][namespace].url}"/>` : ''}\n\n`;
+            if (docs[category][namespace].name === 'Unknown') {
+                docs[category][namespace].name = namespace;
+            }
+            md[category] += `## ${docs[category][namespace].name || namespace} ${docs[category][namespace].url ? `<Site url="${docs[category][namespace].url}"/>` : ''}\n\n`;
             if (docs[category][namespace].description) {
                 md[category] += `${docs[category][namespace].description}\n\n`;
             }
