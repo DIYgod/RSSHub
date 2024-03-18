@@ -356,6 +356,17 @@ Warning: Two Factor Authentication is **not** supported.
 -   `IWARA_USERNAME`: username of Iwara User
 -   `IWARA_PASSWORD`: password of Iwara User
 
+### JavDB
+
+Used for some pages that require login, data retrieval may fail.
+
+Due to the authentication policy of javdb, this SESSION may become invalid when the user logs out. It is recommended to keep the login status.
+
+-   `JAVDB_SESSION`: After logging in, the value of the cookie, acquisition method:
+    1.  After logging in, open the homepage of the website.
+    2.  Open the console, refresh the page.
+    3.  Find the `cookie` named `_jdb_session`, whose content is the value of `JAVDB_SESSION` (that is, find `_jdb_session=***;` in the `cookie`, and set `JAVDB_SESSION = ***`).
+
 ### Last.fm
 
 -   `LASTFM_API_KEY`: Last.fm API Key
@@ -620,14 +631,3 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 
 -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值。
     1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值。
-
-### JavDB
-
-Used for some pages that require login, data retrieval may fail.
-
-Due to the authentication policy of javdb, this SESSION may become invalid when the user logs out. It is recommended to keep the login status.
-
--   `JAVDB_SESSION`: After logging in, the value of the cookie, acquisition method:
-    1.  After logging in, open the homepage of the website.
-    2.  Open the console, refresh the page.
-    3.  Find the `cookie` named `_jdb_session`, whose content is the value of `JAVDB_SESSION` (that is, find `_jdb_session=***;` in the `cookie`, and set `JAVDB_SESSION = ***`).
