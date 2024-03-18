@@ -4888,9 +4888,10 @@
         "title": "Issue / Pull Request comments",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
-          "/:user/:repo/:type"
+          "/:user/:repo/:type",
+          "/:user/:repo/:type/:number"
         ],
-        "target": "/github/comments/:user/:repo"
+        "target": "/github/comments/:user/:repo/:number?"
       },
       {
         "title": "Repo Contributors",

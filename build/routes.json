@@ -20251,9 +20251,10 @@
         "radar": [
           {
             "source": [
-              "github.com/:user/:repo/:type"
+              "github.com/:user/:repo/:type",
+              "github.com/:user/:repo/:type/:number"
             ],
-            "target": "/comments/:user/:repo"
+            "target": "/comments/:user/:repo/:number?"
           }
         ],
         "name": "Issue / Pull Request comments",
