@@ -222,6 +222,12 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
 
 <Route namespace="xunhupay" :data='{"path":"/blog","categories":["blog"],"example":"/xunhupay/blog","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.xunhupay.com/blog"]}],"name":"文章","maintainers":["Joey"],"url":"www.xunhupay.com/blog","location":"index.ts"}' />
 
+## 免費資源網路社群 <Site url="free.com.tw"/>
+
+### 最新文章 <Site url="free.com.tw/" size="sm" />
+
+<Route namespace="free" :data='{"path":"/","categories":["blog"],"example":"/free","radar":[{"source":["free.com.tw/"]}],"name":"最新文章","maintainers":["cnkmmk"],"url":"free.com.tw/","location":"rss.ts"}' />
+
 ## 十年之约 <Site url="www.foreverblog.cn"/>
 
 ### 专题展示 - 文章 <Site url="www.foreverblog.cn/feeds.html" size="sm" />

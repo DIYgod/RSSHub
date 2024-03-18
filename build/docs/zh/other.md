@@ -2053,12 +2053,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="logclub" :data='{"path":"/:category{.+}?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
 
-## 免費資源網路社群 <Site url="free.com.tw"/>
-
-### Unknown <Site url="free.com.tw/" size="sm" />
-
-<Route namespace="free" :data='{"path":"/","radar":[{"source":["free.com.tw/"],"target":""}],"name":"Unknown","maintainers":["cnkmmk"],"url":"free.com.tw/","location":"rss.ts"}' />
-
 ## 木木博客 <Site url="liulinblog.com"/>
 
 ### Unknown <Site url="liulinblog.com" size="sm" />

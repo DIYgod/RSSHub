@@ -18819,15 +18819,18 @@
     "routes": {
       "/": {
         "path": "/",
+        "categories": [
+          "blog"
+        ],
+        "example": "/free",
         "radar": [
           {
             "source": [
               "free.com.tw/"
-            ],
-            "target": ""
+            ]
           }
         ],
-        "name": "Unknown",
+        "name": "最新文章",
         "maintainers": [
           "cnkmmk"
         ],
