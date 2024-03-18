@@ -1,6 +1,16 @@
-const got = require('@/utils/got');
+import { Route } from '@/types';
+import got from '@/utils/got';
 
-module.exports = async (ctx) => {
+export const route: Route = {
+    path: '/crowdfunding',
+    categories: ['shopping'],
+    example: '/mi/crowdfunding',
+    name: '小米众筹',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler() {
     const response = await got({
         method: 'post',
         url: 'http://api.m.mi.com/v1/microwd/home',
@@ -11,9 +21,9 @@ module.exports = async (ctx) => {
             'IOS-Version': 'system=12.0.1&device=iPhone10,3',
         },
     });
-    const list = response.data.data.list.items;
+    const list = response.data.data.list.flatMap((a) => a.items || []);
 
-    ctx.state.data = {
+    return {
         title: '小米众筹',
         link: '',
         allowEmpty: true,
@@ -24,4 +34,4 @@ module.exports = async (ctx) => {
                 description: `<img src="${item.img_url}"><br>价格：${item.product_price}元`,
             })),
     };
-};
+}

@@ -222,6 +222,12 @@ Language
 
 <Route namespace="imagemagick" data={{"path":"/changelog","categories":["program-update"],"example":"/imagemagick/changelog","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["imagemagick.org/script/download.php","imagemagick.org/script","imagemagick.org/"]}],"name":"Changelog","maintainers":["nczitzk"],"url":"imagemagick.org/script/download.php","location":"changelog.ts"}} />
 
+## IPSW.me
+
+### Apple Firmware Update-IPSWs/OTAs version
+
+<Route namespace="ipsw" data={{"path":"/index/:ptype/:pname","categories":["program-update"],"example":"/ipsw/index/ipsws/iPad8,11","parameters":{"ptype":"Fill in ipsws or otas to get different versions of firmware","pname":"Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model"},"name":"Apple Firmware Update-IPSWs/OTAs version","maintainers":["Jeason0228"],"location":"index.ts"}} />
+
 ## Mozilla
 
 ### Add-ons Update
@@ -239,6 +245,21 @@ Language
 ### Addons Update
 
 <Route namespace="microsoft" data={{"path":"/edge/addon/:crxid","categories":["program-update"],"example":"/microsoft/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln","parameters":{"crxid":"Addon id, can be found in addon url"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["microsoftedge.microsoft.com/addons/detail/:name/:crxid"]}],"name":"Addons Update","maintainers":["hoilc","DIYgod"],"location":"addon.ts"}} />
+
+## MIUI
+
+### New firmware
+
+<Route namespace="miui" data={{"path":"/:device/:type?/:region?","categories":["program-update"],"example":"/miui/aries","parameters":{"device":"the device `codename` eg. `aries` for Mi 2S","type":"type","region":"Region, default to `cn`"},"name":"New firmware","maintainers":["Indexyz"],"description":"  | stable  | development |\n    | ------- | ----------- |\n    | release | dev         |\n  \n    | region | region |\n    | ------ | ------ |\n    | China  | cn     |\n    | Global | global |","location":"index.ts"}} />
+
+  | stable  | development |
+    | ------- | ----------- |
+    | release | dev         |
+  
+    | region | region |
+    | ------ | ------ |
+    | China  | cn     |
+    | Global | global |
 
 ## Neat Download Manager
 
@@ -372,4 +393,10 @@ For some URL like [https://sourceforge.net/directory/artificial-intelligence/win
 ### 更新日志
 
 <Route namespace="tencent" data={{"path":"/qq/sdk/changelog/:platform","categories":["program-update"],"example":"/tencent/qq/sdk/changelog/iOS","parameters":{"platform":"平台，iOS / Android"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"更新日志","maintainers":["nuomi1"],"location":"qq/sdk/changelog.ts"}} />
+
+## 小米
+
+### 小米应用商店金米奖
+
+<Route namespace="mi" data={{"path":"/golden","categories":["program-update"],"example":"/mi/golden","name":"小米应用商店金米奖","maintainers":["nczitzk"],"location":"golden.ts"}} />
 

@@ -5,9 +5,11 @@ export const route: Route = {
     path: '/articles',
     categories: ['programming'],
     example: '/web/articles',
-    radar: [{
-        source: ['web.dev/articles'],
-    }],
+    radar: [
+        {
+            source: ['web.dev/articles'],
+        },
+    ],
     name: 'Articles',
     maintainers: ['KarasuShin'],
     handler,

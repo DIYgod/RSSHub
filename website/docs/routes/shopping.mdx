@@ -245,6 +245,42 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
   如商品 `https://item.jd.com/526835.html` 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)
   :::
 
+## 摩点
+
+### 众筹
+
+<Route namespace="modian" data={{"path":"/zhongchou/:category?/:sort?/:status?","categories":["shopping"],"example":"/modian/zhongchou","parameters":{"category":"分类，见下表，默认为全部","sort":"排序，见下表，默认为最新上线","status":"状态，见下表，默认为全部"},"name":"众筹","maintainers":["nczitzk"],"description":"分类\n\n    | 全部 | 游戏  | 动漫   | 出版       | 桌游       |\n    | ---- | ----- | ------ | ---------- | ---------- |\n    | all  | games | comics | publishing | tablegames |\n\n    | 卡牌  | 潮玩模型 | 影视       | 音乐  | 活动       |\n    | ----- | -------- | ---------- | ----- | ---------- |\n    | cards | toys     | film-video | music | activities |\n\n    | 设计   | 科技       | 食品 | 爱心通道 | 动物救助 |\n    | ------ | ---------- | ---- | -------- | -------- |\n    | design | technology | food | charity  | animals  |\n\n    | 个人愿望 | 其他   |\n    | -------- | ------ |\n    | wishes   | others |\n\n    排序\n\n    | 最新上线  | 金额最高   | 评论最多     |\n    | --------- | ---------- | ------------ |\n    | top_time | top_money | top_comment |\n\n    状态\n\n    | 全部 | 创意 | 预热    | 众筹中 | 众筹成功 |\n    | ---- | ---- | ------- | ------ | -------- |\n    | all  | idea | preheat | going  | success  |","radar":[{"source":["zhongchou.modian.com/:category/:sort/:status"]}],"location":"zhongchou.ts"}} />
+
+分类
+
+    | 全部 | 游戏  | 动漫   | 出版       | 桌游       |
+    | ---- | ----- | ------ | ---------- | ---------- |
+    | all  | games | comics | publishing | tablegames |
+
+    | 卡牌  | 潮玩模型 | 影视       | 音乐  | 活动       |
+    | ----- | -------- | ---------- | ----- | ---------- |
+    | cards | toys     | film-video | music | activities |
+
+    | 设计   | 科技       | 食品 | 爱心通道 | 动物救助 |
+    | ------ | ---------- | ---- | -------- | -------- |
+    | design | technology | food | charity  | animals  |
+
+    | 个人愿望 | 其他   |
+    | -------- | ------ |
+    | wishes   | others |
+
+    排序
+
+    | 最新上线  | 金额最高   | 评论最多     |
+    | --------- | ---------- | ------------ |
+    | top_time | top_money | top_comment |
+
+    状态
+
+    | 全部 | 创意 | 预热    | 众筹中 | 众筹成功 |
+    | ---- | ---- | ------- | ------ | -------- |
+    | all  | idea | preheat | going  | success  |
+
 ## 上海文化广场
 
 ### 节目列表
@@ -437,6 +473,12 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 ### 要闻
 
 <Route namespace="ccreports" data={{"path":"/article","categories":["shopping"],"example":"/ccreports/article","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.ccreports.com.cn/"]}],"name":"要闻","maintainers":["EsuRt","Fatpandac"],"url":"www.ccreports.com.cn/","location":"index.ts"}} />
+
+## 小米
+
+### 小米众筹
+
+<Route namespace="mi" data={{"path":"/crowdfunding","categories":["shopping"],"example":"/mi/crowdfunding","name":"小米众筹","maintainers":["DIYgod"],"location":"crowdfunding.ts"}} />
 
 ## 小米有品
 
