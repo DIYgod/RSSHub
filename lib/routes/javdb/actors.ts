@@ -46,6 +46,5 @@ async function handler(ctx) {
     };
 
     const title = `JavDB${filters[filter] === '' ? '' : ` - ${filters[filter]}`} `;
-
     return await utils.ProcessItems(ctx, currentUrl, title);
 }
