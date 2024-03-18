@@ -39,7 +39,7 @@ async function handler(ctx?: Context): Promise<Data> {
 
     const items = $(`.search-results-component div[data-controller="app-card"]`)
         .toArray()
-        .map((item, index) => {
+        .map((item) => {
             const handle = $(item).attr(`data-app-card-handle-value`);
 
             // const appInfo = $(item).find(`div.tw-transition-colors.tw-text-fg-primary + div.tw-self-stretch`);
