@@ -248,6 +248,10 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
 
 ## 雨苁博客 <Site url="ddosi.org"/>
 
+### Unknown <Site url="ddosi.org/" size="sm" />
+
+<Route namespace="ddosi" :data='{"path":"/","radar":[{"source":["ddosi.org/"],"target":""}],"name":"Unknown","maintainers":["XinRoom"],"url":"ddosi.org/","location":"index.ts"}' />
+
 ### 分类 <Site url="ddosi.org/" size="sm" />
 
 <Route namespace="ddosi" :data='{"path":"/category/:category?","categories":["blog"],"example":"/ddosi/category/黑客工具","parameters":{"category":"N"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ddosi.org/category/:category/"],"target":"/category/:category"}],"name":"分类","maintainers":[],"url":"ddosi.org/","location":"category.ts"}' />

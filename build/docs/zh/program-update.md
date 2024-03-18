@@ -6,6 +6,10 @@
 
 <Route namespace="amazon" :data='{"path":"/kindle/software-updates","categories":["program-update"],"example":"/amazon/kindle/software-updates","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Kindle Software Updates","maintainers":["EthanWng97"],"location":"kindle-software-updates.ts"}' />
 
+### Unknown <Site url="amazon.com" size="sm" />
+
+<Route namespace="amazon" :data='{"path":"/awsblogs/:locale?","name":"Unknown","maintainers":["HankChow"],"location":"awsblogs.ts"}' />
+
 ## Android <Site url="developer.android.com"/>
 
 ### SDK Platform Tools release notes <Site url="developer.android.com/studio/releases/platform-tools" size="sm" />
@@ -234,6 +238,10 @@ Language
 
 <Route namespace="firefox" :data='{"path":"/addons/:id","categories":["program-update"],"example":"/firefox/addons/rsshub-radar","parameters":{"id":"Add-ons id, can be found in add-ons url"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["addons.mozilla.org/:lang/firefox/addon/:id/versions","addons.mozilla.org/:lang/firefox/addon/:id"]}],"name":"Add-ons Update","maintainers":["DIYgod"],"location":"addons.ts"}' />
 
+### Unknown <Site url="monitor.firefox.com" size="sm" />
+
+<Route namespace="firefox" :data='{"path":"/release/:platform?","name":"Unknown","maintainers":[],"location":"release.ts"}' />
+
 ## MacUpdate <Site url="macupdate.com"/>
 
 ### Update <Site url="macupdate.com" size="sm" />
@@ -316,6 +324,10 @@ Language
 
 <Route namespace="rsshub" :data='{"path":"/routes/:lang?","categories":["program-update"],"example":"/rsshub/routes/en","parameters":{"lang":"Language, `zh` means Chinese docs, other values or null means English docs, `en` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["docs.rsshub.app/*"],"target":"/routes"}],"name":"New routes","maintainers":["DIYgod"],"url":"docs.rsshub.app/*","location":"routes.ts"}' />
 
+### Unknown <Site url="docs.rsshub.app" size="sm" />
+
+<Route namespace="rsshub" :data='{"path":"/transform/sitemap/:url/:routeParams?","name":"Unknown","maintainers":["flrngel"],"location":"transform/sitemap.ts"}' />
+
 ## Sony <Site url="sony.com"/>
 
 ### Software Downloads <Site url="sony.com" size="sm" />
@@ -341,6 +353,14 @@ For some URL like [https://sourceforge.net/directory/artificial-intelligence/win
 ### Desktop releases and release notes <Site url="tradingview.com/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/" size="sm" />
 
 <Route namespace="tradingview" :data='{"path":"/desktop","categories":["program-update"],"example":"/tradingview/desktop","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["tradingview.com/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/"]}],"name":"Desktop releases and release notes","maintainers":["nczitzk"],"url":"tradingview.com/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/","location":"desktop.ts"}' />
+
+### Unknown <Site url="tradingview.com" size="sm" />
+
+<Route namespace="tradingview" :data='{"path":"/blog/:category{.+}?","name":"Unknown","maintainers":[],"location":"blog.ts"}' />
+
+### Unknown <Site url="tradingview.com" size="sm" />
+
+<Route namespace="tradingview" :data='{"path":"/pine/:version?","radar":[{"source":["tradingview.com/pine-script-docs/en/:version/Release_notes.html"],"target":"/pine/:version"}],"name":"Unknown","maintainers":[],"location":"pine.ts"}' />
 
 ## Typora <Site url="typora.io"/>
 

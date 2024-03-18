@@ -1,52 +1,10 @@
 # 🔍 其他
 
-## 141JAV <Site url="141jav.com"/>
-
-:::tip
-官方提供的订阅源不支持 BT 下载订阅，地址为 [https://141jav.com/feeds/](https://141jav.com/feeds/)
-:::
-
-### Unknown <Site url="141jav.com" size="sm" />
-
-<Route namespace="141jav" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 141PPV <Site url="141ppv.com"/>
-
-:::tip
-官方提供的订阅源不支持 BT 下载订阅，地址为 [https://141ppv.com/feeds/](https://141ppv.com/feeds/)
-:::
-
-### Unknown <Site url="141ppv.com" size="sm" />
-
-<Route namespace="141ppv" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 36kr <Site url="36kr.com"/>
-
-### Unknown <Site url="36kr.com" size="sm" />
-
-<Route namespace="36kr" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 3DMGame <Site url="3dmgame.com"/>
-
-### Unknown <Site url="3dmgame.com" size="sm" />
-
-<Route namespace="3dmgame" :data='{"path":"/:name/:type?","radar":[{"source":["3dmgame.com/games/:name/:type"]}],"name":"Unknown","maintainers":["sinchang","jacky2001114","HenryQW"],"location":"game.ts"}' />
-
 ## 423Down <Site url="www.423down.com"/>
 
 ### Unknown <Site url="www.423down.com" size="sm" />
 
 <Route namespace="423down" :data='{"path":"/:category/:type?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 4Gamers <Site url="www.4gamers.com.tw"/>
-
-### Unknown <Site url="www.4gamers.com.tw/news" size="sm" />
-
-<Route namespace="4gamers" :data='{"path":["/","/category/:category"],"radar":[{"source":["www.4gamers.com.tw/news","www.4gamers.com.tw/"],"target":""}],"name":"Unknown","maintainers":["TonyRL"],"url":"www.4gamers.com.tw/news","location":"category.ts"}' />
-
-### Unknown <Site url="www.4gamers.com.tw/news" size="sm" />
-
-<Route namespace="4gamers" :data='{"path":["/","/category/:category"],"radar":[{"source":["www.4gamers.com.tw/news","www.4gamers.com.tw/"],"target":""}],"name":"Unknown","maintainers":["TonyRL"],"url":"www.4gamers.com.tw/news","location":"category.ts"}' />
 
 ## 591 Rental house <Site url="rent.591.com.tw"/>
 
@@ -63,12 +21,6 @@
 ### Unknown <Site url="78dm.net" size="sm" />
 
 <Route namespace="78dm" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 8KCosplay <Site url="8kcosplay.com"/>
-
-### Unknown <Site url="8kcosplay.com/" size="sm" />
-
-<Route namespace="8kcos" :data='{"path":"/cat/:cat{.+}?","radar":[{"source":["8kcosplay.com/"],"target":""}],"name":"Unknown","maintainers":[],"url":"8kcosplay.com/","location":"cat.ts"}' />
 
 ## 8 视界 <Site url="8world.com"/>
 
@@ -88,27 +40,21 @@
 
 <Route namespace="a9vg" :data='{"path":"/","radar":[{"source":["a9vg.com/list/news","a9vg.com/"],"target":""}],"name":"Unknown","maintainers":["monnerHenster"],"url":"a9vg.com/list/news","location":"a9vg.ts"}' />
 
-## ABC News <Site url="abc.net.au"/>
-
-### Unknown <Site url="abc.net.au" size="sm" />
-
-<Route namespace="abc" :data='{"path":"/:category{.+}?","radar":[{"source":["abc.net.au/:category*"],"target":"/:category"}],"name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
 ## A 姐分享 <Site url="nsfw.abskoop.com"/>
 
-### Unknown <Site url="ahhhhfs.com/" size="sm" />
+### 存档列表 <Site url="ahhhhfs.com/" size="sm" />
 
-<Route namespace="abskoop" :data='{"path":"/","radar":[{"source":["ahhhhfs.com/"],"target":""}],"name":"Unknown","maintainers":["zhenhappy"],"url":"ahhhhfs.com/","location":"index.ts"}' />
+<Route namespace="abskoop" :data='{"path":"/","radar":[{"source":["ahhhhfs.com/"],"target":""}],"name":"存档列表","maintainers":["zhenhappy"],"url":"ahhhhfs.com/","location":"index.ts"}' />
 
-### Unknown <Site url="ahhhhfs.com/" size="sm" />
+### 存档列表 - NSFW <Site url="ahhhhfs.com/" size="sm" />
 
-<Route namespace="abskoop" :data='{"path":"/nsfw","radar":[{"source":["ahhhhfs.com/"],"target":""}],"name":"Unknown","maintainers":[],"url":"ahhhhfs.com/","location":"nsfw.ts"}' />
+<Route namespace="abskoop" :data='{"path":"/nsfw","radar":[{"source":["ahhhhfs.com/"],"target":""}],"name":"存档列表 - NSFW","maintainers":["zhenhappy"],"url":"ahhhhfs.com/","location":"nsfw.ts"}' />
 
-## AcFun <Site url="www.acfun.cn"/>
+## acs <Site url="pubs.acs.org"/>
 
-### Unknown <Site url="www.acfun.cn" size="sm" />
+### Unknown <Site url="pubs.acs.org" size="sm" />
 
-<Route namespace="acfun" :data='{"path":"/user/video/:uid","radar":[{"source":["www.acfun.cn/u/:id"],"target":"/user/video/:id"}],"name":"Unknown","maintainers":["wdssmq"],"location":"video.ts"}' />
+<Route namespace="acs" :data='{"path":"/journal/:id","radar":[{"source":["pubs.acs.org/journal/:id","pubs.acs.org/"]}],"name":"Unknown","maintainers":["nczitzk"],"location":"journal.ts"}' />
 
 ## AI 财经社 <Site url="www.aicaijing.com"/>
 
@@ -116,23 +62,11 @@
 
 <Route namespace="aicaijing" :data='{"path":"/:category?/:id?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
 
-## A List Apart <Site url="alistapart.com"/>
-
-### Unknown <Site url="alistapart.com/articles/" size="sm" />
-
-<Route namespace="alistapart" :data='{"path":"/","radar":[{"source":["alistapart.com/articles/"],"target":""}],"name":"Unknown","maintainers":["Rjnishant530"],"url":"alistapart.com/articles/","location":"index.ts"}' />
-
 ## Aljazeera 半岛电视台 <Site url="aljazeera.com"/>
 
 ### Unknown <Site url="aljazeera.com" size="sm" />
 
 <Route namespace="aljazeera" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## Amazon <Site url="amazon.com"/>
-
-### Unknown <Site url="amazon.com" size="sm" />
-
-<Route namespace="amazon" :data='{"path":"/awsblogs/:locale?","name":"Unknown","maintainers":["HankChow"],"location":"awsblogs.ts"}' />
 
 ## Apple <Site url="apps.apple.com"/>
 
@@ -170,30 +104,6 @@
 
 <Route namespace="bad" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
 
-## BBC <Site url="bbc.com"/>
-
-### Unknown <Site url="bbc.com" size="sm" />
-
-<Route namespace="bbc" :data='{"path":"/:site?/:channel?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## Bilibili <Site url="www.bilibili.com"/>
-
-### Unknown <Site url="www.bilibili.com" size="sm" />
-
-<Route namespace="bilibili" :data='{"path":["/bangumi/:seasonid","/bangumi/media/:mediaid"],"name":"Unknown","maintainers":["DIYgod"],"location":"bangumi.ts"}' />
-
-### Unknown <Site url="www.bilibili.com" size="sm" />
-
-<Route namespace="bilibili" :data='{"path":["/bangumi/:seasonid","/bangumi/media/:mediaid"],"name":"Unknown","maintainers":["DIYgod"],"location":"bangumi.ts"}' />
-
-### Unknown <Site url="www.bilibili.com" size="sm" />
-
-<Route namespace="bilibili" :data='{"path":"/ranking/:rid?/:day?/:arc_type?/:disableEmbed?","name":"Unknown","maintainers":["DIYgod"],"location":"ranking.ts"}' />
-
-### Unknown <Site url="www.bilibili.com" size="sm" />
-
-<Route namespace="bilibili" :data='{"path":"/user/video-all/:uid/:disableEmbed?","name":"Unknown","maintainers":[],"location":"video-all.ts"}' />
-
 ## Bing <Site url="cn.bing.com"/>
 
 ### Unknown <Site url="cn.bing.com/" size="sm" />
@@ -210,16 +120,6 @@
 
 <Route namespace="biodiscover" :data='{"path":"/:channel?","radar":[{"source":["www.biodiscover.com/:channel"],"target":"/:channel"}],"name":"Unknown","maintainers":["aidistan"],"location":"index.ts"}' />
 
-## Bloomberg <Site url="www.bloomberg.com"/>
-
-### Unknown <Site url="www.bloomberg.com" size="sm" />
-
-<Route namespace="bloomberg" :data='{"path":["/:site","/"],"name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-### Unknown <Site url="www.bloomberg.com" size="sm" />
-
-<Route namespace="bloomberg" :data='{"path":["/:site","/"],"name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
 ## ClickMe <Site url="clickme.net"/>
 
 ### 文章 <Site url="clickme.net" size="sm" />
@@ -235,12 +135,6 @@
 ### Unknown <Site url="cnbeta.com.tw/" size="sm" />
 
 <Route namespace="cnbeta" :data='{"path":["/:type/:id","/"],"radar":[{"source":["cnbeta.com.tw/"],"target":""}],"name":"Unknown","maintainers":[],"url":"cnbeta.com.tw/","location":"type.ts"}' />
-
-## CNCF <Site url="cncf.io"/>
-
-### Unknown <Site url="cncf.io/reports" size="sm" />
-
-<Route namespace="cncf" :data='{"path":"/reports","radar":[{"source":["cncf.io/reports"]}],"name":"Unknown","maintainers":[],"url":"cncf.io/reports","location":"reports.ts"}' />
 
 ## CuriousCat <Site url="curiouscat.live"/>
 
@@ -259,12 +153,6 @@
 ### South China Morning Post - China coronavirus outbreak <Site url="scmp.com" size="sm" />
 
 <Route namespace="scmp" :data='{"path":"/coronavirus","categories":["other"],"example":"/scmp/coronavirus","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"South China Morning Post - China coronavirus outbreak","maintainers":["DIYgod"],"location":"coronavirus.ts"}' />
-
-## Daily.dev <Site url="daily.dev"/>
-
-### Unknown <Site url="daily.dev/popular" size="sm" />
-
-<Route namespace="daily" :data='{"path":"/","radar":[{"source":["daily.dev/popular"],"target":""}],"name":"Unknown","maintainers":["Rjnishant530"],"url":"daily.dev/popular","location":"index.ts"}' />
 
 ## Darwin Awards <Site url="darwinawards.com"/>
 
@@ -308,12 +196,6 @@
 
 <Route namespace="dlnews" :data='{"path":"/:category?","radar":[{"source":["dlnews.com/articles/:category"],"target":"/:category"}],"name":"Unknown","maintainers":["Rjnishant530"],"url":"dlnews.com/articles/","location":"category.ts"}' />
 
-## DLsite <Site url="dlsite.com"/>
-
-### Unknown <Site url="dlsite.com" size="sm" />
-
-<Route namespace="dlsite" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
 ## E-Hentai <Site url="e-hentai.org"/>
 
 ### Unknown <Site url="e-hentai.org" size="sm" />
@@ -356,12 +238,6 @@
 
 <Route namespace="fishshell" :data='{"path":"/","radar":[{"source":["fishshell.com/"],"target":""}],"name":"Unknown","maintainers":["x2cf"],"url":"fishshell.com/","location":"index.ts"}' />
 
-## Foresight News <Site url="foresightnews.pro"/>
-
-### Unknown <Site url="foresightnews.pro/" size="sm" />
-
-<Route namespace="foresightnews" :data='{"path":"/","radar":[{"source":["foresightnews.pro/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"foresightnews.pro/","location":"index.ts"}' />
-
 ## Free Computer Books <Site url="freecomputerbooks.com"/>
 
 ### Unknown <Site url="freecomputerbooks.com/" size="sm" />
@@ -388,32 +264,6 @@
 
 <Route namespace="gameapps" :data='{"path":"/","radar":[{"source":["gameapps.hk/"],"target":""}],"name":"Unknown","maintainers":["TonyRL"],"url":"gameapps.hk/","location":"index.ts"}' />
 
-## GitHub <Site url="github.com"/>
-
-:::tip
-GitHub provides some official RSS feeds:
-
--   Repo releases: `https://github.com/:owner/:repo/releases.atom`
--   Repo commits: `https://github.com/:owner/:repo/commits.atom`
--   User activities: `https://github.com/:user.atom`
--   Private feed: `https://github.com/:user.private.atom?token=:secret` (You can find **Subscribe to your news feed** in [dashboard](https://github.com) page after login)
--   Wiki history: `https://github.com/:owner/:repo/wiki.atom`
-:::
-
-### Unknown <Site url="github.com" size="sm" />
-
-<Route namespace="github" :data='{"path":"/file/:user/:repo/:branch/:filepath{.+}","radar":[{"source":["github.com/:user/:repo/blob/:branch/*filepath"],"target":"/file/:user/:repo/:branch/:filepath"}],"name":"Unknown","maintainers":[],"location":"file.ts"}' />
-
-## GoCN <Site url="gocn.vip"/>
-
-### Unknown <Site url="gocn.vip/" size="sm" />
-
-<Route namespace="gocn" :data='{"path":["/","/news"],"name":"Unknown","maintainers":["AtlanCI","CcccFz"],"url":"gocn.vip/","location":"news.ts"}' />
-
-### Unknown <Site url="gocn.vip/" size="sm" />
-
-<Route namespace="gocn" :data='{"path":["/","/news"],"name":"Unknown","maintainers":["AtlanCI","CcccFz"],"url":"gocn.vip/","location":"news.ts"}' />
-
 ## Google <Site url="www.google.com"/>
 
 ### Alerts <Site url="www.google.com" size="sm" />
@@ -423,12 +273,6 @@ GitHub provides some official RSS feeds:
 ### Search <Site url="www.google.com" size="sm" />
 
 <Route namespace="google" :data='{"path":"/search/:keyword/:language?","categories":["other"],"example":"/google/search/rss/zh-CN,zh","parameters":{"keyword":"Keyword","language":"Accept-Language. Example: zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Search","maintainers":["CaoMeiYouRen"],"location":"search.ts"}' />
-
-## Grist <Site url="grist.org"/>
-
-### Unknown <Site url="grist.org/articles/" size="sm" />
-
-<Route namespace="grist" :data='{"path":"/","radar":[{"source":["grist.org/articles/"]}],"name":"Unknown","maintainers":["Rjnishant530"],"url":"grist.org/articles/","location":"index.ts"}' />
 
 ## Grub Street <Site url="grubstreet.com"/>
 
@@ -448,32 +292,6 @@ GitHub provides some official RSS feeds:
 
 <Route namespace="hackyournews" :data='{"path":"/","radar":[{"source":["hackyournews.com/"],"target":""}],"name":"Unknown","maintainers":["ftiasch"],"url":"hackyournews.com/","location":"index.ts"}' />
 
-## HelloGitHub <Site url="hellogithub.com"/>
-
-### Unknown <Site url="hellogithub.com" size="sm" />
-
-<Route namespace="hellogithub" :data='{"path":["/ranking/:type?","/report/:type?"],"name":"Unknown","maintainers":["moke8","nczitzk"],"description":"| 编程语言 | 服务器   | 数据库     |\n  | -------- | -------- | ---------- |\n  | tiobe    | netcraft | db-engines |","location":"report.ts"}' />
-
-| 编程语言 | 服务器   | 数据库     |
-  | -------- | -------- | ---------- |
-  | tiobe    | netcraft | db-engines |
-
-### Unknown <Site url="hellogithub.com" size="sm" />
-
-<Route namespace="hellogithub" :data='{"path":["/ranking/:type?","/report/:type?"],"name":"Unknown","maintainers":["moke8","nczitzk"],"description":"| 编程语言 | 服务器   | 数据库     |\n  | -------- | -------- | ---------- |\n  | tiobe    | netcraft | db-engines |","location":"report.ts"}' />
-
-| 编程语言 | 服务器   | 数据库     |
-  | -------- | -------- | ---------- |
-  | tiobe    | netcraft | db-engines |
-
-### Unknown <Site url="hellogithub.com" size="sm" />
-
-<Route namespace="hellogithub" :data='{"path":["/month","/volume"],"name":"Unknown","maintainers":["moke8","nczitzk"],"location":"volume.ts"}' />
-
-### Unknown <Site url="hellogithub.com" size="sm" />
-
-<Route namespace="hellogithub" :data='{"path":["/month","/volume"],"name":"Unknown","maintainers":["moke8","nczitzk"],"location":"volume.ts"}' />
-
 ## HiFeng'Blog <Site url="hicairo.com"/>
 
 ### Unknown <Site url="hicairo.com/" size="sm" />
@@ -485,12 +303,6 @@ GitHub provides some official RSS feeds:
 ### Unknown <Site url="hkjunkcall.com/" size="sm" />
 
 <Route namespace="hkjunkcall" :data='{"path":"/","radar":[{"source":["hkjunkcall.com/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"hkjunkcall.com/","location":"index.ts"}' />
-
-## Hong Kong Department of Health 香港卫生署 <Site url="dh.gov.hk"/>
-
-### Unknown <Site url="dh.gov.hk/" size="sm" />
-
-<Route namespace="hongkong" :data='{"path":"/chp/:category?/:language?","radar":[{"source":["dh.gov.hk/"]}],"name":"Unknown","maintainers":["nczitzk"],"url":"dh.gov.hk/","location":"chp.ts"}' />
 
 ## Howtoforge Linux Tutorials <Site url="howtoforge.com"/>
 
@@ -516,41 +328,11 @@ GitHub provides some official RSS feeds:
   | -------- | -------- |
   | zh-hans  | zh-hant  |
 
-## IEEE Xplore <Site url="www.ieee.org"/>
-
-### Unknown <Site url="www.ieee.org" size="sm" />
-
-<Route namespace="ieee" :data='{"path":["/:journal/latest/vol/:sortType?","/journal/:journal/:sortType?"],"name":"Unknown","maintainers":[],"location":"journal.ts"}' />
-
-### Unknown <Site url="www.ieee.org" size="sm" />
-
-<Route namespace="ieee" :data='{"path":["/:journal/latest/vol/:sortType?","/journal/:journal/:sortType?"],"name":"Unknown","maintainers":[],"location":"journal.ts"}' />
-
-### Unknown <Site url="www.ieee.org" size="sm" />
-
-<Route namespace="ieee" :data='{"path":["/:journal/latest/date/:sortType?","/journal/:journal/recent/:sortType?"],"name":"Unknown","maintainers":[],"location":"recent.ts"}' />
-
-### Unknown <Site url="www.ieee.org" size="sm" />
-
-<Route namespace="ieee" :data='{"path":["/:journal/latest/date/:sortType?","/journal/:journal/recent/:sortType?"],"name":"Unknown","maintainers":[],"location":"recent.ts"}' />
-
 ## IELTS 雅思 <Site url="ielts.neea.cn"/>
 
 ### Unknown <Site url="ielts.neea.cn/allnews" size="sm" />
 
 <Route namespace="ielts" :data='{"path":"/","radar":[{"source":["ielts.neea.cn/allnews"],"target":""}],"name":"Unknown","maintainers":["zenxds"],"url":"ielts.neea.cn/allnews","location":"index.ts"}' />
-
-## indienova 独立游戏 <Site url="indienova.com"/>
-
-### Unknown <Site url="indienova.com" size="sm" />
-
-<Route namespace="indienova" :data='{"path":"/gamedb/recent","name":"Unknown","maintainers":["TonyRL"],"location":"gamedb.ts"}' />
-
-## Inoreader <Site url="inoreader.com"/>
-
-### Unknown <Site url="inoreader.com" size="sm" />
-
-<Route namespace="inoreader" :data='{"path":"/html_clip/:user/:tag","name":"Unknown","maintainers":[],"location":"index.ts"}' />
 
 ## Instructables <Site url="instructables.com"/>
 
@@ -561,18 +343,6 @@ GitHub provides some official RSS feeds:
 | All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
   | --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
   |     | circuits | workshop | craft | cooking | living | outside | teachers |
-
-## itch.io <Site url="itch.io"/>
-
-### Unknown <Site url="itch.io" size="sm" />
-
-<Route namespace="itch" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## iwara <Site url="ecchi.iwara.tv"/>
-
-### Unknown <Site url="ecchi.iwara.tv" size="sm" />
-
-<Route namespace="iwara" :data='{"path":"/users/:username?/:type?","name":"Unknown","maintainers":["Fatpandac"],"location":"index.ts"}' />
 
 ## Instagram <Site url="picnob.com"/>
 
@@ -618,175 +388,11 @@ JavBus has multiple backup domains, these routes use default domain `https://jav
 
 <Route namespace="javbus" :data='{"path":"*","radar":[{"source":["www.seejav.pw/"],"target":""}],"name":"Unknown","maintainers":[],"url":"www.seejav.pw/","location":"index.ts"}' />
 
-## JavDB <Site url="javdb.com"/>
+## jseea <Site url="jseea.cn"/>
 
-:::tip
-JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.com` ，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 `https://javdb36.com`，则在所有 JavDB 路由最后加上 `?domain=javdb36.com` 即可，此时路由为 [`/javdb?domain=javdb36.com`](https://rsshub.app/javdb?domain=javdb36.com)
+### Unknown <Site url="jseea.cn" size="sm" />
 
-如果加入了 **分類** 参数，直接在分類参数后加入 `?domain=<域名>` 即可。如指定分類 URL 为 `https://javdb.com/tags?c2=5&c10=1` 并指定备用域名为 `https://javdb36.com`，即在 `/javdb/tags/c2=5&c10=1` 最后加上 `?domain=javdb36.com`，此时路由为 [`/javdb/tags/c2=5&c10=1?domain=javdb36.com`](https://rsshub.app/javdb/tags/c2=5&c10=1?domain=javdb36.com)
-
-**排行榜**、**搜索**、**演員**、**片商** 参数同适用于 **分類** 参数的上述规则
-:::
-
-:::tip
-你可以通过指定 `limit` 参数来获取特定数量的条目，即可以通过在路由后方加上 `?limit=25`，默认为单次获取 20 个条目，即默认 `?limit=20`
-
-因为该站有反爬检测，所以不应将此值调整过高
-:::
-
-### Unknown <Site url="javdb.com/" size="sm" />
-
-<Route namespace="javdb" :data='{"path":["/home/:category?/:sort?/:filter?","/:category?/:sort?/:filter?"],"radar":[{"source":["javdb.com/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"javdb.com/","description":"分类\n\n  | 有碼     | 無碼       | 歐美    |\n  | -------- | ---------- | ------- |\n  | censored | uncensored | western |\n\n  排序\n\n  | 发布日期排序 | 磁鏈更新排序 |\n  | ------------ | ------------ |\n  | 1            | 2            |\n\n  过滤\n\n  | 全部 | 可下载 | 含字幕 | 含短評 |\n  | ---- | ------ | ------ | ------ |\n  | 0    | 1      | 2      | 3      |","location":"index.ts"}' />
-
-分类
-
-  | 有碼     | 無碼       | 歐美    |
-  | -------- | ---------- | ------- |
-  | censored | uncensored | western |
-
-  排序
-
-  | 发布日期排序 | 磁鏈更新排序 |
-  | ------------ | ------------ |
-  | 1            | 2            |
-
-  过滤
-
-  | 全部 | 可下载 | 含字幕 | 含短評 |
-  | ---- | ------ | ------ | ------ |
-  | 0    | 1      | 2      | 3      |
-
-### Unknown <Site url="javdb.com/" size="sm" />
-
-<Route namespace="javdb" :data='{"path":["/home/:category?/:sort?/:filter?","/:category?/:sort?/:filter?"],"radar":[{"source":["javdb.com/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"javdb.com/","description":"分类\n\n  | 有碼     | 無碼       | 歐美    |\n  | -------- | ---------- | ------- |\n  | censored | uncensored | western |\n\n  排序\n\n  | 发布日期排序 | 磁鏈更新排序 |\n  | ------------ | ------------ |\n  | 1            | 2            |\n\n  过滤\n\n  | 全部 | 可下载 | 含字幕 | 含短評 |\n  | ---- | ------ | ------ | ------ |\n  | 0    | 1      | 2      | 3      |","location":"index.ts"}' />
-
-分类
-
-  | 有碼     | 無碼       | 歐美    |
-  | -------- | ---------- | ------- |
-  | censored | uncensored | western |
-
-  排序
-
-  | 发布日期排序 | 磁鏈更新排序 |
-  | ------------ | ------------ |
-  | 1            | 2            |
-
-  过滤
-
-  | 全部 | 可下载 | 含字幕 | 含短評 |
-  | ---- | ------ | ------ | ------ |
-  | 0    | 1      | 2      | 3      |
-
-### Unknown <Site url="javdb.com/" size="sm" />
-
-<Route namespace="javdb" :data='{"path":"/lists/:id/:filter?/:sort?","radar":[{"source":["javdb.com/"],"target":""}],"name":"Unknown","maintainers":["dddepg"],"url":"javdb.com/","location":"lists.ts"}' />
-
-## JAVLibrary <Site url="javlibrary.com"/>
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/bestrated/:language?/:mode?","/bestrated/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| Last Month | All Time |\n  | ---------- | -------- |\n  | 1          | 2        |","location":"bestrated.ts"}' />
-
-| Last Month | All Time |
-  | ---------- | -------- |
-  | 1          | 2        |
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/bestrated/:language?/:mode?","/bestrated/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| Last Month | All Time |\n  | ---------- | -------- |\n  | 1          | 2        |","location":"bestrated.ts"}' />
-
-| Last Month | All Time |
-  | ---------- | -------- |
-  | 1          | 2        |
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/genre/:genre?/:language?/:mode?","/genre/:genre?/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |\n\n  :::tip\n  See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.\n  :::","location":"genre.ts"}' />
-
-| videos with comments (by date) | everything (by date) |
-  | ------------------------------ | -------------------- |
-  | 1                              | 2                    |
-
-  :::tip
-  See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
-  :::
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/genre/:genre?/:language?/:mode?","/genre/:genre?/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |\n\n  :::tip\n  See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.\n  :::","location":"genre.ts"}' />
-
-| videos with comments (by date) | everything (by date) |
-  | ------------------------------ | -------------------- |
-  | 1                              | 2                    |
-
-  :::tip
-  See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
-  :::
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/mostwanted/:language?/:mode?","/mostwanted/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| Last Month | All Time |\n  | ---------- | -------- |\n  | 1          | 2        |","location":"mostwanted.ts"}' />
-
-| Last Month | All Time |
-  | ---------- | -------- |
-  | 1          | 2        |
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/mostwanted/:language?/:mode?","/mostwanted/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| Last Month | All Time |\n  | ---------- | -------- |\n  | 1          | 2        |","location":"mostwanted.ts"}' />
-
-| Last Month | All Time |
-  | ---------- | -------- |
-  | 1          | 2        |
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/newentries/:language?","/newentries/:language?"],"name":"Unknown","maintainers":[],"location":"newentries.ts"}' />
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/newentries/:language?","/newentries/:language?"],"name":"Unknown","maintainers":[],"location":"newentries.ts"}' />
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/newrelease/:language?/:mode?","/newrelease/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |","location":"newrelease.ts"}' />
-
-| videos with comments (by date) | everything (by date) |
-  | ------------------------------ | -------------------- |
-  | 1                              | 2                    |
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/newrelease/:language?/:mode?","/newrelease/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |","location":"newrelease.ts"}' />
-
-| videos with comments (by date) | everything (by date) |
-  | ------------------------------ | -------------------- |
-  | 1                              | 2                    |
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/update/:language?","/update/:language?"],"name":"Unknown","maintainers":[],"location":"update.ts"}' />
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/videos/update/:language?","/update/:language?"],"name":"Unknown","maintainers":[],"location":"update.ts"}' />
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/users/:id/:type/:language?","/:type/:id/:language?"],"name":"Unknown","maintainers":[],"description":"| Wanted     | Watched     | Owned     |\n  | ---------- | ----------- | --------- |\n  | userwanted | userwatched | userowned |","location":"user.ts"}' />
-
-| Wanted     | Watched     | Owned     |
-  | ---------- | ----------- | --------- |
-  | userwanted | userwatched | userowned |
-
-### Unknown <Site url="javlibrary.com" size="sm" />
-
-<Route namespace="javlibrary" :data='{"path":["/users/:id/:type/:language?","/:type/:id/:language?"],"name":"Unknown","maintainers":[],"description":"| Wanted     | Watched     | Owned     |\n  | ---------- | ----------- | --------- |\n  | userwanted | userwatched | userowned |","location":"user.ts"}' />
-
-| Wanted     | Watched     | Owned     |
-  | ---------- | ----------- | --------- |
-  | userwanted | userwatched | userowned |
+<Route namespace="jseea" :data='{"path":"/news/:type?","radar":[{"source":["jseea.cn/webfile/news/:type"],"target":"/news/:type"}],"name":"Unknown","maintainers":["schen1024"],"location":"news.ts"}' />
 
 ## Kantar Worldpanel <Site url="kantarworldpanel.com"/>
 
@@ -805,24 +411,6 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
 ### Unknown <Site url="layoffs.fyi/" size="sm" />
 
 <Route namespace="layoffs" :data='{"path":"/","radar":[{"source":["layoffs.fyi/"],"target":""}],"name":"Unknown","maintainers":["BrandNewLifeJackie26"],"url":"layoffs.fyi/","location":"index.ts"}' />
-
-## LeetCode <Site url="leetcode.com"/>
-
-### Unknown <Site url="leetcode.cn/" size="sm" />
-
-<Route namespace="leetcode" :data='{"path":"/dailyquestion/cn","radar":[{"source":["leetcode.cn/"]}],"name":"Unknown","maintainers":[],"url":"leetcode.cn/","location":"dailyquestion-cn.ts"}' />
-
-### Unknown <Site url="leetcode.com/" size="sm" />
-
-<Route namespace="leetcode" :data='{"path":"/dailyquestion/en","radar":[{"source":["leetcode.com/"]}],"name":"Unknown","maintainers":[],"url":"leetcode.com/","location":"dailyquestion-en.ts"}' />
-
-### Unknown <Site url="leetcode.cn/" size="sm" />
-
-<Route namespace="leetcode" :data='{"path":"/dailyquestion/solution/cn","radar":[{"source":["leetcode.cn/"]}],"name":"Unknown","maintainers":[],"url":"leetcode.cn/","location":"dailyquestion-solution-cn.ts"}' />
-
-### Unknown <Site url="leetcode.com/" size="sm" />
-
-<Route namespace="leetcode" :data='{"path":"/dailyquestion/solution/en","radar":[{"source":["leetcode.com/"]}],"name":"Unknown","maintainers":[],"url":"leetcode.com/","location":"dailyquestion-solution-en.ts"}' />
 
 ## LinkedIn 领英中国 <Site url="linkedin.com"/>
 
@@ -874,18 +462,6 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
 
 <Route namespace="linkresearcher" :data='{"path":"/:params","name":"Unknown","maintainers":["yech1990"],"location":"index.ts"}' />
 
-## Liquipedia <Site url="liquipedia.net"/>
-
-### Unknown <Site url="liquipedia.net" size="sm" />
-
-<Route namespace="liquipedia" :data='{"path":"/counterstrike/matches/:team","radar":[{"source":["liquipedia.net/counterstrike/:id/Matches","liquipedia.net/dota2/:id"],"target":"/counterstrike/matches/:id"}],"name":"Unknown","maintainers":["CookiePieWw"],"location":"cs-matches.ts"}' />
-
-## Literotica <Site url="literotica.com"/>
-
-### Unknown <Site url="literotica.com" size="sm" />
-
-<Route namespace="literotica" :data='{"path":"/category/:category","radar":[{"source":["literotica.com/c/:category","literotica.com/"]}],"name":"Unknown","maintainers":["nczitzk"],"location":"category.ts"}' />
-
 ## LogoNews 标志情报局 <Site url="logonews.cn"/>
 
 ### Unknown <Site url="logonews.cn/work" size="sm" />
@@ -906,42 +482,29 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
 
 如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 `https://www.logonews.cn/tag/china`，可得路由为 [`/logonews/tag/china`](https://rsshub.app/logonews/tag/china)。
 
-## lovelive-anime <Site url="www.lovelive-anime.jp"/>
-
-### Unknown <Site url="www.lovelive-anime.jp" size="sm" />
-
-<Route namespace="lovelive-anime" :data='{"path":"/schedules/:serie?/:category?","name":"Unknown","maintainers":[],"location":"schedules.ts"}' />
-
 ## Mozilla <Site url="monitor.firefox.com"/>
 
 ### Firefox Monitor <Site url="monitor.firefox.com/" size="sm" />
 
 <Route namespace="firefox" :data='{"path":"/breaches","categories":["other"],"example":"/firefox/breaches","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["monitor.firefox.com/","monitor.firefox.com/breaches"]}],"name":"Firefox Monitor","maintainers":["TonyRL"],"url":"monitor.firefox.com/","location":"breaches.ts"}' />
 
-### Unknown <Site url="monitor.firefox.com" size="sm" />
+## mangadex <Site url="mangadex.org"/>
 
-<Route namespace="firefox" :data='{"path":"/release/:platform?","name":"Unknown","maintainers":[],"location":"release.ts"}' />
+### Unknown <Site url="mangadex.org" size="sm" />
 
-## Mastodon <Site url="mastodon.social"/>
-
-:::tip
-Official user RSS:
-
--   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
--   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
-
-These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you may need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
-:::
-
-### Unknown <Site url="mastodon.social" size="sm" />
-
-<Route namespace="mastodon" :data='{"path":"/account_id/:site/:account_id/statuses/:only_media?","name":"Unknown","maintainers":["notofoe"],"location":"account-id.ts"}' />
+<Route namespace="mangadex" :data='{"path":"/:id/:lang?","radar":[{"source":["mangadex.org/title/:id/*","mangadex.org/title/:id"],"target":"/:id"}],"name":"Unknown","maintainers":["vzz64"],"location":"index.ts"}' />
 
 ## Metacritic <Site url="metacritic.com"/>
 
 ### Unknown <Site url="metacritic.com" size="sm" />
 
 <Route namespace="metacritic" :data='{"path":"/:type?/:sort?/:filter?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
+
+## metmuseum <Site url="www.metmuseum.org"/>
+
+### Unknown <Site url="www.metmuseum.org" size="sm" />
+
+<Route namespace="metmuseum" :data='{"path":"/exhibitions/:state?","name":"Unknown","maintainers":[],"location":"exhibitions.ts"}' />
 
 ## Ming Pao 明报 <Site url="mingpao.com"/>
 
@@ -983,45 +546,11 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 5. Support simultaneously specifying subscription source information and category information; it will output subscription sources that meet the selected categories' criteria. Consider an example: by using `/miniflux/subscription/feeds=1,archdaily&category=art,7`, if the Subscription Source ID is 1 or the Subscription Source Name is ArchDaily indeed falls under Category 'art' or has a Category ID of 7, then output that subscription source information.
     
 
-## Nature Journal <Site url="nature.com"/>
-
-:::tip
-You can get all short name of a journal from [https://www.nature.com/siteindex](https://www.nature.com/siteindex) or [Journal List](#nature-journal-journal-list).
-:::
-
-### Unknown <Site url="nature.com/latest-news" size="sm" />
-
-<Route namespace="nature" :data='{"path":"/news-and-comment/:journal?","radar":[{"source":["nature.com/latest-news","nature.com/news","nature.com/"],"target":"/news"}],"name":"Unknown","maintainers":["y9c","TonyRL"],"url":"nature.com/latest-news","location":"news-and-comment.ts"}' />
-
-## NEEA 中国教育考试网 <Site url="jlpt.neea.cn"/>
-
-### Unknown <Site url="jlpt.neea.cn" size="sm" />
-
-<Route namespace="neea" :data='{"path":"/:type?","name":"Unknown","maintainers":["SunShinenny"],"location":"index.ts"}' />
-
 ## Netflav <Site url="netflav.com"/>
 
 ### Unknown <Site url="netflav.com/" size="sm" />
 
 <Route namespace="netflav" :data='{"path":"/","radar":[{"source":["netflav.com/"],"target":""}],"name":"Unknown","maintainers":["TonyRL"],"url":"netflav.com/","location":"index.ts"}' />
-
-## Nintendo <Site url="nintendo.com"/>
-
-### Unknown <Site url="nintendoswitch.com.cn/software" size="sm" />
-
-<Route namespace="nintendo" :data='{"path":"/eshop/cn","radar":[{"source":["nintendoswitch.com.cn/software","nintendoswitch.com.cn/"]}],"name":"Unknown","maintainers":[],"url":"nintendoswitch.com.cn/software","location":"eshop-cn.ts"}' />
-
-### Unknown <Site url="nintendo.com.hk/software/switch" size="sm" />
-
-<Route namespace="nintendo" :data='{"path":"/eshop/hk","radar":[{"source":["nintendo.com.hk/software/switch","nintendo.com.hk/"]}],"name":"Unknown","maintainers":[],"url":"nintendo.com.hk/software/switch","location":"eshop-hk.ts"}' />
-
-### Unknown <Site url="nintendo.co.jp/software/switch/index.html" size="sm" />
-
-<Route namespace="nintendo" :data='{"path":"/eshop/jp","radar":[{"source":["nintendo.co.jp/software/switch/index.html","nintendo.co.jp/"]}],"name":"Unknown","maintainers":[],"url":"nintendo.co.jp/software/switch/index.html","location":"eshop-jp.ts"}' />
-
-### Unknown <Site url="nintendo.com/store/games" size="sm" />
-
-<Route namespace="nintendo" :data='{"path":"/eshop/us","radar":[{"source":["nintendo.com/store/games","nintendo.com/"]}],"name":"Unknown","maintainers":[],"url":"nintendo.com/store/games","location":"eshop-us.ts"}' />
 
 ## Notion <Site url="notion.so"/>
 
@@ -1055,17 +584,17 @@ There is an optional query parameter called `properties=` that can be used to cu
 
 <Route namespace="npm" :data='{"path":"package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}","name":"Unknown","maintainers":[],"location":"package.ts"}' />
 
+## openwrt <Site url="openwrt.org"/>
+
+### Unknown <Site url="openwrt.org" size="sm" />
+
+<Route namespace="openwrt" :data='{"path":"/releases/:brand/:model","radar":[{"source":["openwrt.org/toh/:band/:model"],"target":"/releases/:model"}],"name":"Unknown","maintainers":[],"location":"releases.ts"}' />
+
 ## oshwhub 立创开源硬件平台 <Site url="oshwhub.com"/>
 
 ### OpenSource Square <Site url="oshwhub.com" size="sm" />
 
 <Route namespace="oshwhub" :data='{"path":"/:sortType?","categories":["other"],"example":"/oshwhub","parameters":{"sortType":"sortType"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"OpenSource Square","maintainers":["tylinux"],"location":"explore.ts"}' />
-
-## Pikabu <Site url="pikabu.ru"/>
-
-### Unknown <Site url="pikabu.ru" size="sm" />
-
-<Route namespace="pikabu" :data='{"path":"/:type/:name","name":"Unknown","maintainers":[],"location":"community.ts"}' />
 
 ## Proceedings of The National Academy of Sciences <Site url="pnas.org"/>
 
@@ -1102,22 +631,6 @@ There is an optional query parameter called `properties=` that can be used to cu
 | Channel | feedId                   |
   | ------- | ------------------------ |
   | Github  | 5718e53e7a84fb1901e059cc |
-
-## QooApp <Site url="apps.qoo-app.com"/>
-
-### Unknown <Site url="apps.qoo-app.com" size="sm" />
-
-<Route namespace="qoo-app" :data='{"path":"/notes/:lang?/topic/:topic","name":"Unknown","maintainers":["TonyRL"],"location":"notes/topic.ts"}' />
-
-## Quicker <Site url="getquicker.net"/>
-
-### Unknown <Site url="getquicker.net/Help/Versions" size="sm" />
-
-<Route namespace="quicker" :data='{"path":["/update","/versions"],"name":"Unknown","maintainers":["Cesaryuan","nczitzk"],"url":"getquicker.net/Help/Versions","location":"versions.ts"}' />
-
-### Unknown <Site url="getquicker.net/Help/Versions" size="sm" />
-
-<Route namespace="quicker" :data='{"path":["/update","/versions"],"name":"Unknown","maintainers":["Cesaryuan","nczitzk"],"url":"getquicker.net/Help/Versions","location":"versions.ts"}' />
 
 ## Rare Historical Photos <Site url="rarehistoricalphotos.com"/>
 
@@ -1214,10 +727,6 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
   | `itemLink`  | `html_url`      |
   | `itemDesc`  | `body`          |
 
-### Unknown <Site url="docs.rsshub.app" size="sm" />
-
-<Route namespace="rsshub" :data='{"path":"/transform/sitemap/:url/:routeParams?","name":"Unknown","maintainers":["flrngel"],"location":"transform/sitemap.ts"}' />
-
 ## SecIN 信息安全技术社区 <Site url="sec-in.com"/>
 
 ### Unknown <Site url="sec-in.com" size="sm" />
@@ -1236,53 +745,23 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
 
 <Route namespace="subhd" :data='{"path":"/:type?/:category?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
 
-## SupChina <Site url="supchina.com"/>
-
-### Unknown <Site url="supchina.com/feed" size="sm" />
-
-<Route namespace="supchina" :data='{"path":"/","radar":[{"source":["supchina.com/feed","supchina.com/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"supchina.com/feed","location":"index.ts"}' />
-
 ## Surfshark <Site url="surfshark.com"/>
 
 ### Unknown <Site url="surfshark.com" size="sm" />
 
 <Route namespace="surfshark" :data='{"path":"/blog/:category{.+}?","name":"Unknown","maintainers":[],"location":"blog.ts"}' />
 
-## The Nikkei 日本経済新聞 <Site url="asia.nikkei.com"/>
+## test 
 
-### Unknown <Site url="www.nikkei.com/" size="sm" />
+### Unknown 
 
-<Route namespace="nikkei" :data='{"path":["/","/index"],"name":"Unknown","maintainers":[],"url":"www.nikkei.com/","location":"index.ts"}' />
-
-### Unknown <Site url="www.nikkei.com/" size="sm" />
-
-<Route namespace="nikkei" :data='{"path":["/","/index"],"name":"Unknown","maintainers":[],"url":"www.nikkei.com/","location":"index.ts"}' />
-
-### Unknown <Site url="asia.nikkei.com" size="sm" />
-
-<Route namespace="nikkei" :data='{"path":"/cn/*","name":"Unknown","maintainers":[],"location":"cn/index.ts"}' />
-
-## TechPowerUp <Site url="techpowerup.com"/>
-
-### Unknown <Site url="techpowerup.com/" size="sm" />
-
-<Route namespace="techpowerup" :data='{"path":"/","radar":[{"source":["techpowerup.com/"],"target":""}],"name":"Unknown","maintainers":["TonyRL"],"url":"techpowerup.com/","location":"index.ts"}' />
+<Route namespace="test" :data='{"path":"/:id","name":"Unknown","maintainers":["DIYgod","NeverBehave"],"location":"index.ts"}' />
 
 ## The News Lens 關鍵評論 <Site url="thenewslens.com"/>
 
 ### Unknown <Site url="thenewslens.com" size="sm" />
 
 <Route namespace="thenewslens" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## TradingView <Site url="tradingview.com"/>
-
-### Unknown <Site url="tradingview.com" size="sm" />
-
-<Route namespace="tradingview" :data='{"path":"/blog/:category{.+}?","name":"Unknown","maintainers":[],"location":"blog.ts"}' />
-
-### Unknown <Site url="tradingview.com" size="sm" />
-
-<Route namespace="tradingview" :data='{"path":"/pine/:version?","radar":[{"source":["tradingview.com/pine-script-docs/en/:version/Release_notes.html"],"target":"/pine/:version"}],"name":"Unknown","maintainers":[],"location":"pine.ts"}' />
 
 ## Transcript Forest <Site url="www.transcriptforest.com"/>
 
@@ -1306,12 +785,6 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
   | ---------------------- | ------------ |
   | today                  | newest       |
 
-## Unknown <Site url="pubs.acs.org"/>
-
-### Unknown <Site url="pubs.acs.org" size="sm" />
-
-<Route namespace="acs" :data='{"path":"/journal/:id","radar":[{"source":["pubs.acs.org/journal/:id","pubs.acs.org/"]}],"name":"Unknown","maintainers":["nczitzk"],"location":"journal.ts"}' />
-
 ## ui.dev <Site url="bytes.dev"/>
 
 ### Unknown <Site url="bytes.dev/archives" size="sm" />
@@ -1324,43 +797,13 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
 
 <Route namespace="fda" :data='{"path":"/cdrh/:titleOnly?","radar":[{"source":["fda.gov/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates","fda.gov/"],"target":"/cdrh/:titleOnly"}],"name":"Unknown","maintainers":[],"url":"fda.gov/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates","location":"cdrh.ts"}' />
 
-## Unknown <Site url="jseea.cn"/>
-
-### Unknown <Site url="jseea.cn" size="sm" />
-
-<Route namespace="jseea" :data='{"path":"/news/:type?","radar":[{"source":["jseea.cn/webfile/news/:type"],"target":"/news/:type"}],"name":"Unknown","maintainers":["schen1024"],"location":"news.ts"}' />
-
-## Unknown <Site url="mangadex.org"/>
-
-### Unknown <Site url="mangadex.org" size="sm" />
-
-<Route namespace="mangadex" :data='{"path":"/:id/:lang?","radar":[{"source":["mangadex.org/title/:id/*","mangadex.org/title/:id"],"target":"/:id"}],"name":"Unknown","maintainers":["vzz64"],"location":"index.ts"}' />
-
-## Unknown <Site url="www.metmuseum.org"/>
-
-### Unknown <Site url="www.metmuseum.org" size="sm" />
-
-<Route namespace="metmuseum" :data='{"path":"/exhibitions/:state?","name":"Unknown","maintainers":[],"location":"exhibitions.ts"}' />
-
-## Unknown <Site url="openwrt.org"/>
-
-### Unknown <Site url="openwrt.org" size="sm" />
-
-<Route namespace="openwrt" :data='{"path":"/releases/:brand/:model","radar":[{"source":["openwrt.org/toh/:band/:model"],"target":"/releases/:model"}],"name":"Unknown","maintainers":[],"location":"releases.ts"}' />
-
 ## ui.dev <Site url="bytes.dev"/>
 
 ### Unknown <Site url="bytes.dev/issues" size="sm" />
 
 <Route namespace="reactnewsletter" :data='{"path":"/","radar":[{"source":["bytes.dev/issues","bytes.dev/"],"target":""}],"name":"Unknown","maintainers":["meixger"],"url":"bytes.dev/issues","location":"reactnewsletter.ts"}' />
 
-## Unknown 
-
-### Unknown 
-
-<Route namespace="test" :data='{"path":"/:id","name":"Unknown","maintainers":["DIYgod","NeverBehave"],"location":"index.ts"}' />
-
-## Unknown <Site url="u9a9.com"/>
+## u9a9 <Site url="u9a9.com"/>
 
 ### Unknown <Site url="u9a9.com/" size="sm" />
 
@@ -1387,12 +830,6 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
 ### Unknown <Site url="v2rayshare.com/" size="sm" />
 
 <Route namespace="v2rayshare" :data='{"path":"/","radar":[{"source":["v2rayshare.com/"],"target":""}],"name":"Unknown","maintainers":["77taibai"],"url":"v2rayshare.com/","location":"index.ts"}' />
-
-## VCB-Studio <Site url="vcb-s.com"/>
-
-### Unknown <Site url="vcb-s.com/" size="sm" />
-
-<Route namespace="vcb-s" :data='{"path":"/","radar":[{"source":["vcb-s.com/"],"target":""}],"name":"Unknown","maintainers":["cxfksword"],"url":"vcb-s.com/","location":"index.ts"}' />
 
 ## WallpaperHub <Site url="wallpaperhub.app"/>
 
@@ -1426,18 +863,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="wmc-bj" :data='{"path":"/publish/:category{.+}?","name":"Unknown","maintainers":[],"location":"publish.ts"}' />
 
-## Yahoo <Site url="hk.news.yahoo.com"/>
-
-### Unknown <Site url="hk.news.yahoo.com" size="sm" />
-
-<Route namespace="yahoo" :data='{"path":"/news/en/:category?","name":"Unknown","maintainers":[],"location":"news/us/index.ts"}' />
-
-## YouTube Live <Site url="charts.youtube.com"/>
-
-### Unknown <Site url="charts.youtube.com" size="sm" />
-
-<Route namespace="youtube" :data='{"path":"/c/:username/:embed?","radar":[{"source":["www.youtube.com/c/:id"],"target":"/c/:id"}],"name":"Unknown","maintainers":[],"location":"custom.ts"}' />
-
 ## ZAKER <Site url="myzaker.com"/>
 
 ### Unknown <Site url="myzaker.com" size="sm" />
@@ -1456,24 +881,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 | 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |
   | -------- | -------- | -------- | ------------ |
-
-## 爱思想 <Site url="aisixiang.com"/>
-
-### Unknown <Site url="aisixiang.com" size="sm" />
-
-<Route namespace="aisixiang" :data='{"path":["/ranking/:id?/:period?","/toplist/:id?/:period?"],"name":"Unknown","maintainers":["HenryQW","nczitzk"],"description":"| 文章点击排行 | 最近更新文章 | 文章推荐排行 |\n  | ------------ | ------------ | ------------ |\n  | 1            | 10           | 11           |","location":"toplist.ts"}' />
-
-| 文章点击排行 | 最近更新文章 | 文章推荐排行 |
-  | ------------ | ------------ | ------------ |
-  | 1            | 10           | 11           |
-
-### Unknown <Site url="aisixiang.com" size="sm" />
-
-<Route namespace="aisixiang" :data='{"path":["/ranking/:id?/:period?","/toplist/:id?/:period?"],"name":"Unknown","maintainers":["HenryQW","nczitzk"],"description":"| 文章点击排行 | 最近更新文章 | 文章推荐排行 |\n  | ------------ | ------------ | ------------ |\n  | 1            | 10           | 11           |","location":"toplist.ts"}' />
-
-| 文章点击排行 | 最近更新文章 | 文章推荐排行 |
-  | ------------ | ------------ | ------------ |
-  | 1            | 10           | 11           |
 
 ## 爱 Q 生活网 <Site url="iqnew.com"/>
 
@@ -1495,51 +902,11 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="baidu" :data='{"path":"/search/:keyword","categories":["other"],"example":"/baidu/search/rss","parameters":{"keyword":"搜索关键词"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"搜索","maintainers":["CaoMeiYouRen"],"location":"search.ts"}' />
 
-## 北京智源人工智能研究院 <Site url="hub.baai.ac.cn"/>
-
-### Unknown <Site url="hub.baai.ac.cn" size="sm" />
-
-<Route namespace="baai" :data='{"path":["/hub/:tagId/:sort?/:range?","/hub/:tagId/:sort?","/hub/:sort?"],"name":"Unknown","maintainers":[],"location":"hub.ts"}' />
-
-### Unknown <Site url="hub.baai.ac.cn" size="sm" />
-
-<Route namespace="baai" :data='{"path":["/hub/:tagId/:sort?/:range?","/hub/:tagId/:sort?","/hub/:sort?"],"name":"Unknown","maintainers":[],"location":"hub.ts"}' />
-
-### Unknown <Site url="hub.baai.ac.cn" size="sm" />
-
-<Route namespace="baai" :data='{"path":["/hub/:tagId/:sort?/:range?","/hub/:tagId/:sort?","/hub/:sort?"],"name":"Unknown","maintainers":[],"location":"hub.ts"}' />
-
 ## 北京市科学技术协会 <Site url="bast.net.cn"/>
 
 ### Unknown <Site url="bast.net.cn" size="sm" />
 
 <Route namespace="bast" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 北京师范大学 <Site url="bs.bnu.edu.cn"/>
-
-### Unknown <Site url="bs.bnu.edu.cn" size="sm" />
-
-<Route namespace="bnu" :data='{"path":"/fdy/:path{.+}?","name":"Unknown","maintainers":[],"location":"fdy.ts"}' />
-
-### Unknown <Site url="bs.bnu.edu.cn" size="sm" />
-
-<Route namespace="bnu" :data='{"path":"/lib/:category?","radar":[{"source":["www.lib.bnu.edu.cn/:category/index.htm"],"target":"/lib/:category"}],"name":"Unknown","maintainers":["TonyRL"],"location":"lib.ts"}' />
-
-## 北京航空航天大学 <Site url="news.buaa.edu.cn"/>
-
-### Unknown <Site url="news.buaa.edu.cn" size="sm" />
-
-<Route namespace="buaa" :data='{"path":"/sme/:path{.+}?","name":"Unknown","maintainers":[],"location":"sme.ts"}' />
-
-## 北京大学 <Site url="admission.pku.edu.cn"/>
-
-### Unknown <Site url="admission.pku.edu.cn" size="sm" />
-
-<Route namespace="pku" :data='{"path":"/eecs/:type?","name":"Unknown","maintainers":["Ir1d"],"location":"eecs.ts"}' />
-
-### Unknown <Site url="ss.pku.edu.cn/index.php/newscenter/notice" size="sm" />
-
-<Route namespace="pku" :data='{"path":"/ss/notice","radar":[{"source":["ss.pku.edu.cn/index.php/newscenter/notice","ss.pku.edu.cn/"]}],"name":"Unknown","maintainers":["legr4ndk"],"url":"ss.pku.edu.cn/index.php/newscenter/notice","location":"ss/notice.ts"}' />
 
 ## 贝壳研究院 <Site url="www.research.ke.com"/>
 
@@ -1587,40 +954,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="cdzjryb" :data='{"path":"/zw/projectList","categories":["other"],"example":"/cdzjryb/zw/projectList","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["zw.cdzjryb.com/lottery/accept/projectList","zw.cdzjryb.com/"]}],"name":"商品住房购房登记","maintainers":["TonyRL"],"url":"zw.cdzjryb.com/lottery/accept/projectList","location":"project-list.ts"}' />
 
-## 创业邦 <Site url="cyzone.cn"/>
-
-### Unknown <Site url="cyzone.cn" size="sm" />
-
-<Route namespace="cyzone" :data='{"path":["/channel/:id?","/:id?"],"radar":[{"source":["cyzone.cn/channel/:id","cyzone.cn/"],"target":"/:id"}],"name":"Unknown","maintainers":["nczitzk"],"description":"| 最新 | 快鲤鱼 | 创投 | 科创板 | 汽车 |\n  | ---- | ------ | ---- | ------ | ---- |\n  | news | 5      | 14   | 13     | 8    |\n\n  | 海外 | 消费 | 科技 | 医疗 | 文娱 |\n  | ---- | ---- | ---- | ---- | ---- |\n  | 10   | 9    | 7    | 27   | 11   |\n\n  | 城市 | 政策 | 特写 | 干货 | 科技股 |\n  | ---- | ---- | ---- | ---- | ------ |\n  | 16   | 15   | 6    | 12   | 33     |","location":"index.ts"}' />
-
-| 最新 | 快鲤鱼 | 创投 | 科创板 | 汽车 |
-  | ---- | ------ | ---- | ------ | ---- |
-  | news | 5      | 14   | 13     | 8    |
-
-  | 海外 | 消费 | 科技 | 医疗 | 文娱 |
-  | ---- | ---- | ---- | ---- | ---- |
-  | 10   | 9    | 7    | 27   | 11   |
-
-  | 城市 | 政策 | 特写 | 干货 | 科技股 |
-  | ---- | ---- | ---- | ---- | ------ |
-  | 16   | 15   | 6    | 12   | 33     |
-
-### Unknown <Site url="cyzone.cn" size="sm" />
-
-<Route namespace="cyzone" :data='{"path":["/channel/:id?","/:id?"],"radar":[{"source":["cyzone.cn/channel/:id","cyzone.cn/"],"target":"/:id"}],"name":"Unknown","maintainers":["nczitzk"],"description":"| 最新 | 快鲤鱼 | 创投 | 科创板 | 汽车 |\n  | ---- | ------ | ---- | ------ | ---- |\n  | news | 5      | 14   | 13     | 8    |\n\n  | 海外 | 消费 | 科技 | 医疗 | 文娱 |\n  | ---- | ---- | ---- | ---- | ---- |\n  | 10   | 9    | 7    | 27   | 11   |\n\n  | 城市 | 政策 | 特写 | 干货 | 科技股 |\n  | ---- | ---- | ---- | ---- | ------ |\n  | 16   | 15   | 6    | 12   | 33     |","location":"index.ts"}' />
-
-| 最新 | 快鲤鱼 | 创投 | 科创板 | 汽车 |
-  | ---- | ------ | ---- | ------ | ---- |
-  | news | 5      | 14   | 13     | 8    |
-
-  | 海外 | 消费 | 科技 | 医疗 | 文娱 |
-  | ---- | ---- | ---- | ---- | ---- |
-  | 10   | 9    | 7    | 27   | 11   |
-
-  | 城市 | 政策 | 特写 | 干货 | 科技股 |
-  | ---- | ---- | ---- | ---- | ------ |
-  | 16   | 15   | 6    | 12   | 33     |
-
 ## 大连理工大学 <Site url="dutdice.dlut.edu.cn"/>
 
 ### Unknown <Site url="dutdice.dlut.edu.cn" size="sm" />
@@ -1630,12 +963,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### Unknown <Site url="dutdice.dlut.edu.cn" size="sm" />
 
 <Route namespace="dut" :data='{"path":["/*/*","/:0?"],"name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 得到 <Site url="dedao.cn"/>
-
-### Unknown <Site url="dedao.cn" size="sm" />
-
-<Route namespace="dedao" :data='{"path":"/:category?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
 
 ## 第一财经杂志 <Site url="cbnweek.com"/>
 
@@ -1665,16 +992,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="nenu" :data='{"path":"/yjsy/*","name":"Unknown","maintainers":[],"location":"yjsy.ts"}' />
 
-## 豆瓣 <Site url="www.douban.com"/>
-
-### Unknown <Site url="www.douban.com" size="sm" />
-
-<Route namespace="douban" :data='{"path":"/explore/column/:id","name":"Unknown","maintainers":[],"location":"other/explore-column.ts"}' />
-
-### Unknown <Site url="www.douban.com" size="sm" />
-
-<Route namespace="douban" :data='{"path":"/people/:userid/status/:routeParams?","name":"Unknown","maintainers":[],"location":"people/status.ts"}' />
-
 ## 端传媒 <Site url="theinitium.com"/>
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
@@ -1693,29 +1010,11 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="2cycd" :data='{"path":"/:fid/:sort?","name":"Unknown","maintainers":["shelken"],"location":"index.ts"}' />
 
-## 凤凰网 <Site url="feng.ifeng.com"/>
-
-### Unknown <Site url="feng.ifeng.com" size="sm" />
-
-<Route namespace="ifeng" :data='{"path":"/news/*","name":"Unknown","maintainers":[],"location":"news.ts"}' />
-
-## 公視新聞網 <Site url="news.pts.org.tw"/>
-
-### Unknown <Site url="news.pts.org.tw" size="sm" />
-
-<Route namespace="pts" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
 ## 骨朵数据 <Site url="data.guduodata.com"/>
 
 ### 日榜 <Site url="data.guduodata.com/" size="sm" />
 
 <Route namespace="guduodata" :data='{"path":"/daily","categories":["other"],"example":"/guduodata/daily","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["data.guduodata.com/"]}],"name":"日榜","maintainers":["Gem1ni"],"url":"data.guduodata.com/","location":"daily.ts"}' />
-
-## 观察者网 <Site url="guancha.cn"/>
-
-### Unknown <Site url="guancha.cn/" size="sm" />
-
-<Route namespace="guancha" :data='{"path":"/topic/:id/:order?","radar":[{"source":["guancha.cn/"],"target":"/:category?"}],"name":"Unknown","maintainers":["occupy5","nczitzk"],"url":"guancha.cn/","location":"topic.ts"}' />
 
 ## 观海新闻 <Site url="guanhai.com.cn"/>
 
@@ -1751,12 +1050,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="cmde" :data='{"path":"/:cate{.+}?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
 
-## 国家地理 <Site url="nationalgeographic.com"/>
-
-### Unknown <Site url="nationalgeographic.com" size="sm" />
-
-<Route namespace="natgeo" :data='{"path":"/dailyselection","name":"Unknown","maintainers":["OrangeEd1t"],"location":"dailyselection.ts"}' />
-
 ## 国家气候中心 <Site url="cmdp.ncc-cma.net"/>
 
 ### Unknown <Site url="cmdp.ncc-cma.net" size="sm" />
@@ -1769,116 +1062,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="zhujiceping" :data='{"path":"/","radar":[{"source":["zhujiceping.com/"],"target":""}],"name":"Unknown","maintainers":["cnkmmk"],"url":"zhujiceping.com/","location":"rss.ts"}' />
 
-## 哈尔滨工程大学 <Site url="yjsy.hrbeu.edu.cn"/>
-
-### Unknown <Site url="yjsy.hrbeu.edu.cn" size="sm" />
-
-<Route namespace="hrbeu" :data='{"path":"/gx/card/:column/:id?","name":"Unknown","maintainers":[],"location":"gx/card.ts"}' />
-
-### Unknown <Site url="yjsy.hrbeu.edu.cn" size="sm" />
-
-<Route namespace="hrbeu" :data='{"path":"/gx/list/:column/:id?","name":"Unknown","maintainers":[],"location":"gx/list.ts"}' />
-
-## 后续 <Site url="houxu.app"/>
-
-### Unknown <Site url="houxu.app/" size="sm" />
-
-<Route namespace="houxu" :data='{"path":["/featured","/index","/"],"radar":[{"source":["houxu.app/"],"target":""}],"name":"Unknown","maintainers":[],"url":"houxu.app/","location":"index.ts"}' />
-
-### Unknown <Site url="houxu.app/" size="sm" />
-
-<Route namespace="houxu" :data='{"path":["/featured","/index","/"],"radar":[{"source":["houxu.app/"],"target":""}],"name":"Unknown","maintainers":[],"url":"houxu.app/","location":"index.ts"}' />
-
-### Unknown <Site url="houxu.app/" size="sm" />
-
-<Route namespace="houxu" :data='{"path":["/featured","/index","/"],"radar":[{"source":["houxu.app/"],"target":""}],"name":"Unknown","maintainers":[],"url":"houxu.app/","location":"index.ts"}' />
-
-## 虎扑 <Site url=".hupu.com"/>
-
-### Unknown <Site url=".hupu.com" size="sm" />
-
-<Route namespace="hupu" :data='{"path":["/dept/:category?","/:category?"],"radar":[{"source":["m.hupu.com/:category","m.hupu.com/"],"target":"/:category"}],"name":"Unknown","maintainers":["nczitzk"],"description":"| NBA | CBA | 足球   |\n  | --- | --- | ------ |\n  | nba | cba | soccer |\n\n  :::tip\n  电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [`/hupu/all/all-gg`](https://rsshub.app/hupu/all/all-gg)。\n  :::","location":"index.ts"}' />
-
-| NBA | CBA | 足球   |
-  | --- | --- | ------ |
-  | nba | cba | soccer |
-
-  :::tip
-  电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [`/hupu/all/all-gg`](https://rsshub.app/hupu/all/all-gg)。
-  :::
-
-### Unknown <Site url=".hupu.com" size="sm" />
-
-<Route namespace="hupu" :data='{"path":["/dept/:category?","/:category?"],"radar":[{"source":["m.hupu.com/:category","m.hupu.com/"],"target":"/:category"}],"name":"Unknown","maintainers":["nczitzk"],"description":"| NBA | CBA | 足球   |\n  | --- | --- | ------ |\n  | nba | cba | soccer |\n\n  :::tip\n  电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [`/hupu/all/all-gg`](https://rsshub.app/hupu/all/all-gg)。\n  :::","location":"index.ts"}' />
-
-| NBA | CBA | 足球   |
-  | --- | --- | ------ |
-  | nba | cba | soccer |
-
-  :::tip
-  电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [`/hupu/all/all-gg`](https://rsshub.app/hupu/all/all-gg)。
-  :::
-
-## 虎嗅 <Site url="huxiu.com"/>
-
-### Unknown <Site url="huxiu.com" size="sm" />
-
-<Route namespace="huxiu" :data='{"path":"/club/:id","name":"Unknown","maintainers":["nczitzk"],"location":"club.ts"}' />
-
-### Unknown <Site url="huxiu.com" size="sm" />
-
-<Route namespace="huxiu" :data='{"path":["/author/:id/:type?","/member/:id/:type?"],"name":"Unknown","maintainers":[],"description":"| TA 的文章 | TA 的 24 小时 |\n  | --------- | ------------- |\n  | article   | moment        |","location":"member.ts"}' />
-
-| TA 的文章 | TA 的 24 小时 |
-  | --------- | ------------- |
-  | article   | moment        |
-
-### Unknown <Site url="huxiu.com" size="sm" />
-
-<Route namespace="huxiu" :data='{"path":["/author/:id/:type?","/member/:id/:type?"],"name":"Unknown","maintainers":[],"description":"| TA 的文章 | TA 的 24 小时 |\n  | --------- | ------------- |\n  | article   | moment        |","location":"member.ts"}' />
-
-| TA 的文章 | TA 的 24 小时 |
-  | --------- | ------------- |
-  | article   | moment        |
-
-## 华尔街见闻 <Site url="wallstreetcn.com"/>
-
-### Unknown <Site url="wallstreetcn.com" size="sm" />
-
-<Route namespace="wallstreetcn" :data='{"path":["/news/:category?","/:category?"],"radar":[{"source":["wallstreetcn.com/news/:category","wallstreetcn.com/"]}],"name":"Unknown","maintainers":["nczitzk"],"description":"| id           | 分类 |\n  | ------------ | ---- |\n  | global       | 最新 |\n  | shares       | 股市 |\n  | bonds        | 债市 |\n  | commodities  | 商品 |\n  | forex        | 外汇 |\n  | enterprise   | 公司 |\n  | asset-manage | 资管 |\n  | tmt          | 科技 |\n  | estate       | 地产 |\n  | car          | 汽车 |\n  | medicine     | 医药 |","location":"news.ts"}' />
-
-| id           | 分类 |
-  | ------------ | ---- |
-  | global       | 最新 |
-  | shares       | 股市 |
-  | bonds        | 债市 |
-  | commodities  | 商品 |
-  | forex        | 外汇 |
-  | enterprise   | 公司 |
-  | asset-manage | 资管 |
-  | tmt          | 科技 |
-  | estate       | 地产 |
-  | car          | 汽车 |
-  | medicine     | 医药 |
-
-### Unknown <Site url="wallstreetcn.com" size="sm" />
-
-<Route namespace="wallstreetcn" :data='{"path":["/news/:category?","/:category?"],"radar":[{"source":["wallstreetcn.com/news/:category","wallstreetcn.com/"]}],"name":"Unknown","maintainers":["nczitzk"],"description":"| id           | 分类 |\n  | ------------ | ---- |\n  | global       | 最新 |\n  | shares       | 股市 |\n  | bonds        | 债市 |\n  | commodities  | 商品 |\n  | forex        | 外汇 |\n  | enterprise   | 公司 |\n  | asset-manage | 资管 |\n  | tmt          | 科技 |\n  | estate       | 地产 |\n  | car          | 汽车 |\n  | medicine     | 医药 |","location":"news.ts"}' />
-
-| id           | 分类 |
-  | ------------ | ---- |
-  | global       | 最新 |
-  | shares       | 股市 |
-  | bonds        | 债市 |
-  | commodities  | 商品 |
-  | forex        | 外汇 |
-  | enterprise   | 公司 |
-  | asset-manage | 资管 |
-  | tmt          | 科技 |
-  | estate       | 地产 |
-  | car          | 汽车 |
-  | medicine     | 医药 |
-
 ## 环球法律评论 <Site url="globallawreview.org"/>
 
 ### Unknown <Site url="globallawreview.org/Magazine/GetIssueContentList" size="sm" />
@@ -1890,12 +1073,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### Unknown <Site url="lala.im/" size="sm" />
 
 <Route namespace="lala" :data='{"path":"/","radar":[{"source":["lala.im/"],"target":""}],"name":"Unknown","maintainers":["cnkmmk"],"url":"lala.im/","location":"rss.ts"}' />
-
-## 吉首大学 <Site url="jsu.edu.cn"/>
-
-### Unknown <Site url="jsu.edu.cn" size="sm" />
-
-<Route namespace="jsu" :data='{"path":"/cxzx/:types?","name":"Unknown","maintainers":["wenjia03"],"location":"cxzx.ts"}' />
 
 ## 纪妖 <Site url="cbaigui.com"/>
 
@@ -1975,26 +1152,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="kuaidi100" :data='{"path":"/company","categories":["other"],"example":"/kuaidi100/company","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["kuaidi100.com/"]}],"name":"支持的快递公司列表","maintainers":["NeverBehave"],"url":"kuaidi100.com/","location":"supported-company.ts"}' />
 
-## 快科技 <Site url="m.mydrivers.com"/>
-
-### Unknown <Site url="m.mydrivers.com/" size="sm" />
-
-<Route namespace="mydrivers" :data='{"path":["/cid/:id?","/zhibo"],"name":"Unknown","maintainers":[],"url":"m.mydrivers.com/","location":"cid.ts"}' />
-
-### Unknown <Site url="m.mydrivers.com/" size="sm" />
-
-<Route namespace="mydrivers" :data='{"path":["/cid/:id?","/zhibo"],"name":"Unknown","maintainers":[],"url":"m.mydrivers.com/","location":"cid.ts"}' />
-
-### Unknown <Site url="m.mydrivers.com" size="sm" />
-
-<Route namespace="mydrivers" :data='{"path":"/:category{.+}?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 雷峰网 <Site url="leiphone.com"/>
-
-### Unknown <Site url="leiphone.com/" size="sm" />
-
-<Route namespace="leiphone" :data='{"path":"/:do?/:keyword?","radar":[{"source":["leiphone.com/"],"target":""}],"name":"Unknown","maintainers":[],"url":"leiphone.com/","location":"index.ts"}' />
-
 ## 理想生活实验室 <Site url="toodaylab.com"/>
 
 ### Unknown <Site url="toodaylab.com" size="sm" />
@@ -2010,12 +1167,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### Unknown <Site url="uraaka-joshi.com/" size="sm" />
 
 <Route namespace="uraaka-joshi" :data='{"path":"/","radar":[{"source":["uraaka-joshi.com/"],"target":""}],"name":"Unknown","maintainers":["SettingDust","Halcao"],"url":"uraaka-joshi.com/","location":"uraaka-joshi.ts"}' />
-
-## 链捕手 ChainCatcher <Site url="chaincatcher.com"/>
-
-### Unknown <Site url="chaincatcher.com/" size="sm" />
-
-<Route namespace="chaincatcher" :data='{"path":"/","radar":[{"source":["chaincatcher.com/"],"target":""}],"name":"Unknown","maintainers":["TonyRL"],"url":"chaincatcher.com/","location":"home.ts"}' />
 
 ## 留园网 <Site url="club.6parkbbs.com"/>
 
@@ -2037,22 +1188,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="lkong" :data='{"path":"/thread/:id","radar":[{"source":["lkong.com/thread/:id","lkong.com/"]}],"name":"Unknown","maintainers":["nczitzk","ma6254"],"location":"thread.ts"}' />
 
-## 旅法师营地 <Site url="www.iyingdi.com"/>
-
-### Unknown <Site url="www.iyingdi.com" size="sm" />
-
-<Route namespace="lfsyd" :data='{"path":"/tag/:tagId?","radar":[{"source":["mob.iyingdi.com/fine/:tagId"],"target":"/tag/:tagId"}],"name":"Unknown","maintainers":["auto-bot-ty"],"location":"tag.ts"}' />
-
-### Unknown <Site url="www.iyingdi.com" size="sm" />
-
-<Route namespace="lfsyd" :data='{"path":"/user/:id?","radar":[{"source":["www.iyingdi.com/tz/people/:id","www.iyingdi.com/tz/people/:id/*"],"target":"/user/:id"}],"name":"Unknown","maintainers":["auto-bot-ty"],"location":"user.ts"}' />
-
-## 罗戈网 <Site url="logclub.com"/>
-
-### Unknown <Site url="logclub.com" size="sm" />
-
-<Route namespace="logclub" :data='{"path":"/:category{.+}?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
 ## 木木博客 <Site url="liulinblog.com"/>
 
 ### Unknown <Site url="liulinblog.com" size="sm" />
@@ -2069,81 +1204,11 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="cnjxol" :data='{"path":"/:category?/:id?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
 
-## 南京航空航天大学 <Site url="aao.nuaa.edu.cn"/>
-
-### Unknown <Site url="aao.nuaa.edu.cn" size="sm" />
-
-<Route namespace="nuaa" :data='{"path":"/cae/:type/:getDescription?","name":"Unknown","maintainers":["Xm798"],"location":"college/cae.ts"}' />
-
-## 南京信息工程大学 <Site url="bulletin.nuist.edu.cn"/>
-
-:::tip
-路由地址全部按照 **学校官网域名和栏目编号** 设计
-
-使用方法：
-
-以[南信大信息公告栏](https://bulletin.nuist.edu.cn)为例，点开任意一个栏目
-
-获得 URL 中的**分域名**和**栏目编号（可选）**：https://`bulletin`.nuist.edu.cn/`791`/list.htm
-
-将其替换到 RSS 路由地址中即可：
-
-[https://rsshub.app/**nuist**/`bulletin`](https://rsshub.app/nuist/bulletin) 或 [https://rsshub.app/**nuist**/`bulletin`/`791`](https://rsshub.app/nuist/bulletin)
-:::
-
-### Unknown <Site url="bulletin.nuist.edu.cn" size="sm" />
-
-<Route namespace="nuist" :data='{"path":"/yjs/*","name":"Unknown","maintainers":[],"location":"yjs.ts"}' />
-
-### Unknown <Site url="lib.nuist.edu.cn/" size="sm" />
-
-<Route namespace="nuist" :data='{"path":"/lib","radar":[{"source":["lib.nuist.edu.cn/","lib.nuist.edu.cn/index/tzgg.htm"]}],"name":"Unknown","maintainers":["gylidian"],"url":"lib.nuist.edu.cn/","location":"library/lib.ts"}' />
-
-## 南方都市报 <Site url="oeeee.com"/>
-
-### Unknown <Site url="oeeee.com" size="sm" />
-
-<Route namespace="oeeee" :data='{"path":"/app/channel/:id","name":"Unknown","maintainers":["TimWu007"],"location":"app/channel.ts"}' />
-
-## 鸟哥笔记 <Site url="niaogebiji.com"/>
-
-### Unknown <Site url="niaogebiji.com/" size="sm" />
-
-<Route namespace="niaogebiji" :data='{"path":"/","radar":[{"source":["niaogebiji.com/","niaogebiji.com/bulletin"],"target":""}],"name":"Unknown","maintainers":["WenryXu"],"url":"niaogebiji.com/","location":"index.ts"}' />
-
 ## 跑野大爆炸 <Site url="runtrail.cn"/>
 
 ### Unknown <Site url="runtrail.cn/" size="sm" />
 
 <Route namespace="runtrail" :data='{"path":"/","radar":[{"source":["runtrail.cn/"],"target":""}],"name":"Unknown","maintainers":["TonyRL"],"url":"runtrail.cn/","location":"posts.ts"}' />
-
-## 澎湃新闻 <Site url="thepaper.cn"/>
-
-以下所有路由可使用参数`old`以采取旧全文获取方法。该方法会另外获取网页中的图片与视频资源。在原始 url 追加`?old=yes`以启用.
-
-### Unknown <Site url="thepaper.cn/" size="sm" />
-
-<Route namespace="thepaper" :data='{"path":"/sidebar/:sec?","radar":[{"source":["thepaper.cn/"],"target":"/sidebar"}],"name":"Unknown","maintainers":["bigfei"],"url":"thepaper.cn/","location":"sidebar.ts"}' />
-
-### Unknown <Site url="thepaper.cn/" size="sm" />
-
-<Route namespace="thepaper" :data='{"path":"/839studio/:id","radar":[{"source":["thepaper.cn/"]}],"name":"Unknown","maintainers":["umm233"],"url":"thepaper.cn/","location":"839studio/category.ts"}' />
-
-### Unknown <Site url="thepaper.cn" size="sm" />
-
-<Route namespace="thepaper" :data='{"path":"/839studio","name":"Unknown","maintainers":["umm233"],"location":"839studio/studio.ts"}' />
-
-## 片源网 <Site url="pianyuan.org"/>
-
-### Unknown <Site url="pianyuan.org/" size="sm" />
-
-<Route namespace="pianyuan" :data='{"path":"/indexers/pianyuan/results/search/api","radar":[{"source":["pianyuan.org/"],"target":"/index"}],"name":"Unknown","maintainers":["jerry1119"],"url":"pianyuan.org/","location":"search.ts"}' />
-
-## 品葱 <Site url="pincong.rocks"/>
-
-### Unknown <Site url="pincong.rocks" size="sm" />
-
-<Route namespace="pincong" :data='{"path":"/topic/:topic","radar":[{"source":["pincong.rocks/topic/:topic"]}],"name":"Unknown","maintainers":["zphw"],"location":"topic.ts"}' />
 
 ## 齐鲁网 <Site url="v.iqilu.com"/>
 
@@ -2174,12 +1239,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### Unknown <Site url="lightNovel.us/" size="sm" />
 
 <Route namespace="lightnovel" :data='{"path":"/:keywords/:security_key?","radar":[{"source":["lightNovel.us/"],"target":"/:keywords/:security_key"}],"name":"Unknown","maintainers":["nightmare-mio"],"url":"lightNovel.us/","location":"light-novel.ts"}' />
-
-## 轻小说文库 <Site url="www.wenku8.net"/>
-
-### Unknown <Site url="www.wenku8.net" size="sm" />
-
-<Route namespace="wenku8" :data='{"path":"/:category?","name":"Unknown","maintainers":["Fatpandac"],"location":"index.ts"}' />
 
 ## 趨勢科技防詐達人 <Site url="getdr.com"/>
 
@@ -2219,22 +1278,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="iiilab" :data='{"path":"/","radar":[{"source":["www.iiilab.com/"],"target":""}],"name":"Unknown","maintainers":["Joey"],"url":"www.iiilab.com/","location":"index.ts"}' />
 
-## 人民网 <Site url="people.com.cn"/>
-
-### Unknown <Site url="people.com.cn" size="sm" />
-
-<Route namespace="people" :data='{"path":"/:site?/:category{.+}?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 软餐 <Site url="ruancan.com"/>
-
-### Unknown <Site url="ruancan.com/" size="sm" />
-
-<Route namespace="ruancan" :data='{"path":"/","radar":[{"source":["ruancan.com/"],"target":""}],"name":"Unknown","maintainers":[],"url":"ruancan.com/","location":"index.ts"}' />
-
-### Unknown <Site url="ruancan.com/" size="sm" />
-
-<Route namespace="ruancan" :data='{"path":"/user/:id","radar":[{"source":["ruancan.com/i/:id","ruancan.com/"]}],"name":"Unknown","maintainers":[],"url":"ruancan.com/","location":"user.ts"}' />
-
 ## 三联生活周刊 <Site url="lifeweek.com.cn"/>
 
 ### Unknown <Site url="lifeweek.com.cn" size="sm" />
@@ -2244,94 +1287,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### Unknown <Site url="lifeweek.com.cn" size="sm" />
 
 <Route namespace="lifeweek" :data='{"path":"/tag/:id","radar":[{"source":["lifeweek.com.cn/articleList/:tag"],"target":"/tag/:tag"}],"name":"Unknown","maintainers":[],"location":"tag.ts"}' />
-
-## 色花堂 <Site url="sehuatang.net"/>
-
-### Unknown <Site url="sehuatang.net" size="sm" />
-
-<Route namespace="sehuatang" :data='{"path":["/bt/:subforumid?","/picture/:subforumid","/:subforumid?/:type?","/:subforumid?",""],"name":"Unknown","maintainers":["qiwihui","junfengP","nczitzk"],"description":"**原创 BT 电影**\n\n  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |\n  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |\n  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |\n\n  **色花图片**\n\n  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |","location":"index.ts"}' />
-
-**原创 BT 电影**
-
-  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
-  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
-  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
-
-  **色花图片**
-
-  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |
-
-### Unknown <Site url="sehuatang.net" size="sm" />
-
-<Route namespace="sehuatang" :data='{"path":["/bt/:subforumid?","/picture/:subforumid","/:subforumid?/:type?","/:subforumid?",""],"name":"Unknown","maintainers":["qiwihui","junfengP","nczitzk"],"description":"**原创 BT 电影**\n\n  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |\n  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |\n  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |\n\n  **色花图片**\n\n  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |","location":"index.ts"}' />
-
-**原创 BT 电影**
-
-  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
-  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
-  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
-
-  **色花图片**
-
-  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |
-
-### Unknown <Site url="sehuatang.net" size="sm" />
-
-<Route namespace="sehuatang" :data='{"path":["/bt/:subforumid?","/picture/:subforumid","/:subforumid?/:type?","/:subforumid?",""],"name":"Unknown","maintainers":["qiwihui","junfengP","nczitzk"],"description":"**原创 BT 电影**\n\n  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |\n  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |\n  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |\n\n  **色花图片**\n\n  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |","location":"index.ts"}' />
-
-**原创 BT 电影**
-
-  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
-  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
-  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
-
-  **色花图片**
-
-  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |
-
-### Unknown <Site url="sehuatang.net" size="sm" />
-
-<Route namespace="sehuatang" :data='{"path":["/bt/:subforumid?","/picture/:subforumid","/:subforumid?/:type?","/:subforumid?",""],"name":"Unknown","maintainers":["qiwihui","junfengP","nczitzk"],"description":"**原创 BT 电影**\n\n  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |\n  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |\n  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |\n\n  **色花图片**\n\n  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |","location":"index.ts"}' />
-
-**原创 BT 电影**
-
-  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
-  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
-  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
-
-  **色花图片**
-
-  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |
-
-### Unknown <Site url="sehuatang.net" size="sm" />
-
-<Route namespace="sehuatang" :data='{"path":["/bt/:subforumid?","/picture/:subforumid","/:subforumid?/:type?","/:subforumid?",""],"name":"Unknown","maintainers":["qiwihui","junfengP","nczitzk"],"description":"**原创 BT 电影**\n\n  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |\n  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |\n  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |\n\n  **色花图片**\n\n  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |","location":"index.ts"}' />
-
-**原创 BT 电影**
-
-  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
-  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
-  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
-
-  **色花图片**
-
-  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |
-
-## 厦门网 <Site url="epaper.xmnn.cn"/>
-
-### Unknown <Site url="epaper.xmnn.cn" size="sm" />
-
-<Route namespace="xmnn" :data='{"path":"/news/:category{.+}?","name":"Unknown","maintainers":[],"location":"news.ts"}' />
 
 ## 厦门理工大学 <Site url="jwc.xmut.edu.cn"/>
 
@@ -2343,24 +1298,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="xmut" :data='{"path":"/jwc/yjjw/:category?","name":"Unknown","maintainers":[],"location":"jwc/yjs.ts"}' />
 
-## 上海大学 <Site url="jwb.shu.edu.cn"/>
-
-### Unknown <Site url="jwb.shu.edu.cn" size="sm" />
-
-<Route namespace="shu" :data='{"path":["/jwc/:type?","/jwb/:type?"],"radar":[{"source":["www.shu.edu.cn/:type"],"target":"/:type"}],"name":"Unknown","maintainers":[],"description":"| 通知通告 | 新闻 | 政策文件 |\n  | -------- | ---- | -------- |\n  | notice   | news | policy   |","location":"jwb.ts"}' />
-
-| 通知通告 | 新闻 | 政策文件 |
-  | -------- | ---- | -------- |
-  | notice   | news | policy   |
-
-### Unknown <Site url="jwb.shu.edu.cn" size="sm" />
-
-<Route namespace="shu" :data='{"path":["/jwc/:type?","/jwb/:type?"],"radar":[{"source":["www.shu.edu.cn/:type"],"target":"/:type"}],"name":"Unknown","maintainers":[],"description":"| 通知通告 | 新闻 | 政策文件 |\n  | -------- | ---- | -------- |\n  | notice   | news | policy   |","location":"jwb.ts"}' />
-
-| 通知通告 | 新闻 | 政策文件 |
-  | -------- | ---- | -------- |
-  | notice   | news | policy   |
-
 ## 上海第二工业大学 <Site url="jwc.sspu.edu.cn"/>
 
 ### Unknown <Site url="jwc.sspu.edu.cn" size="sm" />
@@ -2370,12 +1307,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### Unknown <Site url="jwc.sspu.edu.cn" size="sm" />
 
 <Route namespace="sspu" :data='{"path":"/pe/:id?","radar":[{"source":["pe2016.sspu.edu.cn/:id/list.htm"],"target":"/pe/:id"}],"name":"Unknown","maintainers":["nczitzk"],"location":"pe.ts"}' />
-
-## 深潮 TechFlow <Site url="techflowpost.com"/>
-
-### Unknown <Site url="techflowpost.com/" size="sm" />
-
-<Route namespace="techflowpost" :data='{"path":"/","radar":[{"source":["techflowpost.com/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"techflowpost.com/","location":"index.ts"}' />
 
 ## 紳士漫畫 <Site url="wnacg.org"/>
 
@@ -2408,12 +1339,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### Unknown <Site url="news.m4.cn" size="sm" />
 
 <Route namespace="m4" :data='{"path":"/:id?/:category{.+}?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 四川工商学院 <Site url="stbu.edu.cn"/>
-
-### Unknown <Site url="stbu.edu.cn/html/news/xueyuan" size="sm" />
-
-<Route namespace="stbu" :data='{"path":"/xyxw","radar":[{"source":["stbu.edu.cn/html/news/xueyuan","stbu.edu.cn/"]}],"name":"Unknown","maintainers":["HyperCherry"],"url":"stbu.edu.cn/html/news/xueyuan","location":"xyxw.ts"}' />
 
 ## 搜狗 <Site url="www.sogou.com"/>
 
@@ -2453,71 +1378,11 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="tynu" :data='{"path":"/","radar":[{"source":["tynu.edu.cn/index/tzgg.htm","tynu.edu.cn/index.htm","tynu.edu.cn/"],"target":""}],"name":"Unknown","maintainers":["2PoL"],"url":"tynu.edu.cn/index/tzgg.htm","location":"tynu.ts"}' />
 
-## 淘股吧 <Site url="taoguba.com.cn"/>
-
-### Unknown <Site url="taoguba.com.cn" size="sm" />
-
-<Route namespace="taoguba" :data='{"path":["/index","/:category?"],"name":"Unknown","maintainers":["nczitzk"],"description":"| 淘股论坛 | 社区总版 | 精华加油 | 网友点赞 |\n  | -------- | -------- | -------- | -------- |\n  | bbs      | zongban  | jinghua  | dianzan  |","location":"index.ts"}' />
-
-| 淘股论坛 | 社区总版 | 精华加油 | 网友点赞 |
-  | -------- | -------- | -------- | -------- |
-  | bbs      | zongban  | jinghua  | dianzan  |
-
-### Unknown <Site url="taoguba.com.cn" size="sm" />
-
-<Route namespace="taoguba" :data='{"path":["/index","/:category?"],"name":"Unknown","maintainers":["nczitzk"],"description":"| 淘股论坛 | 社区总版 | 精华加油 | 网友点赞 |\n  | -------- | -------- | -------- | -------- |\n  | bbs      | zongban  | jinghua  | dianzan  |","location":"index.ts"}' />
-
-| 淘股论坛 | 社区总版 | 精华加油 | 网友点赞 |
-  | -------- | -------- | -------- | -------- |
-  | bbs      | zongban  | jinghua  | dianzan  |
-
 ## 腾讯新闻较真查证平台 <Site url="ac.qq.com"/>
-
-### Unknown <Site url="ac.qq.com" size="sm" />
-
-<Route namespace="qq" :data='{"path":"/ac/comic/:id?","radar":[{"source":["ac.qq.com/Comic/ComicInfo/id/:id","ac.qq.com/"],"target":"/ac/comic/:id"}],"name":"Unknown","maintainers":[],"location":"ac/comic.ts"}' />
 
 ### 最新辟谣 <Site url="vp.fact.qq.com/home" size="sm" />
 
 <Route namespace="qq" :data='{"path":"/fact","categories":["other"],"example":"/qq/fact","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["vp.fact.qq.com/home","vp.fact.qq.com/"]}],"name":"最新辟谣","maintainers":["hoilc"],"url":"vp.fact.qq.com/home","location":"fact/index.ts"}' />
-
-## 停水通知 <Site url="swj.dl.gov.cn"/>
-
-配合 [IFTTT](https://ifttt.com/) Applets [邮件通知](https://ifttt.com/applets/SEvmDVKY-) 使用实现自动通知效果.
-
-### Unknown <Site url="whwater.com/IWater.shtml" size="sm" />
-
-<Route namespace="tingshuitz" :data='{"path":"/wuhan/:channelId?","radar":[{"source":["whwater.com/IWater.shtml","whwater.com/"],"target":"/wuhan"}],"name":"Unknown","maintainers":[],"url":"whwater.com/IWater.shtml","location":"wuhan.ts"}' />
-
-## 王者荣耀 <Site url="mp.weixin.qq.com"/>
-
-### Unknown <Site url="mp.weixin.qq.com" size="sm" />
-
-<Route namespace="tencent" :data='{"path":"/news/coronavirus/data/:province?/:city?","name":"Unknown","maintainers":["CaoMeiYouRen"],"location":"news/coronavirus/data.ts"}' />
-
-### Unknown <Site url="new.qq.com/zt2020/page/feiyan.htm" size="sm" />
-
-<Route namespace="tencent" :data='{"path":"/news/coronavirus/total","radar":[{"source":["new.qq.com/zt2020/page/feiyan.htm"]}],"name":"Unknown","maintainers":["CaoMeiYouRen"],"url":"new.qq.com/zt2020/page/feiyan.htm","location":"news/coronavirus/total.ts"}' />
-
-## 网易公开课 <Site url="163.com"/>
-
-:::tip
-部分歌单及听歌排行信息为登陆后可见，自建时将环境变量`NCM_COOKIES`设为登陆后的 Cookie 值，即可正常获取。
-:::
-
-### Unknown <Site url="163.com" size="sm" />
-
-<Route namespace="163" :data='{"path":"/music/user/events/:id","name":"Unknown","maintainers":["Master-Hash"],"location":"music/userevents.ts"}' />
-
-## 微信小程序 <Site url="posts.careerengine.us"/>
-
-:::tip
-公众号直接抓取困难，故目前提供几种间接抓取方案，请自行选择
-:::
-
-### Unknown <Site url="mp.data258.com/" size="sm" />
-
-<Route namespace="wechat" :data='{"path":"/data258/:id?","radar":[{"source":["mp.data258.com/","mp.data258.com/article/category/:id"]}],"name":"Unknown","maintainers":["Rongronggg9"],"url":"mp.data258.com/","location":"data258.ts"}' />
 
 ## 温州大学 <Site url="wzu.edu.cn"/>
 
@@ -2530,70 +1395,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### Unknown <Site url="onehu.xyz" size="sm" />
 
 <Route namespace="onehu" :data='{"path":"/","name":"Unknown","maintainers":["ruoshui9527"],"location":"common.ts"}' />
-
-## 武汉大学 <Site url="cs.whu.edu.cn"/>
-
-### Unknown <Site url="cs.whu.edu.cn" size="sm" />
-
-<Route namespace="whu" :data='{"path":"/hyxt/:category{.+}?","name":"Unknown","maintainers":[],"location":"hyxt.ts"}' />
-
-### Unknown <Site url="cs.whu.edu.cn" size="sm" />
-
-<Route namespace="whu" :data='{"path":"/news/:category{.+}?","name":"Unknown","maintainers":[],"location":"news.ts"}' />
-
-## 西安交通大学 <Site url="2yuan.xjtu.edu.cn"/>
-
-### Unknown <Site url="2yuan.xjtu.edu.cn" size="sm" />
-
-<Route namespace="xjtu" :data='{"path":"/dean/:subpath{.+}","name":"Unknown","maintainers":[],"location":"dean.ts"}' />
-
-### Unknown <Site url="2yuan.xjtu.edu.cn" size="sm" />
-
-<Route namespace="xjtu" :data='{"path":"/international/:subpath{.+}","name":"Unknown","maintainers":[],"location":"international.ts"}' />
-
-### Unknown <Site url="2yuan.xjtu.edu.cn" size="sm" />
-
-<Route namespace="xjtu" :data='{"path":"/dyyy/:path{.+}","name":"Unknown","maintainers":[],"location":"dyyy/index.ts"}' />
-
-## 香港 01 <Site url="hk01.com"/>
-
-### Unknown <Site url="hk01.com" size="sm" />
-
-<Route namespace="hk01" :data='{"path":"/channel/:id?","radar":[{"source":["hk01.com/channel/:id","hk01.com/"]}],"name":"Unknown","maintainers":[],"location":"channel.ts"}' />
-
-### Unknown <Site url="hk01.com" size="sm" />
-
-<Route namespace="hk01" :data='{"path":"/issue/:id?","radar":[{"source":["hk01.com/issue/:id","hk01.com/"]}],"name":"Unknown","maintainers":[],"location":"issue.ts"}' />
-
-### Unknown <Site url="hk01.com" size="sm" />
-
-<Route namespace="hk01" :data='{"path":"/tag/:id?","radar":[{"source":["hk01.com/tag/:id","hk01.com/"]}],"name":"Unknown","maintainers":[],"location":"tag.ts"}' />
-
-### Unknown <Site url="hk01.com" size="sm" />
-
-<Route namespace="hk01" :data='{"path":"/zone/:id?","radar":[{"source":["hk01.com/zone/:id","hk01.com/"]}],"name":"Unknown","maintainers":[],"location":"zone.ts"}' />
-
-## 小红书 <Site url="xiaohongshu.com"/>
-
-### Unknown <Site url="xiaohongshu.com" size="sm" />
-
-<Route namespace="xiaohongshu" :data='{"path":"/user/:user_id/notes/fulltext","radar":[{"source":["xiaohongshu.com/user/profile/:user_id"],"target":"/user/:user_id/notes"}],"name":"Unknown","maintainers":[],"location":"notes.ts"}' />
-
-### Unknown <Site url="xiaohongshu.com" size="sm" />
-
-<Route namespace="xiaohongshu" :data='{"path":"/user/:user_id/:category","name":"Unknown","maintainers":[],"location":"user.ts"}' />
-
-## 小宇宙 <Site url="xiaoyuzhoufm.com"/>
-
-### Unknown <Site url="xiaoyuzhoufm.com/" size="sm" />
-
-<Route namespace="xiaoyuzhou" :data='{"path":"/","radar":[{"source":["xiaoyuzhoufm.com/"],"target":""}],"name":"Unknown","maintainers":["prnake","Maecenas"],"url":"xiaoyuzhoufm.com/","location":"pickup.ts"}' />
-
-## 新浪 <Site url="finance.sina.com.cn"/>
-
-### Unknown <Site url="finance.sina.com.cn" size="sm" />
-
-<Route namespace="sina" :data='{"path":"/sports/:type?","name":"Unknown","maintainers":["nczitzk"],"location":"sports.ts"}' />
 
 ## 新假期周刊 <Site url="weekendhk.com"/>
 
@@ -2613,51 +1414,11 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="stheadline" :data='{"path":"/std/realtime/:category{.+}?","name":"Unknown","maintainers":[],"location":"std/realtime.ts"}' />
 
-## 一亩三分地 <Site url="blog.1point3acres.com"/>
-
-### Unknown <Site url="instant.1point3acres.com/" size="sm" />
-
-<Route namespace="1point3acres" :data='{"path":["/post/:type?/:order?","/thread/:type?/:order?"],"name":"Unknown","maintainers":["EthanWng97","DIYgod","nczitzk"],"url":"instant.1point3acres.com/","description":"分类\n\n  | 热门帖子 | 最新帖子 |\n  | -------- | -------- |\n  | hot      | new      |\n\n  排序方式\n\n  | 最新回复 | 最新发布 |\n  | -------- | -------- |\n  |          | post     |","location":"thread.ts"}' />
-
-分类
-
-  | 热门帖子 | 最新帖子 |
-  | -------- | -------- |
-  | hot      | new      |
-
-  排序方式
-
-  | 最新回复 | 最新发布 |
-  | -------- | -------- |
-  |          | post     |
-
-### Unknown <Site url="instant.1point3acres.com/" size="sm" />
-
-<Route namespace="1point3acres" :data='{"path":["/post/:type?/:order?","/thread/:type?/:order?"],"name":"Unknown","maintainers":["EthanWng97","DIYgod","nczitzk"],"url":"instant.1point3acres.com/","description":"分类\n\n  | 热门帖子 | 最新帖子 |\n  | -------- | -------- |\n  | hot      | new      |\n\n  排序方式\n\n  | 最新回复 | 最新发布 |\n  | -------- | -------- |\n  |          | post     |","location":"thread.ts"}' />
-
-分类
-
-  | 热门帖子 | 最新帖子 |
-  | -------- | -------- |
-  | hot      | new      |
-
-  排序方式
-
-  | 最新回复 | 最新发布 |
-  | -------- | -------- |
-  |          | post     |
-
 ## 有据 <Site url="chinafactcheck.com"/>
 
 ### Unknown <Site url="chinafactcheck.com/" size="sm" />
 
 <Route namespace="chinafactcheck" :data='{"path":"/","radar":[{"source":["chinafactcheck.com/"],"target":""}],"name":"Unknown","maintainers":["kdanfly"],"url":"chinafactcheck.com/","location":"index.ts"}' />
-
-## 雨苁博客 <Site url="ddosi.org"/>
-
-### Unknown <Site url="ddosi.org/" size="sm" />
-
-<Route namespace="ddosi" :data='{"path":"/","radar":[{"source":["ddosi.org/"],"target":""}],"name":"Unknown","maintainers":["XinRoom"],"url":"ddosi.org/","location":"index.ts"}' />
 
 ## 长江大学 <Site url="yangtzeu.edu.cn"/>
 
@@ -2676,12 +1437,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### Unknown <Site url="getitfree.cn" size="sm" />
 
 <Route namespace="getitfree" :data='{"path":"/:filter{.+}?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 直播吧 <Site url="zhibo8.cc"/>
-
-### Unknown <Site url="zhibo8.cc" size="sm" />
-
-<Route namespace="zhibo8" :data='{"path":"/luxiang/:category?","radar":[{"source":["zhibo8.cc/:category/luxiang.htm"],"target":"/luxiang/:category"}],"name":"Unknown","maintainers":["TonyRL"],"location":"luxiang.ts"}' />
 
 ## 中国军网 <Site url="81rc.81.cn"/>
 
@@ -2720,16 +1475,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### Unknown <Site url="caam.org.cn" size="sm" />
 
 <Route namespace="caam" :data='{"path":"/:category?","name":"Unknown","maintainers":["nczitzk"],"location":"index.ts"}' />
-
-## 中国科学院 <Site url="www.cas.cn"/>
-
-### Unknown <Site url="www.cas.cn" size="sm" />
-
-<Route namespace="cas" :data='{"path":"/genetics/:path{.+}","name":"Unknown","maintainers":[],"location":"genetics/index.ts"}' />
-
-### Unknown <Site url="www.cas.cn" size="sm" />
-
-<Route namespace="cas" :data='{"path":"/is/:path{.+}","name":"Unknown","maintainers":[],"location":"is/index.ts"}' />
 
 ## 中国银行保险监督管理委员会 <Site url="cbirc.gov.cn"/>
 
@@ -2794,79 +1539,11 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
   | ------ | -------- | -------- | -------- | -------- | -------- | -------- |
   | short  | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
 
-## 中国国家应急广播 <Site url="cneb.gov.cn"/>
-
-### Unknown <Site url="cneb.gov.cn/yjxx" size="sm" />
-
-<Route namespace="cneb" :data='{"path":"/yjxx/*","radar":[{"source":["cneb.gov.cn/yjxx","cneb.gov.cn/"],"target":"/yjxx"}],"name":"Unknown","maintainers":[],"url":"cneb.gov.cn/yjxx","location":"yjxx.ts"}' />
-
 ## 中国炼焦行业协会 <Site url="cnljxh.com"/>
 
 ### Unknown <Site url="cnljxh.com" size="sm" />
 
 <Route namespace="cnljxh" :data='{"path":"/:category?/:id?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## 中证网 <Site url="cs.com.cn"/>
-
-### Unknown <Site url="cs.com.cn" size="sm" />
-
-<Route namespace="cs" :data='{"path":["/news/zzkx","/zzkx"],"name":"Unknown","maintainers":[],"location":"zzkx.ts"}' />
-
-### Unknown <Site url="cs.com.cn" size="sm" />
-
-<Route namespace="cs" :data='{"path":["/news/zzkx","/zzkx"],"name":"Unknown","maintainers":[],"location":"zzkx.ts"}' />
-
-### 栏目 <Site url="cs.com.cn" size="sm" />
-
-<Route namespace="cs" :data='{"path":"/:category?","name":"栏目","parameters":{"category":"分类，见下表，默认为首页"},"maintainers":["nczitzk"],"description":"| 要闻 | 公司 | 市场 | 基金 |\n    | ---- | ---- | ---- | ---- |\n    | xwzx | ssgs | gppd | tzjj |\n\n    | 科创 | 产经   | 期货     | 海外   |\n    | ---- | ------ | -------- | ------ |\n    | 5g   | cj2020 | zzqh2020 | hw2020 |\n\n    <details>\n      <summary>更多栏目</summary>\n\n      #### 要闻\n\n      | 财经要闻 | 观点评论 | 民生消费  |\n      | -------- | -------- | --------- |\n      | xwzx/hg  | xwzx/jr  | xwzx/msxf |\n\n      #### 公司\n\n      | 公司要闻  | 公司深度  | 公司巡礼  |\n      | --------- | --------- | --------- |\n      | ssgs/gsxw | ssgs/gssd | ssgs/gsxl |\n\n      #### 市场\n\n      | A 股市场  | 港股资讯  | 债市研究  | 海外报道  | 期货报道  |\n      | --------- | --------- | --------- | --------- | --------- |\n      | gppd/gsyj | gppd/ggzx | gppd/zqxw | gppd/hwbd | gppd/qhbd |\n\n      #### 基金\n\n      | 基金动态  | 基金视点  | 基金持仓  | 私募基金  | 基民学苑  |\n      | --------- | --------- | --------- | --------- | --------- |\n      | tzjj/jjdt | tzjj/jjks | tzjj/jjcs | tzjj/smjj | tzjj/tjdh |\n\n      #### 机构\n\n      | 券商 | 银行 | 保险 |\n      | ---- | ---- | ---- |\n      | qs   | yh   | bx   |\n\n      #### 其他\n\n      | 中证快讯 7x24 | IPO 鉴真 | 公司能见度 |\n      | ------------- | -------- | ---------- |\n      | sylm/jsbd     | yc/ipojz | yc/gsnjd   |\n    </details>","location":"index.ts"}' />
-
-| 要闻 | 公司 | 市场 | 基金 |
-    | ---- | ---- | ---- | ---- |
-    | xwzx | ssgs | gppd | tzjj |
-
-    | 科创 | 产经   | 期货     | 海外   |
-    | ---- | ------ | -------- | ------ |
-    | 5g   | cj2020 | zzqh2020 | hw2020 |
-
-    <details>
-      <summary>更多栏目</summary>
-
-      #### 要闻
-
-      | 财经要闻 | 观点评论 | 民生消费  |
-      | -------- | -------- | --------- |
-      | xwzx/hg  | xwzx/jr  | xwzx/msxf |
-
-      #### 公司
-
-      | 公司要闻  | 公司深度  | 公司巡礼  |
-      | --------- | --------- | --------- |
-      | ssgs/gsxw | ssgs/gssd | ssgs/gsxl |
-
-      #### 市场
-
-      | A 股市场  | 港股资讯  | 债市研究  | 海外报道  | 期货报道  |
-      | --------- | --------- | --------- | --------- | --------- |
-      | gppd/gsyj | gppd/ggzx | gppd/zqxw | gppd/hwbd | gppd/qhbd |
-
-      #### 基金
-
-      | 基金动态  | 基金视点  | 基金持仓  | 私募基金  | 基民学苑  |
-      | --------- | --------- | --------- | --------- | --------- |
-      | tzjj/jjdt | tzjj/jjks | tzjj/jjcs | tzjj/smjj | tzjj/tjdh |
-
-      #### 机构
-
-      | 券商 | 银行 | 保险 |
-      | ---- | ---- | ---- |
-      | qs   | yh   | bx   |
-
-      #### 其他
-
-      | 中证快讯 7x24 | IPO 鉴真 | 公司能见度 |
-      | ------------- | -------- | ---------- |
-      | sylm/jsbd     | yc/ipojz | yc/gsnjd   |
-    </details>
 
 ## 中国驻外使领馆 <Site url="ca.china-embassy.org"/>
 
@@ -2983,224 +1660,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="embassy" :data='{"path":"/:country/:city?","name":"Unknown","maintainers":["HenryQW"],"location":"index.ts"}' />
 
-## 中国人民银行 <Site url="kjt.ah.gov.cn"/>
-
-<details>
-  <summary>*业务咨询* 和 *投诉建议* 可用的站点参数</summary>
-
-  | 上海市   | 北京市  | 天津市  | 河北省 |
-  | -------- | ------- | ------- | ------ |
-  | shanghai | beijing | tianjin | hebei  |
-
-  | 山西省 | 内蒙古自治区 | 辽宁省   | 吉林省 |
-  | ------ | ------------ | -------- | ------ |
-  | shanxi | neimenggu    | liaoning | jilin  |
-
-  | 黑龙江省     | 江苏省  | 浙江省   | 安徽省 |
-  | ------------ | ------- | -------- | ------ |
-  | heilongjiang | jiangsu | zhejiang | anhui  |
-
-  | 福建省 | 江西省  | 山东省   | 河南省 |
-  | ------ | ------- | -------- | ------ |
-  | fujian | jiangxi | shandong | henan  |
-
-  | 湖北省 | 湖南省 | 广东省    | 广西壮族自治区 |
-  | ------ | ------ | --------- | -------------- |
-  | hubei  | hunan  | guangdong | guangxi        |
-
-  | 海南省 | 重庆市    | 四川省  | 贵州省  |
-  | ------ | --------- | ------- | ------- |
-  | hainan | chongqing | sichuan | guizhou |
-
-  | 云南省 | 西藏自治区 | 陕西省  | 甘肃省 |
-  | ------ | ---------- | ------- | ------ |
-  | yunnan | xizang     | shaanxi | gansu  |
-
-  | 青海省  | 宁夏回族自治区 | 新疆维吾尔自治区 | 大连市 |
-  | ------- | -------------- | ---------------- | ------ |
-  | qinghai | ningxia        | xinjiang         | dalian |
-
-  | 宁波市 | 厦门市 | 青岛市  | 深圳市   |
-  | ------ | ------ | ------- | -------- |
-  | ningbo | xiamen | qingdao | shenzhen |
-</details>
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/anhui/kjt/*","name":"Unknown","maintainers":[],"location":"anhui/kjt.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/beijing/bphc/*","name":"Unknown","maintainers":[],"location":"beijing/bphc/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/beijing/kw/:channel","name":"Unknown","maintainers":["Fatpandac"],"location":"beijing/kw/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/cac/*","name":"Unknown","maintainers":[],"location":"cac/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/ccdi/*","name":"Unknown","maintainers":[],"location":"ccdi/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/chinamine-safety/xw/:category{.+}?","name":"Unknown","maintainers":[],"location":"chinamine-safety/xw.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/chinamine-safety/zfxxgk/:category{.+}?","name":"Unknown","maintainers":[],"location":"chinamine-safety/zfxxgk.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/chongqing/gzw/:category{.+}?","name":"Unknown","maintainers":[],"location":"chongqing/gzw.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/cmse/*","name":"Unknown","maintainers":[],"location":"cmse/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/cnnic/*","name":"Unknown","maintainers":[],"location":"cnnic/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/csrc/news/:suffix{.+}?","name":"Unknown","maintainers":[],"location":"csrc/news.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/dianbai/*","name":"Unknown","maintainers":[],"location":"dianbai/dianbai.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/gaozhou/*","name":"Unknown","maintainers":[],"location":"gaozhou/gaozhou.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/gz/:channel/:category","name":"Unknown","maintainers":[],"location":"gz/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/huazhou/*","name":"Unknown","maintainers":[],"location":"huazhou/huazhou.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/maoming/*","name":"Unknown","maintainers":[],"location":"maoming/maoming.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":["/fmprc/:category?","/mfa/wjdt/:category?"],"name":"Unknown","maintainers":["nicolaszf","nczitzk"],"description":"| 分类       | category |\n  | ---------- | -------- |\n  | 领导人活动 | gjldrhd  |\n  | 外事日程   | wsrc     |\n  | 部领导活动 | wjbxw    |\n  | 业务动态   | sjxw     |\n  | 发言人表态 | fyrbt    |\n  | 吹风会     | cfhsl    |\n  | 大使任免   | dsrm     |\n  | 驻外报道   | zwbd     |\n  | 政策解读   | zcjd     |","location":"mfa/wjdt.ts"}' />
-
-| 分类       | category |
-  | ---------- | -------- |
-  | 领导人活动 | gjldrhd  |
-  | 外事日程   | wsrc     |
-  | 部领导活动 | wjbxw    |
-  | 业务动态   | sjxw     |
-  | 发言人表态 | fyrbt    |
-  | 吹风会     | cfhsl    |
-  | 大使任免   | dsrm     |
-  | 驻外报道   | zwbd     |
-  | 政策解读   | zcjd     |
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":["/fmprc/:category?","/mfa/wjdt/:category?"],"name":"Unknown","maintainers":["nicolaszf","nczitzk"],"description":"| 分类       | category |\n  | ---------- | -------- |\n  | 领导人活动 | gjldrhd  |\n  | 外事日程   | wsrc     |\n  | 部领导活动 | wjbxw    |\n  | 业务动态   | sjxw     |\n  | 发言人表态 | fyrbt    |\n  | 吹风会     | cfhsl    |\n  | 大使任免   | dsrm     |\n  | 驻外报道   | zwbd     |\n  | 政策解读   | zcjd     |","location":"mfa/wjdt.ts"}' />
-
-| 分类       | category |
-  | ---------- | -------- |
-  | 领导人活动 | gjldrhd  |
-  | 外事日程   | wsrc     |
-  | 部领导活动 | wjbxw    |
-  | 业务动态   | sjxw     |
-  | 发言人表态 | fyrbt    |
-  | 吹风会     | cfhsl    |
-  | 大使任免   | dsrm     |
-  | 驻外报道   | zwbd     |
-  | 政策解读   | zcjd     |
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/mgs/*","name":"Unknown","maintainers":[],"location":"mgs/mgs.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/mmht/*","name":"Unknown","maintainers":[],"location":"mmht/mmht.ts"}' />
-
-### Unknown <Site url="moa.gov.cn/" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/moa/:suburl{.+}","radar":[{"source":["moa.gov.cn/"],"target":"/moa/:suburl"}],"name":"Unknown","maintainers":[],"url":"moa.gov.cn/","location":"moa/moa.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":["/moa/sjzxfb/:category{.+}?","/moa/zdscxx/:category{.+}?"],"name":"Unknown","maintainers":[],"location":"moa/zdscxx.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":["/moa/sjzxfb/:category{.+}?","/moa/zdscxx/:category{.+}?"],"name":"Unknown","maintainers":[],"location":"moa/zdscxx.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/mofcom/article/:suffix{.+}","name":"Unknown","maintainers":[],"location":"mofcom/article.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/mot/:category{.+}?","name":"Unknown","maintainers":[],"location":"mot/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/ndrc/fggz/:category{.+}?","name":"Unknown","maintainers":[],"location":"ndrc/fggz.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/ndrc/xwdt/:category{.+}?","name":"Unknown","maintainers":[],"location":"ndrc/xwdt.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/nifdc/:path{.+}?","name":"Unknown","maintainers":[],"location":"nifdc/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/nmpa/*","name":"Unknown","maintainers":[],"location":"nmpa/generic.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/nopss/*","name":"Unknown","maintainers":[],"location":"nopss/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/nsfc/*","name":"Unknown","maintainers":[],"location":"nsfc/index.ts"}' />
-
-### Unknown <Site url="pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/pbc/zcyj","radar":[{"source":["pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html"]}],"name":"Unknown","maintainers":["Fatpandac"],"url":"pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html","location":"pbc/zcyj.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/sasac/:path{.+}","name":"Unknown","maintainers":[],"location":"sasac/generic.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/sdb/*","name":"Unknown","maintainers":[],"location":"sdb/sdb.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/shanghai/yjj/*","name":"Unknown","maintainers":[],"location":"shanghai/yjj/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/stats/*","name":"Unknown","maintainers":[],"location":"stats/index.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/suzhou/fg/:category{.+}?","name":"Unknown","maintainers":[],"location":"suzhou/fg.ts"}' />
-
-### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
-
-<Route namespace="gov" :data='{"path":"/xinyi/*","name":"Unknown","maintainers":[],"location":"xinyi/xinyi.ts"}' />
-
 ## 中国工商银行 <Site url="icbc.com.cn"/>
 
 ### 外汇牌价 <Site url="icbc.com.cn/column/1438058341489590354.html" size="sm" />
@@ -3249,21 +1708,9 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="xyzrank" :data='{"path":"/:category?","radar":[{"source":["xyzrank.com/"],"target":""}],"name":"Unknown","maintainers":[],"url":"xyzrank.com/","location":"index.ts"}' />
 
-## 字节点击 <Site url="byteclicks.com"/>
-
-### Unknown <Site url="byteclicks.com/" size="sm" />
-
-<Route namespace="byteclicks" :data='{"path":"/","radar":[{"source":["byteclicks.com/"],"target":""}],"name":"Unknown","maintainers":["TonyRL"],"url":"byteclicks.com/","location":"index.ts"}' />
-
 ## 综艺秀 <Site url="zyshow.net"/>
 
 ### Unknown <Site url="zyshow.net" size="sm" />
 
 <Route namespace="zyshow" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
-
-## アニメ新番組 <Site url="bangumi.moe"/>
-
-### Unknown <Site url="bangumi.moe/" size="sm" />
-
-<Route namespace="bangumi" :data='{"path":"/moe/*","radar":[{"source":["bangumi.moe/"],"target":"/moe"}],"name":"Unknown","maintainers":[],"url":"bangumi.moe/","location":"moe/index.ts"}' />
 

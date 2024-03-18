@@ -12,6 +12,10 @@
 
 ## 8KCosplay <Site url="8kcosplay.com"/>
 
+### Unknown <Site url="8kcosplay.com/" size="sm" />
+
+<Route namespace="8kcos" :data='{"path":"/cat/:cat{.+}?","radar":[{"source":["8kcosplay.com/"],"target":""}],"name":"Unknown","maintainers":[],"url":"8kcosplay.com/","location":"cat.ts"}' />
+
 ### 标签 <Site url="8kcosplay.com/" size="sm" />
 
 <Route namespace="8kcos" :data='{"path":"/tag/:tag","categories":["picture"],"example":"/8kcos/tag/cosplay","parameters":{"tag":"标签名"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["8kcosplay.com/tag/:tag"]}],"name":"标签","maintainers":["KotoriK"],"url":"8kcosplay.com/","location":"tag.ts"}' />
@@ -212,6 +216,10 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 <Route namespace="bjp" :data='{"path":"/apod","categories":["picture"],"example":"/bjp/apod","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bjp.org.cn/APOD/today.shtml","bjp.org.cn/APOD/list.shtml","bjp.org.cn/"]}],"name":"每日一图","maintainers":["HenryQW"],"url":"bjp.org.cn/APOD/today.shtml","location":"apod.ts"}' />
 
 ## 国家地理 <Site url="nationalgeographic.com"/>
+
+### Unknown <Site url="nationalgeographic.com" size="sm" />
+
+<Route namespace="natgeo" :data='{"path":"/dailyselection","name":"Unknown","maintainers":["OrangeEd1t"],"location":"dailyselection.ts"}' />
 
 ### 每日一图 <Site url="nationalgeographic.com/photo-of-the-day/*" size="sm" />
 

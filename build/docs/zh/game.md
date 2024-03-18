@@ -10,7 +10,19 @@
   | -------- | -------- | -------- | -------- | ----------- |
   |          | game     | acg      | next     | news_36_1 |
 
+### 游戏资讯 <Site url="3dmgame.com" size="sm" />
+
+<Route namespace="3dmgame" :data='{"path":"/:name/:type?","radar":[{"source":["3dmgame.com/games/:name/:type"]}],"name":"游戏资讯","categories":["game"],"maintainers":["sinchang","jacky2001114","HenryQW"],"location":"game.ts"}' />
+
 ## 4Gamers <Site url="www.4gamers.com.tw"/>
+
+### Unknown <Site url="www.4gamers.com.tw/news" size="sm" />
+
+<Route namespace="4gamers" :data='{"path":["/","/category/:category"],"radar":[{"source":["www.4gamers.com.tw/news","www.4gamers.com.tw/"],"target":""}],"name":"Unknown","maintainers":["TonyRL"],"url":"www.4gamers.com.tw/news","location":"category.ts"}' />
+
+### Unknown <Site url="www.4gamers.com.tw/news" size="sm" />
+
+<Route namespace="4gamers" :data='{"path":["/","/category/:category"],"radar":[{"source":["www.4gamers.com.tw/news","www.4gamers.com.tw/"],"target":""}],"name":"Unknown","maintainers":["TonyRL"],"url":"www.4gamers.com.tw/news","location":"category.ts"}' />
 
 ### 标签 <Site url="www.4gamers.com.tw/news" size="sm" />
 
@@ -204,6 +216,10 @@ Region
 
 ## indienova 独立游戏 <Site url="indienova.com"/>
 
+### Unknown <Site url="indienova.com" size="sm" />
+
+<Route namespace="indienova" :data='{"path":"/gamedb/recent","name":"Unknown","maintainers":["TonyRL"],"location":"gamedb.ts"}' />
+
 ### 会员开发游戏库 <Site url="indienova.com/usergames" size="sm" />
 
 <Route namespace="indienova" :data='{"path":"/usergames","categories":["game"],"example":"/indienova/usergames","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["indienova.com/usergames","indienova.com/"]}],"name":"会员开发游戏库","maintainers":["TonyRL"],"url":"indienova.com/usergames","location":"usergames.ts"}' />
@@ -272,6 +288,10 @@ Region
 
 <Route namespace="itch" :data='{"path":"/posts/:topic/:id","categories":["game"],"example":"/itch/posts/9539/introduce-yourself","parameters":{"topic":"Topic id, can be found in URL","id":"Topic name, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["itch.io/t/:topic/:id"]}],"name":"Posts","maintainers":["nczitzk"],"location":"posts.ts"}' />
 
+### Unknown <Site url="itch.io" size="sm" />
+
+<Route namespace="itch" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
+
 ## JUMP <Site url="switch.jumpvg.com"/>
 
 ### 游戏折扣 <Site url="switch.jumpvg.com" size="sm" />
@@ -299,6 +319,10 @@ Region
 ### Dota2 战队最近比赛结果 <Site url="liquipedia.net" size="sm" />
 
 <Route namespace="liquipedia" :data='{"path":"/dota2/matches/:id","categories":["game"],"example":"/liquipedia/dota2/matches/Team_Aster","parameters":{"id":"战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["liquipedia.net/dota2/:id"]}],"name":"Dota2 战队最近比赛结果","maintainers":["wzekin"],"location":"dota2-matches.ts"}' />
+
+### Unknown <Site url="liquipedia.net" size="sm" />
+
+<Route namespace="liquipedia" :data='{"path":"/counterstrike/matches/:team","radar":[{"source":["liquipedia.net/counterstrike/:id/Matches","liquipedia.net/dota2/:id"],"target":"/counterstrike/matches/:id"}],"name":"Unknown","maintainers":["CookiePieWw"],"location":"cs-matches.ts"}' />
 
 ## Minecraft <Site url="minecraft.net"/>
 
@@ -331,6 +355,22 @@ Region
 ### Switch System Update（Japan） <Site url="nintendo.co.jp/support/switch/system_update/index.html" size="sm" />
 
 <Route namespace="nintendo" :data='{"path":"/system-update","categories":["game"],"example":"/nintendo/system-update","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nintendo.co.jp/support/switch/system_update/index.html","nintendo.co.jp/"]}],"name":"Switch System Update（Japan）","maintainers":["hoilc"],"url":"nintendo.co.jp/support/switch/system_update/index.html","location":"system-update.ts"}' />
+
+### Unknown <Site url="nintendoswitch.com.cn/software" size="sm" />
+
+<Route namespace="nintendo" :data='{"path":"/eshop/cn","radar":[{"source":["nintendoswitch.com.cn/software","nintendoswitch.com.cn/"]}],"name":"Unknown","maintainers":[],"url":"nintendoswitch.com.cn/software","location":"eshop-cn.ts"}' />
+
+### Unknown <Site url="nintendo.com.hk/software/switch" size="sm" />
+
+<Route namespace="nintendo" :data='{"path":"/eshop/hk","radar":[{"source":["nintendo.com.hk/software/switch","nintendo.com.hk/"]}],"name":"Unknown","maintainers":[],"url":"nintendo.com.hk/software/switch","location":"eshop-hk.ts"}' />
+
+### Unknown <Site url="nintendo.co.jp/software/switch/index.html" size="sm" />
+
+<Route namespace="nintendo" :data='{"path":"/eshop/jp","radar":[{"source":["nintendo.co.jp/software/switch/index.html","nintendo.co.jp/"]}],"name":"Unknown","maintainers":[],"url":"nintendo.co.jp/software/switch/index.html","location":"eshop-jp.ts"}' />
+
+### Unknown <Site url="nintendo.com/store/games" size="sm" />
+
+<Route namespace="nintendo" :data='{"path":"/eshop/us","radar":[{"source":["nintendo.com/store/games","nintendo.com/"]}],"name":"Unknown","maintainers":[],"url":"nintendo.com/store/games","location":"eshop-us.ts"}' />
 
 ### 首页资讯（中国） <Site url="nintendoswitch.com.cn/" size="sm" />
 
@@ -444,6 +484,14 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 <Route namespace="xboxfan" :data='{"path":"/news","categories":["game"],"example":"/xboxfan/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["xboxfan.com/"]}],"name":"资讯","maintainers":["XXY233"],"url":"xboxfan.com/","location":"news.ts"}' />
 
 ## 旅法师营地 <Site url="www.iyingdi.com"/>
+
+### Unknown <Site url="www.iyingdi.com" size="sm" />
+
+<Route namespace="lfsyd" :data='{"path":"/tag/:tagId?","radar":[{"source":["mob.iyingdi.com/fine/:tagId"],"target":"/tag/:tagId"}],"name":"Unknown","maintainers":["auto-bot-ty"],"location":"tag.ts"}' />
+
+### Unknown <Site url="www.iyingdi.com" size="sm" />
+
+<Route namespace="lfsyd" :data='{"path":"/user/:id?","radar":[{"source":["www.iyingdi.com/tz/people/:id","www.iyingdi.com/tz/people/:id/*"],"target":"/user/:id"}],"name":"Unknown","maintainers":["auto-bot-ty"],"location":"user.ts"}' />
 
 ### 首页 <Site url="www.iyingdi.com/" size="sm" />
 

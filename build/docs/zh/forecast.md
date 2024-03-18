@@ -70,6 +70,10 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 配合 [IFTTT](https://ifttt.com/) Applets [邮件通知](https://ifttt.com/applets/SEvmDVKY-) 使用实现自动通知效果.
 
+### Unknown <Site url="whwater.com/IWater.shtml" size="sm" />
+
+<Route namespace="tingshuitz" :data='{"path":"/wuhan/:channelId?","radar":[{"source":["whwater.com/IWater.shtml","whwater.com/"],"target":"/wuhan"}],"name":"Unknown","maintainers":[],"url":"whwater.com/IWater.shtml","location":"wuhan.ts"}' />
+
 ### 大连市 <Site url="swj.dl.gov.cn/col/col4296/index.html" size="sm" />
 
 <Route namespace="tingshuitz" :data='{"path":"/dalian","categories":["forecast"],"example":"/tingshuitz/dalian","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["swj.dl.gov.cn/col/col4296/index.html","swj.dl.gov.cn/"]}],"name":"大连市","maintainers":["DIYgod"],"url":"swj.dl.gov.cn/col/col4296/index.html","location":"dalian.ts"}' />
@@ -153,6 +157,10 @@ Please skip the local service area code for `name`, for example `https://outage.
   :::
 
 ## 中国国家应急广播 <Site url="cneb.gov.cn"/>
+
+### Unknown <Site url="cneb.gov.cn/yjxx" size="sm" />
+
+<Route namespace="cneb" :data='{"path":"/yjxx/*","radar":[{"source":["cneb.gov.cn/yjxx","cneb.gov.cn/"],"target":"/yjxx"}],"name":"Unknown","maintainers":[],"url":"cneb.gov.cn/yjxx","location":"yjxx.ts"}' />
 
 ### 应急新闻 <Site url="cneb.gov.cn" size="sm" />
 

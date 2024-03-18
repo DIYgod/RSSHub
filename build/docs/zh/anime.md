@@ -27,6 +27,10 @@
   | -------- | ------- | -------- | ------- | -------- |
   | all      | oneDay  | threeDay | oneWeek | oneMonth |
 
+### 用户投稿 <Site url="www.acfun.cn" size="sm" />
+
+<Route namespace="acfun" :data='{"path":"/user/video/:uid","radar":[{"source":["www.acfun.cn/u/:id"],"target":"/user/video/:id"}],"name":"用户投稿","parameters":{"uid":"用户 UID"},"categories":["anime"],"maintainers":["wdssmq"],"location":"video.ts"}' />
+
 ## ACG17 <Site url="acg17.com"/>
 
 ### 全部文章 <Site url="acg17.com/post" size="sm" />
@@ -88,6 +92,10 @@
 ### Discounted Works <Site url="dlsite.com" size="sm" />
 
 <Route namespace="dlsite" :data='{"path":"/campaign/:type/:free?","categories":["anime"],"example":"/dlsite/campaign/home","parameters":{"type":"Type, see table above","free":"Free only, empty means false, other value means true"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Discounted Works","maintainers":["cssxsh"],"location":"campaign.ts"}' />
+
+### Unknown <Site url="dlsite.com" size="sm" />
+
+<Route namespace="dlsite" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
 
 ## Eventernote <Site url="www.eventernote.com"/>
 
@@ -157,6 +165,10 @@
 
 ## iwara <Site url="ecchi.iwara.tv"/>
 
+### Unknown <Site url="ecchi.iwara.tv" size="sm" />
+
+<Route namespace="iwara" :data='{"path":"/users/:username?/:type?","name":"Unknown","maintainers":["Fatpandac"],"location":"index.ts"}' />
+
 ### User Subscriptions <Site url="ecchi.iwara.tv/" size="sm" />
 
 <Route namespace="iwara" :data='{"path":"/subscriptions","categories":["anime"],"example":"/iwara/subscriptions","parameters":{},"features":{"requireConfig":[{"name":"IWARA_USERNAME","description":""},{"name":"IWARA_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ecchi.iwara.tv/"]}],"name":"User Subscriptions","maintainers":["FeCCC"],"url":"ecchi.iwara.tv/","description":":::warning\n  This route requires username and password, therefore it&#39;s only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.\n  :::","location":"subscriptions.ts"}' />
@@ -198,6 +210,10 @@ Sources
   | Category Name       | 全てのニュース        | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | その他 | キャンペーン |
   | ------------------- | --------------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
   | `category`parameter | <u>*No parameter*</u> | music    | anime_movie   | cast_movie      | theater | onair             | radio                 | event             | books  | goods  | game   | media    | local      | other  | campaign     |
+
+### Unknown <Site url="www.lovelive-anime.jp" size="sm" />
+
+<Route namespace="lovelive-anime" :data='{"path":"/schedules/:serie?/:category?","name":"Unknown","maintainers":[],"location":"schedules.ts"}' />
 
 ## Mox.moe <Site url="mox.moe"/>
 
@@ -255,6 +271,10 @@ Sources
 
 <Route namespace="qoo-app" :data='{"path":"/notes/:lang?/note/:id","categories":["anime"],"example":"/qoo-app/notes/en/note/2329113","parameters":{"lang":"Language, see the table above, empty means `中文`","id":"Note ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Note Comments","maintainers":["TonyRL"],"location":"notes/note.ts"}' />
 
+### Unknown <Site url="apps.qoo-app.com" size="sm" />
+
+<Route namespace="qoo-app" :data='{"path":"/notes/:lang?/topic/:topic","name":"Unknown","maintainers":["TonyRL"],"location":"notes/topic.ts"}' />
+
 ### User Notes <Site url="apps.qoo-app.com" size="sm" />
 
 <Route namespace="qoo-app" :data='{"path":"/notes/:lang?/user/:uid","categories":["anime"],"example":"/qoo-app/notes/en/user/35399143","parameters":{"lang":"Language, see the table above, empty means `中文`","uid":"User ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User Notes","maintainers":["TonyRL"],"location":"notes/user.ts"}' />
@@ -276,6 +296,10 @@ Sources
 <Route namespace="thwiki" :data='{"path":"/calendar/:before?/:after?","categories":["anime"],"example":"/thwiki/calendar","parameters":{"before":"From how many days ago (default 30)","after":"To how many days after (default 30)"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["thwiki.cc/","thwiki.cc/日程表"],"target":"/calendar"}],"name":"Calendar","maintainers":["aether17"],"url":"thwiki.cc/","location":"index.ts"}' />
 
 ## VCB-Studio <Site url="vcb-s.com"/>
+
+### Unknown <Site url="vcb-s.com/" size="sm" />
+
+<Route namespace="vcb-s" :data='{"path":"/","radar":[{"source":["vcb-s.com/"],"target":""}],"name":"Unknown","maintainers":["cxfksword"],"url":"vcb-s.com/","location":"index.ts"}' />
 
 ### 分类文章 <Site url="vcb-s.com/" size="sm" />
 
@@ -489,6 +513,10 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ## 腾讯新闻较真查证平台 <Site url="ac.qq.com"/>
 
+### Unknown <Site url="ac.qq.com" size="sm" />
+
+<Route namespace="qq" :data='{"path":"/ac/comic/:id?","radar":[{"source":["ac.qq.com/Comic/ComicInfo/id/:id","ac.qq.com/"],"target":"/ac/comic/:id"}],"name":"Unknown","maintainers":[],"location":"ac/comic.ts"}' />
+
 ### 排行榜 <Site url="ac.qq.com" size="sm" />
 
 <Route namespace="qq" :data='{"path":"/ac/rank/:type?/:time?","categories":["anime"],"example":"/qq/ac/rank","parameters":{"type":"分类，见下表，默认为月票榜","time":"时间，`cur` 为当周、`prev` 为上周"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ac.qq.com/Rank/comicRank/type/:type","ac.qq.com/"]}],"name":"排行榜","maintainers":["nczitzk"],"description":"| 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |\n  | ------ | ------ | ------ | ------ | ------ | ------ | ------ |\n  | mt     | rise   | new    | pay    | top    | male   | female |\n\n  :::tip\n  `time` 参数仅在 `type` 参数选为 **月票榜** 的时候生效。\n  :::","location":"ac/rank.ts"}' />
@@ -516,6 +544,10 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
   | all      | news | column |
 
 ## アニメ新番組 <Site url="bangumi.moe"/>
+
+### Unknown <Site url="bangumi.moe/" size="sm" />
+
+<Route namespace="bangumi" :data='{"path":"/moe/*","radar":[{"source":["bangumi.moe/"],"target":"/moe"}],"name":"Unknown","maintainers":[],"url":"bangumi.moe/","location":"moe/index.ts"}' />
 
 ### 成员关注动画榜 <Site url="bgm.tv/anime" size="sm" />
 

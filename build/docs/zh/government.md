@@ -18,6 +18,10 @@ Language
   | ------- | -------- | -------- |
   | english | chs      | tc_chi  |
 
+### Unknown <Site url="dh.gov.hk/" size="sm" />
+
+<Route namespace="hongkong" :data='{"path":"/chp/:category?/:language?","radar":[{"source":["dh.gov.hk/"]}],"name":"Unknown","maintainers":["nczitzk"],"url":"dh.gov.hk/","location":"chp.ts"}' />
+
 ## Hong Kong Independent Commission Against Corruption 香港廉政公署 <Site url="icac.org.hk"/>
 
 ### Press Releases <Site url="icac.org.hk" size="sm" />
@@ -291,6 +295,182 @@ Language
 ### Immigration and Citizenship - News <Site url="kjt.ah.gov.cn" size="sm" />
 
 <Route namespace="gov" :data='{"path":"/immiau/news","categories":["government"],"example":"/gov/immiau/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Immigration and Citizenship - News","maintainers":["liu233w"],"location":"immiau/news.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/anhui/kjt/*","name":"Unknown","maintainers":[],"location":"anhui/kjt.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/beijing/bphc/*","name":"Unknown","maintainers":[],"location":"beijing/bphc/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/beijing/kw/:channel","name":"Unknown","maintainers":["Fatpandac"],"location":"beijing/kw/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/cac/*","name":"Unknown","maintainers":[],"location":"cac/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/ccdi/*","name":"Unknown","maintainers":[],"location":"ccdi/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/chinamine-safety/xw/:category{.+}?","name":"Unknown","maintainers":[],"location":"chinamine-safety/xw.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/chinamine-safety/zfxxgk/:category{.+}?","name":"Unknown","maintainers":[],"location":"chinamine-safety/zfxxgk.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/chongqing/gzw/:category{.+}?","name":"Unknown","maintainers":[],"location":"chongqing/gzw.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/cmse/*","name":"Unknown","maintainers":[],"location":"cmse/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/cnnic/*","name":"Unknown","maintainers":[],"location":"cnnic/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/csrc/news/:suffix{.+}?","name":"Unknown","maintainers":[],"location":"csrc/news.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/dianbai/*","name":"Unknown","maintainers":[],"location":"dianbai/dianbai.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/gaozhou/*","name":"Unknown","maintainers":[],"location":"gaozhou/gaozhou.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/gz/:channel/:category","name":"Unknown","maintainers":[],"location":"gz/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/huazhou/*","name":"Unknown","maintainers":[],"location":"huazhou/huazhou.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/maoming/*","name":"Unknown","maintainers":[],"location":"maoming/maoming.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":["/fmprc/:category?","/mfa/wjdt/:category?"],"name":"Unknown","maintainers":["nicolaszf","nczitzk"],"description":"| 分类       | category |\n  | ---------- | -------- |\n  | 领导人活动 | gjldrhd  |\n  | 外事日程   | wsrc     |\n  | 部领导活动 | wjbxw    |\n  | 业务动态   | sjxw     |\n  | 发言人表态 | fyrbt    |\n  | 吹风会     | cfhsl    |\n  | 大使任免   | dsrm     |\n  | 驻外报道   | zwbd     |\n  | 政策解读   | zcjd     |","location":"mfa/wjdt.ts"}' />
+
+| 分类       | category |
+  | ---------- | -------- |
+  | 领导人活动 | gjldrhd  |
+  | 外事日程   | wsrc     |
+  | 部领导活动 | wjbxw    |
+  | 业务动态   | sjxw     |
+  | 发言人表态 | fyrbt    |
+  | 吹风会     | cfhsl    |
+  | 大使任免   | dsrm     |
+  | 驻外报道   | zwbd     |
+  | 政策解读   | zcjd     |
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":["/fmprc/:category?","/mfa/wjdt/:category?"],"name":"Unknown","maintainers":["nicolaszf","nczitzk"],"description":"| 分类       | category |\n  | ---------- | -------- |\n  | 领导人活动 | gjldrhd  |\n  | 外事日程   | wsrc     |\n  | 部领导活动 | wjbxw    |\n  | 业务动态   | sjxw     |\n  | 发言人表态 | fyrbt    |\n  | 吹风会     | cfhsl    |\n  | 大使任免   | dsrm     |\n  | 驻外报道   | zwbd     |\n  | 政策解读   | zcjd     |","location":"mfa/wjdt.ts"}' />
+
+| 分类       | category |
+  | ---------- | -------- |
+  | 领导人活动 | gjldrhd  |
+  | 外事日程   | wsrc     |
+  | 部领导活动 | wjbxw    |
+  | 业务动态   | sjxw     |
+  | 发言人表态 | fyrbt    |
+  | 吹风会     | cfhsl    |
+  | 大使任免   | dsrm     |
+  | 驻外报道   | zwbd     |
+  | 政策解读   | zcjd     |
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/mgs/*","name":"Unknown","maintainers":[],"location":"mgs/mgs.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/mmht/*","name":"Unknown","maintainers":[],"location":"mmht/mmht.ts"}' />
+
+### Unknown <Site url="moa.gov.cn/" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/moa/:suburl{.+}","radar":[{"source":["moa.gov.cn/"],"target":"/moa/:suburl"}],"name":"Unknown","maintainers":[],"url":"moa.gov.cn/","location":"moa/moa.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":["/moa/sjzxfb/:category{.+}?","/moa/zdscxx/:category{.+}?"],"name":"Unknown","maintainers":[],"location":"moa/zdscxx.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":["/moa/sjzxfb/:category{.+}?","/moa/zdscxx/:category{.+}?"],"name":"Unknown","maintainers":[],"location":"moa/zdscxx.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/mofcom/article/:suffix{.+}","name":"Unknown","maintainers":[],"location":"mofcom/article.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/mot/:category{.+}?","name":"Unknown","maintainers":[],"location":"mot/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/ndrc/fggz/:category{.+}?","name":"Unknown","maintainers":[],"location":"ndrc/fggz.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/ndrc/xwdt/:category{.+}?","name":"Unknown","maintainers":[],"location":"ndrc/xwdt.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/nifdc/:path{.+}?","name":"Unknown","maintainers":[],"location":"nifdc/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/nmpa/*","name":"Unknown","maintainers":[],"location":"nmpa/generic.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/nopss/*","name":"Unknown","maintainers":[],"location":"nopss/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/nsfc/*","name":"Unknown","maintainers":[],"location":"nsfc/index.ts"}' />
+
+### Unknown <Site url="pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/pbc/zcyj","radar":[{"source":["pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html"]}],"name":"Unknown","maintainers":["Fatpandac"],"url":"pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html","location":"pbc/zcyj.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/sasac/:path{.+}","name":"Unknown","maintainers":[],"location":"sasac/generic.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/sdb/*","name":"Unknown","maintainers":[],"location":"sdb/sdb.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/shanghai/yjj/*","name":"Unknown","maintainers":[],"location":"shanghai/yjj/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/stats/*","name":"Unknown","maintainers":[],"location":"stats/index.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/suzhou/fg/:category{.+}?","name":"Unknown","maintainers":[],"location":"suzhou/fg.ts"}' />
+
+### Unknown <Site url="kjt.ah.gov.cn" size="sm" />
+
+<Route namespace="gov" :data='{"path":"/xinyi/*","name":"Unknown","maintainers":[],"location":"xinyi/xinyi.ts"}' />
 
 ### 财政厅 <Site url="kjt.ah.gov.cn" size="sm" />
 

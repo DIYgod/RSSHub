@@ -96,6 +96,22 @@ The parameter id in the route is the id in the URL of the user's Google Scholar 
 
 <Route namespace="ieee" :data='{"path":"/journal/:journal/earlyaccess/:sortType?","categories":["journal"],"example":"/ieee/journal/5306045/earlyaccess","parameters":{"journal":"Issue code, the number of the `isnumber` in the URL","sortType":"Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Early Access Journal","maintainers":["5upernova-heng"],"location":"earlyaccess.ts"}' />
 
+### Unknown <Site url="www.ieee.org" size="sm" />
+
+<Route namespace="ieee" :data='{"path":["/:journal/latest/vol/:sortType?","/journal/:journal/:sortType?"],"name":"Unknown","maintainers":[],"location":"journal.ts"}' />
+
+### Unknown <Site url="www.ieee.org" size="sm" />
+
+<Route namespace="ieee" :data='{"path":["/:journal/latest/vol/:sortType?","/journal/:journal/:sortType?"],"name":"Unknown","maintainers":[],"location":"journal.ts"}' />
+
+### Unknown <Site url="www.ieee.org" size="sm" />
+
+<Route namespace="ieee" :data='{"path":["/:journal/latest/date/:sortType?","/journal/:journal/recent/:sortType?"],"name":"Unknown","maintainers":[],"location":"recent.ts"}' />
+
+### Unknown <Site url="www.ieee.org" size="sm" />
+
+<Route namespace="ieee" :data='{"path":["/:journal/latest/date/:sortType?","/journal/:journal/recent/:sortType?"],"name":"Unknown","maintainers":[],"location":"recent.ts"}' />
+
 ## IEEE Computer Society <Site url="ieee-security.org"/>
 
 ### IEEE Symposium on Security and Privacy <Site url="ieee-security.org/TC/SP-Index.html" size="sm" />
@@ -164,6 +180,10 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 :::warning
   Only some journals are supported.
   :::
+
+### Unknown <Site url="nature.com/latest-news" size="sm" />
+
+<Route namespace="nature" :data='{"path":"/news-and-comment/:journal?","radar":[{"source":["nature.com/latest-news","nature.com/news","nature.com/"],"target":"/news"}],"name":"Unknown","maintainers":["y9c","TonyRL"],"url":"nature.com/latest-news","location":"news-and-comment.ts"}' />
 
 ## National Bureau of Economic Research <Site url="nber.org"/>
 

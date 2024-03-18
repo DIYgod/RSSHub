@@ -1,5 +1,93 @@
 # 🔊 音视频
 
+## 141JAV <Site url="141jav.com"/>
+
+:::tip
+官方提供的订阅源不支持 BT 下载订阅，地址为 [https://141jav.com/feeds/](https://141jav.com/feeds/)
+:::
+
+### 通用 <Site url="141jav.com" size="sm" />
+
+<Route namespace="141jav" :data='{"path":"/{.*}?","categories":["multimedia"],"name":"通用","maintainers":["cgkings","nczitzk"],"description":"**类型**\n\n    | 最新 | 热门    | 随机   | 指定演员 | 指定标签 |\n    | ---- | ------- | ------ | -------- | -------- |\n    | new  | popular | random | actress  | tag      |\n\n    **关键词**\n\n    | 空 | 日期范围    | 演员名       | 标签名         |\n    | -- | ----------- | ------------ | -------------- |\n    |    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards |\n\n    **示例说明**\n\n    -   `/141jav/new`\n\n        仅当类型为 `new` `popular` 或 `random` 时关键词为 **空**\n\n    -   `/141jav/popular/30`\n\n        `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一，分别对应 **7 天**、**30 天** 或 **60 天内**\n\n    -   `/141jav/actress/Yua%20Mikami`\n\n        `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141jav.com/actress) 演员单页链接中获取\n\n    -   `/141jav/tag/Adult%20Awards`\n\n        `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141jav.com/tag) 标签单页链接中获取\n\n    -   `/141jav/date/2020/07/30`\n\n        `date` 类型的关键词必须填写 **日期**","location":"index.ts"}' />
+
+**类型**
+
+    | 最新 | 热门    | 随机   | 指定演员 | 指定标签 |
+    | ---- | ------- | ------ | -------- | -------- |
+    | new  | popular | random | actress  | tag      |
+
+    **关键词**
+
+    | 空 | 日期范围    | 演员名       | 标签名         |
+    | -- | ----------- | ------------ | -------------- |
+    |    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards |
+
+    **示例说明**
+
+    -   `/141jav/new`
+
+        仅当类型为 `new` `popular` 或 `random` 时关键词为 **空**
+
+    -   `/141jav/popular/30`
+
+        `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一，分别对应 **7 天**、**30 天** 或 **60 天内**
+
+    -   `/141jav/actress/Yua%20Mikami`
+
+        `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141jav.com/actress) 演员单页链接中获取
+
+    -   `/141jav/tag/Adult%20Awards`
+
+        `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141jav.com/tag) 标签单页链接中获取
+
+    -   `/141jav/date/2020/07/30`
+
+        `date` 类型的关键词必须填写 **日期**
+
+## 141PPV <Site url="141ppv.com"/>
+
+:::tip
+官方提供的订阅源不支持 BT 下载订阅，地址为 [https://141ppv.com/feeds/](https://141ppv.com/feeds/)
+:::
+
+### 通用 <Site url="141ppv.com" size="sm" />
+
+<Route namespace="141ppv" :data='{"path":"/{.*}?","categories":["multimedia"],"name":"通用","maintainers":["cgkings","nczitzk"],"description":"**类型**\n\n    | 最新 | 热门    | 随机   | 指定演员 | 指定标签 |\n    | ---- | ------- | ------ | -------- | -------- |\n    | new  | popular | random | actress  | tag      |\n\n    **关键词**\n\n    | 空 | 日期范围    | 演员名       | 标签名         |\n    | -- | ----------- | ------------ | -------------- |\n    |    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards |\n\n    **示例说明**\n\n    -   `/141ppv/new`\n\n        仅当类型为 `new` `popular` 或 `random` 时关键词为 **空**\n\n    -   `/141ppv/popular/30`\n\n        `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一，分别对应 **7 天**、**30 天** 或 **60 天内**\n\n    -   `/141ppv/actress/Yua%20Mikami`\n\n        `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141ppv.com/actress) 演员单页链接中获取\n\n    -   `/141ppv/tag/Adult%20Awards`\n\n        `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141ppv.com/tag) 标签单页链接中获取\n\n    -   `/141ppv/date/2020/07/30`\n\n        `date` 类型的关键词必须填写 **日期**","location":"index.ts"}' />
+
+**类型**
+
+    | 最新 | 热门    | 随机   | 指定演员 | 指定标签 |
+    | ---- | ------- | ------ | -------- | -------- |
+    | new  | popular | random | actress  | tag      |
+
+    **关键词**
+
+    | 空 | 日期范围    | 演员名       | 标签名         |
+    | -- | ----------- | ------------ | -------------- |
+    |    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards |
+
+    **示例说明**
+
+    -   `/141ppv/new`
+
+        仅当类型为 `new` `popular` 或 `random` 时关键词为 **空**
+
+    -   `/141ppv/popular/30`
+
+        `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一，分别对应 **7 天**、**30 天** 或 **60 天内**
+
+    -   `/141ppv/actress/Yua%20Mikami`
+
+        `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141ppv.com/actress) 演员单页链接中获取
+
+    -   `/141ppv/tag/Adult%20Awards`
+
+        `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141ppv.com/tag) 标签单页链接中获取
+
+    -   `/141ppv/date/2020/07/30`
+
+        `date` 类型的关键词必须填写 **日期**
+
 ## 2048 核基地 <Site url="hjd2048.com"/>
 
 ### 论坛 <Site url="hjd2048.com" size="sm" />
@@ -265,6 +353,54 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
 因为该站有反爬检测，所以不应将此值调整过高
 :::
 
+### Unknown <Site url="javdb.com/" size="sm" />
+
+<Route namespace="javdb" :data='{"path":["/home/:category?/:sort?/:filter?","/:category?/:sort?/:filter?"],"radar":[{"source":["javdb.com/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"javdb.com/","description":"分类\n\n  | 有碼     | 無碼       | 歐美    |\n  | -------- | ---------- | ------- |\n  | censored | uncensored | western |\n\n  排序\n\n  | 发布日期排序 | 磁鏈更新排序 |\n  | ------------ | ------------ |\n  | 1            | 2            |\n\n  过滤\n\n  | 全部 | 可下载 | 含字幕 | 含短評 |\n  | ---- | ------ | ------ | ------ |\n  | 0    | 1      | 2      | 3      |","location":"index.ts"}' />
+
+分类
+
+  | 有碼     | 無碼       | 歐美    |
+  | -------- | ---------- | ------- |
+  | censored | uncensored | western |
+
+  排序
+
+  | 发布日期排序 | 磁鏈更新排序 |
+  | ------------ | ------------ |
+  | 1            | 2            |
+
+  过滤
+
+  | 全部 | 可下载 | 含字幕 | 含短評 |
+  | ---- | ------ | ------ | ------ |
+  | 0    | 1      | 2      | 3      |
+
+### Unknown <Site url="javdb.com/" size="sm" />
+
+<Route namespace="javdb" :data='{"path":["/home/:category?/:sort?/:filter?","/:category?/:sort?/:filter?"],"radar":[{"source":["javdb.com/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"javdb.com/","description":"分类\n\n  | 有碼     | 無碼       | 歐美    |\n  | -------- | ---------- | ------- |\n  | censored | uncensored | western |\n\n  排序\n\n  | 发布日期排序 | 磁鏈更新排序 |\n  | ------------ | ------------ |\n  | 1            | 2            |\n\n  过滤\n\n  | 全部 | 可下载 | 含字幕 | 含短評 |\n  | ---- | ------ | ------ | ------ |\n  | 0    | 1      | 2      | 3      |","location":"index.ts"}' />
+
+分类
+
+  | 有碼     | 無碼       | 歐美    |
+  | -------- | ---------- | ------- |
+  | censored | uncensored | western |
+
+  排序
+
+  | 发布日期排序 | 磁鏈更新排序 |
+  | ------------ | ------------ |
+  | 1            | 2            |
+
+  过滤
+
+  | 全部 | 可下载 | 含字幕 | 含短評 |
+  | ---- | ------ | ------ | ------ |
+  | 0    | 1      | 2      | 3      |
+
+### Unknown <Site url="javdb.com/" size="sm" />
+
+<Route namespace="javdb" :data='{"path":"/lists/:id/:filter?/:sort?","radar":[{"source":["javdb.com/"],"target":""}],"name":"Unknown","maintainers":["dddepg"],"url":"javdb.com/","location":"lists.ts"}' />
+
 ### 分類 <Site url="javdb.com/" size="sm" />
 
 <Route namespace="javdb" :data='{"path":"/tags/:query?/:category?","categories":["multimedia"],"example":"/javdb/tags/c2=5&c10=1","parameters":{"query":"筛选，默认为 `c10=1`","category":"分类，见下表，默认为 `有碼`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["javdb.com/"],"target":""}],"name":"分類","maintainers":["nczitzk"],"url":"javdb.com/","description":":::tip\n  在 [分類](https://javdb.com/tags) 中选定分类后，URL 中 `tags?` 后的字段即为筛选参数。\n\n  如 `https://javdb.com/tags?c2=5&c10=1` 中 `c2=5&c10=1` 为筛选参数。\n  :::\n\n  分类\n\n  | 有碼     | 無碼       | 歐美    |\n  | -------- | ---------- | ------- |\n  | censored | uncensored | western |","location":"tags.ts"}' />
@@ -352,6 +488,110 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
 | Last Month | All Time |
   | ---------- | -------- |
   | 1          | 2        |
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/bestrated/:language?/:mode?","/bestrated/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| Last Month | All Time |\n  | ---------- | -------- |\n  | 1          | 2        |","location":"bestrated.ts"}' />
+
+| Last Month | All Time |
+  | ---------- | -------- |
+  | 1          | 2        |
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/bestrated/:language?/:mode?","/bestrated/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| Last Month | All Time |\n  | ---------- | -------- |\n  | 1          | 2        |","location":"bestrated.ts"}' />
+
+| Last Month | All Time |
+  | ---------- | -------- |
+  | 1          | 2        |
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/genre/:genre?/:language?/:mode?","/genre/:genre?/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |\n\n  :::tip\n  See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.\n  :::","location":"genre.ts"}' />
+
+| videos with comments (by date) | everything (by date) |
+  | ------------------------------ | -------------------- |
+  | 1                              | 2                    |
+
+  :::tip
+  See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
+  :::
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/genre/:genre?/:language?/:mode?","/genre/:genre?/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |\n\n  :::tip\n  See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.\n  :::","location":"genre.ts"}' />
+
+| videos with comments (by date) | everything (by date) |
+  | ------------------------------ | -------------------- |
+  | 1                              | 2                    |
+
+  :::tip
+  See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
+  :::
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/mostwanted/:language?/:mode?","/mostwanted/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| Last Month | All Time |\n  | ---------- | -------- |\n  | 1          | 2        |","location":"mostwanted.ts"}' />
+
+| Last Month | All Time |
+  | ---------- | -------- |
+  | 1          | 2        |
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/mostwanted/:language?/:mode?","/mostwanted/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| Last Month | All Time |\n  | ---------- | -------- |\n  | 1          | 2        |","location":"mostwanted.ts"}' />
+
+| Last Month | All Time |
+  | ---------- | -------- |
+  | 1          | 2        |
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/newentries/:language?","/newentries/:language?"],"name":"Unknown","maintainers":[],"location":"newentries.ts"}' />
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/newentries/:language?","/newentries/:language?"],"name":"Unknown","maintainers":[],"location":"newentries.ts"}' />
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/newrelease/:language?/:mode?","/newrelease/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |","location":"newrelease.ts"}' />
+
+| videos with comments (by date) | everything (by date) |
+  | ------------------------------ | -------------------- |
+  | 1                              | 2                    |
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/newrelease/:language?/:mode?","/newrelease/:language?/:mode?"],"name":"Unknown","maintainers":[],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |","location":"newrelease.ts"}' />
+
+| videos with comments (by date) | everything (by date) |
+  | ------------------------------ | -------------------- |
+  | 1                              | 2                    |
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/update/:language?","/update/:language?"],"name":"Unknown","maintainers":[],"location":"update.ts"}' />
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/videos/update/:language?","/update/:language?"],"name":"Unknown","maintainers":[],"location":"update.ts"}' />
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/users/:id/:type/:language?","/:type/:id/:language?"],"name":"Unknown","maintainers":[],"description":"| Wanted     | Watched     | Owned     |\n  | ---------- | ----------- | --------- |\n  | userwanted | userwatched | userowned |","location":"user.ts"}' />
+
+| Wanted     | Watched     | Owned     |
+  | ---------- | ----------- | --------- |
+  | userwanted | userwatched | userowned |
+
+### Unknown <Site url="javlibrary.com" size="sm" />
+
+<Route namespace="javlibrary" :data='{"path":["/users/:id/:type/:language?","/:type/:id/:language?"],"name":"Unknown","maintainers":[],"description":"| Wanted     | Watched     | Owned     |\n  | ---------- | ----------- | --------- |\n  | userwanted | userwatched | userowned |","location":"user.ts"}' />
+
+| Wanted     | Watched     | Owned     |
+  | ---------- | ----------- | --------- |
+  | userwanted | userwatched | userowned |
 
 ### Videos by makers <Site url="javlibrary.com" size="sm" />
 
@@ -687,6 +927,10 @@ When `mediaType` is `tv`, `sheet` should be:
 
 ## 片源网 <Site url="pianyuan.org"/>
 
+### Unknown <Site url="pianyuan.org/" size="sm" />
+
+<Route namespace="pianyuan" :data='{"path":"/indexers/pianyuan/results/search/api","radar":[{"source":["pianyuan.org/"],"target":"/index"}],"name":"Unknown","maintainers":["jerry1119"],"url":"pianyuan.org/","location":"search.ts"}' />
+
 ### 最新资源 <Site url="pianyuan.org/" size="sm" />
 
 <Route namespace="pianyuan" :data='{"path":"/index/:media?","categories":["multimedia"],"example":"/pianyuan/index","parameters":{"media":"类别，见下表，默认为首页"},"features":{"requireConfig":[{"name":"PIANYUAN_COOKIE","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["pianyuan.org/"],"target":"/index"}],"name":"最新资源","maintainers":["greatcodeeer","jerry1119"],"url":"pianyuan.org/","description":"| 电影 | 剧集 |\n| ---- | ---- |\n| mv   | tv   |","location":"app.ts"}' />
@@ -733,6 +977,86 @@ When `mediaType` is `tv`, `sheet` should be:
 
 ## 色花堂 <Site url="sehuatang.net"/>
 
+### Unknown <Site url="sehuatang.net" size="sm" />
+
+<Route namespace="sehuatang" :data='{"path":["/bt/:subforumid?","/picture/:subforumid","/:subforumid?/:type?","/:subforumid?",""],"name":"Unknown","maintainers":["qiwihui","junfengP","nczitzk"],"description":"**原创 BT 电影**\n\n  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |\n  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |\n  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |\n\n  **色花图片**\n\n  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |","location":"index.ts"}' />
+
+**原创 BT 电影**
+
+  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
+  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
+  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
+
+  **色花图片**
+
+  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
+  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |
+
+### Unknown <Site url="sehuatang.net" size="sm" />
+
+<Route namespace="sehuatang" :data='{"path":["/bt/:subforumid?","/picture/:subforumid","/:subforumid?/:type?","/:subforumid?",""],"name":"Unknown","maintainers":["qiwihui","junfengP","nczitzk"],"description":"**原创 BT 电影**\n\n  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |\n  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |\n  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |\n\n  **色花图片**\n\n  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |","location":"index.ts"}' />
+
+**原创 BT 电影**
+
+  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
+  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
+  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
+
+  **色花图片**
+
+  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
+  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |
+
+### Unknown <Site url="sehuatang.net" size="sm" />
+
+<Route namespace="sehuatang" :data='{"path":["/bt/:subforumid?","/picture/:subforumid","/:subforumid?/:type?","/:subforumid?",""],"name":"Unknown","maintainers":["qiwihui","junfengP","nczitzk"],"description":"**原创 BT 电影**\n\n  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |\n  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |\n  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |\n\n  **色花图片**\n\n  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |","location":"index.ts"}' />
+
+**原创 BT 电影**
+
+  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
+  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
+  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
+
+  **色花图片**
+
+  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
+  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |
+
+### Unknown <Site url="sehuatang.net" size="sm" />
+
+<Route namespace="sehuatang" :data='{"path":["/bt/:subforumid?","/picture/:subforumid","/:subforumid?/:type?","/:subforumid?",""],"name":"Unknown","maintainers":["qiwihui","junfengP","nczitzk"],"description":"**原创 BT 电影**\n\n  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |\n  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |\n  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |\n\n  **色花图片**\n\n  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |","location":"index.ts"}' />
+
+**原创 BT 电影**
+
+  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
+  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
+  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
+
+  **色花图片**
+
+  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
+  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |
+
+### Unknown <Site url="sehuatang.net" size="sm" />
+
+<Route namespace="sehuatang" :data='{"path":["/bt/:subforumid?","/picture/:subforumid","/:subforumid?/:type?","/:subforumid?",""],"name":"Unknown","maintainers":["qiwihui","junfengP","nczitzk"],"description":"**原创 BT 电影**\n\n  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |\n  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |\n  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |\n\n  **色花图片**\n\n  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |","location":"index.ts"}' />
+
+**原创 BT 电影**
+
+  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
+  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
+  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
+
+  **色花图片**
+
+  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
+  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |
+
 ### 作者文章 <Site url="sehuatang.net" size="sm" />
 
 <Route namespace="sehuatang" :data='{"path":"/user/:uid","categories":["multimedia"],"example":"/sehuatang/user/411096","parameters":{"uid":"用户 uid, 可在用户主页 URL 中找到"},"features":{"requireConfig":[{"name":"SEHUATANG_COOKIE","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"作者文章","maintainers":["JamYiz"],"location":"user.ts"}' />
@@ -764,6 +1088,10 @@ When `mediaType` is `tv`, `sheet` should be:
 ### 歌单歌曲 <Site url="163.com" size="sm" />
 
 <Route namespace="163" :data='{"path":"/music/playlist/:id","categories":["multimedia"],"example":"/163/music/playlist/35798529","parameters":{"id":"歌单 id, 可在歌单页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"歌单歌曲","maintainers":["DIYgod"],"location":"music/playlist.ts"}' />
+
+### 用户动态 <Site url="163.com" size="sm" />
+
+<Route namespace="163" :data='{"path":"/music/user/events/:id","categories":["multimedia"],"name":"用户动态","maintainers":["Master-Hash"],"location":"music/userevents.ts"}' />
 
 ### 用户歌单 <Site url="163.com" size="sm" />
 
@@ -806,6 +1134,10 @@ When `mediaType` is `tv`, `sheet` should be:
   :::
 
 ## 小宇宙 <Site url="xiaoyuzhoufm.com"/>
+
+### Unknown <Site url="xiaoyuzhoufm.com/" size="sm" />
+
+<Route namespace="xiaoyuzhou" :data='{"path":"/","radar":[{"source":["xiaoyuzhoufm.com/"],"target":""}],"name":"Unknown","maintainers":["prnake","Maecenas"],"url":"xiaoyuzhoufm.com/","location":"pickup.ts"}' />
 
 ### 播客 <Site url="xiaoyuzhoufm.com/" size="sm" />
 

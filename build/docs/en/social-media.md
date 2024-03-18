@@ -81,6 +81,10 @@
   可以使用 [UP 主动态](#bilibili-up-zhu-dong-tai)路由作为代替绕过反爬限制
   :::
 
+### 番剧 <Site url="www.bilibili.com" size="sm" />
+
+<Route namespace="bilibili" :data='{"path":"/bangumi/media/:mediaid","name":"番剧","parameters":{"mediaid":"番剧媒体 id, 番剧主页 URL 中获取"},"example":"/bilibili/bangumi/media/9192","categories":["social-media"],"maintainers":["DIYgod"],"location":"bangumi.ts"}' />
+
 ### 分区视频排行榜 <Site url="www.bilibili.com" size="sm" />
 
 <Route namespace="bilibili" :data='{"path":"/partion/ranking/:tid/:days?/:disableEmbed?","categories":["social-media"],"example":"/bilibili/partion/ranking/171/3","parameters":{"tid":"分区 id, 见上方表格","days":"缺省为 7, 指最近多少天内的热度排序","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"分区视频排行榜","maintainers":["lengthmin"],"location":"partion-ranking.ts"}' />
@@ -233,6 +237,14 @@
 
 <Route namespace="bilibili" :data='{"path":"/manga/update/:comicid","categories":["social-media"],"example":"/bilibili/manga/update/26009","parameters":{"comicid":"漫画 id, 可在 URL 中找到, 支持带有`mc`前缀"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["manga.bilibili.com/detail/:comicid"]}],"name":"漫画更新","maintainers":["hoilc"],"location":"manga-update.ts"}' />
 
+### 排行榜 <Site url="www.bilibili.com" size="sm" />
+
+<Route namespace="bilibili" :data='{"path":"/ranking/:rid?/:day?/:arc_type?/:disableEmbed?","name":"排行榜","maintainers":["DIYgod"],"categories":["social-media"],"example":"/bilibili/ranking/0/3/1","parameters":{"rid":"排行榜分区 id, 默认 0","day":"时间跨度, 可为 1 3 7 30","arc_type":"投稿时间, 可为 0(全部投稿) 1(近期投稿) , 默认 1","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"description":"| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 数码 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |\n    | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n    | 0    | 1    | 168      | 3    | 129  | 4    | 36   | 188  | 160  | 119  | 155  | 5    | 181  |","location":"ranking.ts"}' />
+
+| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 数码 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
+    | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+    | 0    | 1    | 168      | 3    | 129  | 4    | 36   | 188  | 160  | 119  | 155  | 5    | 181  |
+
 ### 热搜 <Site url="www.bilibili.com/" size="sm" />
 
 <Route namespace="bilibili" :data='{"path":"/hot-search","categories":["social-media"],"example":"/bilibili/hot-search","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.bilibili.com/"]}],"name":"热搜","maintainers":["CaoMeiYouRen"],"url":"www.bilibili.com/","location":"hot-search.ts"}' />
@@ -295,6 +307,10 @@
 
 <Route namespace="bilibili" :data='{"path":"/user/bangumi/:uid/:type?","categories":["social-media"],"example":"/bilibili/user/bangumi/208259","parameters":{"uid":"用户 id","type":"1为番，2为剧，留空为1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["space.bilibili.com/:uid"],"target":"/user/bangumi/:uid"}],"name":"用户追番列表","maintainers":["wdssmq"],"location":"user-bangumi.ts"}' />
 
+### 用户所有视频 <Site url="www.bilibili.com" size="sm" />
+
+<Route namespace="bilibili" :data='{"path":"/user/video-all/:uid/:disableEmbed?","name":"用户所有视频","maintainers":[],"categories":["social-media"],"location":"video-all.ts"}' />
+
 ### 用户稍后再看 <Site url="www.bilibili.com" size="sm" />
 
 <Route namespace="bilibili" :data='{"path":"/watchlater/:uid/:disableEmbed?","categories":["social-media"],"example":"/bilibili/watchlater/2267573","parameters":{"uid":"用户 id","disableEmbed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":[{"name":"BILIBILI_COOKIE_*","description":"BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n    1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n    2.  打开控制台，切换到 Network 面板，刷新\n    3.  点击 dynamic_new 请求，找到 Cookie\n    4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"用户稍后再看","maintainers":["JimenezLi"],"description":":::warning\n  用户稍后再看需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::","location":"watchlater.ts"}' />
@@ -354,6 +370,10 @@
 ### Most upvoted <Site url="daily.dev/popular" size="sm" />
 
 <Route namespace="daily" :data='{"path":"/upvoted","categories":["social-media"],"example":"/daily/upvoted","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["daily.dev/popular"],"target":""}],"name":"Most upvoted","maintainers":["Rjnishant530"],"url":"daily.dev/popular","location":"upvoted.ts"}' />
+
+### Unknown <Site url="daily.dev/popular" size="sm" />
+
+<Route namespace="daily" :data='{"path":"/","radar":[{"source":["daily.dev/popular"],"target":""}],"name":"Unknown","maintainers":["Rjnishant530"],"url":"daily.dev/popular","location":"index.ts"}' />
 
 ## Discord <Site url="discord.com"/>
 
@@ -473,6 +493,10 @@ If the instance address is not `mastodon.social` or `pawoo.net`, then the route 
 <Route namespace="mastodon" :data='{"path":"/remote/:site/:only_media?","categories":["social-media"],"example":"/mastodon/remote/pawoo.net/true","parameters":{"site":"instance address, only domain, no `http://` or `https://` protocol header","only_media":"whether only display media content, default to false, any value to true"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Instance timeline (federated)","maintainers":["hoilc"],"description":"If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.","location":"timeline-remote.ts"}' />
 
 If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
+
+### Unknown <Site url="mastodon.social" size="sm" />
+
+<Route namespace="mastodon" :data='{"path":"/account_id/:site/:account_id/statuses/:only_media?","name":"Unknown","maintainers":["notofoe"],"location":"account-id.ts"}' />
 
 ### User timeline <Site url="mastodon.social" size="sm" />
 
@@ -817,6 +841,10 @@ Chart
 
 <Route namespace="youtube" :data='{"path":"/subscriptions/:embed?","categories":["social-media"],"example":"/youtube/subscriptions","parameters":{"embed":"Default to embed the video, set to any value to disable embedding"},"features":{"requireConfig":[{"name":"YOUTUBE_KEY","description":""},{"name":"YOUTUBE_CLIENT_ID","description":""},{"name":"YOUTUBE_CLIENT_SECRET","description":""},{"name":"YOUTUBE_REFRESH_TOKEN","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.youtube.com/feed/subscriptions","www.youtube.com/feed/channels"],"target":"/subscriptions"}],"name":"Subscriptions","maintainers":["TonyRL"],"url":"www.youtube.com/feed/subscriptions","location":"subscriptions.ts"}' />
 
+### Unknown <Site url="charts.youtube.com" size="sm" />
+
+<Route namespace="youtube" :data='{"path":"/c/:username/:embed?","radar":[{"source":["www.youtube.com/c/:id"],"target":"/c/:id"}],"name":"Unknown","maintainers":[],"location":"custom.ts"}' />
+
 ### User <Site url="charts.youtube.com" size="sm" />
 
 <Route namespace="youtube" :data='{"path":"/user/:username/:embed?","categories":["social-media"],"example":"/youtube/user/JFlaMusic","parameters":{"username":"YouTuber id","embed":"Default to embed the video, set to any value to disable embedding"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.youtube.com/user/:username"],"target":"/user/:username"}],"name":"User","maintainers":["DIYgod"],"location":"user.ts"}' />
@@ -852,6 +880,14 @@ Chart
 <Route namespace="douyin" :data='{"path":"/user/:uid/:routeParams?","categories":["social-media"],"example":"/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao","parameters":{"uid":"uid，可在用户页面 URL 中找到","routeParams":"额外参数，query string 格式，请参阅上面的表格"},"features":{"requireConfig":false,"requirePuppeteer":true,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["douyin.com/user/:uid"],"target":"/user/:uid"}],"name":"博主","maintainers":["Max-Tortoise","Rongronggg9"],"location":"user.ts"}' />
 
 ## 豆瓣 <Site url="www.douban.com"/>
+
+### Unknown <Site url="www.douban.com" size="sm" />
+
+<Route namespace="douban" :data='{"path":"/explore/column/:id","name":"Unknown","maintainers":[],"location":"other/explore-column.ts"}' />
+
+### Unknown <Site url="www.douban.com" size="sm" />
+
+<Route namespace="douban" :data='{"path":"/people/:userid/status/:routeParams?","name":"Unknown","maintainers":[],"location":"people/status.ts"}' />
 
 ### 北美票房榜 <Site url="www.douban.com" size="sm" />
 
@@ -1259,6 +1295,14 @@ Chart
   :::
 
 ## 小红书 <Site url="xiaohongshu.com"/>
+
+### Unknown <Site url="xiaohongshu.com" size="sm" />
+
+<Route namespace="xiaohongshu" :data='{"path":"/user/:user_id/notes/fulltext","radar":[{"source":["xiaohongshu.com/user/profile/:user_id"],"target":"/user/:user_id/notes"}],"name":"Unknown","maintainers":[],"location":"notes.ts"}' />
+
+### Unknown <Site url="xiaohongshu.com" size="sm" />
+
+<Route namespace="xiaohongshu" :data='{"path":"/user/:user_id/:category","name":"Unknown","maintainers":[],"location":"user.ts"}' />
 
 ### 专辑 <Site url="xiaohongshu.com" size="sm" />
 

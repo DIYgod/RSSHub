@@ -1,10 +1,36 @@
 # 📰 Traditional media
 
+## ABC News <Site url="abc.net.au"/>
+
+### Channel & Topic <Site url="abc.net.au" size="sm" />
+
+<Route namespace="abc" :data='{"path":"/:category{.+}?","radar":[{"source":["abc.net.au/:category*"],"target":"/:category"}],"parameters":{"category":"Category, can be found in the URL, can also be filled in with the `documentId` in the source code of the page, `news/justin` as **Just In** by default"},"name":"Channel & Topic","categories":["traditional-media"],"description":":::tip\n    All Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after `topic` in its URL, or fill in the `documentId`.\n\n    For example, the URL for [Computer Science](https://www.abc.net.au/news/topic/computer-science) is `https://www.abc.net.au/news/topic/computer-science`, the `category` is `news/topic/computer-science`, and the `documentId` of the Topic is `2302`, so the route is [/abc/news/topic/computer-science](https://rsshub.app/abc/news/topic/computer-science) and [/abc/2302](https://rsshub.app/abc/2302).\n\n    The supported channels are all listed in the table below. For other channels, please find the `documentId` in the source code of the channel page and fill it in as above.\n    :::","maintainers":["nczitzk"],"location":"index.ts"}' />
+
+:::tip
+    All Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after `topic` in its URL, or fill in the `documentId`.
+
+    For example, the URL for [Computer Science](https://www.abc.net.au/news/topic/computer-science) is `https://www.abc.net.au/news/topic/computer-science`, the `category` is `news/topic/computer-science`, and the `documentId` of the Topic is `2302`, so the route is [/abc/news/topic/computer-science](https://rsshub.app/abc/news/topic/computer-science) and [/abc/2302](https://rsshub.app/abc/2302).
+
+    The supported channels are all listed in the table below. For other channels, please find the `documentId` in the source code of the channel page and fill it in as above.
+    :::
+
 ## AP News <Site url="apnews.com"/>
 
 ### Topics <Site url="apnews.com" size="sm" />
 
 <Route namespace="apnews" :data='{"path":"/topics/:topic?","categories":["traditional-media"],"example":"/apnews/topics/apf-topnews","parameters":{"topic":"Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["apnews.com/hub/:topic"],"target":"/topics/:topic"}],"name":"Topics","maintainers":["zoenglinghou","mjysci","TonyRL"],"location":"topics.ts"}' />
+
+## BBC <Site url="bbc.com"/>
+
+### News <Site url="bbc.com" size="sm" />
+
+<Route namespace="bbc" :data='{"path":"/:site?/:channel?","name":"News","maintainers":["HenryQW","DIYgod"],"example":"/bbc/world-asia","parameters":{"site":"语言，简体或繁体中文","channel":"channel, default to `top stories`"},"categories":["traditional-media"],"description":"Provides a better reading experience (full text articles) over the official ones.\n\n    Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.\n\n    -   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.","location":"index.ts"}' />
+
+Provides a better reading experience (full text articles) over the official ones.
+
+    Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.
+
+    -   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
 
 ## Caixin Global <Site url="caixinglobal.com"/>
 
@@ -374,6 +400,18 @@ Categories for International site:
 ### Nikkei Asia Latest News <Site url="asia.nikkei.com/" size="sm" />
 
 <Route namespace="nikkei" :data='{"path":"/asia","categories":["traditional-media"],"example":"/nikkei/asia","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["asia.nikkei.com/"]}],"name":"Nikkei Asia Latest News","maintainers":["rainrdx"],"url":"asia.nikkei.com/","location":"asia/index.ts"}' />
+
+### Unknown <Site url="www.nikkei.com/" size="sm" />
+
+<Route namespace="nikkei" :data='{"path":["/","/index"],"name":"Unknown","maintainers":[],"url":"www.nikkei.com/","location":"index.ts"}' />
+
+### Unknown <Site url="www.nikkei.com/" size="sm" />
+
+<Route namespace="nikkei" :data='{"path":["/","/index"],"name":"Unknown","maintainers":[],"url":"www.nikkei.com/","location":"index.ts"}' />
+
+### Unknown <Site url="asia.nikkei.com" size="sm" />
+
+<Route namespace="nikkei" :data='{"path":"/cn/*","name":"Unknown","maintainers":[],"location":"cn/index.ts"}' />
 
 ## The New York Times 纽约时报 <Site url="nytimes.com"/>
 
@@ -805,6 +843,10 @@ Column 列表：
 
 ## 公視新聞網 <Site url="news.pts.org.tw"/>
 
+### Unknown <Site url="news.pts.org.tw" size="sm" />
+
+<Route namespace="pts" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
+
 ### 數位敘事 <Site url="news.pts.org.tw/projects" size="sm" />
 
 <Route namespace="pts" :data='{"path":"/projects","categories":["traditional-media"],"example":"/pts/projects","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["news.pts.org.tw/projects","news.pts.org.tw/"]}],"name":"數位敘事","maintainers":["nczitzk"],"url":"news.pts.org.tw/projects","location":"projects.ts"}' />
@@ -871,6 +913,42 @@ Column 列表：
   | 第 09 版：中缝       | 9    |
 
 ## 华尔街见闻 <Site url="wallstreetcn.com"/>
+
+### Unknown <Site url="wallstreetcn.com" size="sm" />
+
+<Route namespace="wallstreetcn" :data='{"path":["/news/:category?","/:category?"],"radar":[{"source":["wallstreetcn.com/news/:category","wallstreetcn.com/"]}],"name":"Unknown","maintainers":["nczitzk"],"description":"| id           | 分类 |\n  | ------------ | ---- |\n  | global       | 最新 |\n  | shares       | 股市 |\n  | bonds        | 债市 |\n  | commodities  | 商品 |\n  | forex        | 外汇 |\n  | enterprise   | 公司 |\n  | asset-manage | 资管 |\n  | tmt          | 科技 |\n  | estate       | 地产 |\n  | car          | 汽车 |\n  | medicine     | 医药 |","location":"news.ts"}' />
+
+| id           | 分类 |
+  | ------------ | ---- |
+  | global       | 最新 |
+  | shares       | 股市 |
+  | bonds        | 债市 |
+  | commodities  | 商品 |
+  | forex        | 外汇 |
+  | enterprise   | 公司 |
+  | asset-manage | 资管 |
+  | tmt          | 科技 |
+  | estate       | 地产 |
+  | car          | 汽车 |
+  | medicine     | 医药 |
+
+### Unknown <Site url="wallstreetcn.com" size="sm" />
+
+<Route namespace="wallstreetcn" :data='{"path":["/news/:category?","/:category?"],"radar":[{"source":["wallstreetcn.com/news/:category","wallstreetcn.com/"]}],"name":"Unknown","maintainers":["nczitzk"],"description":"| id           | 分类 |\n  | ------------ | ---- |\n  | global       | 最新 |\n  | shares       | 股市 |\n  | bonds        | 债市 |\n  | commodities  | 商品 |\n  | forex        | 外汇 |\n  | enterprise   | 公司 |\n  | asset-manage | 资管 |\n  | tmt          | 科技 |\n  | estate       | 地产 |\n  | car          | 汽车 |\n  | medicine     | 医药 |","location":"news.ts"}' />
+
+| id           | 分类 |
+  | ------------ | ---- |
+  | global       | 最新 |
+  | shares       | 股市 |
+  | bonds        | 债市 |
+  | commodities  | 商品 |
+  | forex        | 外汇 |
+  | enterprise   | 公司 |
+  | asset-manage | 资管 |
+  | tmt          | 科技 |
+  | estate       | 地产 |
+  | car          | 汽车 |
+  | medicine     | 医药 |
 
 ### 实时快讯 <Site url="wallstreetcn.com" size="sm" />
 
@@ -981,6 +1059,10 @@ Column 列表：
 
 ## 南方都市报 <Site url="oeeee.com"/>
 
+### Unknown <Site url="oeeee.com" size="sm" />
+
+<Route namespace="oeeee" :data='{"path":"/app/channel/:id","name":"Unknown","maintainers":["TimWu007"],"location":"app/channel.ts"}' />
+
 ### 奥一网 <Site url="oeeee.com" size="sm" />
 
 <Route namespace="oeeee" :data='{"path":"/web/:channel","categories":["traditional-media"],"example":"/oeeee/web/170","parameters":{"channel":"频道 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"奥一网","maintainers":["TimWu007"],"description":"-   若在桌面端打开奥一网栏目页（如 `https://www.oeeee.com/api/channel.php?s=/index/index/channel/gz`），可查看该页源代码，搜索 `OECID`。\n  -   若在移动端打开奥一网栏目页（格式例：`https://m.oeeee.com/m.php?s=/m2/channel&channel_id=169`），即可从 url 中获取。需注意的是，如果该栏目页的 url 格式为 `https://m.oeeee.com/detailChannel_indexData.html?channel_id=266` ，则 `266` 并非为本路由可用的频道 ID，建议从桌面端获取。","location":"web.ts"}' />
@@ -1027,6 +1109,18 @@ Column 列表：
 ## 澎湃新闻 <Site url="thepaper.cn"/>
 
 以下所有路由可使用参数`old`以采取旧全文获取方法。该方法会另外获取网页中的图片与视频资源。在原始 url 追加`?old=yes`以启用.
+
+### Unknown <Site url="thepaper.cn/" size="sm" />
+
+<Route namespace="thepaper" :data='{"path":"/sidebar/:sec?","radar":[{"source":["thepaper.cn/"],"target":"/sidebar"}],"name":"Unknown","maintainers":["bigfei"],"url":"thepaper.cn/","location":"sidebar.ts"}' />
+
+### Unknown <Site url="thepaper.cn/" size="sm" />
+
+<Route namespace="thepaper" :data='{"path":"/839studio/:id","radar":[{"source":["thepaper.cn/"]}],"name":"Unknown","maintainers":["umm233"],"url":"thepaper.cn/","location":"839studio/category.ts"}' />
+
+### Unknown <Site url="thepaper.cn" size="sm" />
+
+<Route namespace="thepaper" :data='{"path":"/839studio","name":"Unknown","maintainers":["umm233"],"location":"839studio/studio.ts"}' />
 
 ### 栏目 <Site url="thepaper.cn" size="sm" />
 
@@ -1162,6 +1256,10 @@ Column 列表：
 
 ## 人民网 <Site url="people.com.cn"/>
 
+### Unknown <Site url="people.com.cn" size="sm" />
+
+<Route namespace="people" :data='{"path":"/:site?/:category{.+}?","name":"Unknown","maintainers":[],"location":"index.ts"}' />
+
 ### 领导留言板 <Site url="liuyan.people.com.cn/" size="sm" />
 
 <Route namespace="people" :data='{"path":"/liuyan/:id/:state?","categories":["traditional-media"],"example":"/people/liuyan/539","parameters":{"id":"编号，可在对应人物页 URL 中找到","state":"状态，见下表，默认为全部"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["liuyan.people.com.cn/"]}],"name":"领导留言板","maintainers":["nczitzk"],"url":"liuyan.people.com.cn/","description":"| 全部 | 待回复 | 办理中 | 已办理 |\n  | ---- | ------ | ------ | ------ |\n  | 1    | 2      | 3      | 4      |","location":"liuyan.ts"}' />
@@ -1193,6 +1291,10 @@ Column 列表：
   | ---- | ---- | ---- | ---- | ---- | -------- |
 
 ## 厦门网 <Site url="epaper.xmnn.cn"/>
+
+### Unknown <Site url="epaper.xmnn.cn" size="sm" />
+
+<Route namespace="xmnn" :data='{"path":"/news/:category{.+}?","name":"Unknown","maintainers":[],"location":"news.ts"}' />
 
 ### 数字媒体 <Site url="epaper.xmnn.cn" size="sm" />
 

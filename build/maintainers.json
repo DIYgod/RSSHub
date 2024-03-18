@@ -66,8 +66,14 @@
   "/0818tuan/:listId?": [
     "TonyRL"
   ],
-  "/141jav*": [],
-  "/141ppv*": [],
+  "/141jav/{.*}?": [
+    "cgkings",
+    "nczitzk"
+  ],
+  "/141ppv/{.*}?": [
+    "cgkings",
+    "nczitzk"
+  ],
   "/18comic/album/:id": [
     "nczitzk"
   ],
@@ -118,7 +124,9 @@
   "/36kr/hot-list/:category?": [
     "nczitzk"
   ],
-  "/36kr*": [],
+  "/36kr/{.*}?": [
+    "nczitzk"
+  ],
   "/3dmgame/:name/:type?": [
     "sinchang",
     "jacky2001114",
@@ -207,13 +215,17 @@
     "monnerHenster"
   ],
   "/aamacau/:category?/:id?": [],
-  "/abc/:category{.+}?": [],
+  "/abc/:category{.+}?": [
+    "nczitzk"
+  ],
   "/abmedia/:category?": [],
   "/abmedia/index": [],
   "/abskoop/": [
     "zhenhappy"
   ],
-  "/abskoop/nsfw": [],
+  "/abskoop/nsfw": [
+    "zhenhappy"
+  ],
   "/acfun/article/:categoryId/:sortType?/:timeRange?": [
     "TonyRL"
   ],
@@ -514,7 +526,10 @@
     "nczitzk"
   ],
   "/bast*": [],
-  "/bbc/:site?/:channel?": [],
+  "/bbc/:site?/:channel?": [
+    "HenryQW",
+    "DIYgod"
+  ],
   "/bbcnewslabs/news": [
     "elxy"
   ],
@@ -545,9 +560,6 @@
   ],
   "/bilibili/audio/:id": [
     "LogicJake"
-  ],
-  "/bilibili/bangumi/:seasonid": [
-    "DIYgod"
   ],
   "/bilibili/bangumi/media/:mediaid": [
     "DIYgod"

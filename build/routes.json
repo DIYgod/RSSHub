@@ -282,7 +282,10 @@
       },
       "/music/user/events/:id": {
         "path": "/music/user/events/:id",
-        "name": "Unknown",
+        "categories": [
+          "multimedia"
+        ],
+        "name": "用户动态",
         "maintainers": [
           "Master-Hash"
         ],
@@ -607,10 +610,17 @@
   },
   "141jav": {
     "routes": {
-      "*": {
-        "path": "*",
-        "name": "Unknown",
-        "maintainers": [],
+      "/{.*}?": {
+        "path": "/{.*}?",
+        "categories": [
+          "multimedia"
+        ],
+        "name": "通用",
+        "maintainers": [
+          "cgkings",
+          "nczitzk"
+        ],
+        "description": "**类型**\n\n    | 最新 | 热门    | 随机   | 指定演员 | 指定标签 |\n    | ---- | ------- | ------ | -------- | -------- |\n    | new  | popular | random | actress  | tag      |\n\n    **关键词**\n\n    | 空 | 日期范围    | 演员名       | 标签名         |\n    | -- | ----------- | ------------ | -------------- |\n    |    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards |\n\n    **示例说明**\n\n    -   `/141jav/new`\n\n        仅当类型为 `new` `popular` 或 `random` 时关键词为 **空**\n\n    -   `/141jav/popular/30`\n\n        `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一，分别对应 **7 天**、**30 天** 或 **60 天内**\n\n    -   `/141jav/actress/Yua%20Mikami`\n\n        `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141jav.com/actress) 演员单页链接中获取\n\n    -   `/141jav/tag/Adult%20Awards`\n\n        `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141jav.com/tag) 标签单页链接中获取\n\n    -   `/141jav/date/2020/07/30`\n\n        `date` 类型的关键词必须填写 **日期**",
         "location": "index.ts"
       }
     },
@@ -620,10 +630,17 @@
   },
   "141ppv": {
     "routes": {
-      "*": {
-        "path": "*",
-        "name": "Unknown",
-        "maintainers": [],
+      "/{.*}?": {
+        "path": "/{.*}?",
+        "categories": [
+          "multimedia"
+        ],
+        "name": "通用",
+        "maintainers": [
+          "cgkings",
+          "nczitzk"
+        ],
+        "description": "**类型**\n\n    | 最新 | 热门    | 随机   | 指定演员 | 指定标签 |\n    | ---- | ------- | ------ | -------- | -------- |\n    | new  | popular | random | actress  | tag      |\n\n    **关键词**\n\n    | 空 | 日期范围    | 演员名       | 标签名         |\n    | -- | ----------- | ------------ | -------------- |\n    |    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards |\n\n    **示例说明**\n\n    -   `/141ppv/new`\n\n        仅当类型为 `new` `popular` 或 `random` 时关键词为 **空**\n\n    -   `/141ppv/popular/30`\n\n        `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一，分别对应 **7 天**、**30 天** 或 **60 天内**\n\n    -   `/141ppv/actress/Yua%20Mikami`\n\n        `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141ppv.com/actress) 演员单页链接中获取\n\n    -   `/141ppv/tag/Adult%20Awards`\n\n        `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141ppv.com/tag) 标签单页链接中获取\n\n    -   `/141ppv/date/2020/07/30`\n\n        `date` 类型的关键词必须填写 **日期**",
         "location": "index.ts"
       }
     },
@@ -981,7 +998,10 @@
           "/post/:type?/:order?",
           "/thread/:type?/:order?"
         ],
-        "name": "Unknown",
+        "name": "帖子",
+        "categories": [
+          "bbs"
+        ],
         "maintainers": [
           "EthanWng97",
           "DIYgod",
@@ -996,7 +1016,10 @@
           "/post/:type?/:order?",
           "/thread/:type?/:order?"
         ],
-        "name": "Unknown",
+        "name": "帖子",
+        "categories": [
+          "bbs"
+        ],
         "maintainers": [
           "EthanWng97",
           "DIYgod",
@@ -1121,10 +1144,15 @@
         "description": "| 24 小时热榜 | 资讯人气榜 | 资讯综合榜 | 资讯收藏榜 |\n  | ----------- | ---------- | ---------- | ---------- |\n  | 24          | renqi      | zonghe     | shoucang   |",
         "location": "hot-list.ts"
       },
-      "*": {
-        "path": "*",
-        "name": "Unknown",
-        "maintainers": [],
+      "/{.*}?": {
+        "path": "/{.*}?",
+        "categories": [
+          "new-media"
+        ],
+        "name": "资讯, 快讯, 用户文章, 主题文章, 专题文章, 搜索文章, 搜索快讯",
+        "maintainers": [
+          "nczitzk"
+        ],
         "location": "index.ts"
       }
     },
@@ -1142,7 +1170,10 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "游戏资讯",
+        "categories": [
+          "game"
+        ],
         "maintainers": [
           "sinchang",
           "jacky2001114",
@@ -2076,8 +2107,17 @@
             "target": "/:category"
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
+        "parameters": {
+          "category": "Category, can be found in the URL, can also be filled in with the `documentId` in the source code of the page, `news/justin` as **Just In** by default"
+        },
+        "name": "Channel & Topic",
+        "categories": [
+          "traditional-media"
+        ],
+        "description": ":::tip\n    All Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after `topic` in its URL, or fill in the `documentId`.\n\n    For example, the URL for [Computer Science](https://www.abc.net.au/news/topic/computer-science) is `https://www.abc.net.au/news/topic/computer-science`, the `category` is `news/topic/computer-science`, and the `documentId` of the Topic is `2302`, so the route is [/abc/news/topic/computer-science](https://rsshub.app/abc/news/topic/computer-science) and [/abc/2302](https://rsshub.app/abc/2302).\n\n    The supported channels are all listed in the table below. For other channels, please find the `documentId` in the source code of the channel page and fill it in as above.\n    :::",
+        "maintainers": [
+          "nczitzk"
+        ],
         "location": "index.ts"
       }
     },
@@ -2159,7 +2199,7 @@
             "target": ""
           }
         ],
-        "name": "Unknown",
+        "name": "存档列表",
         "maintainers": [
           "zhenhappy"
         ],
@@ -2176,8 +2216,10 @@
             "target": ""
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "存档列表 - NSFW",
+        "maintainers": [
+          "zhenhappy"
+        ],
         "url": "ahhhhfs.com/",
         "location": "nsfw.ts"
       }
@@ -2247,7 +2289,13 @@
             "target": "/user/video/:id"
           }
         ],
-        "name": "Unknown",
+        "name": "用户投稿",
+        "parameters": {
+          "uid": "用户 UID"
+        },
+        "categories": [
+          "anime"
+        ],
         "maintainers": [
           "wdssmq"
         ],
@@ -5205,8 +5253,20 @@
     "routes": {
       "/:site?/:channel?": {
         "path": "/:site?/:channel?",
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "News",
+        "maintainers": [
+          "HenryQW",
+          "DIYgod"
+        ],
+        "example": "/bbc/world-asia",
+        "parameters": {
+          "site": "语言，简体或繁体中文",
+          "channel": "channel, default to `top stories`"
+        },
+        "categories": [
+          "traditional-media"
+        ],
+        "description": "Provides a better reading experience (full text articles) over the official ones.\n\n    Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.\n\n    -   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.",
         "location": "index.ts"
       }
     },
@@ -5532,23 +5592,16 @@
         ],
         "location": "audio.ts"
       },
-      "/bangumi/:seasonid": {
-        "path": [
-          "/bangumi/:seasonid",
-          "/bangumi/media/:mediaid"
-        ],
-        "name": "Unknown",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "location": "bangumi.ts"
-      },
       "/bangumi/media/:mediaid": {
-        "path": [
-          "/bangumi/:seasonid",
-          "/bangumi/media/:mediaid"
+        "path": "/bangumi/media/:mediaid",
+        "name": "番剧",
+        "parameters": {
+          "mediaid": "番剧媒体 id, 番剧主页 URL 中获取"
+        },
+        "example": "/bilibili/bangumi/media/9192",
+        "categories": [
+          "social-media"
         ],
-        "name": "Unknown",
         "maintainers": [
           "DIYgod"
         ],
@@ -6238,10 +6291,21 @@
       },
       "/ranking/:rid?/:day?/:arc_type?/:disableEmbed?": {
         "path": "/ranking/:rid?/:day?/:arc_type?/:disableEmbed?",
-        "name": "Unknown",
+        "name": "排行榜",
         "maintainers": [
           "DIYgod"
         ],
+        "categories": [
+          "social-media"
+        ],
+        "example": "/bilibili/ranking/0/3/1",
+        "parameters": {
+          "rid": "排行榜分区 id, 默认 0",
+          "day": "时间跨度, 可为 1 3 7 30",
+          "arc_type": "投稿时间, 可为 0(全部投稿) 1(近期投稿) , 默认 1",
+          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+        },
+        "description": "| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 数码 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |\n    | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n    | 0    | 1    | 168      | 3    | 129  | 4    | 36   | 188  | 160  | 119  | 155  | 5    | 181  |",
         "location": "ranking.ts"
       },
       "/readlist/:listid": {
@@ -6409,8 +6473,11 @@
       },
       "/user/video-all/:uid/:disableEmbed?": {
         "path": "/user/video-all/:uid/:disableEmbed?",
-        "name": "Unknown",
+        "name": "用户所有视频",
         "maintainers": [],
+        "categories": [
+          "social-media"
+        ],
         "location": "video-all.ts"
       },
       "/user/video/:uid/:disableEmbed?": {

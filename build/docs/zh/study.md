@@ -62,6 +62,10 @@
 
 ## NEEA 中国教育考试网 <Site url="jlpt.neea.cn"/>
 
+### Unknown <Site url="jlpt.neea.cn" size="sm" />
+
+<Route namespace="neea" :data='{"path":"/:type?","name":"Unknown","maintainers":["SunShinenny"],"location":"index.ts"}' />
+
 ### 教育部考试中心日本语能力测试重要通知 <Site url="jlpt.neea.cn/" size="sm" />
 
 <Route namespace="neea" :data='{"path":"/jlpt","categories":["study"],"example":"/neea/jlpt","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["jlpt.neea.cn/"]}],"name":"教育部考试中心日本语能力测试重要通知","maintainers":["nczitzk"],"url":"jlpt.neea.cn/","location":"jlpt.ts"}' />

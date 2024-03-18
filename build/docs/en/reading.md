@@ -14,11 +14,19 @@ Eg: [https://syosetu.org/novel/264928](https://syosetu.org/novel/264928)
 
 <Route namespace="inoreader" :data='{"path":"/rss/:user/:tag","categories":["reading"],"example":"/inoreader/rss/1005137674/user-favorites","parameters":{"user":"user id, the interger after user/ in the example URL","tag":"tag, the string after tag/ in the example URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"RSS","maintainers":["EthanWng97"],"location":"rss.ts"}' />
 
+### Unknown <Site url="inoreader.com" size="sm" />
+
+<Route namespace="inoreader" :data='{"path":"/html_clip/:user/:tag","name":"Unknown","maintainers":[],"location":"index.ts"}' />
+
 ## Literotica <Site url="literotica.com"/>
 
 ### New Stories <Site url="literotica.com/" size="sm" />
 
 <Route namespace="literotica" :data='{"path":"/new","categories":["reading"],"example":"/literotica/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["literotica.com/"]}],"name":"New Stories","maintainers":["nczitzk"],"url":"literotica.com/","location":"new.ts"}' />
+
+### Unknown <Site url="literotica.com" size="sm" />
+
+<Route namespace="literotica" :data='{"path":"/category/:category","radar":[{"source":["literotica.com/c/:category","literotica.com/"]}],"name":"Unknown","maintainers":["nczitzk"],"location":"category.ts"}' />
 
 ## MagazineLib <Site url="magazinelib.com"/>
 
@@ -88,6 +96,22 @@ For instance, when doing search at [https://magazinelib.com](https://magazinelib
 Eg: `https://ncode.syosetu.com/n1976ey/`
 
 ## 爱思想 <Site url="aisixiang.com"/>
+
+### Unknown <Site url="aisixiang.com" size="sm" />
+
+<Route namespace="aisixiang" :data='{"path":["/ranking/:id?/:period?","/toplist/:id?/:period?"],"name":"Unknown","maintainers":["HenryQW","nczitzk"],"description":"| 文章点击排行 | 最近更新文章 | 文章推荐排行 |\n  | ------------ | ------------ | ------------ |\n  | 1            | 10           | 11           |","location":"toplist.ts"}' />
+
+| 文章点击排行 | 最近更新文章 | 文章推荐排行 |
+  | ------------ | ------------ | ------------ |
+  | 1            | 10           | 11           |
+
+### Unknown <Site url="aisixiang.com" size="sm" />
+
+<Route namespace="aisixiang" :data='{"path":["/ranking/:id?/:period?","/toplist/:id?/:period?"],"name":"Unknown","maintainers":["HenryQW","nczitzk"],"description":"| 文章点击排行 | 最近更新文章 | 文章推荐排行 |\n  | ------------ | ------------ | ------------ |\n  | 1            | 10           | 11           |","location":"toplist.ts"}' />
+
+| 文章点击排行 | 最近更新文章 | 文章推荐排行 |
+  | ------------ | ------------ | ------------ |
+  | 1            | 10           | 11           |
 
 ### 栏目 <Site url="aisixiang.com" size="sm" />
 
@@ -207,6 +231,10 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 <Route namespace="qidian" :data='{"path":"/author/:id","categories":["reading"],"example":"/qidian/author/9639927","parameters":{"id":"作者 id, 可在作者页面 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["my.qidian.com/author/:id"]}],"name":"作者","maintainers":["miles170"],"location":"author.ts"}' />
 
 ## 轻小说文库 <Site url="www.wenku8.net"/>
+
+### Unknown <Site url="www.wenku8.net" size="sm" />
+
+<Route namespace="wenku8" :data='{"path":"/:category?","name":"Unknown","maintainers":["Fatpandac"],"location":"index.ts"}' />
 
 ### 章节 <Site url="www.wenku8.net" size="sm" />
 

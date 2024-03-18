@@ -197,8 +197,8 @@
     "_name": "3DMGame",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "游戏资讯",
+        "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/games/:name/:type"
         ],
@@ -220,7 +220,7 @@
     "www": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/news",
           "/"
@@ -229,7 +229,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/news",
           "/"
@@ -361,7 +361,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/picture",
         "source": [
           "/"
         ],
@@ -466,8 +466,8 @@
     "_name": "ABC News",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Channel & Topic",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/:category*"
         ],
@@ -500,7 +500,7 @@
     "_name": "A 姐分享",
     ".": [
       {
-        "title": "Unknown",
+        "title": "存档列表",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/"
@@ -508,7 +508,7 @@
         "target": "/abskoop/"
       },
       {
-        "title": "Unknown",
+        "title": "存档列表 - NSFW",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/"
@@ -521,8 +521,8 @@
     "_name": "AcFun",
     "www": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "用户投稿",
+        "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/u/:id"
         ],
@@ -750,7 +750,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/articles/"
         ],
@@ -1158,7 +1158,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/"
         ],
@@ -1746,7 +1746,7 @@
     "www.lib": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/:category/index.htm"
         ],
@@ -1852,7 +1852,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -2396,7 +2396,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -2740,7 +2740,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/reports"
         ],
@@ -2762,7 +2762,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/forecast",
         "source": [
           "/yjxx",
           "/"
@@ -3099,7 +3099,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/channel/:id",
           "/"
@@ -3108,7 +3108,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/channel/:id",
           "/"
@@ -3162,7 +3162,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/popular"
         ],
@@ -3254,7 +3254,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
           "/"
         ],
@@ -4470,7 +4470,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -4904,7 +4904,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/:user/:repo/blob/:branch/*filepath"
         ],
@@ -5305,7 +5305,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/government",
         "source": [
           "/"
         ],
@@ -5388,7 +5388,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/government",
         "source": [
           "/redianzhuanti/118742/4122386/4122510/index.html"
         ],
@@ -5644,7 +5644,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/articles/"
         ],
@@ -5711,7 +5711,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -6125,7 +6125,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/channel/:id",
           "/"
@@ -6143,7 +6143,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/issue/:id",
           "/"
@@ -6161,7 +6161,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/tag/:id",
           "/"
@@ -6170,7 +6170,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/zone/:id",
           "/"
@@ -6262,7 +6262,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/government",
         "source": [
           "/"
         ],
@@ -6305,7 +6305,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -6313,7 +6313,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -6321,7 +6321,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -6558,7 +6558,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/bbs",
         "source": [
           "/:category",
           "/"
@@ -6567,7 +6567,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/bbs",
         "source": [
           "/:category",
           "/"
@@ -7043,7 +7043,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/"
         ],
@@ -7051,7 +7051,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/"
         ],
@@ -7059,7 +7059,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/"
         ],
@@ -7598,7 +7598,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/"
         ],
@@ -7606,7 +7606,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/"
         ],
@@ -7619,7 +7619,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/"
         ],
@@ -7627,7 +7627,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/"
         ],
@@ -7640,7 +7640,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -7677,7 +7677,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/tz/people/:id",
           "/tz/people/:id/*"
@@ -7688,7 +7688,7 @@
     "mob": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/fine/:tagId"
         ],
@@ -7756,7 +7756,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/counterstrike/:id/Matches",
           "/dota2/:id"
@@ -7778,7 +7778,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/reading",
         "source": [
           "/c/:category",
           "/"
@@ -8419,7 +8419,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/latest-news",
           "/news",
@@ -8718,7 +8718,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/",
           "/bulletin"
@@ -8774,7 +8774,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/store/games",
           "/"
@@ -8788,7 +8788,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/software",
           "/"
@@ -8810,7 +8810,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/software/switch",
           "/"
@@ -8833,7 +8833,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/software/switch/index.html",
           "/"
@@ -9325,7 +9325,7 @@
     "lib": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/",
           "/index/tzgg.htm"
@@ -9775,7 +9775,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/"
         ],
@@ -9827,7 +9827,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/bbs",
         "source": [
           "/topic/:topic"
         ],
@@ -10020,7 +10020,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/index.php/newscenter/notice",
           "/"
@@ -10451,7 +10451,7 @@
     "ac": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/Comic/ComicInfo/id/:id",
           "/"
@@ -10490,7 +10490,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/zt2020/page/feiyan.htm"
         ],
@@ -10742,7 +10742,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -10758,7 +10758,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/i/:id",
           "/"
@@ -11983,7 +11983,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/:type"
         ],
@@ -11991,7 +11991,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/:type"
         ],
@@ -12532,7 +12532,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/html/news/xueyuan",
           "/"
@@ -12608,7 +12608,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/feed",
           "/"
@@ -12991,7 +12991,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
           "/"
         ],
@@ -13004,7 +13004,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -13125,7 +13125,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/"
         ],
@@ -13133,7 +13133,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/"
         ],
@@ -13242,7 +13242,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/forecast",
         "source": [
           "/IWater.shtml",
           "/"
@@ -13393,7 +13393,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/program-update",
         "source": [
           "/pine-script-docs/en/:version/Release_notes.html"
         ],
@@ -14046,7 +14046,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/"
         ],
@@ -14167,7 +14167,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/news/:category",
           "/"
@@ -14176,7 +14176,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/news/:category",
           "/"
@@ -14259,7 +14259,7 @@
     "mp": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/",
           "/article/category/:id"
@@ -14606,7 +14606,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/user/profile/:user_id"
         ],
@@ -14653,7 +14653,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/"
         ],
@@ -15035,7 +15035,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/c/:id"
         ],
@@ -15197,7 +15197,7 @@
     ".": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/bbs",
         "source": [
           "/:category/luxiang.htm"
         ],
