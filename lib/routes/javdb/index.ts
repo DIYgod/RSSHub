@@ -59,6 +59,5 @@ async function handler(ctx) {
 
     const title = `${categories[category]} - JavDB - ${filters[filter] === '' ? '|' : `${filters[filter]} | `}${sorts[sort]}`;
 
-    const data = await utils.ProcessItems(ctx, currentUrl, title);
-    return data;
+    return await utils.ProcessItems(ctx, currentUrl, title);
 }

@@ -64,7 +64,5 @@ async function handler(ctx) {
 
     const title = `關鍵字 ${keyword} ${filters[filter] === '' ? '' : `+ ${filters[filter]}`} ${sorts[sort]} 搜索結果 - JavDB`;
 
-    const data = await utils.ProcessItems(ctx, currentUrl, title);
-
-    return data;
+    return await utils.ProcessItems(ctx, currentUrl, title);
 }

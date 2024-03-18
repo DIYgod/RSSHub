@@ -37,6 +37,5 @@ async function handler(ctx) {
 
     const title = `JavDB${filters[filter] === '' ? '' : ` - ${filters[filter]}`} ${sortOptions[sort]}`;
 
-    const data = await utils.ProcessItems(ctx, currentUrl, title);
-    return data;
+    return await utils.ProcessItems(ctx, currentUrl, title);
 }

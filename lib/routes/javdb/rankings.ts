@@ -43,6 +43,5 @@ async function handler(ctx) {
 
     const title = 'JavDB';
 
-    const data = await utils.ProcessItems(ctx, currentUrl, title);
-    return data;
+    return await utils.ProcessItems(ctx, currentUrl, title);
 }
