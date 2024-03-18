@@ -8,15 +8,6 @@ export const route: Route = {
     path: '/newlist',
     categories: ['government'],
     example: '/ncpssd/newlist',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: {
         source: ['ncpssd.cn/', 'ncpssd.cn/newlist?type=0'],
     },
