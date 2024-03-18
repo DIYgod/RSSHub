@@ -6,7 +6,7 @@ import { URL } from 'url';
 
 export const route: Route = {
     path: '/newlist',
-    categories: ['government'],
+    categories: ['study'],
     example: '/ncpssd/newlist',
     radar: {
         source: ['ncpssd.cn/', 'ncpssd.cn/newlist?type=0'],
