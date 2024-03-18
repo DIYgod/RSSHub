@@ -148,7 +148,7 @@
     "@types/tiny-async-pool": "2.0.3",
     "@types/tough-cookie": "4.0.5",
     "@typescript-eslint/eslint-plugin": "7.2.0",
-    "@typescript-eslint/parser": "7.2.0",
+    "@typescript-eslint/parser": "7.3.0",
     "@vercel/nft": "0.26.4",
     "@vitest/coverage-v8": "1.4.0",
     "cross-env": "7.0.3",
