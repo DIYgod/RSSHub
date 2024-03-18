@@ -426,6 +426,22 @@ GitHub provides some official RSS feeds:
   | -------- | -------- |
   | zh-cn    | zh-tw    |
 
+## NOSEC 安全讯息平台
+
+### Posts
+
+<Route namespace="nosec" data={{"path":"/:keykind?","categories":["programming"],"example":"/nosec/hole","parameters":{"keykind":"对应文章分类"},"name":"Posts","maintainers":["hellodword"],"description":"  | 分类     | 标识       |\n    | :------- | :--------- |\n    | 威胁情报 | `threaten` |\n    | 安全动态 | `security` |\n    | 漏洞预警 | `hole`     |\n    | 数据泄露 | `leakage`  |\n    | 专题报告 | `speech`   |\n    | 技术分析 | `skill`    |\n    | 安全工具 | `tool`     |","radar":[{"source":["nosec.org/home/index/:keykind","nosec.org/home/index"]}],"location":"index.ts"}} />
+
+  | 分类     | 标识       |
+    | :------- | :--------- |
+    | 威胁情报 | `threaten` |
+    | 安全动态 | `security` |
+    | 漏洞预警 | `hole`     |
+    | 数据泄露 | `leakage`  |
+    | 专题报告 | `speech`   |
+    | 技术分析 | `skill`    |
+    | 安全工具 | `tool`     |
+
 ## Quicker
 
 ### 动作分享
@@ -472,7 +488,17 @@ GitHub provides some official RSS feeds:
   | ------- | ----------- | ----------- |
   | Actions | SubPrograms | ActionLists |
 
+## Reactiflux
+
+### Transcripts
+
+<Route namespace="reactiflux" data={{"path":"/transcripts","name":"Transcripts","url":"reactiflux.com/transcripts","maintainers":["nczitzk"],"example":"/reactiflux/transcripts","categories":["programming"],"radar":[{"source":["www.reactiflux.com/transcripts"],"target":"/transcripts"}],"location":"transcripts.ts"}} />
+
 ## Rust 语言中文社区
+
+### 新闻/聚合
+
+<Route namespace="rustcc" data={{"path":"/news","categories":["programming"],"example":"/rustcc/news","radar":[{"source":["rustcc.cn/"]}],"name":"新闻/聚合","maintainers":["zhenlohuang"],"url":"rustcc.cn/","location":"news.ts"}} />
 
 ### 招聘
 
@@ -539,6 +565,24 @@ GitHub provides some official RSS feeds:
   | Wallpapers         | wallpapers         |
   | Web Design         | web-design         |
   | Workflow           | workflow           |
+
+## web.dev
+
+### Articles
+
+<Route namespace="web" data={{"path":"/articles","categories":["programming"],"example":"/web/articles","radar":[{"source":["web.dev/articles"]}],"name":"Articles","maintainers":["KarasuShin"],"location":"articles.ts"}} />
+
+### Blog
+
+<Route namespace="web" data={{"path":"/blog","categories":["programming"],"example":"/web/blog","radar":[{"source":["web.dev/blog"]}],"name":"Blog","maintainers":["KarasuShin"],"location":"blog.ts"}} />
+
+### Series
+
+<Route namespace="web" data={{"path":"/series/:seriesName","parameters":{"seriesName":"topic name in the series section"},"categories":["programming"],"example":"/web/series/new-to-the-web","radar":[{"source":["web.dev/series/:seriesName"],"target":"/series/:seriesName"}],"name":"Series","maintainers":["KarasuShin"],"description":":::tip\n    The `seriesName` can be extracted from the Series page URL: `https://web.dev/series/:seriesName`\n:::","location":"series.ts"}} />
+
+:::tip
+    The `seriesName` can be extracted from the Series page URL: `https://web.dev/series/:seriesName`
+:::
 
 ## 阿里云
 

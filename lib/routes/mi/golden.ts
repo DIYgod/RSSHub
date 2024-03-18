@@ -1,6 +1,16 @@
-const got = require('@/utils/got');
+import { Route } from '@/types';
+import got from '@/utils/got';
 
-module.exports = async (ctx) => {
+export const route: Route = {
+    path: '/golden',
+    categories: ['program-update'],
+    example: '/mi/golden',
+    name: '小米应用商店金米奖',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler() {
     const link = 'https://app.market.xiaomi.com/apm/subject/169449?os=1.1.1&sdk=19';
     const response = await got({
         method: 'get',
@@ -13,10 +23,10 @@ module.exports = async (ctx) => {
         description: item.briefShow,
     }));
 
-    ctx.state.data = {
+    return {
         title: `金米奖 - 小米应用商店`,
         link,
         item: list,
         description: response.data.description,
     };
-};
+}
