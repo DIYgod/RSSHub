@@ -56699,7 +56699,7 @@
         "maintainers": [
           "KarasuShin"
         ],
-        "description": ":::tip\n    The `seriesName` can be extracted from the Series page URL: `https://web.dev/series/:seriesName`\n    :::",
+        "description": ":::tip\n    The `seriesName` can be extracted from the Series page URL: `https://web.dev/series/:seriesName`\n:::",
         "location": "series.ts"
       }
     },
