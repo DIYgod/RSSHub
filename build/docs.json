@@ -7670,28 +7670,6 @@
       },
       "name": "浙江省土地使用权网上交易系统"
     },
-    "zrblog": {
-      "routes": {
-        "/zrblog/": {
-          "path": "/",
-          "radar": [
-            {
-              "source": [
-                "zrblog.net/"
-              ],
-              "target": ""
-            }
-          ],
-          "name": "Unknown",
-          "maintainers": [
-            "cnkmmk"
-          ],
-          "url": "zrblog.net/",
-          "location": "rss.ts"
-        }
-      },
-      "name": "赵容部落"
-    },
     "zyshow": {
       "routes": {
         "/zyshow*": {
@@ -49401,6 +49379,31 @@
         }
       },
       "name": "浙江大学可视分析小组"
+    },
+    "zrblog": {
+      "routes": {
+        "/zrblog/": {
+          "path": "/",
+          "categories": [
+            "blog"
+          ],
+          "example": "/zrblog",
+          "radar": [
+            {
+              "source": [
+                "zrblog.net/"
+              ]
+            }
+          ],
+          "name": "最新文章",
+          "maintainers": [
+            "cnkmmk"
+          ],
+          "url": "zrblog.net/",
+          "location": "rss.ts"
+        }
+      },
+      "name": "赵容部落"
     }
   },
   "traditional-media": {
