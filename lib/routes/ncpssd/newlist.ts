@@ -11,7 +11,7 @@ export const route: Route = {
     radar: {
         source: ['ncpssd.cn/', 'ncpssd.cn/newlist?type=0'],
     },
-    name: '国家哲学社会科学文献中心最新文献',
+    name: '最新文献',
     maintainers: ['LyleLee'],
     handler,
     url: 'ncpssd.cn/',
