@@ -36,19 +36,6 @@ updates:
       - dependency-name: unist-util-visit-parents
         versions: ['>=6.0.0']
 
-  - package-ecosystem: npm
-    directory: '/website'
-    schedule:
-      interval: daily
-      time: '21:00'
-    open-pull-requests-limit: 10
-    labels:
-      - dependencies
-    groups:
-      docusaurus:
-        patterns:
-          - '@docusaurus/*'
-
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
