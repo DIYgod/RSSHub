@@ -610,6 +610,14 @@ However, you can still specify these route-specific configurations if you need t
   Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting `https://t.me/s/:username`.
   :::
 
+### Channel with long videos and file support {#telegram-channel-with-long-videos-and-file-support}
+
+<Route author="synchrone" example="/telegram/channel/telegram" path="/telegram/channel/:username" paramsDesc={['Channel name, without @']} configRequired="1" />
+
+:::warning
+This route requires user-based `TELEGRAM_SESSION`. It can be acquired by running `npx tsx lib/routes/telegram/tglib/client.ts`
+:::
+
 ### Sticker Pack
 
 <Route namespace="telegram" data={{"path":"/stickerpack/:name","categories":["social-media"],"example":"/telegram/stickerpack/DIYgod","parameters":{"name":"Sticker Pack name, available in the sharing URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Sticker Pack","maintainers":["DIYgod"],"location":"stickerpack.ts"}} />

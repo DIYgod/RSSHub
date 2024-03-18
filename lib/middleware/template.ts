@@ -10,6 +10,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
     await next();
+    if (ctx.get('no-template')) { return; }
 
     const data: Data = ctx.get('data');
     const outputType = ctx.req.query('format') || 'rss';
