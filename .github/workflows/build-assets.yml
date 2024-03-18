@@ -68,4 +68,5 @@ jobs:
           destination-github-username: 'RSSNext'
           destination-repository-name: 'rsshub-docs'
           user-email: '41898282+github-actions[bot]@users.noreply.github.com'
-          target-branch: 'github-actions[bot]'
+          user-name: 'github-actions[bot]'
+          target-branch: 'main'
