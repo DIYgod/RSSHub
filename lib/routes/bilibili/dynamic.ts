@@ -99,7 +99,7 @@ export const route: Route = {
 
   用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1\`
 
-  :::tip[动态的专栏显示全文]
+  :::tip 动态的专栏显示全文
   动态的专栏显示全文请使用通用参数里的 \`mode=fulltext\`
 
   举例: bilibili 专栏全文输出 /bilibili/user/dynamic/2267573/?mode=fulltext
