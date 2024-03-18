@@ -4,17 +4,17 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:language?',
-    categories: ['programming'],
-    example: '/news/zh-hans',
+    categories: ['new-media'],
+    example: '/news/zh-hans, /news/zh-hant',
     parameters: {
         language: 'zh-hans | zh-hant',
     },
     radar: [
         {
-            source: ['kaopu.news'],
+            source: ['kaopu.news/'],
         },
     ],
-    name: '靠谱新闻',
+    name: '靠谱新闻-全部',
     maintainers: ['fashioncj'],
     handler,
 };
