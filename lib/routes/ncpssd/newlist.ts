@@ -8,9 +8,9 @@ export const route: Route = {
     path: '/newlist',
     categories: ['study'],
     example: '/ncpssd/newlist',
-    radar: {
-        source: ['ncpssd.cn/', 'ncpssd.cn/newlist?type=0'],
-    },
+    radar: [{
+        source: ['ncpssd.cn/', 'ncpssd.cn/newlist'],
+    }],
     name: '最新文献',
     maintainers: ['LyleLee'],
     handler,
