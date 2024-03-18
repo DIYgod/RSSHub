@@ -17,7 +17,7 @@ export const route: Route = {
     handler,
     description: `:::tip
     The \`seriesName\` can be extracted from the Series page URL: \`https://web.dev/series/:seriesName\`
-    :::`,
+:::`,
 };
 
 async function handler(ctx): Promise<Data> {
