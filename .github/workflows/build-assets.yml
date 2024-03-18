@@ -50,7 +50,7 @@ jobs:
       - name: Pushes to docs repository - en
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.DOCS_SSH_DEPLOY_KEY }}
+          API_TOKEN_GITHUB: ${{ secrets.DOCS_API_TOKEN }}
         with:
           source-directory: './assets/build/docs/en'
           target-directory: './src/routes'
@@ -60,7 +60,7 @@ jobs:
       - name: Pushes to docs repository - zh
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.DOCS_SSH_DEPLOY_KEY }}
+          API_TOKEN_GITHUB: ${{ secrets.DOCS_API_TOKEN }}
         with:
           source-directory: './assets/build/docs/zh'
           target-directory: './src/zh/routes'
