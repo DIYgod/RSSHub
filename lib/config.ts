@@ -166,6 +166,9 @@ export type Config = {
         username?: string;
         password?: string;
     };
+    javdb: {
+        session?: string;
+    };
     lastfm: {
         api_key?: string;
     };
@@ -283,9 +286,6 @@ export type Config = {
     };
     zodgame: {
         cookie?: string;
-    };
-    javdb: {
-        session?: string;
     };
 };
 
@@ -504,6 +504,9 @@ const calculateValue = () => {
             username: envs.IWARA_USERNAME,
             password: envs.IWARA_PASSWORD,
         },
+        javdb: {
+            session: envs.JAVDB_SESSION,
+        },
         lastfm: {
             api_key: envs.LASTFM_API_KEY,
         },
@@ -626,9 +629,6 @@ const calculateValue = () => {
         },
         zodgame: {
             cookie: envs.ZODGAME_COOKIE,
-        },
-        javdb: {
-            session: envs.JAVDB_SESSION,
         },
     };
 
