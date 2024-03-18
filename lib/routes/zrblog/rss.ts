@@ -7,9 +7,11 @@ export const route: Route = {
     path: '/',
     categories: ['blog'],
     example: '/zrblog',
-    radar: [{
+    radar: [
+        {
             source: ['zrblog.net/'],
-        }],
+        },
+    ],
     name: '最新文章',
     maintainers: ['cnkmmk'],
     handler,
