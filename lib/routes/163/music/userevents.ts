@@ -9,7 +9,8 @@ const renderDescription = (info) => art(path.join(__dirname, '../templates/music
 
 export const route: Route = {
     path: '/music/user/events/:id',
-    name: 'Unknown',
+    categories: ['multimedia'],
+    name: '用户动态',
     maintainers: ['Master-Hash'],
     handler,
 };

@@ -17,9 +17,10 @@ const shortcuts = {
 };
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/{.*}?',
+    categories: ['new-media'],
+    name: '资讯, 快讯, 用户文章, 主题文章, 专题文章, 搜索文章, 搜索快讯',
+    maintainers: ['nczitzk'],
     handler,
 };
 
