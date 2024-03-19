@@ -1,27 +1,37 @@
 import readline from 'node:readline/promises';
 import { Api, TelegramClient } from 'telegram';
+import { UserAuthParams } from 'telegram/client/auth';
 import { StringSession } from 'telegram/sessions';
 import { getAppropriatedPartSize } from 'telegram/Utils';
 
 import { config } from '@/config';
 
-const apiId = Number(config.telegram.apiId ?? 4);
-const apiHash = config.telegram.apiHash ?? '014b35b6184100b085b0d0572f9b5103';
+let client: TelegramClient | undefined;
+export async function getClient(authParams?: UserAuthParams, session?: string) {
+    if (!config.telegram.session && session === undefined) {
+        throw new Error('TELEGRAM_SESSION is not configured');
+    }
+    if (client) {
+        return client;
+    }
+    const apiId = Number(config.telegram.apiId ?? 4);
+    const apiHash = config.telegram.apiHash ?? '014b35b6184100b085b0d0572f9b5103';
 
-const stringSession = new StringSession(config.telegram.session);
-const client = new TelegramClient(stringSession, apiId, apiHash, {
-    connectionRetries: Infinity,
-    autoReconnect: true,
-    retryDelay: 3000,
-    maxConcurrentDownloads: Number(config.telegram.maxConcurrentDownloads ?? 10),
-});
-
-if (config.telegram.session) {
-    client.start({
-        onError: (err) => {
-            throw 'Cannot start TG: ' + err;
-        },
+    const stringSession = new StringSession(session ?? config.telegram.session);
+    client = new TelegramClient(stringSession, apiId, apiHash, {
+        connectionRetries: Infinity,
+        autoReconnect: true,
+        retryDelay: 3000,
+        maxConcurrentDownloads: Number(config.telegram.maxConcurrentDownloads ?? 10),
     });
+    await client.start(
+        Object.assign(authParams ?? {}, {
+            onError: (err) => {
+                throw new Error('Cannot start TG: ' + err);
+            },
+        }) as any
+    );
+    return client;
 }
 
 function humanFileSize(size) {
@@ -180,15 +190,17 @@ export { client, getMediaLink, decodeMedia, getFilename, streamDocument, streamT
 
 if (require.main === module) {
     Promise.resolve().then(async () => {
-        client.session = new StringSession('');
         const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-        await client.start({
-            phoneNumber: () => rl.question('Please enter your number: '),
-            password: () => rl.question('Please enter your password: '),
-            phoneCode: () => rl.question('Please enter the code you received: '),
-            onError: (err) => process.stderr.write(err),
-        });
-        process.stdout.write(`TG_SESSION=${client.session.save()}\n`);
+        const client = await getClient(
+            {
+                phoneNumber: () => rl.question('Please enter your phone number: '),
+                password: () => rl.question('Please enter your password: '),
+                phoneCode: () => rl.question('Please enter the code you received: '),
+                onError: (err) => process.stderr.write(err.toString()),
+            },
+            ''
+        );
+        process.stdout.write(`TELEGRAM_SESSION=${client.session.save()}\n`);
         process.exit(0);
     });
 }
