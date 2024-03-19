@@ -1,4 +1,5 @@
 import { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -37,21 +38,28 @@ async function handler(ctx) {
     });
     const data = response.data.result.filter((item) => item.news !== undefined);
 
-    const items = data.map((item) => {
-        const entity = item.news;
-        const newsId = entity.newsId;
-        const newsLink = `https://news.wmpvp.com/news.html?id=${newsId}&gameTypeStr=${type}`;
+    const items = await Promise.all(
+        data.map((item) => {
+            const entity = item.news;
+            const newsId = entity.newsId;
+            const newsLink = `https://news.wmpvp.com/news.html?id=${newsId}&gameTypeStr=${type}`;
 
-        // 最终需要返回的对象
-        return {
-            title: entity.title,
-            pubDate: parseDate(entity.publishTime),
-            link: newsLink,
-            guid: newsLink,
-            description: entity.summary,
-            author: entity.author,
-        };
-    });
+            return cache.tryGet(newsLink, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: `https://appactivity.wmpvp.com/steamcn/app/news/getAppNewsById?gameType=${type}&newsId=${newsId}`,
+                });
+                return {
+                    title: entity.title,
+                    pubDate: parseDate(entity.publishTime),
+                    link: newsLink,
+                    guid: newsLink,
+                    author: entity.author,
+                    description: detailResponse.data.result.news.content,
+                };
+            });
+        })
+    );
 
     return {
         title: `完美世界电竞 - ${TYPE_MAP[type]} 资讯`,
