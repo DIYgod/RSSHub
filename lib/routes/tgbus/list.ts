@@ -18,6 +18,9 @@ const categories: Record<Category, string> = {
 
 export const route: Route = {
     path: '/list/:category',
+    parameters: {
+        category: '列表分类，见下表',
+    },
     categories: ['game'],
     example: '/tgbus/list/news',
     radar: [
