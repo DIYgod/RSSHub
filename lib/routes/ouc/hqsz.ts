@@ -40,7 +40,7 @@ function Decrypt(word, keyStr = '1974051005060708', ivStr = '1974051005060708') 
     });
 
     const decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
-    return decryptedStr.toString();
+    return decryptedStr;
 }
 
 async function handler() {
