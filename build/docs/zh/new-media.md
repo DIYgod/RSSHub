@@ -2019,6 +2019,16 @@ Member ID
 将榜单条目集合到一个列表中，可避免推送大量条目，更符合阅读习惯且有热度排序，推荐使用。
 :::
 
+## 靠谱新闻 <Site url="kaopu.news"/>
+
+### 全部 <Site url="kaopu.news" size="sm" />
+
+<Route namespace="kaopu" :data='{"path":"/news/:language?","categories":["new-media"],"example":"/news/zh-hans, /news/zh-hant","parameters":{"language":"语言"},"radar":[{"source":["kaopu.news/"]}],"name":"全部","maintainers":["fashioncj"],"description":"| 简体中文    | 繁体中文     | \n  | ------- | -------- | \n  | zh-hans | zh-hant | ","location":"news.ts"}' />
+
+| 简体中文    | 繁体中文     | 
+  | ------- | -------- | 
+  | zh-hans | zh-hant | 
+
 ## 科学网 <Site url="blog.sciencenet.cn"/>
 
 ### 精选博客 <Site url="blog.sciencenet.cn" size="sm" />
