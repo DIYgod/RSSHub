@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import OAuth from 'oauth-1.0a';
 import CryptoJS from 'crypto-js';
 import queryString from 'query-string';
-import { getToken } from './token';
+import { initToken, getToken } from './token';
 import cache from '@/utils/cache';
 
 const twitterGot = async (url, params) => {
@@ -269,7 +269,7 @@ const getUserTweet = (id, params) => cacheTryGet(id, params, getUserTweetByStatu
 
 const getSearch = async (keywords, params = {}) => gatherLegacyFromData(await timelineKeywords(keywords, params));
 
-export {
+export default {
     getUser,
     getUserTweets,
     getUserTweetsAndReplies,
@@ -278,4 +278,5 @@ export {
     excludeRetweet,
     getSearch,
     getUserTweet,
+    init: initToken,
 };

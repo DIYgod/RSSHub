@@ -1,5 +1,6 @@
 import { Route } from '@/types';
-import webApiImpl from './mobile-api/search';
+import api from './api';
+import utils from './utils';
 
 export const route: Route = {
     path: '/keyword/:keyword/:routeParams?',
@@ -34,5 +35,16 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    return await webApiImpl(ctx);
+    const keyword = ctx.req.param('keyword');
+    await api.init();
+    const data = await api.getSearch(keyword);
+
+    return {
+        title: `Twitter Keyword - ${keyword}`,
+        link: `https://twitter.com/search?q=${encodeURIComponent(keyword)}`,
+        item: utils.ProcessFeed(ctx, {
+            data,
+        }),
+        allowEmpty: true,
+    };
 }
