@@ -16,11 +16,11 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'TWITTER_USERNAME',
-                description: '',
+                description: 'Please see above for details.',
             },
             {
                 name: 'TWITTER_PASSWORD',
-                description: '',
+                description: 'Please see above for details.',
             },
         ],
         requirePuppeteer: false,
