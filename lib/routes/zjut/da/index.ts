@@ -47,12 +47,9 @@ async function handler(ctx) {
     listResponse.data = iconv.decode(listResponse.data, 'gbk');
     const $ = load(listResponse.data);
 
-    const list = $("td[class='newstd']")
+    const list = $("td[class='newstd'] .news2")
         .map((index, item) => {
             item = $(item);
-            if (item.text().includes('[下一页]') || item.text().includes('[尾页]')) {
-                return null;
-            }
             const title = item.find('a').text();
 
             let link = item.find('a').attr('href');
@@ -63,7 +60,7 @@ async function handler(ctx) {
                 link = rootUrl + link;
             }
 
-            const date = item.find("span[class='datetime']").text().replace('[', '').replace(']', '');
+            const date = item.next().text().replace('[', '').replace(']', '');
 
             return {
                 title,
@@ -72,8 +69,7 @@ async function handler(ctx) {
                 link,
             };
         })
-        .get()
-        .filter((item) => item !== null);
+        .get();
 
     const items = await Promise.all(
         list.map((item) =>
