@@ -62,6 +62,12 @@
   username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 地址。
   :::
 
+## HiFeng'Blog <Site url="hicairo.com"/>
+
+### 最近发表 <Site url="hicairo.com/" size="sm" />
+
+<Route namespace="hicairo" :data='{"path":"/","categories":["blog"],"example":"/hicairo","radar":[{"source":["hicairo.com/"]}],"name":"最近发表","maintainers":["cnkmmk"],"url":"hicairo.com/","location":"rss.ts"}' />
+
 ## Ian Spriggss <Site url="ianspriggs.com"/>
 
 ### Category <Site url="ianspriggs.com" size="sm" />

@@ -280,12 +280,6 @@
 
 <Route namespace="hackyournews" :data='{"path":"/","radar":[{"source":["hackyournews.com/"],"target":""}],"name":"Unknown","maintainers":["ftiasch"],"url":"hackyournews.com/","location":"index.ts"}' />
 
-## HiFeng'Blog <Site url="hicairo.com"/>
-
-### Unknown <Site url="hicairo.com/" size="sm" />
-
-<Route namespace="hicairo" :data='{"path":"/","radar":[{"source":["hicairo.com/"],"target":""}],"name":"Unknown","maintainers":["cnkmmk"],"url":"hicairo.com/","location":"rss.ts"}' />
-
 ## HKJunkCall 資訊中心 <Site url="hkjunkcall.com"/>
 
 ### Unknown <Site url="hkjunkcall.com/" size="sm" />
