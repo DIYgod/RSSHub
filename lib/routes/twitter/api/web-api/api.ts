@@ -123,10 +123,8 @@ const getSearch = async (keywords: string, params?: Record<string, any>) =>
                 ...params,
                 rawQuery: keywords,
                 count: 20,
+                querySource: 'typed_query',
                 product: 'Latest',
-                withDownvotePerspective: false,
-                withReactionsMetadata: false,
-                withReactionsPerspective: false,
             },
             ['search_by_raw_query', 'search_timeline', 'timeline']
         )
