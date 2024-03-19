@@ -9522,6 +9522,16 @@
   },
   "ouc.edu.cn": {
     "_name": "中国海洋大学",
+    "hqsz": [
+      {
+        "title": "后勤公告通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/news.html"
+        ],
+        "target": "/ouc/hqsz"
+      }
+    ],
     "it": [
       {
         "title": "信息科学与工程学院研究生招生通知公告",

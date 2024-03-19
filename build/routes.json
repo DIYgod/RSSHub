@@ -39904,6 +39904,35 @@
   },
   "ouc": {
     "routes": {
+      "/hqsz": {
+        "path": "/hqsz",
+        "categories": [
+          "university"
+        ],
+        "example": "/ouc/hqsz",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "hqsz.ouc.edu.cn/news.html"
+            ]
+          }
+        ],
+        "name": "后勤公告通知",
+        "maintainers": [
+          "ladeng07"
+        ],
+        "url": "hqsz.ouc.edu.cn/news.html?typeId=02",
+        "location": "hqsz.ts"
+      },
       "/it/postgraduate": {
         "path": "/it/postgraduate",
         "categories": [
