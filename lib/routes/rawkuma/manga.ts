@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rawkuma.com/manga/:id', 'rawkuma.com/'],
-    },
+    radar: [
+        {
+            source: ['rawkuma.com/manga/:id', 'rawkuma.com/'],
+        },
+    ],
     name: 'Manga',
     maintainers: ['nczitzk'],
     handler,

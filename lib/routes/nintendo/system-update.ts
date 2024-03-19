@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nintendo.co.jp/support/switch/system_update/index.html', 'nintendo.co.jp/'],
-    },
+    radar: [
+        {
+            source: ['nintendo.co.jp/support/switch/system_update/index.html', 'nintendo.co.jp/'],
+        },
+    ],
     name: 'Switch System Update（Japan）',
     maintainers: ['hoilc'],
     handler,

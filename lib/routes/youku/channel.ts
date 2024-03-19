@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['i.youku.com/i/:id'],
-        target: '/channel/:id',
-    },
+    radar: [
+        {
+            source: ['i.youku.com/i/:id'],
+            target: '/channel/:id',
+        },
+    ],
     name: '频道',
     maintainers: ['xyqfer', 'Fatpandac'],
     handler,

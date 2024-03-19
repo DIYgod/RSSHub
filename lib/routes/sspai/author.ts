@@ -32,9 +32,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/u/:id/posts'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/u/:id/posts'],
+        },
+    ],
     name: '作者',
     maintainers: ['SunShinenny', 'hoilc'],
     handler,

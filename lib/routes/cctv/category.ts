@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.cctv.com/:category'],
-    },
+    radar: [
+        {
+            source: ['news.cctv.com/:category'],
+        },
+    ],
     name: '专题',
     maintainers: ['idealclover', 'xyqfer'],
     handler,
@@ -42,5 +44,5 @@ async function handler(ctx) {
         responseData = await getNews(category);
     }
 
-    ctx.set('data', responseData);
+    return responseData;
 }

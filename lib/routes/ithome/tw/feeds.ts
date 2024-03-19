@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.ithome.com.tw/:category', 'www.ithome.com.tw/:category/feeds'],
-    },
+    radar: [
+        {
+            source: ['www.ithome.com.tw/:category', 'www.ithome.com.tw/:category/feeds'],
+        },
+    ],
     name: 'Feeds',
     maintainers: ['miles170'],
     handler,

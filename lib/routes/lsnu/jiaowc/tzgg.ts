@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['lsnu.edu.cn/'],
-        target: '/jiaowc/tzgg',
-    },
+    radar: [
+        {
+            source: ['lsnu.edu.cn/'],
+            target: '/jiaowc/tzgg',
+        },
+    ],
     name: '教学部通知公告',
     maintainers: ['nyaShine'],
     handler,

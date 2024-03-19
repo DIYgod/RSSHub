@@ -63,10 +63,12 @@ const extractArticle = (item) =>
 
 export const route: Route = {
     path: '/:category?',
-    radar: {
-        source: ['dlnews.com/articles/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['dlnews.com/articles/:category'],
+            target: '/:category',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['Rjnishant530'],
     handler,

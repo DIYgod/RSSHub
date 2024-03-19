@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['lang.live/room/:id'],
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['lang.live/room/:id'],
+        },
+    ],
+    name: '直播间开播',
     maintainers: ['MittWillson'],
     handler,
 };

@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.lovelive-anime.jp/', 'www.lovelive-anime.jp/news'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['www.lovelive-anime.jp/', 'www.lovelive-anime.jp/news'],
+            target: '/news',
+        },
+    ],
     name: 'Love Live! Official Website Latest NEWS',
     maintainers: ['axojhf'],
     handler,

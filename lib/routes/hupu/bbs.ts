@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['m.hupu.com/:category', 'm.hupu.com/'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['m.hupu.com/:category', 'm.hupu.com/'],
+            target: '/:category',
+        },
+    ],
     name: '社区',
     maintainers: ['LogicJake', 'nczitzk'],
     handler,

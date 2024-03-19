@@ -5,10 +5,12 @@ import queryString from 'query-string';
 
 export const route: Route = {
     path: '/file/:user/:repo/:branch/:filepath{.+}',
-    radar: {
-        source: ['github.com/:user/:repo/blob/:branch/*filepath'],
-        target: '/file/:user/:repo/:branch/:filepath',
-    },
+    radar: [
+        {
+            source: ['github.com/:user/:repo/blob/:branch/*filepath'],
+            target: '/file/:user/:repo/:branch/:filepath',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

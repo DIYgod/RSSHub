@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.cngal.org/entries/index/:id'],
-    },
+    radar: [
+        {
+            source: ['www.cngal.org/entries/index/:id'],
+        },
+    ],
     name: '制作者 / 游戏新闻',
     maintainers: ['chengyuhui'],
     handler,

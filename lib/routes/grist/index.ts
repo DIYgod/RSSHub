@@ -3,9 +3,11 @@ import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['grist.org/articles/'],
-    },
+    radar: [
+        {
+            source: ['grist.org/articles/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['Rjnishant530'],
     handler,

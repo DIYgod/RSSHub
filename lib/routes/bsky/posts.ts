@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bsky.app/profile/:handle'],
-    },
+    radar: [
+        {
+            source: ['bsky.app/profile/:handle'],
+        },
+    ],
     name: 'Post',
     maintainers: ['TonyRL'],
     handler,

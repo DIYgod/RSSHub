@@ -32,10 +32,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['chinaventure.com.cn/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['chinaventure.com.cn/'],
+            target: '',
+        },
+    ],
     name: '分类',
     maintainers: ['yuxinliu-alex'],
     handler,

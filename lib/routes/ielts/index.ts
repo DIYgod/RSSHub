@@ -10,10 +10,12 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['ielts.neea.cn/allnews'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['ielts.neea.cn/allnews'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['zenxds'],
     handler,

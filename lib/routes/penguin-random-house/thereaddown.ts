@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['penguinrandomhouse.com/the-read-down'],
-    },
+    radar: [
+        {
+            source: ['penguinrandomhouse.com/the-read-down'],
+        },
+    ],
     name: 'Book Lists',
     maintainers: ['StevenRCE0'],
     handler,

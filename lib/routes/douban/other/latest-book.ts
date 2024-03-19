@@ -17,7 +17,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Unknown',
+    name: '新书速递',
     maintainers: ['fengkx'],
     handler,
 };

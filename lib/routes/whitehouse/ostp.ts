@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['whitehouse.gov/ostp', 'whitehouse.gov/'],
-    },
+    radar: [
+        {
+            source: ['whitehouse.gov/ostp', 'whitehouse.gov/'],
+        },
+    ],
     name: 'Office of Science and Technology Policy',
     maintainers: ['LyleLee'],
     handler,

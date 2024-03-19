@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sony.com/electronics/support/:productType/:productId/downloads'],
-    },
+    radar: [
+        {
+            source: ['sony.com/electronics/support/:productType/:productId/downloads'],
+        },
+    ],
     name: 'Software Downloads',
     maintainers: ['EthanWng97'],
     handler,

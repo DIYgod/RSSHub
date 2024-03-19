@@ -121,7 +121,8 @@
         "n/no-unpublished-import": 0,
         "n/no-unpublished-require": ["error", { "allowModules": ["tosource"] }],
         "prettier/prettier": 0,
-        "yml/quotes": ["error", { "prefer": "single" }]
+        "yml/quotes": ["error", { "prefer": "single" }],
+        "yml/no-empty-mapping-value": 0
     },
     "overrides": [
         {

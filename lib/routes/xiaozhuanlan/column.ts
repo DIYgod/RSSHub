@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xiaozhuanlan.com/:id'],
-    },
+    radar: [
+        {
+            source: ['xiaozhuanlan.com/:id'],
+        },
+    ],
     name: '专栏',
     maintainers: ['TonyRL'],
     handler,

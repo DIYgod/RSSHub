@@ -8,9 +8,11 @@ const baseUrl = 'https://lib.nuist.edu.cn';
 
 export const route: Route = {
     path: '/lib',
-    radar: {
-        source: ['lib.nuist.edu.cn/', 'lib.nuist.edu.cn/index/tzgg.htm'],
-    },
+    radar: [
+        {
+            source: ['lib.nuist.edu.cn/', 'lib.nuist.edu.cn/index/tzgg.htm'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['gylidian'],
     handler,

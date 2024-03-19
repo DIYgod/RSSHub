@@ -36,10 +36,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['freecomputerbooks.com/', 'freecomputerbooks.com/index.html'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['freecomputerbooks.com/', 'freecomputerbooks.com/index.html'],
+            target: '',
+        },
+    ],
 };
 
 async function handler(ctx) {

@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jmcomic.group/'],
-        target: '/:category?/:time?/:order?/:keyword?',
-    },
+    radar: [
+        {
+            source: ['jmcomic.group/'],
+            target: '/:category?/:time?/:order?/:keyword?',
+        },
+    ],
     name: '搜索',
     maintainers: [],
     handler,
@@ -44,5 +46,5 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/search/${option}${category === 'all' ? '' : `/${category}`}${keyword ? `?search_query=${keyword}` : '?'}${time === 'a' ? '' : `&t=${time}`}${order === 'mr' ? '' : `&o=${order}`}`;
 
-    ctx.set('data', await ProcessItems(ctx, currentUrl, rootUrl));
+    return await ProcessItems(ctx, currentUrl, rootUrl);
 }

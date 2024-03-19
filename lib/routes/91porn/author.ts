@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['91porn.com/index.php'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['91porn.com/index.php'],
+            target: '',
+        },
+    ],
     name: 'Author',
     maintainers: ['TonyRL'],
     handler,

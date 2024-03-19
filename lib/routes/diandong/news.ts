@@ -30,10 +30,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['diandong.com/news'],
-        target: '/news/:cate',
-    },
+    radar: [
+        {
+            source: ['diandong.com/news'],
+            target: '/news/:cate',
+        },
+    ],
     name: '资讯',
     maintainers: ['Fatpandac'],
     handler,

@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['indiansinkuwait.com/latest-news', 'indiansinkuwait.com/'],
-    },
+    radar: [
+        {
+            source: ['indiansinkuwait.com/latest-news', 'indiansinkuwait.com/'],
+        },
+    ],
     name: 'News',
     maintainers: ['TonyRL'],
     handler,

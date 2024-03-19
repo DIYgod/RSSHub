@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bmkg.go.id/', 'bmkg.go.id/gempabumi-terkini.html'],
-    },
+    radar: [
+        {
+            source: ['bmkg.go.id/', 'bmkg.go.id/gempabumi-terkini.html'],
+        },
+    ],
     name: 'Recent Earthquakes',
     maintainers: ['Shinanory'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['niaogebiji.com/cat/:cat'],
-    },
+    radar: [
+        {
+            source: ['niaogebiji.com/cat/:cat'],
+        },
+    ],
     name: '分类目录',
     maintainers: ['cKotoriKat'],
     handler,

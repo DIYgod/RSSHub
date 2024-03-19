@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['huggingface.co/papers', 'huggingface.co/'],
-    },
+    radar: [
+        {
+            source: ['huggingface.co/papers', 'huggingface.co/'],
+        },
+    ],
     name: 'Daily Papers',
     maintainers: ['zeyugao'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['qingting.fm/channels/:id'],
-    },
+    radar: [
+        {
+            source: ['qingting.fm/channels/:id'],
+        },
+    ],
     name: '播客',
     maintainers: ['RookieZoe', 'huyyi'],
     handler,

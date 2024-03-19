@@ -13,10 +13,12 @@ const cookieJar = new CookieJar();
 
 export const route: Route = {
     path: ['/:journal/latest', '/:journal'],
-    radar: {
-        source: ['www.sciencedirect.com/journal/:journal/*'],
-        target: '/:journal',
-    },
+    radar: [
+        {
+            source: ['www.sciencedirect.com/journal/:journal/*'],
+            target: '/:journal',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

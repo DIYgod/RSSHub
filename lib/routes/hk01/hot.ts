@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hk01.com/hot', 'hk01.com/'],
-    },
+    radar: [
+        {
+            source: ['hk01.com/hot', 'hk01.com/'],
+        },
+    ],
     name: '热门',
     maintainers: ['hoilc', 'Fatpandac', 'nczitzk'],
     handler,

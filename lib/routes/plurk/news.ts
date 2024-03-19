@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['plurk.com/news'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['plurk.com/news'],
+            target: '/news',
+        },
+    ],
     name: 'Plurk News',
     maintainers: ['TonyRL'],
     handler,

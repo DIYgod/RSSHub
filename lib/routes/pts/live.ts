@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.pts.org.tw/live/:id', 'news.pts.org.tw/'],
-    },
+    radar: [
+        {
+            source: ['news.pts.org.tw/live/:id', 'news.pts.org.tw/'],
+        },
+    ],
     name: '整理報導',
     maintainers: [],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.chinatax.gov.cn/*'],
-    },
+    radar: [
+        {
+            source: ['www.chinatax.gov.cn/*'],
+        },
+    ],
     name: '最新文件',
     maintainers: ['nczitzk', 'fuzy112'],
     handler,

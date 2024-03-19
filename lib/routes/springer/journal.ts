@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.springer.com/journal/:journal/*'],
-    },
+    radar: [
+        {
+            source: ['www.springer.com/journal/:journal/*'],
+        },
+    ],
     name: 'Journal',
     maintainers: ['Derekmini', 'TonyRL'],
     handler,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/hot'],
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/hot'],
+        },
+    ],
     name: '知乎热榜',
     maintainers: ['DIYgod'],
     handler,

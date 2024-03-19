@@ -6,9 +6,10 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/video-all/:uid/:disableEmbed?',
-    name: 'Unknown',
+    name: '用户所有视频',
     maintainers: [],
     handler,
+    categories: ['social-media'],
 };
 
 async function handler(ctx) {

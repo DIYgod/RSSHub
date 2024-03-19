@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nowcoder.com/'],
-    },
+    radar: [
+        {
+            source: ['nowcoder.com/'],
+        },
+    ],
     name: '求职推荐',
     maintainers: ['junfengP'],
     handler,

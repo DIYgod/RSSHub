@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hex-rays.com/', 'hex-rays.com/blog'],
-    },
+    radar: [
+        {
+            source: ['hex-rays.com/', 'hex-rays.com/blog'],
+        },
+    ],
     name: 'Hex-Rays News',
     maintainers: ['hellodword ', 'TonyRL'],
     handler,

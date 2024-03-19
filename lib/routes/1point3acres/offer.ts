@@ -20,15 +20,17 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['offer.1point3acres.com/'],
-        target: '/offer',
-    },
+    radar: [
+        {
+            source: ['offer.1point3acres.com/'],
+            target: '/offer',
+        },
+    ],
     name: '录取结果',
     maintainers: ['EthanWng97'],
     handler,
     url: 'offer.1point3acres.com/',
-    description: `:::tip[三个 id 获取方式]
+    description: `:::tip 三个 id 获取方式
   1.  打开 [https://offer.1point3acres.com](https://offer.1point3acres.com)
   2.  打开控制台
   3.  切换到 Network 面板

@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rlsbj.cq.gov.cn/'],
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['rlsbj.cq.gov.cn/'],
+        },
+    ],
+    name: '重庆人事考试通知公告',
     maintainers: ['Mai19930513'],
     handler,
     url: 'rlsbj.cq.gov.cn/',

@@ -43,9 +43,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['computer.hdu.edu.cn/6769/list.htm'],
-    },
+    radar: [
+        {
+            source: ['computer.hdu.edu.cn/6769/list.htm'],
+        },
+    ],
     name: '计算机学院 - 研究生通知',
     maintainers: ['legr4ndk'],
     handler,

@@ -34,9 +34,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['daily.zhihu.com/*'],
-    },
+    radar: [
+        {
+            source: ['daily.zhihu.com/*'],
+        },
+    ],
     name: '知乎日报',
     maintainers: ['DHPO'],
     handler,

@@ -4,11 +4,14 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['free.com.tw/'],
-        target: '',
-    },
-    name: 'Unknown',
+    categories: ['blog'],
+    example: '/free',
+    radar: [
+        {
+            source: ['free.com.tw/'],
+        },
+    ],
+    name: '最新文章',
     maintainers: ['cnkmmk'],
     handler,
     url: 'free.com.tw/',

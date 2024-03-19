@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['coomer.party/posts', 'coomer.party/'],
-    },
+    radar: [
+        {
+            source: ['coomer.party/posts', 'coomer.party/'],
+        },
+    ],
     name: 'Recent Posts',
     maintainers: ['nczitzk'],
     handler,
@@ -26,5 +28,5 @@ export const route: Route = {
 async function handler(ctx) {
     const currentUrl = 'posts';
 
-    ctx.set('data', await fetchItems(ctx, currentUrl));
+    return await fetchItems(ctx, currentUrl);
 }

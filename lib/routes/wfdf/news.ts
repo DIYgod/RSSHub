@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wfdf.sport/news/', 'wfdf.sport/'],
-    },
+    radar: [
+        {
+            source: ['wfdf.sport/news/', 'wfdf.sport/'],
+        },
+    ],
     name: 'News',
     maintainers: ['HankChow'],
     handler,

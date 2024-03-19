@@ -21,13 +21,22 @@ const typeDict = {
 };
 
 export const route: Route = {
-    path: ['/comments/:user/:repo/:type/:number', '/comments/:user/:repo/:number?'],
-    radar: {
-        source: ['github.com/:user/:repo/:type'],
-        target: '/comments/:user/:repo',
+    path: '/comments/:user/:repo/:number?',
+    categories: ['programming'],
+    example: '/github/comments/DIYgod/RSSHub/8116',
+    parameters: {
+        user: 'User / Org name',
+        repo: 'Repo name',
+        number: 'Issue or pull number (if omitted: all)',
     },
-    name: 'Unknown',
-    maintainers: [],
+    radar: [
+        {
+            source: ['github.com/:user/:repo/:type', 'github.com/:user/:repo/:type/:number'],
+            target: '/comments/:user/:repo/:number?',
+        },
+    ],
+    name: 'Issue / Pull Request comments',
+    maintainers: ['TonyRL', 'FliegendeWurst'],
     handler,
 };
 
@@ -46,7 +55,7 @@ async function handler(ctx) {
                   Accept: 'application/vnd.github.v3+json',
               };
 
-    await (isNaN(number) ? allIssues(ctx, user, repo, limit, headers) : singleIssue(ctx, user, repo, number, limit, headers));
+    return await (isNaN(number) ? allIssues(ctx, user, repo, limit, headers) : singleIssue(ctx, user, repo, number, limit, headers));
 }
 
 async function allIssues(ctx, user, repo, limit, headers) {
@@ -85,18 +94,18 @@ async function allIssues(ctx, user, repo, limit, headers) {
         used: Number.parseInt(response.headers['x-ratelimit-used']),
     };
 
-    return {
-        title: `${user}/${repo}: Issue & Pull request comments`,
-        link: `${rootUrl}/${user}/${repo}`,
-        item: items,
-    };
-
     ctx.set('json', {
         title: `${user}/${repo}: Issue & Pull request comments`,
         link: `${rootUrl}/${user}/${repo}`,
         item: items,
         rateLimit,
     });
+
+    return {
+        title: `${user}/${repo}: Issue & Pull request comments`,
+        link: `${rootUrl}/${user}/${repo}`,
+        item: items,
+    };
 }
 
 async function singleIssue(ctx, user, repo, number, limit, headers) {
@@ -177,12 +186,6 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
         }
     }
 
-    return {
-        title: `${user}/${repo}: ${typeDict[type].title} #${number} - ${issue.title}`,
-        link: issue.html_url,
-        item: items,
-    };
-
     ctx.set('json', {
         title: `${user}/${repo}: ${typeDict[type].title} #${number} - ${issue.title}`,
         link: issue.html_url,
@@ -195,4 +198,10 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
             used: Number.parseInt(response.headers['x-ratelimit-used']),
         },
     });
+
+    return {
+        title: `${user}/${repo}: ${typeDict[type].title} #${number} - ${issue.title}`,
+        link: issue.html_url,
+        item: items,
+    };
 }

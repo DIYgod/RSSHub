@@ -15,10 +15,12 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/:topicPath{.+}?',
-    radar: {
-        source: ['pnas.org/*topicPath'],
-        target: '/:topicPath',
-    },
+    radar: [
+        {
+            source: ['pnas.org/*topicPath'],
+            target: '/:topicPath',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

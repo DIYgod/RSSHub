@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['kemono.su/:source/user/:id', 'kemono.su/'],
-    },
+    radar: [
+        {
+            source: ['kemono.su/:source/user/:id', 'kemono.su/'],
+        },
+    ],
     name: 'Posts',
     maintainers: ['nczitzk'],
     handler,

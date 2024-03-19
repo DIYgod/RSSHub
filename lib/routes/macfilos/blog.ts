@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['macfilos.com/blog', 'macfilos.com/'],
-    },
+    radar: [
+        {
+            source: ['macfilos.com/blog', 'macfilos.com/'],
+        },
+    ],
     name: 'Blog',
     maintainers: ['nczitzk'],
     handler,

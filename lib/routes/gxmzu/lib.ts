@@ -27,9 +27,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['library.gxmzu.edu.cn/news/news_list.jsp', 'library.gxmzu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['library.gxmzu.edu.cn/news/news_list.jsp', 'library.gxmzu.edu.cn/'],
+        },
+    ],
     name: '图书馆最新消息',
     maintainers: ['real-jiakai'],
     handler,

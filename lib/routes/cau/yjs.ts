@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yz.cau.edu.cn/col/col41740/index.html', 'yz.cau.edu.cn/'],
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['yz.cau.edu.cn/col/col41740/index.html', 'yz.cau.edu.cn/'],
+        },
+    ],
+    name: '研招网通知公告',
     maintainers: ['shengmaosu'],
     handler,
     url: 'yz.cau.edu.cn/col/col41740/index.html',

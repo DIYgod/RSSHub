@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['duozhuayu.com/search/book/:wd'],
-    },
+    radar: [
+        {
+            source: ['duozhuayu.com/search/book/:wd'],
+        },
+    ],
     name: '搜索结果',
     maintainers: ['fengkx'],
     handler,

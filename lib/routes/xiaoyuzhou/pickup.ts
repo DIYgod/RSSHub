@@ -81,10 +81,12 @@ const ProcessFeed = async () => {
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['xiaoyuzhoufm.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['xiaoyuzhoufm.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['prnake', 'Maecenas'],
     handler,

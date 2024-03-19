@@ -10,9 +10,11 @@ const host = 'https://leetcode.cn';
 
 export const route: Route = {
     path: '/dailyquestion/cn',
-    radar: {
-        source: ['leetcode.cn/'],
-    },
+    radar: [
+        {
+            source: ['leetcode.cn/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

@@ -7,10 +7,12 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['50forum.org.cn/home/article/index/category/zhuanjia.html', '50forum.org.cn/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['50forum.org.cn/home/article/index/category/zhuanjia.html', '50forum.org.cn/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['sddiky'],
     handler,

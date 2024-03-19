@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['caixin.com/'],
-    },
+    radar: [
+        {
+            source: ['caixin.com/'],
+        },
+    ],
     name: '最新文章',
     maintainers: ['tpnonthealps'],
     handler,

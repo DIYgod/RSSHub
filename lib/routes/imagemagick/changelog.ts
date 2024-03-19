@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['imagemagick.org/script/download.php', 'imagemagick.org/script', 'imagemagick.org/'],
-    },
+    radar: [
+        {
+            source: ['imagemagick.org/script/download.php', 'imagemagick.org/script', 'imagemagick.org/'],
+        },
+    ],
     name: 'Changelog',
     maintainers: ['nczitzk'],
     handler,

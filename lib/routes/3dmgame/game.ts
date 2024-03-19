@@ -7,10 +7,13 @@ import { parseArticle } from './utils';
 
 export const route: Route = {
     path: '/:name/:type?',
-    radar: {
-        source: ['3dmgame.com/games/:name/:type'],
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['3dmgame.com/games/:name/:type'],
+        },
+    ],
+    name: '游戏资讯',
+    categories: ['game'],
     maintainers: ['sinchang', 'jacky2001114', 'HenryQW'],
     handler,
 };
