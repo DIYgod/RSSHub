@@ -709,21 +709,24 @@ generates
 
 <img loading="lazy" src="/img/readable-twitter.png" alt="Readable Twitter RSS of Durov" />
 
-### Collection <Site url="twitter.com" size="sm" />
+Currently supports two authentication methods:
 
-<Route namespace="twitter" :data='{"path":"/collection/:uid/:collectionId/:routeParams?","categories":["social-media"],"example":"/twitter/collection/DIYgod/1527857429467172864","parameters":{"uid":"username, should match the generated token","collectionId":"collection ID, can be found in URL","routeParams":"extra parameters, see the table above"},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Collection","maintainers":["TonyRL"],"description":":::warning\n  This route requires Twitter token&#39;s corresponding id, therefore it&#39;s only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.\n  :::","location":"collection.ts"}' />
+- Using TWITTER_COOKIE (recommended): Configure the cookies of logged-in Twitter Web, at least including the fields auth_token and ct0. RSSHub will use this information to directly access Twitter's web API to obtain data.
 
-:::warning
-  This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
-  :::
+- Using TWITTER_USERNAME TWITTER_PASSWORD: Configure the Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.
+
+
+### Home timeline <Site url="twitter.com" size="sm" />
+
+<Route namespace="twitter" :data='{"path":"/home/:routeParams?","categories":["social-media"],"example":"/twitter/home","features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":"Please see above for details."},{"name":"TWITTER_PASSWORD","description":"Please see above for details."},{"name":"TWITTER_COOKIE","description":"Please see above for details."}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Home timeline","maintainers":["DIYgod"],"radar":[{"source":["twitter.com/home"],"target":"/home"}],"location":"home.ts"}' />
 
 ### Keyword <Site url="twitter.com" size="sm" />
 
-<Route namespace="twitter" :data='{"path":"/keyword/:keyword/:routeParams?","categories":["social-media"],"example":"/twitter/keyword/RSSHub","parameters":{"keyword":"keyword","routeParams":"extra parameters, see the table above"},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Keyword","maintainers":["DIYgod","yindaheng98","Rongronggg9"],"radar":[{"source":["twitter.com/search"]}],"location":"keyword.ts"}' />
+<Route namespace="twitter" :data='{"path":"/keyword/:keyword/:routeParams?","categories":["social-media"],"example":"/twitter/keyword/RSSHub","parameters":{"keyword":"keyword","routeParams":"extra parameters, see the table above"},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":"Please see above for details."},{"name":"TWITTER_PASSWORD","description":"Please see above for details."},{"name":"TWITTER_COOKIE","description":"Please see above for details."}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Keyword","maintainers":["DIYgod","yindaheng98","Rongronggg9"],"radar":[{"source":["twitter.com/search"]}],"location":"keyword.ts"}' />
 
 ### List timeline <Site url="twitter.com" size="sm" />
 
-<Route namespace="twitter" :data='{"path":"/list/:id/:name/:routeParams?","categories":["social-media"],"example":"/twitter/list/ladyleet/javascript","parameters":{"id":"username","name":"list name","routeParams":"extra parameters, see the table above"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"List timeline","maintainers":["xyqfer"],"location":"list.ts"}' />
+<Route namespace="twitter" :data='{"path":"/list/:id/:routeParams?","categories":["social-media"],"example":"/twitter/list/ladyleet/javascript","parameters":{"id":"username","name":"list name","routeParams":"extra parameters, see the table above"},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":"Please see above for details."},{"name":"TWITTER_PASSWORD","description":"Please see above for details."},{"name":"TWITTER_COOKIE","description":"Please see above for details."}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"List timeline","maintainers":["DIYgod","xyqfer"],"radar":[{"source":["twitter.com/i/lists/:id"],"target":"/list/:id"}],"location":"list.ts"}' />
 
 ### Trends <Site url="twitter.com" size="sm" />
 
@@ -731,15 +734,7 @@ generates
 
 ### Tweet Details <Site url="twitter.com" size="sm" />
 
-<Route namespace="twitter" :data='{"path":"/tweet/:id/status/:status/:original?","categories":["social-media"],"example":"/twitter/tweet/DIYgod/status/1650844643997646852","parameters":{"id":"username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`","status":"tweet ID","original":"extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter"},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Tweet Details","maintainers":["LarchLiu","Rongronggg9"],"location":"tweet.ts"}' />
-
-### User following timeline <Site url="twitter.com" size="sm" />
-
-<Route namespace="twitter" :data='{"path":"/followings/:id/:routeParams?","categories":["social-media"],"example":"/twitter/followings/DIYgod","parameters":{"id":"username","routeParams":"extra parameters, see the table above"},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User following timeline","maintainers":["DIYgod"],"description":":::warning\n  This route requires Twitter token&#39;s corresponding id, therefore it&#39;s only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.\n  :::","location":"followings.ts"}' />
-
-:::warning
-  This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
-  :::
+<Route namespace="twitter" :data='{"path":"/tweet/:id/status/:status/:original?","categories":["social-media"],"example":"/twitter/tweet/DIYgod/status/1650844643997646852","parameters":{"id":"username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`","status":"tweet ID","original":"extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter"},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":"Please see above for details."},{"name":"TWITTER_PASSWORD","description":"Please see above for details."}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Tweet Details","maintainers":["LarchLiu","Rongronggg9"],"location":"tweet.ts"}' />
 
 ### User likes <Site url="twitter.com" size="sm" />
 
@@ -747,11 +742,11 @@ generates
 
 ### User media <Site url="twitter.com" size="sm" />
 
-<Route namespace="twitter" :data='{"path":"/media/:id/:routeParams?","categories":["social-media"],"example":"/twitter/media/DIYgod","parameters":{"id":"username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`","routeParams":"extra parameters, see the table above."},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User media","maintainers":["yindaheng98","Rongronggg9"],"radar":[{"source":["twitter.com/:id/media"],"target":"/media/:id"}],"location":"media.ts"}' />
+<Route namespace="twitter" :data='{"path":"/media/:id/:routeParams?","categories":["social-media"],"example":"/twitter/media/DIYgod","parameters":{"id":"username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`","routeParams":"extra parameters, see the table above."},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":"Please see above for details."},{"name":"TWITTER_PASSWORD","description":"Please see above for details."},{"name":"TWITTER_COOKIE","description":"Please see above for details."}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User media","maintainers":["DIYgod","yindaheng98","Rongronggg9"],"radar":[{"source":["twitter.com/:id/media"],"target":"/media/:id"}],"location":"media.ts"}' />
 
 ### User timeline <Site url="twitter.com" size="sm" />
 
-<Route namespace="twitter" :data='{"path":"/user/:id/:routeParams?","categories":["social-media"],"example":"/twitter/user/DIYgod","parameters":{"id":"username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`","routeParams":"extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all."},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":""},{"name":"TWITTER_PASSWORD","description":""}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User timeline","maintainers":["DIYgod","yindaheng98","Rongronggg9"],"radar":[{"source":["twitter.com/:id"],"target":"/user/:id"}],"location":"user.ts"}' />
+<Route namespace="twitter" :data='{"path":"/user/:id/:routeParams?","categories":["social-media"],"example":"/twitter/user/DIYgod","parameters":{"id":"username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`","routeParams":"extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all."},"features":{"requireConfig":[{"name":"TWITTER_USERNAME","description":"Please see above for details."},{"name":"TWITTER_PASSWORD","description":"Please see above for details."},{"name":"TWITTER_COOKIE","description":"Please see above for details."}],"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User timeline","maintainers":["DIYgod","yindaheng98","Rongronggg9"],"radar":[{"source":["twitter.com/:id"],"target":"/user/:id"}],"location":"user.ts"}' />
 
 ## Vimeo <Site url="vimeo.com"/>
 

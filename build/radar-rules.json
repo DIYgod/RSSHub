@@ -13519,12 +13519,28 @@
     "_name": "Twitter",
     ".": [
       {
+        "title": "Home timeline",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/home"
+        ],
+        "target": "/twitter/home"
+      },
+      {
         "title": "Keyword",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/search"
         ],
         "target": "/twitter/keyword/:keyword/:routeParams?"
+      },
+      {
+        "title": "List timeline",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/i/lists/:id"
+        ],
+        "target": "/twitter/list/:id"
       },
       {
         "title": "User media",

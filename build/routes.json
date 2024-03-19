@@ -54091,26 +54091,25 @@
   },
   "twitter": {
     "routes": {
-      "/collection/:uid/:collectionId/:routeParams?": {
-        "path": "/collection/:uid/:collectionId/:routeParams?",
+      "/home/:routeParams?": {
+        "path": "/home/:routeParams?",
         "categories": [
           "social-media"
         ],
-        "example": "/twitter/collection/DIYgod/1527857429467172864",
-        "parameters": {
-          "uid": "username, should match the generated token",
-          "collectionId": "collection ID, can be found in URL",
-          "routeParams": "extra parameters, see the table above"
-        },
+        "example": "/twitter/home",
         "features": {
           "requireConfig": [
             {
               "name": "TWITTER_USERNAME",
-              "description": ""
+              "description": "Please see above for details."
             },
             {
               "name": "TWITTER_PASSWORD",
-              "description": ""
+              "description": "Please see above for details."
+            },
+            {
+              "name": "TWITTER_COOKIE",
+              "description": "Please see above for details."
             }
           ],
           "requirePuppeteer": false,
@@ -54119,46 +54118,19 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Collection",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "description": ":::warning\n  This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.\n  :::",
-        "location": "collection.ts"
-      },
-      "/followings/:id/:routeParams?": {
-        "path": "/followings/:id/:routeParams?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/twitter/followings/DIYgod",
-        "parameters": {
-          "id": "username",
-          "routeParams": "extra parameters, see the table above"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "TWITTER_USERNAME",
-              "description": ""
-            },
-            {
-              "name": "TWITTER_PASSWORD",
-              "description": ""
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "User following timeline",
+        "name": "Home timeline",
         "maintainers": [
           "DIYgod"
         ],
-        "description": ":::warning\n  This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.\n  :::",
-        "location": "followings.ts"
+        "radar": [
+          {
+            "source": [
+              "twitter.com/home"
+            ],
+            "target": "/home"
+          }
+        ],
+        "location": "home.ts"
       },
       "/keyword/:keyword/:routeParams?": {
         "path": "/keyword/:keyword/:routeParams?",
@@ -54174,11 +54146,15 @@
           "requireConfig": [
             {
               "name": "TWITTER_USERNAME",
-              "description": ""
+              "description": "Please see above for details."
             },
             {
               "name": "TWITTER_PASSWORD",
-              "description": ""
+              "description": "Please see above for details."
+            },
+            {
+              "name": "TWITTER_COOKIE",
+              "description": "Please see above for details."
             }
           ],
           "requirePuppeteer": false,
@@ -54226,8 +54202,8 @@
         ],
         "location": "likes.ts"
       },
-      "/list/:id/:name/:routeParams?": {
-        "path": "/list/:id/:name/:routeParams?",
+      "/list/:id/:routeParams?": {
+        "path": "/list/:id/:routeParams?",
         "categories": [
           "social-media"
         ],
@@ -54238,7 +54214,20 @@
           "routeParams": "extra parameters, see the table above"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "TWITTER_USERNAME",
+              "description": "Please see above for details."
+            },
+            {
+              "name": "TWITTER_PASSWORD",
+              "description": "Please see above for details."
+            },
+            {
+              "name": "TWITTER_COOKIE",
+              "description": "Please see above for details."
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -54247,7 +54236,16 @@
         },
         "name": "List timeline",
         "maintainers": [
+          "DIYgod",
           "xyqfer"
+        ],
+        "radar": [
+          {
+            "source": [
+              "twitter.com/i/lists/:id"
+            ],
+            "target": "/list/:id"
+          }
         ],
         "location": "list.ts"
       },
@@ -54265,11 +54263,15 @@
           "requireConfig": [
             {
               "name": "TWITTER_USERNAME",
-              "description": ""
+              "description": "Please see above for details."
             },
             {
               "name": "TWITTER_PASSWORD",
-              "description": ""
+              "description": "Please see above for details."
+            },
+            {
+              "name": "TWITTER_COOKIE",
+              "description": "Please see above for details."
             }
           ],
           "requirePuppeteer": false,
@@ -54280,6 +54282,7 @@
         },
         "name": "User media",
         "maintainers": [
+          "DIYgod",
           "yindaheng98",
           "Rongronggg9"
         ],
@@ -54331,11 +54334,11 @@
           "requireConfig": [
             {
               "name": "TWITTER_USERNAME",
-              "description": ""
+              "description": "Please see above for details."
             },
             {
               "name": "TWITTER_PASSWORD",
-              "description": ""
+              "description": "Please see above for details."
             }
           ],
           "requirePuppeteer": false,
@@ -54365,11 +54368,15 @@
           "requireConfig": [
             {
               "name": "TWITTER_USERNAME",
-              "description": ""
+              "description": "Please see above for details."
             },
             {
               "name": "TWITTER_PASSWORD",
-              "description": ""
+              "description": "Please see above for details."
+            },
+            {
+              "name": "TWITTER_COOKIE",
+              "description": "Please see above for details."
             }
           ],
           "requirePuppeteer": false,
@@ -54397,7 +54404,7 @@
     },
     "name": "Twitter",
     "url": "twitter.com",
-    "description": "Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets\n\n| Key                            | Description                                                                                                                          | Accepts                | Defaults to                               |\n| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ----------------------------------------- |\n| `readable`                     | Enable readable layout                                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `authorNameBold`               | Display author name in bold                                                                                                          | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInTitle`            | Show author name in title                                                                                                            | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showAuthorInDesc`             | Show author name in description (RSS body)                                                                                           | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showQuotedAuthorAvatarInDesc` | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorAvatarInDesc`       | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForRetweetAndReply`  | Use \"🔁\" instead of \"RT\", \"↩️\" & \"💬\" instead of \"Re\"                                                                                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForRetweetAndReply` | Use \" RT \" instead of \"\", \" Re \" instead of \"\"                                                                                       | `0`/`1`/`true`/`false` | `true`                                    |\n| `showRetweetTextInTitle`       | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                       | `0`/`1`/`true`/`false` | `true`                                    |\n| `addLinkForPics`               | Add clickable links for Tweet pictures                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `showTimestampInDescription`   | Show timestamp in description                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |\n| `showQuotedInTitle`            | Show quoted tweet in title                                                                                                           | `0`/`1`/`true`/`false` | `false`                                   |\n| `widthOfPics`                  | Width of Tweet pictures                                                                                                              | Unspecified/Integer    | Unspecified                               |\n| `heightOfPics`                 | Height of Tweet pictures                                                                                                             | Unspecified/Integer    | Unspecified                               |\n| `sizeOfAuthorAvatar`           | Size of author's avatar                                                                                                              | Integer                | `48`                                      |\n| `sizeOfQuotedAuthorAvatar`     | Size of quoted tweet's author's avatar                                                                                               | Integer                | `24`                                      |\n| `excludeReplies`               | Exclude replies, only available in `/twitter/user`                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |\n| `includeRts`                   | Include retweets, only available in `/twitter/user`                                                                                  | `0`/`1`/`true`/`false` | `true`                                    |\n| `forceWebApi`                  | Force using Web API even if Developer API is configured, only available in `/twitter/user` and `/twitter/keyword`                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `count`                        | `count` parameter passed to Twitter API, only available in `/twitter/user`                                                           | Unspecified/Integer    | Unspecified                               |\n\nSpecify different option values than default values to improve readability. The URL\n\n```\nhttps://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150\n```\n\ngenerates\n\n<img loading=\"lazy\" src=\"/img/readable-twitter.png\" alt=\"Readable Twitter RSS of Durov\" />"
+    "description": "Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets\n\n| Key                            | Description                                                                                                                          | Accepts                | Defaults to                               |\n| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ----------------------------------------- |\n| `readable`                     | Enable readable layout                                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `authorNameBold`               | Display author name in bold                                                                                                          | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInTitle`            | Show author name in title                                                                                                            | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showAuthorInDesc`             | Show author name in description (RSS body)                                                                                           | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showQuotedAuthorAvatarInDesc` | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorAvatarInDesc`       | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForRetweetAndReply`  | Use \"🔁\" instead of \"RT\", \"↩️\" & \"💬\" instead of \"Re\"                                                                                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForRetweetAndReply` | Use \" RT \" instead of \"\", \" Re \" instead of \"\"                                                                                       | `0`/`1`/`true`/`false` | `true`                                    |\n| `showRetweetTextInTitle`       | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                       | `0`/`1`/`true`/`false` | `true`                                    |\n| `addLinkForPics`               | Add clickable links for Tweet pictures                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `showTimestampInDescription`   | Show timestamp in description                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |\n| `showQuotedInTitle`            | Show quoted tweet in title                                                                                                           | `0`/`1`/`true`/`false` | `false`                                   |\n| `widthOfPics`                  | Width of Tweet pictures                                                                                                              | Unspecified/Integer    | Unspecified                               |\n| `heightOfPics`                 | Height of Tweet pictures                                                                                                             | Unspecified/Integer    | Unspecified                               |\n| `sizeOfAuthorAvatar`           | Size of author's avatar                                                                                                              | Integer                | `48`                                      |\n| `sizeOfQuotedAuthorAvatar`     | Size of quoted tweet's author's avatar                                                                                               | Integer                | `24`                                      |\n| `excludeReplies`               | Exclude replies, only available in `/twitter/user`                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |\n| `includeRts`                   | Include retweets, only available in `/twitter/user`                                                                                  | `0`/`1`/`true`/`false` | `true`                                    |\n| `forceWebApi`                  | Force using Web API even if Developer API is configured, only available in `/twitter/user` and `/twitter/keyword`                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `count`                        | `count` parameter passed to Twitter API, only available in `/twitter/user`                                                           | Unspecified/Integer    | Unspecified                               |\n\nSpecify different option values than default values to improve readability. The URL\n\n```\nhttps://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150\n```\n\ngenerates\n\n<img loading=\"lazy\" src=\"/img/readable-twitter.png\" alt=\"Readable Twitter RSS of Durov\" />\n\nCurrently supports two authentication methods:\n\n- Using TWITTER_COOKIE (recommended): Configure the cookies of logged-in Twitter Web, at least including the fields auth_token and ct0. RSSHub will use this information to directly access Twitter's web API to obtain data.\n\n- Using TWITTER_USERNAME TWITTER_PASSWORD: Configure the Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.\n"
   },
   "twreporter": {
     "routes": {
