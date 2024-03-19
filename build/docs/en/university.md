@@ -1927,6 +1927,16 @@ author 列表：
   | -------- | -------- | -------- | -------- | -------- |
   | 1        | 2        | 3        | 4        | 5        |
 
+## 浙江工业大学 <Site url="zjut.edu.cn"/>
+
+### 设计与建筑学院 <Site url="zjut.edu.cn" size="sm" />
+
+<Route namespace="zjut" :data='{"path":"/da/:type","categories":["university"],"example":"/zjut/da/1","parameters":{"type":"分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"设计与建筑学院","maintainers":["yikZero"],"description":"| 学院新闻 | 公告通知 | 科研申报 | 科研成果 | 文件与资源 | 学术交流 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| 1        | 2        | 3        | 4        | 5        | 6        |","location":"da/index.ts"}' />
+
+| 学院新闻 | 公告通知 | 科研申报 | 科研成果 | 文件与资源 | 学术交流 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        | 6        |
+
 ## 中国科学院 <Site url="www.cas.cn"/>
 
 ### Unknown <Site url="www.cas.cn" size="sm" />

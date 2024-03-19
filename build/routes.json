@@ -62785,6 +62785,36 @@
     "name": "浙江大学",
     "url": "physics.zju.edu.cn"
   },
+  "zjut": {
+    "routes": {
+      "/da/:type": {
+        "path": "/da/:type",
+        "categories": [
+          "university"
+        ],
+        "example": "/zjut/da/1",
+        "parameters": {
+          "type": "分类，见下表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "设计与建筑学院",
+        "maintainers": [
+          "yikZero"
+        ],
+        "description": "| 学院新闻 | 公告通知 | 科研申报 | 科研成果 | 文件与资源 | 学术交流 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| 1        | 2        | 3        | 4        | 5        | 6        |",
+        "location": "da/index.ts"
+      }
+    },
+    "name": "浙江工业大学",
+    "url": "zjut.edu.cn"
+  },
   "zjuvag": {
     "routes": {
       "/blog": {
