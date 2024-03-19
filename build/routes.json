@@ -21485,8 +21485,21 @@
       },
       "/chongqing/gzw/:category{.+}?": {
         "path": "/chongqing/gzw/:category{.+}?",
-        "name": "Unknown",
-        "maintainers": [],
+        "parameters": {
+          "category": "分类，见下表，默认为通知公告"
+        },
+        "name": "重庆市人民政府 国有资产监督管理委员会",
+        "url": "gzw.cq.gov.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "radar": [
+          {
+            "source": "gzw.cq.gov.cn/*category",
+            "target": "/chongqing/gzw/*category"
+          }
+        ],
+        "description": "| 通知公告  | 国企资讯 | 国企简介 | 国企招聘 |\n    | --------- | -------- | -------- | -------- |\n    | tzgg_191 | gqdj     | gqjj     | gqzp     |",
         "location": "chongqing/gzw.ts"
       },
       "/chongqing/rsks": {
@@ -21495,15 +21508,6 @@
           "government"
         ],
         "example": "/gov/chongqing/rsks",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -21511,27 +21515,22 @@
             ]
           }
         ],
-        "name": "重庆人事考试通知公告",
+        "name": "重庆市人民政府 人力社保局 - 人事考试通知",
         "maintainers": [
           "Mai19930513"
         ],
         "url": "rlsbj.cq.gov.cn/",
         "location": "chongqing/rsks.ts"
       },
-      "/chongqing/sydwgkzp": {
-        "path": "/chongqing/sydwgkzp",
+      "/chongqing/sydwgkzp/:year?": {
+        "path": "/chongqing/sydwgkzp/:year?",
+        "url": "rlsbj.cq.gov.cn/",
         "categories": [
           "government"
         ],
         "example": "/gov/chongqing/sydwgkzp",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
+        "parameters": {
+          "year": "需要订阅的年份，格式为`YYYY`，必须小于等于当前年份，默认为当前年份"
         },
         "radar": [
           {
@@ -21540,12 +21539,10 @@
             ]
           }
         ],
-        "name": "人力社保局",
+        "name": "重庆市人民政府 人力社保局 - 事业单位公开招聘",
         "maintainers": [
           "MajexH"
         ],
-        "url": "rlsbj.cq.gov.cn/",
-        "description": "#### 人事考试通知 {#chong-qing-shi-ren-min-zheng-fu-ren-li-she-bao-ju-ren-shi-kao-shi-tong-zhi}\n\n\n#### 事业单位公开招聘 {#chong-qing-shi-ren-min-zheng-fu-ren-li-she-bao-ju-shi-ye-dan-wei-gong-kai-zhao-pin}",
         "location": "chongqing/sydwgkzp.ts"
       },
       "/cmse/fxrw": {
