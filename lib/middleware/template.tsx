@@ -91,11 +91,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     } else if (ctx.get('no-content')) {
         return ctx.body(null);
     } else if (outputType === 'atom') {
-        // @ts-expect-error
-        return ctx.body(<Atom data={result} />);
+        return ctx.render(<Atom data={result} />);
     } else {
-        // @ts-expect-error
-        return ctx.body(<RSS data={result} />);
+        return ctx.render(<RSS data={result} />);
     }
 };
 
