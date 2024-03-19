@@ -1062,12 +1062,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="globallawreview" :data='{"path":"/","radar":[{"source":["globallawreview.org/Magazine/GetIssueContentList","globallawreview.org/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"globallawreview.org/Magazine/GetIssueContentList","location":"index.ts"}' />
 
-## 荒岛 <Site url="lala.im"/>
-
-### Unknown <Site url="lala.im/" size="sm" />
-
-<Route namespace="lala" :data='{"path":"/","radar":[{"source":["lala.im/"],"target":""}],"name":"Unknown","maintainers":["cnkmmk"],"url":"lala.im/","location":"rss.ts"}' />
-
 ## 纪妖 <Site url="cbaigui.com"/>
 
 ### Unknown <Site url="cbaigui.com" size="sm" />

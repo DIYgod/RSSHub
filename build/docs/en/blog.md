@@ -222,6 +222,12 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
 
 <Route namespace="xunhupay" :data='{"path":"/blog","categories":["blog"],"example":"/xunhupay/blog","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.xunhupay.com/blog"]}],"name":"文章","maintainers":["Joey"],"url":"www.xunhupay.com/blog","location":"index.ts"}' />
 
+## 荒岛 <Site url="lala.im"/>
+
+### 最新发布 <Site url="lala.im/" size="sm" />
+
+<Route namespace="lala" :data='{"path":"/","categories":["blog"],"example":"/lala","radar":[{"source":["lala.im/"]}],"name":"最新发布","maintainers":["cnkmmk"],"url":"lala.im/","location":"rss.ts"}' />
+
 ## 免費資源網路社群 <Site url="free.com.tw"/>
 
 ### 最新文章 <Site url="free.com.tw/" size="sm" />
