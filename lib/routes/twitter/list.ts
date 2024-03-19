@@ -31,6 +31,12 @@ export const route: Route = {
     name: 'List timeline',
     maintainers: ['DIYgod', 'xyqfer'],
     handler,
+    radar: [
+        {
+            source: ['twitter.com/i/lists/:id'],
+            target: '/list/:id',
+        },
+    ],
 };
 
 async function handler(ctx) {

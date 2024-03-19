@@ -30,6 +30,12 @@ export const route: Route = {
     name: 'Home timeline',
     maintainers: ['DIYgod'],
     handler,
+    radar: [
+        {
+            source: ['twitter.com/home'],
+            target: '/home',
+        },
+    ],
 };
 
 async function handler(ctx) {
