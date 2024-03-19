@@ -50,6 +50,7 @@ export type Data = {
     itunes_author?: string;
     itunes_category?: string;
     itunes_explicit?: string | boolean;
+    id?: string;
 
     atomlink?: string;
     ttl?: number;

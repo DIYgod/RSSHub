@@ -1,4 +1,4 @@
-import { rss3Ums, json, RSS, art } from '@/utils/render';
+import { rss3Ums, json, RSS, Atom } from '@/utils/render';
 import * as path from 'node:path';
 import { config } from '@/config';
 import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
@@ -91,7 +91,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     } else if (ctx.get('no-content')) {
         return ctx.body(null);
     } else if (outputType === 'atom') {
-        return ctx.body(art(path.resolve(__dirname, `../views/atom.art`), result));
+        // @ts-expect-error
+        return ctx.body(<Atom data={result} />);
     } else {
         // @ts-expect-error
         return ctx.body(<RSS data={result} />);
