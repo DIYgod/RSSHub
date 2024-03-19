@@ -18959,6 +18959,27 @@
     "routes": {
       "/:category?": {
         "path": "/:category?",
+        "name": "Book List",
+        "url": "freecomputerbooks.com",
+        "maintainers": [
+          "cubroe"
+        ],
+        "example": "/freecomputerbooks/compscAlgorithmBooks",
+        "parameters": {
+          "category": "A category id., which should be the HTML file name (but **without** the `.html` suffix) in the URL path of a book list page."
+        },
+        "categories": [
+          "reading"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
         "radar": [
           {
             "source": [
@@ -18968,9 +18989,6 @@
             "target": ""
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "freecomputerbooks.com/",
         "location": "index.ts"
       }
     },

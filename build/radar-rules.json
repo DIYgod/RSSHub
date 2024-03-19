@@ -4545,8 +4545,8 @@
     "_name": "Free Computer Books",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Book List",
+        "docs": "https://docs.rsshub.app/routes/reading",
         "source": [
           "/",
           "/index.html"

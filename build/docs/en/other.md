@@ -232,12 +232,6 @@
 
 <Route namespace="fishshell" :data='{"path":"/","radar":[{"source":["fishshell.com/"],"target":""}],"name":"Unknown","maintainers":["x2cf"],"url":"fishshell.com/","location":"index.ts"}' />
 
-## Free Computer Books <Site url="freecomputerbooks.com"/>
-
-### Unknown <Site url="freecomputerbooks.com/" size="sm" />
-
-<Route namespace="freecomputerbooks" :data='{"path":"/:category?","radar":[{"source":["freecomputerbooks.com/","freecomputerbooks.com/index.html"],"target":""}],"name":"Unknown","maintainers":[],"url":"freecomputerbooks.com/","location":"index.ts"}' />
-
 ## Futubull 富途牛牛 <Site url="news.futunn.com"/>
 
 ### Unknown <Site url="news.futunn.com/main" size="sm" />

@@ -1,5 +1,11 @@
 # 📚 阅读
 
+## Free Computer Books <Site url="freecomputerbooks.com"/>
+
+### Book List <Site url="freecomputerbooks.com" size="sm" />
+
+<Route namespace="freecomputerbooks" :data='{"path":"/:category?","name":"Book List","url":"freecomputerbooks.com","maintainers":["cubroe"],"example":"/freecomputerbooks/compscAlgorithmBooks","parameters":{"category":"A category id., which should be the HTML file name (but **without** the `.html` suffix) in the URL path of a book list page."},"categories":["reading"],"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportRadar":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["freecomputerbooks.com/","freecomputerbooks.com/index.html"],"target":""}],"location":"index.ts"}' />
+
 ## hameln <Site url="syosetu.org"/>
 
 ### chapter <Site url="syosetu.org" size="sm" />
