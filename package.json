@@ -137,7 +137,7 @@
         "@types/mailparser": "3.4.4",
         "@types/markdown-it": "13.0.7",
         "@types/module-alias": "2.0.4",
-        "@types/node": "20.11.29",
+        "@types/node": "20.11.30",
         "@types/request-promise-native": "1.0.21",
         "@types/supertest": "6.0.2",
         "@types/tiny-async-pool": "2.0.3",
