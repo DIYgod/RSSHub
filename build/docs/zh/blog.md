@@ -222,6 +222,12 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
   | -------- | -------- | -------- | --------------- | --------- |
   | news     | blog     | articles | about-influence | customers |
 
+## 国外主机测评 <Site url="zhujiceping.com"/>
+
+### 最新发布 <Site url="zhujiceping.com/" size="sm" />
+
+<Route namespace="zhujiceping" :data='{"path":"/","categories":["blog"],"example":"/zhujiceping","radar":[{"source":["zhujiceping.com/"]}],"name":"最新发布","maintainers":["cnkmmk"],"url":"zhujiceping.com/","location":"rss.ts"}' />
+
 ## 虎皮椒 <Site url="www.xunhupay.com"/>
 
 ### 文章 <Site url="www.xunhupay.com/blog" size="sm" />

@@ -1038,12 +1038,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="ncc-cma" :data='{"path":"/cmdp/image/:id{.+}?","name":"Unknown","maintainers":[],"location":"cmdp.ts"}' />
 
-## 国外主机测评 <Site url="zhujiceping.com"/>
-
-### Unknown <Site url="zhujiceping.com/" size="sm" />
-
-<Route namespace="zhujiceping" :data='{"path":"/","radar":[{"source":["zhujiceping.com/"],"target":""}],"name":"Unknown","maintainers":["cnkmmk"],"url":"zhujiceping.com/","location":"rss.ts"}' />
-
 ## 环球法律评论 <Site url="globallawreview.org"/>
 
 ### Unknown <Site url="globallawreview.org/Magazine/GetIssueContentList" size="sm" />

@@ -62478,15 +62478,18 @@
     "routes": {
       "/": {
         "path": "/",
+        "categories": [
+          "blog"
+        ],
+        "example": "/zhujiceping",
         "radar": [
           {
             "source": [
               "zhujiceping.com/"
-            ],
-            "target": ""
+            ]
           }
         ],
-        "name": "Unknown",
+        "name": "最新发布",
         "maintainers": [
           "cnkmmk"
         ],
