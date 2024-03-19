@@ -292,12 +292,6 @@
 
 <Route namespace="hkjunkcall" :data='{"path":"/","radar":[{"source":["hkjunkcall.com/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"hkjunkcall.com/","location":"index.ts"}' />
 
-## Howtoforge Linux Tutorials <Site url="howtoforge.com"/>
-
-### Unknown <Site url="howtoforge.com/" size="sm" />
-
-<Route namespace="howtoforge" :data='{"path":"/","radar":[{"source":["howtoforge.com/"],"target":""}],"name":"Unknown","maintainers":["cnkmmk"],"url":"howtoforge.com/","location":"rss.ts"}' />
-
 ## iDaily <Site url="idai.ly"/>
 
 ### Unknown <Site url="idai.ly" size="sm" />

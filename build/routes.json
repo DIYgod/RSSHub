@@ -25984,15 +25984,18 @@
     "routes": {
       "/": {
         "path": "/",
+        "categories": [
+          "study"
+        ],
+        "example": "/howtoforge",
         "radar": [
           {
             "source": [
               "howtoforge.com/"
-            ],
-            "target": ""
+            ]
           }
         ],
-        "name": "Unknown",
+        "name": "Tutorials",
         "maintainers": [
           "cnkmmk"
         ],

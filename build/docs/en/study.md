@@ -24,6 +24,12 @@
 
 <Route namespace="dblp" :data='{"path":"/:field","categories":["study"],"example":"/dblp/knowledge%20tracing","parameters":{"field":"Research field"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["dblp.org/:field"]}],"name":"Keyword Search","maintainers":["ytno1"],"location":"publication.ts"}' />
 
+## Howtoforge Linux Tutorials <Site url="howtoforge.com"/>
+
+### Tutorials <Site url="howtoforge.com/" size="sm" />
+
+<Route namespace="howtoforge" :data='{"path":"/","categories":["study"],"example":"/howtoforge","radar":[{"source":["howtoforge.com/"]}],"name":"Tutorials","maintainers":["cnkmmk"],"url":"howtoforge.com/","location":"rss.ts"}' />
+
 ## MindMeister <Site url="mindmeister.com"/>
 
 ### Public Maps <Site url="mindmeister.com" size="sm" />
