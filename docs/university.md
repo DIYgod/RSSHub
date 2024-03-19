@@ -1535,9 +1535,15 @@ pageClass: routes
 
 <Route author="HenryQW" example="/seu/radio/academic" path="/seu/radio/academic"/>
 
-### 研究生招生网通知公告
+### 研究生招生网
 
-<Route author="Chingyat" example="/seu/yzb/1" path="/seu/yzb/:type" :paramsDesc="['1 为硕士招生，2 为博士招生，3 为港澳台及中外合作办学']"/>
+<Route author="yanbot-team" example="/seu/yzb/6676" path="/seu/yzb/:type" :paramsDesc="['分类见下表']">
+
+| 硕士招生 |
+| -------- |
+| 6676     |
+
+</Route>
 
 ### 东南大学计算机技术与工程学院
 
