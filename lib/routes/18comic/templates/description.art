@@ -1,3 +1,6 @@
+{{ if cover }}
+<img src="{{ cover }}">
+{{ /if }}
 <p>{{ introduction }}</p>
 {{ each images image }}
 <img src="{{ image }}">
