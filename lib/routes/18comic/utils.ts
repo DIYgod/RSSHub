@@ -49,6 +49,7 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
                 const content = load(detailResponse.data);
 
                 item.pubDate = parseDate(content('div[itemprop="datePublished"]').first().attr('content'));
+                item.updated = parseDate(content('div[itemprop="datePublished"]').last().attr('content'));
                 item.category = content('span[data-type="tags"]')
                     .first()
                     .find('a')
@@ -65,6 +66,7 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
                     images: content('.img_zoom_img img')
                         .toArray()
                         .map((image) => content(image).attr('data-original')),
+                    cover: content('.thumb-overlay img').first().attr('src'),
                 });
 
                 return item;
