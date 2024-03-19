@@ -7,15 +7,18 @@ export const route: Route = {
     categories: ['new-media'],
     example: '/news/zh-hans, /news/zh-hant',
     parameters: {
-        language: 'zh-hans | zh-hant',
+        language: '语言',
     },
     radar: [
         {
             source: ['kaopu.news/'],
         },
     ],
-    name: '靠谱新闻-全部',
+    name: '全部',
     maintainers: ['fashioncj'],
+    description: `| 简体中文    | 繁体中文     | 
+  | ------- | -------- | 
+  | zh-hans | zh-hant | `,
     handler,
 };
 
