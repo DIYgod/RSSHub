@@ -2321,7 +2321,10 @@
   "/gov/sichuan/deyang/mztoday/:infoType?": [
     "zytomorrow"
   ],
-  "/gov/stats/*": [],
+  "/gov/stats/*": [
+    "bigfei",
+    "nczitzk"
+  ],
   "/gov/suzhou/doc": [
     "EsuRt"
   ],
