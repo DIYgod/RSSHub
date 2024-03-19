@@ -674,6 +674,24 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 <Route namespace="163" :data='{"path":"/ds/:id","categories":["game"],"example":"/163/ds/63dfbaf4117741daaf73404601165843","parameters":{"id":"用户ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ds.163.com/user/:id"]}],"name":"用户发帖","maintainers":["luyuhuang"],"location":"ds.ts"}' />
 
+## 小黑盒 <Site url="xiaoheihe.cn"/>
+
+### 用户动态 <Site url="xiaoheihe.cn" size="sm" />
+
+<Route namespace="xiaoheihe" :data='{"path":"/user/:id","categories":["game"],"example":"/xiaoheihe/user/30664023","parameters":{"id":"用户 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"用户动态","maintainers":["tssujt"],"location":"user.ts"}' />
+
+### 游戏折扣 <Site url="xiaoheihe.cn" size="sm" />
+
+<Route namespace="xiaoheihe" :data='{"path":"/discount/:platform","categories":["game"],"example":"/xiaoheihe/discount/pc","parameters":{"platform":"平台分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"游戏折扣","maintainers":["tssujt"],"description":"| PC  | Switch  | PSN   | Xbox |\n  | ----- | ------ | ----- | ----- |\n  | pc    | switch | psn   | xbox  |","location":"discount.ts"}' />
+
+| PC  | Switch  | PSN   | Xbox |
+  | ----- | ------ | ----- | ----- |
+  | pc    | switch | psn   | xbox  |
+
+### 游戏新闻 <Site url="xiaoheihe.cn" size="sm" />
+
+<Route namespace="xiaoheihe" :data='{"path":"/news","categories":["game"],"example":"/xiaoheihe/news","features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"游戏新闻","maintainers":["tssujt"],"location":"news.ts"}' />
+
 ## 英雄联盟 <Site url="lol.garena.tw"/>
 
 ### 台服新闻 <Site url="lol.garena.tw" size="sm" />

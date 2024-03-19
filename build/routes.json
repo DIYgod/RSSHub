@@ -58599,6 +58599,79 @@
     "name": "盒心光环",
     "url": "xboxfan.com"
   },
+  "xiaoheihe": {
+    "routes": {
+      "/discount/:platform": {
+        "path": "/discount/:platform",
+        "categories": [
+          "game"
+        ],
+        "example": "/xiaoheihe/discount/pc",
+        "parameters": {
+          "platform": "平台分类，见下表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "游戏折扣",
+        "maintainers": [
+          "tssujt"
+        ],
+        "description": "| PC  | Switch  | PSN   | Xbox |\n  | ----- | ------ | ----- | ----- |\n  | pc    | switch | psn   | xbox  |",
+        "location": "discount.ts"
+      },
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "game"
+        ],
+        "example": "/xiaoheihe/news",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "游戏新闻",
+        "maintainers": [
+          "tssujt"
+        ],
+        "location": "news.ts"
+      },
+      "/user/:id": {
+        "path": "/user/:id",
+        "categories": [
+          "game"
+        ],
+        "example": "/xiaoheihe/user/30664023",
+        "parameters": {
+          "id": "用户 ID"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "用户动态",
+        "maintainers": [
+          "tssujt"
+        ],
+        "location": "user.ts"
+      }
+    },
+    "name": "小黑盒",
+    "url": "xiaoheihe.cn"
+  },
   "xiaohongshu": {
     "routes": {
       "/board/:board_id": {

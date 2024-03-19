@@ -5908,6 +5908,15 @@
   "/xboxfan/news": [
     "XXY233"
   ],
+  "/xiaoheihe/discount/:platform": [
+    "tssujt"
+  ],
+  "/xiaoheihe/news": [
+    "tssujt"
+  ],
+  "/xiaoheihe/user/:id": [
+    "tssujt"
+  ],
   "/xiaohongshu/board/:board_id": [
     "lotosbin"
   ],
