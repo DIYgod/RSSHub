@@ -13060,6 +13060,19 @@
       }
     ]
   },
+  "tgbus.com": {
+    "_name": "电玩巴士 TGBUS",
+    "www": [
+      {
+        "title": "文章列表",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/list/:category/"
+        ],
+        "target": "/tgbus/list/:category"
+      }
+    ]
+  },
   "theatlantic.com": {
     "_name": "The Atlantic",
     "www": [

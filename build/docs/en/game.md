@@ -471,6 +471,16 @@ Region
 News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)
   The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!
 
+## 电玩巴士 TGBUS <Site url="tgbus.com"/>
+
+### 文章列表 <Site url="tgbus.com" size="sm" />
+
+<Route namespace="tgbus" :data='{"path":"/list/:category","parameters":{"category":"列表分类，见下表"},"categories":["game"],"example":"/tgbus/list/news","radar":[{"source":["www.tgbus.com/list/:category/"],"target":"/list/:category"}],"name":"文章列表","maintainers":["Xzonn"],"description":"| 最新资讯 | 游戏评测 | 游戏视频 | 巴士首页特稿 | 硬件资讯 |\n    | -------- | -------- | -------- | ------------ | -------- |\n    | news     | review   | video    | special      | hardware |","location":"list.ts"}' />
+
+| 最新资讯 | 游戏评测 | 游戏视频 | 巴士首页特稿 | 硬件资讯 |
+    | -------- | -------- | -------- | ------------ | -------- |
+    | news     | review   | video    | special      | hardware |
+
 ## 二柄 APP <Site url="diershoubing.com"/>
 
 ### 新闻 <Site url="diershoubing.com/" size="sm" />

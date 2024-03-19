@@ -5247,6 +5247,9 @@
   "/tfc-taiwan/topic/:id": [
     "TonyRL"
   ],
+  "/tgbus/list/:category": [
+    "Xzonn"
+  ],
   "/theatlantic/:category": [
     "EthanWng97"
   ],
