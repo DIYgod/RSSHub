@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import webApiImpl from './web-api/tweet';
+import webApiImpl from './mobile-api/tweet';
 
 export const route: Route = {
     path: '/tweet/:id/status/:status/:original?',

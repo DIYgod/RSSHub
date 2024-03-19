@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import webApiImpl from './web-api/user';
+import webApiImpl from './mobile-api/user';
 
 export const route: Route = {
     path: '/user/:id/:routeParams?',

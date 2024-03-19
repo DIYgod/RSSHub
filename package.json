@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "author": "DIYgod",
-  "main": "lib/pkg.js",
+  "main": "lib/pkg.ts",
   "files": [
     "lib"
   ],

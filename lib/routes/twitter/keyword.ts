@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import webApiImpl from './web-api/search';
+import webApiImpl from './mobile-api/search';
 
 export const route: Route = {
     path: '/keyword/:keyword/:routeParams?',
