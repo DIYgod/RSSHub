@@ -93,9 +93,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     } else if (outputType === 'atom') {
         return ctx.body(art(path.resolve(__dirname, `../views/atom.art`), result));
     } else {
-        const res = ctx.html(<RSS data={result} />);
-        ctx.header('Content-Type', 'application/xml; charset=UTF-8');
-        return res;
+        // @ts-expect-error
+        return ctx.body(<RSS data={result} />);
     }
 };
 
