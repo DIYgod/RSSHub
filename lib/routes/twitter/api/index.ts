@@ -15,6 +15,7 @@ let api: {
     getUserLikes: ApiItem;
     getUserTweet: ApiItem;
     getSearch: ApiItem;
+    getList: ApiItem;
 } = {
     init: () => {
         throw new Error('Twitter API is not configured');
@@ -26,6 +27,7 @@ let api: {
     getUserLikes: () => null,
     getUserTweet: () => null,
     getSearch: () => null,
+    getList: () => null,
 };
 
 if (enableWebApi) {

@@ -130,6 +130,20 @@ const getSearch = async (keywords: string, params?: Record<string, any>) =>
         )
     );
 
+const getList = async (id: string, params?: Record<string, any>) =>
+    gatherLegacyFromData(
+        await paginationTweets(
+            'ListLatestTweetsTimeline',
+            undefined,
+            {
+                ...params,
+                listId: id,
+                count: 20,
+            },
+            ['list', 'tweets_timeline', 'timeline']
+        )
+    );
+
 const getUser = async (id: string) => {
     const userData: any = await getUserData(id);
     return (userData.data?.user || userData.data?.user_result)?.result?.legacy;
@@ -143,5 +157,6 @@ export default {
     getUserLikes,
     getUserTweet,
     getSearch,
+    getList,
     init: () => {},
 };

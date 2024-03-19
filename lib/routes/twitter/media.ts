@@ -29,7 +29,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'User media',
-    maintainers: ['yindaheng98', 'Rongronggg9'],
+    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9'],
     handler,
     radar: [
         {
