@@ -5022,6 +5022,9 @@
   "/stdaily/digitalpaper": [
     "lyqluis"
   ],
+  "/steam/search/:params": [
+    "moppman"
+  ],
   "/stheadline/std/realtime/:category{.+}?": [],
   "/stockedge/daily-updates/news": [
     "Rjnishant530"

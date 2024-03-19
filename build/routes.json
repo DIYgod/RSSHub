@@ -50000,6 +50000,35 @@
     "name": "中国科技网",
     "url": "digitalpaper.stdaily.com"
   },
+  "steam": {
+    "routes": {
+      "/search/:params": {
+        "path": "/search/:params",
+        "categories": [
+          "game"
+        ],
+        "example": "/steam/search/sort_by=Released_DESC&tags=492&category1=10&os=linux",
+        "parameters": {
+          "params": "Query parameters for a Steam Store search."
+        },
+        "radar": [
+          {
+            "source": [
+              "store.steampowered.com",
+              "store.steampowered.com/search/:params"
+            ]
+          }
+        ],
+        "name": "Store Search",
+        "maintainers": [
+          "moppman"
+        ],
+        "location": "search.ts"
+      }
+    },
+    "name": "Steam",
+    "url": "store.steampowered.com"
+  },
   "stheadline": {
     "routes": {
       "/std/realtime/:category{.+}?": {
