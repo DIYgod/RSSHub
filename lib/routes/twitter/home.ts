@@ -3,10 +3,9 @@ import utils from './utils';
 import api from './api';
 
 export const route: Route = {
-    path: '/followings/:routeParams?',
+    path: '/home/:routeParams?',
     categories: ['social-media'],
-    example: '/twitter/followings',
-    parameters: { id: 'username', routeParams: 'extra parameters, see the table above' },
+    example: '/twitter/home',
     features: {
         requireConfig: [
             {
@@ -28,7 +27,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'User following timeline',
+    name: 'Home timeline',
     maintainers: ['DIYgod'],
     handler,
 };
