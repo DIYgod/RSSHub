@@ -952,12 +952,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="cbnweek" :data='{"path":"/","radar":[{"source":["cbnweek.com/"],"target":""}],"name":"Unknown","maintainers":["nczitzk"],"url":"cbnweek.com/","location":"index.ts"}' />
 
-## 电脑玩物 <Site url="playpcesor.com"/>
-
-### Unknown <Site url="playpcesor.com/" size="sm" />
-
-<Route namespace="playpcesor" :data='{"path":"/","radar":[{"source":["playpcesor.com/"],"target":""}],"name":"Unknown","maintainers":["cnkmmk"],"url":"playpcesor.com/","location":"rss.ts"}' />
-
 ## 东莞教研网 <Site url="dgjyw.com"/>
 
 ### Unknown <Site url="dgjyw.com" size="sm" />

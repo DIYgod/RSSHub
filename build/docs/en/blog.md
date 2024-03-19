@@ -212,6 +212,12 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
   | -------- | -------- | -------- | -------- |
   | windows  | android  | tutorial | other    |
 
+## 电脑玩物 <Site url="playpcesor.com"/>
+
+### 每日精选文章 <Site url="playpcesor.com/" size="sm" />
+
+<Route namespace="playpcesor" :data='{"path":"/","categories":["blog"],"example":"/playpcesor","radar":[{"source":["playpcesor.com/"]}],"name":"每日精选文章","maintainers":["cnkmmk"],"url":"playpcesor.com/","location":"rss.ts"}' />
+
 ## 纷享销客 CRM <Site url="fxiaoke.com"/>
 
 ### 文章 <Site url="fxiaoke.com" size="sm" />

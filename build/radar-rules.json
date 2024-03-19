@@ -10091,8 +10091,8 @@
     "_name": "电脑玩物",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "每日精选文章",
+        "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
           "/"
         ],
