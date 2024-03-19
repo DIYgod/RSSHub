@@ -12,7 +12,7 @@ export const twitterGot = async (url, params) => {
         config.twitter.cookie
             .split(';')
             .map((c) => Cookie.parse(c)?.toJSON())
-            .map((c) => [c.key, c.value])
+            .map((c) => [c?.key, c?.value])
     );
     if (!jsonCookie || !jsonCookie.auth_token || !jsonCookie.ct0) {
         throw new Error('Twitter cookie is not valid');
@@ -66,16 +66,20 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
         instructions = data.user.result.timeline_v2.timeline.instructions;
     }
 
-    return instructions.find((i) => i.__typename === 'TimelineAddEntries' || i.type === 'TimelineAddEntries').entries;
+    const entries1 = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems; // Media
+    const entries2 = instructions.find((i) => i.type === 'TimelineAddEntries').entries;
+    return entries1 || entries2;
 };
 
-export function gatherLegacyFromData(entries, filterNested?: string[], userId?: number | string) {
-    const tweets = [];
-    const filteredEntries = [];
+export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {
+    const tweets: any[] = [];
+    const filteredEntries: any[] = [];
     for (const entry of entries) {
         const entryId = entry.entryId;
         if (entryId) {
             if (entryId.startsWith('tweet-')) {
+                filteredEntries.push(entry);
+            } else if (entryId.startsWith('profile-grid-0-tweet-')) {
                 filteredEntries.push(entry);
             }
             if (filterNested && filterNested.some((f) => entryId.startsWith(f))) {
@@ -98,7 +102,7 @@ export function gatherLegacyFromData(entries, filterNested?: string[], userId?: 
                     }
                     t.legacy.user = t.core?.user_result?.result?.legacy || t.core?.user_results?.result?.legacy;
                     t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
-                    const quote = t.quoted_status_result?.result;
+                    const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
                     if (quote) {
                         t.legacy.quoted_status = quote.legacy;
                         t.legacy.quoted_status.user = quote.core.user_result?.result?.legacy || quote.core.user_results?.result?.legacy;

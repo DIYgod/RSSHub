@@ -21,6 +21,10 @@ export const route: Route = {
                 name: 'TWITTER_PASSWORD',
                 description: '',
             },
+            {
+                name: 'TWITTER_COOKIE',
+                description: '',
+            },
         ],
         requirePuppeteer: false,
         antiCrawler: false,

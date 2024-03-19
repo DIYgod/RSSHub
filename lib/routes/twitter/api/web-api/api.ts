@@ -1,4 +1,4 @@
-import { baseUrl, gqlMap, gqlFeatures, gqlFieldToggles } from './constants';
+import { baseUrl, gqlMap, gqlFeatures } from './constants';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import { twitterGot, paginationTweets, gatherLegacyFromData } from './utils';
@@ -12,7 +12,9 @@ const getUserData = (id) =>
                     withSafetyModeUserFields: true,
                 }),
                 features: JSON.stringify(gqlFeatures.UserByRestId),
-                fieldToggles: JSON.stringify(gqlFieldToggles.UserByScreenName),
+                fieldToggles: JSON.stringify({
+                    withAuxiliaryUserLabels: false,
+                }),
             });
         }
         return twitterGot(`${baseUrl}${gqlMap.UserByScreenName}`, {
@@ -21,7 +23,9 @@ const getUserData = (id) =>
                 withSafetyModeUserFields: true,
             }),
             features: JSON.stringify(gqlFeatures.UserByScreenName),
-            fieldToggles: JSON.stringify(gqlFieldToggles.UserByScreenName),
+            fieldToggles: JSON.stringify({
+                withAuxiliaryUserLabels: false,
+            }),
         });
     });
 
@@ -62,7 +66,31 @@ const getUserTweetsAndReplies = (id: string, params?: Record<string, any>) =>
         )
     );
 
-const getUserMedia = (id: string, params?: Record<string, any>) => cacheTryGet(id, params, async (id, params = {}) => gatherLegacyFromData(await paginationTweets('MediaTimeline', id, params)));
+const getUserMedia = (id: string, params?: Record<string, any>) =>
+    cacheTryGet(id, params, async (id, params = {}) => {
+        const cursorSource = await paginationTweets('UserMedia', id, {
+            ...params,
+            count: 20,
+            includePromotedContent: false,
+            withClientEventToken: false,
+            withBirdwatchNotes: false,
+            withVoice: true,
+            withV2Timeline: true,
+        });
+        const cursor = cursorSource.find((i) => i.content?.cursorType === 'Top').content.value;
+        return gatherLegacyFromData(
+            await paginationTweets('UserMedia', id, {
+                ...params,
+                cursor,
+                count: 20,
+                includePromotedContent: false,
+                withClientEventToken: false,
+                withBirdwatchNotes: false,
+                withVoice: true,
+                withV2Timeline: true,
+            })
+        );
+    });
 
 const getUserLikes = (id: string, params?: Record<string, any>) => cacheTryGet(id, params, async (id, params = {}) => gatherLegacyFromData(await paginationTweets('Likes', id, params)));
 
