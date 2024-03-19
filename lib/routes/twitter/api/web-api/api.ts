@@ -149,6 +149,23 @@ const getUser = async (id: string) => {
     return (userData.data?.user || userData.data?.user_result)?.result?.legacy;
 };
 
+const getHomeTimeline = async (id: string, params?: Record<string, any>) =>
+    gatherLegacyFromData(
+        await paginationTweets(
+            'HomeTimeline',
+            undefined,
+            {
+                ...params,
+                count: 20,
+                includePromotedContent: true,
+                latestControlAvailable: true,
+                requestContext: 'launch',
+                withCommunity: true,
+            },
+            ['home', 'home_timeline_urt']
+        )
+    );
+
 export default {
     getUser,
     getUserTweets,
@@ -158,5 +175,6 @@ export default {
     getUserTweet,
     getSearch,
     getList,
+    getHomeTimeline,
     init: () => {},
 };

@@ -1,14 +1,11 @@
 import { Route } from '@/types';
 import utils from './utils';
-import { config } from '@/config';
-const T = {};
-import { TwitterApi } from 'twitter-api-v2';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
+import api from './api';
 
 export const route: Route = {
-    path: '/followings/:id/:routeParams?',
+    path: '/followings/:routeParams?',
     categories: ['social-media'],
-    example: '/twitter/followings/DIYgod',
+    example: '/twitter/followings',
     parameters: { id: 'username', routeParams: 'extra parameters, see the table above' },
     features: {
         requireConfig: [
@@ -18,6 +15,10 @@ export const route: Route = {
             },
             {
                 name: 'TWITTER_PASSWORD',
+                description: '',
+            },
+            {
+                name: 'TWITTER_COOKIE',
                 description: '',
             },
         ],
@@ -30,46 +31,25 @@ export const route: Route = {
     name: 'User following timeline',
     maintainers: ['DIYgod'],
     handler,
-    description: `:::warning
-  This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
-  :::`,
 };
 
 async function handler(ctx) {
-    const id = ctx.req.param('id');
-    const cookie = config.twitter.tokens[id];
-    if (!cookie) {
-        throw new Error(`lacking twitter token for user ${id}`);
-    } else if (!T[id]) {
-        const token = cookie.split(',');
-        T[id] = new TwitterApi({
-            appKey: token[0],
-            appSecret: token[1],
-            accessToken: token[2],
-            accessSecret: token[3],
-        }).readOnly;
+    // For compatibility
+    const { count, include_rts } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const params = count ? { count } : {};
+
+    await api.init();
+    let data = await api.getHomeTimeline('', params);
+    if (!include_rts) {
+        data = utils.excludeRetweet(data);
     }
 
-    const data = await T[id].v1.get('statuses/home_timeline.json', {
-        tweet_mode: 'extended',
-        count: 100,
-    });
-
-    // undefined and strings like "exclude_rts_replies" is also safely parsed, so no if branch is needed
-    const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
-
     return {
-        title: `${id} 的 Twitter 关注时间线`,
-        link: `https://twitter.com/${id}/`,
-        item: utils.ProcessFeed(
-            ctx,
-            {
-                data,
-            },
-            {
-                showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.get('showAuthorInTitle')), true),
-                showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.get('showAuthorInDesc')), true),
-            }
-        ),
+        title: `Twitter following timeline`,
+        link: `https://twitter.com/home`,
+        // description: userInfo?.description,
+        item: utils.ProcessFeed(ctx, {
+            data,
+        }),
     };
 }
