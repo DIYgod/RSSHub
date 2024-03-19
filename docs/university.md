@@ -5093,6 +5093,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
  </Route>
 
+### 同济大学研究生招生网
+
+<Route author="yanbot-team" example="/tongji/yz/zsxw-sszs" path="/tongji/yz/:type" :paramsDesc="['类型，见下表']">
+
+| 硕士招生  | 博士生 |
+| --------- | ------ |
+| zsxw-sszs | 2      |
+
+</Route>
+
 ## 潍坊学院
 
 ### 新闻
