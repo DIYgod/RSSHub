@@ -27,15 +27,9 @@ export const route: Route = {
     url: 'hqsz.ouc.edu.cn/news.html?typeId=02',
 };
 
-function Decrypt(word, keyStr?, ivStr?) {
-    let key = CryptoJS.enc.Utf8.parse('1974051005060708'); // ""中与后台一样  密码
-    let iv = CryptoJS.enc.Utf8.parse('1974051005060708'); // ""中与后台一样
-    if (keyStr) {
-        key = CryptoJS.enc.Utf8.parse(keyStr);
-    }
-    if (ivStr) {
-        iv = CryptoJS.enc.Utf8.parse(ivStr);
-    }
+function Decrypt(word, keyStr = '1974051005060708', ivStr = '1974051005060708') {
+    const key = CryptoJS.enc.Utf8.parse(keyStr); // ""中与后台一样  密码
+    const iv = CryptoJS.enc.Utf8.parse(ivStr); // ""中与后台一样
     const base64 = CryptoJS.enc.Base64.parse(word);
     const src = CryptoJS.enc.Base64.stringify(base64);
 
