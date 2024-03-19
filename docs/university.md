@@ -1777,11 +1777,11 @@ pageClass: routes
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/gxmu/yjs/zsgz" path="/gxmu/yjs/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
+<Route author="yanbot-team" example="/gxmu/yjs/zsgz-zsgg" path="/gxmu/yjs/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
 
-| 招生工作 |
-| -------- |
-| zsgz     |
+| 招生工作  |
+| --------- |
+| zsgz-zsgg |
 
 </Route>
 
@@ -2799,6 +2799,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 人工智能和自动化学院新闻
 
 <Route author="RayHY" example="/hust/aia/news" path="/hust/aia/news" />
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/hust/gszs/notice/0" path="/hust/aia/notice/:type?" :paramsDesc="['分区 type，默认为最新通知 可在网页 HTML中找到']">
+
+| 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
+| ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
+| 0    | 1    | 2    | 3    | 4    | 5      | 6      | 7    |
+
+</Route>
 
 ## 华中农业大学
 
@@ -5207,11 +5217,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生信息网
 
-<Route author="yanbot" example="/whu/wdyz/7" path="/whu/wdyz/:type" :paramsDesc="['类型，详见表格']">
+<Route author="yanbot" example="/whu/wdyz/sszs-ptss" path="/whu/wdyz/:type" :paramsDesc="['类型，详见表格']">
 
-| 硕士招生 | 普通硕士 | 夏令营 | 推荐免试 | 非全日制招生 |
-| -------- | -------- | ------ | -------- | ------------ |
-| 7        | 35       | 35     | 41       | 42           |
+| 硕士招生  | 夏令营   | 推荐免试 | 招生动态  |
+| --------- | -------- | -------- | --------- |
+| sszs-ptss | sszs-xly | sszs-tms | sszs-zsdt |
 
 </Route>
 
@@ -6329,11 +6339,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/nuc/grs/zsgz-zsgz" path="/nuc/grs/:type" :paramsDesc="['分类type，见下表，也可在URL中找到']">
+<Route author="yanbot-team" example="/nuc/grs/zsgl-sszsgz" path="/nuc/grs/:type" :paramsDesc="['分类type，见下表，也可在URL中找到']">
 
-| 招生工作  |
-| --------- |
-| zsgz-zsgz |
+| 招生工作    |
+| ----------- |
+| zsgl-sszsgz |
 
 </Route>
 
@@ -6881,10 +6891,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生部
 
-<Route author="yanbot-team" example="/ccom/yjsb/zsxx-sszs" path="/ccom/yjsb/:type" :paramsDesc="['类型，见下表，其他未列出的类型可在页面URL中找到']" radar="1">
+<Route author="yanbot-team" example="/ccom/yjsb/zxxx-sszs" path="/ccom/yjsb/:type" :paramsDesc="['类型，见下表，其他未列出的类型可在页面URL中找到']" radar="1">
 
 | 类型 | 硕士招生  |
 | ---- | --------- |
-| 参数 | zsxx-sszs |
+| 参数 | zxxx-sszs |
 
 </Route>
