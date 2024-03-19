@@ -13,26 +13,14 @@ export const route: Route = {
     parameters: {
         year: '需要订阅的年份，格式为`YYYY`，必须小于等于当前年份，默认为当前年份',
     },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['rlsbj.cq.gov.cn/'],
         },
     ],
-    name: '人力社保局',
+    name: '重庆市人民政府 人力社保局 - 事业单位公开招聘',
     maintainers: ['MajexH'],
     handler,
-    description: `#### 人事考试通知 {#chong-qing-shi-ren-min-zheng-fu-ren-li-she-bao-ju-ren-shi-kao-shi-tong-zhi}
-
-
-#### 事业单位公开招聘 {#chong-qing-shi-ren-min-zheng-fu-ren-li-she-bao-ju-shi-ye-dan-wei-gong-kai-zhao-pin}`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

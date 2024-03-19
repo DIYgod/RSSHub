@@ -8,21 +8,12 @@ export const route: Route = {
     path: '/chongqing/rsks',
     categories: ['government'],
     example: '/gov/chongqing/rsks',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['rlsbj.cq.gov.cn/'],
         },
     ],
-    name: 'Unknown',
+    name: '重庆市人民政府 人力社保局 - 人事考试通知',
     maintainers: ['Mai19930513'],
     handler,
     url: 'rlsbj.cq.gov.cn/',
