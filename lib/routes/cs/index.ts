@@ -14,7 +14,7 @@ const decodeBufferByCharset = (buffer) => {
 };
 
 export const route: Route = {
-    path: '/:category?',
+    path: '/:category{.+}?',
     name: '栏目',
     parameters: { category: '分类，见下表，默认为首页' },
     maintainers: ['nczitzk'],
