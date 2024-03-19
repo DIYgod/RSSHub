@@ -34,7 +34,7 @@ export const route: Route = {
             source: ['analy.zhubai.love/'],
         },
     ],
-    name: 'Unknown',
+    name: '上周热门 TOP 20',
     maintainers: ['nczitzk'],
     handler,
     url: 'analy.zhubai.love/',

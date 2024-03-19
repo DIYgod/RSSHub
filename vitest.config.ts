@@ -1,4 +1,4 @@
-import { defineConfig, defaultExclude } from 'vitest/config';
+import { defineConfig } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
@@ -10,6 +10,5 @@ export default defineConfig({
             exclude: ['lib/routes/**', 'lib/routes-deprecated/**'],
         },
         testTimeout: 10000,
-        exclude: ['website', ...defaultExclude],
     },
 });

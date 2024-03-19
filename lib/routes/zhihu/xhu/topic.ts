@@ -22,7 +22,7 @@ export const route: Route = {
             source: ['www.zhihu.com/topic/:topicId/:type'],
         },
     ],
-    name: 'Unknown',
+    name: 'xhu - 话题',
     maintainers: ['JimenezLi'],
     handler,
 };

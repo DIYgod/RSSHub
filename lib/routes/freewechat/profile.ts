@@ -25,7 +25,7 @@ export const route: Route = {
             source: ['freewechat.com/profile/:id'],
         },
     ],
-    name: 'Unknown',
+    name: '公众号',
     maintainers: ['TonyRL'],
     handler,
 };

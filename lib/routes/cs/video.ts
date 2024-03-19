@@ -17,7 +17,9 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Unknown',
+    name: '中证视频',
+    description: `| 今日聚焦 | 传闻求证 | 高端访谈 | 投教课堂 | 直播汇 |
+    | -------- | -------- | -------- | -------- | ------ |`,
     maintainers: ['nczitzk'],
     handler,
 };

@@ -30,8 +30,6 @@ jobs:
           node-version: lts/*
           cache: 'pnpm'
       - run: pnpm i
-      - run: pnpm i
-        working-directory: website
       - run: npm run format
       - name: Commit files
         run: |

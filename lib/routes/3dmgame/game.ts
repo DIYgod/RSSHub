@@ -12,7 +12,8 @@ export const route: Route = {
             source: ['3dmgame.com/games/:name/:type'],
         },
     ],
-    name: 'Unknown',
+    name: '游戏资讯',
+    categories: ['game'],
     maintainers: ['sinchang', 'jacky2001114', 'HenryQW'],
     handler,
 };
