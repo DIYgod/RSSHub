@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,30 @@ import { parseDate } from '@/utils/parse-date';
 import { extractArticle, extractWork } from './utils';
 const baseUrl = 'https://www.zcool.com.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/top/:type',
+    categories: ['design'],
+    example: '/zcool/top/design',
+    parameters: { type: '推荐类型,详见下面的表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '作品总榜单',
+    maintainers: ['yuuow'],
+    handler,
+    description: `榜单类型
+
+  | design   | article  |
+  | -------- | -------- |
+  | 作品榜单 | 文章榜单 |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const url = `${baseUrl}/top/${type === 'design' ? 'index.do' : 'article.do?rankType=8'}`;
 
@@ -43,10 +67,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: data.props.pageProps.seo.title,
         description: data.props.pageProps.seo.description,
         link: url,
         item: items,
-    });
-};
+    };
+}

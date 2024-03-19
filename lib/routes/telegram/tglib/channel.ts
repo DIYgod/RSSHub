@@ -1,6 +1,4 @@
-import wait from '@/utils/wait';
-import { config } from '@/config';
-import { client, decodeMedia, getFilename, getMediaLink, streamDocument, streamThumbnail } from './client';
+import { client, decodeMedia, getClient, getFilename, getMediaLink, streamDocument, streamThumbnail } from './client';
 import { returnBigInt as bigInt } from 'telegram/Helpers';
 import { HTMLParser } from 'telegram/extensions/html';
 
@@ -111,13 +109,8 @@ async function getMedia(ctx) {
     return ctx.res.end();
 }
 
-export default async (ctx) => {
-    if (!config.telegram.session) {
-        return [];
-    }
-    if (!client.connected) {
-        await wait(1000);
-    }
+export default async function handler(ctx) {
+    const client = await getClient();
 
     const item = [];
     const chat = await client.getInputEntity(ctx.req.param('username'));
@@ -152,14 +145,14 @@ export default async (ctx) => {
         }
     }
 
-    ctx.set('data', {
+    return {
         title: channelInfo.title,
         language: null,
         link: `https://t.me/${channelInfo.username}`,
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',
         description: `@${channelInfo.username} on Telegram`,
-    });
-};
+    };
+}
 
 export { getMedia };

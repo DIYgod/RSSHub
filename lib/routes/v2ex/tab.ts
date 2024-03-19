@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tab/:tabid',
+    categories: ['bbs'],
+    example: '/v2ex/tab/hot',
+    parameters: { tabid: 'tab标签ID,在 URL 可以找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '标签',
+    maintainers: ['liyefox'],
+    handler,
+};
+
+async function handler(ctx) {
     const tabid = ctx.req.param('tabid');
     const host = 'https://v2ex.com';
     const pageUrl = `${host}/?tab=${tabid}`;
@@ -48,10 +67,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `V2EX-${tabid}`,
         link: pageUrl,
         description: `V2EX-tab-${tabid}`,
         item: items,
-    });
-};
+    };
+}

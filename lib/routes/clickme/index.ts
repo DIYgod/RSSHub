@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:site/:grouping/:name',
+    categories: ['other'],
+    example: '/clickme/default/category/beauty',
+    parameters: { site: '站点，`default`为普通站，`r18`为成人站，其它值默认为普通站', grouping: '分组方式，`category`为分类，`tag`为标签，其他值默认为分类', name: '分类名或标签名，分类名为英文，可以在分类 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '文章',
+    maintainers: ['hoilc'],
+    handler,
+};
+
+async function handler(ctx) {
     const site = ctx.req.param('site') === 'r18' ? 'r18' : '';
     const grouping = ctx.req.param('grouping') === 'tag' ? 'tag' : 'category';
     const name = ctx.req.param('name');
@@ -49,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `ClickMe ${site ? 'R18 ' : ''}- ${displayed_name}`,
         link: url,
         item: out,
-    });
-};
+    };
+}

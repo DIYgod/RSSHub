@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -13,7 +14,28 @@ async function fetch(address) {
     };
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cse/:type?',
+    categories: ['university'],
+    example: '/csu/cse',
+    parameters: { type: '类型' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '计算机学院',
+    maintainers: ['j1g5awi'],
+    handler,
+    description: `| 类型 | 学院新闻 | 通知公告 | 学术信息 | 学工动态 | 科研动态 |
+  | ---- | -------- | -------- | -------- | -------- | -------- |
+  | 参数 | xyxw     | tzgg     | xsxx     | xgdt     | kydt     |`,
+};
+
+async function handler(ctx) {
     const url = 'https://cse.csu.edu.cn/index/';
     const type = ctx.req.param('type') ?? 'tzgg';
     const link = url + type + '.htm';
@@ -34,9 +56,9 @@ export default async (ctx) => {
             });
         })
     );
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link,
         item: out,
-    });
-};
+    };
+}

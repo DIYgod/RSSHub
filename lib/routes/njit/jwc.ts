@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,28 @@ import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://jwc.njit.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:type?',
+    categories: ['university'],
+    example: '/njit/jwc/jx',
+    parameters: { type: '默认为 `jx`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '南京工程学院教务处',
+    maintainers: ['zefengdaguo'],
+    handler,
+    description: `| 教学 | 考试 | 信息 | 实践 |
+| ---- | ---- | ---- | ---- |
+| jx   | ks   | xx   | sj   |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'jx';
     const link = host + '/index/' + type + '.htm';
     const response = await got({
@@ -99,9 +121,9 @@ export default async (ctx) => {
             info = '教学';
             break;
     }
-    ctx.set('data', {
+    return {
         title: '南京工程学院教务处 -- ' + info,
         link,
         item: out,
-    });
-};
+    };
+}

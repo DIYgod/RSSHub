@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const xmut = 'https://yjs.xmut.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/yjjw/:category?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'yjsc' } = ctx.req.param();
     const url = `${xmut}/index/${category}.htm`;
     const res = await got(url, {
@@ -44,9 +52,9 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: url,
         item: itemPromises,
-    });
-};
+    };
+}

@@ -1,12 +1,19 @@
+import { Route, DataItem } from '@/types';
 import { config } from '@/config';
 import got from '@/utils/got';
 import wait from '@/utils/wait';
 import cache from '@/utils/cache';
-import { DataItem } from '@/types';
 
 let cacheIndex = 0;
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id',
+    name: 'Unknown',
+    maintainers: ['DIYgod', 'NeverBehave'],
+    handler,
+};
+
+async function handler(ctx) {
     if (ctx.req.param('id') === 'error') {
         throw new Error('Error test');
     }
@@ -373,7 +380,7 @@ export default async (ctx) => {
         ];
     }
 
-    ctx.set('data', {
+    return {
         title: `Test ${ctx.req.param('id')}`,
         itunes_author: ctx.req.param('id') === 'enclosure' ? 'DIYgod' : null,
         link: 'https://github.com/DIYgod/RSSHub',
@@ -381,5 +388,5 @@ export default async (ctx) => {
         allowEmpty: ctx.req.param('id') === 'allow_empty',
         description:
             ctx.req.param('id') === 'complicated' ? '<img src="http://mock.com/DIYgod/DIYgod/RSSHub">' : ctx.req.param('id') === 'multimedia' ? '<video src="http://mock.com/DIYgod/DIYgod/RSSHub"></video>' : 'A test route for RSSHub',
-    });
-};
+    };
+}

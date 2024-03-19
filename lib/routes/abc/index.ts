@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,31 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category{.+}?',
+    radar: [
+        {
+            source: ['abc.net.au/:category*'],
+            target: '/:category',
+        },
+    ],
+    parameters: {
+        category: 'Category, can be found in the URL, can also be filled in with the `documentId` in the source code of the page, `news/justin` as **Just In** by default',
+    },
+    name: 'Channel & Topic',
+    categories: ['traditional-media'],
+    description: `:::tip
+    All Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after \`topic\` in its URL, or fill in the \`documentId\`.
+
+    For example, the URL for [Computer Science](https://www.abc.net.au/news/topic/computer-science) is \`https://www.abc.net.au/news/topic/computer-science\`, the \`category\` is \`news/topic/computer-science\`, and the \`documentId\` of the Topic is \`2302\`, so the route is [/abc/news/topic/computer-science](https://rsshub.app/abc/news/topic/computer-science) and [/abc/2302](https://rsshub.app/abc/2302).
+
+    The supported channels are all listed in the table below. For other channels, please find the \`documentId\` in the source code of the channel page and fill it in as above.
+    :::`,
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'news/justin' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -149,7 +174,7 @@ export default async (ctx) => {
 
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: $('title').first().text(),
         link: currentUrl,
@@ -161,5 +186,5 @@ export default async (ctx) => {
         subtitle: $('meta[property="og:title"]').prop('content'),
         author: $('meta[name="generator"]').prop('content'),
         allowEmpty: true,
-    });
-};
+    };
+}

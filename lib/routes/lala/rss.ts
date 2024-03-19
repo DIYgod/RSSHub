@@ -1,7 +1,23 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    categories: ['blog'],
+    example: '/lala',
+    radar: [
+        {
+            source: ['lala.im/'],
+        },
+    ],
+    name: '最新发布',
+    maintainers: ['cnkmmk'],
+    handler,
+    url: 'lala.im/',
+};
+
+async function handler() {
     const currentUrl = 'https://lala.im';
     const response = await got(`${currentUrl}/feed`);
     const $ = load(response.data, { xmlMode: true });
@@ -23,10 +39,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: titleMain,
         description: descriptionMain,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

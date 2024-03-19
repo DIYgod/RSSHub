@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -19,7 +20,28 @@ const typeMap = {
     14: '浪潮',
     15: '沸点',
 };
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/special/:type?',
+    categories: ['new-media'],
+    example: '/163/news/special/1',
+    parameters: { type: '栏目' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '专栏',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 轻松一刻 | 槽值 | 人间 | 大国小民 | 三三有梗 | 数读 | 看客 | 下划线 | 谈心社 | 哒哒 | 胖编怪聊 | 曲一刀 | 今日之声 | 浪潮 | 沸点 |
+  | -------- | ---- | ---- | -------- | -------- | ---- | ---- | ------ | ------ | ---- | -------- | ------ | -------- | ---- | ---- |
+  | 1        | 2    | 3    | 4        | 5        | 6    | 7    | 8      | 9      | 10   | 11       | 12     | 13       | 14   | 15   |`,
+};
+
+async function handler(ctx) {
     if (!ctx.req.param('type')) {
         throw new Error('Bad parameter. See <a href="https://docs.rsshub.app/routes/game#wang-yi-da-shen">https://docs.rsshub.app/routes/game#wang-yi-da-shen</a>');
     }
@@ -107,9 +129,9 @@ export default async (ctx) => {
 
     const selectedTypeName = typeMap[selectedType];
 
-    ctx.set('data', {
+    return {
         title: selectedTypeName ? `${selectedTypeName} - 网易专栏` : '网易专栏',
         link: 'https://3g.163.com/touch/exclusive/?referFrom=163',
         item: items,
-    });
-};
+    };
+}

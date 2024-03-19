@@ -1,6 +1,25 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/album/:id',
+    categories: ['picture'],
+    example: '/google/album/msFFnAzKmQmWj76EA',
+    parameters: { id: 'album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Public Albums',
+    maintainers: ['hoilc'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const url = `https://photos.app.goo.gl/${id}?_imcp=1`;
@@ -16,7 +35,7 @@ export default async (ctx) => {
 
     const list = info[1];
 
-    ctx.set('data', {
+    return {
         title: `${owner_name} 创建的 Google 相册 - ${album_name}`,
         link: url,
         item: list.slice(0, 50).map((item) => {
@@ -32,5 +51,5 @@ export default async (ctx) => {
                 guid: item[0],
             };
         }),
-    });
-};
+    };
+}

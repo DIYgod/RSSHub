@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const host = 'https://www.zju.edu.cn/';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/list/:type',
+    categories: ['university'],
+    example: '/zju/list/xs',
+    parameters: { type: '`xs`为学术，`xw`为新闻，`5461`是图片新闻，`578`是浙大报道，具体参数参考左侧的菜单' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '普通栏目 如学术 / 图片 / 新闻等',
+    maintainers: ['Jeason0228'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'xs';
     const link = host + type + `/list.htm`;
     const response = await got({
@@ -55,9 +74,9 @@ export default async (ctx) => {
             });
         })
     );
-    ctx.set('data', {
+    return {
         title: `浙江大学` + $('ul.submenu .selected').text(),
         link,
         item: out,
-    });
-};
+    };
+}

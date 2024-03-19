@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -16,7 +17,32 @@ const typeMap = {
  *
  * @param ctx {import('koa').Context}
  */
-export default async (ctx) => {
+export const route: Route = {
+    path: '/notice/:type?',
+    categories: ['programming'],
+    example: '/aliyun/notice',
+    parameters: { type: 'N' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '公告',
+    maintainers: ['muzea'],
+    handler,
+    description: `| 类型     | type |
+  | -------- | ---- |
+  | 全部     |      |
+  | 升级公告 | 1    |
+  | 安全公告 | 2    |
+  | 备案公告 | 3    |
+  | 其他     | 4    |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const url = `https://help.aliyun.com/noticelist/${typeMap[type] || typeMap[0]}.html`;
     const response = await got({ method: 'get', url });
@@ -49,9 +75,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text().trim(),
         link: url,
         item: result,
-    });
-};
+    };
+}

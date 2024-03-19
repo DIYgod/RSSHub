@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,7 +13,28 @@ import * as path from 'node:path';
 
 const rootUrl = 'https://www.txrjy.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/fornumtopic/:channel?',
+    categories: ['bbs'],
+    example: '/txrjy/fornumtopic',
+    parameters: { channel: '频道的 id，见下表，默认为最新500个主题帖' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '论坛 频道',
+    maintainers: ['Fatpandac'],
+    handler,
+    description: `| 最新 500 个主题帖 | 最新 500 个回复帖 | 最新精华帖 | 最新精华帖 | 一周热帖 | 本月热帖 |
+  | :---------------: | :---------------: | :--------: | :--------: | :------: | :------: |
+  |         1         |         2         |      3     |      4     |     5    |     6    |`,
+};
+
+async function handler(ctx) {
     const channel = ctx.req.param('channel') ?? '1';
     const url = `${rootUrl}/c114-listnewtopic.php?typeid=${channel}`;
 
@@ -68,9 +90,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `通信人家园 - 论坛 ${title}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

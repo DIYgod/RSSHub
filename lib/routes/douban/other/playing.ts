@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/movie/playing', '/movie/playing/:score'],
+    categories: ['social-media'],
+    example: '/douban/movie/playing',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '正在上映的电影',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const score = Number.parseFloat(ctx.req.param('score')) || 0;
     const response = await got({
         method: 'get',
@@ -9,7 +28,7 @@ export default async (ctx) => {
     });
     const $ = load(response.data);
 
-    ctx.set('data', {
+    return {
         title: `正在上映的${score ? `超过 ${score} 分的` : ''}电影`,
         link: `https://movie.douban.com/cinema/nowplaying/`,
         item: $('.list-item')
@@ -29,5 +48,5 @@ export default async (ctx) => {
             })
             .filter(Boolean),
         allowEmpty: true,
-    });
-};
+    };
+}

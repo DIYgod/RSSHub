@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import util from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:type',
+    categories: ['university'],
+    example: '/njnu/jwc/xstz',
+    parameters: { type: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '教务通知',
+    maintainers: ['Shujakuinkuraudo'],
+    handler,
+    description: `| 教师通知 | 新闻动态 | 学生通知 |
+  | -------- | -------- | -------- |
+  | jstz     | xwdt     | xstz     |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     let title, path;
     switch (type) {
@@ -35,10 +57,10 @@ export default async (ctx) => {
 
     const result = await util.ProcessFeed(list, cache);
 
-    ctx.set('data', {
+    return {
         title: '南京师范大学教务处 - ' + title,
         link: 'http://jwc.njnu.edu.cn/',
         description: '南京师范大学教务处',
         item: result,
-    });
-};
+    };
+}

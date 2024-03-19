@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,35 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/global/:lang/:type?', '/ff14_global/:lang/:type?'],
+    categories: ['game'],
+    example: '/ff14/global/na/all',
+    parameters: { lang: 'Region', type: 'Category, `all` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'FINAL FANTASY XIV (The Lodestone)',
+    maintainers: ['chengyuhui'],
+    handler,
+    description: `Region
+
+  | North Ameria | Europe | France | Germany | Japan |
+  | ------------ | ------ | ------ | ------- | ----- |
+  | na           | eu     | fr     | de      | jp    |
+
+  Category
+
+  | all | topics | notices | maintenance | updates | status | developers |
+  | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |`,
+};
+
+async function handler(ctx) {
     const lang = ctx.req.param('lang');
     const type = ctx.req.param('type') ?? 'all';
 
@@ -30,7 +59,7 @@ export default async (ctx) => {
         data = response.data;
     }
 
-    ctx.set('data', {
+    return {
         title: `FFXIV Lodestone updates (${type})`,
         link: `https://${lang}.finalfantasyxiv.com/lodestone/news/`,
         item: data.map(({ id, url, title, time, description, image }) => ({
@@ -43,5 +72,5 @@ export default async (ctx) => {
             pubDate: parseDate(time),
             guid: id,
         })),
-    });
-};
+    };
+}

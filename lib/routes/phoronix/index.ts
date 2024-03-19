@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
@@ -111,7 +112,33 @@ const tryFetch = async (category, topic) => {
     return feed;
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?/:topic?',
+    categories: ['new-media'],
+    example: '/phoronix/linux/KDE',
+    parameters: {
+        category: 'Category',
+        topic: 'Topic. You may find available parameters from their navigator links. E.g. to subscribe to `https://www.phoronix.com/reviews/Operating+Systems`, fill in the path `/phoronix/reviews/Operating+Systems`',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['phoronix.com/:category?/:topic?'],
+        },
+    ],
+    name: 'News & Reviews',
+    maintainers: ['oppliate', 'Rongronggg9'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category, topic } = ctx.req.param();
     let feed;
     switch (category) {
@@ -233,5 +260,5 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', feed);
-};
+    return feed;
+}

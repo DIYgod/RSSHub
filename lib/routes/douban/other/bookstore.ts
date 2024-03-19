@@ -1,6 +1,25 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bookstore',
+    categories: ['social-media'],
+    example: '/douban/bookstore',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '豆瓣书店',
+    maintainers: ['xyqfer'],
+    handler,
+};
+
+async function handler() {
     const link = 'https://market.douban.com/book/';
     const response = await got({
         method: 'get',
@@ -12,7 +31,7 @@ export default async (ctx) => {
 
     const data = response.data.data;
 
-    ctx.set('data', {
+    return {
         title: '豆瓣书店',
         link,
         description: '在豆瓣书店，遇见美好·書生活',
@@ -26,5 +45,5 @@ export default async (ctx) => {
         <strong>价格:</strong> ${price}元
       `,
         })),
-    });
-};
+    };
+}

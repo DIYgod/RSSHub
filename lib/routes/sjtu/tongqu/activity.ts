@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,28 @@ import * as path from 'node:path';
 
 const urlRoot = 'https://tongqu.sjtu.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tongqu/:type?',
+    categories: ['university'],
+    example: '/sjtu/tongqu/lecture',
+    parameters: { type: '类型，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '同去网最新活动',
+    maintainers: ['SeanChao'],
+    handler,
+    description: `| 全部 | 最新   | 招新        | 讲座    | 户外      | 招聘 | 游学       | 比赛         | 公益           | 主题党日 | 学生事务       | 广告 | 其他   |
+  | ---- | ------ | ----------- | ------- | --------- | ---- | ---------- | ------------ | -------------- | -------- | -------------- | ---- | ------ |
+  | all  | newest | recruitment | lecture | outdoords | jobs | studyTours | competitions | publicWarefare | partyDay | studentAffairs | ads  | others |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'all';
     const config = {
         all: 0,
@@ -39,9 +61,9 @@ export default async (ctx) => {
         description: art(path.join(__dirname, '../templates/activity.art'), { e }),
     }));
 
-    ctx.set('data', {
+    return {
         title: '同去网活动',
         link,
         item: feeds,
-    });
-};
+    };
+}

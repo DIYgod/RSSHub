@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/fdy/:path{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'http://fdy.bnu.edu.cn';
     const { path = 'tzgg' } = ctx.req.param();
     const link = `${baseUrl}/${path}/index.htm`;
@@ -34,9 +42,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link,
         item: items,
-    });
-};
+    };
+}

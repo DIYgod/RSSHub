@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { processList, ProcessFeed, baseUrl, apiUrl } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:id',
+    categories: ['social-media'],
+    example: '/vocus/user/tsetyan',
+    parameters: { id: '用户 id，可在用户主页的 URL 找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '用户个人文章',
+    maintainers: ['LogicJake'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const link = `${baseUrl}/user/@${id}`;
     const userData = await cache.tryGet(`vocus:user:${id}`, async () => {
@@ -34,11 +53,11 @@ export default async (ctx) => {
 
     const items = await ProcessFeed(list, cache.tryGet);
 
-    ctx.set('data', {
+    return {
         title: `${userData.fullname}｜方格子 vocus`,
         link,
         description: userData.intro,
         image: userData.avatarUrl,
         item: items,
-    });
-};
+    };
+}

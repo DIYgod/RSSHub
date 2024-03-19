@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { config } from '@/config';
@@ -5,7 +6,25 @@ import { parseDate } from '@/utils/parse-date';
 
 const X_UA = 'NGA_skull/6.0.5(iPhone10,3;iOS 12.0.1)';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/forum/:fid/:recommend?',
+    categories: ['bbs'],
+    example: '/nga/forum/489',
+    parameters: { fid: '分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用', recommend: '是否只显示精华主题, 留空为否, 任意值为是' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分区帖子',
+    maintainers: ['xyqfer'],
+    handler,
+};
+
+async function handler(ctx) {
     const { fid, recommend } = ctx.req.param();
     const timestamp = Math.floor(Date.now() / 1000);
     let cookieString = `guestJs=${timestamp};`;
@@ -63,10 +82,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `NGA-${forumname}${recommend ? '-精华' : ''}`,
         link: `https://nga.178.com/thread.php?fid=${fid}`,
         description: 'NGA是国内专业的游戏玩家社区,魔兽世界,英雄联盟,炉石传说,风暴英雄,暗黑破坏神3(D3)游戏攻略讨论,以及其他热门游戏玩家社区',
         item: resultItem,
-    });
-};
+    };
+}

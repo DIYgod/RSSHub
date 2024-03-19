@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,14 @@ import * as path from 'node:path';
 
 import { rootUrl, apiSlug, GetFilterId } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '*',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
     let filterName;
@@ -89,7 +97,7 @@ export default async (ctx) => {
 
     const icon = $('link[rel="apple-touch-icon"]').first().prop('href');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `纪妖${filterName ? ` - ${filterName}` : ''}`,
         link: currentUrl,
@@ -100,5 +108,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('p.site-description').text(),
         author: $('p.site-title').text(),
-    });
-};
+    };
+}

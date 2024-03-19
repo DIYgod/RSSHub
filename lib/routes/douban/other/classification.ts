@@ -1,6 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/movie/classification/:sort?/:score?/:tags?',
+    categories: ['social-media'],
+    example: '/douban/movie/classification/R/7.5/Netflix,2020',
+    parameters: { sort: '排序方式，默认为U', score: '最低评分，默认不限制', tags: '分类标签，多个标签之间用英文逗号分隔，常见的标签到豆瓣电影的分类页面查看，支持自定义标签' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '豆瓣电影分类',
+    maintainers: ['zzwab'],
+    handler,
+    description: `排序方式可选值如下
+
+| 近期热门 | 标记最多 | 评分最高 | 最近上映 |
+| -------- | -------- | -------- | -------- |
+| U        | T        | S        | R        |`,
+};
+
+async function handler(ctx) {
     const sort = ctx.req.param('sort') || 'U';
     const score = Number.parseFloat(ctx.req.param('score')) || 0;
     const tags = ctx.req.param('tags') || '';
@@ -12,7 +36,7 @@ export default async (ctx) => {
 
     const movies = response.data.data;
 
-    ctx.set('data', {
+    return {
         title: `豆瓣电影分类${score ? `超过 ${score} 分的` : ''}影视`,
         link: `https://movie.douban.com/tag/#/?sort=U&range=0,10&tags=`,
         item: movies
@@ -33,5 +57,5 @@ export default async (ctx) => {
             })
             .filter(Boolean),
         allowEmpty: true,
-    });
-};
+    };
+}

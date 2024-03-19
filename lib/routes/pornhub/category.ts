@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { defaultDomain, renderDescription } from './utils';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/category/:caty',
+    categories: ['multimedia'],
+    example: '/pornhub/category/popular-with-women',
+    parameters: { caty: 'category, see [categories](https://www.pornhub.com/webmasters/categories)' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Category',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('caty');
 
     const categories = await cache.tryGet('pornhub:categories', async () => {
@@ -37,9 +56,9 @@ export default async (ctx) => {
         category: [...new Set([...item.tags.map((t) => t.tag_name), ...item.categories.map((c) => c.category)])],
     }));
 
-    ctx.set('data', {
+    return {
         title: `Pornhub - ${categoryName}`,
         link: `${defaultDomain}/video?c=${categoryId}`,
         item: list,
-    });
-};
+    };
+}

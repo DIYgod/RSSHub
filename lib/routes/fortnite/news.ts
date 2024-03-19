@@ -1,9 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:options?',
+    categories: ['game'],
+    example: '/fortnite/news',
+    parameters: { options: 'Params' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'News',
+    maintainers: ['lyqluis'],
+    handler,
+    description: `-   \`options.lang\`, optional, language, eg. \`/fortnite/news/lang=en-US\`, common languages are listed below, more languages are available one the [official website](https://www.fortnite.com/news)
+
+  | English (default) | Spanish | Japanese | French | Korean | Polish |
+  | ----------------- | ------- | -------- | ------ | ------ | ------ |
+  | en-US             | es-ES   | ja       | fr     | ko     | pl     |`,
+};
+
+async function handler(ctx) {
     const options = ctx.req
         .param('options')
         ?.split('&')
@@ -55,9 +79,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Fortnite News',
         link,
         item: items,
-    });
-};
+    };
+}

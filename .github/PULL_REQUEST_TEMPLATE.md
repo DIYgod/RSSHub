@@ -33,9 +33,6 @@ If your changes are not related to route, please fill in `routes` section with `
   
 - [ ] New Route / 新的路由
   - [ ] Follows [Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard) / 跟随 [路由规范](https://docs.rsshub.app/zh/joinus/advanced/script-standard)
-- [ ] Documentation / 文档说明
-- [ ] Full text / 全文获取
-  - [ ] Use cache / 使用缓存
 - [ ] Anti-bot or rate limit / 反爬/频率限制
   - [ ] If yes, do your code reflect this sign? / 如果有, 是否有对应的措施?
 - [ ] [Date and time](https://docs.rsshub.app/joinus/advanced/pub-date) / [日期和时间](https://docs.rsshub.app/zh/joinus/advanced/pub-date)

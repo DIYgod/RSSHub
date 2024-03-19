@@ -1,39 +1,57 @@
-import cache from '@/utils/cache';
+import { Route } from '@/types';
+import api from './api';
 import utils from './utils';
-import { config } from '@/config';
 
-export default async (ctx) => {
-    if (!config.twitter || !config.twitter.consumer_key || !config.twitter.consumer_secret) {
-        throw new Error('Twitter RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
-    }
-    const { id, name } = ctx.req.param();
-    const client = await utils.getAppClient();
+export const route: Route = {
+    path: '/list/:id/:routeParams?',
+    categories: ['social-media'],
+    example: '/twitter/list/ladyleet/javascript',
+    parameters: { id: 'username', name: 'list name', routeParams: 'extra parameters, see the table above' },
+    features: {
+        requireConfig: [
+            {
+                name: 'TWITTER_USERNAME',
+                description: 'Please see above for details.',
+            },
+            {
+                name: 'TWITTER_PASSWORD',
+                description: 'Please see above for details.',
+            },
+            {
+                name: 'TWITTER_COOKIE',
+                description: 'Please see above for details.',
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'List timeline',
+    maintainers: ['DIYgod', 'xyqfer'],
+    handler,
+    radar: [
+        {
+            source: ['twitter.com/i/lists/:id'],
+            target: '/list/:id',
+        },
+    ],
+};
 
-    const list_data = await cache.tryGet(`twitter_lists_list_screen_name:${id}`, async () => {
-        const data = await client.v1.get('lists/list.json', {
-            screen_name: id,
-        });
+async function handler(ctx) {
+    const id = ctx.req.param('id');
+    const { count } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const params = count ? { count } : {};
 
-        const cached_lists = {};
-        for (const e of data) {
-            cached_lists[e.name] = { id: e.id_str, slug: e.slug };
-        }
+    await api.init();
+    const data = await api.getList(id, params);
 
-        return cached_lists;
-    });
-    const cur_list = list_data[name];
-
-    const data = await client.v1.get('lists/statuses.json', {
-        list_id: cur_list.id,
-        slug: cur_list.slug,
-        tweet_mode: 'extended',
-    });
-
-    ctx.set('data', {
-        title: `Twitter List - ${id}/${name}`,
-        link: `https://twitter.com/${id}/lists/${name}`,
+    return {
+        title: `Twitter List - ${id}`,
+        link: `https://twitter.com/i/lists/${id}`,
         item: utils.ProcessFeed(ctx, {
             data,
         }),
-    });
-};
+    };
+}

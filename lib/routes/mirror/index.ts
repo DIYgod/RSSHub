@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
@@ -7,7 +8,25 @@ const md = MarkdownIt({
 });
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id',
+    categories: ['new-media'],
+    example: '/mirror/tingfei.eth',
+    parameters: { id: 'user id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'User',
+    maintainers: ['fifteen42', 'rde9', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     if (!id.endsWith('.eth') && !isValidHost(id)) {
         throw new Error('Invalid id');
@@ -32,11 +51,11 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `${data.props.pageProps.publicationLayoutProject.displayName} - Mirror`,
         description: data.props.pageProps.publicationLayoutProject.description,
         image: data.props.pageProps.publicationLayoutProject.avatarURL,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

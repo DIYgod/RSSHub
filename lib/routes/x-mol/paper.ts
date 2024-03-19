@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,25 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import asyncPool from 'tiny-async-pool';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/paper/:type/:magazine',
+    categories: ['journal'],
+    example: '/x-mol/paper/0/9',
+    parameters: { type: 'type', magazine: 'magazine' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Journal',
+    maintainers: ['cssxsh'],
+    handler,
+};
+
+async function handler(ctx) {
     const { type, magazine } = ctx.req.param();
     const path = `paper/${type}/${magazine}`;
     const link = new URL(path, utils.host).href;
@@ -65,10 +84,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: response.url,
         description: $('meta[name="description"]').attr('content'),
         item,
-    });
-};
+    };
+}
