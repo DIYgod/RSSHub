@@ -163,7 +163,7 @@
         "remark-parse": "11.0.0",
         "supertest": "6.3.4",
         "tosource": "2.0.0-alpha.3",
-        "typescript": "5.4.2",
+        "typescript": "5.4.3",
         "unified": "9.2.2",
         "vite-tsconfig-paths": "4.3.2",
         "vitest": "1.4.0"
