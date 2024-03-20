@@ -186,6 +186,12 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
 
 在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: `https://www.cnblogs.com/cate/go/`, 则: [`/cnblogs/cate/go`](https://rsshub.app/cnblogs/cate/go)
 
+## 不良林 <Site url="bulianglin.com"/>
+
+### 全部文章 <Site url="bulianglin.com/" size="sm" />
+
+<Route namespace="bulianglin" :data='{"path":"/","categories":["blog"],"example":"/bulianglin","radar":[{"source":["bulianglin.com/"]}],"name":"全部文章","maintainers":["cnkmmk"],"url":"bulianglin.com/","location":"rss.ts"}' />
+
 ## 财新博客 <Site url="caixin.com"/>
 
 > 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容。

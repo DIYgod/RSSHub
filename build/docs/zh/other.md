@@ -924,12 +924,6 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route namespace="biquge" :data='{"path":"*","name":"Unknown","maintainers":[],"location":"index.ts"}' />
 
-## 不良林 <Site url="bulianglin.com"/>
-
-### Unknown <Site url="bulianglin.com/" size="sm" />
-
-<Route namespace="bulianglin" :data='{"path":"/","radar":[{"source":["bulianglin.com/"],"target":""}],"name":"Unknown","maintainers":["cnkmmk"],"url":"bulianglin.com/","location":"bulianglin.ts"}' />
-
 ## 成都住建蓉 e 办 <Site url="zw.cdzjryb.com"/>
 
 ### 商品住房购房登记 <Site url="zw.cdzjryb.com/lottery/accept/projectList" size="sm" />

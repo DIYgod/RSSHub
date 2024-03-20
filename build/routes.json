@@ -7976,20 +7976,23 @@
     "routes": {
       "/": {
         "path": "/",
+        "categories": [
+          "blog"
+        ],
+        "example": "/bulianglin",
         "radar": [
           {
             "source": [
               "bulianglin.com/"
-            ],
-            "target": ""
+            ]
           }
         ],
-        "name": "Unknown",
+        "name": "全部文章",
         "maintainers": [
           "cnkmmk"
         ],
         "url": "bulianglin.com/",
-        "location": "bulianglin.ts"
+        "location": "rss.ts"
       }
     },
     "name": "不良林",

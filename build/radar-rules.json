@@ -1825,8 +1825,8 @@
     "_name": "不良林",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "全部文章",
+        "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
           "/"
         ],
