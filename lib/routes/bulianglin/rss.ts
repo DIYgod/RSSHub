@@ -5,13 +5,14 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/',
+    categories: ['blog'],
+    example: '/bulianglin',
     radar: [
         {
             source: ['bulianglin.com/'],
-            target: '',
         },
     ],
-    name: 'Unknown',
+    name: '全部文章',
     maintainers: ['cnkmmk'],
     handler,
     url: 'bulianglin.com/',
