@@ -55636,6 +55636,36 @@
   },
   "usenix": {
     "routes": {
+      "/loginonline": {
+        "path": "/loginonline",
+        "categories": [
+          "journal"
+        ],
+        "example": "/usenix/loginonline",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "usenix.org/publications/loginonline",
+              "usenix.org/publications",
+              "usenix.org/"
+            ]
+          }
+        ],
+        "name": ";login:",
+        "maintainers": [
+          "wu-yufei"
+        ],
+        "location": "loginonline.ts"
+      },
       "/usenix-security-sympoium": {
         "path": "/usenix-security-sympoium",
         "categories": [

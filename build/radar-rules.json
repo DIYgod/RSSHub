@@ -13932,6 +13932,16 @@
     "_name": "USENIX",
     ".": [
       {
+        "title": ";login:",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/publications/loginonline",
+          "/publications",
+          "/"
+        ],
+        "target": "/usenix/loginonline"
+      },
+      {
         "title": "Security Symposia",
         "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
