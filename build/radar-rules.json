@@ -10197,12 +10197,12 @@
     "_name": "PRINCESS CONNECT! Re Dive プリンセスコネクト！Re Dive",
     ".": [
       {
-        "title": "日服公告",
+        "title": "最新公告",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/news"
         ],
-        "target": "/priconne-redive/news"
+        "target": "/priconne-redive/news/:location?"
       }
     ]
   },

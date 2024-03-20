@@ -42354,13 +42354,15 @@
   },
   "priconne-redive": {
     "routes": {
-      "/news": {
-        "path": "/news",
+      "/news/:location?": {
+        "path": "/news/:location?",
         "categories": [
           "game"
         ],
         "example": "/priconne-redive/news",
-        "parameters": {},
+        "parameters": {
+          "location": "区域，默认日服"
+        },
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -42376,11 +42378,13 @@
             ]
           }
         ],
-        "name": "日服公告",
+        "name": "最新公告",
         "maintainers": [
-          "SayaSS"
+          "SayaSS",
+          "frankcwl"
         ],
         "url": "priconne-redive.jp/news",
+        "description": "location\n\n    | 国服  | 台服  | 日服  |\n    | ----- | ----- | ---- |\n    | zh-cn | zh-tw | jp   |",
         "location": "news.ts"
       }
     },

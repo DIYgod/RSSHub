@@ -384,9 +384,15 @@ Region
 
 ## PRINCESS CONNECT! Re Dive プリンセスコネクト！Re Dive <Site url="priconne-redive.jp"/>
 
-### 日服公告 <Site url="priconne-redive.jp/news" size="sm" />
+### 最新公告 <Site url="priconne-redive.jp/news" size="sm" />
 
-<Route namespace="priconne-redive" :data='{"path":"/news","categories":["game"],"example":"/priconne-redive/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["priconne-redive.jp/news"]}],"name":"日服公告","maintainers":["SayaSS"],"url":"priconne-redive.jp/news","location":"news.ts"}' />
+<Route namespace="priconne-redive" :data='{"path":"/news/:location?","categories":["game"],"example":"/priconne-redive/news","parameters":{"location":"区域，默认日服"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["priconne-redive.jp/news"]}],"name":"最新公告","maintainers":["SayaSS","frankcwl"],"url":"priconne-redive.jp/news","description":"location\n\n    | 国服  | 台服  | 日服  |\n    | ----- | ----- | ---- |\n    | zh-cn | zh-tw | jp   |","location":"news.ts"}' />
+
+location
+
+    | 国服  | 台服  | 日服  |
+    | ----- | ----- | ---- |
+    | zh-cn | zh-tw | jp   |
 
 ## PlayStation Store <Site url="www.playstation.com"/>
 
