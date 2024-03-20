@@ -82,7 +82,7 @@ async function handler(ctx): Promise<Data> {
     return {
         title: `南方周末-${data.data.current_term.title}`,
         link,
-        image: 'https://web.dev/_pwa/web/icons/icon-144x144.png',
+        image: 'https://www.infzm.com/favicon.ico',
         item: resultItem,
     };
 }
