@@ -215,8 +215,8 @@ dependencies:
 
 devDependencies:
   '@babel/preset-env':
-    specifier: 7.24.1
-    version: 7.24.1(@babel/core@7.23.9)
+    specifier: 7.24.3
+    version: 7.24.3(@babel/core@7.23.9)
   '@babel/preset-typescript':
     specifier: 7.24.1
     version: 7.24.1(@babel/core@7.23.9)
@@ -1448,8 +1448,8 @@ packages:
       '@babel/helper-plugin-utils': 7.24.0
     dev: true
 
-  /@babel/preset-env@7.24.1(@babel/core@7.23.9):
-    resolution: {integrity: sha512-CwCMz1Z28UHLI2iE+cbnWT2epPMV9bzzoBGM6A3mOS22VQd/1TPoWItV7S7iL9TkPmPEf5L/QzurmztyyDN9FA==}
+  /@babel/preset-env@7.24.3(@babel/core@7.23.9):
+    resolution: {integrity: sha512-fSk430k5c2ff8536JcPvPWK4tZDwehWLGlBp0wrsBUjZVdeQV6lePbwKWZaZfK2vnh/1kQX1PzAJWsnBmVgGJA==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
