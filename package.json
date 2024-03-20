@@ -139,7 +139,7 @@
         "@types/module-alias": "2.0.4",
         "@types/node": "20.11.30",
         "@types/request-promise-native": "1.0.21",
-        "@types/sanitize-html": "^2.11.0",
+        "@types/sanitize-html": "2.11.0",
         "@types/supertest": "6.0.2",
         "@types/tiny-async-pool": "2.0.3",
         "@types/tough-cookie": "4.0.5",

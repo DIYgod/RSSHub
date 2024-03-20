@@ -278,7 +278,7 @@ devDependencies:
     specifier: 1.0.21
     version: 1.0.21
   '@types/sanitize-html':
-    specifier: ^2.11.0
+    specifier: 2.11.0
     version: 2.11.0
   '@types/supertest':
     specifier: 6.0.2
