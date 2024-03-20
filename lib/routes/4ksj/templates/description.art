@@ -1,56 +1,59 @@
-{{ if picture }}
-<img src="{{ picture }}">
+{{ if images }}
+  {{ each images image }}
+    {{ if !videos?.[0]?.src && image?.src }}
+      <figure>
+        <img
+          {{ if image.alt }}
+            alt="{{ image.alt }}"
+          {{ /if }}
+        src="{{ image.src }}">
+      </figure>
+    {{ /if }}
+  {{ /each }}
 {{ /if }}
 
-{{ if details }}
-<table>
-  <tbody>
-    <tr>
-      <th>片名</th>
-      <td>{{ name }}</td>
-    </tr>
-    <tr>
-      <th>时间</th>
-      <td>{{ time }}</td>
-    </tr>
-    <tr>
-      <th>豆瓣评分</th>
-      <td>{{ score }}</td>
-    </tr>
-    {{ each detailKeys detail }}
-      <tr>
-        <th>{{ detail }}</th>
-        <td>{{@ details[detail] }}</td>
-      </tr>
-    {{ /each }}
+{{ if title }}
+  <h1>{{ title }}</h1>
+{{ /if }}
+
+{{ if keys && details }}
+  <table>
+    <tbody>
+      {{ each keys key }}
+        <tr>
+          <th>
+            {{ key }}
+          </th>
+          <td>
+            {{ details[key] }}
+          </td>
+        </tr>
+      {{ /each }}
     </tbody>
-</table>
+  </table>
 {{ /if }}
 
-<h1>简介</h1>
-　　{{@ intro }}
-<br>
-
-<h1>网盘下载</h1>
-{{ if links }}
-<table>
-  <tbody>
-    {{ each linkKeys link }}
-      <tr>
-        <th>{{ link }}</th>
-        <td>{{@ links[link] }}</td>
-      </tr>
-    {{ /each }}
-    </tbody>
-</table>
+{{ if description }}
+  <p>{{ description }}</p>
 {{ /if }}
-<br>
 
-<h1>BT种子 / 磁力链下载</h1>
-{{@ bt }}
-<br>
-
-<h1>影片信息</h1>
 {{ if info }}
-{{@ info }}
+  <blockquote>{{@ info }}</blockquote>
+{{ /if }}
+
+{{ if links }}
+  <table>
+    <tbody>
+      {{ each links link }}
+        <tr>
+          <td>
+            <a href="{{ link.link }}">{{ link.title }}</a>
+          </td>
+          <td>
+            {{ link.tags?.join('') ?? '' }}
+          </td>
+        </tr>
+      {{ /each }}
+    </tbody>
+  </table>
 {{ /if }}
