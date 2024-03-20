@@ -10,8 +10,8 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '存档列表 - NSFW',
+    maintainers: ['zhenhappy'],
     handler,
     url: 'ahhhhfs.com/',
 };

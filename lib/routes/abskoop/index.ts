@@ -12,7 +12,7 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '存档列表',
     maintainers: ['zhenhappy'],
     handler,
     url: 'ahhhhfs.com/',

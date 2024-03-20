@@ -21,7 +21,7 @@ export const route: Route = {
             source: ['job.hrbeu.edu.cn/*'],
         },
     ],
-    name: 'Unknown',
+    name: '大型招聘会',
     maintainers: ['Derekmini'],
     handler,
     url: 'job.hrbeu.edu.cn/*',

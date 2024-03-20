@@ -23,7 +23,7 @@ export const route: Route = {
             target: '/:cate',
         },
     ],
-    name: 'Unknown',
+    name: '频道',
     maintainers: ['Fatpandac', 'nczitzk'],
     handler,
     url: 'qipamaijia.com/',

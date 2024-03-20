@@ -11,7 +11,11 @@ export const route: Route = {
             target: '/user/video/:id',
         },
     ],
-    name: 'Unknown',
+    name: '用户投稿',
+    parameters: {
+        uid: '用户 UID',
+    },
+    categories: ['anime'],
     maintainers: ['wdssmq'],
     handler,
 };

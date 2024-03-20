@@ -25,7 +25,14 @@ export const route: Route = {
             source: ['ygafz.sysu.edu.cn/:type?'],
         },
     ],
-    name: 'Unknown',
+    name: '粤港澳发展研究院',
+    description: `| 人才招聘   | 人才培养      | 新闻动态 | 通知公告 | 专家观点 |
+    | ---------- | ------------- | -------- | -------- | -------- |
+    | jobopening | personnelplan | news     | notice   | opinion  |
+
+    | 研究成果 | 研究论文 | 学术著作 | 形势政策 |
+    | -------- | -------- | -------- | -------- |
+    | results  | papers   | writings | policy   |`,
     maintainers: ['TonyRL'],
     handler,
 };

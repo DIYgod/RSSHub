@@ -19,7 +19,7 @@ export const route: Route = {
             source: ['zhujia.zhuwang.cc/'],
         },
     ],
-    name: 'Unknown',
+    name: '全国今日生猪价格',
     maintainers: [],
     handler,
     url: 'zhujia.zhuwang.cc/',

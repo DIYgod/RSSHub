@@ -29,7 +29,7 @@ const LOCATION = 'LOCATION';
 const CONTACT = 'CONTACT';
 const STICKER = 'STICKER';
 const ANIMATED_STICKER = 'ANIMATED_STICKER';
-// const VIDEO_STICKER = 'VIDEO_STICKER';  // not supported yet by t.me
+const VIDEO_STICKER = 'VIDEO_STICKER';
 const UNSUPPORTED = 'UNSUPPORTED';
 const PARTIALLY_UNSUPPORTED = 'PARTIALLY_UNSUPPORTED';
 
@@ -50,7 +50,7 @@ const mediaTagDict = {
     CONTACT: ['[Contact]', '📱'],
     STICKER: ['[Sticker]', '[Sticker]'],
     ANIMATED_STICKER: ['[Animated Sticker]', '[Animated Sticker]'],
-    // VIDEO_STICKER: ['[Video Sticker]', '[Video Sticker]'],  // not supported yet by t.me
+    VIDEO_STICKER: ['[Video Sticker]', '[Video Sticker]'],
     UNSUPPORTED: ['[Unsupported]', '🚫'],
     PARTIALLY_UNSUPPORTED: ['', ''],
 };
@@ -224,6 +224,9 @@ async function handler(ctx) {
                     if (item.find('.tgme_widget_message_tgsticker').length) {
                         msgTypes.push(ANIMATED_STICKER);
                     }
+                    if (item.find('.tgme_widget_message_videosticker').length) {
+                        msgTypes.push(VIDEO_STICKER);
+                    }
                     if (item.find('.message_media_not_supported').length) {
                         if (item.find('.media_supported_cont').length) {
                             msgTypes.unshift(PARTIALLY_UNSUPPORTED);
@@ -369,6 +372,12 @@ async function handler(ctx) {
                                     tag_media += $(source).toString();
                                 });
                                 tag_media += '</picture>';
+                            } else if (node.attribs && node.attribs.class && node.attribs.class.search(/(^|\s)tgme_widget_message_videosticker(\s|$)/) !== -1) {
+                                // video sticker
+                                const videoLink = $node.find('.js-videosticker_video').attr('src');
+                                tag_media += art(path.join(__dirname, 'templates/video.art'), {
+                                    source: videoLink,
+                                });
                             } else if (node.name === 'img') {
                                 // unknown
                                 tag_media += $node.toString();
@@ -403,7 +412,9 @@ async function handler(ctx) {
                         return tag_media_all;
                     };
                     // ordinary message photos, service message photos, stickers, animated stickers, video
-                    const messageMedia = generateMedia('.tgme_widget_message_photo_wrap,.tgme_widget_message_service_photo,.tgme_widget_message_sticker,.tgme_widget_message_tgsticker,.tgme_widget_message_video_player');
+                    const messageMedia = generateMedia(
+                        '.tgme_widget_message_photo_wrap,.tgme_widget_message_service_photo,.tgme_widget_message_sticker,.tgme_widget_message_tgsticker,.tgme_widget_message_videosticker,.tgme_widget_message_video_player'
+                    );
 
                     /* location */
                     const location = () => {

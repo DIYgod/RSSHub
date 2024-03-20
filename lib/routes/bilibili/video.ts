@@ -26,7 +26,7 @@ export const route: Route = {
     name: 'UP 主投稿',
     maintainers: ['DIYgod'],
     handler,
-    description: `:::tip[动态的专栏显示全文]
+    description: `:::tip 动态的专栏显示全文
   可以使用 [UP 主动态](#bilibili-up-zhu-dong-tai)路由作为代替绕过反爬限制
   :::`,
 };

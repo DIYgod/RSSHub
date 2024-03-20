@@ -24,7 +24,7 @@ export const route: Route = {
             target: '/weatheralarm',
         },
     ],
-    name: 'Unknown',
+    name: '全国气象预警',
     maintainers: ['ylc395'],
     handler,
     url: 'nmc.cn/publish/alarm.html',

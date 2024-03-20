@@ -30,7 +30,7 @@ export const route: Route = {
     maintainers: ['EthanWng97'],
     handler,
     url: 'offer.1point3acres.com/',
-    description: `:::tip[三个 id 获取方式]
+    description: `:::tip 三个 id 获取方式
   1.  打开 [https://offer.1point3acres.com](https://offer.1point3acres.com)
   2.  打开控制台
   3.  切换到 Network 面板
