@@ -10,7 +10,6 @@ jobs:
     name: Route test
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}  # skip if unsuccessful
-    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -85,6 +84,8 @@ jobs:
 
       - name: Generate feedback
         if: (env.TEST_CONTINUE)
+        id: generate-feedback
+        timeout-minutes: 10
         uses: actions/github-script@v7
         env:
           TEST_BASEURL: http://localhost:1200
@@ -101,6 +102,15 @@ jobs:
             const got = require("got")
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
             return script({ github, context, core, got }, link, routes, number)
+
+      - name: Pull Request Labeler
+        if: ${{ failure() }}
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'add-labels'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+          labels: 'Route Test: Failed'
 
       - name: Print Docker container logs
         if: (env.TEST_CONTINUE)
