@@ -13,8 +13,8 @@ export const route: Route = {
     example: '/infzm/1',
     radar: [
         {
-            source: ['infzm.com/contents?term_id=:id'],
-            target: '/:id',
+            source: ['infzm.com/contents'],
+            target: (_, url) => (url ? `/infzm/${url.match(/contents\?term_id=(\d*)/)?.[1]}` : ''),
         },
     ],
     name: '频道',
