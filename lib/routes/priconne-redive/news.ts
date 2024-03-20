@@ -144,15 +144,20 @@ async function handler(ctx) {
             });
             const list = response.data;
             const items = await Promise.all(
-                list.data.map(async (item) => ({
-                    title: item.title,
-                    link: `https://game.bilibili.com/pcr/news.html#detail=${item.id}`,
-                    pubDate: parseDate(item.ctime),
-                    description: await cache.tryGet(`pcrcn_${item.id}`, async () => {
+                list.data.map((item) => {
+                    const link = `https://game.bilibili.com/pcr/news.html#detail=${item.id}`;
+
+                    return cache.tryGet(link, async () => {
+                        const rssitem = {
+                            title: item.title,
+                            link,
+                            pubDate: parseDate(item.ctime),
+                        };
                         const resp = await got({ method: 'get', url: `https://api.biligame.com/news/${item.id}` });
-                        return resp.data.data.content;
-                    }),
-                }))
+                        rssitem.description = resp.data.data.content;
+                        return rssitem;
+                    });
+                })
             );
 
             return {
