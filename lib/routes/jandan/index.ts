@@ -20,6 +20,14 @@ async function handler() {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 $('.wechat-hide').prev().nextAll().remove();
+                $('img').replaceWith((i, e) => {
+                    const src = $(e).attr('src');
+                    const alt = $(e).attr('alt');
+                    if (src?.match(/https?:\/\/\w+\.moyu\.im/)) {
+                        return `<img src="${src.replace('moyu.im', 'sinaimg.cn')}" alt="${alt}">`;
+                    }
+                    return `<img src="${src}" alt="${alt}">`;
+                });
                 const single = {
                     title: item.title,
                     description: $('.entry').html(),
