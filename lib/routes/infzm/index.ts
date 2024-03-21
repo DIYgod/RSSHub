@@ -1,4 +1,4 @@
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import type { ContentsResponse } from './types';
 import { config } from '@/config';
 import got from '@/utils/got';
@@ -41,18 +41,10 @@ async function handler(ctx): Promise<Data> {
     });
 
     const resultItem = await Promise.all(
-        data.data.contents.map(async ({ id, subject, author, publish_time }) => {
-            // the timezone is GMT+8
-            const date = timezone(publish_time, +8);
+        data.data.contents.map(({ id, subject, author, publish_time }) => {
             const link = `${baseUrl}/${id}`;
-            let description = '';
 
-            const key = `infzm: ${link}`;
-            const value = await cache.get(key);
-
-            if (value) {
-                description = value;
-            } else {
+            return cache.tryGet(link, async () => {
                 const cookie = config.infzm.cookie;
                 const response = await got.get<string>({
                     method: 'get',
@@ -63,18 +55,14 @@ async function handler(ctx): Promise<Data> {
                     },
                 });
                 const $ = load(response.data);
-                description = $('div.nfzm-content__content').html() ?? '';
-
-                cache.set(key, description);
-            }
-
-            return {
-                title: subject,
-                description,
-                pubDate: date.toUTCString(),
-                link,
-                author,
-            };
+                return {
+                    title: subject,
+                    description: $('div.nfzm-content__content').html() ?? '',
+                    pubDate: timezone(publish_time, +8).toUTCString(),
+                    link,
+                    author,
+                };
+            });
         })
     );
 
@@ -82,6 +70,6 @@ async function handler(ctx): Promise<Data> {
         title: `南方周末-${data.data.current_term.title}`,
         link,
         image: 'https://www.infzm.com/favicon.ico',
-        item: resultItem,
+        item: resultItem as DataItem[],
     };
 }
