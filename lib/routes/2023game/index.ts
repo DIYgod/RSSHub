@@ -7,7 +7,7 @@ import { Context } from 'hono';
 export const route: Route = {
     path: '/:category?/:tab?',
     categories: ['game'],
-    example: '/yxxc/sgame/topicList',
+    example: '/2023game/sgame/topicList',
     parameters: {
         category: '分类，见下表',
         tab: '标签, 所有:all;最新:topicList;热门:jhcpb',
@@ -52,7 +52,7 @@ async function handler(ctx?: Context): Promise<Data> {
             const href = $item.find('a').attr('href');
             return {
                 title: $item.text().trim(),
-                guid: `yxxc:${href}`,
+                guid: `2023game:${href}`,
                 link: href!,
                 pubDate: parseDate($item.find('.time_box').text().trim()),
                 description: $item.html() ?? '',
