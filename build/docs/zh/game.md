@@ -714,6 +714,18 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
   | ----- | ---- | ------ | ------ | -------- | -------- |
   | event | info | system | esport | patch    | TFTpatch |
 
+## 游戏星辰 <Site url="www.2023game.com"/>
+
+### 游戏星辰 <Site url="www.2023game.com/" size="sm" />
+
+<Route namespace="2023game" :data='{"path":"/:category?/:tab?","categories":["game"],"example":"/2023game/sgame/topicList","parameters":{"category":"分类，见下表","tab":"标签, 所有:all;最新:topicList;热门:jhcpb"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"游戏星辰","maintainers":["xzzpig"],"url":"www.2023game.com/","description":"分类\n\n    | PS4游戏 | switch游戏 | 3DS游戏 | PSV游戏 | Xbox360 | PS3游戏 | 世嘉MD/SS | PSP游戏 | PC周边 | 怀旧掌机 | 怀旧主机 | PS4教程 | PS4金手指 | switch金手指 | switch教程 | switch补丁 | switch主题 | switch存档 |\n    | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n    | ps4 | sgame | 3ds | psv | jiaocheng | ps3yx | zhuji.md | zhangji.psp | pcgame | zhangji | zhuji | ps4.psjc | ps41.ps4pkg | nsaita.cundang | nsaita.pojie | nsaita.buding | nsaita.zhutie | nsaita.zhuti |","location":"index.ts"}' />
+
+分类
+
+    | PS4游戏 | switch游戏 | 3DS游戏 | PSV游戏 | Xbox360 | PS3游戏 | 世嘉MD/SS | PSP游戏 | PC周边 | 怀旧掌机 | 怀旧主机 | PS4教程 | PS4金手指 | switch金手指 | switch教程 | switch补丁 | switch主题 | switch存档 |
+    | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+    | ps4 | sgame | 3ds | psv | jiaocheng | ps3yx | zhuji.md | zhangji.psp | pcgame | zhangji | zhuji | ps4.psjc | ps41.ps4pkg | nsaita.cundang | nsaita.pojie | nsaita.buding | nsaita.zhutie | nsaita.zhuti |
+
 ## 游戏基因 <Site url="news.gamegene.cn"/>
 
 ### 资讯 <Site url="news.gamegene.cn/news" size="sm" />

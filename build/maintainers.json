@@ -118,6 +118,9 @@
   "/1point3acres/user/:id/threads": [
     "Maecenas"
   ],
+  "/2023game/:category?/:tab?": [
+    "xzzpig"
+  ],
   "/2cycd/:fid/:sort?": [
     "shelken"
   ],
