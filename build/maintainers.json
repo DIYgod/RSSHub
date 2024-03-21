@@ -1488,6 +1488,10 @@
   "/dorohedoro/news": [
     "nczitzk"
   ],
+  "/douban/book/latest/:type?": [
+    "fengkx",
+    "lyqluis"
+  ],
   "/douban/book/rank/:type?": [
     "xyqfer",
     "queensferryme"
@@ -1532,9 +1536,6 @@
   ],
   "/douban/movie/later": [
     "DIYgod"
-  ],
-  "/douban/book/latest": [
-    "fengkx"
   ],
   "/douban/music/latest/:area?": [
     "fengkx",
