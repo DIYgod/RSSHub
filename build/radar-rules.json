@@ -6913,6 +6913,19 @@
       }
     ]
   },
+  "infzm.com": {
+    "_name": "infzm",
+    ".": [
+      {
+        "title": "频道",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/contents"
+        ],
+        "target": "/infzm(_,url)=>url?`/infzm/${url.match(/contents\\?term_id=(\\d*)/)?.[1]}`:\"\""
+      }
+    ]
+  },
   "instructables.com": {
     "_name": "Instructables",
     ".": [

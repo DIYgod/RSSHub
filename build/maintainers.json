@@ -2855,6 +2855,11 @@
   "/informs/:category?": [
     "Fatpandac"
   ],
+  "/infzm/:id": [
+    "KarasuShin",
+    "ranpox",
+    "xyqfer"
+  ],
   "/inoreader/html_clip/:user/:tag": [],
   "/inoreader/rss/:user/:tag": [
     "EthanWng97"

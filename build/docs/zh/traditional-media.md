@@ -126,6 +126,18 @@ Channels:
   -   Obtain the key from the personal RSS address, it looks like `12345678-abcd-4036-82db-vdv20db024b8`
   :::
 
+## infzm 
+
+### 频道 
+
+<Route namespace="infzm" :data='{"path":"/:id","parameters":{"id":"南方周末频道 id, 可在该频道的 URL 中找到（即 https://www.infzm.com/contents?term_id=:id)"},"categories":["traditional-media"],"example":"/infzm/1","radar":[{"source":["infzm.com/contents"]}],"name":"频道","maintainers":["KarasuShin","ranpox","xyqfer"],"description":"下面给出部分参考：\n\n    | 推荐 | 新闻 | 观点 | 文化 | 人物 | 影像 | 专题 | 生活 | 视频 |\n    | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n    | 1    | 2    | 3    | 4    | 7    | 8    | 6    | 5    | 131  |","location":"index.ts"}' />
+
+下面给出部分参考：
+
+    | 推荐 | 新闻 | 观点 | 文化 | 人物 | 影像 | 专题 | 生活 | 视频 |
+    | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+    | 1    | 2    | 3    | 4    | 7    | 8    | 6    | 5    | 131  |
+
 ## Korean Central News Agency (KCNA) 朝鲜中央通讯社 <Site url="www.kcna.kp"/>
 
 ### News <Site url="www.kcna.kp" size="sm" />
