@@ -5,10 +5,10 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/news/:location?',
+    path: '/news/:server?',
     categories: ['game'],
     example: '/priconne-redive/news',
-    parameters: { location: '区域，默认日服' },
+    parameters: { server: '服务器，默认日服' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -20,23 +20,32 @@ export const route: Route = {
     radar: [
         {
             source: ['priconne-redive.jp/news'],
+            target: '/news/jp',
+        },
+        {
+            source: ['princessconnect.so-net.tw/news'],
+            target: '/news/zh-tw',
+        },
+        {
+            source: ['game.bilibili.com/pcr/news.html'],
+            target: '/news/zh-cn',
         },
     ],
     name: '最新公告',
     maintainers: ['SayaSS', 'frankcwl'],
     handler,
     url: 'priconne-redive.jp/news',
-    description: `location
+    description: `服务器
 
-    | 国服  | 台服  | 日服  |
-    | ----- | ----- | ---- |
-    | zh-cn | zh-tw | jp   |`,
+  | 国服  | 台服  | 日服  |
+  | ----- | ----- | ---- |
+  | zh-cn | zh-tw | jp   |`,
 };
 
 async function handler(ctx) {
-    const { location = 'jp' } = ctx.req.param();
+    const { server = 'jp' } = ctx.req.param();
 
-    switch (location) {
+    switch (server) {
         case 'jp': {
             const parseContent = (htmlString) => {
                 const $ = load(htmlString);
