@@ -4283,7 +4283,7 @@
   "/postman/release-notes": [
     "nczitzk"
   ],
-  "/priconne-redive/news/:location?": [
+  "/priconne-redive/news/:server?": [
     "SayaSS",
     "frankcwl"
   ],

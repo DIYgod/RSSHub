@@ -42390,14 +42390,14 @@
   },
   "priconne-redive": {
     "routes": {
-      "/news/:location?": {
-        "path": "/news/:location?",
+      "/news/:server?": {
+        "path": "/news/:server?",
         "categories": [
           "game"
         ],
         "example": "/priconne-redive/news",
         "parameters": {
-          "location": "区域，默认日服"
+          "server": "服务器，默认日服"
         },
         "features": {
           "requireConfig": false,
@@ -42411,7 +42411,20 @@
           {
             "source": [
               "priconne-redive.jp/news"
-            ]
+            ],
+            "target": "/news/jp"
+          },
+          {
+            "source": [
+              "princessconnect.so-net.tw/news"
+            ],
+            "target": "/news/zh-tw"
+          },
+          {
+            "source": [
+              "game.bilibili.com/pcr/news.html"
+            ],
+            "target": "/news/zh-cn"
           }
         ],
         "name": "最新公告",
@@ -42420,7 +42433,7 @@
           "frankcwl"
         ],
         "url": "priconne-redive.jp/news",
-        "description": "location\n\n    | 国服  | 台服  | 日服  |\n    | ----- | ----- | ---- |\n    | zh-cn | zh-tw | jp   |",
+        "description": "服务器\n\n  | 国服  | 台服  | 日服  |\n  | ----- | ----- | ---- |\n  | zh-cn | zh-tw | jp   |",
         "location": "news.ts"
       }
     },

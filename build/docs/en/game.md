@@ -386,13 +386,13 @@ Region
 
 ### 最新公告 <Site url="priconne-redive.jp/news" size="sm" />
 
-<Route namespace="priconne-redive" :data='{"path":"/news/:location?","categories":["game"],"example":"/priconne-redive/news","parameters":{"location":"区域，默认日服"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["priconne-redive.jp/news"]}],"name":"最新公告","maintainers":["SayaSS","frankcwl"],"url":"priconne-redive.jp/news","description":"location\n\n    | 国服  | 台服  | 日服  |\n    | ----- | ----- | ---- |\n    | zh-cn | zh-tw | jp   |","location":"news.ts"}' />
+<Route namespace="priconne-redive" :data='{"path":"/news/:server?","categories":["game"],"example":"/priconne-redive/news","parameters":{"server":"服务器，默认日服"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["priconne-redive.jp/news"],"target":"/news/jp"},{"source":["princessconnect.so-net.tw/news"],"target":"/news/zh-tw"},{"source":["game.bilibili.com/pcr/news.html"],"target":"/news/zh-cn"}],"name":"最新公告","maintainers":["SayaSS","frankcwl"],"url":"priconne-redive.jp/news","description":"服务器\n\n  | 国服  | 台服  | 日服  |\n  | ----- | ----- | ---- |\n  | zh-cn | zh-tw | jp   |","location":"news.ts"}' />
 
-location
+服务器
 
-    | 国服  | 台服  | 日服  |
-    | ----- | ----- | ---- |
-    | zh-cn | zh-tw | jp   |
+  | 国服  | 台服  | 日服  |
+  | ----- | ----- | ---- |
+  | zh-cn | zh-tw | jp   |
 
 ## PlayStation Store <Site url="www.playstation.com"/>
 

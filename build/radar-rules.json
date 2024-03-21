@@ -1443,6 +1443,16 @@
         ],
         "target": "/bilibili/platform/:area?/:p_type?/:uid?"
       }
+    ],
+    "game": [
+      {
+        "title": "最新公告",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/pcr/news.html"
+        ],
+        "target": "/priconne-redive/news/zh-cn"
+      }
     ]
   },
   "bing.com": {
@@ -10202,7 +10212,20 @@
         "source": [
           "/news"
         ],
-        "target": "/priconne-redive/news/:location?"
+        "target": "/priconne-redive/news/jp"
+      }
+    ]
+  },
+  "so-net.tw": {
+    "_name": "PRINCESS CONNECT! Re Dive プリンセスコネクト！Re Dive",
+    "princessconnect": [
+      {
+        "title": "最新公告",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news"
+        ],
+        "target": "/priconne-redive/news/zh-tw"
       }
     ]
   },
