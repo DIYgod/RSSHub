@@ -1,21 +1,11 @@
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
-import cache from '@/utils/cache';
-import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/post/:type',
+    path: '/post/:type?',
     categories: ['bbs'],
     example: '/loongarch/post/newest',
     parameters: { type: 'top 或 newest' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['bbs.loongarch.org'],
@@ -29,45 +19,38 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const link = `https://bbs.loongarch.org/?sort=${type ?? 'newest'}`;
-    const response = await got(link);
-    const $ = load(response.data, {
-        scriptingEnabled: false,
-    });
+    const link = 'https://bbs.loongarch.org/api/discussions';
 
     let title;
+    let sortValue = '-createdAt';
     if (type === 'top') {
         title = '最热帖子';
+        sortValue = '-commentCount';
     } else if (type === 'newest') {
         title = '最新帖子';
     }
 
-    const list = $('#flarum-content ul li')
-        .toArray()
-        .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+    const { data: response } = await got('https://bbs.loongarch.org/api/discussions', {
+        searchParams: {
+            include: 'user,tags,tags.parent,firstPost',
+            sort: sortValue,
+            'page[offset]': 0,
+        },
+    });
 
-            return {
-                title: a.text(),
-                link: String(a.attr('href')),
-            };
-        });
+    const users = response.included.filter((i) => i.type === 'users');
+    const tags = response.included.filter((i) => i.type === 'tags');
+    const posts = response.included.filter((i) => i.type === 'posts');
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
-                const $ = load(response.data, {
-                    scriptingEnabled: false,
-                });
-                item.author = $('#flarum-content h3:first').text();
-                item.description = $('#flarum-content .Post-body').html();
-                item.pubDate = parseDate($('meta[name="article:published_time"]').attr('content'));
-                return item;
-            })
-        )
-    );
+    const out = response.data.map(({ attributes, relationships }) => ({
+        title: attributes.title,
+        link: `https://bbs.loongarch.org/d/${attributes.slug}`,
+        author: users.find((i) => i.id === relationships.user.data.id).attributes.displayName,
+        description: posts.find((i) => i.id === relationships.firstPost.data.id).attributes.contentHtml,
+        pubDate: parseDate(attributes.createdAt),
+        updated: parseDate(attributes.lastPostedAt),
+        category: relationships.tags.data.map((tag) => tags.find((i) => i.id === tag.id).attributes.name),
+    }));
 
     return {
         title: `LA UOSC-${title}`,
