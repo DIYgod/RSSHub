@@ -20,8 +20,8 @@ export const route: Route = {
     name: '频道',
     maintainers: ['KarasuShin', 'ranpox', 'xyqfer'],
     handler,
-    description: `
-    下面给出部分参考：
+    description: `下面给出部分参考：
+
     | 推荐 | 新闻 | 观点 | 文化 | 人物 | 影像 | 专题 | 生活 | 视频 |
     | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
     | 1    | 2    | 3    | 4    | 7    | 8    | 6    | 5    | 131  |
