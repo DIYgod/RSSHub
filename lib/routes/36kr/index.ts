@@ -22,8 +22,8 @@ export const route: Route = {
     example: '/36kr/newsflashes',
     parameters: {
         category: '分类，必填项',
-        subCategory: '子分类，选填项, 目的是为了兼容老逻辑',
-        keyword: '关键词，选填项,仅搜索文章/快讯时有效',
+        subCategory: '子分类，选填项，目的是为了兼容老逻辑',
+        keyword: '关键词，选填项，仅搜索文章/快讯时有效',
     },
     name: '资讯, 快讯, 用户文章, 主题文章, 专题文章, 搜索文章, 搜索快讯',
     maintainers: ['nczitzk', 'fashioncj'],
