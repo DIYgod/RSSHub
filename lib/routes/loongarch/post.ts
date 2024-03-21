@@ -21,13 +21,11 @@ async function handler(ctx) {
     const type = ctx.req.param('type');
     const link = 'https://bbs.loongarch.org/api/discussions';
 
-    let title;
+    let title = '最新帖子';
     let sortValue = '-createdAt';
     if (type === 'top') {
         title = '最热帖子';
         sortValue = '-commentCount';
-    } else if (type === 'newest') {
-        title = '最新帖子';
     }
 
     const { data: response } = await got('https://bbs.loongarch.org/api/discussions', {
