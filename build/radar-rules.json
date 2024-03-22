@@ -15001,6 +15001,19 @@
       }
     ]
   },
+  "blogspot.com": {
+    "_name": "甬哥侃侃侃YouTube教程摘要随笔",
+    "ygkkk": [
+      {
+        "title": "最新发表",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/ygkkk/"
+      }
+    ]
+  },
   "yicai.com": {
     "_name": "第一财经",
     ".": [

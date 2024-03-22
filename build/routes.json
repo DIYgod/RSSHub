@@ -60289,6 +60289,32 @@
     "name": "羊城晚报金羊网",
     "url": "xwlb.com.cn"
   },
+  "ygkkk": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "blog"
+        ],
+        "example": "/ygkkk",
+        "radar": [
+          {
+            "source": [
+              "ygkkk.blogspot.com/"
+            ]
+          }
+        ],
+        "name": "最新发表",
+        "maintainers": [
+          "cnkmmk"
+        ],
+        "url": "ygkkk.blogspot.com/",
+        "location": "rss.ts"
+      }
+    },
+    "name": "甬哥侃侃侃YouTube教程摘要随笔",
+    "url": "ygkkk.blogspot.com"
+  },
   "yicai": {
     "routes": {
       "/author/:id?": {

@@ -276,6 +276,12 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
 
 <Route namespace="xys" :data='{"path":"/new","categories":["blog"],"example":"/xys/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["xys.org/","xys.org/new.html"]}],"name":"新到资料","maintainers":["wenzhenl"],"url":"xys.org/","location":"new.ts"}' />
 
+## 甬哥侃侃侃YouTube教程摘要随笔 <Site url="ygkkk.blogspot.com"/>
+
+### 最新发表 <Site url="ygkkk.blogspot.com/" size="sm" />
+
+<Route namespace="ygkkk" :data='{"path":"/","categories":["blog"],"example":"/ygkkk","radar":[{"source":["ygkkk.blogspot.com/"]}],"name":"最新发表","maintainers":["cnkmmk"],"url":"ygkkk.blogspot.com/","location":"rss.ts"}' />
+
 ## 雨苁博客 <Site url="ddosi.org"/>
 
 ### Unknown <Site url="ddosi.org/" size="sm" />
