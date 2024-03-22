@@ -1,10 +1,9 @@
-const unified = require('unified');
-const parse = require('remark-parse');
-const got = require('got');
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
 
 // @TODO maybe we could use label or some other better ways to distinguish bug/feature issues
 const matchTitle = ['路由地址', 'Routes'];
-const maintainerURL = 'https://raw.githubusercontent.com/DIYgod/RSSHub/gh-pages/build/maintainer.json';
+const maintainerURL = 'https://raw.githubusercontent.com/DIYgod/RSSHub/gh-pages/build/maintainers.json';
 const successTag = 'Bug Ping: Pinged';
 const parseFailTag = 'Bug Ping: Parsing Failed';
 const failTag = 'Bug Ping: Not Found';
@@ -15,7 +14,7 @@ const route = 'Route';
 const dndUsernames = new Set([]);
 
 async function parseBodyRoutes(body, core) {
-    const ast = await unified().use(parse).parse(body);
+    const ast = await unified().use(remarkParse).parse(body);
 
     // Is this a bug report?
     const title = ast.children[0].children[0].value.trim();
@@ -44,10 +43,8 @@ async function parseBodyRoutes(body, core) {
 }
 
 async function getMaintainersByRoutes(routes, core) {
-    // TODO: change me when https://github.com/actions/github-script is run on node20
-    // const response = await fetch(maintainerURL);
-    // const maintainers = await response.json();
-    const maintainers = await got(maintainerURL).json();
+    const response = await fetch(maintainerURL);
+    const maintainers = await response.json();
 
     return routes.map((e) => {
         const m = maintainers[e];
@@ -59,9 +56,9 @@ async function getMaintainersByRoutes(routes, core) {
     });
 }
 
-module.exports = async ({ github, context, core }) => {
+export default async function callMaintainer({ github, context, core }) {
     const body = context.payload.issue.body;
-    const issue_facts = {
+    const issueFacts = {
         issue_number: context.issue.number,
         owner: context.repo.owner,
         repo: context.repo.repo,
@@ -70,7 +67,7 @@ module.exports = async ({ github, context, core }) => {
     const addLabels = (labels) =>
         github.rest.issues
             .addLabels({
-                ...issue_facts,
+                ...issueFacts,
                 labels,
             })
             .catch((error) => {
@@ -79,7 +76,7 @@ module.exports = async ({ github, context, core }) => {
     const updateIssueState = (state) =>
         github.rest.issues
             .update({
-                ...issue_facts,
+                ...issueFacts,
                 state,
             })
             .catch((error) => {
@@ -138,7 +135,7 @@ module.exports = async ({ github, context, core }) => {
         }
     }
 
-    const labels = [`Count: ${successCount}/${routes.length}`];
+    const labels = [''];
 
     if (failedCount > 0) {
         labels.push(failTag);
@@ -160,14 +157,14 @@ module.exports = async ({ github, context, core }) => {
     // Reply to the issue and notify the maintainers (if any)
     await github.rest.issues
         .createComment({
-            ...issue_facts,
+            ...issueFacts,
             body: `${comments}
 
 
 > To maintainers: if you are not willing to be disturbed, list your username in \`scripts/workflow/test-issue/call-maintainer.js\`. In this way, your username will be wrapped in an inline code block when tagged so you will not be notified.
 
-如果所有路由都无法匹配，issue 将会被自动关闭。如果 issue 和路由无关，请使用 \`NOROUTE\` 关键词，或者留下评论。我们会重新审核。
 If all routes can not be found, the issue will be closed automatically. Please use \`NOROUTE\` for a route-irrelevant issue or leave a comment if it is a mistake.
+如果所有路由都无法匹配，issue 将会被自动关闭。如果 issue 和路由无关，请使用 \`NOROUTE\` 关键词，或者留下评论。我们会重新审核。
 `,
         })
         .catch((error) => {
@@ -177,4 +174,4 @@ If all routes can not be found, the issue will be closed automatically. Please u
     if (failedCount && emptyCount === 0 && successCount === 0) {
         await updateIssueState('closed');
     }
-};
+}

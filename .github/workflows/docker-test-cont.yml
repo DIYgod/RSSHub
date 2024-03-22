@@ -2,14 +2,14 @@ name: PR - route test
 
 on:
   workflow_run:
-    workflows: [ PR - Docker build test ]  # open, reopen, synchronized, edited included
-    types: [ completed ]
+    workflows: [PR - Docker build test] # open, reopen, synchronized, edited included
+    types: [completed]
 
 jobs:
   testRoute:
     name: Route test
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # skip if unsuccessful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if unsuccessful
     steps:
       - uses: actions/checkout@v4
 
@@ -44,8 +44,8 @@ jobs:
             const body = PR.body
             const number = PR.number
             const sender = PR.user.login
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
-            return script({ github, context, core }, body, number, sender)
+            const { default: identify } = await import('${{ github.workspace }}/scripts/workflow/test-route/identify.mjs')
+            return identify({ github, context, core }, body, number, sender)
 
       - name: Fetch Docker image
         if: (env.TEST_CONTINUE)
@@ -72,13 +72,13 @@ jobs:
         with:
           version: 8
 
-      - uses: actions/setup-node@v4  # just need its cache
+      - uses: actions/setup-node@v4
         if: (env.TEST_CONTINUE)
         with:
           node-version: lts/*
           cache: 'pnpm'
 
-      - name: Install dependencies (pnpm)  # `got` needed since `github.request` disallows HTTP requests
+      - name: Install dependencies (pnpm) # require js-beautify
         if: (env.TEST_CONTINUE)
         run: pnpm i
 
@@ -99,9 +99,8 @@ jobs:
             const routes = JSON.parse(process.env.TEST_ROUTES)
             const number = PR.number
             core.info(`${link}, ${routes}, ${number}`)
-            const got = require("got")
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
-            return script({ github, context, core, got }, link, routes, number)
+            const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
+            await test({ github, context, core }, link, routes, number)
 
       - name: Pull Request Labeler
         if: ${{ failure() }}
@@ -114,4 +113,4 @@ jobs:
 
       - name: Print Docker container logs
         if: (env.TEST_CONTINUE)
-        run: docker logs rsshub  # logs/combined.log? Not so readable...
+        run: docker logs rsshub # logs/combined.log? Not so readable...
