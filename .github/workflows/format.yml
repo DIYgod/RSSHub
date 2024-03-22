@@ -8,9 +8,6 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: git-push-lock
-
 jobs:
   format:
     permissions:
