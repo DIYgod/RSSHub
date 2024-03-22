@@ -43,4 +43,4 @@ async function handler(ctx) {
         link: `${baseUrl}/@${url_slug}`,
         item: list,
     };
-};
+}

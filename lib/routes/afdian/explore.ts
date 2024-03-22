@@ -75,4 +75,4 @@ async function handler(ctx) {
         link: `${baseUrl}/explore`,
         item: list,
     };
-};
+}
