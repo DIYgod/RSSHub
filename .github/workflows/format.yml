@@ -4,13 +4,12 @@ on:
   push:
     branches:
       - master
-  workflow_run:
-    workflows: ['Build assets']
-    types:
-      - completed
 
 permissions:
   contents: read
+
+concurrency:
+  group: git-push-lock
 
 jobs:
   format:

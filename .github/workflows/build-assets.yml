@@ -11,6 +11,9 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: git-push-lock
+
 jobs:
   build:
     runs-on: ubuntu-latest
