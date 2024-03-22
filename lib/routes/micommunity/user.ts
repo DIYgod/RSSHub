@@ -43,12 +43,12 @@ async function handler(ctx): Promise<Data> {
         const items = records.map((item) => {
             authorName = item.author.name;
             return {
-                title: item.title ? item.title : `${authorName} 的动态`,
+                title: item.title || `${authorName} 的动态`,
                 description: item.textContent,
                 pubDate: new Date(item.createTime).toUTCString(),
                 author: item.author.name,
                 link: `${pageRoot}?postId=${item.id}`,
-                image: item.pic ? item.pic : item.cover ? item.cover : '',
+                image: item.pic || item.cover || '',
             };
         });
         return {
