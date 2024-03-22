@@ -11,9 +11,6 @@ updates:
     ignore:
       - dependency-name: jsrsasign
         versions: ['>=11.0.0'] # no longer includes KJUR.crypto.Cipher for RSA
-      # ESM only packages
-      - dependency-name: got
-        versions: ['>=12.0.0']
       - dependency-name: unified
         versions: ['>=10.0.0']
 

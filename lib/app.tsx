@@ -12,6 +12,7 @@ import debug from '@/middleware/debug';
 import header from '@/middleware/header';
 import antiHotlink from '@/middleware/anti-hotlink';
 import parameter from '@/middleware/parameter';
+import { jsxRenderer } from 'hono/jsx-renderer';
 
 import logger from '@/utils/logger';
 
@@ -27,6 +28,13 @@ const app = new Hono();
 
 app.use(compress());
 
+app.use(jsxRenderer(
+    ({ children }) => <>{children}</>,
+    {
+        docType: '<?xml version="1.0" encoding="UTF-8"?>',
+        stream: {}
+    }
+));
 app.use(mLogger);
 app.use(sentry);
 app.use(accessControl);

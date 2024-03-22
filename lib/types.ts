@@ -24,6 +24,8 @@ export type DataItem = {
     enclosure_title?: string;
     enclosure_length?: number;
     itunes_duration?: number | string;
+    itunes_item_image?: string;
+    media?: Record<string, Record<string, string>>;
 
     _extra?: Record<string, any> & {
         links?: {
@@ -45,6 +47,13 @@ export type Data = {
     language?: string;
     feedLink?: string;
     lastBuildDate?: string;
+    itunes_author?: string;
+    itunes_category?: string;
+    itunes_explicit?: string | boolean;
+    id?: string;
+
+    atomlink?: string;
+    ttl?: number;
 };
 
 // namespace
