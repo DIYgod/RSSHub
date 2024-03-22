@@ -330,3 +330,9 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
   在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`20`
   :::
 
+## 子方有料 <Site url="ippa.top"/>
+
+### 最新文章 <Site url="ippa.top/" size="sm" />
+
+<Route namespace="ippa" :data='{"path":"/","categories":["blog"],"example":"/ippa","radar":[{"source":["ippa.top/"]}],"name":"最新文章","maintainers":["cnkmmk"],"url":"ippa.top/","location":"rss.ts"}' />
+

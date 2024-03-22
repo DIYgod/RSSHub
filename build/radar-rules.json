@@ -6939,6 +6939,19 @@
       }
     ]
   },
+  "ippa.top": {
+    "_name": "子方有料",
+    ".": [
+      {
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/ippa/"
+      }
+    ]
+  },
   "iqiyi.com": {
     "_name": "爱奇艺",
     ".": [

@@ -28450,6 +28450,32 @@
     "name": "Instructables",
     "url": "instructables.com"
   },
+  "ippa": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "blog"
+        ],
+        "example": "/ippa",
+        "radar": [
+          {
+            "source": [
+              "ippa.top/"
+            ]
+          }
+        ],
+        "name": "最新文章",
+        "maintainers": [
+          "cnkmmk"
+        ],
+        "url": "ippa.top/",
+        "location": "rss.ts"
+      }
+    },
+    "name": "子方有料",
+    "url": "ippa.top"
+  },
   "ipsw": {
     "routes": {
       "/index/:ptype/:pname": {
