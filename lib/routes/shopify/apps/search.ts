@@ -25,11 +25,11 @@ async function handler(ctx?: Context): Promise<Data> {
         },
         responseType: 'text',
         headers: {
-            'accept': 'text/html, application/xhtml+xml',
+            accept: 'text/html, application/xhtml+xml',
             'accept-language': 'en-US;q=0.9',
             'turbo-frame': 'search_page',
-            'referer': baseURL,
-            'dnt': '1',
+            referer: baseURL,
+            dnt: '1',
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
         },
     });
@@ -45,7 +45,10 @@ async function handler(ctx?: Context): Promise<Data> {
             // const appInfo = $(item).find(`div.tw-transition-colors.tw-text-fg-primary + div.tw-self-stretch`);
             const appInfo = $(item).find(`div.tw-self-stretch`).clone();
 
-            const rattingMatch = appInfo.find(`span`).text().match(/\d\.\d/);
+            const rattingMatch = appInfo
+                .find(`span`)
+                .text()
+                .match(/\d\.\d/);
             const rattingCountMatch = appInfo.find(`span + span.tw-sr-only`).text().match(/\d+/);
 
             const result: DataItem = {

@@ -26,10 +26,10 @@ async function handler(ctx?: Context): Promise<Data> {
         },
         responseType: 'text',
         headers: {
-            'accept': 'text/html, application/xhtml+xml',
+            accept: 'text/html, application/xhtml+xml',
             'accept-language': 'en-US;q=0.9',
-            'referer': baseURL,
-            'dnt': '1',
+            referer: baseURL,
+            dnt: '1',
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
         },
     });
@@ -59,9 +59,7 @@ async function handler(ctx?: Context): Promise<Data> {
                 description,
 
                 _extra: {
-                    ratting_value: Number(
-                        $review1.find(`div[role="img"]`).attr(`aria-label`)?.substring(0, 1),
-                    ),
+                    ratting_value: Number($review1.find(`div[role="img"]`).attr(`aria-label`)?.substring(0, 1)),
                     location: $review2.find(`div.tw-text-fg-primary + div`).text().trim(),
                     author,
                 },
