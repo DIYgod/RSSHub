@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/apps/:handle/reviews/:page?',
     example: '/shopify/apps/flow/reviews',
     parameters: { handle: '例如一个 App 的链接 https://apps.shopify.com/flow，其中 flow 就是指的是 handle' },
-    name: 'Shopify App reviews',
+    name: 'App reviews',
     maintainers: ['PrintNow'],
     handler,
 };
