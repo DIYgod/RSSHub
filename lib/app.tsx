@@ -1,4 +1,4 @@
-import '@/utils/request-wrapper';
+// import '@/utils/request-wrapper';
 
 import { Hono } from 'hono';
 
@@ -6,7 +6,7 @@ import { compress } from 'hono/compress';
 import mLogger from '@/middleware/logger';
 import cache from '@/middleware/cache';
 import template from '@/middleware/template';
-import sentry from '@/middleware/sentry';
+// import sentry from '@/middleware/sentry';
 import accessControl from '@/middleware/access-control';
 import debug from '@/middleware/debug';
 import header from '@/middleware/header';
@@ -16,7 +16,7 @@ import { jsxRenderer } from 'hono/jsx-renderer';
 
 import logger from '@/utils/logger';
 
-import { notFoundHandler, errorHandler } from '@/errors';
+// import { notFoundHandler, errorHandler } from '@/errors';
 import registry from '@/registry';
 import api from '@/api';
 
@@ -36,7 +36,7 @@ app.use(jsxRenderer(
     }
 ));
 app.use(mLogger);
-app.use(sentry);
+// app.use(sentry);
 app.use(accessControl);
 app.use(debug);
 app.use(template);
@@ -48,7 +48,7 @@ app.use(cache);
 app.route('/', registry);
 app.route('/api', api);
 
-app.notFound(notFoundHandler);
-app.onError(errorHandler);
+// app.notFound(notFoundHandler);
+// app.onError(errorHandler);
 
 export default app;
