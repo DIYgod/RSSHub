@@ -1,7 +1,17 @@
-const got = require('@/utils/got');
+import got from '@/utils/got';
 
-module.exports = async (ctx) => {
-    const url_slug = ctx.params.uid.replace('@', '');
+export const route: Route = {
+    path: '/dynamic/:uid?',
+    categories: ['other'],
+    example: '/afdian/dynamic/@afdian',
+    parameters: { uid: '用户id，用户动态页面url里可找到' },
+    name: '用户动态',
+    maintainers: ['sanmmm'],
+    handler,
+};
+
+async function handler(ctx) {
+    const url_slug = ctx.req.param('uid').replace('@', '');
     const baseUrl = 'https://afdian.net';
     const userInfoRes = await got(`${baseUrl}/api/user/get-profile-by-slug`, {
         searchParams: {
@@ -26,11 +36,11 @@ module.exports = async (ctx) => {
             pubDate: new Date(Number(publish_time) * 1000).toUTCString(),
         };
     });
-    ctx.state.data = {
+    return {
         title: `${name}的爱发电动态`,
         description: `${name}的爱发电动态`,
         image: avatar,
         link: `${baseUrl}/@${url_slug}`,
         item: list,
     };
-};
+}

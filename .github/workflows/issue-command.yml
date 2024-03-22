@@ -80,6 +80,10 @@ jobs:
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
             return script({ github, context, core }, body, number, sender)
 
+      - name: Build RSSHub
+        if: env.TEST_CONTINUE
+        run: pnpm build
+
       - name: Start RSSHub
         if: env.TEST_CONTINUE
         run: pnpm start &

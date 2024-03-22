@@ -45,7 +45,11 @@ const getUserTweets = (id: string, params?: Record<string, any>) =>
         gatherLegacyFromData(
             await paginationTweets('UserTweets', id, {
                 ...params,
+                count: 20,
+                includePromotedContent: true,
                 withQuickPromoteEligibilityTweetFields: true,
+                withVoice: true,
+                withV2Timeline: true,
             })
         )
     );
