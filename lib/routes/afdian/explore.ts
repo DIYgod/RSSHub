@@ -1,4 +1,4 @@
-const got = require('@/utils/got');
+import got from '@/utils/got';
 
 const categoryMap = {
     所有: '',
@@ -26,8 +26,29 @@ const typeToLabel = {
     hot: '人气',
 };
 
-module.exports = async (ctx) => {
-    const { type = 'rec', category = '所有' } = ctx.params;
+export const route: Route = {
+    path: '/explore/:type/:category?',
+    categories: ['other'],
+    example: '/afdian/explore/hot/所有',
+    parameters: { type: '分类', category: '目录类型，默认为 `所有`' },
+    name: '发现用户',
+    maintainers: ['sanmmm'],
+    description: `分类
+
+    | 推荐 | 最热 |
+    | ---- | ---- |
+    | rec  | hot  |
+  
+    目录类型
+  
+    | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |
+    | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+    | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |`,
+    handler,
+};
+
+async function handler(ctx) {
+    const { type = 'rec', category = '所有' } = ctx.req.param();
     const baseUrl = 'https://afdian.net';
     const link = `${baseUrl}/api/creator/list`;
     const res = await got(link, {
@@ -48,10 +69,10 @@ module.exports = async (ctx) => {
             link: `${baseUrl}/@${item.url_slug}`,
         };
     });
-    ctx.state.data = {
+    return {
         title: `爱发电-创作者 (按 ${category}/${typeToLabel[type]})`,
         description: `爱发电-发现创作者 (按 ${category}/${typeToLabel[type]})`,
         link: `${baseUrl}/explore`,
         item: list,
     };
-};
+}
