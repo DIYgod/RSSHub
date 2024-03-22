@@ -323,8 +323,8 @@ devDependencies:
     specifier: 51.0.1
     version: 51.0.1(eslint@8.57.0)
   eslint-plugin-yml:
-    specifier: 1.13.1
-    version: 1.13.1(eslint@8.57.0)
+    specifier: 1.13.2
+    version: 1.13.2(eslint@8.57.0)
   fs-extra:
     specifier: 11.2.0
     version: 11.2.0
@@ -4549,8 +4549,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-yml@1.13.1(eslint@8.57.0):
-    resolution: {integrity: sha512-J1gNca5cWUIlo6ilQJBlPwap2ggVuc7gaOxiCdYjmncyWN8aNHErEhk2ICFj6shr8Jz27c3AU1Ie7i6HqVa4Hw==}
+  /eslint-plugin-yml@1.13.2(eslint@8.57.0):
+    resolution: {integrity: sha512-1i71VhmsG5UxE41rIJmJjhlTTxYy7upAY5Hqj8AdBc7rfJzRIZr3a2spuOS8+N7ZDCWsHAWY3J6lzQNQHDv6Uw==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
