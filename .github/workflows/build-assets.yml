@@ -63,4 +63,4 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git status
-          git diff-index --quiet HEAD || (git commit -m "chore: auto build" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.DOCS_API_TOKEN }}@github.com/RSSNext/rsshub-docs.git" HEAD:main)
+          git diff-index --quiet HEAD || (git commit -m "chore: auto build\n\nUpdate from https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.DOCS_API_TOKEN }}@github.com/RSSNext/rsshub-docs.git" HEAD:main)
