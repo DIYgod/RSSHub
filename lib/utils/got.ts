@@ -1,6 +1,6 @@
 import logger from '@/utils/logger';
 import { config } from '@/config';
-import got, { CancelableRequest, Response as GotResponse, NormalizedOptions, Options, Got } from 'got';
+import got, { CancelableRequest, Response as GotResponse, OptionsInit, Options, Got } from 'got';
 
 type Response<T> = GotResponse<string> & {
     data: T;
@@ -31,15 +31,8 @@ const custom: {
     },
     hooks: {
         beforeRetry: [
-            (
-                options: NormalizedOptions & {
-                    retryCount?: number;
-                },
-                err,
-                count
-            ) => {
-                logger.error(`Request ${options.url} fail, retry attempt #${count}: ${err}`);
-                options.retryCount = count;
+            (err, count) => {
+                logger.error(`Request ${err.options.url} fail, retry attempt #${count}: ${err}`);
             },
         ],
         beforeRedirect: [
@@ -62,7 +55,7 @@ const custom: {
         ],
         init: [
             (
-                options: Options & {
+                options: OptionsInit & {
                     data?: string;
                 }
             ) => {
@@ -83,4 +76,4 @@ const custom: {
 custom.all = (list) => Promise.all(list);
 
 export default custom;
-export type { Response, NormalizedOptions, Options } from 'got';
+export type { Response, Options } from 'got';
