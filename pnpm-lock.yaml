@@ -189,8 +189,8 @@ dependencies:
     specifier: 3.5.3
     version: 3.5.3
   tldts:
-    specifier: 6.1.13
-    version: 6.1.13
+    specifier: 6.1.14
+    version: 6.1.14
   tough-cookie:
     specifier: 4.1.3
     version: 4.1.3
@@ -2148,7 +2148,7 @@ packages:
       '@babel/runtime-corejs2': 7.23.9
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8523,15 +8523,15 @@ packages:
     hasBin: true
     dev: false
 
-  /tldts-core@6.1.13:
-    resolution: {integrity: sha512-M1XP4D13YtXARKroULnLsKKuI1NCRAbJmUGGoXqWinajIDOhTeJf/trYUyBoLVx1/Nx1KBKxCrlW57ZW9cMHAA==}
+  /tldts-core@6.1.14:
+    resolution: {integrity: sha512-McyMQkkIUFYhfs3FPTxTn+5mewxERhfwy2x7TWHkBPb1poKaTBJhXehtuMg0FrhXp53J5eXRfvSD/oH/3mk/2A==}
     dev: false
 
-  /tldts@6.1.13:
-    resolution: {integrity: sha512-+GxHFKVHvUTg2ieNPTx3b/NpZbgJSTZEDdI4cJzTjVYDuxijeHi1tt7CHHsMjLqyc+T50VVgWs3LIb2LrXOzxw==}
+  /tldts@6.1.14:
+    resolution: {integrity: sha512-zGbimRt9fHP68Gbj5fGWmR90xiuRDK/iYukHevT9mcG6Job+HfR119D9DSr6voFWjpStJwOtVfWGpbhNYVwt3A==}
     hasBin: true
     dependencies:
-      tldts-core: 6.1.13
+      tldts-core: 6.1.14
     dev: false
 
   /tmp@0.0.33:
@@ -9400,8 +9400,8 @@ packages:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
