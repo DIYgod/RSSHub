@@ -47,23 +47,20 @@ jobs:
           publish_dir: ./assets
           user_name: 'github-actions[bot]'
           user_email: '41898282+github-actions[bot]@users.noreply.github.com'
-      - name: Pushes to docs repository - en
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.DOCS_API_TOKEN }}
+      - name: Checkout docs
+        uses: actions/checkout@v4
         with:
-          source-directory: './assets/build/docs/en'
-          target-directory: './src/routes'
-          destination-github-username: 'RSSNext'
-          destination-repository-name: 'rsshub-docs'
-          target-branch: 'main'
-      - name: Pushes to docs repository - zh
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.DOCS_API_TOKEN }}
-        with:
-          source-directory: './assets/build/docs/zh'
-          target-directory: './src/zh/routes'
-          destination-github-username: 'RSSNext'
-          destination-repository-name: 'rsshub-docs'
-          target-branch: 'main'
+          repository: 'RSSNext/rsshub-docs'
+          token: ${{ secrets.DOCS_API_TOKEN }}
+          path: rsshub-docs
+      - name: Update docs
+        run: |
+          cp -r ./assets/build/docs/en/* ./rsshub-docs/src/routes
+          cp -r ./assets/build/docs/zh/* ./rsshub-docs/src/zh/routes
+      - name: Commit docs
+        run: |
+          cd rsshub-docs
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git status
+          git diff-index --quiet HEAD || (git commit -m "chore: auto build https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.DOCS_API_TOKEN }}@github.com/RSSNext/rsshub-docs.git" HEAD:main)
