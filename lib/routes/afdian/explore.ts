@@ -33,7 +33,7 @@ export const route: Route = {
     parameters: { type: '分类', category: '目录类型，默认为 `所有`' },
     name: '发现用户',
     maintainers: ['sanmmm'],
-    description: `  分类
+    description: `分类
 
     | 推荐 | 最热 |
     | ---- | ---- |
