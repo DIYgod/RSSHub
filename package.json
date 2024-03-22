@@ -52,7 +52,7 @@
         "@hono/zod-openapi": "0.9.8",
         "@notionhq/client": "2.2.14",
         "@postlight/parser": "2.2.3",
-        "@sentry/node": "7.107.0",
+        "@sentry/node": "7.108.0",
         "@tonyrl/rand-user-agent": "2.0.55",
         "aes-js": "3.1.2",
         "art-template": "4.13.2",
