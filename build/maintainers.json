@@ -127,8 +127,9 @@
   "/36kr/hot-list/:category?": [
     "nczitzk"
   ],
-  "/36kr/{.*}?": [
-    "nczitzk"
+  "/36kr/:category/:subCategory?/:keyword?": [
+    "nczitzk",
+    "fashioncj"
   ],
   "/3dmgame/:name/:type?": [
     "sinchang",
@@ -255,6 +256,12 @@
   ],
   "/aeon/:type": [
     "emdoe"
+  ],
+  "/afdian/dynamic/:uid?": [
+    "sanmmm"
+  ],
+  "/afdian/explore/:type/:category?": [
+    "sanmmm"
   ],
   "/agefans/detail/:id": [
     "s2marine"

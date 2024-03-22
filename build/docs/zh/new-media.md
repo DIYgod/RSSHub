@@ -12,7 +12,11 @@
 
 ### 资讯, 快讯, 用户文章, 主题文章, 专题文章, 搜索文章, 搜索快讯 <Site url="36kr.com" size="sm" />
 
-<Route namespace="36kr" :data='{"path":"/{.*}?","categories":["new-media"],"name":"资讯, 快讯, 用户文章, 主题文章, 专题文章, 搜索文章, 搜索快讯","maintainers":["nczitzk"],"location":"index.ts"}' />
+<Route namespace="36kr" :data='{"path":"/:category/:subCategory?/:keyword?","categories":["new-media"],"example":"/36kr/newsflashes","parameters":{"category":"分类，必填项","subCategory":"子分类，选填项，目的是为了兼容老逻辑","keyword":"关键词，选填项，仅搜索文章/快讯时有效"},"name":"资讯, 快讯, 用户文章, 主题文章, 专题文章, 搜索文章, 搜索快讯","maintainers":["nczitzk","fashioncj"],"description":"| 最新资讯频道    | 快讯     | 推荐资讯｜生活｜房产｜职场｜搜索文章｜搜索快讯｜\n    | ------- | -------- ｜ -------- ｜ -------- ｜ -------- ｜ --------｜ -------- ｜ -------- ｜\n    | news | newsflashes ｜ recommend ｜ life ｜ estate ｜ workplace ｜ search/articles/关键词 ｜ search/articles/关键词 ｜","location":"index.ts"}' />
+
+| 最新资讯频道    | 快讯     | 推荐资讯｜生活｜房产｜职场｜搜索文章｜搜索快讯｜
+    | ------- | -------- ｜ -------- ｜ -------- ｜ -------- ｜ --------｜ -------- ｜ -------- ｜
+    | news | newsflashes ｜ recommend ｜ life ｜ estate ｜ workplace ｜ search/articles/关键词 ｜ search/articles/关键词 ｜
 
 ## 52hrtt 华人头条 <Site url="52hrtt.com"/>
 
@@ -2023,7 +2027,7 @@ Member ID
 
 ### 全部 <Site url="kaopu.news" size="sm" />
 
-<Route namespace="kaopu" :data='{"path":"/news/:language?","categories":["new-media"],"example":"/news/zh-hans, /news/zh-hant","parameters":{"language":"语言"},"radar":[{"source":["kaopu.news/"]}],"name":"全部","maintainers":["fashioncj"],"description":"| 简体中文    | 繁体中文     | \n  | ------- | -------- | \n  | zh-hans | zh-hant | ","location":"news.ts"}' />
+<Route namespace="kaopu" :data='{"path":"/news/:language?","categories":["new-media"],"example":"/news/zh-hans","parameters":{"language":"语言"},"radar":[{"source":["kaopu.news/"]}],"name":"全部","maintainers":["fashioncj"],"description":"| 简体中文    | 繁体中文     | \n  | ------- | -------- | \n  | zh-hans | zh-hant | ","location":"news.ts"}' />
 
 | 简体中文    | 繁体中文     | 
   | ------- | -------- | 

@@ -864,6 +864,28 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 | 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |
   | -------- | -------- | -------- | ------------ |
 
+## 爱发电 <Site url="afdian.net"/>
+
+### 发现用户 <Site url="afdian.net" size="sm" />
+
+<Route namespace="afdian" :data='{"path":"/explore/:type/:category?","categories":["other"],"example":"/afdian/explore/hot/所有","parameters":{"type":"分类","category":"目录类型，默认为 `所有`"},"name":"发现用户","maintainers":["sanmmm"],"description":"分类\n\n    | 推荐 | 最热 |\n    | ---- | ---- |\n    | rec  | hot  |\n  \n    目录类型\n  \n    | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |\n    | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n    | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |","location":"explore.ts"}' />
+
+分类
+
+    | 推荐 | 最热 |
+    | ---- | ---- |
+    | rec  | hot  |
+  
+    目录类型
+  
+    | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |
+    | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+    | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |
+
+### 用户动态 <Site url="afdian.net" size="sm" />
+
+<Route namespace="afdian" :data='{"path":"/dynamic/:uid?","categories":["other"],"example":"/afdian/dynamic/@afdian","parameters":{"uid":"用户id，用户动态页面url里可找到"},"name":"用户动态","maintainers":["sanmmm"],"location":"dynamic.ts"}' />
+
 ## 爱 Q 生活网 <Site url="iqnew.com"/>
 
 ### 最近更新 <Site url="iqnew.com/post/new_100/" size="sm" />

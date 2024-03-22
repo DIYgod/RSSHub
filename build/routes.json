@@ -1176,15 +1176,23 @@
         "description": "| 24 小时热榜 | 资讯人气榜 | 资讯综合榜 | 资讯收藏榜 |\n  | ----------- | ---------- | ---------- | ---------- |\n  | 24          | renqi      | zonghe     | shoucang   |",
         "location": "hot-list.ts"
       },
-      "/{.*}?": {
-        "path": "/{.*}?",
+      "/:category/:subCategory?/:keyword?": {
+        "path": "/:category/:subCategory?/:keyword?",
         "categories": [
           "new-media"
         ],
+        "example": "/36kr/newsflashes",
+        "parameters": {
+          "category": "分类，必填项",
+          "subCategory": "子分类，选填项，目的是为了兼容老逻辑",
+          "keyword": "关键词，选填项，仅搜索文章/快讯时有效"
+        },
         "name": "资讯, 快讯, 用户文章, 主题文章, 专题文章, 搜索文章, 搜索快讯",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "fashioncj"
         ],
+        "description": "| 最新资讯频道    | 快讯     | 推荐资讯｜生活｜房产｜职场｜搜索文章｜搜索快讯｜\n    | ------- | -------- ｜ -------- ｜ -------- ｜ -------- ｜ --------｜ -------- ｜ -------- ｜\n    | news | newsflashes ｜ recommend ｜ life ｜ estate ｜ workplace ｜ search/articles/关键词 ｜ search/articles/关键词 ｜",
         "location": "index.ts"
       }
     },
@@ -2522,6 +2530,44 @@
     },
     "name": "AEON",
     "url": "aeon.aeon.co"
+  },
+  "afdian": {
+    "routes": {
+      "/dynamic/:uid?": {
+        "path": "/dynamic/:uid?",
+        "categories": [
+          "other"
+        ],
+        "example": "/afdian/dynamic/@afdian",
+        "parameters": {
+          "uid": "用户id，用户动态页面url里可找到"
+        },
+        "name": "用户动态",
+        "maintainers": [
+          "sanmmm"
+        ],
+        "location": "dynamic.ts"
+      },
+      "/explore/:type/:category?": {
+        "path": "/explore/:type/:category?",
+        "categories": [
+          "other"
+        ],
+        "example": "/afdian/explore/hot/所有",
+        "parameters": {
+          "type": "分类",
+          "category": "目录类型，默认为 `所有`"
+        },
+        "name": "发现用户",
+        "maintainers": [
+          "sanmmm"
+        ],
+        "description": "分类\n\n    | 推荐 | 最热 |\n    | ---- | ---- |\n    | rec  | hot  |\n  \n    目录类型\n  \n    | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |\n    | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n    | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |",
+        "location": "explore.ts"
+      }
+    },
+    "name": "爱发电",
+    "url": "afdian.net"
   },
   "agefans": {
     "routes": {
@@ -30659,7 +30705,7 @@
         "categories": [
           "new-media"
         ],
-        "example": "/news/zh-hans, /news/zh-hant",
+        "example": "/news/zh-hans",
         "parameters": {
           "language": "语言"
         },
