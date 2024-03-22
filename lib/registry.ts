@@ -98,8 +98,8 @@ for (const namespace in namespaces) {
         const wrapedHandler: Handler = async (ctx) => {
             if (!ctx.get('data')) {
                 if (typeof namespaces[namespace].routes[path].handler !== 'function') {
-                    const { route } = await import(`./routes/${namespace}/${namespaces[namespace].routes[path].location}`);
-                    namespaces[namespace].routes[path].handler = route.handler;
+                    // const { route } = await import(`./routes/${namespace}/${namespaces[namespace].routes[path].location}`);
+                    // namespaces[namespace].routes[path].handler = route.handler;
                 }
                 ctx.set('data', await namespaces[namespace].routes[path].handler(ctx));
             }
