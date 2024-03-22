@@ -32467,6 +32467,36 @@
     "name": "英雄联盟",
     "url": "lol.garena.tw"
   },
+  "loongarch": {
+    "routes": {
+      "/post/:type?": {
+        "path": "/post/:type?",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/loongarch/post/newest",
+        "parameters": {
+          "type": "top 或 newest"
+        },
+        "radar": [
+          {
+            "source": [
+              "bbs.loongarch.org"
+            ]
+          }
+        ],
+        "name": "最热 / 最新帖子",
+        "maintainers": [
+          "ladeng07",
+          "3401797899"
+        ],
+        "url": "bbs.loongarch.org/",
+        "location": "post.ts"
+      }
+    },
+    "name": "LA UOSC社区",
+    "url": "loongarch.org"
+  },
   "lovelive-anime": {
     "routes": {
       "/news/:option?": {

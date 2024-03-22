@@ -3297,6 +3297,10 @@
   "/loltw/news/:category?": [
     "hoilc"
   ],
+  "/loongarch/post/:type?": [
+    "ladeng07",
+    "3401797899"
+  ],
   "/lovelive-anime/news/:option?": [
     "axojhf"
   ],

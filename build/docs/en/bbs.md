@@ -134,6 +134,12 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 | ---- | ------------ | ---- | ----- |
 | jobs | translations | qa   | links |
 
+## LA UOSC社区 <Site url="loongarch.org"/>
+
+### 最热 / 最新帖子 <Site url="bbs.loongarch.org/" size="sm" />
+
+<Route namespace="loongarch" :data='{"path":"/post/:type?","categories":["bbs"],"example":"/loongarch/post/newest","parameters":{"type":"top 或 newest"},"radar":[{"source":["bbs.loongarch.org"]}],"name":"最热 / 最新帖子","maintainers":["ladeng07","3401797899"],"url":"bbs.loongarch.org/","location":"post.ts"}' />
+
 ## Meteor <Site url="meteor.today"/>
 
 ### 看板列表 <Site url="meteor.today/" size="sm" />

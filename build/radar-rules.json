@@ -7909,6 +7909,19 @@
       }
     ]
   },
+  "loongarch.org": {
+    "_name": "LA UOSC社区",
+    "bbs": [
+      {
+        "title": "最热 / 最新帖子",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/"
+        ],
+        "target": "/loongarch/post/:type?"
+      }
+    ]
+  },
   "lovelive-anime.jp": {
     "_name": "lovelive-anime",
     "www": [
