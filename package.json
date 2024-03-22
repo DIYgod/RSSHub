@@ -49,7 +49,7 @@
     "dependencies": {
         "@hono/node-server": "1.8.2",
         "@hono/swagger-ui": "0.2.1",
-        "@hono/zod-openapi": "0.9.8",
+        "@hono/zod-openapi": "0.9.9",
         "@notionhq/client": "2.2.14",
         "@postlight/parser": "2.2.3",
         "@sentry/node": "7.107.0",
