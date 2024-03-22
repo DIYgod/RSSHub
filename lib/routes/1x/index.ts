@@ -1,5 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
+import { Route } from '@/types';
 
 const categories = {
     latest: 'latest',
@@ -43,21 +44,25 @@ export const route: Route = {
     url: '1x.com/gallery/latest/awarded',
     description: `
 
-| 最新   | 热门    | 已发布    | 抽象       | 动作      | 动物       |
-| ------ | ------- | --------- | ---------- | --------- | ---------- |
-| latest | popular | published | latest:15: | latest:1: | latest:21: |
+    | 最新 | 热门 | 已发布 | 摘要 | 行动 | 动物 | 建筑 |
+    |------|------|--------|------|------|------|------|
+    | latest | popular | published | abstract | action | animals | architecture |
+    
 
-| 建筑       | 概念       | 创意编辑   | 纪录片    | 日常       |
-| ---------- | ---------- | ---------- | --------- | ---------- |
-| latest:11: | latest:17: | latest:10: | latest:8: | latest:14: |
+    | 概念 | 创意编辑 | 纪录片 | 日常 | 艺术裸体 | 幽默 |
+    |------|----------|--------|------|------------|------|
+    | conceptual | creative-edit | documentary | everyday | fine-art-nude | humour |
 
-| 裸体艺术   | 幽默      | 风景      | 微距      | 情绪      |
-| ---------- | --------- | --------- | --------- | --------- |
-| latest:12: | latest:3: | latest:6: | latest:2: | latest:4: |
 
-| 夜景      | 表演       | 人像       | 静物       | 街道      | 水下       | 野生动物  |
-| --------- | ---------- | ---------- | ---------- | --------- | ---------- | --------- |
-| latest:9: | latest:19: | latest:13: | latest:18: | latest:7: | latest:20: | latest:5: |`,
+    | 风景 | 微观 | 情绪 | 夜晚 | 表演 | 肖像 |
+    |------|------|------|------|------|------|
+    | landscape | macro | mood | night | performance | portrait |
+
+
+    | 静物 | 街头 | 水下 | 野生动物 |
+    |------|------|------|----------|
+    | still-life | street | underwater | wildlife |
+    `,
 };
 
 async function handler(ctx) {
