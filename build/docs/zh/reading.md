@@ -138,6 +138,16 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
   更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
   :::
 
+## 哔哩轻小说 <Site url="linovelib.com"/>
+
+### 卷 <Site url="linovelib.com" size="sm" />
+
+<Route namespace="linovelib" :data='{"path":"/volume/:id","categories":["reading"],"example":"/linovelib/volume/8","parameters":{"id":"小说 ID，可在小说页 URL 中找到"},"radar":[{"source":["www.linovelib.com/novel/:id/catalog"]}],"name":"卷","maintainers":["rkscv"],"location":"volume.ts"}' />
+
+### 小说更新 <Site url="linovelib.com" size="sm" />
+
+<Route namespace="linovelib" :data='{"path":"/novel/:id","categories":["reading"],"example":"/linovelib/novel/2547","parameters":{"id":"小说 id，对应书架开始阅读 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"小说更新","maintainers":["misakicoca"],"location":"novel.ts"}' />
+
 ## 超星 <Site url="chaoxing.com"/>
 
 ### 期刊 <Site url="chaoxing.com" size="sm" />
@@ -185,12 +195,6 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 ### 作品 <Site url="jjwxc.net" size="sm" />
 
 <Route namespace="jjwxc" :data='{"path":"/book/:id?","categories":["reading"],"example":"/jjwxc/book/7013024","parameters":{"id":"作品 id，可在对应作品页中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"作品","maintainers":["nczitzk"],"location":"book.ts"}' />
-
-## 哩哔轻小说 <Site url="linovelib.com"/>
-
-### 小说更新 <Site url="linovelib.com" size="sm" />
-
-<Route namespace="linovelib" :data='{"path":"/novel/:id","categories":["reading"],"example":"/linovelib/novel/2547","parameters":{"id":"小说 id，对应书架开始阅读 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"小说更新","maintainers":["misakicoca"],"location":"novel.ts"}' />
 
 ## 明月中文网 <Site url="56kog.com"/>
 

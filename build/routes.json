@@ -32090,9 +32090,31 @@
           "misakicoca"
         ],
         "location": "novel.ts"
+      },
+      "/volume/:id": {
+        "path": "/volume/:id",
+        "categories": [
+          "reading"
+        ],
+        "example": "/linovelib/volume/8",
+        "parameters": {
+          "id": "小说 ID，可在小说页 URL 中找到"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.linovelib.com/novel/:id/catalog"
+            ]
+          }
+        ],
+        "name": "卷",
+        "maintainers": [
+          "rkscv"
+        ],
+        "location": "volume.ts"
       }
     },
-    "name": "哩哔轻小说",
+    "name": "哔哩轻小说",
     "url": "linovelib.com"
   },
   "liquipedia": {

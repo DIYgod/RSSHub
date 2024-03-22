@@ -7800,6 +7800,19 @@
       }
     ]
   },
+  "linovelib.com": {
+    "_name": "哔哩轻小说",
+    "www": [
+      {
+        "title": "卷",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/novel/:id/catalog"
+        ],
+        "target": "/linovelib/volume/:id"
+      }
+    ]
+  },
   "liquipedia.net": {
     "_name": "Liquipedia",
     ".": [

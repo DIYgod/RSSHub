@@ -3254,6 +3254,9 @@
   "/linovelib/novel/:id": [
     "misakicoca"
   ],
+  "/linovelib/volume/:id": [
+    "rkscv"
+  ],
   "/liquipedia/counterstrike/matches/:team": [
     "CookiePieWw"
   ],
