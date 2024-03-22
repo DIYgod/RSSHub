@@ -1201,8 +1201,8 @@
   },
   "3dmgame": {
     "routes": {
-      "/:name/:type?": {
-        "path": "/:name/:type?",
+      "/games/:name/:type?": {
+        "path": "/games/:name/:type?",
         "radar": [
           {
             "source": [
@@ -1217,7 +1217,8 @@
         "maintainers": [
           "sinchang",
           "jacky2001114",
-          "HenryQW"
+          "HenryQW",
+          "lyqluis"
         ],
         "location": "game.ts"
       },
@@ -1248,7 +1249,8 @@
         ],
         "name": "新闻中心",
         "maintainers": [
-          "zhboner"
+          "zhboner",
+          "lyqluis"
         ],
         "description": "| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |\n  | -------- | -------- | -------- | -------- | ----------- |\n  |          | game     | acg      | next     | news_36_1 |",
         "location": "news-center.ts"

@@ -88,7 +88,7 @@
     ".":[ { title:"游戏资讯",
         docs:"https://docs.rsshub.app/routes/game",
         source:[ "/games/:name/:type" ],
-        target:"/3dmgame/:name/:type?" },
+        target:"/3dmgame/games/:name/:type?" },
       { title:"新闻中心",
         docs:"https://docs.rsshub.app/routes/game",
         source:[ "/news/:category",

@@ -131,13 +131,15 @@
     "nczitzk",
     "fashioncj"
   ],
-  "/3dmgame/:name/:type?": [
+  "/3dmgame/games/:name/:type?": [
     "sinchang",
     "jacky2001114",
-    "HenryQW"
+    "HenryQW",
+    "lyqluis"
   ],
   "/3dmgame/news/:category?": [
-    "zhboner"
+    "zhboner",
+    "lyqluis"
   ],
   "/423down/:category/:type?": [],
   "/4gamers/": [
