@@ -67,7 +67,7 @@
 
 ### UP 主频道的合集 <Site url="www.bilibili.com" size="sm" />
 
-<Route namespace="bilibili" :data='{"path":"/user/collection/:uid/:sid/:disableEmbed?/:sortReverse?/:page?","categories":["social-media"],"example":"/bilibili/user/collection/245645656/529166","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","sid":"合集 id, 可在合集页面的 URL 中找到","disableEmbed":"默认为开启内嵌视频, 任意值为关闭","sortReverse":"默认:默认排序 1:升序排序","page":"页码, 默认1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"UP 主频道的合集","maintainers":["shininome"],"location":"user-collection.ts"}' />
+<Route namespace="bilibili" :data='{"path":"/user/collection/:uid/:sid/:disableEmbed?/:sortReverse?/:page?","categories":["social-media"],"example":"/bilibili/user/collection/245645656/529166","parameters":{"uid":"用户 id, 可在 UP 主主页中找到","sid":"合集 id, 可在合集页面的 URL 中找到","disableEmbed":"空,0与false为开启内嵌视频, 其他任意值为关闭","sortReverse":"默认:默认排序 1:升序排序","page":"页码, 默认1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"UP 主频道的合集","maintainers":["shininome"],"location":"user-collection.ts"}' />
 
 ### UP 主默认收藏夹 <Site url="www.bilibili.com" size="sm" />
 
