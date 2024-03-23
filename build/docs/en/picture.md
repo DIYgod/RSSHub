@@ -34,7 +34,7 @@
 
 ### MMDArchive 标签查询 <Site url="mmda.booru.org" size="sm" />
 
-<Route namespace="booru" :data='{"path":"/mmda/tags/:tags?","categories":["picture"],"example":"/booru/mmda/tags/full_body%20blue_eyes","parameters":{"tags":"标签，多个标签使用 `%20` 连接，如需根据作者查询则在 `user:` 后接上作者名，如：`user:xxxx`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportRadar":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["mmda.booru.org/index.php"]},"name":"MMDArchive 标签查询","maintainers":["N78Wy"],"description":"For example:\n\n  -   默认查询 (什么 tag 都不加)：`/booru/mmda/tags`\n  -   默认查询单个 tag：`/booru/mmda/tags/full_body`\n  -   默认查询多个 tag：`/booru/mmda/tags/full_body%20blue_eyes`\n  -   默认查询根据作者查询：`/booru/mmda/tags/user:xxxx`","location":"mmda.ts"}' />
+<Route namespace="booru" :data='{"path":"/mmda/tags/:tags?","categories":["picture"],"example":"/booru/mmda/tags/full_body%20blue_eyes","parameters":{"tags":"标签，多个标签使用 `%20` 连接，如需根据作者查询则在 `user:` 后接上作者名，如：`user:xxxx`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportRadar":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["mmda.booru.org/index.php"]}],"name":"MMDArchive 标签查询","maintainers":["N78Wy"],"description":"For example:\n\n  -   默认查询 (什么 tag 都不加)：`/booru/mmda/tags`\n  -   默认查询单个 tag：`/booru/mmda/tags/full_body`\n  -   默认查询多个 tag：`/booru/mmda/tags/full_body%20blue_eyes`\n  -   默认查询根据作者查询：`/booru/mmda/tags/user:xxxx`","location":"mmda.ts"}' />
 
 For example:
 

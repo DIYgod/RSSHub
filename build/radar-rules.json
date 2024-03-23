@@ -1778,6 +1778,19 @@
       }
     ]
   },
+  "booru.org": {
+    "_name": "Booru",
+    "mmda": [
+      {
+        "title": "MMDArchive 标签查询",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/index.php"
+        ],
+        "target": "/booru/mmda/tags/:tags?"
+      }
+    ]
+  },
   "brave.com": {
     "_name": "Brave",
     ".": [
@@ -8296,6 +8309,30 @@
           "/:category/:sort/:status"
         ],
         "target": "/modian/zhongchou/:category?/:sort?/:status?"
+      }
+    ]
+  },
+  "modrinth.com": {
+    "_name": "Modrinth",
+    ".": [
+      {
+        "title": "Project versions",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/mod/:id/*",
+          "/plugin/:id/*",
+          "/datapack/:id/*",
+          "/shader/:id/*",
+          "/resourcepack/:id/*",
+          "/modpack/:id/*",
+          "/mod/:id",
+          "/plugin/:id",
+          "/datapack/:id",
+          "/shader/:id",
+          "/resourcepack/:id",
+          "/modpack/:id"
+        ],
+        "target": "/modrinth/project/:id/versions"
       }
     ]
   },
