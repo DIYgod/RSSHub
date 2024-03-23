@@ -6,21 +6,10 @@ import { parseDate } from '@/utils/parse-date';
 
 const host = 'http://www.news.zjut.edu.cn';
 
-const map = new Map([
-    [1, { id: '5414/list.htm', title: '图片新闻 - 浙江工业大学' }],
-    [2, { id: '5415/list.htm', title: '工大要闻 - 浙江工业大学' }],
-    [3, { id: '5416/list.htm', title: '综合新闻 - 浙江工业大学' }],
-    [4, { id: '5422/list.htm', title: '学术·探索 - 浙江工业大学' }],
-    [5, { id: '5423/list.htm', title: '三创·人物 - 浙江工业大学' }],
-    [6, { id: '5424/list.htm', title: '智库工大 - 浙江工业大学' }],
-    [7, { id: '5425/list.htm', title: '美誉工大 - 浙江工业大学' }],
-    [8, { id: '5419/list.htm', title: '葵园融媒 - 浙江工业大学' }],
-]);
-
 export const route: Route = {
     path: '/news/:type',
     categories: ['university'],
-    example: '/zjut/news/1',
+    example: '/zjut/news/5414',
     parameters: { type: '分类，见下表' },
     features: {
         requireConfig: false,
@@ -36,13 +25,12 @@ export const route: Route = {
     handler,
     description: `| 图片新闻 | 工大要闻 | 综合新闻 | 学术·探索 | 三创·人物 | 智库工大 | 美誉工大 | 葵园融媒 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8        |`,
+| 5414        | 5415        | 5416        | 5422        | 5423        | 5424        | 5425        | 5419        |`,
 };
 
 async function handler(ctx) {
-    const type = Number.parseInt(ctx.req.param('type'));
-    const id = map.get(type)?.id;
-    const listResponse = await got(`${host}/${id}`, {
+    const type = ctx.req.param('type');
+    const listResponse = await got(`${host}/${type}/list.htm`, {
         responseType: 'buffer',
     });
     const $ = load(listResponse.data);
@@ -82,8 +70,8 @@ async function handler(ctx) {
     );
 
     return {
-        title: map.get(type)?.title,
-        link: `${host}/${id}`,
+        title: `${$('.col_title h2').text()} - 浙江工业大学`,
+        link: `${host}/${type}/list.htm`,
         item: items,
     };
 }
