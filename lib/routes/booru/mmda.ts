@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mmda.booru.org/index.php'],
-    },
+    radar: [
+        {
+            source: ['mmda.booru.org/index.php'],
+        },
+    ],
     name: 'MMDArchive 标签查询',
     maintainers: ['N78Wy'],
     handler,
