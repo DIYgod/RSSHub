@@ -157,6 +157,7 @@
         "eslint-plugin-yml": "1.13.2",
         "fs-extra": "11.2.0",
         "husky": "9.0.11",
+        "js-beautify": "1.15.1",
         "lint-staged": "15.2.2",
         "mockdate": "3.0.5",
         "nock": "13.5.4",
@@ -165,7 +166,7 @@
         "supertest": "6.3.4",
         "tosource": "2.0.0-alpha.3",
         "typescript": "5.4.3",
-        "unified": "9.2.2",
+        "unified": "11.0.4",
         "vite-tsconfig-paths": "4.3.2",
         "vitest": "1.4.0"
     },
