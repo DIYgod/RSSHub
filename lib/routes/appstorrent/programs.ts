@@ -13,22 +13,12 @@ const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/programs',
-    categories: ['other'],
-    example: '/programs',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'AppsTorrent Programs',
+    categories: ['program-update'],
+    example: '/appstorrent/programs',
+    name: 'Programs',
     maintainers: ['xzzpig'],
     handler,
     url: 'appstorrent.ru/programs/',
-    description: ``,
 };
 
 async function handler(ctx?: Context): Promise<Data> {
@@ -37,9 +27,6 @@ async function handler(ctx?: Context): Promise<Data> {
     const currentUrl = `${baseUrl}/programs/`;
     const gotOptions: Options = {
         http2: true,
-        headers: {
-            'user-agent': config.ua,
-        },
     };
 
     const response = await got(currentUrl, gotOptions);
