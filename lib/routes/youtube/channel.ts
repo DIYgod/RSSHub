@@ -10,7 +10,12 @@ export const route: Route = {
     example: '/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ',
     parameters: { id: 'YouTube channel id', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'YOUTUBE_KEY',
+                description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
