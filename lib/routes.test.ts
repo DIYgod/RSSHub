@@ -4,22 +4,18 @@ import Parser from 'rss-parser';
 const parser = new Parser();
 import { config } from '@/config';
 
-const criticalRoutes = [
-    '/test/1',
-    '/test/cache',
-    '/bilibili/user/dynamic/2267573',
-    '/bilibili/bangumi/media/9192',
-    '/bilibili/ranking/0/3/1',
-    '/mastodon/timeline/pawoo.net/true',
-    '/mastodon/acct/CatWhitney@mastodon.social/statuses',
-    '/misskey/notes/featured/misskey.io',
-    '/pixiv/search/Nezuko/popular/2',
-    '/pixiv/ranking/week',
-    '/pixiv/user/15288095',
-    '/telegram/channel/rove',
-    '/threads/zuck',
-    '/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ',
-];
+const criticalRoutes = ['/test/1', '/test/cache'];
+if (process.env.FULL_ROUTES_TEST) {
+    // eslint-disable-next-line n/no-unpublished-require
+    const namespaces = require('../assets/build/routes.json');
+    for (const namespace in namespaces) {
+        for (const route in namespaces[namespace].routes) {
+            if (namespaces[namespace].routes[route].example) {
+                criticalRoutes.push(namespaces[namespace].routes[route].example);
+            }
+        }
+    }
+}
 
 async function checkRSS(response) {
     const checkDate = (date) => {
@@ -62,7 +58,7 @@ async function checkRSS(response) {
 
 describe('routes', () => {
     for (const route of criticalRoutes) {
-        it(`critical routes: ${route}`, async () => {
+        it.concurrent(`critical routes: ${route}`, async () => {
             const response = await app.request(route);
             expect(response.status).toBe(200);
             await checkRSS(response);
