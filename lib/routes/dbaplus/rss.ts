@@ -19,8 +19,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = 'https://dbaplus.cn/news-9-1.html';
-    const response = await got({ method: 'get', url });
+    const url = 'https://dbaplus.cn';
+    const response = await got(`${url}/news-9-1.html`);
     const $ = load(response.data);
 
     const list = $('div.col-xs-12.col-md-8.pd30 > div.panel.panel-default.categeay > div.panel-body > ul.media-list.clearfix > li.media')
