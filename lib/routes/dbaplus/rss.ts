@@ -7,6 +7,11 @@ export const route: Route = {
     path: '/',
     categories: ['Programming'],
     example: '/dbaplus',
+    radar: [
+        {
+            source: ['dbaplus.cn/'],
+        },
+    ],
     name: '最新文章',
     maintainers: ['cnkmmk'],
     handler,
@@ -14,11 +19,11 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = 'https://dbaplus.cn/';
+    const url = 'https://dbaplus.cn/news-9-1.html';
     const response = await got({ method: 'get', url });
     const $ = load(response.data);
 
-    const list = $('li.media')
+    const list = $('div.col-xs-12.col-md-8.pd30 > div.panel.panel-default.categeay > div.panel-body > ul.media-list.clearfix > li.media')
         .map((i, e) => {
             const element = $(e);
             const title = element.find('h3 > a').text();
