@@ -4,13 +4,19 @@ import Parser from 'rss-parser';
 const parser = new Parser();
 import { config } from '@/config';
 
+process.env.ALLOW_USER_SUPPLY_UNSAFE_DOMAIN = 'true';
+
 const criticalRoutes = ['/test/1', '/test/cache'];
 if (process.env.FULL_ROUTES_TEST) {
     // eslint-disable-next-line n/no-unpublished-require
     const namespaces = require('../assets/build/routes.json');
     for (const namespace in namespaces) {
         for (const route in namespaces[namespace].routes) {
-            if (namespaces[namespace].routes[route].example) {
+            const configs = namespaces[namespace].routes[route].features?.requireConfig
+                ?.filter((config) => !config.optional)
+                .map?.((config) => config.name)
+                .filter((name) => name !== 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN');
+            if (namespaces[namespace].routes[route].example || !configs?.length) {
                 criticalRoutes.push(namespaces[namespace].routes[route].example);
             }
         }
