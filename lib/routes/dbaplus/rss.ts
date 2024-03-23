@@ -7,11 +7,6 @@ export const route: Route = {
     path: '/',
     categories: ['Programming'],
     example: '/dbaplus',
-    radar: [
-        {
-            source: ['dbaplus.cn/'],
-        },
-    ],
     name: '最新文章',
     maintainers: ['cnkmmk'],
     handler,
