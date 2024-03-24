@@ -6,6 +6,9 @@ import * as path from 'node:path';
 import toSource from 'tosource';
 import { categories } from './data';
 
+import { getCurrentPath } from '../../lib/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 const maintainers: Record<string, string[]> = {};
 const radar: {
     [domain: string]: {
