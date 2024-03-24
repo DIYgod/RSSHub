@@ -1,4 +1,5 @@
 import { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { Context } from 'hono';
@@ -20,74 +21,10 @@ export const route: Route = {
     url: 'www.gamer520.com/',
     description: `分类
 
-  | 所有 | Switch游戏下载 | 金手指 | 3A巨作 | switch主题 | PC游戏 |
-  | --- | --- | --- | --- | --- | --- |
-  | all | switchyouxi | jinshouzhi | 3ajuzuo | zhuti | pcgame |`,
+  | 所有 | Switch 游戏下载 | 金手指     | 3A 巨作 | switch 主题 | PC 游戏 |
+  | ---- | --------------- | ---------- | ------- | ----------- | ------- |
+  | all  | switchyouxi     | jinshouzhi | 3ajuzuo | zhuti       | pcgame  |`,
 };
-
-// (await (await fetch('https://www.gamer520.com/wp-json/wp/v2/categories')).json()).map((category) => ({ slug: category.slug, id: category.id, name: category.name, link: category.link }));
-const CATEGORY_ARRAY = [
-    {
-        slug: 'shen',
-        id: 1,
-        name: '[神の贴]',
-        link: 'https://www.gamer520.com/shen'
-    },
-    {
-        slug: '3ajuzuo',
-        id: 4,
-        name: '3A巨作',
-        link: 'https://www.gamer520.com/3ajuzuo'
-    },
-    {
-        slug: 'cth',
-        id: 1481,
-        name: 'CTH',
-        link: 'https://www.gamer520.com/cth'
-    },
-    {
-        slug: 'offline-game-trainer',
-        id: 1483,
-        name: 'PC单机游戏修改器',
-        link: 'https://www.gamer520.com/offline-game-trainer'
-    },
-    {
-        slug: 'pcsmall',
-        id: 1477,
-        name: 'PC小仓库[持续更新]',
-        link: 'https://www.gamer520.com/pcsmall'
-    },
-    {
-        slug: 'pcgame',
-        id: 1471,
-        name: 'PC游戏下载',
-        link: 'https://www.gamer520.com/pcgame'
-    },
-    {
-        slug: 'zhuti',
-        id: 1476,
-        name: 'switch主题',
-        link: 'https://www.gamer520.com/zhuti'
-    },
-    {
-        slug: 'switchyouxi',
-        id: 2,
-        name: 'Switch游戏下载',
-        link: 'https://www.gamer520.com/switchyouxi'
-    },
-    {
-        slug: 'zhongwen',
-        id: 1461,
-        name: '中文',
-        link: 'https://www.gamer520.com/zhongwen'
-    },
-    {
-        slug: 'jinshouzhi',
-        id: 3,
-        name: '加藤之指',
-        link: 'https://www.gamer520.com/jinshouzhi'
-    }
-];
 
 interface Post {
     id: number,
@@ -99,12 +36,27 @@ interface Post {
     content: { rendered: string },
 }
 
+interface Category {
+    id: number,
+    name: string,
+    link: string,
+    slug: string,
+}
+
+async function getCategories(baseUrl: string): Promise<Category[]> {
+    return await cache.tryGet('gamer520:categories', async () => {
+        const { data } = await got(`${baseUrl}/wp-json/wp/v2/categories`);
+        return data.map((category) => ({ slug: category.slug, id: category.id, name: category.name, link: category.link }));
+    }) as Category[];
+}
+
 async function handler(ctx?: Context): Promise<Data> {
+    const baseUrl = 'https://www.gamer520.com';
+    const categories = await getCategories(baseUrl);
+
     const category = ctx?.req.param('category') ?? 'all';
     const order = ctx?.req.param('order');
-    const categoryId = CATEGORY_ARRAY.find((c) => c.slug === category)?.id;
-
-    const baseUrl = 'https://www.gamer520.com';
+    const categoryId = categories.find((c) => c.slug === category)?.id;
 
     const { data } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
@@ -121,13 +73,13 @@ async function handler(ctx?: Context): Promise<Data> {
             link: item.guid.rendered,
             pubDate: parseDate(item.date_gmt),
             updated: parseDate(item.modified_gmt),
-            category: item.categories?.map((c) => CATEGORY_ARRAY.find((ca) => ca.id === c)?.name ?? '').filter((c) => c !== '') ?? [],
+            category: item.categories?.map((c) => categories.find((ca) => ca.id === c)?.name ?? '').filter((c) => c !== '') ?? [],
             description: item.content.rendered,
         }));
 
     return {
-        title: '全球游戏交流中心-' + (CATEGORY_ARRAY.find((c) => c.slug === category)?.name ?? '所有'),
-        link: CATEGORY_ARRAY.find((c) => c.slug === category)?.link ?? baseUrl,
+        title: '全球游戏交流中心-' + (categories.find((c) => c.slug === category)?.name ?? '所有'),
+        link: categories.find((c) => c.slug === category)?.link ?? baseUrl,
         item: items,
     };
 }
