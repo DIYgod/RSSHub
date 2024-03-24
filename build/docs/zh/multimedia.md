@@ -287,11 +287,11 @@
 
 ### Artist <Site url="coomer.party" size="sm" />
 
-<Route namespace="coomer" :data='{"path":"/artist/:id","categories":["multimedia"],"example":"/coomer/artist/belledelphine","parameters":{"id":"Artist id, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["coomer.party/onlyfans/user/:id","coomer.party/"]}],"name":"Artist","maintainers":["nczitzk"],"location":"artist.ts"}' :test='{"code":1,"message":"expected NaN to be greater than -432000000"}' />
+<Route namespace="coomer" :data='{"path":"/artist/:id","categories":["multimedia"],"example":"/coomer/artist/belledelphine","parameters":{"id":"Artist id, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["coomer.party/onlyfans/user/:id","coomer.party/"]}],"name":"Artist","maintainers":["nczitzk"],"location":"artist.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 ### Recent Posts <Site url="coomer.party/posts" size="sm" />
 
-<Route namespace="coomer" :data='{"path":"/posts","categories":["multimedia"],"example":"/coomer/posts","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["coomer.party/posts","coomer.party/"]}],"name":"Recent Posts","maintainers":["nczitzk"],"url":"coomer.party/posts","location":"posts.ts"}' :test='{"code":1,"message":"expected NaN to be greater than -432000000"}' />
+<Route namespace="coomer" :data='{"path":"/posts","categories":["multimedia"],"example":"/coomer/posts","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["coomer.party/posts","coomer.party/"]}],"name":"Recent Posts","maintainers":["nczitzk"],"url":"coomer.party/posts","location":"posts.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 ## DoMP4 影视 <Site url="domp4.cc"/>
 
@@ -471,7 +471,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
 
 ### 演員 <Site url="javdb.com/" size="sm" />
 
-<Route namespace="javdb" :data='{"path":"/actors/:id/:filter?","categories":["multimedia"],"example":"/javdb/actors/R2Vg","parameters":{"id":"编号，可在演员页 URL 中找到","filter":"过滤，见下表，默认为 `全部`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["javdb.com/"],"target":""}],"name":"演員","maintainers":["nczitzk"],"url":"javdb.com/","description":"| 全部 | 可播放 | 單體作品 | 可下載 | 含字幕 |\n  | ---- | ------ | -------- | ------ | ------ |\n  |      | p      | s        | d      | c      |\n\n  所有演员编号参见 [演員庫](https://javdb.com/actors)","location":"actors.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="javdb" :data='{"path":"/actors/:id/:filter?","categories":["multimedia"],"example":"/javdb/actors/R2Vg","parameters":{"id":"编号，可在演员页 URL 中找到","filter":"过滤，见下表，默认为 `全部`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["javdb.com/"],"target":""}],"name":"演員","maintainers":["nczitzk"],"url":"javdb.com/","description":"| 全部 | 可播放 | 單體作品 | 可下載 | 含字幕 |\n  | ---- | ------ | -------- | ------ | ------ |\n  |      | p      | s        | d      | c      |\n\n  所有演员编号参见 [演員庫](https://javdb.com/actors)","location":"actors.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 | 全部 | 可播放 | 單體作品 | 可下載 | 含字幕 |
   | ---- | ------ | -------- | ------ | ------ |
@@ -483,7 +483,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
 
 ### Best Reviews <Site url="javlibrary.com" size="sm" />
 
-<Route namespace="javlibrary" :data='{"path":"/bestreviews/:language?/:mode?","categories":["multimedia"],"example":"/javlibrary/bestreviews/en","parameters":{"language":"Language, see below, Japanese by default, as `ja`","mode":"Mode, see below, Last Month by default, as `1`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Best Reviews","maintainers":["nczitzk"],"description":"| Last Month | All Time |\n  | ---------- | -------- |\n  | 1          | 2        |","location":"bestreviews.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="javlibrary" :data='{"path":"/bestreviews/:language?/:mode?","categories":["multimedia"],"example":"/javlibrary/bestreviews/en","parameters":{"language":"Language, see below, Japanese by default, as `ja`","mode":"Mode, see below, Last Month by default, as `1`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Best Reviews","maintainers":["nczitzk"],"description":"| Last Month | All Time |\n  | ---------- | -------- |\n  | 1          | 2        |","location":"bestreviews.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 | Last Month | All Time |
   | ---------- | -------- |
@@ -595,7 +595,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
 
 ### Videos by makers <Site url="javlibrary.com" size="sm" />
 
-<Route namespace="javlibrary" :data='{"path":"/videos/maker/:maker?/:language?/:mode?","categories":["multimedia"],"example":"/javlibrary/videos/maker/arlq/cn","parameters":{"maker":"Maker, S1 NO.1 STYLE by default, as `arlq`","language":"Language, see below, Japanese by default, as `ja`","mode":"Mode, see below, videos with comments (by date) by default, as `1`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Videos by makers","maintainers":[],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |","location":"maker.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="javlibrary" :data='{"path":"/videos/maker/:maker?/:language?/:mode?","categories":["multimedia"],"example":"/javlibrary/videos/maker/arlq/cn","parameters":{"maker":"Maker, S1 NO.1 STYLE by default, as `arlq`","language":"Language, see below, Japanese by default, as `ja`","mode":"Mode, see below, videos with comments (by date) by default, as `1`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Videos by makers","maintainers":[],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |","location":"maker.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 | videos with comments (by date) | everything (by date) |
   | ------------------------------ | -------------------- |
@@ -603,7 +603,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
 
 ### Videos by star <Site url="javlibrary.com" size="sm" />
 
-<Route namespace="javlibrary" :data='{"path":"/star/:id/:language?/:mode?","categories":["multimedia"],"example":"/javlibrary/star/abbds/en","parameters":{"id":"Star id, can be found in URL","language":"Language, see below, Japanese by default, as `ja`","mode":"Mode, see below, videos with comments (by date) by default, as `1`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Videos by star","maintainers":["nczitzk"],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |\n\n  :::tip\n  See [Ranking](https://www.javlibrary.com/en/star_mostfav.php) to view stars by ranks.\n\n  See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.\n  :::","location":"star.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="javlibrary" :data='{"path":"/star/:id/:language?/:mode?","categories":["multimedia"],"example":"/javlibrary/star/abbds/en","parameters":{"id":"Star id, can be found in URL","language":"Language, see below, Japanese by default, as `ja`","mode":"Mode, see below, videos with comments (by date) by default, as `1`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Videos by star","maintainers":["nczitzk"],"description":"| videos with comments (by date) | everything (by date) |\n  | ------------------------------ | -------------------- |\n  | 1                              | 2                    |\n\n  :::tip\n  See [Ranking](https://www.javlibrary.com/en/star_mostfav.php) to view stars by ranks.\n\n  See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.\n  :::","location":"star.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 | videos with comments (by date) | everything (by date) |
   | ------------------------------ | -------------------- |
@@ -755,11 +755,11 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
 
 ### Collection <Site url="themoviedb.org" size="sm" />
 
-<Route namespace="themoviedb" :data='{"path":"/collection/:id/:lang?","categories":["multimedia"],"example":"/themoviedb/collection/131292/en-US","parameters":{"id":"Collection ID","lang":"Language"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Collection","maintainers":["x2cf"],"location":"collection.ts"}' :test='{"code":1,"message":"expected 345044381416 to be less than 311040000000"}' />
+<Route namespace="themoviedb" :data='{"path":"/collection/:id/:lang?","categories":["multimedia"],"example":"/themoviedb/collection/131292/en-US","parameters":{"id":"Collection ID","lang":"Language"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Collection","maintainers":["x2cf"],"location":"collection.ts"}' :test='{"code":1,"message":"expected 345062690002 to be less than 311040000000"}' />
 
 ### Sheet <Site url="themoviedb.org" size="sm" />
 
-<Route namespace="themoviedb" :data='{"path":"/:mediaType/:sheet/:lang?","categories":["multimedia"],"example":"/themoviedb/tv/top-rated/en-US","parameters":{"mediaType":"`movie` or `tv`","sheet":"Sheet, see below","lang":"Language"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Sheet","maintainers":["x2cf"],"description":"When `mediaType` is `tv`, `sheet` should be:\n\n  | Airing Today | On TV      | Top Rated |\n  | ------------ | ---------- | --------- |\n  | airing-today | on-the-air | top-rated |\n\n  When `mediaType` is `movie`, `sheet` should be:\n\n  | Now Playing | Upcoming | Top Rated |\n  | ----------- | -------- | --------- |\n  | now-playing | upcoming | top-rated |","location":"sheet.ts"}' :test='{"code":1,"message":"expected 325345181477 to be less than 311040000000"}' />
+<Route namespace="themoviedb" :data='{"path":"/:mediaType/:sheet/:lang?","categories":["multimedia"],"example":"/themoviedb/tv/top-rated/en-US","parameters":{"mediaType":"`movie` or `tv`","sheet":"Sheet, see below","lang":"Language"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Sheet","maintainers":["x2cf"],"description":"When `mediaType` is `tv`, `sheet` should be:\n\n  | Airing Today | On TV      | Top Rated |\n  | ------------ | ---------- | --------- |\n  | airing-today | on-the-air | top-rated |\n\n  When `mediaType` is `movie`, `sheet` should be:\n\n  | Now Playing | Upcoming | Top Rated |\n  | ----------- | -------- | --------- |\n  | now-playing | upcoming | top-rated |","location":"sheet.ts"}' :test='{"code":1,"message":"expected 325363490176 to be less than 311040000000"}' />
 
 When `mediaType` is `tv`, `sheet` should be:
 
@@ -783,7 +783,7 @@ When `mediaType` is `tv`, `sheet` should be:
 
 ### Trending <Site url="themoviedb.org" size="sm" />
 
-<Route namespace="themoviedb" :data='{"path":"/trending/:mediaType/:timeWindow/:lang?","categories":["multimedia"],"example":"/themoviedb/trending/tv/day/en-US","parameters":{"mediaType":"`movie` or `tv`","timeWindow":"`day` or `week`","lang":"Language"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Trending","maintainers":["x2cf"],"location":"trending.ts"}' :test='{"code":1,"message":"expected 345994781551 to be less than 311040000000"}' />
+<Route namespace="themoviedb" :data='{"path":"/trending/:mediaType/:timeWindow/:lang?","categories":["multimedia"],"example":"/themoviedb/trending/tv/day/en-US","parameters":{"mediaType":"`movie` or `tv`","timeWindow":"`day` or `week`","lang":"Language"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Trending","maintainers":["x2cf"],"location":"trending.ts"}' :test='{"code":1,"message":"expected 346013090124 to be less than 311040000000"}' />
 
 ## U9A9 <Site url="u3c3.com"/>
 
@@ -799,7 +799,7 @@ When `mediaType` is `tv`, `sheet` should be:
 
 ### 播客 <Site url="m.ajmide.com" size="sm" />
 
-<Route namespace="ajmide" :data='{"path":"/:id","categories":["multimedia"],"example":"/ajmide/10603594","parameters":{"id":"播客 id，可以从播客页面 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"播客","maintainers":["Fatpandac"],"location":"index.ts"}' :test='{"code":0}' />
+<Route namespace="ajmide" :data='{"path":"/:id","categories":["multimedia"],"example":"/ajmide/10603594","parameters":{"id":"播客 id，可以从播客页面 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"播客","maintainers":["Fatpandac"],"location":"index.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 ## 爱奇艺 <Site url="iq.com"/>
 
@@ -889,7 +889,7 @@ When `mediaType` is `tv`, `sheet` should be:
 
 ### 分区帖子 <Site url="t66y.com" size="sm" />
 
-<Route namespace="t66y" :data='{"path":"/:id/:type?","categories":["multimedia"],"example":"/t66y/20/2","parameters":{"id":"分区 id, 可在分区页 URL 中找到","type":"类型 id, 可在分区类型过滤后的 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"分区帖子","maintainers":["zhboner"],"description":"> 注意：并非所有的分区都有子类型，可以参考成人文学交流区的 `古典武侠` 这一子类型。\n\n  | 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |\n  | -------------- | -------------- | ---------- | ---------- | ---------- |\n  | 2              | 15             | 4          | 5          | 25         |\n\n  | 中字原创区 | 转帖交流区 | HTTP 下载区 | 在线成人区 |\n  | ---------- | ---------- | ----------- | ---------- |\n  | 26         | 27         | 21          | 22         |\n\n  | 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 | 成人文学交流 |\n  | ---------- | ------------ | ------------ | ------------ |\n  | 7          | 8            | 16           | 20           |","location":"index.ts"}' :test='{"code":1,"message":"expected 1709497345852 to be less than 311040000000"}' />
+<Route namespace="t66y" :data='{"path":"/:id/:type?","categories":["multimedia"],"example":"/t66y/20/2","parameters":{"id":"分区 id, 可在分区页 URL 中找到","type":"类型 id, 可在分区类型过滤后的 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"分区帖子","maintainers":["zhboner"],"description":"> 注意：并非所有的分区都有子类型，可以参考成人文学交流区的 `古典武侠` 这一子类型。\n\n  | 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |\n  | -------------- | -------------- | ---------- | ---------- | ---------- |\n  | 2              | 15             | 4          | 5          | 25         |\n\n  | 中字原创区 | 转帖交流区 | HTTP 下载区 | 在线成人区 |\n  | ---------- | ---------- | ----------- | ---------- |\n  | 26         | 27         | 21          | 22         |\n\n  | 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 | 成人文学交流 |\n  | ---------- | ------------ | ------------ | ------------ |\n  | 7          | 8            | 16           | 20           |","location":"index.ts"}' :test='{"code":1,"message":"expected 1709515651888 to be less than 311040000000"}' />
 
 > 注意：并非所有的分区都有子类型，可以参考成人文学交流区的 `古典武侠` 这一子类型。
 
@@ -969,7 +969,7 @@ When `mediaType` is `tv`, `sheet` should be:
 
 ### 影视资讯 <Site url="yysub.net" size="sm" />
 
-<Route namespace="yyets" :data='{"path":"/article/:type?","categories":["multimedia"],"example":"/yyets/article","parameters":{"type":"["},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"影视资讯","maintainers":["wb121017405"],"description":"| 全部 | 影视资讯 | 收视快报 | 人人影评  | 人人剧评  | 新剧评测    | 片单推荐 |\n  | ---- | -------- | -------- | --------- | --------- | ----------- | -------- |\n  |      | news     | report   | m_review | t_review | new_review | recom    |","location":"article.ts"}' :test='{"code":0}' />
+<Route namespace="yyets" :data='{"path":"/article/:type?","categories":["multimedia"],"example":"/yyets/article","parameters":{"type":"["},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"影视资讯","maintainers":["wb121017405"],"description":"| 全部 | 影视资讯 | 收视快报 | 人人影评  | 人人剧评  | 新剧评测    | 片单推荐 |\n  | ---- | -------- | -------- | --------- | --------- | ----------- | -------- |\n  |      | news     | report   | m_review | t_review | new_review | recom    |","location":"article.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 | 全部 | 影视资讯 | 收视快报 | 人人影评  | 人人剧评  | 新剧评测    | 片单推荐 |
   | ---- | -------- | -------- | --------- | --------- | ----------- | -------- |
@@ -1147,13 +1147,13 @@ When `mediaType` is `tv`, `sheet` should be:
 
 ### 频道 <Site url="i.youku.com" size="sm" />
 
-<Route namespace="youku" :data='{"path":"/channel/:channelId/:embed?","categories":["multimedia"],"example":"/youku/channel/UNTg3MTM3OTcy","parameters":{"channelId":"频道 id","embed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["i.youku.com/i/:id"],"target":"/channel/:id"}],"name":"频道","maintainers":["xyqfer","Fatpandac"],"location":"channel.ts"}' :test='{"code":1,"message":"expected &#39;RSSHub&#39; not to be &#39;RSSHub&#39; // Object.is equality"}' />
+<Route namespace="youku" :data='{"path":"/channel/:channelId/:embed?","categories":["multimedia"],"example":"/youku/channel/UNTg3MTM3OTcy","parameters":{"channelId":"频道 id","embed":"默认为开启内嵌视频, 任意值为关闭"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["i.youku.com/i/:id"],"target":"/channel/:id"}],"name":"频道","maintainers":["xyqfer","Fatpandac"],"location":"channel.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ## 云听 <Site url="radio.cn"/>
 
 ### 节目 <Site url="radio.cn" size="sm" />
 
-<Route namespace="radio" :data='{"path":"/:id","categories":["multimedia"],"example":"/radio/1552135","parameters":{"id":"专辑 id，可在对应专辑页面的 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":true,"supportScihub":false},"name":"节目","maintainers":["kt286","nczitzk"],"description":"如果订阅 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)，其 URL 为 `https://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135`，可以得到 `columnId` 为 `1552135`\n\n  所以对应路由为 [`/radio/1552135`](https://rsshub.app/radio/1552135)\n\n  :::tip\n  该路由仅适用于更新时间较早的电台节目，如 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)\n\n  与适用于 [专辑](#yun-ting-zhuan-ji) 路由的专辑其 `columnId` 长度相比，它们的 `columnId` 长度较短\n  :::","location":"index.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="radio" :data='{"path":"/:id","categories":["multimedia"],"example":"/radio/1552135","parameters":{"id":"专辑 id，可在对应专辑页面的 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":true,"supportScihub":false},"name":"节目","maintainers":["kt286","nczitzk"],"description":"如果订阅 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)，其 URL 为 `https://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135`，可以得到 `columnId` 为 `1552135`\n\n  所以对应路由为 [`/radio/1552135`](https://rsshub.app/radio/1552135)\n\n  :::tip\n  该路由仅适用于更新时间较早的电台节目，如 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)\n\n  与适用于 [专辑](#yun-ting-zhuan-ji) 路由的专辑其 `columnId` 长度相比，它们的 `columnId` 长度较短\n  :::","location":"index.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 如果订阅 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)，其 URL 为 `https://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135`，可以得到 `columnId` 为 `1552135`
 

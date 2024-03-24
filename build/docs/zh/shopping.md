@@ -98,11 +98,11 @@ Country
 
 ### UK - New Product Release <Site url="ikea.com/gb/en/new/new-products/" size="sm" />
 
-<Route namespace="ikea" :data='{"path":"/gb/new","categories":["shopping"],"example":"/ikea/gb/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ikea.com/gb/en/new/new-products/","ikea.com/"]}],"name":"UK - New Product Release","maintainers":["HenryQW"],"url":"ikea.com/gb/en/new/new-products/","location":"gb/new.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="ikea" :data='{"path":"/gb/new","categories":["shopping"],"example":"/ikea/gb/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ikea.com/gb/en/new/new-products/","ikea.com/"]}],"name":"UK - New Product Release","maintainers":["HenryQW"],"url":"ikea.com/gb/en/new/new-products/","location":"gb/new.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ### UK - Offers <Site url="ikea.com/gb/en/offers" size="sm" />
 
-<Route namespace="ikea" :data='{"path":"/gb/offer","categories":["shopping"],"example":"/ikea/gb/offer","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ikea.com/gb/en/offers","ikea.com/"]}],"name":"UK - Offers","maintainers":["HenryQW"],"url":"ikea.com/gb/en/offers","location":"gb/offer.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="ikea" :data='{"path":"/gb/offer","categories":["shopping"],"example":"/ikea/gb/offer","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["ikea.com/gb/en/offers","ikea.com/"]}],"name":"UK - Offers","maintainers":["HenryQW"],"url":"ikea.com/gb/en/offers","location":"gb/offer.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ### 中国 - 会员特惠 <Site url="ikea.cn/cn/zh/offers/family-offers" size="sm" />
 
@@ -189,7 +189,7 @@ Category
 
 ### New Arrivals <Site url="www.uniqlo.com" size="sm" />
 
-<Route namespace="uniqlo" :data='{"path":"/new/:country/:category","categories":["shopping"],"example":"/uniqlo/new/sg/men","parameters":{"country":"currently only supports sg, us, jp","category":"supports `men` `women`, `kids`, `baby`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"New Arrivals","maintainers":["DIYgod"],"location":"new.ts"}' :test='{"code":0}' />
+<Route namespace="uniqlo" :data='{"path":"/new/:country/:category","categories":["shopping"],"example":"/uniqlo/new/sg/men","parameters":{"country":"currently only supports sg, us, jp","category":"supports `men` `women`, `kids`, `baby`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"New Arrivals","maintainers":["DIYgod"],"location":"new.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 ## Zagg <Site url="zagg.com"/>
 
@@ -249,7 +249,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 众筹 <Site url="modian.com" size="sm" />
 
-<Route namespace="modian" :data='{"path":"/zhongchou/:category?/:sort?/:status?","categories":["shopping"],"example":"/modian/zhongchou","parameters":{"category":"分类，见下表，默认为全部","sort":"排序，见下表，默认为最新上线","status":"状态，见下表，默认为全部"},"name":"众筹","maintainers":["nczitzk"],"description":"分类\n\n    | 全部 | 游戏  | 动漫   | 出版       | 桌游       |\n    | ---- | ----- | ------ | ---------- | ---------- |\n    | all  | games | comics | publishing | tablegames |\n\n    | 卡牌  | 潮玩模型 | 影视       | 音乐  | 活动       |\n    | ----- | -------- | ---------- | ----- | ---------- |\n    | cards | toys     | film-video | music | activities |\n\n    | 设计   | 科技       | 食品 | 爱心通道 | 动物救助 |\n    | ------ | ---------- | ---- | -------- | -------- |\n    | design | technology | food | charity  | animals  |\n\n    | 个人愿望 | 其他   |\n    | -------- | ------ |\n    | wishes   | others |\n\n    排序\n\n    | 最新上线  | 金额最高   | 评论最多     |\n    | --------- | ---------- | ------------ |\n    | top_time | top_money | top_comment |\n\n    状态\n\n    | 全部 | 创意 | 预热    | 众筹中 | 众筹成功 |\n    | ---- | ---- | ------- | ------ | -------- |\n    | all  | idea | preheat | going  | success  |","radar":[{"source":["zhongchou.modian.com/:category/:sort/:status"]}],"location":"zhongchou.ts"}' :test='{"code":1,"message":"expected -880025847 to be greater than -432000000"}' />
+<Route namespace="modian" :data='{"path":"/zhongchou/:category?/:sort?/:status?","categories":["shopping"],"example":"/modian/zhongchou","parameters":{"category":"分类，见下表，默认为全部","sort":"排序，见下表，默认为最新上线","status":"状态，见下表，默认为全部"},"name":"众筹","maintainers":["nczitzk"],"description":"分类\n\n    | 全部 | 游戏  | 动漫   | 出版       | 桌游       |\n    | ---- | ----- | ------ | ---------- | ---------- |\n    | all  | games | comics | publishing | tablegames |\n\n    | 卡牌  | 潮玩模型 | 影视       | 音乐  | 活动       |\n    | ----- | -------- | ---------- | ----- | ---------- |\n    | cards | toys     | film-video | music | activities |\n\n    | 设计   | 科技       | 食品 | 爱心通道 | 动物救助 |\n    | ------ | ---------- | ---- | -------- | -------- |\n    | design | technology | food | charity  | animals  |\n\n    | 个人愿望 | 其他   |\n    | -------- | ------ |\n    | wishes   | others |\n\n    排序\n\n    | 最新上线  | 金额最高   | 评论最多     |\n    | --------- | ---------- | ------------ |\n    | top_time | top_money | top_comment |\n\n    状态\n\n    | 全部 | 创意 | 预热    | 众筹中 | 众筹成功 |\n    | ---- | ---- | ------- | ------ | -------- |\n    | all  | idea | preheat | going  | success  |","radar":[{"source":["zhongchou.modian.com/:category/:sort/:status"]}],"location":"zhongchou.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 分类
 
@@ -291,7 +291,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 演出月历 <Site url="shoac.com.cn/" size="sm" />
 
-<Route namespace="shoac" :data='{"path":"/recent-show","categories":["shopping"],"example":"/shoac/recent-show","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["shoac.com.cn/"]}],"name":"演出月历","maintainers":["TonyRL"],"url":"shoac.com.cn/","location":"recent-show.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="shoac" :data='{"path":"/recent-show","categories":["shopping"],"example":"/shoac/recent-show","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["shoac.com.cn/"]}],"name":"演出月历","maintainers":["TonyRL"],"url":"shoac.com.cn/","location":"recent-show.ts"}' :test='{"code":0}' />
 
 ## 什么值得买 <Site url="post.smzdm.com"/>
 

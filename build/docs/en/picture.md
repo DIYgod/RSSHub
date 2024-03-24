@@ -1,5 +1,21 @@
 # 🖼️ Picture
 
+## 1x.com <Site url="1x.com"/>
+
+1x.com • In Pursuit of the Sublime. Browse 200,000 curated photos from photographers all over the world.
+
+### Gallery <Site url="1x.com" size="sm" />
+
+<Route namespace="1x" :data='{"path":"/:category{.+}?","name":"Gallery","url":"1x.com","maintainers":["nczitzk"],"example":"/1x/latest/awarded","parameters":{"category":"Category, Latest Awarded by default"},"description":"::: tip\nFill in the field in the path with the part of the corresponding page URL after `https://1x.com/gallery/` or `https://1x.com/photo/`. Here are the examples:\n\nIf you subscribe to [Abstract Awarded](https://1x.com/gallery/abstract/awarded), you should fill in the path with the part `abstract/awarded` from the page URL `https://1x.com/gallery/abstract/awarded`. In this case, the route will be [`/1x/abstract/awarded`](https://rsshub.app/1x/abstract/awarded).\n    \nIf you subscribe to [Wildlife Published](https://1x.com/gallery/wildlife/published), you should fill in the path with the part `wildlife/published` from the page URL `https://1x.com/gallery/wildlife/published`. In this case, the route will be [`/1x/wildlife/published`](https://rsshub.app/1x/wildlife/published).\n:::","categories":["design","picture"],"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportRadar":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["/gallery/:category*","/photos/:category*"],"target":"/1x/:category"}],"location":"index.ts"}' :test='undefined' />
+
+::: tip
+Fill in the field in the path with the part of the corresponding page URL after `https://1x.com/gallery/` or `https://1x.com/photo/`. Here are the examples:
+
+If you subscribe to [Abstract Awarded](https://1x.com/gallery/abstract/awarded), you should fill in the path with the part `abstract/awarded` from the page URL `https://1x.com/gallery/abstract/awarded`. In this case, the route will be [`/1x/abstract/awarded`](https://rsshub.app/1x/abstract/awarded).
+    
+If you subscribe to [Wildlife Published](https://1x.com/gallery/wildlife/published), you should fill in the path with the part `wildlife/published` from the page URL `https://1x.com/gallery/wildlife/published`. In this case, the route will be [`/1x/wildlife/published`](https://rsshub.app/1x/wildlife/published).
+:::
+
 ## 500px 摄影社区 <Site url="500px.com.cn"/>
 
 ### 部落影集 <Site url="500px.com.cn" size="sm" />

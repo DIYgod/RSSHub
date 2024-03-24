@@ -1,5 +1,21 @@
 # 🎨️ Design
 
+## 1x.com <Site url="1x.com"/>
+
+1x.com • In Pursuit of the Sublime. Browse 200,000 curated photos from photographers all over the world.
+
+### Gallery <Site url="1x.com" size="sm" />
+
+<Route namespace="1x" :data='{"path":"/:category{.+}?","name":"Gallery","url":"1x.com","maintainers":["nczitzk"],"example":"/1x/latest/awarded","parameters":{"category":"Category, Latest Awarded by default"},"description":"::: tip\nFill in the field in the path with the part of the corresponding page URL after `https://1x.com/gallery/` or `https://1x.com/photo/`. Here are the examples:\n\nIf you subscribe to [Abstract Awarded](https://1x.com/gallery/abstract/awarded), you should fill in the path with the part `abstract/awarded` from the page URL `https://1x.com/gallery/abstract/awarded`. In this case, the route will be [`/1x/abstract/awarded`](https://rsshub.app/1x/abstract/awarded).\n    \nIf you subscribe to [Wildlife Published](https://1x.com/gallery/wildlife/published), you should fill in the path with the part `wildlife/published` from the page URL `https://1x.com/gallery/wildlife/published`. In this case, the route will be [`/1x/wildlife/published`](https://rsshub.app/1x/wildlife/published).\n:::","categories":["design","picture"],"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportRadar":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["/gallery/:category*","/photos/:category*"],"target":"/1x/:category"}],"location":"index.ts"}' :test='undefined' />
+
+::: tip
+Fill in the field in the path with the part of the corresponding page URL after `https://1x.com/gallery/` or `https://1x.com/photo/`. Here are the examples:
+
+If you subscribe to [Abstract Awarded](https://1x.com/gallery/abstract/awarded), you should fill in the path with the part `abstract/awarded` from the page URL `https://1x.com/gallery/abstract/awarded`. In this case, the route will be [`/1x/abstract/awarded`](https://rsshub.app/1x/abstract/awarded).
+    
+If you subscribe to [Wildlife Published](https://1x.com/gallery/wildlife/published), you should fill in the path with the part `wildlife/published` from the page URL `https://1x.com/gallery/wildlife/published`. In this case, the route will be [`/1x/wildlife/published`](https://rsshub.app/1x/wildlife/published).
+:::
+
 ## Behance <Site url="www.behance.net"/>
 
 ### User Works <Site url="www.behance.net" size="sm" />
@@ -56,7 +72,7 @@ Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://
 
 ### Works <Site url="notefolio.net/search" size="sm" />
 
-<Route namespace="notefolio" :data='{"path":"/search/:category?/:order?/:time?/:query?","categories":["design"],"example":"/notefolio/search/1/pick/all/life","parameters":{"category":"Category, see below, `all` by default","order":"Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default","time":"Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default","query":"Keyword, empty by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["notefolio.net/search"]}],"name":"Works","maintainers":["BianTan"],"url":"notefolio.net/search","description":"| Category | Name in Korean     | Name in English         |\n  | -------- | ------------------ | ----------------------- |\n  | all      | 전체               | All                     |\n  | 1        | 영상/모션그래픽    | Video / Motion Graphics |\n  | 2        | 그래픽 디자인      | Graphic Design          |\n  | 3        | 브랜딩/편집        | Branding / Editing      |\n  | 4        | UI/UX              | UI/UX                   |\n  | 5        | 일러스트레이션     | Illustration            |\n  | 6        | 디지털 아트        | Digital Art             |\n  | 7        | 캐릭터 디자인      | Character Design        |\n  | 8        | 제품/패키지 디자인 | Product Package Design  |\n  | 9        | 포토그래피         | Photography             |\n  | 10       | 타이포그래피       | Typography              |\n  | 11       | 공예               | Crafts                  |\n  | 12       | 파인아트           | Fine Art                |","location":"search.ts"}' :test='{"code":0}' />
+<Route namespace="notefolio" :data='{"path":"/search/:category?/:order?/:time?/:query?","categories":["design"],"example":"/notefolio/search/1/pick/all/life","parameters":{"category":"Category, see below, `all` by default","order":"Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default","time":"Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default","query":"Keyword, empty by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["notefolio.net/search"]}],"name":"Works","maintainers":["BianTan"],"url":"notefolio.net/search","description":"| Category | Name in Korean     | Name in English         |\n  | -------- | ------------------ | ----------------------- |\n  | all      | 전체               | All                     |\n  | 1        | 영상/모션그래픽    | Video / Motion Graphics |\n  | 2        | 그래픽 디자인      | Graphic Design          |\n  | 3        | 브랜딩/편집        | Branding / Editing      |\n  | 4        | UI/UX              | UI/UX                   |\n  | 5        | 일러스트레이션     | Illustration            |\n  | 6        | 디지털 아트        | Digital Art             |\n  | 7        | 캐릭터 디자인      | Character Design        |\n  | 8        | 제품/패키지 디자인 | Product Package Design  |\n  | 9        | 포토그래피         | Photography             |\n  | 10       | 타이포그래피       | Typography              |\n  | 11       | 공예               | Crafts                  |\n  | 12       | 파인아트           | Fine Art                |","location":"search.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 | Category | Name in Korean     | Name in English         |
   | -------- | ------------------ | ----------------------- |
@@ -84,7 +100,7 @@ Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://
 
 ### 最新 H5 <Site url="iguoguo.net" size="sm" />
 
-<Route namespace="iguoguo" :data='{"path":"/html5","categories":["design"],"example":"/iguoguo/html5","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"最新 H5","maintainers":["yuxinliu-alex"],"location":"index.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="iguoguo" :data='{"path":"/html5","categories":["design"],"example":"/iguoguo/html5","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"最新 H5","maintainers":["yuxinliu-alex"],"location":"index.ts"}' :test='{"code":0}' />
 
 ## 站酷 <Site url="www.zcool.com.cn"/>
 
