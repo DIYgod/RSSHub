@@ -6,18 +6,23 @@ import { config } from '@/config';
 
 process.env.ALLOW_USER_SUPPLY_UNSAFE_DOMAIN = 'true';
 
-const criticalRoutes = ['/test/1', '/test/cache'];
+const routes = {
+    '/test/:id': '/test/1',
+};
 if (process.env.FULL_ROUTES_TEST) {
-    // eslint-disable-next-line n/no-unpublished-require
-    const namespaces = require('../assets/build/routes.json');
+    const { namespaces } = await import('@/registry');
     for (const namespace in namespaces) {
         for (const route in namespaces[namespace].routes) {
-            const configs = namespaces[namespace].routes[route].features?.requireConfig
-                ?.filter((config) => !config.optional)
-                .map?.((config) => config.name)
-                .filter((name) => name !== 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN');
-            if (namespaces[namespace].routes[route].example || !configs?.length) {
-                criticalRoutes.push(namespaces[namespace].routes[route].example);
+            const requireConfig = namespaces[namespace].routes[route].features?.requireConfig;
+            let configs;
+            if (typeof requireConfig !== 'boolean') {
+                configs = requireConfig
+                    ?.filter((config) => !config.optional)
+                    .map((config) => config.name)
+                    .filter((name) => name !== 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN');
+            }
+            if (namespaces[namespace].routes[route].example && !configs?.length) {
+                routes[`/${namespace}${route}`] = namespaces[namespace].routes[route].example;
             }
         }
     }
@@ -63,9 +68,9 @@ async function checkRSS(response) {
 }
 
 describe('routes', () => {
-    for (const route of criticalRoutes) {
-        it.concurrent(`critical routes: ${route}`, async () => {
-            const response = await app.request(route);
+    for (const route in routes) {
+        it.concurrent(route, async () => {
+            const response = await app.request(routes[route]);
             expect(response.status).toBe(200);
             await checkRSS(response);
         });
