@@ -4,7 +4,7 @@
 
 ### News <Site url="bmkg.go.id/" size="sm" />
 
-<Route namespace="bmkg" :data='{"path":"/news","categories":["forecast"],"example":"/bmkg/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bmkg.go.id/","bmkg.go.id/berita"]}],"name":"News","maintainers":["Shinanory"],"url":"bmkg.go.id/","location":"news.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="bmkg" :data='{"path":"/news","categories":["forecast"],"example":"/bmkg/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bmkg.go.id/","bmkg.go.id/berita"]}],"name":"News","maintainers":["Shinanory"],"url":"bmkg.go.id/","location":"news.ts"}' :test='{"code":0}' />
 
 ### Recent Earthquakes <Site url="bmkg.go.id/" size="sm" />
 
@@ -14,7 +14,7 @@
 
 ### Report <Site url="outage.report" size="sm" />
 
-<Route namespace="outagereport" :data='{"path":"/:name/:count?","categories":["forecast"],"example":"/outagereport/ubisoft/5","parameters":{"name":"Service name, spelling format must be consistent with URL","count":"Counting threshold, will only be written in RSS if the number of people who report to stop serving is not less than this number"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Report","maintainers":["cxumol","nczitzk"],"description":"Please skip the local service area code for `name`, for example `https://outage.report/us/verizon-wireless` to `verizon-wireless`.","location":"index.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="outagereport" :data='{"path":"/:name/:count?","categories":["forecast"],"example":"/outagereport/ubisoft/5","parameters":{"name":"Service name, spelling format must be consistent with URL","count":"Counting threshold, will only be written in RSS if the number of people who report to stop serving is not less than this number"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Report","maintainers":["cxumol","nczitzk"],"description":"Please skip the local service area code for `name`, for example `https://outage.report/us/verizon-wireless` to `verizon-wireless`.","location":"index.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 Please skip the local service area code for `name`, for example `https://outage.report/us/verizon-wireless` to `verizon-wireless`.
 
@@ -84,7 +84,7 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 ### 广州市 <Site url="swj.dl.gov.cn" size="sm" />
 
-<Route namespace="tingshuitz" :data='{"path":"/guangzhou","categories":["forecast"],"example":"/tingshuitz/guangzhou","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"广州市","maintainers":["xyqfer"],"location":"guangzhou.ts"}' :test='{"code":0}' />
+<Route namespace="tingshuitz" :data='{"path":"/guangzhou","categories":["forecast"],"example":"/tingshuitz/guangzhou","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"广州市","maintainers":["xyqfer"],"location":"guangzhou.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 ### 杭州市 <Site url="www.hzwgc.com/public/stop_the_water" size="sm" />
 
@@ -106,7 +106,7 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 ### 萧山区 <Site url="www.xswater.com/gongshui/channels/227.html" size="sm" />
 
-<Route namespace="tingshuitz" :data='{"path":"/xiaoshan","categories":["forecast"],"example":"/tingshuitz/xiaoshan","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.xswater.com/gongshui/channels/227.html","www.xswater.com/"]}],"name":"萧山区","maintainers":["znhocn"],"url":"www.xswater.com/gongshui/channels/227.html","location":"xiaoshan.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="tingshuitz" :data='{"path":"/xiaoshan","categories":["forecast"],"example":"/tingshuitz/xiaoshan","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["www.xswater.com/gongshui/channels/227.html","www.xswater.com/"]}],"name":"萧山区","maintainers":["znhocn"],"url":"www.xswater.com/gongshui/channels/227.html","location":"xiaoshan.ts"}' :test='{"code":0}' />
 
 ### 阳江市 <Site url="yjsswjt.com/zxdt_list.jsp" size="sm" />
 
@@ -230,5 +230,5 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 ### 停气检修通知 <Site url="cqgas.cn/" size="sm" />
 
-<Route namespace="cqgas" :data='{"path":"/tqtz","categories":["forecast"],"example":"/cqgas/tqtz","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["cqgas.cn/"]}],"name":"停气检修通知","maintainers":["Mai19930513"],"url":"cqgas.cn/","location":"tqtz.ts"}' :test='{"code":0}' />
+<Route namespace="cqgas" :data='{"path":"/tqtz","categories":["forecast"],"example":"/cqgas/tqtz","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["cqgas.cn/"]}],"name":"停气检修通知","maintainers":["Mai19930513"],"url":"cqgas.cn/","location":"tqtz.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
