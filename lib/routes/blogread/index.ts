@@ -5,7 +5,7 @@ import * as cheerio from 'cheerio';
 export const route: Route = {
     path: '/newest',
     categories: ['programming'],
-    example: '/newest',
+    example: '/blogread/newest',
     radar: [
         {
             source: ['blogread.cn/news/newest.php'],
