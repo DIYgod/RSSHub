@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import cherrio from 'cheerio';
+import * as cheerio from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -32,7 +32,7 @@ async function handler() {
     const link = 'https://telegram.org/blog';
 
     const res = await got(link);
-    const $$ = cherrio.load(res.body);
+    const $$ = cheerio.load(res.body);
 
     const items = await Promise.all(
         $$('.dev_blog_card_link_wrap')
@@ -42,7 +42,7 @@ async function handler() {
                 const link = 'https://telegram.org' + $.attr('href');
                 return cache.tryGet(link, async () => {
                     const result = await got(link);
-                    const $ = cherrio.load(result.body);
+                    const $ = cheerio.load(result.body);
                     return {
                         title: $('#dev_page_title').text(),
                         link,
