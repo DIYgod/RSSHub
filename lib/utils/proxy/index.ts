@@ -1,4 +1,7 @@
 import { config } from '@/config';
+import { PacProxyAgent } from 'pac-proxy-agent';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+import { SocksProxyAgent } from 'socks-proxy-agent';
 
 const proxyIsPAC = config.pacUri || config.pacScript;
 
@@ -20,16 +23,13 @@ if (proxyIsPAC) {
     proxyUrlHandler = proxy.proxyUrlHandler;
 }
 
-let agent = null;
+let agent: PacProxyAgent<string> | HttpsProxyAgent<string> | SocksProxyAgent | null = null;
 if (proxyIsPAC) {
-    const { PacProxyAgent } = require('pac-proxy-agent');
     agent = new PacProxyAgent(`pac+${proxyUri}`);
 } else if (proxyUri) {
     if (proxyUri.startsWith('http')) {
-        const { HttpsProxyAgent } = require('https-proxy-agent');
         agent = new HttpsProxyAgent(proxyUri);
     } else if (proxyUri.startsWith('socks')) {
-        const { SocksProxyAgent } = require('socks-proxy-agent');
         agent = new SocksProxyAgent(proxyUri);
     }
 }
