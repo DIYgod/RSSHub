@@ -94,7 +94,11 @@ function generateMd(lang) {
     const md = {};
     for (const category in docs) {
         const nameObj = categories.find((c) => c.link.includes(category));
-        md[category] = `# ${`${nameObj!.icon} ${nameObj![lang]}`}\n\n`;
+        if (!nameObj) {
+            throw new Error(`Category not found: ${category}, please double check your spelling.`);
+        }
+
+        md[category] = `# ${`${nameObj.icon} ${nameObj[lang]}`}\n\n`;
 
         const namespaces = Object.keys(docs[category]).sort((a, b) => {
             const aname = docs[category][a].name[0];
