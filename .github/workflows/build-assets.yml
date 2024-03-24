@@ -33,7 +33,11 @@ jobs:
       - name: Install dependencies (yarn)
         run: pnpm i
       - name: Build assets
-        run: npm run build
+        run: pnpm build
+      - name: Build full routes test result
+        run: pnpm vitest:fullroutes
+      - name: Build docs
+        run: pnpm build:docs
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"

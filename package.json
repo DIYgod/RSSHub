@@ -22,6 +22,7 @@
     "type": "module",
     "scripts": {
         "build": "tsx scripts/workflow/build-routes.ts",
+        "build:docs": "tsx scripts/workflow/build-docs.ts",
         "dev": "NODE_ENV=dev tsx watch --no-cache lib/index.ts",
         "dev:cache": "NODE_ENV=production tsx watch lib/index.ts",
         "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --write",
