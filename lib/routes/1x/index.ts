@@ -92,7 +92,7 @@ export const route: Route = {
     url: '1x.com',
     maintainers: ['nczitzk'],
     handler,
-    example: '/1x/:category?',
+    example: '/1x/latest/awarded',
     parameters: { category: 'Category, Latest Awarded by default' },
     description: `::: tip
 Fill in the field in the path with the part of the corresponding page URL after \`https://1x.com/gallery/\` or \`https://1x.com/photo/\`. Here are the examples:
