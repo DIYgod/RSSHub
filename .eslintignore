@@ -2,4 +2,4 @@ coverage
 .vscode
 docker-compose.yml
 !/.github
-!/docs/.vuepress
+lib/routes-deprecated
