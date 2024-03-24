@@ -1,18 +1,46 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
-        "moduleResolution": "Bundler",
-        "strict": true,
-        "jsx": "react-jsx",
-        "jsxImportSource": "hono/jsx",
-        "paths": {
-            "@/*": ["./lib/*"]
-        },
-        "esModuleInterop": true,
-        "noImplicitAny": false,
-        "outDir": "./dist"
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "jsxImportSource": "hono/jsx",
+    "paths": {
+      "@/*": [
+        "./lib/*"
+      ]
     },
-    "include": ["./lib/**/*", "./api/vercel.ts"],
-    "exclude": ["node_modules", "*.test.*"]
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "outDir": "./dist",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "./lib/**/*.ts",
+    "./lib/**/*.tsx",
+    "./app/**/*.ts",
+    "./app/**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "*.test.*"
+  ]
 }
