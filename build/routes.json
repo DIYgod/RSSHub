@@ -7447,6 +7447,31 @@
     "name": "Blizzard",
     "url": "news.blizzard.com"
   },
+  "blogread": {
+    "routes": {
+      "/newest": {
+        "path": "/newest",
+        "categories": [
+          "programming"
+        ],
+        "example": "/blogread/newest",
+        "radar": [
+          {
+            "source": [
+              "blogread.cn/news/newest.php"
+            ]
+          }
+        ],
+        "name": "最新文章",
+        "maintainers": [
+          "fashioncj"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "技术头条",
+    "url": "blogread.cn"
+  },
   "bloomberg": {
     "routes": {
       "/authors/:id/:slug/:source?": {

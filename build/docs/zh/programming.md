@@ -764,6 +764,12 @@ GitHub provides some official RSS feeds:
   | blog    | 专栏 |
   | u       | 用户 |
 
+## 技术头条 <Site url="blogread.cn"/>
+
+### 最新文章 <Site url="blogread.cn" size="sm" />
+
+<Route namespace="blogread" :data='{"path":"/newest","categories":["programming"],"example":"/blogread/newest","radar":[{"source":["blogread.cn/news/newest.php"]}],"name":"最新文章","maintainers":["fashioncj"],"location":"index.ts"}' :test='undefined' />
+
 ## 掘金 <Site url="juejin.cn"/>
 
 ### 标签 <Site url="juejin.cn" size="sm" />

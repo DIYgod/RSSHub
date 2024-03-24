@@ -1680,6 +1680,19 @@
       }
     ]
   },
+  "blogread.cn": {
+    "_name": "技术头条",
+    ".": [
+      {
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/news/newest.php"
+        ],
+        "target": "/blogread/newest"
+      }
+    ]
+  },
   "bloomberg.com": {
     "_name": "Bloomberg",
     "www": [
