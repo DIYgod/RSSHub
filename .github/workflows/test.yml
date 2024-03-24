@@ -5,7 +5,6 @@ on:
     branches-ignore:
       - 'dependabot/**'
     paths:
-      - 'test/**'
       - 'lib/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
@@ -43,6 +42,8 @@ jobs:
         run: pnpm i
       - name: Run postinstall script for dependencies
         run: pnpm rb
+      - name: Build routes
+        run: pnpm build
       - name: Test all and generate coverage
         run: pnpm run vitest:coverage
         env:
@@ -84,6 +85,8 @@ jobs:
         run: pnpm i
       - name: Run postinstall script for dependencies
         run: pnpm rb
+      - name: Build routes
+        run: pnpm build
       - name: Install Chromium
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
