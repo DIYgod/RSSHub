@@ -11,8 +11,6 @@ updates:
     ignore:
       - dependency-name: jsrsasign
         versions: ['>=11.0.0'] # no longer includes KJUR.crypto.Cipher for RSA
-      - dependency-name: unified
-        versions: ['>=10.0.0']
 
   - package-ecosystem: 'github-actions'
     directory: '/'

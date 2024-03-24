@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build assets
-    timeout-minutes: 5
+    timeout-minutes: 60
     permissions:
       contents: write
     steps:
@@ -33,13 +33,9 @@ jobs:
       - name: Install dependencies (yarn)
         run: pnpm i
       - name: Build assets
-        run: npm run build
-      - name: Commit files
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git status
-          git diff-index --quiet HEAD || (git commit -m "chore: auto build" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master)
+        run: pnpm build
+      - name: Build docs
+        run: pnpm build:docs
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -57,6 +53,8 @@ jobs:
         run: |
           cp -r ./assets/build/docs/en/* ./rsshub-docs/src/routes
           cp -r ./assets/build/docs/zh/* ./rsshub-docs/src/zh/routes
+          cp ./lib/types.ts ./rsshub-docs/.vitepress/theme/types.ts
+          cp ./scripts/workflow/data.ts ./rsshub-docs/.vitepress/config/data.ts
       - name: Commit docs
         run: |
           cd rsshub-docs

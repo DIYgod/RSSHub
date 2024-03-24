@@ -121,7 +121,6 @@ async function handler(ctx) {
         headers: {
             Referer: `https://space.bilibili.com/${uid}/`,
         },
-        transformResponse: [(data) => data],
     });
     const cards = JSONbig.parse(response.body).data.cards;
 

@@ -84,7 +84,7 @@ FROM node:21-bookworm-slim AS chromium-downloader
 # Yeah, downloading Chromium never needs those dependencies below.
 
 WORKDIR /app
-COPY ./.puppeteerrc.js /app/
+COPY ./.puppeteerrc.cjs /app/
 COPY --from=dep-version-parser /ver/.puppeteer_version /app/.puppeteer_version
 
 ARG TARGETPLATFORM
