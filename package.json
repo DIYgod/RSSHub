@@ -19,6 +19,7 @@
     "files": [
         "lib"
     ],
+    "type": "module",
     "scripts": {
         "build": "tsx scripts/workflow/build-routes.ts",
         "dev": "NODE_ENV=dev tsx watch --no-cache lib/index.ts",

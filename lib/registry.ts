@@ -4,7 +4,6 @@ import { Hono, type Handler } from 'hono';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { serveStatic } from '@hono/node-server/serve-static';
-import routes from '../assets/build/routes.json';
 
 import index from '@/routes/index';
 import robotstxt from '@/routes/robots.txt';
@@ -28,7 +27,7 @@ switch (process.env.NODE_ENV) {
     case 'test':
     case 'production':
         // @ts-expect-error
-        namespaces = routes;
+        namespaces = await import('../assets/build/routes.json');
         break;
     default:
         modules = directoryImport({
