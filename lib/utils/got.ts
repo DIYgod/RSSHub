@@ -9,18 +9,19 @@ const gotofetch = ofetch.create({
 });
 
 const getFakeGot = (defaultOptions?: any) => {
-    const fakeGot = (request, options) => {
-        if (options?.hooks?.beforeRequest) {
-            for (const hook of options.hooks.beforeRequest) {
-                hook(options);
-            }
-        }
+    const fakeGot = (request, options?: any) => {
         if (!(typeof request === 'string' || request instanceof Request) && request.url) {
             options = {
                 ...request,
                 ...options,
             };
             request = request.url;
+        }
+        if (options?.hooks?.beforeRequest) {
+            for (const hook of options.hooks.beforeRequest) {
+                hook(options);
+            }
+            delete options.hooks;
         }
 
         options = {
@@ -30,6 +31,7 @@ const getFakeGot = (defaultOptions?: any) => {
 
         if (options?.json && !options.body) {
             options.body = options.json;
+            delete options.json;
         }
         if (options?.form && !options.body) {
             const body = new FormData();
@@ -40,7 +42,11 @@ const getFakeGot = (defaultOptions?: any) => {
             if (!options.headers) {
                 options.headers = {};
             }
-            options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+            delete options.form;
+        }
+        if (options?.searchParams) {
+            request += '?' + new URLSearchParams(options.searchParams).toString();
+            delete options.searchParams;
         }
 
         return gotofetch(request, options);
