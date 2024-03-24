@@ -1,21 +1,14 @@
-import { describe, expect, it, vi, afterEach, afterAll, beforeAll } from 'vitest';
+import { describe, expect, it, vi, afterEach } from 'vitest';
 import Parser from 'rss-parser';
 import wait from '@/utils/wait';
 
+process.env.CACHE_EXPIRE = '1';
+process.env.CACHE_CONTENT_EXPIRE = '3';
+
 const parser = new Parser();
 
-beforeAll(() => {
-    process.env.CACHE_EXPIRE = '1';
-    process.env.CACHE_CONTENT_EXPIRE = '3';
-});
-
 afterEach(() => {
-    delete process.env.CACHE_TYPE;
     vi.resetModules();
-});
-
-afterAll(() => {
-    delete process.env.CACHE_EXPIRE;
 });
 
 describe('cache', () => {

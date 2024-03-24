@@ -1,7 +1,3 @@
-coverage
-.vscode
-docker-compose.yml
-!/.github
 lib/routes-deprecated
 lib/router.js
 babel.config.js

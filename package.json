@@ -19,20 +19,23 @@
     "files": [
         "lib"
     ],
+    "type": "module",
     "scripts": {
         "build": "tsx scripts/workflow/build-routes.ts",
-        "dev": "cross-env NODE_ENV=dev tsx watch --no-cache lib/index.ts",
-        "dev:cache": "cross-env NODE_ENV=production tsx watch lib/index.ts",
+        "build:docs": "tsx scripts/workflow/build-docs.ts",
+        "dev": "NODE_ENV=dev tsx watch --no-cache lib/index.ts",
+        "dev:cache": "NODE_ENV=production tsx watch lib/index.ts",
         "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --write",
         "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
         "format:staged": "lint-staged",
-        "vitest": "cross-env NODE_ENV=test vitest",
-        "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled --reporter=junit",
-        "vitest:watch": "cross-env NODE_ENV=test vitest --watch",
+        "vitest": "NODE_ENV=test vitest",
+        "vitest:fullroutes": "NODE_ENV=test FULL_ROUTES_TEST=true vitest --reporter=json --reporter=default --outputFile=\"./assets/build/test-full-routes.json\" routes",
+        "vitest:coverage": "NODE_ENV=test vitest --coverage.enabled --reporter=junit",
+        "vitest:watch": "NODE_ENV=test vitest --watch",
         "lint": "eslint --cache .",
         "prepare": "husky || true",
         "profiling": "NODE_ENV=production tsx --prof lib/index.ts",
-        "start": "cross-env NODE_ENV=production tsx lib/index.ts",
+        "start": "NODE_ENV=production tsx lib/index.ts",
         "test": "npm run format:check && npm run vitest:coverage"
     },
     "lint-staged": {
@@ -147,7 +150,6 @@
         "@typescript-eslint/parser": "7.3.1",
         "@vercel/nft": "0.26.4",
         "@vitest/coverage-v8": "1.4.0",
-        "cross-env": "7.0.3",
         "eslint": "8.57.0",
         "eslint-config-prettier": "9.1.0",
         "eslint-nibble": "8.1.0",

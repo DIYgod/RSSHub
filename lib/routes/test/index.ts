@@ -79,13 +79,9 @@ async function handler(ctx) {
             break;
 
         case 'cache': {
-            const description = await cache.tryGet(
-                'test',
-                () => ({
-                    text: `Cache${++cacheIndex}`,
-                }),
-                config.cache.routeExpire * 2
-            );
+            const description = await cache.tryGet('test', () => ({
+                text: `Cache${++cacheIndex}`,
+            }));
             item.push({
                 title: 'Cache Title',
                 description: description.text,
