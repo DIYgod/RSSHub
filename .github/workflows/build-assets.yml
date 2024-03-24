@@ -57,6 +57,8 @@ jobs:
         run: |
           cp -r ./assets/build/docs/en/* ./rsshub-docs/src/routes
           cp -r ./assets/build/docs/zh/* ./rsshub-docs/src/zh/routes
+          cp ./lib/types.ts ./rsshub-docs/.vitepress/theme/types.ts
+          cp ./scripts/workflow/data.ts ./rsshub-docs/.vitepress/config/data.ts
       - name: Commit docs
         run: |
           cd rsshub-docs
