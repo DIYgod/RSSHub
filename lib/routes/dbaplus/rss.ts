@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/',
-    categories: ['blog'],
+    categories: ['programming'],
     example: '/dbaplus',
     radar: [
         {
