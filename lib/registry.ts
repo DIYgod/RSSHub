@@ -4,6 +4,7 @@ import { Hono, type Handler } from 'hono';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { serveStatic } from '@hono/node-server/serve-static';
+import routes from '../assets/build/routes.json';
 
 import index from '@/routes/index';
 import robotstxt from '@/routes/robots.txt';
@@ -26,8 +27,8 @@ let namespaces: Record<
 switch (process.env.NODE_ENV) {
     case 'test':
     case 'production':
-        // eslint-disable-next-line n/no-unpublished-require
-        namespaces = require('../assets/build/routes.json');
+        // @ts-expect-error
+        namespaces = routes;
         break;
     default:
         modules = directoryImport({
