@@ -4001,6 +4001,25 @@
     "name": "App Store/Mac App Store",
     "url": "apps.apple.com"
   },
+  "appstorrent": {
+    "routes": {
+      "/programs": {
+        "path": "/programs",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/appstorrent/programs",
+        "name": "Programs",
+        "maintainers": [
+          "xzzpig"
+        ],
+        "url": "appstorrent.ru/programs/",
+        "location": "programs.ts"
+      }
+    },
+    "name": "AppsTorrent",
+    "url": "appstorrent.ru"
+  },
   "aqara": {
     "routes": {
       "/community/:id?/:keyword?": {

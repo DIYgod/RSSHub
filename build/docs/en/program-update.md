@@ -60,6 +60,12 @@
 
 <Route namespace="appstore" :data='{"path":"/xianmian","categories":["program-update"],"example":"/appstore/xianmian","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["app.so/xianmian"]}],"name":"每日精品限免 / 促销应用（鲜面连线 by AppSo）","maintainers":["Andiedie"],"url":"app.so/xianmian","location":"xianmian.ts"}' />
 
+## AppsTorrent <Site url="appstorrent.ru"/>
+
+### Programs <Site url="appstorrent.ru/programs/" size="sm" />
+
+<Route namespace="appstorrent" :data='{"path":"/programs","categories":["program-update"],"example":"/appstorrent/programs","name":"Programs","maintainers":["xzzpig"],"url":"appstorrent.ru/programs/","location":"programs.ts"}' />
+
 ## ASUS <Site url="asus.com.cn"/>
 
 ### BIOS <Site url="asus.com.cn/" size="sm" />
