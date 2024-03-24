@@ -34,17 +34,8 @@ jobs:
         run: pnpm i
       - name: Build assets
         run: pnpm build
-      - name: Build full routes test result
-        continue-on-error: true
-        run: pnpm vitest:fullroutes
       - name: Build docs
         run: pnpm build:docs
-      - name: Commit files
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git status
-          git diff-index --quiet HEAD || (git commit -m "chore: auto build" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master)
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
