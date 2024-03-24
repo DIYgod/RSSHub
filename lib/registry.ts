@@ -7,8 +7,6 @@ import { serveStatic } from '@hono/node-server/serve-static';
 
 import index from '@/routes/index';
 import robotstxt from '@/routes/robots.txt';
-import { namespace as testNamespace } from './routes/test/namespace';
-import { route as testRoute } from '@/routes/test/index';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -27,18 +25,9 @@ let namespaces: Record<
 
 switch (process.env.NODE_ENV) {
     case 'test':
-        modules = {
-            '/test/namespace.ts': {
-                namespace: testNamespace,
-            },
-            '/test/index.ts': {
-                route: testRoute,
-            },
-        };
-        break;
     case 'production':
-        // eslint-disable-next-line n/no-unpublished-require
-        namespaces = require('../assets/build/routes.json');
+        // @ts-expect-error
+        namespaces = await import('../assets/build/routes.json');
         break;
     default:
         modules = directoryImport({
