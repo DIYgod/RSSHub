@@ -3238,6 +3238,19 @@
       }
     ]
   },
+  "dbaplus.cn": {
+    "_name": "dbaplus社群",
+    ".": [
+      {
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/dbaplus/"
+      }
+    ]
+  },
   "dblp.org": {
     "_name": "DBLP",
     ".": [

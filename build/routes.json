@@ -13554,6 +13554,32 @@
     "name": "大眼仔旭",
     "url": "dayanzai.me"
   },
+  "dbaplus": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "programming"
+        ],
+        "example": "/dbaplus",
+        "radar": [
+          {
+            "source": [
+              "dbaplus.cn/"
+            ]
+          }
+        ],
+        "name": "最新文章",
+        "maintainers": [
+          "cnkmmk"
+        ],
+        "url": "dbaplus.cn/",
+        "location": "rss.ts"
+      }
+    },
+    "name": "dbaplus社群",
+    "url": "dbaplus.cn"
+  },
   "dblp": {
     "routes": {
       "/:field": {

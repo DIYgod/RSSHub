@@ -148,6 +148,12 @@ Rated Range
 
 <Route namespace="codeforces" :data='{"path":"/recent-actions/:minrating?","categories":["programming"],"example":"/codeforces/recent-actions","parameters":{"minrating":"The minimum blog/comment rating required. Default: 1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["codeforces.com/recent-actions"],"target":"/recent-actions"}],"name":"Recent actions","maintainers":[],"url":"codeforces.com/recent-actions","location":"recent-actions.ts"}' />
 
+## dbaplus社群 <Site url="dbaplus.cn"/>
+
+### 最新文章 <Site url="dbaplus.cn/" size="sm" />
+
+<Route namespace="dbaplus" :data='{"path":"/","categories":["programming"],"example":"/dbaplus","radar":[{"source":["dbaplus.cn/"]}],"name":"最新文章","maintainers":["cnkmmk"],"url":"dbaplus.cn/","location":"rss.ts"}' />
+
 ## deeplearning.ai <Site url="www.deeplearning.ai"/>
 
 ### TheBatch 周报 <Site url="www.deeplearning.ai/thebatch" size="sm" />
