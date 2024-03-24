@@ -19,7 +19,7 @@ export const route: Route = {
         },
     ],
     name: '云南省人力资源和社会保障政务门户-招考招聘',
-    maintainers: ['MajexH'],
+    maintainers: ['shenleg'],
     handler,
 };
 
