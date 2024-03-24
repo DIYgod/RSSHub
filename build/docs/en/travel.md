@@ -82,7 +82,7 @@
 
 ### Exhibitions <Site url="thejewishmuseum.org" size="sm" />
 
-<Route namespace="jewishmuseum" :data='{"path":"/exhibitions","categories":["travel"],"example":"/jewishmuseum/exhibitions","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Exhibitions","maintainers":["chazeon"],"location":"exhibitions.ts"}' :test='{"code":1,"message":"expected { '$': { isPermaLink: 'false' } } to deeply equal Any<String>"}' />
+<Route namespace="jewishmuseum" :data='{"path":"/exhibitions","categories":["travel"],"example":"/jewishmuseum/exhibitions","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Exhibitions","maintainers":["chazeon"],"location":"exhibitions.ts"}' :test='{"code":1,"message":"expected { &#39;$&#39;: { isPermaLink: &#39;false&#39; } } to deeply equal Any<String>"}' />
 
 ## 中国国际航空公司 <Site url="www.airchina.com.cn"/>
 

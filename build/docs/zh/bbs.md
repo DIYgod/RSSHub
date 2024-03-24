@@ -128,7 +128,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 社区 <Site url="learnku.com" size="sm" />
 
-<Route namespace="learnku" :data='{"path":"/:community/:category?","categories":["bbs"],"example":"/learnku/laravel/qa","parameters":{"community":"社区 标识，可在 <https://learnku.com/communities> 找到","category":"分类，如果不传 `category` 则获取全部分类"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["learnku.com/:community"],"target":"/:community"}],"name":"社区","maintainers":["kayw-geek"],"description":"| 招聘 | 翻译         | 问答 | 链接  |\n| ---- | ------------ | ---- | ----- |\n| jobs | translations | qa   | links |","location":"topic.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="learnku" :data='{"path":"/:community/:category?","categories":["bbs"],"example":"/learnku/laravel/qa","parameters":{"community":"社区 标识，可在 <https://learnku.com/communities> 找到","category":"分类，如果不传 `category` 则获取全部分类"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["learnku.com/:community"],"target":"/:community"}],"name":"社区","maintainers":["kayw-geek"],"description":"| 招聘 | 翻译         | 问答 | 链接  |\n| ---- | ------------ | ---- | ----- |\n| jobs | translations | qa   | links |","location":"topic.ts"}' :test='{"code":0}' />
 
 | 招聘 | 翻译         | 问答 | 链接  |
 | ---- | ------------ | ---- | ----- |
@@ -168,7 +168,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### User <Site url="pikabu.ru" size="sm" />
 
-<Route namespace="pikabu" :data='{"path":"/user/:name","categories":["bbs"],"example":"/pikabu/user/@bula.dragon","parameters":{"name":"User name"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["pikabu.ru/:name"]}],"name":"User","maintainers":["TonyRL"],"location":"user.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="pikabu" :data='{"path":"/user/:name","categories":["bbs"],"example":"/pikabu/user/@bula.dragon","parameters":{"name":"User name"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["pikabu.ru/:name"]}],"name":"User","maintainers":["TonyRL"],"location":"user.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ## PKMer <Site url="pkmer.cn"/>
 
@@ -202,7 +202,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 论坛摘要 <Site url="bbs.saraba1st.com" size="sm" />
 
-<Route namespace="saraba1st" :data='{"path":"/digest/:tid","categories":["bbs"],"example":"/saraba1st/digest/forum-75-1","parameters":{"tid":"论坛 id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"论坛摘要","maintainers":["shinemoon"],"description":"版面网址如果为 `https://bbs.saraba1st.com/2b/forum-75-1.html` 那么论坛 id 就是 `forum-75-1`。","location":"digest.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="saraba1st" :data='{"path":"/digest/:tid","categories":["bbs"],"example":"/saraba1st/digest/forum-75-1","parameters":{"tid":"论坛 id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"论坛摘要","maintainers":["shinemoon"],"description":"版面网址如果为 `https://bbs.saraba1st.com/2b/forum-75-1.html` 那么论坛 id 就是 `forum-75-1`。","location":"digest.ts"}' :test='{"code":0}' />
 
 版面网址如果为 `https://bbs.saraba1st.com/2b/forum-75-1.html` 那么论坛 id 就是 `forum-75-1`。
 
@@ -328,7 +328,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 专题 <Site url="dxy.cn" size="sm" />
 
-<Route namespace="dxy" :data='{"path":"/bbs/special/:specialId","categories":["bbs"],"example":"/dxy/bbs/special/72","parameters":{"specialId":"专题 ID，可在对应专题页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"专题","maintainers":["TonyRL"],"location":"special.ts"}' :test='{"code":0}' />
+<Route namespace="dxy" :data='{"path":"/bbs/special/:specialId","categories":["bbs"],"example":"/dxy/bbs/special/72","parameters":{"specialId":"专题 ID，可在对应专题页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"专题","maintainers":["TonyRL"],"location":"special.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ## 斗鱼直播 <Site url="www.douyu.com"/>
 
@@ -434,7 +434,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 面经 <Site url="nowcoder.com/" size="sm" />
 
-<Route namespace="nowcoder" :data='{"path":"/experience/:tagId","categories":["bbs"],"example":"/nowcoder/experience/639?order=3&companyId=665&phaseId=0","parameters":{"tagId":"职位id [🔗查询链接](https://www.nowcoder.com/profile/all-jobs)复制打开"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nowcoder.com/"],"target":"/experience"}],"name":"面经","maintainers":["huyyi"],"url":"nowcoder.com/","description":"可选参数：\n\n  -   companyId：公司 id，[🔗查询链接](https://www.nowcoder.com/discuss/tag/exp), 复制打开\n  -   order：3 - 最新；1 - 最热\n  -   phaseId：0 - 所有；1 - 校招；2 - 实习；3 - 社招","location":"experience.ts"}' :test='{"code":0}' />
+<Route namespace="nowcoder" :data='{"path":"/experience/:tagId","categories":["bbs"],"example":"/nowcoder/experience/639?order=3&companyId=665&phaseId=0","parameters":{"tagId":"职位id [🔗查询链接](https://www.nowcoder.com/profile/all-jobs)复制打开"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nowcoder.com/"],"target":"/experience"}],"name":"面经","maintainers":["huyyi"],"url":"nowcoder.com/","description":"可选参数：\n\n  -   companyId：公司 id，[🔗查询链接](https://www.nowcoder.com/discuss/tag/exp), 复制打开\n  -   order：3 - 最新；1 - 最热\n  -   phaseId：0 - 所有；1 - 校招；2 - 实习；3 - 社招","location":"experience.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 可选参数：
 
@@ -654,7 +654,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 滚动新闻 <Site url="zhibo8.cc" size="sm" />
 
-<Route namespace="zhibo8" :data='{"path":"/more/:category?","categories":["bbs"],"example":"/zhibo8/more/nba","parameters":{"category":"分类，见下表，默认为 NBA"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["news.zhibo8.cc/:category"],"target":"/more/:category"}],"name":"滚动新闻","description":"\n| NBA | 足球  | 电竞     | 综合   |\n| --- | ----- | -------- | ------ |\n| nba | zuqiu | dianjing | zonghe |","maintainers":["nczitzk"],"location":"more.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="zhibo8" :data='{"path":"/more/:category?","categories":["bbs"],"example":"/zhibo8/more/nba","parameters":{"category":"分类，见下表，默认为 NBA"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["news.zhibo8.cc/:category"],"target":"/more/:category"}],"name":"滚动新闻","description":"\n| NBA | 足球  | 电竞     | 综合   |\n| --- | ----- | -------- | ------ |\n| nba | zuqiu | dianjing | zonghe |","maintainers":["nczitzk"],"location":"more.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 
 | NBA | 足球  | 电竞     | 综合   |

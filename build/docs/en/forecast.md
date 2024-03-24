@@ -8,7 +8,7 @@
 
 ### Recent Earthquakes <Site url="bmkg.go.id/" size="sm" />
 
-<Route namespace="bmkg" :data='{"path":"/earthquake","categories":["forecast"],"example":"/bmkg/earthquake","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bmkg.go.id/","bmkg.go.id/gempabumi-terkini.html"]}],"name":"Recent Earthquakes","maintainers":["Shinanory"],"url":"bmkg.go.id/","location":"earthquake.ts"}' :test='{"code":1,"message":"expected [ Array(1) ] to not include 'https://www.bmkg.go.id/gempabumi-terk…'"}' />
+<Route namespace="bmkg" :data='{"path":"/earthquake","categories":["forecast"],"example":"/bmkg/earthquake","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["bmkg.go.id/","bmkg.go.id/gempabumi-terkini.html"]}],"name":"Recent Earthquakes","maintainers":["Shinanory"],"url":"bmkg.go.id/","location":"earthquake.ts"}' :test='{"code":1,"message":"expected [ Array(1) ] to not include &#39;https://www.bmkg.go.id/gempabumi-terk…&#39;"}' />
 
 ## Outage.Report <Site url="outage.report"/>
 
@@ -114,7 +114,7 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 ### 长沙市 <Site url="swj.dl.gov.cn" size="sm" />
 
-<Route namespace="tingshuitz" :data='{"path":"/changsha/:channelId?","categories":["forecast"],"example":"/tingshuitz/changsha/78","parameters":{"channelId":"N"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"长沙市","maintainers":["shansing"],"description":"可能仅限于中国大陆服务器访问，以实际情况为准。\n\n  | channelId | 分类     |\n  | --------- | -------- |\n  | 78        | 计划停水 |\n  | 157       | 抢修停水 |","location":"changsha.ts"}' :test='{"code":0}' />
+<Route namespace="tingshuitz" :data='{"path":"/changsha/:channelId?","categories":["forecast"],"example":"/tingshuitz/changsha/78","parameters":{"channelId":"N"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"长沙市","maintainers":["shansing"],"description":"可能仅限于中国大陆服务器访问，以实际情况为准。\n\n  | channelId | 分类     |\n  | --------- | -------- |\n  | 78        | 计划停水 |\n  | 157       | 抢修停水 |","location":"changsha.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 可能仅限于中国大陆服务器访问，以实际情况为准。
 
@@ -224,7 +224,7 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 ### 全国气象预警 <Site url="nmc.cn/publish/alarm.html" size="sm" />
 
-<Route namespace="nmc" :data='{"path":"/weatheralarm/:province?","categories":["forecast"],"example":"/nmc/weatheralarm/广东省","parameters":{"province":"省份"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nmc.cn/publish/alarm.html","nmc.cn/"],"target":"/weatheralarm"}],"name":"全国气象预警","maintainers":["ylc395"],"url":"nmc.cn/publish/alarm.html","location":"weatheralarm.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="nmc" :data='{"path":"/weatheralarm/:province?","categories":["forecast"],"example":"/nmc/weatheralarm/广东省","parameters":{"province":"省份"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["nmc.cn/publish/alarm.html","nmc.cn/"],"target":"/weatheralarm"}],"name":"全国气象预警","maintainers":["ylc395"],"url":"nmc.cn/publish/alarm.html","location":"weatheralarm.ts"}' :test='{"code":0}' />
 
 ## 重庆燃气 <Site url="cqgas.cn"/>
 

@@ -163,7 +163,7 @@ Type
 
 ### NASA 中文 <Site url="apod.nasa.govundefined" size="sm" />
 
-<Route namespace="nasa" :data='{"path":"/apod-cn","categories":["picture"],"example":"/nasa/apod-cn","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["apod.nasa.govundefined"]}],"name":"NASA 中文","maintainers":["nczitzk","williamgateszhao"],"url":"apod.nasa.govundefined","description":":::tip\n  [NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。\n  :::","location":"apod-cn.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="nasa" :data='{"path":"/apod-cn","categories":["picture"],"example":"/nasa/apod-cn","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["apod.nasa.govundefined"]}],"name":"NASA 中文","maintainers":["nczitzk","williamgateszhao"],"url":"apod.nasa.govundefined","description":":::tip\n  [NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。\n  :::","location":"apod-cn.ts"}' :test='{"code":0}' />
 
 :::tip
   [NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。
@@ -243,11 +243,11 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 ### 图卦 <Site url="dapenti.com" size="sm" />
 
-<Route namespace="dapenti" :data='{"path":"/tugua","categories":["picture"],"example":"/dapenti/tugua","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"图卦","maintainers":["tgly307"],"location":"tugua.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="dapenti" :data='{"path":"/tugua","categories":["picture"],"example":"/dapenti/tugua","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"图卦","maintainers":["tgly307"],"location":"tugua.ts"}' :test='{"code":0}' />
 
 ### 主题 <Site url="dapenti.com" size="sm" />
 
-<Route namespace="dapenti" :data='{"path":"/subject/:id","categories":["picture"],"example":"/dapenti/subject/184","parameters":{"id":"主题 id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"主题","maintainers":["xyqfer"],"location":"subject.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="dapenti" :data='{"path":"/subject/:id","categories":["picture"],"example":"/dapenti/subject/184","parameters":{"id":"主题 id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"主题","maintainers":["xyqfer"],"location":"subject.ts"}' :test='{"code":0}' />
 
 ## 奇葩买家秀 <Site url="qipamaijia.com"/>
 

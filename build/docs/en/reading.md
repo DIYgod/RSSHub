@@ -62,7 +62,7 @@ For instance, when doing search at [https://magazinelib.com](https://magazinelib
 
 ### 标签 <Site url="sobooks.net" size="sm" />
 
-<Route namespace="sobooks" :data='{"path":"/tag/:id?","categories":["reading"],"example":"/sobooks/tag/小说","parameters":{"id":"标签, 见下表，默认为小说"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sobooks.net/books/tag/:tag"],"target":"/tag/:tag"}],"name":"标签","maintainers":["nczitzk"],"description":"热门标签\n\n  | 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济   |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |\n  | 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典   |\n  | 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治   |\n  | 漫画 | 纪实 | 艺术 | 科学 | 生活 | 职场 | 散文 | 法国 | 互联网 |\n  | 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业   |\n  | 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通   |","location":"tag.ts"}' :test='{"code":0}' />
+<Route namespace="sobooks" :data='{"path":"/tag/:id?","categories":["reading"],"example":"/sobooks/tag/小说","parameters":{"id":"标签, 见下表，默认为小说"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sobooks.net/books/tag/:tag"],"target":"/tag/:tag"}],"name":"标签","maintainers":["nczitzk"],"description":"热门标签\n\n  | 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济   |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |\n  | 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典   |\n  | 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治   |\n  | 漫画 | 纪实 | 艺术 | 科学 | 生活 | 职场 | 散文 | 法国 | 互联网 |\n  | 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业   |\n  | 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通   |","location":"tag.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 热门标签
 
@@ -76,11 +76,11 @@ For instance, when doing search at [https://magazinelib.com](https://magazinelib
 
 ### 归档 <Site url="sobooks.net" size="sm" />
 
-<Route namespace="sobooks" :data='{"path":"/date/:date?","categories":["reading"],"example":"/sobooks/date/2020-11","parameters":{"date":"日期，见例子，默认为当前年月"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sobooks.net/:category"],"target":"/:category"}],"name":"归档","maintainers":["nczitzk"],"location":"date.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="sobooks" :data='{"path":"/date/:date?","categories":["reading"],"example":"/sobooks/date/2020-11","parameters":{"date":"日期，见例子，默认为当前年月"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sobooks.net/:category"],"target":"/:category"}],"name":"归档","maintainers":["nczitzk"],"location":"date.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ### 首页 <Site url="sobooks.net" size="sm" />
 
-<Route namespace="sobooks" :data='{"path":"/:category?","categories":["reading"],"example":"/sobooks","parameters":{"category":"分类, 见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sobooks.net/:category"],"target":"/:category"}],"name":"首页","maintainers":["nczitzk"],"description":"| 分类     | 分类名           |\n  | -------- | ---------------- |\n  | 小说文学 | xiaoshuowenxue   |\n  | 历史传记 | lishizhuanji     |\n  | 人文社科 | renwensheke      |\n  | 励志成功 | lizhichenggong   |\n  | 经济管理 | jingjiguanli     |\n  | 学习教育 | xuexijiaoyu      |\n  | 生活时尚 | shenghuoshishang |\n  | 英文原版 | yingwenyuanban   |","location":"index.ts"}' :test='{"code":0}' />
+<Route namespace="sobooks" :data='{"path":"/:category?","categories":["reading"],"example":"/sobooks","parameters":{"category":"分类, 见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["sobooks.net/:category"],"target":"/:category"}],"name":"首页","maintainers":["nczitzk"],"description":"| 分类     | 分类名           |\n  | -------- | ---------------- |\n  | 小说文学 | xiaoshuowenxue   |\n  | 历史传记 | lishizhuanji     |\n  | 人文社科 | renwensheke      |\n  | 励志成功 | lizhichenggong   |\n  | 经济管理 | jingjiguanli     |\n  | 学习教育 | xuexijiaoyu      |\n  | 生活时尚 | shenghuoshishang |\n  | 英文原版 | yingwenyuanban   |","location":"index.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 | 分类     | 分类名           |
   | -------- | ---------------- |
@@ -125,14 +125,14 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 ### 思想库（专栏） <Site url="aisixiang.com" size="sm" />
 
-<Route namespace="aisixiang" :data='{"path":"/thinktank/:id/:type?","categories":["reading"],"example":"/aisixiang/thinktank/WuQine/论文","parameters":{"id":"专栏 ID，一般为作者拼音，可在URL中找到","type":"栏目类型，参考下表，默认为全部"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"思想库（专栏）","maintainers":["hoilc","nczitzk"],"description":"| 论文 | 时评 | 随笔 | 演讲 | 访谈 | 著作 | 读书 | 史论 | 译作 | 诗歌 | 书信 | 科学 |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |","location":"thinktank.ts"}' :test='{"code":0}' />
+<Route namespace="aisixiang" :data='{"path":"/thinktank/:id/:type?","categories":["reading"],"example":"/aisixiang/thinktank/WuQine/论文","parameters":{"id":"专栏 ID，一般为作者拼音，可在URL中找到","type":"栏目类型，参考下表，默认为全部"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"思想库（专栏）","maintainers":["hoilc","nczitzk"],"description":"| 论文 | 时评 | 随笔 | 演讲 | 访谈 | 著作 | 读书 | 史论 | 译作 | 诗歌 | 书信 | 科学 |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |","location":"thinktank.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 | 论文 | 时评 | 随笔 | 演讲 | 访谈 | 著作 | 读书 | 史论 | 译作 | 诗歌 | 书信 | 科学 |
   | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 
 ### 专题 <Site url="aisixiang.com" size="sm" />
 
-<Route namespace="aisixiang" :data='{"path":"/zhuanti/:id","categories":["reading"],"example":"/aisixiang/zhuanti/211","parameters":{"id":"专题 ID, 可在对应专题 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"专题","maintainers":["nczitzk"],"description":":::tip\n  更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)\n  :::","location":"zhuanti.ts"}' :test='{"code":1,"message":"expected 312240811095 to be less than 311040000000"}' />
+<Route namespace="aisixiang" :data='{"path":"/zhuanti/:id","categories":["reading"],"example":"/aisixiang/zhuanti/211","parameters":{"id":"专题 ID, 可在对应专题 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"专题","maintainers":["nczitzk"],"description":":::tip\n  更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)\n  :::","location":"zhuanti.ts"}' :test='{"code":1,"message":"expected 312243042244 to be less than 311040000000"}' />
 
 :::tip
   更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
@@ -142,11 +142,11 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 ### 卷 <Site url="linovelib.com" size="sm" />
 
-<Route namespace="linovelib" :data='{"path":"/volume/:id","categories":["reading"],"example":"/linovelib/volume/8","parameters":{"id":"小说 ID，可在小说页 URL 中找到"},"radar":[{"source":["www.linovelib.com/novel/:id/catalog"]}],"name":"卷","maintainers":["rkscv"],"location":"volume.ts"}' :test='{"code":0}' />
+<Route namespace="linovelib" :data='{"path":"/volume/:id","categories":["reading"],"example":"/linovelib/volume/8","parameters":{"id":"小说 ID，可在小说页 URL 中找到"},"radar":[{"source":["www.linovelib.com/novel/:id/catalog"]}],"name":"卷","maintainers":["rkscv"],"location":"volume.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ### 小说更新 <Site url="linovelib.com" size="sm" />
 
-<Route namespace="linovelib" :data='{"path":"/novel/:id","categories":["reading"],"example":"/linovelib/novel/2547","parameters":{"id":"小说 id，对应书架开始阅读 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"小说更新","maintainers":["misakicoca"],"location":"novel.ts"}' :test='{"code":0}' />
+<Route namespace="linovelib" :data='{"path":"/novel/:id","categories":["reading"],"example":"/linovelib/novel/2547","parameters":{"id":"小说 id，对应书架开始阅读 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"小说更新","maintainers":["misakicoca"],"location":"novel.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ## 超星 <Site url="chaoxing.com"/>
 
@@ -248,11 +248,11 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 ### 章节 <Site url="www.wenku8.net" size="sm" />
 
-<Route namespace="wenku8" :data='{"path":"/chapter/:id","categories":["reading"],"example":"/wenku8/chapter/74","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"章节","maintainers":["zsakvo"],"location":"chapter.ts"}' :test='{"code":0}' />
+<Route namespace="wenku8" :data='{"path":"/chapter/:id","categories":["reading"],"example":"/wenku8/chapter/74","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"章节","maintainers":["zsakvo"],"location":"chapter.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ### 最新卷 <Site url="www.wenku8.net" size="sm" />
 
-<Route namespace="wenku8" :data='{"path":"/volume/:id","categories":["reading"],"example":"/wenku8/volume/1163","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"最新卷","maintainers":["huangliangshusheng"],"location":"volume.ts"}' :test='{"code":0}' />
+<Route namespace="wenku8" :data='{"path":"/volume/:id","categories":["reading"],"example":"/wenku8/volume/1163","parameters":{"id":"小说 id, 可在对应小说页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"最新卷","maintainers":["huangliangshusheng"],"location":"volume.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ## 日本語多読道場 <Site url="yomujp.com"/>
 
