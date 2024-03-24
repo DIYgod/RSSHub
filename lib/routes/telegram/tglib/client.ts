@@ -1,4 +1,3 @@
-import readline from 'node:readline/promises';
 import { Api, TelegramClient } from 'telegram';
 import { UserAuthParams } from 'telegram/client/auth';
 import { StringSession } from 'telegram/sessions';
@@ -187,20 +186,3 @@ function streamDocument(obj, thumbSize = '', offset, limit) {
 }
 
 export { client, getMediaLink, decodeMedia, getFilename, streamDocument, streamThumbnail };
-
-if (require.main === module) {
-    Promise.resolve().then(async () => {
-        const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-        const client = await getClient(
-            {
-                phoneNumber: () => rl.question('Please enter your phone number: '),
-                password: () => rl.question('Please enter your password: '),
-                phoneCode: () => rl.question('Please enter the code you received: '),
-                onError: (err) => process.stderr.write(err.toString()),
-            },
-            ''
-        );
-        process.stdout.write(`TELEGRAM_SESSION=${client.session.save()}\n`);
-        process.exit(0);
-    });
-}

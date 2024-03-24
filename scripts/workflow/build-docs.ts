@@ -106,7 +106,7 @@ function generateMd(lang) {
                       }
                     : undefined;
                 md[category] += `### ${data.name} ${data.url || docs[category][namespace].url ? `<Site url="${data.url || docs[category][namespace].url}" size="sm" />` : ''}\n\n`;
-                md[category] += `<Route namespace="${namespace}" :data='${JSON.stringify(data).replaceAll(`'`, '&#39;')}' :test='${JSON.stringify(parsedTest)}' />\n\n`;
+                md[category] += `<Route namespace="${namespace}" :data='${JSON.stringify(data).replaceAll(`'`, '&#39;')}' :test='${JSON.stringify(parsedTest)?.replaceAll(`'`, '&#39;')}' />\n\n`;
                 if (data.description) {
                     md[category] += `${data.description}\n\n`;
                 }
