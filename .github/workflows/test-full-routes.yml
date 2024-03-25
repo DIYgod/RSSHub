@@ -1,4 +1,4 @@
-name: Build assets
+name: Build assets (Full Routes Test Result)
 
 on:
   workflow_dispatch:

@@ -34,8 +34,6 @@ jobs:
         run: pnpm i
       - name: Build assets
         run: pnpm build
-      - name: Build docs
-        run: pnpm build:docs
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -43,6 +41,10 @@ jobs:
           publish_dir: ./assets
           user_name: 'github-actions[bot]'
           user_email: '41898282+github-actions[bot]@users.noreply.github.com'
+          # prevent deleting build/test-full-routes.json which will break build:docs
+          keep_files: true
+      - name: Build docs
+        run: pnpm build:docs
       - name: Checkout docs
         uses: actions/checkout@v4
         with:
