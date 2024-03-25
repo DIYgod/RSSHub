@@ -34,7 +34,7 @@ describe('got', () => {
         try {
             await got.get('http://rsshub.test/testRerty');
         } catch (error: any) {
-            expect(error.name).toBe('HTTPError');
+            expect(error.name).toBe('FetchError');
         }
 
         // retries
@@ -52,11 +52,7 @@ describe('got', () => {
                 test: 1,
             },
         });
-        expect(response1.statusCode).toBe(200);
-        // @ts-expect-error custom property
-        expect(response1.status).toBe(200);
         expect(response1.body).toBe('{"code": 0}');
-        // @ts-expect-error custom property
         expect(response1.data.code).toBe(0);
     });
 
@@ -77,7 +73,7 @@ describe('got', () => {
             await got.get('http://rsshub.test/timeout');
             throw new Error('Timeout Invalid');
         } catch (error: any) {
-            expect(error.name).toBe('RequestError');
+            expect(error.name).toBe('FetchError');
         }
         expect(loggerSpy).toHaveBeenCalledWith(expect.stringContaining('http://rsshub.test/timeout'));
 
