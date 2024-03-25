@@ -23,6 +23,11 @@ export const route: Route = {
     maintainers: ['junbaor', 'yikZero'],
     url: 'www.news.zjut.edu.cn',
     handler,
+    radar: [
+        {
+            source: ['www.news.zjut.edu.cn/:type/list.htm'],
+        },
+    ],
     description: `| 图片新闻 | 工大要闻 | 综合新闻 | 学术・探索 | 三创・人物 | 智库工大 | 美誉工大 | 葵园融媒 |
 | -------- | -------- | -------- | ---------- | ---------- | -------- | -------- | -------- |
 | 5414     | 5415     | 5416     | 5422       | 5423       | 5424     | 5425     | 5419     |`,
