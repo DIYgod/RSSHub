@@ -126,21 +126,23 @@ Query:
                         if (cachedText && cachedText.trim().length) {
                             item.contentSnippet = `${item.contentSnippet}\n\n<strong>Transcription:<strong>\n<p>${cachedText}<p>`;
                         } else {
-                            if (!tasks.get(item.enclosure.url) || tasks.get(item.enclosure.url) === 3) {
+                            if (tasks.get(item.enclosure.url) === undefined || tasks.get(item.enclosure.url) === 3) {
                                 tasks.set(item.enclosure.url, 0);
-                                const file = await download(filename, item.enclosure!.url);
-                                tasks.set(item.enclosure.url, 1);
-                                transcribe(file, language, item.title, translate)
-                                    .then(({ text }) => {
-                                        tasks.set(item.enclosure!.url, 2);
-                                        cache.set(item.enclosure!.url, text, 60 * 60 * 24 * 10000);
-                                    })
-                                    .catch(() => {
-                                        tasks.set(item.enclosure!.url, 3);
-                                    })
-                                    .finally(() => {
-                                        fs.unlinkSync(filename);
-                                    });
+                                if (config.openai.apiKey) {
+                                    const file = await download(filename, item.enclosure!.url);
+                                    tasks.set(item.enclosure.url, 1);
+                                    transcribe(file, language, item.title, translate)
+                                        .then(({ text }) => {
+                                            tasks.set(item.enclosure!.url, 2);
+                                            cache.set(item.enclosure!.url, text, 60 * 60 * 24 * 10000);
+                                        })
+                                        .catch(() => {
+                                            tasks.set(item.enclosure!.url, 3);
+                                        })
+                                        .finally(() => {
+                                            fs.unlinkSync(filename);
+                                        });
+                                }
                             }
                             item.contentSnippet = `${item.contentSnippet}\n\n<strong>Transcription:<strong>\n<p>The transcription is being generated. code:${tasks.get(item.enclosure!.url)}}<p>`;
                         }
