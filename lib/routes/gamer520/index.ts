@@ -27,55 +27,55 @@ export const route: Route = {
 };
 
 interface Post {
-    id: number,
-    guid: { rendered: string },
-    title: { rendered: string },
-    date_gmt: string,
-    modified_gmt: string,
-    categories?: number[],
-    content: { rendered: string },
+    id: number;
+    guid: { rendered: string };
+    title: { rendered: string };
+    date_gmt: string;
+    modified_gmt: string;
+    categories?: number[];
+    content: { rendered: string };
 }
 
 interface Category {
-    id: number,
-    name: string,
-    link: string,
-    slug: string,
+    id: number;
+    name: string;
+    link: string;
+    slug: string;
 }
 
 async function getCategories(baseUrl: string): Promise<Category[]> {
-    return await cache.tryGet('gamer520:categories', async () => {
+    return (await cache.tryGet('gamer520:categories', async () => {
         const { data } = await got(`${baseUrl}/wp-json/wp/v2/categories`);
         return data.map((category) => ({ slug: category.slug, id: category.id, name: category.name, link: category.link }));
-    }) as Category[];
+    })) as Category[];
 }
 
-async function handler(ctx?: Context): Promise<Data> {
+async function handler(ctx: Context): Promise<Data> {
     const baseUrl = 'https://www.gamer520.com';
     const categories = await getCategories(baseUrl);
 
-    const category = ctx?.req.param('category') ?? 'all';
-    const order = ctx?.req.param('order');
+    const category = ctx.req.param('category') ?? 'all';
+    const order = ctx.req.param('order');
     const categoryId = categories.find((c) => c.slug === category)?.id;
 
-    const { data } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
+    const { data } = (await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
             categories: categoryId,
             orderby: order,
-            per_page: ctx?.req.query('limit') ? Number.parseInt(ctx?.req.query('limit') as string) : undefined,
+            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit') as string) : undefined,
         },
-    }) as unknown as { data: Post[] };
+    })) as unknown as { data: Post[] };
 
-    const items: DataItem[] = data
-        .map((item) => ({
-            guid: `gamer520:${item.id}`,
-            title: item.title.rendered,
-            link: item.guid.rendered,
-            pubDate: parseDate(item.date_gmt),
-            updated: parseDate(item.modified_gmt),
-            category: item.categories?.map((c) => categories.find((ca) => ca.id === c)?.name ?? '').filter((c) => c !== '') ?? [],
-            description: item.content.rendered,
-        }));
+    const items: DataItem[] = data.map((item) => ({
+        guid: `gamer520:${item.id}`,
+        title: item.title.rendered,
+        link: item.guid.rendered,
+        pubDate: parseDate(item.date_gmt),
+        updated: parseDate(item.modified_gmt),
+        category: item.categories?.map((c) => categories.find((ca) => ca.id === c)?.name ?? '').filter((c) => c !== '') ?? [],
+
+        description: item.content.rendered,
+    }));
 
     return {
         title: '全球游戏交流中心-' + (categories.find((c) => c.slug === category)?.name ?? '所有'),
