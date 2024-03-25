@@ -117,7 +117,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?host_uid=${uid}`,
+        url: `https://api.vc.bilibili.com/dynamic_svr/v2/dynamic_svr/space_history?host_uid=${uid}`,
         headers: {
             Referer: `https://space.bilibili.com/${uid}/`,
         },
