@@ -60,7 +60,7 @@ jobs:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
-          labels: 'Route Test: Failed'
+          labels: 'Auto: Route Test Failed'
 
       - name: Test Docker image
         run: bash scripts/docker/test-docker.sh
