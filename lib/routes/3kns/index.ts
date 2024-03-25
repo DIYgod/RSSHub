@@ -9,15 +9,11 @@ import * as path from 'node:path';
 const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
-    path: '/:category?/:language?/:tag?/:pubDate?/:collection?/:order?',
+    path: '/:filters?/:order?',
     categories: ['game'],
-    example: '/3kns',
+    example: '/3kns/category=all&lang=all',
     parameters: {
-        category: '游戏类型，见下表',
-        language: '游戏语言，见下表',
-        tag: '游戏标签，见下表',
-        pubDate: '发售时间，见下表',
-        collection: '游戏集合，见下表',
+        filters: '过滤器，可用参数见下表',
         order: '排序，按高分排序:desc;按低分排序:asc',
     },
     features: {
@@ -32,44 +28,46 @@ export const route: Route = {
     maintainers: ['xzzpig'],
     handler,
     url: 'www.3kns.com/',
-    description: `游戏类型
+    description: `游戏类型(category)
 
-  | 不限  | 角色扮演 | 动作冒险 | 策略游戏 | 模拟经营 | 即时战略 | 格斗类 | 射击游戏 | 休闲益智 | 体育运动 | 街机格斗 | 无双类 | 其他游戏 | 赛车竞速 |
-  | --- | ---- | ---- | ---- | ---- | ---- | --- | ---- | ---- | ---- | ---- | --- | ---- | ---- |
-  | all | 1    | 2    | 3    | 4    | 5    | 6   | 7    | 8    | 9    | 10   | 11  | 12   | 13   |
+  | 不限 | 角色扮演 | 动作冒险 | 策略游戏 | 模拟经营 | 即时战略 | 格斗类 | 射击游戏 | 休闲益智 | 体育运动 | 街机格斗 | 无双类 | 其他游戏 | 赛车竞速 |
+  | ---- | -------- | -------- | -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- | ------ | -------- | -------- |
+  | all  | 1        | 2        | 3        | 4        | 5        | 6      | 7        | 8        | 9        | 10       | 11     | 12       | 13       |
   
-  游戏语言
+  游戏语言(language)
   
-  | 不限  | 中文  | 英语  | 日语  | 其他  | 中文汉化 | 德语  |
-  | --- | --- | --- | --- | --- | ---- | --- |
-  | all | 1   | 2   | 3   | 4   | 5    | 6   |
+  | 不限 | 中文 | 英语 | 日语 | 其他 | 中文汉化 | 德语 |
+  | ---- | ---- | ---- | ---- | ---- | -------- | ---- |
+  | all  | 1    | 2    | 3    | 4    | 5        | 6    |
   
-  游戏标签
+  游戏标签(tag)
   
-  | 不限  | 热门  | 多人聚会 | 僵尸  | 体感  | 大作  | 音乐  | 三国  | RPG | 格斗  | 闯关  | 横版  | 科幻  | 棋牌  | 运输  | 无双  | 卡通动漫 | 日系  | 养成  | 恐怖  | 运动  | 乙女  | 街机  | 飞行模拟 | 解谜  | 海战  | 战争  | 跑酷  | 即时策略 | 射击  | 经营  | 益智  | 沙盒  | 模拟  | 冒险  | 竞速  | 休闲  | 动作  | 生存  | 独立  | 拼图  | 魔改xci | 卡牌  | 塔防  |
-  | --- | --- | ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---- | --- | --- | --- | --- | --- | --- | ---- | --- | --- | --- | --- | ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ----- | --- | --- |
-  | all | 1   | 2    | 3   | 4   | 5   | 6   | 7   | 8   | 9   | 10  | 11  | 12  | 13  | 14  | 15  | 16   | 17  | 18  | 19  | 20  | 21  | 22  | 23   | 24  | 25  | 26  | 27  | 28   | 29  | 30  | 31  | 32  | 33  | 34  | 35  | 36  | 37  | 38  | 39  | 40  | 41    | 42  | 43  |
+  | 不限 | 热门 | 多人聚会 | 僵尸 | 体感 | 大作 | 音乐 | 三国 | RPG | 格斗 | 闯关 | 横版 | 科幻 | 棋牌 | 运输 | 无双 | 卡通动漫 | 日系 | 养成 | 恐怖 | 运动 | 乙女 | 街机 | 飞行模拟 | 解谜 | 海战 | 战争 | 跑酷 | 即时策略 | 射击 | 经营 | 益智 | 沙盒 | 模拟 | 冒险 | 竞速 | 休闲 | 动作 | 生存 | 独立 | 拼图 | 魔改 xci | 卡牌 | 塔防 |
+  | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | --- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | -------- | ---- | ---- | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | -------- | ---- | ---- |
+  | all  | 1    | 2        | 3    | 4    | 5    | 6    | 7    | 8   | 9    | 10   | 11   | 12   | 13   | 14   | 15   | 16       | 17   | 18   | 19   | 20   | 21   | 22   | 23       | 24   | 25   | 26   | 27   | 28       | 29   | 30   | 31   | 32   | 33   | 34   | 35   | 36   | 37   | 38   | 39   | 40   | 41       | 42   | 43   |
   
-  发售时间
+  发售时间(pubDate)
   
-  | 不限  | 2017年 | 2018年 | 2019年 | 2020年 | 2021年 | 2022年 | 2023年 | 2024年 |
-  | --- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
-  | all | 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     |
+  | 不限 | 2017 年 | 2018 年 | 2019 年 | 2020 年 | 2021 年 | 2022 年 | 2023 年 | 2024 年 |
+  | ---- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
+  | all  | 1       | 2       | 3       | 4       | 5       | 6       | 7       | 8       |
   
-  游戏集合
+  游戏集合(collection)
   
-  | 不限  | 舞力全开 | 马里奥 | 生化危机 | 炼金工房 | 最终幻想 | 塞尔达 | 宝可梦 | 勇者斗恶龙 | 模拟器 | 秋之回忆 | 第一方 | 体感健身 | 开放世界 | 儿童乐园 |
-  | --- | ---- | --- | ---- | ---- | ---- | --- | --- | ----- | --- | ---- | --- | ---- | ---- | ---- |
-  | all | 1    | 2   | 3    | 4    | 5    | 6   | 7   | 8     | 9   | 10   | 11  | 12   | 13   | 14   |`,
+  | 不限 | 舞力全开 | 马里奥 | 生化危机 | 炼金工房 | 最终幻想 | 塞尔达 | 宝可梦 | 勇者斗恶龙 | 模拟器 | 秋之回忆 | 第一方 | 体感健身 | 开放世界 | 儿童乐园 |
+  | ---- | -------- | ------ | -------- | -------- | -------- | ------ | ------ | ---------- | ------ | -------- | ------ | -------- | -------- | -------- |
+  | all  | 1        | 2      | 3        | 4        | 5        | 6      | 7      | 8          | 9      | 10       | 11     | 12       | 13       | 14       |`,
 };
 
 async function handler(ctx?: Context): Promise<Data> {
-    const category = ctx?.req.param('category') ?? 'all';
-    const language = ctx?.req.param('language') ?? 'all';
-    const tag = ctx?.req.param('tag') ?? 'all';
-    const pubDate = ctx?.req.param('pubDate') ?? 'all';
-    const collection = ctx?.req.param('collection') ?? 'all';
+    const filters = new URLSearchParams(ctx?.req.param('filters'));
     const order = ctx?.req.param('order');
+
+    const category = filters.get('category') ?? 'all';
+    const language = filters.get('language') ?? 'all';
+    const tag = filters.get('tag') ?? 'all';
+    const pubDate = filters.get('pubDate') ?? 'all';
+    const collection = filters.get('collection') ?? 'all';
 
     const baseUrl = 'https://www.3kns.com/';
     const currentUrl = new URL(`${baseUrl}forum.php?mod=forumdisplay&fid=2&filter=sortid&typeid=0&sortid=1&searchsort=1&orderbystr=0`);
@@ -80,6 +78,7 @@ async function handler(ctx?: Context): Promise<Data> {
     currentUrl.searchParams.set('nex_sg_stars', collection);
     if (order !== undefined) {
         currentUrl.searchParams.set('ascdescstr', order);
+        currentUrl.searchParams.set('orderbystr', 'nex_sg_score');
     }
 
     const response = await got(currentUrl);
