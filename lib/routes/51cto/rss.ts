@@ -20,7 +20,7 @@ export const route: Route = {
 
 async function handler() {
     const url = 'https://51cto.com';
-    const response = await got(`${url}`);
+    const response = await got({ method: 'get', url });
     const $ = load(response.data);
 
     const list = $('div.article-irl-c.split-left-l')
