@@ -7752,6 +7752,27 @@
         "maintainers": [],
         "location": "fdy.ts"
       },
+      "/jwb": {
+        "path": "/jwb",
+        "categories": [
+          "university"
+        ],
+        "example": "/bnu/jwb",
+        "parameters": {},
+        "radar": [
+          {
+            "source": [
+              "jwb.bnu.edu.cn"
+            ]
+          }
+        ],
+        "name": "教务部（研究生院）",
+        "maintainers": [
+          "ladeng07"
+        ],
+        "url": "jwb.bnu.edu.cn/tzgg/index.htm",
+        "location": "jwb.ts"
+      },
       "/lib/:category?": {
         "path": "/lib/:category?",
         "radar": [
