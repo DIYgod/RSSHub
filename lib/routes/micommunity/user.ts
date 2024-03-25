@@ -16,7 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [],
+    radar: [
+        {
+            source: ['web.vip.miui.com/page/info/mio/mio/homePage'],
+            target: (_, url) => `/micommunity/user/${new URL(url).searchParams.get('uid')}`,
+        },
+    ],
     name: '用户发帖',
     maintainers: ['abc1763613206'],
     handler,
