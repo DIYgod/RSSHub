@@ -40,15 +40,16 @@ async function handler(ctx) {
         },
     });
 
-    const data = response.map((repo) => ({
+    const data = response.map(({ starred_at, repo }) => ({
         title: `${user} starred ${repo.name}`,
         author: user,
         description: `${repo.description ?? 'No Description'}<br>
         Primary Language: ${repo.language ?? 'Primary Language'}<br>
         Stargazers: ${repo.stargazers_count}<br>
         <img sytle="width:50px;" src="https://opengraph.githubassets.com/${md5(repo.updated_at)}/${repo.full_name}">`,
-        pubDate: parseDate(repo.starred_at),
+        pubDate: parseDate(starred_at),
         link: repo.html_url,
+        category: repo.topics,
     }));
 
     return {
