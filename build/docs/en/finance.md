@@ -522,7 +522,7 @@ Language:
 
 ### 创业板项目动态 <Site url="listing.szse.cn/projectdynamic/1/index.html" size="sm" />
 
-<Route namespace="szse" :data='{"path":"/projectdynamic/:type?/:stage?/:status?","categories":["finance"],"example":"/szse/projectdynamic","parameters":{"type":"类型，见下表，默认为IPO","stage":"阶段，见下表，默认为全部","status":"状态，见下表，默认为全部"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["listing.szse.cn/projectdynamic/1/index.html","listing.szse.cn/projectdynamic/2/index.html","listing.szse.cn/projectdynamic/3/index.html","listing.szse.cn/"]}],"name":"创业板项目动态","maintainers":["nczitzk"],"url":"listing.szse.cn/projectdynamic/1/index.html","description":"类型\n\n  | IPO | 再融资 | 重大资产重组 |\n  | --- | ------ | ------------ |\n  | 1   | 2      | 3            |\n\n  阶段\n\n  | 全部 | 受理 | 问询 | 上市委会议 |\n  | ---- | ---- | ---- | ---------- |\n  | 0    | 10   | 20   | 30         |\n\n  | 提交注册 | 注册结果 | 中止 | 终止 |\n  | -------- | -------- | ---- | ---- |\n  | 35       | 40       | 50   | 60   |\n\n  状态\n\n  | 全部 | 新受理 | 已问询 | 通过 | 未通过 |\n  | ---- | ------ | ------ | ---- | ------ |\n  | 0    | 20     | 30     | 45   | 44     |\n\n  | 暂缓审议 | 复审通过 | 复审不通过 | 提交注册 |\n  | -------- | -------- | ---------- | -------- |\n  | 46       | 56       | 54         | 60       |\n\n  | 注册生效 | 不予注册 | 补充审核 | 终止注册 |\n  | -------- | -------- | -------- | -------- |\n  | 70       | 74       | 78       | 76       |\n\n  | 中止 | 审核不通过 | 撤回 |\n  | ---- | ---------- | ---- |\n  | 80   | 90         | 95   |","location":"projectdynamic.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="szse" :data='{"path":"/projectdynamic/:type?/:stage?/:status?","categories":["finance"],"example":"/szse/projectdynamic","parameters":{"type":"类型，见下表，默认为IPO","stage":"阶段，见下表，默认为全部","status":"状态，见下表，默认为全部"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["listing.szse.cn/projectdynamic/1/index.html","listing.szse.cn/projectdynamic/2/index.html","listing.szse.cn/projectdynamic/3/index.html","listing.szse.cn/"]}],"name":"创业板项目动态","maintainers":["nczitzk"],"url":"listing.szse.cn/projectdynamic/1/index.html","description":"类型\n\n  | IPO | 再融资 | 重大资产重组 |\n  | --- | ------ | ------------ |\n  | 1   | 2      | 3            |\n\n  阶段\n\n  | 全部 | 受理 | 问询 | 上市委会议 |\n  | ---- | ---- | ---- | ---------- |\n  | 0    | 10   | 20   | 30         |\n\n  | 提交注册 | 注册结果 | 中止 | 终止 |\n  | -------- | -------- | ---- | ---- |\n  | 35       | 40       | 50   | 60   |\n\n  状态\n\n  | 全部 | 新受理 | 已问询 | 通过 | 未通过 |\n  | ---- | ------ | ------ | ---- | ------ |\n  | 0    | 20     | 30     | 45   | 44     |\n\n  | 暂缓审议 | 复审通过 | 复审不通过 | 提交注册 |\n  | -------- | -------- | ---------- | -------- |\n  | 46       | 56       | 54         | 60       |\n\n  | 注册生效 | 不予注册 | 补充审核 | 终止注册 |\n  | -------- | -------- | -------- | -------- |\n  | 70       | 74       | 78       | 76       |\n\n  | 中止 | 审核不通过 | 撤回 |\n  | ---- | ---------- | ---- |\n  | 80   | 90         | 95   |","location":"projectdynamic.ts"}' :test='{"code":0}' />
 
 类型
 
@@ -564,7 +564,7 @@ Language:
 
 ### 问询函件 <Site url="szse.cn/disclosure/supervision/inquire/index.html" size="sm" />
 
-<Route namespace="szse" :data='{"path":"/inquire/:category?/:select?/:keyword?","categories":["finance"],"example":"/szse/inquire","parameters":{"category":"类型，见下表，默认为 `0` 即 主板","select":"函件类别, 见下表，默认为全部函件类别","keyword":"公司代码或简称，默认为空"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["szse.cn/disclosure/supervision/inquire/index.html","szse.cn/"],"target":"/inquire"}],"name":"问询函件","maintainers":["Jeason0228","nczitzk"],"url":"szse.cn/disclosure/supervision/inquire/index.html","description":"类型\n\n  | 主板 | 创业板 |\n  | ---- | ------ |\n  | 0    | 1      |\n\n  函件类别\n\n  | 全部函件类别 | 非许可类重组问询函 | 问询函 | 违法违规线索分析报告 | 许可类重组问询函 | 监管函（会计师事务所模板） | 提请关注函（会计师事务所模板） | 年报问询函 | 向中介机构发函 | 半年报问询函 | 关注函 | 公司部函 | 三季报问询函 |\n  | ------------ | ------------------ | ------ | -------------------- | ---------------- | -------------------------- | ------------------------------ | ---------- | -------------- | ------------ | ------ | -------- | ------------ |","location":"inquire.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="szse" :data='{"path":"/inquire/:category?/:select?/:keyword?","categories":["finance"],"example":"/szse/inquire","parameters":{"category":"类型，见下表，默认为 `0` 即 主板","select":"函件类别, 见下表，默认为全部函件类别","keyword":"公司代码或简称，默认为空"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["szse.cn/disclosure/supervision/inquire/index.html","szse.cn/"],"target":"/inquire"}],"name":"问询函件","maintainers":["Jeason0228","nczitzk"],"url":"szse.cn/disclosure/supervision/inquire/index.html","description":"类型\n\n  | 主板 | 创业板 |\n  | ---- | ------ |\n  | 0    | 1      |\n\n  函件类别\n\n  | 全部函件类别 | 非许可类重组问询函 | 问询函 | 违法违规线索分析报告 | 许可类重组问询函 | 监管函（会计师事务所模板） | 提请关注函（会计师事务所模板） | 年报问询函 | 向中介机构发函 | 半年报问询函 | 关注函 | 公司部函 | 三季报问询函 |\n  | ------------ | ------------------ | ------ | -------------------- | ---------------- | -------------------------- | ------------------------------ | ---------- | -------------- | ------------ | ------ | -------- | ------------ |","location":"inquire.ts"}' :test='{"code":0}' />
 
 类型
 
@@ -579,7 +579,7 @@ Language:
 
 ### 最新规则 <Site url="szse.cn/lawrules/rule/new" size="sm" />
 
-<Route namespace="szse" :data='{"path":"/rule","categories":["finance"],"example":"/szse/rule","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["szse.cn/lawrules/rule/new","szse.cn/"]}],"name":"最新规则","maintainers":["nczitzk"],"url":"szse.cn/lawrules/rule/new","location":"rule.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="szse" :data='{"path":"/rule","categories":["finance"],"example":"/szse/rule","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["szse.cn/lawrules/rule/new","szse.cn/"]}],"name":"最新规则","maintainers":["nczitzk"],"url":"szse.cn/lawrules/rule/new","location":"rule.ts"}' :test='{"code":0}' />
 
 ## 深潮 TechFlow <Site url="techflowpost.com"/>
 
@@ -671,7 +671,7 @@ Language:
 
 ### 用户自选动态 <Site url="danjuanapp.com" size="sm" />
 
-<Route namespace="xueqiu" :data='{"path":"/user_stock/:id","categories":["finance"],"example":"/xueqiu/user_stock/1247347556","parameters":{"id":"用户 id, 可在用户主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["xueqiu.com/u/:id"]}],"name":"用户自选动态","maintainers":["hillerliao"],"location":"user-stock.ts"}' :test='{"code":1,"message":"expected 348665852579 to be less than 311040000000"}' />
+<Route namespace="xueqiu" :data='{"path":"/user_stock/:id","categories":["finance"],"example":"/xueqiu/user_stock/1247347556","parameters":{"id":"用户 id, 可在用户主页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["xueqiu.com/u/:id"]}],"name":"用户自选动态","maintainers":["hillerliao"],"location":"user-stock.ts"}' :test='{"code":1,"message":"expected 348686630788 to be less than 311040000000"}' />
 
 ### 用户动态 <Site url="danjuanapp.com" size="sm" />
 
@@ -862,7 +862,7 @@ Language:
 
 ### 中证视频 <Site url="cs.com.cn" size="sm" />
 
-<Route namespace="cs" :data='{"path":"/video/:category?","categories":["finance"],"example":"/cs/video/今日聚焦","parameters":{"category":"分类，见下表，默认为今日聚焦"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"中证视频","description":"| 今日聚焦 | 传闻求证 | 高端访谈 | 投教课堂 | 直播汇 |\n    | -------- | -------- | -------- | -------- | ------ |","maintainers":["nczitzk"],"location":"video.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="cs" :data='{"path":"/video/:category?","categories":["finance"],"example":"/cs/video/今日聚焦","parameters":{"category":"分类，见下表，默认为今日聚焦"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"中证视频","description":"| 今日聚焦 | 传闻求证 | 高端访谈 | 投教课堂 | 直播汇 |\n    | -------- | -------- | -------- | -------- | ------ |","maintainers":["nczitzk"],"location":"video.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 | 今日聚焦 | 传闻求证 | 高端访谈 | 投教课堂 | 直播汇 |
     | -------- | -------- | -------- | -------- | ------ |
@@ -911,7 +911,7 @@ Language:
 
 ### 工作论文 <Site url="pbc.gov.cn/redianzhuanti/118742/4122386/4122692/index.html" size="sm" />
 
-<Route namespace="gov" :data='{"path":"/pbc/gzlw","categories":["finance"],"example":"/gov/pbc/gzlw","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["pbc.gov.cn/redianzhuanti/118742/4122386/4122692/index.html"]}],"name":"工作论文","maintainers":["Fatpandac"],"url":"pbc.gov.cn/redianzhuanti/118742/4122386/4122692/index.html","location":"pbc/gzlw.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="gov" :data='{"path":"/pbc/gzlw","categories":["finance"],"example":"/gov/pbc/gzlw","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["pbc.gov.cn/redianzhuanti/118742/4122386/4122692/index.html"]}],"name":"工作论文","maintainers":["Fatpandac"],"url":"pbc.gov.cn/redianzhuanti/118742/4122386/4122692/index.html","location":"pbc/gzlw.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 ### 沟通交流 <Site url="pbc.gov.cn/goutongjiaoliu/113456/113469/index.html" size="sm" />
 

@@ -86,7 +86,7 @@
 
 ### Thesis <Site url="kimlaw.or.kr/67" size="sm" />
 
-<Route namespace="kimlaw" :data='{"path":"/thesis","categories":["study"],"example":"/kimlaw/thesis","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["kimlaw.or.kr/67","kimlaw.or.kr/"]}],"name":"Thesis","maintainers":["TonyRL"],"url":"kimlaw.or.kr/67","location":"thesis.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="kimlaw" :data='{"path":"/thesis","categories":["study"],"example":"/kimlaw/thesis","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["kimlaw.or.kr/67","kimlaw.or.kr/"]}],"name":"Thesis","maintainers":["TonyRL"],"url":"kimlaw.or.kr/67","location":"thesis.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 ## Tableau <Site url="public.tableau.com"/>
 
@@ -120,7 +120,7 @@
 
 ### 新闻 <Site url="sdzk.cn" size="sm" />
 
-<Route namespace="sdzk" :data='{"path":"/:bcid?/:cid?","categories":["study"],"example":"/sdzk","parameters":{"bcid":"板块 id，可在对应板块页 URL 中找到，默认为 `1`，即信息与政策","cid":"栏目 id，可在对应板块页 URL 中找到，默认为 `16`，即通知公告"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"新闻","maintainers":["nczitzk"],"description":":::tip\n  若订阅 [信息与政策](https://www.sdzk.cn/NewsList.aspx?BCID=1)，网址为 `https://www.sdzk.cn/NewsList.aspx?BCID=1`。截取 `BCID=1` 作为参数，此时路由为 [`/sdzk/1`](https://rsshub.app/sdzk/1)。\n\n  若订阅 [通知公告](https://www.sdzk.cn/NewsList.aspx?BCID=1&CID=16)，网址为 `https://www.sdzk.cn/NewsList.aspx?BCID=1&CID=16`。截取 `BCID=1` 与 `CID=16` 作为参数，此时路由为 [`/sdzk/1/16`](https://rsshub.app/sdzk/1/16)。\n  :::","location":"index.ts"}' :test='{"code":0}' />
+<Route namespace="sdzk" :data='{"path":"/:bcid?/:cid?","categories":["study"],"example":"/sdzk","parameters":{"bcid":"板块 id，可在对应板块页 URL 中找到，默认为 `1`，即信息与政策","cid":"栏目 id，可在对应板块页 URL 中找到，默认为 `16`，即通知公告"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"新闻","maintainers":["nczitzk"],"description":":::tip\n  若订阅 [信息与政策](https://www.sdzk.cn/NewsList.aspx?BCID=1)，网址为 `https://www.sdzk.cn/NewsList.aspx?BCID=1`。截取 `BCID=1` 作为参数，此时路由为 [`/sdzk/1`](https://rsshub.app/sdzk/1)。\n\n  若订阅 [通知公告](https://www.sdzk.cn/NewsList.aspx?BCID=1&CID=16)，网址为 `https://www.sdzk.cn/NewsList.aspx?BCID=1&CID=16`。截取 `BCID=1` 与 `CID=16` 作为参数，此时路由为 [`/sdzk/1/16`](https://rsshub.app/sdzk/1/16)。\n  :::","location":"index.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 :::tip
   若订阅 [信息与政策](https://www.sdzk.cn/NewsList.aspx?BCID=1)，网址为 `https://www.sdzk.cn/NewsList.aspx?BCID=1`。截取 `BCID=1` 作为参数，此时路由为 [`/sdzk/1`](https://rsshub.app/sdzk/1)。
@@ -172,7 +172,7 @@
 
 ### 学会动态 <Site url="caai.cn" size="sm" />
 
-<Route namespace="caai" :data='{"path":"/:caty","categories":["study"],"example":"/caai/45","parameters":{"caty":"分类 ID，可在 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"学会动态","maintainers":["tudou027"],"location":"index.ts"}' :test='{"code":0}' />
+<Route namespace="caai" :data='{"path":"/:caty","categories":["study"],"example":"/caai/45","parameters":{"caty":"分类 ID，可在 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"学会动态","maintainers":["tudou027"],"location":"index.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 ## 中国管理现代化研究会 <Site url="cste.org.cn"/>
 
@@ -188,11 +188,11 @@
 
 ### 大数据专家委员会 <Site url="ccf.org.cn" size="sm" />
 
-<Route namespace="ccf" :data='{"path":"/tfbd/:caty/:id","categories":["study"],"example":"/ccf/tfbd/xwdt/tzgg","parameters":{"caty":"主分类，可在 URL 找到","id":"子分类，可在 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["tfbd.ccf.org.cn/tfbd/:caty/:id","tfbd.ccf.org.cn/"]}],"name":"大数据专家委员会","maintainers":["tudou027"],"location":"tfbd/index.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="ccf" :data='{"path":"/tfbd/:caty/:id","categories":["study"],"example":"/ccf/tfbd/xwdt/tzgg","parameters":{"caty":"主分类，可在 URL 找到","id":"子分类，可在 URL 找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["tfbd.ccf.org.cn/tfbd/:caty/:id","tfbd.ccf.org.cn/"]}],"name":"大数据专家委员会","maintainers":["tudou027"],"location":"tfbd/index.ts"}' :test='{"code":0}' />
 
 ### 计算机视觉专委会 - 学术动态 - 分类 <Site url="ccf.org.cn" size="sm" />
 
-<Route namespace="ccf" :data='{"path":"/ccfcv/:channel/:category","categories":["study"],"example":"/ccf/ccfcv/xsdt/xsqy","parameters":{"channel":"频道，仅支持 `xsdt`","category":"分类，见下表，亦可在网站 url 里找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"计算机视觉专委会 - 学术动态 - 分类","maintainers":["elxy"],"description":"| 学术前沿 | 热点征文 | 学术会议 |\n  | -------- | -------- | -------- |\n  | xsqy     | rdzw     | xshy     |","location":"ccfcv/index.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="ccf" :data='{"path":"/ccfcv/:channel/:category","categories":["study"],"example":"/ccf/ccfcv/xsdt/xsqy","parameters":{"channel":"频道，仅支持 `xsdt`","category":"分类，见下表，亦可在网站 url 里找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"计算机视觉专委会 - 学术动态 - 分类","maintainers":["elxy"],"description":"| 学术前沿 | 热点征文 | 学术会议 |\n  | -------- | -------- | -------- |\n  | xsqy     | rdzw     | xshy     |","location":"ccfcv/index.ts"}' :test='{"code":0}' />
 
 | 学术前沿 | 热点征文 | 学术会议 |
   | -------- | -------- | -------- |

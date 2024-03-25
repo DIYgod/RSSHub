@@ -175,7 +175,7 @@ Type
 
 ### Cheng Kung University Mirror <Site url="apod.nasa.govundefined" size="sm" />
 
-<Route namespace="nasa" :data='{"path":"/apod-ncku","categories":["picture"],"example":"/nasa/apod-ncku","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["apod.nasa.govundefined"]}],"name":"Cheng Kung University Mirror","maintainers":["nczitzk","williamgateszhao"],"url":"apod.nasa.govundefined","location":"apod-ncku.ts"}' :test='{"code":0}' />
+<Route namespace="nasa" :data='{"path":"/apod-ncku","categories":["picture"],"example":"/nasa/apod-ncku","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["apod.nasa.govundefined"]}],"name":"Cheng Kung University Mirror","maintainers":["nczitzk","williamgateszhao"],"url":"apod.nasa.govundefined","location":"apod-ncku.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 ### NASA 中文 <Site url="apod.nasa.govundefined" size="sm" />
 

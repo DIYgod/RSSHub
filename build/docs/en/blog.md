@@ -132,7 +132,7 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
 
 ### Essays <Site url="paulgraham.com/articles.html" size="sm" />
 
-<Route namespace="paulgraham" :data='{"path":["/articles","/essays","/"],"categories":["blog"],"example":"/paulgraham/articles","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["paulgraham.com/articles.html"]}],"name":"Essays","maintainers":["Maecenas","nczitzk"],"url":"paulgraham.com/articles.html","location":"article.ts"}' :test='{"code":1,"message":"expected NaN to be greater than -432000000"}' />
+<Route namespace="paulgraham" :data='{"path":["/articles","/essays","/"],"categories":["blog"],"example":"/paulgraham/articles","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["paulgraham.com/articles.html"]}],"name":"Essays","maintainers":["Maecenas","nczitzk"],"url":"paulgraham.com/articles.html","location":"article.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 ### Essays <Site url="paulgraham.com/articles.html" size="sm" />
 
@@ -152,7 +152,7 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
 
 ### 最新发布 <Site url="pianyivps.com/" size="sm" />
 
-<Route namespace="pianyivps" :data='{"path":"/","categories":["blog"],"example":"/pianyivps","radar":[{"source":["pianyivps.com/"]}],"name":"最新发布","maintainers":["cnkmmk"],"url":"pianyivps.com/","location":"rss.ts"}' :test='{"code":0}' />
+<Route namespace="pianyivps" :data='{"path":"/","categories":["blog"],"example":"/pianyivps","radar":[{"source":["pianyivps.com/"]}],"name":"最新发布","maintainers":["cnkmmk"],"url":"pianyivps.com/","location":"rss.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
 
 ## 博客园 <Site url="www.cnblogs.com"/>
 

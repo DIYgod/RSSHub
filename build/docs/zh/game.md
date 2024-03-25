@@ -114,7 +114,7 @@ Region
 
 ### FINAL FANTASY XIV (The Lodestone) <Site url="eu.finalfantasyxiv.com" size="sm" />
 
-<Route namespace="ff14" :data='{"path":["/global/:lang/:type?","/ff14_global/:lang/:type?"],"categories":["game"],"example":"/ff14/global/na/all","parameters":{"lang":"Region","type":"Category, `all` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"FINAL FANTASY XIV (The Lodestone)","maintainers":["chengyuhui"],"description":"Region\n\n  | North Ameria | Europe | France | Germany | Japan |\n  | ------------ | ------ | ------ | ------- | ----- |\n  | na           | eu     | fr     | de      | jp    |\n\n  Category\n\n  | all | topics | notices | maintenance | updates | status | developers |\n  | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |","location":"ff14-global.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
+<Route namespace="ff14" :data='{"path":["/global/:lang/:type?","/ff14_global/:lang/:type?"],"categories":["game"],"example":"/ff14/global/na/all","parameters":{"lang":"Region","type":"Category, `all` by default"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"FINAL FANTASY XIV (The Lodestone)","maintainers":["chengyuhui"],"description":"Region\n\n  | North Ameria | Europe | France | Germany | Japan |\n  | ------------ | ------ | ------ | ------- | ----- |\n  | na           | eu     | fr     | de      | jp    |\n\n  Category\n\n  | all | topics | notices | maintenance | updates | status | developers |\n  | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |","location":"ff14-global.ts"}' :test='{"code":0}' />
 
 Region
 
@@ -328,7 +328,7 @@ Region
 
 ### Java Game Update <Site url="minecraft.net/" size="sm" />
 
-<Route namespace="minecraft" :data='{"path":"/version","categories":["game"],"example":"/minecraft/version","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["minecraft.net/"]}],"name":"Java Game Update","maintainers":["TheresaQWQ"],"url":"minecraft.net/","location":"version.ts"}' :test='{"code":1,"message":"expected 311132922843 to be less than 311040000000"}' />
+<Route namespace="minecraft" :data='{"path":"/version","categories":["game"],"example":"/minecraft/version","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["minecraft.net/"]}],"name":"Java Game Update","maintainers":["TheresaQWQ"],"url":"minecraft.net/","location":"version.ts"}' :test='{"code":1,"message":"expected 311153705468 to be less than 311040000000"}' />
 
 ## Modrinth <Site url="modrinth.com"/>
 
@@ -380,7 +380,7 @@ Region
 
 ### Beatmap Packs <Site url="osu.ppy.sh" size="sm" />
 
-<Route namespace="osu" :data='{"path":"/packs/:type?","categories":["game"],"example":"/osu/packs","parameters":{"type":"pack type, default to `standard`, can choose from `featured`, `tournament`, `loved`, `chart`, `theme` and `artist`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Beatmap Packs","maintainers":["JimenezLi"],"location":"beatmaps/packs.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="osu" :data='{"path":"/packs/:type?","categories":["game"],"example":"/osu/packs","parameters":{"type":"pack type, default to `standard`, can choose from `featured`, `tournament`, `loved`, `chart`, `theme` and `artist`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Beatmap Packs","maintainers":["JimenezLi"],"location":"beatmaps/packs.ts"}' :test='{"code":0}' />
 
 ## PRINCESS CONNECT! Re Dive プリンセスコネクト！Re Dive <Site url="priconne-redive.jp"/>
 
@@ -612,7 +612,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 原神 <Site url="genshin.hoyoverse.com" size="sm" />
 
-<Route namespace="mihoyo" :data='{"path":"/ys/:location?/:category?","categories":["game"],"example":"/mihoyo/ys","parameters":{"location":"区域，可选 `main`（简中）或 `zh-tw`（繁中）","category":"分类，见下表，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["genshin.hoyoverse.com/:location/news"],"target":"/ys/:location"}],"name":"原神","maintainers":["nczitzk"],"description":"#### 新闻 {#mi-ha-you-yuan-shen-xin-wen}\n\n  | 最新   | 新闻 | 公告   | 活动     |\n  | ------ | ---- | ------ | -------- |\n  | latest | news | notice | activity |","location":"ys/news.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="mihoyo" :data='{"path":"/ys/:location?/:category?","categories":["game"],"example":"/mihoyo/ys","parameters":{"location":"区域，可选 `main`（简中）或 `zh-tw`（繁中）","category":"分类，见下表，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":[{"source":["genshin.hoyoverse.com/:location/news"],"target":"/ys/:location"}],"name":"原神","maintainers":["nczitzk"],"description":"#### 新闻 {#mi-ha-you-yuan-shen-xin-wen}\n\n  | 最新   | 新闻 | 公告   | 活动     |\n  | ------ | ---- | ------ | -------- |\n  | latest | news | notice | activity |","location":"ys/news.ts"}' :test='{"code":1,"message":"expected 503 to be 200 // Object.is equality"}' />
 
 #### 新闻 {#mi-ha-you-yuan-shen-xin-wen}
 
@@ -624,7 +624,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 游戏内公告 <Site url="ak.arknights.jp" size="sm" />
 
-<Route namespace="arknights" :data='{"path":"/announce/:platform?/:group?","categories":["game"],"example":"/arknights/announce","parameters":{"platform":"平台，默认为 Android","group":"分组，默认为 ALL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"游戏内公告","maintainers":["swwind"],"description":"平台\n\n  |  安卓服 | iOS 服 |   B 服   |\n  | :-----: | :----: | :------: |\n  | Android |   IOS  | Bilibili |\n\n  分组\n\n  | 全部 | 系统公告 | 活动公告 |\n  | :--: | :------: | :------: |\n  |  ALL |  SYSTEM  | ACTIVITY |","location":"announce.ts"}' :test='{"code":1,"message":"expected -15399361631 to be greater than -432000000"}' />
+<Route namespace="arknights" :data='{"path":"/announce/:platform?/:group?","categories":["game"],"example":"/arknights/announce","parameters":{"platform":"平台，默认为 Android","group":"分组，默认为 ALL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"游戏内公告","maintainers":["swwind"],"description":"平台\n\n  |  安卓服 | iOS 服 |   B 服   |\n  | :-----: | :----: | :------: |\n  | Android |   IOS  | Bilibili |\n\n  分组\n\n  | 全部 | 系统公告 | 活动公告 |\n  | :--: | :------: | :------: |\n  |  ALL |  SYSTEM  | ACTIVITY |","location":"announce.ts"}' :test='{"code":1,"message":"expected -15378605435 to be greater than -432000000"}' />
 
 平台
 
@@ -660,7 +660,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 资讯列表 <Site url="wmpvp.com" size="sm" />
 
-<Route namespace="wmpvp" :data='{"path":"/news/:type","categories":["game"],"example":"/wmpvp/news/1","parameters":{"type":"资讯分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"资讯列表","maintainers":["tssujt"],"description":"| DOTA2 | CS2 |\n  | ----- | --- |\n  | 1     | 2   |","location":"index.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="wmpvp" :data='{"path":"/news/:type","categories":["game"],"example":"/wmpvp/news/1","parameters":{"type":"资讯分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"资讯列表","maintainers":["tssujt"],"description":"| DOTA2 | CS2 |\n  | ----- | --- |\n  | 1     | 2   |","location":"index.ts"}' :test='{"code":0}' />
 
 | DOTA2 | CS2 |
   | ----- | --- |
@@ -694,7 +694,7 @@ News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/
 
 ### 游戏折扣 <Site url="xiaoheihe.cn" size="sm" />
 
-<Route namespace="xiaoheihe" :data='{"path":"/discount/:platform","categories":["game"],"example":"/xiaoheihe/discount/pc","parameters":{"platform":"平台分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"游戏折扣","maintainers":["tssujt"],"description":"| PC  | Switch  | PSN   | Xbox |\n  | ----- | ------ | ----- | ----- |\n  | pc    | switch | psn   | xbox  |","location":"discount.ts"}' :test='{"code":1,"message":"Test timed out in 10000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."}' />
+<Route namespace="xiaoheihe" :data='{"path":"/discount/:platform","categories":["game"],"example":"/xiaoheihe/discount/pc","parameters":{"platform":"平台分类，见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"游戏折扣","maintainers":["tssujt"],"description":"| PC  | Switch  | PSN   | Xbox |\n  | ----- | ------ | ----- | ----- |\n  | pc    | switch | psn   | xbox  |","location":"discount.ts"}' :test='{"code":0}' />
 
 | PC  | Switch  | PSN   | Xbox |
   | ----- | ------ | ----- | ----- |
