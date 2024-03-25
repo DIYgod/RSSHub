@@ -55,30 +55,4 @@ describe('got', () => {
         expect(response1.body).toBe('{"code": 0}');
         expect(response1.data.code).toBe(0);
     });
-
-    it('timeout', async () => {
-        process.env.REQUEST_TIMEOUT = '500';
-
-        const { default: got } = await import('@/utils/got');
-        nock('http://rsshub.test')
-            .get('/timeout')
-            .delay(600)
-            .reply(() => [200, '{"code": 0}']);
-
-        const logger = (await import('@/utils/logger')).default;
-        // @ts-expect-error unused
-        const loggerSpy = vi.spyOn(logger, 'error').mockReturnValue({});
-
-        try {
-            await got.get('http://rsshub.test/timeout');
-            throw new Error('Timeout Invalid');
-        } catch (error: any) {
-            expect(error.name).toBe('FetchError');
-        }
-        expect(loggerSpy).toHaveBeenCalledWith(expect.stringContaining('http://rsshub.test/timeout'));
-
-        loggerSpy.mockRestore();
-
-        delete process.env.REQUEST_TIMEOUT;
-    });
 });

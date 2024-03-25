@@ -10,7 +10,7 @@ const rofetch = ofetch.create({
         'user-agent': config.ua,
     },
     onRequestError({ request, error }) {
-        logger.error(`Request ${request.url} fail: ${error}`);
+        logger.error(`Request ${request} fail: ${error}`);
     },
 });
 
