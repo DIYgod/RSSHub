@@ -24,8 +24,8 @@ dependencies:
     specifier: 7.108.0
     version: 7.108.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.55
-    version: 2.0.55
+    specifier: 2.0.56
+    version: 2.0.56
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -2066,7 +2066,7 @@ packages:
     engines: {node: '>= 14'}
     dependencies:
       eslint: 8.57.0
-      jschardet: 3.1.0
+      jschardet: 3.1.2
       lodash: 4.17.21
       utf8: 3.0.0
     transitivePeerDependencies:
@@ -2171,7 +2171,7 @@ packages:
       '@babel/runtime-corejs2': 7.23.9
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -2483,8 +2483,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.55:
-    resolution: {integrity: sha512-P8FVnfhUH1v1stE5tpSD7oz5Gh+ifCnoznxvd4rk+kGchnMJHSmQUHWzOzEZHFqag9viWp54YIgsx+JBDgu21w==}
+  /@tonyrl/rand-user-agent@2.0.56:
+    resolution: {integrity: sha512-7C2zOyvJsU2BxYayw+w/KjtP/InxYHzRWOWUuPj3XP3SGfnUTpQjKvEuo5K0LB+0YqF62w65LjHGE7Aw1irtaA==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -5953,8 +5953,8 @@ packages:
     resolution: {integrity: sha512-4bYVV3aAMtDTTu4+xsDYa6sy9GyJ69/amsu9sYF2zqjiEoZA5xJi3BrfX3uY+/IekIu7MwdObdbDWpoZdBv3/A==}
     dev: false
 
-  /jschardet@3.1.0:
-    resolution: {integrity: sha512-MND0yjRsoQ/3iFXce7lqV/iBmqH9oWGUTlty36obRBZjhFDWCLKjXgfxY75wYfwlW7EFqw52tyziy/q4WsQmrA==}
+  /jschardet@3.1.2:
+    resolution: {integrity: sha512-mw3CBZGzW8nUBPYhFU2ztZ/kJ6NClQUQVpyzvFMfznZsoC///ZQ30J2RCUanNsr5yF22LqhgYr/lj807/ZleWA==}
     engines: {node: '>=0.1.90'}
     dev: true
 
@@ -9488,8 +9488,8 @@ packages:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
