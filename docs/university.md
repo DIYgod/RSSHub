@@ -2668,11 +2668,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生信息网
 
-<Route author="yanbot-team" example="/ecnu/yjszs/sszsxx" path="/ecnu/yjszs/:type" radar="1" :paramsDesc="['分类，见下表']" >
+<Route author="yanbot-team" example="/ecnu/yjszs/43264" path="/ecnu/yjszs/:type" radar="1" :paramsDesc="['分类，见下表']" >
 
-| 硕士研究生招生 | 华东师范大学考点(3111)及考试 | 推免生接收（含公费师范生攻读教育硕士） | 院系及专项招生动态 | 博士研究生招生 |
-| -------------- | ---------------------------- | -------------------------------------- | ------------------ | -------------- |
-| sszsxx         | hskdxx                       | tjmszsxx                               | yxdtxx             | bszsxx         |
+| 硕士研究生招生 |
+| -------------- |
+| 43264          |
 
 </Route>
 
@@ -2808,11 +2808,13 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生信息网
 
-<Route author="yanbot-team" example="/hust/gszs/notice/0" path="/hust/aia/notice/:type?" :paramsDesc="['分区 type，默认为最新通知 可在网页 HTML中找到']">
+<Route author="yanbot-team" example="/hust/gszs/zsxx-ggtz" path="/hust/aia/notice/:type?" :paramsDesc="['分区 type']">
 
-| 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
-| ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
-| 0    | 1    | 2    | 3    | 4    | 5      | 6      | 7    |
+| 硕士      |
+| --------- |
+| zsxx-ggtz |
+
+</Route>
 
 </Route>
 
