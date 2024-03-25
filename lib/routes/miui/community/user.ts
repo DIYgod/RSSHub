@@ -2,9 +2,9 @@ import { Route, Data } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/user/:uid',
+    path: '/community/user/:uid',
     categories: ['bbs'],
-    example: '/micommunity/user/1200057564',
+    example: '/miui/community/user/1200057564',
     parameters: {
         uid: '小米用户 UID，可于网页版用户主页链接中 `uid` 项获取',
     },
@@ -19,10 +19,10 @@ export const route: Route = {
     radar: [
         {
             source: ['web.vip.miui.com/page/info/mio/mio/homePage'],
-            target: (_, url) => `/micommunity/user/${new URL(url).searchParams.get('uid')}`,
+            target: (_, url) => `/miui/community/user/${new URL(url).searchParams.get('uid')}`,
         },
     ],
-    name: '用户发帖',
+    name: '小米社区用户发帖',
     maintainers: ['abc1763613206'],
     handler,
 };
