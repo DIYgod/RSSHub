@@ -19800,6 +19800,33 @@
     "name": "巴哈姆特電玩資訊站",
     "url": "acg.gamer.com.tw"
   },
+  "gamer520": {
+    "routes": {
+      "/:category?/:order?": {
+        "path": "/:category?/:order?",
+        "categories": [
+          "game"
+        ],
+        "example": "/gamer520/switchyouxi",
+        "parameters": {
+          "category": "分类，见下表",
+          "order": "排序，发布日期: date; 修改日期: modified"
+        },
+        "features": {
+          "antiCrawler": true
+        },
+        "name": "文章",
+        "maintainers": [
+          "xzzpig"
+        ],
+        "url": "www.gamer520.com/",
+        "description": "分类\n\n  | 所有 | Switch 游戏下载 | 金手指     | 3A 巨作 | switch 主题 | PC 游戏 |\n  | ---- | --------------- | ---------- | ------- | ----------- | ------- |\n  | all  | switchyouxi     | jinshouzhi | 3ajuzuo | zhuti       | pcgame  |",
+        "location": "index.ts"
+      }
+    },
+    "name": "全球游戏交流中心",
+    "url": "www.gamer520.com"
+  },
   "gamersecret": {
     "routes": {
       "/:type?/:category?": {
