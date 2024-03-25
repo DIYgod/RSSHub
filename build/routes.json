@@ -24303,27 +24303,19 @@
   },
   "guokr": {
     "routes": {
-      "/:channel": {
-        "path": "/:channel",
+      "/column/:channel": {
+        "path": "/column/:channel",
         "categories": [
           "new-media"
         ],
-        "example": "/guokr/calendar",
+        "example": "/guokr/column/calendar",
         "parameters": {
           "channel": "专栏类别"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
         },
         "radar": [
           {
             "source": [
-              "guokr.com/"
+              "guokr.com/:channel"
             ]
           }
         ],
@@ -24342,15 +24334,6 @@
           "new-media"
         ],
         "example": "/guokr/scientific",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
