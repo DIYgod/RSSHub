@@ -15707,6 +15707,19 @@
       }
     ]
   },
+  "zjut.edu.cn": {
+    "_name": "浙江工业大学",
+    "www.news": [
+      {
+        "title": "浙工大新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:type/list.htm"
+        ],
+        "target": "/zjut/news/:type"
+      }
+    ]
+  },
   "zotero.org": {
     "_name": "Zotero",
     ".": [

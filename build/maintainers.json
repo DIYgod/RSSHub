@@ -6398,6 +6398,10 @@
   "/zju/physics/:type": [
     "Caicailiushui"
   ],
+  "/zjut/news/:type": [
+    "junbaor",
+    "yikZero"
+  ],
   "/zjut/da/:type": [
     "yikZero"
   ],
