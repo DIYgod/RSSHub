@@ -29,14 +29,28 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    // Some sections are inconsistent with their URLs.
-    // Here we use `base` to get the right favicon
-    const home = 'https://www.twreporter.org/';
+    const category = ctx.req.param('category');
     const url = `https://go-api.twreporter.org/v2/index_page`;
     const res = await got(url).json();
-    const category = ctx.req.param('category');
     const list = res.data[category];
-    const name = list[0].category_set[0].category.name;
+
+    let name = list[0].category_set[0].category.name;
+    let categoryID = category;
+    switch (categoryID) {
+        case 'photos_section':
+            categoryID = 'photography';
+
+            break;
+        case 'politics_and_society':
+            categoryID = categoryID.replaceAll('_', '-');
+            name = '政治社會';
+
+            break;
+        default:
+            break;
+    }
+    const home = `https://www.twreporter.org/categories/${categoryID}`;
+
     const out = await Promise.all(
         list.map((item) => {
             const title = item.title;
