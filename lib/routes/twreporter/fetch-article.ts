@@ -48,10 +48,7 @@ export default async function fetch(slug: string) {
                 switch (type) {
                     case 'image':
                     case 'slideshow':
-                        block = content.map((image) => {
-                            const images = art(path.join(__dirname, 'templates/image.art'), { image: image.desktop.url, description: image.description, caption: image.description });
-                            return images.join('<br>');
-                        });
+                        block = content.map((image) => art(path.join(__dirname, 'templates/image.art'), { image: image.desktop.url, description: image.description, caption: image.description })).join('<br>');
 
                         break;
 
