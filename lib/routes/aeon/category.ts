@@ -38,7 +38,7 @@ async function handler(ctx) {
         title: item.node.title,
         author: item.node.authors.map((author) => author.displayName).join(', '),
         link: `https://aeon.co/${item.node.type.toLowerCase()}s/${item.node.slug}`,
-        pubDate: item.node.createdAt,
+        pubDate: item.node.publishedAt,
     }));
 
     const items = await getData(ctx, list);
