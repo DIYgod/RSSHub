@@ -48,7 +48,7 @@ export default async function fetch(slug: string) {
                 switch (type) {
                     case 'image':
                     case 'slideshow':
-                        block = content.map((image) => art(path.join(__dirname, 'templates/image.art'), { image: image.desktop.url, description: image.description, caption: image.description })).join('');
+                        block = content.map((image) => art(path.join(__dirname, 'templates/image.art'), { image: image.desktop.url, description: image.description, caption: image.description })).join('<br>');
 
                         break;
 
@@ -73,8 +73,15 @@ export default async function fetch(slug: string) {
 
                         break;
                     }
+                    case 'youtube': {
+                        const video = content[0].youtubeId;
+                        const id = video.split('?')[0];
+                        block = art(path.join(__dirname, 'templates/youtube.art'), { video: id });
+
+                        break;
+                    }
                     default:
-                        block = `${item.content}<br>`;
+                        block = `${content}<br>`;
                 }
             }
             return block;
