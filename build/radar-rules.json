@@ -13735,6 +13735,14 @@
     "_name": "報導者",
     ".": [
       {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/twreporter/category/:category"
+      },
+      {
         "title": "最新",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
