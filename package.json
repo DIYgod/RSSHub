@@ -63,7 +63,7 @@
         "cheerio": "1.0.0-rc.12",
         "chrono-node": "2.7.5",
         "city-timezones": "1.2.1",
-        "cross-env": "^7.0.3",
+        "cross-env": "7.0.3",
         "crypto-js": "4.2.0",
         "currency-symbol-map": "5.1.0",
         "dayjs": "1.11.8",
