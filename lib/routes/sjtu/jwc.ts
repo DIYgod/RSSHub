@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -26,7 +27,28 @@ async function getFullArticle(link) {
     return content.html() + ($('.Newslist2').length ? $('.Newslist2').html() : '');
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:type?',
+    categories: ['university'],
+    example: '/sjtu/jwc',
+    parameters: { type: '默认为 notice' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '教务处通知公告',
+    maintainers: ['SeanChao'],
+    handler,
+    description: `| 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 语言文字 | 工会与支部 | 通识教育 |
+  | -------- | -------- | --------- | -------- | ------ | ------ | ------ | -------- | ---------- | -------- |
+  | news     | notice   | operation | affairs  | yjb    | jgb    | zhb    | language | party      | ge       |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'notice';
     const config = {
         all: {
@@ -109,9 +131,9 @@ export default async (ctx) => {
             })
     );
 
-    ctx.set('data', {
+    return {
         title: '上海交通大学教务处 ' + config[type].section,
         link: sectionLink,
         item: out,
-    });
-};
+    };
+}

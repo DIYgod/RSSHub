@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,25 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { load } from 'cheerio';
 const host = 'https://www.amazon.com';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/kindle/software-updates',
+    categories: ['program-update'],
+    example: '/amazon/kindle/software-updates',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Kindle Software Updates',
+    maintainers: ['EthanWng97'],
+    handler,
+};
+
+async function handler() {
     const url = host + '/gp/help/customer/display.html';
     const nodeIdValue = 'GKMQC26VQQMM8XSW';
     const response = await got({
@@ -33,7 +52,7 @@ export default async (ctx) => {
             return data;
         })
         .get();
-    ctx.set('data', {
+    return {
         title: 'Kindle E-Reader Software Updates',
         link: `${url}?nodeId=${nodeIdValue}`,
         description: 'Kindle E-Reader Software Updates',
@@ -47,5 +66,5 @@ export default async (ctx) => {
             guid: item.title + ' - ' + item.version,
             link: item.link,
         })),
-    });
-};
+    };
+}

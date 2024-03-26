@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -5,7 +6,14 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/shanghai/yjj/*',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const params = getSubPath(ctx) === '/shanghai/yjj' ? '/shanghai/yjj/zx-ylqx' : getSubPath(ctx);
 
     const rootUrl = 'https://yjj.sh.gov.cn';
@@ -56,9 +64,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text().replace(/--/, ' - '),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

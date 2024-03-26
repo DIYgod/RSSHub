@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,33 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tieba/search/:qw/:routeParams?',
+    categories: ['bbs'],
+    example: '/baidu/tieba/search/neuro',
+    parameters: { qw: '搜索关键词', routeParams: '额外参数；请参阅以下说明和表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '贴吧搜索',
+    maintainers: ['JimenezLi'],
+    handler,
+    description: `| 键           | 含义                                                       | 接受的值      | 默认值 |
+  | ------------ | ---------------------------------------------------------- | ------------- | ------ |
+  | kw           | 在名为 kw 的贴吧中搜索                                     | 任意名称 / 无 | 无     |
+  | only\_thread | 只看主题帖，默认为 0 关闭                                  | 0/1           | 0      |
+  | rn           | 返回条目的数量                                             | 1-20          | 20     |
+  | sm           | 排序方式，0 为按时间顺序，1 为按时间倒序，2 为按相关性顺序 | 0/1/2         | 1      |
+
+  用例：\`/baidu/tieba/search/neuro/kw=neurosama&only_thread=1&sm=2\``,
+};
+
+async function handler(ctx) {
     const qw = ctx.req.param('qw');
     const query = new URLSearchParams(ctx.req.param('routeParams'));
     query.set('ie', 'utf-8');
@@ -28,7 +55,7 @@ export default async (ctx) => {
     const $ = load(data);
     const resultList = $('div.s_post');
 
-    ctx.set('data', {
+    return {
         title: `${qw} - ${query.get('kw') || '百度贴'}吧搜索`,
         link,
         item: resultList.toArray().map((element) => {
@@ -62,5 +89,5 @@ export default async (ctx) => {
                 link,
             };
         }),
-    });
-};
+    };
+}

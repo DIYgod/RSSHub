@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,57 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['new-media'],
+    example: '/kamen-rider-official/news',
+    parameters: { category: 'Category, see below, すべて by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '最新情報',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| Category                               |
+  | -------------------------------------- |
+  | すべて                                 |
+  | テレビ                                 |
+  | 映画・V シネマ等                       |
+  | Blu-ray・DVD、配信等                   |
+  | 20 作記念グッズ・東映 EC 商品          |
+  | 石ノ森章太郎生誕 80 周年記念商品       |
+  | 玩具・カード                           |
+  | 食品・飲料・菓子                       |
+  | 子供生活雑貨                           |
+  | アパレル・大人向け雑貨                 |
+  | フィギュア・ホビー・一番くじ・プライズ |
+  | ゲーム・デジタル                       |
+  | 雑誌・書籍・漫画                       |
+  | 音楽                                   |
+  | 映像                                   |
+  | イベント                               |
+  | ホテル・レストラン等                   |
+  | キャンペーン・タイアップ等             |
+  | その他                                 |
+  | KAMEN RIDER STORE                      |
+  | THE 鎧武祭り                           |
+  | 鎧武外伝                               |
+  | 仮面ライダーリバイス                   |
+  | ファイナルステージ                     |
+  | THE50 周年展                           |
+  | 風都探偵                               |
+  | 仮面ライダーギーツ                     |
+  | 仮面ライダーアウトサイダーズ           |
+  | 仮面ライダーガッチャード               |
+  | 仮面ライダー BLACK SUN                 |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -98,7 +149,7 @@ export default async (ctx) => {
 
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${$('title').text().split(/ー/)[0]}${category ? ` - ${category}` : ''}`,
         link: currentUrl,
@@ -110,5 +161,5 @@ export default async (ctx) => {
         subtitle: $('meta[property="keywords"]').prop('content'),
         author: $('meta[property="og:site_name"]').prop('content'),
         allowEmpty: true,
-    });
-};
+    };
+}

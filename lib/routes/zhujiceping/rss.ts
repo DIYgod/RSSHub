@@ -1,8 +1,24 @@
+import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    categories: ['blog'],
+    example: '/zhujiceping',
+    radar: [
+        {
+            source: ['zhujiceping.com/'],
+        },
+    ],
+    name: '最新发布',
+    maintainers: ['cnkmmk'],
+    handler,
+    url: 'zhujiceping.com/',
+};
+
+async function handler() {
     const url = 'https://www.zhujiceping.com/';
     const response = await got({ method: 'get', url });
     const $ = load(response.data);
@@ -24,9 +40,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: '国外主机测评',
         link: url,
         item: list,
-    });
-};
+    };
+}

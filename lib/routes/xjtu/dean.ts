@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -29,7 +30,14 @@ const parseContent = (htmlString) => {
     };
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/dean/:subpath{.+}',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const subpath = ctx.req.param('subpath');
 
     const url = `http://dean.xjtu.edu.cn/${subpath.replaceAll('.htm', '')}.htm`;
@@ -76,9 +84,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `西安交大教务处 - ${subname}`,
         link: url,
         item: out.filter((item) => item !== ''),
-    });
-};
+    };
+}

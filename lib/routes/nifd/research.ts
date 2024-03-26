@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -18,7 +19,28 @@ const titleMap = {
     '6363bdc7-3e1b-4771-a904-6162cd3a3143': '其他报告',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/research/:categoryGuid?',
+    categories: ['finance'],
+    example: '/nifd/research/3333d2af-91d6-429b-be83-28b92f31b6d7',
+    parameters: { categoryGuid: '资讯类型，默认为周报' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '研究',
+    maintainers: ['Fatpandac'],
+    handler,
+    description: `资讯类型可以从网址中获取，如：
+
+  \`http://www.nifd.cn/Research?categoryGuid=7a6a826d-b525-42aa-b550-4236e524227f\` 对应 \`/nifd/research/7a6a826d-b525-42aa-b550-4236e524227f\``,
+};
+
+async function handler(ctx) {
     const categoryGuid = ctx.req.param('categoryGuid') ?? '7a6a826d-b525-42aa-b550-4236e524227f';
     const url = `${rootUrl}/Research?categoryGuid=${categoryGuid}`;
 
@@ -45,9 +67,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `国家金融与发展实验室 - ${titleMap[categoryGuid]}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

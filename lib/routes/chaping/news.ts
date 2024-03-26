@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -14,7 +15,35 @@ const titles = {
     9: '公里每小时',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:caty?',
+    categories: ['new-media'],
+    example: '/chaping/news/15',
+    parameters: { caty: '分类，默认为全部资讯' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '资讯',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 编号 | 分类       |
+  | ---- | ---------- |
+  | 15   | 直播       |
+  | 3    | 科技新鲜事 |
+  | 7    | 互联网槽点 |
+  | 5    | 趣味科技   |
+  | 6    | DEBUG TIME |
+  | 1    | 游戏       |
+  | 8    | 视频       |
+  | 9    | 公里每小时 |`,
+};
+
+async function handler(ctx) {
     const caty = ctx.req.param('caty') ?? '';
 
     const targetUrl = `https://chaping.cn/news?cate=${caty}`;
@@ -46,9 +75,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `差评资讯 - ${titles[ctx.req.param('caty') === '' ? 0 : ctx.req.param('caty')]}`,
         link: targetUrl,
         item: items,
-    });
-};
+    };
+}

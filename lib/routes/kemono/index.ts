@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,39 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:source?/:id?',
+    categories: ['anime'],
+    example: '/kemono',
+    parameters: { source: 'Source, see below, Posts by default', id: 'User id, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['kemono.su/:source/user/:id', 'kemono.su/'],
+        },
+    ],
+    name: 'Posts',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `Sources
+
+  | Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |
+  | ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
+  | posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
+
+  :::tip
+  When \`posts\` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
+  :::`,
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
     const source = ctx.req.param('source') ?? '';
     const id = ctx.req.param('id');
@@ -92,7 +125,11 @@ export default async (ctx) => {
                             content(this).html(`<img src="${href.startsWith('http') ? href : rootUrl + href}">`);
                         });
 
-                        item.description = content('.post__body').html();
+                        item.description = content('.post__body')
+                            .each(function () {
+                                content(this).find('.ad-container').remove();
+                            })
+                            .html();
                         item.author = content('.post__user-name').text();
                         item.title = content('.post__title span').first().text();
                         item.guid = item.link.replace('kemono.su', 'kemono.party');
@@ -124,10 +161,10 @@ export default async (ctx) => {
         );
     }
 
-    ctx.set('data', {
+    return {
         title,
         image,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

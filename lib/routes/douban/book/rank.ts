@@ -1,6 +1,28 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/book/rank/:type?',
+    categories: ['social-media'],
+    example: '/douban/book/rank/fiction',
+    parameters: { type: '图书类型，默认合并列表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '热门图书排行',
+    maintainers: ['xyqfer', 'queensferryme'],
+    handler,
+    description: `| 全部 | 虚构    | 非虚构     |
+  | ---- | ------- | ---------- |
+  |      | fiction | nonfiction |`,
+};
+
+async function handler(ctx) {
     const { type = '' } = ctx.req.param();
     const referer = `https://m.douban.com/book/${type}`;
 
@@ -14,7 +36,7 @@ export default async (ctx) => {
 
     const items = type ? await _(type) : [...(await _('fiction')), ...(await _('nonfiction'))];
 
-    ctx.set('data', {
+    return {
         title: `豆瓣热门图书-${type ? (type === 'fiction' ? '虚构类' : '非虚构类') : '全部'}`,
         link: referer,
         description: '每周一更新',
@@ -30,5 +52,5 @@ export default async (ctx) => {
                 link: url,
             };
         }),
-    });
-};
+    };
+}

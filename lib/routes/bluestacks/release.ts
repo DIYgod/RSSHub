@@ -1,11 +1,36 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
-import cherrio from 'cheerio';
+import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 
 const pageUrl = 'https://support.bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/release/5',
+    categories: ['program-update'],
+    example: '/bluestacks/release/5',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5', 'bluestacks.com/'],
+        },
+    ],
+    name: 'BlueStacks 5 Release Notes',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5',
+};
+
+async function handler() {
     const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -18,7 +43,7 @@ export default async (ctx) => {
     const res = await page.evaluate(() => document.documentElement.innerHTML);
     await page.close();
 
-    const $ = cherrio.load(res);
+    const $ = cheerio.load(res);
 
     const items = $('div h3 a')
         .toArray()
@@ -42,7 +67,7 @@ export default async (ctx) => {
                     waitUntil: 'domcontentloaded',
                 });
                 const res = await page.evaluate(() => document.documentElement.innerHTML);
-                const $ = cherrio.load(res);
+                const $ = cheerio.load(res);
                 await page.close();
 
                 item.description = $('div.article__body').html();
@@ -55,11 +80,11 @@ export default async (ctx) => {
 
     await browser.close();
 
-    ctx.set('data', {
+    return {
         title: $('.article__title').text().trim(),
         description: $('meta[name=description]').text().trim(),
         link: pageUrl,
         image: $('link[rel="shortcut icon"]').attr('href'),
         item: items,
-    });
-};
+    };
+}

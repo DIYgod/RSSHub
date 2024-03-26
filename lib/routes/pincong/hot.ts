@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { baseUrl, puppeteerGet } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hot/:category?',
+    categories: ['bbs'],
+    example: '/pincong/hot',
+    parameters: { category: '分类，与官网分类 URL `category-` 后的数字对应，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '精选',
+    maintainers: ['zphw'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = '0' } = ctx.req.param();
 
     const url = `${baseUrl}/hot/list/category-${category}`;
@@ -14,7 +33,7 @@ export default async (ctx) => {
     const $ = load(html);
     const list = $('div.aw-item');
 
-    ctx.set('data', {
+    return {
         title: '品葱 - 精选',
         link: `${baseUrl}/hot/${category === '0' ? '' : `category-${category}`}`,
         item: list
@@ -25,5 +44,5 @@ export default async (ctx) => {
                 pubDate: parseDate($(item).find('div.mod-footer .aw-small-text').text()),
             }))
             .get(),
-    });
-};
+    };
+}

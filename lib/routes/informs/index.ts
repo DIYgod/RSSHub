@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,7 +12,25 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://pubsonline.informs.org';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['journal'],
+    example: '/informs/mnsc',
+    parameters: { category: 'Category, can be found in the url of the page, `orsc` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Category',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'orsc';
     const cateUrl = `${rootUrl}/toc/${category}/0/0`;
 
@@ -70,9 +89,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `INFORMS - ${category}`,
         link: cateUrl,
         item: items,
-    });
-};
+    };
+}

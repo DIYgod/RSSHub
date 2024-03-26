@@ -1,9 +1,18 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/video-all/:uid/:disableEmbed?',
+    name: '用户所有视频',
+    maintainers: [],
+    handler,
+    categories: ['social-media'],
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const disableEmbed = ctx.req.param('disableEmbed');
     const cookie = await cache.getCookie();
@@ -57,7 +66,7 @@ export default async (ctx) => {
         }
     }
 
-    ctx.set('data', {
+    return {
         title: name,
         link: `https://space.bilibili.com/${uid}/video`,
         description: `${name} 的 bilibili 所有视频`,
@@ -71,5 +80,5 @@ export default async (ctx) => {
             author: name,
             comments: item.comment,
         })),
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,14 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'news' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
 
@@ -120,7 +128,7 @@ export default async (ctx) => {
     const subtitle = $('meta[name="keywords"]').prop('content');
     const author = subtitle.split(/,/)[0];
 
-    ctx.set('data', {
+    return {
         item: items,
         title: $('title').text().split(/-/)[0].trim(),
         link: currentUrl,
@@ -133,5 +141,5 @@ export default async (ctx) => {
         author,
         itunes_author: author,
         itunes_category: 'News',
-    });
-};
+    };
+}

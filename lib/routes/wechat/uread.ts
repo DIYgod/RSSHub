@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/uread/:userid',
+    categories: ['new-media'],
+    example: '/wechat/uread/shensing',
+    parameters: { userid: '公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '公众号（优读来源）',
+    maintainers: ['kt286'],
+    handler,
+};
+
+async function handler(ctx) {
     const userid = ctx.req.param('userid');
     const url = `http://119.29.146.143:8080/reading/subscription/account/recent?uid=${userid}`;
     const response = await got({
@@ -44,9 +63,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `优读 - ${userid}`,
         link: 'https://uread.ai/',
         item: items,
-    });
-};
+    };
+}

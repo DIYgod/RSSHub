@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,14 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import iconv from 'iconv-lite';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cmdp/image/:id{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -68,7 +76,7 @@ export default async (ctx) => {
     const image = $('img.logo').prop('src');
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author} - ${subtitle}${titles.length === 0 ? '' : ` - ${titles.join('|')}`}`,
         link: currentUrl,
@@ -80,5 +88,5 @@ export default async (ctx) => {
         subtitle,
         author,
         allowEmpty: true,
-    });
-};
+    };
+}

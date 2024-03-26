@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 import { baseUrl, apiHost, parseEventDetail, parseItem } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/hub/:tagId/:sort?/:range?', '/hub/:tagId/:sort?', '/hub/:sort?'],
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { tagId, sort = 'new', range } = ctx.req.param();
 
     let title, description, brief, iconUrl;
@@ -50,11 +58,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${title ? `${title} - ` : ''}${description ? `${description} - ` : ''}智源社区`,
         description: brief,
         link: `${baseUrl}/?${tagId ? `tag_id=${tagId}&` : ''}sort=${sort}${range ? `&time_range=${range}` : ''}`,
         image: iconUrl,
         item: items,
-    });
-};
+    };
+}

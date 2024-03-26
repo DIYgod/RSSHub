@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
 import MarkdownIt from 'markdown-it';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/courses/:sort/:tag',
+    categories: ['programming'],
+    example: '/lanqiao/courses/latest/all',
+    parameters: { sort: '排序规则 sort, 默认(`default`)、最新(`latest`)、最热(`hotest`)', tag: '课程标签 `tag`，可在该页面找到：https://www.lanqiao.cn/courses/' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '全站发布的课程',
+    maintainers: ['huhuhang'],
+    handler,
+};
+
+async function handler(ctx) {
     const sort = ctx.req.param('sort');
     const tag = ctx.req.param('tag');
     // 发起 HTTP GET 请求
@@ -50,7 +69,7 @@ export default async (ctx) => {
         default: '默认',
     };
 
-    ctx.set('data', {
+    return {
         // 源标题
         title: `蓝桥云课${sortType[sort]}课程列表【${tag}】`,
         // 源链接
@@ -59,5 +78,5 @@ export default async (ctx) => {
         description: `蓝桥云课【${tag}】标签下${sortType[sort]}课程列表`,
         // 遍历此前获取的数据
         item: items,
-    });
-};
+    };
+}

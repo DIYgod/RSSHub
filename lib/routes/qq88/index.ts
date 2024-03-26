@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['multimedia'],
+    example: '/qq88',
+    parameters: { category: '分类 id，见下表，默认为首页' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 首页 | オトナの土ドラ | 日剧 | 日剧 SP |
+  | ---- | -------------- | ---- | ------- |
+  |      | 10             | 5    | 11      |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'https://qq88.info';
@@ -53,9 +75,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('.page-title').text() || '首页'} - 秋爸日字`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

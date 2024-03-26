@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ranking/:rid?/:day?/:arc_type?/:disableEmbed?',
+    name: '排行榜',
+    maintainers: ['DIYgod'],
+    categories: ['social-media'],
+    example: '/bilibili/ranking/0/3/1',
+    parameters: {
+        rid: '排行榜分区 id, 默认 0',
+        day: '时间跨度, 可为 1 3 7 30',
+        arc_type: '投稿时间, 可为 0(全部投稿) 1(近期投稿) , 默认 1',
+        disableEmbed: '默认为开启内嵌视频, 任意值为关闭',
+    },
+    description: `| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 数码 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
+    | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+    | 0    | 1    | 168      | 3    | 129  | 4    | 36   | 188  | 160  | 119  | 155  | 5    | 181  |`,
+    handler,
+};
+
+async function handler(ctx) {
     const rid = ctx.req.param('rid') || '0';
     const day = ctx.req.param('day') || '3';
     const arc_type = ctx.req.param('arc_type') || '1';
@@ -29,7 +48,7 @@ export default async (ctx) => {
             list = [...list, ...list[i].others];
         }
     }
-    ctx.set('data', {
+    return {
         title: `bilibili ${day}日排行榜-${rid_type}-${arc_type1}`,
         link: `https://www.bilibili.com/ranking/all/${rid}/0/${day}`,
         item: list.map((item) => ({
@@ -39,5 +58,5 @@ export default async (ctx) => {
             author: item.author,
             link: !item.create || (new Date(item.create) / 1000 > utils.bvidTime && item.bvid) ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
         })),
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -15,7 +16,24 @@ const shortcuts = {
     '/information/workplace': '/information/web_zhichang',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category/:subCategory?/:keyword?',
+    categories: ['new-media'],
+    example: '/36kr/newsflashes',
+    parameters: {
+        category: '分类，必填项',
+        subCategory: '子分类，选填项，目的是为了兼容老逻辑',
+        keyword: '关键词，选填项，仅搜索文章/快讯时有效',
+    },
+    name: '资讯, 快讯, 用户文章, 主题文章, 专题文章, 搜索文章, 搜索快讯',
+    maintainers: ['nczitzk', 'fashioncj'],
+    description: `| 最新资讯频道    | 快讯     | 推荐资讯｜生活｜房产｜职场｜搜索文章｜搜索快讯｜
+    | ------- | -------- ｜ -------- ｜ -------- ｜ -------- ｜ --------｜ -------- ｜ -------- ｜
+    | news | newsflashes ｜ recommend ｜ life ｜ estate ｜ workplace ｜ search/articles/关键词 ｜ search/articles/关键词 ｜`,
+    handler,
+};
+
+async function handler(ctx) {
     const path = getSubPath(ctx)
         .replace(/^\/news(?!flashes)/, '/information')
         .replace(/\/search\/article/, '/search/articles');
@@ -49,9 +67,9 @@ export default async (ctx) => {
         items = await Promise.all(items.map((item) => ProcessItem(item, cache.tryGet)));
     }
 
-    ctx.set('data', {
+    return {
         title: `36氪 - ${$('title').text().split('_')[0]}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

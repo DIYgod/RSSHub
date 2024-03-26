@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/announce/:owner?/:province?/:office?',
+    categories: ['government'],
+    example: '/dol/announce',
+    parameters: { owner: 'Requester/former land owner', province: 'Province which the land is belongs to', office: 'DOL office name which the land is belongs to (สำนักงานที่ดิน(กรุงเทพมหานคร|จังหวัด*) [สาขา*])' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'e-LandsAnnouncement',
+    maintainers: ['itpcc'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://announce.dol.go.th';
     const { owner, province, office } = ctx.req.param();
     const queryParams = {
@@ -27,8 +46,7 @@ export default async (ctx) => {
             const slcProvince = $(`select#searchprovince option:contains('${province}')`);
 
             if (!slcProvince.length) {
-                ctx.set('data', result);
-                return;
+                return result;
             }
 
             queryParams.searchprovince = slcProvince.attr('value');
@@ -38,8 +56,7 @@ export default async (ctx) => {
             const slcOffice = $(`select#searchoffice option:contains('${office}')`);
 
             if (!slcOffice.length) {
-                ctx.set('data', result);
-                return;
+                return result;
             }
 
             queryParams.searchoffice = slcOffice.attr('value');
@@ -88,5 +105,5 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', result);
-};
+    return result;
+}

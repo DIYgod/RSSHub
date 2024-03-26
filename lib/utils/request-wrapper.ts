@@ -45,6 +45,7 @@ const requestWrapper = (url: string, options: http.RequestOptions = {}) => {
     if (config.proxyStrategy === 'all') {
         prxied = proxyWrapper(url, optionsWithHeaders);
     } else if (config.proxyStrategy === 'on_retry' && (optionsWithHeaders as any).retryCount) {
+        // TODO
         prxied = proxyWrapper(url, optionsWithHeaders);
     }
     if (prxied) {
@@ -59,7 +60,7 @@ const requestWrapper = (url: string, options: http.RequestOptions = {}) => {
     }
 
     // Accept
-    if (!headersLowerCaseKeys.has('Accept')) {
+    if (!headersLowerCaseKeys.has('accept')) {
         options.headers.Accept = '*/*';
     }
 

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 const getLinkAndTitle = (type, period) => {
@@ -65,7 +66,36 @@ const getLinkAndTitle = (type, period) => {
     return res;
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hot/:type?/:period?',
+    categories: ['social-media'],
+    example: '/coolapk/hot',
+    parameters: { type: '默认为`jrrm`', period: '默认为`daily`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '热榜',
+    maintainers: ['xizeyoupan'],
+    handler,
+    description: `| 参数名称 | 今日热门 | 点赞榜 | 评论榜 | 收藏榜 | 酷图榜 |
+  | -------- | -------- | ------ | ------ | ------ | ------ |
+  | type     | jrrm     | dzb    | plb    | scb    | ktb    |
+
+  | 参数名称 | 日榜  | 周榜   |
+  | -------- | ----- | ------ |
+  | period   | daily | weekly |
+
+  :::tip
+  今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
+  :::`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'jrrm';
     const period = ctx.req.param('period') || 'daily';
     const { link, title } = getLinkAndTitle(type, period);
@@ -88,10 +118,10 @@ export default async (ctx) => {
 
     out = out.filter(Boolean);
 
-    ctx.set('data', {
+    return {
         title,
         link: 'https://www.coolapk.com/',
         description: `热榜-` + title,
         item: out,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -18,7 +19,25 @@ const reqBodyByYear = (year) => ({
 
 const getItemUrl = (id) => `https://immi.homeaffairs.gov.au/news-media/archive/article?itemId=${id}`;
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/immiau/news',
+    categories: ['government'],
+    example: '/gov/immiau/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Immigration and Citizenship - News',
+    maintainers: ['liu233w'],
+    handler,
+};
+
+async function handler() {
     const res = await got({
         method: 'post',
         url,
@@ -34,10 +53,10 @@ export default async (ctx) => {
         link: getItemUrl(item.Id),
     }));
 
-    ctx.set('data', {
+    return {
         title: 'News - Immigration and Citizenship',
         link: 'https://immi.homeaffairs.gov.au/news-media/archive',
         description: 'Australia Government, Department of Home Affairs',
         item: list,
-    });
-};
+    };
+}

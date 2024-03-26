@@ -1,8 +1,32 @@
+import { Route } from '@/types';
 import utils from './utils';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type/:name?',
+    categories: ['programming'],
+    example: '/aijishu/channel/ai',
+    parameters: { type: '文章类型，可以取值如下', name: '名字，取自URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '频道、专栏、用户',
+    maintainers: [],
+    handler,
+    description: `| type    | 说明 |
+  | ------- | ---- |
+  | channel | 频道 |
+  | blog    | 专栏 |
+  | u       | 用户 |`,
+};
+
+async function handler(ctx) {
     const { type, name = 'newest' } = ctx.req.param();
     const u = name === 'newest' ? `https://aijishu.com/` : `https://aijishu.com/${type}/${name}`;
     const html = await got(u);
@@ -18,9 +42,9 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.filter((item) => item?.url?.startsWith('/a/') || item?.object?.url.startsWith('/a/')).map((item) => utils.parseArticle(item)));
 
-    ctx.set('data', {
+    return {
         title: title.split(' - ').slice(0, 2).join(' - '),
         link: u,
         item: items,
-    });
-};
+    };
+}

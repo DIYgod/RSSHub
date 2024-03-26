@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -10,7 +11,28 @@ const titles = {
     10: '阿里云天池',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/datahero/:category?',
+    categories: ['finance'],
+    example: '/dtcj/datahero',
+    parameters: { category: '分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '数据侠专栏',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 侠创 | 纽约数据科学学院 | RS 实验所 | 阿里云天池 |
+  | ---- | ---------------- | --------- | ---------- |
+  | 5    | 6                | 9         | 10         |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'https://dtcj.com';
@@ -43,9 +65,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${category ? titles[category] : '全部'} - 数据侠专栏 | DT 财经`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

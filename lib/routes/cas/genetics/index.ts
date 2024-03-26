@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://genetics.cas.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/genetics/:path{.+}',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const path = ctx.req.param('path');
 
     const currentUrl = `${baseUrl}/${path}/`;
@@ -55,9 +63,9 @@ export default async (ctx) => {
             });
     }
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

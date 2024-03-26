@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/scit/:type',
+    categories: ['university'],
+    example: '/nju/scit/tzgg',
+    parameters: { type: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '科学技术处',
+    maintainers: ['ret-1'],
+    handler,
+    description: `| 通知公告 | 科研动态 |
+  | -------- | -------- |
+  | tzgg     | kydt     |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const type_dict = {
         tzgg: ['https://scit.nju.edu.cn/10916/list.htm', '通知公告'],
@@ -19,7 +41,7 @@ export default async (ctx) => {
     const $ = load(data);
     const list = $('li.list_item');
 
-    ctx.set('data', {
+    return {
         title: `科学技术处-${type_dict[type][1]}`,
         link: type_dict[type][0],
         item: list
@@ -32,5 +54,5 @@ export default async (ctx) => {
                 };
             })
             .get(),
-    });
-};
+    };
+}

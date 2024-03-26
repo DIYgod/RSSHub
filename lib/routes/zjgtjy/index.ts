@@ -1,7 +1,15 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?',
+    name: 'Unknown',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') === 'all' ? '' : ctx.req.param('type').toUpperCase();
     const host = `https://td.zjgtjy.cn:8553/devops/noticeInfo/queryNoticeInfoList?pageSize=10&pageNumber=1&noticeType=${type}&sort=DESC`;
 
@@ -36,9 +44,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: '浙江土地使用权挂牌公告',
         link: host,
         item: items,
-    });
-};
+    };
+}

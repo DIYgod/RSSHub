@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/notes/featured/:site',
+    categories: ['social-media'],
+    example: '/misskey/notes/featured/misskey.io',
+    parameters: { site: 'instance address, domain only, without `http://` or `https://` protocol header' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Featured Notes',
+    maintainers: ['Misaka13514'],
+    handler,
+};
+
+async function handler(ctx) {
     const site = ctx.req.param('site');
     if (!config.feature.allow_user_supply_unsafe_domain && !utils.allowSiteList.includes(site)) {
         throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
@@ -21,9 +40,9 @@ export default async (ctx) => {
 
     const list = response.data;
 
-    ctx.set('data', {
+    return {
         title: `Featured Notes on ${site}`,
         link: `https://${site}/explore`,
         item: utils.parseNotes(list, site),
-    });
-};
+    };
+}

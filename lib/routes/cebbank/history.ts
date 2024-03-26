@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,33 @@ import utils from './utils';
 
 const { TYPE } = utils;
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/quotation/history/:type',
+    categories: ['other'],
+    example: '/cebbank/quotation/history/usd',
+    parameters: { type: '货币的缩写，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '外汇牌价',
+    maintainers: ['linbuxiao'],
+    handler,
+    description: `#### 总览 {#zhong-guo-guang-da-yin-hang-wai-hui-pai-jia-zong-lan}
+
+
+#### 历史牌价 {#zhong-guo-guang-da-yin-hang-wai-hui-pai-jia-li-shi-pai-jia}
+
+  | 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
+  | ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
+  | usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const url = `https://www.cebbank.com/eportal/ui?struts.portlet.action=/portlet/whpjFront!toView.action&moduleId=12094&pageId=477260&currcode=${TYPE[type].id}&currentPagebak=1&currentPage=1`;
     const res = await got({
@@ -38,16 +65,16 @@ export default async (ctx) => {
         })
         .get();
     items.pop();
-    ctx.set('data', {
+    return {
         title: '中国光大银行',
         description: `中国光大银行 外汇牌价 ${TYPE[type].name}`,
         link: `https://www.cebbank.com/site/ygzx/whpj/rmbwhpjlspj/index.html?currcode=${TYPE[type].id}`,
         item: items,
-    });
+    };
 
     ctx.set('json', {
         title: '中国光大银行',
         description: `中国光大银行 外汇牌价 ${TYPE[type].name}`,
         item: items,
     });
-};
+}

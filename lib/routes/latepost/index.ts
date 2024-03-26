@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -21,7 +22,28 @@ const arrayToDictionary = (arr) =>
         ])
     );
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:proma?',
+    categories: ['new-media'],
+    example: '/latepost',
+    parameters: { proma: '栏目 id，见下表，默认为最新报道' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '报道',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 最新报道 | 晚点独家 | 人物访谈 | 晚点早知道 | 长报道 |
+  | -------- | -------- | -------- | ---------- | ------ |
+  |          | 1        | 2        | 3          | 4      |`,
+};
+
+async function handler(ctx) {
     const proma = ctx.req.param('proma');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
 
@@ -96,7 +118,7 @@ export default async (ctx) => {
 
     const $ = load(currentResponse);
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${title} - ${proma ? columns[proma].title : defaultTitle}`,
         link: currentUrl,
@@ -106,5 +128,5 @@ export default async (ctx) => {
         icon,
         logo: icon,
         author: title,
-    });
-};
+    };
+}

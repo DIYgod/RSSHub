@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/moa/sjzxfb/:category{.+}?', '/moa/zdscxx/:category{.+}?'],
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
 
@@ -87,7 +95,7 @@ export default async (ctx) => {
     const description = '数据';
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${title} - ${description} - ${category}`,
         link: currentUrl,
@@ -99,5 +107,5 @@ export default async (ctx) => {
         subtitle: category,
         author: title,
         allowEmpty: true,
-    });
-};
+    };
+}

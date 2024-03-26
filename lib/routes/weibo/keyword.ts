@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import got from '@/utils/got';
@@ -6,7 +7,25 @@ import timezone from '@/utils/timezone';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/keyword/:keyword/:routeParams?',
+    categories: ['social-media'],
+    example: '/weibo/keyword/DIYgod',
+    parameters: { keyword: '你想订阅的微博关键词', routeParams: '额外参数；请参阅上面的说明和表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '关键词',
+    maintainers: ['DIYgod', 'Rongronggg9'],
+    handler,
+};
+
+async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
 
     const data = await cache.tryGet(
@@ -29,22 +48,20 @@ export default async (ctx) => {
     );
 
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
-    ctx.set(
-        'data',
-        weiboUtils.sinaimgTvax({
-            title: `又有人在微博提到${keyword}了`,
-            link: `http://s.weibo.com/weibo/${encodeURIComponent(keyword)}&b=1&nodup=1`,
-            description: `又有人在微博提到${keyword}了`,
-            item: data.map((item) => {
-                item.mblog.created_at = timezone(item.mblog.created_at, +8);
-                if (item.mblog.retweeted_status && item.mblog.retweeted_status.created_at) {
-                    item.mblog.retweeted_status.created_at = timezone(item.mblog.retweeted_status.created_at, +8);
-                }
-                return weiboUtils.formatExtended(ctx, item.mblog, undefined, {
-                    showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),
-                    showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.showAuthorInDesc), true),
-                });
-            }),
-        })
-    );
-};
+
+    return weiboUtils.sinaimgTvax({
+        title: `又有人在微博提到${keyword}了`,
+        link: `http://s.weibo.com/weibo/${encodeURIComponent(keyword)}&b=1&nodup=1`,
+        description: `又有人在微博提到${keyword}了`,
+        item: data.map((item) => {
+            item.mblog.created_at = timezone(item.mblog.created_at, +8);
+            if (item.mblog.retweeted_status && item.mblog.retweeted_status.created_at) {
+                item.mblog.retweeted_status.created_at = timezone(item.mblog.retweeted_status.created_at, +8);
+            }
+            return weiboUtils.formatExtended(ctx, item.mblog, undefined, {
+                showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),
+                showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.showAuthorInDesc), true),
+            });
+        }),
+    });
+}

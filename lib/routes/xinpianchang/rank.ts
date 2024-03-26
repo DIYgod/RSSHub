@@ -1,9 +1,36 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { rootUrl, getData, processItems } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/rank/:category?',
+    categories: ['new-media'],
+    example: '/xinpianchang/rank',
+    parameters: { category: '分类 id，可在对应排行榜页 URL 中找到，见下表，默认为 `all` ，即总榜' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '排行榜',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 分类     | id         |
+  | -------- | ---------- |
+  | 总榜     | all        |
+  | 精选榜   | staffPicks |
+  | 广告     | ad         |
+  | 宣传片   | publicity  |
+  | 创意     | creative   |
+  | 干货教程 | backstage  |`,
+};
+
+async function handler(ctx) {
     const { category = 'all' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 60;
 
@@ -27,8 +54,8 @@ export default async (ctx) => {
 
     items = await processItems(items.slice(0, limit), cache.tryGet);
 
-    ctx.set('data', {
+    return {
         ...data,
         item: items,
-    });
-};
+    };
+}

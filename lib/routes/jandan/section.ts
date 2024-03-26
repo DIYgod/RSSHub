@@ -1,8 +1,16 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'top';
 
     const rootUrl = 'http://i.jandan.net';
@@ -25,7 +33,10 @@ export default async (ctx) => {
             item.find('.commenttext img, .tucao-report').remove();
 
             item.find('.commenttext .view_img_link').each(function () {
-                $(this).replaceWith(`<img src="${$(this).attr('href')}">`);
+                const url = new URL($(this).attr('href'), rootUrl);
+                url.protocol = 'https:';
+                url.host = url.host.replace('moyu.im', 'sinaimg.cn');
+                $(this).replaceWith(`<img src="${url}">`);
             });
 
             const author = item.find('b').first().text();
@@ -40,9 +51,9 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `${$('title').text()} - 煎蛋`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

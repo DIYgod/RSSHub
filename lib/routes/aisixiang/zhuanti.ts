@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,28 @@ import { parseDate } from '@/utils/parse-date';
 
 import { rootUrl, ossUrl, ProcessFeed } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zhuanti/:id',
+    categories: ['reading'],
+    example: '/aisixiang/zhuanti/211',
+    parameters: { id: '专题 ID, 可在对应专题 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '专题',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `:::tip
+  更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
+  :::`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -34,7 +56,7 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         item: await ProcessFeed(limit, cache.tryGet, items),
         title: `爱思想 - ${title}`,
         link: currentUrl,
@@ -42,5 +64,5 @@ export default async (ctx) => {
         language: 'zh-cn',
         image: new URL('images/logo_zhuanti.jpg', ossUrl).href,
         subtitle: title,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -28,7 +29,7 @@ const LOCATION = 'LOCATION';
 const CONTACT = 'CONTACT';
 const STICKER = 'STICKER';
 const ANIMATED_STICKER = 'ANIMATED_STICKER';
-// const VIDEO_STICKER = 'VIDEO_STICKER';  // not supported yet by t.me
+const VIDEO_STICKER = 'VIDEO_STICKER';
 const UNSUPPORTED = 'UNSUPPORTED';
 const PARTIALLY_UNSUPPORTED = 'PARTIALLY_UNSUPPORTED';
 
@@ -49,12 +50,65 @@ const mediaTagDict = {
     CONTACT: ['[Contact]', '📱'],
     STICKER: ['[Sticker]', '[Sticker]'],
     ANIMATED_STICKER: ['[Animated Sticker]', '[Animated Sticker]'],
-    // VIDEO_STICKER: ['[Video Sticker]', '[Video Sticker]'],  // not supported yet by t.me
+    VIDEO_STICKER: ['[Video Sticker]', '[Video Sticker]'],
     UNSUPPORTED: ['[Unsupported]', '🚫'],
     PARTIALLY_UNSUPPORTED: ['', ''],
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/channel/:username/:routeParams?',
+    categories: ['social-media'],
+    example: '/telegram/channel/awesomeDIYgod/searchQuery=twitter',
+    parameters: { username: 'channel username', routeParams: 'extra parameters, see the table below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['t.me/s/:username'],
+            target: '/channel/:username',
+        },
+    ],
+    name: 'Channel',
+    maintainers: ['DIYgod', 'Rongronggg9'],
+    handler,
+    description: `| Key                   | Description                                                           | Accepts                                              | Defaults to       |
+  | --------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ----------------- |
+  | showLinkPreview       | Show the link preview from Telegram                                   | 0/1/true/false                                       | true              |
+  | showViaBot            | For messages sent via bot, show the bot                               | 0/1/true/false                                       | true              |
+  | showReplyTo           | For reply messages, show the target of the reply                      | 0/1/true/false                                       | true              |
+  | showFwdFrom           | For forwarded messages, show the forwarding source                    | 0/1/true/false                                       | true              |
+  | showFwdFromAuthor     | For forwarded messages, show the author of the forwarding source      | 0/1/true/false                                       | true              |
+  | showInlineButtons     | Show inline buttons                                                   | 0/1/true/false                                       | false             |
+  | showMediaTagInTitle   | Show media tags in the title                                          | 0/1/true/false                                       | true              |
+  | showMediaTagAsEmoji   | Show media tags as emoji                                              | 0/1/true/false                                       | true              |
+  | includeFwd            | Include forwarded messages                                            | 0/1/true/false                                       | true              |
+  | includeReply          | Include reply messages                                                | 0/1/true/false                                       | true              |
+  | includeServiceMsg     | Include service messages (e.g. message pinned, channel photo updated) | 0/1/true/false                                       | true              |
+  | includeUnsupportedMsg | Include messages unsupported by t.me                                  | 0/1/true/false                                       | false             |
+  | searchQuery           | search query                                                          | keywords; replace \`#\` by \`%23\` for hashtag searching | (search disabled) |
+
+  Specify different option values than default values can meet different needs, URL
+
+  \`\`\`
+  https://rsshub.app/telegram/channel/NewlearnerChannel/showLinkPreview=0&showViaBot=0&showReplyTo=0&showFwdFrom=0&showFwdFromAuthor=0&showInlineButtons=0&showMediaTagInTitle=1&showMediaTagAsEmoji=1&includeFwd=0&includeReply=1&includeServiceMsg=0&includeUnsupportedMsg=0
+  \`\`\`
+
+  generates an RSS without any link previews and annoying metadata, with emoji media tags in the title, without forwarded messages (but with reply messages), and without messages you don't care about (service messages and unsupported messages), for people who prefer pure subscriptions.
+
+  :::tip
+  For backward compatibility reasons, invalid \`routeParams\` will be treated as \`searchQuery\` .
+
+  Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`.
+  :::`,
+};
+
+async function handler(ctx) {
     const useWeb = ctx.req.param('routeParams') || !config.telegram.session;
     if (!useWeb) {
         return tglibchannel(ctx);
@@ -78,8 +132,8 @@ export default async (ctx) => {
     if (routeParams && routeParams.search(/(^|&)(show(LinkPreview|ViaBot|ReplyTo|FwdFrom(Author)?|InlineButtons|MediaTag(InTitle|AsEmoji))|include(Fwd|Reply|(Service|Unsupported)Msg)|searchQuery)=/) !== -1) {
         routeParams = querystring.parse(ctx.req.param('routeParams'));
         showLinkPreview = !!fallback(undefined, queryToBoolean(routeParams.showLinkPreview), showLinkPreview);
-        showViaBot = !!fallback(undefined, queryToBoolean(routeParams.showReplyTo), showViaBot);
-        showReplyTo = !!fallback(undefined, queryToBoolean(routeParams.showViaBot), showReplyTo);
+        showViaBot = !!fallback(undefined, queryToBoolean(routeParams.showViaBot), showViaBot);
+        showReplyTo = !!fallback(undefined, queryToBoolean(routeParams.showReplyTo), showReplyTo);
         showFwdFrom = !!fallback(undefined, queryToBoolean(routeParams.showFwdFrom), showFwdFrom);
         showFwdFromAuthor = !!fallback(undefined, queryToBoolean(routeParams.showFwdFromAuthor), showFwdFromAuthor);
         showInlineButtons = !!fallback(undefined, queryToBoolean(routeParams.showInlineButtons), showInlineButtons);
@@ -116,7 +170,7 @@ export default async (ctx) => {
     const channelName = $('.tgme_channel_info_header_title').text();
     const feedTitle = (searchQuery ? `"${searchQuery}" - ` : '') + channelName + ' - Telegram Channel';
 
-    ctx.set('data', {
+    return {
         title: feedTitle,
         description: $('.tgme_channel_info_description').text(),
         link: resourceUrl,
@@ -169,6 +223,9 @@ export default async (ctx) => {
                     }
                     if (item.find('.tgme_widget_message_tgsticker').length) {
                         msgTypes.push(ANIMATED_STICKER);
+                    }
+                    if (item.find('.tgme_widget_message_videosticker').length) {
+                        msgTypes.push(VIDEO_STICKER);
                     }
                     if (item.find('.message_media_not_supported').length) {
                         if (item.find('.media_supported_cont').length) {
@@ -315,6 +372,12 @@ export default async (ctx) => {
                                     tag_media += $(source).toString();
                                 });
                                 tag_media += '</picture>';
+                            } else if (node.attribs && node.attribs.class && node.attribs.class.search(/(^|\s)tgme_widget_message_videosticker(\s|$)/) !== -1) {
+                                // video sticker
+                                const videoLink = $node.find('.js-videosticker_video').attr('src');
+                                tag_media += art(path.join(__dirname, 'templates/video.art'), {
+                                    source: videoLink,
+                                });
                             } else if (node.name === 'img') {
                                 // unknown
                                 tag_media += $node.toString();
@@ -349,7 +412,9 @@ export default async (ctx) => {
                         return tag_media_all;
                     };
                     // ordinary message photos, service message photos, stickers, animated stickers, video
-                    const messageMedia = generateMedia('.tgme_widget_message_photo_wrap,.tgme_widget_message_service_photo,.tgme_widget_message_sticker,.tgme_widget_message_tgsticker,.tgme_widget_message_video_player');
+                    const messageMedia = generateMedia(
+                        '.tgme_widget_message_photo_wrap,.tgme_widget_message_service_photo,.tgme_widget_message_sticker,.tgme_widget_message_tgsticker,.tgme_widget_message_videosticker,.tgme_widget_message_video_player'
+                    );
 
                     /* location */
                     const location = () => {
@@ -598,5 +663,5 @@ export default async (ctx) => {
                 .get()
                 .filter(Boolean)
                 .reverse(),
-    });
-};
+    };
+}

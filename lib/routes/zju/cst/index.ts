@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -43,7 +44,28 @@ async function getPage(id) {
     );
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cst/:type',
+    categories: ['university'],
+    example: '/zju/cst/0',
+    parameters: { type: '分类，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '软件学院',
+    description: `| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国际实习 | 国内合作科研 | 国际合作科研 | 校园服务 |
+    | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | -------- |
+    | 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8            | 9            | 10       |`,
+    maintainers: ['yonvenne', 'zwithz'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
     const link = host + map.get(type).id;
     let items = [];
@@ -77,9 +99,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: map.get(type).title,
         link,
         item: out,
-    });
-};
+    };
+}

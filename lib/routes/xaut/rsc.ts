@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/rsc/:category?',
+    categories: ['university'],
+    example: '/xaut/rsc/tzgg',
+    parameters: { category: '通知类别，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '人事处',
+    maintainers: ['mocusez', 'light0926'],
+    handler,
+    description: `:::warning
+  有些内容指向外部链接，目前只提供这些链接，不提供具体内容，去除 jwc 和 index 的修改
+  :::
+
+  | 通知公告 | 工作动态 |
+  | :------: | :------: |
+  |   tzgg   |   gzdt   |`,
+};
+
+async function handler(ctx) {
     let category = ctx.req.param('category');
     // 这里的category是个形参
     const dic_html = { tzgg: 'tzgg.htm', gzdt: 'gzdt.htm' };
@@ -36,7 +62,7 @@ export default async (ctx) => {
             };
         })
         .get();
-    ctx.set('data', {
+    return {
         // 源标题
         title: '西安理工大学人事处-' + dic_title[category],
         // 源链接
@@ -64,5 +90,5 @@ export default async (ctx) => {
                 })
             )
         ),
-    });
-};
+    };
+}
