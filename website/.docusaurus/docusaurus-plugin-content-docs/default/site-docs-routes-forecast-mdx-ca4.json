@@ -1,0 +1,27 @@
+{
+  "id": "routes/forecast",
+  "title": "❗️ Forecast and alerts",
+  "description": "BADAN METEOROLOGI, KLIMATOLOGI, DAN GEOFISIKA(Indonesian)",
+  "source": "@site/docs/routes/forecast.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/forecast",
+  "permalink": "/zh/routes/forecast",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/forecast.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🎓 University",
+    "permalink": "/zh/routes/university"
+  },
+  "next": {
+    "title": "🛫 Travel",
+    "permalink": "/zh/routes/travel"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "joinus/advanced/script-standard",
+  "title": "路由规范",
+  "description": "代码规范",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/script-standard.md",
+  "sourceDirName": "joinus/advanced",
+  "slug": "/joinus/advanced/script-standard",
+  "permalink": "/zh/joinus/advanced/script-standard",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/advanced/script-standard.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "joinusSidebar",
+  "previous": {
+    "title": "RSS 基础",
+    "permalink": "/zh/joinus/advanced/advanced-feed"
+  },
+  "next": {
+    "title": "使用缓存",
+    "permalink": "/zh/joinus/advanced/use-cache"
+  }
+}

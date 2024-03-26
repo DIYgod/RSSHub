@@ -1,0 +1,27 @@
+{
+  "id": "instances",
+  "title": "公共实例",
+  "description": "尽管官方实例已经足够稳定，但为了实现去中心化，我们鼓励用户自行托管 RSSHub 实例或使用其他公共 RSSHub 实例。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/instances.mdx",
+  "sourceDirName": ".",
+  "slug": "/instances",
+  "permalink": "/zh/instances",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/instances.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "开始食用",
+    "permalink": "/zh/usage"
+  },
+  "next": {
+    "title": "常见问题",
+    "permalink": "/zh/faq"
+  }
+}

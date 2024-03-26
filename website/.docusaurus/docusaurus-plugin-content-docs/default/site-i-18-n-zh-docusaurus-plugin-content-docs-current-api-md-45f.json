@@ -1,0 +1,27 @@
+{
+  "id": "api",
+  "title": "API",
+  "description": "API 仍处于开发状态中，并可能会有改动。欢迎提供建议！",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/api.md",
+  "sourceDirName": ".",
+  "slug": "/api",
+  "permalink": "/zh/api",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/api.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "通用参数",
+    "permalink": "/zh/parameter"
+  },
+  "next": {
+    "title": "Routes",
+    "permalink": "/zh/routes"
+  }
+}

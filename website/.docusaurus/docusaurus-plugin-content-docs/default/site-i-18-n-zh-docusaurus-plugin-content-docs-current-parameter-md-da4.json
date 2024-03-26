@@ -1,0 +1,27 @@
+{
+  "id": "parameter",
+  "title": "通用参数",
+  "description": "通用参数实际上是 URI 中的 query，可以使用 & 连接组合使用，效果叠加。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/parameter.md",
+  "sourceDirName": ".",
+  "slug": "/parameter",
+  "permalink": "/zh/parameter",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/parameter.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "常见问题",
+    "permalink": "/zh/faq"
+  },
+  "next": {
+    "title": "API",
+    "permalink": "/zh/api"
+  }
+}

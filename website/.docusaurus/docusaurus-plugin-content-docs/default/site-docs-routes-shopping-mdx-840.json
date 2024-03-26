@@ -1,0 +1,27 @@
+{
+  "id": "routes/shopping",
+  "title": "🛍️ Shopping",
+  "description": "0818 团",
+  "source": "@site/docs/routes/shopping.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/shopping",
+  "permalink": "/zh/routes/shopping",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/shopping.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🛫 Travel",
+    "permalink": "/zh/routes/travel"
+  },
+  "next": {
+    "title": "🎮 Gaming",
+    "permalink": "/zh/routes/game"
+  }
+}

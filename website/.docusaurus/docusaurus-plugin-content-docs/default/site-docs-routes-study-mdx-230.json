@@ -1,0 +1,27 @@
+{
+  "id": "routes/study",
+  "title": "📖 Study",
+  "description": "Asian Innovation and Entrepreneurship Association",
+  "source": "@site/docs/routes/study.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/study",
+  "permalink": "/zh/routes/study",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/study.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "📢 Government",
+    "permalink": "/zh/routes/government"
+  },
+  "next": {
+    "title": "🔬 Scientific Journal",
+    "permalink": "/zh/routes/journal"
+  }
+}

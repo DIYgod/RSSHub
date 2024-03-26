@@ -1,0 +1,30 @@
+{
+  "id": "joinus/new-rss/add-docs",
+  "title": "添加文档",
+  "description": "现在我们完成了代码，是时候为您的路由添加文档了。在 文档 (/website/docs) 中打开相应的文件，本例中是 website/docs/routes/programming.mdx。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/add-docs.md",
+  "sourceDirName": "joinus/new-rss",
+  "slug": "/joinus/new-rss/add-docs",
+  "permalink": "/zh/joinus/new-rss/add-docs",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/new-rss/add-docs.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_position": 4
+  },
+  "sidebar": "joinusSidebar",
+  "previous": {
+    "title": "制作自己的 RSSHub 路由",
+    "permalink": "/zh/joinus/new-rss/start-code"
+  },
+  "next": {
+    "title": "提交路由",
+    "permalink": "/zh/joinus/new-rss/submit-route"
+  }
+}

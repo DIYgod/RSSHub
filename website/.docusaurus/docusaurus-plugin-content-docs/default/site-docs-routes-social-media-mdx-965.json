@@ -1,0 +1,27 @@
+{
+  "id": "routes/social-media",
+  "title": "💬 Social Media",
+  "description": "755",
+  "source": "@site/docs/routes/social-media.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/social-media",
+  "permalink": "/zh/routes/social-media",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/social-media.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "Routes",
+    "permalink": "/zh/routes"
+  },
+  "next": {
+    "title": "📱 New media",
+    "permalink": "/zh/routes/new-media"
+  }
+}

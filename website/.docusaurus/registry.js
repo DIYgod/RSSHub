@@ -1,0 +1,242 @@
+export default {
+    '__comp---theme-debug-config-23-a-2ff': [() => import(/* webpackChunkName: "__comp---theme-debug-config-23-a-2ff" */ '@theme/DebugConfig'), '@theme/DebugConfig', require.resolveWeak('@theme/DebugConfig')],
+    '__comp---theme-debug-contentba-8-ce7': [() => import(/* webpackChunkName: "__comp---theme-debug-contentba-8-ce7" */ '@theme/DebugContent'), '@theme/DebugContent', require.resolveWeak('@theme/DebugContent')],
+    '__comp---theme-debug-global-dataede-0fa': [() => import(/* webpackChunkName: "__comp---theme-debug-global-dataede-0fa" */ '@theme/DebugGlobalData'), '@theme/DebugGlobalData', require.resolveWeak('@theme/DebugGlobalData')],
+    '__comp---theme-debug-registry-679-501': [() => import(/* webpackChunkName: "__comp---theme-debug-registry-679-501" */ '@theme/DebugRegistry'), '@theme/DebugRegistry', require.resolveWeak('@theme/DebugRegistry')],
+    '__comp---theme-debug-routes-946-699': [() => import(/* webpackChunkName: "__comp---theme-debug-routes-946-699" */ '@theme/DebugRoutes'), '@theme/DebugRoutes', require.resolveWeak('@theme/DebugRoutes')],
+    '__comp---theme-debug-site-metadata-68-e-3d4': [
+        () => import(/* webpackChunkName: "__comp---theme-debug-site-metadata-68-e-3d4" */ '@theme/DebugSiteMetadata'),
+        '@theme/DebugSiteMetadata',
+        require.resolveWeak('@theme/DebugSiteMetadata'),
+    ],
+    '__comp---theme-doc-category-generated-index-page-14-e-640': [
+        () => import(/* webpackChunkName: "__comp---theme-doc-category-generated-index-page-14-e-640" */ '@theme/DocCategoryGeneratedIndexPage'),
+        '@theme/DocCategoryGeneratedIndexPage',
+        require.resolveWeak('@theme/DocCategoryGeneratedIndexPage'),
+    ],
+    '__comp---theme-doc-item-178-a40': [() => import(/* webpackChunkName: "__comp---theme-doc-item-178-a40" */ '@theme/DocItem'), '@theme/DocItem', require.resolveWeak('@theme/DocItem')],
+    '__comp---theme-doc-roota-94-67a': [() => import(/* webpackChunkName: "__comp---theme-doc-roota-94-67a" */ '@theme/DocRoot'), '@theme/DocRoot', require.resolveWeak('@theme/DocRoot')],
+    '__comp---theme-doc-version-roota-7-b-5de': [() => import(/* webpackChunkName: "__comp---theme-doc-version-roota-7-b-5de" */ '@theme/DocVersionRoot'), '@theme/DocVersionRoot', require.resolveWeak('@theme/DocVersionRoot')],
+    '__comp---theme-docs-root-5-e-9-0b6': [() => import(/* webpackChunkName: "__comp---theme-docs-root-5-e-9-0b6" */ '@theme/DocsRoot'), '@theme/DocsRoot', require.resolveWeak('@theme/DocsRoot')],
+    'allContent---zh-docusaurus-debug-content-246-c58': [
+        () => import(/* webpackChunkName: "allContent---zh-docusaurus-debug-content-246-c58" */ '~debug/default/docusaurus-debug-all-content-673.json'),
+        '~debug/default/docusaurus-debug-all-content-673.json',
+        require.resolveWeak('~debug/default/docusaurus-debug-all-content-673.json'),
+    ],
+    'categoryGeneratedIndex---zh-routes-8-a-8-e06': [
+        () => import(/* webpackChunkName: "categoryGeneratedIndex---zh-routes-8-a-8-e06" */ '~docs/default/category-zh-guidesidebar-category-路由-715.json'),
+        '~docs/default/category-zh-guidesidebar-category-路由-715.json',
+        require.resolveWeak('~docs/default/category-zh-guidesidebar-category-路由-715.json'),
+    ],
+    'content---zh-0-e-7-2fc': [
+        () => import(/* webpackChunkName: "content---zh-0-e-7-2fc" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/README.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/README.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/README.md'),
+    ],
+    'content---zh-api-45-f-e40': [
+        () => import(/* webpackChunkName: "content---zh-api-45-f-e40" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/api.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/api.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/api.md'),
+    ],
+    'content---zh-faq-296-943': [
+        () => import(/* webpackChunkName: "content---zh-faq-296-943" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/faq.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/faq.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/faq.md'),
+    ],
+    'content---zh-install-confige-75-a80': [
+        () => import(/* webpackChunkName: "content---zh-install-confige-75-a80" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/install/config.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/install/config.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/install/config.md'),
+    ],
+    'content---zh-install-dac-df4': [
+        () => import(/* webpackChunkName: "content---zh-install-dac-df4" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/install/README.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/install/README.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/install/README.md'),
+    ],
+    'content---zh-instances-435-a1f': [
+        () => import(/* webpackChunkName: "content---zh-instances-435-a1f" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/instances.mdx'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/instances.mdx',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/instances.mdx'),
+    ],
+    'content---zh-joinus-advanced-advanced-feedf-82-c8a': [
+        () => import(/* webpackChunkName: "content---zh-joinus-advanced-advanced-feedf-82-c8a" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/advanced-feed.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/advanced-feed.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/advanced-feed.md'),
+    ],
+    'content---zh-joinus-advanced-debug-4-bb-4b9': [
+        () => import(/* webpackChunkName: "content---zh-joinus-advanced-debug-4-bb-4b9" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/debug.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/debug.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/debug.md'),
+    ],
+    'content---zh-joinus-advanced-pub-date-725-da9': [
+        () => import(/* webpackChunkName: "content---zh-joinus-advanced-pub-date-725-da9" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/pub-date.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/pub-date.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/pub-date.md'),
+    ],
+    'content---zh-joinus-advanced-script-standarda-02-619': [
+        () => import(/* webpackChunkName: "content---zh-joinus-advanced-script-standarda-02-619" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/script-standard.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/script-standard.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/script-standard.md'),
+    ],
+    'content---zh-joinus-advanced-use-cachef-2-e-62a': [
+        () => import(/* webpackChunkName: "content---zh-joinus-advanced-use-cachef-2-e-62a" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/use-cache.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/use-cache.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/use-cache.md'),
+    ],
+    'content---zh-joinus-new-radar-44-a-480': [
+        () => import(/* webpackChunkName: "content---zh-joinus-new-radar-44-a-480" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-radar.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-radar.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-radar.md'),
+    ],
+    'content---zh-joinus-new-rss-add-docs-5-f-5-743': [
+        () => import(/* webpackChunkName: "content---zh-joinus-new-rss-add-docs-5-f-5-743" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/add-docs.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/add-docs.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/add-docs.md'),
+    ],
+    'content---zh-joinus-new-rss-before-start-80-d-777': [
+        () => import(/* webpackChunkName: "content---zh-joinus-new-rss-before-start-80-d-777" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/before-start.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/before-start.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/before-start.md'),
+    ],
+    'content---zh-joinus-new-rss-prerequisitesa-32-e9f': [
+        () => import(/* webpackChunkName: "content---zh-joinus-new-rss-prerequisitesa-32-e9f" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/prerequisites.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/prerequisites.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/prerequisites.md'),
+    ],
+    'content---zh-joinus-new-rss-start-code-6-de-9ea': [
+        () => import(/* webpackChunkName: "content---zh-joinus-new-rss-start-code-6-de-9ea" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/start-code.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/start-code.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/start-code.md'),
+    ],
+    'content---zh-joinus-new-rss-submit-routee-9-d-1aa': [
+        () => import(/* webpackChunkName: "content---zh-joinus-new-rss-submit-routee-9-d-1aa" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/submit-route.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/submit-route.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/submit-route.md'),
+    ],
+    'content---zh-joinus-quick-start-87-f-dc3': [
+        () => import(/* webpackChunkName: "content---zh-joinus-quick-start-87-f-dc3" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/quick-start.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/quick-start.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/quick-start.md'),
+    ],
+    'content---zh-parameterda-4-e93': [
+        () => import(/* webpackChunkName: "content---zh-parameterda-4-e93" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/parameter.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/parameter.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/parameter.md'),
+    ],
+    'content---zh-routes-anime-4-a-8-7c7': [
+        () => import(/* webpackChunkName: "content---zh-routes-anime-4-a-8-7c7" */ '@site/docs/routes/anime.mdx'),
+        '@site/docs/routes/anime.mdx',
+        require.resolveWeak('@site/docs/routes/anime.mdx'),
+    ],
+    'content---zh-routes-bbs-46-e-8b4': [() => import(/* webpackChunkName: "content---zh-routes-bbs-46-e-8b4" */ '@site/docs/routes/bbs.mdx'), '@site/docs/routes/bbs.mdx', require.resolveWeak('@site/docs/routes/bbs.mdx')],
+    'content---zh-routes-blogd-50-107': [() => import(/* webpackChunkName: "content---zh-routes-blogd-50-107" */ '@site/docs/routes/blog.mdx'), '@site/docs/routes/blog.mdx', require.resolveWeak('@site/docs/routes/blog.mdx')],
+    'content---zh-routes-design-4-f-5-cdd': [
+        () => import(/* webpackChunkName: "content---zh-routes-design-4-f-5-cdd" */ '@site/docs/routes/design.mdx'),
+        '@site/docs/routes/design.mdx',
+        require.resolveWeak('@site/docs/routes/design.mdx'),
+    ],
+    'content---zh-routes-financeaa-0-47c': [
+        () => import(/* webpackChunkName: "content---zh-routes-financeaa-0-47c" */ '@site/docs/routes/finance.mdx'),
+        '@site/docs/routes/finance.mdx',
+        require.resolveWeak('@site/docs/routes/finance.mdx'),
+    ],
+    'content---zh-routes-forecastca-4-bc2': [
+        () => import(/* webpackChunkName: "content---zh-routes-forecastca-4-bc2" */ '@site/docs/routes/forecast.mdx'),
+        '@site/docs/routes/forecast.mdx',
+        require.resolveWeak('@site/docs/routes/forecast.mdx'),
+    ],
+    'content---zh-routes-gamec-23-542': [() => import(/* webpackChunkName: "content---zh-routes-gamec-23-542" */ '@site/docs/routes/game.mdx'), '@site/docs/routes/game.mdx', require.resolveWeak('@site/docs/routes/game.mdx')],
+    'content---zh-routes-government-6-e-1-6da': [
+        () => import(/* webpackChunkName: "content---zh-routes-government-6-e-1-6da" */ '@site/docs/routes/government.mdx'),
+        '@site/docs/routes/government.mdx',
+        require.resolveWeak('@site/docs/routes/government.mdx'),
+    ],
+    'content---zh-routes-journal-09-f-34f': [
+        () => import(/* webpackChunkName: "content---zh-routes-journal-09-f-34f" */ '@site/docs/routes/journal.mdx'),
+        '@site/docs/routes/journal.mdx',
+        require.resolveWeak('@site/docs/routes/journal.mdx'),
+    ],
+    'content---zh-routes-live-3-e-7-a9e': [() => import(/* webpackChunkName: "content---zh-routes-live-3-e-7-a9e" */ '@site/docs/routes/live.mdx'), '@site/docs/routes/live.mdx', require.resolveWeak('@site/docs/routes/live.mdx')],
+    'content---zh-routes-multimedia-1-dd-f8c': [
+        () => import(/* webpackChunkName: "content---zh-routes-multimedia-1-dd-f8c" */ '@site/docs/routes/multimedia.mdx'),
+        '@site/docs/routes/multimedia.mdx',
+        require.resolveWeak('@site/docs/routes/multimedia.mdx'),
+    ],
+    'content---zh-routes-new-mediac-30-63e': [
+        () => import(/* webpackChunkName: "content---zh-routes-new-mediac-30-63e" */ '@site/docs/routes/new-media.mdx'),
+        '@site/docs/routes/new-media.mdx',
+        require.resolveWeak('@site/docs/routes/new-media.mdx'),
+    ],
+    'content---zh-routes-other-5-af-cc5': [() => import(/* webpackChunkName: "content---zh-routes-other-5-af-cc5" */ '@site/docs/routes/other.mdx'), '@site/docs/routes/other.mdx', require.resolveWeak('@site/docs/routes/other.mdx')],
+    'content---zh-routes-picture-300-950': [
+        () => import(/* webpackChunkName: "content---zh-routes-picture-300-950" */ '@site/docs/routes/picture.mdx'),
+        '@site/docs/routes/picture.mdx',
+        require.resolveWeak('@site/docs/routes/picture.mdx'),
+    ],
+    'content---zh-routes-program-updatea-26-c88': [
+        () => import(/* webpackChunkName: "content---zh-routes-program-updatea-26-c88" */ '@site/docs/routes/program-update.mdx'),
+        '@site/docs/routes/program-update.mdx',
+        require.resolveWeak('@site/docs/routes/program-update.mdx'),
+    ],
+    'content---zh-routes-programming-3-c-0-34d': [
+        () => import(/* webpackChunkName: "content---zh-routes-programming-3-c-0-34d" */ '@site/docs/routes/programming.mdx'),
+        '@site/docs/routes/programming.mdx',
+        require.resolveWeak('@site/docs/routes/programming.mdx'),
+    ],
+    'content---zh-routes-reading-018-3e8': [
+        () => import(/* webpackChunkName: "content---zh-routes-reading-018-3e8" */ '@site/docs/routes/reading.mdx'),
+        '@site/docs/routes/reading.mdx',
+        require.resolveWeak('@site/docs/routes/reading.mdx'),
+    ],
+    'content---zh-routes-shopping-840-0b4': [
+        () => import(/* webpackChunkName: "content---zh-routes-shopping-840-0b4" */ '@site/docs/routes/shopping.mdx'),
+        '@site/docs/routes/shopping.mdx',
+        require.resolveWeak('@site/docs/routes/shopping.mdx'),
+    ],
+    'content---zh-routes-social-media-965-eab': [
+        () => import(/* webpackChunkName: "content---zh-routes-social-media-965-eab" */ '@site/docs/routes/social-media.mdx'),
+        '@site/docs/routes/social-media.mdx',
+        require.resolveWeak('@site/docs/routes/social-media.mdx'),
+    ],
+    'content---zh-routes-study-230-9e5': [() => import(/* webpackChunkName: "content---zh-routes-study-230-9e5" */ '@site/docs/routes/study.mdx'), '@site/docs/routes/study.mdx', require.resolveWeak('@site/docs/routes/study.mdx')],
+    'content---zh-routes-traditional-mediab-5-e-5dd': [
+        () => import(/* webpackChunkName: "content---zh-routes-traditional-mediab-5-e-5dd" */ '@site/docs/routes/traditional-media.mdx'),
+        '@site/docs/routes/traditional-media.mdx',
+        require.resolveWeak('@site/docs/routes/traditional-media.mdx'),
+    ],
+    'content---zh-routes-traveld-42-93c': [
+        () => import(/* webpackChunkName: "content---zh-routes-traveld-42-93c" */ '@site/docs/routes/travel.mdx'),
+        '@site/docs/routes/travel.mdx',
+        require.resolveWeak('@site/docs/routes/travel.mdx'),
+    ],
+    'content---zh-routes-university-7-f-7-861': [
+        () => import(/* webpackChunkName: "content---zh-routes-university-7-f-7-861" */ '@site/docs/routes/university.mdx'),
+        '@site/docs/routes/university.mdx',
+        require.resolveWeak('@site/docs/routes/university.mdx'),
+    ],
+    'content---zh-support-52-a-41a': [
+        () => import(/* webpackChunkName: "content---zh-support-52-a-41a" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/support/README.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/support/README.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/support/README.md'),
+    ],
+    'content---zh-usaged-19-ced': [
+        () => import(/* webpackChunkName: "content---zh-usaged-19-ced" */ '@site/i18n/zh/docusaurus-plugin-content-docs/current/usage.md'),
+        '@site/i18n/zh/docusaurus-plugin-content-docs/current/usage.md',
+        require.resolveWeak('@site/i18n/zh/docusaurus-plugin-content-docs/current/usage.md'),
+    ],
+    'plugin---zh-9-c-6-fe6': [
+        () => import(/* webpackChunkName: "plugin---zh-9-c-6-fe6" */ '/Users/enoch/Documents/Hacking/GitHub/RSSHub/website/.docusaurus/docusaurus-plugin-content-docs/default/plugin-route-context-module-100.json'),
+        '/Users/enoch/Documents/Hacking/GitHub/RSSHub/website/.docusaurus/docusaurus-plugin-content-docs/default/plugin-route-context-module-100.json',
+        require.resolveWeak('/Users/enoch/Documents/Hacking/GitHub/RSSHub/website/.docusaurus/docusaurus-plugin-content-docs/default/plugin-route-context-module-100.json'),
+    ],
+    'plugin---zh-docusaurus-debug-394-c2b': [
+        () => import(/* webpackChunkName: "plugin---zh-docusaurus-debug-394-c2b" */ '/Users/enoch/Documents/Hacking/GitHub/RSSHub/website/.docusaurus/docusaurus-plugin-debug/default/plugin-route-context-module-100.json'),
+        '/Users/enoch/Documents/Hacking/GitHub/RSSHub/website/.docusaurus/docusaurus-plugin-debug/default/plugin-route-context-module-100.json',
+        require.resolveWeak('/Users/enoch/Documents/Hacking/GitHub/RSSHub/website/.docusaurus/docusaurus-plugin-debug/default/plugin-route-context-module-100.json'),
+    ],
+    'version---zh-935-182': [
+        () => import(/* webpackChunkName: "version---zh-935-182" */ '~docs/default/version-current-metadata-prop-751.json'),
+        '~docs/default/version-current-metadata-prop-751.json',
+        require.resolveWeak('~docs/default/version-current-metadata-prop-751.json'),
+    ],
+};

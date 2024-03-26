@@ -1,0 +1,30 @@
+{
+  "id": "joinus/new-rss/submit-route",
+  "title": "提交路由",
+  "description": "当您完成您的路由后，您可以提交一个 Pull Request（下称 PR）到 RSSHub。我们将使用 squash merge 策略，这意味着您分支中的所有提交将合并成 RSSHub 仓库上的一个提交。然而，保持您的提交历史干净整洁仍然很重要。我们还提供了一个直观的模板供您填写。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/submit-route.md",
+  "sourceDirName": "joinus/new-rss",
+  "slug": "/joinus/new-rss/submit-route",
+  "permalink": "/zh/joinus/new-rss/submit-route",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/new-rss/submit-route.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 5,
+  "frontMatter": {
+    "sidebar_position": 5
+  },
+  "sidebar": "joinusSidebar",
+  "previous": {
+    "title": "添加文档",
+    "permalink": "/zh/joinus/new-rss/add-docs"
+  },
+  "next": {
+    "title": "提交新的 RSSHub Radar 规则",
+    "permalink": "/zh/joinus/new-radar"
+  }
+}

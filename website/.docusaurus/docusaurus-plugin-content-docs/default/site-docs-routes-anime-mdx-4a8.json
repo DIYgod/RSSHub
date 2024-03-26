@@ -1,0 +1,27 @@
+{
+  "id": "routes/anime",
+  "title": "🎨️ ACG",
+  "description": "005.tv",
+  "source": "@site/docs/routes/anime.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/anime",
+  "permalink": "/zh/routes/anime",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/anime.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🖼️ Picture",
+    "permalink": "/zh/routes/picture"
+  },
+  "next": {
+    "title": "🔄 Application Updates",
+    "permalink": "/zh/routes/program-update"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "title": "路由",
+  "description": "路由是 RSSHub 访问路径，每个路由后面包含一段 RSSHub 规则，它告诉 RSSHub 如何从网站中提取内容并生成 RSS 订阅。",
+  "slug": "/routes",
+  "permalink": "/zh/routes",
+  "navigation": {
+    "previous": {
+      "title": "API",
+      "permalink": "/zh/api"
+    },
+    "next": {
+      "title": "💬 Social Media",
+      "permalink": "/zh/routes/social-media"
+    }
+  }
+}

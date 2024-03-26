@@ -1,0 +1,25 @@
+{
+  "id": "README",
+  "title": "介绍",
+  "description": "RSSHub",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/README.md",
+  "sourceDirName": ".",
+  "slug": "/",
+  "permalink": "/zh/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/README.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {
+    "displayed_sidebar": "guideSidebar"
+  },
+  "sidebar": "guideSidebar",
+  "next": {
+    "title": "开始食用",
+    "permalink": "/zh/usage"
+  }
+}

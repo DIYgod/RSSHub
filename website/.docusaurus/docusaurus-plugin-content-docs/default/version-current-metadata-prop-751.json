@@ -1,0 +1,991 @@
+{
+  "pluginId": "default",
+  "version": "current",
+  "label": "Next",
+  "banner": null,
+  "badge": false,
+  "noIndex": false,
+  "className": "docs-version-current",
+  "isLast": true,
+  "docsSidebars": {
+    "tutorialSidebar": [
+      {
+        "type": "html",
+        "value": "CarbonAds"
+      },
+      {
+        "type": "link",
+        "label": "介绍",
+        "href": "/zh/",
+        "docId": "README",
+        "unlisted": false
+      },
+      {
+        "type": "link",
+        "label": "API",
+        "href": "/zh/api",
+        "docId": "api",
+        "unlisted": false
+      },
+      {
+        "type": "link",
+        "label": "常见问题",
+        "href": "/zh/faq",
+        "docId": "faq",
+        "unlisted": false
+      },
+      {
+        "type": "category",
+        "label": "部署",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "配置",
+            "href": "/zh/install/config",
+            "docId": "install/config",
+            "unlisted": false
+          }
+        ],
+        "href": "/zh/install/"
+      },
+      {
+        "type": "link",
+        "label": "公共实例",
+        "href": "/zh/instances",
+        "docId": "instances",
+        "unlisted": false
+      },
+      {
+        "type": "category",
+        "label": "参与我们",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "快速开始",
+            "href": "/zh/joinus/quick-start",
+            "docId": "joinus/quick-start",
+            "unlisted": false
+          },
+          {
+            "type": "category",
+            "label": "提交新的 RSSHub 规则",
+            "collapsible": true,
+            "collapsed": false,
+            "items": [
+              {
+                "type": "link",
+                "label": "准备工作",
+                "href": "/zh/joinus/new-rss/prerequisites",
+                "docId": "joinus/new-rss/prerequisites",
+                "unlisted": false
+              },
+              {
+                "type": "link",
+                "label": "开始之前",
+                "href": "/zh/joinus/new-rss/before-start",
+                "docId": "joinus/new-rss/before-start",
+                "unlisted": false
+              },
+              {
+                "type": "link",
+                "label": "制作自己的 RSSHub 路由",
+                "href": "/zh/joinus/new-rss/start-code",
+                "docId": "joinus/new-rss/start-code",
+                "unlisted": false
+              },
+              {
+                "type": "link",
+                "label": "添加文档",
+                "href": "/zh/joinus/new-rss/add-docs",
+                "docId": "joinus/new-rss/add-docs",
+                "unlisted": false
+              },
+              {
+                "type": "link",
+                "label": "提交路由",
+                "href": "/zh/joinus/new-rss/submit-route",
+                "docId": "joinus/new-rss/submit-route",
+                "unlisted": false
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "提交新的 RSSHub Radar 规则",
+            "href": "/zh/joinus/new-radar",
+            "docId": "joinus/new-radar",
+            "unlisted": false
+          },
+          {
+            "type": "category",
+            "label": "高级用法",
+            "collapsible": true,
+            "collapsed": false,
+            "items": [
+              {
+                "type": "link",
+                "label": "RSS 基础",
+                "href": "/zh/joinus/advanced/advanced-feed",
+                "docId": "joinus/advanced/advanced-feed",
+                "unlisted": false
+              },
+              {
+                "type": "link",
+                "label": "路由规范",
+                "href": "/zh/joinus/advanced/script-standard",
+                "docId": "joinus/advanced/script-standard",
+                "unlisted": false
+              },
+              {
+                "type": "link",
+                "label": "使用缓存",
+                "href": "/zh/joinus/advanced/use-cache",
+                "docId": "joinus/advanced/use-cache",
+                "unlisted": false
+              },
+              {
+                "type": "link",
+                "label": "日期处理",
+                "href": "/zh/joinus/advanced/pub-date",
+                "docId": "joinus/advanced/pub-date",
+                "unlisted": false
+              },
+              {
+                "type": "link",
+                "label": "调试",
+                "href": "/zh/joinus/advanced/debug",
+                "docId": "joinus/advanced/debug",
+                "unlisted": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "label": "通用参数",
+        "href": "/zh/parameter",
+        "docId": "parameter",
+        "unlisted": false
+      },
+      {
+        "type": "category",
+        "label": "路由",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "🎨️ ACG",
+            "href": "/zh/routes/anime",
+            "docId": "routes/anime",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "💬️ BBS",
+            "href": "/zh/routes/bbs",
+            "docId": "routes/bbs",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🖊️️ Blog",
+            "href": "/zh/routes/blog",
+            "docId": "routes/blog",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🎨️ Design",
+            "href": "/zh/routes/design",
+            "docId": "routes/design",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "💰 Finance",
+            "href": "/zh/routes/finance",
+            "docId": "routes/finance",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "❗️ Forecast and alerts",
+            "href": "/zh/routes/forecast",
+            "docId": "routes/forecast",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🎮 Gaming",
+            "href": "/zh/routes/game",
+            "docId": "routes/game",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "📢 Government",
+            "href": "/zh/routes/government",
+            "docId": "routes/government",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🔬 Scientific Journal",
+            "href": "/zh/routes/journal",
+            "docId": "routes/journal",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🎥 Live",
+            "href": "/zh/routes/live",
+            "docId": "routes/live",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🔊 Multimedia",
+            "href": "/zh/routes/multimedia",
+            "docId": "routes/multimedia",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "📱 New media",
+            "href": "/zh/routes/new-media",
+            "docId": "routes/new-media",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🔍 Uncategorized",
+            "href": "/zh/routes/other",
+            "docId": "routes/other",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🖼️ Picture",
+            "href": "/zh/routes/picture",
+            "docId": "routes/picture",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🔄 Application Updates",
+            "href": "/zh/routes/program-update",
+            "docId": "routes/program-update",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "💻 Programming",
+            "href": "/zh/routes/programming",
+            "docId": "routes/programming",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "📚 Reading",
+            "href": "/zh/routes/reading",
+            "docId": "routes/reading",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🛍️ Shopping",
+            "href": "/zh/routes/shopping",
+            "docId": "routes/shopping",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "💬 Social Media",
+            "href": "/zh/routes/social-media",
+            "docId": "routes/social-media",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "📖 Study",
+            "href": "/zh/routes/study",
+            "docId": "routes/study",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "📰 News",
+            "href": "/zh/routes/traditional-media",
+            "docId": "routes/traditional-media",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🛫 Travel",
+            "href": "/zh/routes/travel",
+            "docId": "routes/travel",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🎓 University",
+            "href": "/zh/routes/university",
+            "docId": "routes/university",
+            "unlisted": false
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "label": "支持 RSSHub",
+        "href": "/zh/support/",
+        "docId": "support/README",
+        "unlisted": false
+      },
+      {
+        "type": "link",
+        "label": "开始食用",
+        "href": "/zh/usage",
+        "docId": "usage",
+        "unlisted": false
+      }
+    ],
+    "guideSidebar": [
+      {
+        "type": "html",
+        "value": "CarbonAds"
+      },
+      {
+        "type": "category",
+        "label": "指南",
+        "items": [
+          {
+            "type": "link",
+            "label": "介绍",
+            "href": "/zh/",
+            "docId": "README",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "开始食用",
+            "href": "/zh/usage",
+            "docId": "usage",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "公共实例",
+            "href": "/zh/instances",
+            "docId": "instances",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "常见问题",
+            "href": "/zh/faq",
+            "docId": "faq",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "通用参数",
+            "href": "/zh/parameter",
+            "docId": "parameter",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "API",
+            "href": "/zh/api",
+            "docId": "api",
+            "unlisted": false
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "路由",
+        "items": [
+          {
+            "type": "link",
+            "label": "💬 社交媒体",
+            "href": "/zh/routes/social-media",
+            "docId": "routes/social-media",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "📱 新媒体",
+            "href": "/zh/routes/new-media",
+            "docId": "routes/new-media",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "📰 传统媒体",
+            "href": "/zh/routes/traditional-media",
+            "docId": "routes/traditional-media",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "💬️ 论坛",
+            "href": "/zh/routes/bbs",
+            "docId": "routes/bbs",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🖊️️ 博客",
+            "href": "/zh/routes/blog",
+            "docId": "routes/blog",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "💻 编程",
+            "href": "/zh/routes/programming",
+            "docId": "routes/programming",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🎨️ 设计",
+            "href": "/zh/routes/design",
+            "docId": "routes/design",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🎥 直播",
+            "href": "/zh/routes/live",
+            "docId": "routes/live",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🔊 音视频",
+            "href": "/zh/routes/multimedia",
+            "docId": "routes/multimedia",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🖼️ 图片",
+            "href": "/zh/routes/picture",
+            "docId": "routes/picture",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🎨️ 二次元",
+            "href": "/zh/routes/anime",
+            "docId": "routes/anime",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🔄 程序更新",
+            "href": "/zh/routes/program-update",
+            "docId": "routes/program-update",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🎓 大学通知",
+            "href": "/zh/routes/university",
+            "docId": "routes/university",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "❗️ 预报预警",
+            "href": "/zh/routes/forecast",
+            "docId": "routes/forecast",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🛫 出行旅游",
+            "href": "/zh/routes/travel",
+            "docId": "routes/travel",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🛍️ 购物",
+            "href": "/zh/routes/shopping",
+            "docId": "routes/shopping",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🎮 游戏",
+            "href": "/zh/routes/game",
+            "docId": "routes/game",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "📚 阅读",
+            "href": "/zh/routes/reading",
+            "docId": "routes/reading",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "📢 政务消息",
+            "href": "/zh/routes/government",
+            "docId": "routes/government",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "📖 学习",
+            "href": "/zh/routes/study",
+            "docId": "routes/study",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🔬 科学期刊",
+            "href": "/zh/routes/journal",
+            "docId": "routes/journal",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "💰 金融",
+            "href": "/zh/routes/finance",
+            "docId": "routes/finance",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "🔍 其他",
+            "href": "/zh/routes/other",
+            "docId": "routes/other",
+            "unlisted": false
+          }
+        ],
+        "collapsible": false,
+        "collapsed": false,
+        "href": "/zh/routes"
+      }
+    ],
+    "joinusSidebar": [
+      {
+        "type": "html",
+        "value": "CarbonAds"
+      },
+      {
+        "type": "link",
+        "label": "快速开始",
+        "href": "/zh/joinus/quick-start",
+        "docId": "joinus/quick-start",
+        "unlisted": false
+      },
+      {
+        "type": "category",
+        "label": "提交新的 RSSHub 规则",
+        "collapsible": true,
+        "collapsed": false,
+        "items": [
+          {
+            "type": "link",
+            "label": "准备工作",
+            "href": "/zh/joinus/new-rss/prerequisites",
+            "docId": "joinus/new-rss/prerequisites",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "开始之前",
+            "href": "/zh/joinus/new-rss/before-start",
+            "docId": "joinus/new-rss/before-start",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "制作自己的 RSSHub 路由",
+            "href": "/zh/joinus/new-rss/start-code",
+            "docId": "joinus/new-rss/start-code",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "添加文档",
+            "href": "/zh/joinus/new-rss/add-docs",
+            "docId": "joinus/new-rss/add-docs",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "提交路由",
+            "href": "/zh/joinus/new-rss/submit-route",
+            "docId": "joinus/new-rss/submit-route",
+            "unlisted": false
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "label": "提交新的 RSSHub Radar 规则",
+        "href": "/zh/joinus/new-radar",
+        "docId": "joinus/new-radar",
+        "unlisted": false
+      },
+      {
+        "type": "category",
+        "label": "高级用法",
+        "collapsible": true,
+        "collapsed": false,
+        "items": [
+          {
+            "type": "link",
+            "label": "RSS 基础",
+            "href": "/zh/joinus/advanced/advanced-feed",
+            "docId": "joinus/advanced/advanced-feed",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "路由规范",
+            "href": "/zh/joinus/advanced/script-standard",
+            "docId": "joinus/advanced/script-standard",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "使用缓存",
+            "href": "/zh/joinus/advanced/use-cache",
+            "docId": "joinus/advanced/use-cache",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "日期处理",
+            "href": "/zh/joinus/advanced/pub-date",
+            "docId": "joinus/advanced/pub-date",
+            "unlisted": false
+          },
+          {
+            "type": "link",
+            "label": "调试",
+            "href": "/zh/joinus/advanced/debug",
+            "docId": "joinus/advanced/debug",
+            "unlisted": false
+          }
+        ]
+      }
+    ],
+    "installSidebar": [
+      {
+        "type": "html",
+        "value": "CarbonAds"
+      },
+      {
+        "type": "link",
+        "label": "部署",
+        "href": "/zh/install/",
+        "docId": "install/README",
+        "unlisted": false
+      },
+      {
+        "type": "link",
+        "label": "配置",
+        "href": "/zh/install/config",
+        "docId": "install/config",
+        "unlisted": false
+      }
+    ],
+    "supportSidebar": [
+      {
+        "type": "html",
+        "value": "CarbonAds"
+      },
+      {
+        "type": "link",
+        "label": "支持 RSSHub",
+        "href": "/zh/support/",
+        "docId": "support/README",
+        "unlisted": false
+      }
+    ]
+  },
+  "docs": {
+    "api": {
+      "id": "api",
+      "title": "API",
+      "description": "API 仍处于开发状态中，并可能会有改动。欢迎提供建议！",
+      "sidebar": "guideSidebar"
+    },
+    "faq": {
+      "id": "faq",
+      "title": "常见问题",
+      "description": "Q: RSS 是什么？RSS 如何使用？可以推荐一下好用的 RSS 阅读器么？",
+      "sidebar": "guideSidebar"
+    },
+    "install/config": {
+      "id": "install/config",
+      "title": "配置",
+      "description": "通过设置环境变量来配置 RSSHub",
+      "sidebar": "installSidebar"
+    },
+    "install/README": {
+      "id": "install/README",
+      "title": "部署",
+      "description": "部署 RSSHub 需要基本的计算机编程常识，如果您在部署过程中遇到无法解决的问题请到 issues 寻找类似的问题或 向我们提问，我们会尽快给您答复。",
+      "sidebar": "installSidebar"
+    },
+    "instances": {
+      "id": "instances",
+      "title": "公共实例",
+      "description": "尽管官方实例已经足够稳定，但为了实现去中心化，我们鼓励用户自行托管 RSSHub 实例或使用其他公共 RSSHub 实例。",
+      "sidebar": "guideSidebar"
+    },
+    "joinus/advanced/advanced-feed": {
+      "id": "joinus/advanced/advanced-feed",
+      "title": "RSS 基础",
+      "description": "本指南面向希望深入了解如何制作 RSS 订阅源的高级用户。如果您是第一次制作 RSS 订阅源，我们建议先阅读 制作自己的 RSSHub 路由。",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/advanced/debug": {
+      "id": "joinus/advanced/debug",
+      "title": "调试",
+      "description": "当调试代码时，除了使用 console.log 或将 node 进程附加到调试器，您还可以使用如下方式进行调试。",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/advanced/pub-date": {
+      "id": "joinus/advanced/pub-date",
+      "title": "日期处理",
+      "description": "当你访问网站时，网站通常会提供一个日期或时间戳。本指南将展示如何在代码中正确处理它们。",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/advanced/script-standard": {
+      "id": "joinus/advanced/script-standard",
+      "title": "路由规范",
+      "description": "代码规范",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/advanced/use-cache": {
+      "id": "joinus/advanced/use-cache",
+      "title": "使用缓存",
+      "description": "RSSHub 有一个缓存模块，该缓存在短时间后过期。您可以通过环境变量来修改 lib/config.js 文件中的 CACHEEXPIRE 值使用来更改缓存的持续时间。然而，对于那些内容更新较少的接口，最好是使用 CACHECONTENT_EXPIRE 来指定较长的缓存过期时间。",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/new-radar": {
+      "id": "joinus/new-radar",
+      "title": "提交新的 RSSHub Radar 规则",
+      "description": "如果需要查看新规则的结果，建议您安装浏览器扩展程序。您可以在 参与我们 页面下载适合您浏览器的扩展程序。",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/new-rss/add-docs": {
+      "id": "joinus/new-rss/add-docs",
+      "title": "添加文档",
+      "description": "现在我们完成了代码，是时候为您的路由添加文档了。在 文档 (/website/docs) 中打开相应的文件，本例中是 website/docs/routes/programming.mdx。",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/new-rss/before-start": {
+      "id": "joinus/new-rss/before-start",
+      "title": "开始之前",
+      "description": "在本教程中，我们将通过制作一个 GitHub 仓库 Issues 的 RSS 源为例，向您展示制作 RSS 源的过程。",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/new-rss/prerequisites": {
+      "id": "joinus/new-rss/prerequisites",
+      "title": "准备工作",
+      "description": "在开始编写新的 RSS 规则之前，确保您的开发环境已正确配置很重要。",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/new-rss/start-code": {
+      "id": "joinus/new-rss/start-code",
+      "title": "制作自己的 RSSHub 路由",
+      "description": "如前所述，我们以 GitHub 仓库 Issues 为例制作 RSS 源。我们将展示前面提到的四种数据获取方法：",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/new-rss/submit-route": {
+      "id": "joinus/new-rss/submit-route",
+      "title": "提交路由",
+      "description": "当您完成您的路由后，您可以提交一个 Pull Request（下称 PR）到 RSSHub。我们将使用 squash merge 策略，这意味着您分支中的所有提交将合并成 RSSHub 仓库上的一个提交。然而，保持您的提交历史干净整洁仍然很重要。我们还提供了一个直观的模板供您填写。",
+      "sidebar": "joinusSidebar"
+    },
+    "joinus/quick-start": {
+      "id": "joinus/quick-start",
+      "title": "快速开始",
+      "description": "如果您在使用 RSSHub 过程中遇到了问题或者有建议改进，我们很乐意听取您的意见！您可以通过 Pull Request 来提交您的修改。无论您对 Pull Request 的使用是否熟悉，我们都欢迎不同经验水平的开发者参与贡献。如果您不懂编程，也可以通过 报告错误 的方式来帮助我们。",
+      "sidebar": "joinusSidebar"
+    },
+    "parameter": {
+      "id": "parameter",
+      "title": "通用参数",
+      "description": "通用参数实际上是 URI 中的 query，可以使用 & 连接组合使用，效果叠加。",
+      "sidebar": "guideSidebar"
+    },
+    "README": {
+      "id": "README",
+      "title": "介绍",
+      "description": "RSSHub",
+      "sidebar": "guideSidebar"
+    },
+    "routes/anime": {
+      "id": "routes/anime",
+      "title": "🎨️ ACG",
+      "description": "005.tv",
+      "sidebar": "guideSidebar"
+    },
+    "routes/bbs": {
+      "id": "routes/bbs",
+      "title": "💬️ BBS",
+      "description": "19 楼",
+      "sidebar": "guideSidebar"
+    },
+    "routes/blog": {
+      "id": "routes/blog",
+      "title": "🖊️️ Blog",
+      "description": "Amazon",
+      "sidebar": "guideSidebar"
+    },
+    "routes/design": {
+      "id": "routes/design",
+      "title": "🎨️ Design",
+      "description": "Axis Studios",
+      "sidebar": "guideSidebar"
+    },
+    "routes/finance": {
+      "id": "routes/finance",
+      "title": "💰 Finance",
+      "description": "AI 财经社",
+      "sidebar": "guideSidebar"
+    },
+    "routes/forecast": {
+      "id": "routes/forecast",
+      "title": "❗️ Forecast and alerts",
+      "description": "BADAN METEOROLOGI, KLIMATOLOGI, DAN GEOFISIKA(Indonesian)",
+      "sidebar": "guideSidebar"
+    },
+    "routes/game": {
+      "id": "routes/game",
+      "title": "🎮 Gaming",
+      "description": "3DMGame",
+      "sidebar": "guideSidebar"
+    },
+    "routes/government": {
+      "id": "routes/government",
+      "title": "📢 Government",
+      "description": "Australia Department of Home Affairs",
+      "sidebar": "guideSidebar"
+    },
+    "routes/journal": {
+      "id": "routes/journal",
+      "title": "🔬 Scientific Journal",
+      "description": "Academy of Management",
+      "sidebar": "guideSidebar"
+    },
+    "routes/live": {
+      "id": "routes/live",
+      "title": "🎥 Live",
+      "description": "LiSA",
+      "sidebar": "guideSidebar"
+    },
+    "routes/multimedia": {
+      "id": "routes/multimedia",
+      "title": "🔊 Multimedia",
+      "description": "141JAV",
+      "sidebar": "guideSidebar"
+    },
+    "routes/new-media": {
+      "id": "routes/new-media",
+      "title": "📱 New media",
+      "description": "199IT",
+      "sidebar": "guideSidebar"
+    },
+    "routes/other": {
+      "id": "routes/other",
+      "title": "🔍 Uncategorized",
+      "description": "4399 论坛",
+      "sidebar": "guideSidebar"
+    },
+    "routes/picture": {
+      "id": "routes/picture",
+      "title": "🖼️ Picture",
+      "description": "1X",
+      "sidebar": "guideSidebar"
+    },
+    "routes/program-update": {
+      "id": "routes/program-update",
+      "title": "🔄 Application Updates",
+      "description": "Amazon",
+      "sidebar": "guideSidebar"
+    },
+    "routes/programming": {
+      "id": "routes/programming",
+      "title": "💻 Programming",
+      "description": "A List Apart",
+      "sidebar": "guideSidebar"
+    },
+    "routes/reading": {
+      "id": "routes/reading",
+      "title": "📚 Reading",
+      "description": "All Poetry",
+      "sidebar": "guideSidebar"
+    },
+    "routes/shopping": {
+      "id": "routes/shopping",
+      "title": "🛍️ Shopping",
+      "description": "0818 团",
+      "sidebar": "guideSidebar"
+    },
+    "routes/social-media": {
+      "id": "routes/social-media",
+      "title": "💬 Social Media",
+      "description": "755",
+      "sidebar": "guideSidebar"
+    },
+    "routes/study": {
+      "id": "routes/study",
+      "title": "📖 Study",
+      "description": "Asian Innovation and Entrepreneurship Association",
+      "sidebar": "guideSidebar"
+    },
+    "routes/traditional-media": {
+      "id": "routes/traditional-media",
+      "title": "📰 News",
+      "description": "21 财经",
+      "sidebar": "guideSidebar"
+    },
+    "routes/travel": {
+      "id": "routes/travel",
+      "title": "🛫 Travel",
+      "description": "12306",
+      "sidebar": "guideSidebar"
+    },
+    "routes/university": {
+      "id": "routes/university",
+      "title": "🎓 University",
+      "description": "Beijing Jiaotong University 北京交通大学",
+      "sidebar": "guideSidebar"
+    },
+    "support/README": {
+      "id": "support/README",
+      "title": "支持 RSSHub",
+      "description": "RSSHub 是采用 MIT 许可的开源项目，使用完全免费。但是随着项目规模的增长，也需要有相应的资金支持才能持续项目的维护与开发.",
+      "sidebar": "supportSidebar"
+    },
+    "usage": {
+      "id": "usage",
+      "title": "开始食用",
+      "description": "生成订阅源",
+      "sidebar": "guideSidebar"
+    }
+  }
+}

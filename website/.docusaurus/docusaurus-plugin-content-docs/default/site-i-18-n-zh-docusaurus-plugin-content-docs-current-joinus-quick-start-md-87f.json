@@ -1,0 +1,26 @@
+{
+  "id": "joinus/quick-start",
+  "title": "快速开始",
+  "description": "如果您在使用 RSSHub 过程中遇到了问题或者有建议改进，我们很乐意听取您的意见！您可以通过 Pull Request 来提交您的修改。无论您对 Pull Request 的使用是否熟悉，我们都欢迎不同经验水平的开发者参与贡献。如果您不懂编程，也可以通过 报告错误 的方式来帮助我们。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/quick-start.md",
+  "sourceDirName": "joinus",
+  "slug": "/joinus/quick-start",
+  "permalink": "/zh/joinus/quick-start",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/quick-start.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "joinusSidebar",
+  "next": {
+    "title": "准备工作",
+    "permalink": "/zh/joinus/new-rss/prerequisites"
+  }
+}

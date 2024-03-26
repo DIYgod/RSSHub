@@ -1,0 +1,30 @@
+{
+  "id": "joinus/advanced/use-cache",
+  "title": "使用缓存",
+  "description": "RSSHub 有一个缓存模块，该缓存在短时间后过期。您可以通过环境变量来修改 lib/config.js 文件中的 CACHEEXPIRE 值使用来更改缓存的持续时间。然而，对于那些内容更新较少的接口，最好是使用 CACHECONTENT_EXPIRE 来指定较长的缓存过期时间。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/use-cache.md",
+  "sourceDirName": "joinus/advanced",
+  "slug": "/joinus/advanced/use-cache",
+  "permalink": "/zh/joinus/advanced/use-cache",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/advanced/use-cache.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3
+  },
+  "sidebar": "joinusSidebar",
+  "previous": {
+    "title": "路由规范",
+    "permalink": "/zh/joinus/advanced/script-standard"
+  },
+  "next": {
+    "title": "日期处理",
+    "permalink": "/zh/joinus/advanced/pub-date"
+  }
+}

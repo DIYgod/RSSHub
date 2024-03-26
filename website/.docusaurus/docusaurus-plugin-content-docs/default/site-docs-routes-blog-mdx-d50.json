@@ -1,0 +1,27 @@
+{
+  "id": "routes/blog",
+  "title": "🖊️️ Blog",
+  "description": "Amazon",
+  "source": "@site/docs/routes/blog.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/blog",
+  "permalink": "/zh/routes/blog",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/blog.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "💬️ BBS",
+    "permalink": "/zh/routes/bbs"
+  },
+  "next": {
+    "title": "💻 Programming",
+    "permalink": "/zh/routes/programming"
+  }
+}

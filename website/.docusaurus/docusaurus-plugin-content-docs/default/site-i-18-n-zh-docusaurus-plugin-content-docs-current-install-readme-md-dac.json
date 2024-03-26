@@ -1,0 +1,25 @@
+{
+  "id": "install/README",
+  "title": "部署",
+  "description": "部署 RSSHub 需要基本的计算机编程常识，如果您在部署过程中遇到无法解决的问题请到 issues 寻找类似的问题或 向我们提问，我们会尽快给您答复。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/install/README.md",
+  "sourceDirName": "install",
+  "slug": "/install/",
+  "permalink": "/zh/install/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/install/README.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {
+    "sidebar": "auto"
+  },
+  "sidebar": "installSidebar",
+  "next": {
+    "title": "配置",
+    "permalink": "/zh/install/config"
+  }
+}

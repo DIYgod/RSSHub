@@ -1,0 +1,30 @@
+{
+  "id": "joinus/new-rss/before-start",
+  "title": "开始之前",
+  "description": "在本教程中，我们将通过制作一个 GitHub 仓库 Issues 的 RSS 源为例，向您展示制作 RSS 源的过程。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/before-start.md",
+  "sourceDirName": "joinus/new-rss",
+  "slug": "/joinus/new-rss/before-start",
+  "permalink": "/zh/joinus/new-rss/before-start",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/new-rss/before-start.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "joinusSidebar",
+  "previous": {
+    "title": "准备工作",
+    "permalink": "/zh/joinus/new-rss/prerequisites"
+  },
+  "next": {
+    "title": "制作自己的 RSSHub 路由",
+    "permalink": "/zh/joinus/new-rss/start-code"
+  }
+}

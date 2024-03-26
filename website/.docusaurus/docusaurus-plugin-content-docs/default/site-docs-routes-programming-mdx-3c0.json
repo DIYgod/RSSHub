@@ -1,0 +1,27 @@
+{
+  "id": "routes/programming",
+  "title": "💻 Programming",
+  "description": "A List Apart",
+  "source": "@site/docs/routes/programming.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/programming",
+  "permalink": "/zh/routes/programming",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/programming.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🖊️️ Blog",
+    "permalink": "/zh/routes/blog"
+  },
+  "next": {
+    "title": "🎨️ Design",
+    "permalink": "/zh/routes/design"
+  }
+}

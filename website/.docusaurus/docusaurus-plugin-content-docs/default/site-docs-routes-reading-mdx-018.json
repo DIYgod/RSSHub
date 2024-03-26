@@ -1,0 +1,27 @@
+{
+  "id": "routes/reading",
+  "title": "📚 Reading",
+  "description": "All Poetry",
+  "source": "@site/docs/routes/reading.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/reading",
+  "permalink": "/zh/routes/reading",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/reading.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🎮 Gaming",
+    "permalink": "/zh/routes/game"
+  },
+  "next": {
+    "title": "📢 Government",
+    "permalink": "/zh/routes/government"
+  }
+}

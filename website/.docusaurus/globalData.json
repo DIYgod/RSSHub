@@ -1,0 +1,296 @@
+{
+  "docusaurus-plugin-google-gtag": {
+    "default": {
+      "trackingID": [
+        "G-322PG1X4EL"
+      ],
+      "anonymizeIP": false,
+      "id": "default"
+    }
+  },
+  "docusaurus-plugin-umami": {
+    "default": {
+      "websiteID": "be1761be-7547-49d5-91b8-5c97c8f7cec7",
+      "analyticsDomain": "umami.diygod.dev",
+      "dataAutoTrack": true,
+      "dataDoNotTrack": false,
+      "dataCache": false,
+      "id": "default"
+    }
+  },
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/zh/",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/zh/",
+          "mainDocId": "README",
+          "docs": [
+            {
+              "id": "api",
+              "path": "/zh/api",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "faq",
+              "path": "/zh/faq",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "install/config",
+              "path": "/zh/install/config",
+              "sidebar": "installSidebar"
+            },
+            {
+              "id": "install/README",
+              "path": "/zh/install/",
+              "sidebar": "installSidebar"
+            },
+            {
+              "id": "instances",
+              "path": "/zh/instances",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "joinus/advanced/advanced-feed",
+              "path": "/zh/joinus/advanced/advanced-feed",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/advanced/debug",
+              "path": "/zh/joinus/advanced/debug",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/advanced/pub-date",
+              "path": "/zh/joinus/advanced/pub-date",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/advanced/script-standard",
+              "path": "/zh/joinus/advanced/script-standard",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/advanced/use-cache",
+              "path": "/zh/joinus/advanced/use-cache",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/new-radar",
+              "path": "/zh/joinus/new-radar",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/new-rss/add-docs",
+              "path": "/zh/joinus/new-rss/add-docs",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/new-rss/before-start",
+              "path": "/zh/joinus/new-rss/before-start",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/new-rss/prerequisites",
+              "path": "/zh/joinus/new-rss/prerequisites",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/new-rss/start-code",
+              "path": "/zh/joinus/new-rss/start-code",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/new-rss/submit-route",
+              "path": "/zh/joinus/new-rss/submit-route",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "joinus/quick-start",
+              "path": "/zh/joinus/quick-start",
+              "sidebar": "joinusSidebar"
+            },
+            {
+              "id": "parameter",
+              "path": "/zh/parameter",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "README",
+              "path": "/zh/",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/anime",
+              "path": "/zh/routes/anime",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/bbs",
+              "path": "/zh/routes/bbs",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/blog",
+              "path": "/zh/routes/blog",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/design",
+              "path": "/zh/routes/design",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/finance",
+              "path": "/zh/routes/finance",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/forecast",
+              "path": "/zh/routes/forecast",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/game",
+              "path": "/zh/routes/game",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/government",
+              "path": "/zh/routes/government",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/journal",
+              "path": "/zh/routes/journal",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/live",
+              "path": "/zh/routes/live",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/multimedia",
+              "path": "/zh/routes/multimedia",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/new-media",
+              "path": "/zh/routes/new-media",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/other",
+              "path": "/zh/routes/other",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/picture",
+              "path": "/zh/routes/picture",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/program-update",
+              "path": "/zh/routes/program-update",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/programming",
+              "path": "/zh/routes/programming",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/reading",
+              "path": "/zh/routes/reading",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/shopping",
+              "path": "/zh/routes/shopping",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/social-media",
+              "path": "/zh/routes/social-media",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/study",
+              "path": "/zh/routes/study",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/traditional-media",
+              "path": "/zh/routes/traditional-media",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/travel",
+              "path": "/zh/routes/travel",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "routes/university",
+              "path": "/zh/routes/university",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "support/README",
+              "path": "/zh/support/",
+              "sidebar": "supportSidebar"
+            },
+            {
+              "id": "usage",
+              "path": "/zh/usage",
+              "sidebar": "guideSidebar"
+            },
+            {
+              "id": "/routes",
+              "path": "/zh/routes",
+              "sidebar": "guideSidebar"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/zh/",
+                "label": "README"
+              }
+            },
+            "guideSidebar": {
+              "link": {
+                "path": "/zh/",
+                "label": "README"
+              }
+            },
+            "joinusSidebar": {
+              "link": {
+                "path": "/zh/joinus/quick-start",
+                "label": "joinus/quick-start"
+              }
+            },
+            "installSidebar": {
+              "link": {
+                "path": "/zh/install/",
+                "label": "install/README"
+              }
+            },
+            "supportSidebar": {
+              "link": {
+                "path": "/zh/support/",
+                "label": "support/README"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

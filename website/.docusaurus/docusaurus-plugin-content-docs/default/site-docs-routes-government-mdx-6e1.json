@@ -1,0 +1,27 @@
+{
+  "id": "routes/government",
+  "title": "📢 Government",
+  "description": "Australia Department of Home Affairs",
+  "source": "@site/docs/routes/government.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/government",
+  "permalink": "/zh/routes/government",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/government.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "📚 Reading",
+    "permalink": "/zh/routes/reading"
+  },
+  "next": {
+    "title": "📖 Study",
+    "permalink": "/zh/routes/study"
+  }
+}

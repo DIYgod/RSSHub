@@ -1,0 +1,27 @@
+{
+  "id": "routes/live",
+  "title": "🎥 Live",
+  "description": "LiSA",
+  "source": "@site/docs/routes/live.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/live",
+  "permalink": "/zh/routes/live",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/live.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🎨️ Design",
+    "permalink": "/zh/routes/design"
+  },
+  "next": {
+    "title": "🔊 Multimedia",
+    "permalink": "/zh/routes/multimedia"
+  }
+}

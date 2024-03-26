@@ -1,0 +1,27 @@
+{
+  "id": "routes/university",
+  "title": "🎓 University",
+  "description": "Beijing Jiaotong University 北京交通大学",
+  "source": "@site/docs/routes/university.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/university",
+  "permalink": "/zh/routes/university",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/university.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🔄 Application Updates",
+    "permalink": "/zh/routes/program-update"
+  },
+  "next": {
+    "title": "❗️ Forecast and alerts",
+    "permalink": "/zh/routes/forecast"
+  }
+}

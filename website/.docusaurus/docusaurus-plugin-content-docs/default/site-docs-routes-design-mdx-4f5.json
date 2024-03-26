@@ -1,0 +1,27 @@
+{
+  "id": "routes/design",
+  "title": "🎨️ Design",
+  "description": "Axis Studios",
+  "source": "@site/docs/routes/design.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/design",
+  "permalink": "/zh/routes/design",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/design.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "💻 Programming",
+    "permalink": "/zh/routes/programming"
+  },
+  "next": {
+    "title": "🎥 Live",
+    "permalink": "/zh/routes/live"
+  }
+}

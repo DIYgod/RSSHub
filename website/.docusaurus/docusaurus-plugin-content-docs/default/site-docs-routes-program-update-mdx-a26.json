@@ -1,0 +1,27 @@
+{
+  "id": "routes/program-update",
+  "title": "🔄 Application Updates",
+  "description": "Amazon",
+  "source": "@site/docs/routes/program-update.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/program-update",
+  "permalink": "/zh/routes/program-update",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/program-update.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🎨️ ACG",
+    "permalink": "/zh/routes/anime"
+  },
+  "next": {
+    "title": "🎓 University",
+    "permalink": "/zh/routes/university"
+  }
+}

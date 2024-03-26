@@ -1,0 +1,27 @@
+{
+  "id": "routes/finance",
+  "title": "💰 Finance",
+  "description": "AI 财经社",
+  "source": "@site/docs/routes/finance.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/finance",
+  "permalink": "/zh/routes/finance",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/finance.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🔬 Scientific Journal",
+    "permalink": "/zh/routes/journal"
+  },
+  "next": {
+    "title": "🔍 Uncategorized",
+    "permalink": "/zh/routes/other"
+  }
+}

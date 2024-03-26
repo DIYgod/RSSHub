@@ -1,0 +1,30 @@
+{
+  "id": "joinus/new-radar",
+  "title": "提交新的 RSSHub Radar 规则",
+  "description": "如果需要查看新规则的结果，建议您安装浏览器扩展程序。您可以在 参与我们 页面下载适合您浏览器的扩展程序。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-radar.md",
+  "sourceDirName": "joinus",
+  "slug": "/joinus/new-radar",
+  "permalink": "/zh/joinus/new-radar",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/new-radar.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3
+  },
+  "sidebar": "joinusSidebar",
+  "previous": {
+    "title": "提交路由",
+    "permalink": "/zh/joinus/new-rss/submit-route"
+  },
+  "next": {
+    "title": "RSS 基础",
+    "permalink": "/zh/joinus/advanced/advanced-feed"
+  }
+}

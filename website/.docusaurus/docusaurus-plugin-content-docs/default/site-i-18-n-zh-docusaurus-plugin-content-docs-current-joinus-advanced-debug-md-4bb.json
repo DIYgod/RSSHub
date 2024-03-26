@@ -1,0 +1,26 @@
+{
+  "id": "joinus/advanced/debug",
+  "title": "调试",
+  "description": "当调试代码时，除了使用 console.log 或将 node 进程附加到调试器，您还可以使用如下方式进行调试。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/debug.md",
+  "sourceDirName": "joinus/advanced",
+  "slug": "/joinus/advanced/debug",
+  "permalink": "/zh/joinus/advanced/debug",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/advanced/debug.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 5,
+  "frontMatter": {
+    "sidebar_position": 5
+  },
+  "sidebar": "joinusSidebar",
+  "previous": {
+    "title": "日期处理",
+    "permalink": "/zh/joinus/advanced/pub-date"
+  }
+}

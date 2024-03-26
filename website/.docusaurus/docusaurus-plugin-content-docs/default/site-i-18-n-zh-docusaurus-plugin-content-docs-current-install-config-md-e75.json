@@ -1,0 +1,23 @@
+{
+  "id": "install/config",
+  "title": "配置",
+  "description": "通过设置环境变量来配置 RSSHub",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/install/config.md",
+  "sourceDirName": "install",
+  "slug": "/install/config",
+  "permalink": "/zh/install/config",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/install/config.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "installSidebar",
+  "previous": {
+    "title": "部署",
+    "permalink": "/zh/install/"
+  }
+}

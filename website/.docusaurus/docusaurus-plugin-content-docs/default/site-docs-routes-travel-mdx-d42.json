@@ -1,0 +1,27 @@
+{
+  "id": "routes/travel",
+  "title": "🛫 Travel",
+  "description": "12306",
+  "source": "@site/docs/routes/travel.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/travel",
+  "permalink": "/zh/routes/travel",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/travel.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "❗️ Forecast and alerts",
+    "permalink": "/zh/routes/forecast"
+  },
+  "next": {
+    "title": "🛍️ Shopping",
+    "permalink": "/zh/routes/shopping"
+  }
+}

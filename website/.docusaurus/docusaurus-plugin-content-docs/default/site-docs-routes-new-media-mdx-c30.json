@@ -1,0 +1,27 @@
+{
+  "id": "routes/new-media",
+  "title": "📱 New media",
+  "description": "199IT",
+  "source": "@site/docs/routes/new-media.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/new-media",
+  "permalink": "/zh/routes/new-media",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/new-media.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "💬 Social Media",
+    "permalink": "/zh/routes/social-media"
+  },
+  "next": {
+    "title": "📰 News",
+    "permalink": "/zh/routes/traditional-media"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "usage",
+  "title": "开始食用",
+  "description": "生成订阅源",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/usage.md",
+  "sourceDirName": ".",
+  "slug": "/usage",
+  "permalink": "/zh/usage",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/usage.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "介绍",
+    "permalink": "/zh/"
+  },
+  "next": {
+    "title": "公共实例",
+    "permalink": "/zh/instances"
+  }
+}

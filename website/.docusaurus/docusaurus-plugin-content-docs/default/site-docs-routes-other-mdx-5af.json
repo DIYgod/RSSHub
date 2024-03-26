@@ -1,0 +1,23 @@
+{
+  "id": "routes/other",
+  "title": "🔍 Uncategorized",
+  "description": "4399 论坛",
+  "source": "@site/docs/routes/other.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/other",
+  "permalink": "/zh/routes/other",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/other.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "💰 Finance",
+    "permalink": "/zh/routes/finance"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "joinus/advanced/advanced-feed",
+  "title": "RSS 基础",
+  "description": "本指南面向希望深入了解如何制作 RSS 订阅源的高级用户。如果您是第一次制作 RSS 订阅源，我们建议先阅读 制作自己的 RSSHub 路由。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/advanced-feed.md",
+  "sourceDirName": "joinus/advanced",
+  "slug": "/joinus/advanced/advanced-feed",
+  "permalink": "/zh/joinus/advanced/advanced-feed",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/advanced/advanced-feed.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "joinusSidebar",
+  "previous": {
+    "title": "提交新的 RSSHub Radar 规则",
+    "permalink": "/zh/joinus/new-radar"
+  },
+  "next": {
+    "title": "路由规范",
+    "permalink": "/zh/joinus/advanced/script-standard"
+  }
+}

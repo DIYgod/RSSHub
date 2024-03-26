@@ -1,0 +1,27 @@
+{
+  "id": "routes/game",
+  "title": "🎮 Gaming",
+  "description": "3DMGame",
+  "source": "@site/docs/routes/game.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/game",
+  "permalink": "/zh/routes/game",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/game.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🛍️ Shopping",
+    "permalink": "/zh/routes/shopping"
+  },
+  "next": {
+    "title": "📚 Reading",
+    "permalink": "/zh/routes/reading"
+  }
+}

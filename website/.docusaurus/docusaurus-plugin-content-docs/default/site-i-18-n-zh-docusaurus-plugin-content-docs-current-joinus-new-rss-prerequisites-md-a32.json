@@ -1,0 +1,30 @@
+{
+  "id": "joinus/new-rss/prerequisites",
+  "title": "准备工作",
+  "description": "在开始编写新的 RSS 规则之前，确保您的开发环境已正确配置很重要。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/new-rss/prerequisites.md",
+  "sourceDirName": "joinus/new-rss",
+  "slug": "/joinus/new-rss/prerequisites",
+  "permalink": "/zh/joinus/new-rss/prerequisites",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/new-rss/prerequisites.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "joinusSidebar",
+  "previous": {
+    "title": "快速开始",
+    "permalink": "/zh/joinus/quick-start"
+  },
+  "next": {
+    "title": "开始之前",
+    "permalink": "/zh/joinus/new-rss/before-start"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "routes/bbs",
+  "title": "💬️ BBS",
+  "description": "19 楼",
+  "source": "@site/docs/routes/bbs.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/bbs",
+  "permalink": "/zh/routes/bbs",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/bbs.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "📰 News",
+    "permalink": "/zh/routes/traditional-media"
+  },
+  "next": {
+    "title": "🖊️️ Blog",
+    "permalink": "/zh/routes/blog"
+  }
+}

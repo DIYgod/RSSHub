@@ -1,0 +1,27 @@
+{
+  "id": "routes/picture",
+  "title": "🖼️ Picture",
+  "description": "1X",
+  "source": "@site/docs/routes/picture.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/picture",
+  "permalink": "/zh/routes/picture",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/picture.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🔊 Multimedia",
+    "permalink": "/zh/routes/multimedia"
+  },
+  "next": {
+    "title": "🎨️ ACG",
+    "permalink": "/zh/routes/anime"
+  }
+}

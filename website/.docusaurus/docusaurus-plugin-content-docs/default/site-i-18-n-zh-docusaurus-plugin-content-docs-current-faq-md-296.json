@@ -1,0 +1,27 @@
+{
+  "id": "faq",
+  "title": "常见问题",
+  "description": "Q: RSS 是什么？RSS 如何使用？可以推荐一下好用的 RSS 阅读器么？",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/faq.md",
+  "sourceDirName": ".",
+  "slug": "/faq",
+  "permalink": "/zh/faq",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/faq.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "公共实例",
+    "permalink": "/zh/instances"
+  },
+  "next": {
+    "title": "通用参数",
+    "permalink": "/zh/parameter"
+  }
+}

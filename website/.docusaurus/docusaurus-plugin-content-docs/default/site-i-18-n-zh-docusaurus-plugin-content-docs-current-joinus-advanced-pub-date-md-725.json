@@ -1,0 +1,30 @@
+{
+  "id": "joinus/advanced/pub-date",
+  "title": "日期处理",
+  "description": "当你访问网站时，网站通常会提供一个日期或时间戳。本指南将展示如何在代码中正确处理它们。",
+  "source": "@site/i18n/zh/docusaurus-plugin-content-docs/current/joinus/advanced/pub-date.md",
+  "sourceDirName": "joinus/advanced",
+  "slug": "/joinus/advanced/pub-date",
+  "permalink": "/zh/joinus/advanced/pub-date",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/joinus/advanced/pub-date.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_position": 4
+  },
+  "sidebar": "joinusSidebar",
+  "previous": {
+    "title": "使用缓存",
+    "permalink": "/zh/joinus/advanced/use-cache"
+  },
+  "next": {
+    "title": "调试",
+    "permalink": "/zh/joinus/advanced/debug"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "routes/traditional-media",
+  "title": "📰 News",
+  "description": "21 财经",
+  "source": "@site/docs/routes/traditional-media.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/traditional-media",
+  "permalink": "/zh/routes/traditional-media",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/traditional-media.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "📱 New media",
+    "permalink": "/zh/routes/new-media"
+  },
+  "next": {
+    "title": "💬️ BBS",
+    "permalink": "/zh/routes/bbs"
+  }
+}

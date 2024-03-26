@@ -1,0 +1,27 @@
+{
+  "id": "routes/journal",
+  "title": "🔬 Scientific Journal",
+  "description": "Academy of Management",
+  "source": "@site/docs/routes/journal.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/journal",
+  "permalink": "/zh/routes/journal",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/journal.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "📖 Study",
+    "permalink": "/zh/routes/study"
+  },
+  "next": {
+    "title": "💰 Finance",
+    "permalink": "/zh/routes/finance"
+  }
+}

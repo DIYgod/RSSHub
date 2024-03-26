@@ -1,0 +1,27 @@
+{
+  "id": "routes/multimedia",
+  "title": "🔊 Multimedia",
+  "description": "141JAV",
+  "source": "@site/docs/routes/multimedia.mdx",
+  "sourceDirName": "routes",
+  "slug": "/routes/multimedia",
+  "permalink": "/zh/routes/multimedia",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/DIYgod/RSSHub/blob/master/website/docs/routes/multimedia.mdx",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "2018年10月14日",
+  "frontMatter": {},
+  "sidebar": "guideSidebar",
+  "previous": {
+    "title": "🎥 Live",
+    "permalink": "/zh/routes/live"
+  },
+  "next": {
+    "title": "🖼️ Picture",
+    "permalink": "/zh/routes/picture"
+  }
+}
