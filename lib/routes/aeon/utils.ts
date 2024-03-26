@@ -36,7 +36,7 @@ const getData = async (ctx, list) => {
 
                     const article = data.props.pageProps.article;
                     const capture = load(article.body);
-                    const banner = article.thumbnail?.urls?.header;
+                    const banner = article.image?.url;
                     capture('p.pullquote').remove();
 
                     const authorsBio = article.authors.map((author) => '<p>' + author.name + author.authorBio.replaceAll(/^<p>/g, ' ')).join('');
