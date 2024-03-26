@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/article/:uid',
     categories: ['shopping'],
     example: '/smzdm/article/6902738986',
-    parameters: { uid: '用户id，网址上直接可以看到' },
+    parameters: { uid: '用户 id，网址上直接可以看到' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -33,7 +33,7 @@ async function handler(ctx) {
 
     const response = await got(link);
     const $ = load(response.data);
-    const title = $('.info-stuff-nickname').text();
+    const title = $('.info-stuff-nickname a').text();
 
     const list = $('.pandect-content-stuff')
         .toArray()
