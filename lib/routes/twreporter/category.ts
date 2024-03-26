@@ -36,7 +36,7 @@ async function handler(ctx) {
     const $ = load(res.data);
 
     const regexp = /^window\.__REDUX_STATE__=(.*);$/gm;
-    const raw = $('script[charset="UTF-8"]').html().replaceAll(regexp, '$1');
+    const raw = $('script[charset="UTF-8"]').text().replaceAll(regexp, '$1');
     const list = JSON.parse(raw);
 
     const ids = list.entities.posts.allIds;
