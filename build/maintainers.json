@@ -3895,6 +3895,9 @@
   "/npr/:endpoint?": [
     "bennyyip"
   ],
+  "/ntdm/video/:id": [
+    "alexhere"
+  ],
   "/ntdtv/:language/:id": [
     "Fatpandac"
   ],

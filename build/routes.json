@@ -38511,6 +38511,42 @@
     "name": "National Public Radio",
     "url": "npr.org"
   },
+  "ntdm": {
+    "routes": {
+      "/video/:id": {
+        "path": "/video/:id",
+        "categories": [
+          "anime"
+        ],
+        "example": "/ntdm/video/20200035",
+        "parameters": {
+          "id": "番剧 id，对应详情 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "ntdm9.com/video/:id"
+            ]
+          }
+        ],
+        "name": "番剧详情",
+        "maintainers": [
+          "alexhere"
+        ],
+        "location": "video.ts"
+      }
+    },
+    "name": "NT动漫",
+    "url": "www.ntdm9.com"
+  },
   "ntdtv": {
     "routes": {
       "/:language/:id": {
