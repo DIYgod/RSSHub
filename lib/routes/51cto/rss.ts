@@ -4,7 +4,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/',
+    path: '/recommend',
     categories: ['programming'],
     example: '/51cto',
     radar: [
