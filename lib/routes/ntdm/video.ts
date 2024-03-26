@@ -44,7 +44,7 @@ async function handler(ctx) {
             const a = item.find('a');
             return {
                 title: a.text(),
-                link: `${rootUrl}${a.attr('href')}`
+                link: `${rootUrl}${a.attr('href')}`,
             };
         })
         .reverse();
