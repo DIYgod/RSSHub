@@ -48799,7 +48799,7 @@
         ],
         "example": "/smzdm/article/6902738986",
         "parameters": {
-          "uid": "用户id，网址上直接可以看到"
+          "uid": "用户 id，网址上直接可以看到"
         },
         "features": {
           "requireConfig": false,
