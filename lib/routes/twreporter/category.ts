@@ -46,14 +46,13 @@ async function handler(ctx) {
     const category = posts.byId[posts.allIds[0]].category_set[0].category.name;
 
     const out = await Promise.all(
-        links.map((item, index) => {
-            const title = titles[index];
-            return cache.tryGet(item, async () => {
-                const single = await fetch(item);
-                single.title = title;
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const single = await fetch(item.link);
+                single.title = item.title;
                 return single;
-            });
-        })
+            })
+        )
     );
 
     return {
