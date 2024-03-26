@@ -92,7 +92,7 @@ export const route: Route = {
     radar: [
         {
             source: ['/legal-updates'],
-            target: '/junhe/legal-updates',
+            target: '/legal-updates',
         },
     ],
 };
