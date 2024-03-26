@@ -683,7 +683,7 @@
         source:[ "/blog",
           "/" ],
         target:"/bitmovin/blog" } ] },
-  "bjfu.edu.cn":{ _name:"北京师范大学",
+  "bjfu.edu.cn":{ _name:"北京林业大学",
     graduate:[ { title:"研究生院培养动态",
         docs:"https://docs.rsshub.app/routes/university",
         source:[ "/" ],
