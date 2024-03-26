@@ -16,6 +16,9 @@ const getData = async (ctx, list) => {
 
                 const data = JSON.parse($('script#__NEXT_DATA__').text());
                 const type = data.props.pageProps.article.type.toLowerCase();
+
+                item.pubDate = new Date(data.props.pageProps.article.publishedAt).toUTCString();
+
                 if (type === 'video') {
                     item.description = art(path.join(__dirname, 'templates/video.art'), { article: data.props.pageProps.article });
                 } else {
