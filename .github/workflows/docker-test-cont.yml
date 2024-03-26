@@ -109,7 +109,7 @@ jobs:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
-          labels: 'Route Test: Failed'
+          labels: 'Auto: Route Test Failed'
 
       - name: Print Docker container logs
         if: (env.TEST_CONTINUE)

@@ -8,12 +8,12 @@ export const route: Route = {
     example: '/github/stars/DIYGod/RSSHub',
     parameters: { user: 'GitHub username', repo: 'GitHub repo name' },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
+        requireConfig: [
+            {
+                name: 'GITHUB_ACCESS_TOKEN',
+                description: 'GitHub Access Token',
+            },
+        ],
     },
     radar: [
         {

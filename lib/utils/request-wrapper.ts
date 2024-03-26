@@ -60,7 +60,7 @@ const requestWrapper = (url: string, options: http.RequestOptions = {}) => {
     }
 
     // Accept
-    if (!headersLowerCaseKeys.has('Accept')) {
+    if (!headersLowerCaseKeys.has('accept')) {
         options.headers.Accept = '*/*';
     }
 

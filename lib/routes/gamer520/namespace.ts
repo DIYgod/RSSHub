@@ -1,6 +1,6 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: '浙江工业大学',
-    url: 'www.zjut.edu.cn',
+    name: '全球游戏交流中心',
+    url: 'www.gamer520.com',
 };
