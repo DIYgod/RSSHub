@@ -3149,6 +3149,9 @@
   "/jump/discount/:platform/:filter?/:countries?": [
     "zytomorrow"
   ],
+  "/junhe/legal-updates": [
+    "nczitzk"
+  ],
   "/kamen-rider-official/news/:category?": [
     "nczitzk"
   ],

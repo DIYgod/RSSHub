@@ -30877,6 +30877,47 @@
     "name": "JUMP",
     "url": "switch.jumpvg.com"
   },
+  "junhe": {
+    "routes": {
+      "/legal-updates": {
+        "path": "/legal-updates",
+        "name": "君合法评",
+        "url": "junhe.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/junhe/legal-updates",
+        "description": "",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "/legal-updates"
+            ],
+            "target": "/legal-updates"
+          }
+        ],
+        "location": "legal-updates.ts"
+      }
+    },
+    "name": "君合律师事务所",
+    "url": "junhe.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": ""
+  },
   "kamen-rider-official": {
     "routes": {
       "/news/:category?": {
