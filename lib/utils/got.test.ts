@@ -1,38 +1,26 @@
-import { describe, expect, it, afterEach, vi } from 'vitest';
-import nock from 'nock';
-
-afterEach(() => {
-    vi.resetModules();
-});
+import { describe, expect, it, vi } from 'vitest';
+import { http, HttpResponse } from 'msw';
+import got from '@/utils/got';
+import { config } from '@/config';
 
 describe('got', () => {
     it('headers', async () => {
-        const { default: got } = await import('@/utils/got');
-        const { config } = await import('@/config');
-        nock('http://rsshub.test')
-            .get('/test')
-            .reply(function () {
-                expect(this.req.headers['user-agent']).toBe(config.ua);
-                return [200, ''];
-            });
-
-        await got.get('http://rsshub.test/test');
+        const { data } = await got('http://rsshub.test/ua');
+        expect(data.ua).toBe(config.ua);
     });
 
     it('retry', async () => {
-        const { default: got } = await import('@/utils/got');
-        const { config } = await import('@/config');
         const requestRun = vi.fn();
-        nock('http://rsshub.test')
-            .get('/testRerty')
-            .times(config.requestRetry + 1)
-            .reply(() => {
+        const { default: server } = await import('@/setup.test');
+        server.use(
+            http.get(`http://rsshub.test/retry-test`, () => {
                 requestRun();
-                return [503, '0'];
-            });
+                return HttpResponse.error();
+            })
+        );
 
         try {
-            await got.get('http://rsshub.test/testRerty');
+            await got.get('http://rsshub.test/retry-test');
         } catch (error: any) {
             expect(error.name).toBe('FetchError');
         }
@@ -41,18 +29,23 @@ describe('got', () => {
         expect(requestRun).toHaveBeenCalledTimes(config.requestRetry + 1);
     });
 
-    it('axios', async () => {
-        const { default: got } = await import('@/utils/got');
-        nock('http://rsshub.test')
-            .post('/post')
-            .reply(() => [200, '{"code": 0}']);
-
-        const response1 = await got.post('http://rsshub.test/post', {
+    it('form-post', async () => {
+        const response = await got.post('http://rsshub.test/form-post', {
             form: {
-                test: 1,
+                test: 'rsshub',
             },
         });
-        expect(response1.body).toBe('{"code": 0}');
-        expect(response1.data.code).toBe(0);
+        expect(response.body).toBe('{"test":"rsshub"}');
+        expect(response.data.test).toBe('rsshub');
+    });
+
+    it('json-post', async () => {
+        const response = await got.post('http://rsshub.test/json-post', {
+            json: {
+                test: 'rsshub',
+            },
+        });
+        expect(response.body).toBe('{"test":"rsshub"}');
+        expect(response.data.test).toBe('rsshub');
     });
 });

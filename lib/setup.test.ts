@@ -52,9 +52,25 @@ const server = setupServer(
         HttpResponse.json({
             ua: request.headers.get('user-agent'),
         })
-    )
+    ),
+    http.post(`http://rsshub.test/form-post`, async ({ request }) => {
+        const formData = await request.formData();
+        return HttpResponse.json({
+            test: formData.get('test'),
+        });
+    }),
+    http.post(`http://rsshub.test/json-post`, async ({ request }) => {
+        const jsonData = (await request.json()) as {
+            test: string;
+        };
+        return HttpResponse.json({
+            test: jsonData?.test,
+        });
+    })
 );
 server.listen();
 
 afterAll(() => server.close());
 afterEach(() => server.resetHandlers());
+
+export default server;
