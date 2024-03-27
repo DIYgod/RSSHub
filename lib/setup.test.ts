@@ -47,6 +47,11 @@ const server = setupServer(
                 `var ct = "${1_636_626_300}";\n` +
                 '</script>'
         )
+    ),
+    http.get(`http://rsshub.test/ua`, ({ request }) =>
+        HttpResponse.json({
+            ua: request.headers.get('user-agent'),
+        })
     )
 );
 server.listen();
