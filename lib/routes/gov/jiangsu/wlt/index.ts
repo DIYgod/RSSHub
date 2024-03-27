@@ -52,9 +52,10 @@ async function handler(ctx) {
     const list = $('.tg_tb1')
         .map((_, item) => {
             const i = $(item);
+            const id = i.prop('onclick').match(/openDetail\('(\d+)'\)/)?.[1] || '';
             return {
                 title: i.text(),
-                id: i.prop('onclick').match(/openDetail\('(\d+)'\)/)?.[1] || '',
+                link: id ? `${baseUrl}/detail.do?iid=${id}` : '',
                 description: '',
                 pubDate: new Date(),
             };
@@ -62,12 +63,12 @@ async function handler(ctx) {
         .get();
     const items = await Promise.all(
         list
-            .filter((e) => e.id)
+            .filter((e) => e.link)
             .map((item) =>
-                cache.tryGet(item.id, async () => {
+                cache.tryGet(item.link, async () => {
                     const detailResponse = await got({
                         method: 'get',
-                        url: baseUrl + '/detail.do?iid=' + item.id,
+                        url: item.link,
                     });
                     const $ = load(detailResponse.data);
                     const dateText = $('td:contains("许可决定日期")').next().text().trim();
