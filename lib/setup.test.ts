@@ -66,7 +66,8 @@ const server = setupServer(
         return HttpResponse.json({
             test: jsonData?.test,
         });
-    })
+    }),
+    http.get(`http://rsshub.test/rss`, () => HttpResponse.text('<rss version="2.0"><channel><item></item></channel></rss>'))
 );
 server.listen();
 
