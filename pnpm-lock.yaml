@@ -57,8 +57,8 @@ dependencies:
     specifier: 1.11.8
     version: 1.11.8
   directory-import:
-    specifier: 3.2.1
-    version: 3.2.1
+    specifier: 3.3.1
+    version: 3.3.1
   dotenv:
     specifier: 16.4.5
     version: 16.4.5
@@ -2344,7 +2344,7 @@ packages:
       '@babel/runtime-corejs2': 7.24.1
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -4321,8 +4321,8 @@ packages:
       path-type: 4.0.0
     dev: true
 
-  /directory-import@3.2.1:
-    resolution: {integrity: sha512-hIMc9WJHs4HRZbBiNAvKGxkhjaJ2wOaFcFA0K+yj16GyBJDg28e6QgQ3hFuFB0ZRETNYZu3u85rmxIxoxWEwbA==}
+  /directory-import@3.3.1:
+    resolution: {integrity: sha512-d9paCbverdqmuwR+B40phSqiHhgPKiP8dpsMz5WT9U6ug2VVQ3tqXNCedpa6iGHg6mgv9lHaoq5DJUu2IXMjsQ==}
     engines: {node: '>=18.17.0'}
     dev: false
 
@@ -9684,8 +9684,8 @@ packages:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
