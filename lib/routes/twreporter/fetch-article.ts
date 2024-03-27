@@ -7,6 +7,12 @@ export default async function fetch(address) {
     const capture = load(res.data);
     capture('.gIMvvS').remove();
 
+    let time = capture('.gzaDTq').text();
+    // For `photography`
+    if (!time) {
+        time = capture('.fEZfRw').text();
+    }
+
     let metaInfoBox = capture('.ffAPnj')
         .filter((index) => index === 0)
         .get();
@@ -19,12 +25,6 @@ export default async function fetch(address) {
     }
 
     const acquire = load(metaInfoBox);
-    let time = acquire('.gimsRe').text();
-
-    // For `photography`
-    if (!time) {
-        time = acquire('.kHluJP').text();
-    }
     // # Author(s) of the article
     //
     // There exists two formats for this section.
@@ -62,6 +62,6 @@ export default async function fetch(address) {
         description: contents,
         link: address,
         guid: address,
-        pubDate: parseDate(time, 'M/D/YYYY'),
+        pubDate: parseDate(time, 'YYYY/M/D'),
     };
 }
