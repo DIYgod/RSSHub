@@ -32,6 +32,21 @@ const server = setupServer(
                 </li>
             </ul>
         </div>`)
+    ),
+    http.get(`https://mp.weixin.qq.com/rsshub_test/wechatMp_fetchArticle`, () =>
+        HttpResponse.text(
+            '\n' +
+                '<meta name="description" content="summary" />\n' +
+                '<meta name="author" content="author" />\n' +
+                '<meta property="og:title" content="title" />\n' +
+                '<meta property="twitter:card" content="summary" />\n' +
+                '<div class="rich_media_content" id="js_content" style="visibility: hidden;">description</div>\n' +
+                '<div class="profile_inner"><strong class="profile_nickname">mpName</strong></div>\n' +
+                '<script type="text/javascript" nonce="000000000">\n' +
+                'var appmsg_type = "9";\n' +
+                `var ct = "${1_636_626_300}";\n` +
+                '</script>'
+        )
     )
 );
 server.listen();
