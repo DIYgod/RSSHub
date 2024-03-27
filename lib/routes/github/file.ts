@@ -19,7 +19,7 @@ export const route: Route = {
         },
     ],
     name: 'File Commits',
-    maintainers: [],
+    maintainers: ['zengxs'],
     handler,
 };
 
