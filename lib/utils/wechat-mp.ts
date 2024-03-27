@@ -25,7 +25,7 @@
  * For more details of these functions, please refer to the jsDoc in the source code.
  */
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load, type Cheerio, type Element } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
@@ -196,9 +196,8 @@ const normalizeUrl = (url, bypassHostCheck = false) => {
 const fetchArticle = (url, bypassHostCheck = false) => {
     url = normalizeUrl(url, bypassHostCheck);
     return cache.tryGet(url, async () => {
-        const response = await got(url);
-        // @ts-expect-error custom field
-        const $ = load(response.data);
+        const data = await ofetch(url);
+        const $ = load(data);
 
         const title = ($('meta[property="og:title"]').attr('content') || '').replaceAll('\\r', '').replaceAll('\\n', ' ');
         const author = $('meta[name=author]').attr('content');
@@ -209,9 +208,8 @@ const fetchArticle = (url, bypassHostCheck = false) => {
         const originalUrl = detectOriginalArticleUrl($);
         if (originalUrl) {
             // try to fetch the description from the original article
-            const originalResponse = await got(normalizeUrl(originalUrl, bypassHostCheck));
-            // @ts-expect-error custom field
-            const original$ = load(originalResponse.data);
+            const data = await ofetch(normalizeUrl(originalUrl, bypassHostCheck));
+            const original$ = load(data);
             description += fixArticleContent(original$('#js_content'));
         }
 
@@ -230,7 +228,7 @@ const fetchArticle = (url, bypassHostCheck = false) => {
 
         let mpName = $('.profile_nickname').first().text();
         mpName = mpName && mpName.trim();
-        return { title, author, description, summary, pubDate, mpName, link: response.url };
+        return { title, author, description, summary, pubDate, mpName, link: url };
     }) as Promise<{
         title: string;
         author: string;

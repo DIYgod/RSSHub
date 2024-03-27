@@ -99,7 +99,7 @@ const parseArticle = (item) =>
                     res = await got(apiUrl, { headers });
                 } catch (error) {
                     // fallback
-                    if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError')) {
+                    if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
                         try {
                             res = await got(item.link, { headers });
                         } catch {
@@ -214,7 +214,7 @@ const parseReactRendererPage = async (res, api, item) => {
         return await parseStoryJson(res.data, item);
     } catch (error) {
         // fallback
-        if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError')) {
+        if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
             return {
                 title: item.title,
                 link: item.link,
