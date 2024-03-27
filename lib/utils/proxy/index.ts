@@ -2,6 +2,7 @@ import { config } from '@/config';
 import { PacProxyAgent } from 'pac-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { SocksProxyAgent } from 'socks-proxy-agent';
+import { ProxyAgent } from 'undici';
 
 const proxyIsPAC = config.pacUri || config.pacScript;
 
@@ -24,11 +25,16 @@ if (proxyIsPAC) {
 }
 
 let agent: PacProxyAgent<string> | HttpsProxyAgent<string> | SocksProxyAgent | null = null;
+let dispatcher: ProxyAgent | null = null;
 if (proxyIsPAC) {
     agent = new PacProxyAgent(`pac+${proxyUri}`);
 } else if (proxyUri) {
     if (proxyUri.startsWith('http')) {
         agent = new HttpsProxyAgent(proxyUri);
+        dispatcher = new ProxyAgent({
+            uri: proxyUri,
+            token: proxyObj?.auth ? `Basic ${proxyObj.auth}` : undefined,
+        });
     } else if (proxyUri.startsWith('socks')) {
         agent = new SocksProxyAgent(proxyUri);
     }
@@ -36,6 +42,7 @@ if (proxyIsPAC) {
 
 export default {
     agent,
+    dispatcher,
     proxyUri,
     proxyObj,
     proxyUrlHandler,

@@ -1,4 +1,4 @@
-import '@/utils/request-wrapper';
+import '@/utils/request-interceptor';
 
 import { Hono } from 'hono';
 
