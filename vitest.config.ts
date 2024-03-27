@@ -10,5 +10,6 @@ export default defineConfig({
             exclude: ['lib/routes/**', 'lib/routes-deprecated/**'],
         },
         testTimeout: 10000,
+        setupFiles: ['./lib/setup.test.ts'],
     },
 });
