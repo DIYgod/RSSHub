@@ -2051,7 +2051,9 @@
   "/github/contributors/:user/:repo/:order?/:anon?": [
     "zoenglinghou"
   ],
-  "/github/file/:user/:repo/:branch/:filepath{.+}": [],
+  "/github/file/:user/:repo/:branch/:filepath{.+}": [
+    "zengxs"
+  ],
   "/github/user/followers/:user": [
     "HenryQW"
   ],

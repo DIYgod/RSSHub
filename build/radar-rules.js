@@ -2132,7 +2132,7 @@
         source:[ "/:user/:repo/graphs/contributors",
           "/:user/:repo" ],
         target:"/github/contributors/:user/:repo" },
-      { title:"Unknown",
+      { title:"File Commits",
         docs:"https://docs.rsshub.app/routes/programming",
         source:[ "/:user/:repo/blob/:branch/*filepath" ],
         target:"/github/file/:user/:repo/:branch/:filepath" },
