@@ -29,7 +29,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('h2 a')
+    let items = $('h1 a,h2 a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
         .map((item) => {
