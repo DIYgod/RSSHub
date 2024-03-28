@@ -39,52 +39,56 @@ export default async function fetch(slug: string) {
     const ogDescription = post.og_description;
     const banner = art(path.join(__dirname, 'templates/image.art'), { image: bannerImage, description: bannerDescription, caption });
 
+    function format(type, content) {
+        let block = '';
+        if (content !== '' && type !== 'embeddedcode') {
+            switch (type) {
+                case 'image':
+                case 'slideshow':
+                    block = content.map((image) => art(path.join(__dirname, 'templates/image.art'), { image: image.desktop.url, description: image.description, caption: image.description })).join('<br>');
+
+                    break;
+
+                case 'blockquote':
+                    block = `<blockquote>${content}</blockquote>`;
+
+                    break;
+
+                case 'header-one':
+                    block = `<h1>${content}</h1>`;
+
+                    break;
+
+                case 'header-two':
+                    block = `<h2>${content}</h2>`;
+
+                    break;
+
+                case 'infobox': {
+                    const box = content[0];
+                    block = `<h2>${box.title}</h2>${box.body}`;
+
+                    break;
+                }
+                case 'youtube': {
+                    const video = content[0].youtubeId;
+                    const id = video.split('?')[0];
+                    block = art(path.join(__dirname, 'templates/youtube.art'), { video: id });
+
+                    break;
+                }
+                default:
+                    block = `${content}<br>`;
+            }
+        }
+        return block;
+    }
+
     const text = post.content.api_data
         .map((item) => {
             const content = item.content;
             const type = item.type;
-            let block = '';
-            if (content !== '' && type !== 'embeddedcode') {
-                switch (type) {
-                    case 'image':
-                    case 'slideshow':
-                        block = content.map((image) => art(path.join(__dirname, 'templates/image.art'), { image: image.desktop.url, description: image.description, caption: image.description })).join('<br>');
-
-                        break;
-
-                    case 'blockquote':
-                        block = `<blockquote>${content}</blockquote>`;
-
-                        break;
-
-                    case 'header-one':
-                        block = `<h1>${content}</h1>`;
-
-                        break;
-
-                    case 'header-two':
-                        block = `<h2>${content}</h2>`;
-
-                        break;
-
-                    case 'infobox': {
-                        const box = content[0];
-                        block = `<h2>${box.title}</h2>${box.body}`;
-
-                        break;
-                    }
-                    case 'youtube': {
-                        const video = content[0].youtubeId;
-                        const id = video.split('?')[0];
-                        block = art(path.join(__dirname, 'templates/youtube.art'), { video: id });
-
-                        break;
-                    }
-                    default:
-                        block = `${content}<br>`;
-                }
-            }
-            return block;
+            return format(type, content);
         })
         .join('<br>');
     const contents = [banner, ogDescription, text].join('<br><br>');
