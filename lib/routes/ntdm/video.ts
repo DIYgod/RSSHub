@@ -6,7 +6,7 @@ import cheerio from 'cheerio';
 export const route: Route = {
     path: '/video/:id',
     categories: ['anime'],
-    example: '/ntdm/video/20200035',
+    example: '/ntdm/video/4309',
     parameters: { id: '番剧 id，对应详情 URL 中找到' },
     features: {
         requireConfig: false,
@@ -22,7 +22,7 @@ export const route: Route = {
         },
     ],
     name: '番剧详情',
-    maintainers: ['alexhere'],
+    maintainers: ['Yamico'],
     handler,
 };
 
