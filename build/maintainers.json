@@ -2282,7 +2282,9 @@
   "/gov/moj/aac/news/:type?": [
     "TonyRL"
   ],
-  "/gov/mot/:category{.+}?": [],
+  "/gov/mot/:category{.+}?": [
+    "ladeng07"
+  ],
   "/gov/ndrc/fggz/:category{.+}?": [],
   "/gov/ndrc/xwdt/:category{.+}?": [],
   "/gov/nea/sjzz/ghs": [

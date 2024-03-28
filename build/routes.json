@@ -22629,8 +22629,10 @@
       },
       "/mot/:category{.+}?": {
         "path": "/mot/:category{.+}?",
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "中华人民共和国交通运输部",
+        "maintainers": [
+          "ladeng07"
+        ],
         "location": "mot/index.ts"
       },
       "/ndrc/fggz/:category{.+}?": {
