@@ -67,7 +67,7 @@
         "crypto-js": "4.2.0",
         "currency-symbol-map": "5.1.0",
         "dayjs": "1.11.8",
-        "directory-import": "3.2.1",
+        "directory-import": "3.3.1",
         "dotenv": "16.4.5",
         "entities": "4.5.0",
         "etag": "1.8.1",

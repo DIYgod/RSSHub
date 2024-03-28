@@ -57,8 +57,8 @@ dependencies:
     specifier: 1.11.8
     version: 1.11.8
   directory-import:
-    specifier: 3.2.1
-    version: 3.2.1
+    specifier: 3.3.1
+    version: 3.3.1
   dotenv:
     specifier: 16.4.5
     version: 16.4.5
@@ -4139,8 +4139,8 @@ packages:
       path-type: 4.0.0
     dev: true
 
-  /directory-import@3.2.1:
-    resolution: {integrity: sha512-hIMc9WJHs4HRZbBiNAvKGxkhjaJ2wOaFcFA0K+yj16GyBJDg28e6QgQ3hFuFB0ZRETNYZu3u85rmxIxoxWEwbA==}
+  /directory-import@3.3.1:
+    resolution: {integrity: sha512-d9paCbverdqmuwR+B40phSqiHhgPKiP8dpsMz5WT9U6ug2VVQ3tqXNCedpa6iGHg6mgv9lHaoq5DJUu2IXMjsQ==}
     engines: {node: '>=18.17.0'}
     dev: false
 
