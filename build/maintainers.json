@@ -3513,7 +3513,10 @@
     "EsuRt",
     "queensferryme"
   ],
-  "/miui/:device/:type?/:region?": [
+  "/miui/community/user/:uid": [
+    "abc1763613206"
+  ],
+  "/miui/firmware/:device/:type?/:region?": [
     "Indexyz"
   ],
   "/mixcloud/:username/:type?": [

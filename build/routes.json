@@ -34488,12 +34488,42 @@
   },
   "miui": {
     "routes": {
-      "/:device/:type?/:region?": {
-        "path": "/:device/:type?/:region?",
+      "/community/user/:uid": {
+        "path": "/community/user/:uid",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/miui/community/user/1200057564",
+        "parameters": {
+          "uid": "小米用户 UID，可于网页版用户主页链接中 `uid` 项获取"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "web.vip.miui.com/page/info/mio/mio/homePage"
+            ]
+          }
+        ],
+        "name": "小米社区用户发帖",
+        "maintainers": [
+          "abc1763613206"
+        ],
+        "location": "community/user.ts"
+      },
+      "/firmware/:device/:type?/:region?": {
+        "path": "/firmware/:device/:type?/:region?",
         "categories": [
           "program-update"
         ],
-        "example": "/miui/aries",
+        "example": "/miui/firmware/aries",
         "parameters": {
           "device": "the device `codename` eg. `aries` for Mi 2S",
           "type": "type",
@@ -34504,7 +34534,7 @@
           "Indexyz"
         ],
         "description": "  | stable  | development |\n    | ------- | ----------- |\n    | release | dev         |\n  \n    | region | region |\n    | ------ | ------ |\n    | China  | cn     |\n    | Global | global |",
-        "location": "index.ts"
+        "location": "firmware/index.ts"
       }
     },
     "name": "MIUI",
