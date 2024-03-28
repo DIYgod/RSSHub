@@ -353,8 +353,8 @@ devDependencies:
     specifier: 3.0.5
     version: 3.0.5
   msw:
-    specifier: 2.2.12
-    version: 2.2.12(typescript@5.4.3)
+    specifier: 2.2.13
+    version: 2.2.13(typescript@5.4.3)
   nock:
     specifier: 14.0.0-beta.5
     version: 14.0.0-beta.5
@@ -7187,8 +7187,8 @@ packages:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: false
 
-  /msw@2.2.12(typescript@5.4.3):
-    resolution: {integrity: sha512-thmjEipUvr+XGawcNOh4T8+T2TN3qKWPfF0Ewx6ub1HIATXBsjOhnjV6Wx2BmmFThKEtYYC+RygrvkpG4DzoZw==}
+  /msw@2.2.13(typescript@5.4.3):
+    resolution: {integrity: sha512-ljFf1xZsU0b4zv1l7xzEmC6OZA6yD06hcx0H+dc8V0VypaP3HGYJa1rMLjQbBWl32ptGhcfwcPCWDB1wjmsftw==}
     engines: {node: '>=18'}
     hasBin: true
     requiresBuild: true
