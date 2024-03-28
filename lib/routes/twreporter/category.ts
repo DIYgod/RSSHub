@@ -1,6 +1,5 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import { load } from 'cheerio';
 import got from '@/utils/got';
 
 import fetch from './fetch-article';
@@ -30,34 +29,43 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const baseURL = 'https://www.twreporter.org';
-    const url = baseURL + `/categories/${ctx.req.param('category')}`;
-    const res = await got(url);
-    const $ = load(res.data);
+    const category = ctx.req.param('category');
+    const url = `https://go-api.twreporter.org/v2/index_page`;
+    const res = await got(url).json();
+    const list = res.data[category];
 
-    const regexp = /^window\.__REDUX_STATE__=(.*);$/gm;
-    const raw = $('script[charset="UTF-8"]').text().replaceAll(regexp, '$1');
-    const posts = JSON.parse(raw).entities.posts;
+    let name = list[0].category_set[0].category.name;
+    let categoryID = category;
+    switch (categoryID) {
+        case 'photos_section':
+            categoryID = 'photography';
 
-    const list = posts.allIds.map((id) => ({
-        link: baseURL + '/a/' + posts.byId[id].slug,
-        title: posts.byId[id].title,
-    }));
-    const category = posts.byId[posts.allIds[0]].category_set[0].category.name;
+            break;
+        case 'politics_and_society':
+            categoryID = categoryID.replaceAll('_', '-');
+            name = '政治社會';
+
+            break;
+        default:
+            break;
+    }
+    const home = `https://www.twreporter.org/categories/${categoryID}`;
 
     const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const single = await fetch(item.link);
-                single.title = item.title;
+        list.map((item) => {
+            const title = item.title;
+            // categoryNames = item.category_set[0].category.name;
+            return cache.tryGet(item.slug, async () => {
+                const single = await fetch(item.slug);
+                single.title = title;
                 return single;
-            })
-        )
+            });
+        })
     );
 
     return {
-        title: `報導者 | ${category}`,
-        link: url,
+        title: `報導者 | ${name}`,
+        link: home,
         item: out,
     };
 }

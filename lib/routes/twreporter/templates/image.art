@@ -1,0 +1,3 @@
+
+<img src="{{ image }}" alt="{{ description }}">
+<figcaption>{{ caption }}</figcaption>
