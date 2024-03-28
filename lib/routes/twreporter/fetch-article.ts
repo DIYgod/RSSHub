@@ -90,8 +90,9 @@ export default async function fetch(slug: string) {
             const type = item.type;
             return format(type, content);
         })
+        .filter(Boolean)
         .join('<br>');
-    const contents = [banner, ogDescription, text].join('<br><br>');
+    const contents = [banner, ogDescription, text].filter(Boolean).join('<br><br>');
 
     return {
         author: authors,
