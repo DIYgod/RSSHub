@@ -46,7 +46,7 @@ if (Object.keys(modules).length) {
                   namespace: Namespace;
               };
         const normalizedModule = module.replaceAll('\\', '/');
-        const namespace = module.split('/')[1];
+        const namespace = normalizedModule.split('/')[1];
         if ('namespace' in content) {
             namespaces[namespace] = Object.assign(
                 {
