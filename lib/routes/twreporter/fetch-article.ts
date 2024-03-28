@@ -33,11 +33,11 @@ export default async function fetch(slug: string) {
         authors += '；' + photographers;
     }
 
-    const banner_image = post.og_image.resized_targets.desktop.url;
+    const bannerImage = post.og_image.resized_targets.desktop.url;
     const caption = post.leading_image_description;
-    const banner_description = post.og_image.description;
-    const og_description = post.og_description;
-    const banner = art(path.join(__dirname, 'templates/image.art'), { image: banner_image, description: banner_description, caption });
+    const bannerDescription = post.og_image.description;
+    const ogDescription = post.og_description;
+    const banner = art(path.join(__dirname, 'templates/image.art'), { image: bannerImage, description: bannerDescription, caption });
 
     const text = post.content.api_data
         .map((item) => {
@@ -87,7 +87,7 @@ export default async function fetch(slug: string) {
             return block;
         })
         .join('<br>');
-    const contents = [banner, og_description, text].join('<br><br>');
+    const contents = [banner, ogDescription, text].join('<br><br>');
 
     return {
         author: authors,
