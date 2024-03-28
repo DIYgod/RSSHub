@@ -44,6 +44,9 @@ dependencies:
   city-timezones:
     specifier: 1.2.1
     version: 1.2.1
+  cross-env:
+    specifier: 7.0.3
+    version: 7.0.3
   crypto-js:
     specifier: 4.2.0
     version: 4.2.0
@@ -54,8 +57,8 @@ dependencies:
     specifier: 1.11.8
     version: 1.11.8
   directory-import:
-    specifier: 3.2.1
-    version: 3.2.1
+    specifier: 3.3.1
+    version: 3.3.1
   dotenv:
     specifier: 16.4.5
     version: 16.4.5
@@ -68,6 +71,9 @@ dependencies:
   fanfou-sdk:
     specifier: 5.0.0
     version: 5.0.0
+  form-data:
+    specifier: 4.0.0
+    version: 4.0.0
   git-rev-sync:
     specifier: 3.0.2
     version: 3.0.2
@@ -189,8 +195,8 @@ dependencies:
     specifier: 3.5.3
     version: 3.5.3
   tldts:
-    specifier: 6.1.14
-    version: 6.1.14
+    specifier: 6.1.15
+    version: 6.1.15
   tough-cookie:
     specifier: 4.1.3
     version: 4.1.3
@@ -3881,6 +3887,14 @@ packages:
       typescript: 5.4.3
     dev: false
 
+  /cross-env@7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+    dev: false
+
   /cross-spawn@5.1.0:
     resolution: {integrity: sha512-pTgQJ5KC0d2hcY8eyL1IzlBPYjTkyH72XRZPnLyKus2mBfNjQs3klqbJU2VILqZryAZUt9JOb3h/mWMy23/f5A==}
     dependencies:
@@ -3896,7 +3910,6 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
-    dev: true
 
   /crypto-js@4.2.0:
     resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
@@ -4126,8 +4139,8 @@ packages:
       path-type: 4.0.0
     dev: true
 
-  /directory-import@3.2.1:
-    resolution: {integrity: sha512-hIMc9WJHs4HRZbBiNAvKGxkhjaJ2wOaFcFA0K+yj16GyBJDg28e6QgQ3hFuFB0ZRETNYZu3u85rmxIxoxWEwbA==}
+  /directory-import@3.3.1:
+    resolution: {integrity: sha512-d9paCbverdqmuwR+B40phSqiHhgPKiP8dpsMz5WT9U6ug2VVQ3tqXNCedpa6iGHg6mgv9lHaoq5DJUu2IXMjsQ==}
     engines: {node: '>=18.17.0'}
     dev: false
 
@@ -7236,7 +7249,6 @@ packages:
   /path-key@3.1.1:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
     engines: {node: '>=8'}
-    dev: true
 
   /path-key@4.0.0:
     resolution: {integrity: sha512-haREypq7xkM7ErfgIyA0z+Bj4AGKlMSdlQE2jvJo6huWD1EdkKYV+G/T4nq0YEF2vgTT8kqMFKo1uHn950r4SQ==}
@@ -8092,7 +8104,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       shebang-regex: 3.0.0
-    dev: true
 
   /shebang-regex@1.0.0:
     resolution: {integrity: sha512-wpoSFAxys6b2a2wHZ1XpDSgD7N9iVjg29Ph9uV/uaP9Ex/KXlkTZTeddxDPSYQpgvzKLGJke2UU0AzoGCjNIvQ==}
@@ -8102,7 +8113,6 @@ packages:
   /shebang-regex@3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
-    dev: true
 
   /shelljs@0.8.5:
     resolution: {integrity: sha512-TiwcRcrkhHvbrZbnRcFYMLl30Dfov3HKqzp5tO5b4pt6G/SezKcYhmDg15zXVBswHmctSAQKznqNW2LO5tTDow==}
@@ -8624,15 +8634,15 @@ packages:
     hasBin: true
     dev: false
 
-  /tldts-core@6.1.14:
-    resolution: {integrity: sha512-McyMQkkIUFYhfs3FPTxTn+5mewxERhfwy2x7TWHkBPb1poKaTBJhXehtuMg0FrhXp53J5eXRfvSD/oH/3mk/2A==}
+  /tldts-core@6.1.15:
+    resolution: {integrity: sha512-E/gy+y6I53cZcqbHllhS5Aak6DmMZSO9tX6DYw3NXZk+f1yoFKGLiojQ8ww39G5QAupKKZL+vehNVqzSS0SQgQ==}
     dev: false
 
-  /tldts@6.1.14:
-    resolution: {integrity: sha512-zGbimRt9fHP68Gbj5fGWmR90xiuRDK/iYukHevT9mcG6Job+HfR119D9DSr6voFWjpStJwOtVfWGpbhNYVwt3A==}
+  /tldts@6.1.15:
+    resolution: {integrity: sha512-0/2FOdXnP5ON6PTQfE7B4X1ymqa1Bs6oG/yHKtVMxLSlUPlb/1AdWGzz2Co3P/uM0eUPWOt61L7cayyyNUSh7A==}
     hasBin: true
     dependencies:
-      tldts-core: 6.1.14
+      tldts-core: 6.1.15
     dev: false
 
   /tmp@0.0.33:
@@ -9255,7 +9265,6 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
-    dev: true
 
   /why-is-node-running@2.2.2:
     resolution: {integrity: sha512-6tSwToZxTOcotxHeA+qGCq1mVzKR3CwcJGmVcY+QE8SHy6TnpFnh8PAvPNHYr7EcuVeG0QSMxtYCuO1ta/G/oA==}
