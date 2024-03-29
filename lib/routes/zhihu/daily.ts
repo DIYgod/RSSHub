@@ -60,9 +60,9 @@ async function handler() {
         headers: {
             ...utils.header,
             Referer: `${api}/latest`,
-            Host: HOST,
+            Host: address,
         },
-        host: address,
+        // host: address,
     });
     // 根据api的说明，过滤掉极个别站外链接
     const storyList = listRes.data.stories.filter((el) => el.type === 0);
@@ -85,9 +85,9 @@ async function handler() {
                     url,
                     headers: {
                         Referer: url,
-                        Host: HOST,
+                        Host: address,
                     },
-                    host: address,
+                    // host: address,
                 });
                 return utils.ProcessImage(storyDetail.data.body.replaceAll(/<div class="meta">([\S\s]*?)<\/div>/g, '<strong>$1</strong>').replaceAll(/<\/?h2.*?>/g, ''));
             });
