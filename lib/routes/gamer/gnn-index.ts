@@ -68,11 +68,13 @@ async function handler(ctx) {
         url,
     });
     const data = response.data;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
     const $ = load(data);
 
     const list = $('div.BH-lbox.GN-lbox2')
         .children()
         .not('p,a,img,span')
+        .slice(0, limit)
         .map((index, item) => {
             item = $(item);
             let aLabelNode;
