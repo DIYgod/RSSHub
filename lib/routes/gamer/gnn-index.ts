@@ -138,7 +138,7 @@ async function handler(ctx) {
                         component = _$('div.text-paragraph').html();
                     }
                 }
-                item.pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), +8);
+                item.pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), 0);
                 component = component.replaceAll(/\b(data-src)\b/g, 'src');
                 return component;
             });
