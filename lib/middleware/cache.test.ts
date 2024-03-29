@@ -25,6 +25,8 @@ const noCacheTestFunc = async () => {
 
     expect(parsed1.items[0].content).toBe('Cache1');
     expect(parsed2.items[0].content).toBe('Cache2');
+
+    expect(parsed1.ttl).toEqual('1');
 };
 
 describe('cache', () => {
@@ -48,6 +50,8 @@ describe('cache', () => {
 
         expect(response2.status).toBe(200);
         expect(response2.headers.get('rsshub-cache-status')).toBe('HIT');
+
+        expect(parsed1.ttl).toEqual('1');
 
         await wait(1 * 1000 + 100);
         const response3 = await app.request('/test/cache');
@@ -96,6 +100,8 @@ describe('cache', () => {
 
         expect(response2.status).toBe(200);
         expect(response2.headers.get('rsshub-cache-status')).toBe('HIT');
+
+        expect(parsed1.ttl).toEqual('1');
 
         await wait(1 * 1000 + 100);
         const response3 = await app.request('/test/cache');
@@ -161,5 +167,23 @@ describe('cache', () => {
         } catch (error: any) {
             expect(error.message).toContain('Cache key must be a string');
         }
+    });
+
+    it('RSS TTL (no cache)', async () => {
+        process.env.CACHE_TYPE = '';
+        process.env.CACHE_EXPIRE = '600';
+        const app = (await import('@/app')).default;
+        const response = await app.request('/test/cache');
+        const parsed = await parser.parseString(await response.text());
+        expect(parsed.ttl).toEqual('1');
+    });
+
+    it('RSS TTL (w/ cache)', async () => {
+        process.env.CACHE_TYPE = 'memory';
+        process.env.CACHE_EXPIRE = '600';
+        const app = (await import('@/app')).default;
+        const response = await app.request('/test/cache');
+        const parsed = await parser.parseString(await response.text());
+        expect(parsed.ttl).toEqual('10');
     });
 });
