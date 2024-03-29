@@ -37,9 +37,11 @@ async function handler() {
         list.map((_, item) => {
             const title = $(item).find('a').text();
             const link = $(item).find('a').attr('href');
+
             return cache.tryGet(link, async () => {
                 const { data: response } = await got(link);
                 const $ = load(response);
+                $('div.widget-content').remove();
                 $('div.byline').remove();
                 $('div.post-sidebar').remove();
                 const time = $('time.published').attr('datetime');
