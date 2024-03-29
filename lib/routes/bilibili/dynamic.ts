@@ -6,6 +6,7 @@ import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import cacheIn from './cache';
+import { config } from '@/config';
 
 /**
     @by CaoMeiYouRen 2020-05-05 添加注释
@@ -74,7 +75,7 @@ export const route: Route = {
     example: '/bilibili/user/dynamic/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', routeParams: '额外参数；请参阅以下说明和表格' },
     features: {
-        requireConfig: false,
+        requireConfig: utils.requireConfig,
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -115,11 +116,16 @@ async function handler(ctx) {
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
     const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
 
+    const cookie = Object.values(config.bilibili.cookies).find(Boolean); // 寻找一个真值的 cookie，本路由中 cookie 可以是任意账号的
+    if (!cookie) {
+        throw new Error('缺少 Bilibili 用户登录后的 Cookie 值');
+    }
     const response = await got({
         method: 'get',
-        url: `https://api.vc.bilibili.com/dynamic_svr/v2/dynamic_svr/space_history?host_uid=${uid}`,
+        url: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?host_uid=${uid}`,
         headers: {
             Referer: `https://space.bilibili.com/${uid}/`,
+            Cookie: cookie,
         },
     });
     const cards = JSONbig.parse(response.body).data.cards;
