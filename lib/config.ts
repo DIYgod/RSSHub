@@ -348,7 +348,7 @@ const calculateValue = () => {
         allowOrigin: envs.ALLOW_ORIGIN,
         // cache
         cache: {
-            type: envs.CACHE_TYPE || 'memory', // 缓存类型，支持 'memory' 和 'redis'，设为空可以禁止缓存
+            type: envs.CACHE_TYPE || (envs.CACHE_TYPE === '' ? '' : 'memory'), // 缓存类型，支持 'memory' 和 'redis'，设为空可以禁止缓存
             requestTimeout: toInt(envs.CACHE_REQUEST_TIMEOUT, 60),
             routeExpire: toInt(envs.CACHE_EXPIRE, 5 * 60), // 路由缓存时间，单位为秒
             contentExpire: toInt(envs.CACHE_CONTENT_EXPIRE, 1 * 60 * 60), // 不变内容缓存时间，单位为秒
