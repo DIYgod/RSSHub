@@ -57,8 +57,11 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.title = content('title').text().replace(' - cool18.com', '');
-                item.author = detailResponse.data.match(/送交者: .*>(.*)<.*\[/)[1];
-                item.pubDate = parseDate(detailResponse.data.match(/于 (.*) 已读/)[1]).toUTCString();
+                const matchedAuthors = detailResponse.data.match(/送交者: .*>(.*)<.*\[/);
+                item.author = matchedAuthors && matchedAuthors.length > 1 ? matchedAuthors[1] : 'author is not found';
+                const matchedDates = detailResponse.data.match(/于 (.*) 已读/);
+                const pubDate = matchedDates && matchedDates.length > 1 ? matchedDates[1] : new Date();
+                item.pubDate = parseDate(pubDate).toUTCString();
                 item.description = content('pre')
                     .html()
                     .replaceAll(/<font color="#E6E6DD">cool18.com<\/font>/g, '');
