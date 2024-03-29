@@ -13,13 +13,13 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     name: 'GNN 新聞',
-    maintainers: ['Arracc'],
+    maintainers: ['Arracc', 'ladeng07'],
     handler,
     description: `| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
   | ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
@@ -99,11 +99,11 @@ async function handler(ctx) {
             item.description = await cache.tryGet(item.link, async () => {
                 const response = await got.get(item.link);
                 let component = '';
-                const urlReg = /window.location.replace\('.*'/g;
+                const urlReg = /window\.lazySizesConfig/g;
 
                 let pubInfo;
                 let dateStr;
-                if (response.body.search(urlReg) < 0) {
+                if (response.body.search(urlReg) >= 0) {
                     const $ = load(response.data);
                     if ($('span.GN-lbox3C').length > 0) {
                         // official publish 1
@@ -119,8 +119,7 @@ async function handler(ctx) {
                     component = $('div.GN-lbox3B').html();
                 } else {
                     // url redirect
-                    const newUrl = response.body.match(urlReg)[0].split('(')[1].replaceAll("'", '');
-                    const _response = await got.get(newUrl);
+                    const _response = await got.get(item.link);
                     const _$ = load(_response.data);
 
                     if (_$('div.MSG-list8C').length > 0) {
