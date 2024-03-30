@@ -34,6 +34,11 @@ async function handler() {
         method: 'get',
         url: 'https://sessionserver.mojang.com/blockedservers',
         responseType: 'text',
+        headers: {
+            // I don't know why but without this Mojang returns HTTP 403
+            //   -- xtex
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0',
+        },
     });
 
     const data = (response.data.toString() as string).split('\n').filter((str) => str !== '');
