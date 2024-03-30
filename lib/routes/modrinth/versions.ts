@@ -93,7 +93,7 @@ async function handler(ctx: Context) {
         }).json<Version[]>();
         const authors = await customGot(`https://api.modrinth.com/v2/users`, {
             searchParams: {
-                ids: JSON.stringify(versions.map((it) => it.author_id)),
+                ids: JSON.stringify([...new Set(versions.map((it) => it.author_id))]),
             },
         }).json<Author[]>();
         const groupedAuthors = <Record<string, Author>>{};
