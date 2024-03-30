@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please ensure the feature requested is not listed in [documentation](https://docs.rsshub.app/en) or [issue](https://github.com/DIYgod/RSSHub/issues), and is not a [new RSS proposal](https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+proposal&template=rss_request_en.yml), and provide all the information required by this template.
+        Please ensure the feature requested is not listed in [documentation](https://docs.rsshub.app/) or [issue](https://github.com/DIYgod/RSSHub/issues), and is not a [new RSS proposal](https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+proposal&template=rss_request_en.yml), and provide all the information required by this template.
         Otherwise the issue will be closed immediately.
 
   - type: textarea

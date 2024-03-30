@@ -38,7 +38,7 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 
 async function handler(ctx) {
     if (!config.youtube || !config.youtube.key) {
-        throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const id = ctx.req.param('id');
     const embed = !ctx.req.param('embed');

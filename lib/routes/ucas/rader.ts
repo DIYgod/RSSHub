@@ -4,7 +4,7 @@ export default {
         zhaopin: [
             {
                 title: '招聘信息-博士后',
-                docs: 'https://docs.rsshub.app/university#zhong-guo-ke-xue-yuan-da-xue-zhao-pin-xin-xi',
+                docs: 'https://docs.rsshub.app/routes/university#zhong-guo-ke-xue-yuan-da-xue-zhao-pin-xin-xi',
                 source: '/*',
                 target: (params, url) => {
                     if (new URL(url).searchParams.get('c') === '6') {
@@ -14,7 +14,7 @@ export default {
             },
             {
                 title: '招聘信息-课题项目聘用',
-                docs: 'https://docs.rsshub.app/university#zhong-guo-ke-xue-yuan-da-xue-zhao-pin-xin-xi',
+                docs: 'https://docs.rsshub.app/routes/university#zhong-guo-ke-xue-yuan-da-xue-zhao-pin-xin-xi',
                 source: '/*',
                 target: (params, url) => {
                     if (new URL(url).searchParams.get('c') === '5') {
@@ -24,7 +24,7 @@ export default {
             },
             {
                 title: '招聘信息-管理支撑人才',
-                docs: 'https://docs.rsshub.app/university#zhong-guo-ke-xue-yuan-da-xue-zhao-pin-xin-xi',
+                docs: 'https://docs.rsshub.app/routes/university#zhong-guo-ke-xue-yuan-da-xue-zhao-pin-xin-xi',
                 source: '/*',
                 target: (params, url) => {
                     if (new URL(url).searchParams.get('c') === '4') {
@@ -34,7 +34,7 @@ export default {
             },
             {
                 title: '招聘信息-科学科研人才',
-                docs: 'https://docs.rsshub.app/university#zhong-guo-ke-xue-yuan-da-xue-zhao-pin-xin-xi',
+                docs: 'https://docs.rsshub.app/routes/university#zhong-guo-ke-xue-yuan-da-xue-zhao-pin-xin-xi',
                 source: '/*',
                 target: (params, url) => {
                     if (new URL(url).searchParams.get('c') === '3') {

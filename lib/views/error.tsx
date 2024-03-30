@@ -88,7 +88,7 @@ const Index: FC<{
             </p>
             <p className="!mt-6">
                 Please consider{' '}
-                <a target="_blank" href="https://docs.rsshub.app/support" className="text-[#F5712C]">
+                <a target="_blank" href="https://docs.rsshub.app/sponsor" className="text-[#F5712C]">
                     sponsoring
                 </a>{' '}
                 to help keep this open source project alive.

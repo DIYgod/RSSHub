@@ -12,8 +12,8 @@ dependencies:
     specifier: 0.2.1
     version: 0.2.1(hono@4.1.5)
   '@hono/zod-openapi':
-    specifier: 0.9.9
-    version: 0.9.9(hono@4.1.5)(zod@3.22.4)
+    specifier: 0.9.10
+    version: 0.9.10(hono@4.1.5)(zod@3.22.4)
   '@notionhq/client':
     specifier: 2.2.14
     version: 2.2.14
@@ -195,8 +195,8 @@ dependencies:
     specifier: 3.5.3
     version: 3.5.3
   tldts:
-    specifier: 6.1.15
-    version: 6.1.15
+    specifier: 6.1.16
+    version: 6.1.16
   tough-cookie:
     specifier: 4.1.3
     version: 4.1.3
@@ -1898,21 +1898,21 @@ packages:
       hono: 4.1.5
     dev: false
 
-  /@hono/zod-openapi@0.9.9(hono@4.1.5)(zod@3.22.4):
-    resolution: {integrity: sha512-Icak3c8WKNS1gFDWmYs2zJ7ra3js9lDeAXNPf5h3fa0SnJQcjcCrLaG6EZPPAbW92HRwCDeQt8yA/ZVp17HPFg==}
+  /@hono/zod-openapi@0.9.10(hono@4.1.5)(zod@3.22.4):
+    resolution: {integrity: sha512-v/b/z0qPxDo952gjRyhJ0n9ifbPoIluR2KmXDL20np0hj99+XvakoIHK5/T/3+hUmXlTj1Kn3TiGsSV6hwZesg==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=3.11.3'
       zod: 3.*
     dependencies:
       '@asteasolutions/zod-to-openapi': 5.5.0(zod@3.22.4)
-      '@hono/zod-validator': 0.1.11(hono@4.1.5)(zod@3.22.4)
+      '@hono/zod-validator': 0.2.1(hono@4.1.5)(zod@3.22.4)
       hono: 4.1.5
       zod: 3.22.4
     dev: false
 
-  /@hono/zod-validator@0.1.11(hono@4.1.5)(zod@3.22.4):
-    resolution: {integrity: sha512-PQXeHUP0+36qpRt8yfeD7N2jbK3ETlGvSN6dMof/HwUC/APRokQRjpXZm4rrlG71Ft0aWE01+Bm4XejqPie5Uw==}
+  /@hono/zod-validator@0.2.1(hono@4.1.5)(zod@3.22.4):
+    resolution: {integrity: sha512-HFoxln7Q6JsE64qz2WBS28SD33UB2alp3aRKmcWnNLDzEL1BLsWfbdX6e1HIiUprHYTIXf5y7ax8eYidKUwyaA==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.19.1
@@ -8634,15 +8634,15 @@ packages:
     hasBin: true
     dev: false
 
-  /tldts-core@6.1.15:
-    resolution: {integrity: sha512-E/gy+y6I53cZcqbHllhS5Aak6DmMZSO9tX6DYw3NXZk+f1yoFKGLiojQ8ww39G5QAupKKZL+vehNVqzSS0SQgQ==}
+  /tldts-core@6.1.16:
+    resolution: {integrity: sha512-rxnuCux+zn3hMF57nBzr1m1qGZH7Od2ErbDZjVm04fk76cEynTg3zqvHjx5BsBl8lvRTjpzIhsEGMHDH/Hr2Vw==}
     dev: false
 
-  /tldts@6.1.15:
-    resolution: {integrity: sha512-0/2FOdXnP5ON6PTQfE7B4X1ymqa1Bs6oG/yHKtVMxLSlUPlb/1AdWGzz2Co3P/uM0eUPWOt61L7cayyyNUSh7A==}
+  /tldts@6.1.16:
+    resolution: {integrity: sha512-X6VrQzW4RymhI1kBRvrWzYlRLXTftZpi7/s/9ZlDILA04yM2lNX7mBvkzDib9L4uSymHt8mBbeaielZMdsAkfQ==}
     hasBin: true
     dependencies:
-      tldts-core: 6.1.15
+      tldts-core: 6.1.16
     dev: false
 
   /tmp@0.0.33:
