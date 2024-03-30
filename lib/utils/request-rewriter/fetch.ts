@@ -1,9 +1,9 @@
 import logger from '@/utils/logger';
 import { config } from '@/config';
-import { fetch, Request, RequestInfo, RequestInit } from 'undici';
+import undici, { Request, RequestInfo, RequestInit } from 'undici';
 import proxy from '@/utils/proxy';
 
-const wrappedFetch: typeof fetch = (input: RequestInfo, init?: RequestInit) => {
+const wrappedFetch: typeof undici.fetch = (input: RequestInfo, init?: RequestInit) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
 
@@ -44,7 +44,7 @@ const wrappedFetch: typeof fetch = (input: RequestInfo, init?: RequestInit) => {
         }
     }
 
-    return fetch(request, options);
+    return undici.fetch(request, options);
 };
 
 export default wrappedFetch;

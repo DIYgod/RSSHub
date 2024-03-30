@@ -1,123 +1,137 @@
-import { describe, expect, it, afterEach, vi } from 'vitest';
-import '@/utils/request-rewriter';
-import { config } from '@/config';
-
-import ofetch from '@/utils/ofetch';
+import { describe, expect, it, vi } from 'vitest';
+import undici from 'undici';
 import got from 'got';
+import http from 'node:http';
 
-afterEach(() => {
-    delete process.env.PROXY_URI;
-    delete process.env.PROXY_AUTH;
-    delete process.env.PROXY_URL_REGEX;
+process.env.PROXY_URI = 'http://rsshub.proxy:2333/';
+process.env.PROXY_AUTH = 'rsshubtest';
+process.env.PROXY_URL_REGEX = 'headers';
 
-    vi.resetModules();
-});
+await import('@/utils/request-rewriter');
+const { config } = await import('@/config');
+const { default: ofetch } = await import('@/utils/ofetch');
 
 describe('request-rewriter', () => {
-    it('ofetch', async () => {
-        const response = await ofetch('http://rsshub.test/headers');
-        expect(response['user-agent']).toBe(config.ua);
-        expect(response.accept).toBe('*/*');
-        expect(response.referer).toBe('http://rsshub.test');
+    it('fetch', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch');
+
+        try {
+            await (await fetch('http://rsshub.test/headers')).json();
+        } catch {
+            // ignore
+        }
+
+        // headers
+        const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
+        expect(headers.get('user-agent')).toBe(config.ua);
+        expect(headers.get('accept')).toBe('*/*');
+        expect(headers.get('referer')).toBe('http://rsshub.test');
+
+        // proxy
+        const options = fetchSpy.mock.lastCall?.[1];
+        const agentKey = Object.getOwnPropertySymbols(options?.dispatcher).find((s) => s.description === 'proxy agent options');
+        const agentUri = agentKey ? options?.dispatcher?.[agentKey].uri : null;
+        expect(agentUri).toBe(process.env.PROXY_URI);
+
+        // proxy auth
+        const headersKey = Object.getOwnPropertySymbols(options?.dispatcher).find((s) => s.description === 'proxy headers');
+        const agentHeaders = headersKey ? options?.dispatcher?.[headersKey] : null;
+        expect(agentHeaders['proxy-authorization']).toBe(`Basic ${process.env.PROXY_AUTH}`);
+
+        // url regex not match
+        {
+            try {
+                await (await fetch('http://rsshub.test/rss')).json();
+            } catch {
+                // ignore
+            }
+            const options = fetchSpy.mock.lastCall?.[1];
+            expect(options?.dispatcher).toBeUndefined();
+        }
     });
 
-    it('fetch', async () => {
-        const response = await (await fetch('http://rsshub.test/headers')).json();
-        expect(response['user-agent']).toBe(config.ua);
-        expect(response.accept).toBe('*/*');
-        expect(response.referer).toBe('http://rsshub.test');
+    it('ofetch', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch');
+
+        try {
+            await ofetch('http://rsshub.test/headers', {
+                retry: 0,
+            });
+        } catch {
+            // ignore
+        }
+
+        // headers
+        const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
+        expect(headers.get('user-agent')).toBe(config.ua);
+        expect(headers.get('accept')).toBe('*/*');
+        expect(headers.get('referer')).toBe('http://rsshub.test');
+
+        // proxy
+        const options = fetchSpy.mock.lastCall?.[1];
+        const agentKey = Object.getOwnPropertySymbols(options?.dispatcher).find((s) => s.description === 'proxy agent options');
+        const agentUri = agentKey ? options?.dispatcher?.[agentKey].uri : null;
+        expect(agentUri).toBe(process.env.PROXY_URI);
+
+        // proxy auth
+        const headersKey = Object.getOwnPropertySymbols(options?.dispatcher).find((s) => s.description === 'proxy headers');
+        const agentHeaders = headersKey ? options?.dispatcher?.[headersKey] : null;
+        expect(agentHeaders['proxy-authorization']).toBe(`Basic ${process.env.PROXY_AUTH}`);
+
+        // url regex not match
+        {
+            try {
+                await ofetch('http://rsshub.test/rss', {
+                    retry: 0,
+                });
+            } catch {
+                // ignore
+            }
+            const options = fetchSpy.mock.lastCall?.[1];
+            expect(options?.dispatcher).toBeUndefined();
+        }
     });
 
     it('http', async () => {
-        const { config } = await import('@/config');
-        await import('@/utils/request-rewriter');
+        const httpSpy = vi.spyOn(http, 'request');
 
-        const response = await got
-            .get('http://rsshub.test/headers', {
+        try {
+            await got.get('http://rsshub.test/headers', {
                 headers: {
                     'user-agent': undefined,
                     accept: undefined,
                 },
-            })
-            .json<any>();
-        expect(response['user-agent']).toBe(config.ua);
-        expect(response.accept).toBe('*/*');
-        expect(response.referer).toBe('http://rsshub.test');
+            });
+        } catch {
+            // ignore
+        }
+
+        // headers
+        const options = httpSpy.mock.lastCall?.[1];
+        const headers = options?.headers;
+        expect(headers?.['user-agent']).toBe(config.ua);
+        expect(headers?.accept).toBe('*/*');
+        expect(headers?.referer).toBe('http://rsshub.test');
+
+        // proxy
+        const agentUri = options?.agent?.proxy?.href;
+        expect(agentUri).toBe(process.env.PROXY_URI);
+        expect(options?.agent?.proxyHeaders['proxy-authorization']).toBe(`Basic ${process.env.PROXY_AUTH}`);
+
+        // url regex not match
+        {
+            try {
+                await got.get('http://rsshub.test/rss', {
+                    headers: {
+                        'user-agent': undefined,
+                        accept: undefined,
+                    },
+                });
+            } catch {
+                // ignore
+            }
+            const options = httpSpy.mock.lastCall?.[1];
+            expect(options?.agent).toBeUndefined();
+        }
     });
-
-    // it('proxy-uri http', async () => {
-    //     process.env.PROXY_URI = 'http://user:pass@rsshub.proxy:2333';
-
-    //     await import('@/utils/request-wrapper');
-    //     check = (request) => {
-    //         expect(request.agent.constructor.name).toBe('HttpsProxyAgent');
-    //         expect(request.agent.proxy.protocol).toBe('http:');
-    //         expect(request.agent.proxy.username).toBe('user');
-    //         expect(request.agent.proxy.password).toBe('pass');
-    //         expect(request.agent.proxy.host).toBe('rsshub.proxy:2333');
-    //         expect(request.agent.proxy.hostname).toBe('rsshub.proxy');
-    //         expect(request.agent.proxy.port).toBe('2333');
-    //     };
-
-    //     nock(/rsshub\.test/)
-    //         .get('/proxy')
-    //         .times(2)
-    //         .reply(200, simpleResponse);
-
-    //     await got.get('http://rsshub.test/proxy');
-    //     await parser.parseURL('http://rsshub.test/proxy');
-    // });
-
-    // it('auth', async () => {
-    //     process.env.PROXY_AUTH = 'testtest';
-    //     process.env.PROXY_PROTOCOL = 'http'; // only http(s) proxies extract auth from Headers
-    //     process.env.PROXY_HOST = 'rsshub.proxy';
-    //     process.env.PROXY_PORT = '2333';
-
-    //     await import('@/utils/request-wrapper');
-
-    //     nock(/rsshub\.test/)
-    //         .get('/auth')
-    //         .times(2)
-    //         .reply(function () {
-    //             expect(this.req.headers['proxy-authorization']).toBe('Basic testtest');
-    //             return [200, simpleResponse];
-    //         });
-
-    //     await got.get('http://rsshub.test/auth');
-    //     await parser.parseURL('http://rsshub.test/auth');
-    // });
-
-    // it('url_regex', async () => {
-    //     process.env.PROXY_URL_REGEX = 'url_regex';
-    //     process.env.PROXY_PROTOCOL = 'socks';
-    //     process.env.PROXY_HOST = 'rsshub.proxy';
-    //     process.env.PROXY_PORT = '2333';
-
-    //     await import('@/utils/request-wrapper');
-    //     check = (request) => {
-    //         if (request.path === '/url_regex') {
-    //             expect(request.agent.constructor.name).toBe('SocksProxyAgent');
-    //             expect(request.agent.proxy.host).toBe('rsshub.proxy');
-    //             expect(request.agent.proxy.port).toBe(2333);
-    //         } else if (request.path === '/proxy') {
-    //             expect(request.agent).toBe(undefined);
-    //         }
-    //     };
-
-    //     nock(/rsshub\.test/)
-    //         .get('/url_regex')
-    //         .times(2)
-    //         .reply(() => [200, simpleResponse]);
-    //     nock(/rsshub\.test/)
-    //         .get('/proxy')
-    //         .times(2)
-    //         .reply(() => [200, simpleResponse]);
-
-    //     await got.get('http://rsshub.test/url_regex');
-    //     await parser.parseURL('http://rsshub.test/url_regex');
-
-    //     await got.get('http://rsshub.test/proxy');
-    //     await parser.parseURL('http://rsshub.test/proxy');
-    // });
 });
