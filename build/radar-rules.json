@@ -109,12 +109,12 @@
     "_name": "BT 之家 1LOU 站",
     ".": [
       {
-        "title": "搜索",
+        "title": "通用",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
-          "/:path"
+          "/:params"
         ],
-        "target": "/1lou/:path"
+        "target": "/1lou(_,url)=>{url=new URL(url);return`/1lou${url.href.replace(rootUrl,\"\")}`}"
       }
     ]
   },
