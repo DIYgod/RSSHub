@@ -64,6 +64,9 @@
   "/12306/zxdt/:id?": [
     "LogicJake"
   ],
+  "/005/:category?": [
+    "nczitzk"
+  ],
   "/0818tuan/:listId?": [
     "TonyRL"
   ],

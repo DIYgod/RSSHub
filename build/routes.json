@@ -579,6 +579,77 @@
     "name": "12306",
     "url": "kyfw.12306.cn"
   },
+  "005": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "name": "资讯",
+        "url": "005.tv",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/005/zx",
+        "parameters": {
+          "category": "分类，可在对应分类页 URL 中找到，默认为二次元资讯"
+        },
+        "description": "\n  | 二次元资讯 | 慢慢说 | 道听途说 | 展会资讯 |\n  | ---------- | ------ | -------- | -------- |\n  | zx         | zwh    | dtts     | zh       |\n    ",
+        "categories": [
+          "anime"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "005.tv/:category"
+            ]
+          },
+          {
+            "title": "二次元资讯",
+            "source": [
+              "005.tv/zx/"
+            ],
+            "target": "/005/zx"
+          },
+          {
+            "title": "慢慢说",
+            "source": [
+              "005.tv/zwh/"
+            ],
+            "target": "/005/zwh"
+          },
+          {
+            "title": "道听途说",
+            "source": [
+              "005.tv/dtts/"
+            ],
+            "target": "/005/dtts"
+          },
+          {
+            "title": "展会资讯",
+            "source": [
+              "005.tv/zh/"
+            ],
+            "target": "/005/zh"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "幻之羁绊动漫网",
+    "url": "005.tv",
+    "categories": [
+      "anime"
+    ],
+    "description": ""
+  },
   "0818tuan": {
     "routes": {
       "/:listId?": {
