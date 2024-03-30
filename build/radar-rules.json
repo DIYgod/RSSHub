@@ -8277,7 +8277,7 @@
         "source": [
           "/"
         ],
-        "target": "/minecraft/version"
+        "target": "/minecraft/version/:versionType?/:linkType?"
       }
     ]
   },

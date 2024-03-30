@@ -34238,13 +34238,16 @@
   },
   "minecraft": {
     "routes": {
-      "/version": {
-        "path": "/version",
+      "/version/:versionType?/:linkType?": {
+        "path": "/version/:versionType?/:linkType?",
         "categories": [
           "game"
         ],
         "example": "/minecraft/version",
-        "parameters": {},
+        "parameters": {
+          "versionType": "Game version type, `all` by default",
+          "linkType": "Link added to feed, `official` by default"
+        },
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -34262,9 +34265,14 @@
         ],
         "name": "Java Game Update",
         "maintainers": [
-          "TheresaQWQ"
+          "TheresaQWQ",
+          "xtexChooser"
         ],
         "url": "minecraft.net/",
+        "description": "\n| Version                    | versionType |\n| -------------------------- | ----------- |\n| 正式版                     | release     |\n| 快照                       | snapshot    |\n| Alpha 及更早的版本         | old_alpha  |\n| Beta 版                    | old_beta   |\n| Target                     | linkType    |\n| -------------------------- | --------    |\n| minecraft.net              | official    |\n| 英文 Minecraft Wiki 版本页 | enwiki      |\n| 中文 Minecraft Wiki 版本页 | zhwiki      |\n",
+        "zh": {
+          "name": "Java版游戏更新"
+        },
         "location": "version.ts"
       }
     },
