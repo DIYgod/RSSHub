@@ -8,7 +8,7 @@ type Get = typeof http.get | typeof https.get | typeof http.request | typeof htt
 
 const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
     function (this: any, ...args: Parameters<typeof origin>) {
-        let url: URL;
+        let url: URL | null;
         let options: http.RequestOptions = {};
         let callback: ((res: http.IncomingMessage) => void) | undefined;
         if (typeof args[0] === 'string' || args[0] instanceof URL) {
@@ -22,10 +22,17 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
             }
         } else {
             options = args[0];
-            url = new URL(options.href || `${options.protocol}//${options.hostname || options.host}${options.path}${options.search || (options.query ? `?${options.query}` : '')}`);
+            try {
+                url = new URL(options.href || `${options.protocol || 'http:'}//${options.hostname || options.host}${options.path}${options.search || (options.query ? `?${options.query}` : '')}`);
+            } catch {
+                url = null;
+            }
             if (typeof args[1] === 'function') {
                 callback = args[1];
             }
+        }
+        if (!url) {
+            return Reflect.apply(origin, this, args) as ReturnType<typeof origin>;
         }
 
         logger.debug(`Outgoing request: ${options.method || 'GET'} ${url}`);
