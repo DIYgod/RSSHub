@@ -48,9 +48,9 @@ const server = setupServer(
                 '</script>'
         )
     ),
-    http.get(`http://rsshub.test/ua`, ({ request }) =>
+    http.get(`http://rsshub.test/headers`, ({ request }) =>
         HttpResponse.json({
-            ua: request.headers.get('user-agent'),
+            ...Object.fromEntries(request.headers.entries()),
         })
     ),
     http.post(`http://rsshub.test/form-post`, async ({ request }) => {

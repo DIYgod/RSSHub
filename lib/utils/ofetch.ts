@@ -9,6 +9,9 @@ const rofetch = createFetch().create({
     onRequestError({ request, error }) {
         logger.error(`Request ${request} fail: ${error}`);
     },
+    headers: {
+        'user-agent': config.ua,
+    },
 });
 
 export default rofetch;

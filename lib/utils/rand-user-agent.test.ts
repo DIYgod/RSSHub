@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import randUserAgent from '@/utils/rand-user-agent';
 
@@ -22,16 +22,16 @@ describe('rand-user-agent', () => {
     });
 
     it('should has default random ua', async () => {
-        const { data } = await got('http://rsshub.test/ua');
-        expect(data.ua).toBe(config.ua);
+        const response = await ofetch('http://rsshub.test/headers');
+        expect(response['user-agent']).toBe(config.ua);
     });
 
     it('should match ua configurated', async () => {
-        const { data } = await got('http://rsshub.test/ua', {
+        const response = await ofetch('http://rsshub.test/headers', {
             headers: {
                 'user-agent': mobileUa,
             },
         });
-        expect(data.ua).toBe(mobileUa);
+        expect(response['user-agent']).toBe(mobileUa);
     });
 });
