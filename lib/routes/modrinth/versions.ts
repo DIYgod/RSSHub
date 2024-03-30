@@ -110,7 +110,7 @@ async function handler(ctx: Context) {
                     changelog: md.render(it.changelog),
                 }),
                 guid: it.id,
-                author: authors[index].name,
+                author: authors[index].username,
             })),
         };
     } catch (error: any) {
