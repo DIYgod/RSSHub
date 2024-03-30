@@ -21526,7 +21526,7 @@
         "maintainers": [
           "Fatpandac"
         ],
-        "description": "| Newest | Trending | Most popular |  Name | Number of styles |\n  | :----: | :------: | :----------: | :---: | :--------------: |\n  |  date  | trending |  popularity  | alpha |       style      |\n\n  :::warning\n  This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/install/#configuration-route-specific-configurations) for route-specific configurations.\n  :::",
+        "description": "| Newest | Trending | Most popular |  Name | Number of styles |\n  | :----: | :------: | :----------: | :---: | :--------------: |\n  |  date  | trending |  popularity  | alpha |       style      |\n\n  :::warning\n  This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.\n  :::",
         "location": "fonts.ts"
       },
       "/news/:category/:locale": {
@@ -25479,7 +25479,7 @@
     },
     "name": "哈尔滨工业大学",
     "url": "jwc.hit.edu.cn",
-    "description": ":::warning\n哈工大网站疑似禁止了`rsshub.app`的访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。\n:::"
+    "description": ":::warning\n哈工大网站疑似禁止了`rsshub.app`的访问，使用路由需要自行 [部署](https://docs.rsshub.app/deploy/)。\n:::"
   },
   "hitsz": {
     "routes": {
@@ -28573,7 +28573,7 @@
           "oppilate",
           "DIYgod"
         ],
-        "description": ":::warning\nDue to [Instagram Private API](https://github.com/dilame/instagram-private-api) restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/install/) for more.\n:::",
+        "description": ":::warning\nDue to [Instagram Private API](https://github.com/dilame/instagram-private-api) restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/deploy/) for more.\n:::",
         "location": "private-api/index.ts"
       },
       "/2/:category/:key": {
@@ -29154,7 +29154,7 @@
           "FeCCC"
         ],
         "url": "ecchi.iwara.tv/",
-        "description": ":::warning\n  This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.\n  :::",
+        "description": ":::warning\n  This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.\n  :::",
         "location": "subscriptions.ts"
       }
     },
@@ -33602,7 +33602,7 @@
     },
     "name": "Mastodon",
     "url": "mastodon.social",
-    "description": ":::tip\nOfficial user RSS:\n\n-   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))\n-   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))\n\nThese feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you may need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.\n:::"
+    "description": ":::tip\nOfficial user RSS:\n\n-   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))\n-   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))\n\nThese feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you may need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.\n:::"
   },
   "mckinsey": {
     "routes": {
@@ -36567,7 +36567,7 @@
         "parameters": {
           "key": "Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`",
           "keyword": "Filter value",
-          "mode": "mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`"
+          "mode": "mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations), default to `simple`"
         },
         "features": {
           "requireConfig": false,
@@ -36600,7 +36600,7 @@
         "example": "/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-\"mosaic+censorship\"",
         "parameters": {
           "keyword": "Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details",
-          "mode": "mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`"
+          "mode": "mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations), default to `simple`"
         },
         "features": {
           "requireConfig": false,
@@ -38347,7 +38347,7 @@
     },
     "name": "Notion",
     "url": "notion.so",
-    "description": ":::warning\nNeed to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/install/#Deployment) for details.\n:::\n\n:::tip Recommendation\nIt is recommended to use with clipping tools such as Notion Web Clipper.\n:::"
+    "description": ":::warning\nNeed to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations) for details.\n:::\n\n:::tip Recommendation\nIt is recommended to use with clipping tools such as Notion Web Clipper.\n:::"
   },
   "now": {
     "routes": {
@@ -50492,7 +50492,7 @@
           "HyperCherry"
         ],
         "url": "jsjxy.stbu.edu.cn/news",
-        "description": ":::warning\n计算机学院通知公告疑似禁止了非大陆 IP 访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。\n:::",
+        "description": ":::warning\n计算机学院通知公告疑似禁止了非大陆 IP 访问，使用路由需要自行 [部署](https://docs.rsshub.app/deploy/)。\n:::",
         "location": "jsjxy.ts"
       },
       "/xyxw": {
