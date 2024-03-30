@@ -55,7 +55,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.notion.key) {
-        throw new Error('Notion RSS is disabled due to the lack of NOTION_TOKEN(<a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>)');
+        throw new Error('Notion RSS is disabled due to the lack of NOTION_TOKEN(<a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>)');
     }
 
     const databaseId = ctx.req.param('databaseId');
