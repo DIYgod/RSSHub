@@ -34,6 +34,9 @@ if (proxyIsPAC) {
         dispatcher = new ProxyAgent({
             uri: proxyUri,
             token: proxyObj?.auth ? `Basic ${proxyObj.auth}` : undefined,
+            requestTls: {
+                rejectUnauthorized: process.env.NODE_TLS_REJECT_UNAUTHORIZED !== '0',
+            },
         });
     } else if (proxyUri.startsWith('socks')) {
         agent = new SocksProxyAgent(proxyUri);

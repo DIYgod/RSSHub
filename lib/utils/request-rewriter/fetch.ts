@@ -1,19 +1,14 @@
-import { setupServer } from 'msw/node';
-import { http } from 'msw';
 import logger from '@/utils/logger';
 import { config } from '@/config';
-import { fetch, Headers, FormData, Request, Response } from 'undici';
+import { fetch, Request, RequestInfo, RequestInit } from 'undici';
 import proxy from '@/utils/proxy';
 
-Object.defineProperties(globalThis, {
-    fetch: { value: fetch, writable: true },
-    Headers: { value: Headers },
-    FormData: { value: FormData },
-    Request: { value: Request },
-    Response: { value: Response },
-});
+const wrappedFetch: typeof fetch = (input: RequestInfo, init?: RequestInit) => {
+    const request = new Request(input, init);
+    const options: RequestInit = {};
 
-const handler = (request: globalThis.Request, options: NonNullable<Parameters<typeof fetch>[1]>) => {
+    logger.debug(`Outgoing request: ${request.method} ${request.url}`);
+
     // ua
     if (!request.headers.get('user-agent')) {
         request.headers.set('user-agent', config.ua);
@@ -45,21 +40,11 @@ const handler = (request: globalThis.Request, options: NonNullable<Parameters<ty
         }
 
         if (proxyRegex.test(request.url) && request.url.startsWith('http') && !(urlHandler && urlHandler.host === proxy.proxyUrlHandler?.host)) {
-            // fetch
             options.dispatcher = proxy.dispatcher;
         }
     }
+
+    return fetch(request, options);
 };
 
-const server = setupServer(
-    // @ts-expect-error
-    http.all('*', ({ request }) => {
-        logger.debug(`Outgoing request: ${request.method} ${request.url}`);
-        const requestClone = request.clone();
-        const options = {};
-        handler(requestClone, options);
-        // @ts-expect-error
-        return fetch(requestClone, options);
-    })
-);
-server.listen();
+export default wrappedFetch;
