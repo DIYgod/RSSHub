@@ -22,7 +22,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.twitter || !config.twitter.consumer_key || !config.twitter.consumer_secret) {
-        throw new Error('Twitter RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('Twitter RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const woeid = ctx.req.param('woeid') ?? 1; // Global information is available by using 1 as the WOEID
     const client = await utils.getAppClient();

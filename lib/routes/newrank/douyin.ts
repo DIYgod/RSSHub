@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.newrank || !config.newrank.cookie) {
-        throw new Error('newrank RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('newrank RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const uid = ctx.req.param('dyid');
     const nonce = utils.random_nonce(9);
