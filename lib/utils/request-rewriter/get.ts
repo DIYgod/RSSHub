@@ -54,9 +54,6 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
 
             if (proxyRegex.test(url.toString()) && url.protocol.startsWith('http') && url.host !== proxy.proxyUrlHandler?.host) {
                 options.agent = proxy.agent;
-                if (proxy.proxyObj.auth) {
-                    options.headers['Proxy-Authorization'] = `Basic ${proxy.proxyObj.auth}`;
-                }
             }
         }
 
