@@ -4,7 +4,10 @@ export const route: Route = {
     path: '/:city/:pollution?',
     categories: ['other'],
     example: '/aqicn/beijing/pm25',
-    parameters: { city: '城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)', pollution: '可选择显示更详细的空气污染成分' },
+    parameters: {
+        city: '城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)',
+        pollution: '可选择显示更详细的空气污染成分',
+    },
     radar: [
         {
             source: ['aqicn.org'],
@@ -43,8 +46,7 @@ async function handler(ctx) {
         pm25: 'PM2.5',
         pm10: 'PM10',
     };
-    const area = isNaN(city) ? city : `@${city}`;
-
+    const area = Number.isNaN(city) ? city : `@${city}`;
     const response = await got({
         method: 'get',
         url: `http://aqicn.org/aqicn/json/android/${area}/json`,
@@ -53,12 +55,13 @@ async function handler(ctx) {
     const pollutionDetailed =
         pollution.length === 0
             ? ''
-            : pollution.split(',').reduce((result, item) => {
-                  result += `${pollutionType[item].toUpperCase()}:<b>${
-                      typeof data.historic[pollutionType[item]] === 'object' ? data.historic[pollutionType[item]][Object.keys(data.historic[pollutionType[item]])[0]] : data.historic[pollutionType[item]][0]
-                  }</b><br>`;
-                  return result;
-              }, '');
+            : pollution
+                  .split(',')
+                  .map((item) => {
+                      const pollutionValue = typeof data.historic[pollutionType[item]] === 'object' ? data.historic[pollutionType[item]][Object.keys(data.historic[pollutionType[item]])[0]] : data.historic[pollutionType[item]][0];
+                      return `${pollutionType[item].toUpperCase()}:<b>${pollutionValue}</b><br>`;
+                  })
+                  .join('');
 
     return {
         title: `${data.namena}AQI`,
