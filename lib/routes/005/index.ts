@@ -112,7 +112,7 @@ export const route: Route = {
   | ---------- | ------ | -------- | -------- |
   | zx         | zwh    | dtts     | zh       |
     `,
-    categories: ['anime', 'new-media'],
+    categories: ['anime'],
 
     features: {
         requireConfig: false,
