@@ -27,7 +27,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.ncm || !config.ncm.cookies) {
-        throw new Error('163 Music RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('163 Music RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
 
     const id = ctx.req.param('id');
