@@ -48,8 +48,7 @@ async function handler(ctx) {
     });
 
     if (!channelInfo) {
-        ctx.set('data', notFoundData);
-        return;
+        return notFoundData;
     }
     const [userName, face] = await cacheIn.getUsernameAndFaceFromUID(uid);
     const host = `https://api.bilibili.com/x/series/archives?mid=${uid}&series_id=${sid}&only_normal=true&sort=desc&pn=1&ps=${limit}`;
@@ -62,8 +61,7 @@ async function handler(ctx) {
 
     const data = response.data.data;
     if (!data.archives) {
-        ctx.set('data', notFoundData);
-        return;
+        return notFoundData;
     }
 
     return {

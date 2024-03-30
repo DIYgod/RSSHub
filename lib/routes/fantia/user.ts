@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fantia.jp/fanclubs/:id'],
-    },
+    radar: [
+        {
+            source: ['fantia.jp/fanclubs/:id'],
+        },
+    ],
     name: 'User Posts',
     maintainers: ['nczitzk'],
     handler,

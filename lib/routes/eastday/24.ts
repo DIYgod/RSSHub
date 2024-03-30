@@ -36,10 +36,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mini.eastday.com/'],
-        target: '/24',
-    },
+    radar: [
+        {
+            source: ['mini.eastday.com/'],
+            target: '/24',
+        },
+    ],
     name: '24 小时热闻',
     maintainers: ['nczitzk'],
     handler,

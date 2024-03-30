@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['followin.io/:lang/kol/:kolId', 'followin.io/kol/:kolId'],
-    },
+    radar: [
+        {
+            source: ['followin.io/:lang/kol/:kolId', 'followin.io/kol/:kolId'],
+        },
+    ],
     name: 'KOL',
     maintainers: ['TonyRL'],
     handler,

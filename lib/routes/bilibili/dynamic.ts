@@ -81,10 +81,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['space.bilibili.com/:uid'],
-        target: '/user/dynamic/:uid',
-    },
+    radar: [
+        {
+            source: ['space.bilibili.com/:uid'],
+            target: '/user/dynamic/:uid',
+        },
+    ],
     name: 'UP 主动态',
     maintainers: ['DIYgod', 'zytomorrow', 'CaoMeiYouRen', 'JimenezLi'],
     handler,
@@ -97,7 +99,7 @@ export const route: Route = {
 
   用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1\`
 
-  :::tip[动态的专栏显示全文]
+  :::tip 动态的专栏显示全文
   动态的专栏显示全文请使用通用参数里的 \`mode=fulltext\`
 
   举例: bilibili 专栏全文输出 /bilibili/user/dynamic/2267573/?mode=fulltext
@@ -115,11 +117,10 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?host_uid=${uid}`,
+        url: `https://api.vc.bilibili.com/dynamic_svr/v2/dynamic_svr/space_history?host_uid=${uid}`,
         headers: {
             Referer: `https://space.bilibili.com/${uid}/`,
         },
-        transformResponse: [(data) => data],
     });
     const cards = JSONbig.parse(response.body).data.cards;
 

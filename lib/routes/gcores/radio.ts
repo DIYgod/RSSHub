@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['gcores.com/categories/:category'],
-        target: '/radios/:category',
-    },
+    radar: [
+        {
+            source: ['gcores.com/categories/:category'],
+            target: '/radios/:category',
+        },
+    ],
     name: '播客',
     maintainers: ['eternasuno'],
     handler,

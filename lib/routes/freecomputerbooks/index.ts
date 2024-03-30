@@ -18,14 +18,30 @@ async function cheerioLoad(url) {
 
 export const route: Route = {
     path: '/:category?',
-    radar: {
-        source: ['freecomputerbooks.com/', 'freecomputerbooks.com/index.html'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Book List',
+    url: new URL(baseURL).host,
+    maintainers: ['cubroe'],
     handler,
-    url: 'freecomputerbooks.com/',
+    example: '/freecomputerbooks/compscAlgorithmBooks',
+    parameters: {
+        category: 'A category id., which should be the HTML file name (but **without** the `.html` suffix) in the URL path of a book list page.',
+    },
+    categories: ['reading'],
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportRadar: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['freecomputerbooks.com/', 'freecomputerbooks.com/index.html'],
+            target: '',
+        },
+    ],
 };
 
 async function handler(ctx) {

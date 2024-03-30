@@ -70,10 +70,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['daily.dev/popular'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['daily.dev/popular'],
+            target: '',
+        },
+    ],
     name: 'Most Discussed',
     maintainers: ['Rjnishant530'],
     handler,

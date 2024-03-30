@@ -18,16 +18,18 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.airchina.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.airchina.com.cn/'],
+        },
+    ],
     name: '服务公告',
     maintainers: ['LandonLi'],
     handler,
     url: 'www.airchina.com.cn/',
 };
 
-async function handler(ctx) {
+async function handler() {
     const link = `${baseUrl}/cn/info/new-service/service_announcement.shtml`;
     const data = await buildData({
         link,
@@ -58,5 +60,5 @@ async function handler(ctx) {
         })
     );
 
-    ctx.set('data', data);
+    return data;
 }

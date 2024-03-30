@@ -1,13 +1,15 @@
 import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { config } from '@/config';
 import got from '@/utils/got';
 import MarkdownIt from 'markdown-it';
+import type { Author, Project, Version } from '@/routes/modrinth/api';
+import type { Context } from 'hono';
+
+const __dirname = getCurrentPath(import.meta.url);
 
 const customGot = got.extend({
     headers: {
@@ -20,7 +22,7 @@ const md = MarkdownIt({
 });
 
 export const route: Route = {
-    path: '/models',
+    path: '/project/:id/versions/:routeParams?',
     categories: ['game'],
     example: '/modrinth/project/sodium/versions',
     parameters: {
@@ -35,42 +37,42 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: [
-            'modrinth.com/mod/:id/*',
-            'modrinth.com/plugin/:id/*',
-            'modrinth.com/datapack/:id/*',
-            'modrinth.com/shader/:id/*',
-            'modrinth.com/resourcepack/:id/*',
-            'modrinth.com/modpack/:id/*',
-            'modrinth.com/mod/:id',
-            'modrinth.com/plugin/:id',
-            'modrinth.com/datapack/:id',
-            'modrinth.com/shader/:id',
-            'modrinth.com/resourcepack/:id',
-            'modrinth.com/modpack/:id',
-        ],
-        target: '/project/:id/versions',
-    },
-    description:
-        '| Name           | Example                                      |\n| -------------- | -------------------------------------------- |\n| loaders        | loaders=fabric\\&loaders=quilt\\&loaders=forge |\n| game\\_versions | game\\_versions=1.20.1\\&game\\_versions=1.20.2 |\n| featured       | featured=true                                |',
+    radar: [
+        {
+            source: [
+                'modrinth.com/mod/:id/*',
+                'modrinth.com/plugin/:id/*',
+                'modrinth.com/datapack/:id/*',
+                'modrinth.com/shader/:id/*',
+                'modrinth.com/resourcepack/:id/*',
+                'modrinth.com/modpack/:id/*',
+                'modrinth.com/mod/:id',
+                'modrinth.com/plugin/:id',
+                'modrinth.com/datapack/:id',
+                'modrinth.com/shader/:id',
+                'modrinth.com/resourcepack/:id',
+                'modrinth.com/modpack/:id',
+            ],
+            target: '/project/:id/versions',
+        },
+    ],
     name: 'Project versions',
     maintainers: ['SettingDust'],
     handler,
     description: `| Name           | Example                                      |
 | -------------- | -------------------------------------------- |
-| loaders        | loaders=fabric\&loaders=quilt\&loaders=forge |
-| game\_versions | game\_versions=1.20.1\&game\_versions=1.20.2 |
+| loaders        | loaders=fabric&loaders=quilt&loaders=forge |
+| game_versions | game_versions=1.20.1&game_versions=1.20.2 |
 | featured       | featured=true                                |`,
 };
 
-async function handler(ctx) {
-    const {
-        /** @type string */
-        id,
-        /** @type {string | undefined} */
-        routeParams,
-    } = ctx.req.param();
+async function handler(ctx: Context) {
+    const { id, routeParams } = <
+        {
+            id: string;
+            routeParams?: string;
+        }
+    >ctx.req.param();
 
     /**
      * /@type {{
@@ -85,18 +87,15 @@ async function handler(ctx) {
     parsedQuery.set('game_versions', parsedQuery.has('game_versions') ? JSON.stringify(parsedQuery.getAll('game_versions')) : '');
 
     try {
-        /** @type {import('./api').Project} */
-        const project = await customGot(`https://api.modrinth.com/v2/project/${id}`).json();
-        /** @type {import('./api').Version[]} */
+        const project = await customGot(`https://api.modrinth.com/v2/project/${id}`).json<Project>();
         const versions = await customGot(`https://api.modrinth.com/v2/project/${id}/version`, {
             searchParams: parsedQuery,
-        }).json();
-        /** @type {import('./api').Author[]} */
+        }).json<Version[]>();
         const authors = await customGot(`https://api.modrinth.com/v2/users`, {
             searchParams: {
                 ids: JSON.stringify(versions.map((it) => it.author_id)),
             },
-        }).json();
+        }).json<Author[]>();
 
         return {
             title: `${project.title} Modrinth versions`,
@@ -114,7 +113,7 @@ async function handler(ctx) {
                 author: authors[index].name,
             })),
         };
-    } catch (error) {
+    } catch (error: any) {
         if (error?.response?.statusCode === 404) {
             throw new Error(`${error.message}: Project ${id} not found`);
         }

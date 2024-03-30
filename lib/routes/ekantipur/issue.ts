@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ekantipur.com/:channel'],
-        target: '/:channel',
-    },
+    radar: [
+        {
+            source: ['ekantipur.com/:channel'],
+            target: '/:channel',
+        },
+    ],
     name: 'Full Article RSS',
     maintainers: ['maniche04'],
     handler,

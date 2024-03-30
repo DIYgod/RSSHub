@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nintendo.com/nintendo-direct/archive', 'nintendo.com/'],
-    },
+    radar: [
+        {
+            source: ['nintendo.com/nintendo-direct/archive', 'nintendo.com/'],
+        },
+    ],
     name: 'Nintendo Direct',
     maintainers: ['HFO4'],
     handler,

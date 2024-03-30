@@ -9,10 +9,12 @@ const rootUrl = 'https://www.chinanews.com.cn';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['chinanews.com.cn/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['chinanews.com.cn/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['yuxinliu-alex'],
     handler,

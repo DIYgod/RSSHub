@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['szse.cn/disclosure/supervision/inquire/index.html', 'szse.cn/'],
-        target: '/inquire',
-    },
+    radar: [
+        {
+            source: ['szse.cn/disclosure/supervision/inquire/index.html', 'szse.cn/'],
+            target: '/inquire',
+        },
+    ],
     name: '问询函件',
     maintainers: ['Jeason0228', 'nczitzk'],
     handler,

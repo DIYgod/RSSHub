@@ -30,9 +30,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yxdzqb.com/'],
-    },
+    radar: [
+        {
+            source: ['yxdzqb.com/'],
+        },
+    ],
     name: '游戏折扣',
     maintainers: ['LogicJake', 'nczitzk'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dky.sicau.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['dky.sicau.edu.cn/'],
+        },
+    ],
     name: '招生就业',
     maintainers: ['nczitzk'],
     handler,

@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['niaogebiji.com/', 'niaogebiji.com/bulletin'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['niaogebiji.com/', 'niaogebiji.com/bulletin'],
+            target: '',
+        },
+    ],
     name: '今日事',
     maintainers: ['KotoriK'],
     handler,

@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['navi.cnki.net/knavi/journals/:name/detail'],
-    },
+    radar: [
+        {
+            source: ['navi.cnki.net/knavi/journals/:name/detail'],
+        },
+    ],
     name: '网络首发',
     maintainers: ['Fatpandac'],
     handler,

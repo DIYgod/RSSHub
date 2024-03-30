@@ -32,18 +32,15 @@ async function handler(ctx) {
     const inline_set = ctx.req.param('order') === 'posted' ? 'fs_p' : 'fs_f';
     const items = await EhAPI.getFavoritesItems(cache, favcat, inline_set, page, bittorrent, embed_thumb);
 
-    ctx.set(
-        'data',
-        EhAPI.from_ex
-            ? {
-                  title: 'ExHentai Favorites',
-                  link: `https://exhentai.org/favorites.php?favcat=${favcat}&inline_set=${inline_set}`,
-                  item: items,
-              }
-            : {
-                  title: 'E-Hentai Favorites',
-                  link: `https://e-hentai.org/favorites.php?favcat=${favcat}&inline_set=${inline_set}`,
-                  item: items,
-              }
-    );
+    return EhAPI.from_ex
+        ? {
+              title: 'ExHentai Favorites',
+              link: `https://exhentai.org/favorites.php?favcat=${favcat}&inline_set=${inline_set}`,
+              item: items,
+          }
+        : {
+              title: 'E-Hentai Favorites',
+              link: `https://e-hentai.org/favorites.php?favcat=${favcat}&inline_set=${inline_set}`,
+              item: items,
+          };
 }

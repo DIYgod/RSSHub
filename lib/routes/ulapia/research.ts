@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.ulapia.com/'],
-    },
+    radar: [
+        {
+            source: ['www.ulapia.com/'],
+        },
+    ],
     name: '最新研报',
     maintainers: [],
     handler,

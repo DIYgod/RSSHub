@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['blog.sciencenet.cn/u/:id', 'blog.sciencenet.cn/'],
-    },
+    radar: [
+        {
+            source: ['blog.sciencenet.cn/u/:id', 'blog.sciencenet.cn/'],
+        },
+    ],
     name: '用户博客',
     maintainers: ['nczitzk'],
     handler,

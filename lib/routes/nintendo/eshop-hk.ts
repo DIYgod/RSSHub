@@ -11,9 +11,11 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/eshop/hk',
-    radar: {
-        source: ['nintendo.com.hk/software/switch', 'nintendo.com.hk/'],
-    },
+    radar: [
+        {
+            source: ['nintendo.com.hk/software/switch', 'nintendo.com.hk/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

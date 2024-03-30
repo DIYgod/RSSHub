@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hao6v.com/', 'hao6v.com/gvod/zx.html'],
-    },
+    radar: [
+        {
+            source: ['hao6v.com/', 'hao6v.com/gvod/zx.html'],
+        },
+    ],
     name: '最新电影',
     maintainers: ['tc9011'],
     handler,

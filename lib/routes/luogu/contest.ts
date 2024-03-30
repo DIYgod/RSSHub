@@ -40,9 +40,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['luogu.com.cn/contest/list', 'luogu.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['luogu.com.cn/contest/list', 'luogu.com.cn/'],
+        },
+    ],
     name: '比赛列表',
     maintainers: ['prnake'],
     handler,

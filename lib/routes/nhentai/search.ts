@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nhentai.net/:key/:keyword'],
-        target: '/:key/:keyword',
-    },
+    radar: [
+        {
+            source: ['nhentai.net/:key/:keyword'],
+            target: '/:key/:keyword',
+        },
+    ],
     name: 'Advanced Search',
     maintainers: ['MegrezZhu', 'hoilc'],
     handler,

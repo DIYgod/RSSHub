@@ -1,5 +1,7 @@
 import { Route } from '@/types';
-import webApiImpl from './web-api/tweet';
+import api from './api';
+import utils from './utils';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/tweet/:id/status/:status/:original?',
@@ -14,11 +16,11 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'TWITTER_USERNAME',
-                description: '',
+                description: 'Please see above for details.',
             },
             {
                 name: 'TWITTER_PASSWORD',
-                description: '',
+                description: 'Please see above for details.',
             },
         ],
         requirePuppeteer: false,
@@ -33,5 +35,22 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    return await webApiImpl(ctx);
+    const id = ctx.req.param('id');
+    const status = ctx.req.param('status');
+    const routeParams = new URLSearchParams(ctx.req.param('original'));
+    const original = fallback(undefined, queryToBoolean(routeParams.get('original')), false);
+    const params = { focalTweetId: status };
+    await api.init();
+    const userInfo = await api.getUser(id);
+    const data = await api.getUserTweet(id, params);
+    const profileImageUrl = userInfo.profile_image_url || userInfo.profile_image_url_https;
+    const item = original && config.isPackage ? data : utils.ProcessFeed(ctx, { data });
+
+    return {
+        title: `Twitter @${userInfo.name}`,
+        link: `https://twitter.com/${userInfo.screen_name}/status/${status}`,
+        image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
+        description: userInfo.description,
+        item,
+    };
 }

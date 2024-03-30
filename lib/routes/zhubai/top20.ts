@@ -29,10 +29,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['analy.zhubai.love/'],
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['analy.zhubai.love/'],
+        },
+    ],
+    name: '上周热门 TOP 20',
     maintainers: ['nczitzk'],
     handler,
     url: 'analy.zhubai.love/',

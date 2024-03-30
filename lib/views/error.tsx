@@ -52,13 +52,12 @@ const Index: FC<{
             <div className="text-left w-[800px] space-y-6 !mt-10">
                 <div className="space-y-2">
                     <p className="mb-2 font-bold">Helpful Information</p>
-                    <p>Error Message:</p>
-                    <code className="mt-2 block max-h-28 overflow-auto bg-zinc-100 align-bottom w-fit details">{message}</code>
-                    <p>Route: <code className="ml-2 bg-zinc-100">{errorRoute}</code></p>
-                    <p>Full Route: <code className="ml-2 bg-zinc-100">{requestPath}</code></p>
-                    <p>Node Version: <code className="ml-2 bg-zinc-100">{nodeVersion}</code></p>
-                    <p>Git Hash: <code className="ml-2 bg-zinc-100">{gitHash}</code></p>
-                    <p>Git Date: <code className="ml-2 bg-zinc-100">{gitDate?.toUTCString()}</code></p>
+                    <p className="message">Error Message:<br/><code className="mt-2 block max-h-28 overflow-auto bg-zinc-100 align-bottom w-fit details">{message}</code></p>
+                    <p className="message">Route: <code className="ml-2 bg-zinc-100">{errorRoute}</code></p>
+                    <p className="message">Full Route: <code className="ml-2 bg-zinc-100">{requestPath}</code></p>
+                    <p className="message">Node Version: <code className="ml-2 bg-zinc-100">{nodeVersion}</code></p>
+                    <p className="message">Git Hash: <code className="ml-2 bg-zinc-100">{gitHash}</code></p>
+                    <p className="message">Git Date: <code className="ml-2 bg-zinc-100">{gitDate?.toUTCString()}</code></p>
                 </div>
                 <div>
                     <p className="mb-2 font-bold">Report</p>

@@ -29,10 +29,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['open.spotify.com/collection/tracks'],
-        target: '/saved',
-    },
+    radar: [
+        {
+            source: ['open.spotify.com/collection/tracks'],
+            target: '/saved',
+        },
+    ],
     name: 'Personal Saved Tracks',
     maintainers: ['outloudvi'],
     handler,

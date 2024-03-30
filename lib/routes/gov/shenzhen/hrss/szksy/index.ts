@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xxgk.sz.gov.cn/cn/xxgk/zfxxgj/:caty'],
-    },
+    radar: [
+        {
+            source: ['xxgk.sz.gov.cn/cn/xxgk/zfxxgj/:caty'],
+        },
+    ],
     name: '深圳市考试院',
     maintainers: ['zlasd'],
     handler,

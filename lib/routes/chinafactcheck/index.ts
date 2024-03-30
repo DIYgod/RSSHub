@@ -6,10 +6,12 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['chinafactcheck.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['chinafactcheck.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['kdanfly'],
     handler,

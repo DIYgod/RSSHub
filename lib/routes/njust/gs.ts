@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gs.njust.edu.cn/:type/list.htm'],
-        target: '/gs/:type',
-    },
+    radar: [
+        {
+            source: ['gs.njust.edu.cn/:type/list.htm'],
+            target: '/gs/:type',
+        },
+    ],
     name: '研究生院',
     maintainers: ['MilkShakeYoung', 'jasongzy'],
     handler,

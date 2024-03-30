@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jwc.qdu.edu.cn/jwtz.htm', 'jwc.qdu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['jwc.qdu.edu.cn/jwtz.htm', 'jwc.qdu.edu.cn/'],
+        },
+    ],
     name: '教务处通知',
     maintainers: ['abc1763613206'],
     handler,

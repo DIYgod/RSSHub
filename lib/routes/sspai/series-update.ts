@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/series/:id', 'sspai.com/series/:id/list', 'sspai.com/series/:id/metadata'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/series/:id', 'sspai.com/series/:id/list', 'sspai.com/series/:id/metadata'],
+        },
+    ],
     name: '付费专栏文章更新',
     maintainers: ['TonyRL'],
     handler,

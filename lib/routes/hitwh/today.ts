@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hitwh.edu.cn/1024/list.htm', 'hitwh.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['hitwh.edu.cn/1024/list.htm', 'hitwh.edu.cn/'],
+        },
+    ],
     name: '今日工大 - 通知公告',
     maintainers: ['raptazure'],
     handler,

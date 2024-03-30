@@ -3,10 +3,12 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['cn.bing.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['cn.bing.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['FHYunCai'],
     handler,

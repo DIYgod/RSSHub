@@ -56,10 +56,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sr.mihoyo.com/news'],
-        target: '/sr',
-    },
+    radar: [
+        {
+            source: ['sr.mihoyo.com/news'],
+            target: '/sr',
+        },
+    ],
     name: '崩坏：星穹铁道',
     maintainers: ['shinanory'],
     handler,

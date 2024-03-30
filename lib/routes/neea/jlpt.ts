@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jlpt.neea.cn/'],
-    },
+    radar: [
+        {
+            source: ['jlpt.neea.cn/'],
+        },
+    ],
     name: '教育部考试中心日本语能力测试重要通知',
     maintainers: ['nczitzk'],
     handler,

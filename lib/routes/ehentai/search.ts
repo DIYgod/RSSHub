@@ -40,18 +40,15 @@ async function handler(ctx) {
         title = match[1];
     }
 
-    ctx.set(
-        'data',
-        EhAPI.from_ex
-            ? {
-                  title: title + ' - ExHentai Search ',
-                  link: `https://exhentai.org/?${params}`,
-                  item: items,
-              }
-            : {
-                  title: title + ' - E-Hentai Search ',
-                  link: `https://e-hentai.org/?${params}`,
-                  item: items,
-              }
-    );
+    return EhAPI.from_ex
+        ? {
+              title: title + ' - ExHentai Search ',
+              link: `https://exhentai.org/?${params}`,
+              item: items,
+          }
+        : {
+              title: title + ' - E-Hentai Search ',
+              link: `https://e-hentai.org/?${params}`,
+              item: items,
+          };
 }

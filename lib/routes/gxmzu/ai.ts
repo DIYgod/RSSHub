@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ai.gxmzu.edu.cn/index/tzgg.htm', 'ai.gxmzu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['ai.gxmzu.edu.cn/index/tzgg.htm', 'ai.gxmzu.edu.cn/'],
+        },
+    ],
     name: '人工智能学院通知公告',
     maintainers: ['real-jiakai'],
     handler,

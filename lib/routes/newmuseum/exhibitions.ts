@@ -32,18 +32,15 @@ async function handler(ctx) {
             link = `https://www.newmuseum.org/exhibitions/${state}`;
     }
 
-    ctx.set(
-        'data',
-        await buildData({
-            link,
-            url: link,
-            title: 'New Museum - Exhibitions',
-            item: {
-                item: '.exh',
-                title: `$('.exh .title').text()`,
-                link: `$('.exh > a').attr('href')`,
-                description: `$('.exh .body-reveal').text()`,
-            },
-        })
-    );
+    return await buildData({
+        link,
+        url: link,
+        title: 'New Museum - Exhibitions',
+        item: {
+            item: '.exh',
+            title: `$('.exh .title').text()`,
+            link: `$('.exh > a').attr('href')`,
+            description: `$('.exh .body-reveal').text()`,
+        },
+    });
 }

@@ -25,9 +25,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['btbtt20.com/'],
-    },
+    radar: [
+        {
+            source: ['btbtt20.com/'],
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,

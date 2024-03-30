@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['feng.com/forum/photo/:id', 'feng.com/forum/:id'],
-        target: '/forum/:id',
-    },
+    radar: [
+        {
+            source: ['feng.com/forum/photo/:id', 'feng.com/forum/:id'],
+            target: '/forum/:id',
+        },
+    ],
     name: '社区',
     maintainers: ['TonyRL'],
     handler,

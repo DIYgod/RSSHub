@@ -9,5 +9,5 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    ctx.set('data', await ProcessItems(ctx));
+    return await ProcessItems(ctx);
 }

@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['panewslab.com/'],
-    },
+    radar: [
+        {
+            source: ['panewslab.com/'],
+        },
+    ],
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,

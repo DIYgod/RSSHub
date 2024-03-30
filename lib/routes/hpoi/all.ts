@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.hpoi.net/hobby/all'],
-        target: '/items/all',
-    },
+    radar: [
+        {
+            source: ['www.hpoi.net/hobby/all'],
+            target: '/items/all',
+        },
+    ],
     name: '所有周边',
     maintainers: ['DIYgod'],
     handler,
@@ -28,5 +30,5 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    ctx.set('data', await ProcessFeed('all', 0, ctx.req.param('order')));
+    return await ProcessFeed('all', 0, ctx.req.param('order'));
 }

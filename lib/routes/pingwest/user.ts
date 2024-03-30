@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pingwest.com/user/:uid/:type', 'pingwest.com/'],
-        target: '/user/:uid/:type',
-    },
+    radar: [
+        {
+            source: ['pingwest.com/user/:uid/:type', 'pingwest.com/'],
+            target: '/user/:uid/:type',
+        },
+    ],
     name: '用户',
     maintainers: ['sanmmm'],
     handler,

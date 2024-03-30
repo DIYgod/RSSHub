@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.douban.com/group/:groupid'],
-        target: '/group/:groupid',
-    },
+    radar: [
+        {
+            source: ['www.douban.com/group/:groupid'],
+            target: '/group/:groupid',
+        },
+    ],
     name: '豆瓣小组',
     maintainers: ['DIYgod'],
     handler,

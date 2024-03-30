@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.youtube.com/user/:username'],
-        target: '/user/:username',
-    },
+    radar: [
+        {
+            source: ['www.youtube.com/user/:username'],
+            target: '/user/:username',
+        },
+    ],
     name: 'User',
     maintainers: ['DIYgod'],
     handler,

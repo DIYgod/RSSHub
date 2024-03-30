@@ -35,9 +35,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nature.com/'],
-    },
+    radar: [
+        {
+            source: ['nature.com/'],
+        },
+    ],
     name: 'Cover Story',
     maintainers: ['y9c'],
     handler,

@@ -128,9 +128,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['phoronix.com/:category?/:topic?'],
-    },
+    radar: [
+        {
+            source: ['phoronix.com/:category?/:topic?'],
+        },
+    ],
     name: 'News & Reviews',
     maintainers: ['oppliate', 'Rongronggg9'],
     handler,
@@ -258,5 +260,5 @@ async function handler(ctx) {
         )
     );
 
-    ctx.set('data', feed);
+    return feed;
 }

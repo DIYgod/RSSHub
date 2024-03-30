@@ -31,9 +31,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['vp.fact.qq.com/home', 'vp.fact.qq.com/'],
-    },
+    radar: [
+        {
+            source: ['vp.fact.qq.com/home', 'vp.fact.qq.com/'],
+        },
+    ],
     name: '最新辟谣',
     maintainers: ['hoilc'],
     handler,
