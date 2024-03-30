@@ -123,7 +123,7 @@ export const route: Route = {
   
   若订阅 [搜素繁花主题贴](https://www.1lou.me/search-_E7_B9_81_E8_8A_B1-1.htm)，网址为 \`https://www.1lou.me/search-_E7_B9_81_E8_8A_B1-1.htm\`。截取 \`https://www.1lou.me/\` 到末尾 \`.htm\` 的部分 \`search-_E7_B9_81_E8_8A_B1-1\` 作为参数，此时路由为 [\`/1lou/search-_E7_B9_81_E8_8A_B1-1\`](https://rsshub.app/1lou/search-_E7_B9_81_E8_8A_B1-1)。
   :::`,
-    categories: ['multimedia', 'reading'],
+    categories: ['multimedia'],
 
     features: {
         requireConfig: false,
