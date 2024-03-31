@@ -3,7 +3,7 @@ import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
 
 const server = setupServer(
-    http.post(`https://api.openai.com/v1/chat/completions`, () =>
+    http.post(`https://api.openai.mock/v1/chat/completions`, () =>
         HttpResponse.json({
             choices: [
                 {

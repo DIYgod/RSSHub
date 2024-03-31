@@ -5,8 +5,8 @@ import { config } from '@/config';
 
 describe('got', () => {
     it('headers', async () => {
-        const { data } = await got('http://rsshub.test/ua');
-        expect(data.ua).toBe(config.ua);
+        const { data } = await got('http://rsshub.test/headers');
+        expect(data['user-agent']).toBe(config.ua);
     });
 
     it('retry', async () => {
