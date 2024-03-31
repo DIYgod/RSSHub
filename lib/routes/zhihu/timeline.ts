@@ -38,7 +38,7 @@ async function handler() {
 
     const response = await got({
         method: 'get',
-        url: `https://www.zhihu.com/api/v3/moments?desktop=true`,
+        url: `https://www.zhihu.com/api/v3/moments?desktop=true&limit=100`,
         headers: {
             Cookie: cookie,
         },
@@ -105,12 +105,12 @@ async function handler() {
             pubDate: parseDate(e.updated_time * 1000),
             link: buildLink(e),
             author: e.target.author ? e.target.author.name : '',
-            guid: this.link,
+            guid: e.target.link,
         };
     };
 
     const out = feeds
-        .filter((e) => e && e.type && e.type !== 'feed_advert')
+        .filter((e) => e && e.verb && e.verb !== 'MEMBER_VOTEUP_ARTICLE' && e.verb !== 'MEMBER_VOTEUP_ANSWER')
         .map((e) => {
             if (e && e.type && e.type === 'feed_group') {
                 // A feed group contains a list of feeds whose structure is the same as a single feed
