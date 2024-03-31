@@ -31,7 +31,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.atptour.com';
     const favIcon = `${baseUrl}/assets/atptour/assets/favicon.ico`;
     const { lang = 'en' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 15) : 15;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
     const browser = await puppeteer();
     const page = await browser.newPage();
