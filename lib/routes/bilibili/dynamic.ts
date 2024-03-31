@@ -56,11 +56,49 @@ export const route: Route = {
   :::`,
 };
 
-const getTitle = (data: Modules) => data.module_dynamic.major?.opus?.title || data.module_dynamic.major?.archive?.title || data.module_dynamic.major?.pgc?.title;
-const getDes = (data: Modules) => data.module_dynamic.desc?.text || data.module_dynamic.major?.opus?.summary?.text;
+const getTitle = (data: Modules) => {
+    const major = data.module_dynamic?.major;
+    if (!major) {
+        return '';
+    }
+    if (major.type === 'MAJOR_TYPE_NONE') {
+        return major.none?.tips;
+    }
+    if (major.type === 'MAJOR_TYPE_COURSES') {
+        return `${major.courses?.title} - ${major.courses?.sub_title}`;
+    }
+    const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
+    return major[type]?.title;
+};
+const getDes = (data: Modules) => {
+    let desc = '';
+    if (data.module_dynamic?.desc?.text) {
+        desc += data.module_dynamic.desc.text;
+    }
+    const major = data.module_dynamic?.major;
+    // 普通转发
+    if (!major) {
+        return desc;
+    }
+    // 普通分享
+    if (major?.common?.desc) {
+        desc += desc ? `<br>//转发自: ${major.common.desc}` : major.common.desc;
+        return desc;
+    }
+    // 直播动态
+    if (major?.live) {
+        return `${major.live?.desc_first}<br>${major.live?.desc_second}`;
+    }
+    // 图文动态
+    if (major?.opus) {
+        return major?.opus?.summary?.text;
+    }
+    const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
+    return major[type]?.desc;
+};
 
-const getOriginTitle = (data?: Modules) => data?.module_dynamic?.major?.opus?.title || data?.module_dynamic?.major?.archive?.title || data?.module_dynamic.major?.pgc?.title;
-const getOriginDes = (data?: Modules) => data?.module_dynamic.desc?.text || data?.module_dynamic?.major?.opus?.summary?.text || data?.module_dynamic?.major?.archive?.desc;
+const getOriginTitle = (data?: Modules) => data && getTitle(data);
+const getOriginDes = (data?: Modules) => data && getDes(data);
 const getOriginName = (data?: Modules) => data?.module_author?.name;
 const getIframe = (data?: Modules, disableEmbed: boolean = false) => {
     if (disableEmbed) {
@@ -76,26 +114,25 @@ const getIframe = (data?: Modules, disableEmbed: boolean = false) => {
 
 const getImgs = (data: Modules) => {
     const imgUrls: string[] = [];
-    const dynamic = data.module_dynamic;
-    // 动态图片/专栏封面
-    if (dynamic.major?.opus?.pics) {
-        imgUrls.push(...dynamic.major.opus.pics.map((e) => e.url));
+    const major = data.module_dynamic?.major;
+    if (!major) {
+        return '';
     }
-    // 视频封面
-    if (dynamic.major?.archive?.cover) {
-        imgUrls.push(dynamic.major.archive.cover);
+    // 动态图片
+    if (major.opus?.pics?.length) {
+        imgUrls.push(...major.opus.pics.map((e) => e.url));
     }
-    // 番剧封面
-    if (dynamic.major?.pgc?.cover) {
-        imgUrls.push(dynamic.major.pgc.cover);
+    // 专栏封面
+    if (major.article?.covers?.length) {
+        imgUrls.push(...major.article.covers);
     }
-    // 直播间封面
-    if (dynamic.major?.live?.cover) {
-        imgUrls.push(dynamic.major.live.cover);
+    // 相簿
+    if (major.draw?.items?.length) {
+        imgUrls.push(...major.draw.items.map((e) => e.src));
     }
-    // 专题页封面
-    if (dynamic.major?.common?.cover) {
-        imgUrls.push(dynamic.major.common.cover);
+    const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
+    if (major[type]?.cover) {
+        imgUrls.push(major[type].cover);
     }
     return imgUrls.map((url) => `<img src="${url}">`);
 };
@@ -107,35 +144,55 @@ const getUrl = (item?: Item2, useAvid = false) => {
     }
     let url = '';
     let text = '';
-    switch (data.module_dynamic.major?.type) {
+    const major = data.module_dynamic?.major;
+    if (!major) {
+        return null;
+    }
+    switch (major?.type) {
+        case 'MAJOR_TYPE_UGC_SEASON':
+            url = major?.ugc_season?.jump_url || '';
+            text = `<br>合集地址：<a href=${url}>${url}</a>`;
+            break;
+        case 'MAJOR_TYPE_ARTICLE':
+            url = `https://www.bilibili.com/read/cv${major?.article?.id}`;
+            text = `<br>专栏地址：<a href=${url}>${url}</a>`;
+            break;
         case 'MAJOR_TYPE_ARCHIVE': {
-            const archive = data?.module_dynamic?.major?.archive;
+            const archive = major?.archive;
             const id = useAvid ? `av${archive?.aid}` : archive?.bvid;
             url = `https://www.bilibili.com/video/${id}`;
             text = `<br>视频地址：<a href=${url}>${url}</a>`;
             break;
         }
-        case 'MAJOR_TYPE_PGC': {
-            const pgc = data?.module_dynamic?.major?.pgc;
-            url = `https://www.bilibili.com/bangumi/play/ep${pgc?.epid}&season_id=${pgc?.season_id}`;
-            text = `<br>番剧地址：<a href=${url}>${url}</a>`;
+        case 'MAJOR_TYPE_COMMON':
+            url = major?.common?.jump_url || '';
+            text = `<br>地址：<a href=${url}>${url}</a>`;
             break;
-        }
         case 'MAJOR_TYPE_OPUS':
             if (item?.type === 'DYNAMIC_TYPE_ARTICLE') {
-                url = `https:${data?.module_dynamic?.major?.opus?.jump_url}`;
+                url = `https:${major?.opus?.jump_url}`;
                 text = `<br>专栏地址：<a href=${url}>${url}</a>`;
             } else if (item?.type === 'DYNAMIC_TYPE_DRAW') {
-                url = data?.module_dynamic?.major?.opus?.jump_url || '';
+                url = `https:${major?.opus?.jump_url}`;
                 text = `<br>图文地址：<a href=${url}>${url}</a>`;
             }
             break;
-        case 'MAJOR_TYPE_COMMON':
-            url = data?.module_dynamic?.major?.common?.jump_url || '';
-            text = `<br>地址：<a href=${url}>${url}</a>`;
+        case 'MAJOR_TYPE_PGC': {
+            const pgc = major?.pgc;
+            url = `https://www.bilibili.com/bangumi/play/ep${pgc?.epid}&season_id=${pgc?.season_id}`;
+            text = `<br>剧集地址：<a href=${url}>${url}</a>`;
+            break;
+        }
+        case 'MAJOR_TYPE_COURSES':
+            url = `https://www.bilibili.com/cheese/play/ss${major?.courses?.id}`;
+            text = `<br>课程地址：<a href=${url}>${url}</a>`;
+            break;
+        case 'MAJOR_TYPE_MUSIC':
+            url = `https://www.bilibili.com/audio/au${major?.music?.id}`;
+            text = `<br>音频地址：<a href=${url}>${url}</a>`;
             break;
         case 'MAJOR_TYPE_LIVE':
-            url = `https://live.bilibili.com/${data?.module_dynamic?.major?.live?.id}`;
+            url = `https://live.bilibili.com/${major?.live?.id}`;
             text = `<br>直播间地址：<a href=${url}>${url}</a>`;
             break;
         default:
@@ -175,16 +232,16 @@ async function handler(ctx) {
     if (body?.code === -352) {
         throw new Error('风控校验失败！请手动配置 Cookie 后重试');
     }
-    const cards = (body as BilibiliWebDynamicResponse)?.data?.items;
+    const items = (body as BilibiliWebDynamicResponse)?.data?.items;
 
     const usernameAndFace = await cacheIn.getUsernameAndFaceFromUID(uid);
-    const author = usernameAndFace[0] ?? cards[0]?.modules?.module_author?.name;
-    const face = usernameAndFace[1] ?? cards[0]?.modules?.module_author?.face;
+    const author = usernameAndFace[0] ?? items[0]?.modules?.module_author?.name;
+    const face = usernameAndFace[1] ?? items[0]?.modules?.module_author?.face;
     cache.set(`bili-username-from-uid-${uid}`, author);
     cache.set(`bili-userface-from-uid-${uid}`, face);
 
-    const items = await Promise.all(
-        cards.map(async (item) => {
+    const rssItems = await Promise.all(
+        items.map(async (item) => {
             // const parsed = JSONbig.parse(item.card);
 
             const data = item.modules;
@@ -213,15 +270,15 @@ async function handler(ctx) {
             }
 
             // emoji
-            let data_content = getDes(data) || '';
+            let description = getDes(data) || '';
             // 换行处理
-            data_content = data_content.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
+            description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
             if (data.module_dynamic?.desc?.rich_text_nodes?.length && showEmoji) {
                 const nodes = data.module_dynamic?.desc?.rich_text_nodes;
                 for (const node of nodes) {
                     if (node?.emoji) {
                         const emoji = node.emoji;
-                        data_content = data_content.replaceAll(
+                        description = description.replaceAll(
                             emoji.text,
                             `<img alt="${emoji.text}" src="${emoji.icon_url}"style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
                         );
@@ -231,9 +288,9 @@ async function handler(ctx) {
 
             if (item.type === 'DYNAMIC_TYPE_ARTICLE' && displayArticle) {
                 // 抓取专栏全文
-                const cvid = data.module_dynamic.major?.opus?.jump_url?.match?.(/cv(\d+)/)?.[0];
+                const cvid = data.module_dynamic?.major?.opus?.jump_url?.match?.(/cv(\d+)/)?.[0];
                 if (cvid) {
-                    data_content = (await cacheIn.getArticleDataFromCvid(cvid, uid)).description || '';
+                    description = (await cacheIn.getArticleDataFromCvid(cvid, uid)).description || '';
                 }
             }
 
@@ -266,7 +323,6 @@ async function handler(ctx) {
             if (originDes) {
                 originDescription += `<br>${originDes}`;
             }
-            const description = data_content;
             const imgHTMLSource = imgHTML ? `<br>${imgHTML}` : '';
             return {
                 title: getTitle(data) || '',
@@ -283,6 +339,6 @@ async function handler(ctx) {
         link: `https://space.bilibili.com/${uid}/dynamic`,
         description: `${author} 的 bilibili 动态`,
         image: face,
-        item: items,
+        item: rssItems,
     };
 }
