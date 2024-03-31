@@ -3,7 +3,7 @@ import Parser from 'rss-parser';
 import wait from '@/utils/wait';
 
 process.env.CACHE_EXPIRE = '1';
-process.env.CACHE_CONTENT_EXPIRE = '3';
+process.env.CACHE_CONTENT_EXPIRE = '2';
 
 const parser = new Parser();
 
@@ -38,7 +38,7 @@ describe('cache', () => {
         expect(response3.headers).not.toHaveProperty('rsshub-cache-status');
         const parsed3 = await parser.parseString(await response3.text());
 
-        await wait(3 * 1000 + 100);
+        await wait(2 * 1000 + 100);
         const response4 = await app.request('/test/cache');
         const parsed4 = await parser.parseString(await response4.text());
 
@@ -51,7 +51,7 @@ describe('cache', () => {
         await wait(1 * 1000 + 100);
         const response5 = await app.request('/test/refreshCache');
         const parsed5 = await parser.parseString(await response5.text());
-        await wait(2 * 1000 + 100);
+        await wait(1 * 1000 + 100);
         const response6 = await app.request('/test/refreshCache');
         const parsed6 = await parser.parseString(await response6.text());
 
@@ -86,7 +86,7 @@ describe('cache', () => {
         expect(response3.headers).not.toHaveProperty('rsshub-cache-status');
         const parsed3 = await parser.parseString(await response3.text());
 
-        await wait(3 * 1000 + 100);
+        await wait(2 * 1000 + 100);
         const response4 = await app.request('/test/cache');
         const parsed4 = await parser.parseString(await response4.text());
 
@@ -99,7 +99,7 @@ describe('cache', () => {
         await wait(1 * 1000 + 100);
         const response5 = await app.request('/test/refreshCache');
         const parsed5 = await parser.parseString(await response5.text());
-        await wait(2 * 1000 + 100);
+        await wait(1 * 1000 + 100);
         const response6 = await app.request('/test/refreshCache');
         const parsed6 = await parser.parseString(await response6.text());
 
