@@ -77,7 +77,10 @@ async function handler(ctx) {
                 const itemPage = itemRes.data;
                 const $ = load(itemPage);
 
-                let articleData = await got(`https://www.gcores.com/gapi/v1${item.url}?include=media`);
+                let articleData = await got(`https://www.gcores.com/gapi/v1${item.url}?include=media,category,user`);
+                // assign value before replace
+                const articleMeta = articleData.data.included[0];
+                const author = articleMeta.attributes.nickname;
 
                 articleData = articleData.data.data;
                 let cover;
@@ -127,6 +130,7 @@ async function handler(ctx) {
                     description: cover + content,
                     link: articleUrl,
                     guid: articleUrl,
+                    author,
                     pubDate: new Date(articleData.attributes['published-at']),
                 };
                 return category === 'news' ? basicItem : { ...basicItem, category: item.category };
