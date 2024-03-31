@@ -46,7 +46,8 @@ async function handler(ctx) {
         pm25: 'PM2.5',
         pm10: 'PM10',
     };
-    const area = Number.isNaN(city) ? city : `@${city}`;
+    const area = Number.isNaN(Number(city)) ? city : `@${city}`;
+
     const response = await got({
         method: 'get',
         url: `http://aqicn.org/aqicn/json/android/${area}/json`,
