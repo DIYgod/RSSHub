@@ -1,8 +1,8 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'BT 之家 1LOU 站',
-    url: '1lou.me',
-    categories: ['multimedia'],
+    name: '幻之羁绊动漫网',
+    url: '005.tv',
+    categories: ['anime'],
     description: '',
 };

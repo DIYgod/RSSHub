@@ -3,9 +3,9 @@ import got from '@/utils/got';
 import queryString from 'query-string';
 
 export const route: Route = {
-    path: '/:device/:type?/:region?',
+    path: '/firmware/:device/:type?/:region?',
     categories: ['program-update'],
-    example: '/miui/aries',
+    example: '/miui/firmware/aries',
     parameters: { device: 'the device `codename` eg. `aries` for Mi 2S', type: 'type', region: 'Region, default to `cn`' },
     name: 'New firmware',
     maintainers: ['Indexyz'],
