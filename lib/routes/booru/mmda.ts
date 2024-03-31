@@ -1,4 +1,7 @@
 import { Route } from '@/types';
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 import got from '@/utils/got';
 import queryString from 'query-string';
 import { load } from 'cheerio';
