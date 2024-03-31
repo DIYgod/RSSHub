@@ -67,18 +67,18 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('meta[property="og:image"]').prop('content'), rootUrl).href;
+    const image = $('div.logo_content a img').prop('src');
 
     return {
         title: $('title')
             .text()
             .replace(/\|.*?$/, `| ${$('li.onthis').text()}`),
-        description: $('meta[property="og:description"]').prop('content'),
+        description: $('meta[name="Description"]').prop('content'),
         link: currentUrl,
         item: items,
         allowEmpty: true,
         image,
-        author: $('meta[property="og:site_name"]').prop('content'),
+        author: $('meta[name="Description"]').prop('content'),
     };
 };
 
