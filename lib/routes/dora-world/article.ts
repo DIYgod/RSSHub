@@ -2,6 +2,8 @@ import { Route, Data, DataItem } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/article/:topic/:topicId?',
@@ -21,7 +23,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.dora-world.com'],
+            source: ['www.dora-world.com/:topic'],
         },
     ],
     name: 'Article',
@@ -32,54 +34,29 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const { topic, topicId = '' } = ctx.req.param();
     const baseUrl = 'https://www.dora-world.com';
-    let link = `${baseUrl}/${topic}?t=${topicId}`;
-    if (topicId === '') {
-        link = `${baseUrl}/${topic}`;
-    }
-    const { data: response } = await got(link);
-    const $ = load(response, { decodeEntities: false });
-    const pageTile = $('head > title').text();
-    const targetIndex = pageTile.indexOf('記事一覧');
-    if (targetIndex === -1) {
-        throw new Error('Invalid topic');
-    }
-    const list = $('.contents_list > .item')
-        .toArray()
-        .map((element) => {
-            const item = $(element);
-            const article = item.find('a');
-            const href = article.attr('href') ?? baseUrl;
-            const title = article.find('.p-nolabel').text();
-            const link = href.startsWith('http') ? href : `${baseUrl}${href}`;
-            let description = '';
-            let category: string[] = [];
-            if (!href.startsWith('/contents/')) {
-                category = article
-                    .find('.news_cathegory')
-                    .toArray()
-                    .map((item) => $(item).text().trim());
-                article.find('.area_label').remove();
-                description = article.html() ?? '';
-            }
-            return {
-                title,
-                link,
-                description,
-                category,
-            };
-        });
+    const topicIdParam = topicId === '' ? '' : `?t=${topicId}`;
+    const link = `${baseUrl}/${topic}${topicIdParam}`;
+    const { data: response } = await got(`${baseUrl}/_next/data/SK56eQQo9p-4RN4aqyDzr/${topic}.json${topicIdParam}`);
+    const title = `${response.pageProps.label_name} - ドラえもんチャンネル`;
+    const contents = response.pageProps.contents;
+    const list = contents.map((item) => ({
+        title: item.title,
+        link: item.page_url.startsWith('http') ? item.page_url : `${baseUrl}${item.page_url}`,
+        description: item.page_url.startsWith('/contents/') ? '' : `<p>${item.title}</p><img src="${item.image_url}" alt="">`,
+        pubDate: timezone(parseDate(item.publish_at), +9),
+        category: item.tags.map((tag) => tag.name),
+    }));
     return {
-        title: pageTile.slice(0, targetIndex),
+        title,
         link,
-        description: $('meta[name="description"]').attr('content'),
+        language: 'ja',
+        image: 'https://dora-world.com/assets/images/DORAch_web-touch-icon.png',
         item: (await Promise.all(
             list.map(
                 async (item) =>
                     await cache.tryGet(item.link, async () => {
                         if (item.description === '') {
-                            const content = await getContent(item.link);
-                            item.description = content.description;
-                            item.category = content.category;
+                            item.description = await getContent(item.link);
                         }
                         return item;
                     })
@@ -92,10 +69,6 @@ async function getContent(link: string) {
     const { data: response } = await got(link);
     const $ = load(response);
     const content = $('.main_unit');
-    const category = content
-        .find('.tag-media')
-        .toArray()
-        .map((item) => $(item).text().trim());
     content.find('.tag').remove();
     content.find('div[style="display:none"]').remove();
     const rubyRegex = /<ruby>(.*?)<rt>(.*?)<\/rt><\/ruby>/g;
@@ -104,8 +77,5 @@ async function getContent(link: string) {
             .html()
             ?.replace(rubyRegex, '$1（$2）')
             ?.replace(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/gm, '') ?? '';
-    return {
-        description,
-        category,
-    };
+    return description;
 }
