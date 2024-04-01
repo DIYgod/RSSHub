@@ -141,7 +141,7 @@ const getImgs = (data: Modules) => {
     }
     // 正在直播的动态
     if (major.live_rcmd?.content) {
-        return JSON.parse(major.live_rcmd.content)?.live_play_info?.cover;
+        imgUrls.push(JSON.parse(major.live_rcmd.content)?.live_play_info?.cover);
     }
     const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
     if (major[type]?.cover) {
