@@ -6137,6 +6137,9 @@
     "TonyRL"
   ],
   "/yahoo/news/en/:category?": [],
+  "/yande/post/popular_recent/:period?": [
+    "fashioncj"
+  ],
   "/yangtzeu/dongke/*": [],
   "/ycwb/:node": [
     "TimWu007"

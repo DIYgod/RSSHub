@@ -15179,6 +15179,19 @@
       }
     ]
   },
+  "yande.re": {
+    "_name": "yande",
+    ".": [
+      {
+        "title": "posts",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/post/"
+        ],
+        "target": "/yande/post/popular_recent/:period?"
+      }
+    ]
+  },
   "blogspot.com": {
     "_name": "甬哥侃侃侃YouTube教程摘要随笔",
     "ygkkk": [
