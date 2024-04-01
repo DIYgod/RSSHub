@@ -140,7 +140,7 @@ const getImgs = (data: Modules) => {
     if (major[type]?.cover) {
         imgUrls.push(major[type].cover);
     }
-    return imgUrls.map((url) => `<img src="${url}">`);
+    return imgUrls.map((url) => `<img src="${url}">`).join('');
 };
 
 const getUrl = (item?: Item2, useAvid = false) => {
