@@ -56,7 +56,7 @@ export const route: Route = {
   :::`,
 };
 
-const getTitle = (data: Modules) => {
+const getTitle = (data: Modules): string => {
     const major = data.module_dynamic?.major;
     if (!major) {
         return '';
@@ -74,7 +74,7 @@ const getTitle = (data: Modules) => {
     const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
     return major[type]?.title;
 };
-const getDes = (data: Modules) => {
+const getDes = (data: Modules): string => {
     let desc = '';
     if (data.module_dynamic?.desc?.text) {
         desc += data.module_dynamic.desc.text;
@@ -118,12 +118,12 @@ const getIframe = (data?: Modules, disableEmbed: boolean = false) => {
     if (!aid) {
         return '';
     }
-    return `<br>${utils.iframe(aid, null, bvid)}<br>`;
+    return utils.iframe(aid, null, bvid);
 };
 
-const getImgs = (data: Modules) => {
+const getImgs = (data?: Modules) => {
     const imgUrls: string[] = [];
-    const major = data.module_dynamic?.major;
+    const major = data?.module_dynamic?.major;
     if (!major) {
         return '';
     }
@@ -164,54 +164,54 @@ const getUrl = (item?: Item2, useAvid = false) => {
     switch (major?.type) {
         case 'MAJOR_TYPE_UGC_SEASON':
             url = major?.ugc_season?.jump_url || '';
-            text = `<br>合集地址：<a href=${url}>${url}</a>`;
+            text = `合集地址：<a href=${url}>${url}</a>`;
             break;
         case 'MAJOR_TYPE_ARTICLE':
             url = `https://www.bilibili.com/read/cv${major?.article?.id}`;
-            text = `<br>专栏地址：<a href=${url}>${url}</a>`;
+            text = `专栏地址：<a href=${url}>${url}</a>`;
             break;
         case 'MAJOR_TYPE_ARCHIVE': {
             const archive = major?.archive;
             const id = useAvid ? `av${archive?.aid}` : archive?.bvid;
             url = `https://www.bilibili.com/video/${id}`;
-            text = `<br>视频地址：<a href=${url}>${url}</a>`;
+            text = `视频地址：<a href=${url}>${url}</a>`;
             break;
         }
         case 'MAJOR_TYPE_COMMON':
             url = major?.common?.jump_url || '';
-            text = `<br>地址：<a href=${url}>${url}</a>`;
+            text = `地址：<a href=${url}>${url}</a>`;
             break;
         case 'MAJOR_TYPE_OPUS':
             if (item?.type === 'DYNAMIC_TYPE_ARTICLE') {
                 url = `https:${major?.opus?.jump_url}`;
-                text = `<br>专栏地址：<a href=${url}>${url}</a>`;
+                text = `专栏地址：<a href=${url}>${url}</a>`;
             } else if (item?.type === 'DYNAMIC_TYPE_DRAW') {
                 url = `https:${major?.opus?.jump_url}`;
-                text = `<br>图文地址：<a href=${url}>${url}</a>`;
+                text = `图文地址：<a href=${url}>${url}</a>`;
             }
             break;
         case 'MAJOR_TYPE_PGC': {
             const pgc = major?.pgc;
             url = `https://www.bilibili.com/bangumi/play/ep${pgc?.epid}&season_id=${pgc?.season_id}`;
-            text = `<br>剧集地址：<a href=${url}>${url}</a>`;
+            text = `剧集地址：<a href=${url}>${url}</a>`;
             break;
         }
         case 'MAJOR_TYPE_COURSES':
             url = `https://www.bilibili.com/cheese/play/ss${major?.courses?.id}`;
-            text = `<br>课程地址：<a href=${url}>${url}</a>`;
+            text = `课程地址：<a href=${url}>${url}</a>`;
             break;
         case 'MAJOR_TYPE_MUSIC':
             url = `https://www.bilibili.com/audio/au${major?.music?.id}`;
-            text = `<br>音频地址：<a href=${url}>${url}</a>`;
+            text = `音频地址：<a href=${url}>${url}</a>`;
             break;
         case 'MAJOR_TYPE_LIVE':
             url = `https://live.bilibili.com/${major?.live?.id}`;
-            text = `<br>直播间地址：<a href=${url}>${url}</a>`;
+            text = `直播间地址：<a href=${url}>${url}</a>`;
             break;
         case 'MAJOR_TYPE_LIVE_RCMD': {
             const live_play_info = JSON.parse(major.live_rcmd?.content || '{}')?.live_play_info;
             url = `https://live.bilibili.com/${live_play_info?.room_id}`;
-            text = `<br>直播间地址：<a href=${url}>${url}</a>`;
+            text = `直播间地址：<a href=${url}>${url}</a>`;
             break;
         }
         default:
@@ -267,33 +267,16 @@ async function handler(ctx) {
             const data = item.modules;
             const origin = item?.orig?.modules;
 
-            // img
-            let imgHTML = '';
-
-            imgHTML += getImgs(data);
-
-            if (origin) {
-                imgHTML += getImgs(origin);
-            }
-
-            // some rss readers disallow http content.
-            // 部分 RSS 阅读器要求内容必须使用https传输
-            // bilibili short video does support https request, but https request may timeout ocassionally.
-            // to maximize content availability, here add two source tags.
-            // bilibili的API中返回的视频地址采用http，然而经验证，短视频地址支持https访问，但偶尔会返回超时错误(可能是网络原因)。
-            // 因此保险起见加入两个source标签
-
             // link
             let link = '';
             if (item.id_str) {
                 link = `https://t.bilibili.com/${item.id_str}`;
             }
 
-            // emoji
             let description = getDes(data) || '';
-            const title = getTitle(data) || description;
-            // 换行处理
-            description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
+            const title = getTitle(data) || description; // 没有 title 的时候使用 desc 填充
+
+            // emoji
             if (data.module_dynamic?.desc?.rich_text_nodes?.length && showEmoji) {
                 const nodes = data.module_dynamic?.desc?.rich_text_nodes;
                 for (const node of nodes) {
@@ -316,19 +299,15 @@ async function handler(ctx) {
             }
 
             const urlResult = getUrl(item, useAvid);
-            const originUrlResult = getUrl(item?.orig, useAvid);
-            let urlText = '';
-            if (urlResult) {
-                urlText += urlResult.text;
-                if (directLink) {
-                    link = urlResult.url;
-                }
+            const urlText = urlResult?.text;
+            if (urlResult && directLink) {
+                link = urlResult.url;
             }
-            if (originUrlResult) {
-                urlText += originUrlResult.text;
-                if (directLink) {
-                    link = originUrlResult.url;
-                }
+
+            const originUrlResult = getUrl(item?.orig, useAvid);
+            const originUrlText = originUrlResult?.text;
+            if (originUrlResult && directLink) {
+                link = originUrlResult.url;
             }
 
             let originDescription = '';
@@ -336,7 +315,7 @@ async function handler(ctx) {
             const originTitle = getOriginTitle(origin);
             const originDes = getOriginDes(origin);
             if (originName) {
-                originDescription += `<br>//转发自: @${getOriginName(origin)}: `;
+                originDescription += `//转发自: @${getOriginName(origin)}: `;
             }
             if (originTitle) {
                 originDescription += originTitle;
@@ -344,10 +323,19 @@ async function handler(ctx) {
             if (originDes) {
                 originDescription += `<br>${originDes}`;
             }
-            const imgHTMLSource = imgHTML ? `<br>${imgHTML}` : '';
+
+            // 换行处理
+            description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
+            originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
+
+            const descriptions = [description, originDescription, urlText, originUrlText, getIframe(data, disableEmbed), getIframe(origin, disableEmbed), getImgs(data), getImgs(origin)]
+                .filter(Boolean)
+                .map((e) => e?.trim())
+                .join('<br>');
+
             return {
                 title,
-                description: `${description}${originDescription}<br>${urlText}${getIframe(data, disableEmbed)}${getIframe(origin, disableEmbed)}${imgHTMLSource}`,
+                description: descriptions,
                 pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                 link,
                 author,
