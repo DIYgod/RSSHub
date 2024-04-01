@@ -29,6 +29,9 @@ export type Config = {
     memory: {
         max: number;
     };
+    mox: {
+        cookie: string;
+    };
     redis: {
         url: string;
     };
@@ -526,6 +529,9 @@ const calculateValue = () => {
         miniflux: {
             instance: envs.MINIFLUX_INSTANCE || 'https://reader.miniflux.app',
             token: envs.MINIFLUX_TOKEN || '',
+        },
+        mox: {
+            cookie: envs.MOX_COOKIE,
         },
         ncm: {
             cookies: envs.NCM_COOKIES || '',
