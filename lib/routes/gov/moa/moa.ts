@@ -157,7 +157,7 @@ async function dealNormalPage(link, item) {
 
 // 处理那种带索引号的公示文章，例子：http://www.moa.gov.cn/gk/zcjd/202402/t20240219_6448654.htm
 async function dealGovpublicPage(link, item) {
-    if (item.link.slice(-4) === '.pdf') {
+    if (item.link.endsWith('.pdf')) {
         return item;
     }
     const response = await got.get(link);
@@ -191,21 +191,19 @@ async function dealLatestDataChannel() {
         },
     });
     const items = await Promise.all(
-        res.data.result.table.map(async (item) => {
+        res.data.result.table.map((item) => {
             const { date, id } = item;
             item.pubDate = date;
-            item.link = `http://zdscxx.moa.gov.cn:8080/nyb/pc/messageView.jsp?id=${id}`;
+            const link = (item.link = `http://zdscxx.moa.gov.cn:8080/nyb/pc/messageView.jsp?id=${id}`);
 
-            const cacheIn = await cache.get(item.link);
-            if (cacheIn) {
-                return JSON.parse(cacheIn);
-            }
+            return cache.tryGet(link, async () => {
+                const { content, source } = await getLatestDataArticleDetali(id);
 
-            const { content, source } = await getLatestDataArticleDetali(id);
-            item.description = content;
-            item.author = source;
-            cache.set(item.link, JSON.stringify(item));
-            return item;
+                item.description = content;
+                item.author = source;
+
+                return item;
+            });
         })
     );
     return {
