@@ -15,9 +15,17 @@ const getCookie = () => {
     return cache.tryGet(key, async () => {
         const browser = await puppeteer();
         const page = await browser.newPage();
+        const waitForRequest = new Promise<string>((resolve) => {
+            page.on('requestfinished', async (request) => {
+                if (request.url() === 'https://api.bilibili.com/x/internal/gaia-gateway/ExClimbWuzhi') {
+                    const cookies = await page.cookies();
+                    const cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+                    resolve(cookieString);
+                }
+            });
+        });
         await page.goto('https://space.bilibili.com/1/dynamic');
-        const cookies = await page.cookies();
-        const cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+        const cookieString = await waitForRequest;
 
         return cookieString;
     });
