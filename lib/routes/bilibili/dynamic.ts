@@ -68,7 +68,7 @@ const getTitle = (data: Modules) => {
         return `${major.courses?.title} - ${major.courses?.sub_title}`;
     }
     const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
-    return major[type]?.title;
+    return major[type]?.title || getDes(data);
 };
 const getDes = (data: Modules) => {
     let desc = '';
@@ -325,7 +325,7 @@ async function handler(ctx) {
             }
             const imgHTMLSource = imgHTML ? `<br>${imgHTML}` : '';
             return {
-                title: getTitle(data) || '',
+                title: getTitle(data),
                 description: `${description}${originDescription}<br>${urlText}${getIframe(data, disableEmbed)}${getIframe(origin, disableEmbed)}${imgHTMLSource}`,
                 pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                 link,
