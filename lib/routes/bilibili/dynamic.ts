@@ -134,7 +134,7 @@ const getImgs = (data: Modules) => {
     if (major[type]?.cover) {
         imgUrls.push(major[type].cover);
     }
-    return imgUrls.map((url) => `<img src="${url}">`);
+    return imgUrls.map((url) => `<img src="${url}">`).join('');
 };
 
 const getUrl = (item?: Item2, useAvid = false) => {
@@ -325,7 +325,7 @@ async function handler(ctx) {
             }
             const imgHTMLSource = imgHTML ? `<br>${imgHTML}` : '';
             return {
-                title: getTitle(data) || '',
+                title: getTitle(data) || description,
                 description: `${description}${originDescription}<br>${urlText}${getIframe(data, disableEmbed)}${getIframe(origin, disableEmbed)}${imgHTMLSource}`,
                 pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                 link,
