@@ -26,8 +26,9 @@ const parseDyArticle = (charset, item, tryGet) =>
             }
         });
 
+        const imgUrl = new URL(item.imgsrc);
         item.description = art(path.join(__dirname, 'templates/dy.art'), {
-            imgsrc: item.imgsrc?.split('?')[0],
+            imgsrc: imgUrl.searchParams.get('url'),
             postBody: $('.post_body').html(),
         });
 

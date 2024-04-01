@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import randUserAgent from '@/utils/rand-user-agent';
-import got from 'got';
+import { ofetch } from 'ofetch';
 
 let envs = process.env;
 
@@ -634,9 +634,8 @@ const calculateValue = () => {
 calculateValue();
 
 if (envs.REMOTE_CONFIG) {
-    got.get(envs.REMOTE_CONFIG)
-        .then(async (response) => {
-            const data = JSON.parse(response.body);
+    ofetch(envs.REMOTE_CONFIG)
+        .then(async (data) => {
             if (data) {
                 envs = Object.assign(envs, data);
                 calculateValue();
