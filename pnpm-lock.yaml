@@ -24,8 +24,8 @@ dependencies:
     specifier: 7.109.0
     version: 7.109.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.56
-    version: 2.0.56
+    specifier: 2.0.57
+    version: 2.0.57
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -2427,7 +2427,7 @@ packages:
       '@babel/runtime-corejs2': 7.24.1
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -2743,8 +2743,8 @@ packages:
     dependencies:
       defer-to-connect: 2.0.1
 
-  /@tonyrl/rand-user-agent@2.0.56:
-    resolution: {integrity: sha512-7C2zOyvJsU2BxYayw+w/KjtP/InxYHzRWOWUuPj3XP3SGfnUTpQjKvEuo5K0LB+0YqF62w65LjHGE7Aw1irtaA==}
+  /@tonyrl/rand-user-agent@2.0.57:
+    resolution: {integrity: sha512-/WoiYEltkmniWKQe2SuK4T5t4Zu21ekTcvFxRhFjZN8mFypGPKEr58fLI/jRxFYhBP1FNA7INBo1e6uJ2OC3+w==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -9825,8 +9825,8 @@ packages:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
