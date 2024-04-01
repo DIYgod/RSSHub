@@ -6,8 +6,9 @@ import { config } from '@/config';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 
+let disableConfigCookie = false;
 const getCookie = () => {
-    if (Object.keys(config.bilibili.cookies).length > 0) {
+    if (!disableConfigCookie && Object.keys(config.bilibili.cookies).length > 0) {
         return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]];
     }
     const key = 'bili-cookie';
@@ -20,6 +21,11 @@ const getCookie = () => {
 
         return cookieString;
     });
+};
+
+const clearCookie = () => {
+    cache.set('bili-cookie');
+    disableConfigCookie = true;
 };
 
 const getWbiVerifyString = () => {
@@ -235,6 +241,7 @@ const getArticleDataFromCvid = async (cvid, uid) => {
 
 export default {
     getCookie,
+    clearCookie,
     getWbiVerifyString,
     getUsernameFromUID,
     getUsernameAndFaceFromUID,

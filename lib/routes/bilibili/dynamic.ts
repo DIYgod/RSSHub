@@ -249,7 +249,8 @@ async function handler(ctx) {
     });
     const body = JSONbig.parse(response.body);
     if (body?.code === -352) {
-        throw new Error('风控校验失败！请手动配置 Cookie 后重试');
+        cacheIn.clearCookie();
+        throw new Error('The cookie has expired, please try again.');
     }
     const items = (body as BilibiliWebDynamicResponse)?.data?.items;
 
