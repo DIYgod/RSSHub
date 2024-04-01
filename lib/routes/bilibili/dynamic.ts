@@ -96,7 +96,7 @@ const getDes = (data: Modules) => {
     // 正在直播的动态
     if (major.live_rcmd?.content) {
         const live_play_info = JSON.parse(major.live_rcmd.content)?.live_play_info;
-        return `${live_play_info?.area_name} · ${live_play_info?.watched_show?.text_large}`;
+        return `${live_play_info?.area_name}·${live_play_info?.watched_show?.text_large}`;
     }
     // 图文动态
     if (major?.opus) {
@@ -208,6 +208,12 @@ const getUrl = (item?: Item2, useAvid = false) => {
             url = `https://live.bilibili.com/${major?.live?.id}`;
             text = `<br>直播间地址：<a href=${url}>${url}</a>`;
             break;
+        case 'MAJOR_TYPE_LIVE_RCMD': {
+            const live_play_info = JSON.parse(major.live_rcmd?.content || '{}')?.live_play_info;
+            url = `https://live.bilibili.com/${live_play_info?.room_id}`;
+            text = `<br>直播间地址：<a href=${url}>${url}</a>`;
+            break;
+        }
         default:
             return null;
     }
