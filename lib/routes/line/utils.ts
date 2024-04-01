@@ -29,7 +29,7 @@ const parseItems = (list, tryGet) =>
                     });
                     data = response.data;
                 } catch (error) {
-                    if (error instanceof got.HTTPError && error.response.statusCode === 404) {
+                    if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.response.statusCode === 404) {
                         logger.error(`Error parsing article ${item.link}: ${error.message}`);
                         return item;
                     }
