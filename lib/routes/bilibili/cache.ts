@@ -26,6 +26,7 @@ const getCookie = () => {
         });
         await page.goto('https://space.bilibili.com/1/dynamic');
         const cookieString = await waitForRequest;
+        logger.debug(`Got bilibili cookie: ${cookieString}`);
 
         return cookieString;
     });
