@@ -118,7 +118,7 @@ const getIframe = (data?: Modules, disableEmbed: boolean = false) => {
     if (!aid) {
         return '';
     }
-    return `<br>${utils.iframe(aid, null, bvid)}<br>`;
+    return `<br>${utils.iframe(aid, null, bvid)}`;
 };
 
 const getImgs = (data: Modules) => {
@@ -318,13 +318,13 @@ async function handler(ctx) {
             const originUrlResult = getUrl(item?.orig, useAvid);
             let urlText = '';
             if (urlResult) {
-                urlText += urlResult.text;
+                urlText += `<br>${urlResult.text}`;
                 if (directLink) {
                     link = urlResult.url;
                 }
             }
             if (originUrlResult) {
-                urlText += originUrlResult.text;
+                urlText += `<br>${originUrlResult.text}`;
                 if (directLink) {
                     link = originUrlResult.url;
                 }
@@ -346,7 +346,7 @@ async function handler(ctx) {
             const imgHTMLSource = imgHTML ? `<br>${imgHTML}` : '';
             return {
                 title,
-                description: `${description}${originDescription}<br>${urlText}${getIframe(data, disableEmbed)}${getIframe(origin, disableEmbed)}${imgHTMLSource}`,
+                description: `${description}${originDescription}${urlText}${getIframe(data, disableEmbed)}${getIframe(origin, disableEmbed)}${imgHTMLSource}`,
                 pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                 link,
                 author,
