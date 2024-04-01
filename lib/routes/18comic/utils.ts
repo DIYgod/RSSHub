@@ -67,6 +67,7 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
                         .toArray()
                         .map((image) => content(image).attr('data-original')),
                     cover: content('.thumb-overlay img').first().attr('src'),
+                    category: item.category,
                 });
 
                 return item;

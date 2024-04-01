@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import cherrio from 'cheerio';
+import * as cheerio from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -34,7 +34,7 @@ async function handler() {
     const url = `${homepage}/f/article/articleList?pageNo=1&pageSize=15&createTimeSort=DESC`;
     const response = await got(url);
 
-    const $ = cherrio.load(response.data);
+    const $ = cheerio.load(response.data);
     const articles = $('.aw-item').toArray();
 
     const items = await Promise.all(
@@ -45,7 +45,7 @@ async function handler() {
 
             return cache.tryGet(link, async () => {
                 const result = await got(link);
-                const $ = cherrio.load(result.data);
+                const $ = cheerio.load(result.data);
                 return {
                     title,
                     author: $('.user_name').text(),

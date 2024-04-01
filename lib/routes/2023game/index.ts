@@ -31,9 +31,9 @@ export const route: Route = {
   | ps4 | sgame | 3ds | psv | jiaocheng | ps3yx | zhuji.md | zhangji.psp | pcgame | zhangji | zhuji | ps4.psjc | ps41.ps4pkg | nsaita.cundang | nsaita.pojie | nsaita.buding | nsaita.zhutie | nsaita.zhuti |`,
 };
 
-async function handler(ctx?: Context): Promise<Data> {
-    const category = (ctx!.req.param('category') ?? 'sgame').replaceAll('.', '/');
-    const tab = ctx?.req.param('tab') ?? 'all';
+async function handler(ctx: Context): Promise<Data> {
+    const category = (ctx.req.param('category') ?? 'sgame').replaceAll('.', '/');
+    const tab = ctx.req.param('tab') ?? 'all';
 
     const currentUrl = `https://www.2023game.com/${category}/`;
 

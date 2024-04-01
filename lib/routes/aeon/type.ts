@@ -45,7 +45,6 @@ async function handler(ctx) {
     const list = data.props.pageProps.articles.map((item) => ({
         title: item.title,
         link: `https://aeon.co/${binaryType}/${item.slug}`,
-        pubDate: item.createdAt,
     }));
 
     const items = await getData(ctx, list);

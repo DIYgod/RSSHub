@@ -31,7 +31,7 @@ RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYg
 <a href="https://rss3.io" target="_blank"><img height="50px" src="https://i.imgur.com/lb1dDGK.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://xlog.app/" target="_blank"><img height="50px" src="https://i.imgur.com/JuhHTKD.png"></a>
 </p>
 
-[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
+[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/sponsor/)
 
 ### Contributors
 
@@ -54,15 +54,15 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 We welcome all pull requests. Suggestions and feedback are also welcomed [here](https://github.com/DIYgod/RSSHub/issues).
 
-Refer to [Join Us](https://docs.rsshub.app/joinus/quick-start)
+Refer to [Join Us](https://docs.rsshub.app/joinus/)
 
 ## Deployment
 
-Refer to [Deployment](https://docs.rsshub.app/install/)
+Refer to [Deployment](https://docs.rsshub.app/deploy/)
 
 ## Support RSSHub
 
-Refer to [Support RSSHub](https://docs.rsshub.app/support/)
+Refer to [Support RSSHub](https://docs.rsshub.app/sponsor/)
 
 RSSHub is open source and completely free under the MIT license. However, just like any other open source project, as the project grows, the hosting, development and maintenance requires funding support.
 

@@ -2,4 +2,7 @@ coverage
 .vscode
 docker-compose.yml
 !/.github
-!/docs/.vuepress
+lib/routes-deprecated
+lib/router.js
+babel.config.js
+scripts/docker/minify-docker.js

@@ -1,6 +1,8 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
+import md5 from '@/utils/md5';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/starred_repos/:user',
@@ -8,12 +10,13 @@ export const route: Route = {
     example: '/github/starred_repos/DIYgod',
     parameters: { user: 'User name' },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
+        requireConfig: [
+            {
+                name: 'GITHUB_ACCESS_TOKEN',
+                optional: true,
+                description: 'To get more requests',
+            },
+        ],
     },
     radar: [
         {
@@ -26,62 +29,34 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    if (!config.github || !config.github.access_token) {
-        throw new Error('GitHub star RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
-    }
     const user = ctx.req.param('user');
 
     const host = `https://github.com/${user}?tab=stars`;
-    const url = 'https://api.github.com/graphql';
 
-    const response = await got({
-        method: 'post',
-        url,
+    const { data: response } = await got(`https://api.github.com/users/${user}/starred`, {
         headers: {
-            Authorization: `bearer ${config.github.access_token}`,
-        },
-        json: {
-            query: `
-            {
-                user(login: "${user}") {
-                  starredRepositories(first: 10, orderBy: {direction: DESC, field: STARRED_AT}) {
-                    edges {
-                      starredAt
-                      node {
-                        name
-                        description
-                        url
-                        openGraphImageUrl
-                        primaryLanguage {
-                          name
-                        }
-                        stargazers {
-                          totalCount
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            `,
+            Accept: 'application/vnd.github.star+json',
+            Authorization: config.github?.access_token ? `Bearer ${config.github.access_token}` : undefined,
         },
     });
 
-    const data = response.data.data.user.starredRepositories.edges;
+    const data = response.map(({ starred_at, repo }) => ({
+        title: `${user} starred ${repo.name}`,
+        author: user,
+        description: `${repo.description ?? 'No Description'}<br>
+        Primary Language: ${repo.language ?? 'Primary Language'}<br>
+        Stargazers: ${repo.stargazers_count}<br>
+        <img sytle="width:50px;" src="https://opengraph.githubassets.com/${md5(repo.updated_at)}/${repo.full_name}">`,
+        pubDate: parseDate(starred_at),
+        link: repo.html_url,
+        category: repo.topics,
+    }));
 
     return {
         allowEmpty: true,
-        title: `${user}’s starred repositories`,
+        title: `${user}'s starred repositories`,
         link: host,
-        description: `${user}’s starred repositories`,
-        item: data.map((repo) => ({
-            title: `${user} starred ${repo.node.name}`,
-            author: user,
-            description: `${repo.node.description === null ? 'no description' : repo.node.description} <br> primary language: ${
-                repo.node.primaryLanguage === null ? 'no primary language' : repo.node.primaryLanguage.name
-            } <br> stargazers: ${repo.node.stargazers.totalCount} <br> <img sytle="width:50px;" src='${repo.node.openGraphImageUrl}'>`,
-            pubDate: new Date(repo.starredAt),
-            link: repo.node.url,
-        })),
+        description: `${user}'s starred repositories`,
+        item: data,
     };
 }

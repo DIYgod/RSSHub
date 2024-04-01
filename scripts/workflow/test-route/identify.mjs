@@ -1,14 +1,15 @@
 const noFound = 'Auto: Route No Found';
+const testFailed = 'Auto: Route Test Failed';
 const allowedUser = new Set(['dependabot[bot]', 'pull[bot]']); // dependabot and downstream PR requested by pull[bot]
 
-module.exports = async ({ github, context, core }, body, number, sender) => {
+export default async function identify({ github, context, core }, body, number, sender) {
     core.debug(`sender: ${sender}`);
     core.debug(`body: ${body}`);
     // Remove all HTML comments before performing the match
     const bodyNoCmts = body.replaceAll(/<!--[\S\s]*?-->/g, '');
     const m = bodyNoCmts.match(/```routes\s+([\S\s]*?)```/);
     core.debug(`match: ${m}`);
-    let res = null;
+    let routes = null;
 
     const issueFacts = {
         owner: context.repo.owner,
@@ -31,11 +32,11 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
                 core.warning(error);
             });
 
-    const removeLabel = () =>
+    const removeLabel = (labelName = noFound) =>
         github.rest.issues
             .removeLabel({
                 ...issueFacts,
-                name: noFound,
+                name: labelName,
             })
             .catch((error) => {
                 core.warning(error);
@@ -80,8 +81,13 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
         .catch((error) => {
             core.warning(error);
         });
-    if (pr.pull_request && pr.state === 'closed') {
-        await updatePrState('open');
+    if (pr.pull_request) {
+        if (pr.state === 'closed') {
+            await updatePrState('open');
+        }
+        if (pr.labels.some((e) => e.name === testFailed)) {
+            await removeLabel(testFailed);
+        }
     }
 
     if (allowedUser.has(sender)) {
@@ -94,19 +100,25 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
     }
 
     if (m && m[1]) {
-        res = m[1].trim().split(/\r?\n/);
-        core.info(`routes detected: ${res}`);
+        routes = m[1].trim().split(/\r?\n/);
+        core.info(`routes detected: ${routes}`);
 
-        if (res.length && res[0] === 'NOROUTE') {
+        if (routes.length && routes[0] === 'NOROUTE') {
             core.info('PR stated no route, passing');
             await removeLabel();
             await addLabels(['Auto: Route Test Skipped']);
 
             return;
-        } else if (res.length && !res.some((e) => e.includes('/:'))) {
+        } else if (routes.length) {
+            if (routes.some((e) => e.includes('/:'))) {
+                await addLabels([noFound]);
+                return createComment(`Please use actual values in \`routes\` section instead of path parameters.
+                请在 \`routes\` 部分使用实际值而不是路径参数。`);
+            }
+
             core.exportVariable('TEST_CONTINUE', true);
             await removeLabel();
-            return res;
+            return routes;
         }
     }
 
@@ -119,4 +131,4 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
     }
 
     throw new Error('Please follow the PR rules: failed to detect route');
-};
+}
