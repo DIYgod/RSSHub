@@ -1,52 +1,46 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "strict": true,
-        "jsx": "react-jsx",
-        "jsxImportSource": "hono/jsx",
-        "paths": {
-            "@/*": ["./lib/*"]
-        },
-        "esModuleInterop": true,
-        "noImplicitAny": false,
-        "outDir": "./dist",
-        "skipLibCheck": true,
-        "noEmit": true,
-        "incremental": true,
-        "resolveJsonModule": true,
-        "isolatedModules": true
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "jsx": "preserve",
+    "jsxImportSource": "hono/jsx",
+    "paths": {
+      "@/*": [
+        "./lib/*"
+      ]
     },
     "esModuleInterop": true,
     "noImplicitAny": false,
     "outDir": "./dist",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
     "skipLibCheck": true,
     "noEmit": true,
     "incremental": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "include": [
-        "next-env.d.ts",
-        "./lib/**/*.ts",
-        "./lib/**/*.tsx",
-        "./app/**/*.ts",
-        "./app/**/*.tsx",
-        ".next/types/**/*.ts"
-    ],
-    "exclude": [
-        "node_modules",
-        "*.test.*"
-    ]
+    "allowJs": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "./lib/**/*.ts",
+    "./lib/**/*.tsx",
+    "./app/**/*.ts",
+    "./app/**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "*.test.*"
+  ]
 }
