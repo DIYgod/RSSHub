@@ -55,8 +55,14 @@ export const route: Route = {
   举例: bilibili 专栏全文输出 /bilibili/user/dynamic/2267573/?mode=fulltext
   :::`,
 };
-
-const getTitle = (data: Modules) => {
+/**
+ *
+ *
+ * @author CaoMeiYouRen
+ * @param data
+ * @param [desc=true] 当 title 为空的时候，是否用 desc 填充
+ */
+const getTitle = (data: Modules, desc = true) => {
     const major = data.module_dynamic?.major;
     if (!major) {
         return '';
@@ -68,7 +74,7 @@ const getTitle = (data: Modules) => {
         return `${major.courses?.title} - ${major.courses?.sub_title}`;
     }
     const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
-    return major[type]?.title || getDes(data);
+    return major[type]?.title || (desc ? getDes(data) : '');
 };
 const getDes = (data: Modules) => {
     let desc = '';
@@ -97,7 +103,7 @@ const getDes = (data: Modules) => {
     return major[type]?.desc;
 };
 
-const getOriginTitle = (data?: Modules) => data && getTitle(data);
+const getOriginTitle = (data?: Modules) => data && getTitle(data, false);
 const getOriginDes = (data?: Modules) => data && getDes(data);
 const getOriginName = (data?: Modules) => data?.module_author?.name;
 const getIframe = (data?: Modules, disableEmbed: boolean = false) => {
