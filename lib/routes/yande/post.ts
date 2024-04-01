@@ -1,8 +1,29 @@
-const got = require('@/utils/got');
-const queryString = require('query-string');
+import { Route } from '@/types';
+import got from '@/utils/got';
+import queryString from 'query-string';
 
-module.exports = async (ctx) => {
-    const { period = '1d' } = ctx.params;
+export const route: Route = {
+    path: '/post/popular_recent/:period?',
+    categories: ['anime'],
+    example: '/yande/post/popular_recent/1d',
+    parameters: {
+        period: '展示时间',
+    },
+    radar: [
+        {
+            source: ['yande.re/post/'],
+        },
+    ],
+    name: 'posts',
+    maintainers: ['fashioncj'],
+    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     | 
+  | ------- | -------- | ------- | -------- | 
+  | 1d | 1w | 1m ｜1y｜`,
+    handler,
+};
+
+async function handler(ctx) {
+    const { period = '1d' } = ctx.req.param();
 
     const response = await got({
         url: 'https://yande.re/post/popular_recent.json',
@@ -27,7 +48,7 @@ module.exports = async (ctx) => {
 
     const title = titles[period];
 
-    ctx.state.data = {
+    return {
         title: `${title} - yande.re`,
         link: `https://yande.re/post/popular_recent?period=${period}`,
         item: posts.map((post) => ({
@@ -60,4 +81,4 @@ module.exports = async (ctx) => {
             category: post.tags.split(/\s+/),
         })),
     };
-};
+}
