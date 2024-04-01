@@ -62,8 +62,14 @@ async function handler(ctx) {
 
             const guid = lastItem.attr('href')?.split('/').pop();
 
+            const cover = $(item)
+                .find('a div div')
+                .attr('style')
+                ?.match(/background:url\((.*?)\)/)?.[1];
+
             return {
                 title: lastItem.text(),
+                description: cover ? `<img src="${cover}">` : undefined,
                 link: lastItem.attr('href'),
                 guid,
             };
