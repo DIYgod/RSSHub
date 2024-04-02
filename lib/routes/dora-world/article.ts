@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/article/:topic/:topicId?',
     categories: ['anime'],
-    example: '/article/contents',
+    example: '/dora-world/article/contents',
     parameters: {
         topic: 'Topic name, can be found in URL. For example: the topic name of [https://www.dora-world.com/movie](https://www.dora-world.com/movie) is `movie`',
         topicId: 'Topic id, can be found in URL. For example: the topic id of [https://www.dora-world.com/contents?t=197](https://www.dora-world.com/contents?t=197) is `197`',
@@ -36,7 +36,11 @@ async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://www.dora-world.com';
     const topicIdParam = topicId === '' ? '' : `?t=${topicId}`;
     const link = `${baseUrl}/${topic}${topicIdParam}`;
-    const { data: response } = await got(`${baseUrl}/_next/data/SK56eQQo9p-4RN4aqyDzr/${topic}.json${topicIdParam}`);
+    const { data: html } = await got(baseUrl);
+    const $ = load(html);
+    const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+    const nextBuildId = nextData.buildId;
+    const { data: response } = await got(`${baseUrl}/_next/data/${nextBuildId}/${topic}.json${topicIdParam}`);
     const title = `${response.pageProps.label_name} - ドラえもんチャンネル`;
     const contents = response.pageProps.contents;
     const list = contents.map((item) => ({
