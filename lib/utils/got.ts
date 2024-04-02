@@ -1,79 +1,66 @@
-import logger from '@/utils/logger';
-import { config } from '@/config';
-import got, { CancelableRequest, Response as GotResponse, OptionsInit, Options, Got } from 'got';
+import { destr } from 'destr';
+import ofetch from '@/utils/ofetch';
 
-type Response<T> = GotResponse<string> & {
-    data: T;
-    status: number;
-};
-
-type GotRequestFunction = {
-    (url: string | URL, options?: Options): CancelableRequest<Response<Record<string, any>>>;
-    <T>(url: string | URL, options?: Options): CancelableRequest<Response<T>>;
-    (options: Options): CancelableRequest<Response<Record<string, any>>>;
-    <T>(options: Options): CancelableRequest<Response<T>>;
-};
-
-// @ts-expect-error got instance with custom response type
-const custom: {
-    all?: <T>(list: Array<Promise<T>>) => Promise<Array<T>>;
-    get: GotRequestFunction;
-    post: GotRequestFunction;
-    put: GotRequestFunction;
-    patch: GotRequestFunction;
-    head: GotRequestFunction;
-    delete: GotRequestFunction;
-} & GotRequestFunction &
-    Got = got.extend({
-    retry: {
-        limit: config.requestRetry,
-        statusCodes: [400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 421, 422, 423, 424, 426, 428, 429, 431, 451, 500, 501, 502, 503, 504, 505, 506, 507, 508, 510, 511, 521, 522, 524],
-    },
-    hooks: {
-        beforeRetry: [
-            (err, count) => {
-                logger.error(`Request ${err.options.url} fail, retry attempt #${count}: ${err}`);
-            },
-        ],
-        beforeRedirect: [
-            (options, response) => {
-                logger.http(`Redirecting to ${options.url} for ${response.requestUrl}`);
-            },
-        ],
-        afterResponse: [
-            // @ts-expect-error custom response type
-            (response: Response<Record<string, any>>) => {
-                try {
-                    response.data = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;
-                } catch {
-                    // @ts-expect-error for compatibility
-                    response.data = response.body;
-                }
-                response.status = response.statusCode;
-                return response;
-            },
-        ],
-        init: [
-            (
-                options: OptionsInit & {
-                    data?: string;
-                }
-            ) => {
-                // compatible with axios api
-                if (options && options.data) {
-                    options.body = options.body || options.data;
-                }
-            },
-        ],
-    },
-    headers: {
-        'user-agent': config.ua,
-    },
-    timeout: {
-        request: config.requestTimeout,
-    },
+const gotofetch = ofetch.create({
+    parseResponse: (responseText) => ({
+        data: destr(responseText),
+        body: responseText,
+    }),
 });
-custom.all = (list) => Promise.all(list);
 
-export default custom;
-export type { Response, Options } from 'got';
+const getFakeGot = (defaultOptions?: any) => {
+    const fakeGot = (request, options?: any) => {
+        if (!(typeof request === 'string' || request instanceof Request) && request.url) {
+            options = {
+                ...request,
+                ...options,
+            };
+            request = request.url;
+        }
+        if (options?.hooks?.beforeRequest) {
+            for (const hook of options.hooks.beforeRequest) {
+                hook(options);
+            }
+            delete options.hooks;
+        }
+
+        options = {
+            ...defaultOptions,
+            ...options,
+        };
+
+        if (options?.json && !options.body) {
+            options.body = options.json;
+            delete options.json;
+        }
+        if (options?.form && !options.body) {
+            const body = new FormData();
+            for (const key in options.form) {
+                body.append(key, options.form[key]);
+            }
+            options.body = body;
+            if (!options.headers) {
+                options.headers = {};
+            }
+            delete options.form;
+        }
+        if (options?.searchParams) {
+            request += '?' + new URLSearchParams(options.searchParams).toString();
+            delete options.searchParams;
+        }
+
+        return gotofetch(request, options);
+    };
+
+    fakeGot.get = (request, options) => fakeGot(request, { ...options, method: 'GET' });
+    fakeGot.post = (request, options) => fakeGot(request, { ...options, method: 'POST' });
+    fakeGot.put = (request, options) => fakeGot(request, { ...options, method: 'PUT' });
+    fakeGot.patch = (request, options) => fakeGot(request, { ...options, method: 'PATCH' });
+    fakeGot.head = (request, options) => fakeGot(request, { ...options, method: 'HEAD' });
+    fakeGot.delete = (request, options) => fakeGot(request, { ...options, method: 'DELETE' });
+    fakeGot.extend = (options) => getFakeGot(options);
+
+    return fakeGot;
+};
+
+export default getFakeGot();

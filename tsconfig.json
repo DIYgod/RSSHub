@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "strict": true,
         "jsx": "react-jsx",
         "jsxImportSource": "hono/jsx",

@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 
-describe('got', () => {
+describe('ofetch', () => {
     it('headers', async () => {
-        const { data } = await got('http://rsshub.test/headers');
+        const data = await ofetch('http://rsshub.test/headers');
         expect(data['user-agent']).toBe(config.ua);
     });
 
@@ -20,7 +20,7 @@ describe('got', () => {
         );
 
         try {
-            await got.get('http://rsshub.test/retry-test');
+            await ofetch('http://rsshub.test/retry-test');
         } catch (error: any) {
             expect(error.name).toBe('FetchError');
         }
@@ -30,22 +30,22 @@ describe('got', () => {
     });
 
     it('form-post', async () => {
-        const response = await got.post('http://rsshub.test/form-post', {
-            form: {
-                test: 'rsshub',
-            },
+        const body = new FormData();
+        body.append('test', 'rsshub');
+        const response = await ofetch('http://rsshub.test/form-post', {
+            method: 'POST',
+            body,
         });
-        expect(response.body).toBe('{"test":"rsshub"}');
-        expect(response.data.test).toBe('rsshub');
+        expect(response.test).toBe('rsshub');
     });
 
     it('json-post', async () => {
-        const response = await got.post('http://rsshub.test/json-post', {
-            json: {
+        const response = await ofetch('http://rsshub.test/json-post', {
+            method: 'POST',
+            body: {
                 test: 'rsshub',
             },
         });
-        expect(response.body).toBe('{"test":"rsshub"}');
-        expect(response.data.test).toBe('rsshub');
+        expect(response.test).toBe('rsshub');
     });
 });
