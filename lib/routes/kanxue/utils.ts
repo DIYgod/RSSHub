@@ -20,6 +20,6 @@ const dateParser = (html, timeZone) => {
         return new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset)).toUTCString();
     }
     return html;
-}
+};
 
 export default { dateParser };

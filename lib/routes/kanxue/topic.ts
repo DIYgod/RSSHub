@@ -125,7 +125,7 @@ async function handler(ctx) {
                                 item.attr('referrerpolicy', 'no-referrer');
                             });
 
-                        let description = $('.card').eq(0).find('.message').html();
+                        const description = $('.card').eq(0).find('.message').html();
 
                         return {
                             title: subject.text(),
