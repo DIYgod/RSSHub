@@ -268,7 +268,13 @@
           "id": "歌单 id, 可在歌单页 URL 中找到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "NCM_COOKIES",
+              "optional": true,
+              "description": "网易云音乐登陆后的 cookie 值，可在浏览器控制台通过`document.cookie`获取。"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -326,7 +332,13 @@
           "type": "排行榜类型，0所有时间(默认)，1最近一周"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "NCM_COOKIES",
+              "optional": true,
+              "description": "网易云音乐登陆后的 cookie 值，可在浏览器控制台通过`document.cookie`获取。"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
