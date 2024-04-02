@@ -5,6 +5,8 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+const baseUrl = 'https://www.dora-world.com';
+
 export const route: Route = {
     path: '/article/:topic/:topicId?',
     categories: ['anime'],
@@ -33,7 +35,6 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const { topic, topicId = '' } = ctx.req.param();
-    const baseUrl = 'https://www.dora-world.com';
     const topicIdParam = topicId === '' ? '' : `?t=${topicId}`;
     const link = `${baseUrl}/${topic}${topicIdParam}`;
     const { data: html } = await got(baseUrl);
@@ -49,6 +50,7 @@ async function handler(ctx): Promise<Data> {
         description: item.page_url.startsWith('/contents/') ? '' : `<p>${item.title}</p><img src="${item.image_url}" alt="">`,
         pubDate: timezone(parseDate(item.publish_at), +9),
         category: item.tags.map((tag) => tag.name),
+        guid: item.id,
     }));
     return {
         title,
@@ -60,7 +62,7 @@ async function handler(ctx): Promise<Data> {
                 async (item) =>
                     await cache.tryGet(item.link, async () => {
                         if (item.description === '') {
-                            item.description = await getContent(item.link);
+                            item.description = await getContent(nextBuildId, item.guid);
                         }
                         return item;
                     })
@@ -69,9 +71,9 @@ async function handler(ctx): Promise<Data> {
     };
 }
 
-async function getContent(link: string) {
-    const { data: response } = await got(link);
-    const $ = load(response);
+async function getContent(nextBuildId: string, contentId: string) {
+    const { data: response } = await got(`${baseUrl}/_next/data/${nextBuildId}/contents/${contentId}.json`);
+    const $ = load(response.pageProps.content.content);
     const content = $('.main_unit');
     content.find('.tag').remove();
     content.find('div[style="display:none"]').remove();
