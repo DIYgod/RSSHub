@@ -113,12 +113,12 @@ export const route: Route = {
         {
             title: '通知公告',
             source: ['hubu.edu.cn/index/tzgg.htm'],
-            target: '/hubu/www/index/tzgg',
+            target: '/www/index/tzgg',
         },
         {
             title: '学术预告',
             source: ['hubu.edu.cn/index/xsyg.htm'],
-            target: '/hubu/www/index/xsyg',
+            target: '/www/index/xsyg',
         },
     ],
 };
