@@ -105,7 +105,7 @@ async function handler() {
             pubDate: parseDate(e.updated_time * 1000),
             link: buildLink(e),
             author: e.target.author ? e.target.author.name : '',
-            guid: e.target.link,
+            guid: e.id,
         };
     };
 
