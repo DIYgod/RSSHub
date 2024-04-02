@@ -26828,6 +26828,212 @@
     "name": "环球网",
     "url": "huanqiu.com"
   },
+  "hubu": {
+    "routes": {
+      "/www/:category{.+}?": {
+        "path": "/www/:category{.+}?",
+        "name": "主页",
+        "url": "hubu.edu.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/hubu/www/index/tzgg",
+        "parameters": {
+          "category": "分类，可在对应分类页 URL 中找到，默认为[通知公告](https://www.hubu.edu.cn/index/tzgg.htm)"
+        },
+        "description": ":::tip\n  若订阅 [通知公告](https://www.hubu.edu.cn/index/tzgg.htm)，网址为 `https://www.hubu.edu.cn/index/tzgg.htm`。截取 `https://www.hubu.edu.cn/` 到末尾 `.htm` 的部分 `index/tzgg` 作为参数填入，此时路由为 [`/hubu/www/index/tzgg`](https://rsshub.app/hubu/www/index/tzgg)。\n  :::\n\n  | 通知公告   | 学术预告   |\n  | ---------- | ---------- |\n  | index/tzgg | index/xsyg |\n  ",
+        "categories": [
+          "university"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "通知公告",
+            "source": [
+              "hubu.edu.cn/index/tzgg.htm"
+            ],
+            "target": "/www/index/tzgg"
+          },
+          {
+            "title": "学术预告",
+            "source": [
+              "hubu.edu.cn/index/xsyg.htm"
+            ],
+            "target": "/www/index/xsyg"
+          }
+        ],
+        "location": "index.ts"
+      },
+      "/zhxy/:category{.+}?": {
+        "path": "/zhxy/:category{.+}?",
+        "name": "资源环境学院",
+        "url": "zhxy.hubu.edu.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/hubu/zhxy/index/tzgg",
+        "parameters": {
+          "category": "分类，可在对应分类页 URL 中找到，默认为[通知公告](https://zhxy.hubu.edu.cn/index/tzgg.htm)"
+        },
+        "description": ":::tip\n  若订阅 [通知公告](https://zhxy.hubu.edu.cn/index/tzgg.htm)，网址为 `https://zhxy.hubu.edu.cn/index/tzgg.htm`。截取 `https://zhxy.hubu.edu.cn/` 到末尾 `.htm` 的部分 `index/tzgg` 作为参数填入，此时路由为 [`/hubu/zhxy/index/tzgg`](https://rsshub.app/hubu/zhxy/index/tzgg)。\n  :::\n\n  | [通知公告](https://zhxy.hubu.edu.cn/index/tzgg.htm) | [新闻动态](https://zhxy.hubu.edu.cn/index/xwdt.htm) |\n  | --------------------------------------------------- | --------------------------------------------------- |\n  | index/tzgg                                          | index/xwdt                                          |  \n\n  #### [人才培养](https://zhxy.hubu.edu.cn/rcpy.htm)\n  \n  | [人才培养](https://zhxy.hubu.edu.cn/rcpy.htm) | [本科生教育](https://zhxy.hubu.edu.cn/rcpy/bksjy.htm) | [研究生教育](https://zhxy.hubu.edu.cn/rcpy/yjsjy.htm) | [招生与就业](https://zhxy.hubu.edu.cn/rcpy/zsyjy/zsxx.htm) |\n  | --------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------- |\n  | rcpy                                          | rcpy/bksjy                                            | rcpy/yjsjy                                            | rcpy/zsyjy/zsxx                                            |\n  \n  #### [学科建设](https://zhxy.hubu.edu.cn/xkjianshe/zdxk.htm)\n  \n  | [学科建设](https://zhxy.hubu.edu.cn/xkjianshe/zdxk.htm) | [重点学科](https://zhxy.hubu.edu.cn/xkjianshe/zdxk.htm) | [硕士点](https://zhxy.hubu.edu.cn/xkjianshe/ssd.htm) | [博士点](https://zhxy.hubu.edu.cn/xkjianshe/bsd.htm) |\n  | ------------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |\n  | xkjianshe/zdxk                                          | xkjianshe/zdxk                                          | xkjianshe/ssd                                        | xkjianshe/bsd                                        |\n  \n  #### [科研服务](https://zhxy.hubu.edu.cn/kyfw.htm)\n  \n  | [科研服务](https://zhxy.hubu.edu.cn/kyfw.htm) | [科研动态](https://zhxy.hubu.edu.cn/kyfw/kydongt.htm) | [学术交流](https://zhxy.hubu.edu.cn/kyfw/xsjl.htm) | [科研平台](https://zhxy.hubu.edu.cn/kyfw/keyapt.htm) | [社会服务](https://zhxy.hubu.edu.cn/kyfw/shfuw.htm) |\n  | --------------------------------------------- | ----------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------- | --------------------------------------------------- |\n  | kyfw                                          | kyfw/kydongt                                          | kyfw/xsjl                                          | kyfw/keyapt                                          | kyfw/shfuw                                          |\n  \n  #### [党群工作](https://zhxy.hubu.edu.cn/dqgz.htm)\n  \n  | [党群工作](https://zhxy.hubu.edu.cn/dqgz.htm) | [党建工作](https://zhxy.hubu.edu.cn/dqgz/djgz/jgdj.htm) | [工会工作](https://zhxy.hubu.edu.cn/dqgz/ghgon.htm) |\n  | --------------------------------------------- | ------------------------------------------------------- | --------------------------------------------------- |\n  | dqgz                                          | dqgz/djgz/jgdj                                          | dqgz/ghgon                                          |\n  ",
+        "categories": [
+          "university"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "通知公告",
+            "source": [
+              "zhxy.hubu.edu.cn/index/tzgg.htm"
+            ],
+            "target": "/zhxy/index/tzgg"
+          },
+          {
+            "title": "新闻动态",
+            "source": [
+              "zhxy.hubu.edu.cn/index/xwdt.htm"
+            ],
+            "target": "/zhxy/index/xwdt"
+          },
+          {
+            "title": "人才培养",
+            "source": [
+              "zhxy.hubu.edu.cn/rcpy.htm"
+            ],
+            "target": "/zhxy/rcpy"
+          },
+          {
+            "title": "人才培养 - 本科生教育",
+            "source": [
+              "zhxy.hubu.edu.cn/rcpy/bksjy.htm"
+            ],
+            "target": "/zhxy/rcpy/bksjy"
+          },
+          {
+            "title": "人才培养 - 研究生教育",
+            "source": [
+              "zhxy.hubu.edu.cn/rcpy/yjsjy.htm"
+            ],
+            "target": "/zhxy/rcpy/yjsjy"
+          },
+          {
+            "title": "人才培养 - 招生与就业",
+            "source": [
+              "zhxy.hubu.edu.cn/rcpy/zsyjy/zsxx.htm"
+            ],
+            "target": "/zhxy/rcpy/zsyjy/zsxx"
+          },
+          {
+            "title": "学科建设",
+            "source": [
+              "zhxy.hubu.edu.cn/xkjianshe/zdxk.htm"
+            ],
+            "target": "/zhxy/xkjianshe/zdxk"
+          },
+          {
+            "title": "学科建设 - 重点学科",
+            "source": [
+              "zhxy.hubu.edu.cn/xkjianshe/zdxk.htm"
+            ],
+            "target": "/zhxy/xkjianshe/zdxk"
+          },
+          {
+            "title": "学科建设 - 硕士点",
+            "source": [
+              "zhxy.hubu.edu.cn/xkjianshe/ssd.htm"
+            ],
+            "target": "/zhxy/xkjianshe/ssd"
+          },
+          {
+            "title": "学科建设 - 博士点",
+            "source": [
+              "zhxy.hubu.edu.cn/xkjianshe/bsd.htm"
+            ],
+            "target": "/zhxy/xkjianshe/bsd"
+          },
+          {
+            "title": "科研服务",
+            "source": [
+              "zhxy.hubu.edu.cn/kyfw.htm"
+            ],
+            "target": "/zhxy/kyfw"
+          },
+          {
+            "title": "科研服务 - 科研动态",
+            "source": [
+              "zhxy.hubu.edu.cn/kyfw/kydongt.htm"
+            ],
+            "target": "/zhxy/kyfw/kydongt"
+          },
+          {
+            "title": "科研服务 - 学术交流",
+            "source": [
+              "zhxy.hubu.edu.cn/kyfw/xsjl.htm"
+            ],
+            "target": "/zhxy/kyfw/xsjl"
+          },
+          {
+            "title": "科研服务 - 科研平台",
+            "source": [
+              "zhxy.hubu.edu.cn/kyfw/keyapt.htm"
+            ],
+            "target": "/zhxy/kyfw/keyapt"
+          },
+          {
+            "title": "科研服务 - 社会服务",
+            "source": [
+              "zhxy.hubu.edu.cn/kyfw/shfuw.htm"
+            ],
+            "target": "/zhxy/kyfw/shfuw"
+          },
+          {
+            "title": "党群工作",
+            "source": [
+              "zhxy.hubu.edu.cn/dqgz.htm"
+            ],
+            "target": "/zhxy/dqgz"
+          },
+          {
+            "title": "党群工作 - 党建工作",
+            "source": [
+              "zhxy.hubu.edu.cn/dqgz/djgz/jgdj.htm"
+            ],
+            "target": "/zhxy/dqgz/djgz/jgdj"
+          },
+          {
+            "title": "党群工作 - 工会工作",
+            "source": [
+              "zhxy.hubu.edu.cn/dqgz/ghgon.htm"
+            ],
+            "target": "/zhxy/dqgz/ghgon"
+          }
+        ],
+        "location": "zhxy.ts"
+      }
+    },
+    "name": "湖北大学",
+    "url": "hubu.edu.cn",
+    "categories": [
+      "university"
+    ],
+    "description": ""
+  },
   "huggingface": {
     "routes": {
       "/blog-zh": {

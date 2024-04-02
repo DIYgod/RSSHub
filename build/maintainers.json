@@ -2722,6 +2722,12 @@
   "/huanqiu/news/:category?": [
     "yuxinliu-alex"
   ],
+  "/hubu/www/:category{.+}?": [
+    "nczitzk"
+  ],
+  "/hubu/zhxy/:category{.+}?": [
+    "nczitzk"
+  ],
   "/huggingface/blog-zh": [
     "zcf0508"
   ],
