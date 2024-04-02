@@ -38,7 +38,7 @@ async function handler() {
 
     const response = await got({
         method: 'get',
-        url: `https://www.zhihu.com/api/v3/moments?desktop=true`,
+        url: `https://www.zhihu.com/api/v3/moments?desktop=true&limit=100`,
         headers: {
             Cookie: cookie,
         },
@@ -99,18 +99,19 @@ async function handler() {
         if (!e || !e.target) {
             return {};
         }
+        const link = buildLink(e);
         return {
             title: `${e.action_text_tpl.replace('{}', buildActors(e))}: ${getOne([e.target.title, e.target.question ? e.target.question.title : ''])}`,
             description: utils.ProcessImage(`<div>${getOne([e.target.content_html, getContent(e.target.content), e.target.detail, e.target.excerpt, ''])}</div>`),
             pubDate: parseDate(e.updated_time * 1000),
-            link: buildLink(e),
+            link,
             author: e.target.author ? e.target.author.name : '',
-            guid: this.link,
+            guid: link,
         };
     };
 
     const out = feeds
-        .filter((e) => e && e.type && e.type !== 'feed_advert')
+        .filter((e) => e && e.verb && e.verb !== 'MEMBER_VOTEUP_ARTICLE' && e.verb !== 'MEMBER_VOTEUP_ANSWER')
         .map((e) => {
             if (e && e.type && e.type === 'feed_group') {
                 // A feed group contains a list of feeds whose structure is the same as a single feed
@@ -123,7 +124,7 @@ async function handler() {
                               .join('')
                         : '';
                 const pubDate = e.list && Array.isArray(e.list) && e.list.length > 0 ? parseDate(e.list[0].updated_time * 1000) : new Date();
-                const guid = `${title} ${pubDate}`;
+                const guid = e.link;
                 return {
                     title,
                     description,
