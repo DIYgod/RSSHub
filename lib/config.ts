@@ -633,21 +633,27 @@ const calculateValue = () => {
 };
 calculateValue();
 
-if (envs.REMOTE_CONFIG) {
-    ofetch(envs.REMOTE_CONFIG)
-        .then(async (data) => {
+(async () => {
+    if (envs.REMOTE_CONFIG) {
+        const { default: logger } = await import('@/utils/logger');
+        try {
+            const data = await ofetch(envs.REMOTE_CONFIG, {
+                headers: {
+                    Authorization: `Basic ${envs.REMOTE_CONFIG_AUTH}`,
+                },
+            });
             if (data) {
                 envs = Object.assign(envs, data);
                 calculateValue();
-                const { default: logger } = await import('@/utils/logger');
                 logger.info('Remote config loaded.');
+            } else {
+                logger.error('Remote config load failed.');
             }
-        })
-        .catch(async (error) => {
-            const { default: logger } = await import('@/utils/logger');
+        } catch (error) {
             logger.error('Remote config load failed.', error);
-        });
-}
+        }
+    }
+})();
 
 // @ts-expect-error value is set
 export const config: Config = value;
