@@ -30,17 +30,20 @@ export const route: Route = {
   :::`,
 };
 
-async function handler() {
+async function handler(ctx) {
     const cookie = config.zhihu.cookies;
     if (cookie === undefined) {
         throw new Error('缺少知乎用户登录后的 Cookie 值');
     }
-
     const response = await got({
         method: 'get',
-        url: `https://www.zhihu.com/api/v3/moments?desktop=true&limit=100`,
+        url: `https://www.zhihu.com/api/v3/moments`,
         headers: {
             Cookie: cookie,
+        },
+        searchParams: {
+            desktop: true,
+            limit: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15,
         },
     });
     const feeds = response.data.data;
@@ -111,7 +114,7 @@ async function handler() {
     };
 
     const out = feeds
-        .filter((e) => e && e.verb && e.verb !== 'MEMBER_VOTEUP_ARTICLE' && e.verb !== 'MEMBER_VOTEUP_ANSWER')
+        .filter((e) => e.verb && e.verb !== 'MEMBER_VOTEUP_ARTICLE' && e.verb !== 'MEMBER_VOTEUP_ANSWER')
         .map((e) => {
             if (e && e.type && e.type === 'feed_group') {
                 // A feed group contains a list of feeds whose structure is the same as a single feed
