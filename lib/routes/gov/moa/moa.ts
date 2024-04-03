@@ -26,7 +26,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '中华人民共和国农业农村部',
+    name: '中华人民共和国农业农村部 - 新闻',
     maintainers: ['lyqluis'],
     handler,
     url: 'moa.gov.cn/',
