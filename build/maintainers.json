@@ -430,6 +430,9 @@
   "/aqara/cn/news": [],
   "/aqara*": [],
   "/aqara/:region/:type?": [],
+  "/aqicn/:city/:pollution?": [
+    "ladeng07"
+  ],
   "/arcteryx/new-arrivals/:country/:gender": [
     "EthanWng97"
   ],
