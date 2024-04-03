@@ -27,7 +27,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '中华人民共和国农业农村部 - 新闻',
-    maintainers: ['lyqluis'],
+    maintainers: ['Origami404', 'lyqluis'],
     handler,
     url: 'moa.gov.cn/',
     description: `更多例子：
