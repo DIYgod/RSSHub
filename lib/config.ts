@@ -29,9 +29,6 @@ export type Config = {
     memory: {
         max: number;
     };
-    mox: {
-        cookie: string;
-    };
     redis: {
         url: string;
     };
@@ -193,6 +190,9 @@ export type Config = {
     miniflux: {
         instance?: string;
         token?: string;
+    };
+    mox: {
+        cookie: string;
     };
     ncm: {
         cookies?: string;
