@@ -276,6 +276,9 @@ export type Config = {
     ximalaya: {
         token?: string;
     };
+    xueqiu: {
+        cookies?: string;
+    };
     youtube: {
         key?: string;
         clientId?: string;
@@ -618,6 +621,9 @@ const calculateValue = () => {
         },
         ximalaya: {
             token: envs.XIMALAYA_TOKEN,
+        },
+        xueqiu: {
+            cookies: envs.XUEQIU_COOKIES,
         },
         youtube: {
             key: envs.YOUTUBE_KEY,
