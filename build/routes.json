@@ -28048,23 +28048,26 @@
   },
   "idaily": {
     "routes": {
-      "/today/:language?": {
-        "path": [
-          "/today/:language?",
-          "/:language?"
-        ],
-        "name": "Unknown",
-        "maintainers": [],
-        "description": "| 简体中文 | 繁体中文 |\n  | -------- | -------- |\n  | zh-hans  | zh-hant  |",
-        "location": "index.ts"
-      },
       "/:language?": {
         "path": [
-          "/today/:language?",
           "/:language?"
         ],
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "每日环球视野",
+        "example": "/idaily",
+        "maintainers": [
+          "zphw",
+          "nczitzk"
+        ],
+        "parameters": {
+          "language": "语言，见下表，默认为简体中文"
+        },
+        "radar": [
+          {
+            "source": [
+              "idai.ly/"
+            ]
+          }
+        ],
         "description": "| 简体中文 | 繁体中文 |\n  | -------- | -------- |\n  | zh-hans  | zh-hant  |",
         "location": "index.ts"
       }

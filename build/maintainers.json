@@ -2827,8 +2827,10 @@
   "/icbc/whpj/:format?": [
     "leoleoasd"
   ],
-  "/idaily/today/:language?": [],
-  "/idaily/:language?": [],
+  "/idaily/:language?": [
+    "zphw",
+    "nczitzk"
+  ],
   "/idolypride/news": [
     "Mingxia1"
   ],
