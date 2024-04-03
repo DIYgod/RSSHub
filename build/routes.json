@@ -39726,6 +39726,32 @@
     "name": "Nyaa",
     "url": "nyaa.si"
   },
+  "nymity": {
+    "routes": {
+      "/censorbib": {
+        "path": "/censorbib",
+        "categories": [
+          "journal"
+        ],
+        "example": "/nymity/censorbib",
+        "radar": [
+          {
+            "source": [
+              "censorbib.nymity.ch/"
+            ]
+          }
+        ],
+        "name": "CensorBib Updates",
+        "maintainers": [
+          "xtexChooser"
+        ],
+        "url": "censorbib.nymity.ch/",
+        "location": "censorbib.ts"
+      }
+    },
+    "name": "nymity",
+    "url": "censorbib.nymity.ch"
+  },
   "nytimes": {
     "routes": {
       "/book/:category?": {

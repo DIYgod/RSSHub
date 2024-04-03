@@ -4015,6 +4015,9 @@
     "Lava-Swimmer",
     "noname1776"
   ],
+  "/nymity/censorbib": [
+    "xtexChooser"
+  ],
   "/nytimes/book/:category?": [
     "melvinto"
   ],
