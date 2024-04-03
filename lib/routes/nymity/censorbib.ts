@@ -35,7 +35,7 @@ async function handler() {
             const linkToPaper = c.find("img.icon[title='Link to paper']").parent().attr('href');
             return {
                 title,
-                description: `${other}<br/><br/><a href='${download}'>Download</a>\n<a href='${downloadBibTex}'>Download BibTex</a>`,
+                description: `${other}<br/><br/><a href='${download}'>Download</a><br/><a href='${downloadBibTex}'>Download BibTex</a>`,
                 author,
                 guid: id,
                 link: linkToPaper,
