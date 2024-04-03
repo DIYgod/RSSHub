@@ -23,8 +23,10 @@ export const route: Route = {
     handler,
     url: 'moa.gov.cn/',
     description: `更多例子：
-  公开 - 农业农村部动态：\`/gov/moa/xw/zwdt/\`
-  数据 - 最新发布：\`/gob/moa/sj/zxfb\``,
+  -   \`农业农村部动态\`的网页链接是\`http://www.moa.gov.cn/xw/zwdt/\`, 对应的\`suburl\`是\`xw/zwdt\`
+  -   \`财务公开\`的网页链接是\`http://www.moa.gov.cn/gk/cwgk_1/\`, 对应的\`suburl\`是\`gk/cwgk_1\`
+  -   像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面(\`http://www.moa.gov.cn/gk/zcfg/\`), 它**不是**一个合法的分类目录，它是\`法律\`, \`行政法规\`, \`部门规章\`等一堆栏目的集合，这时候请点开对应栏目的\`更多 >>\`进入栏目的最下级目录，再根据上面的规则提取\`suburl\`
+  -   特别地，\`图片新闻\`对应的\`suburl\`为\`xw/tpxw/\`, \`最新公开\`对应的\`suburl\`为\`govpublic\`, \`数据>最新发布\`对应的\`suburl\`为\`sj/zxfb\``,
 };
 
 async function handler(ctx) {
@@ -50,6 +52,14 @@ async function handler(ctx) {
             titleSelector: 'a',
             dateSelector: 'span',
         });
+    } else if (suburl.startsWith('govpublic')) {
+        // 最新公开
+        return await dealChannel('govpublic/1/index.htm', {
+            channelTitleText: '最新公开',
+            listSelector: '.commonlist li',
+            titleSelector: 'a',
+            dateSelector: 'span',
+        });
     } else {
         return await dealChannel(suburl, {
             channelTitleSelector: '.pub-media1-head-title',
@@ -62,14 +72,14 @@ async function handler(ctx) {
 
 // 处理文章列表，从那里获得一堆要爬取的页面，然后爬取
 async function dealChannel(suburl, selectors) {
-    const { channelTitleSelector, listSelector, titleSelector, dateSelector } = selectors;
+    const { channelTitleSelector, listSelector, titleSelector, dateSelector, channelTitleText } = selectors;
 
     // 为了与下面解析相对链接的 dealLink 配合，这里末尾必须保证有一条斜杠
     const url = suburl.startsWith('http') ? suburl : hostUrl + suburl;
     const response = await got.get(url);
     const $ = load(response.data);
 
-    const channelTitle = $(channelTitleSelector).text();
+    const channelTitle = channelTitleText ?? $(channelTitleSelector).text();
 
     const pageInfos = $(listSelector)
         .map((i, e) => {
@@ -126,9 +136,21 @@ async function dealChannel(suburl, selectors) {
 
 // 处理正常文章，例子：http://www.moa.gov.cn/xw/zwdt/202309/t20230915_6436615.htm
 async function dealNormalPage(link, item) {
-    const reponse = await got.get(link);
-    const $ = load(reponse.data);
-    const metaElements = $('.bjjMAuthorBox span.dc_3').toArray();
+    const response = await got.get(link);
+    const $ = load(response.data);
+
+    // 互动-直播访谈
+    if (link.includes('zbft')) {
+        const pageHeader = $('.nybzb').html() ?? '';
+        const pics = $('.tpsl').html() ?? '';
+        const content = $('.wzsl').html() ?? '';
+
+        item.description = pageHeader + pics + content;
+        return item;
+    }
+
+    // normal news
+    const metaElements = $('.bjjMAuthorBox span.dc_2').toArray();
 
     // 政府网站变动不频繁，写死第几个应该没有多大关系
     const author = $(metaElements[1]).text();
@@ -189,7 +211,7 @@ async function dealLatestDataChannel() {
             const link = (item.link = `http://zdscxx.moa.gov.cn:8080/nyb/pc/messageView.jsp?id=${id}`);
 
             return cache.tryGet(link, async () => {
-                const { content, source } = await getLatestDataArticleDetali(id);
+                const { content, source } = await getLatestDataArticleDetail(id);
 
                 item.description = content;
                 item.author = source;
@@ -205,7 +227,7 @@ async function dealLatestDataChannel() {
     };
 }
 
-async function getLatestDataArticleDetali(id) {
+async function getLatestDataArticleDetail(id) {
     const res = await got({
         url: 'http://zdscxx.moa.gov.cn:8080/nyb/getMessagesById',
         method: 'post',
