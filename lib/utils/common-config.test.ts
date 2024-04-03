@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import configUtils, { transElemText, replaceParams, getProp } from '@/utils/common-config';
-import nock from 'nock';
 
 describe('index', () => {
     it('transElemText', () => {
@@ -40,23 +39,6 @@ describe('index', () => {
     });
 
     it('buildData', async () => {
-        nock('http://rsshub.test')
-            .get('/buildData')
-            .reply(() => [
-                200,
-                `<div class="content">
-                <ul>
-                    <li>
-                        <a href="/1">1</a>
-                        <div class="description">RSSHub1</div>
-                    </li>
-                    <li>
-                        <a href="/2">2</a>
-                        <div class="description">RSSHub2</div>
-                    </li>
-                </ul>
-            </div>`,
-            ]);
         const data = await configUtils({
             link: 'http://rsshub.test/buildData',
             url: 'http://rsshub.test/buildData',

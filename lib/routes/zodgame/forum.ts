@@ -40,7 +40,7 @@ async function handler(ctx) {
     const cookie = config.zodgame.cookie;
 
     if (cookie === undefined) {
-        throw new Error('Zodgame RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('Zodgame RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
     const response = await got({

@@ -22,7 +22,7 @@ describe('httperror', () => {
     it(`httperror`, async () => {
         const response = await request.get('/test/httperror');
         expect(response.status).toBe(503);
-        expect(response.text).toMatch('Response code 404 (Not Found): target website might be blocking our access, you can host your own RSSHub instance for a better usability.');
+        expect(response.text).toMatch('404 Not Found: target website might be blocking our access, you can host your own RSSHub instance for a better usability.');
     }, 20000);
 });
 

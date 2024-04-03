@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import cherrio from 'cheerio';
+import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 
@@ -43,7 +43,7 @@ async function handler() {
     const res = await page.evaluate(() => document.documentElement.innerHTML);
     await page.close();
 
-    const $ = cherrio.load(res);
+    const $ = cheerio.load(res);
 
     const items = $('div h3 a')
         .toArray()
@@ -67,7 +67,7 @@ async function handler() {
                     waitUntil: 'domcontentloaded',
                 });
                 const res = await page.evaluate(() => document.documentElement.innerHTML);
-                const $ = cherrio.load(res);
+                const $ = cheerio.load(res);
                 await page.close();
 
                 item.description = $('div.article__body').html();

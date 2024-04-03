@@ -93,7 +93,7 @@ async function getAccountIdByAcct(acct) {
     const site = mastodonConfig.apiHost || acctHost;
     const acctDomain = mastodonConfig.acctDomain || acctHost;
     if (!(site && acctDomain)) {
-        throw new Error('Mastodon RSS is disabled due to the lack of <a href="https://docs.rsshub.app/en/install/#configuration-route-specific-configurations">relevant config</a>');
+        throw new Error('Mastodon RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     if (!config.feature.allow_user_supply_unsafe_domain && !allowSiteList.includes(site)) {
         throw new Error(`RSS for this domain is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true' or 'MASTODON_API_HOST' is set.`);

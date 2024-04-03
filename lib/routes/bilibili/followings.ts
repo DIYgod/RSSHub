@@ -43,7 +43,7 @@ async function handler(ctx) {
     const loginUid = ctx.req.param('loginUid');
     const cookie = config.bilibili.cookies[loginUid];
     if (cookie === undefined) {
-        throw new Error('缺少对应 loginUid 的 Bilibili 用户登录后的 Cookie 值 <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">bilibili 用户关注动态系列路由</a>');
+        throw new Error('缺少对应 loginUid 的 Bilibili 用户登录后的 Cookie 值 <a href="https://docs.rsshub.app/zh/deploy/config#route-specific-configurations">bilibili 用户关注动态系列路由</a>');
     }
 
     const uid = ctx.req.param('uid');

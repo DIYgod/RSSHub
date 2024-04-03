@@ -7,8 +7,8 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/mot/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    name: '中华人民共和国交通运输部',
+    maintainers: ['ladeng07'],
     handler,
 };
 
@@ -48,7 +48,7 @@ async function handler(ctx) {
 
                     item.title = content('meta[name="ArticleTitle"]').prop('content') || content('h1#ti').text();
                     item.description = content('div.TRS_UEDITOR').html();
-                    item.author = [...new Set([content('meta[name="Author"]').prop('content'), content('meta[name="ContentSource"]').prop('content')])].filter(Boolean);
+                    item.author = [...new Set([content('meta[name="Author"]').prop('content'), content('meta[name="ContentSource"]').prop('content')])].find(Boolean);
                     item.category = [
                         ...new Set([content('meta[name="ColumnName"]').prop('content'), content('meta[name="ColumnType"]').prop('content'), ...(content('meta[name="Keywords"]').prop('content')?.split(/,|;/) ?? [])]),
                     ].filter(Boolean);
