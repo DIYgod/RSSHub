@@ -64,12 +64,12 @@ const getFakeGot = (defaultOptions?: any) => {
         return response;
     };
 
-    fakeGot.get = (request, options) => fakeGot(request, { ...options, method: 'GET' });
-    fakeGot.post = (request, options) => fakeGot(request, { ...options, method: 'POST' });
-    fakeGot.put = (request, options) => fakeGot(request, { ...options, method: 'PUT' });
-    fakeGot.patch = (request, options) => fakeGot(request, { ...options, method: 'PATCH' });
-    fakeGot.head = (request, options) => fakeGot(request, { ...options, method: 'HEAD' });
-    fakeGot.delete = (request, options) => fakeGot(request, { ...options, method: 'DELETE' });
+    fakeGot.get = (request, options?) => fakeGot(request, { ...options, method: 'GET' });
+    fakeGot.post = (request, options?) => fakeGot(request, { ...options, method: 'POST' });
+    fakeGot.put = (request, options?) => fakeGot(request, { ...options, method: 'PUT' });
+    fakeGot.patch = (request, options?) => fakeGot(request, { ...options, method: 'PATCH' });
+    fakeGot.head = (request, options?) => fakeGot(request, { ...options, method: 'HEAD' });
+    fakeGot.delete = (request, options?) => fakeGot(request, { ...options, method: 'DELETE' });
     fakeGot.extend = (options) => getFakeGot(options);
 
     return fakeGot;
