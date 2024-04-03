@@ -21,7 +21,7 @@ async function handler(ctx) {
         const title = `${item.type === 'dlc' ? '[DLC]' : ''}${item.name}${item.name_en ? '/' + item.name_en : ''}`;
 
         let description = `<img src="${item.image}"/> <br/>`;
-        description += String(item.type === 'dlc' ? '本体: ' + item.product_home_name + '<br/>' : '');
+        description += item.type === 'dlc' ? '本体: ' + item.product_home_name + '<br/>' : '';
         if (item.price) {
             description += `原价: ${item.price.initial_amount}<br/>`;
         }
@@ -31,7 +31,7 @@ async function handler(ctx) {
 
         description += `支持中文: ${item.chinese_support ? '是' : '否'}<br/>`;
 
-        description += `截止时间: ${new Date(item.end_time * 1000 + 8 * 3600 * 1000).toLocaleString('zh-CN')}<br/>`;
+        description += `截止时间: ${parseDate(item.end_time * 1000).toLocaleString('zh-CN')}<br/>`;
         description += '<br/>';
 
         let link = `https://api.xiaoheihe.cn/game/share_game_detail?appid=${item.steam_appid}`;
@@ -50,7 +50,7 @@ async function handler(ctx) {
         items = [
             {
                 title: `${platform.toUpperCase()}最近没有喜加一(悲`,
-                pubDate: parseDate(response.data.result.weixindata.timestamp * 1000).setHours(-15, 0, 0, 0),
+                pubDate: parseDate(response.data.result.weixindata.timestamp * 1000),
             },
         ];
     }
