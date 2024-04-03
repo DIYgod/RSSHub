@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { province } = ctx.req.param();
+    const { province = '' } = ctx.req.param();
     const alarmInfoURL = `http://www.nmc.cn/rest/findAlarm`;
     const { data: response } = await got(alarmInfoURL, {
         searchParams: {
@@ -42,7 +42,6 @@ async function handler(ctx) {
             province,
         },
     });
-
     const list = response.data.page.list.map((item) => ({
         title: item.title,
         link: `http://www.nmc.cn${item.url}`,
