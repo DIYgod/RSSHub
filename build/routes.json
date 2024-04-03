@@ -59673,6 +59673,21 @@
   },
   "xiaoheihe": {
     "routes": {
+      "/add2cart/:platform": {
+        "path": "/add2cart/:platform",
+        "categories": [
+          "game"
+        ],
+        "example": "/xiaoheihe/add2cart/epic",
+        "parameters": {
+          "platform": "平台名：epic、steam或gog"
+        },
+        "name": "喜加一",
+        "maintainers": [
+          "ladeng07"
+        ],
+        "location": "add2cart.ts"
+      },
       "/discount/:platform": {
         "path": "/discount/:platform",
         "categories": [
