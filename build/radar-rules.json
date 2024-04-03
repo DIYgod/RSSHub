@@ -3707,6 +3707,19 @@
       }
     ]
   },
+  "dora-world.com": {
+    "_name": "Doraemon Channel",
+    "www": [
+      {
+        "title": "Article",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/:topic"
+        ],
+        "target": "/dora-world/article/:topic/:topicId?"
+      }
+    ]
+  },
   "dorohedoro.net": {
     "_name": "Dorohedoro",
     ".": [
