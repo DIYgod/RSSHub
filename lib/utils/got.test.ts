@@ -48,4 +48,12 @@ describe('got', () => {
         expect(response.body).toBe('{"test":"rsshub"}');
         expect(response.data.test).toBe('rsshub');
     });
+
+    it('buffer-get', async () => {
+        const response = await got.get('http://example.com', {
+            responseType: 'buffer',
+        });
+        expect(response.body instanceof Buffer).toBe(true);
+        expect(response.data instanceof Buffer).toBe(true);
+    });
 });

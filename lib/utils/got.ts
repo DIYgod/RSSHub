@@ -1,13 +1,6 @@
 import { destr } from 'destr';
 import ofetch from '@/utils/ofetch';
 
-const gotofetch = ofetch.create({
-    parseResponse: (responseText) => ({
-        data: destr(responseText),
-        body: responseText,
-    }),
-});
-
 const getFakeGot = (defaultOptions?: any) => {
     const fakeGot = (request, options?: any) => {
         if (!(typeof request === 'string' || request instanceof Request) && request.url) {
@@ -49,7 +42,26 @@ const getFakeGot = (defaultOptions?: any) => {
             delete options.searchParams;
         }
 
-        return gotofetch(request, options);
+        // Add support for buffer responseType, to be compatible with got
+        options.parseResponse = (responseText) => ({
+            data: destr(responseText),
+            body: responseText,
+        });
+
+        if (options?.responseType === 'buffer' || options?.responseType === 'arrayBuffer') {
+            options.responseType = 'arrayBuffer';
+            delete options.parseResponse;
+        }
+
+        const response = ofetch(request, options);
+
+        if (options?.responseType === 'arrayBuffer') {
+            return response.then((responseData) => ({
+                data: Buffer.from(responseData),
+                body: Buffer.from(responseData),
+            }));
+        }
+        return response;
     };
 
     fakeGot.get = (request, options) => fakeGot(request, { ...options, method: 'GET' });
