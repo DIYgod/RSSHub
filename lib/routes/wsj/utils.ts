@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import randUserAgent from '@/utils/rand-user-agent';
 
 const UA = randUserAgent({ browser: 'chrome', os: 'android', device: 'mobile' });

@@ -25,8 +25,8 @@
         "build:docs": "tsx scripts/workflow/build-docs.ts",
         "dev": "cross-env NODE_ENV=dev tsx watch --no-cache lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production tsx watch lib/index.ts",
-        "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --write",
-        "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
+        "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" && prettier \"**/*.{ts,tsx,js,json}\" --write",
+        "format:check": "eslint --cache \"**/*.{ts,tsx,js,yml}\" && prettier \"**/*.{ts,tsx,js,json}\" --check",
         "format:staged": "lint-staged",
         "vitest": "cross-env NODE_ENV=test vitest",
         "vitest:fullroutes": "cross-env NODE_ENV=test FULL_ROUTES_TEST=true vitest --reporter=json --reporter=default --outputFile=\"./assets/build/test-full-routes.json\" routes",
@@ -43,7 +43,7 @@
             "eslint --cache --fix",
             "prettier --ignore-unknown --ignore-path ./.gitignore --write"
         ],
-        "*.ts": [
+        "*.{ts,tsx}": [
             "eslint --cache --fix",
             "prettier --ignore-unknown --ignore-path ./.gitignore --write"
         ],

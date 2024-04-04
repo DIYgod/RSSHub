@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import * as path from 'node:path';
+import path from 'node:path';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 const renderDescription = (info) => art(path.join(__dirname, '../templates/music/userevents.art'), info);

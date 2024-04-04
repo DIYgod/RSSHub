@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx, currentUrl) => {
+const utils = async (ctx, currentUrl) => {
     const rootUrl = 'https://www.sobooks.net';
     currentUrl = `${rootUrl}/${currentUrl}`;
     const response = await got({
@@ -49,3 +49,4 @@ export default async (ctx, currentUrl) => {
         item: items,
     };
 };
+export default utils;

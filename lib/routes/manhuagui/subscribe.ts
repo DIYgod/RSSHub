@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 const web_url = 'https://www.manhuagui.com/user/book/shelf/1';
 

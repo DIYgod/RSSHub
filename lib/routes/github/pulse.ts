@@ -3,7 +3,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';

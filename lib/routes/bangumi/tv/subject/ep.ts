@@ -4,10 +4,10 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { getLocalName } from './utils';
 
-export default async (subjectID, showOriginalName) => {
+const getEps = async (subjectID, showOriginalName) => {
     const url = `https://api.bgm.tv/subject/${subjectID}?responseGroup=large`;
     const { data: epsInfo } = await got(url);
     const activeEps = [];
@@ -33,3 +33,4 @@ export default async (subjectID, showOriginalName) => {
         })),
     };
 };
+export default getEps;

@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
-import * as path from 'node:path';
+import path from 'node:path';
 import { baseUrl, getUserInfoFromUsername, getUserInfoFromId, getUserWorks } from './utils';
 
 export const route: Route = {
