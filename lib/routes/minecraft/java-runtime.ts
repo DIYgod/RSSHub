@@ -89,8 +89,8 @@ function generateArch(arch: string, data: any, javaType: string): DataItem[] {
     return items;
 }
 
-async function handler(ctx?: Context) {
-    const url = ctx?.req.query('mcmanifest') ?? 'https://launchermeta.mojang.com/v1/products/java-runtime/2ec0cc96c44e5a76b9c8b7c39df7210883d12871/all.json';
+async function handler(ctx: Context) {
+    const url = 'https://launchermeta.mojang.com/v1/products/java-runtime/2ec0cc96c44e5a76b9c8b7c39df7210883d12871/all.json';
 
     const response: any = await got({
         method: 'get',
@@ -100,8 +100,8 @@ async function handler(ctx?: Context) {
 
     const data: any = response.data;
 
-    const arch = ctx?.req.param('arch') ?? 'all';
-    const javaType = ctx?.req.param('javaType') ?? 'all';
+    const arch = ctx.req.param('arch') ?? 'all';
+    const javaType = ctx.req.param('javaType') ?? 'all';
 
     let items: DataItem[] = [];
 
@@ -115,13 +115,12 @@ async function handler(ctx?: Context) {
     } else {
         items = [...items, ...generateArch(arch, data[arch], javaType)];
     }
-    items = items.sort((a, b) => new Date(a.pubDate!).getTime() - new Date(b.pubDate!).getTime());
 
-    const title = `Minecraft Java运行时`;
+    const title = 'Minecraft Java运行时';
 
     return {
         title,
-        link: `https://www.minecraft.net/`,
+        link: 'https://www.minecraft.net/',
         description: title,
         item: items,
     };
