@@ -5730,6 +5730,9 @@
   "/ustc/jwc/:type?": [
     "hang333"
   ],
+  "/ustc/math/:type?": [
+    "ne0-wu"
+  ],
   "/ustc/sist/:type?": [
     "jasongzy"
   ],

@@ -56946,6 +56946,39 @@
         "description": "| 信息 | 教学     | 考试 | 交流     |\n  | ---- | -------- | ---- | -------- |\n  | info | teaching | exam | exchange |",
         "location": "jwc.ts"
       },
+      "/math/:type?": {
+        "path": "/math/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/ustc/math/tzgg",
+        "parameters": {
+          "type": "分类，见下表，默认为通知公告"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "math.ustc.edu.cn/"
+            ],
+            "target": "/math"
+          }
+        ],
+        "name": "数学科学学院",
+        "maintainers": [
+          "ne0-wu"
+        ],
+        "url": "math.ustc.edu.cn/",
+        "description": "| 学院新闻 | 通知公告 | 学术交流 | 学术报告 |\n  | -------- | -------- | -------- | -------- |\n  | xyxw     | tzgg     | xsjl     | xsbg     |",
+        "location": "math.ts"
+      },
       "/sist/:type?": {
         "path": "/sist/:type?",
         "categories": [

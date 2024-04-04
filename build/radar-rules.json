@@ -14474,6 +14474,16 @@
         "target": "/ustc/jwc"
       }
     ],
+    "math": [
+      {
+        "title": "数学科学学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ustc/math"
+      }
+    ],
     "sist": [
       {
         "title": "信息科学技术学院",
