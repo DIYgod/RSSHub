@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const getRequestToken = () => {
     const e = 'sgn51n6r6q97o6g3';

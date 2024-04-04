@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
-import * as path from 'node:path';
+import path from 'node:path';
 import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({
     html: true,

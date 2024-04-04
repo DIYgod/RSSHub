@@ -3,7 +3,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 import asyncPool from 'tiny-async-pool';
 
 import { parseDate } from '@/utils/parse-date';

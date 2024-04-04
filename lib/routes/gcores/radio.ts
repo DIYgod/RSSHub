@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/radios/:category?',

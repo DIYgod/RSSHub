@@ -1,6 +1,6 @@
 import { namespaces } from '../../lib/registry';
 import fs from 'node:fs';
-import * as path from 'node:path';
+import path from 'node:path';
 import { categories } from './data';
 import { getCurrentPath } from '../../lib/utils/helpers';
 

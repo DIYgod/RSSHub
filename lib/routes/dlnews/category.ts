@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { getData, getList } from './utils';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import asyncPool from 'tiny-async-pool';
 
 const _website = 'dlnews';
