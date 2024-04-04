@@ -53,7 +53,6 @@ async function handler(ctx) {
     const response = await got(`${host}/${id}/list.htm`);
     const $ = load(response.data);
 
-    // 定位到包含新闻列表的 ul 元素
     let items = $('#wp_news_w6 > .wp_article_list > .list_item')
         .toArray()
         .map((item) => {
@@ -61,7 +60,8 @@ async function handler(ctx) {
             const title = elem.find('.Article_Title > a').attr('title').trim();
             let link = elem.find('.Article_Title > a').attr('href');
             link = link.startsWith('/') ? host + link : link;
-            const pubDate = timezone(parseDate(elem.find('.Article_PublishDate').text(), 'YYYY-MM-DD'), +8);
+            // Assume that the articles are published at 12:00 UTC+8
+            const pubDate = timezone(parseDate(elem.find('.Article_PublishDate').text(), 'YYYY-MM-DD'), -4);
             return {
                 title,
                 pubDate,
