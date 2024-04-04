@@ -1,16 +1,16 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getToken } from './token';
-import getIllusts from './api/get-illusts';
+import { getIllusts } from './api/get-illusts';
 import { config } from '@/config';
 import pixivUtils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/user/:id',
+    path: '/user/:id/:limit?',
     categories: ['social-media'],
     example: '/pixiv/user/15288095',
-    parameters: { id: "user id, available in user's homepage URL" },
+    parameters: { id: "user id, available in user's homepage URL", limit: "(Optional)the maximum number of illusts to fetch, default value is 30." },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -40,9 +40,9 @@ async function handler(ctx) {
         throw new Error('pixiv not login');
     }
 
-    const response = await getIllusts(id, token);
+    const limit = ctx.req.param('limit') ? Number.parseInt(ctx.req.param('limit')) : 30;
 
-    const illusts = response.data.illusts;
+    const illusts = (await getIllusts(id, token, limit)).slice(0, limit);
     const username = illusts[0].user.name;
 
     return {
