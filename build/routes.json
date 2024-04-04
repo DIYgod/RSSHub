@@ -33441,6 +33441,47 @@
     "name": "洛谷",
     "url": "luogu.com.cn"
   },
+  "luolei": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "name": "罗磊的独立博客",
+        "url": "luolei.org",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/luolei",
+        "description": "",
+        "categories": [
+          "blog"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "luolei.org"
+            ],
+            "target": "/"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "罗磊的独立博客",
+    "url": "luolei.org",
+    "categories": [
+      "blog"
+    ],
+    "description": ""
+  },
   "luxiangdong": {
     "routes": {
       "/archive": {
