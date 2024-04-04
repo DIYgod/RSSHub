@@ -17659,6 +17659,41 @@
     "name": "ePrice",
     "url": "eprice.com.tw"
   },
+  "europechinese": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/europechinese/latest",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "europechinese.blogspot.com"
+            ]
+          }
+        ],
+        "name": "最新",
+        "maintainers": [
+          "emdoe"
+        ],
+        "url": "europechinese.blogspot.com/",
+        "location": "latest.ts"
+      }
+    },
+    "name": "歐洲動態（國際）",
+    "url": "europechinese.blogspot.com"
+  },
   "eventernote": {
     "routes": {
       "/actors/:name/:id": {

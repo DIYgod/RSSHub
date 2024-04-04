@@ -1769,6 +1769,9 @@
   "/eprice/:region?": [
     "TonyRL"
   ],
+  "/europechinese/latest": [
+    "emdoe"
+  ],
   "/eventernote/actors/:name/:id": [
     "KTachibanaM"
   ],

@@ -4191,6 +4191,29 @@
       }
     ]
   },
+  "blogspot.com": {
+    "_name": "歐洲動態（國際）",
+    "europechinese": [
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/europechinese/latest"
+      }
+    ],
+    "ygkkk": [
+      {
+        "title": "最新发表",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/ygkkk/"
+      }
+    ]
+  },
   "eventernote.com": {
     "_name": "Eventernote",
     "www": [
@@ -15431,19 +15454,6 @@
           "/post/"
         ],
         "target": "/yande/post/popular_recent/:period?"
-      }
-    ]
-  },
-  "blogspot.com": {
-    "_name": "甬哥侃侃侃YouTube教程摘要随笔",
-    "ygkkk": [
-      {
-        "title": "最新发表",
-        "docs": "https://docs.rsshub.app/routes/blog",
-        "source": [
-          "/"
-        ],
-        "target": "/ygkkk/"
       }
     ]
   },
