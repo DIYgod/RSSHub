@@ -2,7 +2,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getLocalName } from './utils';
 
-export default (type) => {
+const getFromAPI = (type) => {
     const mapping = {
         blog: {
             en: 'reviews',
@@ -31,3 +31,4 @@ export default (type) => {
         };
     };
 };
+export default getFromAPI;

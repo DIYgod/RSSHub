@@ -1,7 +1,7 @@
 import type { Namespace, Route } from '@/types';
 import { directoryImport } from 'directory-import';
 import { Hono, type Handler } from 'hono';
-import * as path from 'node:path';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { serveStatic } from '@hono/node-server/serve-static';
 

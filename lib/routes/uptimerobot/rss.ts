@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import Parser from 'rss-parser';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import dayjs from 'dayjs';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 

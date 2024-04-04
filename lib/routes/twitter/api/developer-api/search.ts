@@ -1,6 +1,6 @@
 import utils from '../../utils';
 
-export default async (ctx) => {
+const handler = async (ctx) => {
     const keyword = ctx.req.param('keyword');
     const limit = ctx.req.query('limit') ?? 50;
     const client = await utils.getAppClient();
@@ -20,3 +20,4 @@ export default async (ctx) => {
         allowEmpty: true,
     };
 };
+export default handler;
