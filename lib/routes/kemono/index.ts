@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
+import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:source?/:id?/:limit?',
@@ -95,23 +95,13 @@ async function handler(ctx) {
             )
         );
         items = items.flat();
-    } else if (isPosts) {
-        title = "Kemono Posts";
-        image = `${rootUrl}/favicon.ico`;
-        items = response.data
-        .filter((i) => i.content || i.attachments)
-        .slice(0, limit)
-        .map((i) => ({
-            title: i.title,
-            link: `${rootUrl}/${i.service}/user/${i.user}/post/${i.id}`
-        }));
-    } else {
+    } else if(!isPosts) {
         const profileResponse = await got({
             method: 'get',
             url: `${currentUrl}/profile`,
             headers,
         });
-
+        
         const author = profileResponse.data.name;
         title = `Posts of ${author} from ${source} | Kemono`;
         image = `img.kemono.su/icons/${source}/${id}`;
@@ -120,55 +110,65 @@ async function handler(ctx) {
         .slice(0, limit)
 		.map((i) => {
 			i.files = [];
-			if ('path' in i.file) {
+			if('path' in i.file){
 				i.files.push({
-                    name: i.file.name,
-                    path: i.file.path,
+                    name: i.file.name, 
+                    path: i.file.path, 
                     extension: i.file.path.replace(/.*\./, "").toLowerCase(),
-                });
+                });	
 			}
-            for (const attachment of i.attachments) {
+            for (let attachment of i.attachments){
                 i.files.push({
 					name: attachment.name,
 					path: attachment.path,
 					extension: attachment.path.replace(/.*\./, "").toLowerCase(),
 				});
             }
-
+            
             const filesHTML = art(path.join(__dirname, 'templates', 'source.art'), { i });
             let $ = load(filesHTML);
-            const kemonoFiles = Array<string>();
-            $("img, a, audio, video").each(function() {
+            let kemonoFiles = Array<string>();
+            $("img, a, audio, video").each(function(){
                 kemonoFiles.push($(this).prop("outerHTML")!);
             });
             let desc = "";
-            if (i.content !== "") {
+            if (i.content!=""){
                 desc += `<div>${i.content}</div>`;
             }
             $ = load(desc);
             let count = 0;
-            const regex = /downloads.fanbox.cc/;
-            $('a').each(function() {
-                const link = $(this).attr('href');
-                if (regex.test(link!)) {
-                    count++;
+            let regex = new RegExp("downloads.fanbox.cc");
+            $('a').each(function(){
+                let link = $(this).attr('href');
+                if(regex.test(link!)){
+                    count++; 
                     $(this).replaceWith(kemonoFiles[count]);
                 }
             });
             desc = (kemonoFiles.length > 0 ? kemonoFiles[0] : "") + $.html();
-            for (const kemonoFile of kemonoFiles.slice(count + 1)) {
+            for (let kemonoFile of kemonoFiles.slice(count+1)) {
                 desc += kemonoFiles[kemonoFile];
             }
 
 			return {
 				title: i.title,
 				description: desc,
-				author,
+				author: author,
 				pubDate: parseDate(i.published),
 				guid: `${currentUrl}/post/${i.id}`,
 				link: `${rootUrl}/${i.service}/user/${i.user}/post/${i.id}`,
 			};
         });
+    } else {
+            title = "Kemono Posts";
+            image = `${rootUrl}/favicon.ico`;
+            items = response.data
+            .filter((i) => i.content || i.attachments)
+            .slice(0, limit)
+            .map((i) => ({
+                title: i.title,
+                link: `${rootUrl}/${i.service}/user/${i.user}/post/${i.id}`
+            }));
         }
 
     return {
