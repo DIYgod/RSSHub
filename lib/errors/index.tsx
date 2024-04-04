@@ -62,18 +62,13 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
 
     logger.error(`Error in ${requestPath}: ${message}`);
 
-    return config.isPackage ? ctx.json({
-        error: {
-            message: error.message ?? error,
-        },
-    }) : ctx.html((
-        <Error
-            requestPath={requestPath}
-            message={message}
-            errorRoute={hasMatchedRoute ? matchedRoute : requestPath}
-            nodeVersion={process.version}
-        />
-    ));
+    return config.isPackage
+        ? ctx.json({
+              error: {
+                  message: error.message ?? error,
+              },
+          })
+        : ctx.html(<Error requestPath={requestPath} message={message} errorRoute={hasMatchedRoute ? matchedRoute : requestPath} nodeVersion={process.version} />);
 };
 
 export const notFoundHandler: NotFoundHandler = (ctx) => errorHandler(new NotFoundError(), ctx);
