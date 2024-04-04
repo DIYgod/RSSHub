@@ -61,7 +61,7 @@ async function handler(ctx) {
             const title = elem.find('.Article_Title > a').attr('title').trim();
             let link = elem.find('.Article_Title > a').attr('href');
             link = link.startsWith('/') ? host + link : link;
-            const pubDate = timezone(parseDate(elem.find('.Article_PublishDate').text().trim(), 'YYYY-MM-DD'), +8);
+            const pubDate = timezone(parseDate(elem.find('.Article_PublishDate').text(), 'YYYY-MM-DD'), +8);
             return {
                 title,
                 pubDate,
