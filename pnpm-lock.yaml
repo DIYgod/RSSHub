@@ -10,10 +10,10 @@ dependencies:
     version: 1.9.1
   '@hono/swagger-ui':
     specifier: 0.2.1
-    version: 0.2.1(hono@4.2.1)
+    version: 0.2.1(hono@4.2.2)
   '@hono/zod-openapi':
     specifier: 0.9.10
-    version: 0.9.10(hono@4.2.1)(zod@3.22.4)
+    version: 0.9.10(hono@4.2.2)(zod@3.22.4)
   '@notionhq/client':
     specifier: 2.2.14
     version: 2.2.14
@@ -81,8 +81,8 @@ dependencies:
     specifier: 134.0.0
     version: 134.0.0
   hono:
-    specifier: 4.2.1
-    version: 4.2.1
+    specifier: 4.2.2
+    version: 4.2.2
   html-to-text:
     specifier: 9.0.5
     version: 9.0.5
@@ -1966,15 +1966,15 @@ packages:
     engines: {node: '>=18.14.1'}
     dev: false
 
-  /@hono/swagger-ui@0.2.1(hono@4.2.1):
+  /@hono/swagger-ui@0.2.1(hono@4.2.2):
     resolution: {integrity: sha512-wBxVMRe3/v8xH4o6icmwztiIq0DG0s7+jHVMHVUAoFFCWEQNL2iskMmQtrhSDtsFmBZUeUFQUaaJ6Ir6DOmHLA==}
     peerDependencies:
       hono: '*'
     dependencies:
-      hono: 4.2.1
+      hono: 4.2.2
     dev: false
 
-  /@hono/zod-openapi@0.9.10(hono@4.2.1)(zod@3.22.4):
+  /@hono/zod-openapi@0.9.10(hono@4.2.2)(zod@3.22.4):
     resolution: {integrity: sha512-v/b/z0qPxDo952gjRyhJ0n9ifbPoIluR2KmXDL20np0hj99+XvakoIHK5/T/3+hUmXlTj1Kn3TiGsSV6hwZesg==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -1982,18 +1982,18 @@ packages:
       zod: 3.*
     dependencies:
       '@asteasolutions/zod-to-openapi': 5.5.0(zod@3.22.4)
-      '@hono/zod-validator': 0.2.1(hono@4.2.1)(zod@3.22.4)
-      hono: 4.2.1
+      '@hono/zod-validator': 0.2.1(hono@4.2.2)(zod@3.22.4)
+      hono: 4.2.2
       zod: 3.22.4
     dev: false
 
-  /@hono/zod-validator@0.2.1(hono@4.2.1)(zod@3.22.4):
+  /@hono/zod-validator@0.2.1(hono@4.2.2)(zod@3.22.4):
     resolution: {integrity: sha512-HFoxln7Q6JsE64qz2WBS28SD33UB2alp3aRKmcWnNLDzEL1BLsWfbdX6e1HIiUprHYTIXf5y7ax8eYidKUwyaA==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.19.1
     dependencies:
-      hono: 4.2.1
+      hono: 4.2.2
       zod: 3.22.4
     dev: false
 
@@ -5633,8 +5633,8 @@ packages:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
     dev: false
 
-  /hono@4.2.1:
-    resolution: {integrity: sha512-yDv/6esHiDgq5fvsALTNyNiRxktOplO6LfSMgIkGE+E5vF8axsUfcyfzzlbLYM9ZQDMuws/ZLGUGWwYnAwCcNw==}
+  /hono@4.2.2:
+    resolution: {integrity: sha512-mDmjBHF6uBNN3TASdAbDCFsN9FLbrlgXyFZkhLEkU7hUgk0+T9hcsUrL/nho4qV+Xk0RDHx7gop4Q1gelZZVRw==}
     engines: {node: '>=16.0.0'}
     dev: false
 
