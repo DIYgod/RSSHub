@@ -58101,6 +58101,33 @@
     "name": "War Thunder",
     "url": "warthunder.com"
   },
+  "watasuke": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "example": "/watasuke/blog",
+        "radar": [
+          {
+            "source": [
+              "watasuke.net/blog/",
+              "watasuke.net/"
+            ]
+          }
+        ],
+        "name": "Blog",
+        "maintainers": [
+          "honahuku"
+        ],
+        "url": "watasuke.net/blog/",
+        "location": "blog.ts"
+      }
+    },
+    "name": "Watasuke",
+    "url": "watasuke.net",
+    "categories": [
+      "blog"
+    ]
+  },
   "wdc": {
     "routes": {
       "/download/:id?": {

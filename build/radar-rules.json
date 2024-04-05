@@ -14835,6 +14835,20 @@
       }
     ]
   },
+  "watasuke.net": {
+    "_name": "Watasuke",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog/",
+          "/"
+        ],
+        "target": "/watasuke/blog"
+      }
+    ]
+  },
   "web.dev": {
     "_name": "web.dev",
     ".": [
