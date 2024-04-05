@@ -2,7 +2,6 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/launchpool',
@@ -19,7 +18,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const baseUrl = `https://www.binance.com/zh-CN/support/announcement`;
+    const baseUrl = 'https://www.binance.com/zh-CN/support/announcement';
     const url = `${baseUrl}/数字货币及交易对上新?c=48&navId=48`;
 
     const response = await got({
@@ -36,12 +35,12 @@ async function handler() {
     return {
         title: 'Binance | 数字货币及交易对上新',
         link: url,
-        description: `获取Binance数字货币及交易对上新公告`,
+        description: '数字货币及交易对上新',
         item: articles.map((item) => ({
             title: item.title,
             link: `${baseUrl}/${item.code}`,
             description: item.title,
-            pubDate: timezone(parseDate(item.releaseDate), +8),
+            pubDate: parseDate(item.releaseDate),
         })),
     };
 }
