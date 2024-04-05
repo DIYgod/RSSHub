@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
 import { Context } from 'hono';
-import * as path from 'node:path';
+import path from 'node:path';
 const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {

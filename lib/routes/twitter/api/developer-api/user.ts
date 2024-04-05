@@ -1,6 +1,6 @@
 import utils from '../../utils';
 
-export default async (ctx) => {
+const handler = async (ctx) => {
     const id = ctx.req.param('id');
     // For compatibility
     const { exclude_replies, include_rts, count } = utils.parseRouteParams(ctx.req.param('routeParams'));
@@ -35,3 +35,4 @@ export default async (ctx) => {
         }),
     };
 };
+export default handler;

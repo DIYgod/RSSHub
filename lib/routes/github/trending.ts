@@ -6,7 +6,7 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/trending/:since/:language/:spoken_language?',

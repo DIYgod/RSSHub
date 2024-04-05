@@ -10,7 +10,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 import md5 from '@/utils/md5';
 

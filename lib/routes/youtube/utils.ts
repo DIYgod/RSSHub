@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import { google } from 'googleapis';
 const { OAuth2 } = google.auth;
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 
 let count = 0;

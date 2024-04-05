@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import * as chrono from 'chrono-node';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 import { puppeteerGet } from './utils';
 import puppeteer from '@/utils/puppeteer';
