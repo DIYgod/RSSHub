@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -50,7 +50,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://kemono.su';
 	const apiUrl = `${rootUrl}/api/v1`;
-    const discordUrl = `${rootUrl}/api/v1/discord/channel/lookup/${id}`;
+    const discordUrl = `${apiUrl}/discord/channel/lookup/${id}`;
 	const currentUrl = isPosts ? `${apiUrl}/posts` : `${apiUrl}/${source}/user/${id}`;
 
     const headers = {
@@ -63,7 +63,7 @@ async function handler(ctx) {
         headers,
     });
 
-    let items = <any>[],
+    let items = new Array<DataItem>(),
         title = '',
         image;
 
@@ -95,26 +95,10 @@ async function handler(ctx) {
             )
         );
         items = items.flat();
-    } else if (isPosts) {
-        title = "Kemono Posts";
-        image = `${rootUrl}/favicon.ico`;
-        items = response.data
-        .filter((i) => i.content || i.attachments)
-        .slice(0, limit)
-        .map((i) => ({
-            title: i.title,
-            link: `${rootUrl}/${i.service}/user/${i.user}/post/${i.id}`
-        }));
     } else {
-        const profileResponse = await got({
-            method: 'get',
-            url: `${currentUrl}/profile`,
-            headers,
-        });
-
-        const author = profileResponse.data.name;
-        title = `Posts of ${author} from ${source} | Kemono`;
-        image = `img.kemono.su/icons/${source}/${id}`;
+        const author = isPosts ? "" : await getAuthor(currentUrl, headers);
+        title = isPosts ? "Kemono Posts" : `Posts of ${author} from ${source} | Kemono`;
+        image = isPosts ? `${rootUrl}/favicon.ico` : `https://img.kemono.su/icons/${source}/${id}`;
         items = response.data
 		.filter((i) => i.content || i.attachments)
         .slice(0, limit)
@@ -134,21 +118,19 @@ async function handler(ctx) {
 					extension: attachment.path.replace(/.*\./, "").toLowerCase(),
 				});
             }
-
             const filesHTML = art(path.join(__dirname, 'templates', 'source.art'), { i });
             let $ = load(filesHTML);
-            const kemonoFiles = Array<string>();
-            $("img, a, audio, video").each(function() {
-                kemonoFiles.push($(this).prop("outerHTML")!);
+            const kemonoFiles = $('img, a, audio, video').map(function () {
+                return $(this).prop('outerHTML')!;
             });
             let desc = "";
-            if (i.content !== "") {
+            if (i.content) {
                 desc += `<div>${i.content}</div>`;
             }
             $ = load(desc);
             let count = 0;
             const regex = /downloads.fanbox.cc/;
-            $('a').each(function() {
+            $('a').each(function(this) {
                 const link = $(this).attr('href');
                 if (regex.test(link!)) {
                     count++;
@@ -157,7 +139,7 @@ async function handler(ctx) {
             });
             desc = (kemonoFiles.length > 0 ? kemonoFiles[0] : "") + $.html();
             for (const kemonoFile of kemonoFiles.slice(count + 1)) {
-                desc += kemonoFiles[kemonoFile];
+                desc += kemonoFile;
             }
 
 			return {
@@ -165,7 +147,7 @@ async function handler(ctx) {
 				description: desc,
 				author,
 				pubDate: parseDate(i.published),
-				guid: `${currentUrl}/post/${i.id}`,
+				guid: `${apiUrl}/${i.service}/user/${i.user}/post/${i.id}`,
 				link: `${rootUrl}/${i.service}/user/${i.user}/post/${i.id}`,
 			};
         });
@@ -177,4 +159,13 @@ async function handler(ctx) {
         link: isPosts ? `${rootUrl}/posts` : (source === 'discord' ? `${rootUrl}/${source}/server/${id}` : `${rootUrl}/${source}/user/${id}`),
         item: items,
     };
+}
+
+async function getAuthor(currentUrl, headers) {
+    const profileResponse = await got({
+        method: 'get',
+        url: `${currentUrl}/profile`,
+        headers,
+    });
+    return profileResponse.data.name;
 }
