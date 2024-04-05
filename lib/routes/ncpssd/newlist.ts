@@ -2,15 +2,17 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { URL } from 'url';
+import { Route } from '@/types';
 
 export const route: Route = {
     path: '/newlist',
     categories: ['study'],
     example: '/ncpssd/newlist',
-    radar: [{
-        source: ['ncpssd.cn/', 'ncpssd.cn/newlist'],
-    }],
+    radar: [
+        {
+            source: ['ncpssd.cn/', 'ncpssd.cn/newlist'],
+        },
+    ],
     name: '最新文献',
     maintainers: ['LyleLee'],
     handler,
@@ -30,7 +32,7 @@ async function handler() {
     const $ = load(data);
     const items = $('.news-list > li');
 
-    const list = items.map((index, p) => {
+    const list = items.toArray().map((p) => {
         const title = $(p)
             .find('a')
             .text()
@@ -41,12 +43,12 @@ async function handler() {
             $(p)
                 .find('a')
                 .attr('onclick')
-                ?.match(/\('(.*?)'\)/)[1];
+                ?.match(/\('(.*?)'\)/)?.[1];
         const parseUrl = new URL(articleUrl);
 
         return {
             title,
-            link: baseUrl + articleUrl,
+            link: articleUrl,
             lngid: parseUrl.searchParams.get('id'),
             type: parseUrl.searchParams.get('typename'),
             pageType: parseUrl.searchParams.get('nav'),
@@ -54,7 +56,7 @@ async function handler() {
     });
 
     const paper = await Promise.all(
-        list.map((index, item) =>
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const url = 'https://www.ncpssd.cn/articleinfoHandler/getjournalarticletable'; // Adjust the URL accordingly
                 const headers = {
@@ -77,9 +79,9 @@ async function handler() {
                 return {
                     title: item.title,
                     link: item.link,
-                    author: response.body.data.showwriter,
-                    description: response.body.data.remarkc,
-                    pubDate: parseDate(response.body.data.publishDateTimee),
+                    author: response.data.data.showwriter,
+                    description: response.data.data.remarkc,
+                    pubDate: parseDate(response.data.data.publishDateTime),
                 };
             })
         )
@@ -87,9 +89,9 @@ async function handler() {
 
     return {
         // 源标题
-        title: `国家哲学社会科学文献中心`,
+        title: '国家哲学社会科学文献中心',
         // 源链接
-        link: String(baseUrl),
+        link: baseUrl + argument,
         // 源文章
         item: paper,
     };
