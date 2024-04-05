@@ -30,23 +30,23 @@ export const route: Route = {
     name: '论坛',
     maintainers: ['renzhexigua'],
     handler,
-    description: `| 版块         | category   |
-    | ------------ | ---------- |
-    | 智能设备     | iot        |
-    | Android 安全 | android    |
-    | iOS 安全     | ios        |
-    | HarmonyOS 安全     | harmonyos        |
-    | 软件逆向     | re         |
-    | 编程技术     | coding     |
-    | 加壳脱壳     | unpack     |
-    | 密码应用     | crypto     |
-    | 二进制漏洞   | vuln       |
-    | CTF对抗      | ctf    |
-    | Pwn          | pwn        |
-    | WEB 安全     | web        |
-    | 极客空间   | geekzone |
-    | 外文翻译     | translate  |
-    | 全站         | all        |
+    description: `| 版块           | category  |
+    | -------------- | --------- |
+    | 智能设备       | iot       |
+    | Android 安全   | android   |
+    | iOS 安全       | ios       |
+    | HarmonyOS 安全 | harmonyos |
+    | 软件逆向       | re        |
+    | 编程技术       | coding    |
+    | 加壳脱壳       | unpack    |
+    | 密码应用       | crypto    |
+    | 二进制漏洞     | vuln      |
+    | CTF 对抗       | ctf       |
+    | Pwn            | pwn       |
+    | WEB 安全       | web       |
+    | 极客空间       | geekzone  |
+    | 外文翻译       | translate |
+    | 全站           | all       |
     
     | 类型     | type   |
     | -------- | ------ |
