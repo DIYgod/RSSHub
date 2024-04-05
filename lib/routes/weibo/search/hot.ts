@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 // import weiboUtils from '../utils';
 
 // Default hide all picture

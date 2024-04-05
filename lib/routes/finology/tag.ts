@@ -23,7 +23,7 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['Rjnishant530'],
     handler,
-    description: `:::note[Category]
+    description: `:::note Category
   | Category              | Link               |
   | --------------------- | ------------------ |
   | **Business**          | business           |

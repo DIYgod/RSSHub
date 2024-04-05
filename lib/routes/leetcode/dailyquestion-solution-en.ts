@@ -7,7 +7,7 @@ const md = MarkdownIt({
 });
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import * as path from 'node:path';
+import path from 'node:path';
 export const route: Route = {
     path: '/dailyquestion/solution/en',
     radar: [

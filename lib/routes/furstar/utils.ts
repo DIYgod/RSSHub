@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const base = 'https://furstar.jp';
 

@@ -9,7 +9,7 @@ import { randUserAgent } from '@tonyrl/rand-user-agent';
  * @param {string} randUserAgent.device Name of a device, case-insensitive. `desktop`, `mobile` or `tablet`.
  * @returns A random useragent for the given specifications.
  */
-export default ({ browser = 'chrome', os = 'mac os', device = 'desktop' }) => {
+const _randUserAgent = ({ browser = 'chrome', os = 'mac os', device = 'desktop' }: { browser: string; os: string; device: string }) => {
     device = device.toLowerCase();
     browser = browser.toLowerCase();
     os = os.toLowerCase();
@@ -27,3 +27,4 @@ export default ({ browser = 'chrome', os = 'mac os', device = 'desktop' }) => {
     }
     return UA;
 };
+export default _randUserAgent;

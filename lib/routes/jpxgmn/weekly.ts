@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import { originUrl, getArticleDesc } from './utils';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
@@ -21,9 +21,9 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await got(originUrl);
+    const response = await ofetch.raw(originUrl);
     const baseUrl = new URL(response.url).origin;
-    const $ = load(response.data);
+    const $ = load(response._data);
     const items = $('aside div:nth-child(2) li')
         .toArray()
         .map((item) => {

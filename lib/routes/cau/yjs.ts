@@ -21,7 +21,7 @@ export const route: Route = {
             source: ['yz.cau.edu.cn/col/col41740/index.html', 'yz.cau.edu.cn/'],
         },
     ],
-    name: 'Unknown',
+    name: '研招网通知公告',
     maintainers: ['shengmaosu'],
     handler,
     url: 'yz.cau.edu.cn/col/col41740/index.html',

@@ -19,7 +19,10 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Unknown',
+    name: '作者期刊文献',
+    description: `:::tip
+    可能仅限中国大陆服务器访问，以实际情况为准。
+    :::`,
     maintainers: ['harveyqiu', 'Derekmini'],
     handler,
 };

@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -18,16 +18,30 @@ async function cheerioLoad(url) {
 
 export const route: Route = {
     path: '/:category?',
+    name: 'Book List',
+    url: new URL(baseURL).host,
+    maintainers: ['cubroe'],
+    handler,
+    example: '/freecomputerbooks/compscAlgorithmBooks',
+    parameters: {
+        category: 'A category id., which should be the HTML file name (but **without** the `.html` suffix) in the URL path of a book list page.',
+    },
+    categories: ['reading'],
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportRadar: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['freecomputerbooks.com/', 'freecomputerbooks.com/index.html'],
             target: '',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'freecomputerbooks.com/',
 };
 
 async function handler(ctx) {

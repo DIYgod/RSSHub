@@ -31,7 +31,11 @@ export const route: Route = {
             target: '/more/:category',
         },
     ],
-    name: 'Unknown',
+    name: '滚动新闻',
+    description: `
+| NBA | 足球  | 电竞     | 综合   |
+| --- | ----- | -------- | ------ |
+| nba | zuqiu | dianjing | zonghe |`,
     maintainers: ['nczitzk'],
     handler,
 };

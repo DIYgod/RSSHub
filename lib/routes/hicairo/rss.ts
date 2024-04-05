@@ -4,13 +4,14 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/',
+    categories: ['blog'],
+    example: '/hicairo',
     radar: [
         {
             source: ['hicairo.com/'],
-            target: '',
         },
     ],
-    name: 'Unknown',
+    name: '最近发表',
     maintainers: ['cnkmmk'],
     handler,
     url: 'hicairo.com/',

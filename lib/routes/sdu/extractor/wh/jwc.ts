@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default (link) =>
+const jwc = (link) =>
     cache.tryGet(link, async () => {
         let content, exactDate;
         try {
@@ -23,3 +23,4 @@ export default (link) =>
             return { description: content, exactDate };
         }
     });
+export default jwc;

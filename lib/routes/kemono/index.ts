@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/:source?/:id?',
@@ -125,7 +125,11 @@ async function handler(ctx) {
                             content(this).html(`<img src="${href.startsWith('http') ? href : rootUrl + href}">`);
                         });
 
-                        item.description = content('.post__body').html();
+                        item.description = content('.post__body')
+                            .each(function () {
+                                content(this).find('.ad-container').remove();
+                            })
+                            .html();
                         item.author = content('.post__user-name').text();
                         item.title = content('.post__title span').first().text();
                         item.guid = item.link.replace('kemono.su', 'kemono.party');

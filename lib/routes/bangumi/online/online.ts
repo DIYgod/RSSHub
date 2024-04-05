@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/online',
@@ -25,7 +25,7 @@ export const route: Route = {
             source: ['bangumi.online/'],
         },
     ],
-    name: 'Unknown',
+    name: '當季新番',
     maintainers: ['devinmugen'],
     handler,
     url: 'bangumi.online/',

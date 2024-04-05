@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
 const titleMap = {
@@ -42,7 +42,7 @@ export const route: Route = {
   |  date  | trending |  popularity  | alpha |       style      |
 
   :::warning
-  This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/install/#configuration-route-specific-configurations) for route-specific configurations.
+  This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.
   :::`,
 };
 

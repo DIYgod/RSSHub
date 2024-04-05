@@ -7,7 +7,7 @@ export const namespace: Namespace = {
 Requests from non-Asia areas will be redirected to login page.
 :::
 
-:::tip[Language]
+:::tip Language
 You can change the language of each route to the languages listed below.
 
 | English | 日本语 | 한국의 | 中文             |

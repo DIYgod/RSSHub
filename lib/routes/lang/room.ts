@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/live/room/:id',
@@ -24,7 +24,7 @@ export const route: Route = {
             source: ['lang.live/room/:id'],
         },
     ],
-    name: 'Unknown',
+    name: '直播间开播',
     maintainers: ['MittWillson'],
     handler,
 };

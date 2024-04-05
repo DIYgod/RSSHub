@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import * as path from 'node:path';
+import path from 'node:path';
 
 import { rootUrl, apiTopicUrl, art, processItems } from './util';
 

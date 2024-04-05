@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const getData = async (ctx, list) => {
     const items = await Promise.all(
@@ -16,6 +16,9 @@ const getData = async (ctx, list) => {
 
                 const data = JSON.parse($('script#__NEXT_DATA__').text());
                 const type = data.props.pageProps.article.type.toLowerCase();
+
+                item.pubDate = new Date(data.props.pageProps.article.publishedAt).toUTCString();
+
                 if (type === 'video') {
                     item.description = art(path.join(__dirname, 'templates/video.art'), { article: data.props.pageProps.article });
                 } else {
@@ -33,7 +36,7 @@ const getData = async (ctx, list) => {
 
                     const article = data.props.pageProps.article;
                     const capture = load(article.body);
-                    const banner = article.thumbnail?.urls?.header;
+                    const banner = article.image?.url;
                     capture('p.pullquote').remove();
 
                     const authorsBio = article.authors.map((author) => '<p>' + author.name + author.authorBio.replaceAll(/^<p>/g, ' ')).join('');

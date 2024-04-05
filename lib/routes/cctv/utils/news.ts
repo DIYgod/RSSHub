@@ -1,13 +1,13 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import randUserAgent from '@/utils/rand-user-agent';
 
 const UA = randUserAgent({ browser: 'mobile safari', os: 'ios', device: 'mobile' });
 
-export default async (category) => {
+const getNews = async (category) => {
     const url = `https://news.cctv.com/2019/07/gaiban/cmsdatainterface/page/${category}_1.jsonp`;
 
     const response = await got({
@@ -106,3 +106,4 @@ export default async (category) => {
         item: resultItem,
     };
 };
+export default getNews;

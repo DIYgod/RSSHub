@@ -1,11 +1,14 @@
 import { Route } from '@/types';
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 import got from '@/utils/got';
 import queryString from 'query-string';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/mmda/tags/:tags?',
@@ -21,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mmda.booru.org/index.php'],
-    },
+    radar: [
+        {
+            source: ['mmda.booru.org/index.php'],
+        },
+    ],
     name: 'MMDArchive 标签查询',
     maintainers: ['N78Wy'],
     handler,

@@ -39,7 +39,7 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     }
 
     let message = '';
-    if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError')) {
+    if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
         ctx.status(503);
         message = `${error.message}: target website might be blocking our access, you can host your own RSSHub instance for a better usability.`;
     } else if (error instanceof RequestInProgressError) {
@@ -62,18 +62,13 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
 
     logger.error(`Error in ${requestPath}: ${message}`);
 
-    return config.isPackage ? ctx.json({
-        error: {
-            message: error.message ?? error,
-        },
-    }) : ctx.html((
-        <Error
-            requestPath={requestPath}
-            message={message}
-            errorRoute={hasMatchedRoute ? matchedRoute : requestPath}
-            nodeVersion={process.version}
-        />
-    ));
+    return config.isPackage
+        ? ctx.json({
+              error: {
+                  message: error.message ?? error,
+              },
+          })
+        : ctx.html(<Error requestPath={requestPath} message={message} errorRoute={hasMatchedRoute ? matchedRoute : requestPath} nodeVersion={process.version} />);
 };
 
 export const notFoundHandler: NotFoundHandler = (ctx) => errorHandler(new NotFoundError(), ctx);

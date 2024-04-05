@@ -4,8 +4,6 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { CookieJar } from 'tough-cookie';
-const cookieJar = new CookieJar();
 
 const host = 'https://www.sehuatang.net/';
 
@@ -66,11 +64,10 @@ async function handler(ctx) {
     const headers = {
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+        Cookie: '_safe=vqd37pjm4p5uodq339yzk6b7jdt6oich',
     };
-    await cookieJar.setCookie('_safe=vqd37pjm4p5uodq339yzk6b7jdt6oich', host);
 
     const response = await got(link, {
-        cookieJar,
         headers,
     });
     const $ = load(response.data);
@@ -93,7 +90,6 @@ async function handler(ctx) {
         list.map((info) =>
             cache.tryGet(info.link, async () => {
                 const response = await got(info.link, {
-                    cookieJar,
                     headers,
                 });
 

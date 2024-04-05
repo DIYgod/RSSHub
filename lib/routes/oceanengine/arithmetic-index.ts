@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
 import { createDecipheriv } from 'node:crypto';
@@ -43,7 +43,7 @@ const getMultiKeywordHotTrend = async (page, keyword, start_date, end_date, app_
             });
             return p;
         }
-        return Promise.all([queryData()]).then((result) => result);
+        return Promise.resolve(queryData()).then((result) => result);
     }, e);
     return res[0];
 };

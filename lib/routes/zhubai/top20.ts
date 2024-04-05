@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const parseContent = (content) =>
     art(path.join(__dirname, 'templates/description.art'), {
@@ -34,7 +34,7 @@ export const route: Route = {
             source: ['analy.zhubai.love/'],
         },
     ],
-    name: 'Unknown',
+    name: '上周热门 TOP 20',
     maintainers: ['nczitzk'],
     handler,
     url: 'analy.zhubai.love/',

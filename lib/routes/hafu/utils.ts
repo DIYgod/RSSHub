@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const typeMap = {
     ggtz: { url: 'https://www.hafu.edu.cn/index/ggtz.htm', root: 'https://www.hafu.edu.cn/', title: '河南财院 - 公告通知', parseFn: ggtzParse },
@@ -17,7 +17,7 @@ const typeMap = {
 // Number of get articles
 let limit = 10;
 
-export default async (ctx, type) => {
+const parseList = async (ctx, type) => {
     const link = typeMap[type].url;
     const title = typeMap[type].title;
 
@@ -33,6 +33,7 @@ export default async (ctx, type) => {
         resultList,
     };
 };
+export default parseList;
 
 async function tryGetFullText(href, link, type) {
     let articleData = '';
