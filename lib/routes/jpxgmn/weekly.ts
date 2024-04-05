@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import { originUrl, getArticleDesc } from './utils';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import got from '@/utils/got-deprecated';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
