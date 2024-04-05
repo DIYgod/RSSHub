@@ -1,5 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
 const baseUrl = 'https://nosec.org/home/ajaxindexdata';
@@ -39,10 +40,10 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const csrfresponse = await got.get('https://nosec.org/home/index');
-    const $ = load(csrfresponse.data);
+    const csrfresponse = await ofetch.raw('https://nosec.org/home/index');
+    const $ = load(csrfresponse._data);
     const token = $('meta[name="csrf-token"]').attr('content');
-    const cookies = csrfresponse.headers['set-cookie'].toString();
+    const cookies = csrfresponse.headers.getSetCookie().toString();
     const xsrf_token = cookies.match(/XSRF-TOKEN=[^\s;]+/)[0];
     const laravel_session = cookies.match(/laravel_session[^\s;]+/)[0];
 
@@ -71,7 +72,7 @@ async function handler(ctx) {
             cookie: `${xsrf_token};${laravel_session}`,
             'X-CSRF-TOKEN': token,
         },
-        data: formdata,
+        body: formdata,
     });
 
     const data = response.data.data.threatData.data;
