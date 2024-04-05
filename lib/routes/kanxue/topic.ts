@@ -98,49 +98,49 @@ async function handler(ctx) {
     const resultItem = await Promise.all(
         list
             ? list
-                // fix .thread .top_3
-                .filter((_, elem) => {
-                    const timeStr = $('.date', elem).eq(0).text();
-                    const pubDate = timeStr.endsWith("前") ? parseRelativeDate(timeStr) : parseDate(timeStr.substring(1));
-                    return !elem.attribs.class.includes('top') || Date.now() - pubDate.valueOf() < timeDiff;
-                })
-                .map((_, elem) => {
-                    const subject = $('.subject a', elem).eq(1);
-                    const timeStr = $('.date', elem).eq(0).text();
-                    const pubDate = timeStr.endsWith("前") ? parseRelativeDate(timeStr) : parseDate(timeStr.substring(1));
+                  // fix .thread .top_3
+                  .filter((_, elem) => {
+                      const timeStr = $('.date', elem).eq(0).text();
+                      const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.substring(1));
+                      return !elem.attribs.class.includes('top') || Date.now() - pubDate.valueOf() < timeDiff;
+                  })
+                  .map((_, elem) => {
+                      const subject = $('.subject a', elem).eq(1);
+                      const timeStr = $('.date', elem).eq(0).text();
+                      const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.substring(1));
 
-                    const link = `${baseUrl}${subject.attr('href')}`;
-                    const key = `kanxue: ${link}`;
+                      const link = `${baseUrl}${subject.attr('href')}`;
+                      const key = `kanxue: ${link}`;
 
-                    return cache.tryGet(key, async () => {
-                        const postDetail = await got({
-                            method: 'get',
-                            url: link,
-                        });
-                        const $ = load(postDetail.data);
-                        $('.card')
-                            .eq(0)
-                            .find('.message img')
-                            .each((_, item) => {
-                                item = $(item);
+                      return cache.tryGet(key, async () => {
+                          const postDetail = await got({
+                              method: 'get',
+                              url: link,
+                          });
+                          const $ = load(postDetail.data);
+                          $('.card')
+                              .eq(0)
+                              .find('.message img')
+                              .each((_, item) => {
+                                  item = $(item);
 
-                                const src = item.attr('src');
-                                if (src !== undefined && !src.startsWith('https://') && !src.startsWith('http://')) {
-                                    item.attr('src', `https://bbs.kanxue.com/${src}`);
-                                }
-                            });
+                                  const src = item.attr('src');
+                                  if (src !== undefined && !src.startsWith('https://') && !src.startsWith('http://')) {
+                                      item.attr('src', `https://bbs.kanxue.com/${src}`);
+                                  }
+                              });
 
-                        const description = $('.card').eq(0).find('.message').html();
+                          const description = $('.card').eq(0).find('.message').html();
 
-                        return {
-                            title: subject.text(),
-                            link,
-                            pubDate,
-                            description,
-                        };
-                    });
-                })
-                .get()
+                          return {
+                              title: subject.text(),
+                              link,
+                              pubDate,
+                              description,
+                          };
+                      });
+                  })
+                  .get()
             : []
     );
 
@@ -148,6 +148,6 @@ async function handler(ctx) {
         title,
         link: baseUrl + path,
         item: resultItem,
-        allowEmpty: true
+        allowEmpty: true,
     };
-};
+}
