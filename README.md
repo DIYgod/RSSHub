@@ -3,17 +3,15 @@
 </p>
 <h1 align="center">RSSHub</h1>
 
-> 🍰 Everything is RSSible
+> 🧡 Everything is RSSible
 
 [![](https://img.shields.io/badge/dynamic/json?url=https://rsshub-analytics.diygod.workers.dev/&query=requests&color=F38020&label=requests&logo=cloudflare&style=flat-square&suffix=/month)](https://rsshub.app)
 [![docker publish](https://img.shields.io/docker/pulls/diygod/rsshub?label=docker%20pulls&logo=docker&style=flat-square)](https://hub.docker.com/r/diygod/rsshub)
 [![npm publish](https://img.shields.io/npm/dt/rsshub?label=npm%20downloads&logo=npm&style=flat-square)](https://www.npmjs.com/package/rsshub)
 [![test](https://img.shields.io/github/actions/workflow/status/DIYgod/RSSHub/test.yml?branch=master&label=test&logo=github&style=flat-square)](https://github.com/DIYgod/RSSHub/actions/workflows/test.yml?query=event%3Apush+branch%3Amaster)
 [![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square&logo=codecov)](https://app.codecov.io/gh/DIYgod/RSSHub/branch/master)
-[![CodeFactor](https://www.codefactor.io/repository/github/diygod/rsshub/badge)](https://www.codefactor.io/repository/github/diygod/rsshub)
-[![DeepScan grade](https://deepscan.io/api/teams/6244/projects/8135/branches/92448/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=6244&pid=8135&bid=92448)
 
-[![Telegram group](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.swo.moe%2Fstats%2Ftelegram%2Frsshub&query=count&color=2CA5E0&label=Telegram%20Group&logo=telegram&cacheSeconds=3600&style=flat-square)](https://t.me/rsshub) [![Telegram channel](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.swo.moe%2Fstats%2Ftelegram%2FawesomeRSSHub&query=count&color=2CA5E0&label=Telegram%20Channel&logo=telegram&cacheSeconds=3600&style=flat-square)](https://t.me/awesomeRSSHub)
+[![Telegram group](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.swo.moe%2Fstats%2Ftelegram%2Frsshub&query=count&color=2CA5E0&label=Telegram%20Group&logo=telegram&cacheSeconds=3600&style=flat-square)](https://t.me/rsshub) [![Telegram channel](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.swo.moe%2Fstats%2Ftelegram%2FawesomeRSSHub&query=count&color=2CA5E0&label=Telegram%20Channel&logo=telegram&cacheSeconds=3600&style=flat-square)](https://t.me/awesomeRSSHub) [![Twitter](https://img.shields.io/badge/any_text-Follow-blue?color=2CA5E0&label=Twitter&logo=twitter&cacheSeconds=3600&style=flat-square)](https://twitter.com/intent/follow?screen_name=_RSSHub)
 
 ## Introduction
 
@@ -23,9 +21,7 @@ RSSHub delivers millions of contents aggregated from all kinds of sources, our v
 
 RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) and mobile auxiliary app [RSSBud](https://github.com/Cay-Zhang/RSSBud) (iOS) and [RSSAid](https://github.com/LeetaoGoooo/RSSAid) (Android)
 
-[English docs](https://docs.rsshub.app) | [Telegram Group](https://t.me/rsshub) | [Telegram Channel](https://t.me/awesomeRSSHub)
-
-[中文文档](https://docs.rsshub.app/zh/) | [Telegram 群](https://t.me/rsshub) | [Telegram 频道](https://t.me/awesomeRSSHub)
+[English docs](https://docs.rsshub.app) | [Telegram Group](https://t.me/rsshub) | [Telegram Channel](https://t.me/awesomeRSSHub) | [Twitter](https://twitter.com/intent/follow?screen_name=_RSSHub) | [中文文档](https://docs.rsshub.app/zh/)
 
 ## Special Thanks
 
@@ -35,7 +31,7 @@ RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYg
 <a href="https://rss3.io" target="_blank"><img height="50px" src="https://i.imgur.com/lb1dDGK.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://xlog.app/" target="_blank"><img height="50px" src="https://i.imgur.com/JuhHTKD.png"></a>
 </p>
 
-[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
+[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/sponsor/)
 
 ### Contributors
 
@@ -58,15 +54,15 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 We welcome all pull requests. Suggestions and feedback are also welcomed [here](https://github.com/DIYgod/RSSHub/issues).
 
-Refer to [Join Us](https://docs.rsshub.app/joinus/quick-start)
+Refer to [Join Us](https://docs.rsshub.app/joinus/)
 
 ## Deployment
 
-Refer to [Deployment](https://docs.rsshub.app/install/)
+Refer to [Deployment](https://docs.rsshub.app/deploy/)
 
 ## Support RSSHub
 
-Refer to [Support RSSHub](https://docs.rsshub.app/support/)
+Refer to [Support RSSHub](https://docs.rsshub.app/sponsor/)
 
 RSSHub is open source and completely free under the MIT license. However, just like any other open source project, as the project grows, the hosting, development and maintenance requires funding support.
 
@@ -89,6 +85,14 @@ We accept donations via the following ways:
 -   [WeChat Pay](https://archive.diygod.me/images/wx.jpg)
 -   [Alipay](https://archive.diygod.me/images/zfb.jpg)
 -   [Paypal](https://www.paypal.me/DIYgod)
+
+Open source is a very expensive thing. RSSHub would not be possible without the help of these individuals and organizations.
+
+<p align="center">
+  <a href="https://github.com/DIYgod/sponsors">
+    <img src="https://raw.githubusercontent.com/DIYgod/sponsors/main/sponsors.wide.svg" />
+  </a>
+</p>
 
 ## Author
 
