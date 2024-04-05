@@ -1,5 +1,4 @@
 import { randUserAgent } from '@tonyrl/rand-user-agent';
-require.resolve('@tonyrl/rand-user-agent/data/user-agents.json'); // workaround for @vercel/nft removing datastore
 
 /**
  * A handy function to help generate a legit useragent.
@@ -10,7 +9,7 @@ require.resolve('@tonyrl/rand-user-agent/data/user-agents.json'); // workaround 
  * @param {string} randUserAgent.device Name of a device, case-insensitive. `desktop`, `mobile` or `tablet`.
  * @returns A random useragent for the given specifications.
  */
-export default ({ browser = 'chrome', os = 'mac os', device = 'desktop' }) => {
+const _randUserAgent = ({ browser = 'chrome', os = 'mac os', device = 'desktop' }: { browser: string; os: string; device: string }) => {
     device = device.toLowerCase();
     browser = browser.toLowerCase();
     os = os.toLowerCase();
@@ -28,3 +27,4 @@ export default ({ browser = 'chrome', os = 'mac os', device = 'desktop' }) => {
     }
     return UA;
 };
+export default _randUserAgent;

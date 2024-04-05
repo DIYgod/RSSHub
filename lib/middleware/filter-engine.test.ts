@@ -1,6 +1,4 @@
-import { describe, expect, it, afterAll, jest, afterEach } from '@jest/globals';
-
-jest.setTimeout(50000);
+import { describe, expect, it, afterAll, vi, afterEach } from 'vitest';
 
 afterAll(() => {
     delete process.env.FILTER_REGEX_ENGINE;
@@ -8,7 +6,7 @@ afterAll(() => {
 
 afterEach(() => {
     delete process.env.FILTER_REGEX_ENGINE;
-    jest.resetModules();
+    vi.resetModules();
 });
 
 describe('filter-engine', () => {
@@ -16,7 +14,7 @@ describe('filter-engine', () => {
         const app = (await import('@/app')).default;
 
         const response = await app.request('/test/1?filter=abc(%3F%3Ddef)');
-        expect(response.status).toBe(404);
+        expect(response.status).toBe(503);
         expect(await response.text()).toMatch(/RE2JSSyntaxException/);
     });
 
@@ -35,7 +33,7 @@ describe('filter-engine', () => {
         const app = (await import('@/app')).default;
 
         const response = await app.request('/test/1?filter=abc(%3F%3Ddef)');
-        expect(response.status).toBe(404);
+        expect(response.status).toBe(503);
         expect(await response.text()).toMatch(/somethingelse/);
     });
 });

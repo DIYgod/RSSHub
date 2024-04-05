@@ -1,8 +1,7 @@
-import { describe, expect, it, afterEach, jest } from '@jest/globals';
-import nock from 'nock';
+import { describe, expect, it, afterEach, vi } from 'vitest';
 
 afterEach(() => {
-    jest.resetModules();
+    vi.resetModules();
 });
 
 describe('config', () => {
@@ -93,11 +92,6 @@ describe('config', () => {
     it('remote config', async () => {
         process.env.REMOTE_CONFIG = 'http://rsshub.test/config';
 
-        nock(/rsshub\.test/)
-            .get('/config')
-            .reply(200, {
-                UA: 'test',
-            });
         const { config } = await import('./config');
         await new Promise((resolve) => setTimeout(resolve, 100));
         expect(config.ua).toBe('test');

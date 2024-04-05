@@ -1,5 +1,6 @@
 import { parseDate } from '@/utils/parse-date';
 import title from 'title';
+import os from 'os';
 
 // convert a string into title case
 const toTitleCase = (str: string) => title(str);
@@ -31,4 +32,14 @@ const getSubPath = (ctx) => {
     return subPath;
 };
 
-export { toTitleCase, collapseWhitespace, convertDateToISO8601, getSubPath };
+const getLocalhostAddress = () => {
+    const interfaces = os.networkInterfaces();
+    const address = Object.keys(interfaces)
+        .flatMap((name) => interfaces[name] ?? [])
+        .filter((iface) => iface?.family === 'IPv4' && !iface.internal)
+        .map((iface) => iface?.address)
+        .filter(Boolean);
+    return address;
+};
+
+export { toTitleCase, collapseWhitespace, convertDateToISO8601, getSubPath, getLocalhostAddress };

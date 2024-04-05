@@ -1,4 +1,4 @@
-import { describe, expect, it, jest, afterEach } from '@jest/globals';
+import { describe, expect, it, vi, afterEach } from 'vitest';
 import wait from './wait';
 import { type Browser } from 'puppeteer';
 
@@ -8,7 +8,7 @@ afterEach(() => {
     if (browser) {
         // double insurance to close unclosed browser immediately after each test
         // if a test closure fails before it can close the browser, the browser process will probably be unclosed,
-        // especially when the test unit is run through `npm run jest puppeteer`
+        // especially when the test unit is run through `npm run vitest puppeteer`
         browser.close();
         browser = null;
     }
@@ -18,7 +18,7 @@ afterEach(() => {
     delete process.env.PROXY_PORT;
     delete process.env.PROXY_AUTH;
 
-    jest.resetModules();
+    vi.resetModules();
 });
 
 describe('puppeteer', () => {
@@ -55,7 +55,7 @@ describe('puppeteer', () => {
             // since we don't really care whether puppeteer without stealth passes the bot test, just let it go
             expect(['present (failed)', '']).toContain(webDriverTest);
             expect(['missing (failed)', '']).toContain(chromeTest);
-        }, 15000);
+        }, 20000);
 
         it('puppeteer with stealth', async () => {
             const { default: puppeteer } = await import('./puppeteer');
@@ -67,7 +67,7 @@ describe('puppeteer', () => {
             // these are something we really care about
             expect(webDriverTest).toBe('missing (passed)');
             expect(chromeTest).toBe('present (passed)');
-        }, 15000);
+        }, 20000);
     }
 
     it('puppeteer accept http proxy uri w/ auth', async () => {

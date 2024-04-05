@@ -1,8 +1,12 @@
-import { describe, expect, it, jest } from '@jest/globals';
-import app from '@/app';
+import { describe, expect, it, vi } from 'vitest';
 import Parser from 'rss-parser';
-import { config } from '@/config';
-import nock from 'nock';
+
+process.env.OPENAI_API_KEY = 'sk-1234567890';
+process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
+
+vi.mock('@/utils/request-rewriter', () => ({ default: null }));
+const { config } = await import('@/config');
+const { default: app } = await import('@/app');
 
 const parser = new Parser();
 
@@ -296,7 +300,7 @@ describe('tgiv', () => {
 describe('empty', () => {
     it(`empty`, async () => {
         const response1 = await app.request('/test/empty');
-        expect(response1.status).toBe(404);
+        expect(response1.status).toBe(503);
         expect(await response1.text()).toMatch(/Error: this route is empty/);
 
         const response2 = await app.request('/test/1?limit=0');
@@ -320,7 +324,7 @@ describe('wrong_path', () => {
         const response = await app.request('/wrong');
         expect(response.status).toBe(404);
         expect(response.headers.get('cache-control')).toBe(`public, max-age=${config.cache.routeExpire}`);
-        expect(await response.text()).toMatch(/Error message: wrong path/);
+        expect(await response.text()).toMatch('wrong path');
     });
 });
 
@@ -347,7 +351,8 @@ describe('complicated_description', () => {
 <img data-mock="/DIYgod/RSSHub.png" src="https://mock.com/DIYgod/RSSHub.png" referrerpolicy="no-referrer">
 <img mock="/DIYgod/RSSHub.gif" src="https://mock.com/DIYgod/RSSHub.gif" referrerpolicy="no-referrer">
 <img src="http://mock.com/DIYgod/DIYgod/RSSHub" referrerpolicy="no-referrer">
-<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
+<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
+<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" referrerpolicy="no-referrer">`);
         expect(parsed.items[1].content).toBe(`<a href="https://mock.com/DIYgod/RSSHub"></a>
 <img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
     });
@@ -423,26 +428,6 @@ describe('multi parameter', () => {
 
 describe('openai', () => {
     it(`chatgpt`, async () => {
-        jest.resetModules();
-
-        process.env.OPENAI_API_KEY = 'sk-1234567890';
-        const app = (await import('@/app')).default;
-        const { config } = await import('@/config');
-        nock(config.openai.endpoint)
-            .post('/chat/completions')
-            .reply(() => [
-                200,
-                {
-                    choices: [
-                        {
-                            message: {
-                                content: 'Summary of the article.',
-                            },
-                        },
-                    ],
-                },
-            ]);
-
         const responseWithGpt = await app.request('/test/gpt?chatgpt=true');
         const responseNormal = await app.request('/test/gpt');
 

@@ -7,8 +7,6 @@ on:
     paths:
       - '.github/workflows/docker-release.yml'
       - 'lib/**'
-      - '!**/maintainer.js'
-      - '!**/radar.js'
       - '!lib/**/*.test.ts'
       - 'Dockerfile'
   workflow_dispatch: {}

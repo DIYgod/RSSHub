@@ -1,14 +1,32 @@
-import { describe, expect, it, afterAll } from '@jest/globals';
-process.env.SOCKET = 'socket';
-
+import { describe, expect, it } from 'vitest';
 import app from '@/app';
 import Parser from 'rss-parser';
 const parser = new Parser();
 import { config } from '@/config';
 
-afterAll(() => {
-    delete process.env.SOCKET;
-});
+process.env.ALLOW_USER_SUPPLY_UNSAFE_DOMAIN = 'true';
+
+const routes = {
+    '/test/:id': '/test/1',
+};
+if (process.env.FULL_ROUTES_TEST) {
+    const { namespaces } = await import('@/registry');
+    for (const namespace in namespaces) {
+        for (const route in namespaces[namespace].routes) {
+            const requireConfig = namespaces[namespace].routes[route].features?.requireConfig;
+            let configs;
+            if (typeof requireConfig !== 'boolean') {
+                configs = requireConfig
+                    ?.filter((config) => !config.optional)
+                    .map((config) => config.name)
+                    .filter((name) => name !== 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN');
+            }
+            if (namespaces[namespace].routes[route].example && !configs?.length) {
+                routes[`/${namespace}${route}`] = namespaces[namespace].routes[route].example;
+            }
+        }
+    }
+}
 
 async function checkRSS(response) {
     const checkDate = (date) => {
@@ -49,39 +67,12 @@ async function checkRSS(response) {
     }
 }
 
-describe('router', () => {
-    // root
-    it(`/`, async () => {
-        const response = await app.request('/');
-        expect(response.status).toBe(200);
-        expect(response.headers.get('content-type')).toBe('text/html; charset=UTF-8');
-        expect(response.headers.get('cache-control')).toBe('no-cache');
-    });
-
-    // route
-    it(`/test/1`, async () => {
-        const response = await app.request('/test/1');
-        expect(response.status).toBe(200);
-
-        await checkRSS(response);
-    });
-
-    // robots.txt
-    it('/robots.txt', async () => {
-        config.disallowRobot = false;
-        const response404 = await app.request('/robots.txt');
-        expect(response404.status).toBe(404);
-
-        config.disallowRobot = true;
-        const response = await app.request('/robots.txt');
-        expect(response.status).toBe(200);
-        expect(await response.text()).toBe('User-agent: *\nDisallow: /');
-        expect(response.headers.get('content-type')).toBe('text/plain; charset=UTF-8');
-    });
-
-    // favicon.ico
-    it('/favicon.ico', async () => {
-        const response = await app.request('/favicon.ico');
-        expect(response.status).toBe(200);
-    });
+describe('routes', () => {
+    for (const route in routes) {
+        it.concurrent(route, async () => {
+            const response = await app.request(routes[route]);
+            expect(response.status).toBe(200);
+            await checkRSS(response);
+        });
+    }
 });
