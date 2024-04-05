@@ -1,6 +1,5 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { baseUrl, parseList, parseItems } from './utils';
 
 export const route: Route = {
@@ -8,14 +7,6 @@ export const route: Route = {
     categories: ['new-media'],
     example: '/line/today/th/publisher/101048',
     parameters: { edition: 'Edition, see table above', id: 'Channel ID, can be found in URL' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['today.line.me/:edition/v2/publisher/:id'],
@@ -29,44 +20,43 @@ export const route: Route = {
 async function handler(ctx) {
     const { edition, id } = ctx.req.param();
 
-    const { data: publisherInfo } = await got(`${baseUrl}/webapi/portal/page/setting`, {
-        searchParams: {
+    const publisherInfo = await ofetch(`${baseUrl}/webapi/portal/page/setting`, {
+        query: {
             entityId: id,
             country: edition,
             pageType: 'CP',
         },
     });
 
-    let cpLatest;
+    let thaiData;
     if (edition === 'th') {
-        const { data } = await got(`${baseUrl}/webapi/portal/embedded/page/cplatest`, {
-            searchParams: {
+        thaiData = await ofetch(`${baseUrl}/webapi/portal/embedded/page/cplatest`, {
+            query: {
                 entityId: id,
                 pageType: 'CP',
                 country: edition,
             },
         });
-        cpLatest = data;
     }
 
-    const modules = edition === 'th' ? cpLatest.modules : publisherInfo.modules;
+    const modules = edition === 'th' ? thaiData.modules : publisherInfo.modules;
     const mod = modules.find((item) => item.source === 'CP_LATEST');
     const listing = mod.listings[0];
 
-    const { data: listResponse } = await got(`${baseUrl}/webapi/trending/cp/latest/listings/${mod.id}`, {
-        searchParams: {
+    const listResponse = await ofetch(`${baseUrl}/webapi/trending/cp/latest/listings/${mod.id}`, {
+        query: {
             offset: listing.offset,
             length: listing.length,
             country: edition,
-            targetContent: listing.params.targetContent,
-            cps: listing.params.cps,
-            publishedWithin: listing.params.publishedWithin,
+            targetContent: listing.params?.targetContent,
+            cps: listing.params?.cps,
+            publishedWithin: listing.params?.publishedWithin,
         },
     });
 
     const list = parseList(listResponse.items);
 
-    const items = await parseItems(list, cache.tryGet);
+    const items = await parseItems(list);
 
     return {
         title: `${publisherInfo.data.name} - Line Today`,
