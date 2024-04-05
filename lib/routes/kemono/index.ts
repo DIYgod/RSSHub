@@ -10,10 +10,10 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/:source?/:id?/:limit?',
+    path: '/:source?/:id?',
     categories: ['anime'],
     example: '/kemono',
-    parameters: { source: 'Source, see below, Posts by default', id: 'User id, can be found in URL', limit: '(Optional)the maximum number of posts to fetch, deault value is 25.' },
+    parameters: { source: 'Source, see below, Posts by default', id: 'User id, can be found in URL' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -43,7 +43,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.param('limit') ? Number.parseInt(ctx.req.param('limit')) : 25;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
     const source = ctx.req.param('source') ?? 'posts';
     const id = ctx.req.param('id');
     const isPosts = (source === 'posts');
@@ -130,7 +130,7 @@ async function handler(ctx) {
             $ = load(desc);
             let count = 0;
             const regex = /downloads.fanbox.cc/;
-            $('a').each(function(this) {
+            $('a').each(function() {
                 const link = $(this).attr('href');
                 if (regex.test(link!)) {
                     count++;
