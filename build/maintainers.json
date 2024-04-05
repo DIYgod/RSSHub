@@ -703,6 +703,9 @@
   "/bilibili/weekly/:disableEmbed?": [
     "ttttmr"
   ],
+  "/binance/launchpool": [
+    "zhenlohuang"
+  ],
   "/bing/": [
     "FHYunCai"
   ],

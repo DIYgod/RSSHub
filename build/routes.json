@@ -6895,6 +6895,31 @@
     "name": "Bilibili",
     "url": "www.bilibili.com"
   },
+  "binance": {
+    "routes": {
+      "/launchpool": {
+        "path": "/launchpool",
+        "categories": [
+          "finance"
+        ],
+        "example": "/binance/launchpool",
+        "radar": [
+          {
+            "source": [
+              "binance.com/:lang/support/announcement"
+            ]
+          }
+        ],
+        "name": "Binance数字货币及交易对上新",
+        "maintainers": [
+          "zhenlohuang"
+        ],
+        "location": "launchpool.ts"
+      }
+    },
+    "name": "Binance",
+    "url": "binance.com"
+  },
   "bing": {
     "routes": {
       "/": {
