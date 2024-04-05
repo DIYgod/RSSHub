@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import { originUrl, getArticleDesc } from './utils';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
@@ -18,9 +18,9 @@ export const route: Route = {
 async function handler(ctx) {
     const { kw } = ctx.req.param();
     const searchUrl = originUrl + `/plus/search/index.asp?keyword=${kw}`;
-    const response = await got(searchUrl);
+    const response = await ofetch.raw(searchUrl);
     const baseUrl = new URL(response.url).origin;
-    const $ = load(response.data);
+    const $ = load(response._data);
     const items = $('div.list div.list div.node p')
         .toArray()
         .map((item) => ({
