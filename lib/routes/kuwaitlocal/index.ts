@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['kuwaitlocal.com/news/categories/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['kuwaitlocal.com/news/categories/:category'],
+            target: '/:category',
+        },
+    ],
     name: 'Categorised News',
     maintainers: ['TonyRL'],
     handler,

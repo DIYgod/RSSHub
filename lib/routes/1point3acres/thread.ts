@@ -4,7 +4,8 @@ import { rootUrl, apiRootUrl, types, ProcessThreads } from './utils';
 
 export const route: Route = {
     path: ['/post/:type?/:order?', '/thread/:type?/:order?'],
-    name: 'Unknown',
+    name: '帖子',
+    categories: ['bbs'],
     maintainers: ['EthanWng97', 'DIYgod', 'nczitzk'],
     handler,
     url: 'instant.1point3acres.com/',

@@ -9,7 +9,7 @@ const md = MarkdownIt({
     html: true,
     linkify: true,
 });
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 
@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['modelscope.cn/datasets'],
-    },
+    radar: [
+        {
+            source: ['modelscope.cn/datasets'],
+        },
+    ],
     name: '数据集',
     maintainers: ['TonyRL'],
     handler,

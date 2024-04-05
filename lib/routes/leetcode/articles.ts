@@ -25,9 +25,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['leetcode.com/articles'],
-    },
+    radar: [
+        {
+            source: ['leetcode.com/articles'],
+        },
+    ],
     name: 'Articles',
     maintainers: ['LogicJake'],
     handler,

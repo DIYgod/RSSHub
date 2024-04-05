@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 
 export const route: Route = {
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nationalgeographic.com/photo-of-the-day/*', 'nationalgeographic.com/'],
-    },
+    radar: [
+        {
+            source: ['nationalgeographic.com/photo-of-the-day/*', 'nationalgeographic.com/'],
+        },
+    ],
     name: '每日一图',
     maintainers: ['LogicJake', 'OrangeEd1t', 'TonyRL'],
     handler,

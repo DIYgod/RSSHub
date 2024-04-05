@@ -67,10 +67,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ugs.hrbeu.edu.cn/:author/list.htm'],
-        target: '/ugs/news/:author',
-    },
+    radar: [
+        {
+            source: ['ugs.hrbeu.edu.cn/:author/list.htm'],
+            target: '/ugs/news/:author',
+        },
+    ],
     name: '本科生院工作通知',
     maintainers: ['XYenon'],
     handler,

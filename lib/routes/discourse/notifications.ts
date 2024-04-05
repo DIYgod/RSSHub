@@ -9,7 +9,12 @@ export const route: Route = {
     example: '/discourse/0/notifications',
     parameters: { configId: 'Environment variable configuration id, see above', fulltext: 'Fetch the content if the notification points to a post. This is disabled by default, set it to `1` to enable it.' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'DISCOURSE_CONFIG_*',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

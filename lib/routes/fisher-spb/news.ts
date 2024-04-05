@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/news',
@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fisher.spb.ru/news'],
-    },
+    radar: [
+        {
+            source: ['fisher.spb.ru/news'],
+        },
+    ],
     name: 'News',
     maintainers: ['denis-ya'],
     handler,

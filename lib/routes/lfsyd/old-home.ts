@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.iyingdi.com/'],
-    },
+    radar: [
+        {
+            source: ['www.iyingdi.com/'],
+        },
+    ],
     name: '首页（旧版）',
     maintainers: ['auto-bot-ty'],
     handler,

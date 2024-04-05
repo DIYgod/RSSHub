@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const categories = {
     1: '同人誌 漢化',
@@ -32,10 +32,12 @@ const baseUrl = 'https://www.wnacg.com';
 
 export const route: Route = {
     path: ['/', '/category/:cid', '/tag/:tag'],
-    radar: {
-        source: ['wnacg.org/albums.html', 'wnacg.org/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['wnacg.org/albums.html', 'wnacg.org/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['KenMizz'],
     handler,

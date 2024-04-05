@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/ask/jinghua',
@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['imiker.com/explore/find'],
-    },
+    radar: [
+        {
+            source: ['imiker.com/explore/find'],
+        },
+    ],
     name: '米课圈精华',
     maintainers: ['nczitzk'],
     handler,

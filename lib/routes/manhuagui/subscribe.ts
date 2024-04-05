@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 const web_url = 'https://www.manhuagui.com/user/book/shelf/1';
 
@@ -16,16 +16,23 @@ export const route: Route = {
     example: '/manhuagui/subscribe',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'MHGUI_COOKIE',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.mhgui.com/user/book/shelf'],
-    },
+    radar: [
+        {
+            source: ['www.mhgui.com/user/book/shelf'],
+        },
+    ],
     name: '漫画个人订阅',
     maintainers: ['shininome'],
     handler,
@@ -38,7 +45,7 @@ export const route: Route = {
 
 async function handler() {
     if (!config.manhuagui || !config.manhuagui.cookie) {
-        throw new Error('manhuagui RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('manhuagui RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const cookie = config.manhuagui.cookie;
     const response = await got({

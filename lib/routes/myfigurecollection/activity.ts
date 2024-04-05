@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -30,10 +30,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
-        target: '/:category?/:language?',
-    },
+    radar: [
+        {
+            source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
+            target: '/:category?/:language?',
+        },
+    ],
     name: 'Activity',
     maintainers: ['nczitzk'],
     handler,

@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/news/author/:mid',
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['new.qq.com/omn/author/:mid'],
-    },
+    radar: [
+        {
+            source: ['new.qq.com/omn/author/:mid'],
+        },
+    ],
     name: '更新',
     maintainers: ['LogicJake', 'miles170'],
     handler,

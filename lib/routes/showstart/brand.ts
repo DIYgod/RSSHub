@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.showstart.com/host/:id'],
-    },
+    radar: [
+        {
+            source: ['www.showstart.com/host/:id'],
+        },
+    ],
     name: '厂牌 - 演出更新',
     maintainers: ['lchtao26'],
     handler,

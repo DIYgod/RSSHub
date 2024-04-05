@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['finance.sina.com.cn/stock/usstock', 'finance.sina.com.cn/'],
-        target: '/finance/stock/usstock',
-    },
+    radar: [
+        {
+            source: ['finance.sina.com.cn/stock/usstock', 'finance.sina.com.cn/'],
+            target: '/finance/stock/usstock',
+        },
+    ],
     name: '美股',
     maintainers: ['TonyRL'],
     handler,

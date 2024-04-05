@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zhujia.zhuwang.cc/'],
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['zhujia.zhuwang.cc/'],
+        },
+    ],
+    name: '全国今日生猪价格',
     maintainers: [],
     handler,
     url: 'zhujia.zhuwang.cc/',

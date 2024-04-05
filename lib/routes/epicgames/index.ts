@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import dayjs from 'dayjs';
 
 export const route: Route = {
@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['store.epicgames.com/:locale/free-games'],
-        target: '/freegames/:locale',
-    },
+    radar: [
+        {
+            source: ['store.epicgames.com/:locale/free-games'],
+            target: '/freegames/:locale',
+        },
+    ],
     name: 'Free games',
     maintainers: ['DIYgod', 'NeverBehave', 'Zyx-A', 'junfengP', 'nczitzk', 'KotaHv'],
     handler,

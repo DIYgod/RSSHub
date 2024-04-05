@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sobooks.net/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['sobooks.net/:category'],
+            target: '/:category',
+        },
+    ],
     name: '归档',
     maintainers: ['nczitzk'],
     handler,
@@ -26,5 +28,5 @@ export const route: Route = {
 async function handler(ctx) {
     const date = ctx.req.param('date') ?? `${new Date().getFullYear()}/${new Date().getMonth()}`;
 
-    ctx.set('data', await utils(ctx, `books/date/${date.replace('-', '/')}`));
+    return await utils(ctx, `books/date/${date.replace('-', '/')}`);
 }

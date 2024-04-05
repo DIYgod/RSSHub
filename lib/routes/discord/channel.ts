@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { baseUrl, getChannel, getChannelMessages, getGuild } from './discord-api';
 
 export const route: Route = {
@@ -15,16 +15,23 @@ export const route: Route = {
     example: '/discord/channel/950465850056536084',
     parameters: { channelId: 'Channel ID' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'DISCORD_AUTHORIZATION',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['discord.com/channels/:guildId/:channelId/:messageID', 'discord.com/channels/:guildId/:channelId'],
-    },
+    radar: [
+        {
+            source: ['discord.com/channels/:guildId/:channelId/:messageID', 'discord.com/channels/:guildId/:channelId'],
+        },
+    ],
     name: 'Channel Messages',
     maintainers: ['TonyRL'],
     handler,
@@ -32,7 +39,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.discord || !config.discord.authorization) {
-        throw new Error('Discord RSS is disabled due to the lack of <a href="https://docs.rsshub.app/en/install/#configuration-route-specific-configurations">relevant config</a>');
+        throw new Error('Discord RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const { authorization } = config.discord;
     const channelId = ctx.req.param('channelId');

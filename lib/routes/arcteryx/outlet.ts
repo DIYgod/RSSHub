@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { generateRssData } from './utils';
 
 export const route: Route = {
@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['outlet.arcteryx.com/:country/en/c/:gender'],
-    },
+    radar: [
+        {
+            source: ['outlet.arcteryx.com/:country/en/c/:gender'],
+        },
+    ],
     name: 'Outlet',
     maintainers: ['EthanWng97'],
     handler,

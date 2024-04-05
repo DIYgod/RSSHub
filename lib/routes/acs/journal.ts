@@ -6,15 +6,17 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/journal/:id',
-    radar: {
-        source: ['pubs.acs.org/journal/:id', 'pubs.acs.org/'],
-    },
+    radar: [
+        {
+            source: ['pubs.acs.org/journal/:id', 'pubs.acs.org/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

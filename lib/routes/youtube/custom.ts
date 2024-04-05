@@ -8,10 +8,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/c/:username/:embed?',
-    radar: {
-        source: ['www.youtube.com/c/:id'],
-        target: '/c/:id',
-    },
+    radar: [
+        {
+            source: ['www.youtube.com/c/:id'],
+            target: '/c/:id',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,
@@ -19,7 +21,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.youtube || !config.youtube.key) {
-        throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const username = ctx.req.param('username');
     const embed = !ctx.req.param('embed');

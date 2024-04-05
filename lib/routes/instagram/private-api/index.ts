@@ -61,7 +61,13 @@ export const route: Route = {
     example: '/instagram/user/stefaniejoosten',
     parameters: { category: 'Feed category, see table above', key: 'Username / Hashtag name' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'IG_PROXY',
+                optional: true,
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
@@ -72,7 +78,7 @@ export const route: Route = {
     maintainers: ['oppilate', 'DIYgod'],
     handler,
     description: `:::warning
-Due to [Instagram Private API](https://github.com/dilame/instagram-private-api) restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/install/) for more.
+Due to [Instagram Private API](https://github.com/dilame/instagram-private-api) restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/deploy/) for more.
 :::`,
 };
 

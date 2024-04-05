@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xiaohongshu.com/board/:board_id'],
-    },
+    radar: [
+        {
+            source: ['xiaohongshu.com/board/:board_id'],
+        },
+    ],
     name: '专辑',
     maintainers: ['lotosbin'],
     handler,

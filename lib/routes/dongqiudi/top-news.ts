@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['m.dongqiudi.com/home/:id'],
-        target: '/top_news/:id',
-    },
+    radar: [
+        {
+            source: ['m.dongqiudi.com/home/:id'],
+            target: '/top_news/:id',
+        },
+    ],
     name: '新闻',
     maintainers: ['HendricksZheng'],
     handler,

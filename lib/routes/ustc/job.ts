@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['job.ustc.edu.cn/'],
-        target: '/job',
-    },
+    radar: [
+        {
+            source: ['job.ustc.edu.cn/'],
+            target: '/job',
+        },
+    ],
     name: '就业信息网',
     maintainers: ['nczitzk'],
     handler,

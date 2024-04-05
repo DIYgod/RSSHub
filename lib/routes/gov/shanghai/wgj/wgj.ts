@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/shanghai/wgj/:page?',
@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wsbs.wgj.sh.gov.cn/'],
-        target: '/shanghai/wgj',
-    },
+    radar: [
+        {
+            source: ['wsbs.wgj.sh.gov.cn/'],
+            target: '/shanghai/wgj',
+        },
+    ],
     name: '上海市文旅局审批公告',
     maintainers: ['gideonsenku'],
     handler,

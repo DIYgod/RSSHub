@@ -7,15 +7,17 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { puppeteerGet } from './utils';
 import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/user/:id',
-    radar: {
-        source: ['picnob.com/profile/:id/*'],
-    },
+    radar: [
+        {
+            source: ['picnob.com/profile/:id/*'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL', 'micheal-death'],
     handler,

@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 // import weiboUtils from '../utils';
 
 // Default hide all picture
@@ -27,9 +27,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['s.weibo.com/top/summary'],
-    },
+    radar: [
+        {
+            source: ['s.weibo.com/top/summary'],
+        },
+    ],
     name: '热搜榜',
     maintainers: ['xyqfer', 'shinemoon'],
     handler,
@@ -93,14 +95,12 @@ async function handler(ctx) {
         });
     }
 
-    // Update ctx
     return {
         title: '微博热搜榜',
         link: 'https://s.weibo.com/top/summary?cate=realtimehot',
         description: '实时热点，每分钟更新一次',
         item: resultItems,
     };
-    // ctx.set('data', weiboUtils.sinaimgTvax(ctx.state.data)); // no image in the route
 }
 
 async function fetchContent(url) {

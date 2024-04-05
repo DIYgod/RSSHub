@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/:category/:article_type?',
@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.nikkei.com/:category/archive', 'www.nikkei.com/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['www.nikkei.com/:category/archive', 'www.nikkei.com/:category'],
+            target: '/:category',
+        },
+    ],
     name: 'News',
     maintainers: ['Arracc'],
     handler,

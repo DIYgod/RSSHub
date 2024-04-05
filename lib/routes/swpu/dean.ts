@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['swpu.edu.cn/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['swpu.edu.cn/'],
+            target: '',
+        },
+    ],
     name: '教务处',
     maintainers: ['CYTMWIA'],
     handler,

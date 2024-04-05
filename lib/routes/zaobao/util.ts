@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { base32 } from 'rfc4648';
 
 const baseUrl = 'https://www.zaobao.com';

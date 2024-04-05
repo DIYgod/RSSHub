@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 
 export const route: Route = {
@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jin10.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['jin10.com/'],
+            target: '',
+        },
+    ],
     name: '市场快讯',
     maintainers: ['laampui'],
     handler,

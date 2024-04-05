@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.pixiv.net/users/:id'],
-    },
+    radar: [
+        {
+            source: ['www.pixiv.net/users/:id'],
+        },
+    ],
     name: 'User Activity',
     maintainers: ['DIYgod'],
     handler,
@@ -29,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.pixiv || !config.pixiv.refreshToken) {
-        throw new Error('pixiv RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('pixiv RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
     const id = ctx.req.param('id');

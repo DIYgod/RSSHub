@@ -4,15 +4,17 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const host = 'https://leetcode.com';
 
 export const route: Route = {
     path: '/dailyquestion/en',
-    radar: {
-        source: ['leetcode.com/'],
-    },
+    radar: [
+        {
+            source: ['leetcode.com/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

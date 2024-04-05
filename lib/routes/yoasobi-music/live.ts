@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseJSONP } from './jsonp-helper';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/live',
@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/live'],
-    },
+    radar: [
+        {
+            source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/live'],
+        },
+    ],
     name: 'Live',
     maintainers: ['Kiotlin'],
     handler,

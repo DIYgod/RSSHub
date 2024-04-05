@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wanqu.co/'],
-    },
+    radar: [
+        {
+            source: ['wanqu.co/'],
+        },
+    ],
     name: '最新推荐',
     maintainers: ['Fatpandac'],
     handler,

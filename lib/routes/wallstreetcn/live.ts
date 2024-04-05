@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const titles = {
     global: '要闻',
@@ -30,10 +30,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wallstreetcn.com/live/:category', 'wallstreetcn.com/'],
-        target: '/live/:category?',
-    },
+    radar: [
+        {
+            source: ['wallstreetcn.com/live/:category', 'wallstreetcn.com/'],
+            target: '/live/:category?',
+        },
+    ],
     name: '实时快讯',
     maintainers: ['nczitzk'],
     handler,

@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/news/breakingnews/:id',
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['udn.com/news/breaknews/1/:id', 'udn.com/'],
-    },
+    radar: [
+        {
+            source: ['udn.com/news/breaknews/1/:id', 'udn.com/'],
+        },
+    ],
     name: '即時新聞',
     maintainers: ['miles170'],
     handler,

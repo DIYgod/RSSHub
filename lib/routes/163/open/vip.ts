@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/open/vip',
@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['vip.open.163.com/'],
-    },
+    radar: [
+        {
+            source: ['vip.open.163.com/'],
+        },
+    ],
     name: '精品课程',
     maintainers: ['hoilc'],
     handler,

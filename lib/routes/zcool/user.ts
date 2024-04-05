@@ -19,11 +19,18 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zcool.com.cn/u/:id'],
-        target: '/user/:id',
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['www.zcool.com.cn/u/:id'],
+            target: '/user/:id',
+        },
+    ],
+    name: '用户作品',
+    description: `  例如:
+
+    站酷的个人主页 \`https://baiyong.zcool.com.cn\` 对应 rss 路径 \`/zcool/user/baiyong\`
+
+    站酷的个人主页 \`https://www.zcool.com.cn/u/568339\` 对应 rss 路径 \`/zcool/user/568339\``,
     maintainers: ['junbaor'],
     handler,
 };

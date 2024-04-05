@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/:user'],
-    },
+    radar: [
+        {
+            source: ['github.com/:user'],
+        },
+    ],
     name: 'User Repo',
     maintainers: ['DIYgod'],
     handler,

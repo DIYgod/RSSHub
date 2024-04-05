@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const headers = {
     cookie: config.ncm.cookies,
@@ -47,7 +47,13 @@ export const route: Route = {
     example: '/163/music/user/playrecords/45441555/1',
     parameters: { uid: '用户 uid, 可在用户主页 URL 中找到', type: '排行榜类型，0所有时间(默认)，1最近一周' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'NCM_COOKIES',
+                optional: true,
+                description: '网易云音乐登陆后的 cookie 值，可在浏览器控制台通过`document.cookie`获取。',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

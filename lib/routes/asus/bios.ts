@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const getProductID = async (model) => {
     const searchAPI = `https://odinapi.asus.com.cn/recent-data/apiv2/SearchSuggestion?SystemCode=asus&WebsiteCode=cn&SearchKey=${model}&SearchType=ProductsAll&RowLimit=4&sitelang=cn`;
@@ -30,9 +30,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['asus.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['asus.com.cn/'],
+        },
+    ],
     name: 'BIOS',
     maintainers: ['Fatpandac'],
     handler,

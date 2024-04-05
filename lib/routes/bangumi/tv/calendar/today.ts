@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import getData from './_base';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/tv/calendar/today',
@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bgm.tv/calendar'],
-    },
+    radar: [
+        {
+            source: ['bgm.tv/calendar'],
+        },
+    ],
     name: '放送列表',
     maintainers: ['magic-akari'],
     handler,

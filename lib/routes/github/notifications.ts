@@ -11,16 +11,23 @@ export const route: Route = {
     example: '/github/notifications',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'GITHUB_ACCESS_TOKEN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/notifications'],
-    },
+    radar: [
+        {
+            source: ['github.com/notifications'],
+        },
+    ],
     name: 'Notifications',
     maintainers: ['zhzy0077'],
     handler,
@@ -29,7 +36,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.github || !config.github.access_token) {
-        throw new Error('GitHub trending RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('GitHub trending RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const headers = {
         Accept: 'application/vnd.github.v3+json',

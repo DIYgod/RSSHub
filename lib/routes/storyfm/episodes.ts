@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/episodes',
@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['storyfm.cn/episodes-list', 'storyfm.cn/'],
-    },
+    radar: [
+        {
+            source: ['storyfm.cn/episodes-list', 'storyfm.cn/'],
+        },
+    ],
     name: '播客',
     maintainers: ['nczitzk'],
     handler,

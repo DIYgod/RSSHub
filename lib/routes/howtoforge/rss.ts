@@ -4,11 +4,14 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['howtoforge.com/'],
-        target: '',
-    },
-    name: 'Unknown',
+    categories: ['study'],
+    example: '/howtoforge',
+    radar: [
+        {
+            source: ['howtoforge.com/'],
+        },
+    ],
+    name: 'Tutorials',
     maintainers: ['cnkmmk'],
     handler,
     url: 'howtoforge.com/',

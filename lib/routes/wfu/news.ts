@@ -32,7 +32,7 @@ async function loadContent(link) {
         response = await got.get(link);
     } catch (error) {
         // 如果网络问题 直接出错
-        if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError')) {
+        if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
             description = 'Page 404 Please Check!';
         }
         return { description };
@@ -59,10 +59,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.wfu.edu.cn/'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['news.wfu.edu.cn/'],
+            target: '/news',
+        },
+    ],
     name: '新闻',
     maintainers: ['cccht'],
     handler,

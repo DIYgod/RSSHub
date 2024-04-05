@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/:category/:topic?',
@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['reuters.com/:category/:topic?', 'reuters.com/'],
-    },
+    radar: [
+        {
+            source: ['reuters.com/:category/:topic?', 'reuters.com/'],
+        },
+    ],
     name: 'Category/Topic/Author',
     maintainers: ['LyleLee', 'HenryQW', 'proletarius101', 'black-desk', 'nczitzk'],
     handler,

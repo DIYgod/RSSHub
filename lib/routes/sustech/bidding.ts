@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['biddingoffice.sustech.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['biddingoffice.sustech.edu.cn/'],
+        },
+    ],
     name: '采购与招标管理部',
     maintainers: ['sparkcyf'],
     handler,

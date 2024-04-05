@@ -4,7 +4,7 @@ import got from '@/utils/got';
 // Token used to retrieve public information.
 async function getPublicToken() {
     if (!config.spotify || !config.spotify.clientId || !config.spotify.clientSecret) {
-        throw new Error('Spotify public RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('Spotify public RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
     const { clientId, clientSecret } = config.spotify;
@@ -26,7 +26,7 @@ async function getPublicToken() {
 // Note that we don't use PKCE since the client secret shall be safe on the server.
 async function getPrivateToken() {
     if (!config.spotify || !config.spotify.clientId || !config.spotify.clientSecret || !config.spotify.refreshToken) {
-        throw new Error('Spotify private RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('Spotify private RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
     const { clientId, clientSecret, refreshToken } = config.spotify;

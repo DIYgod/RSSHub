@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['journals.uchicago.edu/toc/:journal/current', 'journals.uchicago.edu/journal/:journal'],
-    },
+    radar: [
+        {
+            source: ['journals.uchicago.edu/toc/:journal/current', 'journals.uchicago.edu/journal/:journal'],
+        },
+    ],
     name: 'Current Issue',
     maintainers: ['TonyRL'],
     handler,
@@ -100,5 +102,6 @@ async function handler(ctx) {
         link,
         image: $('head meta[property="og:image"]').attr('content'),
         item: items,
+        language: $('html').attr('lang'),
     };
 }

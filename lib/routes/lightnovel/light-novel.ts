@@ -7,10 +7,12 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/:keywords/:security_key?',
-    radar: {
-        source: ['lightNovel.us/'],
-        target: '/:keywords/:security_key',
-    },
+    radar: [
+        {
+            source: ['lightNovel.us/'],
+            target: '/:keywords/:security_key',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nightmare-mio'],
     handler,

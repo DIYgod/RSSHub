@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { isValidHost } from '@/utils/valid-host';
 
 const shortcuts = {
@@ -28,9 +28,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
-    },
+    radar: [
+        {
+            source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
+        },
+    ],
     name: '圖片',
     maintainers: ['nczitzk'],
     handler,

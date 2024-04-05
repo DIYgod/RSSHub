@@ -4,10 +4,12 @@ import { getNotes, formatText, formatNote } from './util';
 
 export const route: Route = {
     path: '/user/:user_id/notes/fulltext',
-    radar: {
-        source: ['xiaohongshu.com/user/profile/:user_id'],
-        target: '/user/:user_id/notes',
-    },
+    radar: [
+        {
+            source: ['xiaohongshu.com/user/profile/:user_id'],
+            target: '/user/:user_id/notes',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

@@ -19,10 +19,12 @@ import { baseUrl, cookieJar, getArticleList, getArticle } from './utils';
 
 export const route: Route = {
     path: '/news-and-comment/:journal?',
-    radar: {
-        source: ['nature.com/latest-news', 'nature.com/news', 'nature.com/'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['nature.com/latest-news', 'nature.com/news', 'nature.com/'],
+            target: '/news',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['y9c', 'TonyRL'],
     handler,

@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['grad.nua.edu.cn/:type/list.htm'],
-    },
+    radar: [
+        {
+            source: ['grad.nua.edu.cn/:type/list.htm'],
+        },
+    ],
     name: 'Graduate Institute',
     maintainers: ['evnydd0sf'],
     handler,

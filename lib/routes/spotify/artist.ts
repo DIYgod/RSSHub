@@ -9,16 +9,27 @@ export const route: Route = {
     example: '/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1',
     parameters: { id: 'Artist ID' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'SPOTIFY_CLIENT_ID',
+                description: '',
+            },
+            {
+                name: 'SPOTIFY_CLIENT_SECRET',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['open.spotify.com/artist/:id'],
-    },
+    radar: [
+        {
+            source: ['open.spotify.com/artist/:id'],
+        },
+    ],
     name: 'Artist Albums',
     maintainers: ['outloudvi'],
     handler,

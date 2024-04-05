@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['segmentfault.com/u/:name'],
-    },
+    radar: [
+        {
+            source: ['segmentfault.com/u/:name'],
+        },
+    ],
     name: '用户',
     maintainers: ['leyuuu', 'Fatpandac'],
     handler,

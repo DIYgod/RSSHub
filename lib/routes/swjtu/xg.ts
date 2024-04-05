@@ -62,10 +62,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xg.swjtu.edu.cn/web/Home/PushNewsList', 'xg.swjtu.edu.cn/web/Home/NewsList', 'xg.swjtu.edu.cn/web/Home/ColourfulCollegeNewsList', 'xg.swjtu.edu.cn/web/Publicity/List', 'xg.swjtu.edu.cn/'],
-        target: '/xg',
-    },
+    radar: [
+        {
+            source: ['xg.swjtu.edu.cn/web/Home/PushNewsList', 'xg.swjtu.edu.cn/web/Home/NewsList', 'xg.swjtu.edu.cn/web/Home/ColourfulCollegeNewsList', 'xg.swjtu.edu.cn/web/Publicity/List', 'xg.swjtu.edu.cn/'],
+            target: '/xg',
+        },
+    ],
     name: '扬华素质网',
     maintainers: ['mobyw'],
     handler,

@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { queryToBoolean } from '@/utils/readable-social';
 import puppeteer from '@/utils/puppeteer';
 
@@ -25,10 +25,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tiktok.com/:user'],
-        target: '/user/:user',
-    },
+    radar: [
+        {
+            source: ['tiktok.com/:user'],
+            target: '/user/:user',
+        },
+    ],
     name: 'User',
     maintainers: ['TonyRL'],
     handler,

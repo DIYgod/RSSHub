@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sciencedirect.com/journal/:id', 'sciencedirect.com/'],
-    },
+    radar: [
+        {
+            source: ['sciencedirect.com/journal/:id', 'sciencedirect.com/'],
+        },
+    ],
     name: 'Journal',
     maintainers: ['nczitzk'],
     handler,

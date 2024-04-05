@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.laimanhua8.com/kanmanhua/:id'],
-    },
+    radar: [
+        {
+            source: ['www.laimanhua8.com/kanmanhua/:id'],
+        },
+    ],
     name: '漫画列表',
     maintainers: ['TonyRL'],
     handler,

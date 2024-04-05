@@ -5,11 +5,14 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['playpcesor.com/'],
-        target: '',
-    },
-    name: 'Unknown',
+    categories: ['blog'],
+    example: '/playpcesor',
+    radar: [
+        {
+            source: ['playpcesor.com/'],
+        },
+    ],
+    name: '每日精选文章',
     maintainers: ['cnkmmk'],
     handler,
     url: 'playpcesor.com/',

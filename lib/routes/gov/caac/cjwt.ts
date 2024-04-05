@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/caac/cjwt/:category?',
@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['caac.gov.cn/HDJL/'],
-        target: '/caac/cjwt',
-    },
+    radar: [
+        {
+            source: ['caac.gov.cn/HDJL/'],
+            target: '/caac/cjwt',
+        },
+    ],
     name: '公众留言',
     maintainers: ['nczitzk'],
     handler,

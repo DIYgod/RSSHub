@@ -10,17 +10,24 @@ export const route: Route = {
     example: '/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ',
     parameters: { id: 'YouTube channel id', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'YOUTUBE_KEY',
+                description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.youtube.com/channel/:id'],
-        target: '/channel/:id',
-    },
+    radar: [
+        {
+            source: ['www.youtube.com/channel/:id'],
+            target: '/channel/:id',
+        },
+    ],
     name: 'Channel',
     maintainers: ['DIYgod'],
     handler,
@@ -31,7 +38,7 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 
 async function handler(ctx) {
     if (!config.youtube || !config.youtube.key) {
-        throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const id = ctx.req.param('id');
     const embed = !ctx.req.param('embed');

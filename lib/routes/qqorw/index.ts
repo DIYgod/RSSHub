@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['qqorw.cn/:category', 'qqorw.cn/'],
-    },
+    radar: [
+        {
+            source: ['qqorw.cn/:category', 'qqorw.cn/'],
+        },
+    ],
     name: '每日早报',
     maintainers: ['nczitzk'],
     handler,

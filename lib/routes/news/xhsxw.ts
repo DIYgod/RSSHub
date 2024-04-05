@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: ['/xhsxw', '/whxw'],
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.cn/xhsxw.htm'],
-    },
+    radar: [
+        {
+            source: ['news.cn/xhsxw.htm'],
+        },
+    ],
     name: '新华社新闻',
     maintainers: ['nczitzk'],
     handler,

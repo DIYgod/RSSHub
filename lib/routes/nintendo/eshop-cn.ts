@@ -7,9 +7,11 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/eshop/cn',
-    radar: {
-        source: ['nintendoswitch.com.cn/software', 'nintendoswitch.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['nintendoswitch.com.cn/software', 'nintendoswitch.com.cn/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

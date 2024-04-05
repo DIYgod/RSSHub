@@ -30,12 +30,9 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    ctx.set(
-        'data',
-        await utils.getData({
-            site: ctx.req.param('language') === 'chinese' ? 'www' : 'big5',
-            channel: ctx.req.param('channel'),
-            ctx,
-        })
-    );
+    return await utils.getData({
+        site: ctx.req.param('language') === 'chinese' ? 'www' : 'big5',
+        channel: ctx.req.param('channel'),
+        ctx,
+    });
 }

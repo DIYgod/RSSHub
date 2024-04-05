@@ -12,16 +12,23 @@ export const route: Route = {
     example: '/pixiv/user/illustfollows',
     parameters: {},
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'PIXIV_REFRESHTOKEN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.pixiv.net/bookmark_new_illust.php'],
-    },
+    radar: [
+        {
+            source: ['www.pixiv.net/bookmark_new_illust.php'],
+        },
+    ],
     name: 'Following timeline',
     maintainers: ['ClarkeCheng'],
     handler,
@@ -33,7 +40,7 @@ export const route: Route = {
 
 async function handler() {
     if (!config.pixiv || !config.pixiv.refreshToken) {
-        throw new Error('pixiv RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('pixiv RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
     const token = await getToken(cache.tryGet);

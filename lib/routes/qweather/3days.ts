@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 
 const WEATHER_API = 'https://devapi.qweather.com/v7/weather/3d';
@@ -19,7 +19,12 @@ export const route: Route = {
     example: '/qweather/3days/广州',
     parameters: { location: 'N' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'HEFENG_KEY',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

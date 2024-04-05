@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { parseJSONP } from './jsonp-helper';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/info/:category?',
@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/:category'],
-        target: '/info/:category',
-    },
+    radar: [
+        {
+            source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/:category'],
+            target: '/info/:category',
+        },
+    ],
     name: 'News & Biography',
     maintainers: [],
     handler,

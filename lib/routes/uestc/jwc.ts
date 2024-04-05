@@ -29,10 +29,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jwc.uestc.edu.cn/'],
-        target: '/jwc',
-    },
+    radar: [
+        {
+            source: ['jwc.uestc.edu.cn/'],
+            target: '/jwc',
+        },
+    ],
     name: '教务处',
     maintainers: ['achjqz', 'mobyw'],
     handler,

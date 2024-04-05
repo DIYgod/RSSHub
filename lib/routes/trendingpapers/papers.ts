@@ -60,5 +60,6 @@ async function handler(ctx) {
         title: `Trending Papers on arXiv.org | ${category} | ${time} | ${cited} | `,
         link: currentUrl,
         item: papers,
+        language: $('html').attr('lang'),
     };
 }

@@ -171,7 +171,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub">
                         <button className="bg-zinc-200 hover:bg-zinc-300 py-2 px-4 rounded-full">View on GitHub</button>
                     </a>
-                    <a target="_blank" href="https://docs.rsshub.app/support" className="text-[#F5712C]">
+                    <a target="_blank" href="https://docs.rsshub.app/sponsor" className="text-[#F5712C]">
                         <button className="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded-full">❤️ Sponsor</button>
                     </a>
                 </div>
@@ -204,7 +204,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 </p>
                 <p className="!mt-6">
                     Please consider{' '}
-                    <a target="_blank" href="https://docs.rsshub.app/support" className="text-[#F5712C]">
+                    <a target="_blank" href="https://docs.rsshub.app/sponsor" className="text-[#F5712C]">
                         sponsoring
                     </a>{' '}
                     to help keep this open source project alive.

@@ -9,17 +9,24 @@ export const route: Route = {
     example: '/pianyuan/index',
     parameters: { media: '类别，见下表，默认为首页' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'PIANYUAN_COOKIE',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pianyuan.org/'],
-        target: '/index',
-    },
+    radar: [
+        {
+            source: ['pianyuan.org/'],
+            target: '/index',
+        },
+    ],
     name: '最新资源',
     maintainers: ['greatcodeeer', 'jerry1119'],
     handler,

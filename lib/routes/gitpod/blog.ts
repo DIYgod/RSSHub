@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { rootUrl } from './utils';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/blog',
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gitpod.io/blog', 'gitpod.io/'],
-    },
+    radar: [
+        {
+            source: ['gitpod.io/blog', 'gitpod.io/'],
+        },
+    ],
     name: 'Blog',
     maintainers: ['TonyRL'],
     handler,

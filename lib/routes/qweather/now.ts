@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 const rootUrl = 'https://devapi.qweather.com/v7/weather/now?';
@@ -15,7 +15,12 @@ export const route: Route = {
     example: '/qweather/广州',
     parameters: { location: 'N' },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'HEFENG_KEY',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

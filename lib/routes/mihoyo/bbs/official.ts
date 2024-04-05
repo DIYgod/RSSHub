@@ -72,5 +72,5 @@ async function handler(ctx) {
         item: items,
     };
 
-    ctx.set('data', data);
+    return data;
 }

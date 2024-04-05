@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
-import * as path from 'node:path';
+import path from 'node:path';
 import { baseUrl, getUserInfoFromUsername, getUserInfoFromId, getUserWorks } from './utils';
 
 export const route: Route = {
@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['500px.com.cn/:id', '500px.com.cn/community/user-details/:id', '500px.com.cn/community/user-details/:id/*'],
-    },
+    radar: [
+        {
+            source: ['500px.com.cn/:id', '500px.com.cn/community/user-details/:id', '500px.com.cn/community/user-details/:id/*'],
+        },
+    ],
     name: '摄影师作品',
     maintainers: ['TonyRL'],
     handler,

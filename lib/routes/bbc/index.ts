@@ -7,9 +7,20 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/:site?/:channel?',
-    name: 'Unknown',
-    maintainers: [],
+    name: 'News',
+    maintainers: ['HenryQW', 'DIYgod'],
     handler,
+    example: '/bbc/world-asia',
+    parameters: {
+        site: '语言，简体或繁体中文',
+        channel: 'channel, default to `top stories`',
+    },
+    categories: ['traditional-media'],
+    description: `Provides a better reading experience (full text articles) over the official ones.
+
+    Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, \`business\` for \`https://feeds.bbci.co.uk/news/business/rss.xml\`.
+
+    -   Channel contains sub-directories, such as \`https://feeds.bbci.co.uk/news/world/asia/rss.xml\`, replace \`/\` with \`-\`, \`/bbc/world-asia\`.`,
 };
 
 async function handler(ctx) {

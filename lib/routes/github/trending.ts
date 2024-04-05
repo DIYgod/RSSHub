@@ -6,7 +6,7 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/trending/:since/:language/:spoken_language?',
@@ -18,17 +18,24 @@ export const route: Route = {
         spoken_language: "natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL",
     },
     features: {
-        requireConfig: true,
+        requireConfig: [
+            {
+                name: 'GITHUB_ACCESS_TOKEN',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/trending'],
-        target: '/trending/:since',
-    },
+    radar: [
+        {
+            source: ['github.com/trending'],
+            target: '/trending/:since',
+        },
+    ],
     name: 'Trending',
     maintainers: ['DIYgod', 'jameschensmith'],
     handler,
@@ -37,7 +44,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.github || !config.github.access_token) {
-        throw new Error('GitHub trending RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new Error('GitHub trending RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const since = ctx.req.param('since');
     const language = ctx.req.param('language') === 'any' ? '' : ctx.req.param('language');

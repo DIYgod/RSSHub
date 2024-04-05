@@ -6,7 +6,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 
 // 分类
@@ -86,9 +86,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['notefolio.net/search'],
-    },
+    radar: [
+        {
+            source: ['notefolio.net/search'],
+        },
+    ],
     name: 'Works',
     maintainers: ['BianTan'],
     handler,

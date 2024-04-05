@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['plurk.com/anonymous'],
-    },
+    radar: [
+        {
+            source: ['plurk.com/anonymous'],
+        },
+    ],
     name: 'Anonymous',
     maintainers: ['TonyRL'],
     handler,

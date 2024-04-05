@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const rootUrl = 'http://www.rsj.sh.gov.cn';
 
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rsj.sh.gov.cn/'],
-    },
+    radar: [
+        {
+            source: ['rsj.sh.gov.cn/'],
+        },
+    ],
     name: '上海市职业能力考试院 考试项目',
     maintainers: ['Fatpandac'],
     handler,

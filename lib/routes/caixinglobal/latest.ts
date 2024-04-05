@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['caixinglobal.com/news', 'caixinglobal.com/'],
-    },
+    radar: [
+        {
+            source: ['caixinglobal.com/news', 'caixinglobal.com/'],
+        },
+    ],
     name: 'Latest News',
     maintainers: ['TonyRL'],
     handler,

@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 
 export const route: Route = {
@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.playstation.com/en-sg/ps-plus/whats-new'],
-    },
+    radar: [
+        {
+            source: ['www.playstation.com/en-sg/ps-plus/whats-new'],
+        },
+    ],
     name: 'PlayStation Monthly Games',
     maintainers: ['justjustCC'],
     handler,
