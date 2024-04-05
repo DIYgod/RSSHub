@@ -1,26 +1,24 @@
 {{ if i.files }}
-    {{ each i.files a }}
-		{{ if a.extension === 'jpg' || a.extension === 'png' || a.extension === 'webp' || a.extension === 'jpeg' || a.extension === 'jfif' }}
-			<img src="{{ a.path }}">
-		{{ else if a.extension === 'm4a' || a.extension === 'mp3' || a.extension === 'ogg' }}
-			<audio controls><source src="{{ a.path }}" type="audeo/{{a.extention}}"></audio>
-		{{ else if a.extension === 'mp4' || a.extension === 'webm' }}
-			<vedio controls><source src="{{ a.path }}" type="video/{{a.extention}}"></vedio>
+    {{ each i.files file }}
+		{{ if file.extension === 'jpg' || file.extension === 'png' || file.extension === 'webp' || file.extension === 'jpeg' || file.extension === 'jfif' }}
+			<img src="{{ file.path }}">
+		{{ else if file.extension === 'm4a' || file.extension === 'mp3' || file.extension === 'ogg' }}
+			<audio controls><source src="{{ file.path }}" type="audio/{{file.extention}}"></audio>
+		{{ else if file.extension === 'mp4' || file.extension === 'webm' }}
+			<video controls><source src="{{ file.path }}" type="video/{{file.extention}}"></video>
         {{ else }}
-            <a href="{{ a.path }}">{{a.name}}</a>
+            <a href="{{ file.path }}">{{file.name}}</a>
         {{ /if }}
     {{ /each }}
 {{ /if }}
 
-{{ if i.embeds }}
-    {{ each i.embeds e }}
-        {{ if e.type === 'image' }}
-            <img src="{{ e.thumbnail.proxy_url }}">
-        {{ else if e.type === 'link' }}
-            {{ if e.thumbnail }}
-                <a href="{{ e.thumbnail.url }}"><img src="{{ e.thumbnail.proxy_url }}"></a>
-            {{ /if }}
-            <a href="{{ e.url }}">{{ e.title }}</a>{{ if e.description }}<p>{{ e.description }}</p>{{ /if }}
+{{ if i.embed }}
+    {{ if i.embed.type === 'image' }}
+        <img src="{{ i.embed.thumbnail.proxy_url }}">
+    {{ else if i.embed.type === 'link' }}
+        {{ if i.embed.thumbnail }}
+            <a href="{{ i.embed.thumbnail.url }}"><img src="{{ i.embed.thumbnail.proxy_url }}"></a>
         {{ /if }}
-    {{ /each }}
+        <a href="{{ i.embed.url }}">{{ i.embed.title }}</a>{{ if i.embed.description }}<p>{{ i.embed.description }}</p>{{ /if }}
+    {{ /if }}
 {{ /if }}
