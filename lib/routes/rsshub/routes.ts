@@ -7,14 +7,6 @@ export const route: Route = {
     categories: ['program-update'],
     example: '/rsshub/routes/en',
     parameters: { lang: 'Language, `zh` means Chinese docs, other values or null means English docs, `en` by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['docs.rsshub.app/*'],
@@ -83,7 +75,7 @@ async function handler(ctx) {
             return {
                 title: `${h2Title.text().trim()} - ${h3Title.text().trim()}`,
                 description: item.html(),
-                link: `https://docs.rsshub.app/${lang}routes/${type}#${encodeURIComponent(h2Title.find('.hash-link').attr('href') && h3Title.find('.hash-link').attr('href')?.substring(1))}`,
+                link: `https://docs.rsshub.app/${lang}routes/${type}#${encodeURIComponent(h2Title.find('.header-anchor').attr('href') && h3Title.find('.header-anchor').attr('href')?.substring(1))}`,
                 guid: item.attr('id'),
             };
         }),
