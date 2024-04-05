@@ -3514,6 +3514,12 @@
   "/mindmeister/:category?/:language?": [
     "TonyRL"
   ],
+  "/minecraft/blockedservers": [
+    "xtexChooser"
+  ],
+  "/minecraft/java-runtime/:arch?/:javaType?": [
+    "xtexChooser"
+  ],
   "/minecraft/version/:versionType?/:linkType?": [
     "TheresaQWQ",
     "xtexChooser"

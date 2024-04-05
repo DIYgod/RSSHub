@@ -34712,6 +34712,75 @@
   },
   "minecraft": {
     "routes": {
+      "/blockedservers": {
+        "path": "/blockedservers",
+        "categories": [
+          "game"
+        ],
+        "example": "/minecraft/blockedservers",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "minecraft.net/"
+            ]
+          }
+        ],
+        "name": "Java Blocked Servers",
+        "maintainers": [
+          "xtexChooser"
+        ],
+        "url": "minecraft.net/",
+        "description": "Java 版中被 Mojang 通过 sessionserver 阻止的服务器域名的 SHA-1 散列",
+        "zh": {
+          "name": "Java版被阻止的服务器域名散列"
+        },
+        "location": "blockedservers.ts"
+      },
+      "/java-runtime/:arch?/:javaType?": {
+        "path": "/java-runtime/:arch?/:javaType?",
+        "categories": [
+          "game"
+        ],
+        "example": "/minecraft/java-runtime",
+        "parameters": {
+          "arch": "Arch, `all` by default",
+          "javaType": "Java runtime type, `all` by default"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "minecraft.net/"
+            ]
+          }
+        ],
+        "name": "Java Runtimes",
+        "maintainers": [
+          "xtexChooser"
+        ],
+        "url": "minecraft.net/",
+        "description": "\narch:\n\n- gamecore (Currently not used by Mojang)\n- linux\n- linux-i386\n- mac-os\n- mac-os-arm64\n- windows-arm64\n- windows-x64\n- windows-x86\n\njavaType:\n\n- java-runtime-alpha\n- java-runtime-beta\n- java-runtime-delta\n- java-runtime-gamma\n- java-runtime-gamma-snapshot\n- jre-legacy\n- minecraft-java-exe (Only on Windows)\n",
+        "zh": {
+          "name": "Java运行时"
+        },
+        "location": "java-runtime.ts"
+      },
       "/version/:versionType?/:linkType?": {
         "path": "/version/:versionType?/:linkType?",
         "categories": [

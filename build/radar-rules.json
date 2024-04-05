@@ -8572,6 +8572,22 @@
     "_name": "Minecraft",
     ".": [
       {
+        "title": "Java Blocked Servers",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/minecraft/blockedservers"
+      },
+      {
+        "title": "Java Runtimes",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/minecraft/java-runtime/:arch?/:javaType?"
+      },
+      {
         "title": "Java Game Update",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
