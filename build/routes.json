@@ -48718,6 +48718,50 @@
     "name": "ShopBack",
     "url": "shopback.com.tw"
   },
+  "shopify": {
+    "routes": {
+      "/apps/:handle/reviews/:page?": {
+        "path": "/apps/:handle/reviews/:page?",
+        "example": "/shopify/apps/flow/reviews",
+        "parameters": {
+          "handle": "例如一个 App 的链接 https://apps.shopify.com/flow，其中 flow 就是指的是 handle"
+        },
+        "name": "App reviews",
+        "maintainers": [
+          "PrintNow"
+        ],
+        "radar": [
+          {
+            "source": [
+              "apps.shopify.com/:handle"
+            ]
+          }
+        ],
+        "location": "apps/[handle].reviews.ts"
+      },
+      "/apps/search/:q": {
+        "path": "/apps/search/:q",
+        "example": "/shopify/apps/search/flow",
+        "parameters": {
+          "q": "需要搜索的 App"
+        },
+        "name": "App store search",
+        "maintainers": [
+          "PrintNow"
+        ],
+        "radar": [
+          {
+            "source": [
+              "apps.shopify.com/search"
+            ]
+          }
+        ],
+        "location": "apps/search.ts"
+      }
+    },
+    "name": "Shopify",
+    "url": "shopify.com"
+  },
   "shoppingdesign": {
     "routes": {
       "/posts": {

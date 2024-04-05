@@ -12502,6 +12502,27 @@
       }
     ]
   },
+  "shopify.com": {
+    "_name": "Shopify",
+    "apps": [
+      {
+        "title": "App reviews",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:handle"
+        ],
+        "target": "/shopify/apps/:handle/reviews/:page?"
+      },
+      {
+        "title": "App store search",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/search"
+        ],
+        "target": "/shopify(_params,url)=>{const{searchParams}=new URL(url).searchParams;return searchParams.has(\"q\")?`/shopify/apps/search/${searchParams.get(\"q\")}`:null}"
+      }
+    ]
+  },
   "shoppingdesign.com.tw": {
     "_name": "Shopping Design",
     "www": [
