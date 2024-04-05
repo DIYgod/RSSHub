@@ -12,9 +12,20 @@ import { CookieJar } from 'tough-cookie';
 const cookieJar = new CookieJar();
 
 export const route: Route = {
-    path: ['/:journal/latest/vol/:sortType?', '/journal/:journal/:sortType?'],
-    name: 'Unknown',
-    maintainers: [],
+    path: ['/journal/:journal/:sortType?', '/:journal/latest/vol/:sortType?'],
+    categories: ['journal'],
+    examples: '/ieee/journal/6287639/vol-only-seq',
+    parameters: { journal: 'Issue code, the number of the `isnumber` in the URL', sortType: 'Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: true,
+    },
+    name: 'Current Issue',
+    maintainers: ['Derekmini'],
     handler,
 };
 
