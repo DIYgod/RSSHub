@@ -7,6 +7,7 @@ import path from 'node:path';
 import asyncPool from 'tiny-async-pool';
 
 import { parseDate } from '@/utils/parse-date';
+import oldGot from '@/utils/got-deprecated';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 
@@ -96,7 +97,7 @@ const parseArticle = (item) =>
 
                 try {
                     const apiUrl = `${api.url}${link}`;
-                    res = await got(apiUrl, { headers });
+                    res = await oldGot(apiUrl, { headers });
                 } catch (error) {
                     // fallback
                     if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
@@ -210,7 +211,7 @@ const parseReactRendererPage = async (res, api, item) => {
     const json = load(res.data)(api.sel).text().trim();
     const story_id = JSON.parse(json)[api.prop];
     try {
-        const res = await got(`${idUrl}${story_id}`, { headers });
+        const res = await oldGot(`${idUrl}${story_id}`, { headers });
         return await parseStoryJson(res.data, item);
     } catch (error) {
         // fallback
@@ -364,7 +365,7 @@ const processBody = async (body_html, story_json) => {
 
 const processVideo = async (bmmrId, summary) => {
     const api = `https://www.bloomberg.com/multimedia/api/embed?id=${bmmrId}`;
-    const res = await got(api, { headers });
+    const res = await oldGot(api, { headers });
 
     // Blocked by PX3, return the default
     const redirectUrls = res.redirectUrls.map(String);
