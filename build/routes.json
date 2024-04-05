@@ -32688,14 +32688,6 @@
           "edition": "Edition, see table above",
           "id": "Channel ID, can be found in URL"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -32718,14 +32710,6 @@
         "parameters": {
           "edition": "Edition, see below, Taiwan by default",
           "tab": "Tag, can be found in URL, `top` by default"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
         },
         "radar": [
           {
