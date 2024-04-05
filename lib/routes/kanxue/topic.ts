@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import kanxueUtils from './utils';
+import { parseRelativeDate, parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://bbs.kanxue.com/';
 const categoryId = {
@@ -18,6 +18,7 @@ const categoryId = {
     ctf: [37, 'CTF对抗'],
     pwn: [171, 'Pwn'],
     web: [151, 'WEB安全'],
+    chat: [45, '茶余饭后'],
     geekzone: [172, '极客空间'],
     translate: [32, '外文翻译'],
 };
@@ -44,6 +45,7 @@ export const route: Route = {
     | CTF 对抗       | ctf       |
     | Pwn            | pwn       |
     | WEB 安全       | web       |
+    | 茶余饭后       | chat      |
     | 极客空间       | geekzone  |
     | 外文翻译       | translate |
     | 全站           | all       |
@@ -53,6 +55,8 @@ export const route: Route = {
     | 最新主题 | latest |
     | 精华主题 | digest |`,
 };
+
+const timeDiff = 1000 * 60 * 60 * 24 * 3;
 
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'all';
@@ -96,12 +100,14 @@ async function handler(ctx) {
             ? list
                 // fix .thread .top_3
                 .filter((_, elem) => {
-                    const pubDate = kanxueUtils.dateParser($('.date', elem).eq(0).text(), 8);
-                    return !elem.attribs.class.includes('top') || Date.now() - new Date(pubDate) < 1000 * 60 * 60 * 24 * 3;
+                    const timeStr = $('.date', elem).eq(0).text();
+                    const pubDate = timeStr.endsWith("前") ? parseRelativeDate(timeStr) : parseDate(timeStr.substring(1));
+                    return !elem.attribs.class.includes('top') || Date.now() - pubDate.valueOf() < timeDiff;
                 })
                 .map((_, elem) => {
                     const subject = $('.subject a', elem).eq(1);
-                    const pubDate = kanxueUtils.dateParser($('.date', elem).eq(0).text(), 8);
+                    const timeStr = $('.date', elem).eq(0).text();
+                    const pubDate = timeStr.endsWith("前") ? parseRelativeDate(timeStr) : parseDate(timeStr.substring(1));
 
                     const link = `${baseUrl}${subject.attr('href')}`;
                     const key = `kanxue: ${link}`;
@@ -122,7 +128,6 @@ async function handler(ctx) {
                                 if (src !== undefined && !src.startsWith('https://') && !src.startsWith('http://')) {
                                     item.attr('src', `https://bbs.kanxue.com/${src}`);
                                 }
-                                item.attr('referrerpolicy', 'no-referrer');
                             });
 
                         const description = $('.card').eq(0).find('.message').html();
@@ -130,7 +135,7 @@ async function handler(ctx) {
                         return {
                             title: subject.text(),
                             link,
-                            pubDate: new Date(pubDate),
+                            pubDate,
                             description,
                         };
                     });
