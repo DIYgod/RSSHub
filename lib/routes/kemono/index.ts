@@ -1,4 +1,4 @@
-import { DataItem, Route } from '@/types';
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -63,8 +63,8 @@ async function handler(ctx) {
         headers,
     });
 
-    let items = new Array<DataItem>(),
-        title = '',
+    let items,
+        title,
         image;
 
     if (source === 'discord') {
