@@ -14,7 +14,7 @@ const cookieJar = new CookieJar();
 export const route: Route = {
     path: ['/journal/:journal/:sortType?', '/:journal/latest/vol/:sortType?'],
     categories: ['journal'],
-    examples: '/ieee/journal/6287639/vol-only-seq',
+    examples: '/ieee/journal/6287639',
     parameters: { journal: 'Issue code, the number of the `isnumber` in the URL', sortType: 'Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`' },
     features: {
         requireConfig: false,
