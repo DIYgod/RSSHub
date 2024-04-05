@@ -591,6 +591,36 @@
     "name": "12306",
     "url": "kyfw.12306.cn"
   },
+  "12371": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "example": "/12371/zxfb",
+        "parameters": {
+          "category": "新闻分类名，预设 `zxfb`"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.12371.cn/:category"
+            ]
+          }
+        ],
+        "name": "最新发布",
+        "maintainers": [
+          "zvrr"
+        ],
+        "url": "www.12371.cn",
+        "description": "| 最新发布 |\n    | :------: |\n    |   zxfb   |",
+        "location": "zxfb.ts"
+      }
+    },
+    "name": "共产党员网",
+    "url": "www.12371.cn",
+    "categories": [
+      "government"
+    ]
+  },
   "005": {
     "routes": {
       "/:category?": {

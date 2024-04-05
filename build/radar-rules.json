@@ -68,6 +68,19 @@
       }
     ]
   },
+  "12371.cn": {
+    "_name": "共产党员网",
+    "www": [
+      {
+        "title": "最新发布",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/:category"
+        ],
+        "target": "/12371/:category?"
+      }
+    ]
+  },
   "005.tv": {
     "_name": "幻之羁绊动漫网",
     ".": [
