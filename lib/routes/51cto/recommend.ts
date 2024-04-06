@@ -28,7 +28,7 @@ async function handler() {
         item: list.map((item) => ({
             title: item.title,
             link: item.url,
-            pubDate: parseDate(item.pubdate,+8),
+            pubDate: parseDate(item.pubdate, +8),
             description: item.abstract,
         })),
     };
