@@ -14,6 +14,9 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
         <author>
             <name>{data.author || 'RSSHub'}</name>
         </author>
+        {data.icon && <icon>{data.icon}</icon>}
+        {data.logo && <logo>{data.logo}</logo>}
+
         {data.item?.map((item) => (
             <entry>
                 <title>{item.title}</title>
