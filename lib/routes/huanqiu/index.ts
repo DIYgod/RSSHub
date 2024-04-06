@@ -56,11 +56,9 @@ async function handler(ctx) {
         url: `${host}/api/channel_pc`,
     });
 
-    const respData = JSON.parse(resp.body);
+    const name = getKeysRecursive(resp.data.children, 'children', 'domain_name', [])[0];
 
-    const name = getKeysRecursive(respData.children, 'children', 'domain_name', [])[0];
-
-    const nodes = getKeysRecursive(respData.children, 'children', 'node', [])
+    const nodes = getKeysRecursive(resp.data.children, 'children', 'node', [])
         .map((x) => `"${x}"`)
         .join(',');
     const req = await got({
