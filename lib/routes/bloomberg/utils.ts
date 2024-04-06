@@ -114,7 +114,10 @@ const parseArticle = (item) =>
                 }
 
                 // Blocked by PX3, or 404 by both api and direct link, return the default
-                const redirectUrls = res.redirectUrls.map(String);
+                let redirectUrls: string[] = [];
+                if (res.redirectUrls && res.redirectUrls.length > 0) {
+                    redirectUrls = res.redirectUrls.map(String);
+                }
                 if (redirectUrls.some((r) => new URL(r).pathname === '/tosv2.html') || res.statusCode === 404) {
                     return {
                         title: item.title,
