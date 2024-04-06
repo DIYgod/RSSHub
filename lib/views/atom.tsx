@@ -14,6 +14,9 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
         <author>
             <name>{data.author || 'RSSHub'}</name>
         </author>
+        {data.icon && <icon>{data.icon}</icon>}
+        {data.logo && <logo>{data.logo}</logo>}
+
         {data.item?.map((item) => (
             <entry>
                 <title>{item.title}</title>
@@ -35,6 +38,9 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                         const Tag = `media:${key}`;
                         return <Tag {...value} />;
                     })}
+                {item.upvotes ? <rsshub:upvotes>{item.upvotes}</rsshub:upvotes> : ''}
+                {item.downvotes ? <rsshub:downvotes>{item.downvotes}</rsshub:downvotes> : ''}
+                {item.comments ? <rsshub:comments>{item.comments}</rsshub:comments> : ''}
             </entry>
         ))}
     </feed>

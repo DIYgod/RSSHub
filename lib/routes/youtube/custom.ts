@@ -8,14 +8,17 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/c/:username/:embed?',
+    categories: ['social-media'],
+    example: '/youtube/c/YouTubeCreators',
+    parameters: { username: 'YouTube custom URL', embed: 'Default to embed the video, set to any value to disable embedding' },
     radar: [
         {
             source: ['www.youtube.com/c/:id'],
             target: '/c/:id',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Custom URL',
+    maintainers: ['TonyRL'],
     handler,
 };
 
@@ -31,7 +34,7 @@ async function handler(ctx) {
     const ytInitialData = JSON.parse(
         $('script')
             .text()
-            .match(/ytInitialData = ({.*?});/)[1]
+            .match(/ytInitialData = ({.*?});/)?.[1] || '{}'
     );
     const externalId = ytInitialData.metadata.channelMetadataRenderer.externalId;
     const playlistId = (await utils.getChannelWithId(externalId, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;

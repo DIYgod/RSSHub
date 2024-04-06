@@ -348,6 +348,8 @@ async function handler(ctx) {
         link: `https://space.bilibili.com/${uid}/dynamic`,
         description: `${author} 的 bilibili 动态`,
         image: face,
+        logo: face,
+        icon: face,
         item: rssItems,
     };
 }
