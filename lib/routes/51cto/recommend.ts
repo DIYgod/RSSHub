@@ -1,7 +1,6 @@
 import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/index/recommend',
@@ -19,30 +18,18 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = 'https://51cto.com';
-    const response = await got({ method: 'get', url });
-    const $ = load(response.data);
-
-    const list = $('div.article-irl-c.split-left-l')
-        .map((i, e) => {
-            const element = $(e);
-            const title = element.find('a.usehover.article-irl-ct_title').text();
-            const link = element.find('a.usehover.article-irl-ct_title').attr('href');
-            const description = element.find('a.split-top-m.usehover.pc-three-line.article-abstract').text();
-            const dateraw = element.find('p.article-irl-cb_time').text();
-
-            return {
-                title,
-                description,
-                link,
-                pubDate: parseDate(dateraw, 'YYYY-MM-DD HH:mm:ss'),
-            };
-        })
-        .get();
-
+    const url = 'http://api-media.51cto.com';
+    const response = await got(`${url}/index/index/recommend`);
+    const list = response.data.data.data.list;
     return {
         title: '51CTO',
-        link: url,
-        item: list,
+        link: 'https://www.51cto.com/',
+        description: '51cto - 推荐',
+        item: list.map((item) => ({
+            title: item.title,
+            link: item.url,
+            pubDate: parseDate(item.pubdate,+8),
+            description: item.abstract,
+        })),
     };
 }
