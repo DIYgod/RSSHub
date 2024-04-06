@@ -7,7 +7,6 @@ import path from 'node:path';
 import asyncPool from 'tiny-async-pool';
 
 import { parseDate } from '@/utils/parse-date';
-import oldGot from '@/utils/got-deprecated';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 
@@ -61,6 +60,10 @@ const regex = [pageTypeRegex1, pageTypeRegex2];
 const capRegex = /<p>|<\/p>/g;
 const emptyRegex = /<p\b[^>]*>(&nbsp;|\s)<\/p>/g;
 
+const redirectGot = got.extend({
+    rawResponse: true,
+});
+
 const parseNewsList = async (url, ctx) => {
     const resp = await got(url);
     const $ = load(resp.data, {
@@ -97,12 +100,12 @@ const parseArticle = (item) =>
 
                 try {
                     const apiUrl = `${api.url}${link}`;
-                    res = await oldGot(apiUrl, { headers });
+                    res = await redirectGot(apiUrl, { headers });
                 } catch (error) {
                     // fallback
                     if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
                         try {
-                            res = await got(item.link, { headers });
+                            res = await redirectGot(item.link, { headers });
                         } catch {
                             // return the default one
                             return {
@@ -115,8 +118,7 @@ const parseArticle = (item) =>
                 }
 
                 // Blocked by PX3, or 404 by both api and direct link, return the default
-                const redirectUrls = res.redirectUrls.map(String);
-                if (redirectUrls.some((r) => new URL(r).pathname === '/tosv2.html') || res.statusCode === 404) {
+                if ((res.redirected && new URL(res.url).pathname === '/tosv2.html') || res.status === 404) {
                     return {
                         title: item.title,
                         link: item.link,
@@ -126,15 +128,15 @@ const parseArticle = (item) =>
 
                 switch (page) {
                     case 'audio':
-                        return parseAudioPage(res, api, item);
+                        return parseAudioPage(res._data, api, item);
                     case 'videos':
-                        return parseVideoPage(res, api, item);
+                        return parseVideoPage(res._data, api, item);
                     case 'photo-essays':
-                        return parsePhotoEssaysPage(res, api, item);
+                        return parsePhotoEssaysPage(res._data, api, item);
                     case 'features/': // single features page
-                        return parseReactRendererPage(res, api, item);
+                        return parseReactRendererPage(res._data, api, item);
                     default: // use story api to get json
-                        return parseStoryJson(res.data, item);
+                        return parseStoryJson(res._data.data, item);
                 }
             }
         }
@@ -211,8 +213,8 @@ const parseReactRendererPage = async (res, api, item) => {
     const json = load(res.data)(api.sel).text().trim();
     const story_id = JSON.parse(json)[api.prop];
     try {
-        const res = await oldGot(`${idUrl}${story_id}`, { headers });
-        return await parseStoryJson(res.data, item);
+        const res = await redirectGot(`${idUrl}${story_id}`, { headers });
+        return await parseStoryJson(res._data, item);
     } catch (error) {
         // fallback
         if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
@@ -365,11 +367,10 @@ const processBody = async (body_html, story_json) => {
 
 const processVideo = async (bmmrId, summary) => {
     const api = `https://www.bloomberg.com/multimedia/api/embed?id=${bmmrId}`;
-    const res = await oldGot(api, { headers });
+    const res = await redirectGot(api, { headers });
 
     // Blocked by PX3, return the default
-    const redirectUrls = res.redirectUrls.map(String);
-    if (redirectUrls.some((r) => new URL(r).pathname === '/tosv2.html')) {
+    if ((res.redirected && new URL(res.url).pathname === '/tosv2.html') || res.status === 404) {
         return {
             stream: '',
             mp4: '',
@@ -378,8 +379,8 @@ const processVideo = async (bmmrId, summary) => {
         };
     }
 
-    if (res.data) {
-        const video_json = res.data;
+    if (res._data.data) {
+        const video_json = res._data.data;
         return {
             stream: video_json.streams ? video_json.streams[0]?.url : '',
             mp4: video_json.downloadURLs ? video_json.downloadURLs['600'] : '',
@@ -387,7 +388,12 @@ const processVideo = async (bmmrId, summary) => {
             caption: video_json.description || video_json.title || summary,
         };
     }
-    return {};
+    return {
+        stream: '',
+        mp4: '',
+        coverUrl: '',
+        caption: summary,
+    };
 };
 
 const nodeRenderers = {

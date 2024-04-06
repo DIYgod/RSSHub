@@ -53,7 +53,7 @@ const getFakeGot = (defaultOptions?: any) => {
             delete options.parseResponse;
         }
 
-        const response = ofetch(request, options);
+        const response = options?.rawResponse ? ofetch.raw(request, options) : ofetch(request, options);
 
         if (options?.responseType === 'arrayBuffer') {
             return response.then((responseData) => ({
