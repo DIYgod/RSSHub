@@ -29,11 +29,6 @@ export const route: Route = {
                 description: '',
             },
         ],
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
     },
     radar: [
         {
