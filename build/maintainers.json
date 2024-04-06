@@ -6266,7 +6266,9 @@
   "/youtube/community/:handle": [
     "TonyRL"
   ],
-  "/youtube/c/:username/:embed?": [],
+  "/youtube/c/:username/:embed?": [
+    "TonyRL"
+  ],
   "/youtube/live/:username/:embed?": [
     "sussurr127"
   ],

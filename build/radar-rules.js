@@ -6781,7 +6781,7 @@
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/channel/:id" ],
         target:"/youtube/channel/:id" },
-      { title:"Unknown",
+      { title:"Custom URL",
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/c/:id" ],
         target:"/youtube/c/:id" },

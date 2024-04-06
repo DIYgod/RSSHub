@@ -62117,14 +62117,6 @@
           "country": "Country Code, see table below, default to global",
           "embed": "Default to embed the video, set to any value to disable embedding"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "name": "Music Charts",
         "maintainers": [
           "TonyRL"
@@ -62141,14 +62133,6 @@
         "parameters": {
           "handle": "YouTube handles or channel id"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "name": "Community",
         "maintainers": [
           "TonyRL"
@@ -62157,6 +62141,14 @@
       },
       "/c/:username/:embed?": {
         "path": "/c/:username/:embed?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/youtube/c/YouTubeCreators",
+        "parameters": {
+          "username": "YouTube custom URL",
+          "embed": "Default to embed the video, set to any value to disable embedding"
+        },
         "radar": [
           {
             "source": [
@@ -62165,8 +62157,10 @@
             "target": "/c/:id"
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "Custom URL",
+        "maintainers": [
+          "TonyRL"
+        ],
         "location": "custom.ts"
       },
       "/live/:username/:embed?": {
@@ -62244,12 +62238,7 @@
               "name": "YOUTUBE_REFRESH_TOKEN",
               "description": ""
             }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
+          ]
         },
         "radar": [
           {

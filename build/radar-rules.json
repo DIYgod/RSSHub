@@ -15719,7 +15719,7 @@
         "target": "/youtube/channel/:id"
       },
       {
-        "title": "Unknown",
+        "title": "Custom URL",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/c/:id"
