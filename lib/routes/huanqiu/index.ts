@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from 'got';
+import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
@@ -54,20 +54,23 @@ async function handler(ctx) {
     const resp = await got({
         method: 'get',
         url: `${host}/api/channel_pc`,
-        responseType: 'json',
     });
-    const name = getKeysRecursive(resp.body.children, 'children', 'domain_name', [])[0];
 
-    const nodes = getKeysRecursive(resp.body.children, 'children', 'node', [])
+    const respData = JSON.parse(resp.body);
+
+    const name = getKeysRecursive(respData.children, 'children', 'domain_name', [])[0];
+
+    const nodes = getKeysRecursive(respData.children, 'children', 'node', [])
         .map((x) => `"${x}"`)
         .join(',');
     const req = await got({
         method: 'get',
         url: `${host}/api/list?node=${nodes}&offset=0&limit=${ctx.req.query('limit') ?? 20}`,
-        responseType: 'json',
     });
 
-    let items = req.body.list
+    const reqData = JSON.parse(req.body);
+
+    let items = reqData.list
         .filter((item) => item.aid)
         .map((item) => ({
             link: `${host}/article/${item.aid}`,
@@ -81,7 +84,7 @@ async function handler(ctx) {
                     method: 'get',
                     url: item.link,
                 });
-                const content = load(detailResponse.body);
+                const content = load(detailResponse.data);
 
                 item.description = content('textarea.article-content').text();
                 item.author = content('span', '.source').text();
