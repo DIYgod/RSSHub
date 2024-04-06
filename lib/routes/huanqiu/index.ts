@@ -66,8 +66,6 @@ async function handler(ctx) {
         url: `${host}/api/list?node=${nodes}&offset=0&limit=${ctx.req.query('limit') ?? 20}`,
     });
 
-    const reqData = JSON.parse(req.body);
-
     let items = reqData.list
         .filter((item) => item.aid)
         .map((item) => ({
