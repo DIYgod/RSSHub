@@ -341,6 +341,19 @@
       }
     ]
   },
+  "51cto.com": {
+    "_name": "51CTO",
+    ".": [
+      {
+        "title": "推荐",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/51cto/index/recommend"
+      }
+    ]
+  },
   "52hrtt.com": {
     "_name": "52hrtt 华人头条",
     ".": [

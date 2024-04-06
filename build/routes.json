@@ -1688,6 +1688,32 @@
     "name": "经济 50 人论坛",
     "url": "50forum.org.cn"
   },
+  "51cto": {
+    "routes": {
+      "/index/recommend": {
+        "path": "/index/recommend",
+        "categories": [
+          "programming"
+        ],
+        "example": "/51cto/index/recommend",
+        "radar": [
+          {
+            "source": [
+              "51cto.com/"
+            ]
+          }
+        ],
+        "name": "推荐",
+        "maintainers": [
+          "cnkmmk"
+        ],
+        "url": "51cto.com/",
+        "location": "recommend.ts"
+      }
+    },
+    "name": "51CTO",
+    "url": "51cto.com"
+  },
   "52hrtt": {
     "routes": {
       "/:area?/:type?": {
