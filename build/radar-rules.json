@@ -16129,6 +16129,49 @@
       }
     ]
   },
+  "zhonglun.com": {
+    "_name": "中伦律师事务所",
+    ".": [
+      {
+        "title": "专业文章",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/research/articles"
+        ],
+        "target": "/zhonglun/research/article/zh"
+      }
+    ],
+    "en": [
+      {
+        "title": " Articles",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/research/articles"
+        ],
+        "target": "/zhonglun/research/article/en"
+      }
+    ],
+    "ja": [
+      {
+        "title": "論評",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/research/articles"
+        ],
+        "target": "/zhonglun/research/article/ja"
+      }
+    ],
+    "kr": [
+      {
+        "title": "전문기사",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/research/articles"
+        ],
+        "target": "/zhonglun/research/article/kr"
+      }
+    ]
+  },
   "zhubai.love": {
     "_name": "竹白",
     "analy": [

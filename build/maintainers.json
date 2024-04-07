@@ -704,7 +704,7 @@
     "DIYgod"
   ],
   "/bilibili/vsearch/:kw/:order?/:disableEmbed?/:tid?": [
-    "Symty",
+    "pcrtool",
     "DIYgod"
   ],
   "/bilibili/watchlater/:uid/:disableEmbed?": [
@@ -6459,6 +6459,9 @@
   ],
   "/zhiy/posts/:author": [
     "TonyRL"
+  ],
+  "/zhonglun/research/article/:language{[a-zA-Z0-9-]+}?": [
+    "nczitzk"
   ],
   "/zhubai/:id": [
     "naixy28"

@@ -6924,7 +6924,7 @@
         },
         "name": "视频搜索",
         "maintainers": [
-          "Symty",
+          "pcrtool",
           "DIYgod"
         ],
         "description": "分区 id 的取值请参考下表：\n\n  | 全部分区 | 动画 | 番剧 | 国创 | 音乐 | 舞蹈 | 游戏 | 知识 | 科技 | 运动 | 汽车 | 生活 | 美食 | 动物圈 | 鬼畜 | 时尚 | 资讯 | 娱乐 | 影视 | 纪录片 | 电影 | 电视剧 |\n  | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ------ |\n  | 0        | 1    | 13   | 167  | 3    | 129  | 4    | 36   | 188  | 234  | 223  | 160  | 211  | 217    | 119  | 155  | 202  | 5    | 181  | 177    | 23   | 11     |",
@@ -63987,6 +63987,72 @@
     },
     "name": "知园",
     "url": "zhiy.cc"
+  },
+  "zhonglun": {
+    "routes": {
+      "/research/article/:language{[a-zA-Z0-9-]+}?": {
+        "path": "/research/article/:language{[a-zA-Z0-9-]+}?",
+        "name": "中伦研究专业文章",
+        "url": "zhonglun.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/zhonglun/research/article/zh",
+        "parameters": {
+          "category": "语言，默认为 zh，即简体中文，可在对应分类页 URL 中找到"
+        },
+        "description": "\n  | ENG | 简体中文 | 日本語 | 한국어 |\n  | --- | -------- | ------ | ------ |\n  | en  | zh       | ja     | kr     |\n    ",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "专业文章",
+            "source": [
+              "zhonglun.com/research/articles"
+            ],
+            "target": "/research/article/zh"
+          },
+          {
+            "title": " Articles",
+            "source": [
+              "en.zhonglun.com/research/articles"
+            ],
+            "target": "/research/article/en"
+          },
+          {
+            "title": "論評",
+            "source": [
+              "ja.zhonglun.com/research/articles"
+            ],
+            "target": "/research/article/ja"
+          },
+          {
+            "title": "전문기사",
+            "source": [
+              "kr.zhonglun.com/research/articles"
+            ],
+            "target": "/research/article/kr"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "中伦律师事务所",
+    "url": "zhonglun.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": ""
   },
   "zhubai": {
     "routes": {
