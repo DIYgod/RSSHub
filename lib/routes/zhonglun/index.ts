@@ -13,7 +13,7 @@ export const handler = async (ctx) => {
     const { language = 'zh' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
-    const rootUrl = `https://${language === 'zh' ? 'www' : language}.zhonglun.com`;
+    const rootUrl = `https://${language === 'zh' ? 'www' : language.replaceAll(/[^\dA-Za-z-]/g, '')}.zhonglun.com`;
     const currentUrl = new URL('research/articles', rootUrl).href;
 
     const { data: response } = await got(currentUrl);
@@ -87,7 +87,7 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/research/article/:language?',
+    path: '/research/article/:language{[a-zA-Z0-9-]+}?',
     name: '中伦研究专业文章',
     url: 'zhonglun.com',
     maintainers: ['nczitzk'],
@@ -114,22 +114,22 @@ export const route: Route = {
         {
             title: '专业文章',
             source: ['zhonglun.com/research/articles'],
-            target: '/zhonglun/research/article/zh',
+            target: '/research/article/zh',
         },
         {
             title: ' Articles',
             source: ['en.zhonglun.com/research/articles'],
-            target: '/zhonglun/research/article/en',
+            target: '/research/article/en',
         },
         {
             title: '論評',
             source: ['ja.zhonglun.com/research/articles'],
-            target: '/zhonglun/research/article/ja',
+            target: '/research/article/ja',
         },
         {
             title: '전문기사',
             source: ['kr.zhonglun.com/research/articles'],
-            target: '/zhonglun/research/article/kr',
+            target: '/research/article/kr',
         },
     ],
 };
