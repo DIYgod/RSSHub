@@ -473,6 +473,9 @@
   "/atcoder/post/:language?/:keyword?": [
     "nczitzk"
   ],
+  "/atptour/news/:lang?": [
+    "LM1207"
+  ],
   "/auto-stats/:category?": [
     "nczitzk"
   ],

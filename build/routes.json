@@ -4695,6 +4695,35 @@
     "name": "AtCoder",
     "url": "atcoder.jp"
   },
+  "atptour": {
+    "routes": {
+      "/news/:lang?": {
+        "path": "/news/:lang?",
+        "categories": [
+          "other"
+        ],
+        "example": "/atptour/news/en",
+        "parameters": {
+          "lang": "en or es."
+        },
+        "radar": [
+          {
+            "source": [
+              "atptour.com"
+            ]
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "LM1207"
+        ],
+        "location": "news.ts"
+      }
+    },
+    "name": "ATP Tour",
+    "url": "www.atptour.com",
+    "description": "News from the official site of men's professional tennis."
+  },
   "auto-stats": {
     "routes": {
       "/:category?": {

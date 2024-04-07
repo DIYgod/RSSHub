@@ -1140,6 +1140,19 @@
       }
     ]
   },
+  "atptour.com": {
+    "_name": "ATP Tour",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/atptour/news/:lang?"
+      }
+    ]
+  },
   "baai.ac.cn": {
     "_name": "北京智源人工智能研究院",
     "hub": [
