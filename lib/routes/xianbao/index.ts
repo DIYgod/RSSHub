@@ -64,8 +64,6 @@ export const route: Route = {
 async function handler(ctx) {
     const categoryParam = ctx.req.param() || { category: 'latest' };
 
-    let fullName = '';
-    let pushPath = '';
     let urlPath = '';
 
     const category = categoryParam.category || 'latest';
