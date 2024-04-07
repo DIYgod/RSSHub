@@ -2291,7 +2291,10 @@
     "Yoge-Code"
   ],
   "/gov/mmht/*": [],
-  "/gov/moa/:suburl{.+}": [],
+  "/gov/moa/:suburl{.+}": [
+    "Origami404",
+    "lyqluis"
+  ],
   "/gov/moa/sjzxfb/:category{.+}?": [],
   "/gov/moa/zdscxx/:category{.+}?": [],
   "/gov/moe/:type": [

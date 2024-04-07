@@ -2371,7 +2371,7 @@
         source:[ "/gzcy/yjzj/index.html" ],
         target:"/gov/miit/yjzj" } ] },
   "moa.gov.cn":{ _name:"中国人民银行",
-    ".":[ { title:"Unknown",
+    ".":[ { title:"中华人民共和国农业农村部 - 新闻",
         docs:"https://docs.rsshub.app/routes/government",
         source:[ "/" ],
         target:"/gov/moa/:suburl" } ] },
