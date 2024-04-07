@@ -1,5 +1,5 @@
-import { Data, Route } from '@/types';
-import { Context } from 'hono';
+import type { Data, Route } from '@/types';
+import type { Context } from 'hono';
 import { load } from 'cheerio';
 import puppeteer from '@/utils/puppeteer';
 import logger from '@/utils/logger';
