@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { getContent } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const map = new Map([
     ['jstz', { title: '南京理工大学教务处 -- 教师通知', id: '/1216' }],
@@ -38,7 +39,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'xstz';
     const info = map.get(type);
     if (!info) {
-        throw new Error('invalid type');
+        throw new InvalidParameterError('invalid type');
     }
     const id = info.id;
     const siteUrl = host + id + '/list.htm';

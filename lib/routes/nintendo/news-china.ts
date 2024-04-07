@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import util from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 const news_url = 'https://www.nintendoswitch.com.cn';
 
 export const route: Route = {
@@ -41,7 +42,7 @@ async function handler() {
         title: "8款新品开启预约：超级马力欧系列官方周边"
     */
     if (!result.newsList) {
-        throw new Error('新闻信息不存在，请报告这个问题');
+        throw new InvalidParameterError('新闻信息不存在，请报告这个问题');
     }
 
     let data = result.newsList.map((item) => ({

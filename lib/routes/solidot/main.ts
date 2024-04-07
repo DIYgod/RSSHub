@@ -9,6 +9,7 @@ import got from '@/utils/got'; // get web content
 import { load } from 'cheerio'; // html parser
 import get_article from './_article';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:type?',
@@ -40,7 +41,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'www';
     if (!isValidHost(type)) {
-        throw new Error('Invalid type');
+        throw new InvalidParameterError('Invalid type');
     }
 
     const base_url = `https://${type}.solidot.org`;

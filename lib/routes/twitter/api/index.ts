@@ -1,3 +1,4 @@
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import mobileApi from './mobile-api/api';
 import webApi from './web-api/api';
 import { config } from '@/config';
@@ -19,7 +20,7 @@ let api: {
     getHomeTimeline: ApiItem;
 } = {
     init: () => {
-        throw new Error('Twitter API is not configured');
+        throw new ConfigNotFoundError('Twitter API is not configured');
     },
     getUser: () => null,
     getUserTweets: () => null,

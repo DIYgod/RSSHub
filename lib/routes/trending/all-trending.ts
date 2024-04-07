@@ -13,6 +13,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
 import md5 from '@/utils/md5';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 // Constants
 const CACHE_KEY = 'trending-all-in-one';
@@ -187,7 +188,7 @@ export const route: Route = {
 async function handler(ctx) {
     // Prevent making over 100 requests per invocation
     if (ctx.req.param('numberOfDays') > 14) {
-        throw new Error('days must be less than 14');
+        throw new InvalidParameterError('days must be less than 14');
     }
     const numberOfDays = ctx.req.param('numberOfDays') || 3;
     const currentShanghaiDateTime = dayjs(toShanghaiTimezone(new Date()));

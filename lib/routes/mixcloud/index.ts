@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import CryptoJS from 'crypto-js';
 import { parseDate } from '@/utils/parse-date';
 import { queries } from './queries';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:username/:type?',
@@ -37,7 +38,7 @@ async function handler(ctx) {
 
     const type = ctx.req.param('type') ?? 'uploads';
     if (!['stream', 'uploads', 'favorites', 'listens'].includes(type)) {
-        throw new Error(`Invalid type: ${type}`);
+        throw new InvalidParameterError(`Invalid type: ${type}`);
     }
     const username = ctx.req.param('username');
 

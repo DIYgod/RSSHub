@@ -5,6 +5,7 @@ import getIllustFollows from './api/get-illust-follows';
 import { config } from '@/config';
 import pixivUtils from './utils';
 import { parseDate } from '@/utils/parse-date';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/user/illustfollows',
@@ -40,12 +41,12 @@ export const route: Route = {
 
 async function handler() {
     if (!config.pixiv || !config.pixiv.refreshToken) {
-        throw new Error('pixiv RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
+        throw new ConfigNotFoundError('pixiv RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
     const token = await getToken(cache.tryGet);
     if (!token) {
-        throw new Error('pixiv not login');
+        throw new ConfigNotFoundError('pixiv not login');
     }
 
     const response = await getIllustFollows(token);

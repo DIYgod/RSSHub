@@ -1,5 +1,6 @@
 import { config } from '@/config';
 import login from './login';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 let tokenIndex = 0;
 let authentication = null;
@@ -32,7 +33,7 @@ function getToken() {
             tokenIndex = 0;
         }
     } else {
-        throw new Error('Invalid twitter configs');
+        throw new ConfigNotFoundError('Invalid twitter configs');
     }
 
     return token;

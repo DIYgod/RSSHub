@@ -8,6 +8,7 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const shortcuts = {
     potd: 'picture/browse/potd/',
@@ -46,7 +47,7 @@ async function handler(ctx) {
     const language = ctx.req.param('language') ?? '';
     const category = ctx.req.param('category') ?? 'figure';
     if (language && !isValidHost(language)) {
-        throw new Error('Invalid language');
+        throw new InvalidParameterError('Invalid language');
     }
 
     const rootUrl = `https://${language === 'en' || language === '' ? '' : `${language}.`}myfigurecollection.net`;

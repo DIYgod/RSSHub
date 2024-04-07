@@ -10,6 +10,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const cookieJar = new CookieJar();
 
@@ -133,7 +134,7 @@ async function handler(ctx) {
     const country = ctx.req.param('country') ?? 'tw';
 
     if (!isValidHost(country) && country !== 'tw') {
-        throw new Error('Invalid country codes. Only "tw" is supported now.');
+        throw new InvalidParameterError('Invalid country codes. Only "tw" is supported now.');
     }
 
     /** @type {House[]} */
