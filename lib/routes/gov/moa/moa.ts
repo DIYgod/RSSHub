@@ -17,7 +17,7 @@ export const route: Route = {
             target: '/moa/:suburl',
         },
     ],
-    parameters: { subrul: '下级目录，请使用最下级的目录' },
+    parameters: { suburl: '下级目录，请使用最下级的目录' },
     name: '中华人民共和国农业农村部 - 新闻',
     maintainers: ['Origami404', 'lyqluis'],
     handler,
