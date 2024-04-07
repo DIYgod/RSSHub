@@ -48,10 +48,14 @@ export const route: Route = {
             pubDate: timezone(parseDate(item.createtime, 'YYYY/MM/DD HH:mm:ss'), +8),
             author: item.author,
         }));
+        const image_url = 'https://www.bupt.edu.cn/__local/1/F4/62/05815E603799A29D53DDB1E0FAF_557A7220_102AD.png';
         return {
             title: '北京邮电大学校内新闻',
             link: 'https://www.bupt.edu.cn/',
             item: items,
+            image: image_url,
+            icon: image_url,
+            logo: image_url,
         };
     },
     url: 'my.bupt.edu.cn/',
