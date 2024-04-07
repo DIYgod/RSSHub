@@ -33,19 +33,20 @@ export const route: Route = {
     name: 'Bloomberg Site',
     maintainers: ['bigfei'],
     description: `
-    | Site ID   | Title      |
-    | /         | News       |
-    | bpol      | Politics   |
-    | bbiz      | Business   |
-    | markets   | Markets    |
-    | technology| Technology |
-    | green     | Green      |
-    | wealth    | Wealth     |
-    | pursuits  | Pursuits   |
-    | bview     | Opinion    |
-    | equality  | Equality   |
+    | Site ID      | Title        |
+    | ------------ | ------------ |
+    | /            | News         |
+    | bpol         | Politics     |
+    | bbiz         | Business     |
+    | markets      | Markets      |
+    | technology   | Technology   |
+    | green        | Green        |
+    | wealth       | Wealth       |
+    | pursuits     | Pursuits     |
+    | bview        | Opinion      |
+    | equality     | Equality     |
     | businessweek | Businessweek |
-    | citylab   | CityLab    |
+    | citylab      | CityLab      |
     `,
     handler,
 };
