@@ -1,9 +1,9 @@
-/* eslint-disable no-console */
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/notice',
@@ -45,7 +45,7 @@ export const route: Route = {
             title: item.title,
             link: 'https://wx.bupt.edu.cn/portal-article-page/article/notice/' + item.id,
             description: item.content,
-            pubDate: parseDate(item.createtime, 'YYYY/MM/DD HH:mm:ss'),
+            pubDate: timezone(parseDate(item.createtime, 'YYYY/MM/DD HH:mm:ss'), +8),
             author: item.author,
         }));
         return {
