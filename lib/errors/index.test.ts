@@ -22,7 +22,7 @@ describe('httperror', () => {
     it(`httperror`, async () => {
         const response = await request.get('/test/httperror');
         expect(response.status).toBe(503);
-        expect(response.text).toMatch('404 Not Found: target website might be blocking our access, you can host your own RSSHub instance for a better usability.');
+        expect(response.text).toMatch('FetchError: [GET] &quot;https://httpbingo.org/status/404&quot;: 404 Not Found');
     }, 20000);
 });
 
@@ -31,7 +31,7 @@ describe('RequestInProgressError', () => {
         const responses = await Promise.all([request.get('/test/slow'), request.get('/test/slow')]);
         expect(new Set(responses.map((r) => r.status))).toEqual(new Set([200, 503]));
         expect(new Set(responses.map((r) => r.headers['cache-control']))).toEqual(new Set([`public, max-age=${config.cache.routeExpire}`, `public, max-age=${config.requestTimeout / 1000}`]));
-        expect(responses.filter((r) => r.text.includes('This path is currently fetching, please come back later!'))).toHaveLength(1);
+        expect(responses.filter((r) => r.text.includes('RequestInProgressError: This path is currently fetching, please come back later!'))).toHaveLength(1);
     });
 });
 

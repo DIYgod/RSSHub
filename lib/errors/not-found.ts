@@ -1,3 +1,5 @@
-class NotFoundError extends Error {}
+class NotFoundError extends Error {
+    name = 'NotFoundError';
+}
 
 export default NotFoundError;
