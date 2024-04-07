@@ -6053,6 +6053,9 @@
   "/xboxfan/news": [
     "XXY233"
   ],
+  "/xianbao/:category?": [
+    "nashi23"
+  ],
   "/xiaoheihe/add2cart/:platform": [
     "ladeng07"
   ],

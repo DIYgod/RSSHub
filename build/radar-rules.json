@@ -15278,6 +15278,19 @@
       }
     ]
   },
+  "xianbao.fun": {
+    "_name": "线报酷",
+    "new": [
+      {
+        "title": "线板酷",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/"
+        ],
+        "target": "/xianbao/"
+      }
+    ]
+  },
   "xiaohongshu.com": {
     "_name": "小红书",
     ".": [
