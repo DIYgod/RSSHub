@@ -70,23 +70,9 @@ async function handler(ctx) {
 
     const category = categoryParam.category || 'latest';
 
-    for (const cat of CATEGORIES) {
-        if (cat.id === category) {
-            fullName = cat.fullName;
-            pushPath = cat.pushPath;
-            break;
-        }
-    }
-
-    if (!fullName || !pushPath) {
-        for (const cat of CATEGORIES) {
-            if (cat.id === 'latest') {
-                fullName = cat.fullName;
-                pushPath = cat.pushPath;
-                break;
-            }
-        }
-    }
+    const cat = CATEGORIES.find((cat) => cat.id === category) || CATEGORIES.find((cat) => cat.id === 'latest');
+    const fullName = cat!.fullName;
+    const pushPath = cat!.pushPath;
 
     if (category.endsWith('xiaoshi') || category.endsWith('tian')) {
         urlPath = `${category}-hot.html`;
