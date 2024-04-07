@@ -5,7 +5,7 @@ import Sentry from '@sentry/node';
 import logger from '@/utils/logger';
 import Error from '@/views/error';
 
-import NotFoundError from './not-found';
+import NotFoundError from './types/not-found';
 
 export const errorHandler: ErrorHandler = (error, ctx) => {
     const requestPath = ctx.req.path;

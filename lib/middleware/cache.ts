@@ -2,7 +2,7 @@ import xxhash from 'xxhash-wasm';
 import type { MiddlewareHandler } from 'hono';
 
 import { config } from '@/config';
-import RequestInProgressError from '@/errors/request-in-progress';
+import RequestInProgressError from '@/errors/types/request-in-progress';
 import cacheModule from '@/utils/cache/index';
 import { Data } from '@/types';
 
