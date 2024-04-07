@@ -50,7 +50,7 @@ export const route: Route = {
         }));
         return {
             title: '北京邮电大学校内通知',
-            link: 'https://wx.bupt.edu.cn/portal-article-page/index/notice',
+            link: 'https://www.bupt.edu.cn/',
             item: items,
         };
     },
