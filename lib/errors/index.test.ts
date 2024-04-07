@@ -35,6 +35,22 @@ describe('RequestInProgressError', () => {
     });
 });
 
+describe('config-not-found-error', () => {
+    it(`config-not-found-error`, async () => {
+        const response = await request.get('/test/config-not-found-error');
+        expect(response.status).toBe(503);
+        expect(response.text).toMatch('ConfigNotFoundError: Test config not found error');
+    }, 20000);
+});
+
+describe('invalid-parameter-error', () => {
+    it(`invalid-parameter-error`, async () => {
+        const response = await request.get('/test/invalid-parameter-error');
+        expect(response.status).toBe(503);
+        expect(response.text).toMatch('InvalidParameterError: Test invalid parameter error');
+    }, 20000);
+});
+
 describe('route throws an error', () => {
     it('route path error should have path mounted', async () => {
         await request.get('/test/error');
@@ -47,19 +63,19 @@ describe('route throws an error', () => {
             const value = $(item).find('.debug-value').html()?.trim();
             switch (key) {
                 case 'Request Amount:':
-                    expect(value).toBe('7');
+                    expect(value).toBe('9');
                     break;
                 case 'Hot Routes:':
-                    expect(value).toBe('4 /test/:id<br>');
+                    expect(value).toBe('6 /test/:id<br>');
                     break;
                 case 'Hot Paths:':
-                    expect(value).toBe('2 /test/error<br>2 /test/slow<br>1 /test/httperror<br>1 /thisDoesNotExist<br>1 /<br>');
+                    expect(value).toBe('2 /test/error<br>2 /test/slow<br>1 /test/httperror<br>1 /test/config-not-found-error<br>1 /test/invalid-parameter-error<br>1 /thisDoesNotExist<br>1 /<br>');
                     break;
                 case 'Hot Error Routes:':
-                    expect(value).toBe('3 /test/:id<br>');
+                    expect(value).toBe('5 /test/:id<br>');
                     break;
                 case 'Hot Error Paths:':
-                    expect(value).toBe('2 /test/error<br>1 /test/httperror<br>1 /test/slow<br>1 /thisDoesNotExist<br>');
+                    expect(value).toBe('2 /test/error<br>1 /test/httperror<br>1 /test/slow<br>1 /test/config-not-found-error<br>1 /test/invalid-parameter-error<br>1 /thisDoesNotExist<br>');
                     break;
                 default:
             }
