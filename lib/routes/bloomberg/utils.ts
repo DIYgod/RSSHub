@@ -5,9 +5,11 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import path from 'node:path';
 import asyncPool from 'tiny-async-pool';
+import { destr } from 'destr';
 
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 
 const rootUrl = 'https://www.bloomberg.com/feeds';
@@ -60,9 +62,14 @@ const regex = [pageTypeRegex1, pageTypeRegex2];
 const capRegex = /<p>|<\/p>/g;
 const emptyRegex = /<p\b[^>]*>(&nbsp;|\s)<\/p>/g;
 
-const redirectGot = got.extend({
-    rawResponse: true,
-});
+const redirectGot = (url) =>
+    ofetch.raw(url, {
+        headers,
+        parseResponse: (responseText) => ({
+            data: destr(responseText),
+            body: responseText,
+        }),
+    });
 
 const parseNewsList = async (url, ctx) => {
     const resp = await got(url);
@@ -100,12 +107,12 @@ const parseArticle = (item) =>
 
                 try {
                     const apiUrl = `${api.url}${link}`;
-                    res = await redirectGot(apiUrl, { headers });
+                    res = await redirectGot(apiUrl);
                 } catch (error) {
                     // fallback
                     if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
                         try {
-                            res = await redirectGot(item.link, { headers });
+                            res = await redirectGot(item.link);
                         } catch {
                             // return the default one
                             return {
@@ -213,7 +220,7 @@ const parseReactRendererPage = async (res, api, item) => {
     const json = load(res.data)(api.sel).text().trim();
     const story_id = JSON.parse(json)[api.prop];
     try {
-        const res = await redirectGot(`${idUrl}${story_id}`, { headers });
+        const res = await redirectGot(`${idUrl}${story_id}`);
         return await parseStoryJson(res._data, item);
     } catch (error) {
         // fallback
@@ -367,7 +374,7 @@ const processBody = async (body_html, story_json) => {
 
 const processVideo = async (bmmrId, summary) => {
     const api = `https://www.bloomberg.com/multimedia/api/embed?id=${bmmrId}`;
-    const res = await redirectGot(api, { headers });
+    const res = await redirectGot(api);
 
     // Blocked by PX3, return the default
     if ((res.redirected && new URL(res.url).pathname === '/tosv2.html') || res.status === 404) {
