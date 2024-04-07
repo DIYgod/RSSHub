@@ -29,7 +29,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '视频搜索',
-    maintainers: ['Symty', 'DIYgod'],
+    maintainers: ['pcrtool', 'DIYgod'],
     handler,
     description: `分区 id 的取值请参考下表：
 
