@@ -11,38 +11,38 @@ export const route: Route = {
     example: '/xianbao',
     parameters: { category: '类别id，默认为：latest' },
     description: `
-| 分类 | id |
-| -------- | ----------------- |
-| 最新 | latest |
-| 赚客吧 | zuankeba |
-| 赚客吧热帖 | zuankeba-hot |
-| 新赚吧 | xinzuanba |
-| 新赚吧热帖 | xinzuanba-hot |
-| 微博 | weibo |
-| 微博热帖 | weibo-hot |
-| 豆瓣线报 | douban |
-| 豆瓣热帖 | douban-hot |
-| 酷安 | kuan |
-| 小嘀咕 | xiaodigu |
-| 葫芦侠 | huluxia |
-| 小刀娱乐网 | xiadao |
-| 技术QQ网 | qqjishu |
-| YYOK大全 | yyok |
-| 活动资讯网 | huodong |
-| 免费赚钱中心 | maifei |
-| 一小时 | yixiaoshi |
-| 三小时 | sanxiaoshi |
-| 六小时 | liuxiaoshi |
-| 十二小时 | shierxiaoshi |
-| 二十四小时 | ershisixiaoshi |
-| 四十八小时 | sishibaxiaoshi |
-| 今天 | jintian |
-| 昨天 | zuotian |
-| 前天 | qiantian |
-| 三天 | santian |
-| 五天 | wutian |
-| 七天 | qitian |
-| 十五天 | shiwutian |`,
+| 分类         | id             |
+| ------------ | -------------- |
+| 最新         | latest         |
+| 赚客吧       | zuankeba       |
+| 赚客吧热帖   | zuankeba-hot   |
+| 新赚吧       | xinzuanba      |
+| 新赚吧热帖   | xinzuanba-hot  |
+| 微博         | weibo          |
+| 微博热帖     | weibo-hot      |
+| 豆瓣线报     | douban         |
+| 豆瓣热帖     | douban-hot     |
+| 酷安         | kuan           |
+| 小嘀咕       | xiaodigu       |
+| 葫芦侠       | huluxia        |
+| 小刀娱乐网   | xiadao         |
+| 技术 QQ 网   | qqjishu        |
+| YYOK 大全    | yyok           |
+| 活动资讯网   | huodong        |
+| 免费赚钱中心 | maifei         |
+| 一小时       | yixiaoshi      |
+| 三小时       | sanxiaoshi     |
+| 六小时       | liuxiaoshi     |
+| 十二小时     | shierxiaoshi   |
+| 二十四小时   | ershisixiaoshi |
+| 四十八小时   | sishibaxiaoshi |
+| 今天         | jintian        |
+| 昨天         | zuotian        |
+| 前天         | qiantian       |
+| 三天         | santian        |
+| 五天         | wutian         |
+| 七天         | qitian         |
+| 十五天       | shiwutian      |`,
     categories: ['shopping'],
     features: {
         requireConfig: false,
