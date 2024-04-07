@@ -7795,22 +7795,28 @@
         ],
         "location": "authors.ts"
       },
-      "/:site": {
-        "path": [
-          "/:site",
-          "/"
+      "/:site?": {
+        "path": "/:site?",
+        "categories": [
+          "finance"
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "location": "index.ts"
-      },
-      "/": {
-        "path": [
-          "/:site",
-          "/"
+        "example": "/bloomberg/bbiz",
+        "parameters": {
+          "site": "Site ID, can be found below"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Bloomberg Site",
+        "maintainers": [
+          "bigfei"
         ],
-        "name": "Unknown",
-        "maintainers": [],
+        "description": "\n    | Site ID      | Title        |\n    | ------------ | ------------ |\n    | /            | News         |\n    | bpol         | Politics     |\n    | bbiz         | Business     |\n    | markets      | Markets      |\n    | technology   | Technology   |\n    | green        | Green        |\n    | wealth       | Wealth       |\n    | pursuits     | Pursuits     |\n    | bview        | Opinion      |\n    | equality     | Equality     |\n    | businessweek | Businessweek |\n    | citylab      | CityLab      |\n    ",
         "location": "index.ts"
       }
     },
