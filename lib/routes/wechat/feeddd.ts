@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { finishArticleItem } from '@/utils/wechat-mp';
@@ -14,7 +15,7 @@ const handler = async (ctx) => {
         response = await got(apiUrl);
     } catch (error) {
         if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.response.statusCode === 404) {
-            throw new Error('该公众号不存在，有关如何获取公众号 id，详见 https://docs.rsshub.app/routes/new-media#wei-xin-gong-zhong-hao-feeddd-lai-yuan');
+            throw new InvalidParameterError('该公众号不存在，有关如何获取公众号 id，详见 https://docs.rsshub.app/routes/new-media#wei-xin-gong-zhong-hao-feeddd-lai-yuan');
         }
         throw error;
     }

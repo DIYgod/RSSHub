@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 const cateList = new Set(['all', 'design-resources', 'learn-design', 'inside-eagle']);
 
 export const route: Route = {
@@ -35,7 +36,7 @@ async function handler(ctx) {
     let cate = ctx.req.param('cate') ?? 'all';
     let language = ctx.req.param('language') ?? 'cn';
     if (!isValidHost(cate) || !isValidHost(language)) {
-        throw new Error('Invalid host');
+        throw new InvalidParameterError('Invalid host');
     }
     if (!cateList.has(cate)) {
         language = cate;

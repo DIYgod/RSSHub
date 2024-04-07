@@ -1,6 +1,7 @@
 import { Route, Data } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/entry/:feeds/:parameters?',
@@ -63,7 +64,7 @@ async function handler(ctx) {
     const token = config.miniflux.token;
 
     if (!token) {
-        throw new Error('This RSS feed is disabled due to its incorrect configuration: the token is missing.');
+        throw new ConfigNotFoundError('This RSS feed is disabled due to its incorrect configuration: the token is missing.');
     }
 
     // In this function, var`mark`, `link`, and `limit`, `addFeedName`

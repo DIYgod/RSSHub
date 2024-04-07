@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/suzhou/news/:uid',
@@ -119,7 +120,7 @@ async function handler(ctx) {
             title = '苏州市政府 - 民生资讯';
             break;
         default:
-            throw new Error('pattern not matched');
+            throw new InvalidParameterError('pattern not matched');
     }
     if (apiUrl) {
         const response = await got(apiUrl);

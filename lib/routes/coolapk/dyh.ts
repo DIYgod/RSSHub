@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/dyh/:dyhId',
@@ -48,7 +49,7 @@ async function handler(ctx) {
 
     out = out.filter(Boolean); // 去除空值
     if (out.length === 0) {
-        throw new Error('仅限于采集站内订阅的看看号的图文及动态内容。这个ID可能是站外订阅。');
+        throw new InvalidParameterError('仅限于采集站内订阅的看看号的图文及动态内容。这个ID可能是站外订阅。');
     }
     return {
         title: `酷安看看号-${targetTitle}`,

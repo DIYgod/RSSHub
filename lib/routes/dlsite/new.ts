@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const host = 'https://www.dlsite.com';
 const infos = {
@@ -75,7 +76,7 @@ async function handler(ctx) {
     const info = infos[ctx.req.param('type')];
     // 判断参数是否合理
     if (info === undefined) {
-        throw new Error('不支持指定类型！');
+        throw new InvalidParameterError('不支持指定类型！');
     }
 
     const link = info.url.slice(1);

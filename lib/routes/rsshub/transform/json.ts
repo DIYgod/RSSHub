@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 function jsonGet(obj, attr) {
     if (typeof attr !== 'string') {
@@ -70,7 +71,7 @@ JSON Path only supports format like \`a.b.c\`. if you need to access arrays, lik
 
 async function handler(ctx) {
     if (!config.feature.allow_user_supply_unsafe_domain) {
-        throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
     const url = ctx.req.param('url');
     const response = await got({

@@ -7,6 +7,7 @@ const md = MarkdownIt({
     linkify: true,
 });
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:id',
@@ -29,7 +30,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
     if (!id.endsWith('.eth') && !isValidHost(id)) {
-        throw new Error('Invalid id');
+        throw new InvalidParameterError('Invalid id');
     }
     const rootUrl = 'https://mirror.xyz';
     const currentUrl = id.endsWith('.eth') ? `${rootUrl}/${id}` : `https://${id}.mirror.xyz`;
