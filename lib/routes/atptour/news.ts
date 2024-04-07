@@ -1,22 +1,13 @@
 import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import logger from '@/utils/logger';
-import { load } from 'cheerio';
-import puppeteer from '@/utils/puppeteer';
+import got from '@/utils/got';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/news/:lang?',
     categories: ['other'],
-    example: '/news/en',
+    example: '/atptour/news/en',
     parameters: { lang: 'en or es.' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['atptour.com'],
@@ -33,22 +24,12 @@ async function handler(ctx) {
     const { lang = 'en' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
-    });
     const link = `${baseUrl}/${lang}/-/tour/news/latest-filtered-results/0/${limit}`;
-    logger.http(`Requesting ${link}`);
-    await page.goto(link, {
-        waitUntil: 'domcontentloaded',
+    const { data } = await got(link, {
+        headers: {
+            'user-agent': config.trueUA,
+        },
     });
-    const response = await page.content();
-    const $ = load(response);
-    const data = JSON.parse($('pre').text());
-    page.close();
-    browser.close();
 
     return {
         title: lang === 'en' ? 'News' : 'Noticias',
