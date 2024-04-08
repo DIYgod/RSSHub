@@ -6,6 +6,7 @@ import { getData } from './utils';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/news/coronavirus/data/:province?/:city?',
@@ -50,7 +51,7 @@ async function handler(ctx) {
         }
     }
     if (!coronavirusData) {
-        throw new Error(`未找到 ${placeName} 的疫情数据，请检查输入的省市名称是否正确`);
+        throw new InvalidParameterError(`未找到 ${placeName} 的疫情数据，请检查输入的省市名称是否正确`);
     }
     todayConfirm = coronavirusData.today?.confirm;
     totalNowConfirm = coronavirusData.total?.nowConfirm;

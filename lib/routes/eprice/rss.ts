@@ -9,6 +9,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 const allowRegion = new Set(['tw', 'hk']);
 
 export const route: Route = {
@@ -37,7 +38,7 @@ export const route: Route = {
 async function handler(ctx) {
     const region = ctx.req.param('region') ?? 'tw';
     if (!allowRegion.has(region)) {
-        throw new Error('Invalid region');
+        throw new InvalidParameterError('Invalid region');
     }
 
     const feed = await parser.parseURL(`https://www.eprice.com.${region}/news/rss.xml`);

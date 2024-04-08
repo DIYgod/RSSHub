@@ -3,13 +3,14 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 const allowDomain = new Set(['javdb.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 
 const ProcessItems = async (ctx, currentUrl, title) => {
     const domain = ctx.req.query('domain') ?? 'javdb.com';
     const url = new URL(currentUrl, `https://${domain}`);
     if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(url.hostname)) {
-        throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
     const rootUrl = `https://${domain}`;

@@ -16,9 +16,38 @@ const site_title_mapping = {
 };
 
 export const route: Route = {
-    path: ['/:site', '/'],
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:site?',
+    categories: ['finance'],
+    example: '/bloomberg/bbiz',
+    parameters: {
+        site: 'Site ID, can be found below',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Bloomberg Site',
+    maintainers: ['bigfei'],
+    description: `
+    | Site ID      | Title        |
+    | ------------ | ------------ |
+    | /            | News         |
+    | bpol         | Politics     |
+    | bbiz         | Business     |
+    | markets      | Markets      |
+    | technology   | Technology   |
+    | green        | Green        |
+    | wealth       | Wealth       |
+    | pursuits     | Pursuits     |
+    | bview        | Opinion      |
+    | equality     | Equality     |
+    | businessweek | Businessweek |
+    | citylab      | CityLab      |
+    `,
     handler,
 };
 

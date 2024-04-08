@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
@@ -47,11 +48,11 @@ async function handler(ctx) {
         11: '交易',
     };
 
-    const res1 = await got({
+    const res1 = await ofetch.raw(rootUrl, {
         method: 'get',
-        url: rootUrl,
     });
-    const token = res1.headers['set-cookie'].find((s) => s.startsWith('xq_a_token=')).split(';')[0];
+    const cookieArray = res1.headers.getSetCookie();
+    const token = cookieArray.find((c) => c.startsWith('xq_a_token='));
 
     const res2 = await got({
         method: 'get',

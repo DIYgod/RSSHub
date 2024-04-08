@@ -1,3 +1,4 @@
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { baseUrl, gqlFeatures, bearerToken, gqlMap } from './constants';
 import { config } from '@/config';
 import got from '@/utils/got';
@@ -6,7 +7,7 @@ import { Cookie } from 'tough-cookie';
 
 export const twitterGot = async (url, params) => {
     if (!config.twitter.cookie) {
-        throw new Error('Twitter cookie is not configured');
+        throw new ConfigNotFoundError('Twitter cookie is not configured');
     }
     const jsonCookie = Object.fromEntries(
         config.twitter.cookie
@@ -15,7 +16,7 @@ export const twitterGot = async (url, params) => {
             .map((c) => [c?.key, c?.value])
     );
     if (!jsonCookie || !jsonCookie.auth_token || !jsonCookie.ct0) {
-        throw new Error('Twitter cookie is not valid');
+        throw new ConfigNotFoundError('Twitter cookie is not valid');
     }
 
     const requestData = {

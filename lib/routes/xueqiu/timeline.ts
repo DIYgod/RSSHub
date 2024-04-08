@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 const rootUrl = 'https://xueqiu.com';
 export const route: Route = {
     path: '/timeline/:usergroup_id?',
@@ -39,7 +40,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') || 15;
     const usergroup_id = ctx.req.param('usergroup_id') ?? -1;
     if (cookie === undefined) {
-        throw new Error('缺少雪球用户登录后的 Cookie 值');
+        throw new ConfigNotFoundError('缺少雪球用户登录后的 Cookie 值');
     }
     let out: DataItem[] = [];
     let max_id = -1;

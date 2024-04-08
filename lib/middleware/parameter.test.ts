@@ -324,7 +324,7 @@ describe('wrong_path', () => {
         const response = await app.request('/wrong');
         expect(response.status).toBe(404);
         expect(response.headers.get('cache-control')).toBe(`public, max-age=${config.cache.routeExpire}`);
-        expect(await response.text()).toMatch('wrong path');
+        expect(await response.text()).toMatch('The route does not exist or has been deleted.');
     });
 });
 

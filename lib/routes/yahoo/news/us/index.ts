@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/news/en/:category?',
@@ -15,7 +16,7 @@ export const route: Route = {
 async function handler(ctx) {
     const region = ctx.req.param('region') === 'en' ? '' : ctx.req.param('region').toLowerCase();
     if (!isValidHost(region) && region !== '') {
-        throw new Error('Invalid region');
+        throw new InvalidParameterError('Invalid region');
     }
     const category = ctx.req.param('category') ? ctx.req.param('category').toLowerCase() : '';
     const rssUrl = `https://${region ? `${region}.` : ''}news.yahoo.com/rss/${category}`;

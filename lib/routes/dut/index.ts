@@ -6,6 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import defaults from './defaults';
 import shortcuts from './shortcuts';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: ['/*/*', '/:0?'],
@@ -17,7 +18,7 @@ export const route: Route = {
 async function handler(ctx) {
     const site = ctx.params[0] ?? 'news';
     if (!isValidHost(site)) {
-        throw new Error('Invalid site');
+        throw new InvalidParameterError('Invalid site');
     }
 
     let items;

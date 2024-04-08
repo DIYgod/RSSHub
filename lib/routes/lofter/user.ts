@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -25,7 +26,7 @@ async function handler(ctx) {
     const name = ctx.req.param('name') ?? 'i';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : '50';
     if (!isValidHost(name)) {
-        throw new Error('Invalid name');
+        throw new InvalidParameterError('Invalid name');
     }
 
     const rootUrl = `${name}.lofter.com`;

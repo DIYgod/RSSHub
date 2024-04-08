@@ -3,6 +3,8 @@ import { config } from '@/config';
 
 import parseArticle from './parse-article.js';
 import { getUserCatalogMainContentQuery } from './graphql.js';
+import ConfigNotFoundError from '@/errors/types/config-not-found.js';
+import InvalidParameterError from '@/errors/types/invalid-parameter.js';
 
 export const route: Route = {
     path: '/list/:user/:catalogId',
@@ -37,10 +39,10 @@ async function handler(ctx) {
     ctx.set('json', catalog);
 
     if (catalog && catalog.__typename === 'Forbidden') {
-        throw new Error(`无权访问 id 为 ${catalogId} 的 List（可能是未设置 Cookie 或 Cookie 已过期）`);
+        throw new ConfigNotFoundError(`无权访问 id 为 ${catalogId} 的 List（可能是未设置 Cookie 或 Cookie 已过期）`);
     }
     if (!catalog || !catalog.itemsConnection) {
-        throw new Error(`id 为 ${catalogId} 的 List 不存在`);
+        throw new InvalidParameterError(`id 为 ${catalogId} 的 List 不存在`);
     }
 
     const name = catalog.name;

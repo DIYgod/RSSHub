@@ -3,6 +3,8 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import wait from '@/utils/wait';
 import cache from '@/utils/cache';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 let cacheIndex = 0;
 
@@ -22,6 +24,12 @@ async function handler(ctx) {
             method: 'get',
             url: 'https://httpbingo.org/status/404',
         });
+    }
+    if (ctx.req.param('id') === 'config-not-found-error') {
+        throw new ConfigNotFoundError('Test config not found error');
+    }
+    if (ctx.req.param('id') === 'invalid-parameter-error') {
+        throw new InvalidParameterError('Test invalid parameter error');
     }
     let item: DataItem[] = [];
     switch (ctx.req.param('id')) {

@@ -2,6 +2,7 @@ import { baseUrl, gqlMap, gqlFeatures } from './constants';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import { twitterGot, paginationTweets, gatherLegacyFromData } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const getUserData = (id) =>
     cache.tryGet(`twitter-userdata-${id}`, () => {
@@ -33,7 +34,7 @@ const cacheTryGet = async (_id, params, func) => {
     const userData: any = await getUserData(_id);
     const id = (userData.data?.user || userData.data?.user_result)?.result?.rest_id;
     if (id === undefined) {
-        throw new Error('User not found');
+        throw new InvalidParameterError('User not found');
     }
     const funcName = func.name;
     const paramsString = JSON.stringify(params);
