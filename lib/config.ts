@@ -86,7 +86,8 @@ export type Config = {
     };
     bupt: {
         portal_cookie?: string;
-        wx_cookie?: string;
+        student_id?: string;
+        auth_password?: string;
     };
     civitai: {
         cookie?: string;
@@ -428,7 +429,8 @@ const calculateValue = () => {
         },
         bupt: {
             portal_cookie: envs.BUPT_PORTAL_COOKIE,
-            wx_cookie: envs.BUPT_WX_COOKIE,
+            student_id: envs.BUPT_STUDENT_ID,
+            auth_password: envs.BUPT_AUTH_PASSWORD,
         },
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
