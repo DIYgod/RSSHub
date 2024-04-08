@@ -3,7 +3,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -76,8 +76,8 @@ async function handler(ctx) {
     const { title, description, rootUrl, response } = await (async () => {
         if (MUST_FETCH_BY_TOPICS.has(category)) {
             const rootUrl = 'https://www.reuters.com/pf/api/v3/content/fetch/articles-by-topic-v1';
-            const response = await got(rootUrl, {
-                searchParams: {
+            const response = await ofetch(rootUrl, {
+                query: {
                     query: JSON.stringify({
                         offset: 0,
                         size: limit,
@@ -85,7 +85,7 @@ async function handler(ctx) {
                         website: 'reuters',
                     }),
                 },
-            }).json();
+            });
 
             return {
                 title: `${response.result.topics[0].name} | Reuters`,
@@ -95,8 +95,8 @@ async function handler(ctx) {
             };
         } else {
             const rootUrl = 'https://www.reuters.com/pf/api/v3/content/fetch/articles-by-section-alias-or-id-v1';
-            const response = await got(rootUrl, {
-                searchParams: {
+            const response = await ofetch(rootUrl, {
+                query: {
                     query: JSON.stringify({
                         offset: 0,
                         size: limit,
@@ -111,7 +111,7 @@ async function handler(ctx) {
                             : {}),
                     }),
                 },
-            }).json();
+            });
             return {
                 title: response.result.section.title,
                 description: response.result.section.section_about,
@@ -138,7 +138,7 @@ async function handler(ctx) {
         items.map((item) =>
             ctx.req.query('mode') === 'fulltext'
                 ? cache.tryGet(item.link, async () => {
-                      const detailResponse = await got(item.link);
+                      const detailResponse = await ofetch(item.link);
                       const content = load(detailResponse.data);
 
                       if (detailResponse.url.startsWith('https://www.reuters.com/investigates/')) {
