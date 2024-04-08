@@ -849,7 +849,9 @@
   "/btzj/:category?": [
     "nczitzk"
   ],
-  "/buaa/sme/:path{.+}?": [],
+  "/buaa/sme/:path{.+}?": [
+    "MeanZhang"
+  ],
   "/buaa/news/:type": [
     "AlanDecode"
   ],
