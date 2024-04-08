@@ -138,7 +138,7 @@ async function handler(ctx) {
         items.map((item) =>
             ctx.req.query('mode') === 'fulltext'
                 ? cache.tryGet(item.link, async () => {
-                      const detailResponse = await got(item.link);
+                      const detailResponse = await ofetch(item.link);
                       const content = load(detailResponse.data);
 
                       if (detailResponse.url.startsWith('https://www.reuters.com/investigates/')) {
