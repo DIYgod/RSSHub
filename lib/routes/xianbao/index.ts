@@ -26,10 +26,10 @@ export const route: Route = {
 | 小嘀咕       | xiaodigu       |
 | 葫芦侠       | huluxia        |
 | 小刀娱乐网   | xiadao         |
-| 技术 QQ 网   | qqjishu        |
-| YYOK 大全    | yyok           |
+| 技术QQ网     | qqjishu        |
+| YYOK大全     | yyok           |
 | 活动资讯网   | huodong        |
-| 免费赚钱中心 | maifei         |
+| 免费赚钱中心 | mianfei        |
 | 一小时       | yixiaoshi      |
 | 三小时       | sanxiaoshi     |
 | 六小时       | liuxiaoshi     |
@@ -84,7 +84,15 @@ async function handler(ctx) {
     const response = await got(apiUrl);
     const responseData = JSON.parse(response.body);
 
-    const items = responseData.map((item) => ({
+    let parsedData;
+    if (Array.isArray(responseData)) {
+        parsedData = responseData;
+    } else {
+        const hotKey = Object.keys(responseData).find((key) => key.startsWith('remen'));
+        parsedData = responseData[hotKey];
+    }
+
+    const items = parsedData.map((item) => ({
         title: item.title,
         link: `http://new.xianbao.fun${item.url}`,
         description: item.content,
@@ -130,5 +138,5 @@ const CATEGORIES = [
     { id: 'qqjishu', fullName: '技术QQ网', pushPath: 'push_6' },
     { id: 'yyok', fullName: 'YYOK大全', pushPath: 'push_7' },
     { id: 'huodong', fullName: '活动资讯网', pushPath: 'push_8' },
-    { id: 'maifei', fullName: '免费赚钱中心', pushPath: 'push_9' },
+    { id: 'mianfei', fullName: '免费赚钱中心', pushPath: 'push_9' },
 ];
