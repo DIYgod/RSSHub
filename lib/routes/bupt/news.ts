@@ -20,7 +20,10 @@ export const route: Route = {
     path: '/news/:treeid?',
     categories: ['university'],
     example: '/bupt/news/1154',
-    parameters: {},
+    parameters: {
+        treeid: '信息门户网址中的 wbtreeid',
+    },
+    description: '需要有校园网环境',
     features: {
         requireConfig: [
             {
