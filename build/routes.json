@@ -25834,6 +25834,38 @@
     "url": "jwc.hit.edu.cn",
     "description": ":::warning\n哈工大网站疑似禁止了`rsshub.app`的访问，使用路由需要自行 [部署](https://docs.rsshub.app/deploy/)。\n:::"
   },
+  "hitcon": {
+    "routes": {
+      "/zeroday/vulnerability/:status?": {
+        "name": "漏洞",
+        "categories": [
+          "programming"
+        ],
+        "path": "/zeroday/vulnerability/:status?",
+        "example": "/hitcon/zeroday/vulnerability",
+        "parameters": {
+          "status": "漏洞状态，见下表"
+        },
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "radar": [
+          {
+            "source": [
+              "zeroday.hitcon.org/vulnerability/:status?"
+            ]
+          }
+        ],
+        "features": {
+          "requirePuppeteer": true
+        },
+        "description": "| 缺省   | all  | closed | disclosed | patching |\n  | ------ | ---- | ------ | --------- | -------- |\n  | 活動中 | 全部 | 關閉   | 公開      | 修補中   |",
+        "location": "zeroday.ts"
+      }
+    },
+    "name": "HITCON",
+    "url": "hitcon.org"
+  },
   "hitsz": {
     "routes": {
       "/article/:category?": {

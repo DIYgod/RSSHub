@@ -6311,6 +6311,19 @@
       }
     ]
   },
+  "hitcon.org": {
+    "_name": "HITCON",
+    "zeroday": [
+      {
+        "title": "漏洞",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/vulnerability/:status"
+        ],
+        "target": "/hitcon/zeroday/vulnerability/:status?"
+      }
+    ]
+  },
   "hitwh.edu.cn": {
     "_name": "哈尔滨工业大学（威海）",
     ".": [
