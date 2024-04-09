@@ -5,6 +5,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 import { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterParamsForUrl, parseFilterStr } from './util';
 
@@ -13,7 +14,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
     if (!config.feature.allow_user_supply_unsafe_domain) {
-        throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
     if (!/^(https?):\/\/[^\s#$./?].\S*$/i.test(url)) {
@@ -139,7 +140,7 @@ export const route: Route = {
     handler,
     example: '/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast',
     parameters: { url: 'URL, <https://wordpress.org/news> by default', filter: 'Filter, see below' },
-    description: `If you subscribe to [WordPress News](https://wordpress.org/news/)，where the URL is \`https://wordpress.org/news/\`, use it as the parameter to fill in. Therefore, the route will be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews).
+    description: `If you subscribe to [WordPress News](https://wordpress.org/news/)，where the URL is \`https://wordpress.org/news/\`, Encode the URL using \`encodeURIComponent()\` and then use it as the parameter. Therefore, the route will be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews).
 
   :::tip
   If you wish to subscribe to specific categories or tags, you can fill in the "filter" parameter in the route. \`/category/Podcast\` to subscribe to the Podcast category. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast).
@@ -151,7 +152,13 @@ export const route: Route = {
     categories: ['blog'],
 
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
+                description: `This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`,
+                optional: false,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportRadar: false,
