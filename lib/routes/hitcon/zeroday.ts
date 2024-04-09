@@ -1,8 +1,11 @@
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import type { Context } from 'hono';
 import { load } from 'cheerio';
 import puppeteer from '@/utils/puppeteer';
 import logger from '@/utils/logger';
+import { art } from '@/utils/render';
+import path from 'node:path';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     name: '漏洞',
@@ -60,7 +63,7 @@ async function handler(ctx: Context): Promise<Data> {
     browser.close();
 
     const $ = load(response);
-    const items = $('.zdui-strip-list>li')
+    const items: DataItem[] = $('.zdui-strip-list>li')
         .toArray()
         .map((el) => {
             const title = $(el).find('.title a');
@@ -77,24 +80,26 @@ async function handler(ctx: Context): Promise<Data> {
             const status = vulData.find('.status').text().replace('Status:', '').trim();
             const date = vulData.find('.date').text().replace('Date:', '').trim();
             const reporter = vulData.find('.zdui-author-badge').find('a>span').text();
+            const description = art(path.join(__dirname, 'templates/zeroday.art'), {
+                code,
+                risk,
+                vender,
+                status,
+                date,
+                reporter,
+            });
 
             return {
                 title: title.text(),
                 link: title.attr('href'),
-                description: `<ul>
-                <li>${vender}</li>
-                <li>ZDID: ${code}</li>
-                <li>風險: ${risk}</li>
-                <li>處理狀態: ${status}</li>
-                <li>通報者: ${reporter}</li>
-                <li>通報日期: ${date}</li>
-                </ul>`,
+                description,
+                pubDate: parseDate(date),
             };
         });
 
     return {
         title: status ? titleMap[status] ?? 'ZeroDay' : '活動中',
-        link: url',
+        link: url,
         item: items,
         image: 'https://zeroday.hitcon.org/images/favicon/favicon.png',
     };
