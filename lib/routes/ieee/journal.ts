@@ -3,7 +3,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
@@ -35,32 +35,37 @@ async function handler(ctx) {
     const host = 'https://ieeexplore.ieee.org';
     const jrnlUrl = `${host}/xpl/mostRecentIssue.jsp?punumber=${punumber}`;
 
-    const response = await got(`${host}/rest/publication/home/metadata?pubid=${punumber}`, {
-        cookieJar,
-    }).json();
+    const response = await ofetch(`${host}/rest/publication/home/metadata?pubid=${punumber}`, {
+        parseResponse: JSON.parse,
+        headers: {
+            cookie: cookieJar.getCookieStringSync(host),
+        },
+    });
     const volume = response.currentIssue.volume;
     const isnumber = response.currentIssue.issueNumber;
     const jrnlName = response.displayTitle;
 
-    const response2 = await got
-        .post(`${host}/rest/search/pub/${punumber}/issue/${isnumber}/toc`, {
-            cookieJar,
-            json: {
-                punumber,
-                isnumber,
-                sortType,
-                rowsPerPage: '100',
-            },
-        })
-        .json();
-    let list = response2.records.map((item) => {
+    const response2 = await ofetch(`${host}/rest/search/pub/${punumber}/issue/${isnumber}/toc`, {
+        method: 'POST',
+        parseResponse: JSON.parse,
+        headers: {
+            cookie: cookieJar.getCookieStringSync(host),
+        },
+        body: {
+            punumber,
+            isnumber,
+            sortType,
+            rowsPerPage: '100',
+        },
+    });
+    let list = response2.records.map((item: any) => {
         const $2 = load(item.articleTitle);
         const title = $2.text();
         const link = item.htmlLink;
         const doi = item.doi;
         let authors = 'Do not have author';
         if (Object.hasOwn(item, 'authors')) {
-            authors = item.authors.map((itemAuth) => itemAuth.preferredName).join('; ');
+            authors = item.authors.map((itemAuth: any) => itemAuth.preferredName).join('; ');
         }
         let abstract = '';
         Object.hasOwn(item, 'abstract') ? (abstract = item.abstract) : (abstract = '');
@@ -74,18 +79,22 @@ async function handler(ctx) {
         };
     });
 
-    const renderDesc = (item) =>
+    const renderDesc = (item: any) =>
         art(path.join(__dirname, 'templates/description.art'), {
             item,
         });
     list = await Promise.all(
-        list.map((item) =>
+        list.map((item: any) =>
             cache.tryGet(item.link, async () => {
                 if (item.abstract !== '') {
-                    const response3 = await got(`${host}${item.link}`);
-                    const { abstract } = JSON.parse(response3.body.match(/metadata=(.*);/)[1]);
-                    const $3 = load(abstract);
-                    item.abstract = $3.text();
+                    const response3 = await ofetch(`${host}${item.link}`, {
+                        parseResponse: (txt) => txt,
+                    });
+                    const $3 = load(response3);
+                    const metadataMatch = $3.html().match(/metadata=(.*);/);
+                    const metadata = metadataMatch ? JSON.parse(metadataMatch[1]) : null;
+                    const $4 = load(metadata?.abstract || '');
+                    item.abstract = $4.text();
                     item.description = renderDesc(item);
                 }
                 return item;
