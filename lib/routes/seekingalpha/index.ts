@@ -14,6 +14,9 @@ export const route: Route = {
     categories: ['finance'],
     example: '/seekingalpha/TSM/transcripts',
     parameters: { symbol: 'Stock symbol', category: 'Category, see below, `news` by default' },
+    features: {
+        antiCrawler: true,
+    },
     radar: [
         {
             source: ['seekingalpha.com/symbol/:symbol/:category', 'seekingalpha.com/symbol/:symbol/earnings/:category'],
@@ -92,7 +95,7 @@ async function handler(ctx) {
 
                       item.category = response.included.filter((i) => i.type === 'tag').map((i) => (i.attributes.company ? `${i.attributes.company} (${i.attributes.name})` : i.attributes.name));
                       item.description =
-                          (response.data.attributes.summary.length
+                          (response.data.attributes.summary?.length
                               ? art(path.join(__dirname, 'templates/summary.art'), {
                                     summary: response.data.attributes.summary,
                                 })
