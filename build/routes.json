@@ -47457,12 +47457,7 @@
           "category": "Category, see below, `news` by default"
         },
         "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
+          "antiCrawler": true
         },
         "radar": [
           {
