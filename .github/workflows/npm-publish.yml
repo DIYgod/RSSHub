@@ -7,9 +7,6 @@ on:
     paths:
       - '.github/workflows/npm-publish.yml'
       - 'lib/**'
-      - '!**/maintainer.js'
-      - '!**/radar.js'
-      - '!**/radar-rules.js'
 
 permissions:
   contents: read
@@ -25,7 +22,7 @@ jobs:
       HUSKY: 0
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - uses: actions/setup-node@v4
