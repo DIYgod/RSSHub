@@ -12,8 +12,8 @@ dependencies:
     specifier: 0.2.1
     version: 0.2.1(hono@4.2.2)
   '@hono/zod-openapi':
-    specifier: 0.9.10
-    version: 0.9.10(hono@4.2.2)(zod@3.22.4)
+    specifier: 0.10.0
+    version: 0.10.0(hono@4.2.2)(zod@3.22.4)
   '@notionhq/client':
     specifier: 2.2.14
     version: 2.2.14
@@ -400,8 +400,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.25
     dev: true
 
-  /@asteasolutions/zod-to-openapi@5.5.0(zod@3.22.4):
-    resolution: {integrity: sha512-d5HwrvM6dOKr3XdeF+DmashGvfEc+1oiEfbscugsiwSTrFtuMa7ETpW9sTNnVgn+hJaz+PRxPQUYD7q9/5dUig==}
+  /@asteasolutions/zod-to-openapi@7.0.0(zod@3.22.4):
+    resolution: {integrity: sha512-rJRKHD2m6nUb/9ZheeN8nqOURX24WTzY8Sex1ZKT0Kpx+xfpRcD0fTD6vEeXNHGaDGxzu65Jj/jb2x6nLTjcMw==}
     peerDependencies:
       zod: ^3.20.2
     dependencies:
@@ -1974,14 +1974,14 @@ packages:
       hono: 4.2.2
     dev: false
 
-  /@hono/zod-openapi@0.9.10(hono@4.2.2)(zod@3.22.4):
-    resolution: {integrity: sha512-v/b/z0qPxDo952gjRyhJ0n9ifbPoIluR2KmXDL20np0hj99+XvakoIHK5/T/3+hUmXlTj1Kn3TiGsSV6hwZesg==}
+  /@hono/zod-openapi@0.10.0(hono@4.2.2)(zod@3.22.4):
+    resolution: {integrity: sha512-XvUtRMI5IugLSkdadYi349k1I40RntfeDqAcIskQ5dXqD+7ZEn3PxGX/jntyHXcbTLLotfzRTXQi0eh4Bb/LWg==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=3.11.3'
       zod: 3.*
     dependencies:
-      '@asteasolutions/zod-to-openapi': 5.5.0(zod@3.22.4)
+      '@asteasolutions/zod-to-openapi': 7.0.0(zod@3.22.4)
       '@hono/zod-validator': 0.2.1(hono@4.2.2)(zod@3.22.4)
       hono: 4.2.2
       zod: 3.22.4
@@ -2990,7 +2990,7 @@ packages:
       is-glob: 4.0.3
       minimatch: 9.0.3
       semver: 7.6.0
-      ts-api-utils: 1.2.1(typescript@5.4.4)
+      ts-api-utils: 1.3.0(typescript@5.4.4)
       typescript: 5.4.4
     transitivePeerDependencies:
       - supports-color
@@ -3012,7 +3012,7 @@ packages:
       is-glob: 4.0.3
       minimatch: 9.0.3
       semver: 7.6.0
-      ts-api-utils: 1.2.1(typescript@5.4.4)
+      ts-api-utils: 1.3.0(typescript@5.4.4)
       typescript: 5.4.4
     transitivePeerDependencies:
       - supports-color
@@ -5438,7 +5438,7 @@ packages:
     dependencies:
       foreground-child: 3.1.1
       jackspeak: 2.3.6
-      minimatch: 9.0.3
+      minimatch: 9.0.4
       minipass: 5.0.0
       path-scurry: 1.10.1
     dev: true
