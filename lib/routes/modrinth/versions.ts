@@ -4,19 +4,20 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
-import got from '@/utils/got';
+import _ofetch from '@/utils/ofetch';
 import MarkdownIt from 'markdown-it';
 import type { Author, Project, Version } from '@/routes/modrinth/api';
 import type { Context } from 'hono';
 
 const __dirname = getCurrentPath(import.meta.url);
 
-const customGot = got.extend({
+const ofetch = _ofetch.create({
     headers: {
         // https://docs.modrinth.com/#section/User-Agents
         'user-agent': config.trueUA,
     },
 });
+
 const md = MarkdownIt({
     html: true,
 });
@@ -83,19 +84,19 @@ async function handler(ctx: Context) {
      */
     const parsedQuery = new URLSearchParams(routeParams);
 
-    parsedQuery.set('loaders', parsedQuery.has('loaders') ? JSON.stringify(parsedQuery.getAll('loaders')) : '');
-    parsedQuery.set('game_versions', parsedQuery.has('game_versions') ? JSON.stringify(parsedQuery.getAll('game_versions')) : '');
-
     try {
-        const project = await customGot(`https://api.modrinth.com/v2/project/${id}`).json<Project>();
-        const versions = await customGot(`https://api.modrinth.com/v2/project/${id}/version`, {
-            searchParams: parsedQuery,
-        }).json<Version[]>();
-        const authors = await customGot(`https://api.modrinth.com/v2/users`, {
-            searchParams: {
+        const project = await ofetch<Project>(`https://api.modrinth.com/v2/project/${id}`);
+        const versions = await ofetch<Version[]>(`https://api.modrinth.com/v2/project/${id}/version`, {
+            query: {
+                loaders: parsedQuery.has('loaders') ? JSON.stringify(parsedQuery.getAll('loaders')) : '',
+                game_versions: parsedQuery.has('game_versions') ? JSON.stringify(parsedQuery.getAll('game_versions')) : '',
+            },
+        });
+        const authors = await ofetch<Author[]>(`https://api.modrinth.com/v2/users`, {
+            query: {
                 ids: JSON.stringify([...new Set(versions.map((it) => it.author_id))]),
             },
-        }).json<Author[]>();
+        });
         const groupedAuthors = <Record<string, Author>>{};
         for (const author of authors) {
             groupedAuthors[author.id] = author;
