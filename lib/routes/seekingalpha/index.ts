@@ -1,8 +1,12 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
+import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
+import { getCurrentPath } from '@/utils/helpers';
+import path from 'node:path';
+const __dirname = getCurrentPath(import.meta.url);
+
 const baseUrl = 'https://seekingalpha.com';
 
 export const route: Route = {
@@ -30,6 +34,21 @@ const getMachineCookie = () =>
         return response.headers.getSetCookie().map((c) => c.split(';')[0]);
     });
 
+const apiParams = {
+    article: {
+        slug: '/articles',
+        include: 'author,primaryTickers,secondaryTickers,otherTags,presentations,presentations.slides,author.authorResearch,author.userBioTags,co_authors,promotedService,sentiments',
+    },
+    news: {
+        slug: '/news',
+        include: 'author,primaryTickers,secondaryTickers,otherTags',
+    },
+    pr: {
+        slug: '/press_releases',
+        include: 'acquireService,primaryTickers',
+    },
+};
+
 async function handler(ctx) {
     const { category = 'news', symbol } = ctx.req.param();
     const pageUrl = `${baseUrl}/symbol/${symbol.toUpperCase()}/${category === 'transcripts' ? `earnings/${category}` : category}`;
@@ -44,7 +63,7 @@ async function handler(ctx) {
             'filter[until]': 0,
             id: symbol.toLowerCase(),
             include: 'author,primaryTickers,secondaryTickers,sentiments',
-            'page[size]': ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 40,
+            'page[size]': ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : category === 'news' ? 40 : 20,
             'page[number]': 1,
         },
     });
@@ -54,21 +73,31 @@ async function handler(ctx) {
         link: new URL(item.links.self, baseUrl).href,
         pubDate: parseDate(item.attributes.publishOn),
         author: response.included.find((i) => i.id === item.relationships.author.data.id).attributes.nick,
+        id: item.id,
+        articleType: item.links.self.split('/')[1],
     }));
 
     const items = list
         ? await Promise.all(
               list.map((item) =>
                   cache.tryGet(item.link, async () => {
-                      const response = await ofetch(item.link);
-                      const $ = load(response);
+                      const response = await ofetch(`${baseUrl}/api/v3${apiParams[item.articleType].slug}/${item.id}`, {
+                          headers: {
+                              cookie: machineCookie.join('; '),
+                          },
+                          query: {
+                              include: apiParams[item.articleType].include,
+                          },
+                      });
 
-                      const summary = $('[data-test-id=article-summary-title]').length ? $('[data-test-id=article-summary-title]').html() + $('[data-test-id=article-summary-title]').next().html() : '';
-
-                      item.category = $('div[data-test-id=themes-list] a')
-                          .toArray()
-                          .map((c) => $(c).text());
-                      item.description = summary + $('div.paywall-full-content').html();
+                      item.category = response.included.filter((i) => i.type === 'tag').map((i) => (i.attributes.company ? `${i.attributes.company} (${i.attributes.name})` : i.attributes.name));
+                      item.description =
+                          (response.data.attributes.summary.length
+                              ? art(path.join(__dirname, 'templates/summary.art'), {
+                                    summary: response.data.attributes.summary,
+                                })
+                              : '') + response.data.attributes.content;
+                      item.updated = parseDate(response.data.attributes.lastModified);
 
                       return item;
                   })
