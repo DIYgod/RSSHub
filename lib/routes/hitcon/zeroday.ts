@@ -22,9 +22,9 @@ export const route: Route = {
         requirePuppeteer: true,
     },
     handler,
-    description: `| 缺省 | all | closed | disclosed | patching |
-  | ----- | ----- | ----- | ----- | ----- |
-  |  活動中 | 全部 | 關閉 | 公開 | 修補中 |`,
+    description: `| 缺省   | all  | closed | disclosed | patching |
+  | ------ | ---- | ------ | --------- | -------- |
+  | 活動中 | 全部 | 關閉   | 公開      | 修補中   |`,
 };
 
 const baseUrl = 'https://zeroday.hitcon.org/vulnerability';
