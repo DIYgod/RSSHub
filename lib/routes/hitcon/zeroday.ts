@@ -48,7 +48,7 @@ async function handler(ctx: Context): Promise<Data> {
     await page.setRequestInterception(true);
 
     page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+        request.resourceType() === 'document' ? request.continue() : request.abort();
     });
 
     logger.http(`Requesting ${url}`);
