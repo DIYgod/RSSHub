@@ -12,9 +12,9 @@ import { CookieJar } from 'tough-cookie';
 const cookieJar = new CookieJar();
 
 export const route: Route = {
-    path: ['/journal/:journal/:sortType?', '/:journal/latest/vol/:sortType?'],
+    path: '/journal/:journal/:sortType?',
     categories: ['journal'],
-    example: '/ieee/journal/6287639',
+    example: '/ieee/journal/8782710',
     parameters: { journal: 'Issue code, the number of the `isnumber` in the URL', sortType: 'Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`' },
     features: {
         requireConfig: false,
