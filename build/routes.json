@@ -1614,51 +1614,11 @@
         "parameters": {
           "id": "部落 ID"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "name": "部落影集",
         "maintainers": [
           "TonyRL"
         ],
         "location": "tribe-set.ts"
-      },
-      "/user/works/:id": {
-        "path": "/user/works/:id",
-        "categories": [
-          "picture"
-        ],
-        "example": "/500px/user/works/hujunli",
-        "parameters": {
-          "id": "摄影师 ID"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "500px.com.cn/:id",
-              "500px.com.cn/community/user-details/:id",
-              "500px.com.cn/community/user-details/:id/*"
-            ]
-          }
-        ],
-        "name": "摄影师作品",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "user.ts"
       }
     },
     "name": "500px 摄影社区",
