@@ -1,9 +1,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import dayjs from 'dayjs';
 const baseUrl = 'https://seekingalpha.com';
 
 export const route: Route = {
@@ -11,14 +10,6 @@ export const route: Route = {
     categories: ['finance'],
     example: '/seekingalpha/TSM/transcripts',
     parameters: { symbol: 'Stock symbol', category: 'Category, see below, `news` by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['seekingalpha.com/symbol/:symbol/:category', 'seekingalpha.com/symbol/:symbol/earnings/:category'],
@@ -33,32 +24,44 @@ export const route: Route = {
   | analysis | news | transcripts | press-releases | related-analysis |`,
 };
 
+const getMachineCookie = () =>
+    cache.tryGet('seekingalpha:machine_cookie', async () => {
+        const response = await ofetch.raw(baseUrl);
+        return response.headers.getSetCookie().map((c) => c.split(';')[0]);
+    });
+
 async function handler(ctx) {
     const { category = 'news', symbol } = ctx.req.param();
     const pageUrl = `${baseUrl}/symbol/${symbol.toUpperCase()}/${category === 'transcripts' ? `earnings/${category}` : category}`;
 
-    const response = await got(`${baseUrl}/api/v3/symbols/${symbol.toUpperCase()}/${category}`, {
-        searchParams: {
-            cacheBuster: category === 'news' ? dayjs().format('YYYY-MM-DD') : undefined,
+    const machineCookie = await getMachineCookie();
+    const response = await ofetch(`${baseUrl}/api/v3/symbols/${symbol.toUpperCase()}/${category}`, {
+        headers: {
+            cookie: machineCookie.join('; '),
+        },
+        query: {
+            'filter[since]': 0,
+            'filter[until]': 0,
             id: symbol.toLowerCase(),
             include: 'author,primaryTickers,secondaryTickers,sentiments',
-            'page[size]': ctx.req.query('limit') ? Number(ctx.req.query('limit')) : category === 'news' ? 40 : 20,
+            'page[size]': ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 40,
+            'page[number]': 1,
         },
     });
 
-    const list = response.data.data?.map((item) => ({
+    const list = response.data?.map((item) => ({
         title: item.attributes.title,
         link: new URL(item.links.self, baseUrl).href,
         pubDate: parseDate(item.attributes.publishOn),
-        author: response.data.included.find((i) => i.id === item.relationships.author.data.id).attributes.nick,
+        author: response.included.find((i) => i.id === item.relationships.author.data.id).attributes.nick,
     }));
 
     const items = list
         ? await Promise.all(
               list.map((item) =>
                   cache.tryGet(item.link, async () => {
-                      const response = await got(item.link);
-                      const $ = load(response.data);
+                      const response = await ofetch(item.link);
+                      const $ = load(response);
 
                       const summary = $('[data-test-id=article-summary-title]').length ? $('[data-test-id=article-summary-title]').html() + $('[data-test-id=article-summary-title]').next().html() : '';
 
@@ -74,8 +77,8 @@ async function handler(ctx) {
         : [];
 
     return {
-        title: response.data.meta.page.title,
-        description: response.data.meta.page.description,
+        title: response.meta.page.title,
+        description: response.meta.page.description,
         link: pageUrl,
         image: 'https://seekingalpha.com/samw/static/images/favicon.svg',
         item: items,
