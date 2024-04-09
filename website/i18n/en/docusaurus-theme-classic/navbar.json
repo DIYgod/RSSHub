@@ -1,0 +1,34 @@
+{
+  "title": {
+    "message": "RSSHub",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "RSSHub",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Guide": {
+    "message": "Guide",
+    "description": "Navbar item with label Guide"
+  },
+  "item.label.Routes": {
+    "message": "Routes",
+    "description": "Navbar item with label Routes"
+  },
+  "item.label.Join Us": {
+    "message": "Join Us",
+    "description": "Navbar item with label Join Us"
+  },
+  "item.label.Deploy": {
+    "message": "Deploy",
+    "description": "Navbar item with label Deploy"
+  },
+  "item.label.Support RSSHub": {
+    "message": "Support RSSHub",
+    "description": "Navbar item with label Support RSSHub"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}
