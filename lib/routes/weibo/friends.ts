@@ -5,6 +5,7 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import weiboUtils from './utils';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/friends/:routeParams?',
@@ -45,7 +46,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.weibo.cookies) {
-        throw new Error('Weibo Friends Timeline is not available due to the absense of [Weibo Cookies]. Check <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config tutorial</a>');
+        throw new ConfigNotFoundError('Weibo Friends Timeline is not available due to the absense of [Weibo Cookies]. Check <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config tutorial</a>');
     }
 
     let displayVideo = '1';

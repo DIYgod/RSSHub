@@ -5,9 +5,7 @@ import Sentry from '@sentry/node';
 import logger from '@/utils/logger';
 import Error from '@/views/error';
 
-import RequestInProgressError from './request-in-progress';
-import RejectError from './reject';
-import NotFoundError from './not-found';
+import NotFoundError from './types/not-found';
 
 export const errorHandler: ErrorHandler = (error, ctx) => {
     const requestPath = ctx.req.path;
@@ -38,27 +36,29 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
         });
     }
 
-    let message = '';
-    if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
-        ctx.status(503);
-        message = `${error.message}: target website might be blocking our access, you can host your own RSSHub instance for a better usability.`;
-    } else if (error instanceof RequestInProgressError) {
-        ctx.header('Cache-Control', `public, max-age=${config.requestTimeout / 1000}`);
-        ctx.status(503);
-        message = error.message;
-    } else if (error instanceof RejectError) {
-        ctx.status(403);
-        message = error.message;
-    } else if (error instanceof NotFoundError) {
-        ctx.status(404);
-        message = 'wrong path';
-        if (ctx.req.path.endsWith('/')) {
-            message += ', you can try removing the trailing slash in the path';
-        }
-    } else {
-        ctx.status(503);
-        message = process.env.NODE_ENV === 'production' ? error.message : error.stack || error.message;
+    let errorMessage = process.env.NODE_ENV === 'production' ? error.message : error.stack || error.message;
+    switch (error.constructor.name) {
+        case 'HTTPError':
+        case 'RequestError':
+        case 'FetchError':
+            ctx.status(503);
+            break;
+        case 'RequestInProgressError':
+            ctx.header('Cache-Control', `public, max-age=${config.requestTimeout / 1000}`);
+            ctx.status(503);
+            break;
+        case 'RejectError':
+            ctx.status(403);
+            break;
+        case 'NotFoundError':
+            ctx.status(404);
+            errorMessage += 'The route does not exist or has been deleted.';
+            break;
+        default:
+            ctx.status(503);
+            break;
     }
+    const message = `${error.name}: ${errorMessage}`;
 
     logger.error(`Error in ${requestPath}: ${message}`);
 

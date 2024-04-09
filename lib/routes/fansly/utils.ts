@@ -4,6 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import path from 'node:path';
 import { art } from '@/utils/render';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const apiBaseUrl = 'https://apiv3.fansly.com';
 const baseUrl = 'https://fansly.com';
@@ -27,7 +28,7 @@ const getAccountByUsername = (username, tryGet) =>
         });
 
         if (!accountResponse.response.length) {
-            throw new Error('This profile or page does not exist.');
+            throw new InvalidParameterError('This profile or page does not exist.');
         }
 
         return accountResponse.response[0];

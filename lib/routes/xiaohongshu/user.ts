@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getUser } from './util';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/user/:user_id/:category',
@@ -36,13 +37,13 @@ async function handler(ctx) {
         );
     const renderCollect = (collect) => {
         if (!collect) {
-            throw new Error('该用户已设置收藏内容不可见');
+            throw new InvalidParameterError('该用户已设置收藏内容不可见');
         }
         if (collect.code !== 0) {
             throw new Error(JSON.stringify(collect));
         }
         if (!collect.data.notes.length) {
-            throw new Error('该用户已设置收藏内容不可见');
+            throw new InvalidParameterError('该用户已设置收藏内容不可见');
         }
         return collect.data.notes.map((item) => ({
             title: item.display_title,

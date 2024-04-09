@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const rootURL = 'http://xg.swjtu.edu.cn';
 const listURL = {
@@ -84,7 +85,7 @@ async function handler(ctx) {
     const pageURL = listURL[code];
 
     if (!pageURL) {
-        throw new Error('code not supported');
+        throw new InvalidParameterError('code not supported');
     }
 
     const resp = await got({

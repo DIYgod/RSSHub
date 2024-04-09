@@ -7,6 +7,7 @@ import CryptoJS from 'crypto-js';
 import queryString from 'query-string';
 import { initToken, getToken } from './token';
 import cache from '@/utils/cache';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const twitterGot = async (url, params) => {
     const token = await getToken();
@@ -209,7 +210,7 @@ const getUser = async (id) => {
 const cacheTryGet = async (_id, params, func) => {
     const id = await getUserID(_id);
     if (id === undefined) {
-        throw new Error('User not found');
+        throw new InvalidParameterError('User not found');
     }
     const funcName = func.name;
     const paramsString = JSON.stringify(params);

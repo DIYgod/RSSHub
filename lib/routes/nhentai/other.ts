@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSimple, getDetails, getTorrents } from './util';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const supportedKeys = new Set(['parody', 'character', 'tag', 'artist', 'group', 'language', 'category']);
 
@@ -36,7 +37,7 @@ async function handler(ctx) {
     const { key, keyword, mode } = ctx.req.param();
 
     if (!supportedKeys.has(key)) {
-        throw new Error('Unsupported key');
+        throw new InvalidParameterError('Unsupported key');
     }
 
     const url = `https://nhentai.net/${key}/${keyword.toLowerCase().replace(' ', '-')}/`;

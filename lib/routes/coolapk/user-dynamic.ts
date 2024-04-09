@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/user/:uid/dynamic',
@@ -29,7 +30,7 @@ async function handler(ctx) {
     });
     const data = response.data.data;
     if (!data) {
-        throw new Error('这个人没有任何动态。');
+        throw new InvalidParameterError('这个人没有任何动态。');
     }
     let out = await Promise.all(
         data.map((item) => {
@@ -43,7 +44,7 @@ async function handler(ctx) {
 
     out = out.filter(Boolean); // 去除空值
     if (out.length === 0) {
-        throw new Error('这个人还没有图文或动态。');
+        throw new InvalidParameterError('这个人还没有图文或动态。');
     }
     return {
         title: `酷安个人动态-${username}`,

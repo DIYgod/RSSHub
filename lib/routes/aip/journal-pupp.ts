@@ -4,6 +4,7 @@ import { puppeteerGet, renderDesc } from './utils';
 import { config } from '@/config';
 import { isValidHost } from '@/utils/valid-host';
 import puppeteer from '@/utils/puppeteer';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const handler = async (ctx) => {
     const pub = ctx.req.param('pub');
@@ -11,7 +12,7 @@ const handler = async (ctx) => {
     const host = `https://pubs.aip.org`;
     const jrnlUrl = `${host}/${pub}/${jrn}/issue`;
     if (!isValidHost(pub)) {
-        throw new Error('Invalid pub');
+        throw new InvalidParameterError('Invalid pub');
     }
 
     // use Puppeteer due to the obstacle by cloudflare challenge

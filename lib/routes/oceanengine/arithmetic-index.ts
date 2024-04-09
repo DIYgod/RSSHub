@@ -11,6 +11,7 @@ import path from 'node:path';
 import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
 import { createDecipheriv } from 'node:crypto';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 // Parameters
 const CACHE_MAX_AGE = config.cache.contentExpire;
@@ -95,10 +96,10 @@ async function handler(ctx) {
     const end_date = now.format('YYYYMMDD');
     const keyword = ctx.req.param('keyword');
     if (!keyword) {
-        throw new Error('Invalid keyword');
+        throw new InvalidParameterError('Invalid keyword');
     }
     if (ctx.req.param('channel') && !['douyin', 'toutiao'].includes(ctx.req.param('channel'))) {
-        throw new Error('Invalid channel。 Only support `douyin` or `toutiao`');
+        throw new InvalidParameterError('Invalid channel。 Only support `douyin` or `toutiao`');
     }
 
     const channel = ctx.req.param('channel') === 'toutiao' ? 'toutiao' : 'aweme'; // default channel is `douyin`

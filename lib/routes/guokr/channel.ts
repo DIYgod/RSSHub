@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseList, parseItem } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const channelMap = {
     calendar: 'pac',
@@ -42,7 +43,7 @@ async function handler(ctx) {
     const result = parseList(response.result);
 
     if (result.length === 0) {
-        throw new Error('Unknown channel');
+        throw new InvalidParameterError('Unknown channel');
     }
 
     const channelName = result[0].channels[0].name;
