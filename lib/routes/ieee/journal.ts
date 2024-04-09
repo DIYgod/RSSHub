@@ -29,6 +29,11 @@ export const route: Route = {
     handler,
 };
 
+const renderDesc = (item: any) =>
+    art(path.join(__dirname, 'templates/description.art'), {
+        item,
+    });
+
 async function handler(ctx) {
     const punumber = ctx.req.param('journal');
     const sortType = ctx.req.param('sortType') ?? 'vol-only-seq';
@@ -79,10 +84,6 @@ async function handler(ctx) {
         };
     });
 
-    const renderDesc = (item: any) =>
-        art(path.join(__dirname, 'templates/description.art'), {
-            item,
-        });
     list = await Promise.all(
         list.map((item: any) =>
             cache.tryGet(item.link, async () => {
