@@ -29,7 +29,7 @@ export const route: Route = {
     handler,
 };
 
-const renderDesc = (item: any) =>
+const renderDesc = (item) =>
     art(path.join(__dirname, 'templates/description.art'), {
         item,
     });
@@ -63,17 +63,16 @@ async function handler(ctx) {
             rowsPerPage: '100',
         },
     });
-    let list = response2.records.map((item: any) => {
+    let list = response2.records.map((item) => {
         const $2 = load(item.articleTitle);
         const title = $2.text();
         const link = item.htmlLink;
         const doi = item.doi;
         let authors = 'Do not have author';
         if (Object.hasOwn(item, 'authors')) {
-            authors = item.authors.map((itemAuth: any) => itemAuth.preferredName).join('; ');
+            authors = item.authors.map((itemAuth) => itemAuth.preferredName).join('; ');
         }
-        let abstract = '';
-        Object.hasOwn(item, 'abstract') ? (abstract = item.abstract) : (abstract = '');
+        const abstract = Object.hasOwn(item, 'abstract') ? item.abstract : '';
         return {
             title,
             link,
@@ -85,7 +84,7 @@ async function handler(ctx) {
     });
 
     list = await Promise.all(
-        list.map((item: any) =>
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
                 if (item.abstract !== '') {
                     const response3 = await ofetch(`${host}${item.link}`, {
