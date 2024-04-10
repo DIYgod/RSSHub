@@ -15,7 +15,7 @@ export const route: Route = {
     path: '/journal/:journal/:sortType?',
     categories: ['journal'],
     example: '/ieee/journal/8782710',
-    parameters: { journal: 'Issue code, the number of the `isnumber` in the URL', sortType: 'Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`' },
+    parameters: { journal: 'Issue code, the number of the `isnumber` in the link', sortType: 'Sort Type, default: `vol-only-seq`, the part of the link after `sortType`' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -38,7 +38,7 @@ async function handler(ctx) {
     const punumber = ctx.req.param('journal');
     const sortType = ctx.req.param('sortType') ?? 'vol-only-seq';
     const host = 'https://ieeexplore.ieee.org';
-    const jrnlUrl = `${host}/xpl/mostRecentIssue.jsp?punumber=${punumber}`;
+    const link = `${host}/xpl/mostRecentIssue.jsp?punumber=${punumber}`;
 
     const response = await ofetch(`${host}/rest/publication/home/metadata?pubid=${punumber}`, {
         parseResponse: JSON.parse,
@@ -48,7 +48,7 @@ async function handler(ctx) {
     });
     const volume = response.currentIssue.volume;
     const isnumber = response.currentIssue.issueNumber;
-    const jrnlName = response.displayTitle;
+    const title = response.displayTitle;
 
     const response2 = await ofetch(`${host}/rest/search/pub/${punumber}/issue/${isnumber}/toc`, {
         method: 'POST',
@@ -103,8 +103,8 @@ async function handler(ctx) {
     );
 
     return {
-        title: jrnlName,
-        link: jrnlUrl,
+        title,
+        link,
         item: list,
     };
 }
