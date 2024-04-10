@@ -43,7 +43,7 @@ const bakeFilterSearchParams = (filterPairs: Record<string, Filter[] | string[]>
      *          e.g. `category=a,b&tag=c`.
      */
     const bakeFilters = (filterPairs: Record<string, Filter[] | string[]>, filterSearchParams: URLSearchParams): URLSearchParams => {
-        const keys = Object.keys(filterPairs).filter((key) => filterPairs[key]?.length > 0 && (isApi ? filterApiKeys.hasOwnProperty(key) : filterKeys.hasOwnProperty(key)));
+        const keys = Object.keys(filterPairs).filter((key) => filterPairs[key]?.length > 0 && (isApi ? Object.hasOwn(filterApiKeys, key) : Object.hasOwn(filterKeys, key)));
 
         if (keys.length === 0) {
             return filterSearchParams;
@@ -56,7 +56,7 @@ const bakeFilterSearchParams = (filterPairs: Record<string, Filter[] | string[]>
         delete originalFilters[key];
 
         const filterKey = getFilterKeyForSearchParams(key, isApi);
-        const pairValues = pairs.map((pair) => (pair.hasOwnProperty(pairKey) ? pair[pairKey] : pair));
+        const pairValues = pairs.map((pair) => (Object.hasOwn(pair, pairKey) ? pair[pairKey] : pair));
 
         if (filterKey) {
             filterSearchParams.append(filterKey, pairValues.join(','));
@@ -250,7 +250,7 @@ const getFilterKeyForSearchParams = (key: string, isApi: boolean = false): strin
  * @returns The filter parameters for the URL, or undefined if no filters are available.
  */
 const getFilterParamsForUrl = (filterPairs: Record<string, Filter[]>): string | undefined => {
-    const keys = Object.keys(filterPairs).filter((key) => filterPairs[key].length > 0);
+    const keys = Object.keys(filterPairs).filter((key) => filterPairs[key].length > 0 && !Object.hasOwn(filterKeys, key));
 
     if (keys.length === 0) {
         return;
@@ -288,14 +288,15 @@ const parseFilterStr = (filterStr: string | undefined): Record<string, string[]>
 
         const [word, ...rest] = remainingStr.split(/\/|,/);
 
-        const key = filterApiKeys[word] ? word : currentKey;
+        const isKey = Object.hasOwn(filterApiKeys, word);
+        const key = isKey ? word : currentKey;
 
-        const newFilters: Record<string, string[]> | undefined = key
+        const newFilters = key
             ? {
                   ...filters,
-                  [key]: filters[key] ? [...filters[key], ...(filterApiKeys[word] ? [] : [word])] : [word],
+                  [key]: [...(filters[key] || []), ...(isKey ? [] : [word])],
               }
-            : undefined;
+            : filters;
 
         return parseStr(rest.join('/'), newFilters, key);
     };

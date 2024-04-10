@@ -148,6 +148,8 @@ export const route: Route = {
   You can also subscribe to multiple categories. \`/category/Podcast,Community\` to subscribe to both the Podcast and Community categories. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community).
 
   Categories and tags can be combined as well. \`/category/Releases/tag/tagging\` to subscribe to the Releases category and the tagging tag. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging).
+  
+  You can also search for keywords. \`/search/Blog\` to search for the keyword "Blog". In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog).
   :::`,
     categories: ['blog'],
 
