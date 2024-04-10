@@ -10364,8 +10364,8 @@
     "_name": "Instagram",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "User Profile - Picnob",
+        "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/profile/:id/*"
         ],

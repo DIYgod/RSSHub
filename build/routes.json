@@ -42162,14 +42162,30 @@
     "routes": {
       "/user/:id": {
         "path": "/user/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/picnob/user/xlisa_olivex",
+        "parameters": {
+          "id": "Instagram id"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
         "radar": [
           {
             "source": [
               "picnob.com/profile/:id/*"
-            ]
+            ],
+            "target": "/user/:id"
           }
         ],
-        "name": "Unknown",
+        "name": "User Profile - Picnob",
         "maintainers": [
           "TonyRL",
           "micheal-death"
