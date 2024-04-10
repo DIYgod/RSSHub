@@ -11,7 +11,7 @@ import { art } from '@/utils/render';
 export const route: Route = {
     path: '/author/:aid/:sortType/:count?',
     categories: ['journal'],
-    example: '/ieee/author/8782710',
+    example: '/ieee/author/37281702200',
     parameters: { aid: 'Author ID', sortType: 'Sort Type of papers', count: 'Number of papers to show' },
     features: {
         requireConfig: false,
