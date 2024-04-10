@@ -6011,6 +6011,9 @@
   "/wnacg/tag/:tag": [
     "KenMizz"
   ],
+  "/wordpress/:url?/:filter{.+}?": [
+    "nczitzk"
+  ],
   "/worldjournal/:path{.+}?": [],
   "/woshipm/popular/:range?": [
     "WenryXu"
