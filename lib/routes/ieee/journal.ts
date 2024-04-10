@@ -40,17 +40,23 @@ async function handler(ctx) {
     const host = 'https://ieeexplore.ieee.org';
     const link = `${host}/xpl/mostRecentIssue.jsp?punumber=${punumber}`;
 
-    const response = await ofetch(`${host}/rest/publication/home/metadata?pubid=${punumber}`, {
+    const { title, isnumber, volume } = await ofetch(`${host}/rest/publication/home/metadata?pubid=${punumber}`, {
         parseResponse: JSON.parse,
         headers: {
             cookie: cookieJar.getCookieStringSync(host),
         },
+    }).then((res) => {
+        const volume = res.currentIssue.volume;
+        const isnumber = res.currentIssue.issueNumber;
+        const title = res.displayTitle;
+        return {
+            title,
+            isnumber,
+            volume,
+        };
     });
-    const volume = response.currentIssue.volume;
-    const isnumber = response.currentIssue.issueNumber;
-    const title = response.displayTitle;
 
-    const response2 = await ofetch(`${host}/rest/search/pub/${punumber}/issue/${isnumber}/toc`, {
+    const response = await ofetch(`${host}/rest/search/pub/${punumber}/issue/${isnumber}/toc`, {
         method: 'POST',
         parseResponse: JSON.parse,
         headers: {
@@ -63,9 +69,9 @@ async function handler(ctx) {
             rowsPerPage: '100',
         },
     });
-    let list = response2.records.map((item) => {
-        const $2 = load(item.articleTitle);
-        const title = $2.text();
+    let list = response.records.map((item) => {
+        const $ = load(item.articleTitle);
+        const title = $.text();
         const link = item.htmlLink;
         const doi = item.doi;
         let authors = 'Do not have author';
