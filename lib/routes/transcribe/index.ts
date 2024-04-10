@@ -5,6 +5,8 @@ import { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import cache from '@/utils/cache';
 import { config } from '@/config';
+import logger from '@/utils/logger';
+import { transcribe } from './utils';
 
 type TaskStatus =
     /** not started */
@@ -34,41 +36,16 @@ function download(dest: string, url: string) {
             return resolve(new Blob([fs.readFileSync(dest)]));
         }
         const file = fs.createWriteStream(dest);
-        got.stream(url)
-            .pipe(file)
-            .on('finish', () => {
-                file.on('finish', () => {
-                    file.close(() => {
-                        resolve(new Blob([fs.readFileSync(dest)]));
-                    });
-                });
+        got.get(url)
+            .then((res) => {
+                file.write(res.body);
+                file.end();
+                resolve(new Blob([res.body]));
             })
-            .on('error', (err) => {
-                reject(err);
+            .catch((error) => {
+                reject(error);
             });
     });
-}
-
-/**
- * @see https://platform.openai.com/docs/api-reference/audio/createTranscription
- */
-async function transcribe(file: Blob, language: string, prompt?: string, translate?: boolean) {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('model', 'whisper-1');
-    formData.append('language', language);
-    formData.append('prompt', prompt || '');
-
-    return (await (
-        await fetch(`${config.openai.endpoint || 'https://api.openai.com'}/v1/audio/${translate ? 'translations' : 'transcriptions'}`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${config.openai.apiKey}`,
-                'Content-Type': 'multipart/form-data',
-            },
-            body: formData,
-        })
-    ).json()) as { text: string };
 }
 
 export const route: Route = {
@@ -113,6 +90,16 @@ Query:
             throw new Error('Missing RSS URL');
         }
 
+        if (rssUrl === 'clear') {
+            // 移除 task 中 失败的任务
+            for (const [url, status] of tasks.entries()) {
+                if (status === 3) {
+                    tasks.delete(url);
+                }
+            }
+            return { title: 'Clear Success' };
+        }
+
         const parser = new Parser();
 
         const feed = await parser.parseURL(rssUrl);
@@ -126,7 +113,7 @@ Query:
                         if (cachedText && cachedText.trim().length) {
                             item.contentSnippet = `${item.contentSnippet}\n\n<strong>Transcription:<strong>\n<p>${cachedText}<p>`;
                         } else {
-                            if (tasks.get(item.enclosure.url) === undefined || tasks.get(item.enclosure.url) === 3) {
+                            if (tasks.get(item.enclosure.url) === undefined) {
                                 tasks.set(item.enclosure.url, 0);
                                 if (config.openai.apiKey) {
                                     const file = await download(filename, item.enclosure!.url);
@@ -142,6 +129,8 @@ Query:
                                         .finally(() => {
                                             fs.unlinkSync(filename);
                                         });
+                                } else {
+                                    logger.warn('No OPENAI_API_KEY');
                                 }
                             }
                             item.contentSnippet = `${item.contentSnippet}\n\n<strong>Transcription:<strong>\n<p>The transcription is being generated. code:${tasks.get(item.enclosure!.url)}}<p>`;
