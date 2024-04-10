@@ -114,6 +114,6 @@ async function handler(ctx) {
         item: items,
         image: details.data.data.image,
         description: details.data.data.des ?? details.data.data.desSimple,
-        itunes_author: 'radio.cn',
+        itunes_author: details.data.data.ownerNickName || 'radio.cn',
     };
 }
