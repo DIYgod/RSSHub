@@ -53,7 +53,7 @@
         "@hono/node-server": "1.9.1",
         "@hono/swagger-ui": "0.2.1",
         "@hono/zod-openapi": "0.10.0",
-        "@notionhq/client": "2.2.14",
+        "@notionhq/client": "2.2.15",
         "@postlight/parser": "2.2.3",
         "@sentry/node": "7.109.0",
         "@tonyrl/rand-user-agent": "2.0.58",
