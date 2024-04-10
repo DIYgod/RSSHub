@@ -6,6 +6,7 @@ import { config } from '@/config';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import { templates, resolveUrl, proxyVideo, getOriginAvatar } from './utils';
 import puppeteer from '@/utils/puppeteer';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/hashtag/:cid/:routeParams?',
@@ -34,7 +35,7 @@ export const route: Route = {
 async function handler(ctx) {
     const cid = ctx.req.param('cid');
     if (isNaN(cid)) {
-        throw new TypeError('Invalid tag ID. Tag ID should be a number.');
+        throw new InvalidParameterError('Invalid tag ID. Tag ID should be a number.');
     }
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const embed = fallback(undefined, queryToBoolean(routeParams.embed), false); // embed video

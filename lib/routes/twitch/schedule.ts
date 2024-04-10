@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -76,7 +77,7 @@ async function handler(ctx) {
     const streamScheduleData = response.data[1].data;
 
     if (!streamScheduleData.user.id) {
-        throw new Error(`Username does not exist`);
+        throw new InvalidParameterError(`Username does not exist`);
     }
 
     const displayName = channelShellData.userOrError.displayName;

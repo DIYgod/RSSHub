@@ -1,7 +1,7 @@
 import type { Namespace, Route } from '@/types';
 import { directoryImport } from 'directory-import';
 import { Hono, type Handler } from 'hono';
-import * as path from 'node:path';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { serveStatic } from '@hono/node-server/serve-static';
 
@@ -45,7 +45,7 @@ if (Object.keys(modules).length) {
             | {
                   namespace: Namespace;
               };
-        const namespace = module.split('/')[1];
+        const namespace = module.split(/[/\\]/)[1];
         if ('namespace' in content) {
             namespaces[namespace] = Object.assign(
                 {
@@ -65,13 +65,13 @@ if (Object.keys(modules).length) {
                 for (const path of content.route.path) {
                     namespaces[namespace].routes[path] = {
                         ...content.route,
-                        location: module.split('/').slice(2).join('/'),
+                        location: module.split(/[/\\]/).slice(2).join('/'),
                     };
                 }
             } else {
                 namespaces[namespace].routes[content.route.path] = {
                     ...content.route,
-                    location: module.split('/').slice(2).join('/'),
+                    location: module.split(/[/\\]/).slice(2).join('/'),
                 };
             }
         }

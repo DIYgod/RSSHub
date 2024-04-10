@@ -6,11 +6,12 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import { config } from './config';
 import { radar } from './radar';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:type/:id?',
@@ -58,13 +59,13 @@ async function handler(ctx) {
     const type = ctx.req.param('type');
 
     if (!Object.keys(config).includes(type)) {
-        throw new Error(`Invalid type: ${type}`);
+        throw new InvalidParameterError(`Invalid type: ${type}`);
     }
 
     const { listSelector = '.list_item', pubDateSelector = '.Article_PublishDate', descriptionSelector = '.wp_articlecontent', title } = config[type];
 
     if (!title) {
-        throw new Error(`Invalid type: ${type}`);
+        throw new InvalidParameterError(`Invalid type: ${type}`);
     }
 
     const host = `https://${type}.shiep.edu.cn`;

@@ -5,6 +5,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/news/:city',
@@ -43,7 +44,7 @@ export const route: Route = {
 async function handler(ctx) {
     const city = ctx.req.param('city');
     if (!isValidHost(city)) {
-        throw new Error('Invalid city');
+        throw new InvalidParameterError('Invalid city');
     }
 
     const rootUrl = `http://${city}.bendibao.com`;

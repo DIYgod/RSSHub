@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSimple, getDetails, getTorrents } from './util';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const supportedKeys = new Set(['parody', 'character', 'tag', 'artist', 'group', 'language', 'category']);
 
@@ -11,7 +12,7 @@ export const route: Route = {
     parameters: {
         key: 'Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`',
         keyword: 'Filter value',
-        mode: 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`',
+        mode: 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations), default to `simple`',
     },
     features: {
         requireConfig: false,
@@ -36,7 +37,7 @@ async function handler(ctx) {
     const { key, keyword, mode } = ctx.req.param();
 
     if (!supportedKeys.has(key)) {
-        throw new Error('Unsupported key');
+        throw new InvalidParameterError('Unsupported key');
     }
 
     const url = `https://nhentai.net/${key}/${keyword.toLowerCase().replace(' ', '-')}/`;

@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const dateRegex = /(20\d{2}).(\d{2})-(\d{2})/;
 
@@ -45,7 +46,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') || 'announcement';
     const pageUrl = map[type];
     if (!pageUrl) {
-        throw new Error('type not supported');
+        throw new InvalidParameterError('type not supported');
     }
 
     const response = await got.get(baseUrl + pageUrl);

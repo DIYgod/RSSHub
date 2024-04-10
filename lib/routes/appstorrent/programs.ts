@@ -7,7 +7,7 @@ import { art } from '@/utils/render';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import { Context } from 'hono';
-import * as path from 'node:path';
+import path from 'node:path';
 const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {

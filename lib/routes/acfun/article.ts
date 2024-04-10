@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const baseUrl = 'https://www.acfun.cn';
 const categoryMap = {
@@ -66,13 +67,13 @@ export const route: Route = {
 async function handler(ctx) {
     const { categoryId, sortType = 'createTime', timeRange = 'all' } = ctx.req.param();
     if (!categoryMap[categoryId]) {
-        throw new Error(`Invalid category Id: ${categoryId}`);
+        throw new InvalidParameterError(`Invalid category Id: ${categoryId}`);
     }
     if (!sortTypeEnum.has(sortType)) {
-        throw new Error(`Invalid sort type: ${sortType}`);
+        throw new InvalidParameterError(`Invalid sort type: ${sortType}`);
     }
     if (!timeRangeEnum.has(timeRange)) {
-        throw new Error(`Invalid time range: ${timeRange}`);
+        throw new InvalidParameterError(`Invalid time range: ${timeRange}`);
     }
 
     const url = `${baseUrl}/v/list${categoryId}/index.htm`;

@@ -2,6 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const allowSiteList = ['mastodon.social', 'pawoo.net', config.mastodon.apiHost].filter(Boolean);
 
@@ -93,10 +94,10 @@ async function getAccountIdByAcct(acct) {
     const site = mastodonConfig.apiHost || acctHost;
     const acctDomain = mastodonConfig.acctDomain || acctHost;
     if (!(site && acctDomain)) {
-        throw new Error('Mastodon RSS is disabled due to the lack of <a href="https://docs.rsshub.app/en/install/#configuration-route-specific-configurations">relevant config</a>');
+        throw new ConfigNotFoundError('Mastodon RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     if (!config.feature.allow_user_supply_unsafe_domain && !allowSiteList.includes(site)) {
-        throw new Error(`RSS for this domain is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true' or 'MASTODON_API_HOST' is set.`);
+        throw new ConfigNotFoundError(`RSS for this domain is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true' or 'MASTODON_API_HOST' is set.`);
     }
 
     const search_url = `https://${site}/api/v2/search`;

@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
 const baseUrl = 'http://www.chinadegrees.com.cn';

@@ -8,8 +8,9 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 const allowDomain = new Set(['2btjia.com', '88btbtt.com', 'btbtt15.com', 'btbtt20.com']);
 
 export const route: Route = {
@@ -71,7 +72,7 @@ async function handler(ctx) {
     let category = ctx.req.param('category') ?? '';
     let domain = ctx.req.query('domain') ?? 'btbtt15.com';
     if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(new URL(`http://${domain}/`).hostname)) {
-        throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
     if (category === 'base') {

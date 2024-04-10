@@ -4,6 +4,7 @@ import { ig, login } from './utils';
 import logger from '@/utils/logger';
 import { config } from '@/config';
 import { renderItems } from '../common-utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 // loadContent pulls the desired user/tag/etc
 async function loadContent(category, nameOrId, tryGet) {
@@ -78,7 +79,7 @@ export const route: Route = {
     maintainers: ['oppilate', 'DIYgod'],
     handler,
     description: `:::warning
-Due to [Instagram Private API](https://github.com/dilame/instagram-private-api) restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/install/) for more.
+Due to [Instagram Private API](https://github.com/dilame/instagram-private-api) restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/deploy/) for more.
 :::`,
 };
 
@@ -93,7 +94,7 @@ async function handler(ctx) {
     // e.g. username for user feed
     const { category, key } = ctx.req.param();
     if (!availableCategories.includes(category)) {
-        throw new Error('Such feed is not supported.');
+        throw new InvalidParameterError('Such feed is not supported.');
     }
 
     if (config.instagram && config.instagram.proxy) {

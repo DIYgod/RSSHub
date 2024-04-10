@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -28,7 +29,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
     if (!isValidHost(id)) {
-        throw new Error('Invalid id');
+        throw new InvalidParameterError('Invalid id');
     }
 
     const response = await got({

@@ -7,8 +7,9 @@ import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import MarkdownIt from 'markdown-it';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 const md = MarkdownIt({
     html: true,
 });
@@ -58,7 +59,7 @@ async function handler(ctx) {
     const topicItems = response.data.filter((i) => i.title === topic);
 
     if (!topicItems) {
-        throw new Error(`No topic named ${topic}`);
+        throw new InvalidParameterError(`No topic named ${topic}`);
     }
 
     const topicItem = topicItems[0];

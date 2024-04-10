@@ -6,7 +6,8 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/album/:id',
@@ -43,7 +44,7 @@ async function handler(ctx) {
     } = await got(`https://pcw-api.iqiyi.com/album/album/baseinfo/${album.videoAlbumInfo.albumId}`);
 
     if (Object.keys(album.cacheAlbumList).length === 0) {
-        throw new Error(`${baseInfo.name} is not available in this server region.`);
+        throw new InvalidParameterError(`${baseInfo.name} is not available in this server region.`);
     }
 
     let pos = 1;

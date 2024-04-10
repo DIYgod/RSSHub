@@ -6,7 +6,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 
 // 分类

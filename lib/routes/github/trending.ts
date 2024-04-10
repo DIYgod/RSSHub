@@ -6,7 +6,8 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/trending/:since/:language/:spoken_language?',
@@ -44,7 +45,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.github || !config.github.access_token) {
-        throw new Error('GitHub trending RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new ConfigNotFoundError('GitHub trending RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const since = ctx.req.param('since');
     const language = ctx.req.param('language') === 'any' ? '' : ctx.req.param('language');

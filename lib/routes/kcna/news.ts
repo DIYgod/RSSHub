@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import asyncPool from 'tiny-async-pool';
 import { art } from '@/utils/render';
 import { parseJucheDate, fixDesc, fetchPhoto, fetchVideo } from './utils';
-import * as path from 'node:path';
+import path from 'node:path';
 import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {

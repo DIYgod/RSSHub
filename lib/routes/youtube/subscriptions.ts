@@ -4,6 +4,7 @@ import { config } from '@/config';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 import asyncPool from 'tiny-async-pool';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/subscriptions/:embed?',
@@ -29,11 +30,6 @@ export const route: Route = {
                 description: '',
             },
         ],
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
     },
     radar: [
         {
@@ -49,7 +45,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.youtube || !config.youtube.key || !config.youtube.clientId || !config.youtube.clientSecret || !config.youtube.refreshToken) {
-        throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new ConfigNotFoundError('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const embed = !ctx.req.param('embed');
 

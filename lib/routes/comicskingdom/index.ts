@@ -7,7 +7,8 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:name',
@@ -50,7 +51,7 @@ async function handler(ctx) {
         .map((el) => $(el).find('a').first().attr('href'));
 
     if (links.length === 0) {
-        throw new Error(`Comic Not Found - ${name}`);
+        throw new InvalidParameterError(`Comic Not Found - ${name}`);
     }
     const items = await Promise.all(
         links.map((link) =>

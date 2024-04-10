@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -32,7 +33,7 @@ async function handler(ctx) {
         title = 'Android SDK 历史变更';
         link = 'https://wiki.connect.qq.com/android_sdk历史变更';
     } else {
-        throw new Error('not support platform');
+        throw new InvalidParameterError('not support platform');
     }
 
     const response = await got.get(link);

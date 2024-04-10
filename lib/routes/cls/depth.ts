@@ -7,9 +7,10 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 import { rootUrl, getSearchParams } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const categories = {
     1000: '头条',
@@ -57,7 +58,7 @@ async function handler(ctx) {
     const title = categories[category];
 
     if (!title) {
-        throw new Error('Bad category. See <a href="https://docs.rsshub.app/routes/finance#cai-lian-she-shen-du">docs</a>');
+        throw new InvalidParameterError('Bad category. See <a href="https://docs.rsshub.app/routes/finance#cai-lian-she-shen-du">docs</a>');
     }
 
     const apiUrl = `${rootUrl}/v3/depth/home/assembled/${category}`;

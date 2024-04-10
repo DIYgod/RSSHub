@@ -7,21 +7,13 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/:category/:article_type?',
     categories: ['traditional-media'],
     example: '/nikkei/news',
     parameters: { category: 'Category, see table below', article_type: 'Only includes free articles, set `free` to enable, disabled by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['www.nikkei.com/:category/archive', 'www.nikkei.com/:category'],
@@ -29,7 +21,7 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    maintainers: ['Arracc'],
+    maintainers: ['Arracc', 'ladeng07'],
     handler,
     description: `| 総合 | オピニオン | 経済    | 政治     | 金融      | マーケット | ビジネス | マネーのまなび | テック     | 国際          | スポーツ | 社会・調査 | 地域  | 文化    | ライフスタイル |
   | ---- | ---------- | ------- | -------- | --------- | ---------- | -------- | -------------- | ---------- | ------------- | -------- | ---------- | ----- | ------- | -------------- |
@@ -47,18 +39,18 @@ async function handler(ctx) {
     const $ = load(data);
 
     let categoryName = '';
-    const listSelector = $('div#CONTENTS_MAIN').children('div.m-miM09').not('.PRa');
-    const paidSelector = 'span.m-iconMember';
+    const listSelector = $('[class^="container_"]  [class^="default_"]:has(article)');
+    const paidSelector = 'img[class^="icon_"]';
 
     let list = listSelector.toArray().map((item) => {
         item = $(item);
         item.find('p a').remove();
         return {
-            title: item.find('.m-miM09_titleL').text(),
-            link: `${baseUrl}${item.find('.m-miM09_title a').attr('href')}`,
-            image: item.find('.m-miM09_thumb img').removeAttr('style').removeAttr('width').removeAttr('height').parent().html(),
+            title: item.find('[class^="titleLink_"]').text(),
+            link: `${baseUrl}${item.find('[class^="title_"] a').attr('href')}`,
+            image: item.find('[class^="image_"] img').removeAttr('style').removeAttr('width').removeAttr('height').parent().html(),
             category: item
-                .find('.m-miM09_keyword a')
+                .find('[class^="topicItem_"] a')
                 .toArray()
                 .map((item) => $(item).text()),
             paywall: !!item.find(paidSelector).length,

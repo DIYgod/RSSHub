@@ -2,21 +2,22 @@ import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
-import got from '@/utils/got';
+import _ofetch from '@/utils/ofetch';
 import MarkdownIt from 'markdown-it';
 import type { Author, Project, Version } from '@/routes/modrinth/api';
 import type { Context } from 'hono';
 
 const __dirname = getCurrentPath(import.meta.url);
 
-const customGot = got.extend({
+const ofetch = _ofetch.create({
     headers: {
         // https://docs.modrinth.com/#section/User-Agents
         'user-agent': config.trueUA,
     },
 });
+
 const md = MarkdownIt({
     html: true,
 });
@@ -83,25 +84,29 @@ async function handler(ctx: Context) {
      */
     const parsedQuery = new URLSearchParams(routeParams);
 
-    parsedQuery.set('loaders', parsedQuery.has('loaders') ? JSON.stringify(parsedQuery.getAll('loaders')) : '');
-    parsedQuery.set('game_versions', parsedQuery.has('game_versions') ? JSON.stringify(parsedQuery.getAll('game_versions')) : '');
-
     try {
-        const project = await customGot(`https://api.modrinth.com/v2/project/${id}`).json<Project>();
-        const versions = await customGot(`https://api.modrinth.com/v2/project/${id}/version`, {
-            searchParams: parsedQuery,
-        }).json<Version[]>();
-        const authors = await customGot(`https://api.modrinth.com/v2/users`, {
-            searchParams: {
-                ids: JSON.stringify(versions.map((it) => it.author_id)),
+        const project = await ofetch<Project>(`https://api.modrinth.com/v2/project/${id}`);
+        const versions = await ofetch<Version[]>(`https://api.modrinth.com/v2/project/${id}/version`, {
+            query: {
+                loaders: parsedQuery.has('loaders') ? JSON.stringify(parsedQuery.getAll('loaders')) : '',
+                game_versions: parsedQuery.has('game_versions') ? JSON.stringify(parsedQuery.getAll('game_versions')) : '',
             },
-        }).json<Author[]>();
+        });
+        const authors = await ofetch<Author[]>(`https://api.modrinth.com/v2/users`, {
+            query: {
+                ids: JSON.stringify([...new Set(versions.map((it) => it.author_id))]),
+            },
+        });
+        const groupedAuthors = <Record<string, Author>>{};
+        for (const author of authors) {
+            groupedAuthors[author.id] = author;
+        }
 
         return {
             title: `${project.title} Modrinth versions`,
             description: project.description,
             link: `https://modrinth.com/project/${id}`,
-            item: versions.map((it, index) => ({
+            item: versions.map((it) => ({
                 title: `${it.name} for ${it.loaders.join('/')} on ${[...new Set([it.game_versions[0], it.game_versions.at(-1)])].join('-')}`,
                 link: `https://modrinth.com/project/${id}/version/${it.version_number}`,
                 pubDate: parseDate(it.date_published),
@@ -110,7 +115,7 @@ async function handler(ctx: Context) {
                     changelog: md.render(it.changelog),
                 }),
                 guid: it.id,
-                author: authors[index].name,
+                author: groupedAuthors[it.author_id].username,
             })),
         };
     } catch (error: any) {

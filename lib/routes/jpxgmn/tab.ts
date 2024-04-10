@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import { originUrl, getArticleDesc } from './utils';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
@@ -25,9 +25,9 @@ async function handler(ctx) {
     const { tab = 'top' } = ctx.req.param();
     const isSpecial = ['new', 'top', 'hot'].includes(tab);
     const tabUrl = `${originUrl}/${tab}` + (isSpecial ? '.html' : '/');
-    const response = await got(tabUrl);
+    const response = await ofetch.raw(tabUrl);
     const baseUrl = new URL(response.url).origin;
-    const $ = load(response.data);
+    const $ = load(response._data);
     const topTitle = $('div.toptip > a').get(1);
     let feedTitle = $('title').text();
     if (isSpecial) {

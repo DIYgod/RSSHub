@@ -2,7 +2,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async () => {
+const getMzzlbg = async () => {
     const url = 'https://api.cntv.cn/video/videolistById?serviceId=cbox&vsid=C10354&em=01&p=1&n=50';
 
     const response = await got({
@@ -39,3 +39,4 @@ export default async () => {
         item: resultItem,
     };
 };
+export default getMzzlbg;

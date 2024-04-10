@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/:source?/:id?',
@@ -38,17 +38,20 @@ export const route: Route = {
 
   :::tip
   When \`posts\` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
+  There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.
   :::`,
 };
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
-    const source = ctx.req.param('source') ?? '';
+    const source = ctx.req.param('source') ?? 'posts';
     const id = ctx.req.param('id');
+    const isPosts = source === 'posts';
 
     const rootUrl = 'https://kemono.su';
-    const apiUrl = `${rootUrl}/api/v1/discord/channel/lookup/${id}`;
-    const currentUrl = `${rootUrl}/${source ? `${source}/${source === 'discord' ? `server/${id}` : `user/${id}`}` : 'posts'}`;
+    const apiUrl = `${rootUrl}/api/v1`;
+    const discordUrl = `${apiUrl}/discord/channel/lookup/${id}`;
+    const currentUrl = isPosts ? `${apiUrl}/posts` : `${apiUrl}/${source}/user/${id}`;
 
     const headers = {
         cookie: '__ddg2=sBQ4uaaGecmfEUk7',
@@ -56,13 +59,11 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: source === 'discord' ? apiUrl : currentUrl,
+        url: source === 'discord' ? discordUrl : currentUrl,
         headers,
     });
 
-    let items = [],
-        title = '',
-        image;
+    let items, title, image;
 
     if (source === 'discord') {
         title = `Posts of ${id} from Discord | Kemono`;
@@ -93,78 +94,76 @@ async function handler(ctx) {
         );
         items = items.flat();
     } else {
-        const $ = load(response.data);
+        const author = isPosts ? '' : await getAuthor(currentUrl, headers);
+        title = isPosts ? 'Kemono Posts' : `Posts of ${author} from ${source} | Kemono`;
+        image = isPosts ? `${rootUrl}/favicon.ico` : `https://img.kemono.su/icons/${source}/${id}`;
+        items = response.data
+            .filter((i) => i.content || i.attachments)
+            .slice(0, limit)
+            .map((i) => {
+                i.files = [];
+                if ('path' in i.file) {
+                    i.files.push({
+                        name: i.file.name,
+                        path: i.file.path,
+                        extension: i.file.path.replace(/.*\./, '').toLowerCase(),
+                    });
+                }
+                for (const attachment of i.attachments) {
+                    i.files.push({
+                        name: attachment.name,
+                        path: attachment.path,
+                        extension: attachment.path.replace(/.*\./, '').toLowerCase(),
+                    });
+                }
+                const filesHTML = art(path.join(__dirname, 'templates', 'source.art'), { i });
+                let $ = load(filesHTML);
+                const kemonoFiles = $('img, a, audio, video').map(function () {
+                    return $(this).prop('outerHTML')!;
+                });
+                let desc = '';
+                if (i.content) {
+                    desc += `<div>${i.content}</div>`;
+                }
+                $ = load(desc);
+                let count = 0;
+                const regex = /downloads.fanbox.cc/;
+                $('a').each(function () {
+                    const link = $(this).attr('href');
+                    if (regex.test(link!)) {
+                        count++;
+                        $(this).replaceWith(kemonoFiles[count]);
+                    }
+                });
+                desc = (kemonoFiles.length > 0 ? kemonoFiles[0] : '') + $.html();
+                for (const kemonoFile of kemonoFiles.slice(count + 1)) {
+                    desc += kemonoFile;
+                }
 
-        title = $('title').text();
-        image = $('.user-header__avatar img[src]').attr('src');
-
-        items = await Promise.all(
-            $('.card-list__items')
-                .find('a')
-                .slice(0, limit)
-                .toArray()
-                .map((item) => {
-                    item = $(item);
-
-                    return {
-                        link: `${rootUrl}${item.attr('href')}`,
-                    };
-                })
-                .map((item) =>
-                    cache.tryGet(item.link, async () => {
-                        const detailResponse = await got({
-                            method: 'get',
-                            url: item.link,
-                            headers,
-                        });
-
-                        const content = load(detailResponse.data);
-
-                        content('.post__thumbnail').each(function () {
-                            const href = content(this).find('.fileThumb').attr('href');
-                            content(this).html(`<img src="${href.startsWith('http') ? href : rootUrl + href}">`);
-                        });
-
-                        item.description = content('.post__body')
-                            .each(function () {
-                                content(this).find('.ad-container').remove();
-                            })
-                            .html();
-                        item.author = content('.post__user-name').text();
-                        item.title = content('.post__title span').first().text();
-                        item.guid = item.link.replace('kemono.su', 'kemono.party');
-                        item.pubDate = parseDate(content('div.post__published').contents().last().text().trim());
-
-                        // find the first attachment with a file extension we
-                        // want, and set it as the enclosure
-                        content('.post__attachment-link[href][download]').each(function () {
-                            const extension = content(this).attr('download').replace(/.*\./, '').toLowerCase();
-                            const mimeType =
-                                {
-                                    m4a: 'audio/mp4',
-                                    mp3: 'audio/mpeg',
-                                    mp4: 'video/mp4',
-                                }[extension] || null;
-                            if (mimeType === null) {
-                                return;
-                            }
-
-                            item.enclosure_url = content(this).attr('href');
-                            item.enclosure_type = mimeType;
-
-                            return false;
-                        });
-
-                        return item;
-                    })
-                )
-        );
+                return {
+                    title: i.title,
+                    description: desc,
+                    author,
+                    pubDate: parseDate(i.published),
+                    guid: `${apiUrl}/${i.service}/user/${i.user}/post/${i.id}`,
+                    link: `${rootUrl}/${i.service}/user/${i.user}/post/${i.id}`,
+                };
+            });
     }
 
     return {
         title,
         image,
-        link: currentUrl,
+        link: isPosts ? `${rootUrl}/posts` : source === 'discord' ? `${rootUrl}/${source}/server/${id}` : `${rootUrl}/${source}/user/${id}`,
         item: items,
     };
+}
+
+async function getAuthor(currentUrl, headers) {
+    const profileResponse = await got({
+        method: 'get',
+        url: `${currentUrl}/profile`,
+        headers,
+    });
+    return profileResponse.data.name;
 }

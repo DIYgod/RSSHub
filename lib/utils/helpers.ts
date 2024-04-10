@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'url';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const getRouteNameFromPath = (path: string) => {
     const p = path.split('/').filter(Boolean);

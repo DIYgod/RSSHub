@@ -1,15 +1,7 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
-
-async function loadFullPage(id) {
-    const link = `https://apis.guokr.com/minisite/article/${id}.json`;
-    const content = await cache.tryGet(link, async () => {
-        const res = await got(link);
-        return res.data.result.content;
-    });
-    return content;
-}
+import { parseList, parseItem } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const channelMap = {
     calendar: 'pac',
@@ -19,21 +11,13 @@ const channelMap = {
 };
 
 export const route: Route = {
-    path: '/:channel',
+    path: '/column/:channel',
     categories: ['new-media'],
-    example: '/guokr/calendar',
+    example: '/guokr/column/calendar',
     parameters: { channel: '专栏类别' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
-            source: ['guokr.com/'],
+            source: ['guokr.com/:channel'],
         },
     ],
     name: '果壳网专栏',
@@ -48,29 +32,28 @@ export const route: Route = {
 async function handler(ctx) {
     const channel = channelMap[ctx.req.param('channel')] ?? ctx.req.param('channel');
 
-    const response = await got(`https://www.guokr.com/apis/minisite/article.json?retrieve_type=by_wx&channel_key=${channel}&offset=0&limit=10`);
-    const items = response.data.result;
+    const { data: response } = await got(`https://www.guokr.com/apis/minisite/article.json`, {
+        searchParams: {
+            retrieve_type: 'by_wx',
+            channel_key: channel,
+            offset: 0,
+            limit: 10,
+        },
+    });
+    const result = parseList(response.result);
 
-    if (items.length === 0) {
-        throw new Error('Unknown channel');
+    if (result.length === 0) {
+        throw new InvalidParameterError('Unknown channel');
     }
 
-    const channel_name = items[0].channels[0].name;
-    const channel_url = items[0].channels[0].url;
+    const channelName = result[0].channels[0].name;
+    const channelUrl = result[0].channels[0].url;
 
-    const result = await Promise.all(
-        items.map(async (item) => ({
-            title: item.title,
-            description: await loadFullPage(item.id), // Mercury 无法正确解析全文，故这里手动加载
-            pubDate: item.date_published,
-            link: item.url,
-            author: item.author.nickname,
-        }))
-    );
+    const items = await Promise.all(result.map((item) => parseItem(item)));
 
     return {
-        title: `果壳网 ${channel_name}`,
-        link: channel_url,
-        item: result,
+        title: `果壳网 ${channelName}`,
+        link: channelUrl,
+        item: items,
     };
 }

@@ -1,5 +1,6 @@
 import { Route } from '@/types';
 import util from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 const baseUrl = 'https://lib.nua.edu.cn';
 
 export const route: Route = {
@@ -49,7 +50,7 @@ async function handler(ctx) {
             webPageName = '.wp_column.column-4.selected';
             break;
         default:
-            throw new Error(`暂不支持对${type}的订阅`);
+            throw new InvalidParameterError(`暂不支持对${type}的订阅`);
     }
 
     const newsUrl = `${baseUrl}/${type}/list.htm`;

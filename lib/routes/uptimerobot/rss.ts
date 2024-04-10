@@ -4,9 +4,10 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import Parser from 'rss-parser';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import dayjs from 'dayjs';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const titleRegex = /(.+)\s+is\s+([A-Z]+)\s+\((.+)\)/;
 
@@ -101,12 +102,12 @@ async function handler(ctx) {
     const items = rss.items.reverse().map((item) => {
         const titleMatch = item.title.match(titleRegex);
         if (!titleMatch) {
-            throw new Error('Unexpected title, please open an issue.');
+            throw new InvalidParameterError('Unexpected title, please open an issue.');
         }
         const [monitorName, status, id] = titleMatch.slice(1);
 
         if (id !== item.link) {
-            throw new Error('Monitor ID mismatch, please open an issue.');
+            throw new InvalidParameterError('Monitor ID mismatch, please open an issue.');
         }
 
         // id could be a URL, a domain, an IP address, or a hex string. fix it
@@ -125,7 +126,7 @@ async function handler(ctx) {
         } else if (status === 'DOWN') {
             monitor.down(duration);
         } else {
-            throw new Error('Unexpected status, please open an issue.');
+            throw new InvalidParameterError('Unexpected status, please open an issue.');
         }
 
         const desc = art(path.join(__dirname, 'templates/rss.art'), {

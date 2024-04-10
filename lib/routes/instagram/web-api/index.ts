@@ -4,6 +4,8 @@ import { CookieJar } from 'tough-cookie';
 import { config } from '@/config';
 import { renderItems } from '../common-utils';
 import { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeedItems, getLoggedOutTagsFeedItems, renderGuestItems } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/2/:category/:key',
@@ -33,13 +35,13 @@ You may need to setup cookie for a less restrictive rate limit and private profi
 
 async function handler(ctx) {
     // if (!config.instagram || !config.instagram.cookie) {
-    //     throw Error('Instagram RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+    //     throw Error('Instagram RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     // }
     const availableCategories = ['user', 'tags'];
     const { category, key } = ctx.req.param();
     const { cookie } = config.instagram;
     if (!availableCategories.includes(category)) {
-        throw new Error('Such feed is not supported.');
+        throw new InvalidParameterError('Such feed is not supported.');
     }
 
     let cookieJar = await cache.get('instagram:cookieJar');
@@ -58,7 +60,7 @@ async function handler(ctx) {
     }
 
     if (!wwwClaimV2 && cookie && !(await checkLogin(cookieJar, cache))) {
-        throw new Error('Invalid cookie');
+        throw new ConfigNotFoundError('Invalid cookie');
     }
 
     let feedTitle, feedLink, feedDescription, feedLogo;

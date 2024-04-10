@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 const renderDesc = (content) => art(path.join(__dirname, 'templates/description.art'), content);
 
 export const route: Route = {

@@ -2,9 +2,10 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const getCategories = (tryGet) =>
     tryGet('4gamers:categories', async () => {
@@ -48,7 +49,7 @@ const parseItem = async (item) => {
                     case 'ImageGroupSection':
                         return renderImages(section.items);
                     default:
-                        throw new Error(`Unhandled section type: ${section['@type']} on ${item.link}`);
+                        throw new InvalidParameterError(`Unhandled section type: ${section['@type']} on ${item.link}`);
                 }
             })
             .join('')
