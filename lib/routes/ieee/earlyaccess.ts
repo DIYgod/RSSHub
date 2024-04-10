@@ -93,14 +93,14 @@ async function handler(ctx) {
         list.map((item: any) =>
             cache.tryGet(item.link, async () => {
                 if (item.abstract !== '') {
-                    const response3 = await ofetch(`${host}${item.link}`, {
+                    const res = await ofetch(`${host}${item.link}`, {
                         parseResponse: (txt) => txt,
                     });
-                    const $3 = load(response3);
-                    const metadataMatch = $3.html().match(/metadata=(.*);/);
+                    const $ = load(res);
+                    const metadataMatch = $.html().match(/metadata=(.*);/);
                     const metadata = metadataMatch ? JSON.parse(metadataMatch[1]) : null;
-                    const $4 = load(metadata?.abstract || '');
-                    item.abstract = $4.text();
+                    const $2 = load(metadata?.abstract || '');
+                    item.abstract = $2.text();
                     item.description = renderDesc(item);
                 }
                 return item;

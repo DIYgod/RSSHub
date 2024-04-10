@@ -8,14 +8,11 @@ import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
 
-import { CookieJar } from 'tough-cookie';
-const cookieJar = new CookieJar();
-
 export const route: Route = {
-    path: '/journal/:journal/:sortType?',
+    path: '/author/:aid/:sortType/:count?',
     categories: ['journal'],
-    example: '/ieee/journal/8782710',
-    parameters: { journal: 'Issue code, the number of the `isnumber` in the link', sortType: 'Sort Type, default: `vol-only-seq`, the part of the link after `sortType`' },
+    example: '/ieee/author/8782710',
+    parameters: { aid: 'Author ID', sortType: 'Sort Type of papers', count: 'Number of papers to show' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -24,7 +21,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    name: 'Current Issue',
+    name: 'Author',
     maintainers: ['Derekmini'],
     handler,
 };
@@ -35,38 +32,20 @@ const renderDesc = (item) =>
     });
 
 async function handler(ctx) {
-    const punumber = ctx.req.param('journal');
-    const sortType = ctx.req.param('sortType') ?? 'vol-only-seq';
+    const { aid, sortType, count = 10 } = ctx.req.param();
     const host = 'https://ieeexplore.ieee.org';
-    const link = `${host}/xpl/mostRecentIssue.jsp?punumber=${punumber}`;
 
-    const { title, isnumber, volume } = await ofetch(`${host}/rest/publication/home/metadata?pubid=${punumber}`, {
-        parseResponse: JSON.parse,
-        headers: {
-            cookie: cookieJar.getCookieStringSync(host),
-        },
-    }).then((res) => {
-        const volume = res.currentIssue.volume;
-        const isnumber = res.currentIssue.issueNumber;
-        const title = res.displayTitle;
-        return {
-            title,
-            isnumber,
-            volume,
-        };
-    });
+    const author = await ofetch(`${host}/rest/author/${aid}`).then((res) => res[0]);
+    const title = `${author.preferredName} on IEEE Xplore`;
+    const link = `${host}/author/${aid}`;
+    const description = author.bioParagraphs.join('<br/>');
 
-    const response = await ofetch(`${host}/rest/search/pub/${punumber}/issue/${isnumber}/toc`, {
+    const response = await ofetch(`${host}/rest/search`, {
         method: 'POST',
-        parseResponse: JSON.parse,
-        headers: {
-            cookie: cookieJar.getCookieStringSync(host),
-        },
         body: {
-            punumber,
-            isnumber,
+            rowsPerPage: count,
+            searchWithin: [`"Author Ids": ${aid}`],
             sortType,
-            rowsPerPage: '100',
         },
     });
     let list = response.records.map((item) => {
@@ -79,13 +58,18 @@ async function handler(ctx) {
             authors = item.authors.map((itemAuth) => itemAuth.preferredName).join('; ');
         }
         const abstract = Object.hasOwn(item, 'abstract') ? item.abstract : '';
+        // const pubDate = item.publicationDate;
+        // const category = item.articleContentType;
+        // const description = item.abstract;
         return {
             title,
             link,
             authors,
             doi,
-            volume,
             abstract,
+            // pubDate,
+            // category,
+            // description,
         };
     });
 
@@ -111,6 +95,7 @@ async function handler(ctx) {
     return {
         title,
         link,
+        description,
         item: list,
     };
 }
