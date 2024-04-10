@@ -25,7 +25,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Early Access Journal',
-    maintainers: ['5upernova-heng'],
+    maintainers: ['5upernova-heng', 'Derekmini'],
     handler,
 };
 
