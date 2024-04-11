@@ -170,7 +170,7 @@ async function handler(ctx) {
 
     out.reverse();
     return {
-        title: $('.tgme_channel_info_header_title').text(),
+        title: mpName || $('.tgme_channel_info_header_title').text(),
         link: `https://t.me/s/${id}`,
         item: out.filter(Boolean),
         allowEmpty: !!mpName,
