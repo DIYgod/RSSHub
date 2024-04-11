@@ -157,14 +157,14 @@ async function handler(ctx) {
         };
     });
 
+    ctx.set('json', {
+        houses,
+    });
+
     return {
         title: '591 租屋 - 自訂查詢',
         link: queryUrl,
         description: `591 租屋 - 自訂查詢, query: ${query}`,
         item: items,
     };
-
-    ctx.set('json', {
-        houses,
-    });
 }

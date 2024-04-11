@@ -95,18 +95,17 @@ async function allIssues(ctx, user, repo, limit, headers) {
     //     used: Number.parseInt(response.headers['x-ratelimit-used']),
     // };
 
-    ctx.set('json', {
-        title: `${user}/${repo}: Issue & Pull request comments`,
-        link: `${rootUrl}/${user}/${repo}`,
-        item: items,
-        // rateLimit,
-    });
-
-    return {
+    const ret = {
         title: `${user}/${repo}: Issue & Pull request comments`,
         link: `${rootUrl}/${user}/${repo}`,
         item: items,
     };
+
+    ctx.set('json', {
+        ...ret,
+        // rateLimit,
+    });
+    return ret;
 }
 
 async function singleIssue(ctx, user, repo, number, limit, headers) {
@@ -187,10 +186,14 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
         }
     }
 
-    ctx.set('json', {
+    const ret = {
         title: `${user}/${repo}: ${typeDict[type].title} #${number} - ${issue.title}`,
         link: issue.html_url,
         item: items,
+    };
+
+    ctx.set('json', {
+        ...ret,
         // rateLimit: {
         //     limit: Number.parseInt(response.headers['x-ratelimit-limit']),
         //     remaining: Number.parseInt(response.headers['x-ratelimit-remaining']),
@@ -199,10 +202,5 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
         //     used: Number.parseInt(response.headers['x-ratelimit-used']),
         // },
     });
-
-    return {
-        title: `${user}/${repo}: ${typeDict[type].title} #${number} - ${issue.title}`,
-        link: issue.html_url,
-        item: items,
-    };
+    return ret;
 }

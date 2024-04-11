@@ -154,17 +154,13 @@ async function handler(ctx) {
 
     const items = is_intl ? await fetchIntlItems(ctx.params) : await fetchMainlandItems(ctx.params);
 
-    return {
+    const ret = {
         title: `TapTap 评价 ${app_name} - ${(is_intl ? intlSortMap : sortMap)[order][lang]}排序`,
         link: `${getRootUrl(is_intl)}/app/${id}/review?${makeSortParam(is_intl, order)}`,
         image: app_img,
         item: items,
     };
 
-    ctx.set('json', {
-        title: `TapTap 评价 ${app_name} - ${(is_intl ? intlSortMap : sortMap)[order][lang]}排序`,
-        link: `${getRootUrl(is_intl)}/app/${id}/review?${makeSortParam(is_intl, order)}`,
-        image: app_img,
-        item: items,
-    });
+    ctx.set('json', ret);
+    return ret;
 }

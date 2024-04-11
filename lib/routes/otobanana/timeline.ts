@@ -34,6 +34,11 @@ async function handler(ctx) {
 
     const posts = postData.results.map((item) => renderPost(item));
 
+    ctx.set('json', {
+        userInfo,
+        postData,
+    });
+
     return {
         title: `${userInfo.name} (@${userInfo.username}) - タイムライン | OTOBANANA`,
         description: userInfo.bio.replaceAll('\n', ' '),
@@ -46,9 +51,4 @@ async function handler(ctx) {
         itunes_author: userInfo.name,
         item: posts,
     };
-
-    ctx.set('json', {
-        userInfo,
-        postData,
-    });
 }

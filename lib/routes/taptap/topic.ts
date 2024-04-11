@@ -99,7 +99,7 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    const ret = {
         title: `${app_name} - ${typeMap[type][lang]} - TapTap 论坛`,
         link: `${getRootUrl(false)}/app/${appId}/topic?type=${type}&sort=${sort}`,
         image: app_img,
@@ -107,12 +107,10 @@ async function handler(ctx) {
     };
 
     ctx.set('json', {
-        title: `${app_name} - ${typeMap[type][lang]} - TapTap 论坛`,
-        link: `${getRootUrl(false)}/app/${appId}/topic?type=${type}&sort=${sort}`,
-        image: app_img,
-        item: out.filter((item) => item !== ''),
+        ...ret,
         appId,
         groupId,
         topics_list,
     });
+    return ret;
 }
