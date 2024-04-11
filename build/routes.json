@@ -14013,17 +14013,17 @@
         "parameters": {
           "type": "分類，預設為所有新聞"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "name": "新聞中心",
         "maintainers": [
           "TonyRL"
+        ],
+        "radar": [
+          {
+            "source": [
+              "dcfever.com/news/index.php"
+            ],
+            "target": "/news"
+          }
         ],
         "description": "| 所有新聞 | 攝影器材 | 手機通訊 | 汽車熱話 | 攝影文化    | 影片攝錄    | 測試報告 | 生活科技 | 攝影技巧  |\n  | -------- | -------- | -------- | -------- | ----------- | ----------- | -------- | -------- | --------- |\n  |          | camera   | mobile   | auto     | photography | videography | reviews  | gadget   | technique |",
         "location": "news.ts"
@@ -14036,14 +14036,6 @@
         "example": "/dcfever/reviews/cameras",
         "parameters": {
           "type": "分類，預設為 `cameras`"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
         },
         "radar": [
           {
@@ -14070,14 +14062,6 @@
           "keyword": "關鍵字",
           "mainCat": "主要分類 ID，見上表"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "name": "二手市集 - 物品搜尋",
         "maintainers": [
           "TonyRL"
@@ -14092,14 +14076,6 @@
         "example": "/dcfever/trading/1",
         "parameters": {
           "id": "分類 ID，見下表"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
         },
         "name": "二手市集",
         "maintainers": [

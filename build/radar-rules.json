@@ -3386,6 +3386,14 @@
     "_name": "DCFever",
     ".": [
       {
+        "title": "新聞中心",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news/index.php"
+        ],
+        "target": "/dcfever/news"
+      },
+      {
         "title": "測試報告",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
