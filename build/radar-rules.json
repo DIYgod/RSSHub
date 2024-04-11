@@ -4236,6 +4236,20 @@
       }
     ]
   },
+  "esquirehk.com": {
+    "_name": "Esquire Hong Kong",
+    "www": [
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag/:id",
+          "/:id"
+        ],
+        "target": "/esquirehk/tag/:id?"
+      }
+    ]
+  },
   "blogspot.com": {
     "_name": "歐洲動態（國際）",
     "europechinese": [

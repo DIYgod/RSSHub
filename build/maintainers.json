@@ -1782,6 +1782,9 @@
   "/eprice/:region?": [
     "TonyRL"
   ],
+  "/esquirehk/tag/:id?": [
+    "nczitzk"
+  ],
   "/europechinese/latest": [
     "emdoe"
   ],

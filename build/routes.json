@@ -17738,6 +17738,35 @@
     "name": "ePrice",
     "url": "eprice.com.tw"
   },
+  "esquirehk": {
+    "routes": {
+      "/tag/:id?": {
+        "path": "/tag/:id?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/esquirehk/tag/Fashion",
+        "parameters": {
+          "id": "标签，可在对应标签页 URL 中找到"
+        },
+        "name": "Tag",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.esquirehk.com/tag/:id",
+              "www.esquirehk.com/:id"
+            ]
+          }
+        ],
+        "location": "tag.ts"
+      }
+    },
+    "name": "Esquire Hong Kong",
+    "url": "www.esquirehk.com"
+  },
   "europechinese": {
     "routes": {
       "/latest": {
