@@ -64127,12 +64127,12 @@
   },
   "zhubai": {
     "routes": {
-      "/:id": {
-        "path": "/:id",
+      "/posts/:id": {
+        "path": "/posts/:id",
         "categories": [
           "blog"
         ],
-        "example": "/zhubai/via",
+        "example": "/zhubai/posts/via",
         "parameters": {
           "id": "`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`"
         },
