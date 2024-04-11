@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import got from '@/utils/got';
 import { config } from '@/config';
+import { Cookie, CookieJar } from 'tough-cookie';
 
 describe('got', () => {
     it('headers', async () => {
@@ -55,5 +56,21 @@ describe('got', () => {
         });
         expect(response.body instanceof Buffer).toBe(true);
         expect(response.data instanceof Buffer).toBe(true);
+    });
+
+    it('cookieJar', async () => {
+        const cookieJar = new CookieJar();
+        const cookie = Cookie.fromJSON({
+            key: 'cookie',
+            value: 'test',
+            domain: 'rsshub.test',
+            path: '/',
+        });
+        cookie && cookieJar.setCookie(cookie, 'http://rsshub.test');
+        const { data } = await got.get('http://rsshub.test/headers', {
+            cookieJar,
+        });
+
+        expect(data.cookie).toBe('cookie=test; Domain=rsshub.test; Path=/');
     });
 });

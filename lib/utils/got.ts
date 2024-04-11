@@ -61,6 +61,7 @@ const getFakeGot = (defaultOptions?: any) => {
                 }
                 options.headers.Cookie = cookies.join('; ');
             }
+            delete options.cookieJar;
         }
 
         const response = ofetch(request, options);
