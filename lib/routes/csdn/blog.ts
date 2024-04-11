@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['blog.csdn.net/:user'],
-    },
+    radar: [
+        {
+            source: ['blog.csdn.net/:user'],
+        },
+    ],
     name: 'User Feed',
     maintainers: [],
     handler,

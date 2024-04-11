@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getProviderList } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/news/providers/:region',
@@ -23,7 +24,7 @@ export const route: Route = {
 async function handler(ctx) {
     const region = ctx.req.param('region');
     if (!['hk', 'tw'].includes(region)) {
-        throw new Error(`Unknown region: ${region}`);
+        throw new InvalidParameterError(`Unknown region: ${region}`);
     }
 
     const providerList = await getProviderList(region, cache.tryGet);

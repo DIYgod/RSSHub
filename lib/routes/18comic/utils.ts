@@ -6,8 +6,9 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const defaultDomain = 'jmcomic1.me';
 // list of address: https://jmcomic2.bet
@@ -15,7 +16,7 @@ const allowDomain = new Set(['18comic.vip', '18comic.org', 'jmcomic.me', 'jmcomi
 
 const getRootUrl = (domain) => {
     if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(domain)) {
-        throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
     return `https://${domain}`;
@@ -49,6 +50,7 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
                 const content = load(detailResponse.data);
 
                 item.pubDate = parseDate(content('div[itemprop="datePublished"]').first().attr('content'));
+                item.updated = parseDate(content('div[itemprop="datePublished"]').last().attr('content'));
                 item.category = content('span[data-type="tags"]')
                     .first()
                     .find('a')
@@ -65,6 +67,8 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
                     images: content('.img_zoom_img img')
                         .toArray()
                         .map((image) => content(image).attr('data-original')),
+                    cover: content('.thumb-overlay img').first().attr('src'),
+                    category: item.category,
                 });
 
                 return item;

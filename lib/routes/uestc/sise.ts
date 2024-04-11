@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
 import puppeteer from '@/utils/puppeteer';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const baseUrl = 'https://sise.uestc.edu.cn/';
 
@@ -43,10 +44,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sise.uestc.edu.cn/'],
-        target: '/sise',
-    },
+    radar: [
+        {
+            source: ['sise.uestc.edu.cn/'],
+            target: '/sise',
+        },
+    ],
     name: '信息与软件工程学院',
     maintainers: ['Yadomin', 'mobyw'],
     handler,
@@ -60,7 +63,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') || 1;
     const divId = mapId[type];
     if (!divId) {
-        throw new Error('type not supported');
+        throw new InvalidParameterError('type not supported');
     }
 
     const browser = await puppeteer({ stealth: true });

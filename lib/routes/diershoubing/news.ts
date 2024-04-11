@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 const renderDesc = (data) => art(path.join(__dirname, 'templates/news.art'), data);
 
 export const route: Route = {
@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['diershoubing.com/'],
-    },
+    radar: [
+        {
+            source: ['diershoubing.com/'],
+        },
+    ],
     name: '新闻',
     maintainers: ['wushijishan'],
     handler,

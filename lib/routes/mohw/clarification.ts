@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mohw.gov.tw/'],
-    },
+    radar: [
+        {
+            source: ['mohw.gov.tw/'],
+        },
+    ],
     name: '即時新聞澄清',
     maintainers: ['nczitzk'],
     handler,

@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['scs.nuist.edu.cn/:category/list.htm'],
-        target: '/scs/:category',
-    },
+    radar: [
+        {
+            source: ['scs.nuist.edu.cn/:category/list.htm'],
+            target: '/scs/:category',
+        },
+    ],
     name: 'NUIST CS（南信大计软院）',
     maintainers: ['gylidian'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['lib.njxzc.edu.cn/pxyhd/list.htm', 'lib.njxzc.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['lib.njxzc.edu.cn/pxyhd/list.htm', 'lib.njxzc.edu.cn/'],
+        },
+    ],
     name: '图书馆通知公告',
     maintainers: ['real-jiakai'],
     handler,

@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 // import weiboUtils from '../utils';
 
 // Default hide all picture
@@ -27,9 +27,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['s.weibo.com/top/summary'],
-    },
+    radar: [
+        {
+            source: ['s.weibo.com/top/summary'],
+        },
+    ],
     name: '热搜榜',
     maintainers: ['xyqfer', 'shinemoon'],
     handler,

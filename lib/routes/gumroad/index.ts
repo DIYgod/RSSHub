@@ -5,8 +5,9 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:username/:products',
@@ -31,7 +32,7 @@ async function handler(ctx) {
     const username = ctx.req.param('username');
     const products = ctx.req.param('products');
     if (!isValidHost(username)) {
-        throw new Error('Invalid username');
+        throw new InvalidParameterError('Invalid username');
     }
     const url = `https://${username}.gumroad.com/l/${products}`;
 

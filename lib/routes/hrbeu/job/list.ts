@@ -30,8 +30,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Unknown',
+    name: '就业服务平台',
     maintainers: ['Derekmini'],
+    description: `| 通知公告 | 热点新闻 |
+    | :------: | :------: |
+    |   tzgg   |   rdxw   |`,
     handler,
 };
 

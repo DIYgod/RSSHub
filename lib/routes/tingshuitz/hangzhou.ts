@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.hzwgc.com/public/stop_the_water', 'www.hzwgc.com/'],
-    },
+    radar: [
+        {
+            source: ['www.hzwgc.com/public/stop_the_water', 'www.hzwgc.com/'],
+        },
+    ],
     name: '杭州市',
     maintainers: ['znhocn'],
     handler,

@@ -25,9 +25,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.eventernote.com/actors/:name/:id/events'],
-    },
+    radar: [
+        {
+            source: ['www.eventernote.com/actors/:name/:id/events'],
+        },
+    ],
     name: '声优活动及演唱会',
     maintainers: ['KTachibanaM'],
     handler,

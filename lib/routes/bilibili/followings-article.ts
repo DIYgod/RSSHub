@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/followings/article/:uid',
@@ -39,7 +40,7 @@ async function handler(ctx) {
 
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
-        throw new Error('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
+        throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
     }
 
     const response = await got({
@@ -51,7 +52,7 @@ async function handler(ctx) {
         },
     });
     if (response.data.code === -6) {
-        throw new Error('对应 uid 的 Bilibili 用户的 Cookie 已过期');
+        throw new ConfigNotFoundError('对应 uid 的 Bilibili 用户的 Cookie 已过期');
     }
     const cards = response.data.data.cards;
 

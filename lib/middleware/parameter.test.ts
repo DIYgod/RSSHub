@@ -1,8 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
-import app from '@/app';
 import Parser from 'rss-parser';
-import { config } from '@/config';
-import nock from 'nock';
+
+process.env.OPENAI_API_KEY = 'sk-1234567890';
+process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
+
+vi.mock('@/utils/request-rewriter', () => ({ default: null }));
+const { config } = await import('@/config');
+const { default: app } = await import('@/app');
 
 const parser = new Parser();
 
@@ -320,7 +324,7 @@ describe('wrong_path', () => {
         const response = await app.request('/wrong');
         expect(response.status).toBe(404);
         expect(response.headers.get('cache-control')).toBe(`public, max-age=${config.cache.routeExpire}`);
-        expect(await response.text()).toMatch('wrong path');
+        expect(await response.text()).toMatch('The route does not exist or has been deleted.');
     });
 });
 
@@ -424,26 +428,6 @@ describe('multi parameter', () => {
 
 describe('openai', () => {
     it(`chatgpt`, async () => {
-        vi.resetModules();
-
-        process.env.OPENAI_API_KEY = 'sk-1234567890';
-        const app = (await import('@/app')).default;
-        const { config } = await import('@/config');
-        nock(config.openai.endpoint)
-            .post('/chat/completions')
-            .reply(() => [
-                200,
-                {
-                    choices: [
-                        {
-                            message: {
-                                content: 'Summary of the article.',
-                            },
-                        },
-                    ],
-                },
-            ]);
-
         const responseWithGpt = await app.request('/test/gpt?chatgpt=true');
         const responseNormal = await app.request('/test/gpt');
 

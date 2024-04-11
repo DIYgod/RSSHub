@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/search/:q/:order?',
@@ -27,10 +27,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['pixabay.com/:searchType/search/:q'],
-        target: '/search/:q',
-    },
+    radar: [
+        {
+            source: ['pixabay.com/:searchType/search/:q'],
+            target: '/search/:q',
+        },
+    ],
     name: 'Search',
     maintainers: ['TonyRL'],
     handler,

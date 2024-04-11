@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const titles = {
     '01': '关于我们',
@@ -36,9 +36,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cahkms.org/'],
-    },
+    radar: [
+        {
+            source: ['cahkms.org/'],
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,

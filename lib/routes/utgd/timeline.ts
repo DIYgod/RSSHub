@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({
     html: true,
@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['utgd.net/'],
-    },
+    radar: [
+        {
+            source: ['utgd.net/'],
+        },
+    ],
     name: '时间线',
     maintainers: ['nczitzk'],
     handler,

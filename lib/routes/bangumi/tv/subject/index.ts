@@ -3,6 +3,7 @@ import getComments from './comments';
 import getFromAPI from './offcial-subject-api';
 import getEps from './ep';
 import { queryToBoolean } from '@/utils/readable-social';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/tv/subject/:id/:type?/:showOriginalName?',
@@ -17,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bgm.tv/subject/:id'],
-        target: '/tv/subject/:id',
-    },
+    radar: [
+        {
+            source: ['bgm.tv/subject/:id'],
+            target: '/tv/subject/:id',
+        },
+    ],
     name: '条目的通用路由格式',
     maintainers: ['JimenezLi'],
     handler,
@@ -48,7 +51,7 @@ async function handler(ctx) {
             response = await getFromAPI('topic')(id, showOriginalName);
             break;
         default:
-            throw new Error(`暂不支持对${type}的订阅`);
+            throw new InvalidParameterError(`暂不支持对${type}的订阅`);
     }
     return response;
 }

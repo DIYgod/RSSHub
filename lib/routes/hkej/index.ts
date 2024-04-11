@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { CookieJar } from 'tough-cookie';
 
 const cookieJar = new CookieJar();
@@ -71,9 +71,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hkej.com/'],
-    },
+    radar: [
+        {
+            source: ['hkej.com/'],
+        },
+    ],
     name: '即时新闻',
     maintainers: ['TonyRL'],
     handler,

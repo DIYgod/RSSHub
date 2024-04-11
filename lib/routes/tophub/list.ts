@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 
 export const route: Route = {
@@ -27,9 +27,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tophub.today/n/:id'],
-    },
+    radar: [
+        {
+            source: ['tophub.today/n/:id'],
+        },
+    ],
     name: '榜单列表',
     maintainers: ['akynazh'],
     handler,

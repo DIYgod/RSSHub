@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/all/:id?',
@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['m.hupu.com/:category', 'm.hupu.com/'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['m.hupu.com/:category', 'm.hupu.com/'],
+            target: '/:category',
+        },
+    ],
     name: '热帖',
     maintainers: ['nczitzk'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['storm.mg/:category/:id'],
-    },
+    radar: [
+        {
+            source: ['storm.mg/:category/:id'],
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,

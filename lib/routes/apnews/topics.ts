@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['apnews.com/hub/:topic'],
-        target: '/topics/:topic',
-    },
+    radar: [
+        {
+            source: ['apnews.com/hub/:topic'],
+            target: '/topics/:topic',
+        },
+    ],
     name: 'Topics',
     maintainers: ['zoenglinghou', 'mjysci', 'TonyRL'],
     handler,
@@ -34,7 +36,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const items = await Promise.all(
-        $('.PagePromo-content bsp-custom-headline')
+        $(':is(.PagePromo-content, .PageListStandardE-leadPromo-info) bsp-custom-headline')
             .get()
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : Infinity)
             .map((e) => ({

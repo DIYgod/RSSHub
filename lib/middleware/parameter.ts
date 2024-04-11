@@ -1,7 +1,7 @@
 import * as entities from 'entities';
 import { load, type CheerioAPI, type Element } from 'cheerio';
 import { simplecc } from 'simplecc-wasm';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import { RE2JS } from 're2js';
 import markdownit from 'markdown-it';
@@ -34,8 +34,9 @@ const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl
 
 const summarizeArticle = async (articleText: string) => {
     const apiUrl = `${config.openai.endpoint}/chat/completions`;
-    const response = await got.post(apiUrl, {
-        json: {
+    const response = await ofetch(apiUrl, {
+        method: 'POST',
+        body: {
             model: config.openai.model,
             max_tokens: config.openai.maxTokens,
             messages: [
@@ -49,8 +50,7 @@ const summarizeArticle = async (articleText: string) => {
         },
     });
 
-    // @ts-expect-error custom field
-    return response.data.choices[0].message.content;
+    return response.choices[0].message.content;
 };
 
 const getAuthorString = (item) => {
@@ -305,8 +305,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     if (link) {
                         // if parser failed, return default description and not report error
                         try {
-                            // @ts-expect-error custom field
-                            const { data: res } = await got(link);
+                            const res = await ofetch(link);
                             const $ = load(res);
                             const result = await Parser.parse(link, {
                                 html: $.html(),
@@ -380,7 +379,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     }
                 }
             } else {
-                throw new Error(`Invalid parameter brief. Please check the doc https://docs.rsshub.app/parameter#shu-chu-jian-xun`);
+                throw new Error(`Invalid parameter brief. Please check the doc https://docs.rsshub.app/guide/parameters#shu-chu-jian-xun`);
             }
         }
         // some parameters are processed in `anti-hotlink.js`

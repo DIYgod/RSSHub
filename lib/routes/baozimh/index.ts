@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const rootUrl = 'https://www.baozimh.com';
 
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.baozimh.com/comic/:name'],
-    },
+    radar: [
+        {
+            source: ['www.baozimh.com/comic/:name'],
+        },
+    ],
     name: '订阅漫画',
     maintainers: ['Fatpandac'],
     handler,

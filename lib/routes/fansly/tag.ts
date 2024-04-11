@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fansly.com/explore/tag/:tag'],
-    },
+    radar: [
+        {
+            source: ['fansly.com/explore/tag/:tag'],
+        },
+    ],
     name: 'Hashtag',
     maintainers: ['TonyRL'],
     handler,

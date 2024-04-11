@@ -1,5 +1,6 @@
 import { Route } from '@/types';
 import util from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/dc/:type',
@@ -14,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dc.nua.edu.cn/:type/list.htm'],
-    },
+    radar: [
+        {
+            source: ['dc.nua.edu.cn/:type/list.htm'],
+        },
+    ],
     name: 'School of Design',
     maintainers: ['evnydd0sf'],
     handler,
@@ -78,7 +81,7 @@ async function handler(ctx) {
             webPageName = 'ul.screen_4 .big_title';
             break;
         default:
-            throw new Error(`暂不支持对${type}的订阅`);
+            throw new InvalidParameterError(`暂不支持对${type}的订阅`);
     }
 
     const items = await util.ProcessList(baseUrl, baseUrl, listName, listDate, webPageName);

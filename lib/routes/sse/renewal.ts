@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import 'dayjs/locale/zh-cn';
@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['kcb.sse.com.cn/home', 'kcb.sse.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['kcb.sse.com.cn/home', 'kcb.sse.com.cn/'],
+        },
+    ],
     name: '科创板项目动态',
     maintainers: ['Jeason0228'],
     handler,

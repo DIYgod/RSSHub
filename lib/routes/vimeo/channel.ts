@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/channel/:channel',
@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['vimeo.com/channels/:channel', 'vimeo.com/channels/:channel/videos', 'vimeo.com/channels/:channel/videos/:sort/:format'],
-    },
+    radar: [
+        {
+            source: ['vimeo.com/channels/:channel', 'vimeo.com/channels/:channel/videos', 'vimeo.com/channels/:channel/videos/:sort/:format'],
+        },
+    ],
     name: 'Channel',
     maintainers: ['MisteryMonster'],
     handler,

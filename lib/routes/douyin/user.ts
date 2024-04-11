@@ -5,6 +5,7 @@ import { art } from '@/utils/render';
 import { config } from '@/config';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import { templates, resolveUrl, proxyVideo, getOriginAvatar, universalGet } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/user/:uid/:routeParams?',
@@ -19,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['douyin.com/user/:uid'],
-        target: '/user/:uid',
-    },
+    radar: [
+        {
+            source: ['douyin.com/user/:uid'],
+            target: '/user/:uid',
+        },
+    ],
     name: '博主',
     maintainers: ['Max-Tortoise', 'Rongronggg9'],
     handler,
@@ -31,7 +34,7 @@ export const route: Route = {
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
     if (!uid.startsWith('MS4wLjABAAAA')) {
-        throw new Error('Invalid UID. UID should start with <b>MS4wLjABAAAA</b>.');
+        throw new InvalidParameterError('Invalid UID. UID should start with <b>MS4wLjABAAAA</b>.');
     }
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const embed = fallback(undefined, queryToBoolean(routeParams.embed), false); // embed video

@@ -4,11 +4,14 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['lala.im/'],
-        target: '',
-    },
-    name: 'Unknown',
+    categories: ['blog'],
+    example: '/lala',
+    radar: [
+        {
+            source: ['lala.im/'],
+        },
+    ],
+    name: '最新发布',
     maintainers: ['cnkmmk'],
     handler,
     url: 'lala.im/',

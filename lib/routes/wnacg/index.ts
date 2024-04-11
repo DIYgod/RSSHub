@@ -7,7 +7,8 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const categories = {
     1: '同人誌 漢化',
@@ -32,10 +33,12 @@ const baseUrl = 'https://www.wnacg.com';
 
 export const route: Route = {
     path: ['/', '/category/:cid', '/tag/:tag'],
-    radar: {
-        source: ['wnacg.org/albums.html', 'wnacg.org/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['wnacg.org/albums.html', 'wnacg.org/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['KenMizz'],
     handler,
@@ -47,7 +50,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { cid, tag } = ctx.req.param();
     if (cid && !Object.keys(categories).includes(cid)) {
-        throw new Error('此分类不存在');
+        throw new InvalidParameterError('此分类不存在');
     }
 
     const url = `${baseUrl}/albums${cid ? `-index-cate-${cid}` : ''}${tag ? `-index-tag-${tag}` : ''}.html`;

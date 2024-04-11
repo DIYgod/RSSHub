@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const categories = {
     news: 0,
@@ -22,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['finviz.com/news.ashx', 'finviz.com/'],
-    },
+    radar: [
+        {
+            source: ['finviz.com/news.ashx', 'finviz.com/'],
+        },
+    ],
     name: 'News',
     maintainers: ['nczitzk'],
     handler,
@@ -39,7 +42,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 200;
 
     if (!Object.hasOwn(categories, category.toLowerCase())) {
-        throw new Error(`No category '${category}'.`);
+        throw new InvalidParameterError(`No category '${category}'.`);
     }
 
     const rootUrl = 'https://finviz.com';

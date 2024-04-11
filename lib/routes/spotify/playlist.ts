@@ -25,9 +25,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['open.spotify.com/playlist/:id'],
-    },
+    radar: [
+        {
+            source: ['open.spotify.com/playlist/:id'],
+        },
+    ],
     name: 'Playlist',
     maintainers: ['outloudvi'],
     handler,

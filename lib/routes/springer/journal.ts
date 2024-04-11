@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 
 import { CookieJar } from 'tough-cookie';
@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.springer.com/journal/:journal/*'],
-    },
+    radar: [
+        {
+            source: ['www.springer.com/journal/:journal/*'],
+        },
+    ],
     name: 'Journal',
     maintainers: ['Derekmini', 'TonyRL'],
     handler,

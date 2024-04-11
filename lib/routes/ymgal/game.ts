@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { load } from 'cheerio';
 
 const host = 'https://www.ymgal.games';
@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ymgal.games/'],
-    },
+    radar: [
+        {
+            source: ['ymgal.games/'],
+        },
+    ],
     name: '本月新作',
     maintainers: ['SunBK201'],
     handler,

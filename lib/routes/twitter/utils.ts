@@ -474,4 +474,15 @@ const parseRouteParams = (routeParams) => {
     return { count, exclude_replies, include_rts, force_web_api };
 };
 
-export default { ProcessFeed, getAppClient, parseRouteParams };
+export const excludeRetweet = function (tweets) {
+    const excluded = [];
+    for (const t of tweets) {
+        if (t.retweeted_status) {
+            continue;
+        }
+        excluded.push(t);
+    }
+    return excluded;
+};
+
+export default { ProcessFeed, getAppClient, parseRouteParams, excludeRetweet };

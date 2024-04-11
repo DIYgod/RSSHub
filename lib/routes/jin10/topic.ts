@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xnews.jin10.com/topic/:id'],
-    },
+    radar: [
+        {
+            source: ['xnews.jin10.com/topic/:id'],
+        },
+    ],
     name: '主题文章',
     maintainers: ['miles170'],
     handler,

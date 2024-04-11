@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['aeon.aeon.co/:type'],
-    },
+    radar: [
+        {
+            source: ['aeon.aeon.co/:type'],
+        },
+    ],
     name: 'Types',
     maintainers: ['emdoe'],
     handler,
@@ -43,7 +45,6 @@ async function handler(ctx) {
     const list = data.props.pageProps.articles.map((item) => ({
         title: item.title,
         link: `https://aeon.co/${binaryType}/${item.slug}`,
-        pubDate: item.createdAt,
     }));
 
     const items = await getData(ctx, list);

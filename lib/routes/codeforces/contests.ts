@@ -3,7 +3,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 
 import dayjs from 'dayjs';
@@ -34,9 +34,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.codeforces.com/contests'],
-    },
+    radar: [
+        {
+            source: ['www.codeforces.com/contests'],
+        },
+    ],
     name: 'Latest contests',
     maintainers: ['Fatpandac'],
     handler,

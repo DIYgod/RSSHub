@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -13,7 +14,7 @@ async function getUserId(slug) {
     });
 
     if (response.data.error !== 0) {
-        throw new Error('User Not Found');
+        throw new InvalidParameterError('User Not Found');
     }
 
     return response.data.data.id;
@@ -32,9 +33,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/u/:id/posts'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/u/:id/posts'],
+        },
+    ],
     name: '作者',
     maintainers: ['SunShinenny', 'hoilc'],
     handler,

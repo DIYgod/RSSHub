@@ -72,7 +72,7 @@ const webFetch = (url) =>
         try {
             return webFetchCb(await got(url));
         } catch (error) {
-            if (error.name === 'HTTPError' && error.response.statusCode === 404) {
+            if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.response.statusCode === 404) {
                 return '404';
             }
             throw error;
@@ -128,9 +128,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['phoronix.com/:category?/:topic?'],
-    },
+    radar: [
+        {
+            source: ['phoronix.com/:category?/:topic?'],
+        },
+    ],
     name: 'News & Reviews',
     maintainers: ['oppliate', 'Rongronggg9'],
     handler,

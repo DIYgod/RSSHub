@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.airchina.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.airchina.com.cn/'],
+        },
+    ],
     name: '服务公告',
     maintainers: ['LandonLi'],
     handler,

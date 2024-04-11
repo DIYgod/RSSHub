@@ -46,10 +46,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['oschina.net/news/:category'],
-        target: '/news/:category',
-    },
+    radar: [
+        {
+            source: ['oschina.net/news/:category'],
+            target: '/news/:category',
+        },
+    ],
     name: '资讯',
     maintainers: ['tgly307', 'zengxs'],
     handler,

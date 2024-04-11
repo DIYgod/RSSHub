@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 const baseUrl = 'https://www3.nhk.or.jp';
 const apiUrl = 'https://nwapi.nhk.jp';
 
@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www3.nhk.or.jp/nhkworld/:lang/news/list/', 'www3.nhk.or.jp/nhkworld/:lang/news/'],
-        target: '/news/:lang',
-    },
+    radar: [
+        {
+            source: ['www3.nhk.or.jp/nhkworld/:lang/news/list/', 'www3.nhk.or.jp/nhkworld/:lang/news/'],
+            target: '/news/:lang',
+        },
+    ],
     name: 'WORLD-JAPAN - Top Stories',
     maintainers: ['TonyRL'],
     handler,

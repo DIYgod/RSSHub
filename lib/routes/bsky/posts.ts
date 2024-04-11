@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { resolveHandle, getProfile, getAuthorFeed } from './utils';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/profile/:handle',
@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bsky.app/profile/:handle'],
-    },
+    radar: [
+        {
+            source: ['bsky.app/profile/:handle'],
+        },
+    ],
     name: 'Post',
     maintainers: ['TonyRL'],
     handler,

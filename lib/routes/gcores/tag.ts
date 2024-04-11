@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -16,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gcores.com/categories/:tag', 'gcores.com/'],
-        target: '/tag/:tag',
-    },
+    radar: [
+        {
+            source: ['gcores.com/categories/:tag', 'gcores.com/'],
+            target: '/tag/:tag',
+        },
+    ],
     name: '标签',
     maintainers: ['StevenRCE0'],
     handler,
@@ -50,7 +53,7 @@ async function handler(ctx) {
         .get();
 
     if (list.length > 0 && list.every((item) => item.url === undefined)) {
-        throw new Error('Article URL not found! Please submit an issue on GitHub.');
+        throw new InvalidParameterError('Article URL not found! Please submit an issue on GitHub.');
     }
 
     const out = await Promise.all(

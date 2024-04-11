@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/memory',
@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['houxu.app/memory', 'houxu.app/'],
-    },
+    radar: [
+        {
+            source: ['houxu.app/memory', 'houxu.app/'],
+        },
+    ],
     name: '跟踪',
     maintainers: ['nczitzk'],
     handler,

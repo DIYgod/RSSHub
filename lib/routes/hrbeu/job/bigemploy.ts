@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['job.hrbeu.edu.cn/*'],
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['job.hrbeu.edu.cn/*'],
+        },
+    ],
+    name: '大型招聘会',
     maintainers: ['Derekmini'],
     handler,
     url: 'job.hrbeu.edu.cn/*',

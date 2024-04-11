@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import asyncPool from 'tiny-async-pool';
 import { art } from '@/utils/render';
 import { parseJucheDate, fixDesc, fetchPhoto, fetchVideo } from './utils';
-import * as path from 'node:path';
+import path from 'node:path';
 import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
@@ -24,10 +24,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.kcna.kp/:lang', 'www.kcna.kp/:lang/category/articles/q/1ee9bdb7186944f765208f34ecfb5407.kcmsf', 'www.kcna.kp/:lang/category/articles.kcmsf'],
-        target: '/:lang',
-    },
+    radar: [
+        {
+            source: ['www.kcna.kp/:lang', 'www.kcna.kp/:lang/category/articles/q/1ee9bdb7186944f765208f34ecfb5407.kcmsf', 'www.kcna.kp/:lang/category/articles.kcmsf'],
+            target: '/:lang',
+        },
+    ],
     name: 'News',
     maintainers: ['Rongronggg9'],
     handler,

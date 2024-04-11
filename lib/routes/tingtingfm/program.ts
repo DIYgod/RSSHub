@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { getClientVal, sign } from './utils';
 
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['mobile.tingtingfm.com/v3/program/:programId'],
-    },
+    radar: [
+        {
+            source: ['mobile.tingtingfm.com/v3/program/:programId'],
+        },
+    ],
     name: '节目',
     maintainers: ['TonyRL'],
     handler,

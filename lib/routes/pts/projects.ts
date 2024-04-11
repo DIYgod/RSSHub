@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/projects',
@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.pts.org.tw/projects', 'news.pts.org.tw/'],
-    },
+    radar: [
+        {
+            source: ['news.pts.org.tw/projects', 'news.pts.org.tw/'],
+        },
+    ],
     name: '數位敘事',
     maintainers: ['nczitzk'],
     handler,

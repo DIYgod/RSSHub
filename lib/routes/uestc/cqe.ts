@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const baseUrl = 'https://cqe.uestc.edu.cn/';
 
@@ -28,10 +29,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cqe.uestc.edu.cn/'],
-        target: '/cqe',
-    },
+    radar: [
+        {
+            source: ['cqe.uestc.edu.cn/'],
+            target: '/cqe',
+        },
+    ],
     name: '文化素质教育中心',
     maintainers: ['truobel', 'mobyw'],
     handler,
@@ -45,7 +48,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') || 'tzgg';
     const pageUrl = mapUrl[type];
     if (!pageUrl) {
-        throw new Error('type not supported');
+        throw new InvalidParameterError('type not supported');
     }
 
     const browser = await puppeteer({ stealth: true });

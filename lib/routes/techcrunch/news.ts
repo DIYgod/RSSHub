@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['techcrunch.com/'],
-    },
+    radar: [
+        {
+            source: ['techcrunch.com/'],
+        },
+    ],
     name: 'News',
     maintainers: ['EthanWng97'],
     handler,

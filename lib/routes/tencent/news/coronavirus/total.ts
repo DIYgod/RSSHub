@@ -5,13 +5,15 @@ const __dirname = getCurrentPath(import.meta.url);
 import { getData } from './utils';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/news/coronavirus/total',
-    radar: {
-        source: ['new.qq.com/zt2020/page/feiyan.htm'],
-    },
+    radar: [
+        {
+            source: ['new.qq.com/zt2020/page/feiyan.htm'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['CaoMeiYouRen'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ieee-security.org/TC/SP-Index.html', 'ieee-security.org/'],
-    },
+    radar: [
+        {
+            source: ['ieee-security.org/TC/SP-Index.html', 'ieee-security.org/'],
+        },
+    ],
     name: 'IEEE Symposium on Security and Privacy',
     maintainers: ['ZeddYu'],
     handler,

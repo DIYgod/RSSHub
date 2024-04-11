@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/acm/contest/:category?',
@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['acm.ecnu.edu.cn/contest/', 'acm.ecnu.edu.cn/'],
-        target: '/acm/contest/',
-    },
+    radar: [
+        {
+            source: ['acm.ecnu.edu.cn/contest/', 'acm.ecnu.edu.cn/'],
+            target: '/acm/contest/',
+        },
+    ],
     name: 'ACM Online-Judge contests list',
     maintainers: ['a180285'],
     handler,

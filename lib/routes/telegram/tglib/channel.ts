@@ -1,6 +1,5 @@
-import wait from '@/utils/wait';
-import { config } from '@/config';
-import { client, decodeMedia, getFilename, getMediaLink, streamDocument, streamThumbnail } from './client';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { client, decodeMedia, getClient, getFilename, getMediaLink, streamDocument, streamThumbnail } from './client';
 import { returnBigInt as bigInt } from 'telegram/Helpers';
 import { HTMLParser } from 'telegram/extensions/html';
 
@@ -10,7 +9,7 @@ function parseRange(range, length) {
     }
     const [typ, segstr] = range.split('=');
     if (typ !== 'bytes') {
-        throw `unsupported range: ${typ}`;
+        throw new InvalidParameterError(`unsupported range: ${typ}`);
     }
     const segs = segstr.split(',').map((s) => s.trim());
     const parsedSegs = [];
@@ -111,13 +110,8 @@ async function getMedia(ctx) {
     return ctx.res.end();
 }
 
-export default async (ctx) => {
-    if (!config.telegram.session) {
-        return [];
-    }
-    if (!client.connected) {
-        await wait(1000);
-    }
+export default async function handler(ctx) {
+    const client = await getClient();
 
     const item = [];
     const chat = await client.getInputEntity(ctx.req.param('username'));
@@ -160,6 +154,6 @@ export default async (ctx) => {
         allowEmpty: ctx.req.param('id') === 'allow_empty',
         description: `@${channelInfo.username} on Telegram`,
     };
-};
+}
 
 export { getMedia };

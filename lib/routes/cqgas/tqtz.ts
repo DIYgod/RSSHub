@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cqgas.cn/'],
-    },
+    radar: [
+        {
+            source: ['cqgas.cn/'],
+        },
+    ],
     name: '停气检修通知',
     maintainers: ['Mai19930513'],
     handler,

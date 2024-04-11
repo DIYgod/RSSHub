@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/factpaper/:status?',
@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['factpaper.cn/'],
-        target: '/factpaper/:status',
-    },
+    radar: [
+        {
+            source: ['factpaper.cn/'],
+            target: '/factpaper/:status',
+        },
+    ],
     name: '明查',
     maintainers: ['nczitzk'],
     handler,

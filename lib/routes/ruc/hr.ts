@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hr.ruc.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['hr.ruc.edu.cn/'],
+        },
+    ],
     name: '人事处',
     maintainers: ['nczitzk'],
     handler,

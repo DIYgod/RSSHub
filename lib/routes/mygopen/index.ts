@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mygopen.com/search/label/:label', 'mygopen.com/'],
-    },
+    radar: [
+        {
+            source: ['mygopen.com/search/label/:label', 'mygopen.com/'],
+        },
+    ],
     name: '分類',
     maintainers: ['nczitzk'],
     handler,

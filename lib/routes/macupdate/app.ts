@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['macupdate.com/app/mac/:appId/:appSlug'],
-    },
+    radar: [
+        {
+            source: ['macupdate.com/app/mac/:appId/:appSlug'],
+        },
+    ],
     name: 'Update',
     maintainers: ['TonyRL'],
     handler,

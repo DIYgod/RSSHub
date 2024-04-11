@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const STATUS_MAP = {
     up: '上涨',
@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gushitong.baidu.com/'],
-    },
+    radar: [
+        {
+            source: ['gushitong.baidu.com/'],
+        },
+    ],
     name: '首页指数',
     maintainers: ['CaoMeiYouRen'],
     handler,
