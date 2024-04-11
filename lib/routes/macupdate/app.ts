@@ -51,6 +51,10 @@ async function handler(ctx) {
         author: appData.developer.name,
     };
 
+    ctx.set('json', {
+        pageProps: nextData.props.initialProps.pageProps,
+    });
+
     return {
         title: appData.title,
         description: appData.description,
@@ -60,8 +64,4 @@ async function handler(ctx) {
         item: [item],
         language: 'en',
     };
-
-    ctx.set('json', {
-        pageProps: nextData.props.initialProps.pageProps,
-    });
 }

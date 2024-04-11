@@ -65,15 +65,12 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    const ret = {
         title: $('title').text(),
         link: rootUrl,
         item: items,
     };
 
-    ctx.set('json', {
-        title: $('title').text(),
-        link: rootUrl,
-        item: items,
-    });
+    ctx.set('json', ret);
+    return ret;
 }

@@ -27,8 +27,9 @@ const extractTokens = async (user, ctx) => {
 
     const userId = data.match(/{"user_id":"(\d+)"},/)?.[1];
 
-    ctx.set('json', { lsd, userId });
-    return { lsd, userId };
+    const ret = { lsd, userId };
+    ctx.set('json', ret);
+    return ret;
 };
 
 const makeHeader = (user, lsd) => ({

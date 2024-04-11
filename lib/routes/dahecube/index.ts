@@ -72,7 +72,7 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    const ret = {
         title: '大河财立方',
         link: parseUrl(type),
         description: `大河财立方 ${TYPE[type].name}`,
@@ -80,10 +80,6 @@ async function handler(ctx) {
         item: items,
     };
 
-    ctx.set('json', {
-        title: '大河财立方',
-        link: parseUrl(type),
-        description: `大河财立方 ${TYPE[type].name}`,
-        items,
-    });
+    ctx.set('json', ret);
+    return ret;
 }

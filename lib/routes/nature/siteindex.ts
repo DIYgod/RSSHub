@@ -57,12 +57,12 @@ async function handler(ctx) {
         )
     );
 
+    ctx.set('json', {
+        items,
+    });
     return {
         title: 'Nature siteindex',
         link: response.url,
         item: items,
     };
-    ctx.set('json', {
-        items,
-    });
 }
