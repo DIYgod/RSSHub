@@ -1,17 +1,18 @@
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import cache from '@/utils/cache';
 
 const baseUrl = 'https://www.dcfever.com';
 
-const parseItem = (item, tryGet) =>
-    tryGet(item.link, async () => {
-        const { data: response } = await got(item.link);
+const parseItem = (item) =>
+    cache.tryGet(item.link, async () => {
+        const response = await ofetch(item.link);
         const $ = load(response);
         const content = $('div[itemprop="articleBody"], .column_article_content_html');
 
@@ -23,7 +24,7 @@ const parseItem = (item, tryGet) =>
         if (pageLinks.length) {
             const pages = await Promise.all(
                 pageLinks.map(async (pageLink) => {
-                    const { data: response } = await got(pageLink.link);
+                    const response = await ofetch(pageLink.link);
                     const $ = load(response);
                     return $('div[itemprop="articleBody"]').html();
                 })
@@ -32,7 +33,7 @@ const parseItem = (item, tryGet) =>
         }
 
         content.find('img').each((_, e) => {
-            if (e.attribs.src.includes('?')) {
+            if (e.attribs.src?.includes('?')) {
                 e.attribs.src = e.attribs.src.split('?')[0];
             }
         });
@@ -57,9 +58,9 @@ const parseItem = (item, tryGet) =>
         return item;
     });
 
-const parseTradeItem = (item, tryGet) =>
-    tryGet(item.link, async () => {
-        const { data: response } = await got(item.link);
+const parseTradeItem = (item) =>
+    cache.tryGet(item.link, async () => {
+        const response = await ofetch(item.link);
         const $ = load(response);
 
         $('.selector_text').remove();
