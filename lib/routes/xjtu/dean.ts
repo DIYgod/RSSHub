@@ -33,7 +33,7 @@ const parseContent = (htmlString) => {
 export const route: Route = {
     path: '/dean/:subpath{.+}',
     name: '教务处',
-    maintainers: [],
+    maintainers: ['hoilc'],
     example: '/xjtu/dean/jxxx/jxtz2',
     description: '打开一个类似 <https://dean.xjtu.edu.cn/jxxx/jxtz2.htm> 的网址，在 `.cn` 后的内容就是 subpath，此例中是 `jxxx/jxtz2`',
     handler,
