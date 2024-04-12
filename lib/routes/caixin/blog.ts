@@ -82,8 +82,8 @@ async function handler(ctx) {
                 page: 1,
                 size: limit,
             },
-        }).json();
-        const posts = data.map((item) => ({
+        });
+        const posts = data.data.map((item) => ({
             title: item.title,
             description: item.brief,
             author: item.authorName,
