@@ -3,6 +3,8 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
+import { Cookie, CookieJar } from 'tough-cookie';
+
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 const allowDomain = new Set(['javdb.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 
@@ -15,9 +17,22 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const rootUrl = `https://${domain}`;
 
+    const cookieJar = new CookieJar();
+
+    if (config.javdb.session) {
+        const cookie = Cookie.fromJSON({
+            key: '_jdb_session',
+            value: config.javdb.session,
+            domain,
+            path: '/',
+        });
+        cookie && cookieJar.setCookie(cookie, rootUrl);
+    }
+
     const response = await got({
         method: 'get',
         url: url.href,
+        cookieJar,
     });
 
     const $ = load(response.data);
@@ -42,6 +57,7 @@ const ProcessItems = async (ctx, currentUrl, title) => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
+                    cookieJar,
                 });
 
                 const content = load(detailResponse.data);

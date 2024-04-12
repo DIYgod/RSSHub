@@ -7,7 +7,13 @@ export const route: Route = {
     example: '/javdb/tags/c2=5&c10=1',
     parameters: { query: '筛选，默认为 `c10=1`', category: '分类，见下表，默认为 `有碼`' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'JAVDB_SESSION',
+                description: 'JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
