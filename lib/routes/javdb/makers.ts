@@ -7,7 +7,13 @@ export const route: Route = {
     example: '/javdb/makers/7R',
     parameters: { id: '编号，可在片商页 URL 中找到', filter: '过滤，见下表，默认为 `全部`' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'JAVDB_SESSION',
+                description: 'JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
