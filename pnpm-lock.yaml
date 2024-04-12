@@ -230,8 +230,8 @@ devDependencies:
     specifier: 7.24.1
     version: 7.24.1(@babel/core@7.24.3)
   '@microsoft/eslint-formatter-sarif':
-    specifier: 3.0.0
-    version: 3.0.0
+    specifier: 3.1.0
+    version: 3.1.0
   '@stylistic/eslint-plugin':
     specifier: 1.7.0
     version: 1.7.0(eslint@8.57.0)(typescript@5.4.5)
@@ -2112,8 +2112,8 @@ packages:
       - supports-color
     dev: true
 
-  /@microsoft/eslint-formatter-sarif@3.0.0:
-    resolution: {integrity: sha512-KIKkT44hEqCzqxODYwFMUvYEK0CrdHx/Ll9xiOWgFbBSRuzbxmVy4d/tzfgoucGz72HJZNOMjuyzFTBKntRK5Q==}
+  /@microsoft/eslint-formatter-sarif@3.1.0:
+    resolution: {integrity: sha512-/mn4UXziHzGXnKCg+r8HGgPy+w4RzpgdoqFuqaKOqUVBT5x2CygGefIrO4SusaY7t0C4gyIWMNu6YQT6Jw64Cw==}
     engines: {node: '>= 14'}
     dependencies:
       eslint: 8.57.0
