@@ -59,7 +59,7 @@ const getFakeGot = (defaultOptions?: any) => {
                 if (!options.headers) {
                     options.headers = {};
                 }
-                options.headers.Cookie = cookies.join('; ');
+                options.headers.cookie = cookies.join('; ');
             }
             delete options.cookieJar;
         }
