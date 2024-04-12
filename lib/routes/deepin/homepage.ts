@@ -3,23 +3,15 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: 'homepage/:user_id',
+    path: '/homepage/:user_id',
     categories: ['bbs'],
     example: '/deepin/homepage/78326',
     parameters: { user_id: 'user id' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'deepin bbs home page',
-    maintainers: ['tensor'],
+    name: 'BBS Home Page',
+    maintainers: ['tensor-tech'],
     radar: {
         source: ['bbs.deepin.org/user/:user_id'],
-        target: '/deepin/homepage/:user_id',
+        target: '/homepage/:user_id',
     },
     handler,
 };
@@ -35,7 +27,7 @@ async function handler(ctx) {
     const items = res.data.map((item) => ({
         title: item.subject,
         link: `https://bbs.deepin.org/post/${item.id}`,
-        description: item.subject,
+        description: item.post.message,
         pubDate: parseDate(item.created_at),
         author: item.user.nickname,
         category: item.forum.name,
