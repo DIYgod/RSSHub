@@ -88,7 +88,7 @@
         "jsrsasign": "10.9.0",
         "lru-cache": "10.2.0",
         "lz-string": "1.5.0",
-        "mailparser": "3.6.9",
+        "mailparser": "3.7.0",
         "markdown-it": "14.1.0",
         "module-alias": "2.2.3",
         "notion-to-md": "3.1.1",
