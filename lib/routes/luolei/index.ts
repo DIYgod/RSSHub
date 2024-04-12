@@ -1,9 +1,31 @@
 import { Route } from '@/types';
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+import { CheerioAPI, load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+import path from 'node:path';
+
+const unblurImages = ($: CheerioAPI) => {
+    $('img[data-original-src]').each((_, el) => {
+        el = $(el);
+
+        el.replaceWith(
+            art(path.join(__dirname, 'templates/description.art'), {
+                images: [
+                    {
+                        src: el.prop('data-original-src'),
+                    },
+                ],
+            })
+        );
+    });
+
+    return $;
+};
 
 export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
@@ -29,8 +51,10 @@ export const handler = async (ctx) => {
         .map((item) => {
             item = JSON.parse(item.replaceAll('\\\\"', '\\"').replaceAll('\\\\n', '').replaceAll('\\`', '`'));
 
+            const $$ = unblurImages(load(item.excerpt));
+
             const title = item.title;
-            const description = item.excerpt;
+            const description = $$.html();
             const image = item.cover;
 
             return {
@@ -53,13 +77,13 @@ export const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (item.description) {
+                if (item.description.length > 40) {
                     return item;
                 }
 
                 const { data: detailResponse } = await got(item.link);
 
-                const $$ = load(detailResponse);
+                const $$ = unblurImages(load(detailResponse));
 
                 $$('div.tweet-card').remove();
 
