@@ -12,8 +12,8 @@ dependencies:
     specifier: 0.2.1
     version: 0.2.1(hono@4.2.3)
   '@hono/zod-openapi':
-    specifier: 0.10.0
-    version: 0.10.0(hono@4.2.3)(zod@3.22.4)
+    specifier: 0.11.0
+    version: 0.11.0(hono@4.2.3)(zod@3.22.4)
   '@notionhq/client':
     specifier: 2.2.15
     version: 2.2.15
@@ -1974,8 +1974,8 @@ packages:
       hono: 4.2.3
     dev: false
 
-  /@hono/zod-openapi@0.10.0(hono@4.2.3)(zod@3.22.4):
-    resolution: {integrity: sha512-XvUtRMI5IugLSkdadYi349k1I40RntfeDqAcIskQ5dXqD+7ZEn3PxGX/jntyHXcbTLLotfzRTXQi0eh4Bb/LWg==}
+  /@hono/zod-openapi@0.11.0(hono@4.2.3)(zod@3.22.4):
+    resolution: {integrity: sha512-thbxV4lWJoDo1NjF8ZGnd0muD3UHUpRqpKvS3RI+kWCXU05nyuViymUbPvVpp+O6i5SjovITTF91NRMTraZm3Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=3.11.3'
