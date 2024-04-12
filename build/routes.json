@@ -29873,7 +29873,13 @@
           "filter": "过滤，见下表，默认为 `全部`"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "JAVDB_SESSION",
+              "description": "JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取",
+              "optional": true
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -29966,7 +29972,13 @@
           "filter": "过滤，见下表，默认为 `全部`"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "JAVDB_SESSION",
+              "description": "JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取",
+              "optional": true
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -30000,7 +30012,13 @@
           "time": "时间，见下表，默认为 `日榜`"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "JAVDB_SESSION",
+              "description": "JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取",
+              "optional": true
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -30035,7 +30053,13 @@
           "sort": "排序，见下表，默认为 `按相关度排序`"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "JAVDB_SESSION",
+              "description": "JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取",
+              "optional": true
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -30069,7 +30093,13 @@
           "filter": "过滤，见下表，默认为 `全部`"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "JAVDB_SESSION",
+              "description": "JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取",
+              "optional": true
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -30103,7 +30133,13 @@
           "category": "分类，见下表，默认为 `有碼`"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "JAVDB_SESSION",
+              "description": "JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取",
+              "optional": true
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
