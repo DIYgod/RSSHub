@@ -1,4 +1,4 @@
-import { Data, Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
@@ -41,10 +41,10 @@ async function handler(ctx) {
     const colType = ctx.req.param('colType');
 
     const result = {
-        title: '',
+        title: RESULT_DESC_MAP[colType] ?? 'NULL',
         link: url,
         description: RESULT_DESC_MAP[colType] ?? 'NULL',
-        item: [] as Data[],
+        item: [] as DataItem[],
     };
     const response = await ofetch(`${url}/github/collection/list?colType=${colType}`);
     const $ = load(response);
@@ -58,7 +58,6 @@ async function handler(ctx) {
             description: $(item).find('.d-sm-inline-block').text(),
             link: $(item).find('a.btn-link').attr('href') || '',
             pubDate: dataObject,
-            published: dataObject,
             category: [...$(item).find('.nav.nav-stack.small li')].map((sub) => $(sub).find('.badge').text()),
         };
     });
