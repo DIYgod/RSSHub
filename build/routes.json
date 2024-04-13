@@ -29481,6 +29481,31 @@
     "name": "Issue Hunt",
     "url": "issuehunt.io"
   },
+  "itc": {
+    "routes": {
+      "/collection/:colType": {
+        "path": "/collection/:colType",
+        "categories": [
+          "blog"
+        ],
+        "example": "/itc/collection/1",
+        "radar": [
+          {
+            "source": [
+              "open.itc.cn/"
+            ]
+          }
+        ],
+        "name": "合集",
+        "maintainers": [
+          "cnkmmk"
+        ],
+        "location": "collection.ts"
+      }
+    },
+    "name": "Open Github社区",
+    "url": "open.itc.cn"
+  },
   "itch": {
     "routes": {
       "/devlog/:user/:id": {

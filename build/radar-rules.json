@@ -7387,6 +7387,19 @@
       }
     ]
   },
+  "itc.cn": {
+    "_name": "Open Github社区",
+    "open": [
+      {
+        "title": "合集",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/itc/collection/:colType"
+      }
+    ]
+  },
   "itch.io": {
     "_name": "itch.io",
     ".": [

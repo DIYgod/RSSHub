@@ -2983,6 +2983,9 @@
   "/issuehunt/funded/:username/:repo": [
     "running-grass"
   ],
+  "/itc/collection/:colType": [
+    "cnkmmk"
+  ],
   "/itch/devlog/:user/:id": [
     "nczitzk"
   ],
