@@ -80,17 +80,16 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    const ret = {
         title: 'Subscriptions - YouTube',
         description: 'YouTube Subscriptions',
         item: items,
     };
 
     ctx.set('json', {
-        title: 'Subscriptions - YouTube',
-        description: 'YouTube Subscriptions',
+        ...ret,
         channelIds,
         playlistIds,
-        item: items,
     });
+    return ret;
 }

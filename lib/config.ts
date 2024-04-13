@@ -168,6 +168,9 @@ export type Config = {
         username?: string;
         password?: string;
     };
+    javdb: {
+        session?: string;
+    };
     lastfm: {
         api_key?: string;
     };
@@ -511,6 +514,9 @@ const calculateValue = () => {
         iwara: {
             username: envs.IWARA_USERNAME,
             password: envs.IWARA_PASSWORD,
+        },
+        javdb: {
+            session: envs.JAVDB_SESSION,
         },
         lastfm: {
             api_key: envs.LASTFM_API_KEY,
