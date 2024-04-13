@@ -51,7 +51,7 @@ async function handler() {
                     pubDate: parseDate(item.find('time').attr('datetime')),
                 };
             });
-        items = items.concat(pageItem);
+        items = [...items, ...pageItem];
     }
 
     return {
