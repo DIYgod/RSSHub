@@ -7,14 +7,7 @@ import { CookieJar } from 'tough-cookie';
 import { load } from 'cheerio';
 import { Context } from 'hono';
 import cache from '@/utils/cache';
-import got from 'got';
-
-const cookieJar = new CookieJar();
-
-const _got = got.extend({
-    cookieJar,
-    followRedirect: false,
-});
+import { fetch as _fetch, type RequestInfo, type RequestInit } from 'undici';
 
 export const route: Route = {
     path: '/news/:treeid?',
@@ -52,15 +45,33 @@ export const route: Route = {
     url: 'my.bupt.edu.cn/',
 };
 
+const cookieJar = new CookieJar();
+
+async function fetch(request: RequestInfo, options?: RequestInit) {
+    const headers = {
+        ...options?.headers,
+        cookie: await cookieJar.getCookieString(request as string),
+    };
+    const res = await _fetch(request, {
+        redirect: 'manual',
+        ...options,
+        headers,
+    });
+    if (res.headers.get('set-cookie')) {
+        await cookieJar.setCookieSync(res.headers.get('set-cookie')!, request as string);
+    }
+    return res;
+}
+
 async function handler(ctx: Context) {
-    const res = await _got('http://my.bupt.edu.cn/list.jsp?urltype=tree.TreeTempUrl&wbtreeid=' + (ctx.req.param('treeid') || '1154'));
-    if (res.statusCode === 302) {
+    const res = await fetch('http://my.bupt.edu.cn/list.jsp?urltype=tree.TreeTempUrl&wbtreeid=' + (ctx.req.param('treeid') || '1154'));
+    if (res.status === 302) {
         await loginAuth();
         return handler(ctx);
-    } else if (res.statusCode !== 200) {
-        throw new Error(res.statusCode + (res.statusMessage || ''));
+    } else if (res.status !== 200) {
+        throw new Error(res.status + (res.statusText || ''));
     }
-    const $ = load(res.body);
+    const $ = load(await res.text());
     const items = await Promise.all(
         $('ul.newslist > li')
             .toArray()
@@ -71,8 +82,8 @@ async function handler(ctx: Context) {
                 author: $(author).text(),
                 pubDate: timezone(parseDate($(pubDate).text(), 'YYYY/MM/DD'), +8),
                 description: (await cache.tryGet('http://my.bupt.edu.cn/' + a.attribs.href, async () => {
-                    const res = await _got('http://my.bupt.edu.cn/' + a.attribs.href);
-                    const $ = load(res.body);
+                    const res = await fetch('http://my.bupt.edu.cn/' + a.attribs.href);
+                    const $ = load(await res.text());
                     return $('div.singleinfo').html() || '获取失败';
                 })) as string,
             }))
@@ -90,8 +101,8 @@ async function handler(ctx: Context) {
 }
 
 async function getExecution() {
-    const res = await _got.get('https://auth.bupt.edu.cn/authserver/login?service=http://my.bupt.edu.cn/system/resource/code/auth/clogin.jsp?owner=1664271694');
-    const executions = res.body.match(/<input name="execution" value="(.*?)"/);
+    const res = await fetch('https://auth.bupt.edu.cn/authserver/login?service=http://my.bupt.edu.cn/system/resource/code/auth/clogin.jsp?owner=1664271694');
+    const executions = (await res.text()).match(/<input name="execution" value="(.*?)"/);
     if (!executions || !executions.length) {
         throw new Error('Failed to obtain the execution value from the HTML response');
     }
@@ -104,7 +115,8 @@ async function loginAuth() {
     }
     const bodyp = `username=${encodeURIComponent(config.bupt.student_id)}&password=${encodeURIComponent(config.bupt.auth_password)}`;
     const execution = await getExecution();
-    const res = await _got.post('https://auth.bupt.edu.cn/authserver/login', {
+    const res = await fetch('https://auth.bupt.edu.cn/authserver/login', {
+        method: 'POST',
         headers: {
             authority: 'auth.bupt.edu.cn',
             'content-type': 'application/x-www-form-urlencoded',
@@ -113,12 +125,10 @@ async function loginAuth() {
         },
         body: bodyp + '&submit=%E7%99%BB%E5%BD%95&type=username_password&execution=' + execution + '&_eventId=submit',
     });
-    if (res.statusCode === 302) {
-        await _got.get(res.headers.location!, {
-            followRedirect: true,
-        });
-        await _got.get('http://my.bupt.edu.cn/index.jsp?null=');
-    } else if (res.statusCode !== 200) {
+    if (res.status === 302) {
+        const res2 = await fetch(res.headers.get('location')!, { redirect: 'manual' });
+        await fetch(res2.headers.get('location')!, { redirect: 'manual' });
+    } else if (res.status !== 200) {
         throw new Error('登录失败，请检查学号和密码（注意必须是统一认证的密码）');
     }
 }
