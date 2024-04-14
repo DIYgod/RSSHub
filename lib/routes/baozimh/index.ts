@@ -40,7 +40,9 @@ async function handler(ctx) {
     const response = await got(url);
     const $ = load(response.data);
     const comicTitle = $('div > div.pure-u-1-1.pure-u-sm-2-3.pure-u-md-3-4 > div > h1').text();
-    const list = $('#layout > div.comics-detail > div:nth-child(3) > div > div:nth-child(4) > div')
+    const list = $('#layout > div.comics-detail > div:nth-child(3) > div > div.pure-g')
+        .first() // 最新章节
+        .children()
         .toArray()
         .map((item) => {
             const title = $(item).find('span').text();
