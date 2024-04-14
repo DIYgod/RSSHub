@@ -107,22 +107,22 @@ export const route: Route = {
         {
             title: 'arXiv Artificial Intelligence (cs.AI)',
             source: ['papers.cool/arxiv/cs.AI'],
-            target: '/papers/arxiv/cs.AI',
+            target: '/arxiv/cs.AI',
         },
         {
             title: 'arXiv Computation and Language (cs.CL)',
             source: ['papers.cool/arxiv/cs.CL'],
-            target: '/papers/arxiv/cs.CL',
+            target: '/arxiv/cs.CL',
         },
         {
             title: 'arXiv Computer Vision and Pattern Recognition (cs.CV)',
             source: ['papers.cool/arxiv/cs.CV'],
-            target: '/papers/arxiv/cs.CV',
+            target: '/arxiv/cs.CV',
         },
         {
             title: 'arXiv Machine Learning (cs.LG)',
             source: ['papers.cool/arxiv/cs.LG'],
-            target: '/papers/arxiv/cs.LG',
+            target: '/arxiv/cs.LG',
         },
     ],
 };
