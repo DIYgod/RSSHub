@@ -725,6 +725,16 @@
         ],
         "target": "/agora0/pen0"
       }
+    ],
+    "njuferret": [
+      {
+        "title": "Blogs",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/njuferret/blog"
+      }
     ]
   },
   "ahjzu.edu.cn": {

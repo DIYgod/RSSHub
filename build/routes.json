@@ -38491,6 +38491,35 @@
     "name": "南京中医药大学",
     "url": "lib.njucm.edu.cn"
   },
+  "njuferret": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/njuferret/blog",
+        "radar": [
+          {
+            "source": [
+              "njuferret.github.io"
+            ]
+          }
+        ],
+        "name": "Blogs",
+        "maintainers": [
+          "tyl0622"
+        ],
+        "location": "blog.ts"
+      }
+    },
+    "name": "njuferret",
+    "url": "njuferret.github.io",
+    "description": "",
+    "zh": {
+      "name": "有点博客"
+    }
+  },
   "njupt": {
     "routes": {
       "/jwc/:type?": {
