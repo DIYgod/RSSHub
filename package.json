@@ -15,11 +15,11 @@
     },
     "license": "MIT",
     "author": "DIYgod",
+    "type": "module",
     "main": "lib/pkg.ts",
     "files": [
         "lib"
     ],
-    "type": "module",
     "scripts": {
         "build": "tsx scripts/workflow/build-routes.ts",
         "build:docs": "tsx scripts/workflow/build-docs.ts",
@@ -28,15 +28,15 @@
         "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" && prettier \"**/*.{ts,tsx,js,json}\" --write",
         "format:check": "eslint --cache \"**/*.{ts,tsx,js,yml}\" && prettier \"**/*.{ts,tsx,js,json}\" --check",
         "format:staged": "lint-staged",
-        "vitest": "cross-env NODE_ENV=test vitest",
-        "vitest:fullroutes": "cross-env NODE_ENV=test FULL_ROUTES_TEST=true vitest --reporter=json --reporter=default --outputFile=\"./assets/build/test-full-routes.json\" routes",
-        "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled --reporter=junit",
-        "vitest:watch": "cross-env NODE_ENV=test vitest --watch",
         "lint": "eslint --cache .",
         "prepare": "husky || true",
         "profiling": "cross-env NODE_ENV=production tsx --prof lib/index.ts",
         "start": "cross-env NODE_ENV=production tsx lib/index.ts",
-        "test": "npm run format:check && npm run vitest:coverage"
+        "test": "npm run format:check && npm run vitest:coverage",
+        "vitest": "cross-env NODE_ENV=test vitest",
+        "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled --reporter=junit",
+        "vitest:fullroutes": "cross-env NODE_ENV=test FULL_ROUTES_TEST=true vitest --reporter=json --reporter=default --outputFile=\"./assets/build/test-full-routes.json\" routes",
+        "vitest:watch": "cross-env NODE_ENV=test vitest --watch"
     },
     "lint-staged": {
         "*.js": [
@@ -129,6 +129,7 @@
         "@microsoft/eslint-formatter-sarif": "3.1.0",
         "@stylistic/eslint-plugin": "1.7.0",
         "@types/aes-js": "3.1.4",
+        "@types/babel__preset-env": "7.9.6",
         "@types/crypto-js": "4.2.2",
         "@types/eslint": "8.56.7",
         "@types/eslint-config-prettier": "6.11.3",
@@ -137,8 +138,10 @@
         "@types/git-rev-sync": "2.0.2",
         "@types/html-to-text": "9.0.4",
         "@types/imapflow": "1.0.18",
+        "@types/js-beautify": "1.14.3",
         "@types/jsdom": "21.1.6",
         "@types/json-bigint": "1.0.4",
+        "@types/jsrsasign": "10.5.13",
         "@types/lint-staged": "13.3.0",
         "@types/mailparser": "3.4.4",
         "@types/markdown-it": "14.0.0",
@@ -148,7 +151,9 @@
         "@types/sanitize-html": "2.11.0",
         "@types/supertest": "6.0.2",
         "@types/tiny-async-pool": "2.0.3",
+        "@types/title": "3.4.3",
         "@types/tough-cookie": "4.0.5",
+        "@types/uuid": "9.0.8",
         "@typescript-eslint/eslint-plugin": "7.6.0",
         "@typescript-eslint/parser": "7.6.0",
         "@vercel/nft": "0.26.4",
