@@ -18,12 +18,20 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['mixcloud.com/:username/:type?'],
+        },
+        {
+            source: ['www.mixcloud.com/:username/:type?'],
+        },
+    ],
     name: 'User',
     maintainers: ['Misaka13514'],
     handler,
-    description: `| Shows   | Favorites | History | Stream |
-  | ------- | --------- | ------- | ------ |
-  | uploads | favorites | listens | stream |`,
+    description: `| Shows   | Reposts | Favorites | History | Stream |
+  | ------- | ------- | --------- | ------- | ------ |
+  | uploads | reposts | favorites | listens | stream |`,
 };
 
 async function handler(ctx) {
@@ -37,17 +45,19 @@ async function handler(ctx) {
     };
 
     const type = ctx.req.param('type') ?? 'uploads';
-    if (!['stream', 'uploads', 'favorites', 'listens'].includes(type)) {
-        throw new InvalidParameterError(`Invalid type: ${type}`);
-    }
     const username = ctx.req.param('username');
 
     const config = {
         stream: { name: 'Stream', node: 'stream' },
         uploads: { name: 'Shows', node: 'uploads' },
+        reposts: { name: 'Reposts', node: 'reposted' },
         favorites: { name: 'Favorites', node: 'favorites' },
         listens: { name: 'History', node: 'listeningHistory' },
     };
+    if (!config[type]) {
+        throw new InvalidParameterError(`Invalid type: ${type}`);
+    }
+
     const payloads = {
         stream: {
             query: queries.stream.query,
@@ -64,6 +74,16 @@ async function handler(ctx) {
                     username: ctx.req.param('username'),
                 },
                 orderBy: 'LATEST',
+                onlyAttributedTo: '',
+                hasAttributedTo: false,
+            },
+        },
+        reposts: {
+            query: queries.reposts.query,
+            variables: {
+                lookup: {
+                    username: ctx.req.param('username'),
+                },
             },
         },
         favorites: {
