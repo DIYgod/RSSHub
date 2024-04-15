@@ -127,7 +127,7 @@
         "@babel/preset-env": "7.24.4",
         "@babel/preset-typescript": "7.24.1",
         "@microsoft/eslint-formatter-sarif": "3.1.0",
-        "@stylistic/eslint-plugin": "1.7.0",
+        "@stylistic/eslint-plugin": "1.7.2",
         "@types/aes-js": "3.1.4",
         "@types/babel__preset-env": "7.9.6",
         "@types/crypto-js": "4.2.2",
