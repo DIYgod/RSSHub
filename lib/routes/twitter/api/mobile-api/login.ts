@@ -2,6 +2,7 @@
 
 import { bearerToken, guestActivateUrl } from './constants';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import crypto from 'crypto';
 import { config } from '@/config';
 import { v5 as uuidv5 } from 'uuid';
@@ -16,7 +17,7 @@ let authentication = null;
 
 const headers = {
     'User-Agent': 'TwitterAndroid/10.21.0-release.0 (310210000-r-0) ONEPLUS+A3010/9 (OnePlus;ONEPLUS+A3010;OnePlus;OnePlus3;0;;1;2016)',
-    'X-Twitter-API-Version': 5,
+    'X-Twitter-API-Version': '5',
     'X-Twitter-Client': 'TwitterAndroid',
     'X-Twitter-Client-Version': '10.21.0-release.0',
     'OS-Version': '28',
@@ -47,7 +48,7 @@ async function login() {
 
             headers['x-guest-token'] = guestToken.data.guest_token;
 
-            const task1 = await got.post(
+            const task1 = await ofetch.raw(
                 'https://api.twitter.com/1.1/onboarding/task.json?' +
                     new URLSearchParams({
                         flow_name: 'login',
@@ -56,8 +57,9 @@ async function login() {
                         sim_country_code: 'us',
                     }).toString(),
                 {
+                    method: 'POST',
                     headers,
-                    json: {
+                    body: {
                         flow_token: null,
                         input_flow_data: {
                             country_code: null,
@@ -78,12 +80,12 @@ async function login() {
             );
             logger.debug('Twitter login 2 finished: login flow.');
 
-            headers.att = task1.headers.att;
+            headers.att = task1.headers.get('att');
 
             const task2 = await got.post('https://api.twitter.com/1.1/onboarding/task.json', {
                 headers,
                 json: {
-                    flow_token: task1.data.flow_token,
+                    flow_token: task1._data.flow_token,
                     subtask_inputs: [
                         {
                             enter_text: {
