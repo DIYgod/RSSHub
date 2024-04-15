@@ -5462,6 +5462,19 @@
       }
     ]
   },
+  "jiangsu.gov.cn": {
+    "_name": "中国人民银行",
+    "wlt": [
+      {
+        "title": "江苏文旅局审批公告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/"
+        ],
+        "target": "/gov/jiangsu/wlt"
+      }
+    ]
+  },
   "jinan.gov.cn": {
     "_name": "中国人民银行",
     "jnmhc": [

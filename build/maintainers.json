@@ -2258,6 +2258,9 @@
   "/gov/jgjcndrc/:id?": [
     "nczitzk"
   ],
+  "/gov/jiangsu/wlt/:page?": [
+    "GideonSenku"
+  ],
   "/gov/jinan/healthcommission/medical_exam_notice": [
     "tzjyxb"
   ],
