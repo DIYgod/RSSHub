@@ -238,6 +238,9 @@ devDependencies:
   '@types/aes-js':
     specifier: 3.1.4
     version: 3.1.4
+  '@types/babel__preset-env':
+    specifier: 7.9.6
+    version: 7.9.6
   '@types/crypto-js':
     specifier: 4.2.2
     version: 4.2.2
@@ -262,12 +265,18 @@ devDependencies:
   '@types/imapflow':
     specifier: 1.0.18
     version: 1.0.18
+  '@types/js-beautify':
+    specifier: 1.14.3
+    version: 1.14.3
   '@types/jsdom':
     specifier: 21.1.6
     version: 21.1.6
   '@types/json-bigint':
     specifier: 1.0.4
     version: 1.0.4
+  '@types/jsrsasign':
+    specifier: 10.5.13
+    version: 10.5.13
   '@types/lint-staged':
     specifier: 13.3.0
     version: 13.3.0
@@ -295,9 +304,15 @@ devDependencies:
   '@types/tiny-async-pool':
     specifier: 2.0.3
     version: 2.0.3
+  '@types/title':
+    specifier: 3.4.3
+    version: 3.4.3
   '@types/tough-cookie':
     specifier: 4.0.5
     version: 4.0.5
+  '@types/uuid':
+    specifier: 9.0.8
+    version: 9.0.8
   '@typescript-eslint/eslint-plugin':
     specifier: 7.6.0
     version: 7.6.0(@typescript-eslint/parser@7.6.0)(eslint@8.57.0)(typescript@5.4.5)
@@ -2550,6 +2565,10 @@ packages:
     resolution: {integrity: sha512-v3D66IptpUqh+pHKVNRxY8yvp2ESSZXe0rTzsGdzUhEwag7ljVfgCllkWv2YgiYXDhWFBrEywll4A5JToyTNFA==}
     dev: true
 
+  /@types/babel__preset-env@7.9.6:
+    resolution: {integrity: sha512-PaOA2V4J3CZZopQaTGT1e8WEWCqHWc1k12zLlci4T9eR2lQIlA/GbnVbloFDqYVFr1BNiCXnotH32Up8WdgTxQ==}
+    dev: true
+
   /@types/bluebird@3.5.42:
     resolution: {integrity: sha512-Jhy+MWRlro6UjVi578V/4ZGNfeCOcNCp0YaFNIUGFKlImowqwb1O/22wDVk3FDGMLqxdpOV3qQHD5fPEH4hK6A==}
     dev: false
@@ -2623,6 +2642,10 @@ packages:
       '@types/node': 20.12.7
     dev: true
 
+  /@types/js-beautify@1.14.3:
+    resolution: {integrity: sha512-FMbQHz+qd9DoGvgLHxeqqVPaNRffpIu5ZjozwV8hf9JAGpIOzuAf4wGbRSo8LNITHqGjmmVjaMggTT5P4v4IHg==}
+    dev: true
+
   /@types/jsdom@21.1.6:
     resolution: {integrity: sha512-/7kkMsC+/kMs7gAYmmBR9P0vGTnOoLhQhyhQJSlXGI5bzTHp6xdo0TtKWQAsz6pmSAeVqKSbqeyP6hytqr9FDw==}
     dependencies:
@@ -2643,6 +2666,10 @@ packages:
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
     dependencies:
       '@types/node': 20.12.7
+    dev: true
+
+  /@types/jsrsasign@10.5.13:
+    resolution: {integrity: sha512-vvVHLrXxoUZgBWTcJnTMSC4FAQcG2loK7N1Uy20I3nr/aUhetbGdfuwSzXkrMoll2RoYKW0IcMIN0I0bwMwVMQ==}
     dev: true
 
   /@types/linkify-it@3.0.5:
@@ -2764,6 +2791,10 @@ packages:
     resolution: {integrity: sha512-n3l1s538tKo9RBoHs4I3DG/VmD3VYhF5mHcgu1sU4Lq7JCNBtxnpBy3OkWSbZsp5r5QOuplh2UkXXXwufoAuNQ==}
     dev: true
 
+  /@types/title@3.4.3:
+    resolution: {integrity: sha512-mjupLOb4kwUuoUFokkacy/VMRVBH2qtqZ5AX7K7iha6+iKIkX80n/Y4EoNVEVRmer8dYJU/ry+fppUaDFVQh7Q==}
+    dev: true
+
   /@types/tough-cookie@4.0.5:
     resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
 
@@ -2773,6 +2804,10 @@ packages:
 
   /@types/unist@3.0.2:
     resolution: {integrity: sha512-dqId9J8K/vGi5Zr7oo212BGii5m3q5Hxlkwy3WpYuKPklmBEvsbMYYyLxAQpSffdLl/gdW0XUpKWFvYmyoWCoQ==}
+    dev: true
+
+  /@types/uuid@9.0.8:
+    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
     dev: true
 
   /@types/wrap-ansi@3.0.0:
