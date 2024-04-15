@@ -45,7 +45,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.weibo.cookies) {
-        throw new Error('Weibo Friends Timeline is not available due to the absense of [Weibo Cookies]. Check <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config tutorial</a>');
+        throw new Error('Weibo Friends Timeline is not available due to the absense of [Weibo Cookies]. Check <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config tutorial</a>');
     }
 
     let displayVideo = '1';

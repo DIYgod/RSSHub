@@ -93,15 +93,19 @@ async function handler(ctx: Context) {
         }).json<Version[]>();
         const authors = await customGot(`https://api.modrinth.com/v2/users`, {
             searchParams: {
-                ids: JSON.stringify(versions.map((it) => it.author_id)),
+                ids: JSON.stringify([...new Set(versions.map((it) => it.author_id))]),
             },
         }).json<Author[]>();
+        const groupedAuthors = <Record<string, Author>>{};
+        for (const author of authors) {
+            groupedAuthors[author.id] = author;
+        }
 
         return {
             title: `${project.title} Modrinth versions`,
             description: project.description,
             link: `https://modrinth.com/project/${id}`,
-            item: versions.map((it, index) => ({
+            item: versions.map((it) => ({
                 title: `${it.name} for ${it.loaders.join('/')} on ${[...new Set([it.game_versions[0], it.game_versions.at(-1)])].join('-')}`,
                 link: `https://modrinth.com/project/${id}/version/${it.version_number}`,
                 pubDate: parseDate(it.date_published),
@@ -110,7 +114,7 @@ async function handler(ctx: Context) {
                     changelog: md.render(it.changelog),
                 }),
                 guid: it.id,
-                author: authors[index].name,
+                author: groupedAuthors[it.author_id].username,
             })),
         };
     } catch (error: any) {

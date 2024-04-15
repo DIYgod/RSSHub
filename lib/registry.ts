@@ -45,7 +45,7 @@ if (Object.keys(modules).length) {
             | {
                   namespace: Namespace;
               };
-        const namespace = module.split('/')[1];
+        const namespace = module.split(/[/\\]/)[1];
         if ('namespace' in content) {
             namespaces[namespace] = Object.assign(
                 {
@@ -65,13 +65,13 @@ if (Object.keys(modules).length) {
                 for (const path of content.route.path) {
                     namespaces[namespace].routes[path] = {
                         ...content.route,
-                        location: module.split('/').slice(2).join('/'),
+                        location: module.split(/[/\\]/).slice(2).join('/'),
                     };
                 }
             } else {
                 namespaces[namespace].routes[content.route.path] = {
                     ...content.route,
-                    location: module.split('/').slice(2).join('/'),
+                    location: module.split(/[/\\]/).slice(2).join('/'),
                 };
             }
         }
