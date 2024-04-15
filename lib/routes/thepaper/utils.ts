@@ -27,7 +27,7 @@ export default {
             // external link
             return defaultRssItem(item);
         }
-        const itemUrl = `https://m.thepaper.cn/detail/${item.contId}`;
+        const itemUrl = `https://${ctx.req.query('pc') === 'yes' ? '' : 'm.'}thepaper.cn/detail/${item.contId}`;
         return cache.tryGet(`${itemUrl}${useOldMode ? ':old' : ''}`, async () => {
             const res = await got(itemUrl);
             const data = JSON.parse(load(res.data)('#__NEXT_DATA__').html());
