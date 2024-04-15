@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import dayjs from 'dayjs';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
@@ -34,7 +35,7 @@ async function handler(ctx) {
             title: item.copyright,
             description: `<img src="https://cn.bing.com${item.url}">`,
             link: item.copyrightlink,
-            pubDate: dayjs(item.startdate),
+            pubDate: timezone(parseDate(item.fullstartdate), 0),
         })),
     };
 }
