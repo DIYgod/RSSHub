@@ -1,21 +1,16 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { PROFILE_QUERY, REPLIES_QUERY, THREADS_QUERY, apiUrl, threadUrl, profileUrl, extractTokens, makeHeader, buildContent } from './utils';
+import { REPLIES_QUERY, THREADS_QUERY, apiUrl, threadUrl, profileUrl, extractTokens, makeHeader, getUserId, buildContent } from './utils';
+import { destr } from 'destr';
+import cache from '@/utils/cache';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/:user/:routeParams?',
     categories: ['social-media'],
     example: '/threads/zuck',
     parameters: { user: 'Username', routeParams: 'Extra parameters, see the table below' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: 'User timeline',
     maintainers: ['ninboy'],
     handler,
@@ -40,11 +35,13 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { user, routeParams } = ctx.req.param();
-    const { lsd, userId } = await extractTokens(user, ctx);
+    const { lsd } = await extractTokens(user);
+    const userId = await getUserId(user, lsd);
 
     const params = new URLSearchParams(routeParams);
-    const json = {
+    const debugJson = {
         params: routeParams,
+        lsd,
     };
 
     const options = {
@@ -57,32 +54,33 @@ async function handler(ctx) {
         replies: params.get('replies') ?? false,
     };
 
-    const { data: profileResponse } = await got.post(apiUrl, {
-        headers: makeHeader(user, lsd),
-        form: {
-            lsd,
-            variables: JSON.stringify({ userID: userId }),
-            doc_id: PROFILE_QUERY,
-        },
-    });
+    const threadsResponse = await cache.tryGet(
+        `threads:${userId}:${options.replies}`,
+        () =>
+            ofetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    ...makeHeader(user, lsd),
+                    'content-type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    lsd,
+                    variables: JSON.stringify({ userID: userId }),
+                    doc_id: String(options.replies ? REPLIES_QUERY : THREADS_QUERY),
+                }).toString(),
+                parseResponse: (txt) => destr(txt),
+            }),
+        config.cache.routeExpire,
+        false
+    );
 
-    const { data: threadsResponse, request: threadsRequest } = await got.post(apiUrl, {
-        headers: makeHeader(user, lsd),
-        form: {
-            lsd,
-            variables: JSON.stringify({ userID: userId }),
-            doc_id: options.replies ? REPLIES_QUERY : THREADS_QUERY,
-        },
-    });
-
-    json.profileData = profileResponse;
-    json.request = {
-        headers: threadsRequest.options.headers,
-        body: threadsRequest.options.body,
+    debugJson.profileId = userId;
+    debugJson.response = {
+        response: threadsResponse,
     };
 
-    const userData = profileResponse?.data?.userData?.user || {};
     const threads = threadsResponse?.data?.mediaData?.threads || [];
+    const userData = threadsResponse?.data?.mediaData?.threads?.[0]?.thread_items?.[0]?.post?.user || {};
 
     const items = threads.flatMap((thread) =>
         thread.thread_items
@@ -99,14 +97,14 @@ async function handler(ctx) {
             })
     );
 
-    json.items = items;
-    ctx.set('json', json);
+    debugJson.items = items;
+    ctx.set('json', debugJson);
 
     return {
         title: `${user} (@${user}) on Threads`,
         link: profileUrl(user),
-        image: userData.hd_profile_pic_versions?.sort((a, b) => b.width - a.width)[0].url ?? userData.profile_pic_url,
-        description: userData.biography,
+        image: userData?.profile_pic_url,
+        // description: userData.biography,
         item: items,
     };
 }
