@@ -4790,6 +4790,19 @@
       }
     ]
   },
+  "jjmhw.cc": {
+    "_name": "漫小肆韓漫",
+    "www": [
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/book/:id"
+        ],
+        "target": "/freexcomic/book/:id"
+      }
+    ]
+  },
   "fuliba2023.net": {
     "_name": "福利吧",
     ".": [

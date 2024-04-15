@@ -1955,6 +1955,9 @@
   "/freewechat/profile/:id": [
     "TonyRL"
   ],
+  "/freexcomic/book/:id": [
+    "junfengP"
+  ],
   "/ft/:language/:channel?": [
     "HenryQW",
     "xyqfer"

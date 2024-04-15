@@ -19623,6 +19623,35 @@
     "name": "自由微信",
     "url": "freewechat.com"
   },
+  "freexcomic": {
+    "routes": {
+      "/book/:id": {
+        "path": "/book/:id",
+        "example": "/freexcomic/book/90",
+        "parameters": {
+          "id": "漫画id，漫画主页的地址栏中"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jjmhw.cc/book/:id"
+            ]
+          }
+        ],
+        "name": "漫画更新",
+        "maintainers": [
+          "junfengP"
+        ],
+        "url": "www.jjmhw.cc",
+        "location": "book.ts"
+      }
+    },
+    "name": "漫小肆韓漫",
+    "url": "freexcomic.com",
+    "categories": [
+      "anime"
+    ]
+  },
   "ft": {
     "routes": {
       "/:language/:channel?": {
