@@ -155,7 +155,7 @@
         "@types/tough-cookie": "4.0.5",
         "@types/uuid": "9.0.8",
         "@typescript-eslint/eslint-plugin": "7.6.0",
-        "@typescript-eslint/parser": "7.6.0",
+        "@typescript-eslint/parser": "7.7.0",
         "@vercel/nft": "0.26.4",
         "@vitest/coverage-v8": "1.5.0",
         "eslint": "8.57.0",
