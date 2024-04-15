@@ -1,5 +1,6 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import dayjs from 'dayjs';
 
 export const route: Route = {
     path: '/',
@@ -16,18 +17,16 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const response = await got({
-        method: 'get',
-        prefixUrl: 'https://cn.bing.com',
-        url: 'HPImageArchive.aspx',
-        searchParams: {
+    const response = await ofetch('HPImageArchive.aspx', {
+        baseURL: 'https://cn.bing.com',
+        query: {
             format: 'js',
             idx: 0,
             n: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 7,
             mkt: 'zh-CN',
         },
     });
-    const data = response.data;
+    const data = response;
     return {
         title: 'Bing每日壁纸',
         link: 'https://cn.bing.com/',
@@ -35,6 +34,7 @@ async function handler(ctx) {
             title: item.copyright,
             description: `<img src="https://cn.bing.com${item.url}">`,
             link: item.copyrightlink,
+            pubDate: dayjs(item.startdate),
         })),
     };
 }
