@@ -29,7 +29,7 @@ export const route: Route = {
         },
     ],
     name: '江苏文旅局审批公告',
-    maintainers: ['gideonsenku'],
+    maintainers: ['GideonSenku'],
     handler,
     url: 'wlt.jiangsu.gov.cn/',
 };
@@ -57,38 +57,37 @@ async function handler(ctx) {
                 title: i.text(),
                 link: id ? `${baseUrl}/detail.do?iid=${id}` : '',
                 description: '',
-                pubDate: new Date(),
+                pubDate: '',
             };
         })
-        .get();
+        .get()
+        .filter((e) => e.link);
     const items = await Promise.all(
-        list
-            .filter((e) => e.link)
-            .map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
-                    const $ = load(detailResponse.data);
-                    const dateText = $('td:contains("许可决定日期")').next().text().trim();
-                    const hostingUnit = $('td:contains("行政相对人名称")').next().text().trim();
-                    const licenseNumber = $('td:contains("行政许可决定文书号")').next().text().trim();
-                    const performanceName = $('td:contains("项目名称")').next().text().trim();
-                    const performanceContent = $('td:contains("许可内容")').next().text().trim();
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                });
+                const $ = load(detailResponse.data);
+                const dateText = $('td:contains("许可决定日期")').next().text().trim();
+                const hostingUnit = $('td:contains("行政相对人名称")').next().text().trim();
+                const licenseNumber = $('td:contains("行政许可决定文书号")').next().text().trim();
+                const performanceName = $('td:contains("项目名称")').next().text().trim();
+                const performanceContent = $('td:contains("许可内容")').next().text().trim();
 
-                    item.description = art(path.join(__dirname, './templates/wlt.art'), {
-                        dateText,
-                        hostingUnit,
-                        licenseNumber,
-                        performanceName,
-                        performanceContent,
-                    });
-                    item.pubDate = parseDate(dateText);
+                item.description = art(path.join(__dirname, './templates/wlt.art'), {
+                    dateText,
+                    hostingUnit,
+                    licenseNumber,
+                    performanceName,
+                    performanceContent,
+                });
+                item.pubDate = parseDate(dateText);
 
-                    return item;
-                })
-            )
+                return item;
+            })
+        )
     );
 
     return {
