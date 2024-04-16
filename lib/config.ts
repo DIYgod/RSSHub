@@ -258,6 +258,7 @@ export type Config = {
         oauthTokenSecrets?: string[];
         username?: string;
         password?: string;
+        authenticationSecret?: string;
         cookie?: string;
     };
     weibo: {
@@ -607,6 +608,7 @@ const calculateValue = () => {
             oauthTokenSecrets: envs.TWITTER_OAUTH_TOKEN_SECRET?.split(','),
             username: envs.TWITTER_USERNAME,
             password: envs.TWITTER_PASSWORD,
+            authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET,
             cookie: envs.TWITTER_COOKIE,
         },
         weibo: {

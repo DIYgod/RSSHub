@@ -22,6 +22,11 @@ export const route: Route = {
                 description: 'Please see above for details.',
             },
             {
+                name: 'TWITTER_AUTHENTICATION_SECRET',
+                description: 'TOTP 2FA secret, please see above for details.',
+                optional: true,
+            },
+            {
                 name: 'TWITTER_COOKIE',
                 description: 'Please see above for details.',
             },
