@@ -23,18 +23,33 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
-                if (response.redirectUrls.length) {
-                    item.link = response.redirectUrls[0];
+                if (response.redirectUrls && response.redirectUrls.length > 0) {
                     item.description = '该通知无法直接预览，请点击原文链接↑查看';
                 } else {
                     const $ = load(response.data);
-                    item.title = $(contentSelector.title).text();
-                    item.description = $(contentSelector.content)
-                        .html()
-                        .replaceAll('src="/', `src="${new URL('.', host).href}`)
-                        .replaceAll('href="/', `href="${new URL('.', host).href}`)
-                        .trim();
-                    item.pubDate = timezone(parseDate($(contentSelector.date).text().replace('编辑：', '').replace('发布日期：', '').replace('发布时间：', '')), +8);
+                    if ($('.wp_error_msg').length > 0) {
+                        item.description = '您当前ip并非校内地址，该信息仅允许校内地址访问';
+                    } else {
+                        const contentHtml = $(contentSelector.content).html();
+                        const $content = load(contentHtml);
+
+                        if ($content('.wp_pdf_player').length > 0) {
+                            item.description = '该通知无法直接预览，请点击原文链接↑查看';
+                        } else {
+                            $content('a').each(function () {
+                                const a = $(this);
+                                const href = a.attr('href');
+                                if (href && !href.startsWith('http')) {
+                                    a.attr('href', new URL(href, host).href);
+                                }
+                            });
+                            item.description = $content.html();
+                        }
+
+                        item.title = $(contentSelector.title).text();
+                        const dateText = $(contentSelector.date).text().replace('编辑：', '').replace('发布日期：', '').replace('发布时间：', '');
+                        item.pubDate = timezone(parseDate(dateText, 'YYYY-MM-DD'), +8);
+                    }
                 }
                 return item;
             })
