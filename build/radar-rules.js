@@ -717,7 +717,7 @@
         source:[ "/:lang/support/announcement" ],
         target:"/binance/launchpool" } ] },
   "bing.com":{ _name:"Bing",
-    cn:[ { title:"Unknown",
+    cn:[ { title:"每日壁纸",
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/" ],
         target:"/bing/" },
