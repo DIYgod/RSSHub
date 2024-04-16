@@ -11,7 +11,7 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '每日壁纸',
     maintainers: ['FHYunCai'],
     handler,
     url: 'cn.bing.com/',
