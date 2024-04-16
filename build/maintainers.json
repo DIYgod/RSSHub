@@ -246,6 +246,9 @@
   "/abskoop/nsfw": [
     "zhenhappy"
   ],
+  "/accessbriefing/:category{.+}?": [
+    "nczitzk"
+  ],
   "/acfun/article/:categoryId/:sortType?/:timeRange?": [
     "TonyRL"
   ],
