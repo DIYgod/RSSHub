@@ -230,6 +230,9 @@ export type Config = {
     pkubbs: {
         cookie?: string;
     };
+    qingting: {
+        id?: string;
+    };
     saraba1st: {
         cookie?: string;
     };
@@ -574,6 +577,9 @@ const calculateValue = () => {
         },
         pkubbs: {
             cookie: envs.PKUBBS_COOKIE,
+        },
+        qingting: {
+            id: envs.QINGTING_ID,
         },
         saraba1st: {
             cookie: envs.SARABA1ST_COOKIE,
