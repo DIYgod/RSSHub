@@ -44767,12 +44767,14 @@
           "id": "专辑id, 可在专辑页 URL 中找到"
         },
         "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
           "supportPodcast": true,
-          "supportScihub": false
+          "requireConfig": [
+            {
+              "name": "QINGTING_ID",
+              "optional": true,
+              "description": "用户id， 部分专辑需要会员身份，用户id可以通过从网页端登录蜻蜓fm后使用开发者工具，在控制台中运行JSON.parse(localStorage.getItem(\"user\")).qingting_id获取"
+            }
+          ]
         },
         "radar": [
           {
