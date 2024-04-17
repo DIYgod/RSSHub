@@ -572,7 +572,7 @@ const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = fal
                     : fetchedItem.author || item.author; // the real author of the article. if your route return articles from a certain account, use this
                 break;
             case 'link':
-                item.link = skipLink ? item.link : (item.link = fetchedItem.link || item.link);
+                item.link = skipLink ? item.link : fetchedItem.link || item.link;
                 break;
             default:
                 item[key] = item[key] || fetchedItem[key];
