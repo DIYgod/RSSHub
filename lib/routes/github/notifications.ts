@@ -64,12 +64,6 @@ async function handler(ctx) {
         };
     });
 
-    return {
-        title: 'Github Notifications',
-        link: 'https://github.com/notifications',
-        item: items,
-    };
-
     ctx.set('json', {
         title: 'Github Notifications',
         item: notifications,
@@ -81,4 +75,10 @@ async function handler(ctx) {
             used: Number.parseInt(response.headers['X-RateLimit-Used']),
         },
     });
+
+    return {
+        title: 'Github Notifications',
+        link: 'https://github.com/notifications',
+        item: items,
+    };
 }

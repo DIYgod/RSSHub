@@ -30,20 +30,14 @@ const handler = async (ctx) => {
 
     items = await Promise.all(items.map((item) => finishArticleItem(item)));
 
-    ctx.set('json', {
-        title: response.data.title,
-        link: response.data.feed_url,
-        image: 'https://mp.weixin.qq.com/favicon.ico',
-        description: response.data.title,
-        item: items,
-    });
-
-    return {
+    const ret = {
         title: response.data.title,
         link: response.data.feed_url,
         description: response.data.title,
         item: items,
         allowEmpty: true,
     };
+    ctx.set('json', ret);
+    return ret;
 };
 export default handler;

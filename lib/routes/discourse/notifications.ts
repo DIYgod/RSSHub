@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getConfig } from './utils';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:configId/notifications/:fulltext?',
@@ -32,7 +32,7 @@ If you opt to enable \`fulltext\` feature, consider adding \`limit\` parameter t
 async function handler(ctx) {
     const { link, key } = getConfig(ctx);
 
-    const response = await got(`${link}/notifications.json`, { headers: { 'User-Api-Key': key } }).json();
+    const response = await ofetch(`${link}/notifications.json`, { headers: { 'User-Api-Key': key } });
     let items = response.notifications.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10).map((e) => ({
         title: e.fancy_title ?? e.data.badge_name,
         link: `${link}/${Object.hasOwn(e.data, 'badge_id') ? `badges/${e.data.badge_id}/${e.data.badge_slug}?username=${e.data.username}` : `t/topic/${e.topic_id}/${e.post_number}`}`,
@@ -48,7 +48,7 @@ async function handler(ctx) {
                 if (e.original_post_id) {
                     const post_link = `${link}/posts/${e.original_post_id}.json`;
                     return cache.tryGet(post_link, async () => {
-                        const { cooked } = await got(post_link, { headers: { 'User-Api-Key': key } }).json();
+                        const { cooked } = await ofetch(post_link, { headers: { 'User-Api-Key': key } });
                         return { ...e, description: cooked };
                     });
                 } else {
@@ -58,7 +58,7 @@ async function handler(ctx) {
         );
     }
 
-    const { about } = await got(`${link}/about.json`, { headers: { 'User-Api-Key': key } }).json();
+    const { about } = await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key } });
     return {
         title: `${about.title} - Notifications`,
         description: about.description,

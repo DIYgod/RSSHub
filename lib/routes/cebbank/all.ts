@@ -63,7 +63,7 @@ async function handler(ctx) {
         })
         .get();
 
-    return {
+    const ret = {
         title: '中国光大银行',
         description: '中国光大银行 外汇牌价',
         link,
@@ -71,9 +71,8 @@ async function handler(ctx) {
     };
 
     ctx.set('json', {
-        title: '中国光大银行',
-        description: '中国光大银行 外汇牌价',
+        ...ret,
         pubDate: timezone(parseDate($('#t_id span').text().substring(5), 'YYYY-MM-DD HH:mm', true), 0),
-        item: items,
     });
+    return ret;
 }

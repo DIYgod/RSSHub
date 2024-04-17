@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import queryString from 'query-string';
 
 export const route: Route = {
     path: '/jw/:type',
@@ -50,17 +51,18 @@ async function handler(ctx) {
     const { data } = await got({
         method: 'post',
         url: 'https://jw.nju.edu.cn/_wp3services/generalQuery?queryObj=articles',
-        form: {
+        body: queryString.stringify({
             siteId: 414,
             columnId: type_dict[type][0],
             pageIndex: 1,
             rows: 24, // 用大一点的值，因为前面太多置顶的
             orders: type_dict[type][2],
             returnInfos: type_dict[type][3],
-        },
+        }),
         headers: {
             Origin: 'https://jw.nju.edu.cn',
             Referer: 'https://jw.nju.edu.cn/main.htm',
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
     });
 

@@ -115,17 +115,13 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    const ret = {
         title: '时刻新闻',
         link: url,
         description: `时刻新闻 ${PATH_LIST[type].name}`,
         item: items,
     };
 
-    ctx.set('json', {
-        title: '时刻新闻',
-        link: url,
-        description: `时刻新闻 ${PATH_LIST[type].name}`,
-        item: items,
-    });
+    ctx.set('json', ret);
+    return ret;
 }

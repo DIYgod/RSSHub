@@ -108,7 +108,7 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    const ret = {
         title: feed.title,
         link: feed.link,
         description: feed.description,
@@ -117,12 +117,6 @@ async function handler(ctx) {
         language: feed.language,
     };
 
-    ctx.set('json', {
-        title: feed.title,
-        link: feed.link,
-        description: feed.description,
-        item: items,
-        image: feed.image.url,
-        language: feed.language,
-    });
+    ctx.set('json', ret);
+    return ret;
 }
