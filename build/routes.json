@@ -722,6 +722,26 @@
     "name": "0818 团",
     "url": "0818tuan.com"
   },
+  "0x80": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/0x80/blog",
+        "url": "0x80.pl/notesen.html",
+        "name": "Articles",
+        "maintainers": [
+          "xnum"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "Wojciech Muła",
+    "url": "0x80.pl",
+    "description": ""
+  },
   "141jav": {
     "routes": {
       "/{.*}?": {
