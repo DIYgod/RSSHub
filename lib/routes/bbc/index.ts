@@ -1,9 +1,9 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 import utils from './utils';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:site?/:channel?',
@@ -61,14 +61,11 @@ async function handler(ctx) {
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+                const response = await ofetch(item.link);
 
-                const $ = load(response.data);
+                const $ = load(response);
 
-                const description = response.request.options.url.pathname.startsWith('/news/av') ? item.content : utils.ProcessFeed($);
+                const description = new URL(item.link).pathname.startsWith('/news/av') ? item.content : utils.ProcessFeed($);
 
                 let section = 'sport';
                 const urlSplit = item.link.split('/');

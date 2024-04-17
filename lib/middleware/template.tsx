@@ -48,6 +48,14 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     }
                 }
 
+                if (item.description) {
+                    // https://stackoverflow.com/questions/2507608/error-input-is-not-proper-utf-8-indicate-encoding-using-phps-simplexml-lo/40552083#40552083
+                    // https://stackoverflow.com/questions/1497885/remove-control-characters-from-php-string/1497928#1497928
+                    // remove unicode control characters
+                    // see #14940 #14943 #15262
+                    item.description = item.description.replaceAll(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F]/g, '');
+                }
+
                 if (typeof item.author === 'string') {
                     item.author = collapseWhitespace(item.author) || '';
                 } else if (typeof item.author === 'object' && item.author !== null) {
