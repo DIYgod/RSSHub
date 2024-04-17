@@ -1,4 +1,4 @@
-import { rss3Ums, json, RSS, Atom } from '@/utils/render';
+import { rss3, json, RSS, Atom } from '@/utils/render';
 import { config } from '@/config';
 import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
 import type { MiddlewareHandler } from 'hono';
@@ -94,8 +94,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         return ctx.json(result);
     }
 
-    if (outputType === 'ums') {
-        return ctx.json(rss3Ums(result));
+    // retain .ums for backward compatibility
+    if (outputType === 'ums' || outputType === 'rss3') {
+        return ctx.json(rss3(result));
     } else if (outputType === 'json') {
         ctx.header('Content-Type', 'application/feed+json; charset=UTF-8');
         return ctx.body(json(result));
