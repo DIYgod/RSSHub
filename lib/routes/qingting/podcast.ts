@@ -34,8 +34,8 @@ export const route: Route = {
     description: `获取的播放 URL 有效期只有 1 天，需要开启播客 APP 的自动下载功能。`,
 };
 
-function getMediaUrl(channelId: string, midiaId: string) {
-    const path = `/audiostream/redirect/${channelId}/${midiaId}?access_token=&device_id=MOBILESITE&qingting_id=${qingtingId}&t=${Date.now()}`;
+function getMediaUrl(channelId: string, mediaId: string) {
+    const path = `/audiostream/redirect/${channelId}/${mediaId}?access_token=&device_id=MOBILESITE&qingting_id=${qingtingId}&t=${Date.now()}`;
     const sign = crypto.createHmac('md5', 'fpMn12&38f_2e').update(path).digest('hex').toString();
     return `https://audio.qingting.fm${path}&sign=${sign}`;
 }
