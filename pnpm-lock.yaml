@@ -365,8 +365,8 @@ devDependencies:
     specifier: 3.0.5
     version: 3.0.5
   msw:
-    specifier: 2.2.13
-    version: 2.2.13(typescript@5.4.5)
+    specifier: 2.2.14
+    version: 2.2.14(typescript@5.4.5)
   prettier:
     specifier: 3.2.5
     version: 3.2.5
@@ -2461,7 +2461,7 @@ packages:
       '@babel/runtime-corejs2': 7.23.9
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -7266,8 +7266,8 @@ packages:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: false
 
-  /msw@2.2.13(typescript@5.4.5):
-    resolution: {integrity: sha512-ljFf1xZsU0b4zv1l7xzEmC6OZA6yD06hcx0H+dc8V0VypaP3HGYJa1rMLjQbBWl32ptGhcfwcPCWDB1wjmsftw==}
+  /msw@2.2.14(typescript@5.4.5):
+    resolution: {integrity: sha512-64i8rNCa1xzDK8ZYsTrVMli05D687jty8+Th+PU5VTbJ2/4P7fkQFVyDQ6ZFT5FrNR8z2BHhbY47fKNvfHrumA==}
     engines: {node: '>=18'}
     hasBin: true
     requiresBuild: true
@@ -9958,8 +9958,8 @@ packages:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:

@@ -171,7 +171,7 @@
         "js-beautify": "1.15.1",
         "lint-staged": "15.2.2",
         "mockdate": "3.0.5",
-        "msw": "2.2.13",
+        "msw": "2.2.14",
         "prettier": "3.2.5",
         "remark-parse": "11.0.0",
         "supertest": "6.3.4",
