@@ -384,6 +384,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             description,
             pubDate: parseDate(item.created_at),
             link,
+            urls: item.entities?.urls ?? [],
 
             _extra:
                 (isRetweet && {

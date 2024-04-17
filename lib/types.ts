@@ -29,6 +29,7 @@ type Category =
 
 // rss
 export type DataItem = {
+    urls?: { expanded_url: string }[];
     title: string;
     description?: string;
     pubDate?: number | string | Date;
