@@ -66,13 +66,13 @@ describe('route throws an error', () => {
                     expect(value).toBe('9');
                     break;
                 case 'Hot Routes:':
-                    expect(value).toBe('6 /test/:id<br>');
+                    expect(value).toBe('6 /test/:id/:params?<br>');
                     break;
                 case 'Hot Paths:':
                     expect(value).toBe('2 /test/error<br>2 /test/slow<br>1 /test/httperror<br>1 /test/config-not-found-error<br>1 /test/invalid-parameter-error<br>1 /thisDoesNotExist<br>1 /<br>');
                     break;
                 case 'Hot Error Routes:':
-                    expect(value).toBe('5 /test/:id<br>');
+                    expect(value).toBe('5 /test/:id/:params?<br>');
                     break;
                 case 'Hot Error Paths:':
                     expect(value).toBe('2 /test/error<br>1 /test/httperror<br>1 /test/slow<br>1 /test/config-not-found-error<br>1 /test/invalid-parameter-error<br>1 /thisDoesNotExist<br>');
