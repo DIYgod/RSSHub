@@ -80,7 +80,7 @@ async function handler() {
     );
 
     return {
-        title: `0x80.pl articles`,
+        title: '0x80.pl articles',
         link: targetUrl,
         item: items,
     };
