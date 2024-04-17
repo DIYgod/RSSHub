@@ -166,6 +166,9 @@ export type Config = {
         username?: string;
         password?: string;
     };
+    javdb: {
+        session?: string;
+    };
     lastfm: {
         api_key?: string;
     };
@@ -226,6 +229,9 @@ export type Config = {
     };
     pkubbs: {
         cookie?: string;
+    };
+    qingting: {
+        id?: string;
     };
     saraba1st: {
         cookie?: string;
@@ -508,6 +514,9 @@ const calculateValue = () => {
             username: envs.IWARA_USERNAME,
             password: envs.IWARA_PASSWORD,
         },
+        javdb: {
+            session: envs.JAVDB_SESSION,
+        },
         lastfm: {
             api_key: envs.LASTFM_API_KEY,
         },
@@ -568,6 +577,9 @@ const calculateValue = () => {
         },
         pkubbs: {
             cookie: envs.PKUBBS_COOKIE,
+        },
+        qingting: {
+            id: envs.QINGTING_ID,
         },
         saraba1st: {
             cookie: envs.SARABA1ST_COOKIE,

@@ -7,7 +7,13 @@ export const route: Route = {
     example: '/javdb/search/巨乳',
     parameters: { keyword: '关键字，默认为空', filter: '过滤，见下表，默认为 `可播放`', sort: '排序，见下表，默认为 `按相关度排序`' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'JAVDB_SESSION',
+                description: 'JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,

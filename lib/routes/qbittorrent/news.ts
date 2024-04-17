@@ -71,15 +71,12 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    const ret = {
         title: 'qBittorrent News',
         link: `${baseUrl}/news.php`,
         item,
     };
 
-    ctx.set('json', {
-        title: 'qBittorrent News',
-        link: `${baseUrl}/news.php`,
-        item,
-    });
+    ctx.set('json', ret);
+    return ret;
 }

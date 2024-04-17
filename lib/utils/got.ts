@@ -53,6 +53,17 @@ const getFakeGot = (defaultOptions?: any) => {
             delete options.parseResponse;
         }
 
+        if (options.cookieJar) {
+            const cookies = options.cookieJar.getCookiesSync(request);
+            if (cookies.length) {
+                if (!options.headers) {
+                    options.headers = {};
+                }
+                options.headers.cookie = cookies.join('; ');
+            }
+            delete options.cookieJar;
+        }
+
         const response = ofetch(request, options);
 
         if (options?.responseType === 'arrayBuffer') {

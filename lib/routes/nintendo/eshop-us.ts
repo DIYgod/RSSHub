@@ -35,6 +35,7 @@ async function handler(ctx) {
     });
     const data = response.data.hits;
 
+    ctx.set('json', response.data);
     return {
         title: `Nintendo eShop（美服）新游戏`,
         link: `https://www.nintendo.com/store/games/`,
@@ -45,5 +46,4 @@ async function handler(ctx) {
             link: `https://www.nintendo.com${item.url}`,
         })),
     };
-    ctx.set('json', response.data);
 }

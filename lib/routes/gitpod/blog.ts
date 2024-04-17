@@ -71,7 +71,7 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    const ret = {
         title: $('title').text(),
         link: rootUrl + '/blog',
         description: $('meta[name="description"]').attr('content'),
@@ -79,11 +79,6 @@ async function handler(ctx) {
         item: items,
     };
 
-    ctx.set('json', {
-        title: $('title').text(),
-        link: rootUrl + '/blog',
-        description: $('meta[name="description"]').attr('content'),
-        language: 'en-US',
-        item: items,
-    });
+    ctx.set('json', ret);
+    return ret;
 }
