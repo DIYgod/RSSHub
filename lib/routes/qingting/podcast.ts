@@ -6,7 +6,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
-const qingtingId = config.qingting.id;
+const qingtingId = config.qingting.id ?? '';
 
 export const route: Route = {
     path: '/podcast/:id',
