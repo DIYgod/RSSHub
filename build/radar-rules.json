@@ -1072,6 +1072,16 @@
         ],
         "target": "/apple/exchange_repair/:country"
       }
+    ],
+    "podcasts": [
+      {
+        "title": "播客",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/cn/podcast/:id"
+        ],
+        "target": "/apple/podcast/:id"
+      }
     ]
   },
   "appleinsider.com": {

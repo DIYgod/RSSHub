@@ -415,6 +415,9 @@
     "HenryQW",
     "kt286"
   ],
+  "/apple/podcast/:id": [
+    "Acring"
+  ],
   "/appleinsider/:category?": [
     "nczitzk"
   ],
