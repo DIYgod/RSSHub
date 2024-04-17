@@ -50,7 +50,7 @@ async function handler(ctx) {
             enclosure_type: 'audio/mp4',
             link: attr.url,
             pubDate: parseDate(attr.releaseDateTime),
-            description: attr.description.standard,
+            description: attr.description.standard.replaceAll('\n', '<br>'),
         };
     });
 
