@@ -43,9 +43,8 @@ const replaceReturnNewline = (() => {
     return (text: string, replaceReturnWith = '', replaceNewlineWith = '<br>') => text.replaceAll(returnRegExp, replaceReturnWith).replaceAll(newlineRegExp, replaceNewlineWith);
 })();
 const fixUrl = (() => {
-    const hex26RegExp = /\\x26/g;
-    const ampRegExp = /&amp;/g;
-    return (text: string) => text.replaceAll(hex26RegExp, '&').replaceAll(ampRegExp, '&');
+    const ampRegExp = /(&|\\x26)amp;/g;
+    return (text: string) => text.replaceAll(ampRegExp, '&');
 })();
 
 class LoopContinue extends Error {

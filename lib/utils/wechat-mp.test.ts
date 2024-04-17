@@ -36,13 +36,7 @@ const genScriptHtmlStr = (script: string) => `
         </script>
     </html>
 `;
-const testFetchArticleFinishArticleItem = async (
-    path: string,
-    finishArticleItemParams = {
-        setMpNameAsAuthor: false,
-        skipLink: false,
-    }
-) => {
+const testFetchArticleFinishArticleItem = async (path: string, { setMpNameAsAuthor = false, skipLink = false } = {}) => {
     const ct = 1_636_626_300;
     const httpsUrl = `https://mp.weixin.qq.com/rsshub_test${path}`;
     const httpUrl = 'http' + httpsUrl.slice(5);
@@ -60,10 +54,10 @@ const testFetchArticleFinishArticleItem = async (
 
     const ToBeFinishedArticleItem = { link: httpUrl };
     const expectedFinishedArticleItem = { ...fetchArticleItem };
-    expectedFinishedArticleItem.author = finishArticleItemParams.setMpNameAsAuthor ? <string>expectedFinishedArticleItem.mpName : expectedFinishedArticleItem.author;
-    expectedFinishedArticleItem.link = finishArticleItemParams.skipLink ? ToBeFinishedArticleItem.link : expectedFinishedArticleItem.link;
+    expectedFinishedArticleItem.author = setMpNameAsAuthor ? <string>expectedFinishedArticleItem.mpName : expectedFinishedArticleItem.author;
+    expectedFinishedArticleItem.link = skipLink ? ToBeFinishedArticleItem.link : expectedFinishedArticleItem.link;
 
-    const finishedArticleItem = await finishArticleItem(ToBeFinishedArticleItem, finishArticleItemParams.setMpNameAsAuthor, finishArticleItemParams.skipLink);
+    const finishedArticleItem = await finishArticleItem(ToBeFinishedArticleItem, setMpNameAsAuthor, skipLink);
     expect(compareDate(finishedArticleItem.pubDate, fetchArticleItem.pubDate)).toBe(true);
     delete expectedFinishedArticleItem.pubDate;
     expect(finishedArticleItem).toMatchObject(expectedFinishedArticleItem);
