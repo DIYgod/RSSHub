@@ -112,17 +112,17 @@ export const route: Route = {
         {
             title: '专业文章',
             source: ['dehenglaw.com/:language/paper/0008/000902.aspx'],
-            target: '/dehenglaw/:language/paper',
+            target: '/:language/paper',
         },
         {
             title: '出版物',
             source: ['dehenglaw.com/:language/publish/0008/000903.aspx'],
-            target: '/dehenglaw/:language/publish',
+            target: '/:language/publish',
         },
         {
             title: '德恒论坛',
             source: ['dehenglaw.com/:language/luntan/0008/000901.aspx'],
-            target: '/dehenglaw/:language/luntan',
+            target: '/:language/luntan',
         },
     ],
 };
