@@ -40,12 +40,12 @@
     },
     "lint-staged": {
         "*.js": [
-            "eslint --cache --fix",
-            "prettier --ignore-unknown --ignore-path ./.gitignore --write"
+            "prettier --ignore-unknown --ignore-path ./.gitignore --write",
+            "eslint --cache --fix"
         ],
         "*.{ts,tsx}": [
-            "eslint --cache --fix",
-            "prettier --ignore-unknown --ignore-path ./.gitignore --write"
+            "prettier --ignore-unknown --ignore-path ./.gitignore --write",
+            "eslint --cache --fix"
         ],
         "*.yml": "eslint --cache --fix"
     },
