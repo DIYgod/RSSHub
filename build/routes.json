@@ -14534,6 +14534,66 @@
     "name": "DeepMind",
     "url": "deepmind.com"
   },
+  "dehenglaw": {
+    "routes": {
+      "/:language?/:category?": {
+        "path": "/:language?/:category?",
+        "name": "德恒探索",
+        "url": "dehenglaw.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/dehenglaw/CN/paper",
+        "parameters": {
+          "language": "语言，默认为中文，即 CN，可在对应分类页 URL 中找到，可选 CN 和 EN",
+          "category": "分类，默认为专业文章，即 paper，可在对应分类页 URL 中找到"
+        },
+        "description": ":::tip\n  若订阅 [专业文章](https://dehenglaw.com/)，网址为 `https://www.dehenglaw.com/CN/paper/0008/000902.aspx`。截取 `https://dehenglaw.com/` 到末尾 `/0008/000902.aspx` 的部分 `CN/paper` 作为参数填入，此时路由为 [`/dehenglaw/CN/paper`](https://rsshub.app/dehenglaw/CN/paper)。\n\n  | 专业文章 | 出版物  | 德恒论坛 |\n  | -------- | ------- | -------- |\n  | paper    | publish | luntan   |\n  :::",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "专业文章",
+            "source": [
+              "dehenglaw.com/:language/paper/0008/000902.aspx"
+            ],
+            "target": "/:language/paper"
+          },
+          {
+            "title": "出版物",
+            "source": [
+              "dehenglaw.com/:language/publish/0008/000903.aspx"
+            ],
+            "target": "/:language/publish"
+          },
+          {
+            "title": "德恒论坛",
+            "source": [
+              "dehenglaw.com/:language/luntan/0008/000901.aspx"
+            ],
+            "target": "/:language/luntan"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "德恒律师事务所",
+    "url": "dehenglaw.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": ""
+  },
   "deltaio": {
     "routes": {
       "/blog": {

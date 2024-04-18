@@ -1441,6 +1441,9 @@
     "nczitzk",
     "TonyRL"
   ],
+  "/dehenglaw/:language?/:category?": [
+    "nczitzk"
+  ],
   "/deltaio/blog": [
     "RengarLee"
   ],
