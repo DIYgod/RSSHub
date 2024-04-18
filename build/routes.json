@@ -53870,8 +53870,8 @@
   },
   "test": {
     "routes": {
-      "/:id": {
-        "path": "/:id",
+      "/:id/:params?": {
+        "path": "/:id/:params?",
         "name": "Unknown",
         "maintainers": [
           "DIYgod",
