@@ -3,13 +3,14 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import wait from '@/utils/wait';
 import cache from '@/utils/cache';
+import { fetchArticle } from '@/utils/wechat-mp';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 let cacheIndex = 0;
 
 export const route: Route = {
-    path: '/:id',
+    path: '/:id/:params?',
     name: 'Unknown',
     maintainers: ['DIYgod', 'NeverBehave'],
     handler,
@@ -382,6 +383,15 @@ async function handler(ctx) {
                 link: 'https://m.thepaper.cn/newsDetail_forward_4059298',
             },
         ];
+    }
+
+    if (ctx.req.param('id') === 'wechat-mp') {
+        const params = ctx.req.param('params');
+        if (!params) {
+            throw new InvalidParameterError('Invalid parameter');
+        }
+        const mpUrl = 'https:/mp.weixin.qq.com/s' + (params.includes('&') ? '?' : '/') + params;
+        item = [await fetchArticle(mpUrl)];
     }
 
     return {

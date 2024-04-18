@@ -26,9 +26,215 @@
  */
 
 import ofetch from '@/utils/ofetch';
-import { load, type Cheerio, type Element } from 'cheerio';
+import { type Cheerio, type CheerioAPI, type Element, load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+
+const MAINTAINERS = ['Rongronggg9'];
+
+const warn = (reason: string, details: string) =>
+    logger.warn(`wechat-mp: ${reason}: ${details},
+consider raise an issue (mentioning ${MAINTAINERS.join(', ')}) with the article URL for further investigation`);
+
+const replaceReturnNewline = (() => {
+    const returnRegExp = /\r|\\(r|x0d)/g;
+    const newlineRegExp = /\n|\\(n|x0a)/g;
+    return (text: string, replaceReturnWith = '', replaceNewlineWith = '<br>') => text.replaceAll(returnRegExp, replaceReturnWith).replaceAll(newlineRegExp, replaceNewlineWith);
+})();
+const fixUrl = (() => {
+    const ampRegExp = /(&|\\x26)amp;/g;
+    return (text: string) => text.replaceAll(ampRegExp, '&');
+})();
+
+class LoopContinue extends Error {
+    constructor() {
+        super('');
+        this.name = 'LoopContinue';
+    }
+}
+
+class LoopReturn extends Error {
+    to_return: any;
+
+    constructor(to_return: any) {
+        super('');
+        this.name = 'LoopReturn';
+        this.to_return = to_return;
+    }
+}
+
+const forEachScript = ($: CheerioAPI | string, callback: (script) => void, defaultReturn: any = null, selector = 'script[nonce][type="text/javascript"]') => {
+    const scripts = typeof $ === 'string' ? [$] : $(selector).toArray();
+    for (const script of scripts) {
+        try {
+            callback(script);
+        } catch (error) {
+            if (error instanceof LoopReturn) {
+                return error.to_return;
+            } else if (error instanceof LoopContinue) {
+                continue;
+            }
+            throw error;
+        }
+    }
+    return defaultReturn;
+};
+
+// view-source a *_SHARE_PAGE type article and search for `ITEM_SHOW_TYPE_MAP`
+// Please update the comments below if you find new types or new examples
+const showTypeMap = {
+    // "Article".
+    // May be combined with media, but type won't change
+    // Combined with audio and iframe: https://mp.weixin.qq.com/s/FnjcMXZ1xdS-d6n-pUUyyw
+    APP_MSG_PAGE: '0',
+    // https://mp.weixin.qq.com/s?__biz=Mzg4NTA1MTkwNA==&mid=2247532942&idx=1&sn=a84e4adbe49fdb39e4d4c1b5c12a4c3f
+    VIDEO_SHARE_PAGE: '5',
+    MUSIC_SHARE_PAGE: '6',
+    // https://mp.weixin.qq.com/s/FY6yQC_e4NMAxK0FBr6jwQ
+    AUDIO_SHARE_PAGE: '7',
+    // https://mp.weixin.qq.com/s/4p5YmYuASiQSYFiy7KqydQ
+    // https://mp.weixin.qq.com/s?__biz=Mzg4NTA1MTkwNA==&mid=2247532936&idx=4&sn=624054c20ded6ee85c6632f419c6f758
+    IMG_SHARE_PAGE: '8',
+    TEXT_SHARE_PAGE: '10',
+    SHORT_CONTENT_PAGE: '17',
+};
+const showTypeMapReverse = Object.fromEntries(Object.entries(showTypeMap).map(([k, v]) => [v, k]));
+
+class ExtractMetadata {
+    private static genAssignmentRegExp = (varName: string, valuePattern: string, assignPattern: string) => RegExp(`\\b${varName}\\s*${assignPattern}\\s*(?<quote>["'])(?<value>${valuePattern})\\k<quote>`, 'mg');
+
+    private static genExtractFunc = (
+        varName: string,
+        {
+            valuePattern = '\\w+',
+            assignPattern = '=',
+            allowNotFound = false,
+            multiple = false,
+        }: {
+            valuePattern?: string;
+            assignPattern?: string;
+            allowNotFound?: boolean;
+            multiple?: boolean;
+        }
+    ) => {
+        const regExp = this.genAssignmentRegExp(varName, valuePattern, assignPattern);
+        return (str: string) => {
+            const values: string[] = [];
+            for (const match of str.matchAll(regExp)) {
+                const value = <string>match.groups?.value;
+                if (!multiple) {
+                    return value;
+                }
+                values.push(value);
+            }
+            if (!allowNotFound && values.length === 0) {
+                throw new LoopContinue();
+            }
+            return multiple ? values : null;
+        };
+    };
+
+    private static doExtract = (metadataToBeExtracted: Record<string, (str: string) => string | string[] | null | undefined>, scriptText: string) => {
+        const metadataExtracted: Record<string, string | string[]> = {};
+        for (const [key, extractFunc] of Object.entries(metadataToBeExtracted)) {
+            metadataExtracted[key] = <string>extractFunc(scriptText);
+        }
+        metadataExtracted._extractedFrom = scriptText;
+        return metadataExtracted;
+    };
+
+    private static commonMetadataToBeExtracted = {
+        showType: this.genExtractFunc('item_show_type', { valuePattern: '\\d+' }),
+        realShowType: this.genExtractFunc('real_item_show_type', { valuePattern: '\\d+' }),
+        createTime: this.genExtractFunc('ct', { valuePattern: '\\d+' }),
+        sourceUrl: this.genExtractFunc('msg_source_url', { valuePattern: `https?://[^'"]*`, allowNotFound: true }),
+    };
+
+    static common = ($: CheerioAPI) =>
+        forEachScript(
+            $,
+            (script) => {
+                const scriptText = $(script).text();
+                const metadataExtracted = <Record<string, string>> this.doExtract(this.commonMetadataToBeExtracted, scriptText);
+                const showType = showTypeMapReverse[metadataExtracted.showType];
+                const realShowType = showTypeMapReverse[metadataExtracted.realShowType];
+                metadataExtracted.sourceUrl = metadataExtracted.sourceUrl && fixUrl(metadataExtracted.sourceUrl);
+                if (showType) {
+                    metadataExtracted.showType = showType;
+                } else {
+                    warn('showType not found', `item_show_type=${metadataExtracted.showType}`);
+                }
+                if (realShowType) {
+                    metadataExtracted.realShowType = realShowType;
+                } else {
+                    warn('realShowType not found', `real_item_show_type=${metadataExtracted.realShowType}`);
+                }
+                if (metadataExtracted.showType !== metadataExtracted.realShowType) {
+                    // never seen this happen, waiting for examples
+                    warn('showType mismatch', `item_show_type=${metadataExtracted.showType}, real_item_show_type=${metadataExtracted.realShowType}`);
+                }
+                throw new LoopReturn(metadataExtracted);
+            },
+            {},
+            'script[nonce][type="text/javascript"]:contains("real_item_show_type")'
+        );
+
+    private static audioMetadataToBeExtracted = {
+        voiceId: this.genExtractFunc('voiceid', { assignPattern: ':' }),
+        duration: this.genExtractFunc('duration', { valuePattern: '\\d*', assignPattern: ':', allowNotFound: true }),
+    };
+
+    // never seen a audio article containing multiple audio, waiting for examples
+    static audio = ($: CheerioAPI) =>
+        forEachScript(
+            $,
+            (script) => {
+                const scriptText = $(script).text();
+                const metadataExtracted = <Record<string, string>> this.doExtract(this.audioMetadataToBeExtracted, scriptText);
+                throw new LoopReturn(metadataExtracted);
+            },
+            {},
+            'script[nonce][type="text/javascript"]:contains("voiceid")'
+        );
+
+    private static imgMetadataToBeExtracted = {
+        imgUrls: this.genExtractFunc('cdn_url', { valuePattern: `https?://[^'"]*`, assignPattern: ':', multiple: true }),
+    };
+
+    static img = ($: CheerioAPI) =>
+        forEachScript(
+            $,
+            (script) => {
+                const scriptText = $(script).text();
+                const metadataExtracted = <Record<string, string[]>> this.doExtract(this.imgMetadataToBeExtracted, scriptText);
+                if (Array.isArray(metadataExtracted.imgUrls)) {
+                    metadataExtracted.imgUrls = metadataExtracted.imgUrls.map((url) => fixUrl(url));
+                }
+                throw new LoopReturn(metadataExtracted);
+            },
+            {},
+            'script[nonce][type="text/javascript"]:contains("picture_page_info_list")'
+        );
+
+    private static locationMetadataToBeExtracted = {
+        countryName: this.genExtractFunc('countryName', { valuePattern: `[^'"]*`, assignPattern: ':' }),
+        provinceName: this.genExtractFunc('provinceName', { valuePattern: `[^'"]*`, assignPattern: ':' }),
+        cityName: this.genExtractFunc('cityName', { valuePattern: `[^'"]*`, assignPattern: ':' }),
+    };
+
+    static location = ($: CheerioAPI) =>
+        forEachScript(
+            $,
+            (script) => {
+                const scriptText = $(script).text();
+                const metadataExtracted = this.doExtract(this.locationMetadataToBeExtracted, scriptText);
+                throw new LoopReturn(metadataExtracted);
+            },
+            {},
+            'script[nonce][type="text/javascript"]:contains("countryName")'
+        );
+}
 
 const replaceTag = ($, oldTag, newTagName) => {
     oldTag = $(oldTag);
@@ -55,15 +261,23 @@ const detectOriginalArticleUrl = ($) => {
     return null;
 };
 
-const detectSourceUrl = ($) => {
-    const matchs = $.root()
-        .html()
-        .match(/msg_source_url = '(.+)';/);
-
-    if (matchs) {
-        return matchs[1];
-    }
-    return null;
+const genAudioSrc = (voiceId: string) => `https://res.wx.qq.com/voice/getvoice?mediaid=${voiceId}`;
+const genAudioTag = (src: string, title: string) => `<audio controls src="${src}" title="${title}" style="width:100%"/>`;
+const genVideoSrc = (videoId: string) => {
+    const newSearchParams = new URLSearchParams({
+        origin: 'https://mp.weixin.qq.com',
+        containerId: 'js_tx_video_container_0.3863487104715233',
+        vid: videoId,
+        width: '677',
+        height: '380.8125',
+        autoplay: 'false',
+        allowFullScreen: 'true',
+        chid: '17',
+        full: 'true',
+        show1080p: 'false',
+        isDebugIframe: 'false',
+    });
+    return `https://v.qq.com/txp/iframe/player.html?${newSearchParams.toString()}`;
 };
 
 /**
@@ -99,6 +313,33 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
             }
         });
     }
+    // fix audio: https://mp.weixin.qq.com/s/FnjcMXZ1xdS-d6n-pUUyyw
+    $('mpvoice[voice_encode_fileid]').each((_, voice) => {
+        const $voice = $(voice);
+        const voiceId = $voice.attr('voice_encode_fileid');
+        if (voiceId) {
+            const title = $voice.attr('name') || 'Audio';
+            $voice.replaceWith(genAudioTag(genAudioSrc(voiceId), title));
+        }
+    });
+    // fix iframe: https://mp.weixin.qq.com/s/FnjcMXZ1xdS-d6n-pUUyyw
+    $('iframe.video_iframe[data-src]').each((_, iframe) => {
+        const $iframe = $(iframe);
+        const dataSrc = <string>$iframe.attr('data-src');
+        const srcUrlObj = new URL(dataSrc);
+        if (srcUrlObj.host === 'v.qq.com' && srcUrlObj.searchParams.has('vid')) {
+            const newSrc = genVideoSrc(<string>srcUrlObj.searchParams.get('vid'));
+            $iframe.attr('src', newSrc);
+            $iframe.removeAttr('data-src');
+            const width = $iframe.attr('data-w');
+            const ratio = $iframe.attr('data-ratio');
+            if (width && ratio) {
+                const width_ = Math.min(Number.parseInt(width), 677);
+                $iframe.attr('width', width_.toString());
+                $iframe.attr('height', (width_ / Number.parseFloat(ratio)).toString());
+            }
+        } // else {} FIXME: https://mp.weixin.qq.com/s?__biz=Mzg5Mjk3MzE4OQ==&mid=2247549515&idx=2&sn=a608fca597f0589c1aebd6d0b82ff6e9
+    });
     // fix section
     $('section').each((_, section) => {
         const $section = $(section);
@@ -121,17 +362,6 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
 
     // clear line index tags in code section
     $('.code-snippet__line-index').remove();
-
-    // fix single picture article
-    // example: https://mp.weixin.qq.com/s/4p5YmYuASiQSYFiy7KqydQ
-    $('script').each((_, script) => {
-        const $script = $(script);
-        const matchs = $script.html()?.match(/document\.getElementById\('js_image_desc'\)\.innerHTML = "(.*)"\.replace/);
-
-        if (matchs) {
-            $script.replaceWith(matchs[1].replaceAll('\r', '').replaceAll('\n', '<br>').replaceAll('\\x0d', '').replaceAll('\\x0a', '<br>'));
-        }
-    });
 
     // clean scripts
     $('script').remove();
@@ -184,51 +414,124 @@ const normalizeUrl = (url, bypassHostCheck = false) => {
     return urlObj.href;
 };
 
+class PageParsers {
+    private static common = ($: CheerioAPI, commonMetadata: Record<string, string>) => {
+        const title = replaceReturnNewline($('meta[property="og:title"]').attr('content') || '', '', ' ');
+        const author = replaceReturnNewline($('meta[name=author]').attr('content') || '', '', ' ');
+        const pubDate = commonMetadata.createTime ? parseDate(Number.parseInt(commonMetadata.createTime) * 1000) : undefined;
+        const mpName = $('.wx_follow_nickname').first().text()?.trim();
+
+        let summary = replaceReturnNewline($('meta[name=description]').attr('content') || '');
+        const description = summary;
+        summary = summary.replaceAll('<br>', ' ') === title ? '' : summary;
+
+        return { title, author, description, summary, pubDate, mpName } as {
+            title: string;
+            author: string;
+            description: string;
+            summary: string;
+            pubDate?: Date;
+            mpName?: string;
+            enclosure_url?: string;
+            itunes_duration?: string | number;
+            enclosure_type?: string;
+        };
+    };
+    private static appMsg = async ($: CheerioAPI, commonMetadata: Record<string, string>) => {
+        const page = PageParsers.common($, commonMetadata);
+        page.description = fixArticleContent($('#js_content'));
+        const originalArticleUrl = detectOriginalArticleUrl($);
+        if (originalArticleUrl) {
+            // No article or article is too short, try to fetch the description from the original article
+            const data = await ofetch(normalizeUrl(originalArticleUrl));
+            const original$ = load(data);
+            page.description += fixArticleContent(original$('#js_content'));
+        }
+        return page;
+    };
+    private static img = ($: CheerioAPI, commonMetadata: Record<string, string>) => {
+        const page = PageParsers.common($, commonMetadata);
+        const imgUrls = ExtractMetadata.img($)?.imgUrls;
+        let imgHtml = '';
+        if (Array.isArray(imgUrls) && imgUrls.length > 0) {
+            for (const imgUrl of imgUrls) {
+                imgHtml += `<br><br><img src="${imgUrl}" />`;
+            }
+        }
+        page.description += imgHtml;
+        return page;
+    };
+    private static audio = ($: CheerioAPI, commonMetadata: Record<string, string>) => {
+        const page = PageParsers.common($, commonMetadata);
+        const audioMetadata = ExtractMetadata.audio($);
+        const audioUrl = genAudioSrc(audioMetadata.voiceId);
+        page.enclosure_url = audioUrl;
+        page.itunes_duration = audioMetadata.duration;
+        page.enclosure_type = 'audio/mp3'; // FIXME: may it be other types?
+        page.description += '<br><br>' + genAudioTag(audioUrl, page.title);
+        return page;
+    };
+    private static fallback = ($: CheerioAPI, commonMetadata: Record<string, string>) => {
+        const page = PageParsers.common($, commonMetadata);
+        const image = $('meta[property="og:image"]').attr('content');
+        if (image) {
+            page.description += `<br><br><img src="${image}" />`;
+        }
+        return page;
+    };
+    static dispatch = async ($: CheerioAPI) => {
+        const commonMetadata = ExtractMetadata.common($);
+        let page: Record<string, any>;
+        switch (commonMetadata.showType) {
+            case 'APP_MSG_PAGE':
+                page = await PageParsers.appMsg($, commonMetadata);
+                break;
+            case 'AUDIO_SHARE_PAGE':
+                page = PageParsers.audio($, commonMetadata);
+                break;
+            case 'IMG_SHARE_PAGE':
+                page = PageParsers.img($, commonMetadata);
+                break;
+            case 'VIDEO_SHARE_PAGE':
+                page = PageParsers.fallback($, commonMetadata);
+                break;
+            default:
+                warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`);
+                page = PageParsers.fallback($, commonMetadata);
+        }
+        const locationMetadata = ExtractMetadata.location($);
+        let location = '';
+        for (const loc of [locationMetadata.countryName, locationMetadata.provinceName, locationMetadata.cityName]) {
+            if (loc) {
+                location += loc + ' ';
+            }
+        }
+        location = location.trim();
+        if (location) {
+            page.description += `<p>📍发表于：${location}</p>`;
+        }
+        if (commonMetadata.sourceUrl) {
+            page.description += `<p><a href="${commonMetadata.sourceUrl}">🔗️ 阅读原文</a></p>`;
+        }
+        return page;
+    };
+}
+
 /**
  * Fetch article and its metadata from WeChat MP (mp.weixin.qq.com).
  *
  * If you use this function, no need to call `fixArticleContent`
- * @param {object} ctx - The context object.
- * @param {string} url - The url of the article.
- * @param {boolean} bypassHostCheck - Whether to bypass host check.
- * @return {Promise<object>} - An object containing the article and its metadata.
+ * @param url - The url of the article.
+ * @param bypassHostCheck - Whether to bypass host check.
+ * @return - An object containing the article and its metadata.
  */
-const fetchArticle = (url, bypassHostCheck = false) => {
+const fetchArticle = (url: string, bypassHostCheck: boolean = false) => {
     url = normalizeUrl(url, bypassHostCheck);
     return cache.tryGet(url, async () => {
         const data = await ofetch(url);
         const $ = load(data);
-
-        const title = ($('meta[property="og:title"]').attr('content') || '').replaceAll('\\r', '').replaceAll('\\n', ' ');
-        const author = $('meta[name=author]').attr('content');
-        let summary = $('meta[name=description]').attr('content');
-        summary = summary === title ? '' : summary;
-        let description = fixArticleContent($('#js_content'));
-        // No article get or article is too short, try the original url
-        const originalUrl = detectOriginalArticleUrl($);
-        if (originalUrl) {
-            // try to fetch the description from the original article
-            const data = await ofetch(normalizeUrl(originalUrl, bypassHostCheck));
-            const original$ = load(data);
-            description += fixArticleContent(original$('#js_content'));
-        }
-
-        const sourceUrl = detectSourceUrl($);
-        if (sourceUrl) {
-            description += `<a href="${sourceUrl}">阅读原文</a>`;
-        }
-
-        let pubDate;
-        const publish_time_script = $('script[nonce][type="text/javascript"]:contains("var ct")').text();
-        const publish_time_match = publish_time_script && publish_time_script.match(/var ct *= *"?(\d{10})"?/);
-        const publish_timestamp = publish_time_match && publish_time_match[1];
-        if (publish_timestamp) {
-            pubDate = parseDate(Number.parseInt(publish_timestamp) * 1000);
-        }
-
-        let mpName = $('.profile_nickname').first().text();
-        mpName = mpName && mpName.trim();
-        return { title, author, description, summary, pubDate, mpName, link: url };
+        const page = await PageParsers.dispatch($);
+        return { ...page, link: url };
     }) as Promise<{
         title: string;
         author: string;
@@ -237,6 +540,9 @@ const fetchArticle = (url, bypassHostCheck = false) => {
         pubDate?: Date;
         mpName?: string;
         link: string;
+        enclosure_type?: string;
+        enclosure_url?: string;
+        itunes_duration?: string | number;
     }>;
 };
 
@@ -257,18 +563,23 @@ const fetchArticle = (url, bypassHostCheck = false) => {
  * @return {Promise<object>} - The incoming `item` object, with the article and its metadata filled in.
  */
 const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = false) => {
-    const { title, author, description, summary, pubDate, mpName, link } = await fetchArticle(item.link);
-    item.title = title || item.title;
-    item.description = description || item.description;
-    item.summary = summary || item.summary;
-    item.pubDate = pubDate || item.pubDate;
-    item.author = setMpNameAsAuthor
-        ? mpName || item.author // the Official Account itself. if your route return articles from different accounts, you may want to use this
-        : author || item.author; // the real author of the article. if your route return articles from a certain account, use this
-    if (!skipLink) {
-        item.link = link || item.link;
+    const fetchedItem = await fetchArticle(item.link);
+    for (const key in fetchedItem) {
+        switch (key) {
+            case 'author':
+                item.author = setMpNameAsAuthor
+                    ? fetchedItem.mpName || item.author // the Official Account itself. if your route return articles from different accounts, you may want to use this
+                    : fetchedItem.author || item.author; // the real author of the article. if your route return articles from a certain account, use this
+                break;
+            case 'link':
+                item.link = skipLink ? item.link : fetchedItem.link || item.link;
+                break;
+            default:
+                item[key] = item[key] || fetchedItem[key];
+        }
     }
     return item;
 };
 
-export { fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl };
+const exportedForTestingOnly = { ExtractMetadata, showTypeMapReverse };
+export { exportedForTestingOnly, fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl };
