@@ -10,7 +10,7 @@ const NETWORK = 'RSS';
 const TAG = 'RSS';
 const TYPE = 'feed';
 
-const rss3Ums = (data) => {
+const rss3 = (data) => {
     const currentUnixTsp = dayjs().unix();
     const umsResult = {
         data: data.item.map((item) => {
@@ -59,4 +59,4 @@ function getOwnershipFieldFromURL(item) {
     }
 }
 
-export default rss3Ums;
+export default rss3;
