@@ -46723,6 +46723,36 @@
     "name": "Samsung",
     "url": "research.samsung.com"
   },
+  "sara": {
+    "routes": {
+      "/:type": {
+        "path": "/:type",
+        "categories": [
+          "government"
+        ],
+        "example": "/sara/announcement",
+        "parameters": {
+          "type": "dynamic | announcement | industry"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "description": "| 协会动态 | 通知公告 |行业动态 |\n    | -------- | ------------ | -------- |\n    | dynamic | announcement | industry |",
+        "name": "新闻资讯",
+        "maintainers": [
+          "HChenZi"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "上海业余无线电协会",
+    "url": "www.sara.org.cn"
+  },
   "saraba1st": {
     "routes": {
       "/digest/:tid": {
