@@ -59,7 +59,14 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         if (!options.agent && proxy.agent) {
             const proxyRegex = new RegExp(proxy.proxyObj.url_regex);
 
-            if (proxyRegex.test(url.toString()) && url.protocol.startsWith('http') && url.host !== proxy.proxyUrlHandler?.host) {
+            if (
+                proxyRegex.test(url.toString()) &&
+                url.protocol.startsWith('http') &&
+                url.host !== proxy.proxyUrlHandler?.host &&
+                url.host !== 'localhost' &&
+                !url.host.startsWith('127.') &&
+                !(config.puppeteerWSEndpoint?.includes(url.host) ?? false)
+            ) {
                 options.agent = proxy.agent;
             }
         }
