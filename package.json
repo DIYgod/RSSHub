@@ -25,8 +25,8 @@
         "build:docs": "tsx scripts/workflow/build-docs.ts",
         "dev": "cross-env NODE_ENV=dev tsx watch --no-cache lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production tsx watch lib/index.ts",
-        "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" && prettier \"**/*.{ts,tsx,js,json}\" --write",
-        "format:check": "eslint --cache \"**/*.{ts,tsx,js,yml}\" && prettier \"**/*.{ts,tsx,js,json}\" --check",
+        "format": "prettier \"**/*.{ts,tsx,js,json}\" --write && eslint --cache --fix \"**/*.{ts,tsx,js,yml}\"",
+        "format:check": "prettier \"**/*.{ts,tsx,js,json}\" --check && eslint --cache \"**/*.{ts,tsx,js,yml}\"",
         "format:staged": "lint-staged",
         "lint": "eslint --cache .",
         "prepare": "husky || true",
@@ -40,12 +40,12 @@
     },
     "lint-staged": {
         "*.js": [
-            "eslint --cache --fix",
-            "prettier --ignore-unknown --ignore-path ./.gitignore --write"
+            "prettier --ignore-unknown --ignore-path ./.gitignore --write",
+            "eslint --cache --fix"
         ],
         "*.{ts,tsx}": [
-            "eslint --cache --fix",
-            "prettier --ignore-unknown --ignore-path ./.gitignore --write"
+            "prettier --ignore-unknown --ignore-path ./.gitignore --write",
+            "eslint --cache --fix"
         ],
         "*.yml": "eslint --cache --fix"
     },
@@ -55,7 +55,7 @@
         "@hono/zod-openapi": "0.11.0",
         "@notionhq/client": "2.2.15",
         "@postlight/parser": "2.2.3",
-        "@sentry/node": "7.110.1",
+        "@sentry/node": "7.111.0",
         "@tonyrl/rand-user-agent": "2.0.59",
         "aes-js": "3.1.2",
         "art-template": "4.13.2",
@@ -75,13 +75,13 @@
         "fanfou-sdk": "5.0.0",
         "form-data": "4.0.0",
         "googleapis": "134.0.0",
-        "hono": "4.2.4",
+        "hono": "4.2.5",
         "html-to-text": "9.0.5",
         "https-proxy-agent": "7.0.4",
         "iconv-lite": "0.6.3",
         "imapflow": "1.0.159",
         "instagram-private-api": "1.46.1",
-        "ioredis": "5.4.0",
+        "ioredis": "5.4.1",
         "ip-regex": "5.0.0",
         "jsdom": "24.0.0",
         "json-bigint": "1.0.0",
@@ -171,7 +171,7 @@
         "js-beautify": "1.15.1",
         "lint-staged": "15.2.2",
         "mockdate": "3.0.5",
-        "msw": "2.2.13",
+        "msw": "2.2.14",
         "prettier": "3.2.5",
         "remark-parse": "11.0.0",
         "supertest": "6.3.4",

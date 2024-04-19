@@ -10,10 +10,10 @@ dependencies:
     version: 1.10.0
   '@hono/swagger-ui':
     specifier: 0.2.1
-    version: 0.2.1(hono@4.2.4)
+    version: 0.2.1(hono@4.2.5)
   '@hono/zod-openapi':
     specifier: 0.11.0
-    version: 0.11.0(hono@4.2.4)(zod@3.22.4)
+    version: 0.11.0(hono@4.2.5)(zod@3.22.4)
   '@notionhq/client':
     specifier: 2.2.15
     version: 2.2.15
@@ -21,8 +21,8 @@ dependencies:
     specifier: 2.2.3
     version: 2.2.3
   '@sentry/node':
-    specifier: 7.110.1
-    version: 7.110.1
+    specifier: 7.111.0
+    version: 7.111.0
   '@tonyrl/rand-user-agent':
     specifier: 2.0.59
     version: 2.0.59
@@ -81,8 +81,8 @@ dependencies:
     specifier: 134.0.0
     version: 134.0.0
   hono:
-    specifier: 4.2.4
-    version: 4.2.4
+    specifier: 4.2.5
+    version: 4.2.5
   html-to-text:
     specifier: 9.0.5
     version: 9.0.5
@@ -99,8 +99,8 @@ dependencies:
     specifier: 1.46.1
     version: 1.46.1
   ioredis:
-    specifier: 5.4.0
-    version: 5.4.0
+    specifier: 5.4.1
+    version: 5.4.1
   ip-regex:
     specifier: 5.0.0
     version: 5.0.0
@@ -365,8 +365,8 @@ devDependencies:
     specifier: 3.0.5
     version: 3.0.5
   msw:
-    specifier: 2.2.13
-    version: 2.2.13(typescript@5.4.5)
+    specifier: 2.2.14
+    version: 2.2.14(typescript@5.4.5)
   prettier:
     specifier: 3.2.5
     version: 3.2.5
@@ -2148,15 +2148,15 @@ packages:
     engines: {node: '>=18.14.1'}
     dev: false
 
-  /@hono/swagger-ui@0.2.1(hono@4.2.4):
+  /@hono/swagger-ui@0.2.1(hono@4.2.5):
     resolution: {integrity: sha512-wBxVMRe3/v8xH4o6icmwztiIq0DG0s7+jHVMHVUAoFFCWEQNL2iskMmQtrhSDtsFmBZUeUFQUaaJ6Ir6DOmHLA==}
     peerDependencies:
       hono: '*'
     dependencies:
-      hono: 4.2.4
+      hono: 4.2.5
     dev: false
 
-  /@hono/zod-openapi@0.11.0(hono@4.2.4)(zod@3.22.4):
+  /@hono/zod-openapi@0.11.0(hono@4.2.5)(zod@3.22.4):
     resolution: {integrity: sha512-thbxV4lWJoDo1NjF8ZGnd0muD3UHUpRqpKvS3RI+kWCXU05nyuViymUbPvVpp+O6i5SjovITTF91NRMTraZm3Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -2164,18 +2164,18 @@ packages:
       zod: 3.*
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.0.0(zod@3.22.4)
-      '@hono/zod-validator': 0.2.1(hono@4.2.4)(zod@3.22.4)
-      hono: 4.2.4
+      '@hono/zod-validator': 0.2.1(hono@4.2.5)(zod@3.22.4)
+      hono: 4.2.5
       zod: 3.22.4
     dev: false
 
-  /@hono/zod-validator@0.2.1(hono@4.2.4)(zod@3.22.4):
+  /@hono/zod-validator@0.2.1(hono@4.2.5)(zod@3.22.4):
     resolution: {integrity: sha512-HFoxln7Q6JsE64qz2WBS28SD33UB2alp3aRKmcWnNLDzEL1BLsWfbdX6e1HIiUprHYTIXf5y7ax8eYidKUwyaA==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.19.1
     dependencies:
-      hono: 4.2.4
+      hono: 4.2.5
       zod: 3.22.4
     dev: false
 
@@ -2665,43 +2665,43 @@ packages:
       selderee: 0.11.0
     dev: false
 
-  /@sentry-internal/tracing@7.110.1:
-    resolution: {integrity: sha512-4kTd6EM0OP1SVWl2yLn3KIwlCpld1lyhNDeR8G1aKLm1PN+kVsR6YB/jy9KPPp4Q3lN3W9EkTSES3qhP4jVffQ==}
+  /@sentry-internal/tracing@7.111.0:
+    resolution: {integrity: sha512-CgXly8rsdu4loWVKi2RqpInH3C2cVBuaYsx4ZP5IJpzSinsUAMyyr3Pc0PZzCyoVpBBXGBGj/4HhFsY3q6Z0Vg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.110.1
-      '@sentry/types': 7.110.1
-      '@sentry/utils': 7.110.1
+      '@sentry/core': 7.111.0
+      '@sentry/types': 7.111.0
+      '@sentry/utils': 7.111.0
     dev: false
 
-  /@sentry/core@7.110.1:
-    resolution: {integrity: sha512-yC1yeUFQlmHj9u/KxKmwOMVanBmgfX+4MZnZU31QPqN95adyZTwpaYFZl4fH5kDVnz7wXJI0qRP8SxuMePtqhw==}
+  /@sentry/core@7.111.0:
+    resolution: {integrity: sha512-/ljeMjZu8CSrLGrseBi/7S2zRIFsqMcvfyG6Nwgfc07J9nbHt8/MqouE1bXZfiaILqDBpK7BK9MLAAph4mkAWg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.110.1
-      '@sentry/utils': 7.110.1
+      '@sentry/types': 7.111.0
+      '@sentry/utils': 7.111.0
     dev: false
 
-  /@sentry/node@7.110.1:
-    resolution: {integrity: sha512-n6sNzZJ/ChfyCI1FxuGWgloeevC8j2vax3vXM4IZrSIm5hS1d9L2oCJ4HEPuxGUxCkQ1f4kXPcdmNaQsWH0JBw==}
+  /@sentry/node@7.111.0:
+    resolution: {integrity: sha512-bTLZNETT7W89HEk04rwsch02KSpu++Yec/BEyM3AxUNY+ZQ9ZLL/lrNZuCwbe7fURpKoZrvGAhxpPjgs5UcB9w==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.110.1
-      '@sentry/core': 7.110.1
-      '@sentry/types': 7.110.1
-      '@sentry/utils': 7.110.1
+      '@sentry-internal/tracing': 7.111.0
+      '@sentry/core': 7.111.0
+      '@sentry/types': 7.111.0
+      '@sentry/utils': 7.111.0
     dev: false
 
-  /@sentry/types@7.110.1:
-    resolution: {integrity: sha512-sZxOpM5gfyxvJeWVvNpHnxERTnlqcozjqNcIv29SZ6wonlkekmxDyJ3uCuPv85VO54WLyA4uzskPKnNFHacI8A==}
+  /@sentry/types@7.111.0:
+    resolution: {integrity: sha512-Oti4pgQ55+FBHKKcHGu51ZUxO1u52G5iVNK4mbtAN+5ArSCy/2s1H8IDJiOMswn3acfUnCR0oB/QsbEgAPZ26g==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.110.1:
-    resolution: {integrity: sha512-eibLo2m1a7sHkOHxYYmRujr3D7ek2l9sv26F1SLoQBVDF7Afw5AKyzPmtA1D+4M9P/ux1okj7cGj3SaBrVpxXA==}
+  /@sentry/utils@7.111.0:
+    resolution: {integrity: sha512-CB5rz1EgCSwj3xoXogsCZ5pQtfERrURc/ItcCuoaijUhkD0iMq5MCNWMHW3mBsBrqx/Oba+XGvDu0t/5+SWwBg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.110.1
+      '@sentry/types': 7.111.0
     dev: false
 
   /@sinclair/typebox@0.27.8:
@@ -5830,8 +5830,8 @@ packages:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
     dev: false
 
-  /hono@4.2.4:
-    resolution: {integrity: sha512-2T5Ahxh8tT0ISKCrNeA+OIwfD5W4EZ00iIMYBBCuiIivr+sOrZYOphinARSG7wL3nFsY6zkFHMMZbcR9CzEzug==}
+  /hono@4.2.5:
+    resolution: {integrity: sha512-uonJD3i/yy005kQ7bPZRVfG3rejYJwyPqBmPoUGijS4UB/qM+YlrZ7xzSWy+ByDu9buGHUG+f+SKzz03Y6V1Kw==}
     engines: {node: '>=16.0.0'}
     dev: false
 
@@ -6101,8 +6101,8 @@ packages:
       - supports-color
     dev: false
 
-  /ioredis@5.4.0:
-    resolution: {integrity: sha512-lGiiZyWFOskPu3pH4P8+uicHOZHpzYpgfKZFre68wLK6059zBo+KDTQpwxAVibBajKqpcrRJ5k+jl/uNHcCo3A==}
+  /ioredis@5.4.1:
+    resolution: {integrity: sha512-2YZsvl7jopIa1gaePkeMtd9rAcSjOOjPtpcLlOeusyO+XH2SK5ZcT+UCrElPP+WVIInh2TzeI4XW9ENaSLVVHA==}
     engines: {node: '>=12.22.0'}
     dependencies:
       '@ioredis/commands': 1.2.0
@@ -7266,8 +7266,8 @@ packages:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: false
 
-  /msw@2.2.13(typescript@5.4.5):
-    resolution: {integrity: sha512-ljFf1xZsU0b4zv1l7xzEmC6OZA6yD06hcx0H+dc8V0VypaP3HGYJa1rMLjQbBWl32ptGhcfwcPCWDB1wjmsftw==}
+  /msw@2.2.14(typescript@5.4.5):
+    resolution: {integrity: sha512-64i8rNCa1xzDK8ZYsTrVMli05D687jty8+Th+PU5VTbJ2/4P7fkQFVyDQ6ZFT5FrNR8z2BHhbY47fKNvfHrumA==}
     engines: {node: '>=18'}
     hasBin: true
     requiresBuild: true
