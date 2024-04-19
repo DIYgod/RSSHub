@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { load } from 'cheerio';
 import Parser from 'rss-parser';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { exportedForTestingOnly, fetchArticle, finishArticleItem, fixArticleContent, normalizeUrl } from '@/utils/wechat-mp';
+import { exportedForTestingOnly, WeChatMpError, fetchArticle, finishArticleItem, fixArticleContent, normalizeUrl } from '@/utils/wechat-mp';
 const { ExtractMetadata, showTypeMapReverse } = exportedForTestingOnly;
 
 vi.mock('@/utils/request-rewriter', () => ({ default: null }));
@@ -403,6 +403,17 @@ describe('wechat-mp', () => {
         await testFetchArticleFinishArticleItem('/fallback', { setMpNameAsAuthor: true, skipLink: false });
         await testFetchArticleFinishArticleItem('/fallback', { setMpNameAsAuthor: false, skipLink: true });
         await testFetchArticleFinishArticleItem('/fallback', { setMpNameAsAuthor: true, skipLink: true });
+    });
+
+    it('hit_waf', async () => {
+        try {
+            await fetchArticle('https://mp.weixin.qq.com/s/rsshub_test_hit_waf');
+            expect.unreachable('Should throw an error');
+        } catch (error) {
+            expect(error).toBeInstanceOf(WeChatMpError);
+            expect((<WeChatMpError>error).message).toContain('/mp/rsshub_test/waf');
+            expect((<WeChatMpError>error).message).toContain('环境异常');
+        }
     });
 
     it('route_test', async () => {

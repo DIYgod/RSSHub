@@ -31,11 +31,21 @@ import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 
-const MAINTAINERS = ['Rongronggg9'];
+class WeChatMpError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'WeChatMpError';
+    }
+}
 
-const warn = (reason: string, details: string) =>
-    logger.warn(`wechat-mp: ${reason}: ${details},
-consider raise an issue (mentioning ${MAINTAINERS.join(', ')}) with the article URL for further investigation`);
+const MAINTAINERS = ['@Rongronggg9'];
+
+const formatLog = (...params: string[]): string => `wechat-mp: ${params.join(': ')}
+Consider raise an issue (mentioning ${MAINTAINERS.join(', ')}) with the article URL for further investigation`;
+const warn = (...params: string[]) => logger.warn(formatLog(...params));
+const error = (...params: string[]): never => {
+    throw new WeChatMpError(formatLog(...params));
+};
 
 const replaceReturnNewline = (() => {
     const returnRegExp = /\r|\\(r|x0d)/g;
@@ -147,7 +157,7 @@ class ExtractMetadata {
     private static commonMetadataToBeExtracted = {
         showType: this.genExtractFunc('item_show_type', { valuePattern: '\\d+' }),
         realShowType: this.genExtractFunc('real_item_show_type', { valuePattern: '\\d+' }),
-        createTime: this.genExtractFunc('ct', { valuePattern: '\\d+' }),
+        createTime: this.genExtractFunc('ct', { valuePattern: '\\d+', allowNotFound: true }),
         sourceUrl: this.genExtractFunc('msg_source_url', { valuePattern: `https?://[^'"]*`, allowNotFound: true }),
     };
 
@@ -376,18 +386,17 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
 // abtest_cookie, wx_header
 // Known params (temporary link):
 // src, timestamp, ver, signature, new (unessential)
-const normalizeUrl = (url, bypassHostCheck = false) => {
-    const oriUrl = url;
+const normalizeUrl = (url: string, bypassHostCheck = false) => {
     const urlObj = new URL(url);
     if (!bypassHostCheck && urlObj.host !== 'mp.weixin.qq.com') {
-        throw new Error('wechat-mp: URL host must be "mp.weixin.qq.com", but got ' + oriUrl);
+        error('URL host must be "mp.weixin.qq.com"', url);
     }
     urlObj.protocol = 'https:';
     urlObj.hash = ''; // remove hash
-    if (/^\/s\/.+/.test(urlObj.pathname)) {
+    if (urlObj.pathname.startsWith('/s/')) {
         // a short link, just remove all the params
         urlObj.search = '';
-    } else if (/^\/s$/.test(urlObj.pathname)) {
+    } else if (urlObj.pathname === '/s') {
         const biz = urlObj.searchParams.get('__biz');
         const mid = urlObj.searchParams.get('mid') || urlObj.searchParams.get('appmsgid');
         const idx = urlObj.searchParams.get('idx') || urlObj.searchParams.get('itemidx');
@@ -405,11 +414,11 @@ const normalizeUrl = (url, bypassHostCheck = false) => {
                 // a temporary link, remove all unessential params
                 urlObj.search = `?src=${src}&timestamp=${timestamp}&ver=${ver}&signature=${signature}`;
             } else {
-                // unknown link, just let it go
+                warn('unknown URL search parameters', url);
             }
         }
     } else {
-        // IDK what it is, just let it go
+        warn('unknown URL path', url);
     }
     return urlObj.href;
 };
@@ -479,9 +488,11 @@ class PageParsers {
         }
         return page;
     };
-    static dispatch = async ($: CheerioAPI) => {
+    static dispatch = async (html: string, url: string) => {
+        const $ = load(html);
         const commonMetadata = ExtractMetadata.common($);
         let page: Record<string, any>;
+        let pageText: string = '';
         switch (commonMetadata.showType) {
             case 'APP_MSG_PAGE':
                 page = await PageParsers.appMsg($, commonMetadata);
@@ -495,8 +506,16 @@ class PageParsers {
             case 'VIDEO_SHARE_PAGE':
                 page = PageParsers.fallback($, commonMetadata);
                 break;
+            case undefined:
+                pageText = $('body').text().replaceAll(/\s+/g, ' ');
+                if (pageText.length >= 25) {
+                    pageText = pageText.slice(0, 25);
+                    pageText += '...';
+                }
+                error('unknown page, probably due to WAF', pageText, url);
+                return {}; // just to make TypeScript happy, actually UNREACHABLE
             default:
-                warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`);
+                warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`, url);
                 page = PageParsers.fallback($, commonMetadata);
         }
         const locationMetadata = ExtractMetadata.location($);
@@ -528,9 +547,20 @@ class PageParsers {
 const fetchArticle = (url: string, bypassHostCheck: boolean = false) => {
     url = normalizeUrl(url, bypassHostCheck);
     return cache.tryGet(url, async () => {
-        const data = await ofetch(url);
-        const $ = load(data);
-        const page = await PageParsers.dispatch($);
+        let maxRedirects = 5;
+        let raw = await ofetch.raw(url);
+        while ([301, 302, 303, 307, 308].includes(raw.status) && maxRedirects-- > 0) {
+            if (!raw.headers.has('location')) {
+                error('redirect without location', url);
+            }
+            // eslint-disable-next-line no-await-in-loop
+            raw = await ofetch.raw(<string>raw.headers.get('location'));
+        }
+        if ([301, 302, 303, 307, 308].includes(raw.status) && maxRedirects <= 0) {
+            error('too many redirects', url);
+        }
+        // pass the redirected URL to dispatcher for better error logging
+        const page = await PageParsers.dispatch(<string>raw._data, raw.url);
         return { ...page, link: url };
     }) as Promise<{
         title: string;
@@ -582,4 +612,4 @@ const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = fal
 };
 
 const exportedForTestingOnly = { ExtractMetadata, showTypeMapReverse };
-export { exportedForTestingOnly, fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl };
+export { exportedForTestingOnly, WeChatMpError, fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl };
