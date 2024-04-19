@@ -1,4 +1,4 @@
-import { Route, Data } from '@/types';
+import { Route, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { ofetch } from 'ofetch';
@@ -44,7 +44,7 @@ export const route: Route = {
                     title: a.attr('title'),
                 };
             });
-        const items = (await Promise.all(list.map(getFeedItem))) as Data[];
+        const items = (await Promise.all(list.map(getFeedItem))) as DataItem[];
         return {
             title: typeMap[type],
             link: url,
