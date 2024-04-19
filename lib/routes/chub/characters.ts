@@ -42,8 +42,8 @@ async function handler(ctx) {
                     description: `${item.tagline}<br><br>${item.description}<br><br>${item.topics}`,
                     pubDate: parseDate(item.lastActivityAt),
                     link: `${host}/${item.fullPath}`,
-                    author: `${item.fullPath.split('/',1)}`,
-                    enclosure_url: `${item.avatar_url}`,
+                    author: String(item.fullPath.split('/', 1)),
+                    enclosure_url: item.avatar_url,
                     enclosure_type: `image/webp`,
             })),
     };
