@@ -3167,6 +3167,195 @@
       }
     ]
   },
+  "cpcaauto.com": {
+    "_name": "cpcaauto.com",
+    ".": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php"
+        ],
+        "target": "/cpcaauto(_,url)=>{url=new URL(url);const types=url.searchParams.get(\"types\");const id=url.searchParams.get(\"id\");return types?`/${types}${id?`/${id}`:\"\"}`:\"\"}"
+      },
+      {
+        "title": "行业新闻 - 国内乘用车",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=news&anid=10"
+        ],
+        "target": "/cpcaauto/news/news/10"
+      },
+      {
+        "title": "行业新闻 - 进口及国外乘用车",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=news&anid=64"
+        ],
+        "target": "/cpcaauto/news/news/64"
+      },
+      {
+        "title": "行业新闻 - 后市场",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=news&anid=44"
+        ],
+        "target": "/cpcaauto/news/news/44"
+      },
+      {
+        "title": "行业新闻 - 商用车",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=news&anid=62"
+        ],
+        "target": "/cpcaauto/news/news/62"
+      },
+      {
+        "title": "车市解读 - 周度",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=csjd&anid=128"
+        ],
+        "target": "/cpcaauto/news/csjd/128"
+      },
+      {
+        "title": "车市解读 - 月度",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=csjd&anid=129"
+        ],
+        "target": "/cpcaauto/news/csjd/129"
+      },
+      {
+        "title": "车市解读 - 指数",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=csjd&anid=130"
+        ],
+        "target": "/cpcaauto/news/csjd/130"
+      },
+      {
+        "title": "车市解读 - 预测",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=csjd&anid=131"
+        ],
+        "target": "/cpcaauto/news/csjd/131"
+      },
+      {
+        "title": "发布会报告 - 上海市场上牌数",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=bgzl&anid=119"
+        ],
+        "target": "/cpcaauto/news/bgzl/119"
+      },
+      {
+        "title": "发布会报告 - 京城车市",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=bgzl&anid=122"
+        ],
+        "target": "/cpcaauto/news/bgzl/122"
+      },
+      {
+        "title": "发布会报告 - 进口车市场分析",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=bgzl&anid=120"
+        ],
+        "target": "/cpcaauto/news/bgzl/120"
+      },
+      {
+        "title": "发布会报告 - 二手车市场分析",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=bgzl&anid=121"
+        ],
+        "target": "/cpcaauto/news/bgzl/121"
+      },
+      {
+        "title": "发布会报告 - 价格指数",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=bgzl&anid=124"
+        ],
+        "target": "/cpcaauto/news/bgzl/124"
+      },
+      {
+        "title": "发布会报告 - 热点评述",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=bgzl&anid=125"
+        ],
+        "target": "/cpcaauto/news/bgzl/125"
+      },
+      {
+        "title": "发布会报告 - 新能源月报",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=bgzl&anid=126"
+        ],
+        "target": "/cpcaauto/news/bgzl/126"
+      },
+      {
+        "title": "发布会报告 - 商用车月报",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=bgzl&anid=127"
+        ],
+        "target": "/cpcaauto/news/bgzl/127"
+      },
+      {
+        "title": "发布会报告 - 政策分析",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=bgzl&anid=123"
+        ],
+        "target": "/cpcaauto/news/bgzl/123"
+      },
+      {
+        "title": "经济与政策 - 一周经济",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=meeting&anid=46"
+        ],
+        "target": "/cpcaauto/news/meeting/46"
+      },
+      {
+        "title": "经济与政策 - 一周政策",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=meeting&anid=47"
+        ],
+        "target": "/cpcaauto/news/meeting/47"
+      },
+      {
+        "title": "乘联会论坛 - 论坛文章",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=yjsy&anid=49"
+        ],
+        "target": "/cpcaauto/news/yjsy/49"
+      },
+      {
+        "title": "乘联会论坛 - 两会",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=yjsy&anid=111"
+        ],
+        "target": "/cpcaauto/news/yjsy/111"
+      },
+      {
+        "title": "乘联会论坛 - 车展看点",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news.php?types=yjsy&anid=113"
+        ],
+        "target": "/cpcaauto/news/yjsy/113"
+      }
+    ]
+  },
   "cpuid.com": {
     "_name": "CPUID",
     ".": [
