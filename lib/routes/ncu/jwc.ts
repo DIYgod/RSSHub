@@ -46,7 +46,6 @@ async function handler() {
                 const date = el.text().split('】')[0].replace('【', '').trim();
                 const title = linkEl.attr('title');
                 const link = `${baseUrl}/${linkEl.attr('href')}`;
-                const month = date.slice(0, 2);
 
                 return {
                     title,
