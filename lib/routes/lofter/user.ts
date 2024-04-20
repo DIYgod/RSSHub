@@ -18,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'User',
-    maintainers: ['hondajojo', 'nczitzk'],
+    maintainers: ['hondajojo', 'nczitzk', 'LucunJi'],
     handler,
 };
 
@@ -34,7 +34,7 @@ async function handler(ctx) {
     const response = await got({
         method: 'post',
         url: `http://api.lofter.com/v2.0/blogHomePage.api?product=lofter-iphone-10.0.0`,
-        form: {
+        body: new URLSearchParams({
             blogdomain: rootUrl,
             checkpwd: '1',
             following: '0',
@@ -44,7 +44,7 @@ async function handler(ctx) {
             offset: '0',
             postdigestnew: '1',
             supportposttypes: '1,2,3,4,5,6',
-        },
+        }),
     });
 
     if (!response.data.response || response.data.response.posts.length === 0) {
