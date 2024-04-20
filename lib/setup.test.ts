@@ -158,8 +158,19 @@ var ct = "${1_636_626_300}";
     http.get(`https://mp.weixin.qq.com/s?__biz=rsshub_test&mid=1&idx=1&sn=1`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`)),
     http.get(`https://mp.weixin.qq.com/mp/rsshub_test/waf`, () =>
         HttpResponse.text(
-            `<html><body>
+            `<html>
+<head>
+<title>Title</title>
+<script>console.log</script>
+</head>
+<body class="zh_CN " ontouchstart="">
+<script>console.log</script>
+<style>.style{}</style>
 <div class="weui-msg">
+  <div id="tips" style="display:none;" class="top_tips warning"></div>
+        <div class="weui-msg__icon-area">
+      <i class="weui-icon-info-circle weui-icon_msg"></i>
+    </div>
     <div class="weui-msg__text-area pc-area">
         <h2 class="weui-msg__title">环境异常</h2>
         <p class="weui-msg__desc">当前环境异常，完成验证后即可继续访问。</p>

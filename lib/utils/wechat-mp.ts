@@ -507,8 +507,9 @@ class PageParsers {
                 page = PageParsers.fallback($, commonMetadata);
                 break;
             case undefined:
-                pageText = $('body').text().replaceAll(/\s+/g, ' ');
-                if (pageText.length >= 25) {
+                $('script, style').remove();
+                pageText = $('title, body').text().replaceAll(/\s+/g, ' ').trim();
+                if (pageText.length >= 25 + '...'.length) {
                     pageText = pageText.slice(0, 25);
                     pageText += '...';
                 }

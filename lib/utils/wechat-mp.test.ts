@@ -411,7 +411,10 @@ describe('wechat-mp', () => {
             expect.unreachable('Should throw an error');
         } catch (error) {
             expect(error).toBeInstanceOf(WeChatMpError);
+            expect((<WeChatMpError>error).message).not.toContain('console.log');
+            expect((<WeChatMpError>error).message).not.toContain('.style');
             expect((<WeChatMpError>error).message).toContain('/mp/rsshub_test/waf');
+            expect((<WeChatMpError>error).message).toContain('Title');
             expect((<WeChatMpError>error).message).toContain('环境异常');
         }
     });
