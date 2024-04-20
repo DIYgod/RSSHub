@@ -32,28 +32,28 @@ export const route: Route = {
     maintainers: ['renzhexigua'],
     handler,
     description: `| 版块           | category  |
-    | -------------- | --------- |
-    | 智能设备       | iot       |
-    | Android 安全   | android   |
-    | iOS 安全       | ios       |
-    | HarmonyOS 安全 | harmonyos |
-    | 软件逆向       | re        |
-    | 编程技术       | coding    |
-    | 加壳脱壳       | unpack    |
-    | 密码应用       | crypto    |
-    | 二进制漏洞     | vuln      |
-    | CTF 对抗       | ctf       |
-    | Pwn            | pwn       |
-    | WEB 安全       | web       |
-    | 茶余饭后       | chat      |
-    | 极客空间       | geekzone  |
-    | 外文翻译       | translate |
-    | 全站           | all       |
-    
-    | 类型     | type   |
-    | -------- | ------ |
-    | 最新主题 | latest |
-    | 精华主题 | digest |`,
+  | -------------- | --------- |
+  | 智能设备       | iot       |
+  | Android 安全   | android   |
+  | iOS 安全       | ios       |
+  | HarmonyOS 安全 | harmonyos |
+  | 软件逆向       | re        |
+  | 编程技术       | coding    |
+  | 加壳脱壳       | unpack    |
+  | 密码应用       | crypto    |
+  | 二进制漏洞     | vuln      |
+  | CTF 对抗       | ctf       |
+  | Pwn            | pwn       |
+  | WEB 安全       | web       |
+  | 茶余饭后       | chat      |
+  | 极客空间       | geekzone  |
+  | 外文翻译       | translate |
+  | 全站           | all       |
+
+  | 类型     | type   |
+  | -------- | ------ |
+  | 最新主题 | latest |
+  | 精华主题 | digest |`,
 };
 
 const timeDiff = 1000 * 60 * 60 * 24 * 3;
