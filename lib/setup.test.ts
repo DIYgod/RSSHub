@@ -185,6 +185,8 @@ var ct = "${1_636_626_300}";
         )
     ),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test_hit_waf`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/mp/rsshub_test/waf`)),
+    http.get(`https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location`, () => HttpResponse.text('', { status: 302 })),
+    http.get(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`)),
     http.get(`http://rsshub.test/headers`, ({ request }) =>
         HttpResponse.json({
             ...Object.fromEntries(request.headers.entries()),

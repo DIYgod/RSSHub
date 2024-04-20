@@ -1,13 +1,15 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi, afterEach } from 'vitest';
 import { load } from 'cheerio';
 import Parser from 'rss-parser';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { exportedForTestingOnly, WeChatMpError, fetchArticle, finishArticleItem, fixArticleContent, normalizeUrl } from '@/utils/wechat-mp';
-const { ExtractMetadata, showTypeMapReverse } = exportedForTestingOnly;
+const { toggleWerror, ExtractMetadata, showTypeMapReverse } = exportedForTestingOnly;
 
 vi.mock('@/utils/request-rewriter', () => ({ default: null }));
 const { default: app } = await import('@/app');
 const parser = new Parser();
+
+afterEach(() => toggleWerror(false));
 
 const expectedItem: {
     title: string;
@@ -324,8 +326,20 @@ describe('wechat-mp', () => {
         expect(normalizeUrl(somethingElseWithHash.replace('https://', 'http://'))).toBe(somethingElse);
 
         const notWechatMp = 'https://im.not.wechat.mp/and/an/error/is/expected';
-        expect(() => normalizeUrl(notWechatMp)).toThrow();
+        expect(() => normalizeUrl(notWechatMp)).toThrow('URL host must be "mp.weixin.qq.com"');
         expect(normalizeUrl(notWechatMp, true)).toBe(notWechatMp);
+
+        const unknownSearchParam = mpArticleRoot + '?unknown=param';
+        toggleWerror(false);
+        expect(normalizeUrl(unknownSearchParam)).toBe(unknownSearchParam);
+        toggleWerror(true);
+        expect(() => normalizeUrl(unknownSearchParam)).toThrow('WarningAsError: unknown URL search parameters');
+
+        const unknownPath = mpRoot + '/unknown/path';
+        toggleWerror(false);
+        expect(normalizeUrl(unknownPath)).toBe(unknownPath);
+        toggleWerror(true);
+        expect(() => normalizeUrl(unknownPath, true)).toThrow('WarningAsError: unknown URL path');
     });
 
     it('fetchArticle_&_finishArticleItem_appMsg', async () => {
@@ -413,10 +427,16 @@ describe('wechat-mp', () => {
             expect(error).toBeInstanceOf(WeChatMpError);
             expect((<WeChatMpError>error).message).not.toContain('console.log');
             expect((<WeChatMpError>error).message).not.toContain('.style');
+            expect((<WeChatMpError>error).message).toContain('unknown page');
             expect((<WeChatMpError>error).message).toContain('/mp/rsshub_test/waf');
             expect((<WeChatMpError>error).message).toContain('Title');
             expect((<WeChatMpError>error).message).toContain('环境异常');
         }
+    });
+
+    it('redirect', () => {
+        expect(fetchArticle('https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location')).rejects.toThrow('redirect without location');
+        expect(fetchArticle('https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect')).rejects.toThrow('too many redirects');
     });
 
     it('route_test', async () => {

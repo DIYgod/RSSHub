@@ -42,10 +42,17 @@ const MAINTAINERS = ['@Rongronggg9'];
 
 const formatLog = (...params: string[]): string => `wechat-mp: ${params.join(': ')}
 Consider raise an issue (mentioning ${MAINTAINERS.join(', ')}) with the article URL for further investigation`;
-const warn = (...params: string[]) => logger.warn(formatLog(...params));
+let warn = (...params: string[]) => logger.warn(formatLog(...params));
 const error = (...params: string[]): never => {
     throw new WeChatMpError(formatLog(...params));
 };
+const toggleWerror = (() => {
+    const onFunc = (...params: string[]) => error('WarningAsError', ...params);
+    const offFunc = warn;
+    return (on: boolean) => {
+        warn = on ? onFunc : offFunc;
+    };
+})();
 
 const replaceReturnNewline = (() => {
     const returnRegExp = /\r|\\(r|x0d)/g;
@@ -612,5 +619,5 @@ const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = fal
     return item;
 };
 
-const exportedForTestingOnly = { ExtractMetadata, showTypeMapReverse };
+const exportedForTestingOnly = { toggleWerror, ExtractMetadata, showTypeMapReverse };
 export { exportedForTestingOnly, WeChatMpError, fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl };
