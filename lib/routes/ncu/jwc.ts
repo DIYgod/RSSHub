@@ -51,7 +51,7 @@ async function handler() {
                 return {
                     title,
                     link,
-                    pubDate: parseDate(date, 'MM-DD').setFullYear(month < 6 ? new Date().getFullYear() - 1 : new Date().getFullYear()),
+                    pubDate: parseDate(date, 'MM-DD').setFullYear(new Date().getFullYear()),
                 };
             }),
     };
