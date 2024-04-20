@@ -27,9 +27,9 @@ export const route: Route = {
     },
     name: '资讯, 快讯, 用户文章, 主题文章, 专题文章, 搜索文章, 搜索快讯',
     maintainers: ['nczitzk', 'fashioncj'],
-    description: `| 最新资讯频道    | 快讯     | 推荐资讯｜生活｜房产｜职场｜搜索文章｜搜索快讯｜
-    | ------- | -------- ｜ -------- ｜ -------- ｜ -------- ｜ --------｜ -------- ｜ -------- ｜
-    | news | newsflashes ｜ recommend ｜ life ｜ estate ｜ workplace ｜ search/articles/关键词 ｜ search/articles/关键词 ｜`,
+    description: `| 最新资讯频道 | 快讯 | 推荐资讯 | 生活 | 房产 | 职场 | 搜索文章 | 搜索快讯 |
+  | ------- | -------- | -------- | -------- | -------- | --------| -------- | -------- |
+  | news | newsflashes | recommend | life | estate | workplace | search/articles/关键词 | search/articles/关键词 |`,
     handler,
 };
 
