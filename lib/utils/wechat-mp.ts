@@ -544,6 +544,20 @@ class PageParsers {
     };
 }
 
+const redirectHelper = async (url: string, maxRedirects: number = 5) => {
+    maxRedirects--;
+    const raw = await ofetch.raw(url);
+    if ([301, 302, 303, 307, 308].includes(raw.status)) {
+        if (!raw.headers.has('location')) {
+            error('redirect without location', url);
+        } else if (maxRedirects <= 0) {
+            error('too many redirects', url);
+        }
+        return await redirectHelper(<string>raw.headers.get('location'), maxRedirects);
+    }
+    return raw;
+};
+
 /**
  * Fetch article and its metadata from WeChat MP (mp.weixin.qq.com).
  *
@@ -555,20 +569,9 @@ class PageParsers {
 const fetchArticle = (url: string, bypassHostCheck: boolean = false) => {
     url = normalizeUrl(url, bypassHostCheck);
     return cache.tryGet(url, async () => {
-        let maxRedirects = 5;
-        let raw = await ofetch.raw(url);
-        while ([301, 302, 303, 307, 308].includes(raw.status) && maxRedirects-- > 0) {
-            if (!raw.headers.has('location')) {
-                error('redirect without location', url);
-            }
-            // eslint-disable-next-line no-await-in-loop
-            raw = await ofetch.raw(<string>raw.headers.get('location'));
-        }
-        if ([301, 302, 303, 307, 308].includes(raw.status) && maxRedirects <= 0) {
-            error('too many redirects', url);
-        }
+        const raw = await redirectHelper(url);
         // pass the redirected URL to dispatcher for better error logging
-        const page = await PageParsers.dispatch(<string>raw._data, raw.url);
+        const page = await PageParsers.dispatch(raw._data, raw.url);
         return { ...page, link: url };
     }) as Promise<{
         title: string;
