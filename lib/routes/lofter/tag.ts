@@ -18,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Tag',
-    maintainers: ['hoilc', 'nczitzk'],
+    maintainers: ['hoilc', 'nczitzk', 'LucunJi'],
     handler,
     description: `| new  | date | week | month | total |
   | ---- | ---- | ---- | ----- | ----- |

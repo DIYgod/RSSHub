@@ -18,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'User',
-    maintainers: ['hondajojo', 'nczitzk'],
+    maintainers: ['hondajojo', 'nczitzk', 'LucunJi'],
     handler,
 };
 
