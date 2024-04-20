@@ -34,6 +34,7 @@ export const route: Route = {
 | 快照                       | snapshot    |
 | Alpha 及更早的版本         | old_alpha  |
 | Beta 版                    | old_beta   |
+
 | Target                     | linkType    |
 | -------------------------- | --------    |
 | minecraft.net              | official    |
