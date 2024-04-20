@@ -33544,7 +33544,8 @@
         "name": "Tag",
         "maintainers": [
           "hoilc",
-          "nczitzk"
+          "nczitzk",
+          "LucunJi"
         ],
         "description": "| new  | date | week | month | total |\n  | ---- | ---- | ---- | ----- | ----- |\n  | 最新 | 日榜 | 周榜 | 月榜  | 总榜  |",
         "location": "tag.ts"
@@ -33569,7 +33570,8 @@
         "name": "User",
         "maintainers": [
           "hondajojo",
-          "nczitzk"
+          "nczitzk",
+          "LucunJi"
         ],
         "location": "user.ts"
       }
