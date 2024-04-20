@@ -1,0 +1,5 @@
+{{ if image?.src }}
+  <figure>
+    <img src="{{ image.src }}">
+  </figure>
+{{ /if }}

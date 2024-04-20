@@ -1,5 +1,5 @@
 .DS_Store
-.env
+.env*
 .eslintcache
 .idea
 .log
@@ -19,6 +19,7 @@ coverage
 docs/.vuepress/dist
 node_modules
 tmp
+dist
 
 Session.vim
 combined.log
@@ -30,4 +31,4 @@ package-lock.json
 yarn.lock
 yarn-error.log
 
-scripts/twitter-token/accounts.txt
+scripts/twitter-token/accounts.*
