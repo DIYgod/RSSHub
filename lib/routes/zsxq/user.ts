@@ -44,11 +44,9 @@ async function handler(ctx: Context): Promise<Data> {
         count = 30;
     }
 
-    const userInfoResponse = await customFetch<UserInfoResponse>(`/users/${uid}`);
+    const userInfo = await customFetch<UserInfoResponse>(`/users/${uid}`);
 
     const { topics } = await customFetch<TopicsResponse>(`/users/${uid}/topics/footprint?count=${count}`);
-
-    const userInfo = userInfoResponse;
 
     return {
         title: `知识星球 - ${userInfo.user.name}`,
