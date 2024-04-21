@@ -8,10 +8,11 @@ import { customFetch, generateTopicDataItem } from './utils';
 export const route: Route = {
     name: '星球',
     categories: ['social-media'],
-    path: '/group/:id',
+    path: '/group/:id/:scope?',
     example: '/zsxq/group/88855458825252',
     parameters: {
         id: '星球id，从网页端url中获取',
+        scope: '栏目分类，默认为"all"，见下表',
     },
     maintainers: ['KarasuShin'],
     radar: [
@@ -29,10 +30,14 @@ export const route: Route = {
         ],
     },
     handler,
+    description: `| all  | digests | by_owner | questions | tasks |
+    | ---- | ------ | --------- | -------- | ------ |
+    | 最新 | 精华    | 只看星主    | 问答      | 作业   |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {
     const groupId = ctx.req.param('id');
+    const scope = ctx.req.param('scope') ?? 'all';
     const accessToken = config.zsxq.accessToken;
 
     if (!accessToken) {
@@ -46,7 +51,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const { group } = await customFetch<GroupInfoResponse>(`/groups/${groupId}`);
 
-    const { topics } = await customFetch<TopicsResponse>(`/groups/${groupId}/topics?scope=all&count=${count}`);
+    const { topics } = await customFetch<TopicsResponse>(`/groups/${groupId}/topics?scope=${scope}&count=${count}`);
 
     return {
         title: `知识星球 - ${group.name}`,

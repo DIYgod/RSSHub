@@ -2,6 +2,7 @@ import got from '@/utils/got';
 import type { TopicImage, Topic, BasicResponse } from './types';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
+import type { DataItem } from '@/types';
 
 export async function customFetch<T extends BasicResponse<any>>(path: string, retryCount = 0): Promise<T['resp_data']> {
     const apiUrl = 'https://api.zsxq.com/v2';
@@ -33,27 +34,35 @@ function parseTopicContent(text: string = '', images: TopicImage[] = []) {
     return result;
 }
 
-export function generateTopicDataItem(topics: Topic[]) {
+export function generateTopicDataItem(topics: Topic[]): DataItem[] {
     return topics.map((topic) => {
         let description: string | undefined;
         let title = '';
         switch (topic.type) {
             case 'talk':
-                title = topic.talk?.text?.split('\n')[0] ?? '';
+                title = topic.talk?.text?.split('\n')[0] ?? '文章';
                 description = parseTopicContent(topic.talk.text, topic.talk?.images);
                 break;
             case 'q&a':
-                title = 'Q&A';
+                title = topic.question?.text?.split('\n')[0] ?? '问答';
                 description = parseTopicContent(topic.question.text, topic.question?.images);
+                if (topic.answered) {
+                    description += '<br><br>';
+                    description += parseTopicContent(topic.answer?.text, topic.answer?.images);
+                }
                 break;
             case 'task':
-                title = topic.task?.text?.split('\n')[0] ?? '';
+                title = topic.task?.text?.split('\n')[0] ?? '作业';
                 description = parseTopicContent(topic.task.text, topic.task?.images);
+                break;
+            case 'solution':
+                title = topic.solution?.text?.split('\n')[0] ?? '写作业';
+                description = parseTopicContent(topic.solution.text, topic.solution?.images);
                 break;
             default:
         }
         return {
-            title,
+            title: topic.title ?? title,
             description,
             pubDate: parseDate(topic.create_time),
         };

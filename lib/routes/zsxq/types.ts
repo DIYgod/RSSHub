@@ -35,6 +35,7 @@ interface BasicTopic {
         liked: false;
         subscribed: false;
     };
+    title?: string;
 }
 
 interface TalkTopic extends BasicTopic {
@@ -45,9 +46,9 @@ interface TalkTopic extends BasicTopic {
     };
 }
 
-export interface AnswerTopic extends BasicTopic {
+export interface QATopic extends BasicTopic {
     type: 'q&a';
-    answer: {
+    answer?: {
         owner: {
             avatar_url: string;
             description: string;
@@ -55,7 +56,8 @@ export interface AnswerTopic extends BasicTopic {
             name: string;
             user_id: number;
         };
-        text: string;
+        text?: string;
+        images?: TopicImage[];
     };
     answered: boolean;
     question: {
@@ -69,6 +71,15 @@ interface TaskTopic extends BasicTopic {
     task: {
         images?: TopicImage[];
         text?: string;
+    };
+}
+
+interface SolutionTopic extends BasicTopic {
+    type: 'solution';
+    solution: {
+        task_id: number;
+        text?: string;
+        images?: TopicImage[];
     };
 }
 
@@ -127,7 +138,7 @@ export interface TopicImage {
     type: string;
 }
 
-export type Topic = TalkTopic | AnswerTopic | TaskTopic;
+export type Topic = TalkTopic | QATopic | TaskTopic | SolutionTopic;
 
 export type UserInfoResponse = BasicResponse<UserInfo>;
 
