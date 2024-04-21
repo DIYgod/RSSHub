@@ -28,7 +28,7 @@ function parseTopicContent(text: string = '', images: TopicImage[] = []) {
     result = result.replaceAll(/<e type="web" href="(.*?)" title="(.*?)" \/>/g, (_, p1, p2) => `<a href=${decodeURIComponent(p1)}>${decodeURIComponent(p2)}</a>`);
     result = result.replaceAll(/<e type="hashtag".*?title="(.*?)" \/>/g, (_, p1) => {
         const title = decodeURIComponent(p1);
-        return `<span>${title}</a>`;
+        return `<span>${title}</span>`;
     });
     result += images.map((image) => `<img src="${image.original?.url ?? image.large?.url ?? image.thumbnail?.url}">`).join('<br>');
     return result;
