@@ -529,10 +529,13 @@ class PageParsers {
                     pageTextShort = pageText.slice(0, 25);
                     pageTextShort += '...';
                 }
-                if (new URL(url).pathname.includes('captcha') || pageText.includes('环境异常')) {
+                if (pageText.includes('已被发布者删除')) {
+                    errorNoMention('deleted by author', pageTextShort, url);
+                } else if (new URL(url).pathname.includes('captcha') || pageText.includes('环境异常')) {
                     errorNoMention('request blocked by WAF', pageTextShort, url);
+                } else {
+                    error('unknown page, probably due to WAF', pageTextShort, url);
                 }
-                error('unknown page, probably due to WAF', pageTextShort, url);
                 return {}; // just to make TypeScript happy, actually UNREACHABLE
             default:
                 warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`, url);

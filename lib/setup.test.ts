@@ -201,6 +201,22 @@ Unknown paragraph
 </body></html>`
         )
     ),
+    http.get(`https://mp.weixin.qq.com/s/deleted_page`, () =>
+        HttpResponse.text(
+            `<html>
+<head>
+<title>Title</title>
+<script>console.log</script>
+</head>
+<body class="zh_CN " ontouchstart="">
+<script>console.log</script>
+<style>.style{}</style>
+<p>
+该内容已被发布者删除
+</p>
+</body></html>`
+        )
+    ),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location`, () => HttpResponse.text('', { status: 302 })),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`)),
     http.get(`http://rsshub.test/headers`, ({ request }) =>

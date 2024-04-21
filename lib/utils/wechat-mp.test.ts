@@ -454,6 +454,23 @@ describe('wechat-mp', () => {
         }
     });
 
+    it('deleted_page', async () => {
+        const deletedPageUrl = 'https://mp.weixin.qq.com/s/deleted_page';
+
+        try {
+            await fetchArticle(deletedPageUrl);
+            expect.unreachable('Should throw an error');
+        } catch (error) {
+            expect(error).toBeInstanceOf(WeChatMpError);
+            expect((<WeChatMpError>error).message).not.toContain('console.log');
+            expect((<WeChatMpError>error).message).not.toContain('.style');
+            expect((<WeChatMpError>error).message).not.toContain('Consider raise an issue');
+            expect((<WeChatMpError>error).message).toContain('deleted by author:');
+            expect((<WeChatMpError>error).message).toContain('Title 该内容已被发布者删除');
+            expect((<WeChatMpError>error).message).toContain(deletedPageUrl);
+        }
+    });
+
     it('redirect', () => {
         expect(fetchArticle('https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location')).rejects.toThrow('redirect without location');
         expect(fetchArticle('https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect')).rejects.toThrow('too many redirects');
