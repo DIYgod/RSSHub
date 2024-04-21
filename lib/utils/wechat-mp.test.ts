@@ -340,6 +340,9 @@ describe('wechat-mp', () => {
         expect(normalizeUrl(unknownPath)).toBe(unknownPath);
         toggleWerror(true);
         expect(() => normalizeUrl(unknownPath, true)).toThrow('WarningAsError: unknown URL path');
+
+        const ampEscapedUrl = longUrl.replaceAll('&', '&amp;');
+        expect(normalizeUrl(ampEscapedUrl)).toBe(longUrlShortened);
     });
 
     it('fetchArticle_&_finishArticleItem_appMsg', async () => {

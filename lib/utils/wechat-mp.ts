@@ -394,6 +394,10 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
 // Known params (temporary link):
 // src, timestamp, ver, signature, new (unessential)
 const normalizeUrl = (url: string, bypassHostCheck = false) => {
+    const oriUrl = url;
+    // already seen some weird urls with `&` escaped as `&amp;`, so fix it
+    // calling fixUrl should always be safe since having `&amp;` or `\x26` in a URL is meaningless
+    url = fixUrl(url);
     const urlObj = new URL(url);
     if (!bypassHostCheck && urlObj.host !== 'mp.weixin.qq.com') {
         error('URL host must be "mp.weixin.qq.com"', url);
@@ -421,11 +425,11 @@ const normalizeUrl = (url: string, bypassHostCheck = false) => {
                 // a temporary link, remove all unessential params
                 urlObj.search = `?src=${src}&timestamp=${timestamp}&ver=${ver}&signature=${signature}`;
             } else {
-                warn('unknown URL search parameters', url);
+                warn('unknown URL search parameters', oriUrl);
             }
         }
     } else {
-        warn('unknown URL path', url);
+        warn('unknown URL path', oriUrl);
     }
     return urlObj.href;
 };
