@@ -4,11 +4,10 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import { ofetch } from 'ofetch';
 
 const languages = {
     arabic: {
@@ -45,12 +44,8 @@ async function handler(ctx) {
     const rootUrl = languages[language].rootUrl;
     const currentUrl = `${rootUrl}/${isRSS ? languages[language].rssUrl : params.join('/')}`;
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-
-    const $ = load(response.data);
+    const response = await ofetch(currentUrl);
+    const $ = load(response);
 
     let items = isRSS
         ? response.data.match(new RegExp('<link>' + rootUrl + '/(.*?)</link>', 'g')).map((item) => ({
@@ -69,19 +64,27 @@ async function handler(ctx) {
     items = await Promise.all(
         items.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50).map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+                const detailResponse = await ofetch(item.link);
 
-                const content = load(detailResponse.data);
+                const content = load(detailResponse);
 
                 content('.more-on').parent().remove();
                 content('.responsive-image img').removeAttr('srcset');
+                let pubDate;
+
+                const datePublished = detailResponse.match(/"datePublished": ?"(.*?)",/);
+                if (datePublished && datePublished.length > 1) {
+                    pubDate = detailResponse.match(/"datePublished": ?"(.*?)",/)[1];
+                } else {
+                    // uploadDate replaces datePublished for video articles
+                    const uploadDate = detailResponse.match(/"uploadDate": ?"(.*?)",/)[1];
+
+                    pubDate = uploadDate && uploadDate.length > 1 ? uploadDate : content('div.date-simple > span:nth-child(2)').text();
+                }
 
                 item.title = content('h1').first().text();
                 item.author = content('.author').text();
-                item.pubDate = parseDate(detailResponse.data.match(/"datePublished": ?"(.*?)",/)[1]);
+                item.pubDate = pubDate;
                 item.description = art(path.join(__dirname, 'templates/description.art'), {
                     image: content('.article-featured-image').html(),
                     description: content('.wysiwyg').html(),
