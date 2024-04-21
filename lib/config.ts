@@ -298,6 +298,9 @@ export type Config = {
     zodgame: {
         cookie?: string;
     };
+    zsxq: {
+        accessToken?: string;
+    };
 };
 
 const value: Config | Record<string, any> = {};
@@ -650,6 +653,9 @@ const calculateValue = () => {
         },
         zodgame: {
             cookie: envs.ZODGAME_COOKIE,
+        },
+        zsxq: {
+            accessToken: envs.ZSXQ_ACCESS_TOKEN,
         },
     };
 
