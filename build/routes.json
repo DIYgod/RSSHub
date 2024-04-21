@@ -65426,6 +65426,74 @@
     "name": "赵容部落",
     "url": "zrblog.net"
   },
+  "zsxq": {
+    "routes": {
+      "/group/:id/:scope?": {
+        "name": "星球",
+        "categories": [
+          "social-media"
+        ],
+        "path": "/group/:id/:scope?",
+        "example": "/zsxq/group/88855458825252",
+        "parameters": {
+          "id": "星球id，从网页端url中获取",
+          "scope": "栏目分类，默认为\"all\"，见下表"
+        },
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "radar": [
+          {
+            "source": [
+              "wx.zsxq.com/dweb2/index/group/:id"
+            ]
+          }
+        ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ZSXQ_ACCESS_TOKEN",
+              "description": "知识星球访问令牌,获取方式：\n1. 登录知识星球网页版\n2. 打开浏览器开发者工具，切换到 Application 面板\n3. 点击侧边栏中的Storage -> Cookies -> https://wx.zsxq.com\n4. 复制 Cookie 中的 zsxq_access_token 值"
+            }
+          ]
+        },
+        "description": "| all  | digests | by_owner | questions | tasks |\n    | ---- | ------ | --------- | -------- | ------ |\n    | 最新 | 精华    | 只看星主    | 问答      | 作业   |",
+        "location": "group.ts"
+      },
+      "/user/:id": {
+        "name": "用户足迹",
+        "categories": [
+          "social-media"
+        ],
+        "path": "/user/:id",
+        "example": "/zsxq/user/2414218251",
+        "parameters": {
+          "id": "用户id，从网页端url中获取"
+        },
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "radar": [
+          {
+            "source": [
+              "wx.zsxq.com/dweb2/index/footprint/:id"
+            ]
+          }
+        ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ZSXQ_ACCESS_TOKEN",
+              "description": "知识星球访问令牌,获取方式：\n1. 登录知识星球网页版\n2. 打开浏览器开发者工具，切换到 Application 面板\n3. 点击侧边栏中的Storage -> Cookies -> https://wx.zsxq.com\n4. 复制 Cookie 中的 zsxq_access_token 值"
+            }
+          ]
+        },
+        "location": "user.ts"
+      }
+    },
+    "name": "知识星球",
+    "url": "zsxq.com"
+  },
   "zuel": {
     "routes": {
       "/notice": {

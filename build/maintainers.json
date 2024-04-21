@@ -6577,6 +6577,12 @@
   "/zrblog/": [
     "cnkmmk"
   ],
+  "/zsxq/group/:id/:scope?": [
+    "KarasuShin"
+  ],
+  "/zsxq/user/:id": [
+    "KarasuShin"
+  ],
   "/zuel/notice": [
     "nczitzk"
   ],
