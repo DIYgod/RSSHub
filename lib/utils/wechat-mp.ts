@@ -45,10 +45,14 @@ const formatLog = (...params: string[]): string => `${formatLogNoMention(...para
 Consider raise an issue (mentioning ${MAINTAINERS.join(', ')}) with the article URL for further investigation`;
 let warn = (...params: string[]) => logger.warn(formatLog(...params));
 const error = (...params: string[]): never => {
-    throw new WeChatMpError(formatLog(...params));
+    const msg = formatLog(...params);
+    logger.error(msg);
+    throw new WeChatMpError(msg);
 };
 const errorNoMention = (...params: string[]): never => {
-    throw new WeChatMpError(formatLogNoMention(...params));
+    const msg = formatLogNoMention(...params);
+    logger.error(msg);
+    throw new WeChatMpError(msg);
 };
 const toggleWerror = (() => {
     const onFunc = (...params: string[]) => error('WarningAsError', ...params);
