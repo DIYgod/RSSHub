@@ -40,11 +40,15 @@ class WeChatMpError extends Error {
 
 const MAINTAINERS = ['@Rongronggg9'];
 
-const formatLog = (...params: string[]): string => `wechat-mp: ${params.join(': ')}
+const formatLogNoMention = (...params: string[]): string => `wechat-mp: ${params.join(': ')}`;
+const formatLog = (...params: string[]): string => `${formatLogNoMention(...params)}
 Consider raise an issue (mentioning ${MAINTAINERS.join(', ')}) with the article URL for further investigation`;
 let warn = (...params: string[]) => logger.warn(formatLog(...params));
 const error = (...params: string[]): never => {
     throw new WeChatMpError(formatLog(...params));
+};
+const errorNoMention = (...params: string[]): never => {
+    throw new WeChatMpError(formatLogNoMention(...params));
 };
 const toggleWerror = (() => {
     const onFunc = (...params: string[]) => error('WarningAsError', ...params);
@@ -503,7 +507,7 @@ class PageParsers {
         const $ = load(html);
         const commonMetadata = ExtractMetadata.common($);
         let page: Record<string, any>;
-        let pageText: string = '';
+        let pageText: string, pageTextShort: string;
         switch (commonMetadata.showType) {
             case 'APP_MSG_PAGE':
                 page = await PageParsers.appMsg($, commonMetadata);
@@ -520,11 +524,15 @@ class PageParsers {
             case undefined:
                 $('script, style').remove();
                 pageText = $('title, body').text().replaceAll(/\s+/g, ' ').trim();
+                pageTextShort = pageText.slice(0, 25);
                 if (pageText.length >= 25 + '...'.length) {
-                    pageText = pageText.slice(0, 25);
-                    pageText += '...';
+                    pageTextShort = pageText.slice(0, 25);
+                    pageTextShort += '...';
                 }
-                error('unknown page, probably due to WAF', pageText, url);
+                if (new URL(url).pathname.includes('captcha') || pageText.includes('环境异常')) {
+                    errorNoMention('request blocked by WAF', pageTextShort, url);
+                }
+                error('unknown page, probably due to WAF', pageTextShort, url);
                 return {}; // just to make TypeScript happy, actually UNREACHABLE
             default:
                 warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`, url);

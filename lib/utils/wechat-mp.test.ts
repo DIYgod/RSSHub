@@ -430,10 +430,27 @@ describe('wechat-mp', () => {
             expect(error).toBeInstanceOf(WeChatMpError);
             expect((<WeChatMpError>error).message).not.toContain('console.log');
             expect((<WeChatMpError>error).message).not.toContain('.style');
-            expect((<WeChatMpError>error).message).toContain('unknown page');
+            expect((<WeChatMpError>error).message).not.toContain('Consider raise an issue');
+            expect((<WeChatMpError>error).message).toContain('request blocked by WAF:');
             expect((<WeChatMpError>error).message).toContain('/mp/rsshub_test/waf');
             expect((<WeChatMpError>error).message).toContain('Title');
             expect((<WeChatMpError>error).message).toContain('环境异常');
+        }
+    });
+
+    it('unknown_page', async () => {
+        const unknownPageUrl = 'https://mp.weixin.qq.com/s/unknown_page';
+        try {
+            await fetchArticle(unknownPageUrl);
+            expect.unreachable('Should throw an error');
+        } catch (error) {
+            expect(error).toBeInstanceOf(WeChatMpError);
+            expect((<WeChatMpError>error).message).not.toContain('console.log');
+            expect((<WeChatMpError>error).message).not.toContain('.style');
+            expect((<WeChatMpError>error).message).toContain('Consider raise an issue');
+            expect((<WeChatMpError>error).message).toContain('unknown page,');
+            expect((<WeChatMpError>error).message).toContain('Title Unknown paragraph');
+            expect((<WeChatMpError>error).message).toContain(unknownPageUrl);
         }
     });
 
