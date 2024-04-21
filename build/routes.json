@@ -8654,6 +8654,37 @@
     "name": "北京邮电大学",
     "url": "bupt.edu.cn"
   },
+  "byau": {
+    "routes": {
+      "/news/:type_id": {
+        "path": "/news/:type_id",
+        "categories": [
+          "university"
+        ],
+        "example": "/byau/news/3674",
+        "parameters": {
+          "type_id": "栏目类型(从菜单栏获取对应 ID)"
+        },
+        "radar": [
+          {
+            "source": [
+              "xinwen.byau.edu.cn/:type_id/list.htm"
+            ],
+            "target": "/news/:type_id"
+          }
+        ],
+        "name": "新闻网",
+        "maintainers": [
+          "ueiu"
+        ],
+        "url": "xinwen.byau.edu.cn",
+        "description": "| 学校要闻 | 校园动态 |\n  | ---- | ----------- |\n  | 3674 | 3676 |",
+        "location": "xinwen/index.ts"
+      }
+    },
+    "name": "黑龙江八一农垦大学",
+    "url": "byau.edu.cn"
+  },
   "byteclicks": {
     "routes": {
       "/": {
