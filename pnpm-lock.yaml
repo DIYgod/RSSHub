@@ -204,8 +204,8 @@ dependencies:
     specifier: 4.7.2
     version: 4.7.2
   twitter-api-v2:
-    specifier: 1.16.1
-    version: 1.16.1
+    specifier: 1.16.3
+    version: 1.16.3
   undici:
     specifier: 6.13.0
     version: 6.13.0
@@ -9308,8 +9308,8 @@ packages:
     resolution: {integrity: sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==}
     dev: false
 
-  /twitter-api-v2@1.16.1:
-    resolution: {integrity: sha512-76hZsRmVdFQu2MvN2oBw0RjTsYmgqnef1bWb4/Ds54CrcTXvtTZFCp3d6FMdeKp9m2PIx2l9MIJWvs5PjQN/Dw==}
+  /twitter-api-v2@1.16.3:
+    resolution: {integrity: sha512-T9Wbq1y3IrTshBvtVawpWp1GmL3mduF4RhieSfM1HsL10Qda0EeJMDUwr5C6IeelnSZ65tiiXzs0xUS8FHM9XA==}
     dev: false
 
   /type-check@0.3.2:
