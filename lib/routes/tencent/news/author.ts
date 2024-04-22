@@ -68,17 +68,19 @@ async function handler(ctx) {
                               .text()
                               .match(/window\.DATA = ({.+});/)[1]
                       );
-                      const $data = load(data.originContent.text, null, false);
-
-                      $data('*')
-                          .contents()
-                          .filter((_, elem) => elem.type === 'comment')
-                          .replaceWith((_, elem) =>
-                              art(path.join(__dirname, '../templates/news/image.art'), {
-                                  attribute: elem.data.trim(),
-                                  originAttribute: data.originAttribute,
-                              })
-                          );
+                      const $data = load(data.originContent?.text || '', null, false);
+                      if ($data) {
+                          // Not video page
+                          $data('*')
+                              .contents()
+                              .filter((_, elem) => elem.type === 'comment')
+                              .replaceWith((_, elem) =>
+                                  art(path.join(__dirname, '../templates/news/image.art'), {
+                                      attribute: elem.data.trim(),
+                                      originAttribute: data.originAttribute,
+                                  })
+                              );
+                      }
 
                       return {
                           title,
