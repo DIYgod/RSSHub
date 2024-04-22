@@ -32,7 +32,8 @@ async function handler() {
             .map((item) => ({
                     title: item.name,
                     description: `${item.tagline}<br><br>${item.description}<br><br>${item.topics}`,
-                    pubDate: parseDate(item.lastActivityAt),
+                    pubDate: parseDate(item.createdAt),
+                    updated: parseDate(item.lastActivityAt),
                     link: `${host}/${item.fullPath}`,
                     author: String(item.fullPath.split('/', 1)),
                     enclosure_url: item.avatar_url,
