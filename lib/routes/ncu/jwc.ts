@@ -47,10 +47,20 @@ async function handler() {
                 const title = linkEl.attr('title');
                 const link = `${baseUrl}/${linkEl.attr('href')}`;
 
+                const newsDate = parseDate(date, 'MM-DD');
+                const currentYear = new Date().getFullYear();
+                const currentMonth = new Date().getMonth() + 1; // getMonth() returns month index starting from 0
+                const newsMonth = newsDate.getMonth() + 1;
+
+                // If the news month is greater than the current month, subtract 1 from the year
+                const year = newsMonth > currentMonth ? currentYear - 1 : currentYear;
+
+                newsDate.setFullYear(year);
+
                 return {
                     title,
                     link,
-                    pubDate: parseDate(date, 'MM-DD').setFullYear(new Date().getFullYear()),
+                    pubDate: newsDate,
                 };
             }),
     };
