@@ -26,7 +26,7 @@ async function handler() {
 
     return {
         allowEmpty: true,
-        title: `Chub`,
+        title: 'Chub',
         link: host,
         item: nodes
             .map((item) => ({
