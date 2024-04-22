@@ -31,11 +31,36 @@ import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 
-const MAINTAINERS = ['Rongronggg9'];
+class WeChatMpError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'WeChatMpError';
+    }
+}
 
-const warn = (reason: string, details: string) =>
-    logger.warn(`wechat-mp: ${reason}: ${details},
-consider raise an issue (mentioning ${MAINTAINERS.join(', ')}) with the article URL for further investigation`);
+const MAINTAINERS = ['@Rongronggg9'];
+
+const formatLogNoMention = (...params: string[]): string => `wechat-mp: ${params.join(': ')}`;
+const formatLog = (...params: string[]): string => `${formatLogNoMention(...params)}
+Consider raise an issue (mentioning ${MAINTAINERS.join(', ')}) with the article URL for further investigation`;
+let warn = (...params: string[]) => logger.warn(formatLog(...params));
+const error = (...params: string[]): never => {
+    const msg = formatLog(...params);
+    logger.error(msg);
+    throw new WeChatMpError(msg);
+};
+const errorNoMention = (...params: string[]): never => {
+    const msg = formatLogNoMention(...params);
+    logger.error(msg);
+    throw new WeChatMpError(msg);
+};
+const toggleWerror = (() => {
+    const onFunc = (...params: string[]) => error('WarningAsError', ...params);
+    const offFunc = warn;
+    return (on: boolean) => {
+        warn = on ? onFunc : offFunc;
+    };
+})();
 
 const replaceReturnNewline = (() => {
     const returnRegExp = /\r|\\(r|x0d)/g;
@@ -147,7 +172,7 @@ class ExtractMetadata {
     private static commonMetadataToBeExtracted = {
         showType: this.genExtractFunc('item_show_type', { valuePattern: '\\d+' }),
         realShowType: this.genExtractFunc('real_item_show_type', { valuePattern: '\\d+' }),
-        createTime: this.genExtractFunc('ct', { valuePattern: '\\d+' }),
+        createTime: this.genExtractFunc('ct', { valuePattern: '\\d+', allowNotFound: true }),
         sourceUrl: this.genExtractFunc('msg_source_url', { valuePattern: `https?://[^'"]*`, allowNotFound: true }),
     };
 
@@ -376,18 +401,21 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
 // abtest_cookie, wx_header
 // Known params (temporary link):
 // src, timestamp, ver, signature, new (unessential)
-const normalizeUrl = (url, bypassHostCheck = false) => {
+const normalizeUrl = (url: string, bypassHostCheck = false) => {
     const oriUrl = url;
+    // already seen some weird urls with `&` escaped as `&amp;`, so fix it
+    // calling fixUrl should always be safe since having `&amp;` or `\x26` in a URL is meaningless
+    url = fixUrl(url);
     const urlObj = new URL(url);
     if (!bypassHostCheck && urlObj.host !== 'mp.weixin.qq.com') {
-        throw new Error('wechat-mp: URL host must be "mp.weixin.qq.com", but got ' + oriUrl);
+        error('URL host must be "mp.weixin.qq.com"', url);
     }
     urlObj.protocol = 'https:';
     urlObj.hash = ''; // remove hash
-    if (/^\/s\/.+/.test(urlObj.pathname)) {
+    if (urlObj.pathname.startsWith('/s/')) {
         // a short link, just remove all the params
         urlObj.search = '';
-    } else if (/^\/s$/.test(urlObj.pathname)) {
+    } else if (urlObj.pathname === '/s') {
         const biz = urlObj.searchParams.get('__biz');
         const mid = urlObj.searchParams.get('mid') || urlObj.searchParams.get('appmsgid');
         const idx = urlObj.searchParams.get('idx') || urlObj.searchParams.get('itemidx');
@@ -405,11 +433,11 @@ const normalizeUrl = (url, bypassHostCheck = false) => {
                 // a temporary link, remove all unessential params
                 urlObj.search = `?src=${src}&timestamp=${timestamp}&ver=${ver}&signature=${signature}`;
             } else {
-                // unknown link, just let it go
+                warn('unknown URL search parameters', oriUrl);
             }
         }
     } else {
-        // IDK what it is, just let it go
+        warn('unknown URL path', oriUrl);
     }
     return urlObj.href;
 };
@@ -479,9 +507,11 @@ class PageParsers {
         }
         return page;
     };
-    static dispatch = async ($: CheerioAPI) => {
+    static dispatch = async (html: string, url: string) => {
+        const $ = load(html);
         const commonMetadata = ExtractMetadata.common($);
         let page: Record<string, any>;
+        let pageText: string, pageTextShort: string;
         switch (commonMetadata.showType) {
             case 'APP_MSG_PAGE':
                 page = await PageParsers.appMsg($, commonMetadata);
@@ -495,8 +525,24 @@ class PageParsers {
             case 'VIDEO_SHARE_PAGE':
                 page = PageParsers.fallback($, commonMetadata);
                 break;
+            case undefined:
+                $('script, style').remove();
+                pageText = $('title, body').text().replaceAll(/\s+/g, ' ').trim();
+                pageTextShort = pageText.slice(0, 25);
+                if (pageText.length >= 25 + '...'.length) {
+                    pageTextShort = pageText.slice(0, 25);
+                    pageTextShort += '...';
+                }
+                if (pageText.includes('已被发布者删除')) {
+                    errorNoMention('deleted by author', pageTextShort, url);
+                } else if (new URL(url).pathname.includes('captcha') || pageText.includes('环境异常')) {
+                    errorNoMention('request blocked by WAF', pageTextShort, url);
+                } else {
+                    error('unknown page, probably due to WAF', pageTextShort, url);
+                }
+                return {}; // just to make TypeScript happy, actually UNREACHABLE
             default:
-                warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`);
+                warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`, url);
                 page = PageParsers.fallback($, commonMetadata);
         }
         const locationMetadata = ExtractMetadata.location($);
@@ -517,6 +563,20 @@ class PageParsers {
     };
 }
 
+const redirectHelper = async (url: string, maxRedirects: number = 5) => {
+    maxRedirects--;
+    const raw = await ofetch.raw(url);
+    if ([301, 302, 303, 307, 308].includes(raw.status)) {
+        if (!raw.headers.has('location')) {
+            error('redirect without location', url);
+        } else if (maxRedirects <= 0) {
+            error('too many redirects', url);
+        }
+        return await redirectHelper(<string>raw.headers.get('location'), maxRedirects);
+    }
+    return raw;
+};
+
 /**
  * Fetch article and its metadata from WeChat MP (mp.weixin.qq.com).
  *
@@ -528,9 +588,9 @@ class PageParsers {
 const fetchArticle = (url: string, bypassHostCheck: boolean = false) => {
     url = normalizeUrl(url, bypassHostCheck);
     return cache.tryGet(url, async () => {
-        const data = await ofetch(url);
-        const $ = load(data);
-        const page = await PageParsers.dispatch($);
+        const raw = await redirectHelper(url);
+        // pass the redirected URL to dispatcher for better error logging
+        const page = await PageParsers.dispatch(raw._data, raw.url);
         return { ...page, link: url };
     }) as Promise<{
         title: string;
@@ -581,5 +641,5 @@ const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = fal
     return item;
 };
 
-const exportedForTestingOnly = { ExtractMetadata, showTypeMapReverse };
-export { exportedForTestingOnly, fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl };
+const exportedForTestingOnly = { toggleWerror, ExtractMetadata, showTypeMapReverse };
+export { exportedForTestingOnly, WeChatMpError, fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl };

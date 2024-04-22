@@ -154,8 +154,71 @@ var ct = "${1_636_626_300}";
             )
         )
     ),
-    http.get(`https://mp.weixin.qq.com/s/rsshub_test`, () => HttpResponse.text(genWeChatMpPage('', ''))),
-    http.get(`https://mp.weixin.qq.com/s?__biz=rsshub_test&mid=1&idx=1&sn=1`, () => HttpResponse.text(genWeChatMpPage('', ''))),
+    http.get(`https://mp.weixin.qq.com/s/rsshub_test`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`)),
+    http.get(`https://mp.weixin.qq.com/s?__biz=rsshub_test&mid=1&idx=1&sn=1`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`)),
+    http.get(`https://mp.weixin.qq.com/mp/rsshub_test/waf`, () =>
+        HttpResponse.text(
+            `<html>
+<head>
+<title>Title</title>
+<script>console.log</script>
+</head>
+<body class="zh_CN " ontouchstart="">
+<script>console.log</script>
+<style>.style{}</style>
+<div class="weui-msg">
+  <div id="tips" style="display:none;" class="top_tips warning"></div>
+        <div class="weui-msg__icon-area">
+      <i class="weui-icon-info-circle weui-icon_msg"></i>
+    </div>
+    <div class="weui-msg__text-area pc-area">
+        <h2 class="weui-msg__title">环境异常</h2>
+        <p class="weui-msg__desc">当前环境异常，完成验证后即可继续访问。</p>
+    </div>
+    <div class="weui-msg__opr-area">
+      <p class="weui-btn-area">
+        <a class="weui-btn weui-btn_primary" id="js_verify">去验证</a>
+      </p>
+    </div>
+</div>
+</body></html>`
+        )
+    ),
+    http.get(`https://mp.weixin.qq.com/s/rsshub_test_hit_waf`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/mp/rsshub_test/waf`)),
+    http.get(`https://mp.weixin.qq.com/s/unknown_page`, () =>
+        HttpResponse.text(
+            `<html>
+<head>
+<title>Title</title>
+<script>console.log</script>
+</head>
+<body class="zh_CN " ontouchstart="">
+<script>console.log</script>
+<style>.style{}</style>
+<p>
+Unknown paragraph
+</p>
+</body></html>`
+        )
+    ),
+    http.get(`https://mp.weixin.qq.com/s/deleted_page`, () =>
+        HttpResponse.text(
+            `<html>
+<head>
+<title>Title</title>
+<script>console.log</script>
+</head>
+<body class="zh_CN " ontouchstart="">
+<script>console.log</script>
+<style>.style{}</style>
+<p>
+该内容已被发布者删除
+</p>
+</body></html>`
+        )
+    ),
+    http.get(`https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location`, () => HttpResponse.text('', { status: 302 })),
+    http.get(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`)),
     http.get(`http://rsshub.test/headers`, ({ request }) =>
         HttpResponse.json({
             ...Object.fromEntries(request.headers.entries()),
