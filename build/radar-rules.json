@@ -14681,10 +14681,10 @@
     ]
   },
   "u9a9.com": {
-    "_name": "Unknown",
+    "_name": "U9A9",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Search",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/"
@@ -14692,7 +14692,7 @@
         "target": "/u9a9/:preview?"
       },
       {
-        "title": "Unknown",
+        "title": "Search",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/"

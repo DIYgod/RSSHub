@@ -56683,7 +56683,7 @@
         "categories": [
           "multimedia"
         ],
-        "example": "/u9a9/search/新片速递",
+        "example": "/u3c3/search/新片速递",
         "parameters": {
           "keyword": "Search keyword",
           "preview": "Show image preview, off by default, non empty value means on"
@@ -56710,7 +56710,7 @@
         "categories": [
           "multimedia"
         ],
-        "example": "/u9a9/search/新片速递",
+        "example": "/u3c3/search/新片速递",
         "parameters": {
           "keyword": "Search keyword",
           "preview": "Show image preview, off by default, non empty value means on"
@@ -56730,7 +56730,7 @@
         "location": "index.ts"
       }
     },
-    "name": "U9A9",
+    "name": "U3C3",
     "url": "u3c3.com"
   },
   "u9a9": {
@@ -56740,6 +56740,7 @@
           "/:preview?",
           "/search/:keyword/:preview?"
         ],
+        "example": "/u9a9/search/新片速递",
         "radar": [
           {
             "source": [
@@ -56748,7 +56749,7 @@
             "target": ""
           }
         ],
-        "name": "Unknown",
+        "name": "Search",
         "maintainers": [
           "TonyRL"
         ],
@@ -56760,6 +56761,7 @@
           "/:preview?",
           "/search/:keyword/:preview?"
         ],
+        "example": "/u9a9/search/新片速递",
         "radar": [
           {
             "source": [
@@ -56768,7 +56770,7 @@
             "target": ""
           }
         ],
-        "name": "Unknown",
+        "name": "Search",
         "maintainers": [
           "TonyRL"
         ],
@@ -56776,7 +56778,7 @@
         "location": "index.ts"
       }
     },
-    "name": "Unknown",
+    "name": "U9A9",
     "url": "u9a9.com"
   },
   "uber": {
