@@ -159,6 +159,18 @@ async function handler(ctx) {
     );
 
     const $ = load(data);
+
+    /*
+     * Since 2024/4/20, t.me/s/ mistakenly have every '&' in **hyperlinks** replaced by '&amp;'.
+     * The characteristic of a hyperlink is [onclick] (pop-up confirmation), which is not present in ordinary links.
+     * This is a workaround to fix the issue until Telegram fixes it.
+     */
+    $('a[onclick][href]').each((_, elem) => {
+        const $elem = $(elem);
+        const href = $elem.attr('href');
+        href && $elem.attr('href', href.replaceAll('&amp;', '&'));
+    });
+
     const list = includeServiceMsg
         ? $('.tgme_widget_message_wrap:not(.tgme_widget_message_wrap:has(.tme_no_messages_found))') // exclude 'no posts found' messages
         : $('.tgme_widget_message_wrap:not(.tgme_widget_message_wrap:has(.service_message,.tme_no_messages_found))'); // also exclude service messages
