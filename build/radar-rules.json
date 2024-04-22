@@ -1993,6 +1993,112 @@
         ],
         "target": "/bnu/lib/:category"
       }
+    ],
+    "mba": [
+      {
+        "title": "经济与工商管理学院MBA",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:category"
+        ],
+        "target": "/bnuparams=>{const category=params.category;return category?`/${category.replace(/\\/index\\.html$/,\"\")}`:\"\"}"
+      },
+      {
+        "title": "新闻聚焦",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xwdt/index.html"
+        ],
+        "target": "/bnu/mba/xwdt"
+      },
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg/index.html"
+        ],
+        "target": "/bnu/mba/tzgg"
+      },
+      {
+        "title": "MBA系列讲座",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/mbaxljz/index.html"
+        ],
+        "target": "/bnu/mba/mbaxljz"
+      },
+      {
+        "title": "招生动态 - 下载专区",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/zsdt/cjwt/index.html"
+        ],
+        "target": "/bnu/mba/zsdt/cjwt"
+      },
+      {
+        "title": "国际视野 - 海外基地",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/gjhz/hwjd/index.html"
+        ],
+        "target": "/bnu/mba/gjhz/hwjd"
+      },
+      {
+        "title": "国际视野 - 学位合作",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/gjhz/xwhz/index.html"
+        ],
+        "target": "/bnu/mba/gjhz/xwhz"
+      },
+      {
+        "title": "国际视野 - 长期交换",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/gjhz/zqjh/index.html"
+        ],
+        "target": "/bnu/mba/gjhz/zqjh"
+      },
+      {
+        "title": "国际视野 - 短期项目",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/gjhz/dqxm/index.html"
+        ],
+        "target": "/bnu/mba/gjhz/dqxm"
+      },
+      {
+        "title": "校园生活 - 学生组织",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xysh/xszz/index.html"
+        ],
+        "target": "/bnu/mba/xysh/xszz"
+      },
+      {
+        "title": "职业发展 - 校外导师",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/zyfz/xwds/index.html"
+        ],
+        "target": "/bnu/mba/zyfz/xwds"
+      },
+      {
+        "title": "职业发展 - 企业实践",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/zyfz/zycp/index.html"
+        ],
+        "target": "/bnu/mba/zyfz/zycp"
+      },
+      {
+        "title": "职业发展 - 就业创业",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/zyfz/jycy/index.html"
+        ],
+        "target": "/bnu/mba/zyfz/jycy"
+      }
     ]
   },
   "boc.cn": {
