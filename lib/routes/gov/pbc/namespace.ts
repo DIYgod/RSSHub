@@ -2,7 +2,7 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: '中国人民银行',
-    url: 'kjt.ah.gov.cn',
+    url: 'pbc.gov.cn',
     description: `<details>
   <summary>*业务咨询* 和 *投诉建议* 可用的站点参数</summary>
 
