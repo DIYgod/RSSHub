@@ -33,14 +33,6 @@ export const route: Route = {
         appid: 'Steam appid, can be found on the community hub page or store page URL.',
         routeParams: 'Query parameters.',
     },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             title: 'Community Hub',
