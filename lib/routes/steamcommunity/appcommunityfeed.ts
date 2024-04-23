@@ -26,9 +26,9 @@ const workshopFileTypes = {
 };
 
 export const route: Route = {
-    path: 'appcommunityfeed/:appid/:routeParams?',
+    path: '/appcommunityfeed/:appid/:routeParams?',
     categories: ['game'],
-    example: 'steamcommunity/appcommunityfeed/730',
+    example: '/steamcommunity/appcommunityfeed/730',
     parameters: {
         appid: 'Steam appid, can be found on the community hub page or store page URL.',
         routeParams: 'Query parameters.',
