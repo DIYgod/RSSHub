@@ -49,7 +49,8 @@ async function handler() {
 
                 const newsDate = parseDate(date, 'MM-DD');
                 const currentDate = new Date();
-                const currentYear = currentDate.getFullYear(), currentMonth = currentDate.getMonth() + 1;
+                const currentYear = currentDate.getFullYear(),
+                    currentMonth = currentDate.getMonth() + 1;
                 const newsMonth = newsDate.getMonth() + 1;
 
                 // If the news month is greater than the current month, subtract 1 from the year
