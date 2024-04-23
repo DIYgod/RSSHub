@@ -34,6 +34,10 @@ async function handler() {
 
     const list = $('.box3 .inner ul.img-list li');
 
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+
     return {
         title: '南昌大学教务处',
         link: baseUrl,
@@ -48,8 +52,6 @@ async function handler() {
                 const link = `${baseUrl}/${linkEl.attr('href')}`;
 
                 const newsDate = parseDate(date, 'MM-DD');
-                const currentDate = new Date();
-                const currentYear = currentDate.getFullYear(), currentMonth = currentDate.getMonth() + 1;
                 const newsMonth = newsDate.getMonth() + 1;
 
                 // If the news month is greater than the current month, subtract 1 from the year
