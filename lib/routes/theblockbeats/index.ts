@@ -1,76 +1,35 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-
-const domain = 'theblockbeats.info';
-const rootUrl = `https://www.${domain}`;
-const apiBase = `https://api.${domain}`;
-
-const channelMap = {
-    newsflash: {
-        title: '快讯',
-        link: `${rootUrl}/newsflash`,
-        api: `${apiBase}/v5/newsflash/select`,
-    },
-    article: {
-        title: '文章',
-        link: `${rootUrl}/article`,
-        api: `${apiBase}/v5/Information/newsall`,
-    },
-};
+import { ofetch } from 'ofetch';
+import { parseStringPromise } from 'xml2js';
 
 export const route: Route = {
-    path: '/:channel?',
+    path: '/',
     categories: ['finance'],
-    example: '/theblockbeats/newsflash',
-    parameters: { channel: '类型，见下表，默认为快讯' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '新闻快讯',
-    maintainers: ['Fatpandac', 'jameshih'],
+    example: '/theblockbeats',
+    name: '律动BlockBeats',
+    maintainers: ['Daring Cλlf'],
     handler,
-    description: `|    快讯   |   文章  |
-  | :-------: | :-----: |
-  | newsflash | article |`,
 };
 
-async function handler(ctx) {
-    const { channel = 'newsflash' } = ctx.req.param();
+const apiEndpoint = 'https://api.theblockbeats.news/v1/open-api/home-xml';
 
-    const { data: response } = await got(channelMap[channel].api);
+async function handler() {
+    const data = await ofetch(apiEndpoint);
 
-    const { data } = channel === 'newsflash' ? response.data : response;
-    let list = data.map((item) => ({
-        title: item.title,
-        link: `${rootUrl}/${channel === 'newsflash' ? 'flash' : 'news'}/${item.id}`,
-        description: item.content ?? item.im_abstract,
-        pubDate: parseDate(item.add_time, 'X'),
+    const json = await parseStringPromise(data);
+    const items = json.rss.channel[0].item.map((item) => ({
+        title: item.title[0],
+        description: item.description ? item.description[0] : '',
+        author: item.author[0],
+        link: item.link[0],
+        pubDate: parseDate(item.pubDate[0]),
+        guid: item.guid[0]._,
     }));
 
-    if (channel !== 'newsflash') {
-        list = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const { data: response } = await got(item.link);
-                    const $ = load(response);
-                    item.description = $('div.news-content').html();
-                    return item;
-                })
-            )
-        );
-    }
-
     return {
-        title: `TheBlockBeats - ${channelMap[channel].title}`,
-        link: channelMap[channel].link,
-        item: list,
+        title: `律动BlockBeats`,
+        link: apiEndpoint,
+        item: items,
     };
 }
