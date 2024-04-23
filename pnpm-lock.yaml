@@ -10,10 +10,10 @@ dependencies:
     version: 1.11.0
   '@hono/swagger-ui':
     specifier: 0.2.1
-    version: 0.2.1(hono@4.2.6)
+    version: 0.2.1(hono@4.2.7)
   '@hono/zod-openapi':
     specifier: 0.11.0
-    version: 0.11.0(hono@4.2.6)(zod@3.23.3)
+    version: 0.11.0(hono@4.2.7)(zod@3.23.3)
   '@notionhq/client':
     specifier: 2.2.15
     version: 2.2.15
@@ -81,8 +81,8 @@ dependencies:
     specifier: 134.0.0
     version: 134.0.0
   hono:
-    specifier: 4.2.6
-    version: 4.2.6
+    specifier: 4.2.7
+    version: 4.2.7
   html-to-text:
     specifier: 9.0.5
     version: 9.0.5
@@ -2148,15 +2148,15 @@ packages:
     engines: {node: '>=18.14.1'}
     dev: false
 
-  /@hono/swagger-ui@0.2.1(hono@4.2.6):
+  /@hono/swagger-ui@0.2.1(hono@4.2.7):
     resolution: {integrity: sha512-wBxVMRe3/v8xH4o6icmwztiIq0DG0s7+jHVMHVUAoFFCWEQNL2iskMmQtrhSDtsFmBZUeUFQUaaJ6Ir6DOmHLA==}
     peerDependencies:
       hono: '*'
     dependencies:
-      hono: 4.2.6
+      hono: 4.2.7
     dev: false
 
-  /@hono/zod-openapi@0.11.0(hono@4.2.6)(zod@3.23.3):
+  /@hono/zod-openapi@0.11.0(hono@4.2.7)(zod@3.23.3):
     resolution: {integrity: sha512-thbxV4lWJoDo1NjF8ZGnd0muD3UHUpRqpKvS3RI+kWCXU05nyuViymUbPvVpp+O6i5SjovITTF91NRMTraZm3Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -2164,18 +2164,18 @@ packages:
       zod: 3.*
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.0.0(zod@3.23.3)
-      '@hono/zod-validator': 0.2.1(hono@4.2.6)(zod@3.23.3)
-      hono: 4.2.6
+      '@hono/zod-validator': 0.2.1(hono@4.2.7)(zod@3.23.3)
+      hono: 4.2.7
       zod: 3.23.3
     dev: false
 
-  /@hono/zod-validator@0.2.1(hono@4.2.6)(zod@3.23.3):
+  /@hono/zod-validator@0.2.1(hono@4.2.7)(zod@3.23.3):
     resolution: {integrity: sha512-HFoxln7Q6JsE64qz2WBS28SD33UB2alp3aRKmcWnNLDzEL1BLsWfbdX6e1HIiUprHYTIXf5y7ax8eYidKUwyaA==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.19.1
     dependencies:
-      hono: 4.2.6
+      hono: 4.2.7
       zod: 3.23.3
     dev: false
 
@@ -2461,7 +2461,7 @@ packages:
       '@babel/runtime-corejs2': 7.23.9
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -5830,8 +5830,8 @@ packages:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
     dev: false
 
-  /hono@4.2.6:
-    resolution: {integrity: sha512-AtbHZJYWsm+uFHLz0C6xltX7hjOV44a55gSEGBfoQOJ00KSxEUOoiIkmd+NXfapNX0j2GCKhqMmYeegBdHRwcQ==}
+  /hono@4.2.7:
+    resolution: {integrity: sha512-k1xHi86tJnRIVvqhFMBDGFKJ8r5O+bEsT4P59ZK59r0F300Xd910/r237inVfuT/VmE86RQQffX4OYNda6dLXw==}
     engines: {node: '>=16.0.0'}
     dev: false
 
@@ -9962,8 +9962,8 @@ packages:
     resolution: {integrity: sha512-tPvq1B/2Yu/dh2uAIH2/BhUlUeLIUvAjr6dpL/75I0pCYefHgjhXk1o1Kob3kTU8C7yU1j396jFHlsVWFi9ogg==}
     dev: false
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
