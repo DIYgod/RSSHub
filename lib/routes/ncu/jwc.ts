@@ -31,6 +31,9 @@ async function handler() {
     const baseUrl = 'https://jwc.ncu.edu.cn';
     const response = await got(baseUrl);
     const $ = load(response.body);
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
 
     const list = $('.box3 .inner ul.img-list li');
 
@@ -38,6 +41,7 @@ async function handler() {
         title: '南昌大学教务处',
         link: baseUrl,
         description: '南昌大学教务处',
+
         item:
             list &&
             list.toArray().map((item) => {
@@ -48,8 +52,6 @@ async function handler() {
                 const link = `${baseUrl}/${linkEl.attr('href')}`;
 
                 const newsDate = parseDate(date, 'MM-DD');
-                const currentYear = new Date().getFullYear();
-                const currentMonth = new Date().getMonth() + 1; // getMonth() returns month index starting from 0
                 const newsMonth = newsDate.getMonth() + 1;
 
                 // If the news month is greater than the current month, subtract 1 from the year
