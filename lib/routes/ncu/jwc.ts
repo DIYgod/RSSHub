@@ -48,8 +48,8 @@ async function handler() {
                 const link = `${baseUrl}/${linkEl.attr('href')}`;
 
                 const newsDate = parseDate(date, 'MM-DD');
-                const currentDate = new Date();
-                const currentYear = currentDate.getFullYear(), currentMonth = currentDate.getMonth() + 1;
+                const currentYear = new Date().getFullYear();
+                const currentMonth = new Date().getMonth() + 1; // getMonth() returns month index starting from 0
                 const newsMonth = newsDate.getMonth() + 1;
 
                 // If the news month is greater than the current month, subtract 1 from the year
