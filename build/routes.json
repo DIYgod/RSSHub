@@ -12527,6 +12527,46 @@
     "name": "CoinDesk Consensus Magazine",
     "url": "coindesk.com"
   },
+  "colamanga": {
+    "routes": {
+      "/:id": {
+        "path": "/:id",
+        "parameters": {
+          "id": "漫画id"
+        },
+        "name": "Manga",
+        "maintainers": [
+          "machsix"
+        ],
+        "example": "/colamanga/manga-qq978758",
+        "categories": [
+          "anime"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.colamanga.com/:id/"
+            ],
+            "target": "/:id"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "manga.ts"
+      }
+    },
+    "name": "COLAMANGA",
+    "url": "www.colamanga.com",
+    "zh": {
+      "name": "可乐漫画"
+    }
+  },
   "comicat": {
     "routes": {
       "/search/:keyword": {

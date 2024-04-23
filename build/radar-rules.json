@@ -3223,6 +3223,19 @@
       }
     ]
   },
+  "colamanga.com": {
+    "_name": "COLAMANGA",
+    "www": [
+      {
+        "title": "Manga",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/:id/"
+        ],
+        "target": "/colamanga/:id"
+      }
+    ]
+  },
   "comicskingdom.com": {
     "_name": "Comics Kingdom",
     ".": [
