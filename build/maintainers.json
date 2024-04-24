@@ -5208,6 +5208,9 @@
   "/stdaily/digitalpaper": [
     "lyqluis"
   ],
+  "/steam/appcommunityfeed/:appid/:routeParams?": [
+    "NyaaaDoge"
+  ],
   "/steam/search/:params": [
     "moppman"
   ],
