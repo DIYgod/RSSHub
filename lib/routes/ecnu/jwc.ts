@@ -11,19 +11,10 @@ export const route: Route = {
     path: '/jwc',
     categories: ['university'],
     example: '/ecnu/jwc',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
+    radar: [{
         source: ['www.jwc.ecnu.edu.cn', 'www.ecnu.edu.cn'],
         target: '/tzgg',
-    },
+    }],
     name: '教务处通知',
     maintainers: ['markbang'],
     handler: async () => {
@@ -31,7 +22,7 @@ export const route: Route = {
 
         const response = await got(`${baseUrl}tzggwwxsgg/list.htm`);
         const $ = load(response.data);
-        const links = $('.col_news_con ul > li')
+        const links = $('.col_news_con ul.news_list > li')
             .map((_, el) => ({
                 pubDate: timezone(parseDate($(el).find('.news_date').text()), 8),
                 link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
@@ -49,7 +40,7 @@ export const route: Route = {
                                 },
                             });
                             const $ = load(data);
-                            item.description = $('div.article').html() && $('div.article').html().replaceAll('src="/', `src="${baseUrl}/`).replaceAll('href="/', `href="${baseUrl}/`).trim();
+                            item.description = $('div.article')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
                             return item;
                         } catch {
                             // intranet
@@ -66,8 +57,8 @@ export const route: Route = {
         );
 
         return {
-            title: `教务处通知`,
-            link: `http://www.jwc.ecnu.edu.cn/tzggwwxsgg/list.htm`,
+            title: '教务处通知',
+            link: 'http://www.jwc.ecnu.edu.cn/tzggwwxsgg/list.htm',
             item: items,
         };
     },
