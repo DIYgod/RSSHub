@@ -5,6 +5,8 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+const type = (filename) => filename.split('.').pop();
+
 export const route: Route = {
     path: '/jwc',
     categories: ['university'],
@@ -29,7 +31,6 @@ export const route: Route = {
 
         const response = await got(`${baseUrl}tzggwwxsgg/list.htm`);
         const $ = load(response.data);
-        const type = (filename) => filename.split('.').pop();
         const links = $('.col_news_con ul > li')
             .map((_, el) => ({
                 pubDate: timezone(parseDate($(el).find('.news_date').text()), 8),
