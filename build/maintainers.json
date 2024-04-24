@@ -1743,6 +1743,9 @@
   "/ecnu/acm/contest/:category?": [
     "a180285"
   ],
+  "/ecnu/jwc": [
+    "markbang"
+  ],
   "/ecnu/yjs": [
     "shengmaosu"
   ],

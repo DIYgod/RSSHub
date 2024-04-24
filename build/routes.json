@@ -17738,6 +17738,27 @@
         "url": "acm.ecnu.edu.cn/contest/",
         "location": "contest.ts"
       },
+      "/jwc": {
+        "path": "/jwc",
+        "categories": [
+          "university"
+        ],
+        "example": "/ecnu/jwc",
+        "radar": [
+          {
+            "source": [
+              "www.jwc.ecnu.edu.cn",
+              "www.ecnu.edu.cn"
+            ],
+            "target": "/tzgg"
+          }
+        ],
+        "name": "教务处通知",
+        "maintainers": [
+          "markbang"
+        ],
+        "location": "jwc.ts"
+      },
       "/yjs": {
         "path": "/yjs",
         "categories": [
@@ -17770,7 +17791,7 @@
       }
     },
     "name": "East China Normal University 华东师范大学",
-    "url": "acm.ecnu.edu.cn"
+    "url": "ecnu.edu.cn"
   },
   "economist": {
     "routes": {
