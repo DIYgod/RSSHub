@@ -172,7 +172,7 @@
         "msw": "2.2.14",
         "prettier": "3.2.5",
         "remark-parse": "11.0.0",
-        "supertest": "6.3.4",
+        "supertest": "7.0.0",
         "tosource": "2.0.0-alpha.3",
         "typescript": "5.4.5",
         "unified": "11.0.4",
