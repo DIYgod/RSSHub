@@ -11,10 +11,12 @@ export const route: Route = {
     path: '/jwc',
     categories: ['university'],
     example: '/ecnu/jwc',
-    radar: [{
-        source: ['www.jwc.ecnu.edu.cn', 'www.ecnu.edu.cn'],
-        target: '/tzgg',
-    }],
+    radar: [
+        {
+            source: ['www.jwc.ecnu.edu.cn', 'www.ecnu.edu.cn'],
+            target: '/tzgg',
+        },
+    ],
     name: '教务处通知',
     maintainers: ['markbang'],
     handler: async () => {
