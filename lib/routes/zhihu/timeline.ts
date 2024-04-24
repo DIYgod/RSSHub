@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/timeline',
@@ -33,7 +34,7 @@ export const route: Route = {
 async function handler(ctx) {
     const cookie = config.zhihu.cookies;
     if (cookie === undefined) {
-        throw new Error('缺少知乎用户登录后的 Cookie 值');
+        throw new ConfigNotFoundError('缺少知乎用户登录后的 Cookie 值');
     }
     const response = await got({
         method: 'get',

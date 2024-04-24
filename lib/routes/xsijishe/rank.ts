@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -33,7 +34,7 @@ async function handler(ctx) {
         title = '司机社综合月排行榜';
         rankId = 'nex_recons_demens1';
     } else {
-        throw new Error('Invalid rank type');
+        throw new InvalidParameterError('Invalid rank type');
     }
     const url = `${baseUrl}/portal.php`;
     const resp = await got(url);

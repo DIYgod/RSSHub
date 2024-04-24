@@ -7,6 +7,7 @@ import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const baseUrl = 'https://nhentai.net';
 
@@ -88,11 +89,11 @@ const getDetails = (cache, simples, limit) => Promise.all(simples.slice(0, limit
 
 const getTorrents = async (cache, simples, limit) => {
     if (!config.nhentai || !config.nhentai.username || !config.nhentai.password) {
-        throw new Error('nhentai RSS with torrents is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
+        throw new ConfigNotFoundError('nhentai RSS with torrents is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const cookie = await getCookie(config.nhentai.username, config.nhentai.password, cache);
     if (!cookie) {
-        throw new Error('Invalid username (or email) or password for nhentai torrent download');
+        throw new ConfigNotFoundError('Invalid username (or email) or password for nhentai torrent download');
     }
     return getTorrentWithCookie(cache, simples, cookie, limit);
 };

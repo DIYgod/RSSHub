@@ -7,6 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: ['/global/:lang/:type?', '/ff14_global/:lang/:type?'],
@@ -41,7 +42,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'all';
 
     if (!isValidHost(lang)) {
-        throw new Error('Invalid lang');
+        throw new InvalidParameterError('Invalid lang');
     }
 
     const response = await got({

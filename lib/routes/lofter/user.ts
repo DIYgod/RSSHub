@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -17,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'User',
-    maintainers: ['hondajojo', 'nczitzk'],
+    maintainers: ['hondajojo', 'nczitzk', 'LucunJi'],
     handler,
 };
 
@@ -25,7 +26,7 @@ async function handler(ctx) {
     const name = ctx.req.param('name') ?? 'i';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : '50';
     if (!isValidHost(name)) {
-        throw new Error('Invalid name');
+        throw new InvalidParameterError('Invalid name');
     }
 
     const rootUrl = `${name}.lofter.com`;
@@ -33,7 +34,7 @@ async function handler(ctx) {
     const response = await got({
         method: 'post',
         url: `http://api.lofter.com/v2.0/blogHomePage.api?product=lofter-iphone-10.0.0`,
-        form: {
+        body: new URLSearchParams({
             blogdomain: rootUrl,
             checkpwd: '1',
             following: '0',
@@ -43,7 +44,7 @@ async function handler(ctx) {
             offset: '0',
             postdigestnew: '1',
             supportposttypes: '1,2,3,4,5,6',
-        },
+        }),
     });
 
     if (!response.data.response || response.data.response.posts.length === 0) {

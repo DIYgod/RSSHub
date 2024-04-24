@@ -34,9 +34,9 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { data } = await got('https://gateway.caixin.com/api/dataplatform/scroll/index').json();
+    const { data } = await got('https://gateway.caixin.com/api/dataplatform/scroll/index');
 
-    const list = data.articleList
+    const list = data.data.articleList
         .map((e) => ({
             title: e.title,
             link: e.url,

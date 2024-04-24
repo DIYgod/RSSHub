@@ -64,13 +64,13 @@ jobs:
         chromium:
           - name: bundled Chromium
             dependency: ''
-            environment: '{}'
+            environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "0" }'
           - name: Chromium from Ubuntu
             dependency: chromium-browser
-            environment: '{ "CHROMIUM_EXECUTABLE_PATH": "chromium-browser" }'
+            environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
           - name: Chrome from Google
             dependency: google-chrome-stable
-            environment: '{ "CHROMIUM_EXECUTABLE_PATH": "google-chrome-stable" }'
+            environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
     name: Vitest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
     steps:
       - uses: actions/checkout@v4
@@ -83,10 +83,13 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies (pnpm)
         run: pnpm i
+        env: ${{ fromJSON(matrix.chromium.environment) }}
       - name: Run postinstall script for dependencies
         run: pnpm rb
+        env: ${{ fromJSON(matrix.chromium.environment) }}
       - name: Build routes
         run: pnpm build
+        env: ${{ fromJSON(matrix.chromium.environment) }}
       - name: Install Chromium
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
@@ -94,7 +97,7 @@ jobs:
         # That's not really a problem since the Chromium-bundled Docker image is based on Debian bookworm,
         # which provides up-to-date native packages.
         run: |
-          set -ex
+          set -eux
           curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
             sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
           echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
@@ -102,7 +105,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
       - name: Test puppeteer
-        run: pnpm run vitest puppeteer
+        run: |
+          set -eux
+          export CHROMIUM_EXECUTABLE_PATH="$(which ${{ matrix.chromium.dependency }})"
+          pnpm run vitest puppeteer
         env: ${{ fromJSON(matrix.chromium.environment) }}
 
   all:

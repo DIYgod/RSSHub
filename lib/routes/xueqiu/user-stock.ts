@@ -1,6 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
-import queryString from 'query-string';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -29,34 +28,32 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const res1 = await got({
-        method: 'get',
-        url: 'https://xueqiu.com/',
-    });
-    const token = res1.headers['set-cookie'].find((s) => s.startsWith('xq_a_token=')).split(';')[0];
+    const { headers } = await ofetch.raw('https://xueqiu.com/');
+    const token = headers
+        ?.getSetCookie()
+        .find((s) => s.startsWith('xq_a_token='))
+        ?.split(';')[0] as string;
 
-    const res2 = await got({
-        method: 'get',
-        url: `https://stock.xueqiu.com/v5/stock/portfolio/stock/list.json?category=1&size=1000&uid=${id}`,
+    const {
+        data: { stocks: data },
+    } = await ofetch(`https://stock.xueqiu.com/v5/stock/portfolio/stock/list.json?category=1&size=1000&uid=${id}`, {
         headers: {
             Cookie: token,
             Referer: `https://xueqiu.com/u/${id}`,
         },
     });
-    const data = res2.data.data.stocks;
 
-    const res3 = await got({
-        method: 'get',
-        url: 'https://xueqiu.com/statuses/original/show.json',
-        searchParams: queryString.stringify({
+    const {
+        user: { screen_name },
+    } = await ofetch('https://xueqiu.com/statuses/original/show.json', {
+        query: {
             user_id: id,
-        }),
+        },
         headers: {
             Cookie: token,
             Referer: `https://xueqiu.com/u/${id}`,
         },
     });
-    const screen_name = res3.data.user.screen_name;
 
     return {
         title: `${screen_name} 的雪球自选动态`,

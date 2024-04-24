@@ -7,6 +7,7 @@ import { config } from '@/config';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const titleMap = {
     date: 'Newest',
@@ -52,7 +53,7 @@ async function handler(ctx) {
 
     const API_KEY = config.google.fontsApiKey;
     if (!API_KEY) {
-        throw new Error('Google Fonts API key is required.');
+        throw new ConfigNotFoundError('Google Fonts API key is required.');
     }
 
     const googleFontsAPI = `https://www.googleapis.com/webfonts/v1/webfonts?sort=${sort}&key=${API_KEY}`;

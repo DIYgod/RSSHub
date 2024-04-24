@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 import g_encrypt from './execlib/x-zse-96-v3';
@@ -38,15 +39,15 @@ async function handler(ctx) {
 
     // fisrt: get cookie(dc_0) from zhihu.com
     const cookie_mes = await cache.tryGet('zhihu:cookies:d_c0', async () => {
-        const response = await got(`https://www.zhihu.com/people/${id}`, {
+        const response = await ofetch.raw(`https://www.zhihu.com/people/${id}`, {
             headers: {
                 ...utils.header,
             },
         });
 
-        const cookie_org = response.headers['set-cookie'];
-        const cookie = cookie_org.toString();
-        const match = cookie.match(/d_c0=(\S+?)(?:;|$)/);
+        const cookie_org = response.headers.get('set-cookie');
+        const cookie = cookie_org?.toString();
+        const match = cookie?.match(/d_c0=(\S+?)(?:;|$)/);
         const cookie_mes = match && match[1];
         if (!cookie_mes) {
             throw new Error('Failed to extract `d_c0` from cookies');

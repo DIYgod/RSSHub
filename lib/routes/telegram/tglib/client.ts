@@ -4,11 +4,12 @@ import { StringSession } from 'telegram/sessions';
 import { getAppropriatedPartSize } from 'telegram/Utils';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 let client: TelegramClient | undefined;
 export async function getClient(authParams?: UserAuthParams, session?: string) {
     if (!config.telegram.session && session === undefined) {
-        throw new Error('TELEGRAM_SESSION is not configured');
+        throw new ConfigNotFoundError('TELEGRAM_SESSION is not configured');
     }
     if (client) {
         return client;

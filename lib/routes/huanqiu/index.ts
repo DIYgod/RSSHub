@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 function getKeysRecursive(dic, key, attr, array) {
     for (const v of Object.values(dic)) {
@@ -46,7 +47,7 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'china';
     if (!isValidHost(category)) {
-        throw new Error('Invalid category');
+        throw new InvalidParameterError('Invalid category');
     }
 
     const host = `https://${category}.huanqiu.com`;

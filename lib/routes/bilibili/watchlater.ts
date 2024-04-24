@@ -4,6 +4,7 @@ import cache from './cache';
 import { config } from '@/config';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/watchlater/:uid/:disableEmbed?',
@@ -42,7 +43,7 @@ async function handler(ctx) {
 
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
-        throw new Error('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
+        throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
     }
 
     const response = await got({
@@ -55,7 +56,7 @@ async function handler(ctx) {
     });
     if (response.data.code) {
         const message = response.data.code === -6 ? '对应 uid 的 Bilibili 用户的 Cookie 已过期' : response.data.message;
-        throw new Error(`Error code ${response.data.code}: ${message}`);
+        throw new ConfigNotFoundError(`Error code ${response.data.code}: ${message}`);
     }
     const list = response.data.data.list || [];
 

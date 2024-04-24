@@ -8,6 +8,7 @@ import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const rootUrl = 'https://zodgame.xyz';
 
@@ -40,7 +41,7 @@ async function handler(ctx) {
     const cookie = config.zodgame.cookie;
 
     if (cookie === undefined) {
-        throw new Error('Zodgame RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
+        throw new ConfigNotFoundError('Zodgame RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
     const response = await got({

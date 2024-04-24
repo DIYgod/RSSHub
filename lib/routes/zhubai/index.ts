@@ -1,12 +1,13 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
-    path: '/:id',
+    path: '/posts/:id',
     categories: ['blog'],
-    example: '/zhubai/via',
+    example: '/zhubai/posts/via',
     parameters: { id: '`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`' },
     features: {
         requireConfig: false,
@@ -28,7 +29,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
     if (!isValidHost(id)) {
-        throw new Error('Invalid id');
+        throw new InvalidParameterError('Invalid id');
     }
 
     const response = await got({

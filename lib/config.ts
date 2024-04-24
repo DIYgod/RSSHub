@@ -166,6 +166,9 @@ export type Config = {
         username?: string;
         password?: string;
     };
+    javdb: {
+        session?: string;
+    };
     lastfm: {
         api_key?: string;
     };
@@ -227,6 +230,9 @@ export type Config = {
     pkubbs: {
         cookie?: string;
     };
+    qingting: {
+        id?: string;
+    };
     saraba1st: {
         cookie?: string;
     };
@@ -255,6 +261,7 @@ export type Config = {
         oauthTokenSecrets?: string[];
         username?: string;
         password?: string;
+        authenticationSecret?: string;
         cookie?: string;
     };
     weibo: {
@@ -290,6 +297,9 @@ export type Config = {
     };
     zodgame: {
         cookie?: string;
+    };
+    zsxq: {
+        accessToken?: string;
     };
 };
 
@@ -508,6 +518,9 @@ const calculateValue = () => {
             username: envs.IWARA_USERNAME,
             password: envs.IWARA_PASSWORD,
         },
+        javdb: {
+            session: envs.JAVDB_SESSION,
+        },
         lastfm: {
             api_key: envs.LASTFM_API_KEY,
         },
@@ -569,6 +582,9 @@ const calculateValue = () => {
         pkubbs: {
             cookie: envs.PKUBBS_COOKIE,
         },
+        qingting: {
+            id: envs.QINGTING_ID,
+        },
         saraba1st: {
             cookie: envs.SARABA1ST_COOKIE,
         },
@@ -601,6 +617,7 @@ const calculateValue = () => {
             oauthTokenSecrets: envs.TWITTER_OAUTH_TOKEN_SECRET?.split(','),
             username: envs.TWITTER_USERNAME,
             password: envs.TWITTER_PASSWORD,
+            authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET,
             cookie: envs.TWITTER_COOKIE,
         },
         weibo: {
@@ -636,6 +653,9 @@ const calculateValue = () => {
         },
         zodgame: {
             cookie: envs.ZODGAME_COOKIE,
+        },
+        zsxq: {
+            accessToken: envs.ZSXQ_ACCESS_TOKEN,
         },
     };
 

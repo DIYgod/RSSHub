@@ -27,14 +27,11 @@ const getFakeGot = (defaultOptions?: any) => {
             delete options.json;
         }
         if (options?.form && !options.body) {
-            const body = new FormData();
-            for (const key in options.form) {
-                body.append(key, options.form[key]);
-            }
-            options.body = body;
+            options.body = new URLSearchParams(options.form as Record<string, string>).toString();
             if (!options.headers) {
                 options.headers = {};
             }
+            options.headers['content-type'] = 'application/x-www-form-urlencoded';
             delete options.form;
         }
         if (options?.searchParams) {
@@ -51,6 +48,17 @@ const getFakeGot = (defaultOptions?: any) => {
         if (options?.responseType === 'buffer' || options?.responseType === 'arrayBuffer') {
             options.responseType = 'arrayBuffer';
             delete options.parseResponse;
+        }
+
+        if (options.cookieJar) {
+            const cookies = options.cookieJar.getCookiesSync(request);
+            if (cookies.length) {
+                if (!options.headers) {
+                    options.headers = {};
+                }
+                options.headers.cookie = cookies.join('; ');
+            }
+            delete options.cookieJar;
         }
 
         const response = ofetch(request, options);

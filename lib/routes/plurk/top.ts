@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { baseUrl, getPlurk } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const categoryList = new Set(['topReplurks', 'topFavorites', 'topResponded']);
 
@@ -33,7 +34,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { category = 'topReplurks', lang = 'en' } = ctx.req.param();
     if (!categoryList.has(category)) {
-        throw new Error(`Invalid category: ${category}`);
+        throw new InvalidParameterError(`Invalid category: ${category}`);
     }
 
     const { data: apiResponse } = await got(`${baseUrl}/Stats/${category}`, {

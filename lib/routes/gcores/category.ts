@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -60,7 +61,7 @@ async function handler(ctx) {
     list = list.get();
 
     if (list.length > 0 && list.every((item) => item.url === undefined)) {
-        throw new Error('Article URL not found! Please submit an issue on GitHub.');
+        throw new InvalidParameterError('Article URL not found! Please submit an issue on GitHub.');
     }
 
     const out = await Promise.all(
@@ -76,9 +77,11 @@ async function handler(ctx) {
                 const itemPage = itemRes.data;
                 const $ = load(itemPage);
 
-                let articleData = await got(`https://www.gcores.com/gapi/v1${item.url}?include=media`);
+                const articleRaw = await got(`https://www.gcores.com/gapi/v1${item.url}?include=media,category,user`);
+                const articleData = articleRaw.data.data;
+                const articleMeta = articleRaw.data.included.find((i) => i.type === 'users' && i.id === articleData.relationships.user.data.id);
+                const author = articleMeta.attributes.nickname;
 
-                articleData = articleData.data.data;
                 let cover;
                 if (articleData.attributes.cover) {
                     cover = `<img src="https://image.gcores.com/${articleData.attributes.cover}" />`;
@@ -126,6 +129,7 @@ async function handler(ctx) {
                     description: cover + content,
                     link: articleUrl,
                     guid: articleUrl,
+                    author,
                     pubDate: new Date(articleData.attributes['published-at']),
                 };
                 return category === 'news' ? basicItem : { ...basicItem, category: item.category };

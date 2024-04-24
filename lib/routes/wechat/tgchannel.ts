@@ -149,11 +149,18 @@ async function handler(ctx) {
 
                 const pubDate = new Date(item.find('.tgme_widget_message_date time').attr('datetime')).toUTCString();
 
+                /*
+                 * Since 2024/4/20, t.me/s/ mistakenly have every '&' in **hyperlinks** replaced by '&amp;'.
+                 * wechat-mp will take care of this, so no need to fix it here.
+                 * However, once the bug is eventually fixed, all guid will be changed again.
+                 * Considering that this is almost certain to happen, let's break guid consistency now by using
+                 * normalized URL from wechat-mp as guid to avoid similar issues in the future.
+                 */
                 const single = {
                     title,
                     pubDate,
                     link,
-                    guid: link,
+                    // guid: link,
                 };
 
                 if (link !== undefined) {
@@ -170,7 +177,7 @@ async function handler(ctx) {
 
     out.reverse();
     return {
-        title: $('.tgme_channel_info_header_title').text(),
+        title: mpName || $('.tgme_channel_info_header_title').text(),
         link: `https://t.me/s/${id}`,
         item: out.filter(Boolean),
         allowEmpty: !!mpName,

@@ -4,6 +4,8 @@ import { CookieJar } from 'tough-cookie';
 import { config } from '@/config';
 import { renderItems } from '../common-utils';
 import { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeedItems, getLoggedOutTagsFeedItems, renderGuestItems } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/2/:category/:key',
@@ -39,7 +41,7 @@ async function handler(ctx) {
     const { category, key } = ctx.req.param();
     const { cookie } = config.instagram;
     if (!availableCategories.includes(category)) {
-        throw new Error('Such feed is not supported.');
+        throw new InvalidParameterError('Such feed is not supported.');
     }
 
     let cookieJar = await cache.get('instagram:cookieJar');
@@ -58,7 +60,7 @@ async function handler(ctx) {
     }
 
     if (!wwwClaimV2 && cookie && !(await checkLogin(cookieJar, cache))) {
-        throw new Error('Invalid cookie');
+        throw new ConfigNotFoundError('Invalid cookie');
     }
 
     let feedTitle, feedLink, feedDescription, feedLogo;

@@ -1,6 +1,12 @@
 import { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { post2item } from './utils';
+import { art } from '@/utils/render';
+import path from 'node:path';
+import { parseDate } from '@/utils/parse-date';
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 // 游戏id
 const GITS_MAP = {
     1: '崩坏三',
@@ -17,6 +23,81 @@ const TYPE_MAP = {
     2: '活动',
     3: '资讯',
 };
+
+// 游戏缩写
+const GAME_SHORT_MAP = {
+    1: 'bh3',
+    2: 'ys',
+    3: 'bh2',
+    4: 'wd',
+    6: 'sr',
+    8: 'zzz',
+};
+// 游戏官方页所属分区
+const OFFICIAL_PAGE_MAP = {
+    1: '6',
+    2: '28',
+    3: '31',
+    4: '33',
+    6: '53',
+    8: '58',
+};
+
+const getNewsList = async ({ gids, type, page_size, last_id }) => {
+    const query = new URLSearchParams({
+        gids,
+        type,
+        page_size,
+        last_id,
+    }).toString();
+    const url = `https://bbs-api.miyoushe.com/post/wapi/getNewsList?${query}`;
+    const response = await got({
+        method: 'get',
+        url,
+    });
+    const list = response?.data?.data?.list;
+    return list;
+};
+
+const getPostContent = (list) =>
+    Promise.all(
+        list.map(async (row) => {
+            const post = row.post;
+            const post_id = post.post_id;
+            const query = new URLSearchParams({
+                post_id,
+            }).toString();
+            const url = `https://bbs-api.miyoushe.com/post/wapi/getPostFull?${query}`;
+            return await cache.tryGet(url, async () => {
+                const res = await got({
+                    method: 'get',
+                    url,
+                });
+                const gid = res?.data?.data?.post?.post?.game_id || '2';
+                const author = res?.data?.data?.post?.user?.nickname || '';
+                const content = res?.data?.data?.post?.post?.content || '';
+                const tags = res?.data?.data?.post?.topics?.map((item) => item.name) || [];
+                const description = art(path.join(__dirname, '../templates/official.art'), {
+                    hasCover: post.has_cover,
+                    coverList: row.cover_list,
+                    content,
+                });
+                return {
+                    // 文章标题
+                    title: post.subject,
+                    // 文章链接
+                    link: `https://www.miyoushe.com/${GAME_SHORT_MAP[gid]}/article/${post_id}`,
+                    // 文章正文
+                    description,
+                    // 文章发布日期
+                    pubDate: parseDate(post.created_at * 1000),
+                    // 文章标签
+                    category: tags,
+                    author,
+                };
+            });
+        })
+    );
 
 export const route: Route = {
     path: '/bbs/official/:gids/:type?/:page_size?/:last_id?',
@@ -49,23 +130,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { gids, type = '2', page_size = '20', last_id = '' } = ctx.req.param();
-    const query = new URLSearchParams({
-        gids,
-        type,
-        page_size,
-        last_id,
-    }).toString();
-    const url = `https://bbs-api.miyoushe.com/post/wapi/getNewsList?${query}`;
-    const response = await got({
-        method: 'get',
-        url,
-    });
-    const list = response?.data?.data?.list;
-    if (!list) {
-        throw new Error('未获取到数据！');
-    }
+
+    const list = await getNewsList({ gids, type, page_size, last_id });
+    const items = await getPostContent(list);
     const title = `米游社 - ${GITS_MAP[gids] || ''} - ${TYPE_MAP[type] || ''}`;
-    const items = list.map((e) => post2item(e));
+    const url = `https://www.miyoushe.com/${GAME_SHORT_MAP[gids]}/home/${OFFICIAL_PAGE_MAP[gids]}?type=${type}`;
     const data = {
         title,
         link: url,
