@@ -109,7 +109,7 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: `连享会 - ${$('.actives').text()}`,
+        title: `连享会 - ${$('.card-title').text()}`,
         link: currentUrl,
         item: items as DataItem[],
     };
