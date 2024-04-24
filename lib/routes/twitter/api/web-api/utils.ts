@@ -55,7 +55,6 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
         }),
         features: JSON.stringify(gqlFeatures[endpoint]),
     });
-
     let instructions;
     if (path) {
         instructions = data;
@@ -121,5 +120,6 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
             }
         }
     }
+
     return tweets;
 }

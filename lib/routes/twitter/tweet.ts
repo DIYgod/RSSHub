@@ -39,7 +39,16 @@ async function handler(ctx) {
     const status = ctx.req.param('status');
     const routeParams = new URLSearchParams(ctx.req.param('original'));
     const original = fallback(undefined, queryToBoolean(routeParams.get('original')), false);
-    const params = { focalTweetId: status };
+    const params = {
+        focalTweetId: status,
+        with_rux_injections: false,
+        includePromotedContent: true,
+        withCommunity: true,
+        withQuickPromoteEligibilityTweetFields: true,
+        withBirdwatchNotes: true,
+        withVoice: true,
+        withV2Timeline: true,
+    };
     await api.init();
     const userInfo = await api.getUser(id);
     const data = await api.getUserTweet(id, params);
