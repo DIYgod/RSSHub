@@ -4881,51 +4881,12 @@
   },
   "baai": {
     "routes": {
-      "/hub/comments": {
-        "path": "/hub/comments",
-        "categories": [
-          "programming"
-        ],
-        "example": "/baai/hub/comments",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "hub.baai.ac.cn/comments",
-              "hub.baai.ac.cn/"
-            ]
-          }
-        ],
-        "name": "智源社区 - 评论",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "hub.baai.ac.cn/comments",
-        "location": "comments.ts"
-      },
       "/hub/events": {
         "path": "/hub/events",
         "categories": [
           "programming"
         ],
         "example": "/baai/hub/events",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -4941,34 +4902,31 @@
         "url": "hub.baai.ac.cn/events",
         "location": "events.ts"
       },
-      "/hub/:tagId/:sort?/:range?": {
+      "/hub/:tagId?/:sort?/:range?": {
         "path": [
-          "/hub/:tagId/:sort?/:range?",
-          "/hub/:tagId/:sort?",
-          "/hub/:sort?"
+          "/hub/:tagId?/:sort?/:range?"
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "location": "hub.ts"
-      },
-      "/hub/:tagId/:sort?": {
-        "path": [
-          "/hub/:tagId/:sort?/:range?",
-          "/hub/:tagId/:sort?",
-          "/hub/:sort?"
+        "categories": [
+          "programming"
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "location": "hub.ts"
-      },
-      "/hub/:sort?": {
-        "path": [
-          "/hub/:tagId/:sort?/:range?",
-          "/hub/:tagId/:sort?",
-          "/hub/:sort?"
+        "example": "/baai/hub",
+        "parameters": {
+          "tagId": "社群 ID，可在 [社群页](https://hub.baai.ac.cn/taglist) 或 URL 中找到",
+          "sort": "排序，见下表，默认为 `new`",
+          "range": "时间跨度，仅在排序 `readCnt` 时有效"
+        },
+        "description": "排序\n\n| 最新 | 最热    |\n| ---- | ------- |\n| new  | readCnt |\n\n时间跨度\n\n| 3 天 | 本周 | 本月 |\n| ---- | ---- | ---- |\n| 3    | 7    | 30   |",
+        "radar": [
+          {
+            "source": [
+              "baai.ac.cn/"
+            ]
+          }
         ],
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "智源社区",
+        "maintainers": [
+          "TonyRL"
+        ],
         "location": "hub.ts"
       }
     },
