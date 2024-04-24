@@ -8667,6 +8667,20 @@
       }
     ]
   },
+  "lianxh.cn": {
+    "_name": "连享会",
+    "www": [
+      {
+        "title": "精彩资讯",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blogs/all.html",
+          "/"
+        ],
+        "target": "/lianxh/:category?"
+      }
+    ]
+  },
   "lifeweek.com.cn": {
     "_name": "三联生活周刊",
     ".": [

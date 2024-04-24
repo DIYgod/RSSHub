@@ -3348,6 +3348,9 @@
   "/lfsyd/user/:id?": [
     "auto-bot-ty"
   ],
+  "/lianxh/:category?": [
+    "nczitzk"
+  ],
   "/lifeweek/channel/:id": [],
   "/lifeweek/tag/:id": [],
   "/lightnovel/:keywords/:security_key?": [
