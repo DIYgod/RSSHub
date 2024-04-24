@@ -5002,7 +5002,9 @@
   "/sicau/zsjy/:category?": [
     "nczitzk"
   ],
-  "/sigsac/ccs": [],
+  "/sigsac/ccs": [
+    "ZeddYu"
+  ],
   "/simpleinfo/:category?": [
     "haukeng"
   ],

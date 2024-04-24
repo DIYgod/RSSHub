@@ -29093,15 +29093,6 @@
           "journal"
         ],
         "example": "/ieee-security/security-privacy",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -50110,15 +50101,6 @@
           "journal"
         ],
         "example": "/sigsac/ccs",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -50128,7 +50110,9 @@
           }
         ],
         "name": "The ACM Conference on Computer and Communications Security",
-        "maintainers": [],
+        "maintainers": [
+          "ZeddYu"
+        ],
         "url": "sigsac.org/ccs.html",
         "description": "Return results from 2020",
         "location": "ccs.ts"
@@ -57943,15 +57927,6 @@
           "journal"
         ],
         "example": "/usenix/usenix-security-sympoium",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
