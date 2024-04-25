@@ -197,6 +197,9 @@ dependencies:
   tldts:
     specifier: 6.1.18
     version: 6.1.18
+  tosource:
+    specifier: 2.0.0-alpha.3
+    version: 2.0.0-alpha.3
   tough-cookie:
     specifier: 4.1.3
     version: 4.1.3
@@ -376,9 +379,6 @@ devDependencies:
   supertest:
     specifier: 6.3.4
     version: 6.3.4
-  tosource:
-    specifier: 2.0.0-alpha.3
-    version: 2.0.0-alpha.3
   typescript:
     specifier: 5.4.5
     version: 5.4.5
@@ -9184,7 +9184,7 @@ packages:
   /tosource@2.0.0-alpha.3:
     resolution: {integrity: sha512-KAB2lrSS48y91MzFPFuDg4hLbvDiyTjOVgaK7Erw+5AmZXNq4sFRVn8r6yxSLuNs15PaokrDRpS61ERY9uZOug==}
     engines: {node: '>=10'}
-    dev: true
+    dev: false
 
   /tough-cookie@2.5.0:
     resolution: {integrity: sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g==}

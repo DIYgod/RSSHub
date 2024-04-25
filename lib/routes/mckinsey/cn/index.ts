@@ -1,8 +1,5 @@
 import { Route } from '@/types';
-// use stock `got` package as a workaround for
-// https://github.com/DIYgod/RSSHub/issues/8239
-// https://github.com/DIYgod/RSSHub/pull/8288
-import got from 'got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { categories } from './category-map';
 
@@ -53,12 +50,12 @@ async function handler(ctx) {
         categories.find((c) => c.slug === category);
     }
 
-    const posts = await got(`${endpoint}/wp/v2/posts`, {
-        searchParams: {
+    const posts = await ofetch(`${endpoint}/wp/v2/posts`, {
+        query: {
             per_page: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50,
             categories: category,
         },
-    }).json();
+    });
 
     const items = posts.map((item) => ({
         title: item.title.rendered,
