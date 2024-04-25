@@ -14,14 +14,6 @@ export const route: Route = {
         cateid: '信息分类-默认：658（全部）',
         sortType: '排序类型-默认：2（按时间）',
     },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: {
         source: ['search.zj.gov.cn/jsearchfront/search.do'],
         target: '/gov/zj/search/:websiteid?/:word/:cateid?',
