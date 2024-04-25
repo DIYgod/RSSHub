@@ -7632,6 +7632,35 @@
       }
     ]
   },
+  "iehou.com": {
+    "_name": "网猴线报",
+    ".": [
+      {
+        "title": "最新线报",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/iehou/"
+      },
+      {
+        "title": "24小时热门",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/page-dayhot.htm"
+        ],
+        "target": "/iehou/dayhot"
+      },
+      {
+        "title": "一周热门",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/page-weekhot.htm"
+        ],
+        "target": "/iehou/weekhot"
+      }
+    ]
+  },
   "neea.cn": {
     "_name": "IELTS 雅思",
     "ielts": [
