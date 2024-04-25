@@ -70,8 +70,8 @@ export const route: Route = {
                 };
             }) || [];
         return {
-            title: `浙江省人民政府-全省政府网站统一搜索`,
-            link: `search.zj.gov.cn/jsearchfront/search.do`,
+            title: '浙江省人民政府-全省政府网站统一搜索',
+            link: 'https://search.zj.gov.cn/jsearchfront/search.do',
             item: items,
         };
     },
