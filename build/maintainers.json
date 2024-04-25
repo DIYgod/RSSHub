@@ -3279,6 +3279,9 @@
   "/konghq/blog-posts": [
     "piglei"
   ],
+  "/kpmg/insights/:lang?": [
+    "LogicJake"
+  ],
   "/kuaidi100/track/:number/:id/:phone?": [
     "NeverBehave"
   ],

@@ -32683,6 +32683,48 @@
     "url": "konghq.com",
     "description": "[Kong](https://konghq.com/) 是一家开源的 API 网关服务商，此处收集其官网的最新博客文章。"
   },
+  "kpmg": {
+    "routes": {
+      "/insights/:lang?": {
+        "path": "/insights/:lang?",
+        "example": "/kpmg/insights",
+        "parameters": {
+          "lang": "Language, either `en` or `zh`"
+        },
+        "radar": [
+          {
+            "source": [
+              "kpmg.com/xx/en/home/insights.html"
+            ],
+            "target": "/insights/en"
+          },
+          {
+            "source": [
+              "kpmg.com/cn/zh/home/insights.html"
+            ],
+            "target": "/insights/zh"
+          }
+        ],
+        "name": "Insights",
+        "maintainers": [
+          "LogicJake"
+        ],
+        "url": "kpmg.com/xx/en/home/insights.html",
+        "zh": {
+          "name": "洞察"
+        },
+        "location": "insights.ts"
+      }
+    },
+    "name": "KPMG",
+    "url": "kpmg.com",
+    "categories": [
+      "other"
+    ],
+    "zh": {
+      "name": "毕马威"
+    }
+  },
   "kuaidi100": {
     "routes": {
       "/track/:number/:id/:phone?": {
