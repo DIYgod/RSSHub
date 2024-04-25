@@ -14,10 +14,12 @@ export const route: Route = {
         cateid: '信息分类-默认：658（全部）',
         sortType: '排序类型-默认：2（按时间）',
     },
-    radar: [{
-        source: ['search.zj.gov.cn/jsearchfront/search.do'],
-        target: '/zj/search/:websiteid?/:word/:cateid?',
-    }],
+    radar: [
+        {
+            source: ['search.zj.gov.cn/jsearchfront/search.do'],
+            target: '/zj/search/:websiteid?/:word/:cateid?',
+        },
+    ],
     name: '浙江省人民政府-全省政府网站统一搜索',
     url: 'search.zj.gov.cn/jsearchfront/search.do',
     maintainers: ['HaoyuLee'],
