@@ -6,20 +6,12 @@ export const route: Route = {
     path: '/library',
     categories: ['programming'],
     example: '/ollama/library',
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['ollama.com/library'],
         },
     ],
-    name: 'ollama models',
+    name: 'Models',
     maintainers: ['Nick22nd'],
     handler,
 };
@@ -40,8 +32,8 @@ async function handler() {
             };
         });
     return {
-        title: `ollama library`,
-        link: `https://ollama.com/library`,
+        title: 'ollama library',
+        link: 'https://ollama.com/library',
         item: items,
     };
 }
