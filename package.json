@@ -50,7 +50,7 @@
         "*.yml": "eslint --cache --fix"
     },
     "dependencies": {
-        "@hono/node-server": "1.11.0",
+        "@hono/node-server": "1.11.1",
         "@hono/swagger-ui": "0.2.1",
         "@hono/zod-openapi": "0.11.0",
         "@notionhq/client": "2.2.15",
