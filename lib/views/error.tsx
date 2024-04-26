@@ -1,29 +1,7 @@
 import type { FC } from 'hono/jsx';
 
+import { Layout } from '@/views/layout';
 import { gitHash, gitDate } from '@/utils/git-hash';
-
-const Layout: FC = (props) => (
-    <html>
-        <head>
-            <title>Welcome to RSSHub!</title>
-            <script src="https://cdn.tailwindcss.com"></script>
-            <style>
-                {`
-                details::-webkit-scrollbar {
-                    width: 0.25rem;
-                }
-                details::-webkit-scrollbar-thumb {
-                    border-radius: 0.125rem;
-                    background-color: #e4e4e7;
-                }
-                details::-webkit-scrollbar-thumb:hover {
-                    background-color: #a1a1aa;
-                }`}
-            </style>
-        </head>
-        <body className="antialiased text-zinc-700">{props.children}</body>
-    </html>
-);
 
 const Index: FC<{
     requestPath: string;

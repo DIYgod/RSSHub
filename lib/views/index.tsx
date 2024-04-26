@@ -1,33 +1,11 @@
 import type { FC } from 'hono/jsx';
 
+import { Layout } from '@/views/layout';
 import { config } from '@/config';
 import { gitHash, gitDate } from '@/utils/git-hash';
 import { getDebugInfo } from '@/utils/debug-info';
 
 const startTime = Date.now();
-
-const Layout: FC = (props) => (
-    <html>
-        <head>
-            <title>Welcome to RSSHub!</title>
-            <script src="https://cdn.tailwindcss.com"></script>
-            <style>
-                {`
-                details::-webkit-scrollbar {
-                    width: 0.25rem;
-                }
-                details::-webkit-scrollbar-thumb {
-                    border-radius: 0.125rem;
-                    background-color: #e4e4e7;
-                }
-                details::-webkit-scrollbar-thumb:hover {
-                    background-color: #a1a1aa;
-                }`}
-            </style>
-        </head>
-        <body className="antialiased text-zinc-700">{props.children}</body>
-    </html>
-);
 
 const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
     const debug = getDebugInfo();
@@ -166,13 +144,13 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 <p className="text-xl font-medium text-zinc-600">Everything is RSSible</p>
                 <div className="font-bold space-x-4 text-sm">
                     <a target="_blank" href="https://docs.rsshub.app">
-                        <button className="text-white bg-[#F5712C] hover:bg-[#DD4A15] py-2 px-4 rounded-full">View Docs</button>
+                        <button className="text-white bg-[#F5712C] hover:bg-[#DD4A15] py-2 px-4 rounded-full transition-colors">View Docs</button>
                     </a>
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub">
-                        <button className="bg-zinc-200 hover:bg-zinc-300 py-2 px-4 rounded-full">View on GitHub</button>
+                        <button className="bg-zinc-200 hover:bg-zinc-300 py-2 px-4 rounded-full transition-colors">View on GitHub</button>
                     </a>
                     <a target="_blank" href="https://docs.rsshub.app/sponsor" className="text-[#F5712C]">
-                        <button className="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded-full">❤️ Sponsor</button>
+                        <button className="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded-full transition-colors">❤️ Sponsor</button>
                     </a>
                 </div>
                 {info.showDebug ? (
