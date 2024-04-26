@@ -41373,6 +41373,31 @@
     "name": "隆众资讯",
     "url": "oilchem.net"
   },
+  "ollama": {
+    "routes": {
+      "/library": {
+        "path": "/library",
+        "categories": [
+          "programming"
+        ],
+        "example": "/ollama/library",
+        "radar": [
+          {
+            "source": [
+              "ollama.com/library"
+            ]
+          }
+        ],
+        "name": "Models",
+        "maintainers": [
+          "Nick22nd"
+        ],
+        "location": "models.ts"
+      }
+    },
+    "name": "Ollama",
+    "url": "ollama.com"
+  },
   "oncc": {
     "routes": {
       "/:language/:channel?": {

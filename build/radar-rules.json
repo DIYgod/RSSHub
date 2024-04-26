@@ -10614,6 +10614,19 @@
       }
     ]
   },
+  "ollama.com": {
+    "_name": "Ollama",
+    ".": [
+      {
+        "title": "Models",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/library"
+        ],
+        "target": "/ollama/library"
+      }
+    ]
+  },
   "onet.pl": {
     "_name": "Onet",
     "wiadomosci": [

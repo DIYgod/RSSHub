@@ -4152,6 +4152,9 @@
   "/oilchem/:type?/:category?/:subCategory?": [
     "nczitzk"
   ],
+  "/ollama/library": [
+    "Nick22nd"
+  ],
   "/oncc/:language/:channel?": [
     "Fatpandac"
   ],
