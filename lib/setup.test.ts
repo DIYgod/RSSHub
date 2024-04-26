@@ -228,6 +228,7 @@ Unknown paragraph
         const formData = await request.formData();
         return HttpResponse.json({
             test: formData.get('test'),
+            req: { headers: Object.fromEntries(request.headers.entries()) },
         });
     }),
     http.post(`http://rsshub.test/json-post`, async ({ request }) => {
