@@ -1,7 +1,5 @@
 import { Route } from '@/types';
 import utils from './utils';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import api from './api';
 
 export const route: Route = {
@@ -37,12 +35,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const client = await utils.getAppClient();
     const { count, include_rts } = utils.parseRouteParams(ctx.req.param('routeParams'));
     const params = count ? { count } : {};
 
     await api.init();
-    const userInfo = await api.getUser(id);
     let data = await api.getUserLikes(id, params);
     if (!include_rts) {
         data = utils.excludeRetweet(data);
