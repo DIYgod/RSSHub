@@ -52259,7 +52259,7 @@
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
-          "antiCrawler": false,
+          "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -52268,11 +52268,12 @@
           {
             "source": [
               "jsjxy.stbu.edu.cn/news",
-              "jsjxy.stbu.edu.cn/"
+              "jsjxy.stbu.edu.cn",
+              "stbu.edu.cn"
             ]
           }
         ],
-        "name": "计算机学院通知公告",
+        "name": "计算机学院 - 通知公告",
         "maintainers": [
           "HyperCherry"
         ],
@@ -52282,15 +52283,28 @@
       },
       "/xyxw": {
         "path": "/xyxw",
+        "categories": [
+          "university"
+        ],
+        "example": "/stbu/xyxw",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
         "radar": [
           {
             "source": [
               "stbu.edu.cn/html/news/xueyuan",
-              "stbu.edu.cn/"
+              "stbu.edu.cn"
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "学院新闻",
         "maintainers": [
           "HyperCherry"
         ],
