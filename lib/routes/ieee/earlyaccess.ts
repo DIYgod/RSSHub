@@ -7,6 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
+import { parseDate } from '@/utils/parse-date'; // Tool function for parsing dates
 
 import { CookieJar } from 'tough-cookie';
 const cookieJar = new CookieJar();
@@ -82,10 +83,12 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 if (item.abstract !== '') {
                     const response3 = await got(`${host}${item.link}`);
-                    const { abstract } = JSON.parse(response3.body.match(/metadata=(.*);/)[1]);
+                    const { abstract, displayPublicationDate} = JSON.parse(response3.body.match(/metadata=(.*);/)[1]);
                     const $3 = load(abstract);
+                    const $4 = load(displayPublicationDate)
                     item.abstract = $3.text();
                     item.description = renderDesc(item);
+                    item.pubDate = parseDate($4.text()); // Ignore pubDate unless with abstract.
                 }
                 return item;
             })
