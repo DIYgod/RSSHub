@@ -8,8 +8,17 @@ import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/:path?',
+    categories: ['traditional-media'],
+    example: '/ttv',
+    parameters: { path: '分类' },
     name: '分类',
-    maintainers: [],
+    maintainers: ['dzx-dzx'],
+    radar: [
+        {
+            source: ['news.ttv.com.tw/:path'],
+            target: '/:path',
+        },
+    ],
     handler,
 };
 
