@@ -10,7 +10,6 @@ const md = MarkdownIt({
     html: true,
 });
 import { load } from 'cheerio';
-import { fallback, queryToInteger } from '@/utils/readable-social';
 import cache from '@/utils/cache';
 import { config } from '@/config';
 
@@ -27,7 +26,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit: number = fallback(queryToInteger(ctx.req.query('limit')), 10);
+    const limit: number = Number.parseInt(ctx.req.query('limit')) || 10;
     const rootUrl = 'https://hellogithub.com';
     const apiUrl = 'https://api.hellogithub.com/v1/periodical/';
 
@@ -65,7 +64,7 @@ async function handler(ctx) {
                     };
                 },
                 config.cache.routeExpire,
-                true
+                false
             );
         })
     );
