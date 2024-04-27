@@ -1,4 +1,4 @@
-const fallback = (a: any, b: any, c?: any) => {
+const fallback = (a, b, c) => {
     if (a !== undefined && a !== null) {
         return a;
     }
