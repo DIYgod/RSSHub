@@ -26170,37 +26170,7 @@
     "routes": {
       "/article/:sort?/:id?": {
         "path": [
-          "/article/:sort?/:id?",
-          "/:sort?/:id?"
-        ],
-        "categories": [
-          "programming"
-        ],
-        "example": "/hellogithub/article",
-        "parameters": {
-          "sort": "排序方式，见下表，默认为 `hot`，即热门",
-          "id": "标签 id，可在对应标签页 URL 中找到，默认为全部标签"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "文章",
-        "maintainers": [
-          "moke8",
-          "nczitzk"
-        ],
-        "description": "| 热门 | 最近 |\n  | ---- | ---- |\n  | hot  | last |",
-        "location": "index.ts"
-      },
-      "/:sort?/:id?": {
-        "path": [
-          "/article/:sort?/:id?",
-          "/:sort?/:id?"
+          "/article/:sort?/:id?"
         ],
         "categories": [
           "programming"
@@ -26231,7 +26201,8 @@
           "/ranking/:type?",
           "/report/:type?"
         ],
-        "name": "Unknown",
+        "example": "/hellogithub/ranking",
+        "name": "榜单报告",
         "maintainers": [
           "moke8",
           "nczitzk"
@@ -26244,7 +26215,8 @@
           "/ranking/:type?",
           "/report/:type?"
         ],
-        "name": "Unknown",
+        "example": "/hellogithub/ranking",
+        "name": "榜单报告",
         "maintainers": [
           "moke8",
           "nczitzk"
@@ -26257,10 +26229,12 @@
           "/month",
           "/volume"
         ],
-        "name": "Unknown",
+        "example": "/hellogithub/volume",
+        "name": "月刊",
         "maintainers": [
           "moke8",
-          "nczitzk"
+          "nczitzk",
+          "CaoMeiYouRen"
         ],
         "location": "volume.ts"
       },
@@ -26269,10 +26243,12 @@
           "/month",
           "/volume"
         ],
-        "name": "Unknown",
+        "example": "/hellogithub/volume",
+        "name": "月刊",
         "maintainers": [
           "moke8",
-          "nczitzk"
+          "nczitzk",
+          "CaoMeiYouRen"
         ],
         "location": "volume.ts"
       }
