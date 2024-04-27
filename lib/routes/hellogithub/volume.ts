@@ -57,7 +57,7 @@ async function handler(ctx) {
                     const data = response.props;
                     const id = data.pageProps.volume.current_num;
                     return {
-                        title: `No.${id}`,
+                        title: `《HelloGitHub》第 ${id} 期`,
                         link: `${rootUrl}/periodical/volume/${id}`,
                         description: art(path.join(__dirname, 'templates/volume.art'), {
                             data: data.pageProps.volume.data,
