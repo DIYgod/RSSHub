@@ -13527,6 +13527,19 @@
       }
     ]
   },
+  "sohu.com": {
+    "_name": "搜狐号",
+    "mp": [
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/profile"
+        ],
+        "target": "/sohu(_params,url)=>`/sohu/mp/${new URL(url).searchParams.get(\"xpt\")}`"
+      }
+    ]
+  },
   "sony.com": {
     "_name": "Sony",
     ".": [
