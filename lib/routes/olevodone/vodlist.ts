@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/vodlist',
     categories: ['social-media'],
-    example: '/vodlist/',
+    example: '/vodlist',
     parameters: {},
     features: {
         requireConfig: false,
