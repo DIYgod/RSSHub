@@ -47,8 +47,8 @@ async function handler(ctx) {
             .toArray()
             .map((elem) => ({
                 link: new URL(elem.attribs.href, pageUrl).href,
-                title: elem.attribs.title,
-                pubDate: parseDate($(elem.next).text().trim()),
+                title: $(elem).text(),
+                pubDate: parseDate($(elem.next?.next).text().trim()),
             })),
     };
 }
