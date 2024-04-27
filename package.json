@@ -23,8 +23,8 @@
     "scripts": {
         "build": "tsx scripts/workflow/build-routes.ts",
         "build:docs": "tsx scripts/workflow/build-docs.ts",
-        "dev": "cross-env NODE_ENV=dev tsx watch --no-cache lib/index.ts",
-        "dev:cache": "cross-env NODE_ENV=production tsx watch lib/index.ts",
+        "dev": "cross-env NODE_ENV=dev tsx watch --clear-screen=false lib/index.ts",
+        "dev:cache": "cross-env NODE_ENV=production tsx watch --clear-screen=false lib/index.ts",
         "format": "prettier \"**/*.{ts,tsx,js,json}\" --write && eslint --cache --fix \"**/*.{ts,tsx,js,yml}\"",
         "format:check": "prettier \"**/*.{ts,tsx,js,json}\" --check && eslint --cache \"**/*.{ts,tsx,js,yml}\"",
         "format:staged": "lint-staged",
@@ -50,7 +50,7 @@
         "*.yml": "eslint --cache --fix"
     },
     "dependencies": {
-        "@hono/node-server": "1.11.0",
+        "@hono/node-server": "1.11.1",
         "@hono/swagger-ui": "0.2.1",
         "@hono/zod-openapi": "0.11.0",
         "@notionhq/client": "2.2.15",
@@ -75,7 +75,7 @@
         "fanfou-sdk": "5.0.0",
         "form-data": "4.0.0",
         "googleapis": "135.0.0",
-        "hono": "4.2.7",
+        "hono": "4.2.8",
         "html-to-text": "9.0.5",
         "https-proxy-agent": "7.0.4",
         "iconv-lite": "0.6.3",
