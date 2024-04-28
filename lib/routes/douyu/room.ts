@@ -44,21 +44,24 @@ async function handler(ctx) {
         room_thumb = data.room_pic;
 
         if (data.show_status === 1) {
-            item = data.videoLoop === 1 ? [
-                    {
-                        title: `视频轮播: ${data.room_name}`,
-                        pubDate: new Date(data.show_time * 1000).toUTCString(),
-                        guid: data.show_time,
-                        link: `https://www.douyu.com/${id}`,
-                    },
-                ] : [
-                    {
-                        title: `开播: ${data.room_name}`,
-                        pubDate: new Date(data.show_time * 1000).toUTCString(),
-                        guid: data.show_time,
-                        link: `https://www.douyu.com/${id}`,
-                    },
-                ];
+            item =
+                data.videoLoop === 1
+                    ? [
+                          {
+                              title: `视频轮播: ${data.room_name}`,
+                              pubDate: new Date(data.show_time * 1000).toUTCString(),
+                              guid: data.show_time,
+                              link: `https://www.douyu.com/${id}`,
+                          },
+                      ]
+                    : [
+                          {
+                              title: `开播: ${data.room_name}`,
+                              pubDate: new Date(data.show_time * 1000).toUTCString(),
+                              guid: data.show_time,
+                              link: `https://www.douyu.com/${id}`,
+                          },
+                      ];
         }
         // make a fallback to the old api
     } catch {
