@@ -14,10 +14,11 @@ export const route: Route = {
 
 async function handler() {
     const hostURL = 'https://www.chub.ai/characters';
-    const apiURL = 'https://api.chub.ai/api/characters/search?query=';
+    const apiURL = 'https://api.chub.ai/api/characters/search';
     const data = await ofetch(apiURL, {
         headers: { Accept: 'application/json' },
         query: {
+            query: '',
             first: 200,
             page: 1,
             sort: 'last_activity_at',
