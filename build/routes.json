@@ -11268,6 +11268,24 @@
     "name": "川流",
     "url": "chuanliu.org"
   },
+  "chub": {
+    "routes": {
+      "/characters": {
+        "path": "/characters",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/chub/characters",
+        "name": "Characters",
+        "maintainers": [
+          "flameleaf"
+        ],
+        "location": "characters.ts"
+      }
+    },
+    "name": "Chub",
+    "url": "chub.ai"
+  },
   "cib": {
     "routes": {
       "/whpj/:format?": {
