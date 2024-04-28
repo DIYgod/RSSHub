@@ -20,6 +20,7 @@ async function handler(ctx) {
         ['人文叙述', '4_3'],
         ['观点评论', '4_5'],
     ]);
+    if(!CATEGORY_TO_ARG_MAP.get(ctx.req.param().category)) throw new Error("The requested category does not exist or is not supported.")
     const reqArgs = {
         args: {
             _jcp: CATEGORY_TO_ARG_MAP.get(ctx.req.param().category),
