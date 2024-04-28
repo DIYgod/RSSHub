@@ -53,15 +53,17 @@ async function handler(ctx) {
         title: `又有人在微博提到${keyword}了`,
         link: `http://s.weibo.com/weibo/${encodeURIComponent(keyword)}&b=1&nodup=1`,
         description: `又有人在微博提到${keyword}了`,
-        item: data.map((item) => {
-            item.mblog.created_at = timezone(item.mblog.created_at, +8);
-            if (item.mblog.retweeted_status && item.mblog.retweeted_status.created_at) {
-                item.mblog.retweeted_status.created_at = timezone(item.mblog.retweeted_status.created_at, +8);
-            }
-            return weiboUtils.formatExtended(ctx, item.mblog, undefined, {
-                showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),
-                showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.showAuthorInDesc), true),
-            });
-        }),
+        item: data
+            .filter((i) => i.mblog)
+            .map((item) => {
+                item.mblog.created_at = timezone(item.mblog.created_at, +8);
+                if (item.mblog.retweeted_status && item.mblog.retweeted_status.created_at) {
+                    item.mblog.retweeted_status.created_at = timezone(item.mblog.retweeted_status.created_at, +8);
+                }
+                return weiboUtils.formatExtended(ctx, item.mblog, undefined, {
+                    showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),
+                    showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.showAuthorInDesc), true),
+                });
+            }),
     });
 }
