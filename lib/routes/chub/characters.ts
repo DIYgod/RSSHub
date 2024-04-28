@@ -11,7 +11,6 @@ export const route: Route = {
     handler,
 };
 
-
 async function handler() {
     const hostURL = 'https://www.chub.ai/characters';
     const apiURL = 'https://api.chub.ai/api/characters/search';
@@ -50,19 +49,16 @@ async function handler() {
         allowEmpty: true,
         title: 'Chub',
         link: hostURL,
-        item: nodes
-            .map((item) => ({
-                    title: item.name,
-                    description: `${item.tagline}<br><br>${item.description}`,
-                    pubDate: parseDate(item.createdAt),
-                    updated: parseDate(item.lastActivityAt),
-                    link: `${hostURL}/${item.fullPath}`,
-                    author: String(item.fullPath.split('/', 1)),
-                    enclosure_url: item.avatar_url,
-                    enclosure_type: `image/webp`,
-                    category: item.topics,
-            })),
+        item: nodes.map((item) => ({
+            title: item.name,
+            description: `${item.tagline}<br><br>${item.description}`,
+            pubDate: parseDate(item.createdAt),
+            updated: parseDate(item.lastActivityAt),
+            link: `${hostURL}/${item.fullPath}`,
+            author: String(item.fullPath.split('/', 1)),
+            enclosure_url: item.avatar_url,
+            enclosure_type: `image/webp`,
+            category: item.topics,
+        })),
     };
 }
-
-
