@@ -10,7 +10,9 @@ export const route: Route = {
     categories: ['blog'],
     radar: [{ source: ['www.copernicium.tw'] }],
     name: '分类',
-    maintainers: [''],
+    example: "/copernicium/环球视角",
+    parameters: {"category" : "分类名"},
+    maintainers: ['dzx-dzx'],
     handler,
 };
 
