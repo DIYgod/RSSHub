@@ -10764,6 +10764,27 @@
       }
     ]
   },
+  "olevod.one": {
+    "_name": "欧乐影院",
+    "www": [
+      {
+        "title": "视频",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/vod/:id"
+        ],
+        "target": "/olevod/vod/:id"
+      },
+      {
+        "title": "最新视频",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/"
+        ],
+        "target": "/olevod/vodlist"
+      }
+    ]
+  },
   "ollama.com": {
     "_name": "Ollama",
     ".": [

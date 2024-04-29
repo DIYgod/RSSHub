@@ -41505,6 +41505,55 @@
     "name": "隆众资讯",
     "url": "oilchem.net"
   },
+  "olevod": {
+    "routes": {
+      "/vod/:id": {
+        "path": "/vod/:id",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/olevod/vod/202449091",
+        "parameters": {
+          "id": "视频id号"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.olevod.one/vod/:id"
+            ],
+            "target": "/vod/:id"
+          }
+        ],
+        "name": "视频",
+        "maintainers": [
+          "fang63625"
+        ],
+        "location": "vod.ts"
+      },
+      "/vodlist": {
+        "path": "/vodlist",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/olevod/vodlist",
+        "radar": [
+          {
+            "source": [
+              "www.olevod.one"
+            ],
+            "target": "/vodlist"
+          }
+        ],
+        "name": "最新视频",
+        "maintainers": [
+          "fang63625"
+        ],
+        "location": "vodlist.ts"
+      }
+    },
+    "name": "欧乐影院",
+    "url": "olevod.one"
+  },
   "ollama": {
     "routes": {
       "/library": {
