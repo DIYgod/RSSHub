@@ -2216,7 +2216,9 @@
   "/google/search/:keyword/:language?": [
     "CaoMeiYouRen"
   ],
-  "/gov/anhui/kjt/*": [],
+  "/gov/ah/kjt/:category{.+}?": [
+    "nczitzk"
+  ],
   "/gov/beijing/bjedu/gh/:urlPath?": [
     "TonyRL"
   ],

@@ -22573,11 +22573,150 @@
   },
   "gov": {
     "routes": {
-      "/anhui/kjt/*": {
-        "path": "/anhui/kjt/*",
-        "name": "Unknown",
-        "maintainers": [],
-        "location": "anhui/kjt.ts"
+      "/ah/kjt/:category{.+}?": {
+        "path": "/ah/kjt/:category{.+}?",
+        "name": "安徽省科学技术厅",
+        "url": "kjt.ah.gov.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/gov/ah/kjt",
+        "parameters": {
+          "category": "分类，默认为 `kjzx/tzgg`，即通知公告，可在对应分类页 URL 中找到"
+        },
+        "description": ":::tip\n  若订阅 [通知公告](https://kjt.ah.gov.cn/kjzx/tzgg/)，网址为 `https://kjt.ah.gov.cn/kjzx/tzgg/`。截取 `https://kjt.ah.gov.cn/` 到末尾 `/` 的部分 `` 作为参数填入，此时路由为 [`/gov/ah/kjt/kjzx/tzgg`](https://rsshub.app/gov/ah/kjt/kjzx/tzgg)。\n  :::\n\n  #### [科技资讯](https://kjt.ah.gov.cn/kjzx/index.html)\n\n  | [通知公告](https://kjt.ah.gov.cn/kjzx/tzgg/index.html) | [工作动态](https://kjt.ah.gov.cn/kjzx/gzdt/index.html) | [基层科技](https://kjt.ah.gov.cn/kjzx/jckj/index.html) | [媒体聚焦](https://kjt.ah.gov.cn/kjzx/mtjj/index.html) |\n  | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |\n  | [kjzx/tzgg](https://rsshub.app/gov/ah/kjt/kjzx/tzgg)   | [kjzx/gzdt](https://rsshub.app/gov/ah/kjt/kjzx/gzdt)   | [kjzx/jckj](https://rsshub.app/gov/ah/kjt/kjzx/jckj)   | [kjzx/mtjj](https://rsshub.app/gov/ah/kjt/kjzx/mtjj)   |\n  \n  | [重要转载](https://kjt.ah.gov.cn/kjzx/zyzz/index.html) | [图片视频](https://kjt.ah.gov.cn/kjzx/tpsp/index.html) |\n  | ------------------------------------------------------ | ------------------------------------------------------ |\n  | [kjzx/zyzz](https://rsshub.app/gov/ah/kjt/kjzx/zyzz)   | [kjzx/tpsp](https://rsshub.app/gov/ah/kjt/kjzx/tpsp)   |\n\n  #### [科技统计](https://kjt.ah.gov.cn/kjzy/kjtj/index.html)\n\n  | [技术市场交易](https://kjt.ah.gov.cn/kjzy/kjtj/jsscjy/index.html)  | [科技成果公报](https://kjt.ah.gov.cn/kjzy/kjtj/kjcggb/index.html)  | [孵化载体发展](https://kjt.ah.gov.cn/kjzy/kjtj/cyfhfz/index.html)  |\n  | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |\n  | [kjzy/kjtj/jsscjy](https://rsshub.app/gov/ah/kjt/kjzy/kjtj/jsscjy) | [kjzy/kjtj/kjcggb](https://rsshub.app/gov/ah/kjt/kjzy/kjtj/kjcggb) | [kjzy/kjtj/cyfhfz](https://rsshub.app/gov/ah/kjt/kjzy/kjtj/cyfhfz) |\n\n  #### [科技数据](https://kjt.ah.gov.cn/kjzy/kjsj/index.html)\n\n  | [创新企业](https://kjt.ah.gov.cn/kjzy/kjsj/cxqy/index.html)    | [创新项目](https://kjt.ah.gov.cn/kjzy/kjsj/cxxm/index.html)    | [创新成果](https://kjt.ah.gov.cn/kjzy/kjsj/cxcg/index.html)    | [转化基金入库项目](https://kjt.ah.gov.cn/kjzy/kjsj/zhjjrkxm/index.html) |\n  | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------- |\n  | [kjzy/kjsj/cxqy](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxqy) | [kjzy/kjsj/cxxm](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxxm) | [kjzy/kjsj/cxcg](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxcg) | [kjzy/kjsj/zhjjrkxm](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/zhjjrkxm)  |\n\n  | [创新平台](https://kjt.ah.gov.cn/kjzy/kjsj/cxpt/index.html)    | [创新园区](https://kjt.ah.gov.cn/kjzy/kjsj/cxyq/index.html)    | [创新许可](https://kjt.ah.gov.cn/kjzy/kjsj/cxxk/index.html)    |\n  | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |\n  | [kjzy/kjsj/cxpt](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxpt) | [kjzy/kjsj/cxyq](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxyq) | [kjzy/kjsj/cxxk](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxxk) |\n\n  ",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "kjt.ah.gov.cn/:category"
+            ]
+          },
+          {
+            "title": "科技资讯 - 通知公告",
+            "source": [
+              "kjt.ah.gov.cn/kjzx/tzgg/index.html"
+            ],
+            "target": "/ah/kjt/kjzx/tzgg"
+          },
+          {
+            "title": "科技资讯 - 工作动态",
+            "source": [
+              "kjt.ah.gov.cn/kjzx/gzdt/index.html"
+            ],
+            "target": "/ah/kjt/kjzx/gzdt"
+          },
+          {
+            "title": "科技资讯 - 基层科技",
+            "source": [
+              "kjt.ah.gov.cn/kjzx/jckj/index.html"
+            ],
+            "target": "/ah/kjt/kjzx/jckj"
+          },
+          {
+            "title": "科技资讯 - 媒体聚焦",
+            "source": [
+              "kjt.ah.gov.cn/kjzx/mtjj/index.html"
+            ],
+            "target": "/ah/kjt/kjzx/mtjj"
+          },
+          {
+            "title": "科技资讯 - 重要转载",
+            "source": [
+              "kjt.ah.gov.cn/kjzx/zyzz/index.html"
+            ],
+            "target": "/ah/kjt/kjzx/zyzz"
+          },
+          {
+            "title": "科技资讯 - 图片视频",
+            "source": [
+              "kjt.ah.gov.cn/kjzx/tpsp/index.html"
+            ],
+            "target": "/ah/kjt/kjzx/tpsp"
+          },
+          {
+            "title": "科技统计 - 技术市场交易",
+            "source": [
+              "kjt.ah.gov.cn/kjzy/kjtj/jsscjy/index.html"
+            ],
+            "target": "/ah/kjt/kjzy/kjtj/jsscjy"
+          },
+          {
+            "title": "科技统计 - 科技成果公报",
+            "source": [
+              "kjt.ah.gov.cn/kjzy/kjtj/kjcggb/index.html"
+            ],
+            "target": "/ah/kjt/kjzy/kjtj/kjcggb"
+          },
+          {
+            "title": "科技统计 - 孵化载体发展",
+            "source": [
+              "kjt.ah.gov.cn/kjzy/kjtj/cyfhfz/index.html"
+            ],
+            "target": "/ah/kjt/kjzy/kjtj/cyfhfz"
+          },
+          {
+            "title": "科技数据 - 创新企业",
+            "source": [
+              "kjt.ah.gov.cn/kjzy/kjsj/cxqy/index.html"
+            ],
+            "target": "/ah/kjt/kjzy/kjsj/cxqy"
+          },
+          {
+            "title": "科技数据 - 创新项目",
+            "source": [
+              "kjt.ah.gov.cn/kjzy/kjsj/cxxm/index.html"
+            ],
+            "target": "/ah/kjt/kjzy/kjsj/cxxm"
+          },
+          {
+            "title": "科技数据 - 创新成果",
+            "source": [
+              "kjt.ah.gov.cn/kjzy/kjsj/cxcg/index.html"
+            ],
+            "target": "/ah/kjt/kjzy/kjsj/cxcg"
+          },
+          {
+            "title": "科技数据 - 转化基金入库项目",
+            "source": [
+              "kjt.ah.gov.cn/kjzy/kjsj/zhjjrkxm/index.html"
+            ],
+            "target": "/ah/kjt/kjzy/kjsj/zhjjrkxm"
+          },
+          {
+            "title": "科技数据 - 创新平台",
+            "source": [
+              "kjt.ah.gov.cn/kjzy/kjsj/cxpt/index.html"
+            ],
+            "target": "/ah/kjt/kjzy/kjsj/cxpt"
+          },
+          {
+            "title": "科技数据 - 创新园区",
+            "source": [
+              "kjt.ah.gov.cn/kjzy/kjsj/cxyq/index.html"
+            ],
+            "target": "/ah/kjt/kjzy/kjsj/cxyq"
+          },
+          {
+            "title": "科技数据 - 创新许可",
+            "source": [
+              "kjt.ah.gov.cn/kjzy/kjsj/cxxk/index.html"
+            ],
+            "target": "/ah/kjt/kjzy/kjsj/cxxk"
+          }
+        ],
+        "location": "ah/kjt.ts"
       },
       "/beijing/bjedu/gh/:urlPath?": {
         "path": "/beijing/bjedu/gh/:urlPath?",
@@ -24706,6 +24845,9 @@
     },
     "name": "中国人民银行",
     "url": "pbc.gov.cn",
+    "categories": [
+      "government"
+    ],
     "description": "<details>\n  <summary>*业务咨询* 和 *投诉建议* 可用的站点参数</summary>\n\n  | 上海市   | 北京市  | 天津市  | 河北省 |\n  | -------- | ------- | ------- | ------ |\n  | shanghai | beijing | tianjin | hebei  |\n\n  | 山西省 | 内蒙古自治区 | 辽宁省   | 吉林省 |\n  | ------ | ------------ | -------- | ------ |\n  | shanxi | neimenggu    | liaoning | jilin  |\n\n  | 黑龙江省     | 江苏省  | 浙江省   | 安徽省 |\n  | ------------ | ------- | -------- | ------ |\n  | heilongjiang | jiangsu | zhejiang | anhui  |\n\n  | 福建省 | 江西省  | 山东省   | 河南省 |\n  | ------ | ------- | -------- | ------ |\n  | fujian | jiangxi | shandong | henan  |\n\n  | 湖北省 | 湖南省 | 广东省    | 广西壮族自治区 |\n  | ------ | ------ | --------- | -------------- |\n  | hubei  | hunan  | guangdong | guangxi        |\n\n  | 海南省 | 重庆市    | 四川省  | 贵州省  |\n  | ------ | --------- | ------- | ------- |\n  | hainan | chongqing | sichuan | guizhou |\n\n  | 云南省 | 西藏自治区 | 陕西省  | 甘肃省 |\n  | ------ | ---------- | ------- | ------ |\n  | yunnan | xizang     | shaanxi | gansu  |\n\n  | 青海省  | 宁夏回族自治区 | 新疆维吾尔自治区 | 大连市 |\n  | ------- | -------------- | ---------------- | ------ |\n  | qinghai | ningxia        | xinjiang         | dalian |\n\n  | 宁波市 | 厦门市 | 青岛市  | 深圳市   |\n  | ------ | ------ | ------- | -------- |\n  | ningbo | xiamen | qingdao | shenzhen |\n</details>"
   },
   "greasyfork": {
