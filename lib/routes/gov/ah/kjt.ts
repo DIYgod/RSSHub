@@ -142,7 +142,7 @@ export const route: Route = {
             target: (params) => {
                 const category = params.category;
 
-                return `/ah/kjt${category ? `/${category}` : ''}`;
+                return `/gov/ah/kjt${category ? `/${category}` : ''}`;
             },
         },
         {
