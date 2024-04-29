@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/vodlist',
     categories: ['multimedia'],
-    example: '/olevode/vodlist',
+    example: '/olevod/vodlist',
     radar: [
         {
             source: ['www.olevod.one'],

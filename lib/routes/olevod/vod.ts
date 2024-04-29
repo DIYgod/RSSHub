@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/vod/:id',
     categories: ['social-media'],
-    example: '/olevode/vod/202449091',
+    example: '/olevod/vod/202449091',
     parameters: { id: '视频id号' },
     radar: [
         {
