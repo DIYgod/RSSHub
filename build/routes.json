@@ -14177,25 +14177,12 @@
     "routes": {
       "/discussed": {
         "path": "/discussed",
-        "categories": [
-          "social-media"
-        ],
         "example": "/daily/discussed",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
               "daily.dev/popular"
-            ],
-            "target": ""
+            ]
           }
         ],
         "name": "Most Discussed",
@@ -14207,15 +14194,15 @@
       },
       "/": {
         "path": "/",
+        "example": "/daily",
         "radar": [
           {
             "source": [
               "daily.dev/popular"
-            ],
-            "target": ""
+            ]
           }
         ],
-        "name": "Unknown",
+        "name": "Popular",
         "maintainers": [
           "Rjnishant530"
         ],
@@ -14224,25 +14211,12 @@
       },
       "/upvoted": {
         "path": "/upvoted",
-        "categories": [
-          "social-media"
-        ],
         "example": "/daily/upvoted",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
               "daily.dev/popular"
-            ],
-            "target": ""
+            ]
           }
         ],
         "name": "Most upvoted",
@@ -14251,10 +14225,31 @@
         ],
         "url": "daily.dev/popular",
         "location": "upvoted.ts"
+      },
+      "/user/:userId": {
+        "path": "/user/:userId",
+        "example": "/daily/user/kramer",
+        "radar": [
+          {
+            "source": [
+              "daily.dev/:userId/posts",
+              "daily.dev/:userId"
+            ]
+          }
+        ],
+        "name": "User Posts",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "daily.dev",
+        "location": "user.ts"
       }
     },
     "name": "Daily.dev",
-    "url": "daily.dev"
+    "url": "daily.dev",
+    "categories": [
+      "social-media"
+    ]
   },
   "damai": {
     "routes": {

@@ -1386,6 +1386,9 @@
   "/daily/upvoted": [
     "Rjnishant530"
   ],
+  "/daily/user/:userId": [
+    "TonyRL"
+  ],
   "/damai/activity/:city/:category/:subcategory/:keyword?": [
     "hoilc"
   ],
