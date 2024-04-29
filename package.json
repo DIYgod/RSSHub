@@ -86,7 +86,7 @@
         "jsdom": "24.0.0",
         "json-bigint": "1.0.0",
         "jsrsasign": "10.9.0",
-        "lru-cache": "10.2.1",
+        "lru-cache": "10.2.2",
         "lz-string": "1.5.0",
         "mailparser": "3.7.1",
         "markdown-it": "14.1.0",
