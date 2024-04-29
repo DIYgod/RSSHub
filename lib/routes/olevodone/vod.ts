@@ -14,7 +14,7 @@ export const route: Route = {
         },
     ],
     name: '视频',
-    maintainers: ['st'],
+    maintainers: ['fang63625'],
     handler,
 };
 
