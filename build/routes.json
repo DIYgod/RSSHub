@@ -16990,7 +16990,8 @@
         ],
         "name": "直播间开播",
         "maintainers": [
-          "DIYgod"
+          "DIYgod",
+          "ChaosTong"
         ],
         "location": "room.ts"
       }
