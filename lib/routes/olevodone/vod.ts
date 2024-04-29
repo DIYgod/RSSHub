@@ -7,14 +7,6 @@ export const route: Route = {
     categories: ['social-media'],
     example: '/olevodone/vod/202449091',
     parameters: { id: '视频id号' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['www.olevod.one/vod/:id'],
