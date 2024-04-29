@@ -60,7 +60,7 @@ async function handler(ctx) {
     );
     return {
         title: `日新说 - ${ctx.req.param().category}`,
-        link: 'www.copernicium.tw',
+        link: 'https://www.copernicium.tw',
         item: items,
     };
 }
