@@ -53,7 +53,9 @@ async function handler(ctx: Context) {
                 const response = await ofetch(item.link!);
                 const $ = cheerio.load(response);
 
-                item.category = $('.detail-labels.mobile-only a')
+                item.category = $('.detail-labels.mobile-only')
+                    .eq(0)
+                    .find('a')
                     .toArray()
                     .map((a) => $(a).text().trim());
 
