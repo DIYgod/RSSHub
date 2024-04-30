@@ -14983,6 +14983,19 @@
       }
     ]
   },
+  "ttv.com.tw": {
+    "_name": "台視新聞網",
+    "news": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/ttv/:category?"
+      }
+    ]
+  },
   "tvb.com": {
     "_name": "无线新闻",
     ".": [

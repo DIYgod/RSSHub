@@ -56555,6 +56555,34 @@
     "name": "The Ring of Wonder",
     "url": "trow.cc"
   },
+  "ttv": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/ttv",
+        "parameters": {
+          "category": "分类"
+        },
+        "name": "分类",
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "radar": [
+          {
+            "source": [
+              "news.ttv.com.tw/:category"
+            ]
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "台視新聞網",
+    "url": "news.ttv.com.tw"
+  },
   "tvb": {
     "routes": {
       "/news/:category?/:language?": {

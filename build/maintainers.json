@@ -5655,6 +5655,9 @@
   "/trow/portal": [
     "shiningdracon"
   ],
+  "/ttv/:category?": [
+    "dzx-dzx"
+  ],
   "/tvb/news/:category?/:language?": [
     "nczitzk"
   ],
