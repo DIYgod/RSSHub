@@ -5,6 +5,7 @@ import { isValidHost } from '@/utils/valid-host';
 import type { Context } from 'hono';
 import { getHeaders, parseItem } from './utils';
 import type { PostListResponse, UserInfoResponse } from './types';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:creator',
@@ -38,12 +39,10 @@ async function handler(ctx: Context): Promise<Data> {
     let image: string | undefined;
 
     try {
-        const user_api = `https://api.fanbox.cc/creator.get?creatorId=${creator}`;
-        const userInfoResponse = (
-            await got(user_api, {
-                headers: getHeaders(),
-            })
-        ).data as UserInfoResponse;
+        const userApi = `https://api.fanbox.cc/creator.get?creatorId=${creator}`;
+        const userInfoResponse = (await ofetch(userApi, {
+            headers: getHeaders(),
+        })) as UserInfoResponse;
         title = `Fanbox - ${userInfoResponse.body.user.name}`;
         description = userInfoResponse.body.description;
         image = userInfoResponse.body.user.iconUrl;
