@@ -10,8 +10,8 @@ export const route: Route = {
     categories: ['new-media'],
     radar: [{ source: ['www.copernicium.tw'] }],
     name: '分类',
-    example: "/copernicium/环球视角",
-    parameters: {"category" : "分类名"},
+    example: '/copernicium/环球视角',
+    parameters: { category: '分类名' },
     maintainers: ['dzx-dzx'],
     handler,
 };
@@ -23,7 +23,7 @@ async function handler(ctx) {
         ['观点评论', '4_5'],
     ]);
     if (!CATEGORY_TO_ARG_MAP.get(ctx.req.param().category)) {
-        throw new Error("The requested category does not exist or is not supported.");
+        throw new Error('The requested category does not exist or is not supported.');
     }
     const reqArgs = {
         args: {
