@@ -15,7 +15,7 @@ export const route: Route = {
     maintainers: ['dzx-dzx'],
     radar: [
         {
-            source: ['news.ttv.com.tw/:category']
+            source: ['news.ttv.com.tw/:category'],
         },
     ],
     handler,
