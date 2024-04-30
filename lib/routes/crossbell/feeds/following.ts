@@ -26,7 +26,7 @@ async function handler(ctx) {
         title: 'Crossbell Feeds of ' + characterId,
         link: 'https://crossbell.io/',
         item: response.data?.list
-            ??.filter((item) => item.type !== 'UPDATE_CHARACTER_METADATA')
+            ?.filter((item) => item.type !== 'UPDATE_CHARACTER_METADATA')
             .map((item) => {
             let link = item.note ? item.note.metadata?.content?.external_urls?.[0] || `https://crossbell.io/notes/${item.note.characterId}-${item.note.noteId}` : 'https://xchar.app/' + item.character.handle;
             if (link.startsWith('https://xn--')) {
