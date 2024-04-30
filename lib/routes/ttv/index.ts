@@ -24,7 +24,7 @@ export const route: Route = {
 async function handler(ctx) {
     const rootUrl = 'https://news.ttv.com.tw';
     const category = ctx.req.param('category') ?? 'realtime';
-    const currentUrl = `${rootUrl}/${['realtime', 'focus'].includes(category)?category:`category/${category}`}`;
+    const currentUrl = `${rootUrl}/${['realtime', 'focus'].includes(category) ? category : `category/${category}`}`;
 
     const response = await got({
         method: 'get',
