@@ -28,7 +28,7 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const creator = ctx.req.param('creator');
-    if (!isValidHost(`creator`)) {
+    if (!isValidHost(creator)) {
         throw new InvalidParameterError('Invalid user name');
     }
 
