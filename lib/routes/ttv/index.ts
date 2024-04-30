@@ -7,16 +7,15 @@ import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 
 export const route: Route = {
-    path: '/:path?',
+    path: '/:category?',
     categories: ['traditional-media'],
     example: '/ttv',
-    parameters: { path: '分类' },
+    parameters: { category: '分类' },
     name: '分类',
     maintainers: ['dzx-dzx'],
     radar: [
         {
-            source: ['news.ttv.com.tw/:path'],
-            target: '/:path',
+            source: ['news.ttv.com.tw/:category']
         },
     ],
     handler,
@@ -24,8 +23,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = 'https://news.ttv.com.tw';
-    const path = ctx.req.param('path');
-    const currentUrl = `${rootUrl}/${path ?? 'realtime'}`;
+    const category = ctx.req.param('category') ?? 'realtime';
+    const currentUrl = `${rootUrl}/${['realtime', 'focus'].includes(category)?category:`category/${category}`}`;
 
     const response = await got({
         method: 'get',
