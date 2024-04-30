@@ -36,12 +36,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const term = ctx.req.param('term');
-    const { data } = await got(`${baseUrl}/node_api/v1/articles/posts`, {
-        searchParams: {
-            pageId: 977_080_509_047_743,
-            term,
-        },
-    });
+    const searchParams = term ? { pageId: 977_080_509_047_743, term } : { pageId: 977_080_509_047_743 };
+    const { data } = await got(`${baseUrl}/node_api/v1/articles/posts`, { searchParams });
 
     const list = data.data.posts.map((post) => ({
         title: post.title,
