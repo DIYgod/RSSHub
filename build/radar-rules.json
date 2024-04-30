@@ -16503,6 +16503,19 @@
       }
     ]
   },
+  "yenpress.com": {
+    "_name": "Yen Press",
+    ".": [
+      {
+        "title": "Series",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/series/:name"
+        ],
+        "target": "/yenpress/series/:name"
+      }
+    ]
+  },
   "yicai.com": {
     "_name": "第一财经",
     ".": [

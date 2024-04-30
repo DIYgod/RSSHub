@@ -62979,6 +62979,35 @@
     "name": "羊城晚报金羊网",
     "url": "xwlb.com.cn"
   },
+  "yenpress": {
+    "routes": {
+      "/series/:name": {
+        "path": "/series/:name",
+        "example": "/yenpress/series/alya-sometimes-hides-her-feelings-in-russian",
+        "parameters": {
+          "name": "Series name"
+        },
+        "name": "Series",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "radar": [
+          {
+            "source": [
+              "yenpress.com/series/:name"
+            ],
+            "target": "/series/:name"
+          }
+        ],
+        "location": "series.ts"
+      }
+    },
+    "name": "Yen Press",
+    "url": "yenpress.com",
+    "categories": [
+      "reading"
+    ]
+  },
   "ygkkk": {
     "routes": {
       "/": {
