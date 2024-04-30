@@ -1,5 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
+import { getItem } from './utils';
 
 export const route: Route = {
     path: '/notes/character/:characterId',
@@ -21,7 +22,7 @@ export const route: Route = {
         },
     ],
     name: 'Notes of character',
-    maintainers: ['DIYgod', 'markbang'],
+    maintainers: ['DIYgod'],
     handler,
     url: 'crossbell.io/*',
 };
@@ -29,31 +30,19 @@ export const route: Route = {
 async function handler(ctx) {
     const characterId = ctx.req.param('characterId');
 
-    const response = await got(`https://indexer.crossbell.io/v1/characters/${characterId}/notes`);
-    const response_getCharacter = await got(`https://indexer.crossbell.io/v1/characters/${characterId}`);
+    const response = await got('https://indexer.crossbell.io/v1/notes', {
+        searchParams: {
+            characterId,
+            includeCharacter: true,
+        },
+    });
 
-    const name = response_getCharacter.data?.metadata?.content?.name || characterId;
-    const handle = response_getCharacter.data?.handle || '*';
+    const name = response.data?.list?.[0]?.character?.metadata?.content?.name || response.data?.list?.[0]?.character?.handle || characterId;
+    const handle = response.data?.list?.[0]?.character?.handle;
 
     return {
         title: 'Crossbell Notes from ' + name,
         link: 'https://xchar.app/' + handle,
-        item: response.data?.list?.map((item) => {
-            let link = item.noteId ? `https://crossbell.io/notes/${item.characterId}-${item.noteId}` : 'https://xchar.app/' + handle;
-            if (link.startsWith('https://xn--')) {
-                link = `https://crossbell.io/notes/${item.characterId}-${item.noteId}`;
-            }
-
-            return {
-                title: item.metadata?.content?.title || 'Untitled Note',
-                description: `${item.metadata?.content?.content} <br>Character: ${name}@${handle}`,
-                link,
-                pubDate: item.createdAt,
-                updated: item.updatedAt,
-                author: name || handle,
-                guid: item.transactionHash + item.logIndex + item.linkItemType,
-                category: [...(item.metadata?.content?.sources || []), ...(item.metadata?.content?.tags || [])],
-            };
-        }),
+        item: response.data?.list?.map((item) => getItem(item)),
     };
 }
