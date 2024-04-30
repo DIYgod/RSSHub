@@ -3300,6 +3300,19 @@
       }
     ]
   },
+  "copernicium.tw": {
+    "_name": "日新说",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/copernicium/:category"
+      }
+    ]
+  },
   "cpcaauto.com": {
     "_name": "cpcaauto.com",
     ".": [

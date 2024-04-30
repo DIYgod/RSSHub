@@ -12933,6 +12933,34 @@
     "name": "Coomer",
     "url": "coomer.party"
   },
+  "copernicium": {
+    "routes": {
+      "/:category": {
+        "path": "/:category",
+        "categories": [
+          "new-media"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.copernicium.tw"
+            ]
+          }
+        ],
+        "name": "分类",
+        "example": "/copernicium/环球视角",
+        "parameters": {
+          "category": "分类名"
+        },
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "日新说",
+    "url": "www.copernicium.tw"
+  },
   "copymanga": {
     "routes": {
       "/comic/:id/:chapterCnt?": {
