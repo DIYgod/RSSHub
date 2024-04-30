@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category',
-    categories: ['blog'],
+    categories: ['new-media'],
     radar: [{ source: ['www.copernicium.tw'] }],
     name: '分类',
     example: "/copernicium/环球视角",
