@@ -1,5 +1,4 @@
-export default {
-    getItem: (note) => {
+export const getItem = (note) => {
         let link = note.metadata?.content?.external_urls?.[0] ?? `https://crossbell.io/notes/${note.characterId}-${note.noteId}`;
         if (link.startsWith('https://xn--')) {
             link = `https://crossbell.io/notes/${note.characterId}-${note.noteId}`;
@@ -14,5 +13,4 @@ export default {
             guid: `https://crossbell.io/notes/${note.characterId}-${note.noteId}`,
             category: [...(note.metadata?.content?.sources || []), ...(note.metadata?.content?.tags || [])],
         };
-    },
-};
+    };
