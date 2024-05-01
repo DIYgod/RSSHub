@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import type { DataItem } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import type { ArticlePost, FilePost, ImagePost, PostDetailResponse, PostItem, TextPost, VideoPost } from './types';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
@@ -169,7 +169,7 @@ async function parseDetail(i: PostDetailResponse['body']) {
 
 export function parseItem(item: PostItem) {
     return cache.tryGet(`${item.id}-${item.updatedDatetime}`, async () => {
-        const postDetail = (await got(`https://api.fanbox.cc/post.info?postId=${item.id}`, { headers: getHeaders() })).data as PostDetailResponse;
+        const postDetail = (await ofetch(`https://api.fanbox.cc/post.info?postId=${item.id}`, { headers: getHeaders() })) as PostDetailResponse;
         return {
             title: item.title || `No title`,
             description: await parseDetail(postDetail.body),
@@ -183,6 +183,6 @@ export function parseItem(item: PostItem) {
 async function getSoundCloudEmbedUrl(videoId: string) {
     const videoUrl = `https://soundcloud.com/${videoId}`;
     const apiUrl = `https://soundcloud.com/oembed?url=${encodeURIComponent(videoUrl)}&format=json&maxheight=400&format=json`;
-    const resp = await got(apiUrl);
-    return resp.data.html;
+    const resp = await ofetch(apiUrl);
+    return resp.html;
 }

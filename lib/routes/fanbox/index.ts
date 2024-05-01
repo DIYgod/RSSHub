@@ -1,6 +1,5 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
-import got from '@/utils/got';
 import { isValidHost } from '@/utils/valid-host';
 import type { Context } from 'hono';
 import { getHeaders, parseItem } from './utils';
@@ -50,7 +49,7 @@ async function handler(ctx: Context): Promise<Data> {
         // ignore
     }
 
-    const postListResponse = (await got(`https://api.fanbox.cc/post.listCreator?creatorId=${creator}&limit=20`, { headers: getHeaders() })).data as PostListResponse;
+    const postListResponse = (await ofetch(`https://api.fanbox.cc/post.listCreator?creatorId=${creator}&limit=20`, { headers: getHeaders() })) as PostListResponse;
     const items = await Promise.all(postListResponse.body.items.map((i) => parseItem(i)));
 
     return {
