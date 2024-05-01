@@ -1,6 +1,6 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: '貓奴日常',
-    url: 'thecatcity.com',
+    name: 'PetCity 毛孩日常',
+    url: 'thepetcity.com',
 };

@@ -9,22 +9,13 @@ const baseUrl = 'https://thepetcity.co';
 export const route: Route = {
     path: '/:term?',
     categories: ['new-media'],
-    example: '/thecatcity',
+    example: '/thepetcity',
     parameters: { term: '見下表，留空為全部文章' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: [
-        {
-            source: ['thepetcity.co/'],
-            target: '',
-        },
-    ],
+    radar: Object.entries(termsMap).map(([key, value]) => ({
+        title: value.title,
+        source: [...new Set([`thepetcity.co${value.slug}`, 'thepetcity.co/'])],
+        target: key ? `/${key}` : '',
+    })),
     name: '分類',
     maintainers: ['TonyRL', 'bigfei'],
     handler,
