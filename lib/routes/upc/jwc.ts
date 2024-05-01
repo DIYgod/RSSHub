@@ -6,34 +6,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 
-export const route: Route = {
-    path: '/jwc/:type?',
-    categories: ['university'],
-    example: '/upc/jwc/tzgg',
-    parameters: { type: '分类，见下表，其值与对应网页url路径参数一致，默认为所有通知' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: [
-        {
-            source: ['jwc.upc.edu.cn', 'jwc.upc.edu.cn/:type/list.htm'],
-            target: '/upc/jwc/:type?/list.htm',
-        },
-    ],
-    name: '教务处通知公告',
-    maintainers: ['sddzhyc'],
-    description: `| 所有通知 | 教学·运行 | 学业·学籍 | 教学·研究 | 课程·教材 | 实践·教学 | 创新·创业 | 语言·文字 | 继续·教育 | 本科·招生 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | tzgg     | 18519    | 18520   | 18521    |    18522 |    18523 | 18524    |  yywwz   |  jxwjy   |   bkwzs  |`,
-    url: 'https://jwc.upc.edu.cn/tzgg/list.htm',
-    handler,
-};
-
 const typeDict = {
     tzgg: '', // 默认为所有通知
     '18519': '教学·运行-', // 教学·运行
@@ -48,7 +20,7 @@ const typeDict = {
 };
 
 // module.exports = async (ctx) => {
-async function handler(ctx) {
+const handler = async (ctx) => {
     // 从 URL 参数中获取通知分类
     const { type = 'tzgg' } = ctx.req.param();
     // console.log(type);
@@ -117,4 +89,32 @@ async function handler(ctx) {
         // 源文章
         item: items,
     };
-}
+};
+
+export const route: Route = {
+    path: '/jwc/:type?',
+    categories: ['university'],
+    example: '/upc/jwc/tzgg',
+    parameters: { type: '分类，见下表，其值与对应网页url路径参数一致，默认为所有通知' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['jwc.upc.edu.cn', 'jwc.upc.edu.cn/:type/list.htm'],
+            target: '/upc/jwc/:type?/list.htm',
+        },
+    ],
+    name: '教务处通知公告',
+    maintainers: ['sddzhyc'],
+    description: `| 所有通知 | 教学·运行 | 学业·学籍 | 教学·研究 | 课程·教材 | 实践·教学 | 创新·创业 | 语言·文字 | 继续·教育 | 本科·招生 |
+  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+  | tzgg     | 18519    | 18520   | 18521    |    18522 |    18523 | 18524    |  yywwz   |  jxwjy   |   bkwzs  |`,
+    url: 'https://jwc.upc.edu.cn/tzgg/list.htm',
+    handler,
+};
