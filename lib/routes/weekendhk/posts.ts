@@ -4,13 +4,13 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    example: '/weekendhk',
     radar: [
         {
             source: ['weekendhk.com/'],
-            target: '',
         },
     ],
-    name: 'Unknown',
+    name: '最新文章',
     maintainers: ['TonyRL'],
     handler,
     url: 'weekendhk.com/',
