@@ -168,7 +168,7 @@ async function parseDetail(i: PostDetailResponse['body']) {
 }
 
 export function parseItem(item: PostItem) {
-    return cache.tryGet(`${item.id}-${item.updatedDatetime}`, async () => {
+    return cache.tryGet(`fanbox-${item.id}-${item.updatedDatetime}`, async () => {
         const postDetail = (await ofetch(`https://api.fanbox.cc/post.info?postId=${item.id}`, { headers: getHeaders() })) as PostDetailResponse;
         return {
             title: item.title || `No title`,
