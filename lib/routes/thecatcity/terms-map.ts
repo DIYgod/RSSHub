@@ -1,26 +1,26 @@
 const termsMap = {
     '': {
-        title: 'CatCity 貓奴日常 | 貓咪日常照顧、新手準備、貓用品、貓咪醫療',
+        title: 'PetCity 毛孩日常 | 飼養竉物、竉物用品、萌寵趣聞',
         slug: '/',
     },
     1: {
-        title: '貓物分享｜流行小物、貓咪用品',
+        title: 'Pet Staff 毛孩好物',
         slug: '/category/cute-item',
     },
     2: {
-        title: '貓咪新聞｜貓界人氣熱話、貓電影',
+        title: 'Funny News毛孩趣聞',
         slug: '/category/funny-news',
     },
     3: {
-        title: '養貓大全｜貓咪飲食與醫療、行為心理、貓測驗與冷知識',
+        title: 'Knowledge飼養大全',
         slug: '/category/knowledge',
     },
     4: {
-        title: '貓奴景點｜貓咪咖啡廳與餐廳、貓奴旅行景點推薦',
+        title: 'Hot Spot 毛孩打卡點',
         slug: '/category/hot-spot',
     },
     5: {
-        title: '新手養貓教學｜養貓準備與花費、日常照顧',
+        title: 'Raise Pets 養寵物新手',
         slug: '/category/raise-cats',
     },
 };
