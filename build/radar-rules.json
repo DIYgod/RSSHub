@@ -8962,6 +8962,19 @@
       }
     ]
   },
+  "linkedin.com": {
+    "_name": "LinkedIn 领英",
+    "www": [
+      {
+        "title": "Jobs",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/jobs/search"
+        ],
+        "target": "/linkedin(params,url)=>{const searchParams=new URLSearchParams(new URL(url).search);const fJT=(0,import_utils.parseRouteParam)(searchParams.get(\"f_JT\"));const fE=(0,import_utils.parseRouteParam)(searchParams.get(\"f_E\"));const keywords=encodeURIComponent(searchParams.get(\"keywords\")||\"\");const newSearchParams=new URLSearchParams;for(const[key,value]of searchParams.entries()){if(![\"f_JT\",\"f_E\",\"keywords\"].includes(key)){newSearchParams.append(key,value)}}return`/linkedin/jobs/${fJT}/${fE}/${keywords}/?${newSearchParams.toString()}`}"
+      }
+    ]
+  },
   "linovelib.com": {
     "_name": "哔哩轻小说",
     "www": [
