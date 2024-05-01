@@ -1834,6 +1834,9 @@
   "/famitsu/category/:category?": [
     "TonyRL"
   ],
+  "/fanbox/:creator": [
+    "KarasuShin"
+  ],
   "/fansly/user/:username": [
     "TonyRL"
   ],
