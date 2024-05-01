@@ -21,7 +21,7 @@ async function handler(ctx) {
         ['环球视角', '4_1'],
         ['人文叙述', '4_3'],
         ['观点评论', '4_5'],
-        ['专题报道', '4_7']'
+        ['专题报道', '4_7']
     ]);
     if (!CATEGORY_TO_ARG_MAP.get(ctx.req.param().category)) {
         throw new Error('The requested category does not exist or is not supported.');
