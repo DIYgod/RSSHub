@@ -146,7 +146,7 @@
         "@types/mailparser": "3.4.4",
         "@types/markdown-it": "14.1.1",
         "@types/module-alias": "2.0.4",
-        "@types/node": "20.12.7",
+        "@types/node": "20.12.8",
         "@types/sanitize-html": "2.11.0",
         "@types/supertest": "6.0.2",
         "@types/tiny-async-pool": "2.0.3",
