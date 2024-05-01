@@ -6039,6 +6039,12 @@
     "xyqfer",
     "shinemoon"
   ],
+  "/wellcee/rent/:city/:district?": [
+    "TonyRL"
+  ],
+  "/wellcee/support-city": [
+    "TonyRL"
+  ],
   "/wenku8/chapter/:id": [
     "zsakvo"
   ],

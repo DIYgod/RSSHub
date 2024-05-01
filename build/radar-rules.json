@@ -15944,7 +15944,7 @@
     "_name": "新假期周刊",
     ".": [
       {
-        "title": "Unknown",
+        "title": "最新文章",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/"
@@ -16004,6 +16004,19 @@
           "/profile/:uid"
         ],
         "target": "/weibo/user/:uid"
+      }
+    ]
+  },
+  "wellcee.com": {
+    "_name": "Wellcee 唯心所寓",
+    "www": [
+      {
+        "title": "支持的城市",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/wellcee/support-city"
       }
     ]
   },
