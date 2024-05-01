@@ -1,7 +1,6 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Daily.dev',
-    url: 'daily.dev',
-    categories: ['social-media'],
+    name: '台視新聞網',
+    url: 'news.ttv.com.tw',
 };
