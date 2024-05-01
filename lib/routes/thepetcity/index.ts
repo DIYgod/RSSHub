@@ -1,47 +1,38 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { termsMap } from './terms-map';
 
-const baseUrl = 'https://thecatcity.com';
+const baseUrl = 'https://thepetcity.co';
 
 export const route: Route = {
     path: '/:term?',
     categories: ['new-media'],
-    example: '/thecatcity',
+    example: '/thepetcity',
     parameters: { term: '見下表，留空為全部文章' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: [
-        {
-            source: ['thecatcity.com/'],
-            target: '',
-        },
-    ],
+    radar: Object.entries(termsMap).map(([key, value]) => ({
+        title: value.title,
+        source: [...new Set([`thepetcity.co${value.slug}`, 'thepetcity.co/'])],
+        target: key ? `/${key}` : '',
+    })),
     name: '分類',
-    maintainers: ['TonyRL'],
+    maintainers: ['TonyRL', 'bigfei'],
     handler,
-    url: 'thecatcity.com/',
-    description: `| 貓物分享 | 貓咪新聞 | 養貓大全 | 貓奴景點 | 新手養貓教學 |
-  | -------- | -------- | -------- | -------- | ------------ |
-  | 1        | 2        | 3        | 4        | 5            |`,
+    url: 'thepetcity.co/',
+    description: `| Column Name       | TermID |
+    | -------------------- | ------ |
+    | Knowledge飼養大全     | 3      |
+    | Funny News毛孩趣聞    | 2      |
+    | Raise Pets 養寵物新手  | 5      |
+    | Hot Spot 毛孩打卡點    | 4      |
+    | Pet Staff 毛孩好物    | 1      |`,
 };
 
 async function handler(ctx) {
     const term = ctx.req.param('term');
-    const { data } = await got(`${baseUrl}/node_api/v1/articles/posts`, {
-        searchParams: {
-            pageId: 977_080_509_047_743,
-            term,
-        },
-    });
+    const searchParams = term ? { pageId: 977_080_509_047_743, term } : { pageId: 977_080_509_047_743 };
+    const data = await ofetch(`${baseUrl}/node_api/v1/articles/posts`, { query: { ...searchParams } });
 
     const list = data.data.posts.map((post) => ({
         title: post.title,
@@ -55,8 +46,8 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.guid, async () => {
-                const { data } = await got(item.api, {
-                    searchParams: {
+                const data = await ofetch(item.api, {
+                    query: {
                         pageId: 977_080_509_047_743,
                     },
                 });
@@ -70,9 +61,9 @@ async function handler(ctx) {
 
     return {
         title: termsMap[term] ? termsMap[term].title : termsMap[''].title,
-        description: '提供貓咪日常照顧、新手準備、貓用品、貓咪醫療、貓飲食與行為等相關知識，以及療癒貓影片、貓趣聞、貓小物流行資訊，不論你是貓奴、還是貓控，一切所需都在貓奴日常找到',
+        description: '專屬毛孩愛好者的資訊平台，不論你是貓奴、狗奴，還是其他動物控，一起發掘最新的萌寵趣聞、有趣的寵物飼養知識、訓練動物、竉物用品推介、豐富多樣的寵物可愛影片。',
         link: baseUrl,
-        image: 'https://assets.presslogic.com/presslogic-hk-tc/static/favicon.ico',
+        image: 'https://assets.presslogic.com/presslogic-hk-pc/static/favicon.ico',
         item: items,
     };
 }
