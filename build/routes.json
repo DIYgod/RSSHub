@@ -54963,45 +54963,6 @@
     "name": "律动",
     "url": "rszhaopin.theblockbeats.info"
   },
-  "thecatcity": {
-    "routes": {
-      "/:term?": {
-        "path": "/:term?",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/thecatcity",
-        "parameters": {
-          "term": "見下表，留空為全部文章"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "thecatcity.com/"
-            ],
-            "target": ""
-          }
-        ],
-        "name": "分類",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "thecatcity.com/",
-        "description": "| 貓物分享 | 貓咪新聞 | 養貓大全 | 貓奴景點 | 新手養貓教學 |\n  | -------- | -------- | -------- | -------- | ------------ |\n  | 1        | 2        | 3        | 4        | 5            |",
-        "location": "index.ts"
-      }
-    },
-    "name": "貓奴日常",
-    "url": "thecatcity.com"
-  },
   "thecover": {
     "routes": {
       "/channel/:id?": {
@@ -55385,6 +55346,79 @@
     "name": "澎湃新闻",
     "url": "thepaper.cn",
     "description": "以下所有路由可使用参数`old`以采取旧全文获取方法。该方法会另外获取网页中的图片与视频资源。在原始 url 追加`?old=yes`以启用."
+  },
+  "thepetcity": {
+    "routes": {
+      "/:term?": {
+        "path": "/:term?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/thepetcity",
+        "parameters": {
+          "term": "見下表，留空為全部文章"
+        },
+        "radar": [
+          {
+            "title": "Pet Staff 毛孩好物",
+            "source": [
+              "thepetcity.co/category/cute-item",
+              "thepetcity.co/"
+            ],
+            "target": "/1"
+          },
+          {
+            "title": "Funny News毛孩趣聞",
+            "source": [
+              "thepetcity.co/category/funny-news",
+              "thepetcity.co/"
+            ],
+            "target": "/2"
+          },
+          {
+            "title": "Knowledge飼養大全",
+            "source": [
+              "thepetcity.co/category/knowledge",
+              "thepetcity.co/"
+            ],
+            "target": "/3"
+          },
+          {
+            "title": "Hot Spot 毛孩打卡點",
+            "source": [
+              "thepetcity.co/category/hot-spot",
+              "thepetcity.co/"
+            ],
+            "target": "/4"
+          },
+          {
+            "title": "Raise Pets 養寵物新手",
+            "source": [
+              "thepetcity.co/category/raise-cats",
+              "thepetcity.co/"
+            ],
+            "target": "/5"
+          },
+          {
+            "title": "PetCity 毛孩日常 | 飼養竉物、竉物用品、萌寵趣聞",
+            "source": [
+              "thepetcity.co/"
+            ],
+            "target": ""
+          }
+        ],
+        "name": "分類",
+        "maintainers": [
+          "TonyRL",
+          "bigfei"
+        ],
+        "url": "thepetcity.co/",
+        "description": "| Column Name       | TermID |\n    | -------------------- | ------ |\n    | Knowledge飼養大全     | 3      |\n    | Funny News毛孩趣聞    | 2      |\n    | Raise Pets 養寵物新手  | 5      |\n    | Hot Spot 毛孩打卡點    | 4      |\n    | Pet Staff 毛孩好物    | 1      |",
+        "location": "index.ts"
+      }
+    },
+    "name": "PetCity 毛孩日常",
+    "url": "thepetcity.com"
   },
   "theverge": {
     "routes": {

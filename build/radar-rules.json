@@ -14616,19 +14616,6 @@
       }
     ]
   },
-  "thecatcity.com": {
-    "_name": "貓奴日常",
-    ".": [
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/thecatcity/:term?"
-      }
-    ]
-  },
   "thehindu.com": {
     "_name": "The Hindu",
     ".": [
@@ -14681,6 +14668,64 @@
           "/"
         ],
         "target": "/thepaper/839studio/:id"
+      }
+    ]
+  },
+  "thepetcity.co": {
+    "_name": "PetCity 毛孩日常",
+    ".": [
+      {
+        "title": "Pet Staff 毛孩好物",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/cute-item",
+          "/"
+        ],
+        "target": "/thepetcity/1"
+      },
+      {
+        "title": "Funny News毛孩趣聞",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/funny-news",
+          "/"
+        ],
+        "target": "/thepetcity/2"
+      },
+      {
+        "title": "Knowledge飼養大全",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/knowledge",
+          "/"
+        ],
+        "target": "/thepetcity/3"
+      },
+      {
+        "title": "Hot Spot 毛孩打卡點",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/hot-spot",
+          "/"
+        ],
+        "target": "/thepetcity/4"
+      },
+      {
+        "title": "Raise Pets 養寵物新手",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/raise-cats",
+          "/"
+        ],
+        "target": "/thepetcity/5"
+      },
+      {
+        "title": "PetCity 毛孩日常 | 飼養竉物、竉物用品、萌寵趣聞",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/thepetcity/:term?"
       }
     ]
   },

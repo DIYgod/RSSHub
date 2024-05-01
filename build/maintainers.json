@@ -5490,9 +5490,6 @@
     "Fatpandac",
     "jameshih"
   ],
-  "/thecatcity/:term?": [
-    "TonyRL"
-  ],
   "/thecover/channel/:id?": [
     "yuxinliu-alex"
   ],
@@ -5541,6 +5538,10 @@
   ],
   "/thepaper/839studio": [
     "umm233"
+  ],
+  "/thepetcity/:term?": [
+    "TonyRL",
+    "bigfei"
   ],
   "/theverge/:hub?": [
     "HenryQW",
