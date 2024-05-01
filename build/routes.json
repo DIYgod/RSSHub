@@ -25783,8 +25783,8 @@
         "radar": [
           {
             "source": [
-              "ycombinator.com/:section",
-              "ycombinator.com/"
+              "news.ycombinator.com/:section",
+              "news.ycombinator.com/"
             ]
           }
         ],

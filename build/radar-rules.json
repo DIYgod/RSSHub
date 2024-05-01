@@ -6734,7 +6734,7 @@
   },
   "ycombinator.com": {
     "_name": "Hacker News",
-    ".": [
+    "news": [
       {
         "title": "用户",
         "docs": "https://docs.rsshub.app/routes/programming",

@@ -2928,7 +2928,7 @@
           "/" ],
         target:"/gzhu/yjs" } ] },
   "ycombinator.com":{ _name:"Hacker News",
-    ".":[ { title:"用户",
+    news:[ { title:"用户",
         docs:"https://docs.rsshub.app/routes/programming",
         source:[ "/:section",
           "/" ],
