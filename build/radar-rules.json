@@ -9252,6 +9252,19 @@
       }
     ]
   },
+  "magnumphotos.com": {
+    "_name": "Magnum Photos",
+    ".": [
+      {
+        "title": "Magazine",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/"
+        ],
+        "target": "/magnumphotos/magazine"
+      }
+    ]
+  },
   "mangadex.org": {
     "_name": "Unknown",
     ".": [

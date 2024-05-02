@@ -35063,6 +35063,41 @@
     "name": "MagazineLib",
     "url": "magazinelib.com"
   },
+  "magnumphotos": {
+    "routes": {
+      "/magazine": {
+        "path": "/magazine",
+        "categories": [
+          "picture"
+        ],
+        "example": "/magnumphotos/magazine",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "magnumphotos.com/"
+            ]
+          }
+        ],
+        "name": "Magazine",
+        "maintainers": [
+          "EthanWng97"
+        ],
+        "url": "magnumphotos.com/",
+        "location": "magazine.ts"
+      }
+    },
+    "name": "Magnum Photos",
+    "url": "magnumphotos.com"
+  },
   "mail": {
     "routes": {
       "/imap/:email/:folder{.+}?": {
