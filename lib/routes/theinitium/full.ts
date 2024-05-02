@@ -14,7 +14,7 @@ export const route: Route = {
     name: '全文',
     maintainers: [],
     handler,
-    example: 'https://rsshub.app/theinitium/channel/latest/zh-hans',
+    example: '/theinitium/channel/latest/zh-hans',
     categories: ['new-media'],
 };
 
