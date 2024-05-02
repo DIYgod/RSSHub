@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
+import timezone from '@/utils/timezone';
 
 const typeDict = {
     tzgg: '', // 默认为所有通知
@@ -50,7 +51,7 @@ const handler = async (ctx) => {
             return {
                 title: a.text(),
                 link: linkStr,
-                pubDate: parseDate(item.find('.news_meta').text()), // 添加发布日期查询
+                pubDate: timezone(parseDate(item.find('.news_meta').text()), +8), // 添加发布日期查询
             };
         });
 
@@ -85,7 +86,7 @@ const handler = async (ctx) => {
         // 源标题
         title: `${typeDict[type]}教务处通知-中国石油大学（华东）`,
         // 源链接
-        link: `https://jwc.upc.edu.cn/tzgg/list.htm`,
+        link: `${baseUrl}/${type}/list.htm`,
         // 源文章
         item: items,
     };
