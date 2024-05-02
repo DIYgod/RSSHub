@@ -144,7 +144,7 @@ export const route: Route = {
     radar: [
         {
             source: ['ithome.com/zt/:id'],
-            target: '/ithome/zt/:id',
+            target: '/zt/:id',
         },
     ],
 };
