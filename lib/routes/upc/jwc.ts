@@ -1,4 +1,3 @@
-/* eslint-disable @stylistic/linebreak-style */
 // 导入必要的模组
 import { Route } from '@/types';
 import got from '@/utils/got';
@@ -108,7 +107,7 @@ export const route: Route = {
     radar: [
         {
             source: ['jwc.upc.edu.cn', 'jwc.upc.edu.cn/:type/list.htm'],
-            target: '/upc/jwc/:type?/list.htm',
+            target: '/jwc/:type?',
         },
     ],
     name: '教务处通知公告',
@@ -116,6 +115,6 @@ export const route: Route = {
     description: `| 所有通知 | 教学·运行 | 学业·学籍 | 教学·研究 | 课程·教材 | 实践·教学 | 创新·创业 | 语言·文字 | 继续·教育 | 本科·招生 |
   | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
   | tzgg     | 18519    | 18520   | 18521    |    18522 |    18523 | 18524    |  yywwz   |  jxwjy   |   bkwzs  |`,
-    url: 'https://jwc.upc.edu.cn/tzgg/list.htm',
+    url: 'jwc.upc.edu.cn/tzgg/list.htm',
     handler,
 };
