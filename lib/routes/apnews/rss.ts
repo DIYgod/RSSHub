@@ -32,7 +32,7 @@ async function handler(ctx) {
     const url = `${HOME_PAGE}/${rss}.rss`;
     const res = await parser.parseURL(url);
 
-    const items = await Promise.all(res.items.map(fetchArticle));
+    const items = await Promise.all(res.items.map((item) => fetchArticle(item)));
 
     return {
         ...rss,
