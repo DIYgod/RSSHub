@@ -42,9 +42,9 @@ const handler = async (ctx) => {
             const a = item.find('a').first();
             let linkStr = a.attr('href');
             // 若链接不是以http开头，则加上前缀
-            if (a.attr('href').startsWith('http')) {
+            if (a.attr('href').startsWith('http://')) {
                 // 改为https访问
-                linkStr.replace('http', 'https');
+                linkStr.replace('http://', 'https://');
             } else {
                 linkStr = `${baseUrl}${a.attr('href')}`;
             }
@@ -62,8 +62,9 @@ const handler = async (ctx) => {
                 const $ = load(response);
                 // 选择类名为“comment-body”的第一个元素
                 item.description = $('.read').first().html();
-                item.pubDate = $('.arti_update').html() === null ? '' : $('.arti_update').html().slice(5, 15);
-                item.publisher = $('.arti_publisher').html();
+                // item.pubDate = $('.arti_update').html() === null ? '' : $('.arti_update').html().slice(5, 15);
+                // item.publisher = $('.arti_publisher').html();
+                item.author = $('.arti_publisher').html();
                 // console.log($('.arti_update').html().slice(5, 15));
                 // 上面每个列表项的每个属性都在此重用，
                 // 并增加了一个新属性“description”
