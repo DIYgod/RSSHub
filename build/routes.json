@@ -30565,19 +30565,26 @@
         ],
         "location": "tag.ts"
       },
-      "/zt/:id": {
-        "path": "/zt/:id",
-        "categories": [
-          "new-media"
+      "/zt/:id?": {
+        "path": "/zt/:id?",
+        "name": "专题",
+        "url": "ithome.com",
+        "maintainers": [
+          "nczitzk"
         ],
         "example": "/ithome/zt/xijiayi",
         "parameters": {
-          "id": "专题 id"
+          "category": "专题 id，默认为 xijiayi，即 [喜加一](https://www.ithome.com/zt/xijiayi)，可在对应专题页 URL 中找到"
         },
+        "description": ":::tip\n  更多专题请见 [IT之家专题](https://www.ithome.com/zt)\n  :::",
+        "categories": [
+          "new-media"
+        ],
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -30586,14 +30593,10 @@
           {
             "source": [
               "ithome.com/zt/:id"
-            ]
+            ],
+            "target": "/zt/:id"
           }
         ],
-        "name": "专题",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "description": "所有专题请见[此处](https://www.ithome.com/zt)",
         "location": "zt.ts"
       },
       "/tw/feeds/:category": {

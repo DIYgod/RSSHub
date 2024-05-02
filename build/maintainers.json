@@ -3052,7 +3052,7 @@
   "/ithome/tag/:name": [
     "Fatpandac"
   ],
-  "/ithome/zt/:id": [
+  "/ithome/zt/:id?": [
     "nczitzk"
   ],
   "/ithome/tw/feeds/:category": [
