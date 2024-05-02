@@ -1,13 +1,13 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-const host = 'https://techcrunch.com';
+const host = 'https://www.magnumphotos.com';
 export const route: Route = {
-    path: '/news',
-    categories: ['new-media'],
-    example: '/techcrunch/news',
+    path: '/magazine',
+    categories: ['picture'],
+    example: '/magnumphotos/magazine',
     parameters: {},
     features: {
         requireConfig: false,
@@ -19,13 +19,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['techcrunch.com/'],
+            source: ['magnumphotos.com/'],
         },
     ],
-    name: 'News',
+    name: 'Magazine',
     maintainers: ['EthanWng97'],
     handler,
-    url: 'techcrunch.com/',
+    url: 'magnumphotos.com/',
 };
 
 async function handler() {
@@ -34,18 +34,15 @@ async function handler() {
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const url = item.link;
-                const response = await got({
-                    url,
-                    method: 'get',
-                });
-                const html = response.data;
-                const $ = load(html);
-                const description = $('#root');
-                description.find('.article__title').remove();
-                description.find('.article__byline__meta').remove();
-                description.find('.mobile-header-nav').remove();
-                description.find('.desktop-nav').remove();
+                if (!item.link) {
+                    return;
+                }
+                const data = await ofetch(item.link);
+                const $ = load(data);
+                const description = $('#content');
+                description.find('ul.share').remove();
+                description.find('h1').remove();
+
                 return {
                     title: item.title,
                     pubDate: item.pubDate,
@@ -58,9 +55,9 @@ async function handler() {
     );
 
     return {
-        title: 'TechCrunch',
+        title: 'Magnum Photos',
         link: host,
-        description: 'Reporting on the business of technology, startups, venture capital funding, and Silicon Valley.',
+        description: 'Magnum is a community of thought, a shared human quality, a curiosity about what is going on in the world, a respect for what is going on and a desire to transcribe it visually',
         item: items,
     };
 }
