@@ -4,14 +4,18 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { FetchError } from 'ofetch';
 
 const TOKEN = 'Basic YW5vbnltb3VzOkdpQ2VMRWp4bnFCY1ZwbnA2Y0xzVXZKaWV2dlJRY0FYTHY=';
 
 export const route: Route = {
     path: '/:model?/:type?/:language?',
-    name: 'Unknown',
+    name: '全文',
     maintainers: [],
     handler,
+    example: 'https://rsshub.app/theinitium/channel/latest/zh-hans',
+    categories: ['new-media'],
 };
 
 async function handler(ctx) {
@@ -38,6 +42,8 @@ async function handler(ctx) {
             listUrl = `https://api.theinitium.com/api/v2/tag/articles/?language=${language}&slug=${type}`;
             listLink = `https://theinitium.com/tags/${type}/`;
             break;
+        default:
+            throw new InvalidParameterError('wrong model');
     }
 
     const key = {
@@ -92,9 +98,18 @@ async function handler(ctx) {
         'X-IAP-Receipt': key.iapReceipt || '',
     };
 
-    const response = await got(listUrl, {
-        headers,
-    });
+    let response;
+    try {
+        response = await got(listUrl, {
+            headers,
+        });
+    } catch (error) {
+        if (error instanceof FetchError && error.statusCode === 401) {
+            // 401 说明 token 过期了，将它删掉
+            await cache.set('initium:token', '');
+        }
+        throw error;
+    }
 
     const name = response.data.name || (response.data[model] && response.data[model].name) || '追踪';
     // 从v1直升的channel和tags里面是digests，v2新增的author和follow出来都是results
