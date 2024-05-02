@@ -45,7 +45,7 @@ async function handler(ctx) {
     const pagesize = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://utgd.net';
-    const baseApiUrl = 'https://api.utgd.net'
+    const baseApiUrl = 'https://api.utgd.net';
     const apiUrl = `${baseApiUrl}/api/v2/categories`;
     const currentUrl = `${rootUrl}/category/s/${category}`;
     const slugUrl = `${rootUrl}/api/v2/category/slug/${category}/`;

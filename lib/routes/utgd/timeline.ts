@@ -41,7 +41,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://utgd.net';
-    const baseApiUrl = 'https://api.utgd.net'
+    const baseApiUrl = 'https://api.utgd.net';
     const apiUrl = `${baseApiUrl}/api/v2/timeline/?page=1&page_size=${limit}`;
 
     const response = await got({
