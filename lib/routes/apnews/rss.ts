@@ -6,7 +6,7 @@ const HOME_PAGE = 'https://apnews.com';
 export const route: Route = {
     path: '/rss/:rss?',
     categories: ['traditional-media'],
-    example: '/apnews/topics/apf-topnews',
+    example: '/apnews/rss/business',
     parameters: { rss: 'Route name from the first segment of the corresponding site, or `index` for the front page(default).' },
     features: {
         requireConfig: false,
