@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Context } from 'hono';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { config } from '@/config';
@@ -9,18 +9,8 @@ import { FetchError } from 'ofetch';
 
 const TOKEN = 'Basic YW5vbnltb3VzOkdpQ2VMRWp4bnFCY1ZwbnA2Y0xzVXZKaWV2dlJRY0FYTHY=';
 
-export const route: Route = {
-    path: '/:model?/:type?/:language?',
-    name: '全文',
-    maintainers: [],
-    handler,
-    example: '/theinitium/channel/latest/zh-hans',
-    categories: ['new-media'],
-};
-
-async function handler(ctx) {
+export const processFeed = async (model: string, ctx: Context) => {
     // model是channel/tag/etc.，而type是latest/feature/quest-academy这些一级栏目/标签/作者名的slug名。如果是追踪的话，那就是model是follow，type是articles。
-    const model = ctx.req.param('model') ?? 'channel';
     const type = ctx.req.param('type') ?? 'latest';
     const language = ctx.req.param('language') ?? 'zh-hans';
     let listUrl;
@@ -190,4 +180,4 @@ async function handler(ctx) {
         item: items,
         image,
     };
-}
+};
