@@ -1,5 +1,5 @@
 {{ if poster && src }}
-<video controls preload="none" poster="{{ poster.location }}">
+<video controls preload="metadata" poster="{{ poster.location }}">
     <source src="{{ src.location }}" type="video/mp4">
 </video>
 {{ else if src }}

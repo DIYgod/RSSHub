@@ -107,7 +107,7 @@ async function handler(ctx) {
             case 'zvideo':
                 title = item.title;
                 description = `${item.description}<br>
-                <video controls poster="${item.video.thumbnail}" preload="none">
+                <video controls poster="${item.video.thumbnail}" preload="metadata">
                     <source src="${item.video.playlist.fhd?.url ?? item.video.playlist.hd?.url ?? item.video.playlist.ld?.url ?? item.video.playlist.sd?.url}" type="video/mp4">
                 </video>`;
                 link = item.url;
