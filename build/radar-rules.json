@@ -14655,6 +14655,43 @@
       }
     ]
   },
+  "theinitium.com": {
+    "_name": "端传媒",
+    ".": [
+      {
+        "title": "作者",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/author/:type"
+        ],
+        "target": "/theinitium/author/:type"
+      },
+      {
+        "title": "专题・栏目",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/channel/:type"
+        ],
+        "target": "/theinitium/channel/:type"
+      },
+      {
+        "title": "作者",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/author/:type"
+        ],
+        "target": "/theinitium/author/:type"
+      },
+      {
+        "title": "话题・标签",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tags/:type"
+        ],
+        "target": "/theinitium/tags/:type"
+      }
+    ]
+  },
   "factpaper.cn": {
     "_name": "澎湃新闻",
     ".": [
