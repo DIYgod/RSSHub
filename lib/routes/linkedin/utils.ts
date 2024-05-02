@@ -87,11 +87,11 @@ function parseJobSearch(data) {
     const jobs = $('li')
         .map((i, elem) => {
             const elemHtml = $(elem);
-            const link = elemHtml.find('a.base-card__full-link').attr('href').split('?')[0];
-            const title = elemHtml.find('h3.base-search-card__title').text().trim();
-            const company = elemHtml.find('h4.base-search-card__subtitle').text().trim();
-            const location = elemHtml.find('span.job-search-card__location').text().trim();
-            const pubDate = elemHtml.find('time').attr('datetime');
+            const link = elemHtml.find('a.base-card__full-link, a.base-card--link')?.attr('href')?.split('?')[0];
+            const title = elemHtml.find('h3.base-search-card__title')?.text()?.trim();
+            const company = elemHtml.find('h4.base-search-card__subtitle')?.text()?.trim();
+            const location = elemHtml.find('span.job-search-card__location')?.text()?.trim();
+            const pubDate = elemHtml.find('time')?.attr('datetime');
 
             return new Job(title, link, company, location, pubDate);
         })
