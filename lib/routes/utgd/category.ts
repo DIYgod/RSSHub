@@ -33,7 +33,7 @@ export const route: Route = {
         },
     ],
     name: '分类',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'liqun1024'],
     handler,
     description: `| 方法   | 观点    |
   | ------ | ------- |

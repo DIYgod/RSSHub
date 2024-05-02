@@ -32,7 +32,7 @@ export const route: Route = {
         },
     ],
     name: '时间线',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'liqun1024'],
     handler,
     url: 'utgd.net/',
 };
