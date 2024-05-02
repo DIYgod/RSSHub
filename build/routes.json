@@ -58159,6 +58159,40 @@
         "description": "| 学院新闻 | 学术关注 | 学工动态 | 通知公告 |\n  | -------- | -------- | -------- | -------- |\n  | news     | scholar  | states   | notice   |",
         "location": "jsj.ts"
       },
+      "/jwc/:type?": {
+        "path": "/jwc/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/upc/jwc/tzgg",
+        "parameters": {
+          "type": "分类，见下表，其值与对应网页url路径参数一致，默认为所有通知"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "jwc.upc.edu.cn",
+              "jwc.upc.edu.cn/:type/list.htm"
+            ],
+            "target": "/jwc/:type?"
+          }
+        ],
+        "name": "教务处通知公告",
+        "maintainers": [
+          "sddzhyc"
+        ],
+        "description": "| 所有通知 | 教学·运行 | 学业·学籍 | 教学·研究 | 课程·教材 | 实践·教学 | 创新·创业 | 语言·文字 | 继续·教育 | 本科·招生 |\n  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |\n  | tzgg     | 18519    | 18520   | 18521    |    18522 |    18523 | 18524    |  yywwz   |  jxwjy   |   bkwzs  |",
+        "url": "jwc.upc.edu.cn/tzgg/list.htm",
+        "location": "jwc.ts"
+      },
       "/main/:type": {
         "path": "/main/:type",
         "categories": [

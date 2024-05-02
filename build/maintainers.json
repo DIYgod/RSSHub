@@ -5815,6 +5815,9 @@
   "/upc/jsj/:type": [
     "Veagau"
   ],
+  "/upc/jwc/:type?": [
+    "sddzhyc"
+  ],
   "/upc/main/:type": [
     "Veagau"
   ],
