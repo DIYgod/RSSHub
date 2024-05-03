@@ -15,6 +15,30 @@ permissions:
   contents: read
 
 jobs:
+  fix-pnpmp-lock:
+    # workaround for https://github.com/dependabot/dependabot-core/issues/7258
+    # until https://github.com/pnpm/pnpm/issues/6530 is fixed
+    if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'pnpm'
+      - run: |
+          rm pnpm-lock.yaml
+          pnpm i
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: fix pnpm install'
+
   vitest:
     runs-on: ubuntu-latest
     timeout-minutes: 10
