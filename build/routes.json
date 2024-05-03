@@ -21878,7 +21878,10 @@
           }
         ],
         "name": "Repo Pull Requests",
-        "maintainers": [],
+        "maintainers": [
+          "hashman",
+          "TonyRL"
+        ],
         "location": "pulls.ts"
       },
       "/pulse/:user/:repo/:period?": {
