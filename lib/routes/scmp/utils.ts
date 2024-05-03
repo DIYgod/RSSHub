@@ -79,6 +79,10 @@ export const parseItem = async (item) => {
     item.updated = parseDate(article.updatedDate, 'x');
     item.category = [...new Set([...article.topics.map((t) => t.name), ...article.sections.flatMap((t) => t.value.map((v) => v.name)), ...article.keywords.map((k) => k?.split(', '))])];
 
+    item.enclosure_length = item.enclosure.length;
+    item.enclosure_url = item.enclosure.url;
+    item.enclosure_type = item.enclosure.type;
+
     // N.B. gallery in article is not rendered
     // e.g., { type: 'div', attribs: { class: 'scmp-photo-gallery', 'data-gallery-nid': '3239409' }}
     // from https://www.scmp.com/news/china/politics/article/3239355/li-keqiang-former-premier-china-dead
