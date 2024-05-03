@@ -401,6 +401,11 @@
   "/apkpure/versions/:pkg/:region?": [
     "maple3142"
   ],
+  "/apnews/rss/:rss?": [
+    "zoenglinghou",
+    "mjysci",
+    "TonyRL"
+  ],
   "/apnews/topics/:topic?": [
     "zoenglinghou",
     "mjysci",

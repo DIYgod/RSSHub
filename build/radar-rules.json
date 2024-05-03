@@ -1019,6 +1019,14 @@
     "_name": "AP News",
     ".": [
       {
+        "title": "RSS",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:rss"
+        ],
+        "target": "/apnews/rss/:rss"
+      },
+      {
         "title": "Topics",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
