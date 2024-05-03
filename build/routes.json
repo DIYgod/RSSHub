@@ -38304,6 +38304,42 @@
     "name": "上下游 News&Market",
     "url": "newsmarket.com.tw"
   },
+  "newyorker": {
+    "routes": {
+      "/:category/:subCategory?": {
+        "path": "/:category/:subCategory?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/newyorker/everything",
+        "parameters": {
+          "category": "rss category. can be found at `https://www.newyorker.com/about/feeds`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "newyorker.com/feed/:category/:subCategory?"
+            ]
+          }
+        ],
+        "name": "The New Yorker",
+        "maintainers": [
+          "EthanWng97"
+        ],
+        "location": "news.ts"
+      }
+    },
+    "name": "New Yorker",
+    "url": "newyorker.com"
+  },
   "newzmz": {
     "routes": {
       "/:id?/:downLinkType?": {
