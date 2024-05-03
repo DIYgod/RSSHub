@@ -41,6 +41,7 @@ async function handler(ctx) {
                 description.find('.article-body__footer').remove();
                 description.find('.social-icons').remove();
                 description.find('div[class^="ActionBarWrapperContent-"]').remove();
+                description.find('div[class^="ContentHeaderByline-"]').remove();
                 return {
                     title: item.title,
                     pubDate: item.pubDate,
