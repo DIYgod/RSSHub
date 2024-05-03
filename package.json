@@ -156,7 +156,7 @@
         "@typescript-eslint/eslint-plugin": "7.8.0",
         "@typescript-eslint/parser": "7.8.0",
         "@vercel/nft": "0.26.4",
-        "@vitest/coverage-v8": "1.5.3",
+        "@vitest/coverage-v8": "1.6.0",
         "eslint": "8.57.0",
         "eslint-config-prettier": "9.1.0",
         "eslint-nibble": "8.1.0",
@@ -177,7 +177,7 @@
         "typescript": "5.4.5",
         "unified": "11.0.4",
         "vite-tsconfig-paths": "4.3.2",
-        "vitest": "1.5.3"
+        "vitest": "1.6.0"
     },
     "packageManager": "pnpm@8.15.7+sha256.50783dd0fa303852de2dd1557cd4b9f07cb5b018154a6e76d0f40635d6cee019",
     "engines": {
