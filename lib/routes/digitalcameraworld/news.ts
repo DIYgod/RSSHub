@@ -1,8 +1,7 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
-import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 import { ofetch } from 'ofetch';
+import { parseDate } from '@/utils/parse-date';
 const host = 'https://www.digitalcameraworld.com';
 export const route: Route = {
     path: '/news',
@@ -29,40 +28,29 @@ export const route: Route = {
 
 async function handler() {
     const rssUrl = `${host}/feeds.xml`;
-    const feed = await parser.parseURL(rssUrl);
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const data = await ofetch(item.link);
-                const $ = load(data);
-                const description = $('#main');
-                description.find('.slice-container-affiliateDisclaimer').remove();
-                description.find('.slice-container-trending').remove();
-                description.find('.slice-container-newsletterForm').remove();
-                description.find('.slice-container-authorBio').remove();
-                description.find('.slice-container-popularBox').remove();
-                description.find('.breadcrumb').remove();
-                description.find('.ad-unit').remove();
-                description.find('.media-list').remove();
-                description.find('p.vanilla-image-block').removeAttr('style');
-                description.find('h1').remove();
-                description.find('.byline-social').remove();
-                description.find('.socialite-widget').remove();
-                description.find('.fancy-box').remove();
-                description.find('.sticky-nav__scroll-wrapper').remove();
-                description.find('h4.separator-heading:contains("Related articles")').remove();
-                description.find('[class*="kiosq"]').remove();
-                description.find('[class*="hawk"]').remove();
-                return {
-                    title: item.title,
-                    pubDate: item.pubDate,
-                    link: item.link,
-                    category: item.categories,
-                    description: description.html(),
-                };
-            })
-        )
-    );
+
+    const response = await ofetch(rssUrl);
+
+    const $ = load(response, {
+        xmlMode: true,
+    });
+
+    const items = $('item')
+        .toArray()
+        .map((item) => {
+            item = $(item);
+            let description = item.find('dc\\:content').text();
+            description = $('<div>').html(description);
+            description.find('.vanilla-image-block').removeAttr('style');
+            description.find('.fancy-box').remove();
+
+            return {
+                title: item.find('title').text(),
+                pubDate: parseDate(item.find('pubDate').text()),
+                link: item.find('link').text(),
+                description: description.html(),
+            };
+        });
 
     return {
         title: 'Digital Camera World',
