@@ -320,8 +320,8 @@ devDependencies:
     specifier: 0.26.4
     version: 0.26.4
   '@vitest/coverage-v8':
-    specifier: 1.5.3
-    version: 1.5.3(vitest@1.5.3)
+    specifier: 1.6.0
+    version: 1.6.0(vitest@1.6.0)
   eslint:
     specifier: 8.57.0
     version: 8.57.0
@@ -383,8 +383,8 @@ devDependencies:
     specifier: 4.3.2
     version: 4.3.2(typescript@5.4.5)
   vitest:
-    specifier: 1.5.3
-    version: 1.5.3(@types/node@20.12.8)(jsdom@24.0.0)
+    specifier: 1.6.0
+    version: 1.6.0(@types/node@20.12.8)(jsdom@24.0.0)
 
 packages:
 
@@ -2259,7 +2259,7 @@ packages:
       '@babel/runtime-corejs2': 7.23.9
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -3087,10 +3087,10 @@ packages:
       - supports-color
     dev: true
 
-  /@vitest/coverage-v8@1.5.3(vitest@1.5.3):
-    resolution: {integrity: sha512-DPyGSu/fPHOJuPxzFSQoT4N/Fu/2aJfZRtEpEp8GI7NHsXBGE94CQ+pbEGBUMFjatsHPDJw/+TAF9r4ens2CNw==}
+  /@vitest/coverage-v8@1.6.0(vitest@1.6.0):
+    resolution: {integrity: sha512-KvapcbMY/8GYIG0rlwwOKCVNRc0OL20rrhFkg/CHNzncV03TE2XWvO5w9uZYoxNiMEBacAJt3unSOiZ7svePew==}
     peerDependencies:
-      vitest: 1.5.3
+      vitest: 1.6.0
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -3105,43 +3105,43 @@ packages:
       std-env: 3.7.0
       strip-literal: 2.0.0
       test-exclude: 6.0.0
-      vitest: 1.5.3(@types/node@20.12.8)(jsdom@24.0.0)
+      vitest: 1.6.0(@types/node@20.12.8)(jsdom@24.0.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@vitest/expect@1.5.3:
-    resolution: {integrity: sha512-y+waPz31pOFr3rD7vWTbwiLe5+MgsMm40jTZbQE8p8/qXyBX3CQsIXRx9XK12IbY7q/t5a5aM/ckt33b4PxK2g==}
+  /@vitest/expect@1.6.0:
+    resolution: {integrity: sha512-ixEvFVQjycy/oNgHjqsL6AZCDduC+tflRluaHIzKIsdbzkLn2U/iBnVeJwB6HsIjQBdfMR8Z0tRxKUsvFJEeWQ==}
     dependencies:
-      '@vitest/spy': 1.5.3
-      '@vitest/utils': 1.5.3
+      '@vitest/spy': 1.6.0
+      '@vitest/utils': 1.6.0
       chai: 4.4.1
     dev: true
 
-  /@vitest/runner@1.5.3:
-    resolution: {integrity: sha512-7PlfuReN8692IKQIdCxwir1AOaP5THfNkp0Uc4BKr2na+9lALNit7ub9l3/R7MP8aV61+mHKRGiqEKRIwu6iiQ==}
+  /@vitest/runner@1.6.0:
+    resolution: {integrity: sha512-P4xgwPjwesuBiHisAVz/LSSZtDjOTPYZVmNAnpHHSR6ONrf8eCJOFRvUwdHn30F5M1fxhqtl7QZQUk2dprIXAg==}
     dependencies:
-      '@vitest/utils': 1.5.3
+      '@vitest/utils': 1.6.0
       p-limit: 5.0.0
       pathe: 1.1.2
     dev: true
 
-  /@vitest/snapshot@1.5.3:
-    resolution: {integrity: sha512-K3mvIsjyKYBhNIDujMD2gfQEzddLe51nNOAf45yKRt/QFJcUIeTQd2trRvv6M6oCBHNVnZwFWbQ4yj96ibiDsA==}
+  /@vitest/snapshot@1.6.0:
+    resolution: {integrity: sha512-+Hx43f8Chus+DCmygqqfetcAZrDJwvTj0ymqjQq4CvmpKFSTVteEOBzCusu1x2tt4OJcvBflyHUE0DZSLgEMtQ==}
     dependencies:
       magic-string: 0.30.8
       pathe: 1.1.2
       pretty-format: 29.7.0
     dev: true
 
-  /@vitest/spy@1.5.3:
-    resolution: {integrity: sha512-Llj7Jgs6lbnL55WoshJUUacdJfjU2honvGcAJBxhra5TPEzTJH8ZuhI3p/JwqqfnTr4PmP7nDmOXP53MS7GJlg==}
+  /@vitest/spy@1.6.0:
+    resolution: {integrity: sha512-leUTap6B/cqi/bQkXUu6bQV5TZPx7pmMBKBQiI0rJA8c3pB56ZsaTbREnF7CJfmvAS4V2cXIBAh/3rVwrrCYgw==}
     dependencies:
       tinyspy: 2.2.1
     dev: true
 
-  /@vitest/utils@1.5.3:
-    resolution: {integrity: sha512-rE9DTN1BRhzkzqNQO+kw8ZgfeEBCLXiHJwetk668shmNBpSagQxneT5eSqEBLP+cqSiAeecvQmbpFfdMyLcIQA==}
+  /@vitest/utils@1.6.0:
+    resolution: {integrity: sha512-21cPiuGMoMZwiOHa2i4LXkMkMkCGzA+MVFV70jRwHo95dL4x/ts5GZhML1QWuy7yfp3WzK3lRvZi3JnXTYqrBw==}
     dependencies:
       diff-sequences: 29.6.3
       estree-walker: 3.0.3
@@ -9311,8 +9311,8 @@ packages:
       vfile-message: 4.0.2
     dev: true
 
-  /vite-node@1.5.3(@types/node@20.12.8):
-    resolution: {integrity: sha512-axFo00qiCpU/JLd8N1gu9iEYL3xTbMbMrbe5nDp9GL0nb6gurIdZLkkFogZXWnE8Oyy5kfSLwNVIcVsnhE7lgQ==}
+  /vite-node@1.6.0(@types/node@20.12.8):
+    resolution: {integrity: sha512-de6HJgzC+TFzOu0NTC4RAIsyf/DY/ibWDYQUcuEA84EMHhcefTUGkjFHKKEJhQN4A+6I0u++kr3l36ZF2d7XRw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     dependencies:
@@ -9384,15 +9384,15 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitest@1.5.3(@types/node@20.12.8)(jsdom@24.0.0):
-    resolution: {integrity: sha512-2oM7nLXylw3mQlW6GXnRriw+7YvZFk/YNV8AxIC3Z3MfFbuziLGWP9GPxxu/7nRlXhqyxBikpamr+lEEj1sUEw==}
+  /vitest@1.6.0(@types/node@20.12.8)(jsdom@24.0.0):
+    resolution: {integrity: sha512-H5r/dN06swuFnzNFhq/dnz37bPXnq8xB2xB5JOVk8K09rUtoeNN+LHWkoQ0A/i3hvbUKKcCei9KpbxqHMLhLLA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
       '@edge-runtime/vm': '*'
       '@types/node': ^18.0.0 || >=20.0.0
-      '@vitest/browser': 1.5.3
-      '@vitest/ui': 1.5.3
+      '@vitest/browser': 1.6.0
+      '@vitest/ui': 1.6.0
       happy-dom: '*'
       jsdom: '*'
     peerDependenciesMeta:
@@ -9410,11 +9410,11 @@ packages:
         optional: true
     dependencies:
       '@types/node': 20.12.8
-      '@vitest/expect': 1.5.3
-      '@vitest/runner': 1.5.3
-      '@vitest/snapshot': 1.5.3
-      '@vitest/spy': 1.5.3
-      '@vitest/utils': 1.5.3
+      '@vitest/expect': 1.6.0
+      '@vitest/runner': 1.6.0
+      '@vitest/snapshot': 1.6.0
+      '@vitest/spy': 1.6.0
+      '@vitest/utils': 1.6.0
       acorn-walk: 8.3.2
       chai: 4.4.1
       debug: 4.3.4
@@ -9429,7 +9429,7 @@ packages:
       tinybench: 2.6.0
       tinypool: 0.8.3
       vite: 5.2.9(@types/node@20.12.8)
-      vite-node: 1.5.3(@types/node@20.12.8)
+      vite-node: 1.6.0(@types/node@20.12.8)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
@@ -9733,8 +9733,8 @@ packages:
     resolution: {integrity: sha512-fkwiq0VIQTksNNA131rDOsVJcns0pfVUjHzLrNBiF/O/Xxb5lQyEXkhZWcJ7npWsYlvs+h0jFWXXy4X46Em1JA==}
     dev: false
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
