@@ -19,7 +19,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['newyorker.com/'],
+            source: ['newyorker.com/feed/:category/:subCategory?'],
         },
     ],
     name: 'The New Yorker',
