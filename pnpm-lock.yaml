@@ -13,7 +13,7 @@ dependencies:
     version: 0.2.2(hono@4.3.0)
   '@hono/zod-openapi':
     specifier: 0.11.0
-    version: 0.11.0(hono@4.3.0)(zod@3.23.5)
+    version: 0.11.0(hono@4.3.0)(zod@3.23.6)
   '@notionhq/client':
     specifier: 2.2.15
     version: 2.2.15
@@ -204,8 +204,8 @@ dependencies:
     specifier: 4.1.4
     version: 4.1.4
   tsx:
-    specifier: 4.8.2
-    version: 4.8.2
+    specifier: 4.9.0
+    version: 4.9.0
   twitter-api-v2:
     specifier: 1.16.3
     version: 1.16.3
@@ -222,8 +222,8 @@ dependencies:
     specifier: 1.0.2
     version: 1.0.2
   zod:
-    specifier: 3.23.5
-    version: 3.23.5
+    specifier: 3.23.6
+    version: 3.23.6
 
 devDependencies:
   '@babel/preset-env':
@@ -396,13 +396,13 @@ packages:
       '@jridgewell/trace-mapping': 0.3.25
     dev: true
 
-  /@asteasolutions/zod-to-openapi@7.0.0(zod@3.23.5):
+  /@asteasolutions/zod-to-openapi@7.0.0(zod@3.23.6):
     resolution: {integrity: sha512-rJRKHD2m6nUb/9ZheeN8nqOURX24WTzY8Sex1ZKT0Kpx+xfpRcD0fTD6vEeXNHGaDGxzu65Jj/jb2x6nLTjcMw==}
     peerDependencies:
       zod: ^3.20.2
     dependencies:
       openapi3-ts: 4.3.1
-      zod: 3.23.5
+      zod: 3.23.6
     dev: false
 
   /@babel/code-frame@7.0.0:
@@ -1907,27 +1907,27 @@ packages:
       hono: 4.3.0
     dev: false
 
-  /@hono/zod-openapi@0.11.0(hono@4.3.0)(zod@3.23.5):
+  /@hono/zod-openapi@0.11.0(hono@4.3.0)(zod@3.23.6):
     resolution: {integrity: sha512-thbxV4lWJoDo1NjF8ZGnd0muD3UHUpRqpKvS3RI+kWCXU05nyuViymUbPvVpp+O6i5SjovITTF91NRMTraZm3Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=3.11.3'
       zod: 3.*
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.0.0(zod@3.23.5)
-      '@hono/zod-validator': 0.2.1(hono@4.3.0)(zod@3.23.5)
+      '@asteasolutions/zod-to-openapi': 7.0.0(zod@3.23.6)
+      '@hono/zod-validator': 0.2.1(hono@4.3.0)(zod@3.23.6)
       hono: 4.3.0
-      zod: 3.23.5
+      zod: 3.23.6
     dev: false
 
-  /@hono/zod-validator@0.2.1(hono@4.3.0)(zod@3.23.5):
+  /@hono/zod-validator@0.2.1(hono@4.3.0)(zod@3.23.6):
     resolution: {integrity: sha512-HFoxln7Q6JsE64qz2WBS28SD33UB2alp3aRKmcWnNLDzEL1BLsWfbdX6e1HIiUprHYTIXf5y7ax8eYidKUwyaA==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.19.1
     dependencies:
       hono: 4.3.0
-      zod: 3.23.5
+      zod: 3.23.6
     dev: false
 
   /@humanwhocodes/config-array@0.11.14:
@@ -8931,8 +8931,8 @@ packages:
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
-  /tsx@4.8.2:
-    resolution: {integrity: sha512-hmmzS4U4mdy1Cnzpl/NQiPUC2k34EcNSTZYVJThYKhdqTwuBeF+4cG9KUK/PFQ7KHaAaYwqlb7QfmsE2nuj+WA==}
+  /tsx@4.9.0:
+    resolution: {integrity: sha512-UY0UUhDPL6MkqkZU4xTEjEBOLfV+RIt4xeeJ1qwK73xai4/zveG+X6+tieILa7rjtegUW2LE4p7fw7gAoLuytA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
@@ -9653,8 +9653,8 @@ packages:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
-  /zod@3.23.5:
-    resolution: {integrity: sha512-fkwiq0VIQTksNNA131rDOsVJcns0pfVUjHzLrNBiF/O/Xxb5lQyEXkhZWcJ7npWsYlvs+h0jFWXXy4X46Em1JA==}
+  /zod@3.23.6:
+    resolution: {integrity: sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==}
     dev: false
 
   github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
