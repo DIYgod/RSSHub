@@ -88,7 +88,7 @@ const gqlFeatures = {
     ListLatestTweetsTimeline: gqlFeatureFeed,
     HomeTimeline: gqlFeatureFeed,
     TweetDetail: TweetDetailFeatures,
-    Likes: gqlFeatureFeed
+    Likes: gqlFeatureFeed,
 };
 
 const timelineParams = {
