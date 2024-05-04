@@ -6,7 +6,7 @@ import type { Route, DataItem } from '@/types';
 export const route: Route = {
     path: '/article/:id',
     name: '章节',
-    url: 'www.69shu.top/book/*',
+    url: 'www.69shu.top',
     maintainers: ['eternasuno'],
     example: '/article/47117',
     parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
