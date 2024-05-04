@@ -7,25 +7,17 @@ import { rootUrl, ProcessFeed } from './utils';
 export const route: Route = {
     path: '/contributors/:author',
     categories: ['reading'],
-    example: '/contributors/黃衍仁',
+    example: '/p-articles/contributors/黃衍仁',
     parameters: { author: '虛詞作者, 可在作者页面 URL 找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: '虛詞作者',
     maintainers: ['Insomnia1437'],
     handler,
 };
 
 async function handler(ctx) {
-    const author_name: string = ctx.req.param('author');
-    const author_url = new URL(`/contributors/${author_name}`, rootUrl).href;
-    const response = await ofetch(author_url);
+    const authorName: string = ctx.req.param('author');
+    const authorUrl = new URL(`/contributors/${authorName}`, rootUrl).href;
+    const response = await ofetch(authorUrl);
     const $ = load(response);
 
     const list = $('div.contect_box_05in > a')
@@ -48,8 +40,8 @@ async function handler(ctx) {
         )
     );
     return {
-        title: `虚词 p-articles`,
-        link: new URL(`/contributors/${author_name}`, rootUrl).href,
+        title: '虚词 p-articles',
+        link: authorUrl,
         item: items,
         language: 'zh-cn',
     };

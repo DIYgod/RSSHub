@@ -7,29 +7,21 @@ import { rootUrl, ProcessFeed } from './utils';
 export const route: Route = {
     path: '/section/:section',
     categories: ['reading'],
-    example: '/section/critics',
+    example: '/p-articles/section/critics',
     parameters: { section: '版块名称, 可在对应版块 URL 中找到, 子版块链接用`-`连接' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: '版块',
     maintainers: ['DW'],
     handler,
 };
 
 async function handler(ctx) {
-    let section_name: string = ctx.req.param('section');
-    section_name = section_name.replace('-', '/');
-    section_name += '/';
-    const section_url = new URL(section_name, rootUrl).href;
-    const response = await ofetch(section_url);
+    let sectionName: string = ctx.req.param('section');
+    sectionName = sectionName.replace('-', '/');
+    sectionName += '/';
+    const sectionUrl = new URL(sectionName, rootUrl).href;
+    const response = await ofetch(sectionUrl);
     const $ = load(response);
-    const top_info = {
+    const topInfo = {
         title: $('div.inner_top_title_01 > h1 > a').text(),
         link: new URL($('div.inner_top_title_01 > h1 > a').prop('href'), rootUrl).href,
     };
@@ -43,7 +35,7 @@ async function handler(ctx) {
             return info;
         })
         .get();
-    list.unshift(top_info);
+    list.unshift(topInfo);
 
     const items = await Promise.all(
         list.map((info) =>
@@ -55,8 +47,8 @@ async function handler(ctx) {
         )
     );
     return {
-        title: `虚词 p-articles`,
-        link: new URL(section_name, rootUrl).href,
+        title: '虚词 p-articles',
+        link: sectionUrl,
         item: items,
         language: 'zh-cn',
     };
