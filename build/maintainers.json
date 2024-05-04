@@ -1498,6 +1498,9 @@
   "/diershoubing/news": [
     "wushijishan"
   ],
+  "/digitalcameraworld/news": [
+    "EthanWng97"
+  ],
   "/discord/channel/:channelId": [
     "TonyRL"
   ],

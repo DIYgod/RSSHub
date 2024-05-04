@@ -4065,6 +4065,19 @@
       }
     ]
   },
+  "digitalcameraworld.com": {
+    "_name": "Digital Camera World",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/digitalcameraworld/news"
+      }
+    ]
+  },
   "discord.com": {
     "_name": "Discord",
     ".": [
