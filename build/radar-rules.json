@@ -366,6 +366,19 @@
       }
     ]
   },
+  "69shu.top": {
+    "_name": "69书吧",
+    "www": [
+      {
+        "title": "章节",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/book/:id.htm"
+        ],
+        "target": "/69shu/article/:id"
+      }
+    ]
+  },
   "6parkbbs.com": {
     "_name": "留园网",
     "club": [

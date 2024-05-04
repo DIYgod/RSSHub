@@ -198,6 +198,9 @@
   "/5eplay/article": [
     "Dlouxgit"
   ],
+  "/69shu/article/:id": [
+    "eternasuno"
+  ],
   "/6park/:id?/:type?/:keyword?": [],
   "/6park/news/:site?/:id?/:keyword?": [],
   "/6v123/latestMovies": [

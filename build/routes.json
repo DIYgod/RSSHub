@@ -1848,6 +1848,44 @@
     "name": "5EPLAY",
     "url": "csgo.5eplay.com"
   },
+  "69shu": {
+    "routes": {
+      "/article/:id": {
+        "path": "/article/:id",
+        "name": "章节",
+        "url": "www.69shu.top",
+        "maintainers": [
+          "eternasuno"
+        ],
+        "example": "/article/47117",
+        "parameters": {
+          "id": "小说 id, 可在对应小说页 URL 中找到"
+        },
+        "categories": [
+          "reading"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.69shu.top/book/:id.htm"
+            ],
+            "target": "/article/:id"
+          }
+        ],
+        "location": "article.ts"
+      }
+    },
+    "name": "69书吧",
+    "url": "69shu.top"
+  },
   "6park": {
     "routes": {
       "/:id?/:type?/:keyword?": {
