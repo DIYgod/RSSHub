@@ -3943,6 +3943,19 @@
       }
     ]
   },
+  "deepin.org": {
+    "_name": "Deepin",
+    "bbs": [
+      {
+        "title": "BBS Home Page",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/user/:user_id"
+        ],
+        "target": "/deepin/homepage/:user_id"
+      }
+    ]
+  },
   "deeplearning.ai": {
     "_name": "deeplearning.ai",
     "www": [
