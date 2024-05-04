@@ -13,7 +13,7 @@ export const route: Route = {
     path: '/:path',
     name: '论坛',
     parameters: { path: '路径，默认为热点聚焦' },
-    categories: ['game', 'bbs'],
+    categories: ['game'],
     example: '/keylol/f161-1',
     radar: [
         {
@@ -42,11 +42,18 @@ async function handler(ctx) {
     queryParams.filter = 'author';
 
     // get real author name from official rss feed
-    const feed = await parser.parseURL(`https://keylol.com/forum.php?mod=rss&fid=${queryParams.fid}&auth=0`);
-    const authorNameMap = feed.items.map((item) => ({
-        threadId: item.link.match(threadIdRegex)[1],
-        author: item.author,
-    }));
+    let authorNameMap;
+    try {
+        const feed = await parser.parseURL(`https://keylol.com/forum.php?mod=rss&fid=${queryParams.fid}&auth=0`);
+        authorNameMap = feed.items.map((item) => ({
+            threadId: item.link.match(threadIdRegex)[1],
+            author: item.author,
+        }));
+    } catch {
+        authorNameMap = [];
+    }
+
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
     const rootUrl = 'https://keylol.com';
     const currentUrl = queryString.stringifyUrl({ url: `${rootUrl}/forum.php`, query: queryParams });
@@ -56,6 +63,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     let items = $('tbody[id^="normalthread_"] a.xst')
+        .slice(0, limit)
         .toArray()
         .map((item) => {
             item = $(item);
@@ -79,7 +87,7 @@ async function handler(ctx) {
                 if (indexDiv.length > 0) {
                     // post with page
                     const postId = content('div.t_fsz > script')
-                        .html()
+                        .text()
                         .match(/show_threadindex\((\d+),/)[1];
                     descriptionList = await Promise.all(
                         indexDiv.find('a').map((i, a) => {
@@ -102,8 +110,8 @@ async function handler(ctx) {
                 }
 
                 item.description = descriptionList.join('<br/>');
-                const authorName = authorNameMap.filter((a) => a.threadId === threadId);
-                item.author = authorName.length > 0 ? authorName[0].author : content('a.xw1').first().text();
+                const authorName = authorNameMap.find((a) => a.threadId === threadId);
+                item.author = authorName && authorName.length > 0 ? authorName[0].author : content('a.xw1').first().text();
                 item.category = content('#keyloL_thread_tags a')
                     .toArray()
                     .map((c) => content(c).text());
