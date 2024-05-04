@@ -9,7 +9,7 @@ import path from 'node:path';
 import { art } from '@/utils/render';
 
 export const route: Route = {
-    path: '/author/:aid/:sortType/:count?',
+    path: '/author/:aid/:sortType?/:count?',
     categories: ['journal'],
     example: '/ieee/author/8782710',
     parameters: { aid: 'Author ID', sortType: 'Sort Type of papers', count: 'Number of papers to show' },
