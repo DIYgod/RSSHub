@@ -8629,6 +8629,19 @@
       }
     ]
   },
+  "keylol.com": {
+    "_name": "其乐",
+    ".": [
+      {
+        "title": "论坛",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/:path"
+        ],
+        "target": "/keylol(params,url)=>url.replaceAll(\"forum.php?\",\"\")"
+      }
+    ]
+  },
   "kimlaw.or.kr": {
     "_name": "The Korea Institute of Marine Law",
     ".": [
