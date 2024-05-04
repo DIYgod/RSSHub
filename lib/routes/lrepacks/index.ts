@@ -115,7 +115,7 @@ export const route: Route = {
     url: 'lrepacks.net',
     maintainers: ['nczitzk'],
     handler,
-    example: '/lrepacks/:category?',
+    example: '/lrepacks',
     parameters: { category: 'Category, Homepage by default' },
     description: `:::tip
   If you subscribe to [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)，where the URL is \`https://lrepacks.net/repaki-sistemnyh-programm/\`, extract the part \`https://lrepacks.net/\` to the end, which is \`repaki-sistemnyh-programm\`, and use it as the parameter to fill in. Therefore, the route will be [\`/lrepacks/repaki-sistemnyh-programm\`](https://rsshub.app/lrepacks/repaki-sistemnyh-programm).
