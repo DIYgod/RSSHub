@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate(data.datePublished);
+                item.pubDate = data ? parseDate(data.datePublished) : undefined;
                 item.author = data.author?.name ?? undefined;
                 item.content = {
                     html: description,
@@ -87,7 +87,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.updated = parseDate(data.dateModified);
+                item.updated = data ? parseDate(data.dateModified) : undefined;
                 item.language = language;
 
                 return item;
