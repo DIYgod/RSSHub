@@ -2,6 +2,8 @@ import { Route } from '@/types';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { load } from 'cheerio'; // 类似 jQuery 的 API HTML 解析器
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news',
@@ -28,10 +30,14 @@ export const route: Route = {
             .toArray()
             .map((item) => {
                 const el = $(item);
+                const title = el.find('h3').text().trim();
+                const link = `https://${domain}${el.find('a').attr('href')!}`;
+                const pubDate = el.find('.wgc-field-publication-date').text().trim();
+
                 return {
-                    title: el.find('h3').text().trim(),
-                    link: `https://${domain}${el.find('a').attr('href')!}`,
-                    pubDate: el.find('.wgc-field-publication-date').text().trim(),
+                    title,
+                    link,
+                    pubDate: pubDate ? timezone(parseDate(pubDate, ['YYYY年MM月DD日']), 0) : undefined,
                     description: '',
                 };
             });
