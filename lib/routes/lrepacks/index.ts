@@ -80,7 +80,7 @@ export const handler = async (ctx) => {
                 item.title = title;
                 item.description = description;
                 item.pubDate = data ? parseDate(data.datePublished) : undefined;
-                item.author = data.author?.name ?? undefined;
+                item.author = data?.author?.name ?? undefined;
                 item.content = {
                     html: description,
                     text: $$('div.entry-content').text(),
