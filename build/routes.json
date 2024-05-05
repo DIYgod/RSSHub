@@ -34718,6 +34718,112 @@
     "name": "lovelive-anime",
     "url": "www.lovelive-anime.jp"
   },
+  "lrepacks": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "name": "REPACK скачать",
+        "url": "lrepacks.net",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/lrepacks",
+        "parameters": {
+          "category": "Category, Homepage by default"
+        },
+        "description": ":::tip\n  If you subscribe to [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)，where the URL is `https://lrepacks.net/repaki-sistemnyh-programm/`, extract the part `https://lrepacks.net/` to the end, which is `repaki-sistemnyh-programm`, and use it as the parameter to fill in. Therefore, the route will be [`/lrepacks/repaki-sistemnyh-programm`](https://rsshub.app/lrepacks/repaki-sistemnyh-programm).\n\n  | Category                                                                        | ID                                                                                           |\n  | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |\n  | [Новые репаки на сегодня](https://lrepacks.net/novye-repaki-elchupacabra/)      | [novye-repaki-elchupacabra](https://rsshub.app/lrepacks/novye-repaki-elchupacabra)           |\n  | [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)          | [repaki-sistemnyh-programm](https://rsshub.app/lrepacks/repaki-sistemnyh-programm)           |\n  | [Программы для графики](https://lrepacks.net/repaki-programm-dlya-grafiki/)     | [repaki-programm-dlya-grafiki](https://rsshub.app/lrepacks/repaki-programm-dlya-grafiki)     |\n  | [Программы для интернета](https://lrepacks.net/repaki-programm-dlya-interneta/) | [repaki-programm-dlya-interneta](https://rsshub.app/lrepacks/repaki-programm-dlya-interneta) |\n  | [Мультимедиа программы](https://lrepacks.net/repaki-multimedia-programm/)       | [repaki-multimedia-programm](https://rsshub.app/lrepacks/repaki-multimedia-programm)         |\n  | [Программы для офиса](https://lrepacks.net/repaki-programm-dlya-ofisa/)         | [repaki-programm-dlya-ofisa](https://rsshub.app/lrepacks/repaki-programm-dlya-ofisa)         |\n  | [Разные программы](https://lrepacks.net/repaki-raznyh-programm/)                | [repaki-raznyh-programm](https://rsshub.app/lrepacks/repaki-raznyh-programm)                 |\n  | [Системные библиотеки](https://lrepacks.net/sistemnye-biblioteki/)              | [sistemnye-biblioteki](https://rsshub.app/lrepacks/sistemnye-biblioteki)                     |\n  | [Важная информация](https://lrepacks.net/informaciya/)                          | [informaciya](https://rsshub.app/lrepacks/informaciya)                                       |\n  :::",
+        "categories": [
+          "program-update"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "lrepacks.net/:category"
+            ]
+          },
+          {
+            "title": "Новые репаки на сегодня",
+            "source": [
+              "lrepacks.net/novye-repaki-elchupacabra/"
+            ],
+            "target": "/novye-repaki-elchupacabra"
+          },
+          {
+            "title": "Системные программы",
+            "source": [
+              "lrepacks.net/repaki-sistemnyh-programm/"
+            ],
+            "target": "/repaki-sistemnyh-programm"
+          },
+          {
+            "title": "Программы для графики",
+            "source": [
+              "lrepacks.net/repaki-programm-dlya-grafiki/"
+            ],
+            "target": "/repaki-programm-dlya-grafiki"
+          },
+          {
+            "title": "Программы для интернета",
+            "source": [
+              "lrepacks.net/repaki-programm-dlya-interneta/"
+            ],
+            "target": "/repaki-programm-dlya-interneta"
+          },
+          {
+            "title": "Мультимедиа программы",
+            "source": [
+              "lrepacks.net/repaki-multimedia-programm/"
+            ],
+            "target": "/repaki-multimedia-programm"
+          },
+          {
+            "title": "Программы для офиса",
+            "source": [
+              "lrepacks.net/repaki-programm-dlya-ofisa/"
+            ],
+            "target": "/repaki-programm-dlya-ofisa"
+          },
+          {
+            "title": "Разные программы",
+            "source": [
+              "lrepacks.net/repaki-raznyh-programm/"
+            ],
+            "target": "/repaki-raznyh-programm"
+          },
+          {
+            "title": "Системные библиотеки",
+            "source": [
+              "lrepacks.net/sistemnye-biblioteki/"
+            ],
+            "target": "/sistemnye-biblioteki"
+          },
+          {
+            "title": "Важная информация",
+            "source": [
+              "lrepacks.net/informaciya/"
+            ],
+            "target": "/informaciya"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "REPACK скачать",
+    "url": "lrepacks.net",
+    "categories": [
+      "program-update"
+    ],
+    "description": ""
+  },
   "lsnu": {
     "routes": {
       "/jiaowc/tzgg/:category?": {

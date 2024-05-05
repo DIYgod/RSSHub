@@ -3485,6 +3485,9 @@
   "/lovelive-anime/topics/:abbr/:category?/:option?": [
     "axojhf"
   ],
+  "/lrepacks/:category?": [
+    "nczitzk"
+  ],
   "/lsnu/jiaowc/tzgg/:category?": [
     "nyaShine"
   ],
