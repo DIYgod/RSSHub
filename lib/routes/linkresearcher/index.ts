@@ -8,7 +8,7 @@ const baseURL = 'https://www.linkresearcher.com';
 export const route: Route = {
     path: '/:params',
     name: 'Unknown',
-    maintainers: ['yech1990'],
+    maintainers: ['john-theo'],
     handler,
 };
 
@@ -23,7 +23,7 @@ async function handler(ctx) {
 
     // get XSRF token from main page
     const metaURL = `${baseURL}/${category}`;
-    const metaResponse = await got(metaURL);
+    const metaResponse = await got(metaURL, {headers: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"});
     const xsrfToken = metaResponse.headers['set-cookie'][0].split(';')[0].split('=')[1];
 
     let data = { filters: { status: false } };
