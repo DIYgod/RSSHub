@@ -20,21 +20,13 @@ const categories = {
 };
 
 export const route: Route = {
-    path: '/:category?',
+    path: '/profundity/:category?',
     categories: ['new-media'],
-    example: '/panewslab',
+    example: '/panewslab/profundity',
     parameters: { category: '分类，见下表，默认为精选' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
-            source: ['panewslab.com/'],
+            source: ['panewslab.com/', 'www.panewslab.com/zh/profundity/index.html'],
         },
     ],
     name: '深度',
