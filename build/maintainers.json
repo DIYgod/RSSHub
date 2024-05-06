@@ -1178,8 +1178,18 @@
   "/cnbc/rss/:id?": [
     "TonyRL"
   ],
-  "/cnbeta/:type/:id": [],
-  "/cnbeta/": [],
+  "/cnbeta/category/:id": [
+    "nczitzk"
+  ],
+  "/cnbeta/": [
+    "kt286",
+    "HaitianLiu",
+    "nczitzk"
+  ],
+  "/cnbeta/topics/:id": [
+    "cczhong11",
+    "nczitzk"
+  ],
   "/cnblogs/aggsite/topdiggs": [
     "hujingnb"
   ],
@@ -1409,10 +1419,6 @@
   ],
   "/dapenti/tugua": [
     "tgly307"
-  ],
-  "/darwinawards/all": [
-    "zoenglinghou",
-    "nczitzk"
   ],
   "/darwinawards/": [
     "zoenglinghou",
@@ -2762,9 +2768,9 @@
   "/houxu/events": [
     "nczitzk"
   ],
-  "/houxu/featured": [],
-  "/houxu/index": [],
-  "/houxu/": [],
+  "/houxu/": [
+    "nczitzk"
+  ],
   "/houxu/lives/:id": [
     "nczitzk"
   ],
@@ -3792,8 +3798,12 @@
   "/nbd/:id?": [
     "nczitzk"
   ],
-  "/nber/papers": [],
-  "/nber/news": [],
+  "/nber/papers": [
+    "5upernova-heng"
+  ],
+  "/nber/new": [
+    "5upernova-heng"
+  ],
   "/ncc-cma/cmdp/image/:id{.+}?": [],
   "/ncepu/master/:type": [
     "nilleo"
@@ -4312,13 +4322,10 @@
   "/panewslab/column/:id": [
     "nczitzk"
   ],
-  "/panewslab/:category?": [
-    "nczitzk"
-  ],
   "/panewslab/news": [
     "nczitzk"
   ],
-  "/panewslab/newsflash": [
+  "/panewslab/profundity/:category?": [
     "nczitzk"
   ],
   "/panewslab/topic/:id": [
@@ -5448,9 +5455,6 @@
   "/techflowpost/express": [
     "nczitzk"
   ],
-  "/techflowpost/newsflash": [
-    "nczitzk"
-  ],
   "/techflowpost/": [
     "nczitzk"
   ],
@@ -5504,19 +5508,10 @@
     "DIYgod",
     "NeverBehave"
   ],
-  "/tfc-taiwan/": [
+  "/tfc-taiwan/:type?": [
     "TonyRL"
   ],
-  "/tfc-taiwan/category/:id{.+}": [
-    "TonyRL"
-  ],
-  "/tfc-taiwan/info": [
-    "TonyRL"
-  ],
-  "/tfc-taiwan/report": [
-    "TonyRL"
-  ],
-  "/tfc-taiwan/topic/:id": [
+  "/tfc-taiwan/:type/:id{.+}": [
     "TonyRL"
   ],
   "/tgbus/list/:category": [
@@ -6153,14 +6148,14 @@
   "/wmpvp/news/:type": [
     "tssujt"
   ],
+  "/wnacg/category/:cid": [
+    "Gandum2077"
+  ],
   "/wnacg/": [
     "KenMizz"
   ],
-  "/wnacg/category/:cid": [
-    "KenMizz"
-  ],
   "/wnacg/tag/:tag": [
-    "KenMizz"
+    "Gandum2077"
   ],
   "/wordpress/:url?/:filter{.+}?": [
     "nczitzk"

@@ -3068,20 +3068,28 @@
     "_name": "cnBeta.COM",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/"
+          "/category/:id"
         ],
-        "target": "/cnbeta/:type/:id"
+        "target": "/cnbetaparams=>`/cnbeta/category/${params.id.replace(\".htm\",\"\")}`"
       },
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "头条资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
         "target": "/cnbeta/"
+      },
+      {
+        "title": "主题",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/:id"
+        ],
+        "target": "/cnbetaparams=>`/cnbeta/topics/${params.id.replace(\".htm\",\"\")}`"
       }
     ]
   },
@@ -3801,16 +3809,7 @@
     "_name": "Darwin Awards",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/darwin",
-          "/"
-        ],
-        "target": "/darwinawards/all"
-      },
-      {
-        "title": "Unknown",
+        "title": "Award Winners",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/darwin",
@@ -4187,7 +4186,7 @@
   },
   "dnaindia.com": {
     "_name": "DNA India",
-    ".": [
+    "www": [
       {
         "title": "News",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
@@ -4197,10 +4196,10 @@
         "target": "/dnaindia/:category"
       },
       {
-        "title": "News",
+        "title": "Topic",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/:category"
+          "/topic/:topic"
         ],
         "target": "/dnaindia/topic/:topic"
       }
@@ -7279,23 +7278,7 @@
         "target": "/houxu/events"
       },
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/houxu/featured"
-      },
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/houxu/index"
-      },
-      {
-        "title": "Unknown",
+        "title": "热点",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
@@ -10007,12 +9990,12 @@
         "target": "/nber/papers"
       },
       {
-        "title": "All Papers",
+        "title": "New Papers",
         "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/papers"
         ],
-        "target": "/nber/news"
+        "target": "/nber/new"
       }
     ]
   },
@@ -11232,14 +11215,6 @@
         "target": "/panewslab/column/:id"
       },
       {
-        "title": "深度",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/panewslab/:category?"
-      },
-      {
         "title": "快讯",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
@@ -11248,12 +11223,13 @@
         "target": "/panewslab/news"
       },
       {
-        "title": "快讯",
+        "title": "深度",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/"
+          "/",
+          "/zh/profundity/index.html"
         ],
-        "target": "/panewslab/newsflash"
+        "target": "/panewslab/profundity/:category?"
       },
       {
         "title": "专题",
@@ -14730,15 +14706,7 @@
         "target": "/techflowpost/express"
       },
       {
-        "title": "快讯",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/newsletter/index.html"
-        ],
-        "target": "/techflowpost/newsflash"
-      },
-      {
-        "title": "Unknown",
+        "title": "首页",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
           "/"
@@ -16415,11 +16383,19 @@
       }
     ]
   },
-  "wnacg.org": {
+  "wnacg.com": {
     "_name": "紳士漫畫",
     ".": [
       {
-        "title": "Unknown",
+        "title": "分类更新",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/*"
+        ],
+        "target": "/wnacg(_,url)=>`/wnacg/category/${new URL(url).pathname.match(/albums-index-cate-(\\d+)\\.html$/)[1]}`"
+      },
+      {
+        "title": "最新",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/albums.html",
@@ -16428,22 +16404,12 @@
         "target": "/wnacg/"
       },
       {
-        "title": "Unknown",
+        "title": "標籤更新",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
-          "/albums.html",
-          "/"
+          "/*"
         ],
-        "target": "/wnacg/category/:cid"
-      },
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/albums.html",
-          "/"
-        ],
-        "target": "/wnacg/tag/:tag"
+        "target": "/wnacg(_,url)=>`/wnacg/tag/${new URL(url).pathname.match(/albums-index-tag-(.+?)\\.html$/)[1]}`"
       }
     ]
   },

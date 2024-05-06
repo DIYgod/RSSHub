@@ -11893,45 +11893,80 @@
   },
   "cnbeta": {
     "routes": {
-      "/:type/:id": {
+      "/category/:id": {
+        "name": "分类",
         "path": [
-          "/:type/:id",
-          "/"
+          "/category/:id"
         ],
+        "example": "/cnbeta/category/movie",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "parameters": {
+          "id": "分类 id，可在对应分类页的 URL 中找到"
+        },
         "radar": [
           {
             "source": [
-              "cnbeta.com.tw/"
-            ],
-            "target": ""
+              "cnbeta.com.tw/category/:id"
+            ]
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "cnbeta.com.tw/",
-        "location": "type.ts"
+        "url": "cnbeta.com.tw",
+        "description": "| 影视  | 音乐  | 游戏 | 动漫  | 趣闻  | 科学    | 软件 |\n  | ----- | ----- | ---- | ----- | ----- | ------- | ---- |\n  | movie | music | game | comic | funny | science | soft |",
+        "location": "category.ts"
       },
       "/": {
+        "name": "头条资讯",
         "path": [
-          "/:type/:id",
           "/"
         ],
+        "example": "/cnbeta",
         "radar": [
           {
             "source": [
               "cnbeta.com.tw/"
-            ],
-            "target": ""
+            ]
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "cnbeta.com.tw/",
-        "location": "type.ts"
+        "maintainers": [
+          "kt286",
+          "HaitianLiu",
+          "nczitzk"
+        ],
+        "url": "cnbeta.com.tw",
+        "location": "index.ts"
+      },
+      "/topics/:id": {
+        "name": "主题",
+        "path": [
+          "/topics/:id"
+        ],
+        "example": "/cnbeta/topics/453",
+        "maintainers": [
+          "cczhong11",
+          "nczitzk"
+        ],
+        "parameters": {
+          "id": "主题 id，可在对应主题页的 URL 中找到"
+        },
+        "radar": [
+          {
+            "source": [
+              "cnbeta.com.tw/topics/:id"
+            ]
+          }
+        ],
+        "url": "cnbeta.com.tw",
+        "description": "::: tip\n完整的主题列表参见 [主题列表](https://www.cnbeta.com.tw/topics.htm)\n:::",
+        "location": "topics.ts"
       }
     },
     "name": "cnBeta.COM",
-    "url": "cnbeta.com.tw"
+    "url": "cnbeta.com.tw",
+    "categories": [
+      "new-media"
+    ]
   },
   "cnblogs": {
     "routes": {
@@ -11967,7 +12002,7 @@
         "maintainers": [
           "hujingnb"
         ],
-        "url": "www.cnblogs.com/aggsite/topdiggs",
+        "url": "www.cnblogs.com/aggsite/headline",
         "description": "在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: `https://www.cnblogs.com/cate/go/`, 则: [`/cnblogs/cate/go`](https://rsshub.app/cnblogs/cate/go)",
         "location": "common.ts"
       },
@@ -12003,7 +12038,7 @@
         "maintainers": [
           "hujingnb"
         ],
-        "url": "www.cnblogs.com/aggsite/topdiggs",
+        "url": "www.cnblogs.com/aggsite/headline",
         "description": "在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: `https://www.cnblogs.com/cate/go/`, 则: [`/cnblogs/cate/go`](https://rsshub.app/cnblogs/cate/go)",
         "location": "common.ts"
       },
@@ -12039,7 +12074,7 @@
         "maintainers": [
           "hujingnb"
         ],
-        "url": "www.cnblogs.com/aggsite/topdiggs",
+        "url": "www.cnblogs.com/aggsite/headline",
         "description": "在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: `https://www.cnblogs.com/cate/go/`, 则: [`/cnblogs/cate/go`](https://rsshub.app/cnblogs/cate/go)",
         "location": "common.ts"
       },
@@ -12075,7 +12110,7 @@
         "maintainers": [
           "hujingnb"
         ],
-        "url": "www.cnblogs.com/aggsite/topdiggs",
+        "url": "www.cnblogs.com/aggsite/headline",
         "description": "在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: `https://www.cnblogs.com/cate/go/`, 则: [`/cnblogs/cate/go`](https://rsshub.app/cnblogs/cate/go)",
         "location": "common.ts"
       },
@@ -12111,7 +12146,7 @@
         "maintainers": [
           "hujingnb"
         ],
-        "url": "www.cnblogs.com/aggsite/topdiggs",
+        "url": "www.cnblogs.com/aggsite/headline",
         "description": "在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: `https://www.cnblogs.com/cate/go/`, 则: [`/cnblogs/cate/go`](https://rsshub.app/cnblogs/cate/go)",
         "location": "common.ts"
       }
@@ -14438,43 +14473,18 @@
   },
   "darwinawards": {
     "routes": {
-      "/all": {
-        "path": [
-          "/all",
-          "/"
-        ],
-        "radar": [
-          {
-            "source": [
-              "darwinawards.com/darwin",
-              "darwinawards.com/"
-            ],
-            "target": ""
-          }
-        ],
-        "name": "Unknown",
-        "maintainers": [
-          "zoenglinghou",
-          "nczitzk"
-        ],
-        "url": "darwinawards.com/darwin",
-        "location": "index.ts"
-      },
       "/": {
-        "path": [
-          "/all",
-          "/"
-        ],
+        "name": "Award Winners",
+        "example": "/darwinawards",
+        "path": "/",
         "radar": [
           {
             "source": [
               "darwinawards.com/darwin",
               "darwinawards.com/"
-            ],
-            "target": ""
+            ]
           }
         ],
-        "name": "Unknown",
         "maintainers": [
           "zoenglinghou",
           "nczitzk"
@@ -14484,7 +14494,10 @@
       }
     },
     "name": "Darwin Awards",
-    "url": "darwinawards.com"
+    "url": "darwinawards.com",
+    "categories": [
+      "other"
+    ]
   },
   "dayanzai": {
     "routes": {
@@ -15784,76 +15797,57 @@
   "dnaindia": {
     "routes": {
       "/:category": {
-        "path": [
-          "/:category",
-          "/topic/:topic"
+        "name": "News",
+        "maintainers": [
+          "Rjnishant530"
         ],
-        "categories": [
-          "traditional-media"
+        "path": [
+          "/:category"
         ],
         "example": "/dnaindia/headlines",
         "parameters": {
           "category": "Find it in the URL, or tables below"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
-              "dnaindia.com/:category"
+              "www.dnaindia.com/:category"
             ]
           }
         ],
-        "name": "News",
-        "maintainers": [
-          "Rjnishant530"
-        ],
-        "description": "Categories:\n\n  | Headlines | Explainer | India | Entertainment | Sports | Viral | Lifestyle | Education | Business | World |\n  | --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |\n  | headlines | explainer | india | entertainment | sports | viral | lifestyle | education | business | world |",
-        "location": "category.ts"
+        "url": "www.dnaindia.com",
+        "description": "Categories:\n\n| Headlines | Explainer | India | Entertainment | Sports | Viral | Lifestyle | Education | Business | World |\n| --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |\n| headlines | explainer | india | entertainment | sports | viral | lifestyle | education | business | world |",
+        "location": "news.ts"
       },
       "/topic/:topic": {
+        "name": "Topic",
+        "maintainers": [
+          "Rjnishant530"
+        ],
         "path": [
-          "/:category",
           "/topic/:topic"
         ],
-        "categories": [
-          "traditional-media"
-        ],
-        "example": "/dnaindia/headlines",
+        "example": "/dnaindia/topic/dna-verified",
         "parameters": {
-          "category": "Find it in the URL, or tables below"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
+          "category": "Find it in the URL"
         },
         "radar": [
           {
             "source": [
-              "dnaindia.com/:category"
+              "www.dnaindia.com/topic/:topic"
             ]
           }
         ],
-        "name": "News",
-        "maintainers": [
-          "Rjnishant530"
-        ],
-        "description": "Categories:\n\n  | Headlines | Explainer | India | Entertainment | Sports | Viral | Lifestyle | Education | Business | World |\n  | --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |\n  | headlines | explainer | india | entertainment | sports | viral | lifestyle | education | business | world |",
-        "location": "category.ts"
+        "url": "www.dnaindia.com",
+        "description": "Topics:\n\n| DNA verified |\n| ------------ |\n| dna-verified |\n\n:::tip\nThe URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates the utilization of the subdomain `topic`.\n:::",
+        "location": "topic.ts"
       }
     },
     "name": "DNA India",
-    "url": "dnaindia.com"
+    "url": "dnaindia.com",
+    "categories": [
+      "traditional-media"
+    ]
   },
   "dockerhub": {
     "routes": {
@@ -18891,7 +18885,7 @@
         "maintainers": [
           "nczitzk"
         ],
-        "url": "farmatters.com/exclusive",
+        "url": "farmatters.com/news",
         "location": "index.ts"
       },
       "/news/:locale?": {
@@ -18928,7 +18922,7 @@
         "maintainers": [
           "nczitzk"
         ],
-        "url": "farmatters.com/exclusive",
+        "url": "farmatters.com/news",
         "location": "index.ts"
       },
       "/:locale?": {
@@ -18965,7 +18959,7 @@
         "maintainers": [
           "nczitzk"
         ],
-        "url": "farmatters.com/exclusive",
+        "url": "farmatters.com/news",
         "location": "index.ts"
       },
       "/:type/:id/:locale?": {
@@ -19002,12 +18996,15 @@
         "maintainers": [
           "nczitzk"
         ],
-        "url": "farmatters.com/exclusive",
+        "url": "farmatters.com/news",
         "location": "index.ts"
       }
     },
     "name": "Farmatters",
-    "url": "farmatters.com"
+    "url": "farmatters.com",
+    "categories": [
+      "new-media"
+    ]
   },
   "fastbull": {
     "routes": {
@@ -27495,15 +27492,6 @@
           "new-media"
         ],
         "example": "/houxu/events",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -27519,60 +27507,20 @@
         "url": "houxu.app/events",
         "location": "events.ts"
       },
-      "/featured": {
-        "path": [
-          "/featured",
-          "/index",
-          "/"
-        ],
-        "radar": [
-          {
-            "source": [
-              "houxu.app/"
-            ],
-            "target": ""
-          }
-        ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "houxu.app/",
-        "location": "index.ts"
-      },
-      "/index": {
-        "path": [
-          "/featured",
-          "/index",
-          "/"
-        ],
-        "radar": [
-          {
-            "source": [
-              "houxu.app/"
-            ],
-            "target": ""
-          }
-        ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "houxu.app/",
-        "location": "index.ts"
-      },
       "/": {
-        "path": [
-          "/featured",
-          "/index",
-          "/"
+        "name": "热点",
+        "maintainers": [
+          "nczitzk"
         ],
+        "example": "/houxu",
+        "path": "/",
         "radar": [
           {
             "source": [
               "houxu.app/"
-            ],
-            "target": ""
+            ]
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
         "url": "houxu.app/",
         "location": "index.ts"
       },
@@ -27614,15 +27562,6 @@
           "new-media"
         ],
         "example": "/houxu/memory",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -34540,7 +34479,7 @@
         "maintainers": [
           "nczitzk"
         ],
-        "url": "logonews.cn/work",
+        "url": "logonews.cn/",
         "description": "如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 `https://www.logonews.cn/tag/china`，可得路由为 [`/logonews/tag/china`](https://rsshub.app/logonews/tag/china)。",
         "location": "index.ts"
       },
@@ -34561,7 +34500,7 @@
         "maintainers": [
           "nczitzk"
         ],
-        "url": "logonews.cn/work",
+        "url": "logonews.cn/",
         "description": "如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 `https://www.logonews.cn/tag/china`，可得路由为 [`/logonews/tag/china`](https://rsshub.app/logonews/tag/china)。",
         "location": "index.ts"
       },
@@ -34582,7 +34521,7 @@
         "maintainers": [
           "nczitzk"
         ],
-        "url": "logonews.cn/work",
+        "url": "logonews.cn/",
         "description": "如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 `https://www.logonews.cn/tag/china`，可得路由为 [`/logonews/tag/china`](https://rsshub.app/logonews/tag/china)。",
         "location": "index.ts"
       }
@@ -37884,21 +37823,13 @@
   "nber": {
     "routes": {
       "/papers": {
-        "path": [
-          "/papers",
-          "/news"
+        "name": "All Papers",
+        "maintainers": [
+          "5upernova-heng"
         ],
-        "categories": [
-          "journal"
-        ],
+        "path": "/papers",
         "example": "/nber/papers",
-        "parameters": {},
         "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
           "supportScihub": true
         },
         "radar": [
@@ -37908,28 +37839,17 @@
             ]
           }
         ],
-        "name": "All Papers",
-        "maintainers": [],
         "url": "nber.org/papers",
-        "description": "Papers that are published in this week.",
-        "location": "index.ts"
+        "location": "all.ts"
       },
-      "/news": {
-        "path": [
-          "/papers",
-          "/news"
+      "/new": {
+        "name": "New Papers",
+        "maintainers": [
+          "5upernova-heng"
         ],
-        "categories": [
-          "journal"
-        ],
-        "example": "/nber/papers",
-        "parameters": {},
+        "path": "/new",
+        "example": "/nber/new",
         "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
           "supportScihub": true
         },
         "radar": [
@@ -37939,15 +37859,16 @@
             ]
           }
         ],
-        "name": "All Papers",
-        "maintainers": [],
         "url": "nber.org/papers",
         "description": "Papers that are published in this week.",
-        "location": "index.ts"
+        "location": "new.ts"
       }
     },
     "name": "National Bureau of Economic Research",
-    "url": "nber.org"
+    "url": "nber.org",
+    "categories": [
+      "journal"
+    ]
   },
   "ncc-cma": {
     "routes": {
@@ -43115,27 +43036,40 @@
         "url": "panewslab.com/",
         "location": "author.ts"
       },
-      "/:category?": {
-        "path": "/:category?",
+      "/news": {
+        "path": "/news",
         "categories": [
           "new-media"
         ],
-        "example": "/panewslab",
-        "parameters": {
-          "category": "分类，见下表，默认为精选"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
+        "example": "/panewslab/news",
         "radar": [
           {
             "source": [
               "panewslab.com/"
+            ]
+          }
+        ],
+        "name": "快讯",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "url": "panewslab.com/",
+        "location": "news.ts"
+      },
+      "/profundity/:category?": {
+        "path": "/profundity/:category?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/panewslab/profundity",
+        "parameters": {
+          "category": "分类，见下表，默认为精选"
+        },
+        "radar": [
+          {
+            "source": [
+              "panewslab.com/",
+              "www.panewslab.com/zh/profundity/index.html"
             ]
           }
         ],
@@ -43145,71 +43079,7 @@
         ],
         "url": "panewslab.com/",
         "description": "| 精选 | 链游 | 元宇宙 | NFT | DeFi | 监管 | 央行数字货币 | 波卡 | Layer 2 | DAO | 融资 | 活动 |\n  | ---- | ---- | ------ | --- | ---- | ---- | ------------ | ---- | ------- | --- | ---- | ---- |",
-        "location": "index.ts"
-      },
-      "/news": {
-        "path": [
-          "/news",
-          "/newsflash"
-        ],
-        "categories": [
-          "new-media"
-        ],
-        "example": "/panewslab/news",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "panewslab.com/"
-            ]
-          }
-        ],
-        "name": "快讯",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "panewslab.com/",
-        "location": "news.ts"
-      },
-      "/newsflash": {
-        "path": [
-          "/news",
-          "/newsflash"
-        ],
-        "categories": [
-          "new-media"
-        ],
-        "example": "/panewslab/news",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "panewslab.com/"
-            ]
-          }
-        ],
-        "name": "快讯",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "panewslab.com/",
-        "location": "news.ts"
+        "location": "profundity.ts"
       },
       "/topic/:id": {
         "path": "/topic/:id",
@@ -54715,23 +54585,11 @@
   "techflowpost": {
     "routes": {
       "/express": {
-        "path": [
-          "/express",
-          "/newsflash"
-        ],
+        "path": "/express",
         "categories": [
           "finance"
         ],
         "example": "/techflowpost/express",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -54743,52 +54601,20 @@
         "maintainers": [
           "nczitzk"
         ],
-        "url": "techflowpost.com/newsletter/index.html",
-        "location": "express.ts"
-      },
-      "/newsflash": {
-        "path": [
-          "/express",
-          "/newsflash"
-        ],
-        "categories": [
-          "finance"
-        ],
-        "example": "/techflowpost/express",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "techflowpost.com/newsletter/index.html"
-            ]
-          }
-        ],
-        "name": "快讯",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "techflowpost.com/newsletter/index.html",
+        "url": "techflowpost.com/",
         "location": "express.ts"
       },
       "/": {
         "path": "/",
+        "example": "/techflowpost",
         "radar": [
           {
             "source": [
               "techflowpost.com/"
-            ],
-            "target": ""
+            ]
           }
         ],
-        "name": "Unknown",
+        "name": "首页",
         "maintainers": [
           "nczitzk"
         ],
@@ -55193,80 +55019,33 @@
   },
   "tfc-taiwan": {
     "routes": {
-      "/": {
-        "path": [
-          "/",
-          "/category/:id{.+}",
-          "/info",
-          "/report",
-          "/topic/:id"
-        ],
-        "name": "Unknown",
+      "/:type?": {
+        "name": "最新相關資訊 / 最新查核報告",
         "maintainers": [
           "TonyRL"
         ],
-        "url": "tfc-taiwan.org.tw/articles/info",
+        "example": "/tfc-taiwan",
+        "path": "/:type?",
+        "parameters": {
+          "type": "分類，見下表，預設為 `report`"
+        },
+        "url": "tfc-taiwan.org.tw/articles/report",
+        "description": "| 最新相關資訊 | 最新查核報告 |\n| ------------ | ------------ |\n| info         | report       |",
         "location": "index.ts"
       },
-      "/category/:id{.+}": {
-        "path": [
-          "/",
-          "/category/:id{.+}",
-          "/info",
-          "/report",
-          "/topic/:id"
-        ],
-        "name": "Unknown",
+      "/:type/:id{.+}": {
+        "name": "專題 / 重點專區",
         "maintainers": [
           "TonyRL"
         ],
-        "url": "tfc-taiwan.org.tw/articles/info",
-        "location": "index.ts"
-      },
-      "/info": {
-        "path": [
-          "/",
-          "/category/:id{.+}",
-          "/info",
-          "/report",
-          "/topic/:id"
-        ],
-        "name": "Unknown",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "tfc-taiwan.org.tw/articles/info",
-        "location": "index.ts"
-      },
-      "/report": {
-        "path": [
-          "/",
-          "/category/:id{.+}",
-          "/info",
-          "/report",
-          "/topic/:id"
-        ],
-        "name": "Unknown",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "tfc-taiwan.org.tw/articles/info",
-        "location": "index.ts"
-      },
-      "/topic/:id": {
-        "path": [
-          "/",
-          "/category/:id{.+}",
-          "/info",
-          "/report",
-          "/topic/:id"
-        ],
-        "name": "Unknown",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "tfc-taiwan.org.tw/articles/info",
-        "location": "index.ts"
+        "example": "/tfc-taiwan/category/242",
+        "path": "/:type/:id{.+}",
+        "parameters": {
+          "type": "分類，見下表，預設為 `report`"
+        },
+        "url": "tfc-taiwan.org.tw/articles/report",
+        "description": "| 專題     | 重點專區 |\n| -------- | -------- |\n| category | topic    |",
+        "location": "topic.ts"
       }
     },
     "name": "台灣事實查核中心",
@@ -61501,71 +61280,57 @@
   },
   "wnacg": {
     "routes": {
-      "/": {
-        "path": [
-          "/",
-          "/category/:cid",
-          "/tag/:tag"
-        ],
-        "radar": [
-          {
-            "source": [
-              "wnacg.org/albums.html",
-              "wnacg.org/"
-            ],
-            "target": ""
-          }
-        ],
-        "name": "Unknown",
-        "maintainers": [
-          "KenMizz"
-        ],
-        "url": "wnacg.org/albums.html",
-        "location": "index.ts"
-      },
       "/category/:cid": {
-        "path": [
-          "/",
-          "/category/:cid",
-          "/tag/:tag"
+        "name": "分类更新",
+        "maintainers": [
+          "Gandum2077"
         ],
+        "path": "/category/:cid",
+        "example": "/wnacg/category/6",
         "radar": [
           {
             "source": [
-              "wnacg.org/albums.html",
-              "wnacg.org/"
-            ],
-            "target": ""
+              "wnacg.com/*"
+            ]
           }
         ],
-        "name": "Unknown",
+        "url": "wnacg.com/albums.html",
+        "location": "category.ts"
+      },
+      "/": {
+        "name": "最新",
         "maintainers": [
           "KenMizz"
         ],
-        "url": "wnacg.org/albums.html",
+        "path": "/",
+        "example": "/wnacg",
+        "radar": [
+          {
+            "source": [
+              "wnacg.com/albums.html",
+              "wnacg.com/"
+            ]
+          }
+        ],
+        "url": "wnacg.com/albums.html",
         "location": "index.ts"
       },
       "/tag/:tag": {
-        "path": [
-          "/",
-          "/category/:cid",
-          "/tag/:tag"
+        "name": "標籤更新",
+        "maintainers": [
+          "Gandum2077"
         ],
+        "path": "/tag/:tag",
+        "example": "/wnacg/tag/漢化",
         "radar": [
           {
             "source": [
-              "wnacg.org/albums.html",
-              "wnacg.org/"
-            ],
-            "target": ""
+              "wnacg.com/*"
+            ]
           }
         ],
-        "name": "Unknown",
-        "maintainers": [
-          "KenMizz"
-        ],
-        "url": "wnacg.org/albums.html",
-        "location": "index.ts"
+        "url": "wnacg.com/albums.html",
+        "location": "tag.ts"
       }
     },
     "name": "紳士漫畫",
