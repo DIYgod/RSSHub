@@ -42,7 +42,6 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'farmatters.com/news',
-    url: 'farmatters.com/exclusive',
 };
 
 async function handler(ctx) {

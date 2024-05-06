@@ -10,7 +10,6 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     url: 'tfc-taiwan.org.tw/articles/report',
-    url: 'tfc-taiwan.org.tw/articles/info',
 };
 
 async function handler(ctx) {

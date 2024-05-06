@@ -15,7 +15,6 @@ export const route: Route = {
     maintainers: ['zoenglinghou', 'nczitzk'],
     handler,
     url: 'darwinawards.com/darwin',
-    url: 'darwinawards.com/darwin',
 };
 
 async function handler() {

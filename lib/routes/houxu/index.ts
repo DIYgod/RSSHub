@@ -19,8 +19,6 @@ export const route: Route = {
     maintainers: [],
     handler,
     url: 'houxu.app/',
-    url: 'houxu.app/',
-    url: 'houxu.app/',
 };
 
 async function handler(ctx) {

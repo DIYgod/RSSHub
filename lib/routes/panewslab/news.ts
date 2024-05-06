@@ -24,7 +24,6 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'panewslab.com/',
-    url: 'panewslab.com/',
 };
 
 async function handler(ctx) {

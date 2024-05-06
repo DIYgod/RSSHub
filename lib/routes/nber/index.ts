@@ -39,7 +39,6 @@ export const route: Route = {
     handler,
     url: 'nber.org/papers',
     description: `Papers that are published in this week.`,
-    url: 'nber.org/papers',
 };
 
 async function handler(ctx) {

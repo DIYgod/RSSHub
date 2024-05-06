@@ -19,7 +19,6 @@ export const route: Route = {
     maintainers: [],
     handler,
     url: 'cnbeta.com.tw/',
-    url: 'cnbeta.com.tw/',
 };
 
 async function handler(ctx) {
