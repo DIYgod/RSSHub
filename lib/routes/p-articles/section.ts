@@ -10,7 +10,7 @@ export const route: Route = {
     example: '/p-articles/section/critics',
     parameters: { section: '版块名称, 可在对应版块 URL 中找到, 子版块链接用`-`连接' },
     name: '版块',
-    maintainers: ['DW'],
+    maintainers: ['Insomnia1437'],
     handler,
 };
 
