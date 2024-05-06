@@ -1,22 +1,16 @@
-import { Route } from '@/types';
+import { Context } from 'hono';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { config } from '@/config';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { FetchError } from 'ofetch';
 
 const TOKEN = 'Basic YW5vbnltb3VzOkdpQ2VMRWp4bnFCY1ZwbnA2Y0xzVXZKaWV2dlJRY0FYTHY=';
 
-export const route: Route = {
-    path: '/:model?/:type?/:language?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export const processFeed = async (model: string, ctx: Context) => {
     // model是channel/tag/etc.，而type是latest/feature/quest-academy这些一级栏目/标签/作者名的slug名。如果是追踪的话，那就是model是follow，type是articles。
-    const model = ctx.req.param('model') ?? 'channel';
     const type = ctx.req.param('type') ?? 'latest';
     const language = ctx.req.param('language') ?? 'zh-hans';
     let listUrl;
@@ -38,6 +32,8 @@ async function handler(ctx) {
             listUrl = `https://api.theinitium.com/api/v2/tag/articles/?language=${language}&slug=${type}`;
             listLink = `https://theinitium.com/tags/${type}/`;
             break;
+        default:
+            throw new InvalidParameterError('wrong model');
     }
 
     const key = {
@@ -92,9 +88,18 @@ async function handler(ctx) {
         'X-IAP-Receipt': key.iapReceipt || '',
     };
 
-    const response = await got(listUrl, {
-        headers,
-    });
+    let response;
+    try {
+        response = await got(listUrl, {
+            headers,
+        });
+    } catch (error) {
+        if (error instanceof FetchError && error.statusCode === 401) {
+            // 401 说明 token 过期了，将它删掉
+            await cache.set('initium:token', '');
+        }
+        throw error;
+    }
 
     const name = response.data.name || (response.data[model] && response.data[model].name) || '追踪';
     // 从v1直升的channel和tags里面是digests，v2新增的author和follow出来都是results
@@ -175,4 +180,4 @@ async function handler(ctx) {
         item: items,
         image,
     };
-}
+};

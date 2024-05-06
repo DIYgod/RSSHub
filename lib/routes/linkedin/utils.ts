@@ -40,6 +40,10 @@ const EXP_LEVELS = {
  *   as search param in url
  */
 function parseParamsToSearchParams(params, map) {
+    if (!params) {
+        return '';
+    } // Handle undefined params
+
     const validParamValues = params.split('-').filter((v) => v in map);
     return validParamValues.join(',');
 }
@@ -54,6 +58,10 @@ function parseParamsToSearchParams(params, map) {
  * @returns param value strings separated by ','
  */
 function parseParamsToString(params, map) {
+    if (!params) {
+        return '';
+    } // Handle undefined params
+
     const validParamValues = params
         .split('-')
         .filter((v) => v in map)
@@ -79,11 +87,11 @@ function parseJobSearch(data) {
     const jobs = $('li')
         .map((i, elem) => {
             const elemHtml = $(elem);
-            const link = elemHtml.find('a.base-card__full-link').attr('href').split('?')[0];
-            const title = elemHtml.find('h3.base-search-card__title').text().trim();
-            const company = elemHtml.find('h4.base-search-card__subtitle').text().trim();
-            const location = elemHtml.find('span.job-search-card__location').text().trim();
-            const pubDate = elemHtml.find('time').attr('datetime');
+            const link = elemHtml.find('a.base-card__full-link, a.base-card--link')?.attr('href')?.split('?')[0];
+            const title = elemHtml.find('h3.base-search-card__title')?.text()?.trim();
+            const company = elemHtml.find('h4.base-search-card__subtitle')?.text()?.trim();
+            const location = elemHtml.find('span.job-search-card__location')?.text()?.trim();
+            const pubDate = elemHtml.find('time')?.attr('datetime');
 
             return new Job(title, link, company, location, pubDate);
         })
@@ -108,4 +116,11 @@ function parseJobDetail(data) {
     return job;
 }
 
-export { parseParamsToSearchParams, parseParamsToString, parseJobDetail, parseJobSearch, JOB_TYPES, JOB_TYPES_QUERY_KEY, EXP_LEVELS, EXP_LEVELS_QUERY_KEY, KEYWORDS_QUERY_KEY };
+const parseRouteParam = (searchParam: string | null): string => {
+    if (!searchParam || typeof searchParam !== 'string') {
+        return 'all';
+    }
+    return encodeURIComponent(searchParam.split(',').join('-'));
+};
+
+export { parseParamsToSearchParams, parseParamsToString, parseJobDetail, parseJobSearch, parseRouteParam, JOB_TYPES, JOB_TYPES_QUERY_KEY, EXP_LEVELS, EXP_LEVELS_QUERY_KEY, KEYWORDS_QUERY_KEY };

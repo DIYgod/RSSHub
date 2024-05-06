@@ -1,0 +1,18 @@
+租金: {{ item.rent }}<br>
+{{ if item.dailyRent }}
+日租: {{ item.dailyRent }}<br>
+{{ /if }}
+<br>
+
+{{ if item.video }}
+<video controls preload="metadata" poster="{{ item.video }}?vframe/png/offset/0">
+    <source src="{{ item.video }}" type="video/mp4">
+</video>
+<br>
+{{ /if }}
+
+{{ if item.imgs }}
+    {{ each item.imgs img }}
+    <img src="{{ img }}"><br>
+    {{ /each }}
+{{ /if }}

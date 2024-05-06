@@ -58,7 +58,7 @@ jobs:
         if: (env.TEST_CONTINUE)
         run: |
           set -ex
-          gzip -cvd docker-image/rsshub.tar.gz | docker load
+          zstd -d --stdout docker-image/rsshub.tar.zst | docker load
           docker run -d \
             --name rsshub \
             -e NODE_ENV=dev \
