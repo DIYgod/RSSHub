@@ -12,6 +12,11 @@ export const route: Route = {
     name: '版块',
     maintainers: ['Insomnia1437'],
     handler,
+    radar: [
+        {
+            source: ['p-articles.com/:section/'],
+        },
+    ],
 };
 
 async function handler(ctx) {
