@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import utils from './utils';
+import { ProcessItem } from './utils';
 
 const rootUrl = 'https://kns.cnki.net';
 
@@ -70,7 +70,7 @@ async function handler(ctx) {
         };
     });
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => utils.ProcessItem(item))));
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => ProcessItem(item))));
 
     return {
         title: `知网 ${authorName} ${companyName}`,
