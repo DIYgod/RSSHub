@@ -4299,6 +4299,12 @@
     "cxumol",
     "nczitzk"
   ],
+  "/p-articles/contributors/:author": [
+    "Insomnia1437"
+  ],
+  "/p-articles/section/:section": [
+    "Insomnia1437"
+  ],
   "/panewslab/author/:id": [
     "nczitzk"
   ],

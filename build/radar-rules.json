@@ -11191,6 +11191,27 @@
       }
     ]
   },
+  "p-articles.com": {
+    "_name": "虚词",
+    ".": [
+      {
+        "title": "虛詞作者",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/contributors/:author"
+        ],
+        "target": "/p-articles/contributors/:author"
+      },
+      {
+        "title": "版块",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/:section/"
+        ],
+        "target": "/p-articles/section/:section"
+      }
+    ]
+  },
   "panewslab.com": {
     "_name": "PANews",
     ".": [
