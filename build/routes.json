@@ -5536,13 +5536,15 @@
         ],
         "location": "tv/group/topic.ts"
       },
-      "/tv/followrank": {
-        "path": "/tv/followrank",
+      "/:type/followrank": {
+        "path": "/:type/followrank",
         "categories": [
           "anime"
         ],
-        "example": "/bangumi/tv/followrank",
-        "parameters": {},
+        "example": "/bangumi/anime/followrank",
+        "parameters": {
+          "type": "类型：anime - 动画, book - 图书, music - 音乐, game - 游戏, real - 三次元"
+        },
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -5554,15 +5556,16 @@
         "radar": [
           {
             "source": [
-              "bgm.tv/anime"
-            ]
+              "bgm.tv/:type"
+            ],
+            "target": "/:type/followrank"
           }
         ],
-        "name": "成员关注动画榜",
+        "name": "成员关注榜",
         "maintainers": [
-          "honue"
+          "honue",
+          "zhoukuncheng"
         ],
-        "url": "bgm.tv/anime",
         "location": "tv/other/followrank.ts"
       },
       "/tv/person/:id": {

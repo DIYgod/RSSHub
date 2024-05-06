@@ -553,8 +553,9 @@
   "/bangumi/tv/group/:id": [
     "SettingDust"
   ],
-  "/bangumi/tv/followrank": [
-    "honue"
+  "/bangumi/:type/followrank": [
+    "honue",
+    "zhoukuncheng"
   ],
   "/bangumi/tv/person/:id": [
     "ylc395"
