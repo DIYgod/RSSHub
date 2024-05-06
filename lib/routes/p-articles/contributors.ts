@@ -12,6 +12,11 @@ export const route: Route = {
     name: '虛詞作者',
     maintainers: ['Insomnia1437'],
     handler,
+    radar: [
+        {
+            source: ['p-articles.com/contributors/:author'],
+        },
+    ],
 };
 
 async function handler(ctx) {
