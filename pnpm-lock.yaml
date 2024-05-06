@@ -93,8 +93,8 @@ dependencies:
     specifier: 0.6.3
     version: 0.6.3
   imapflow:
-    specifier: 1.0.160
-    version: 1.0.160
+    specifier: 1.0.161
+    version: 1.0.161
   instagram-private-api:
     specifier: 1.46.1
     version: 1.46.1
@@ -2217,7 +2217,7 @@ packages:
       '@babel/runtime-corejs2': 7.24.5
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -5719,8 +5719,8 @@ packages:
     hasBin: true
     dev: false
 
-  /imapflow@1.0.160:
-    resolution: {integrity: sha512-gjoPn863lt2RYGRKV9i+CdcPycs04ufBwtDPAri7+pnI1Zr/JPcUcL1aOB6Z/rNCvpRGJ1IBaad+bLo5wbm7cg==}
+  /imapflow@1.0.161:
+    resolution: {integrity: sha512-wMVCi+iVqPCEAMBqudivqYC0Uvj7nk1Id1HS+RzRkpFOXZKF9JLRNRmGiCj16WgsMFdArJ29PxV4RRStFg7Okg==}
     dependencies:
       encoding-japanese: 2.1.0
       iconv-lite: 0.6.3
@@ -5729,7 +5729,7 @@ packages:
       libqp: 2.1.0
       mailsplit: 5.4.0
       nodemailer: 6.9.13
-      pino: 8.20.0
+      pino: 9.0.0
       socks: 2.8.3
     dev: false
 
@@ -7506,8 +7506,8 @@ packages:
     resolution: {integrity: sha512-cHjPPsE+vhj/tnhCy/wiMh3M3z3h/j15zHQX+S9GkTBgqJuTuJzYJ4gUyACLhDaJ7kk9ba9iRDmbH2tJU03OiA==}
     dev: false
 
-  /pino@8.20.0:
-    resolution: {integrity: sha512-uhIfMj5TVp+WynVASaVEJFTncTUe4dHBq6CWplu/vBgvGHhvBvQfxz+vcOrnnBQdORH3izaGEurLfNlq3YxdFQ==}
+  /pino@9.0.0:
+    resolution: {integrity: sha512-uI1ThkzTShNSwvsUM6b4ND8ANzWURk9zTELMztFkmnCQeR/4wkomJ+echHee5GMWGovoSfjwdeu80DsFIt7mbA==}
     hasBin: true
     dependencies:
       atomic-sleep: 1.0.0
@@ -9657,8 +9657,8 @@ packages:
     resolution: {integrity: sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==}
     dev: false
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
