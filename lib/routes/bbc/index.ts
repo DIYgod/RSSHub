@@ -84,7 +84,7 @@ async function handler(ctx) {
                 }
 
                 return {
-                    title: String(item.title),
+                    title: item.title,
                     description,
                     pubDate: item.pubDate,
                     link: item.link,
