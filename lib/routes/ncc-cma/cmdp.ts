@@ -103,7 +103,7 @@ export const route: Route = {
     url: 'cmdp.ncc-cma.net',
     maintainers: ['nczitzk'],
     handler,
-    example: '/cmdp/image/RPJQWQYZ',
+    example: '/ncc-cma/cmdp/image/RPJQWQYZ',
     parameters: { category: '图片，默认为 RPJQWQYZ，即日平均气温距平，可在对应列表项 data-id 属性中找到' },
     description: `:::tip
   若订阅日平均气温距平，将其 data-id \`RPJQWQYZ\` 作为参数填入，此时路由为 [\`/ncc-cma/cmdp/image/RPJQWQYZ\`](https://rsshub.app/ncc-cma/cmdp/image/RPJQWQYZ)。
@@ -148,7 +148,7 @@ export const route: Route = {
   | [glbraina20\_](https://rsshub.app/ncc-cma/cmdp/image/glbraina20_) | [glbraina30\_](https://rsshub.app/ncc-cma/cmdp/image/glbraina30_) | [glbraina90\_](https://rsshub.app/ncc-cma/cmdp/image/glbraina90_) |
 
     `,
-    categories: ['other'],
+    categories: ['forecast'],
 
     features: {
         requireConfig: false,
@@ -163,67 +163,67 @@ export const route: Route = {
         {
             title: '日平均气温距平',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/RPJQWQYZ',
+            target: '/cmdp/image/RPJQWQYZ',
         },
         {
             title: '近5天平均气温距平',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ5TPJQWJP',
+            target: '/cmdp/image/ZJ5TPJQWJP',
         },
         {
             title: '近10天平均气温距平',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ10TQWJP',
+            target: '/cmdp/image/ZJ10TQWJP',
         },
         {
             title: '近20天平均气温距平',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ20TQWJP',
+            target: '/cmdp/image/ZJ20TQWJP',
         },
         {
             title: '近30天平均气温距平',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ30TQWJP',
+            target: '/cmdp/image/ZJ30TQWJP',
         },
         {
             title: '本月以来气温距平',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/BYYLQWJP',
+            target: '/cmdp/image/BYYLQWJP',
         },
         {
             title: '本季以来气温距平',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/BJYLQWJP',
+            target: '/cmdp/image/BJYLQWJP',
         },
         {
             title: '本年以来气温距平',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/BNYLQWJP',
+            target: '/cmdp/image/BNYLQWJP',
         },
         {
             title: '日降水量分布',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/QGRJSLFBT0808S',
+            target: '/cmdp/image/QGRJSLFBT0808S',
         },
         {
             title: '近5天降水量',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ5TJSLFBT',
+            target: '/cmdp/image/ZJ5TJSLFBT',
         },
         {
             title: '近10天降水量',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ10TJSL',
+            target: '/cmdp/image/ZJ10TJSL',
         },
         {
             title: '近20天降水量',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ20TJSL',
+            target: '/cmdp/image/ZJ20TJSL',
         },
         {
             title: '近30天降水量',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ30TJSL',
+            target: '/cmdp/image/ZJ30TJSL',
         },
         {
             title: '本月以来降水量',
@@ -233,117 +233,117 @@ export const route: Route = {
         {
             title: '本季以来降水量',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/BJYLJSL',
+            target: '/cmdp/image/BJYLJSL',
         },
         {
             title: '近10天降水量距平百分率',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ10TJSLJP',
+            target: '/cmdp/image/ZJ10TJSLJP',
         },
         {
             title: '近20天降水量距平百分率',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ20TJSLJP',
+            target: '/cmdp/image/ZJ20TJSLJP',
         },
         {
             title: '近30天降水量距平百分率',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/ZJ30TJSLJP',
+            target: '/cmdp/image/ZJ30TJSLJP',
         },
         {
             title: '本月以来降水量距平百分率',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/BYYLJSLJPZYQHZ',
+            target: '/cmdp/image/BYYLJSLJPZYQHZ',
         },
         {
             title: '本季以来降水量距平百分率',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/BJYLJSLJPZJQHZ',
+            target: '/cmdp/image/BJYLJSLJPZJQHZ',
         },
         {
             title: '本年以来降水量距平百分率',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/BNYLJSLJP',
+            target: '/cmdp/image/BNYLJSLJP',
         },
         {
             title: '气温距平（最近10天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbtmeana10_',
+            target: '/cmdp/image/glbtmeana10_',
         },
         {
             title: '气温距平（最近20天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbtmeana20_',
+            target: '/cmdp/image/glbtmeana20_',
         },
         {
             title: '气温距平（最近30天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbtmeana30_',
+            target: '/cmdp/image/glbtmeana30_',
         },
         {
             title: '气温距平（最近90天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbtmeana90_',
+            target: '/cmdp/image/glbtmeana90_',
         },
         {
             title: '最低气温距平（最近30天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbtmina30_',
+            target: '/cmdp/image/glbtmina30_',
         },
         {
             title: '最低气温距平（最近90天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbtmina90_',
+            target: '/cmdp/image/glbtmina90_',
         },
         {
             title: '最高气温距平（最近30天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbtmaxa30_',
+            target: '/cmdp/image/glbtmaxa30_',
         },
         {
             title: '最高气温距平（最近90天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbtmaxa90_',
+            target: '/cmdp/image/glbtmaxa90_',
         },
         {
             title: '降水量（最近10天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbrain10_',
+            target: '/cmdp/image/glbrain10_',
         },
         {
             title: '降水量（最近20天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbrain20_',
+            target: '/cmdp/image/glbrain20_',
         },
         {
             title: '降水量（最近30天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbrain30_',
+            target: '/cmdp/image/glbrain30_',
         },
         {
             title: '降水量（最近90天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbrain90_',
+            target: '/cmdp/image/glbrain90_',
         },
         {
             title: '降水距平百分率（最近10天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbraina10_',
+            target: '/cmdp/image/glbraina10_',
         },
         {
             title: '降水距平百分率（最近20天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbraina20_',
+            target: '/cmdp/image/glbraina20_',
         },
         {
             title: '降水距平百分率（最近30天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbraina30_',
+            target: '/cmdp/image/glbraina30_',
         },
         {
             title: '降水距平百分率（最近90天）',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/glbraina90_',
+            target: '/cmdp/image/glbraina90_',
         },
     ],
 };
