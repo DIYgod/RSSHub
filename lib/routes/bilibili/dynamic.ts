@@ -289,7 +289,7 @@ async function handler(ctx) {
                         );
                     }
                     // 处理转发带图评论的情况
-                    if (node.pics?.length) {
+                    if (node?.pics?.length) {
                         const { pics, text } = node;
                         description = description.replaceAll(
                             text,
