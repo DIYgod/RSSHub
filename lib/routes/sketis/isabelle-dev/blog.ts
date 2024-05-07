@@ -6,8 +6,8 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/blog/:blog',
     categories: ['programming'],
-    example: '/isabelle-dev/blog/1',
-    parameters: { blog: 'name of blog (1 for News; 2 for Release)' },
+    example: '/isabelle-dev/blog/{1,2}',
+    parameters: { blog: 'name of blog (1 for NEWS; 2 for Release)' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://isabelle-dev.sketis.net/phame/blog/view/:blog/'],
+            source: ['isabelle-dev.sketis.net/phame/blog/view/:blog/'],
             target: '/isabelle-dev/blog/',
         },
     ],
@@ -45,7 +45,6 @@ export const route: Route = {
                     description: item.find('.phui-document-summary-body').text(),
                     pubDate: parseDate(subtitle.find('strong').next().text().slice(4)), // parse starts after ' on '
                     author: subtitle.find('strong').text(),
-                    categories: [],
                 };
             });
 
