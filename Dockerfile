@@ -23,7 +23,7 @@ COPY ./package.json /app/
 RUN \
     set -ex && \
     export PUPPETEER_SKIP_DOWNLOAD=true && \
-    npm install -g pnpm@8.15.7 && \
+    corepack enable pnpm && \
     pnpm install --frozen-lockfile && \
     pnpm rb
 
@@ -102,7 +102,7 @@ RUN \
         fi; \
         echo 'Downloading Chromium...' && \
         unset PUPPETEER_SKIP_DOWNLOAD && \
-        npm install -g pnpm@8.15.7 && \
+        corepack enable pnpm && \
         pnpm add puppeteer@$(cat /app/.puppeteer_version) --save-prod && \
         pnpm rb ; \
     else \
