@@ -186,7 +186,15 @@ interface Richtextnode {
     type: string;
     jump_url?: string;
     emoji?: Emoji;
+    pics?: Pic2[];
 }
+interface Pic2 {
+    height: number;
+    size: number;
+    src: string;
+    width: number;
+}
+
 interface Desc {
     rich_text_nodes: Richtextnode[];
     text: string;
