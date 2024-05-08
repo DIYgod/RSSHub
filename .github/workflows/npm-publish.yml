@@ -22,9 +22,7 @@ jobs:
       HUSKY: 0
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           # pinned to 18 until https://github.com/compulim/version-from-git/issues/16 is fixed

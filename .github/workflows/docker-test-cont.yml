@@ -68,9 +68,7 @@ jobs:
             -p 1200:1200 \
             rsshub:latest
 
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
+      - uses: pnpm/action-setup@v4
 
       - uses: actions/setup-node@v4
         if: (env.TEST_CONTINUE)
