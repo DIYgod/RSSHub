@@ -54,8 +54,6 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - name: Use Node.js Active LTS
         uses: actions/setup-node@v4
