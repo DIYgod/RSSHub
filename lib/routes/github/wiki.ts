@@ -38,8 +38,8 @@ async function handler(ctx) {
     if (!page) {
         const { data } = await got(`${baseUrl}/${user}/${repo}/wiki`);
         const $ = load(data);
-        
-        url = `${baseUrl}{$('a[href$=_history]')}`;
+
+        url = `${baseUrl}${$('a[href$=_history]')}`;
     }
 
     const { data } = await got(url);
