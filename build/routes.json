@@ -51413,6 +51413,59 @@
     "name": "上海交通大学",
     "url": "bjwb.seiee.sjtu.edu.cn"
   },
+  "sketis": {
+    "routes": {
+      "/isabelle-dev/blog/:blog": {
+        "path": "/isabelle-dev/blog/:blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/sketis/isabelle-dev/blog/1",
+        "parameters": {
+          "blog": "name of blog (1 for NEWS; 2 for Release)"
+        },
+        "description": "\n- Isabelle News: `https://isabelle-dev.sketis.net/phame/blog/view/1/`\n- Isabelle Release: `https://isabelle-dev.sketis.net/phame/blog/view/2/`\n",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "isabelle-dev.sketis.net/phame/",
+              "isabelle-dev.sketis.net/phame/blog/",
+              "isabelle-dev.sketis.net/phame/blog/view/:blog/",
+              "isabelle-dev.sketis.net/phame/post/",
+              "isabelle-dev.sketis.net/phame/post/view/:post_id/:post_title/"
+            ],
+            "target": "/isabelle-dev/blog/1"
+          },
+          {
+            "source": [
+              "isabelle-dev.sketis.net/phame/",
+              "isabelle-dev.sketis.net/phame/blog/",
+              "isabelle-dev.sketis.net/phame/blog/view/:blog/",
+              "isabelle-dev.sketis.net/phame/post/",
+              "isabelle-dev.sketis.net/phame/post/view/:post_id/:post_title/"
+            ],
+            "target": "/isabelle-dev/blog/2"
+          }
+        ],
+        "name": "Isabelle Development Blogs",
+        "url": "isabelle-dev.sketis.net",
+        "maintainers": [
+          "Ritsuka314"
+        ],
+        "location": "isabelle-dev/blog/index.ts"
+      }
+    },
+    "name": "Sketis | Website of Dr. Makarius Wenzel",
+    "url": "sketis.net"
+  },
   "skysports": {
     "routes": {
       "/news/:team": {

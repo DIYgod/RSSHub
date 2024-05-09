@@ -14106,6 +14106,35 @@
       }
     ]
   },
+  "sketis.net": {
+    "_name": "Sketis | Website of Dr. Makarius Wenzel",
+    "isabelle-dev": [
+      {
+        "title": "Isabelle Development Blogs",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/phame/",
+          "/phame/blog/",
+          "/phame/blog/view/:blog/",
+          "/phame/post/",
+          "/phame/post/view/:post_id/:post_title/"
+        ],
+        "target": "/sketis/isabelle-dev/blog/1"
+      },
+      {
+        "title": "Isabelle Development Blogs",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/phame/",
+          "/phame/blog/",
+          "/phame/blog/view/:blog/",
+          "/phame/post/",
+          "/phame/post/view/:post_id/:post_title/"
+        ],
+        "target": "/sketis/isabelle-dev/blog/2"
+      }
+    ]
+  },
   "slowmist.com": {
     "_name": "慢雾科技",
     ".": [

@@ -5119,6 +5119,9 @@
   "/sjtu/yzb/zkxx/:type": [
     "stdrc"
   ],
+  "/sketis/isabelle-dev/blog/:blog": [
+    "Ritsuka314"
+  ],
   "/skysports/news/:team": [
     "nczitzk"
   ],
