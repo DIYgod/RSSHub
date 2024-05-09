@@ -14,7 +14,8 @@ export async function fetchThread(
     options?: {
         ordertype?: string;
         _dsign?: string;
-    }
+    },
+    retry = 0
 ): Promise<{
     link: string;
     data?: string;
@@ -40,7 +41,7 @@ export async function fetchThread(
     const data = await ofetch<string>(link, { headers });
 
     // sometimes may trigger anti-crawling measures
-    if (data.startsWith('<script type="text/javascript">') && !options?._dsign) {
+    if (data.startsWith('<script type="text/javascript">') && retry <= 3) {
         let script = data.match(/<script type="text\/javascript">([\S\s]*?)<\/script>/)![1];
         script = script.replace(/= location;|=location;/, '=fakeLocation;');
         script = script.replace('location.replace', 'foo');
@@ -69,10 +70,14 @@ export async function fetchThread(
             const searchParams = new URLSearchParams(locationValue);
             const _dsign = searchParams.get('_dsign');
             if (_dsign) {
-                return await fetchThread(tid, {
-                    ...options,
-                    _dsign,
-                });
+                return await fetchThread(
+                    tid,
+                    {
+                        ...options,
+                        _dsign,
+                    },
+                    ++retry
+                );
             }
         } else {
             return {

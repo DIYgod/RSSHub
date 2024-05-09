@@ -86,7 +86,7 @@ async function handler(ctx: Context): Promise<Data> {
     items = await asyncPoolAll(10, items, async (item) => {
         const description = (await cache.tryGet(item.link!, async () => {
             const { data } = await fetchThread(item.id!);
-            if (data) {
+            if (data && !data.startsWith('<script type="text/javascript">')) {
                 const $ = load(data);
                 const op = $('#postlist>div[id^="post_"]').first();
                 const postId = op.attr('id')!.match(/\d+/)![0];
