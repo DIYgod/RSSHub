@@ -1,7 +1,5 @@
 import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import cache from '@/utils/cache';
 import { config } from '@/config';
 import got from '@/utils/got';
@@ -12,6 +10,8 @@ import path from 'node:path';
 import querystring from 'querystring';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import tglibchannel from './tglib/channel';
+
+const __dirname = getCurrentPath(import.meta.url);
 
 /* message types */
 const REPLY = 'REPLY';
@@ -77,21 +77,23 @@ export const route: Route = {
     name: 'Channel',
     maintainers: ['DIYgod', 'Rongronggg9'],
     handler,
-    description: `| Key                   | Description                                                           | Accepts                                              | Defaults to       |
-  | --------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ----------------- |
-  | showLinkPreview       | Show the link preview from Telegram                                   | 0/1/true/false                                       | true              |
-  | showViaBot            | For messages sent via bot, show the bot                               | 0/1/true/false                                       | true              |
-  | showReplyTo           | For reply messages, show the target of the reply                      | 0/1/true/false                                       | true              |
-  | showFwdFrom           | For forwarded messages, show the forwarding source                    | 0/1/true/false                                       | true              |
-  | showFwdFromAuthor     | For forwarded messages, show the author of the forwarding source      | 0/1/true/false                                       | true              |
-  | showInlineButtons     | Show inline buttons                                                   | 0/1/true/false                                       | false             |
-  | showMediaTagInTitle   | Show media tags in the title                                          | 0/1/true/false                                       | true              |
-  | showMediaTagAsEmoji   | Show media tags as emoji                                              | 0/1/true/false                                       | true              |
-  | includeFwd            | Include forwarded messages                                            | 0/1/true/false                                       | true              |
-  | includeReply          | Include reply messages                                                | 0/1/true/false                                       | true              |
-  | includeServiceMsg     | Include service messages (e.g. message pinned, channel photo updated) | 0/1/true/false                                       | true              |
-  | includeUnsupportedMsg | Include messages unsupported by t.me                                  | 0/1/true/false                                       | false             |
-  | searchQuery           | search query                                                          | keywords; replace \`#\` by \`%23\` for hashtag searching | (search disabled) |
+    description: `
+  | Key                    | Description                                                           | Accepts                                            | Defaults to  |
+  | ---------------------- | --------------------------------------------------------------------- | -------------------------------------------------- | ------------ |
+  | showLinkPreview        | Show the link preview from Telegram                                   | 0/1/true/false                                     | true         |
+  | showViaBot             | For messages sent via bot, show the bot                               | 0/1/true/false                                     | true         |
+  | showReplyTo            | For reply messages, show the target of the reply                      | 0/1/true/false                                     | true         |
+  | showFwdFrom            | For forwarded messages, show the forwarding source                    | 0/1/true/false                                     | true         |
+  | showFwdFromAuthor      | For forwarded messages, show the author of the forwarding source      | 0/1/true/false                                     | true         |
+  | showInlineButtons      | Show inline buttons                                                   | 0/1/true/false                                     | false        |
+  | showMediaTagInTitle    | Show media tags in the title                                          | 0/1/true/false                                     | true         |
+  | showMediaTagAsEmoji    | Show media tags as emoji                                              | 0/1/true/false                                     | true         |
+  | showHashtagAsHyperlink | Show hashtags as hyperlinks (\`https://t.me/s/channel?q=%23hashtag\`) | 0/1/true/false                                     | true         |
+  | includeFwd             | Include forwarded messages                                            | 0/1/true/false                                     | true         |
+  | includeReply           | Include reply messages                                                | 0/1/true/false                                     | true         |
+  | includeServiceMsg      | Include service messages (e.g. message pinned, channel photo updated) | 0/1/true/false                                     | true         |
+  | includeUnsupportedMsg  | Include messages unsupported by t.me                                  | 0/1/true/false                                     | false        |
+  | searchQuery            | search query                                                          | keywords; replace \`#hashtag\` with \`%23hashtag\` | (no keyword) |
 
   Specify different option values than default values can meet different needs, URL
 
@@ -124,12 +126,13 @@ async function handler(ctx) {
     let showInlineButtons = false;
     let showMediaTagInTitle = true;
     let showMediaTagAsEmoji = true;
+    let showHashtagAsHyperlink = true;
     let includeFwd = true;
     let includeReply = true;
     let includeServiceMsg = true;
     let includeUnsupportedMsg = false;
     let searchQuery = routeParams; // for backward compatibility
-    if (routeParams && routeParams.search(/(^|&)(show(LinkPreview|ViaBot|ReplyTo|FwdFrom(Author)?|InlineButtons|MediaTag(InTitle|AsEmoji))|include(Fwd|Reply|(Service|Unsupported)Msg)|searchQuery)=/) !== -1) {
+    if (routeParams && routeParams.search(/(^|&)(show(LinkPreview|ViaBot|ReplyTo|FwdFrom(Author)?|InlineButtons|MediaTag(InTitle|AsEmoji)|HashtagAsHyperlink)|include(Fwd|Reply|(Service|Unsupported)Msg)|searchQuery)=/) !== -1) {
         routeParams = querystring.parse(ctx.req.param('routeParams'));
         showLinkPreview = !!fallback(undefined, queryToBoolean(routeParams.showLinkPreview), showLinkPreview);
         showViaBot = !!fallback(undefined, queryToBoolean(routeParams.showViaBot), showViaBot);
@@ -139,6 +142,7 @@ async function handler(ctx) {
         showInlineButtons = !!fallback(undefined, queryToBoolean(routeParams.showInlineButtons), showInlineButtons);
         showMediaTagInTitle = !!fallback(undefined, queryToBoolean(routeParams.showMediaTagInTitle), showMediaTagInTitle);
         showMediaTagAsEmoji = !!fallback(undefined, queryToBoolean(routeParams.showMediaTagAsEmoji), showMediaTagAsEmoji);
+        showHashtagAsHyperlink = !!fallback(undefined, queryToBoolean(routeParams.showHashtagAsHyperlink), showHashtagAsHyperlink);
         includeFwd = !!fallback(undefined, queryToBoolean(routeParams.includeFwd), includeFwd);
         includeReply = !!fallback(undefined, queryToBoolean(routeParams.includeReply), includeReply);
         includeServiceMsg = !!fallback(undefined, queryToBoolean(routeParams.includeServiceMsg), includeServiceMsg);
@@ -170,6 +174,12 @@ async function handler(ctx) {
         const href = $elem.attr('href');
         href && $elem.attr('href', href.replaceAll('&amp;', '&'));
     });
+
+    !showHashtagAsHyperlink &&
+        $('a[href^="?q=%23"]').each((_, elem) => {
+            const $elem = $(elem);
+            $elem.replaceWith($elem.text());
+        });
 
     const list = includeServiceMsg
         ? $('.tgme_widget_message_wrap:not(.tgme_widget_message_wrap:has(.tme_no_messages_found))') // exclude 'no posts found' messages
