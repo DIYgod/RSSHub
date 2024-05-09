@@ -64337,7 +64337,7 @@
             "target": "/channel/:id"
           }
         ],
-        "name": "Channel",
+        "name": "Channel with id",
         "maintainers": [
           "DIYgod"
         ],
@@ -64387,6 +64387,19 @@
           "username": "YouTube custom URL",
           "embed": "Default to embed the video, set to any value to disable embedding"
         },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
         "radar": [
           {
             "source": [
@@ -64412,7 +64425,12 @@
           "embed": "Default to embed the video, set to any value to disable embedding"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -64436,7 +64454,12 @@
           "embed": "Default to embed the video, set to any value to disable embedding"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -64499,13 +64522,18 @@
         "categories": [
           "social-media"
         ],
-        "example": "/youtube/user/JFlaMusic",
+        "example": "/youtube/user/@JFlaMusic",
         "parameters": {
-          "username": "YouTuber id",
+          "username": "YouTuber username with @",
           "embed": "Default to embed the video, set to any value to disable embedding"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -64520,15 +64548,15 @@
             "target": "/user/:username"
           }
         ],
-        "name": "User",
+        "name": "Channel with username",
         "maintainers": [
           "DIYgod"
         ],
         "location": "user.ts"
       }
     },
-    "name": "YouTube Live",
-    "url": "charts.youtube.com"
+    "name": "YouTube",
+    "url": "youtube.com"
   },
   "youzhiyouxing": {
     "routes": {

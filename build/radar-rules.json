@@ -17267,10 +17267,10 @@
     ]
   },
   "youtube.com": {
-    "_name": "YouTube Live",
+    "_name": "YouTube",
     "www": [
       {
-        "title": "Channel",
+        "title": "Channel with id",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/channel/:id"
@@ -17295,7 +17295,7 @@
         "target": "/youtube/subscriptions"
       },
       {
-        "title": "User",
+        "title": "Channel with username",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/user/:username"
