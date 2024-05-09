@@ -35,7 +35,7 @@ async function handler(ctx) {
     const items = await Promise.all(res.items.map((item) => fetchArticle(item)));
 
     return {
-        ...rss,
+        ...res,
         item: items,
     };
 }
