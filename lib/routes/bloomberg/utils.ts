@@ -85,9 +85,9 @@ const parseNewsList = async (url, ctx) => {
         .map((u) => {
             u = $(u);
             const item = {
-                title: u.find('news\\:title').text(),
+                title: u.find(String.raw`news\:title`).text(),
                 link: u.find('loc').text(),
-                pubDate: parseDate(u.find('news\\:publication_date').text()),
+                pubDate: parseDate(u.find(String.raw`news\:publication_date`).text()),
             };
             return item;
         });

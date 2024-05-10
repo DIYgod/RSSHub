@@ -45,7 +45,7 @@ const ProcessItems = async (ctx, title, currentUrl) => {
                 const images = detailResponse.data.match(/src": '(.*?)',"width/g);
 
                 item.description = art(path.join(__dirname, 'templates/description.art'), {
-                    images: images.map((i) => i.split("'")[1].replaceAll('\\/', '/')),
+                    images: images.map((i) => i.split("'")[1].replaceAll(String.raw`\/`, '/')),
                 });
 
                 return item;
