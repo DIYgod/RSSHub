@@ -41,11 +41,15 @@ async function handler() {
                 });
                 const html = response.data;
                 const $ = load(html);
-                const description = $('#root');
-                description.find('.article__title').remove();
-                description.find('.article__byline__meta').remove();
-                description.find('.mobile-header-nav').remove();
-                description.find('.desktop-nav').remove();
+                const description = $('.single-post__container');
+                description.find('.social-share').remove();
+                description.find('.wp-block-query').remove();
+                description.find('.wp-block-tc23-newsletter-signup-compact').remove();
+                description.find('.wp-block-heading').remove();
+                description.find('.single-post-hero__meta').remove();
+                description.find('.wp-block-tenup-post-primary-term').remove();
+                description.find('.wp-block-post-title').remove();
+                description.find('.wp-block-post-terms').remove();
                 return {
                     title: item.title,
                     pubDate: item.pubDate,
