@@ -63,7 +63,7 @@ async function handler(ctx) {
                     .match(/window\._rcState_ = (.*);/)[1];
                 const rcStateJson = JSON.parse(rcState);
                 const news = Object.values(rcStateJson.pagesV2.pages)[0];
-                item.description = news.data.newsStory.body.html.replaceAll('\\n', '<br>');
+                item.description = news.data.newsStory.body.html.replaceAll(String.raw`\n`, '<br>');
 
                 return item;
             })
