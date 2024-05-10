@@ -85,7 +85,9 @@ async function handler(ctx) {
     return {
         title: 'SupChina - Podcasts',
         link: `${rootUrl}/podcasts`,
-        itunes_author: $(String.raw`channel itunes\:author`).first().text(),
+        itunes_author: $(String.raw`channel itunes\:author`)
+            .first()
+            .text(),
         image: $(String.raw`itunes\:image`).attr('href'),
         item: items,
     };
