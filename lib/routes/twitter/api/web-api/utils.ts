@@ -63,7 +63,11 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
         }
         instructions = instructions.instructions;
     } else {
-        instructions = data.user.result.timeline_v2.timeline.instructions;
+        if (data?.user?.result?.timeline_v2?.timeline?.instructions) {
+            instructions = data.user.result.timeline_v2.timeline.instructions;
+        } else {
+            throw new Error('Because Twitter Premium has features that hide your likes, this RSS link is not available for Twitter Premium accounts.');
+        }
     }
 
     const entries1 = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems; // Media

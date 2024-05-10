@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getUuid, getBook, getChapter, getChapters, getImgEncrypted, getImgKey, decrypt, getRealKey, siteHost } from './utils';
+import { getUuid, getBook, getChapter, getChapters, getImgEncrypted, getImgKey, decrypt, getRealKey, apiHost } from './utils';
 
 export const route: Route = {
     path: '/book/:id/:coverOnly?/:quality?',
@@ -62,7 +62,7 @@ async function handler(ctx) {
                                 const realKey = getRealKey(imgKey);
                                 const encrypted = await getImgEncrypted(p.id, quality);
 
-                                return cache.tryGet(`${siteHost}/fs/chapter_content/encrypt/${p.id}/${quality}`, () => decrypt(encrypted, realKey));
+                                return cache.tryGet(`${apiHost}/fs/chapter_content/encrypt/${p.id}/${quality}`, () => decrypt(encrypted, realKey));
                             })
                         );
                     }

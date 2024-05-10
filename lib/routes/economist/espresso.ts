@@ -42,7 +42,7 @@ async function handler() {
     );
 
     const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-    const parts = nextData.props.pageProps.content.hasPart.parts[0].hasPart.parts.filter((part) => part.type.includes('Article'));
+    const parts = nextData.props.pageProps.content.hasPart.parts[0].hasPart.parts.filter((part) => part.type.includes('Article') && part.headline !== '');
 
     const renderHTML = (node) => {
         let el;

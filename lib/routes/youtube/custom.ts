@@ -12,6 +12,19 @@ export const route: Route = {
     categories: ['social-media'],
     example: '/youtube/c/YouTubeCreators',
     parameters: { username: 'YouTube custom URL', embed: 'Default to embed the video, set to any value to disable embedding' },
+    features: {
+        requireConfig: [
+            {
+                name: 'YOUTUBE_KEY',
+                description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['www.youtube.com/c/:id'],

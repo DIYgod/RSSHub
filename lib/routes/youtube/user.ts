@@ -10,10 +10,15 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 export const route: Route = {
     path: '/user/:username/:embed?',
     categories: ['social-media'],
-    example: '/youtube/user/JFlaMusic',
-    parameters: { username: 'YouTuber id', embed: 'Default to embed the video, set to any value to disable embedding' },
+    example: '/youtube/user/@JFlaMusic',
+    parameters: { username: 'YouTuber username with @', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'YOUTUBE_KEY',
+                description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -26,7 +31,7 @@ export const route: Route = {
             target: '/user/:username',
         },
     ],
-    name: 'User',
+    name: 'Channel with username',
     maintainers: ['DIYgod'],
     handler,
 };
