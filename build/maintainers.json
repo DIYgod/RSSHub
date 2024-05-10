@@ -4506,25 +4506,25 @@
     "TonyRL"
   ],
   "/pnas/:topicPath{.+}?": [],
-  "/pornhub/:language?/category_url/:url?": [
+  "/pornhub/category_url/:url?/:language?": [
     "I2IMk",
     "queensferryme"
   ],
   "/pornhub/category/:caty": [
     "nczitzk"
   ],
-  "/pornhub/:language?/model/:username/:sort?": [
+  "/pornhub/model/:username/:language?/:sort?": [
     "I2IMk",
     "queensferryme"
   ],
-  "/pornhub/:language?/pornstar/:username/:sort?": [
+  "/pornhub/pornstar/:username/:language?/:sort?": [
     "I2IMk",
     "queensferryme"
   ],
   "/pornhub/search/:keyword": [
     "nczitzk"
   ],
-  "/pornhub/:language?/users/:username": [
+  "/pornhub/users/:username/:language?": [
     "I2IMk",
     "queensferryme"
   ],

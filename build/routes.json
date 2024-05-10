@@ -45189,8 +45189,8 @@
   },
   "pornhub": {
     "routes": {
-      "/:language?/category_url/:url?": {
-        "path": "/:language?/category_url/:url?",
+      "/category_url/:url?/:language?": {
+        "path": "/category_url/:url?/:language?",
         "categories": [
           "multimedia"
         ],
@@ -45238,8 +45238,8 @@
         ],
         "location": "category.ts"
       },
-      "/:language?/model/:username/:sort?": {
-        "path": "/:language?/model/:username/:sort?",
+      "/model/:username/:language?/:sort?": {
+        "path": "/model/:username/:language?/:sort?",
         "categories": [
           "multimedia"
         ],
@@ -45272,8 +45272,8 @@
         ],
         "location": "model.ts"
       },
-      "/:language?/pornstar/:username/:sort?": {
-        "path": "/:language?/pornstar/:username/:sort?",
+      "/pornstar/:username/:language?/:sort?": {
+        "path": "/pornstar/:username/:language?/:sort?",
         "categories": [
           "multimedia"
         ],
@@ -45330,8 +45330,8 @@
         ],
         "location": "search.ts"
       },
-      "/:language?/users/:username": {
-        "path": "/:language?/users/:username",
+      "/users/:username/:language?": {
+        "path": "/users/:username/:language?",
         "categories": [
           "multimedia"
         ],
