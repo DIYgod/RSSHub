@@ -1,7 +1,7 @@
 import type { Data, DataItem, Route } from '@/types';
 import type { Context } from 'hono';
 import { load } from 'cheerio';
-import { fetchThread, getDate } from '../utils';
+import { fetchThread, generateDescription, getDate, bbsOrigin } from '../utils';
 
 export const route: Route = {
     name: 'BBS - 讨论串',
@@ -35,8 +35,6 @@ export const route: Route = {
 :::`,
 };
 
-const origin = 'https://bbs.yamibo.com';
-
 async function handler(ctx: Context): Promise<Data> {
     const tid = ctx.req.param('tid');
 
@@ -62,15 +60,8 @@ async function handler(ctx: Context): Promise<Data> {
             const profileBlock = $tr.find(`#favatar${postId}`);
             const nickName = profileBlock.find('.authi').text();
             const floor = isOP ? '主楼' : $tr.find(`#postnum${postId} em`).text();
-            const link = isOP ? `${origin}/forum.php?mod=viewthread&tid=${tid}` : `${origin}/forum.php?mod=redirect&goto=findpost&ptid=${tid}&pid=${postId}`;
-            let description = $tr.find(`#postmessage_${postId}`).parent().html() ?? '';
-
-            const images = $item.find('.pattl img').toArray();
-            for (const img of images) {
-                const $img = $(img);
-                const src = $img.attr('zoomfile');
-                description += `<img src="${origin}/${src}" />`;
-            }
+            const link = isOP ? `${bbsOrigin}/forum.php?mod=viewthread&tid=${tid}` : `${bbsOrigin}/forum.php?mod=redirect&goto=findpost&ptid=${tid}&pid=${postId}`;
+            const description = generateDescription($item, postId);
 
             const createTime = $tr
                 .find(`#authorposton${postId}`)

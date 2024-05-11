@@ -4,6 +4,9 @@ import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import asyncPool from 'tiny-async-pool';
 import { JSDOM } from 'jsdom';
+import type { Cheerio, Element } from 'cheerio';
+
+export const bbsOrigin = 'https://bbs.yamibo.com';
 
 export function getDate(date: string): Date {
     return timezone(parseDate(date), 8);
@@ -70,26 +73,36 @@ export async function fetchThread(
             const searchParams = new URLSearchParams(locationValue);
             const _dsign = searchParams.get('_dsign');
             if (_dsign) {
-                return await fetchThread(
-                    tid,
-                    {
-                        ...options,
-                        _dsign,
-                    },
-                    ++retry
-                );
+                options = {
+                    ...options,
+                    _dsign,
+                };
             }
-        } else {
-            return {
-                link,
-            };
         }
+        return await fetchThread(tid, options, ++retry);
     }
 
     return {
         link,
         data,
     };
+}
+
+export function generateDescription($item: Cheerio<Element>, postId: string) {
+    const content = $item.find(`#postmessage_${postId}`).parent();
+    content.find('img').each((_, img) => {
+        const src = img.attribs.zoomfile ?? img.attribs.src;
+        img.attribs.src = `${bbsOrigin}/${src}`;
+    });
+    let description = content.html() ?? '';
+
+    const images = $item.find('.pattl img').toArray();
+    for (const img of images) {
+        const src = img.attribs.zoomfile ?? img.attribs.src;
+        description += `<img src="${bbsOrigin}/${src}" />`;
+    }
+
+    return description;
 }
 
 export async function asyncPoolAll<IN, OUT>(poolLimit: number, array: readonly IN[], iteratorFn: (generator: IN) => Promise<OUT>) {

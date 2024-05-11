@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { asyncPoolAll, fetchThread, getDate } from '../utils';
+import { asyncPoolAll, fetchThread, generateDescription, getDate, bbsOrigin } from '../utils';
 import cache from '@/utils/cache';
 
 export const route: Route = {
@@ -39,8 +39,6 @@ export const route: Route = {
 :::`,
 };
 
-const origin = 'https://bbs.yamibo.com';
-
 async function handler(ctx: Context): Promise<Data> {
     const fid = ctx.req.param('fid');
     const type = ctx.req.param('type');
@@ -60,7 +58,7 @@ async function handler(ctx: Context): Promise<Data> {
         headers.cookie = `EeqY_2132_saltkey=${salt}; EeqY_2132_auth=${auth}`;
     }
 
-    const link = `${origin}/forum.php?${params.toString()}`;
+    const link = `${bbsOrigin}/forum.php?${params.toString()}`;
 
     const $ = load(await ofetch<string>(link, { headers }));
 
@@ -72,7 +70,7 @@ async function handler(ctx: Context): Promise<Data> {
             const $item = $(item);
             const id = $item.attr('id')!.match(/\d+/)![0];
             const title = $item.find('th em').text() + $item.find('th .s.xst').text();
-            const link = `${origin}/thread-${id}-1-1.html`;
+            const link = `${bbsOrigin}/thread-${id}-1-1.html`;
             const pubDate = getDate($item.find('td.by').first().find('em').text());
 
             return {
@@ -83,25 +81,32 @@ async function handler(ctx: Context): Promise<Data> {
             };
         });
 
-    items = await asyncPoolAll(10, items, async (item) => {
-        const description = (await cache.tryGet(item.link!, async () => {
-            const { data } = await fetchThread(item.id!);
-            if (data && !data.startsWith('<script type="text/javascript">')) {
-                const $ = load(data);
-                const op = $('#postlist>div[id^="post_"]').first();
-                const postId = op.attr('id')!.match(/\d+/)![0];
-                return op.find('table').find('tr').first().find(`#postmessage_${postId}`).parent().html()!;
-            }
-            return '';
-        })) as string;
+    items = await asyncPoolAll(
+        5,
+        items,
+        async (item) =>
+            (await cache.tryGet(item.link!, async () => {
+                let description: string | undefined;
+                const { data } = await fetchThread(item.id!);
+                if (data && !data.startsWith('<script type="text/javascript">')) {
+                    const $ = load(data);
+                    if ($('#postlist>div[id^="post_"]').length) {
+                        const op = $('#postlist>div[id^="post_"]').first();
+                        const postId = op.attr('id')?.match(/\d+/)?.[0];
+                        if (postId) {
+                            description = generateDescription(op, postId);
+                        }
+                    }
+                }
 
-        return {
-            title: item.title,
-            link: item.link,
-            description,
-            pubDate: item.pubDate,
-        };
-    });
+                return {
+                    title: item.title,
+                    link: item.link,
+                    description,
+                    pubDate: item.pubDate,
+                };
+            })) as DataItem
+    );
 
     return {
         title,
