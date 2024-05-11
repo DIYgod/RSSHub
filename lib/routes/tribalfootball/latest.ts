@@ -41,7 +41,7 @@ async function handler() {
                 link,
                 guid: $item.find('guid').text(),
                 pubDate: parseDate($item.find('pubDate').text()),
-                author: $item.find('dc\\:creator').text(),
+                author: $item.find(String.raw`dc\:creator`).text(),
                 _header_image: $item.find('enclosure').attr('url'),
             };
         })

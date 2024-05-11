@@ -55,7 +55,12 @@ async function handler(ctx) {
                 const content = load(detailResponse.data.match(/"content":"(.*)"}},"secondaryList":/)[1]);
 
                 content('img').each(function () {
-                    content(this).attr('src', content(this).attr('src').replaceAll('\\"', ''));
+                    content(this).attr(
+                        'src',
+                        content(this)
+                            .attr('src')
+                            .replaceAll(String.raw`\"`, '')
+                    );
                 });
 
                 item.description = content.html();

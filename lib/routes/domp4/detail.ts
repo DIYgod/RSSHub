@@ -37,7 +37,7 @@ function getItemList($, detailUrl, second) {
     const data = JSON.parse(
         decodeCipherText(encoded[1], encoded[2], encoded[3], encoded[4].split('|'), 0, {})
             .match(/var down_urls=\\'(.*)\\'/)[1]
-            .replaceAll('\\\\"', '"')
+            .replaceAll(String.raw`\\"`, '"')
             .replaceAll(/\\{3}/g, '')
     );
     // support secondary download address

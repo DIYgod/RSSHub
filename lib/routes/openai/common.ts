@@ -19,7 +19,7 @@ const getApiUrl = async () => {
     const apiBaseUrl = initResponse.data
         .toString()
         .match(/(?<=TWILL_API_BASE:").+?(?=")/)[0]
-        .replaceAll('\\u002F', '/');
+        .replaceAll(String.raw`\u002F`, '/');
 
     return new URL(apiBaseUrl);
 };

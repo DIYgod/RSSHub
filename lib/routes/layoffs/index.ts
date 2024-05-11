@@ -95,7 +95,7 @@ async function handler() {
             $('script')
                 .text()
                 .match(/urlWithParams: "(.*?)"/)[1]
-                .replaceAll('\\u002F', '/');
+                .replaceAll(String.raw`\u002F`, '/');
 
         // Cache it again
         cache.set(ENTRY_URL, dataSourceUrl);

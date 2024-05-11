@@ -4,14 +4,14 @@ import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
 import type { MiddlewareHandler } from 'hono';
 import { Data } from '@/types';
 
-// Set RSS <ttl> (minute) according to the availability of cache
-// * available: max(config.cache.routeExpire / 60, 1)
-// * unavailable: 1
-// The minimum <ttl> is limited to 1 minute to prevent potential misuse
 import cacheModule from '@/utils/cache/index';
-const ttl = (cacheModule.status.available && Math.trunc(config.cache.routeExpire / 60)) || 1;
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
+    // Set RSS <ttl> (minute) according to the availability of cache
+    // * available: max(config.cache.routeExpire / 60, 1)
+    // * unavailable: 1
+    // The minimum <ttl> is limited to 1 minute to prevent potential misuse
+    const ttl = (cacheModule.status.available && Math.trunc(config.cache.routeExpire / 60)) || 1;
     await next();
 
     const data: Data = ctx.get('data');

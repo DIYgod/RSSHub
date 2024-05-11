@@ -126,7 +126,7 @@ async function handler(ctx) {
                     item.title = content('meta[property="og:title"]').prop('content');
                     item.description = '';
 
-                    const enclosurePattern = '"(?:MIME|content)?Type":"([\\w]+/[\\w]+)".*?"(?:fileS|s)?ize":(\\d+),.*?"url":"([\\w-.:/?]+)"';
+                    const enclosurePattern = String.raw`"(?:MIME|content)?Type":"([\w]+/[\w]+)".*?"(?:fileS|s)?ize":(\d+),.*?"url":"([\w-.:/?]+)"`;
 
                     const enclosureMatches = detailResponse.match(new RegExp(enclosurePattern, 'g'));
 
