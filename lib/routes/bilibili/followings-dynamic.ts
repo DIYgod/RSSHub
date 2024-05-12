@@ -56,12 +56,9 @@ async function handler(ctx) {
         method: 'get',
         url: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${uid}&type_list=268435455`,
         headers: {
-            // Referer: `https://space.bilibili.com/${uid}/`,
-            Referer: 'https://t.bilibili.com/',
+            Referer: `https://space.bilibili.com/${uid}/`,
             Cookie: cookie,
         },
-        body: null,
-        data: null,
     });
     if (response.data.code === -6) {
         throw new ConfigNotFoundError('对应 uid 的 Bilibili 用户的 Cookie 已过期');
