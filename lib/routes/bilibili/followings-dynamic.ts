@@ -47,7 +47,6 @@ async function handler(ctx) {
     const displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false);
 
     const name = await cache.getUsernameFromUID(uid);
-
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
         throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
@@ -57,12 +56,18 @@ async function handler(ctx) {
         method: 'get',
         url: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${uid}&type_list=268435455`,
         headers: {
-            Referer: `https://space.bilibili.com/${uid}/`,
+            // Referer: `https://space.bilibili.com/${uid}/`,
+            Referer: 'https://t.bilibili.com/',
             Cookie: cookie,
         },
+        body: null,
+        data: null,
     });
     if (response.data.code === -6) {
         throw new ConfigNotFoundError('对应 uid 的 Bilibili 用户的 Cookie 已过期');
+    }
+    if (response.data.code === 4_100_000) {
+        throw new ConfigNotFoundError('对应 uid 的 Bilibili 用户 请求失败');
     }
     const data = JSONbig.parse(response.body).data.cards;
 
