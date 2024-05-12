@@ -132,7 +132,7 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/t/:category?',
+    path: '/:category?',
     name: '分类',
     url: 'cuilingmag.com',
     maintainers: ['nczitzk'],
