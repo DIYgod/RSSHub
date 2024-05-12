@@ -53,7 +53,7 @@ export const handler = async (ctx) => {
                 banner: image,
                 language,
                 enclosure_url: image,
-                enclosure_type: `image/${image.split(/\./).pop()}`,
+                enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
             };
         });
