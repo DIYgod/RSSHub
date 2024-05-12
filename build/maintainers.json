@@ -1360,6 +1360,9 @@
   "/cuc/yz": [
     "niuyi1017"
   ],
+  "/cuilingmag/:category?": [
+    "nczitzk"
+  ],
   "/curiouscat/user/:id": [
     "lucasew"
   ],

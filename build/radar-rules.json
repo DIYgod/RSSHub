@@ -3655,6 +3655,75 @@
       }
     ]
   },
+  "cuilingmag.com": {
+    "_name": "萃嶺网",
+    ".": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/:category"
+        ],
+        "target": "/cuilingmagparams=>{const category=params.category;return`/cuilingmag${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "全部",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/cuilingmag/"
+      },
+      {
+        "title": "哲学 · 文明",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/philosophy_civilization"
+        ],
+        "target": "/cuilingmag/philosophy_civilization"
+      },
+      {
+        "title": "艺术 · 科技",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/art_science"
+        ],
+        "target": "/cuilingmag/art_science"
+      },
+      {
+        "title": "未来 · 生命",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/future_life"
+        ],
+        "target": "/cuilingmag/future_life"
+      },
+      {
+        "title": "行星智慧",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/planetary_wisdom"
+        ],
+        "target": "/cuilingmag/planetary_wisdom"
+      },
+      {
+        "title": "数字治理",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/digital_governance"
+        ],
+        "target": "/cuilingmag/digital_governance"
+      },
+      {
+        "title": "Noema精选",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/selected_noema"
+        ],
+        "target": "/cuilingmag/selected_noema"
+      }
+    ]
+  },
   "curiouscat.live": {
     "_name": "CuriousCat",
     ".": [
