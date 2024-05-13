@@ -23,6 +23,14 @@ export const route: Route = {
     handler,
 };
 
+const tryFinishArticleItem = async (item) => {
+    try {
+        return await finishArticleItem(item);
+    } catch {
+        return null;
+    }
+};
+
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const rootUrl = 'https://www.cimidata.com';
@@ -42,14 +50,6 @@ async function handler(ctx) {
             };
         })
         .get();
-
-    const tryFinishArticleItem = async (item) => {
-        try {
-            return await finishArticleItem(item);
-        } catch {
-            return null;
-        }
-    };
 
     await Promise.all(items.map((item) => tryFinishArticleItem(item)));
 
