@@ -115,7 +115,7 @@ function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
     };
 }
 
-async function getDetail(ctx: Context, item: Data) {
+async function getDetail(ctx: Context, item: Data): Promise<{ title: string; description: string }> {
     if (item.external) {
         return `<a href="${item.link}">阅读原文</a>`;
     }
@@ -167,7 +167,7 @@ async function handleIndex(ctx): Promise<Array<Data>> {
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 组合所有新闻
     const fullList = await Promise.all(
-        new Array<Data>().concat(xyxwList, tzggList, xsdtList, xsjzList, jxdtList, xgdtList).map(async (item) => ({
+        [...xyxwList, ...tzggList, ...xsdtList, ...xsjzList, ...jxdtList, ...xgdtList].map(async (item) => ({
             ...item,
             ...(await getDetail(ctx, item)),
         }))
