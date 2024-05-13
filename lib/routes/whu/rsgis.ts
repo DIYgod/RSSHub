@@ -115,7 +115,7 @@ function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
     };
 }
 
-async function getDetail(ctx: Context, item: Data): Promise<{ title: string; description: string }> {
+async function getDetail(item: Data): Promise<{ title: string; description: string }> {
     if (item.external) {
         return `<a href="${item.link}">阅读原文</a>`;
     }
@@ -134,10 +134,8 @@ async function getDetail(ctx: Context, item: Data): Promise<{ title: string; des
 
 /**
  * Process index type.
- *
- * @param ctx Context
  */
-async function handleIndex(ctx): Promise<Array<Data>> {
+async function handleIndex(): Promise<Array<Data>> {
     const url = `${baseUrl}/index.htm`;
     const response = await ofetch(url);
     const $ = load(response);
@@ -169,7 +167,7 @@ async function handleIndex(ctx): Promise<Array<Data>> {
     const fullList = await Promise.all(
         [...xyxwList, ...tzggList, ...xsdtList, ...xsjzList, ...jxdtList, ...xgdtList].map(async (item) => ({
             ...item,
-            ...(await getDetail(ctx, item)),
+            ...(await getDetail(item)),
         }))
     );
     return fullList;
@@ -178,11 +176,10 @@ async function handleIndex(ctx): Promise<Array<Data>> {
 /**
  * Process non-index types.
  *
- * @param ctx Context
  * @param type Level 1 type
  * @param sub Level 2 type
  */
-async function handlePostList(ctx: any, type: string, sub: string): Promise<Array<Data>> {
+async function handlePostList(type: string, sub: string): Promise<Array<Data>> {
     const urlList: Array<{ url: string; base: string }> = [];
     const category = categoryMap[type];
     if (sub === 'all') {
@@ -216,7 +213,7 @@ async function handlePostList(ctx: any, type: string, sub: string): Promise<Arra
     const fullList = await Promise.all(
         urlPosts.flat().map(async (item) => ({
             ...item,
-            ...(await getDetail(ctx, item)),
+            ...(await getDetail(item)),
         }))
     );
     return fullList;
@@ -272,12 +269,12 @@ export const route: Route = {
         let itemList: Array<Data> = [];
         switch (type) {
             case 'index':
-                itemList = await handleIndex(ctx);
+                itemList = await handleIndex();
                 break;
             case 'xyxw':
             case 'kxyj':
             case 'tzgg':
-                itemList = await handlePostList(ctx, type, sub);
+                itemList = await handlePostList(type, sub);
                 break;
             default:
                 throw 'No such type';
