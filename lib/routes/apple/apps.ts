@@ -123,7 +123,7 @@ async function handler(ctx) {
 
     return {
         item: items,
-        title: `${title} - Apple App Stroe`,
+        title: `${title} - Apple App Store`,
         link: currentUrl,
         description: description?.replace(/\n/g, ' '),
         language: $('html').prop('lang'),
