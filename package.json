@@ -155,7 +155,7 @@
         "@types/uuid": "9.0.8",
         "@typescript-eslint/eslint-plugin": "7.8.0",
         "@typescript-eslint/parser": "7.8.0",
-        "@vercel/nft": "0.26.5",
+        "@vercel/nft": "0.27.0",
         "@vitest/coverage-v8": "1.6.0",
         "eslint": "8.57.0",
         "eslint-config-prettier": "9.1.0",
