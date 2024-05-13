@@ -43,7 +43,15 @@ async function handler(ctx) {
         })
         .get();
 
-    await Promise.all(items.map((item) => finishArticleItem(item)));
+    const tryFinishArticleItem = async (item) => {
+        try {
+            return await finishArticleItem(item);
+        } catch {
+            return null;
+        }
+    };
+
+    await Promise.all(items.map((item) => tryFinishArticleItem(item)));
 
     return {
         title: `微信公众号 - ${$('span.name').text()}`,
