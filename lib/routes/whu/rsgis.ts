@@ -100,7 +100,9 @@ function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
     const linkElement = element.find('a').first();
     const title = linkElement.text();
     const href = linkElement.attr('href');
-    if (href === undefined) {throw 'Cannot get link';}
+    if (href === undefined) {
+        throw 'Cannot get link';
+    }
     const external = checkExternal(href);
     const link = external ? href : `${currentUrl}/${href}`;
     const pubDate = element.find('div.date1').first().text();
@@ -140,37 +142,35 @@ async function handleIndex(ctx): Promise<Array<Data>> {
     const response = await ofetch(url);
     const $ = load(response);
     // 学院新闻
-    const xyxwList = $('div.main1 > div.newspaper:nth-child(1) > div.newspaper_list > ul > li')
+    const xyxwList: Array<Data> = $('div.main1 > div.newspaper:nth-child(1) > div.newspaper_list > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 通知公告
-    const tzggList = $('div.main1 > div.newspaper:nth-child(2) > div.newspaper_list > ul > li')
+    const tzggList: Array<Data> = $('div.main1 > div.newspaper:nth-child(2) > div.newspaper_list > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 学术动态
-    const xsdtList = $('div.main3 div.inner > div.newspaper:nth-child(1) > ul.newspaper_list2 > li:nth-child(1) > ul > li')
+    const xsdtList: Array<Data> = $('div.main3 div.inner > div.newspaper:nth-child(1) > ul.newspaper_list2 > li:nth-child(1) > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 学术进展
-    const xsjzList = $('div.main3 div.inner > div.newspaper:nth-child(1) > ul.newspaper_list2 > li:nth-child(2) > ul > li')
+    const xsjzList: Array<Data> = $('div.main3 div.inner > div.newspaper:nth-child(1) > ul.newspaper_list2 > li:nth-child(2) > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 教学动态
-    const jxdtList = $('div.main3 div.inner > div.newspaper:nth-child(2) > div.newspaper_list2 > ul > li')
+    const jxdtList: Array<Data> = $('div.main3 div.inner > div.newspaper:nth-child(2) > div.newspaper_list2 > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 学工动态
-    const xgdtList = $('div.main3 div.inner > div.newspaper:nth-child(3) > div.newspaper_list2 > ul > li')
+    const xgdtList: Array<Data> = $('div.main3 div.inner > div.newspaper:nth-child(3) > div.newspaper_list2 > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 组合所有新闻
     const fullList = await Promise.all(
-        [xyxwList, tzggList, xsdtList, xsjzList, jxdtList, xgdtList]
-            .reduce((a, b) => a.concat(b))
-            .map(async (item) => ({
-                ...item,
-                ...(await getDetail(ctx, item)),
-            }))
+        new Array<Data>().concat(xyxwList, tzggList, xsdtList, xsjzList, jxdtList, xgdtList).map(async (item) => ({
+            ...item,
+            ...(await getDetail(ctx, item)),
+        }))
     );
     return fullList;
 }
@@ -214,11 +214,10 @@ async function handlePostList(ctx: any, type: string, sub: string): Promise<Arra
         })
     );
     const fullList = await Promise.all(
-        urlPosts.flat()
-            .map(async (item) => ({
-                ...item,
-                ...(await getDetail(ctx, item)),
-            }))
+        urlPosts.flat().map(async (item) => ({
+            ...item,
+            ...(await getDetail(ctx, item)),
+        }))
     );
     return fullList;
 }
