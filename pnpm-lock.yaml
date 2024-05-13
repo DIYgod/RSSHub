@@ -15,8 +15,8 @@ importers:
         specifier: 0.2.2
         version: 0.2.2(hono@4.3.4)
       '@hono/zod-openapi':
-        specifier: 0.11.0
-        version: 0.11.0(hono@4.3.4)(zod@3.23.8)
+        specifier: 0.11.1
+        version: 0.11.1(hono@4.3.4)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -1194,8 +1194,8 @@ packages:
     peerDependencies:
       hono: '*'
 
-  '@hono/zod-openapi@0.11.0':
-    resolution: {integrity: sha512-thbxV4lWJoDo1NjF8ZGnd0muD3UHUpRqpKvS3RI+kWCXU05nyuViymUbPvVpp+O6i5SjovITTF91NRMTraZm3Q==}
+  '@hono/zod-openapi@0.11.1':
+    resolution: {integrity: sha512-lCeAu1fH5cWRQccGsiiJBxHQKT1ueMYP3efdY/4VX6MvGNaLjFiIf5haXhbF2pr3+Eln7ZogKUVSVF+NoCWtgw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=3.11.3'
@@ -2455,8 +2455,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -6371,7 +6371,7 @@ snapshots:
     dependencies:
       hono: 4.3.4
 
-  '@hono/zod-openapi@0.11.0(hono@4.3.4)(zod@3.23.8)':
+  '@hono/zod-openapi@0.11.1(hono@4.3.4)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.0.0(zod@3.23.8)
       '@hono/zod-validator': 0.2.1(hono@4.3.4)(zod@3.23.8)
@@ -6566,7 +6566,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.5
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -7746,7 +7746,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
