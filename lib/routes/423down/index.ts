@@ -13,7 +13,8 @@ export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 18;
 
-    const rootUrl = 'https://www.423down.com';
+    const domain = '423down.com';
+    const rootUrl = `https://www.${domain}`;
     const currentUrl = new URL(category, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
@@ -29,7 +30,7 @@ export const handler = async (ctx) => {
 
             const link = item.find('h2 a').prop('href');
 
-            return link.startsWith(rootUrl);
+            return new RegExp(domain).test(link);
         })
         .slice(0, limit)
         .map((item) => {
@@ -151,9 +152,9 @@ export const route: Route = {
   
   #### 操作系统
   
-  | [Windows 11](https://www.423down.com/win11) | [Windows 10](https://www.423down.com/win10) | [Windows 7](https://www.423down.com/win7) | [Windows XP](https://www.423down.com/win7/winxp)     | [WinPE](https://www.423down.com/pe-system)         |
-  | ------------------------------------------- | ------------------------------------------- | ----------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
-  | [win11](https://rsshub.app//423down/win11)  | [win10](https://rsshub.app//423down/win10)  | [win7](https://rsshub.app//423down/win7)  | [win7/winxp](https://rsshub.app//423down/win7/winxp) | [pe-system](https://rsshub.app//423down/pe-system) |
+  | [Windows 11](https://www.423down.com/win11) | [Windows 10](https://www.423down.com/win10) | [Windows 7](https://www.423down.com/win7) | [Windows XP](https://www.423down.com/win7/winxp)    | [WinPE](https://www.423down.com/pe-system)        |
+  | ------------------------------------------- | ------------------------------------------- | ----------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |
+  | [win11](https://rsshub.app/423down/win11)   | [win10](https://rsshub.app/423down/win10)   | [win7](https://rsshub.app/423down/win7)   | [win7/winxp](https://rsshub.app/423down/win7/winxp) | [pe-system](https://rsshub.app/423down/pe-system) |
   `,
     categories: ['program-update'],
 
