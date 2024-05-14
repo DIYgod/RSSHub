@@ -20,7 +20,7 @@ async function handler(ctx) {
 
     if (/^\/cn\/(cn|zh)/.test(path)) {
         language = path.match(/^\/cn\/(cn|zh)/)[1];
-        path = path.match(new RegExp('\\/cn\\/' + language + '(.*)'))[1];
+        path = path.match(new RegExp(String.raw`\/cn\/` + language + '(.*)'))[1];
     } else {
         language = 'cn';
     }

@@ -111,7 +111,7 @@ async function handler(ctx) {
             return {
                 title: `#${index + 1} ${illust.title}`,
                 pubDate: parseDate(illust.create_date),
-                description: `<p>画师：${illust.user.name} - 阅览数：${illust.total_view} - 收藏数：${illust.total_bookmarks}</p><br>${images.join('')}`,
+                description: `${illust.caption}<br><p>画师：${illust.user.name} - 阅览数：${illust.total_view} - 收藏数：${illust.total_bookmarks}</p><br>${images.join('')}`,
                 link: `https://www.pixiv.net/artworks/${illust.id}`,
                 author: illust.user.name,
                 category: illust.tags.map((tag) => tag.name),

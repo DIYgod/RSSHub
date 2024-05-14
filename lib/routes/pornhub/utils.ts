@@ -27,7 +27,7 @@ const parseItems = (e) => ({
         previewVideo: e.find('img').data('mediabook'),
     }),
     author: e.find('.usernameWrap a').text(),
-    pubDate: dayjs(extractDateFromImageUrl(e.find('img').data('mediumthumb'))) || parseRelativeDate(e.find('.added').text()),
+    pubDate: dayjs(extractDateFromImageUrl(e.find('img').data('mediumthumb'))).toDate() || parseRelativeDate(e.find('.added').text()),
 });
 
 export { defaultDomain, headers, renderDescription, parseItems };

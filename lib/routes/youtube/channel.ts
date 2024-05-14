@@ -30,7 +30,7 @@ export const route: Route = {
             target: '/channel/:id',
         },
     ],
-    name: 'Channel',
+    name: 'Channel with id',
     maintainers: ['DIYgod'],
     handler,
     description: `:::tip

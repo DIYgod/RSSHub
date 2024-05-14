@@ -39,7 +39,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             item = $(item);
-            let description = item.find('dc\\:content').text();
+            let description = item.find(String.raw`dc\:content`).text();
             description = $('<div>').html(description);
             description.find('.vanilla-image-block').removeAttr('style');
             description.find('.fancy-box').remove();

@@ -73,13 +73,13 @@ function decodeCipherText(p, a, c, k, e, d) {
             },
         ];
         e = function () {
-            return '\\w+';
+            return String.raw`\w+`;
         };
         c = 1;
     }
     while (c--) {
         if (k[c]) {
-            p = p.replaceAll(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
+            p = p.replaceAll(new RegExp(String.raw`\b` + e(c) + String.raw`\b`, 'g'), k[c]);
         }
     }
     return p;

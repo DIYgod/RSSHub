@@ -132,7 +132,7 @@ class ExtractMetadata {
     private static genExtractFunc = (
         varName: string,
         {
-            valuePattern = '\\w+',
+            valuePattern = String.raw`\w+`,
             assignPattern = '=',
             allowNotFound = false,
             multiple = false,
@@ -170,9 +170,9 @@ class ExtractMetadata {
     };
 
     private static commonMetadataToBeExtracted = {
-        showType: this.genExtractFunc('item_show_type', { valuePattern: '\\d+' }),
-        realShowType: this.genExtractFunc('real_item_show_type', { valuePattern: '\\d+' }),
-        createTime: this.genExtractFunc('ct', { valuePattern: '\\d+', allowNotFound: true }),
+        showType: this.genExtractFunc('item_show_type', { valuePattern: String.raw`\d+` }),
+        realShowType: this.genExtractFunc('real_item_show_type', { valuePattern: String.raw`\d+` }),
+        createTime: this.genExtractFunc('ct', { valuePattern: String.raw`\d+`, allowNotFound: true }),
         sourceUrl: this.genExtractFunc('msg_source_url', { valuePattern: `https?://[^'"]*`, allowNotFound: true }),
     };
 
@@ -207,7 +207,7 @@ class ExtractMetadata {
 
     private static audioMetadataToBeExtracted = {
         voiceId: this.genExtractFunc('voiceid', { assignPattern: ':' }),
-        duration: this.genExtractFunc('duration', { valuePattern: '\\d*', assignPattern: ':', allowNotFound: true }),
+        duration: this.genExtractFunc('duration', { valuePattern: String.raw`\d*`, assignPattern: ':', allowNotFound: true }),
     };
 
     // never seen a audio article containing multiple audio, waiting for examples

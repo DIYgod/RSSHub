@@ -6,7 +6,7 @@ import { headers, parseItems } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
-    path: '/:language?/users/:username',
+    path: '/users/:username/:language?',
     categories: ['multimedia'],
     example: '/pornhub/users/pornhubmodels',
     parameters: { language: 'language, see below', username: 'username, part of the url e.g. `pornhub.com/users/pornhubmodels`' },
@@ -43,7 +43,7 @@ async function handler(ctx) {
         .map((e) => parseItems($(e)));
 
     return {
-        title: $('title').first().text(),
+        title: $('.profileUserName a').text(),
         description: $('.aboutMeText').text().trim(),
         link,
         image: $('#coverPictureDefault').attr('src'),

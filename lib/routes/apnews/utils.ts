@@ -8,13 +8,16 @@ export function fetchArticle(item) {
     return cache.tryGet(item.link, async () => {
         const data = await ofetch(item.link);
         const $ = load(data);
+        const ldjson = JSON.parse($('#link-ld-json').text())[0];
         $('div.Enhancement').remove();
-        return Object.assign(item, {
-            pubDate: timezone(parseDate($("meta[property='article:published_time']").attr('content')), 0),
-            updated: timezone(parseDate($("meta[property='article:modified_time']").attr('content')), 0),
+        return {
+            pubDate: timezone(parseDate(ldjson.datePublished), 0),
+            updated: timezone(parseDate(ldjson.dateModified), 0),
             description: $('div.RichTextStoryBody').html(),
-            category: $("meta[property='article:section']").attr('content'),
+            category: [`section:${$("meta[property='article:section']").attr('content')}`, ...ldjson.keywords],
             guid: $("meta[name='brightspot.contentId']").attr('content'),
-        });
+            author: ldjson.author,
+            ...item,
+        };
     });
 }

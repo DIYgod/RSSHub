@@ -49,7 +49,12 @@ export const handler = async (ctx) => {
         .match(/{"title":".*?"string":".*?"}}/g)
         .slice(0, limit)
         .map((item) => {
-            item = JSON.parse(item.replaceAll('\\\\"', '\\"').replaceAll('\\\\n', '').replaceAll('\\`', '`'));
+            item = JSON.parse(
+                item
+                    .replaceAll(String.raw`\\"`, String.raw`\"`)
+                    .replaceAll(String.raw`\\n`, '')
+                    .replaceAll('\\`', '`')
+            );
 
             const $$ = unblurImages(load(item.excerpt));
 
