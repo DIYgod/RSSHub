@@ -6377,6 +6377,12 @@
     "TonyRL"
   ],
   "/yahoo/news/en/:category?": [],
+  "/yamibo/bbs/forum/:fid/:type?": [
+    "KarasuShin"
+  ],
+  "/yamibo/bbs/thread/:tid": [
+    "KarasuShin"
+  ],
   "/yande/post/popular_recent/:period?": [
     "fashioncj"
   ],
