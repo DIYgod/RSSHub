@@ -16957,6 +16957,16 @@
   },
   "whu.edu.cn": {
     "_name": "武汉大学",
+    "rsgis": [
+      {
+        "title": "武汉大学遥感信息工程学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index.htm"
+        ],
+        "target": "/whu/rsgis/index"
+      }
+    ],
     "gs": [
       {
         "title": "研究生院",
