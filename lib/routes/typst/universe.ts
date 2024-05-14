@@ -28,7 +28,7 @@ interface Context {
 
 export const route: Route = {
     path: '/universe',
-    categories: ['programming'],
+    categories: ['program-update'],
     example: '/typst/universe',
     radar: [
         {
