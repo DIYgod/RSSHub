@@ -158,7 +158,9 @@
   "/3kns/:filters?/:order?": [
     "xzzpig"
   ],
-  "/423down/:category/:type?": [],
+  "/423down/:category{.+}?": [
+    "nczitzk"
+  ],
   "/4gamers/": [
     "TonyRL"
   ],

@@ -273,6 +273,182 @@
       }
     ]
   },
+  "423down.com": {
+    "_name": "423Down",
+    ".": [
+      {
+        "title": "423Down",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/:category",
+          "/"
+        ],
+        "target": "/423downparams=>{const category=params.category;return`/423down${category?`/${category}`:\"\"}`}"
+      }
+    ],
+    "www": [
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/"
+        ],
+        "target": "/423down/"
+      },
+      {
+        "title": "安卓软件",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/apk"
+        ],
+        "target": "/423down/apk"
+      },
+      {
+        "title": "电脑软件 - 原创软件",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/zd423"
+        ],
+        "target": "/423down/zd423"
+      },
+      {
+        "title": "电脑软件 - 媒体播放",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/multimedia"
+        ],
+        "target": "/423down/multimedia"
+      },
+      {
+        "title": "电脑软件 - 网页浏览",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/browser"
+        ],
+        "target": "/423down/browser"
+      },
+      {
+        "title": "电脑软件 - 图形图像",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/image"
+        ],
+        "target": "/423down/image"
+      },
+      {
+        "title": "电脑软件 - 聊天软件",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/im"
+        ],
+        "target": "/423down/im"
+      },
+      {
+        "title": "电脑软件 - 办公软件",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/work"
+        ],
+        "target": "/423down/work"
+      },
+      {
+        "title": "电脑软件 - 上传下载",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/down"
+        ],
+        "target": "/423down/down"
+      },
+      {
+        "title": "电脑软件 - 实用软件",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/softtool"
+        ],
+        "target": "/423down/softtool"
+      },
+      {
+        "title": "电脑软件 - 系统辅助",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/systemsoft"
+        ],
+        "target": "/423down/systemsoft"
+      },
+      {
+        "title": "电脑软件 - 系统必备",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/systemplus"
+        ],
+        "target": "/423down/systemplus"
+      },
+      {
+        "title": "电脑软件 - 安全软件",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/security"
+        ],
+        "target": "/423down/security"
+      },
+      {
+        "title": "电脑软件 - 补丁相关",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/patch"
+        ],
+        "target": "/423down/patch"
+      },
+      {
+        "title": "电脑软件 - 硬件相关",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/hardware"
+        ],
+        "target": "/423down/hardware"
+      },
+      {
+        "title": "操作系统 - Windows 11",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/win11"
+        ],
+        "target": "/423down/win11"
+      },
+      {
+        "title": "操作系统 - Windows 10",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/win10"
+        ],
+        "target": "/423down/win10"
+      },
+      {
+        "title": "操作系统 - Windows 7",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/win7"
+        ],
+        "target": "/423down/win7"
+      },
+      {
+        "title": "操作系统 - Windows XP",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/win7/winxp"
+        ],
+        "target": "/423down/win7/winxp"
+      },
+      {
+        "title": "操作系统 - WinPE",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/pe-system"
+        ],
+        "target": "/423down/pe-system"
+      }
+    ]
+  },
   "4gamers.com.tw": {
     "_name": "4Gamers",
     "www": [
