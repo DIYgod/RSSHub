@@ -69,5 +69,5 @@ export const handler = async (ctx) => {
                 pubDate,
                 item: items,
             };
-        },
-};
+        }
+        );
