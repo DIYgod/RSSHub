@@ -64,7 +64,7 @@ export const route: Route = {
                     title: `${item.name} | ${item.description}`,
                     link: `https://typst.app/universe/package/${item.name}`,
                     description: md.render(item.readme),
-                    pubDate: parseDate(item.updatedAt),
+                    pubDate: parseDate(item.updatedAt, 'X'),
                 }));
             return {
                 title: 'Typst universe',
