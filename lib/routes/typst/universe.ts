@@ -1,8 +1,9 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import markdownit from 'markdown-it';
-import vm from 'vm';
+import vm from 'node:vm';
 
 interface Package {
     name: string;
@@ -28,15 +29,7 @@ interface Context {
 export const route: Route = {
     path: '/universe',
     categories: ['programming'],
-    example: '/github/issue/vuejs/core/all/wontfix',
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
+    example: '/typst/universe',
     radar: [
         {
             source: ['typst.app/universe'],
@@ -52,12 +45,11 @@ export const route: Route = {
         const script = $('script')
             .toArray()
             .map((item) => item.attribs.src)
-            .filter((item) => item !== undefined)
-            .find((item) => item.startsWith('/scripts/universe-search'));
+            .find((item) => item && item.startsWith('/scripts/universe-search'));
         const data: string = await ofetch(`https://typst.app${script}`, {
             parseResponse: (txt) => txt,
         });
-        let packages = data.match(/(an.exports=[\S\s]+);var Ye/)?.[1];
+        let packages = data.match(/(an.exports=[\S\s]+);var ([$A-Z_a-z][\w$]*)=new Intl.Collator/)?.[1];
         if (packages) {
             packages = packages.slice(0, -2);
             const context: Context = { an: { exports: [] } };
@@ -68,12 +60,11 @@ export const route: Route = {
             const md = markdownit('commonmark');
             const items = context.an.exports
                 .sort((a, b) => b.updatedAt - a.updatedAt)
-                .slice(0, 10)
                 .map((item) => ({
                     title: `${item.name} | ${item.description}`,
                     link: `https://typst.app/universe/package/${item.name}`,
                     description: md.render(item.readme),
-                    pubDate: new Date(item.updatedAt),
+                    pubDate: parseDate(item.updatedAt),
                 }));
             return {
                 title: 'Typst universe',
