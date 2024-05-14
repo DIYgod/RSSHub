@@ -231,7 +231,7 @@ export const route: Route = {
     radar: [
         {
             source: ['rsgis.whu.edu.cn/index.htm'],
-            target: 'whu/rsgis/index',
+            target: '/rsgis/index',
         },
     ],
     name: '武汉大学遥感信息工程学院',
