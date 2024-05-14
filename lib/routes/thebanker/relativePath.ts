@@ -11,7 +11,7 @@ export const route: Route = {
     maintainers: ['benjaminyzhang'],
     handler,
     example: '/thebanker/News-in-Brief',
-    parameters: { relative- path: '想读路径可在对应网页列表的 URL 中找到，默认为NEWS IN BRIEF' },
+    parameters: { relativePath: '想读路径可在对应网页列表的 URL 中找到，默认为NEWS IN BRIEF' },
     description: `
   | NEWS IN BRIEF | Investment-banking |
   | ---------- | ------ |
