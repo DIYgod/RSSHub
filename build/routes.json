@@ -58289,6 +58289,36 @@
     "name": "Typora",
     "url": "typora.io"
   },
+  "typst": {
+    "routes": {
+      "/universe": {
+        "path": "/universe",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/typst/universe",
+        "radar": [
+          {
+            "source": [
+              "typst.app/universe"
+            ],
+            "target": "/universe"
+          }
+        ],
+        "name": "Universe",
+        "maintainers": [
+          "HPDell"
+        ],
+        "location": "universe.ts"
+      }
+    },
+    "name": "Typst",
+    "url": "typst.com",
+    "description": "\nCompose papers faster: Focus on your text and let Typst take care of layout and formatting.\n",
+    "zh": {
+      "name": "Typst"
+    }
+  },
   "u3c3": {
     "routes": {
       "/search/:keyword/:preview?": {

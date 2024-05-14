@@ -16013,6 +16013,19 @@
       }
     ]
   },
+  "typst.app": {
+    "_name": "Typst",
+    ".": [
+      {
+        "title": "Universe",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/universe"
+        ],
+        "target": "/typst/universe"
+      }
+    ]
+  },
   "u9a9.com": {
     "_name": "U9A9",
     ".": [
