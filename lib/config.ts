@@ -286,6 +286,10 @@ export type Config = {
     xueqiu: {
         cookies?: string;
     };
+    yamibo: {
+        salt?: string;
+        auth?: string;
+    };
     youtube: {
         key?: string;
         clientId?: string;
@@ -641,6 +645,10 @@ const calculateValue = () => {
         },
         xueqiu: {
             cookies: envs.XUEQIU_COOKIES,
+        },
+        yamibo: {
+            salt: envs.YAMIBO_SALT,
+            auth: envs.YAMIBO_AUTH,
         },
         youtube: {
             key: envs.YOUTUBE_KEY,
