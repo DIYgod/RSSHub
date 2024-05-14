@@ -228,14 +228,6 @@ export const route: Route = {
         type: '栏目，详见表格',
         sub: '子栏目。当 `type` 为 `index` 的时候不起效；当 `type` 为其他合法值时，默认为 `all` 表示所有子类，其他可选项见下表。',
     },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['rsgis.whu.edu.cn/index.htm'],
