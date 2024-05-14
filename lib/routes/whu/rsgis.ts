@@ -122,19 +122,21 @@ function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
 
 async function getDetail(item: Post): Promise<DataItem | any> {
     const link = item.link;
-    return link ? (await cache.tryGet(`whu:rsgis:${link}`, async () => {
-            if (item.external) {
-                item.description = `<a href="${link}">阅读原文</a>`;
-            } else {
-                const response = await ofetch(link);
-                const $ = load(response);
-                const title = $('div.content div.content_title h1').first().text();
-                const content = $('div.content div.v_news_content').first().html();
-                item.title = title;
-                item.description = content || '';
-            }
-            return item;
-        })) : item;
+    return link
+        ? await cache.tryGet(`whu:rsgis:${link}`, async () => {
+              if (item.external) {
+                  item.description = `<a href="${link}">阅读原文</a>`;
+              } else {
+                  const response = await ofetch(link);
+                  const $ = load(response);
+                  const title = $('div.content div.content_title h1').first().text();
+                  const content = $('div.content div.v_news_content').first().html();
+                  item.title = title;
+                  item.description = content || '';
+              }
+              return item;
+          })
+        : item;
 }
 
 /**
@@ -169,12 +171,7 @@ async function handleIndex(): Promise<Array<Post>> {
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 组合所有新闻
-    const fullList = await Promise.all(
-        [...xyxwList, ...tzggList, ...xsdtList, ...xsjzList, ...jxdtList, ...xgdtList].map(async (item) => ({
-            ...item,
-            ...(await getDetail(item)),
-        }))
-    );
+    const fullList = await Promise.all([...xyxwList, ...tzggList, ...xsdtList, ...xsjzList, ...jxdtList, ...xgdtList].map(async (item) => await getDetail(item)));
     return fullList;
 }
 
@@ -213,12 +210,7 @@ async function handlePostList(type: string, sub: string): Promise<Array<DataItem
                 .map((item) => parseListLinkDateItem($(item), url.base));
         })
     );
-    const fullList = await Promise.all(
-        urlPosts.flat().map(async (item) => ({
-            ...item,
-            ...(await getDetail(item)),
-        }))
-    );
+    const fullList = await Promise.all(urlPosts.flat().map(async (item) => await getDetail(item)));
     return fullList;
 }
 
