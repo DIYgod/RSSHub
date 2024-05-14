@@ -4,6 +4,7 @@ import { load, Cheerio, AnyNode } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { Context } from 'hono';
+import cache from '@/utils/cache';
 
 interface Post extends DataItem {
     external: boolean;
@@ -119,20 +120,21 @@ function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
     };
 }
 
-async function getDetail(item: Post): Promise<DataItem> {
-    if (item.link) {
-        if (item.external) {
-            item.description = `<a href="${item.link}">阅读原文</a>`;
-        } else {
-            const response = await ofetch(item.link);
-            const $ = load(response);
-            const title = $('div.content div.content_title h1').first().text();
-            const content = $('div.content div.v_news_content').first().html();
-            item.title = title;
-            item.description = content || '';
-        }
-    }
-    return item;
+async function getDetail(item: Post): Promise<DataItem | any> {
+    const link = item.link;
+    return link ? (await cache.tryGet(`whu:rsgis:${link}`, async () => {
+            if (item.external) {
+                item.description = `<a href="${link}">阅读原文</a>`;
+            } else {
+                const response = await ofetch(link);
+                const $ = load(response);
+                const title = $('div.content div.content_title h1').first().text();
+                const content = $('div.content div.v_news_content').first().html();
+                item.title = title;
+                item.description = content || '';
+            }
+            return item;
+        })) : item;
 }
 
 /**
