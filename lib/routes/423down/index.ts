@@ -173,7 +173,7 @@ export const route: Route = {
             target: (params) => {
                 const category = params.category;
 
-                return `423Down${category ? `/${category}` : ''}`;
+                return `/423down${category ? `/${category}` : ''}`;
             },
         },
         {
