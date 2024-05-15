@@ -1,0 +1,8 @@
+{{ if images }}
+    {{ each images img }}
+        <img src="{{ img }}">
+    {{ /each }}
+{{ /if }}
+{{ if description }}
+    <p>{{ description }}</p>
+{{ /if }}

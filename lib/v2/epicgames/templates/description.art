@@ -1,2 +1,0 @@
-<p>{{ description }}</p>
-<img src="{{ image }}">

@@ -1,0 +1,26 @@
+{{ if item }}
+  <div>
+    <span>
+      <img height="50px" src="https://xgzlyhd.samr.gov.cn/gjjly/img/fd-q-avator.png">
+      <b>{{ item.lyr }}</b>
+    </span>
+    <div>
+      <h3>{{ item.lybt }}</h3> 
+      <p>留言日期：{{ item.lysj }}</p>
+      <div style="word-break: break-all;">
+        {{ item.lynr }}
+      </div>
+    <br>
+    </div>
+    <span>
+      <img height="50px" src="https://xgzlyhd.samr.gov.cn/gjjly/img/fd-a-avator.png">
+      <b>{{ item.fzsjCn }}</b>
+    </span>
+    <div>
+      <p>时间：{{ item.pubtime }}</p>
+      <div style="word-break: break-all;">
+        {{ item.clyj }}
+      </div>
+    </div>
+  </div>
+{{ /if }}

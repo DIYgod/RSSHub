@@ -1,0 +1,14 @@
+{{ packageStatus }}<br>
+{{ if packageTrackRecord }}{{ packageTrackRecord }}<br>{{ /if }}
+{{ if packageOfficeZipCode }}{{ packageOfficeZipCode }} {{ /if }}{{ if packageOffice }}{{ packageOffice }} {{ /if }}{{ packageRegion }}
+{{ if index === 0 }}
+    {{ if officeItemList }}
+        <br>
+        {{ each officeItemList }}
+            <br>{{ $value.officeType }} {{@ $value.officeName }} {{ $value.officeTel }}
+        {{ /each }}
+    {{ /if }}
+    {{ if packageService }}
+        <br>{{ serviceText }}{{ packageService }}
+    {{ /if }}
+{{ /if }}

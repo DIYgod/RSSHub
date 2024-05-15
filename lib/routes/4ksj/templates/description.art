@@ -1,0 +1,59 @@
+{{ if images }}
+  {{ each images image }}
+    {{ if !videos?.[0]?.src && image?.src }}
+      <figure>
+        <img
+          {{ if image.alt }}
+            alt="{{ image.alt }}"
+          {{ /if }}
+        src="{{ image.src }}">
+      </figure>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
+{{ if title }}
+  <h1>{{ title }}</h1>
+{{ /if }}
+
+{{ if keys && details }}
+  <table>
+    <tbody>
+      {{ each keys key }}
+        <tr>
+          <th>
+            {{ key }}
+          </th>
+          <td>
+            {{ details[key] }}
+          </td>
+        </tr>
+      {{ /each }}
+    </tbody>
+  </table>
+{{ /if }}
+
+{{ if description }}
+  <p>{{ description }}</p>
+{{ /if }}
+
+{{ if info }}
+  <blockquote>{{@ info }}</blockquote>
+{{ /if }}
+
+{{ if links }}
+  <table>
+    <tbody>
+      {{ each links link }}
+        <tr>
+          <td>
+            <a href="{{ link.link }}">{{ link.title }}</a>
+          </td>
+          <td>
+            {{ link.tags?.join('') ?? '' }}
+          </td>
+        </tr>
+      {{ /each }}
+    </tbody>
+  </table>
+{{ /if }}

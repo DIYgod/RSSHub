@@ -1,7 +1,0 @@
-{{ if image }}
-    <img src="{{ image }}"><br>
-{{ /if }}
-{{ if title }}
-    {{@ title }}
-{{ /if }}
-{{@ links }}

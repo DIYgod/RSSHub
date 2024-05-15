@@ -14,7 +14,7 @@ tasks:
       sudo apt update
       sudo apt install -y ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libexpat1 libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 wget xdg-util
       sudo apt install -y redis-server
-    init: pnpm i && pnpm i -C website && pnpm rb
+    init: pnpm i && pnpm rb
   - name: app
     command: pnpm run dev
     openMode: tab-after
@@ -34,13 +34,5 @@ vscode:
     - deepscan.vscode-deepscan
     - rangav.vscode-thunder-client
     - sonarsource.sonarlint-vscode
+    - unifiedjs.vscode-mdx
     # - ZihanLi.at-helper not available on Open VSX
-
-github:
-  prebuilds:
-    master: true
-    branches: true
-    pullRequests: false
-    pullRequestsFromForks: false
-    addCheck: false
-    addComment: false

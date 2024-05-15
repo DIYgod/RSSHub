@@ -1,15 +1,17 @@
-'Route: v1':
-- lib/router.js
-- any: ['lib/routes/**/*.js', '!lib/routes/index.js']
+'Route: deprecated':
+- changed-files:
+  - any-glob-to-any-file: ['lib/router.js']
+  - all-globs-to-any-file: ['lib/routes-deprecated/**/*.js', '!lib/routes-deprecated/index.js']
 
-'Route: v2':
-- 'lib/v2/**/*.js'
+'Route':
+- changed-files:
+  - any-glob-to-any-file: ['lib/routes/**/*.ts']
 
 core enhancement:
-- lib/routes/index.js
-- any: ['lib/**', '!lib/radar-rules.js', '!lib/router.js', '!lib/routes/**', '!lib/v2/**']
+- changed-files:
+  - any-glob-to-any-file: ['lib/routes/index.ts']
+  - all-globs-to-any-file: ['lib/**', '!lib/config.ts', '!lib/router.js', '!lib/routes/**', '!lib/routes-deprecated/**']
 
 dependencies:
-- package.json
-- pnpm-lock.yaml
-- yarn.lock
+- changed-files:
+  - any-glob-to-any-file: ['package.json', 'pnpm-lock.yaml', 'yarn.lock']

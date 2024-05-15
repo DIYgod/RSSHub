@@ -1,7 +1,0 @@
-{{ if links }}
-<ul>
-{{ each links link }}
-<li><a href="{{ link.link }}">{{ link.name }}</a></li>
-{{ /each }}
-</ul>
-{{ /if }}
