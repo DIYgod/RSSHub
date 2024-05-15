@@ -41574,6 +41574,37 @@
     "name": "南京航空航天大学",
     "url": "aao.nuaa.edu.cn"
   },
+  "nudt": {
+    "routes": {
+      "/yjszs/:type?": {
+        "path": "/yjszs/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/nudt/yjszs/sszs",
+        "parameters": {
+          "type": "分类，见下表，默认为硕士招生"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "研究生院",
+        "maintainers": [
+          "Blank0120"
+        ],
+        "url": "yjszs.nudt.edu.cn/",
+        "description": "| 通知公告 | 硕士招生 |\n  | -------- | -------- |\n  | tzgg     | sszs     |",
+        "location": "yjszs.ts"
+      }
+    },
+    "name": "中国人民解放军国防科技大学",
+    "url": "www.nudt.edu.cn"
+  },
   "nuist": {
     "routes": {
       "/bulletin/:category?": {
