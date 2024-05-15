@@ -28,8 +28,8 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '国防科技大学研究生院',
-    maintainers: ['blankTourist'],
+    name: '研究生院',
+    maintainers: ['Blank0120'],
     handler,
     url: 'yjszs.nudt.edu.cn/',
     description: `| 通知公告 | 硕士招生 |
