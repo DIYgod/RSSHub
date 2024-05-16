@@ -59,9 +59,6 @@ export const handler = async (ctx) => {
                 item.image = image;
                 item.banner = image;
                 item.language = language;
-                item.enclosure_url = image;
-                item.enclosure_type = image ? `image/${image.split(/\./).pop()}` : undefined;
-                item.enclosure_title = title;
 
                 return item;
             })
