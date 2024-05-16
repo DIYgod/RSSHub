@@ -150,7 +150,7 @@ const getItem = (item, selector, cache) => {
 export const route: Route = {
     path: '/gs/:type?',
     categories: ['university'],
-    example: '/gs/noti',
+    example: '/bjtu/gs/noti',
     parameters: { type: 'Article type' },
     features: {
         requireConfig: false,
