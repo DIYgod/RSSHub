@@ -43,12 +43,10 @@ async function handler(ctx) {
         })
         .get();
 
-    await Promise.all(items.map((item) => finishArticleItem(item)));
-
     return {
         title: `微信公众号 - ${$('span.name').text()}`,
         link: url,
         description: $('div.Profile-sideColumnItemValue').text(),
-        item: items,
+        item: await Promise.all(items.map((item) => finishArticleItem(item).catch(() => item))),
     };
 }
