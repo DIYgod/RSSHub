@@ -165,7 +165,7 @@ export const route: Route = {
             source: ['gs.bjtu.edu.cn'],
         },
     ],
-    name: title,
+    name: '研究生院',
     maintainers: ['E1nzbern'],
     handler,
     description: `
