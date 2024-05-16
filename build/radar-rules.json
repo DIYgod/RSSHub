@@ -12647,11 +12647,11 @@
     ]
   },
   "qq.com": {
-    "_name": "腾讯新闻较真查证平台",
+    "_name": "腾讯网",
     "ac": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/anime",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/Comic/ComicInfo/id/:id",
           "/"
@@ -12666,6 +12666,48 @@
           "/"
         ],
         "target": "/qq/ac/rank/:type?/:time?"
+      }
+    ],
+    "cfhd.cf": [
+      {
+        "title": "穿越火线 CFHD 专区资讯中心 - 最新",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/webplat/info/news_version3/37427/59139/59140/60847/m22510/list_1.shtml"
+        ],
+        "target": "/qq/cfhd/news/60847"
+      },
+      {
+        "title": "穿越火线 CFHD 专区资讯中心 - 公告",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/webplat/info/news_version3/37427/59139/59140/59625/m22510/list_1.shtml"
+        ],
+        "target": "/qq/cfhd/news/59625"
+      },
+      {
+        "title": "穿越火线 CFHD 专区资讯中心 - 版本",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/webplat/info/news_version3/37427/59139/59140/60850/m22510/list_1.shtml"
+        ],
+        "target": "/qq/cfhd/news/60850"
+      },
+      {
+        "title": "穿越火线 CFHD 专区资讯中心 - 赛事",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/webplat/info/news_version3/37427/59139/59140/59626/m22510/list_1.shtml"
+        ],
+        "target": "/qq/cfhd/news/59626"
+      },
+      {
+        "title": "穿越火线 CFHD 专区资讯中心 - 杂谈",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/webplat/info/news_version3/37427/59139/59140/59624/m22510/list_1.shtml"
+        ],
+        "target": "/qq/cfhd/news/59624"
       }
     ],
     "vp.fact": [
