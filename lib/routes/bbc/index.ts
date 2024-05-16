@@ -61,11 +61,16 @@ async function handler(ctx) {
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+                const linkURL = new URL(item.link);
+                if (linkURL.hostname === 'www.bbc.com') {
+                    linkURL.hostname = 'www.bbc.co.uk';
+                }
+
+                const response = await ofetch(linkURL.href);
 
                 const $ = load(response);
 
-                const path = new URL(item.link).pathname;
+                const path = linkURL.pathname;
 
                 let description;
 
