@@ -1,5 +1,7 @@
 {
-  "/81/81rc/*": [],
+  "/81/81rc/:category{.+}?": [
+    "nczitzk"
+  ],
   "/163/ds/:id": [
     "luyuhuang"
   ],

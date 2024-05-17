@@ -1,15 +1,46 @@
 {
   "81": {
     "routes": {
-      "/81rc/*": {
-        "path": "/81rc/*",
-        "name": "Unknown",
-        "maintainers": [],
+      "/81rc/:category{.+}?": {
+        "path": "/81rc/:category{.+}?",
+        "name": "中国人民解放军专业技术人才网",
+        "url": "81rc.81.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/81/81rc/sy/gzdt_210283",
+        "parameters": {
+          "category": "分类，默认为 `sy/gzdt_210283`，即工作动态，可在对应分类页 URL 中找到"
+        },
+        "description": ":::tip\n  若订阅 [工作动态](https://81rc.81.cn/sy/gzdt_210283)，网址为 `https://81rc.81.cn/sy/gzdt_210283`。截取 `https://81rc.81.cn/` 到末尾的部分 `sy/gzdt_210283` 作为参数填入，此时路由为 [`/81/81rc/sy/gzdt_210283`](https://rsshub.app/81/81rc/sy/gzdt_210283)。\n  :::\n  ",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "81rc.81.cn/:category"
+            ]
+          }
+        ],
         "location": "81rc/index.ts"
       }
     },
     "name": "中国军网",
-    "url": "81rc.81.cn"
+    "url": "81.cn",
+    "categories": [
+      "government"
+    ],
+    "description": ""
   },
   "163": {
     "routes": {
