@@ -43,7 +43,7 @@ async function handler(ctx) {
 
     const { data: response } = await got(link, { headers });
     const $ = load(response);
-    const items = $('#mostRecentVideosSection .videoBox')
+    const items = $('#pornstarsVideoSection .videoBox')
         .toArray()
         .map((e) => parseItems($(e)));
 
