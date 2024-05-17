@@ -29,9 +29,9 @@ export const route: Route = {
     maintainers: ['CYTMWIA'],
     handler,
     url: 'swpu.edu.cn/',
-    description: `| 栏目 | 重要通知公告 | 部门通知公告 | 本周活动 | 学术报告 |
-  | ---- | ------------ | ------------ | -------- | -------- |
-  | 代码 | zytzgg       | bmtzgg       | bzhd     | xsbg     |`,
+    description: `| 栏目 | 重要通知公告 | 部门通知公告 | 本周活动 |
+  | ---- | ------------ | ------------ | -------- |
+  | 代码 | zytzgg       | bmtzgg       | bzhd     |`,
 };
 
 async function handler(ctx): Promise<Data> {
