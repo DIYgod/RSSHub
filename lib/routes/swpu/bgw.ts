@@ -43,14 +43,13 @@ async function handler(ctx): Promise<Data> {
     const title = $('.title').text();
 
     // 获取标题、时间及链接
-    const items: DataItem[] = [];
-    $('.notice > ul > li > a').each((i, elem) => {
-        items.push({
-            title: $(elem.children[0]).text(),
-            pubDate: timezone(parseDate($(elem.children[1]).text()), +8),
-            link: joinUrl('https://www.swpu.edu.cn', $(elem).attr('href')), // 实际获得连接 "../info/1312/17891.htm"
-        });
-    });
+    const items: DataItem[] = $('.notice > ul > li > a')
+        .toArray()
+        .map((elem) => ({
+                title: $(elem.children[0]).text(),
+                pubDate: timezone(parseDate($(elem.children[1]).text()), +8),
+                link: joinUrl('https://www.swpu.edu.cn', $(elem).attr('href')), // 实际获得连接 "../info/1312/17891.htm"
+            }));
 
     // 请求全文
     const out: DataItem[] = await Promise.all(
