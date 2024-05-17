@@ -55860,25 +55860,33 @@
         "parameters": {
           "channel": "类型，见下表，默认为快讯"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "name": "新闻快讯",
         "maintainers": [
           "Fatpandac",
           "jameshih"
         ],
+        "radar": [
+          {
+            "title": "文章",
+            "source": [
+              "www.theblockbeats.info/article"
+            ],
+            "target": "/article"
+          },
+          {
+            "title": "快讯",
+            "source": [
+              "www.theblockbeats.info/newsflash"
+            ],
+            "target": "/newsflash"
+          }
+        ],
         "description": "|    快讯   |   文章  |\n  | :-------: | :-----: |\n  | newsflash | article |",
         "location": "index.ts"
       }
     },
-    "name": "律动",
-    "url": "rszhaopin.theblockbeats.info"
+    "name": "律动 BlockBeats",
+    "url": "www.theblockbeats.info"
   },
   "thecover": {
     "routes": {
