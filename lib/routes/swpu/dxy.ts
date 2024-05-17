@@ -66,7 +66,7 @@ async function handler(ctx): Promise<Data> {
                         item.description = '无权访问';
                     } else {
                         item.author = '电气信息学院';
-                        item.description = $('.v_news_content').html()?.toString();
+                        item.description = $('.v_news_content').html()!;
                         for (const elem of $('.v_news_content p')) {
                             if ($(elem).css('text-align') === 'right') {
                                 item.author = $(elem).text();

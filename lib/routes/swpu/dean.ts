@@ -63,7 +63,7 @@ async function handler(ctx): Promise<Data> {
                         item.description = '无权访问';
                     } else {
                         item.author = '教务处';
-                        item.description = $('.v_news_content').html()?.toString();
+                        item.description = $('.v_news_content').html()!;
                         item.pubDate = timezone(parseDate($('#lbDate').text(), '更新时间：YYYY年MM月DD日'), +8);
                         for (const elem of $('.v_news_content p')) {
                             if ($(elem).css('text-align') === 'right') {

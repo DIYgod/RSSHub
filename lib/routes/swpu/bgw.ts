@@ -46,10 +46,10 @@ async function handler(ctx): Promise<Data> {
     const items: DataItem[] = $('.notice > ul > li > a')
         .toArray()
         .map((elem) => ({
-                title: $(elem.children[0]).text(),
-                pubDate: timezone(parseDate($(elem.children[1]).text()), +8),
-                link: joinUrl('https://www.swpu.edu.cn', $(elem).attr('href')), // 实际获得连接 "../info/1312/17891.htm"
-            }));
+            title: $(elem.children[0]).text(),
+            pubDate: timezone(parseDate($(elem.children[1]).text()), +8),
+            link: joinUrl('https://www.swpu.edu.cn', $(elem).attr('href')), // 实际获得连接 "../info/1312/17891.htm"
+        }));
 
     // 请求全文
     const out: DataItem[] = await Promise.all(
@@ -63,7 +63,7 @@ async function handler(ctx): Promise<Data> {
                         item.description = '无权访问';
                     } else {
                         item.author = '办公网';
-                        item.description = $('.v_news_content').html()?.toString();
+                        item.description = $('.v_news_content').html()!;
                         for (const elem of $('.v_news_content p')) {
                             if ($(elem).css('text-align') === 'right') {
                                 item.author = $(elem).text();
