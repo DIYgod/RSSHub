@@ -8,16 +8,16 @@ export const header = {
     'x-api-version': '3.0.91',
 };
 
-export const processImage = (content) => {
+const fixImageUrl = (url: string) => url.split('?')[0].replace('_b.jpg', '.jpg').replace('_r.jpg', '.jpg').replace('_720w.jpg', '.jpg');
+
+export const processImage = (content: string) => {
     const $ = load(content, null, false);
 
-    $('noscript').remove();
-
-    $('a[data-draft-type="mcn-link-card"]').remove();
+    $('noscript, a[data-draft-type="mcn-link-card"]').remove();
 
     $('a').each((_, elem) => {
         const href = $(elem).attr('href');
-        if (href?.startsWith('https://link.zhihu.com/?target=')) {
+        if (href?.startsWith('http://link.zhihu.com/?target=') || href?.startsWith('https://link.zhihu.com/?target=')) {
             const url = new URL(href);
             const target = url.searchParams.get('target') || '';
             try {
@@ -31,19 +31,21 @@ export const processImage = (content) => {
     $('img.content_image, img.origin_image, img.content-image, img.data-actualsrc, figure>img').each((i, e) => {
         if (e.attribs['data-actualsrc']) {
             $(e).attr({
-                src: e.attribs['data-actualsrc'].replace('_b.jpg', '_1440w.jpg'),
+                src: fixImageUrl(e.attribs['data-actualsrc']),
                 width: null,
                 height: null,
             });
+            $(e).removeAttr('data-actualsrc');
         } else if (e.attribs['data-original']) {
             $(e).attr({
-                src: e.attribs['data-original'].replace('_r.jpg', '_1440w.jpg'),
+                src: fixImageUrl(e.attribs['data-original']),
                 width: null,
                 height: null,
             });
+            $(e).removeAttr('data-original');
         } else {
             $(e).attr({
-                src: e.attribs.src.replace('_b.jpg', '_1440w.jpg'),
+                src: fixImageUrl(e.attribs.src),
                 width: null,
                 height: null,
             });
