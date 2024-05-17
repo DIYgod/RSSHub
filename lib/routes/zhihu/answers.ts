@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import utils from './utils';
+import { header, processImage } from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -51,7 +51,7 @@ async function handler(ctx) {
                 method: 'get',
                 url: `https://www.zhihu.com${apiPath}`,
                 headers: {
-                    ...utils.header,
+                    ...header,
                     Referer: `https://www.zhihu.com/people/${id}`,
                 },
             });
@@ -71,7 +71,7 @@ async function handler(ctx) {
                     url: `https://api.zhihu.com/appview/api/v4/answers/${item.id}?include=content&is_appview=true`,
                     headers,
                 });
-                description = utils.ProcessImage(detail.data.content);
+                description = processImage(detail.data.content);
             } catch {
                 description = `<a href="${link}" target="_blank">${title}</a>`;
             }

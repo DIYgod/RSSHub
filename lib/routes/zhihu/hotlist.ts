@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
-import utils from './utils';
+import { processImage } from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -44,7 +44,7 @@ async function handler() {
                 case 'answer':
                     return {
                         title: item.target.question.title,
-                        description: `${item.target.author.name}的回答<br/><br/>${utils.ProcessImage(item.target.content)}`,
+                        description: `${item.target.author.name}的回答<br/><br/>${processImage(item.target.content)}`,
                         author: item.target.author.name,
                         pubDate: parseDate(item.target.updated_time * 1000),
                         guid: item.target.id.toString(),
@@ -53,7 +53,7 @@ async function handler() {
                 case 'article':
                     return {
                         title: item.target.title,
-                        description: `${item.target.author.name}的文章<br/><br/>${utils.ProcessImage(item.target.content)}`,
+                        description: `${item.target.author.name}的文章<br/><br/>${processImage(item.target.content)}`,
                         author: item.target.author.name,
                         pubDate: parseDate(item.updated * 1000),
                         guid: item.target.id.toString(),

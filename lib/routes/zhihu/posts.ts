@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
-import utils from './utils';
+import { header } from './utils';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
@@ -36,7 +36,7 @@ async function handler(ctx) {
 
     const { data } = await got(`https://www.zhihu.com/${usertype}/${id}/posts`, {
         headers: {
-            ...utils.header,
+            ...header,
             Referer: `https://www.zhihu.com/${usertype}/${id}/`,
         },
     });
@@ -46,9 +46,9 @@ async function handler(ctx) {
         .contents()
         .filter((_index, element) => element.type === 'text')
         .text();
-    const authordescription = $('.ProfileHeader-headline').text();
+    const authorDescription = $('.ProfileHeader-headline').text();
 
-    const parsed = JSON.parse(jsondata.html());
+    const parsed = JSON.parse(jsondata.text());
     const articlesdata = parsed.initialState.entities.articles;
 
     const list = Object.keys(articlesdata).map((key) => {
@@ -74,7 +74,7 @@ async function handler(ctx) {
     return {
         title: `${authorname} 的知乎文章`,
         link: `https://www.zhihu.com/${usertype}/${id}/posts`,
-        description: authordescription,
+        description: authorDescription,
         item: list,
     };
 }
