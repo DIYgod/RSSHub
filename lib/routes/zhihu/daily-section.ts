@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import utils from './utils';
+import { header, processImage } from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 // 参考：https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90
@@ -38,7 +38,7 @@ async function handler(ctx) {
         method: 'get',
         url: `https://news-at.zhihu.com/api/7/section/${sectionId}`,
         headers: {
-            ...utils.header,
+            ...header,
             Referer: `https://news-at.zhihu.com/api/7/section/${sectionId}`,
         },
     });
@@ -61,7 +61,7 @@ async function handler(ctx) {
                         Referer: url,
                     },
                 });
-                item.description = utils.ProcessImage(storyDetail.data.body.replaceAll(/<div class="meta">([\S\s]*?)<\/div>/g, '<strong>$1</strong>').replaceAll(/<\/?h2.*?>/g, ''));
+                item.description = processImage(storyDetail.data.body.replaceAll(/<div class="meta">([\S\s]*?)<\/div>/g, '<strong>$1</strong>').replaceAll(/<\/?h2.*?>/g, ''));
 
                 return item;
             });

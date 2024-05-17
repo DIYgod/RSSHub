@@ -36,14 +36,14 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language = 'www', username, sort = 'mr' } = ctx.req.param();
-    const link = `https://${language}.pornhub.com/pornstar/${username}/videos?o=${sort}`;
+    const link = `https://${language}.pornhub.com/pornstar/${username}?o=${sort}`;
     if (!isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');
     }
 
     const { data: response } = await got(link, { headers });
     const $ = load(response);
-    const items = $('#mostRecentVideosSection .videoBox')
+    const items = $('#pornstarsVideoSection .videoBox')
         .toArray()
         .map((e) => parseItems($(e)));
 

@@ -1,41 +1,35 @@
 import { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/81rc/*',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
-    const thePath = getSubPath(ctx).replace(/^\/81rc/, '');
+export const handler = async (ctx) => {
+    const { category = 'sy/gzdt_210283' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
     const rootUrl = 'https://81rc.81.cn';
-
-    // The default is http://81rc.81.cn/sy/gzdt_210283.
-    const currentUrl = new URL(thePath || '/sy/gzdt_210283', rootUrl).href;
+    const currentUrl = new URL(category?.endsWith('/') ? `${category}/` : category, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 
     const $ = load(response);
 
-    let items = $('div.left-news ul li a')
+    const language = $('html').prop('lang');
+
+    let items = $('div.left-news ul li')
         .slice(0, limit)
         .toArray()
         .map((item) => {
             item = $(item);
 
             return {
-                title: item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
-                pubDate: timezone(parseDate(item.parent().find('span').text()), +8),
+                title: item.find('a').text(),
+                pubDate: timezone(parseDate(item.find('span').text()), +8),
+                link: item.find('a').prop('href'),
+                language,
             };
         });
 
@@ -44,29 +38,71 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
-                const content = load(detailResponse);
+                const $$ = load(detailResponse);
 
-                item.description = content('.txt').html();
-                item.author = content('meta[name="reporter"]').prop('content') || content('meta[name="author"]').prop('content');
+                const description = $$('div.txt').html();
+
+                item.title = $$('h2').text();
+                item.description = description;
+                item.pubDate = timezone(parseDate($$('div.time span').last().text()), +8);
+                item.author = $$('div.time span').first().text();
+                item.content = {
+                    html: description,
+                    text: $$('div.txt').text(),
+                };
+                item.language = language;
 
                 return item;
             })
         )
     );
 
-    const icon = $('link[rel="icon"]').prop('href');
+    const title = $('title').text();
+    const image = new URL('template/tenant207/t582/new.jpg', rootUrl).href;
 
     return {
-        item: items,
-        title: `军队人才网 - ${$('div.left-word')
-            .find('a')
-            .toArray()
-            .map((a) => $(a).text())
-            .filter((a) => a !== '首页')
-            .join(' - ')}`,
+        title,
+        description: $('div.time').contents().first().text(),
         link: currentUrl,
-        language: 'zh-cn',
-        icon,
-        logo: icon,
+        item: items,
+        allowEmpty: true,
+        image,
+        author: title.split(/-/).pop()?.trim(),
+        language,
     };
-}
+};
+
+export const route: Route = {
+    path: '/81rc/:category{.+}?',
+    name: '中国人民解放军专业技术人才网',
+    url: '81rc.81.cn',
+    maintainers: ['nczitzk'],
+    handler,
+    example: '/81/81rc/sy/gzdt_210283',
+    parameters: { category: '分类，默认为 `sy/gzdt_210283`，即工作动态，可在对应分类页 URL 中找到' },
+    description: `:::tip
+  若订阅 [工作动态](https://81rc.81.cn/sy/gzdt_210283)，网址为 \`https://81rc.81.cn/sy/gzdt_210283\`。截取 \`https://81rc.81.cn/\` 到末尾的部分 \`sy/gzdt_210283\` 作为参数填入，此时路由为 [\`/81/81rc/sy/gzdt_210283\`](https://rsshub.app/81/81rc/sy/gzdt_210283)。
+  :::
+  `,
+    categories: ['government'],
+
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportRadar: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['81rc.81.cn/:category'],
+            target: (params) => {
+                const category = params.category;
+
+                return `/81/81rc/${category ? `/${category}` : ''}`;
+            },
+        },
+    ],
+};

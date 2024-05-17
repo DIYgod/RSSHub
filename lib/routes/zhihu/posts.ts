@@ -1,6 +1,6 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
-import utils from './utils';
+import ofetch from '@/utils/ofetch';
+import { header, getSignedHeader, processImage } from './utils';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
@@ -34,47 +34,49 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const usertype = ctx.req.param('usertype');
 
-    const { data } = await got(`https://www.zhihu.com/${usertype}/${id}/posts`, {
+    const data = await ofetch(`https://www.zhihu.com/${usertype}/${id}/posts`, {
         headers: {
-            ...utils.header,
+            ...header,
             Referer: `https://www.zhihu.com/${usertype}/${id}/`,
         },
     });
     const $ = load(data);
-    const jsondata = $('#js-initialData');
-    const authorname = $('.ProfileHeader-name')
-        .contents()
-        .filter((_index, element) => element.type === 'text')
-        .text();
-    const authordescription = $('.ProfileHeader-headline').text();
+    const initialData = JSON.parse($('#js-initialData').text());
+    const userData = initialData?.initialState?.entities?.users?.[id];
 
-    const parsed = JSON.parse(jsondata.html());
-    const articlesdata = parsed.initialState.entities.articles;
+    const apiPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}/articles?${new URLSearchParams({
+        include:
+            'data[*].comment_count,suggest_edit,is_normal,thumbnail_extra_info,thumbnail,can_comment,comment_permission,admin_closed_comment,content,voteup_count,created,updated,upvoted_followees,voting,review_info,reaction_instruction,is_labeled,label_info;data[*].vessay_info;data[*].author.badge[?(type=best_answerer)].topics;data[*].author.vip_info;',
+        offset: '0',
+        limit: '20',
+        sort_by: 'created',
+    })}`;
 
-    const list = Object.keys(articlesdata).map((key) => {
-        const $ = load(articlesdata[key].content, null, false);
-        $('noscript').remove();
-        $('img').each((_, item) => {
-            if (item.attribs['data-actualsrc'] || item.attribs['data-original']) {
-                item.attribs['data-actualsrc'] = item.attribs['data-actualsrc'] ? item.attribs['data-actualsrc'].split('?source')[0] : null;
-                item.attribs['data-original'] = item.attribs['data-original'] ? item.attribs['data-original'].split('?source')[0] : null;
-                item.attribs.src = item.attribs['data-original'] || item.attribs['data-actualsrc'];
-                delete item.attribs['data-actualsrc'];
-                delete item.attribs['data-original'];
-            }
-        });
-        return {
-            title: articlesdata[key].title,
-            description: $.html(),
-            link: articlesdata[key].url,
-            pubDate: parseDate(articlesdata[key].created, 'X'),
-        };
+    const signedHeader = await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/posts`, apiPath);
+
+    const articleResponse = await ofetch(`https://www.zhihu.com${apiPath}`, {
+        headers: {
+            ...header,
+            ...signedHeader,
+            Referer: `https://www.zhihu.com/${usertype}/${id}/posts`,
+        },
     });
 
+    const items = articleResponse.data.map((item) => ({
+        title: item.title,
+        description: processImage(item.content),
+        link: `https://zhuanlan.zhihu.com/p/${item.id}`,
+        pubDate: parseDate(item.created, 'X'),
+        updated: parseDate(item.updated, 'X'),
+        author: item.author.name,
+    }));
+
     return {
-        title: `${authorname} 的知乎文章`,
+        title: `${userData?.name} 的知乎文章`,
         link: `https://www.zhihu.com/${usertype}/${id}/posts`,
-        description: authordescription,
-        item: list,
+        description: userData?.headline,
+        image: userData?.avatarUrlTemplate?.split('?')[0],
+        banner: userData?.coverUrl?.split('?')[0],
+        item: items,
     };
 }

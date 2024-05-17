@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
-import utils from './utils';
+import { processImage } from './utils';
 import { parseDate } from '@/utils/parse-date';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
@@ -106,7 +106,7 @@ async function handler(ctx) {
         const link = buildLink(e);
         return {
             title: `${e.action_text_tpl.replace('{}', buildActors(e))}: ${getOne([e.target.title, e.target.question ? e.target.question.title : ''])}`,
-            description: utils.ProcessImage(`<div>${getOne([e.target.content_html, getContent(e.target.content), e.target.detail, e.target.excerpt, ''])}</div>`),
+            description: processImage(`<div>${getOne([e.target.content_html, getContent(e.target.content), e.target.detail, e.target.excerpt, ''])}</div>`),
             pubDate: parseDate(e.updated_time * 1000),
             link,
             author: e.target.author ? e.target.author.name : '',
