@@ -33,7 +33,7 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['twitter.com/search'],
+            source: ['x.com/search'],
         },
     ],
 };
@@ -45,7 +45,7 @@ async function handler(ctx) {
 
     return {
         title: `Twitter Keyword - ${keyword}`,
-        link: `https://twitter.com/search?q=${encodeURIComponent(keyword)}`,
+        link: `https://x.com/search?q=${encodeURIComponent(keyword)}`,
         item: utils.ProcessFeed(ctx, {
             data,
         }),

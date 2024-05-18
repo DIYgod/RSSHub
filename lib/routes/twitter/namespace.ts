@@ -1,8 +1,8 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Twitter',
-    url: 'twitter.com',
+    name: 'X (Twitter)',
+    url: 'x.com',
     description: `Specify options (in the format of query string) in parameter \`routeParams\` to control some extra features for Tweets
 
 | Key                            | Description                                                                                                                          | Accepts                | Defaults to                               |

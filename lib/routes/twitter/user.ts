@@ -42,7 +42,7 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['twitter.com/:id'],
+            source: ['x.com/:id'],
             target: '/user/:id',
         },
     ],
@@ -66,7 +66,7 @@ async function handler(ctx) {
 
     return {
         title: `Twitter @${userInfo?.name}`,
-        link: `https://twitter.com/${userInfo?.screen_name}`,
+        link: `https://x.com/${userInfo?.screen_name}`,
         image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
         description: userInfo?.description,
         item: utils.ProcessFeed(ctx, {
