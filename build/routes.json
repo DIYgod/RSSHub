@@ -54316,7 +54316,7 @@
           "CYTMWIA"
         ],
         "url": "swpu.edu.cn/",
-        "description": "| 栏目 | 重要通知公告 | 部门通知公告 | 本周活动 | 学术报告 |\n  | ---- | ------------ | ------------ | -------- | -------- |\n  | 代码 | zytzgg       | bmtzgg       | bzhd     | xsbg     |",
+        "description": "| 栏目 | 重要通知公告 | 部门通知公告 | 本周活动 |\n  | ---- | ------------ | ------------ | -------- |\n  | 代码 | zytzgg       | bmtzgg       | bzhd     |",
         "location": "bgw.ts"
       },
       "/cjxy/:code": {
@@ -54476,7 +54476,7 @@
             "target": ""
           }
         ],
-        "name": "计算机科学学院",
+        "name": "计算机与软件学院",
         "maintainers": [
           "CYTMWIA"
         ],

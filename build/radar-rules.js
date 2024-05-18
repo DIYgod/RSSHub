@@ -6580,7 +6580,7 @@
         docs:"https://docs.rsshub.app/routes/university",
         source:[ "/" ],
         target:"/swpu/is/:code" },
-      { title:"计算机科学学院",
+      { title:"计算机与软件学院",
         docs:"https://docs.rsshub.app/routes/university",
         source:[ "/" ],
         target:"/swpu/scs/:code" } ] },
