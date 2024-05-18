@@ -5,10 +5,10 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootURL = 'https://gs.bjtu.edu.cn';
-const url_cms = `${rootURL}/cms/item/?tag=`;
-const url_zszt = `${rootURL}/cms/zszt/item/?cat=`;
+const urlCms = `${rootURL}/cms/item/?tag=`;
+const urlZszt = `${rootURL}/cms/zszt/item/?cat=`;
 const title = ' - 北京交通大学研究生院';
-const zszt_regex = /_zszt/;
+const zsztRegex = /_zszt/;
 const struct = {
     noti_zs: {
         selector: {
@@ -124,27 +124,27 @@ const struct = {
     },
 };
 
-const getItem = (item, selector, cache) => {
-    const news_info = item.find('a');
-    const news_date = item
+const getItem = (item, selector) => {
+    const newsInfo = item.find('a');
+    const newsDate = item
         .find('span')
         .text()
         .match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/)[0];
 
-    const info_title = news_info.text();
-    const link = rootURL + news_info.attr('href');
+    const infoTitle = newsInfo.text();
+    const link = rootURL + newsInfo.attr('href');
     return cache.tryGet(link, async () => {
         const resp = await ofetch(link);
         const $$ = load(resp);
-        const info_text = $$(selector).html();
+        const infoText = $$(selector).html();
 
         return {
-            title: info_title,
-            pubDate: parseDate(news_date),
+            title: infoTitle,
+            pubDate: parseDate(newsDate),
             link,
-            description: info_text,
+            description: infoText,
         };
-    });
+    }) as any;
 };
 
 export const route: Route = {
@@ -169,41 +169,41 @@ export const route: Route = {
     maintainers: ['E1nzbern'],
     handler,
     description: `
-    | 文章来源           | 参数         |
-    | ----------------- | ------------ |
-    | 通知公告_招生      | noti_zs      |
-    | 通知公告           | noti         |
-    | 新闻动态           | news         |
-    | 招生宣传           | zsxc         |
-    | 培养               | py           |
-    | 招生               | zs           |
-    | 学位               | xw           |
-    | 研工部             | ygb          |
-    | 通知公告 - 研工部   | ygbtzgg      |
-    | 新闻动态 - 研工部   | ygbnews      |
-    | 新闻封面 - 研工部   | ygbnewscover |
-    | 文章列表           | all          |
-    | 博士招生 - 招生专题 | bszs_zszt    |
-    | 硕士招生 - 招生专题 | sszs_zszt    |
-    | 招生简章 - 招生专题 | zsjz_zszt    |
-    | 政策法规 - 招生专题 | zcfg_zszt    |
+  | 文章来源           | 参数         |
+  | ----------------- | ------------ |
+  | 通知公告_招生      | noti_zs      |
+  | 通知公告           | noti         |
+  | 新闻动态           | news         |
+  | 招生宣传           | zsxc         |
+  | 培养               | py           |
+  | 招生               | zs           |
+  | 学位               | xw           |
+  | 研工部             | ygb          |
+  | 通知公告 - 研工部   | ygbtzgg      |
+  | 新闻动态 - 研工部   | ygbnews      |
+  | 新闻封面 - 研工部   | ygbnewscover |
+  | 文章列表           | all          |
+  | 博士招生 - 招生专题 | bszs_zszt    |
+  | 硕士招生 - 招生专题 | sszs_zszt    |
+  | 招生简章 - 招生专题 | zsjz_zszt    |
+  | 政策法规 - 招生专题 | zcfg_zszt    |
 
-    :::tip 文章来源
-    文章来源的命名均来自研究生院网站标题。
-    最常用的几项有“通知公告_招生”、“通知公告”、“博士招生 - 招生专题”、“硕士招生 - 招生专题”。
-    :::`,
+  :::tip 文章来源
+  文章来源的命名均来自研究生院网站标题。
+  最常用的几项有“通知公告_招生”、“通知公告”、“博士招生 - 招生专题”、“硕士招生 - 招生专题”。
+  :::`,
 };
 
 async function handler(ctx) {
     const { type = 'noti' } = ctx.req.param();
-    let url = url_cms;
-    let selector_article = 'div.main_left.main_left_list';
-    if (zszt_regex.test(type)) {
-        url = url_zszt;
-        selector_article = 'div.mainleft_box';
+    let url = urlCms;
+    let selectorArticle = 'div.main_left.main_left_list';
+    if (zsztRegex.test(type)) {
+        url = urlZszt;
+        selectorArticle = 'div.mainleft_box';
     }
-    const url_addr = `${url}${struct[type].tag}`;
-    const resp = await ofetch(url_addr);
+    const urlAddr = `${url}${struct[type].tag}`;
+    const resp = await ofetch(urlAddr);
     const $ = load(resp);
 
     const list = $(struct[type].selector.list);
@@ -211,13 +211,13 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.toArray().map((i) => {
             const item = $(i);
-            return getItem(item, selector_article, cache);
+            return getItem(item, selectorArticle);
         })
     );
 
     return {
         title: `${struct[type].name}${title}`,
-        link: url_addr,
+        link: urlAddr,
         item: items,
         allowEmpty: true,
     };

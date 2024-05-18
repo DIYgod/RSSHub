@@ -5,29 +5,29 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootURL = 'https://gsee.swjtu.edu.cn';
-const url_addr = `${rootURL}/xwzx/tzgg.htm`;
+const urlAddr = `${rootURL}/xwzx/tzgg.htm`;
 
-const getItem = (item, cache) => {
-    const news_info = item.find('dt');
-    const news_date = item
+const getItem = (item) => {
+    const newsInfo = item.find('dt');
+    const newsDate = item
         .find('dd')
         .text()
         .match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/)[0];
 
-    const info_title = news_info.text();
-    const link = rootURL + news_info.find('a').last().attr('href').slice(2);
+    const infoTitle = newsInfo.text();
+    const link = rootURL + newsInfo.find('a').last().attr('href').slice(2);
     return cache.tryGet(link, async () => {
         const resp = await ofetch(link);
         const $$ = load(resp);
-        const info_text = $$('.article').html();
+        const infoText = $$('.article').html();
 
         return {
-            title: info_title,
-            pubDate: parseDate(news_date),
+            title: infoTitle,
+            pubDate: parseDate(newsDate),
             link,
-            description: info_text,
+            description: infoText,
         };
-    });
+    }) as any;
 };
 
 export const route: Route = {
@@ -51,11 +51,11 @@ export const route: Route = {
     name: '地球科学与工程学院',
     maintainers: ['E1nzbern'],
     handler,
-    description: `#### 研究生教育通知公告`,
+    description: `研究生教育通知公告`,
 };
 
 async function handler() {
-    const resp = await ofetch(url_addr);
+    const resp = await ofetch(urlAddr);
     const $ = load(resp);
 
     const list = $('dl');
@@ -63,13 +63,13 @@ async function handler() {
     const items = await Promise.all(
         list.toArray().map((i) => {
             const item = $(i);
-            return getItem(item, cache);
+            return getItem(item);
         })
     );
 
     return {
         title: '西南交大地学学院-研究生通知',
-        link: url_addr,
+        link: urlAddr,
         item: items,
         allowEmpty: true,
     };
