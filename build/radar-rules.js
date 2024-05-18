@@ -6962,7 +6962,7 @@
         docs:"https://docs.rsshub.app/routes/live",
         source:[ "/:login/videos" ],
         target:"/twitch/video/:login" } ] },
-  "twitter.com":{ _name:"Twitter",
+  "x.com":{ _name:"X (Twitter)",
     ".":[ { title:"Home timeline",
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/home" ],
