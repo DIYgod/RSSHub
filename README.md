@@ -25,14 +25,6 @@ RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYg
 
 ## Special Thanks
 
-### Special Sponsors
-
-<p>
-<a href="https://rss3.io" target="_blank"><img height="50px" src="https://i.imgur.com/lb1dDGK.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://xlog.app/" target="_blank"><img height="50px" src="https://i.imgur.com/JuhHTKD.png"></a>
-</p>
-
-[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/sponsor/)
-
 ### Contributors
 
 [![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
