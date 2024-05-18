@@ -28,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const xhuCookie = await auth.getCookie(ctx);
+    const xhuCookie = await auth.getCookie();
     const id = ctx.req.param('id');
     const link = `https://www.zhihu.com/collection/${id}`;
 

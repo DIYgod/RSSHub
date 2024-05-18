@@ -139,6 +139,8 @@ async function handler(ctx) {
                     description = detail.description;
                     url = `https://www.zhihu.com/roundtable/${detail.id}`;
                     break;
+                default:
+                    description = `未知类型 ${item.target.type}，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue`;
             }
 
             return {
