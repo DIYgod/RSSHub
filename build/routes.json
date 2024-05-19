@@ -31207,23 +31207,28 @@
   },
   "javbus": {
     "routes": {
-      "*": {
-        "path": "*",
+      "/:path{.+}?": {
+        "path": "/:path{.+}?",
         "radar": [
           {
             "source": [
-              "www.seejav.pw/"
+              "www.javbus.com/:path*"
             ],
-            "target": ""
+            "target": "/:path"
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "Works",
+        "maintainers": [
+          "MegrezZhu",
+          "CoderTonyChan",
+          "nczitzk",
+          "Felix2yu"
+        ],
         "categories": [
           "multimedia",
           "popular"
         ],
-        "url": "www.seejav.pw/",
+        "url": "www.javbus.com",
         "location": "index.ts"
       }
     },

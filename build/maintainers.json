@@ -3107,7 +3107,12 @@
   "/japanpost/track/:reqCode/:locale?": [
     "tuzi3040"
   ],
-  "/javbus*": [],
+  "/javbus/:path{.+}?": [
+    "MegrezZhu",
+    "CoderTonyChan",
+    "nczitzk",
+    "Felix2yu"
+  ],
   "/javdb/actors/:id/:filter?": [
     "nczitzk"
   ],

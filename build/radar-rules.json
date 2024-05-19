@@ -8494,16 +8494,16 @@
       }
     ]
   },
-  "seejav.pw": {
+  "javbus.com": {
     "_name": "JavBus",
     "www": [
       {
-        "title": "Unknown",
+        "title": "Works",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
-          "/"
+          "/:path*"
         ],
-        "target": "/javbus*"
+        "target": "/javbus/:path"
       }
     ]
   },
