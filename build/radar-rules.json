@@ -2085,6 +2085,19 @@
       }
     ]
   },
+  "bjtu.edu.cn": {
+    "_name": "Beijing Jiaotong University",
+    "gs": [
+      {
+        "title": "研究生院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/bjtu/gs/:type?"
+      }
+    ]
+  },
   "bjx.com.cn": {
     "_name": "北极星电力网",
     "huanbao": [
@@ -15063,6 +15076,16 @@
           "/"
         ],
         "target": "/swjtu/xg"
+      }
+    ],
+    "gsee": [
+      {
+        "title": "地球科学与工程学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/swjtu/gsee/yjs"
       }
     ]
   },
