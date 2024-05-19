@@ -3709,7 +3709,7 @@
         target:"/ixigua/user/video/:uid" } ] },
   "seejav.pw":{ _name:"JavBus",
     www:[ { title:"Unknown",
-        docs:"https://docs.rsshub.app/routes/other",
+        docs:"https://docs.rsshub.app/routes/multimedia",
         source:[ "/" ],
         target:"/javbus*" } ] },
   "javdb.com":{ _name:"JavDB",

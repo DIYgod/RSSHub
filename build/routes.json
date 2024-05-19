@@ -4281,7 +4281,8 @@
       "/rss/:rss?": {
         "path": "/rss/:rss?",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
         "example": "/apnews/rss/business",
         "parameters": {
@@ -6403,7 +6404,8 @@
       "/user/dynamic/:uid/:routeParams?": {
         "path": "/user/dynamic/:uid/:routeParams?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/bilibili/user/dynamic/2267573",
         "parameters": {
@@ -7039,7 +7041,8 @@
           "DIYgod"
         ],
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/bilibili/ranking/0/3/1",
         "parameters": {
@@ -7226,7 +7229,8 @@
       "/user/video/:uid/:disableEmbed?": {
         "path": "/user/video/:uid/:disableEmbed?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/bilibili/user/video/2267573",
         "parameters": {
@@ -16189,7 +16193,8 @@
       "/build/:owner/:image/:tag?": {
         "path": "/build/:owner/:image/:tag?",
         "categories": [
-          "program-update"
+          "program-update",
+          "popular"
         ],
         "example": "/dockerhub/build/wangqiru/ttrss",
         "parameters": {
@@ -16897,7 +16902,8 @@
       "/group/:groupid/:type?": {
         "path": "/group/:groupid/:type?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/douban/group/648102",
         "parameters": {
@@ -22229,7 +22235,8 @@
       "/issue/:user/:repo/:state?/:labels?": {
         "path": "/issue/:user/:repo/:state?/:labels?",
         "categories": [
-          "programming"
+          "programming",
+          "popular"
         ],
         "example": "/github/issue/vuejs/core/all/wontfix",
         "parameters": {
@@ -30467,7 +30474,8 @@
       "/:category/:key": {
         "path": "/:category/:key",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/instagram/user/stefaniejoosten",
         "parameters": {
@@ -31211,6 +31219,10 @@
         ],
         "name": "Unknown",
         "maintainers": [],
+        "categories": [
+          "multimedia",
+          "popular"
+        ],
         "url": "www.seejav.pw/",
         "location": "index.ts"
       }
@@ -31977,7 +31989,8 @@
       "/topic/:id/:showUid?": {
         "path": "/topic/:id/:showUid?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/jike/topic/556688fae4b00c57d9dd46ee",
         "parameters": {
@@ -32010,7 +32023,8 @@
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/jike/user/3EE02BC9-C5B3-4209-8750-4ED1EE0F67BB",
         "parameters": {
@@ -34703,7 +34717,8 @@
       "/user/:name?": {
         "path": "/user/:name?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/lofter/user/i",
         "parameters": {
@@ -44769,7 +44784,8 @@
       "/ranking/:mode/:date?": {
         "path": "/ranking/:mode/:date?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/pixiv/ranking/week",
         "parameters": {
@@ -44794,7 +44810,8 @@
       "/search/:keyword/:order?/:mode?": {
         "path": "/search/:keyword/:order?/:mode?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/pixiv/search/Nezuko/popular/2",
         "parameters": {
@@ -44820,7 +44837,8 @@
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/pixiv/user/15288095",
         "parameters": {
@@ -48086,7 +48104,8 @@
       "/routes/:lang?": {
         "path": "/routes/:lang?",
         "categories": [
-          "program-update"
+          "program-update",
+          "popular"
         ],
         "example": "/rsshub/routes/en",
         "parameters": {
@@ -50015,7 +50034,8 @@
       "/user/:uid": {
         "path": "/user/:uid",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
         "example": "/sehuatang/user/411096",
         "parameters": {
@@ -55574,7 +55594,8 @@
       "/channel/:username/:routeParams?": {
         "path": "/channel/:username/:routeParams?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/telegram/channel/awesomeDIYgod/searchQuery=twitter",
         "parameters": {
@@ -58028,7 +58049,8 @@
       "/keyword/:keyword/:routeParams?": {
         "path": "/keyword/:keyword/:routeParams?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/twitter/keyword/RSSHub",
         "parameters": {
@@ -58150,7 +58172,8 @@
       "/media/:id/:routeParams?": {
         "path": "/media/:id/:routeParams?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/twitter/media/DIYgod",
         "parameters": {
@@ -58255,7 +58278,8 @@
       "/user/:id/:routeParams?": {
         "path": "/user/:id/:routeParams?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/twitter/user/DIYgod",
         "parameters": {
@@ -61344,7 +61368,8 @@
       "/keyword/:keyword/:routeParams?": {
         "path": "/keyword/:keyword/:routeParams?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/weibo/keyword/DIYgod",
         "parameters": {
@@ -61441,7 +61466,8 @@
       "/user/:uid/:routeParams?": {
         "path": "/user/:uid/:routeParams?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/weibo/user/1195230310",
         "parameters": {
@@ -63145,7 +63171,8 @@
       "/podcast/:id": {
         "path": "/podcast/:id",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
         "example": "/xiaoyuzhou/podcast/6021f949a789fca4eff4492c",
         "parameters": {
@@ -63246,49 +63273,13 @@
   },
   "ximalaya": {
     "routes": {
-      "/:type/:id/:all?": {
-        "path": [
-          "/:type/:id/:all?",
-          "/:type/:id/:all/:shownote?"
-        ],
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/ximalaya/album/299146",
-        "parameters": {
-          "type": "专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到",
-          "id": "专辑 id, 可在对应专辑页面的 URL 中找到",
-          "all": "是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "XIMALAYA_TOKEN",
-              "description": ""
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": true,
-          "supportScihub": false
-        },
-        "name": "专辑（不输出 ShowNote）",
-        "maintainers": [
-          "lengthmin",
-          "jjeejj",
-          "prnake"
-        ],
-        "description": "目前喜马拉雅的 API 只能一集一集的获取各节目上的 ShowNote，会极大的占用系统资源，所以默认为不获取节目的 ShowNote。下方有一个新的路径可选获取 ShowNote。\n\n  :::warning\n  专辑类型即 url 中的分类拼音，使用通用分类 `album` 通常是可行的，专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了\n\n  **付费内容需要配置好已购买账户的 token 才能收听，详情见部署页面的配置模块**\n  :::",
-        "location": "album.ts"
-      },
       "/:type/:id/:all/:shownote?": {
         "path": [
-          "/:type/:id/:all?",
           "/:type/:id/:all/:shownote?"
         ],
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
         "example": "/ximalaya/album/299146",
         "parameters": {
@@ -63309,13 +63300,13 @@
           "supportPodcast": true,
           "supportScihub": false
         },
-        "name": "专辑（不输出 ShowNote）",
+        "name": "专辑",
         "maintainers": [
           "lengthmin",
           "jjeejj",
           "prnake"
         ],
-        "description": "目前喜马拉雅的 API 只能一集一集的获取各节目上的 ShowNote，会极大的占用系统资源，所以默认为不获取节目的 ShowNote。下方有一个新的路径可选获取 ShowNote。\n\n  :::warning\n  专辑类型即 url 中的分类拼音，使用通用分类 `album` 通常是可行的，专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了\n\n  **付费内容需要配置好已购买账户的 token 才能收听，详情见部署页面的配置模块**\n  :::",
+        "description": "目前喜马拉雅的 API 只能一集一集的获取各节目上的 ShowNote，会极大的占用系统资源，所以默认为不获取节目的 ShowNote。\n\n  :::warning\n  专辑类型即 url 中的分类拼音，使用通用分类 `album` 通常是可行的，专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了\n\n  **付费内容需要配置好已购买账户的 token 才能收听，详情见部署页面的配置模块**\n  :::",
         "location": "album.ts"
       }
     },
@@ -65231,7 +65222,8 @@
       "/user/:username/:embed?": {
         "path": "/user/:username/:embed?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/youtube/user/@JFlaMusic",
         "parameters": {
@@ -66050,7 +66042,8 @@
       "/people/activities/:id": {
         "path": "/people/activities/:id",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/zhihu/people/activities/diygod",
         "parameters": {

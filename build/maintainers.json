@@ -6291,11 +6291,6 @@
   "/xidian/jwc/:category?": [
     "ShadowySpirits"
   ],
-  "/ximalaya/:type/:id/:all?": [
-    "lengthmin",
-    "jjeejj",
-    "prnake"
-  ],
   "/ximalaya/:type/:id/:all/:shownote?": [
     "lengthmin",
     "jjeejj",
