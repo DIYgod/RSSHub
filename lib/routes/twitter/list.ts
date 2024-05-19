@@ -33,7 +33,7 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['twitter.com/i/lists/:id'],
+            source: ['x.com/i/lists/:id'],
             target: '/list/:id',
         },
     ],
@@ -49,7 +49,7 @@ async function handler(ctx) {
 
     return {
         title: `Twitter List - ${id}`,
-        link: `https://twitter.com/i/lists/${id}`,
+        link: `https://x.com/i/lists/${id}`,
         item: utils.ProcessFeed(ctx, {
             data,
         }),

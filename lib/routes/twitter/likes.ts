@@ -38,7 +38,7 @@ async function handler(ctx) {
 
     return {
         title: `Twitter Likes - ${id}`,
-        link: `https://twitter.com/${id}/likes`,
+        link: `https://x.com/${id}/likes`,
         item: utils.ProcessFeed(ctx, {
             data,
         }),
