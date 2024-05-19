@@ -29,6 +29,7 @@ export const route: Route = {
     ],
     name: 'Unknown',
     maintainers: [],
+    categories: ['multimedia', 'popular'],
     handler,
     url: 'www.seejav.pw/',
 };

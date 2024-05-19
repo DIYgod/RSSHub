@@ -6,7 +6,7 @@ import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/user/video/:uid/:disableEmbed?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/bilibili/user/video/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {
