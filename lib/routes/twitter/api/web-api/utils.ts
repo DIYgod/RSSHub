@@ -23,7 +23,7 @@ export const twitterGot = async (url, params) => {
         url: `${url}?${queryString.stringify(params)}`,
         method: 'GET',
         headers: {
-            authority: 'twitter.com',
+            authority: 'x.com',
             accept: '*/*',
             'accept-language': 'en-US,en;q=0.9',
             authorization: bearerToken,
@@ -32,7 +32,7 @@ export const twitterGot = async (url, params) => {
             cookie: config.twitter.cookie,
             dnt: '1',
             pragma: 'no-cache',
-            referer: 'https://twitter.com/narendramodi',
+            referer: 'https://x.com/narendramodi',
             'x-csrf-token': jsonCookie.ct0,
             'x-twitter-active-user': 'yes',
             'x-twitter-auth-type': 'OAuth2Session',

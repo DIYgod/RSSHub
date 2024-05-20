@@ -58,7 +58,7 @@ async function loadContent(category, nameOrId, tryGet) {
 
 export const route: Route = {
     path: '/:category/:key',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/instagram/user/stefaniejoosten',
     parameters: { category: 'Feed category, see table above', key: 'Username / Hashtag name' },
     features: {

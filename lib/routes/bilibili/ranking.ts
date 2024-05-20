@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/ranking/:rid?/:day?/:arc_type?/:disableEmbed?',
     name: '排行榜',
     maintainers: ['DIYgod'],
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/bilibili/ranking/0/3/1',
     parameters: {
         rid: '排行榜分区 id, 默认 0',

@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/issue/:user/:repo/:state?/:labels?',
-    categories: ['programming'],
+    categories: ['programming', 'popular'],
     example: '/github/issue/vuejs/core/all/wontfix',
     parameters: { user: 'GitHub username', repo: 'GitHub repo name', state: 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', labels: 'a list of comma separated label names' },
     radar: [

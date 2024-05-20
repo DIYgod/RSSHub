@@ -27,7 +27,7 @@ const handler = async (ctx) => {
 
     return {
         title: `Twitter @${userInfo.name}`,
-        link: `https://twitter.com/${screen_name}`,
+        link: `https://x.com/${screen_name}`,
         image: profileImageUrl,
         description: userInfo.description,
         item: utils.ProcessFeed(ctx, {
