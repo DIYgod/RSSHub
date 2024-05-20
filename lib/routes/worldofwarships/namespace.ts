@@ -9,5 +9,5 @@ export const namespace: Namespace = {
     'zh-TW': {
         name: '戰艦世界',
     },
-    description: 'Tip: use proxy if necessary.'
+    description: 'Tip: use proxy if necessary.',
 };
