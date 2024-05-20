@@ -165,7 +165,7 @@
         "eslint-plugin-unicorn": "53.0.0",
         "eslint-plugin-yml": "1.14.0",
         "fs-extra": "11.2.0",
-        "got": "14.2.1",
+        "got": "14.3.0",
         "husky": "9.0.11",
         "js-beautify": "1.15.1",
         "lint-staged": "15.2.2",
