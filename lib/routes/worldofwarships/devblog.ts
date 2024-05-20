@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import cache from '@/utils/cache'
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/devblog',
@@ -28,7 +28,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler() {
     const url = 'https://blog.worldofwarships.com/';
 
     const { data: response } = await got(url);
@@ -68,7 +68,7 @@ async function handler(ctx) {
     return {
         title: 'World of Warships - Development Blog',
         link: url,
-        item: list,
+        item: items,
         image: 'https:' + face.attr('href'),
         language: 'en',
         author: 'Wargaming',
