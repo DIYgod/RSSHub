@@ -62359,6 +62359,47 @@
     "name": "世界新聞網",
     "url": "worldjournal.com"
   },
+  "worldofwarships": {
+    "routes": {
+      "/devblog": {
+        "path": "/devblog",
+        "categories": [
+          "game"
+        ],
+        "example": "/worldofwarships/devblog",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "blog.worldofwarships.com"
+            ],
+            "target": "/devblog"
+          }
+        ],
+        "name": "Development Blog",
+        "maintainers": [
+          "SinCerely023"
+        ],
+        "location": "devblog.ts"
+      }
+    },
+    "name": "World of Warships",
+    "url": "worldofwarships.com",
+    "zh": {
+      "name": "战舰世界"
+    },
+    "zh-TW": {
+      "name": "戰艦世界"
+    },
+    "description": "Tip: use proxy if necessary."
+  },
   "woshipm": {
     "routes": {
       "/popular/:range?": {

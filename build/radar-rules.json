@@ -17160,6 +17160,19 @@
       }
     ]
   },
+  "worldofwarships.com": {
+    "_name": "World of Warships",
+    "blog": [
+      {
+        "title": "Development Blog",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/worldofwarships/devblog"
+      }
+    ]
+  },
   "woshipm.com": {
     "_name": "人人都是产品经理",
     ".": [
