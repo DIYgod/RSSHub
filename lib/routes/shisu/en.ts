@@ -1,13 +1,17 @@
 import { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { got } from 'got';
-import cache from '@/utils/cache';
+
+const url = 'http://en.shisu.edu.cn';
+const url_backup = 'https://en.shisu.edu.cn';
 
 export const route: Route = {
-    path: '/en/features',
+    path: '/en/:section',
     categories: ['university'],
-    example: '/shisu/en/features',
+    example: '/shisu/en/news',
+    parameters: { section: 'The name of resources' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,44 +22,61 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['en.shisu.edu.cn/resources/features/'],
+            source: ['en.shisu.edu.cn/resources/:section/'],
+            target: '/en/:section',
         },
     ],
-    name: 'FEATURED STORIES',
+    name: 'SISU TODAY | FEATURED STORIES',
     maintainers: ['Duuckjing'],
-    description: 'Read a series of in-depth stories about SISU faculty, students, alumni and beyond campus.',
-    handler: async () => {
-        const url = 'https://en.shisu.edu.cn';
-        const { body: r } = await got(`${url}/resources/features/`, { https: { rejectUnauthorized: false } });
-        // eslint-disable-next-line no-console
-        const $ = load(r);
-        const itemsoup = $('.tab-con:nth-child(1) ul li')
-            .toArray()
-            .map((i0) => {
-                const i = $(i0);
-                const img = i.find('img').attr('src');
-                const link = `${url}${i.find('h3>a').attr('href')}`;
-                return {
-                    title: i.find('h3>a').text().trim(),
-                    link,
-                    pubDate: parseDate(i.find('p.time').text()),
-                    itunes_item_image: `${url}${img}`,
-                };
-            });
-        const items = await Promise.all(
-            itemsoup.map((j) =>
-                cache.tryGet(j.link, async () => {
-                    const { body: r } = await got(j.link, { https: { rejectUnauthorized: false } });
-                    const $ = load(r);
-                    j.description = $('.details-con').html()!;
-                    return j;
-                })
-            )
-        );
-        return {
-            title: 'FEATURED STORIES',
-            link: `${url}/resources/features/`,
-            item: items,
-        };
-    },
+    handler,
+    description: `- features: Read a series of in-depth stories about SISU faculty, students, alumni and beyond campus.
+    - news: SISU TODAY English site.`,
 };
+
+async function process(baseUrl: string, section: any) {
+    const r = await ofetch(`${baseUrl}/resources/${section}/`);
+    const $ = load(r);
+    const itemsoup = $('.tab-con:nth-child(1) ul li')
+        .toArray()
+        .map((i0) => {
+            const i = $(i0);
+            const img = i.find('img').attr('src');
+            const link = `${baseUrl}${i.find('h3>a').attr('href')}`;
+            return {
+                title: i.find('h3>a').text().trim(),
+                link,
+                pubDate: parseDate(i.find('p.time').text()),
+                itunes_item_image: `${baseUrl}${img}`,
+            };
+        });
+    const items = await Promise.all(
+        itemsoup.map((j) =>
+            cache.tryGet(j.link, async () => {
+                const r = await ofetch(j.link);
+                const $ = load(r);
+                j.description = $('.details-con')
+                    .html()!
+                    .replaceAll(/<o:p>[\S\s]*?<\/o:p>|<[^>]*>&nbsp;<\/[^>]*>/g, '');
+                return j;
+            })
+        )
+    );
+    return {
+        title: 'FEATURED STORIES',
+        link: `${url}/resources/features/`,
+        item: items,
+    };
+}
+
+async function handler(ctx) {
+    const { section } = ctx.req.param();
+    let res: any;
+    try {
+        await ofetch(url);
+        res = process(url, section);
+    } catch {
+        await ofetch(url_backup);
+        res = process(url_backup, section);
+    }
+    return res;
+}

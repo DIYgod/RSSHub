@@ -23,6 +23,7 @@ export const route: Route = {
     radar: [
         {
             source: ['news.shisu.edu.cn/:section/index.html'],
+            target: '/news/:section',
         },
     ],
     name: '上外新闻',
