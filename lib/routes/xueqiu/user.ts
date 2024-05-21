@@ -83,7 +83,7 @@ async function handler(ctx) {
                 const description = item.description + retweetedStatus;
 
                 return {
-                    title: item.title ?? sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
+                    title: item.title || sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
                     description: item.text ? item.text + retweetedStatus : description,
                     pubDate: parseDate(item.created_at),
                     link: rootUrl + item.target,
