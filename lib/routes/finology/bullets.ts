@@ -7,15 +7,6 @@ export const route: Route = {
     path: '/bullets',
     categories: ['finance'],
     example: '/finology/bullets',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['insider.finology.in/bullets'],

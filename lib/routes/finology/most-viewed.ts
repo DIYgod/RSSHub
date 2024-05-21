@@ -6,19 +6,11 @@ export const route: Route = {
     path: '/most-viewed/:time',
     categories: ['finance'],
     example: '/finology/most-viewed/monthly',
-    parameters: { time: 'N' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
+    parameters: { time: '`alltime` or `monthly` only' },
     radar: [
         {
-            source: ['insider.finology.in/:category'],
-            target: '/:category',
+            source: ['insider.finology.in/most-viewed'],
+            target: '/most-viewed/monthly',
         },
     ],
     name: 'Most Viewed',
@@ -45,7 +37,7 @@ async function handler(ctx) {
         date: false,
         selector,
     };
-    const listItems = await getItems(ctx, baseUrl, extra);
+    const listItems = await getItems(baseUrl, extra);
     return {
         title: `Most Viewed ${title} - Finology Insider`,
         link: baseUrl,
