@@ -1925,10 +1925,10 @@
   "/finology/bullets": [
     "Rjnishant530"
   ],
-  "/finology/most-viewed/:time": [
+  "/finology/:category": [
     "Rjnishant530"
   ],
-  "/finology/:category": [
+  "/finology/most-viewed/:time": [
     "Rjnishant530"
   ],
   "/finology/tag/:topic": [

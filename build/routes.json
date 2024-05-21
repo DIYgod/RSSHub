@@ -19696,15 +19696,6 @@
           "finance"
         ],
         "example": "/finology/bullets",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -19719,6 +19710,29 @@
         "url": "insider.finology.in/bullets",
         "location": "bullets.ts"
       },
+      "/:category": {
+        "path": "/:category",
+        "categories": [
+          "finance"
+        ],
+        "example": "/finology/success-stories",
+        "parameters": {
+          "category": "Refer Table below or find in URL"
+        },
+        "radar": [
+          {
+            "source": [
+              "insider.finology.in/:category"
+            ]
+          }
+        ],
+        "name": "Category",
+        "maintainers": [
+          "Rjnishant530"
+        ],
+        "description": ":::note Category\n  | Category              | Link               |\n  | --------------------- | ------------------ |\n  | **Business**          | business           |\n  | Big Shots             | entrepreneurship   |\n  | Startups              | startups-india     |\n  | Brand Games           | success-stories    |\n  | Juicy Scams           | juicy-scams        |\n  | **Finance**           | finance            |\n  | Macro Moves           | economy            |\n  | News Platter          | market-news        |\n  | Tax Club              | tax                |\n  | Your Money            | your-money         |\n  | **Invest**            | investing          |\n  | Stock Market          | stock-market       |\n  | Financial Ratios      | stock-ratios       |\n  | Investor's Psychology | behavioral-finance |\n  | Mutual Funds          | mutual-fund        |\n  :::",
+        "location": "category.ts"
+      },
       "/most-viewed/:time": {
         "path": "/most-viewed/:time",
         "categories": [
@@ -19726,22 +19740,14 @@
         ],
         "example": "/finology/most-viewed/monthly",
         "parameters": {
-          "time": "N"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
+          "time": "`alltime` or `monthly` only"
         },
         "radar": [
           {
             "source": [
-              "insider.finology.in/:category"
+              "insider.finology.in/most-viewed"
             ],
-            "target": "/:category"
+            "target": "/most-viewed/monthly"
           }
         ],
         "name": "Most Viewed",
@@ -19750,72 +19756,27 @@
         ],
         "location": "most-viewed.ts"
       },
-      "/:category": {
-        "path": [
-          "/:category",
-          "/tag/:topic"
-        ],
-        "categories": [
-          "finance"
-        ],
-        "example": "/finology/success-stories",
-        "parameters": {
-          "category": "N"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "insider.finology.in/:category"
-            ]
-          }
-        ],
-        "name": "Category",
-        "maintainers": [
-          "Rjnishant530"
-        ],
-        "description": ":::note Category\n  | Category              | Link               |\n  | --------------------- | ------------------ |\n  | **Business**          | business           |\n  | Big Shots             | entrepreneurship   |\n  | Startups              | startups-india     |\n  | Brand Games           | success-stories    |\n  | Juicy Scams           | juicy-scams        |\n  | **Finance**           | finance            |\n  | Macro Moves           | economy            |\n  | News Platter          | market-news        |\n  | Tax Club              | tax                |\n  | Your Money            | your-money         |\n  | **Invest**            | investing          |\n  | Stock Market          | stock-market       |\n  | Financial Ratios      | stock-ratios       |\n  | Investor's Psychology | behavioral-finance |\n  | Mutual Funds          | mutual-fund        |\n  :::",
-        "location": "tag.ts"
-      },
       "/tag/:topic": {
-        "path": [
-          "/:category",
-          "/tag/:topic"
-        ],
+        "path": "/tag/:topic",
         "categories": [
           "finance"
         ],
-        "example": "/finology/success-stories",
+        "example": "/finology/tag/startups",
         "parameters": {
-          "category": "N"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
+          "category": "Refer Table below or find in URL"
         },
         "radar": [
           {
             "source": [
-              "insider.finology.in/:category"
+              "insider.finology.in/tag/:topic"
             ]
           }
         ],
-        "name": "Category",
+        "name": "Trending Topic",
         "maintainers": [
           "Rjnishant530"
         ],
-        "description": ":::note Category\n  | Category              | Link               |\n  | --------------------- | ------------------ |\n  | **Business**          | business           |\n  | Big Shots             | entrepreneurship   |\n  | Startups              | startups-india     |\n  | Brand Games           | success-stories    |\n  | Juicy Scams           | juicy-scams        |\n  | **Finance**           | finance            |\n  | Macro Moves           | economy            |\n  | News Platter          | market-news        |\n  | Tax Club              | tax                |\n  | Your Money            | your-money         |\n  | **Invest**            | investing          |\n  | Stock Market          | stock-market       |\n  | Financial Ratios      | stock-ratios       |\n  | Investor's Psychology | behavioral-finance |\n  | Mutual Funds          | mutual-fund        |\n  :::",
+        "description": ":::note Topic\n  | Topic                    | Link                     |\n  | ------------------------ | ------------------------ |\n  | Investment Decisions     | investment-decisions     |\n  | Investing 101            | investing-101            |\n  | Stock Markets            | stock-markets            |\n  | business news india      | business-news-india      |\n  | Company Analysis         | company-analysis         |\n  | Business and brand tales | business-and-brand-tales |\n  | Featured                 | featured                 |\n  | Fundamental Analysis     | fundamental-analysis     |\n  | Business Story           | business-story           |\n  | All Biz                  | all-biz                  |\n  | Stock Analysis           | stock-analysis           |\n  | Automobile Industry      | automobile-industry      |\n  | Indian Economy           | indian-economy           |\n  | Govt's Words             | govt%27s-words           |\n  | Behavioral Finance       | behavioral-finance       |\n  | Global Economy           | global-economy           |\n  | Startups                 | startups                 |\n  | GST                      | gst                      |\n  | Product Review           | product-review           |\n  | My Pocket                | my-pocket                |\n  | Business Games           | business-games           |\n  | Business Models          | business-models          |\n  | Indian Indices           | indian-indices           |\n  | Banking System           | banking-system           |\n  | Debt                     | debt                     |\n  | World News               | world-news               |\n  | Technology               | technology               |\n  | Regulatory Bodies        | regulatory-bodies        |\n:::",
         "location": "tag.ts"
       }
     },
