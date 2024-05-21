@@ -2023,12 +2023,12 @@
   "/freexcomic/book/:id": [
     "junfengP"
   ],
-  "/ft/:language/:channel?": [
-    "HenryQW",
-    "xyqfer"
-  ],
   "/ft/myft/:key": [
     "HenryQW"
+  ],
+  "/ftchinese/:language/:channel?": [
+    "HenryQW",
+    "xyqfer"
   ],
   "/fuliba/latest": [
     "shinemoon"
