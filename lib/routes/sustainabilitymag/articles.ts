@@ -28,7 +28,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const baseURL = `https://${route.url}`;
+    const baseURL = `https://sustainabilitymag.com`;
+    const feedURL = `${baseURL}/articles`;
     const feedLang = 'en';
     const feedDescription = 'Sustainability Magazine Articles';
 
@@ -38,8 +39,8 @@ async function handler() {
     page.on('request', (request) => {
         request.resourceType() === 'document' ? request.continue() : request.abort();
     });
-    logger.http(`Requesting ${baseURL}`);
-    await page.goto(baseURL, {
+    logger.http(`Requesting ${feedURL}`);
+    await page.goto(feedURL, {
         waitUntil: 'domcontentloaded',
     });
     const response = await page.content();
@@ -51,9 +52,10 @@ async function handler() {
         .toArray()
         .map((item) => {
             item = $(item);
+            const title = item.find('h3').first().text();
             const a = item.find('a').first();
             return {
-                title: a.text(),
+                title,
                 link: `${baseURL}${a.attr('href')}`,
             };
         });
