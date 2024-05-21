@@ -50821,14 +50821,38 @@
   },
   "shisu": {
     "routes": {
-      "/news/:category": {
-        "path": "/news/:category",
+      "/en/:section": {
+        "path": "/en/:section",
         "categories": [
           "university"
         ],
-        "example": "/shisu/news/notice",
+        "example": "/shisu/en/news",
         "parameters": {
-          "category": "新闻的分类可根据自己的需要选择，首页为全部新闻"
+          "section": "The name of resources"
+        },
+        "radar": [
+          {
+            "source": [
+              "en.shisu.edu.cn/resources/:section/"
+            ],
+            "target": "/en/:section"
+          }
+        ],
+        "name": "SISU TODAY | FEATURED STORIES",
+        "maintainers": [
+          "Duuckjing"
+        ],
+        "description": "- features: Read a series of in-depth stories about SISU faculty, students, alumni and beyond campus.\n  - news: SISU TODAY English site.",
+        "location": "en.ts"
+      },
+      "/news/:section": {
+        "path": "/news/:section",
+        "categories": [
+          "university"
+        ],
+        "example": "/shisu/news/news",
+        "parameters": {
+          "section": "主站的新闻类别"
         },
         "features": {
           "requireConfig": false,
@@ -50841,8 +50865,9 @@
         "radar": [
           {
             "source": [
-              "news.shisu.edu.cn/:category/index.html"
-            ]
+              "news.shisu.edu.cn/:section/index.html"
+            ],
+            "target": "/news/:section"
           }
         ],
         "name": "上外新闻",
@@ -50854,7 +50879,7 @@
       }
     },
     "name": "上海外国语大学",
-    "url": "news.shisu.edu.cn"
+    "url": "shisu.edu.cn"
   },
   "shmeea": {
     "routes": {

@@ -5037,7 +5037,10 @@
     "gumibea",
     "TeamSUEP"
   ],
-  "/shisu/news/:category": [
+  "/shisu/en/:section": [
+    "Duuckjing"
+  ],
+  "/shisu/news/:section": [
     "Duuckjing"
   ],
   "/shmeea/:id?": [
