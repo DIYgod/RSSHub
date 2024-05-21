@@ -5,21 +5,13 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const url = 'http://en.shisu.edu.cn';
-const url_backup = 'https://en.shisu.edu.cn';
+const urlBackup = 'https://en.shisu.edu.cn';
 
 export const route: Route = {
     path: '/en/:section',
     categories: ['university'],
     example: '/shisu/en/news',
     parameters: { section: 'The name of resources' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['en.shisu.edu.cn/resources/:section/'],
@@ -30,7 +22,7 @@ export const route: Route = {
     maintainers: ['Duuckjing'],
     handler,
     description: `- features: Read a series of in-depth stories about SISU faculty, students, alumni and beyond campus.
-    - news: SISU TODAY English site.`,
+  - news: SISU TODAY English site.`,
 };
 
 async function process(baseUrl: string, section: any) {
@@ -56,14 +48,15 @@ async function process(baseUrl: string, section: any) {
                 const $ = load(r);
                 j.description = $('.details-con')
                     .html()!
-                    .replaceAll(/<o:p>[\S\s]*?<\/o:p>/g, '');
+                    .replaceAll(/<o:p>[\S\s]*?<\/o:p>/g, '')
+                    .replaceAll(/(<p[^>]*>&nbsp;<\/p>\s*)+/gm, '<p>&nbsp;</p>');
                 return j;
             })
         )
     );
     return {
-        title: 'FEATURED STORIES',
-        link: `${url}/resources/features/`,
+        title: String(section) === 'features' ? 'FEATURED STORIES' : 'SISU TODAY',
+        link: `${url}/resources/${section}/`,
         item: items,
     };
 }
@@ -75,8 +68,8 @@ async function handler(ctx) {
         await ofetch(url);
         res = process(url, section);
     } catch {
-        await ofetch(url_backup);
-        res = process(url_backup, section);
+        await ofetch(urlBackup);
+        res = process(urlBackup, section);
     }
     return res;
 }
