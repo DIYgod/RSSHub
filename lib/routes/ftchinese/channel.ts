@@ -5,7 +5,7 @@ export const route: Route = {
     path: '/:language/:channel?',
     categories: ['traditional-media'],
     example: '/ft/chinese/hotstoryby7day',
-    parameters: { language: '语言，简体`chinese`，繁体`traditional`', channel: '频道，缺省为每日更新' },
+    parameters: { language: '语言，简体 `chinese`，繁体 `traditional`', channel: '频道，缺省为每日更新' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
