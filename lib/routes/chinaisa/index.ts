@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
@@ -170,10 +170,15 @@ async function handler(ctx) {
     const apiArticleUrl = new URL('gxportal/xfpt/portal/viewArticleById', rootUrl).href;
     const currentUrl = new URL(`gxportal/xfgl/portal/list.html?columnId=${id}`, rootUrl).href;
 
-    const { data: response } = await got.post(apiUrl, {
-        form: {
-            params: encodeURI(`{"columnId":"${id}"}`),
+    const response = await ofetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
+        body: new URLSearchParams({
+            params: encodeURI(`{"columnId":"${id}"}`),
+        }),
+        parseResponse: JSON.parse,
     });
 
     let $ = load(response.articleListHtml);
@@ -195,10 +200,15 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got.post(apiArticleUrl, {
-                    form: {
-                        params: encodeURI(`{"articleId":"${item.guid}","columnId":"${id}"}`),
+                const detailResponse = await ofetch(apiArticleUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     },
+                    body: new URLSearchParams({
+                        params: encodeURI(`{"articleId":"${item.guid}","columnId":"${id}"}`),
+                    }),
+                    parseResponse: JSON.parse,
                 });
 
                 const articleContent = detailResponse.article_content;
@@ -220,7 +230,7 @@ async function handler(ctx) {
 
     const subtitle = $('div.head-tit').text();
 
-    const { data: currentResponse } = await got(currentUrl);
+    const currentResponse = await ofetch(currentUrl);
 
     $ = load(currentResponse);
 
