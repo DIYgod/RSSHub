@@ -1368,33 +1368,6 @@
       }
     ]
   },
-  "arknights.jp": {
-    "_name": "明日方舟",
-    "ak": [
-      {
-        "title": "アークナイツ (日服新闻)",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/news",
-          "/"
-        ],
-        "target": "/arknights/japan"
-      }
-    ]
-  },
-  "hypergryph.com": {
-    "_name": "明日方舟",
-    "ak-conf": [
-      {
-        "title": "游戏公告与新闻",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/*"
-        ],
-        "target": "/arknights/news"
-      }
-    ]
-  },
   "artstation.com": {
     "_name": "ArtStation",
     "www": [
@@ -8040,6 +8013,33 @@
           "/"
         ],
         "target": "/huxiu/search/:keyword"
+      }
+    ]
+  },
+  "arknights.jp": {
+    "_name": "鹰角网络",
+    "ak": [
+      {
+        "title": "アークナイツ (日服新闻)",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news",
+          "/"
+        ],
+        "target": "/hypergryph/arknights/japan"
+      }
+    ]
+  },
+  "hypergryph.com": {
+    "_name": "鹰角网络",
+    "ak-conf": [
+      {
+        "title": "明日方舟 - 游戏公告与新闻",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news"
+        ],
+        "target": "/hypergryph/arknights/news/:group?"
       }
     ]
   },

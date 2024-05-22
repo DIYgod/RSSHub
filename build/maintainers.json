@@ -466,15 +466,6 @@
   "/arcteryx/regear/new-arrivals": [
     "EthanWng97"
   ],
-  "/arknights/announce/:platform?/:group?": [
-    "swwind"
-  ],
-  "/arknights/japan": [
-    "ofyark"
-  ],
-  "/arknights/news": [
-    "Astrian"
-  ],
   "/artstation/:handle": [
     "TonyRL"
   ],
@@ -2925,6 +2916,15 @@
     "xyqfer",
     "HenryQW",
     "nczitzk"
+  ],
+  "/hypergryph/arknights/announce/:platform?/:group?": [
+    "swwind"
+  ],
+  "/hypergryph/arknights/japan": [
+    "ofyark"
+  ],
+  "/hypergryph/arknights/news/:group?": [
+    "Astrian"
   ],
   "/ianspriggs/:category?": [
     "nczitzk"

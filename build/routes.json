@@ -4824,96 +4824,6 @@
     "name": "Arcteryx",
     "url": "arcteryx.com"
   },
-  "arknights": {
-    "routes": {
-      "/announce/:platform?/:group?": {
-        "path": "/announce/:platform?/:group?",
-        "categories": [
-          "game"
-        ],
-        "example": "/arknights/announce",
-        "parameters": {
-          "platform": "平台，默认为 Android",
-          "group": "分组，默认为 ALL"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "游戏内公告",
-        "maintainers": [
-          "swwind"
-        ],
-        "description": "平台\n\n  |  安卓服 | iOS 服 |   B 服   |\n  | :-----: | :----: | :------: |\n  | Android |   IOS  | Bilibili |\n\n  分组\n\n  | 全部 | 系统公告 | 活动公告 |\n  | :--: | :------: | :------: |\n  |  ALL |  SYSTEM  | ACTIVITY |",
-        "location": "announce.ts"
-      },
-      "/japan": {
-        "path": "/japan",
-        "categories": [
-          "game"
-        ],
-        "example": "/arknights/japan",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "ak.arknights.jp/news",
-              "ak.arknights.jp/"
-            ]
-          }
-        ],
-        "name": "アークナイツ (日服新闻)",
-        "maintainers": [
-          "ofyark"
-        ],
-        "url": "ak.arknights.jp/news",
-        "location": "japan.ts"
-      },
-      "/news": {
-        "path": "/news",
-        "categories": [
-          "game"
-        ],
-        "example": "/arknights/news",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "ak-conf.hypergryph.com/*"
-            ]
-          }
-        ],
-        "name": "游戏公告与新闻",
-        "maintainers": [
-          "Astrian"
-        ],
-        "url": "ak-conf.hypergryph.com/*",
-        "location": "news.ts"
-      }
-    },
-    "name": "明日方舟",
-    "url": "ak.arknights.jp"
-  },
   "artstation": {
     "routes": {
       "/:handle": {
@@ -29410,6 +29320,77 @@
     },
     "name": "虎嗅",
     "url": "huxiu.com"
+  },
+  "hypergryph": {
+    "routes": {
+      "/arknights/announce/:platform?/:group?": {
+        "path": "/arknights/announce/:platform?/:group?",
+        "categories": [
+          "game"
+        ],
+        "example": "/hypergryph/arknights/announce",
+        "parameters": {
+          "platform": "平台，默认为 Android",
+          "group": "分组，默认为 ALL"
+        },
+        "name": "明日方舟 - 游戏内公告",
+        "maintainers": [
+          "swwind"
+        ],
+        "description": "平台\n\n  |  安卓服 | iOS 服 |   B 服   |\n  | :-----: | :----: | :------: |\n  | Android |   IOS  | Bilibili |\n\n  分组\n\n  | 全部 | 系统公告 | 活动公告 |\n  | :--: | :------: | :------: |\n  |  ALL |  SYSTEM  | ACTIVITY |",
+        "location": "announce.ts"
+      },
+      "/arknights/japan": {
+        "path": "/arknights/japan",
+        "categories": [
+          "game"
+        ],
+        "example": "/hypergryph/arknights/japan",
+        "radar": [
+          {
+            "source": [
+              "ak.arknights.jp/news",
+              "ak.arknights.jp/"
+            ]
+          }
+        ],
+        "name": "アークナイツ (日服新闻)",
+        "maintainers": [
+          "ofyark"
+        ],
+        "url": "ak.arknights.jp/news",
+        "location": "japan.ts"
+      },
+      "/arknights/news/:group?": {
+        "path": "/arknights/news/:group?",
+        "categories": [
+          "game"
+        ],
+        "example": "/hypergryph/arknights/news",
+        "parameters": {
+          "group": "分组，默认为 `ALL`"
+        },
+        "radar": [
+          {
+            "source": [
+              "ak-conf.hypergryph.com/news"
+            ]
+          }
+        ],
+        "name": "明日方舟 - 游戏公告与新闻",
+        "maintainers": [
+          "Astrian"
+        ],
+        "url": "ak-conf.hypergryph.com/news",
+        "description": "\n  | 全部 | 最新   | 公告         | 活动     | 新闻 |\n  | ---- | ------ | ------------ | -------- | ---- |\n  | ALL  | LATEST | ANNOUNCEMENT | ACTIVITY | NEWS |",
+        "location": "news.ts"
+      }
+    },
+    "name": "鹰角网络",
+    "url": "www.hypergryph.com",
+    "categories": [
+      "game"
+    ]
   },
   "ianspriggs": {
     "routes": {
