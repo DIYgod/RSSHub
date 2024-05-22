@@ -10,12 +10,8 @@ export const route: Route = {
         mode: 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations), default to `simple`',
     },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: true,
-        supportPodcast: false,
-        supportScihub: false,
     },
     radar: [
         {

@@ -77,7 +77,7 @@ const oFetch = (url, ...options) =>
     });
 
 const getSimple = async (url) => {
-    const { data } = await oFetch(url);
+    const data = await oFetch(url);
     const $ = load(data);
 
     return $('.gallery a.cover')
@@ -116,14 +116,14 @@ const getTorrent = async (simple, cookie) => {
     const response = await oFetch(link + 'download', { followRedirect: false, responseType: 'buffer', headers: { Cookie: cookie } });
     return {
         ...simple,
-        enclosure_url: response.data,
+        enclosure_url: response,
         enclosure_type: 'application/x-bittorrent',
     };
 };
 
 const getDetail = async (simple) => {
     const { link } = simple;
-    const { data } = await oFetch(link);
+    const data = await oFetch(link);
     const $ = load(data);
 
     const galleryImgs = $('.gallerythumb img')
