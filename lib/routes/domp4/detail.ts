@@ -26,7 +26,7 @@ function getDomList($, detailUrl) {
     return list;
 }
 
-function getItemList($, detailUrl, second) {
+export function getItemList($, detailUrl, second) {
     const encoded = $('.article script[type]')
         .text()
         .match(/return p}\('(.*)',(\d+),(\d+),'(.*)'.split\(/);
