@@ -6,9 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 const supportedKeys = new Set(['parody', 'character', 'tag', 'artist', 'group', 'language', 'category']);
 
 export const route: Route = {
-    path: '/:key/:keyword/:mode?',
-    categories: ['anime'],
-    example: '/nhentai/language/chinese',
+    path: '/index/:key/:keyword/:mode?',
+    example: '/nhentai/index/language/chinese',
     parameters: {
         key: 'Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`',
         keyword: 'Filter value',
@@ -25,7 +24,7 @@ export const route: Route = {
     radar: [
         {
             source: ['nhentai.net/:key/:keyword'],
-            target: '/:key/:keyword',
+            target: '/index/:key/:keyword',
         },
     ],
     name: 'Filter',

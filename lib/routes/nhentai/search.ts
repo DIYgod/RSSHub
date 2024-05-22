@@ -4,7 +4,6 @@ import { getSimple, getDetails, getTorrents } from './util';
 
 export const route: Route = {
     path: '/search/:keyword/:mode?',
-    categories: ['anime'],
     example: '/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"',
     parameters: {
         keyword: 'Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details',
