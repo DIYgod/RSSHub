@@ -1570,6 +1570,9 @@
   "/domp4/detail/:id": [
     "savokiss"
   ],
+  "/domp4/latest_movie_bt": [
+    "xianghuawe"
+  ],
   "/domp4/latest/:type?": [
     "savokiss"
   ],

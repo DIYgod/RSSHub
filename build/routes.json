@@ -16283,6 +16283,36 @@
         "description": ":::tip\n由于大部分详情页是 `/html/xxx.html`，还有部分是 `/detail/123.html`，所以此处做了兼容，id 取 `xxx` 或者 `123` 都可以。\n\n新增 `second` 参数，用于选择下载地址二（地址二不可用或者不填都默认地址一），用法: `/domp4/detail/LBTANI22222I?second=1`。\n:::",
         "location": "detail.ts"
       },
+      "/latest_movie_bt": {
+        "path": "/latest_movie_bt",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/domp4/latest_movie_bt",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": true,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "domp4.cc/",
+              "domp4.cc/custom/update.html"
+            ]
+          }
+        ],
+        "name": "最近更新的电源BT列表",
+        "maintainers": [
+          "xianghuawe"
+        ],
+        "url": "domp4.cc/",
+        "location": "latest-movie-bt.ts"
+      },
       "/latest/:type?": {
         "path": "/latest/:type?",
         "categories": [
