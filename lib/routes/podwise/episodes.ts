@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -47,20 +48,24 @@ export const route: Route = {
 
                 return {
                     title,
-                    link,
+                    link: `https://podwise.ai${link}`,
                     description,
                     author,
-                    pubDate,
+                    pubDate: timezone(parseDate(pubDate, 'DD MMM YYYY', 'en'), 8),
                 };
             });
 
-        const items = list.map((item) => ({
-            title: item.title,
-            link: `https://podwise.ai${item.link}`,
-            description: item.description,
-            author: item.author,
-            pubDate: timezone(parseDate(item.pubDate, 'DD MMM YYYY', 'en'), 8),
-        }));
+        const items = await Promise.all(
+            list.map((item) =>
+                cache.tryGet(item.link, async () => {
+                    const response = await ofetch(item.link);
+                    const $ = load(response);
+
+                    item.description = $('summary').first().html();
+                    return item;
+                })
+            )
+        );
 
         return {
             title,
