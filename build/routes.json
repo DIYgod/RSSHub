@@ -3742,6 +3742,37 @@
     "name": "阿基米德 FM",
     "url": "m.ajmide.com"
   },
+  "alipan": {
+    "routes": {
+      "/files/:share_id/:parent_file_id?": {
+        "path": "/files/:share_id/:parent_file_id?",
+        "example": "/alipan/files/jjtKEgXJAtC/64a957744876479ab17941b29d1289c6ebdd71ef",
+        "parameters": {
+          "share_id": "分享 id，可以从分享页面 URL 中找到",
+          "parent_file_id": "文件夹 id，可以从文件夹页面 URL 中找到"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.alipan.com/s/:share_id/folder/:parent_file_id",
+              "www.alipan.com/s/:share_id"
+            ]
+          }
+        ],
+        "name": "文件列表",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "url": "www.alipan.com/s",
+        "location": "files.ts"
+      }
+    },
+    "name": "阿里云盘",
+    "url": "www.alipan.com",
+    "categories": [
+      "multimedia"
+    ]
+  },
   "aliresearch": {
     "routes": {
       "/information/:type?": {
