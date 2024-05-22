@@ -64052,7 +64052,12 @@
           "id": "用户 id, 可在用户主页 URL 中找到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "XUEQIU_COOKIES",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -64070,6 +64075,7 @@
         "maintainers": [
           "hillerliao"
         ],
+        "description": ":::warning\n  用户自选动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n:::",
         "location": "user-stock.ts"
       },
       "/user/:id/:type?": {
