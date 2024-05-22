@@ -4716,7 +4716,7 @@
     ".":[ { title:"Filter",
         docs:"https://docs.rsshub.app/routes/anime",
         source:[ "/:key/:keyword" ],
-        target:"/nhentai/:key/:keyword" },
+        target:"/nhentai/index/:key/:keyword" },
       { title:"Advanced Search",
         docs:"https://docs.rsshub.app/routes/anime",
         source:[ "/:key/:keyword" ],
