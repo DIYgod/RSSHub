@@ -28,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const item = await processItems(ctx, baseURL, [/第*集/, /第*季/, /(EP|ep)\d+/, /([Ss])\d+/, /更新/]);
+    const item = await processItems(ctx, baseURL, [/第*集/, /第*季/, /(ep)\d+/i, /(s)\d+/i, /更新/]);
 
     return {
         title: '6v电影-最新电影',
