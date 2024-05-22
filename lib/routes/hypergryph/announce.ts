@@ -1,23 +1,26 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import { config } from '@/config';
+
+type AnnounceItem = {
+    announceId: string;
+    title: string;
+    isWebUrl: boolean;
+    webUrl: string;
+    day: number;
+    month: number;
+    group: string;
+};
 
 export const route: Route = {
-    path: '/announce/:platform?/:group?',
+    path: '/arknights/announce/:platform?/:group?',
     categories: ['game'],
-    example: '/arknights/announce',
+    example: '/hypergryph/arknights/announce',
     parameters: { platform: '平台，默认为 Android', group: '分组，默认为 ALL' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '游戏内公告',
+    name: '明日方舟 - 游戏内公告',
     maintainers: ['swwind'],
     handler,
     description: `平台
@@ -36,24 +39,24 @@ export const route: Route = {
 async function handler(ctx) {
     const { platform = 'Android', group = 'ALL' } = ctx.req.param();
 
-    let {
-        data: { announceList },
-    } = await got({
-        method: 'get',
-        url: `https://ak-conf.hypergryph.com/config/prod/announce_meta/${platform}/announcement.meta.json`,
-    });
+    let announceList = (await cache.tryGet(
+        `hypergryph:arknights:announce_meta:${platform}`,
+        async () => {
+            const { announceList } = await ofetch(`https://ak-conf.hypergryph.com/config/prod/announce_meta/${platform}/announcement.meta.json`);
+            return announceList;
+        },
+        config.cache.routeExpire,
+        false
+    )) as AnnounceItem[];
 
     if (group !== 'ALL') {
         announceList = announceList.filter((item) => item.group === group);
     }
 
-    announceList = await Promise.all(
+    const items = await Promise.all(
         announceList.map((item) =>
             cache.tryGet(item.webUrl, async () => {
-                const { data } = await got({
-                    method: 'get',
-                    url: item.webUrl,
-                });
+                const data = await ofetch(item.webUrl);
 
                 const $ = load(data);
                 let description =
@@ -81,6 +84,6 @@ async function handler(ctx) {
     return {
         title: `《明日方舟》${group === 'SYSTEM' ? '系统' : group === 'ACTIVITY' ? '活动' : '全部'}公告`,
         link: 'https://ak.hypergryph.com/',
-        item: announceList,
+        item: items,
     };
 }
