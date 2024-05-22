@@ -1,5 +1,7 @@
 import { Route } from '@/types';
+import cache from '@/utils/cache';
 import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 import { load } from 'cheerio';
 
@@ -44,11 +46,9 @@ async function handler() {
         waitUntil: 'domcontentloaded',
     });
     const response = await page.content();
-    page.close();
-
     const $ = load(response);
 
-    const items = $('#content > div > div > div:nth-child(4) > div > div > div > div > div > div:nth-child(2) > div.infinite-scroll-component__outerdiv > div > div > div')
+    const list = $('#content > div > div > div:nth-child(4) > div > div > div > div > div > div:nth-child(2) > div.infinite-scroll-component__outerdiv > div > div > div')
         .toArray()
         .map((item) => {
             item = $(item);
@@ -59,14 +59,39 @@ async function handler() {
                 link: `${baseURL}${a.attr('href')}`,
             };
         });
-    browser.close();
 
-    // add full-text support
+    page.close();
+
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const page = await browser.newPage();
+                await page.setRequestInterception(true);
+                page.on('request', (request) => {
+                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                });
+                logger.http(`Requesting ${item.link}`);
+                await page.goto(item.link, {
+                    waitUntil: 'domcontentloaded',
+                });
+                const response = await page.content();
+                page.close();
+
+                const $ = load(response);
+                item.pubDate = parseDate($('#content > div > div > div > div:nth-child(1) > div > div > div > div > div > div.ArticleHeader_Details__3n5Er > div.Breadcrumbs_Breadcrumbs__3yIKi > div:nth-child(1) > div').text());
+                item.author = $('#content > div > div > div > div:nth-child(1) > div > div > div > div > div > div.ArticleHeader_Details__3n5Er > div.Type_m-body2__3AsD-.Type_d-body3__24mDH.Type_medium__2avgC > a').text();
+                item.description = $('#content > div > div > div > div:nth-child(2) > div > div.GridWrapper_flex__1NgfS.GridWrapper_grow__23Wl1.GridWrapper_gutter-default__1hMKq').html();
+                return item;
+            })
+        )
+    );
+
+    browser.close();
 
     return {
         title: 'Sustainability Magazine Articles',
-        feedLang,
-        feedDescription,
+        language: feedLang,
+        description: feedDescription,
         link: `https://${baseURL}`,
         item: items,
     };
