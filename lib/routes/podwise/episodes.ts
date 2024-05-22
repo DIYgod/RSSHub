@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/explore/:type',
@@ -58,7 +59,7 @@ export const route: Route = {
             link: `https://podwise.ai${item.link}`,
             description: item.description,
             author: item.author,
-            pubDate: parseDate(item.pubDate, 'DD MMM YYYY', 'en'),
+            pubDate: timezone(parseDate(item.pubDate, 'DD MMM YYYY', 'en'), 8),
         }));
 
         return {
