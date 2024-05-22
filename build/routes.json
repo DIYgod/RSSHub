@@ -22145,19 +22145,13 @@
           "programming"
         ],
         "example": "/github/notifications",
-        "parameters": {},
         "features": {
           "requireConfig": [
             {
               "name": "GITHUB_ACCESS_TOKEN",
               "description": ""
             }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
+          ]
         },
         "radar": [
           {
