@@ -56,9 +56,7 @@ async function handler(ctx) {
         list.map(
             async (item) =>
                 await cache.tryGet(item.link, async () => {
-                    const response = await got.get(item.link, {
-                        responseType: 'buffer',
-                    });
+                    const response = await got.get(item.link);
                     const $ = load(response.data);
                     return detailItemList($, item.link, second);
                 })
