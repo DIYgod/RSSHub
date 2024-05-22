@@ -39,7 +39,7 @@ export const route: Route = {
     name: 'Universe',
     maintainers: ['HPDell'],
     handler: async () => {
-        const targetUrl = 'https://typst.app/universe/search?kind=packages%2Ctemplates&packages=last-published';
+        const targetUrl = 'https://typst.app/universe/search?kind=packages%2Ctemplates&packages=last-updated';
         const page = await ofetch(targetUrl);
         const $ = load(page);
         const script = $('script')
@@ -61,7 +61,7 @@ export const route: Route = {
             const items = context.an.exports
                 .sort((a, b) => b.updatedAt - a.updatedAt)
                 .map((item) => ({
-                    title: `${item.name} | ${item.description}`,
+                    title: `${item.name} (${item.version}) | ${item.description}`,
                     link: `https://typst.app/universe/package/${item.name}`,
                     description: md.render(item.readme),
                     pubDate: parseDate(item.updatedAt, 'X'),
