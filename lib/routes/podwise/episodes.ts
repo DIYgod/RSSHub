@@ -1,12 +1,13 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/explore',
+    path: '/explore/:type',
     categories: ['multimedia', 'programming'],
-    example: '/podwise/explore',
-    parameters: {},
+    example: '/podwise/explore/latest',
+    parameters: { type: 'latest or all episodes.' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -17,18 +18,20 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['podwise.ai', 'podwise.ai/explore'],
+            source: ['podwise.ai/explore/:type'],
         },
     ],
-    name: 'Collections',
+    name: 'Episodes',
     maintainers: ['lyling'],
-    handler: async () => {
-        const link = `https://podwise.ai/explore`;
+    handler: async (ctx) => {
+        const type = ctx.req.param('type');
+        const link = `https://podwise.ai/explore/${type}`;
         const response = await ofetch(link);
         const $ = load(response);
         const content = $('#navigator').next();
-        // header/[div => content]/footer, content p(2)
-        const collectinDescription = content.find('p').eq(1).text();
+        // header/[div => content]/footer, content>div(2)>h1
+        const title = content.find('h1').first().text();
+        const description = content.find('p').eq(1).text();
 
         const list = content
             .find('.group')
@@ -38,10 +41,15 @@ export const route: Route = {
                 const title = item.find('a').first().text();
                 const link = item.find('a').first().attr('href');
                 const description = item.find('p').first().text();
+                const author = item.children('div').last().children('div').first().text();
+                const pubDate = item.find('a').next().children('span').text();
+
                 return {
                     title,
                     link,
                     description,
+                    author,
+                    pubDate,
                 };
             });
 
@@ -49,11 +57,13 @@ export const route: Route = {
             title: item.title,
             link: `https://podwise.ai${item.link}`,
             description: item.description,
+            author: item.author,
+            pubDate: parseDate(item.pubDate, 'DD MMM YYYY', 'en'),
         }));
 
         return {
-            title: $('title').text(),
-            description: collectinDescription,
+            title,
+            description,
             item: items,
         };
     },
