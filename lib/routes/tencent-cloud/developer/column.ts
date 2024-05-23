@@ -6,9 +6,9 @@ const PAGE = 1;
 const PAGE_SIZE = 20;
 
 export const route: Route = {
-    path: '/developer/column',
+    path: '/developer/column/:categoryId',
     categories: ['social-media', 'programming'],
-    example: '/tencent-cloud/developer/column',
+    example: '/tencent-cloud/developer/column/1',
     parameters: { categoryId: '专栏Id: categoryId == classifyId(api)' },
     features: {
         requireConfig: false,
@@ -20,14 +20,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['cloud.tencent.com/developer/column', 'cloud.tencent.com/developer/column?', 'cloud.tencent.com/developer/column?categoryId=:categoryId'],
-            target: '/developer/column?categoryId=:categoryId',
+            source: ['cloud.tencent.com/developer/column'],
         },
     ],
     name: '腾讯云开发者社区专栏',
     maintainers: ['lyling'],
     handler: async (ctx) => {
-        const categoryId = ctx.req.query('categoryId') ?? 0;
+        const categoryId = ctx.req.param('categoryId') ?? 0;
         const link = `https://cloud.tencent.com/developer/api/home/article-list`;
         const response = await ofetch(link, {
             method: 'POST',
