@@ -1,6 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'fanbox',
-    url: 'www.fanbox.cc',
+    name: '番茄小说',
+    url: 'fanqienovel.com',
+    categories: ['reading'],
 };
