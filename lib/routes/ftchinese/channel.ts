@@ -4,8 +4,8 @@ import utils from './utils';
 export const route: Route = {
     path: '/:language/:channel?',
     categories: ['traditional-media'],
-    example: '/ft/chinese/hotstoryby7day',
-    parameters: { language: '语言，简体`chinese`，繁体`traditional`', channel: '频道，缺省为每日更新' },
+    example: '/ft/simplified/hotstoryby7day',
+    parameters: { language: '语言，简体 `simplified`，繁体 `traditional`', channel: '频道，缺省为每日更新' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -25,13 +25,13 @@ export const route: Route = {
 
   支持所有频道，频道名称见 [官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
 
-  -   频道为单一路径，如 \`http://www.ftchinese.com/rss/news\` 则为 \`/ft/chinese/news\`.
-  -   频道包含多重路径，如 \`http://www.ftchinese.com/rss/column/007000002\` 则替换 \`/\` 为 \`-\` \`/ft/chinese/column-007000002\`.`,
+  -   频道为单一路径，如 \`http://www.ftchinese.com/rss/news\` 则为 \`/ft/simplified/news\`.
+  -   频道包含多重路径，如 \`http://www.ftchinese.com/rss/column/007000002\` 则替换 \`/\` 为 \`-\` \`/ft/simplified/column-007000002\`.`,
 };
 
 async function handler(ctx) {
     return await utils.getData({
-        site: ctx.req.param('language') === 'chinese' ? 'www' : 'big5',
+        site: ctx.req.param('language') === 'simplified' ? 'www' : 'big5',
         channel: ctx.req.param('channel'),
         ctx,
     });

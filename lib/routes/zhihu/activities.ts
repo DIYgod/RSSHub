@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/people/activities/:id',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/zhihu/people/activities/diygod',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
     features: {
@@ -139,6 +139,8 @@ async function handler(ctx) {
                     description = detail.description;
                     url = `https://www.zhihu.com/roundtable/${detail.id}`;
                     break;
+                default:
+                    description = `未知类型 ${item.target.type}，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue`;
             }
 
             return {

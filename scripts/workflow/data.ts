@@ -1,5 +1,11 @@
 export const categories = [
     {
+        icon: '🌟',
+        link: '/routes/popular',
+        en: 'Popular',
+        zh: '热门',
+    },
+    {
         icon: '💬',
         link: '/routes/social-media',
         en: 'Social Media',

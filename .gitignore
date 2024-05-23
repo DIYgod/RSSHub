@@ -31,6 +31,5 @@ package-lock.json
 yarn.lock
 yarn-error.log
 
-scripts/twitter-token/accounts.*
 !.env.project
 !.env.vault

@@ -10,7 +10,7 @@ import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/bilibili/user/dynamic/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', routeParams: '额外参数；请参阅以下说明和表格' },
     features: {

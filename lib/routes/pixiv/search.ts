@@ -10,7 +10,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/search/:keyword/:order?/:mode?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/pixiv/search/Nezuko/popular/2',
     parameters: { keyword: 'keyword', order: 'rank mode, empty or other for time order, popular for popular order', mode: 'filte R18 content' },
     features: {

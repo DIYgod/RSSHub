@@ -28,7 +28,7 @@ const twitterGot = async (url, params) => {
             connection: 'keep-alive',
             'content-type': 'application/json',
             'x-twitter-active-user': 'yes',
-            authority: 'api.twitter.com',
+            authority: 'api.x.com',
             'accept-encoding': 'gzip',
             'accept-language': 'en-US,en;q=0.9',
             accept: '*/*',

@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/media/:id/:routeParams?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/twitter/media/DIYgod',
     parameters: { id: 'username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', routeParams: 'extra parameters, see the table above.' },
     features: {
@@ -33,7 +33,7 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['twitter.com/:id/media'],
+            source: ['x.com/:id/media'],
             target: '/media/:id',
         },
     ],
@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     return {
         title: `Twitter @${userInfo?.name}`,
-        link: `https://twitter.com/${userInfo?.screen_name}/media`,
+        link: `https://x.com/${userInfo?.screen_name}/media`,
         image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
         description: userInfo?.description,
         item: utils.ProcessFeed(ctx, {

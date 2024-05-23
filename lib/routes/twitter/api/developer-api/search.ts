@@ -13,7 +13,7 @@ const handler = async (ctx) => {
 
     return {
         title: `Twitter Keyword - ${keyword}`,
-        link: `https://twitter.com/search?q=${encodeURIComponent(keyword)}`,
+        link: `https://x.com/search?q=${encodeURIComponent(keyword)}`,
         item: utils.ProcessFeed(ctx, {
             data: data.statuses,
         }),

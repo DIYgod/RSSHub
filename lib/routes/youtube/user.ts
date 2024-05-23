@@ -9,7 +9,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/user/:username/:embed?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/youtube/user/@JFlaMusic',
     parameters: { username: 'YouTuber username with @', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {

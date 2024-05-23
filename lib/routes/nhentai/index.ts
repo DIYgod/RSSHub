@@ -6,26 +6,21 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 const supportedKeys = new Set(['parody', 'character', 'tag', 'artist', 'group', 'language', 'category']);
 
 export const route: Route = {
-    path: '/:key/:keyword/:mode?',
-    categories: ['anime'],
-    example: '/nhentai/language/chinese',
+    path: '/index/:key/:keyword/:mode?',
+    example: '/nhentai/index/language/chinese',
     parameters: {
         key: 'Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`',
         keyword: 'Filter value',
         mode: 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations), default to `simple`',
     },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: true,
-        supportPodcast: false,
-        supportScihub: false,
     },
     radar: [
         {
             source: ['nhentai.net/:key/:keyword'],
-            target: '/:key/:keyword',
+            target: '/index/:key/:keyword',
         },
     ],
     name: 'Filter',
