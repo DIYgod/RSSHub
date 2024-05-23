@@ -1862,6 +1862,9 @@
   "/fanbox/:creator": [
     "KarasuShin"
   ],
+  "/fanqienovel/page/:bookId": [
+    "TonyRL"
+  ],
   "/fansly/user/:username": [
     "TonyRL"
   ],

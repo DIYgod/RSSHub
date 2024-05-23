@@ -19002,7 +19002,35 @@
       }
     },
     "name": "fanbox",
-    "url": "https://www.fanbox.cc"
+    "url": "www.fanbox.cc"
+  },
+  "fanqienovel": {
+    "routes": {
+      "/page/:bookId": {
+        "path": "/page/:bookId",
+        "example": "/fanqienovel/page/6621052928482348040",
+        "parameters": {
+          "bookId": "小说 ID，可在 URL 中找到"
+        },
+        "maintainers": [
+          "TonyRL"
+        ],
+        "name": "小说更新",
+        "radar": [
+          {
+            "source": [
+              "fanqienovel.com/page/:bookId"
+            ]
+          }
+        ],
+        "location": "page.ts"
+      }
+    },
+    "name": "番茄小说",
+    "url": "fanqienovel.com",
+    "categories": [
+      "reading"
+    ]
   },
   "fansly": {
     "routes": {
