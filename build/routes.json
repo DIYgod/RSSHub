@@ -46126,15 +46126,6 @@
           "other"
         ],
         "example": "/pwc/strategyand/sustainability",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
