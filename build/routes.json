@@ -32282,6 +32282,31 @@
     "name": "集思录",
     "url": "jisilu.cn"
   },
+  "jiuyangongshe": {
+    "routes": {
+      "/community": {
+        "path": "/community",
+        "example": "/jiuyangongshe/community",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "name": "社群",
+        "radar": [
+          {
+            "source": [
+              "www.jiuyangongshe.com"
+            ]
+          }
+        ],
+        "location": "community.ts"
+      }
+    },
+    "name": "韭研公社",
+    "url": "www.jiuyangongshe.com",
+    "categories": [
+      "finance"
+    ]
+  },
   "jjwxc": {
     "routes": {
       "/author/:id?": {

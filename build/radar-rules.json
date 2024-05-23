@@ -8729,6 +8729,19 @@
       }
     ]
   },
+  "jiuyangongshe.com": {
+    "_name": "韭研公社",
+    "www": [
+      {
+        "title": "社群",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/jiuyangongshe/community"
+      }
+    ]
+  },
   "jou.edu.cn": {
     "_name": "江苏海洋大学",
     "www": [

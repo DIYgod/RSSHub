@@ -3225,6 +3225,9 @@
   "/jisilu/:category?/:sort?/:day?": [
     "nczitzk"
   ],
+  "/jiuyangongshe/community": [
+    "TonyRL"
+  ],
   "/jjwxc/author/:id?": [
     "nczitzk"
   ],
