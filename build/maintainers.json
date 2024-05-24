@@ -6555,10 +6555,10 @@
     "AlexdanerZe",
     "TonyRL"
   ],
-  "/zaobao/:type?/:section?": [
+  "/zaobao/interactive-graphics": [
     "shunf4"
   ],
-  "/zaobao/interactive-graphics": [
+  "/zaobao/other/:type?/:section?": [
     "shunf4"
   ],
   "/zaobao/realtime/:section?": [
