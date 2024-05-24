@@ -31,7 +31,10 @@ export default async function test({ github, context, core }, baseUrl, routes, n
                 detail += '\n\n';
                 detail += errInfoList
                     .slice(0, 5)
-                    .map((e) => (e.length > 1000 ? e.slice(0, 1000) + '...' : e).trim())
+                    .map((e) => {
+                        e = e.replaceAll(/<code class="[^"]+">|<\/code>/g, '').trim();
+                        return e.length > 1000 ? e.slice(0, 1000) + '...' : e;
+                    })
                     .join('\n');
             }
         }
