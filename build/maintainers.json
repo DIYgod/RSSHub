@@ -3930,16 +3930,19 @@
   "/nifd/research/:categoryGuid?": [
     "Fatpandac"
   ],
-  "/nikkei/": [],
-  "/nikkei/index": [],
-  "/nikkei/:category/:article_type?": [
+  "/nikkei/index": [
+    "zjysdhr"
+  ],
+  "/nikkei/news/:category/:article_type?": [
     "Arracc",
     "ladeng07"
   ],
   "/nikkei/asia": [
     "rainrdx"
   ],
-  "/nikkei/cn/*": [],
+  "/nikkei/cn/*": [
+    "nczitzk"
+  ],
   "/nintendo/direct": [
     "HFO4"
   ],

@@ -39579,32 +39579,22 @@
   },
   "nikkei": {
     "routes": {
-      "/": {
-        "path": [
-          "/",
-          "/index"
-        ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "www.nikkei.com/",
-        "location": "index.ts"
-      },
       "/index": {
-        "path": [
-          "/",
-          "/index"
+        "path": "/index",
+        "name": "Home",
+        "example": "/nikkei/index",
+        "maintainers": [
+          "zjysdhr"
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "www.nikkei.com/",
+        "url": "www.nikkei.com",
         "location": "index.ts"
       },
-      "/:category/:article_type?": {
-        "path": "/:category/:article_type?",
+      "/news/:category/:article_type?": {
+        "path": "/news/:category/:article_type?",
         "categories": [
           "traditional-media"
         ],
-        "example": "/nikkei/news",
+        "example": "/nikkei/news/news",
         "parameters": {
           "category": "Category, see table below",
           "article_type": "Only includes free articles, set `free` to enable, disabled by default"
@@ -39632,15 +39622,6 @@
           "traditional-media"
         ],
         "example": "/nikkei/asia",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
         "radar": [
           {
             "source": [
@@ -39652,18 +39633,40 @@
         "maintainers": [
           "rainrdx"
         ],
-        "url": "asia.nikkei.com/",
+        "url": "asia.nikkei.com",
         "location": "asia/index.ts"
       },
       "/cn/*": {
         "path": "/cn/*",
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "中文版新闻",
+        "example": "/nikkei/cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "description": "::: tip\n  如 [中国 经济 日经中文网](https://cn.nikkei.com/china/ceconomy.html) 的 URL 为 `https://cn.nikkei.com/china/ceconomy.html` 对应路由为 [`/nikkei/cn/cn/china/ceconomy`](https://rsshub.app/nikkei/cn/cn/china/ceconomy)\n\n  如 [中國 經濟 日經中文網](https://zh.cn.nikkei.com/china/ceconomy.html) 的 URL 为 `https://zh.cn.nikkei.com/china/ceconomy.html` 对应路由为 [`/nikkei/cn/zh/china/ceconomy`](https://rsshub.app/nikkei/cn/zh/china/ceconomy)\n\n  特别地，当 `path` 填入 `rss` 后（如路由为 [`/nikkei/cn/cn/rss`](https://rsshub.app/nikkei/cn/cn/rss)），此时返回的是 [官方 RSS 的内容](https://cn.nikkei.com/rss.html)\n:::",
+        "radar": [
+          {
+            "title": "中文版新闻",
+            "source": [
+              "cn.nikkei.com/:category/:type",
+              "cn.nikkei.com/:category",
+              "cn.nikkei.com/"
+            ]
+          },
+          {
+            "title": "中文版新聞",
+            "source": [
+              "zh.cn.nikkei.com/:category/:type",
+              "zh.cn.nikkei.com/:category",
+              "zh.cn.nikkei.com/"
+            ]
+          }
+        ],
         "location": "cn/index.ts"
       }
     },
     "name": "The Nikkei 日本経済新聞",
-    "url": "asia.nikkei.com"
+    "url": "nikkei.com"
   },
   "nintendo": {
     "routes": {
