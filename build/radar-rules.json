@@ -9769,6 +9769,35 @@
       }
     ]
   },
+  "matters.town": {
+    "_name": "Matters",
+    ".": [
+      {
+        "title": "Author",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:uid"
+        ],
+        "target": "/mattersparams=>`/matters/author/${params.uid.slice(1)}`"
+      },
+      {
+        "title": "Latest, heat, essence",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/matters/latest/:type?"
+      },
+      {
+        "title": "Tags",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tags/:tid"
+        ],
+        "target": "/matters/tags/:tid"
+      }
+    ]
+  },
   "mdpi.com": {
     "_name": "MDPI",
     "www": [

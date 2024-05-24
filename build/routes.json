@@ -35957,6 +35957,76 @@
     "url": "mastodon.social",
     "description": ":::tip\nOfficial user RSS:\n\n-   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))\n-   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))\n\nThese feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you may need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.\n:::"
   },
+  "matters": {
+    "routes": {
+      "/author/:uid": {
+        "path": "/author/:uid",
+        "name": "Author",
+        "example": "/matters/author/robertu",
+        "parameters": {
+          "uid": "Author id, can be found at author's homepage url"
+        },
+        "maintainers": [
+          "Cerebrater",
+          "xosdy"
+        ],
+        "radar": [
+          {
+            "source": [
+              "matters.town/:uid"
+            ]
+          }
+        ],
+        "location": "author.ts"
+      },
+      "/latest/:type?": {
+        "path": "/latest/:type?",
+        "name": "Latest, heat, essence",
+        "example": "/matters/latest/heat",
+        "parameters": {
+          "uid": "Defaults to latest, see table below"
+        },
+        "maintainers": [
+          "xyqfer",
+          "Cerebrater",
+          "xosdy"
+        ],
+        "radar": [
+          {
+            "source": [
+              "matters.town"
+            ]
+          }
+        ],
+        "description": "| 最新   | 热门 | 精华    |\n  | ------ | ---- | ------- |\n  | latest | heat | essence |",
+        "location": "latest.ts"
+      },
+      "/tags/:tid": {
+        "path": "/tags/:tid",
+        "name": "Tags",
+        "example": "/matters/tags/972-哲學",
+        "parameters": {
+          "tid": "Tag id, can be found in the url of the tag page"
+        },
+        "maintainers": [
+          "Cerebrater"
+        ],
+        "radar": [
+          {
+            "source": [
+              "matters.town/tags/:tid"
+            ]
+          }
+        ],
+        "location": "tags.ts"
+      }
+    },
+    "name": "Matters",
+    "url": "matters.town",
+    "categories": [
+      "new-media"
+    ]
+  },
   "mckinsey": {
     "routes": {
       "/cn/:category?": {

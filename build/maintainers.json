@@ -3596,6 +3596,18 @@
   "/mastodon/remote/:site/:only_media?": [
     "hoilc"
   ],
+  "/matters/author/:uid": [
+    "Cerebrater",
+    "xosdy"
+  ],
+  "/matters/latest/:type?": [
+    "xyqfer",
+    "Cerebrater",
+    "xosdy"
+  ],
+  "/matters/tags/:tid": [
+    "Cerebrater"
+  ],
   "/mckinsey/cn/:category?": [
     "laampui"
   ],
