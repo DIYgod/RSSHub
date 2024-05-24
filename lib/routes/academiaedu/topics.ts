@@ -23,20 +23,17 @@ async function handler(ctx) {
     const list = $('.works > .u-borderBottom1')
         .toArray()
         .map((item) => {
+            item = $(item);
             return {
                 title: $(item).find('.title > a').first().text(),
                 link: $(item).find('.title > a').first().attr('href'),
-                // pubDate
-                author:$(item).find('span[itemprop=author] > a').text(),
-                description: $(item).find('.summarized').text()
-            }
-        })
-        return {
-            // channel title
-            title: `academia.edu | ${interest} documents`,
-            // channel link
-            link: `https://academia.edu/Documents/in/${interest}/MostRecent`,
-            // each feed item
-            item: list,
-        };
+                author: $(item).find('span[itemprop=author] > a').text(),
+                description: $(item).find('.summarized').text(),
+            };
+        });
+    return {
+        title: `academia.edu | ${interest} documents`,
+        link: `https://academia.edu/Documents/in/${interest}/MostRecent`,
+        item: list,
+    };
 }
