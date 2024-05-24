@@ -38,6 +38,7 @@ async function handler(ctx: Context): Promise<Data> {
     const selectorMap = {
         podcasts: '.episode-content__title a',
         blog: '.card-series__content-link',
+        'books-reports': '.card-article__link',
     };
 
     const listSelector = selectorMap[category] ?? '.card-article-large__link';
