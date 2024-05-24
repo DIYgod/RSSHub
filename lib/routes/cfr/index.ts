@@ -21,6 +21,9 @@ export const route: Route = {
             target: '/:category/:subCategory?',
         },
     ],
+    features: {
+        antiCrawler: true,
+    },
 };
 
 async function handler(ctx: Context): Promise<Data> {
