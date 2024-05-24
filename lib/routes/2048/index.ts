@@ -1,14 +1,10 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
 export const route: Route = {
     path: '/:id?',
@@ -87,7 +83,14 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const currentHost = `https://${new URL(response.url).host}`; // redirected host
+
+    const headbase = $('#headbase')?.attr('href');
+
+    if (!headbase) {
+        throw new Error('headbase not found');
+    }
+
+    const currentHost = new URL(headbase).origin; // redirected host
 
     $('#shortcut').remove();
     $('tr[onmouseover="this.className=\'tr3 t_two\'"]').remove();
@@ -103,6 +106,10 @@ async function handler(ctx) {
                 title: item.text(),
                 link: `${currentHost}/2048/${item.attr('href')}`,
                 guid: `${rootUrl}/2048/${item.attr('href')}`,
+                enclosure_url: '',
+                pubDate: new Date(),
+                author: '',
+                description: '',
             };
         })
         .filter((item) => !item.link.includes('undefined'));
@@ -126,37 +133,63 @@ async function handler(ctx) {
                 item.author = content('.fl.black').first().text();
                 item.pubDate = timezone(parseDate(content('span.fl.gray').first().attr('title')), +8);
 
-                const downloadLink = content('#read_tpc').first().find('a').last();
-
-                if (downloadLink?.text()?.startsWith('http') && /datapps\.org$/.test(new URL(downloadLink.text()).hostname)) {
-                    const torrentResponse = await got({
-                        method: 'get',
-                        url: downloadLink.text(),
-                    });
-
-                    const torrent = load(torrentResponse.data);
-
-                    item.enclosure_type = 'application/x-bittorrent';
-                    item.enclosure_url = `https://data.datapps.org/${torrent('.uk-button').last().attr('href')}`;
-
-                    const magnet = torrent('.uk-button').first().attr('href');
-
-                    downloadLink.replaceWith(
-                        art(path.join(__dirname, 'templates/download.art'), {
-                            magnet,
-                            torrent: item.enclosure_url,
-                        })
-                    );
-                }
-
                 const desp = content('#read_tpc').first();
 
                 content('.showhide img').each(function () {
                     desp.append(`<br><img style="max-width: 100%;" src="${content(this).attr('src')}">`);
                 });
 
-                item.description = desp.html();
+                item.description = desp.html() ?? '';
 
+                const downloadLink = content('#read_tpc').first().find('a').last();
+                const copyLink = content('#copytext')?.first()?.text();
+                const attachments = content('.r_one')
+                    .find('a')
+                    .map((i, t) => {
+                        const a = content(t);
+                        const res = {
+                            name: a.text(),
+                            link: a.attr('href'),
+                        };
+                        return res;
+                    })
+                    .filter((i, e) => e.link && e.link.includes('action=download'));
+
+                if (downloadLink?.text()?.startsWith('https') && /down2048\.com\/list\.php/.test(downloadLink?.text())) {
+                    // second level page magnet url
+                    const torrentResponse = await got({
+                        method: 'get',
+                        url: downloadLink.text(),
+                    });
+
+                    const torrent = load(torrentResponse.data);
+                    const magUrl = torrent('.uk-button').first().attr('href');
+                    if (magUrl) {
+                        item.enclosure_url = magUrl;
+                    }
+                } else if (copyLink?.startsWith('magnet')) {
+                    // copy link
+                    item.enclosure_url = copyLink;
+                } else if (attachments && attachments.length > 0) {
+                    // use attachment make item replicas
+                    const copyItem = item;
+                    item = [];
+                    for (const attachment of attachments) {
+                        if (attachment.link && !attachment.link.startsWith('http')) {
+                            attachment.link = `${currentHost}/${attachment.link}`;
+                        }
+                        const attachmentItem = {
+                            title: `${copyItem.title} [${attachment.name}]`,
+                            link: copyItem.link,
+                            guid: copyItem.guid,
+                            enclosure_url: attachment.link,
+                            pubDate: copyItem.pubDate,
+                            author: copyItem.author,
+                            description: copyItem.description,
+                        };
+                        item.push(attachmentItem);
+                    }
+                }
                 return item;
             })
         )
@@ -165,6 +198,6 @@ async function handler(ctx) {
     return {
         title: `${$('#main #breadCrumb a').last().text()} - 2048核基地`,
         link: currentUrl,
-        item: items,
+        item: items.flat().filter((i) => i !== null && i.enclosure_url && i.enclosure_url !== ''),
     };
 }
