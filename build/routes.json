@@ -30166,6 +30166,36 @@
     "name": "ImageMagick",
     "url": "imagemagick.org"
   },
+  "imdb": {
+    "routes": {
+      "/chart/:chart?": {
+        "path": "/chart/:chart?",
+        "categories": [
+          "multimedia"
+        ],
+        "parameters": {
+          "chart": "The chart to display, `top` by default"
+        },
+        "example": "/imdb/chart",
+        "radar": [
+          {
+            "source": [
+              "www.imdb.com/chart/:chart/"
+            ]
+          }
+        ],
+        "name": "Charts",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.imdb.com/chart/top/",
+        "description": "| Top 250 Movies | Most Popular Movies | Top 250 TV Shows | Most Popular TV Shows |\n  | -------------- | ------------------- | ---------------- | --------------------- |\n  | top            | moviemeter          | toptv            | tvmeter               |",
+        "location": "chart.ts"
+      }
+    },
+    "name": "IMDb",
+    "url": "www.imdb.com"
+  },
   "imiker": {
     "routes": {
       "/ask/jinghua": {

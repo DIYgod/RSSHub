@@ -3001,6 +3001,9 @@
   "/imagemagick/changelog": [
     "nczitzk"
   ],
+  "/imdb/chart/:chart?": [
+    "TonyRL"
+  ],
   "/imiker/ask/jinghua": [
     "nczitzk"
   ],
