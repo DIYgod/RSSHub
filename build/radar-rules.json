@@ -2962,6 +2962,20 @@
       }
     ]
   },
+  "cfr.org": {
+    "_name": "Council on Foreign Relations",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category",
+          "/:category/:subCategory"
+        ],
+        "target": "/cfr/:category/:subCategory?"
+      }
+    ]
+  },
   "cgtn.com": {
     "_name": "中国环球电视网",
     ".": [

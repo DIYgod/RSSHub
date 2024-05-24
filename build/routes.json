@@ -10812,6 +10812,40 @@
     "name": "中国期货市场监控中心",
     "url": "cfmmc.com"
   },
+  "cfr": {
+    "routes": {
+      "/:category/:subCategory?": {
+        "path": "/:category/:subCategory?",
+        "categories": [
+          "traditional-media"
+        ],
+        "parameters": {
+          "category": "category, find it in the URL",
+          "subCategory": "sub-category, find it in the URL"
+        },
+        "example": "/cfr/asia",
+        "name": "News",
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.cfr.org/:category",
+              "www.cfr.org/:category/:subCategory"
+            ],
+            "target": "/:category/:subCategory?"
+          }
+        ],
+        "features": {
+          "antiCrawler": true
+        },
+        "location": "index.ts"
+      }
+    },
+    "name": "Council on Foreign Relations",
+    "url": "www.cfr.org"
+  },
   "cgtn": {
     "routes": {
       "/podcast/:category/:id": {

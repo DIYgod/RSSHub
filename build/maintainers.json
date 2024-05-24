@@ -1058,6 +1058,9 @@
     "TonyRL"
   ],
   "/cfmmc/:id{.+}?": [],
+  "/cfr/:category/:subCategory?": [
+    "KarasuShin"
+  ],
   "/cgtn/podcast/:category/:id": [
     "5upernova-heng"
   ],
