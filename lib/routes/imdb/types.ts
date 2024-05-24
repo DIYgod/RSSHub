@@ -49,7 +49,7 @@ interface Title {
     };
     releaseYear: {
         year: number;
-        endYear: null;
+        endYear: number | null;
         __typename: string;
     };
     ratingsSummary: {
