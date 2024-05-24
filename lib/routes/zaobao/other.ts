@@ -3,18 +3,10 @@ import { parseList } from './util';
 const baseUrl = 'https://www.zaobao.com';
 
 export const route: Route = {
-    path: '/:type?/:section?',
+    path: '/other/:type?/:section?',
     categories: ['traditional-media'],
-    example: '/zaobao/lifestyle/health',
+    example: '/zaobao/other/lifestyle/health',
     parameters: { type: 'https://www.zaobao.com/**lifestyle**/health 中的 **lifestyle**', section: 'https://www.zaobao.com/lifestyle/**health** 中的 **health**' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: '其他栏目',
     maintainers: ['shunf4'],
     handler,
