@@ -37,13 +37,13 @@ async function handler(ctx: Context): Promise<Data> {
 
     let items: DataItem[] = [];
 
-    const listSelectors = ['.card-article-large__link', '.card-article__link', '.card-series__content-link'];
+    const listSelectors = ['.card-series__content-link', '.card-article-large__link', '.card-article__link'];
 
     const listSelector = listSelectors.find((selector) => $(selector).length);
 
     if (listSelector) {
         items = await Promise.all(
-            $('.card-article-large__link')
+            $(listSelector)
                 .toArray()
                 .map(async (item) => {
                     const $item = $(item);
