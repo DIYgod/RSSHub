@@ -14,28 +14,44 @@ export function getDataItem(href: string) {
         const res = await ofetch(link);
         const $ = load(res);
 
+        let dataItem: DataItem;
+
         switch (prefix) {
             case 'article':
-                return parseArticle($);
+                dataItem = parseArticle($);
+                break;
             case 'blog':
-                return parseBlog($);
+                dataItem = parseBlog($);
+                break;
             case 'book':
-                return parseBook($);
+                dataItem = parseBook($);
+                break;
             case 'conference-calls':
-                return parseConferenceCalls($);
+                dataItem = parseConferenceCalls($);
+                break;
             case 'event':
-                return parseEvent($);
+                dataItem = parseEvent($);
+                break;
             case 'backgrounder':
-                return parseBackgrounder($);
+                dataItem = parseBackgrounder($);
+                break;
             case 'podcasts':
-                return parsePodcasts($);
+                dataItem = parsePodcasts($);
+                break;
             case 'task-force-report':
-                return parseTaskForceReport($);
+                dataItem = parseTaskForceReport($);
+                break;
             case 'timeline':
-                return parseTimeline($);
+                dataItem = parseTimeline($);
+                break;
             default:
-                return parseDefault($);
+                dataItem = parseDefault($);
         }
+
+        return {
+            ...dataItem,
+            link,
+        };
     }) as Promise<DataItem>;
 }
 
