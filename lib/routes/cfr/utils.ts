@@ -44,6 +44,9 @@ export function getDataItem(href: string) {
             case 'timeline':
                 dataItem = parseTimeline($);
                 break;
+            case 'video':
+                dataItem = parseVideo($);
+                break;
             default:
                 dataItem = parseDefault($);
         }
@@ -59,13 +62,8 @@ function parseArticle($: CheerioAPI): DataItem {
     const linkData = parseLinkData($);
     let description = parseDescription($('.body-content'), $);
     const $articleHeader = $('.article-header__image');
-    if ($articleHeader.find('.article-header__image-img').length) {
-        const articleImageSrc = $articleHeader.find('.article-header__image-img').attr('src');
-        description = `<img src="${articleImageSrc}"><br>${description}`;
-    }
-    const videoIfame = getVideoIframe($articleHeader);
-    if (videoIfame) {
-        description = `${videoIfame}<br>${description}`;
+    if ($articleHeader.length) {
+        description = `<figure>${$articleHeader.html()}</figure><br>${description}`;
     }
     return {
         title: linkData?.title ?? $('.article-header__title').text(),
@@ -76,7 +74,11 @@ function parseArticle($: CheerioAPI): DataItem {
 
 function parseBlog($: CheerioAPI): DataItem {
     const linkData = parseLinkData($);
-    const description = parseDescription($('.body-content'), $);
+    let description = parseDescription($('.body-content'), $);
+    const figure = $('.article-header-blog__figure');
+    if (figure.length) {
+        description = `<figure>${figure.html()}</figure><br>${description}`;
+    }
     return {
         title: linkData?.title ?? $('.article-header-blog__title').text(),
         pubDate: linkData?.pubDate,
@@ -87,12 +89,8 @@ function parseBlog($: CheerioAPI): DataItem {
 function parseBook($: CheerioAPI): DataItem {
     const linkData = parseLinkData($);
     let description = parseDescription($('.body-content'), $);
-    const sectionTop = $('.article-header__section-top').remove('.article-header__image');
+    const sectionTop = $('.article-header__section-top');
     description = `${sectionTop.html()}<br>${description}`;
-    const bookCover = $('.article-header__image-img').attr('src');
-    if (bookCover) {
-        description = `<img src="${bookCover}"><br>${description}`;
-    }
 
     return {
         title: linkData?.title ?? $('.article-header__title').text(),
@@ -133,6 +131,10 @@ function parseBackgrounder($: CheerioAPI): DataItem {
     if (summary) {
         description = `${summary}<br>${description}`;
     }
+    const figure = $('.article-header-backgrounder__figure');
+    if (figure.length) {
+        description = `<figure>${figure.html()}</figure><br>${description}`;
+    }
 
     return {
         title: linkData?.title ?? $('.article-header-backgrounder__title').text(),
@@ -143,11 +145,17 @@ function parseBackgrounder($: CheerioAPI): DataItem {
 
 function parsePodcasts($: CheerioAPI): DataItem {
     const linkData = parseLinkData($);
-    const description = $('.body-content').first().html() ?? '';
+    let description = $('.body-content').first().html() ?? '';
+    const audioSrc = $('#player-default').attr('src');
+    if (audioSrc) {
+        description = `<audio controls src="${audioSrc}"></audio><br>${description}`;
+    }
     return {
         title: linkData?.title ?? $('head title').text(),
         pubDate: linkData?.pubDate,
         description,
+        enclosure_url: audioSrc,
+        enclosure_type: 'audio/mpeg',
     };
 }
 
@@ -186,6 +194,22 @@ function parseTimeline($: CheerioAPI): DataItem {
     }
     return {
         title: linkData?.title ?? $('.timeline-header__title').text(),
+        pubDate: linkData?.pubDate,
+        description,
+    };
+}
+
+function parseVideo($: CheerioAPI): DataItem {
+    const linkData = parseLinkData($);
+    let description = parseDescription($('.body-content'), $);
+    const $articleHeader = $('.article-header__image');
+    const videoIfame = getVideoIframe($articleHeader);
+    if (videoIfame) {
+        description = `${videoIfame}<br>${description}`;
+    }
+
+    return {
+        title: linkData?.title ?? $('.article-header__title').text(),
         pubDate: linkData?.pubDate,
         description,
     };
