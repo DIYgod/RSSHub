@@ -2,7 +2,7 @@ import type { Data, Route } from '@/types';
 import type { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { getDataItem } from './utils';
+import { asyncPoolAll, getDataItem } from './utils';
 
 export const route: Route = {
     path: '/:category/:subCategory?',
@@ -35,7 +35,9 @@ async function handler(ctx: Context): Promise<Data> {
 
     const $ = load(res);
 
-    const selectorMap = {
+    const selectorMap: {
+        [key: string]: string;
+    } = {
         podcasts: '.episode-content__title a',
         blog: '.card-series__content-link',
         'books-reports': '.card-article__link',
@@ -43,15 +45,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const listSelector = selectorMap[category] ?? '.card-article-large__link';
 
-    const items = await Promise.all(
-        $(listSelector)
-            .toArray()
-            .map(async (item) => {
-                const $item = $(item);
-                const href = $item.attr('href')!;
-                return await getDataItem(href);
-            })
-    );
+    const items = await asyncPoolAll(5, $(listSelector).toArray(), async (item) => await getDataItem($(item).attr('href')!));
 
     return {
         title: $('head title').text().replace(' | Council on Foreign Relations', ''),
