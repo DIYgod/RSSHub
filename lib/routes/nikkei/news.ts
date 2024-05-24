@@ -10,9 +10,9 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/:category/:article_type?',
+    path: '/news/:category/:article_type?',
     categories: ['traditional-media'],
-    example: '/nikkei/news',
+    example: '/nikkei/news/news',
     parameters: { category: 'Category, see table below', article_type: 'Only includes free articles, set `free` to enable, disabled by default' },
     radar: [
         {
