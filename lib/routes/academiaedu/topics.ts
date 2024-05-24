@@ -17,7 +17,6 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let items = null
     const interest = ctx.req.param('interest');
     const response = await ofetch(`https://www.academia.edu/Documents/in/${interest}/MostRecent`);
     const $ = load(response);
