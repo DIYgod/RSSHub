@@ -4,17 +4,8 @@ import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 
 export const route: Route = {
     path: '/explore',
-    categories: ['multimedia', 'programming'],
+    categories: ['multimedia'],
     example: '/podwise/explore',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['podwise.ai', 'podwise.ai/explore'],
@@ -23,14 +14,14 @@ export const route: Route = {
     name: 'Collections',
     maintainers: ['lyling'],
     handler: async () => {
-        const link = `https://podwise.ai/explore`;
+        const link = 'https://podwise.ai/explore';
         const response = await ofetch(link);
         const $ = load(response);
         const content = $('#navigator').next();
         // header/[div => content]/footer, content p(2)
         const collectinDescription = content.find('p').eq(1).text();
 
-        const list = content
+        const items = content
             .find('.group')
             .toArray()
             .map((item) => {
@@ -40,21 +31,16 @@ export const route: Route = {
                 const description = item.find('p').first().text();
                 return {
                     title,
-                    link,
+                    link: `https://podwise.ai${link}`,
                     description,
                 };
             });
-
-        const items = list.map((item) => ({
-            title: item.title,
-            link: `https://podwise.ai${item.link}`,
-            description: item.description,
-        }));
 
         return {
             title: $('title').text(),
             description: collectinDescription,
             item: items,
+            link,
         };
     },
 };

@@ -7,17 +7,9 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/explore/:type',
-    categories: ['multimedia', 'programming'],
+    categories: ['multimedia'],
     example: '/podwise/explore/latest',
     parameters: { type: 'latest or all episodes.' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['podwise.ai/explore/:type'],
@@ -70,6 +62,7 @@ export const route: Route = {
         return {
             title,
             description,
+            link,
             item: items,
         };
     },
