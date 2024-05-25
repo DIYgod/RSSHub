@@ -4,8 +4,8 @@ import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-const dayjs = require('dayjs');
-const duration = require('dayjs/plugin/duration');
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
 
 export const route: Route = {
