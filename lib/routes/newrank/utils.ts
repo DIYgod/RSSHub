@@ -42,7 +42,7 @@ const decrypt_douyin_detail_xyz = (nonce) => {
     return md5(str);
 };
 
-const flatten = (arr) => arr.reduce((acc, val) => Array.isArray(val) ? [...acc, ...(flatten(val))] : [...acc, val], []);
+const flatten = (arr) => arr.reduce((acc, val) => (Array.isArray(val) ? [...acc, ...flatten(val)] : [...acc, val]), []);
 
 function shouldUpdateCookie(forcedUpdate = false) {
     if (forcedUpdate) {
