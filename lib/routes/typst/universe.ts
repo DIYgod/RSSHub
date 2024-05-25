@@ -3,7 +3,6 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import markdownit from 'markdown-it';
-import { Token, Options, Renderer } from 'markdown-it/index.js';
 import vm from 'node:vm';
 
 interface Package {
@@ -30,11 +29,11 @@ interface Context {
 const GITHUBRAW_BASE = 'https://raw.githubusercontent.com';
 const PKG_GITHUB_BASE = `${GITHUBRAW_BASE}/typst/packages/main/packages/preview`;
 
-function fixImageSrc(src, env) {
+function fixImageSrc(src: string, env: Package) {
     if (src.indexOf('://') > 0) {
         if (src.startsWith('https://typst.app/universe/package')) {
             src = src.replaceAll('https://typst.app/universe/package', `${PKG_GITHUB_BASE}/${env.name}/${env.version}`);
-        } else if (src.startsWith('https://github.com')) {
+        } else if (src.startsWith('https://github.com') && src.match(/\.(jpeg|jpg|gif|png|bmp|webp)$/gi)?.length) {
             src = src.replace('https://github.com', GITHUBRAW_BASE);
         }
     } else {
@@ -44,29 +43,6 @@ function fixImageSrc(src, env) {
         src = url.toString();
     }
     return src;
-}
-
-function rendererImage(tokens: Token[], idx: number, options: Options, env: Package, self: Renderer): string {
-    const token = tokens[idx];
-    if (token.attrs === null) {
-        return '';
-    }
-    const src = token.attrGet('src');
-    if (src === null) {
-        return '';
-    }
-    token.attrs[token.attrIndex('src')][1] = fixImageSrc(src, env);
-    return self.renderToken(tokens, idx, options);
-}
-
-function rendererHtmlImage(tokens: Token[], idx: number, _: Options, env: Package): string {
-    const token = tokens[idx];
-    const $ = load(token.content, {}, false);
-    $('img').each((i, el) => {
-        const src = el.attribs.src;
-        el.attribs.src = fixImageSrc(src, env);
-    });
-    return $.html();
 }
 
 export const route: Route = {
@@ -101,17 +77,21 @@ export const route: Route = {
                 displayErrors: true,
             });
             const md = markdownit('commonmark');
-            md.renderer.rules.image = rendererImage;
-            md.renderer.rules.html_inline = rendererHtmlImage;
-            md.renderer.rules.html_block = rendererHtmlImage;
             const items = context.an.exports.sort((a, b) => a.updatedAt - b.updatedAt);
             const groups = new Map(items.map((it) => [it.name, it]));
-            const pkgs = [...groups.values()].map((item) => ({
-                title: `${item.name} (${item.version}) | ${item.description}`,
-                link: `https://typst.app/universe/package/${item.name}`,
-                description: md.render(item.readme, item),
-                pubDate: parseDate(item.updatedAt, 'X'),
-            }));
+            const pkgs = [...groups.values()].map((item) => {
+                const $ = load(md.render(item.readme, item));
+                $('img').each((i, el) => {
+                    const src = el.attribs.src;
+                    el.attribs.src = fixImageSrc(src, item);
+                });
+                return {
+                    title: `${item.name} (${item.version}) | ${item.description}`,
+                    link: `https://typst.app/universe/package/${item.name}`,
+                    description: $.html(),
+                    pubDate: parseDate(item.updatedAt, 'X'),
+                };
+            });
             return {
                 title: 'Typst universe',
                 link: targetUrl,
