@@ -3134,9 +3134,6 @@
   "/javdb/home/:category?/:sort?/:filter?": [
     "nczitzk"
   ],
-  "/javdb/:category?/:sort?/:filter?": [
-    "nczitzk"
-  ],
   "/javdb/lists/:id/:filter?/:sort?": [
     "dddepg"
   ],
