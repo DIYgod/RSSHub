@@ -252,7 +252,7 @@
         source:[ "/",
           "/article" ],
         target:"/5eplay/article" } ] },
-  "69shu.top":{ _name:"69书吧",
+  "69shuba.pro":{ _name:"69书吧",
     www:[ { title:"章节",
         docs:"https://docs.rsshub.app/routes/reading",
         source:[ "/book/:id.htm" ],

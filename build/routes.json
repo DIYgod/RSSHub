@@ -2056,11 +2056,11 @@
       "/article/:id": {
         "path": "/article/:id",
         "name": "章节",
-        "url": "www.69shu.top",
+        "url": "www.69shuba.pro",
         "maintainers": [
           "eternasuno"
         ],
-        "example": "/article/47117",
+        "example": "/69shu/article/47117",
         "parameters": {
           "id": "小说 id, 可在对应小说页 URL 中找到"
         },
@@ -2078,7 +2078,7 @@
         "radar": [
           {
             "source": [
-              "www.69shu.top/book/:id.htm"
+              "www.69shuba.pro/book/:id.htm"
             ],
             "target": "/article/:id"
           }
@@ -2087,7 +2087,7 @@
       }
     },
     "name": "69书吧",
-    "url": "69shu.top"
+    "url": "69shuba.pro"
   },
   "6park": {
     "routes": {
