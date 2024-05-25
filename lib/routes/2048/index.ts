@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:id?',
@@ -149,6 +149,7 @@ async function handler(ctx) {
                 } else if (copyLink?.startsWith('magnet')) {
                     // copy link
                     item.enclosure_url = copyLink;
+                    item.enclosure_type = 'x-scheme-handler/magnet';
                 }
 
                 const desp = content('#read_tpc').first();
