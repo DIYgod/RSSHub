@@ -13,14 +13,6 @@ export const route: Route = {
         content: 'Set to true to retrieve the full article (images are blurry), anything else will pull the short text',
         language: 'defaults to `en`, use the website to discover other codes',
     },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['www.vice.com/:language/topic/:topic'],
