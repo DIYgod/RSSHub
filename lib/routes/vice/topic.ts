@@ -13,7 +13,7 @@ const render = (data) => art(path.join(__dirname, 'templates', 'article.art'), d
 export const route: Route = {
     path: '/topic/:topic/:language?',
     categories: ['traditional-media'],
-    example: '/vice/politics/true/en',
+    example: '/vice/topic/politics/en',
     parameters: {
         topic: 'Can be found in the URL',
         content: 'Set to true to retrieve the full article (images are blurry), anything else will pull the short text',
@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.vice.com/:language/topic/:topic'],
-            target: '/:topic/false/:language',
+            target: '/topic/:topic/:language',
         },
     ],
     name: 'Topic',
