@@ -55,7 +55,6 @@ export const route: Route = {
                     item.description = $('summary').first().html();
 
                     // duration
-                    // item.itunes_duration = parseDate("");
                     const $cover = $('img[alt="Podcast cover"]').eq(1);
                     const $duration = $cover.next().find('span').eq(2);
 
