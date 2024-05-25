@@ -6,7 +6,6 @@ export const route: Route = {
     radar: [
         {
             source: ['javdb.com/'],
-            target: '',
         },
     ],
     name: '主页',
