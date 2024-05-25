@@ -27,24 +27,20 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language = 'en', topic } = ctx.req.param();
-    let items = null;
     const response = await ofetch(`https://www.vice.com/${language}/topic/${topic}`);
     const $ = load(response);
-    const list = $('.vice-card')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            return {
-                title: $(item).find('h3').first().text(),
-                link: `https://vice.com${$(item).find('h3 > a').first().attr('href')}`,
-                pubDate: parseDate(new Date($(item).find('time').first().attr('datetime') * 1)),
-                author: $(item).find('.vice-card-details__byline').first().text(),
-                description: $(item).find('.vice-card-dek').first().text(),
-            };
-        });
-    // if content true pull the full article.
-    // images come through blury, default is to pull the short text
-    items = await Promise.all(
+    const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+
+    const list = nextData.props.pageProps.listPageData.articles.map((item) => ({
+        title: item.title,
+        link: `https://vice.com${item.url}`,
+        pubDate: parseDate(item.publish_date, 'x'),
+        author: item.contributions.map((c) => c.contributor.full_name).join(', '),
+        description: item.dek,
+        category: [...new Set([item.primary_topic.name, ...item.topics.map((t) => t.name)])],
+    }));
+
+    const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
