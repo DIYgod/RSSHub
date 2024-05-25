@@ -33,8 +33,8 @@ function fixImageSrc(src: string, env: Package) {
     if (src.indexOf('://') > 0) {
         if (src.startsWith('https://typst.app/universe/package')) {
             src = src.replaceAll('https://typst.app/universe/package', `${PKG_GITHUB_BASE}/${env.name}/${env.version}`);
-        } else if (src.startsWith('https://github.com') && src.match(/\.(jpeg|jpg|gif|png|bmp|webp)$/gi)?.length) {
-            src = src.replace('https://github.com', GITHUBRAW_BASE);
+        } else if (src.startsWith('https://github.com/') && src.match(/\.(jpeg|jpg|gif|png|bmp|webp)$/gi)?.length) {
+            src = src.replace('https://github.com/', `${GITHUBRAW_BASE}/`);
         }
     } else {
         const suffix = src.indexOf('/') === 0 ? '' : '/';
