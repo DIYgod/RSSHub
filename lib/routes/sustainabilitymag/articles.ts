@@ -1,8 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
+import oftech from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
 import { load } from 'cheerio';
 
 export const route: Route = {
@@ -20,7 +19,7 @@ export const route: Route = {
     ],
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -35,17 +34,7 @@ async function handler() {
     const feedLang = 'en';
     const feedDescription = 'Sustainability Magazine Articles';
 
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
-    });
-    logger.http(`Requesting ${feedURL}`);
-    await page.goto(feedURL, {
-        waitUntil: 'domcontentloaded',
-    });
-    const response = await page.content();
+    const response = await oftech(feedURL);
     const $ = load(response);
 
     const list = $('#content > div > div > div:nth-child(4) > div > div > div > div > div > div:nth-child(2) > div.infinite-scroll-component__outerdiv > div > div > div')
@@ -60,23 +49,10 @@ async function handler() {
             };
         });
 
-    page.close();
-
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const page = await browser.newPage();
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' ? request.continue() : request.abort();
-                });
-                logger.http(`Requesting ${item.link}`);
-                await page.goto(item.link, {
-                    waitUntil: 'domcontentloaded',
-                });
-                const response = await page.content();
-                page.close();
-
+                const response = await oftech(item.link);
                 const $ = load(response);
                 item.pubDate = parseDate($('#content > div > div > div > div:nth-child(1) > div > div > div > div > div > div.ArticleHeader_Details__3n5Er > div.Breadcrumbs_Breadcrumbs__3yIKi > div:nth-child(1) > div').text());
                 item.author = $('#content > div > div > div > div:nth-child(1) > div > div > div > div > div > div.ArticleHeader_Details__3n5Er > div.Type_m-body2__3AsD-.Type_d-body3__24mDH.Type_medium__2avgC > a').text();
@@ -85,8 +61,6 @@ async function handler() {
             })
         )
     );
-
-    browser.close();
 
     return {
         title: 'Sustainability Magazine Articles',
