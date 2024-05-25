@@ -28,7 +28,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { language = 'en', topic } = ctx.req.param();
     let items = null;
-    const response = await ofetch(`https://www.vice.com/${language ?? 'en'}/topic/${topic}`);
+    const response = await ofetch(`https://www.vice.com/${language}/topic/${topic}`);
     const $ = load(response);
     const list = $('.vice-card')
         .toArray()
