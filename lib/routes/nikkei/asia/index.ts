@@ -8,15 +8,6 @@ export const route: Route = {
     path: '/asia',
     categories: ['traditional-media'],
     example: '/nikkei/asia',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['asia.nikkei.com/'],
@@ -25,7 +16,7 @@ export const route: Route = {
     name: 'Nikkei Asia Latest News',
     maintainers: ['rainrdx'],
     handler,
-    url: 'asia.nikkei.com/',
+    url: 'asia.nikkei.com',
 };
 
 async function handler() {
