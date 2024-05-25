@@ -6,18 +6,10 @@ const PAGE = 1;
 const PAGE_SIZE = 20;
 
 export const route: Route = {
-    path: '/developer/column/:categoryId',
+    path: '/cloud/developer/column/:categoryId?',
     categories: ['social-media', 'programming'],
-    example: '/tencent-cloud/developer/column/1',
+    example: '/tencent/cloud/developer/column/1',
     parameters: { categoryId: '专栏Id: categoryId == classifyId(api)' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['cloud.tencent.com/developer/column'],
