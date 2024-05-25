@@ -8733,6 +8733,19 @@
       }
     ]
   },
+  "jingzhengu.com": {
+    "_name": "精真估",
+    "www": [
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/jingzhengu/news"
+      }
+    ]
+  },
   "jisilu.cn": {
     "_name": "集思录",
     ".": [

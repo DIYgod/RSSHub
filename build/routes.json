@@ -32207,6 +32207,32 @@
     "name": "金十数据",
     "url": "jin10.com"
   },
+  "jingzhengu": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "other"
+        ],
+        "example": "/jingzhengu/news",
+        "radar": [
+          {
+            "source": [
+              "www.jingzhengu.com"
+            ]
+          }
+        ],
+        "name": "资讯",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.jingzhengu.com",
+        "location": "news.ts"
+      }
+    },
+    "name": "精真估",
+    "url": "www.jingzhengu.com"
+  },
   "jinse": {
     "routes": {
       "/:category?": {
