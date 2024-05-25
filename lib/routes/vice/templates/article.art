@@ -1,0 +1,23 @@
+{{ if image }}
+<figure>
+  <img src="{{ image.url }}" alt="{{ image.alt }}">
+  <figcaption>{{ image.caption || image.credit || image.alt }}</figcaption>
+</figure>
+{{ /if }}
+
+{{ if body }}
+<p>{{@ body.html }}</p>
+{{ /if }}
+
+{{ if heading2 }}
+<hr/>
+<h2>{{@ heading2.html }}</h2>
+{{ /if }}
+
+{{ if oembed }}
+{{@ oembed.html }}
+{{ /if }}
+
+{{ if article }}
+<div>{{@ article.html }}</div>
+{{ /if }}

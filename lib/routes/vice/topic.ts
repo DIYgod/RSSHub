@@ -3,6 +3,12 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
+import path from 'path';
+import { getCurrentPath } from '@/utils/helpers';
+import { art } from '@/utils/render';
+
+const __dirname = getCurrentPath(import.meta.url);
+const render = (data) => art(path.join(__dirname, 'templates', 'article.art'), data);
 
 export const route: Route = {
     path: '/topic/:topic/:language?',
@@ -45,12 +51,49 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
+                const articleNextData = JSON.parse($('script#__NEXT_DATA__').text()).props.pageProps.data.articles[0];
+                const bodyComponent = JSON.parse(articleNextData.body_components_json);
 
-                // Select the first element with the class name 'comment-body'
-                item.description = $('.short-form').first().html();
+                item.description =
+                    render({
+                        image: {
+                            url: articleNextData.thumbnail_url,
+                            alt: articleNextData.caption,
+                            caption: articleNextData.caption,
+                            credit: articleNextData.credit,
+                        },
+                    }) +
+                    bodyComponent
+                        .map((component) => {
+                            switch (component.role) {
+                                case 'body':
+                                    return render({ body: { html: component.html } });
+                                case 'heading2':
+                                    return render({ heading2: { html: component.html } });
+                                case 'divider':
+                                    return '';
+                                case 'image':
+                                    return render({
+                                        image: {
+                                            url: component.URL,
+                                            alt: component.alt,
+                                            caption: component.caption,
+                                        },
+                                    });
+                                case 'oembed':
+                                    return render({ oembed: { html: component.oembed.html } });
+                                case 'tweet':
+                                    return render({ oembed: { html: component.oembed.html } });
+                                case 'youtube':
+                                    return render({ oembed: { html: component.oembed.html } });
+                                case 'article':
+                                    return render({ article: { html: component.article.body } });
+                                default:
+                                    throw new Error(`Unhandled component: ${component.role} from ${item.link}`);
+                            }
+                        })
+                        .join('');
 
-                // Every property of a list item defined above is reused here
-                // and we add a new property 'description'
                 return item;
             })
         )
