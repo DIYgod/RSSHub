@@ -58,18 +58,18 @@ export const route: Route = {
                 displayErrors: true,
             });
             const md = markdownit('commonmark');
-            const items = context.an.exports
-                .sort((a, b) => b.updatedAt - a.updatedAt)
-                .map((item) => ({
-                    title: `${item.name} (${item.version}) | ${item.description}`,
-                    link: `https://typst.app/universe/package/${item.name}`,
-                    description: md.render(item.readme),
-                    pubDate: parseDate(item.updatedAt, 'X'),
-                }));
+            const items = context.an.exports.sort((a, b) => a.updatedAt - b.updatedAt);
+            const groups = new Map(items.map((it) => [it.name, it]));
+            const pkgs = [...groups.values()].map((item) => ({
+                title: `${item.name} (${item.version}) | ${item.description}`,
+                link: `https://typst.app/universe/package/${item.name}`,
+                description: md.render(item.readme, item),
+                pubDate: parseDate(item.updatedAt, 'X'),
+            }));
             return {
                 title: 'Typst universe',
                 link: targetUrl,
-                item: items,
+                item: pkgs,
             };
         } else {
             return {
