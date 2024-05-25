@@ -34,9 +34,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const language = ctx.req.param('language');
-    const topic = ctx.req.param('topic');
-    const content = ctx.req.param('content');
+    const { language = 'en', topic } = ctx.req.param();
     let items = null;
     const response = await ofetch(`https://www.vice.com/${language ?? 'en'}/topic/${topic}`);
     const $ = load(response);
