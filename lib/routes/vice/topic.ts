@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 
 export const route: Route = {
-    path: '/:topic/:content/:language?',
+    path: '/topic/:topic/:language?',
     categories: ['traditional-media'],
     example: '/vice/politics/true/en',
     parameters: {
@@ -44,24 +44,21 @@ async function handler(ctx) {
         });
     // if content true pull the full article.
     // images come through blury, default is to pull the short text
-    items =
-        content === 'true'
-            ? await Promise.all(
-                  list.map((item) =>
-                      cache.tryGet(item.link, async () => {
-                          const response = await ofetch(item.link);
-                          const $ = load(response);
+    items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link);
+                const $ = load(response);
 
-                          // Select the first element with the class name 'comment-body'
-                          item.description = $('.short-form').first().html();
+                // Select the first element with the class name 'comment-body'
+                item.description = $('.short-form').first().html();
 
-                          // Every property of a list item defined above is reused here
-                          // and we add a new property 'description'
-                          return item;
-                      })
-                  )
-              )
-            : list;
+                // Every property of a list item defined above is reused here
+                // and we add a new property 'description'
+                return item;
+            })
+        )
+    );
 
     return {
         // channel title
