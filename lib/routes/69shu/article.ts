@@ -6,9 +6,9 @@ import type { Route, DataItem } from '@/types';
 export const route: Route = {
     path: '/article/:id',
     name: '章节',
-    url: 'www.69shu.top',
+    url: 'www.69shuba.pro',
     maintainers: ['eternasuno'],
-    example: '/article/47117',
+    example: '/69shu/article/47117',
     parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
     categories: ['reading'],
     features: {
@@ -21,13 +21,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.69shu.top/book/:id.htm'],
+            source: ['www.69shuba.pro/book/:id.htm'],
             target: '/article/:id',
         },
     ],
     handler: async (ctx) => {
         const { id } = ctx.req.param();
-        const link = `https://www.69shu.top/book/${id}.htm`;
+        const link = `https://www.69shuba.pro/book/${id}.htm`;
         const $ = load(await get(link));
 
         const item = await Promise.all(
@@ -91,6 +91,6 @@ const decrypt = (txt: string, articleid: string, chapterid: string, decryptionMa
         .split('<br><br>')
         .map((line, index, array) => (lineMap[index] ? array[lineMap[index]] : line))
         .slice(1, -1)
-        .join('<br>')
+        .join('<br><br>')
         .replaceAll(/\u2003|(<div[\S\s]*?<\/div>)/g, '');
 };
