@@ -42,7 +42,6 @@ async function handler() {
             return cache.tryGet(key, async () => {
                 const response = await got({ method: 'get', url: link });
                 const articleData = response.data.data;
-                let description = '';
                 let banner = articleData.banner;
                 if (articleData.keywords.includes('派早报')) {
                     banner = `https://cdnfile.sspai.com/${banner}`;
