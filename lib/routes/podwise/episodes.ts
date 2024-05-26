@@ -75,7 +75,7 @@ export const route: Route = {
                     item.itunes_duration = parseDuration($duration.text());
                     item.enclosure_url = podcastData.link;
                     // item.enclosure_length: nothing can convert to.
-                    item.enclosure_type = podcastData.linkType;
+                    item.enclosure_type = toEnclosureType(podcastData.linkType);
 
                     return item;
                 })
@@ -103,4 +103,17 @@ function parseDuration(durationStr) {
             minutes,
         })
         .asSeconds();
+}
+
+function toEnclosureType(linkType: string): string {
+    switch (linkType) {
+        case 'mp3':
+            return 'audio/mpeg';
+        case 'm4a':
+            return 'audio/x-m4a';
+        case 'mp4':
+            return 'video/mp4';
+        default:
+            return linkType;
+    }
 }
