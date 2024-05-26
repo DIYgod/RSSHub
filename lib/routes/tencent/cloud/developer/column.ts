@@ -7,9 +7,9 @@ const PAGE_SIZE = 20;
 
 export const route: Route = {
     path: '/cloud/developer/column/:categoryId?',
-    categories: ['social-media', 'programming'],
+    categories: ['programming'],
     example: '/tencent/cloud/developer/column/1',
-    parameters: { categoryId: '专栏Id: categoryId == classifyId(api)' },
+    parameters: { categoryId: 'categoryId from page url' },
     radar: [
         {
             source: ['cloud.tencent.com/developer/column'],
