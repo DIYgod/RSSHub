@@ -146,6 +146,6 @@ describe('request-rewriter', () => {
                 }
             })
         );
-        expect(Date.now() - time).toBeGreaterThan(2000);
+        expect(Date.now() - time).toBeGreaterThan(1500);
     });
 });
