@@ -99,7 +99,7 @@ async function handler(ctx) {
 
     return {
         // channel title
-        title: `Vice.com | ${topic} articles`,
+        title: `VICE | ${topic} articles`,
         // channel link
         link: `https://vice.com/${language}/topic/${topic}`,
         // each feed item
