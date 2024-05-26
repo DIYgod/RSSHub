@@ -5,7 +5,7 @@ import logger from '@/utils/logger';
 const rofetch = createFetch().create({
     retry: config.requestRetry,
     retryDelay: 1000,
-    timeout: config.requestTimeout,
+    // timeout: config.requestTimeout,
     onRequestError({ request, error }) {
         logger.error(`Request ${request} fail: ${error}`);
     },
