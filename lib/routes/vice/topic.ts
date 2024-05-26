@@ -81,9 +81,7 @@ async function handler(ctx) {
                                         },
                                     });
                                 case 'oembed':
-                                    return render({ oembed: { html: component.oembed.html } });
                                 case 'tweet':
-                                    return render({ oembed: { html: component.oembed.html } });
                                 case 'youtube':
                                     return render({ oembed: { html: component.oembed.html } });
                                 case 'article':
