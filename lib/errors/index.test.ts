@@ -27,8 +27,12 @@ describe('httperror', () => {
 });
 
 describe('RequestInProgressError', () => {
-    it(`RequestInProgressError`, async () => {
+    it(`RequestInProgressError with retry`, async () => {
         const responses = await Promise.all([request.get('/test/slow'), request.get('/test/slow')]);
+        expect(new Set(responses.map((r) => r.status))).toEqual(new Set([200, 200]));
+    });
+    it(`RequestInProgressError`, async () => {
+        const responses = await Promise.all([request.get('/test/slow'), request.get('/test/slow4')]);
         expect(new Set(responses.map((r) => r.status))).toEqual(new Set([200, 503]));
         expect(new Set(responses.map((r) => r.headers['cache-control']))).toEqual(new Set([`public, max-age=${config.cache.routeExpire}`, `public, max-age=${config.requestTimeout / 1000}`]));
         expect(responses.filter((r) => r.text.includes('RequestInProgressError: This path is currently fetching, please come back later!'))).toHaveLength(1);
