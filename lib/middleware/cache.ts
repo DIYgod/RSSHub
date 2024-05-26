@@ -27,7 +27,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         let bypass = false;
         while (retryTimes > 0) {
             // eslint-disable-next-line no-await-in-loop
-            await new Promise((resolve) => setTimeout(resolve, 6000));
+            await new Promise((resolve) => setTimeout(resolve, process.env.NODE_ENV === 'test' ? 3000 : 6000));
             // eslint-disable-next-line no-await-in-loop
             if ((await cacheModule.globalCache.get(controlKey)) !== '1') {
                 bypass = true;
