@@ -39,7 +39,7 @@ export const route: Route = {
             // 文章链接
             link: `https://cloud.tencent.com/developer/article/${item.articleId}`,
             // 文章正文
-            description: item.summary ?? item.summary,
+            description: item.summary,
             // 文章发布日期
             pubDate: parseDate(item.createTime * 1000),
             // 如果有的话，文章作者
@@ -50,7 +50,7 @@ export const route: Route = {
 
         const classify = await findClassifyById(categoryId);
 
-        const title = `腾讯云开发者社区`;
+        const title = '腾讯云开发者社区';
         const description = classify.length > 0 ? classify[0].name : '';
 
         return {
