@@ -140,7 +140,9 @@ async function handler(ctx) {
     // const isAsc = albumData.store.AlbumDetailTrackList.sort === 0;
     // 喜马拉雅的 API 的 query 参数 isAsc=0 时才是升序，不写就是降序。
     const trackInfoApi = `http://mobile.ximalaya.com/mobile/v1/album/track/?albumId=${id}&pageSize=${pageSize}&pageId=`;
-    const trackInfoResponse = await ofetch<TrackInfoResponse>(trackInfoApi + '1');
+    const trackInfoResponse = await ofetch<TrackInfoResponse>(trackInfoApi + '1', {
+        parseResponse: JSON.parse,
+    });
     const maxPageId = trackInfoResponse.data.maxPageId; // 最大页数
 
     let playList = trackInfoResponse.data.list;
@@ -149,7 +151,11 @@ async function handler(ctx) {
         const promises = [];
         for (let i = 2; i <= maxPageId; i++) {
             // string + number -> string
-            promises.push(ofetch<TrackInfoResponse>(trackInfoApi + i));
+            promises.push(
+                ofetch<TrackInfoResponse>(trackInfoApi + i, {
+                    parseResponse: JSON.parse,
+                })
+            );
         }
         const responses = await Promise.all(promises);
         for (const j of responses) {

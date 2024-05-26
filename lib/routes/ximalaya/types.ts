@@ -1,4 +1,4 @@
-interface TrackData {
+interface Track {
     trackId: number;
     trackRecordId: number;
     uid: number;
@@ -53,7 +53,13 @@ interface TrackData {
 export interface TrackInfoResponse {
     msg: string;
     ret: number;
-    data: TrackData[];
+    data: {
+        list: Track[];
+        pageId: number;
+        pageSize: number;
+        maxPageId: number;
+        totalCount: number;
+    };
 }
 
 export interface RichIntro {
