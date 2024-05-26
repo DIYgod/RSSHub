@@ -33050,6 +33050,47 @@
     ],
     "description": ""
   },
+  "kadokawa": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "角編新聞台",
+        "url": "kadokawa.com.tw",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/kadokawa/blog",
+        "description": "",
+        "categories": [
+          "blog"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "kadokawa.com.tw/blog/posts"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "location": "blog.ts"
+      }
+    },
+    "name": "台灣角川",
+    "url": "kadokawa.com.tw",
+    "categories": [
+      "shopping"
+    ],
+    "description": "TAIWAN KADOKAWA"
+  },
   "kamen-rider-official": {
     "routes": {
       "/news/:category?": {

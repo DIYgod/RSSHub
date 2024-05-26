@@ -8888,6 +8888,19 @@
       }
     ]
   },
+  "kadokawa.com.tw": {
+    "_name": "台灣角川",
+    ".": [
+      {
+        "title": "角編新聞台",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog/posts"
+        ],
+        "target": "/kadokawa/blog"
+      }
+    ]
+  },
   "kaopu.news": {
     "_name": "靠谱新闻",
     ".": [
