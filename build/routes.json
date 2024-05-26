@@ -56036,33 +56036,6 @@
   },
   "test": {
     "routes": {
-      "/config-not-found-error": {
-        "path": "/config-not-found-error",
-        "name": "config-not-found-error",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "example": "/config-not-found-error",
-        "location": "config-not-found-error.ts"
-      },
-      "/error": {
-        "path": "/error",
-        "name": "error",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "example": "/error",
-        "location": "error.ts"
-      },
-      "/httperror": {
-        "path": "/httperror",
-        "name": "httperror",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "example": "/httperror",
-        "location": "httperror.ts"
-      },
       "/:id/:params?": {
         "path": "/:id/:params?",
         "name": "Test",
@@ -56071,15 +56044,6 @@
           "NeverBehave"
         ],
         "location": "index.ts"
-      },
-      "/invalid-parameter-error": {
-        "path": "/invalid-parameter-error",
-        "name": "invalid-parameter-error",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "example": "/invalid-parameter-error",
-        "location": "invalid-parameter-error.ts"
       }
     },
     "name": "RSSHub Test"

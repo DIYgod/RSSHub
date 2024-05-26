@@ -5569,21 +5569,9 @@
   "/tesla/price": [
     "xiaokyo"
   ],
-  "/test/config-not-found-error": [
-    "DIYgod"
-  ],
-  "/test/error": [
-    "DIYgod"
-  ],
-  "/test/httperror": [
-    "DIYgod"
-  ],
   "/test/:id/:params?": [
     "DIYgod",
     "NeverBehave"
-  ],
-  "/test/invalid-parameter-error": [
-    "DIYgod"
   ],
   "/tfc-taiwan/:type?": [
     "TonyRL"
