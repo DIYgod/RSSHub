@@ -4557,6 +4557,12 @@
     "TonyRL"
   ],
   "/pnas/:topicPath{.+}?": [],
+  "/podwise/explore": [
+    "lyling"
+  ],
+  "/podwise/explore/:type": [
+    "lyling"
+  ],
   "/pornhub/category_url/:url?/:language?": [
     "I2IMk",
     "queensferryme"

@@ -45765,6 +45765,57 @@
     "name": "Proceedings of The National Academy of Sciences",
     "url": "pnas.org"
   },
+  "podwise": {
+    "routes": {
+      "/explore": {
+        "path": "/explore",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/podwise/explore",
+        "radar": [
+          {
+            "source": [
+              "podwise.ai",
+              "podwise.ai/explore"
+            ]
+          }
+        ],
+        "name": "Collections",
+        "maintainers": [
+          "lyling"
+        ],
+        "location": "collections.ts"
+      },
+      "/explore/:type": {
+        "path": "/explore/:type",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/podwise/explore/latest",
+        "parameters": {
+          "type": "latest or all episodes."
+        },
+        "radar": [
+          {
+            "source": [
+              "podwise.ai/explore/:type"
+            ]
+          }
+        ],
+        "name": "Episodes",
+        "maintainers": [
+          "lyling"
+        ],
+        "location": "episodes.ts"
+      }
+    },
+    "name": "Podwise",
+    "url": "podwise.ai",
+    "zh": {
+      "name": "Podwise"
+    }
+  },
   "pornhub": {
     "routes": {
       "/category_url/:url?/:language?": {
