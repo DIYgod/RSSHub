@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { parseDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 
 const PAGE = 1;
 const PAGE_SIZE = 20;
@@ -50,8 +51,8 @@ export const route: Route = {
 
         const classify = await findClassifyById(categoryId);
 
-        const title = '腾讯云开发者社区';
-        const description = classify.length > 0 ? classify[0].name : '';
+        const title = classify ? classify.name : '';
+        const description = `${title} - 腾讯云开发者社区`;
 
         return {
             title,
@@ -62,17 +63,19 @@ export const route: Route = {
 };
 
 async function findClassifyById(id) {
-    const classifylink = `https://cloud.tencent.com/developer/api/column/get-classify-list-by-scene`;
-    const response = await ofetch(classifylink, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: {
-            scene: 0,
-        },
+    const classifylink = 'https://cloud.tencent.com/developer/api/column/get-classify-list-by-scene';
+    const result = await cache.tryGet(classifylink, async () => {
+        const response = await ofetch(classifylink, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: {
+                scene: 0,
+            },
+        });
+        return response.list.find((classify) => classify.id === Number(id));
     });
 
-    const result = response.list.filter((classify) => classify.id === Number(id));
     return result;
 }
