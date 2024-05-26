@@ -54231,6 +54231,31 @@
     "name": "Stratechery by Ben Thompson",
     "url": "blog.stratechery.com"
   },
+  "stream-capital": {
+    "routes": {
+      "/search": {
+        "path": "/search",
+        "name": "最新",
+        "categories": [
+          "finance"
+        ],
+        "example": "/stream-capital/search",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.stream-capital.com/search"
+            ]
+          }
+        ],
+        "location": "search.ts"
+      }
+    },
+    "name": "远川研究所",
+    "url": "www.stream-capital.com"
+  },
   "studygolang": {
     "routes": {
       "/go/:id?": {

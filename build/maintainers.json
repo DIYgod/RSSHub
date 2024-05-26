@@ -5383,6 +5383,9 @@
   "/stratechery/": [
     "chazeon"
   ],
+  "/stream-capital/search": [
+    "TonyRL"
+  ],
   "/studygolang/go/:id?": [
     "nczitzk"
   ],
