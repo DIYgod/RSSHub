@@ -376,6 +376,10 @@ async function handler(ctx) {
         await wait(1000);
     }
 
+    if (ctx.req.param('id') === 'slow4') {
+        await wait(4000);
+    }
+
     if (ctx.req.query('mode') === 'fulltext') {
         item = [
             {

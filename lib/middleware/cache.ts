@@ -23,7 +23,21 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const isRequesting = await cacheModule.globalCache.get(controlKey);
 
     if (isRequesting === '1') {
-        throw new RequestInProgressError('This path is currently fetching, please come back later!');
+        let retryTimes = process.env.NODE_ENV === 'test' ? 1 : 10;
+        let bypass = false;
+        while (retryTimes > 0) {
+            // eslint-disable-next-line no-await-in-loop
+            await new Promise((resolve) => setTimeout(resolve, process.env.NODE_ENV === 'test' ? 3000 : 6000));
+            // eslint-disable-next-line no-await-in-loop
+            if ((await cacheModule.globalCache.get(controlKey)) !== '1') {
+                bypass = true;
+                break;
+            }
+            retryTimes--;
+        }
+        if (!bypass) {
+            throw new RequestInProgressError('This path is currently fetching, please come back later!');
+        }
     }
 
     const value = await cacheModule.globalCache.get(key);
