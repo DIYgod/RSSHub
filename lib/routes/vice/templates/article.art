@@ -17,7 +17,3 @@
 {{ if oembed }}
 {{@ oembed.html }}
 {{ /if }}
-
-{{ if article }}
-<div>{{@ article.html }}</div>
-{{ /if }}
