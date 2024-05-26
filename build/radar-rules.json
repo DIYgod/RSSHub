@@ -16836,6 +16836,19 @@
       }
     ]
   },
+  "vice.com": {
+    "_name": "VICE",
+    "www": [
+      {
+        "title": "Topic",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:language/topic/:topic"
+        ],
+        "target": "/vice/topic/:topic/:language"
+      }
+    ]
+  },
   "vimeo.com": {
     "_name": "Vimeo",
     ".": [

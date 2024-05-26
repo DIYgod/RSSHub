@@ -6034,6 +6034,9 @@
   "/verfghbw/press/:keyword?": [
     "quinn-dev"
   ],
+  "/vice/topic/:topic/:language?": [
+    "K33k0"
+  ],
   "/vimeo/category/:category/:staffpicks?": [
     "MisteryMonster"
   ],
