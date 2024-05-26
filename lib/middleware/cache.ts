@@ -6,18 +6,19 @@ import RequestInProgressError from '@/errors/types/request-in-progress';
 import cacheModule from '@/utils/cache/index';
 import { Data } from '@/types';
 
+const bypassList = new Set(['/', '/robots.txt', '/logo.png', '/favicon.ico']);
 // only give cache string, as the `!` condition tricky
 // md5 is used to shrink key size
 // plz, write these tips in comments!
 const middleware: MiddlewareHandler = async (ctx, next) => {
-    const { h64ToString } = await xxhash();
-    const key = 'rsshub:koa-redis-cache:' + h64ToString(ctx.req.path);
-    const controlKey = 'rsshub:path-requested:' + h64ToString(ctx.req.path);
-
-    if (!cacheModule.status.available) {
+    if (!cacheModule.status.available || bypassList.has(ctx.req.path)) {
         await next();
         return;
     }
+
+    const { h64ToString } = await xxhash();
+    const key = 'rsshub:koa-redis-cache:' + h64ToString(ctx.req.path);
+    const controlKey = 'rsshub:path-requested:' + h64ToString(ctx.req.path);
 
     const isRequesting = await cacheModule.globalCache.get(controlKey);
 
