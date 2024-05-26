@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { getUrl, getRandom16 } from './utils';
+import { getRandom16, decryptUrl } from './utils';
 const baseUrl = 'https://www.ximalaya.com';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
@@ -180,7 +180,8 @@ async function handler(ctx) {
     if (isPaid && token) {
         await Promise.all(
             playList.map(async (item) => {
-                const trackPayInfoApi = `https://mpay.ximalaya.com/mobile/track/pay/${item.trackId}/?device=pc`;
+                const timestamp = Math.floor(Date.now());
+                const trackPayInfoApi = `https://www.ximalaya.com/mobile-playpage/track/v3/baseInfo/${timestamp}?device=www2&trackQualityLevel=2&trackId=${item.trackId}`;
                 const data = await cache.tryGet('ximalaya:trackPayInfo' + trackPayInfoApi, async () => {
                     const trackPayInfoResponse = await got(trackPayInfoApi, {
                         headers: {
@@ -188,14 +189,15 @@ async function handler(ctx) {
                             cookie: `1&_device=android&${randomToken}&6.7.9;1&_token=${token}`,
                         },
                     });
+                    const trackInfo = trackPayInfoResponse.data.trackInfo;
                     const _item = {};
-                    if (trackPayInfoResponse.data.ep) {
-                        _item.playPathAacv224 = getUrl(trackPayInfoResponse.data);
-                    } else if (trackPayInfoResponse.data.msg) {
-                        _item.desc = item.desc + '<br/>' + trackPayInfoResponse.data.msg;
+                    if (!trackInfo.isAuthorized) {
+                        return _item;
                     }
+                    _item.playPathAacv224 = decryptUrl(trackInfo.playUrlList[0].url);
                     return _item;
                 });
+
                 if (data.playPathAacv224) {
                     item.playPathAacv224 = data.playPathAacv224;
                 }
