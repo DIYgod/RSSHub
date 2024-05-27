@@ -169,7 +169,7 @@
         "got": "14.3.0",
         "husky": "9.0.11",
         "js-beautify": "1.15.1",
-        "lint-staged": "15.2.4",
+        "lint-staged": "15.2.5",
         "mockdate": "3.0.5",
         "msw": "2.3.0",
         "prettier": "3.2.5",
