@@ -108,8 +108,8 @@ importers:
         specifier: 5.0.0
         version: 5.0.0
       jsdom:
-        specifier: 24.0.0
-        version: 24.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+        specifier: 24.1.0
+        version: 24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       json-bigint:
         specifier: 1.0.0
         version: 1.0.0
@@ -326,7 +326,7 @@ importers:
         version: 0.27.1
       '@vitest/coverage-v8':
         specifier: 1.6.0
-        version: 1.6.0(vitest@1.6.0(@types/node@20.12.12)(jsdom@24.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+        version: 1.6.0(vitest@1.6.0(@types/node@20.12.12)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       eslint:
         specifier: 8.57.0
         version: 8.57.0
@@ -389,7 +389,7 @@ importers:
         version: 4.3.2(typescript@5.4.5)(vite@5.2.11(@types/node@20.12.12))
       vitest:
         specifier: 1.6.0
-        version: 1.6.0(@types/node@20.12.12)(jsdom@24.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+        version: 1.6.0(@types/node@20.12.12)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
 
 packages:
 
@@ -3699,8 +3699,8 @@ packages:
     resolution: {integrity: sha512-mw3CBZGzW8nUBPYhFU2ztZ/kJ6NClQUQVpyzvFMfznZsoC///ZQ30J2RCUanNsr5yF22LqhgYr/lj807/ZleWA==}
     engines: {node: '>=0.1.90'}
 
-  jsdom@24.0.0:
-    resolution: {integrity: sha512-UDS2NayCvmXSXVP6mpTj+73JnNQadZlr9N68189xib2tx5Mls7swlTNao26IoHv46BZJFvXygyRtyXd1feAk1A==}
+  jsdom@24.1.0:
+    resolution: {integrity: sha512-6gpM7pRXCwIOKxX47cgOyvyQDN/Eh0f1MeKySBV2xGdKtqJBLj8P25eY3EVCWo2mglDDzozR2r2MW4T+JiNUZA==}
     engines: {node: '>=18'}
     peerDependencies:
       canvas: ^2.11.2
@@ -4863,6 +4863,9 @@ packages:
 
   rrweb-cssom@0.6.0:
     resolution: {integrity: sha512-APM0Gt1KoXBz0iIkkdB/kfvGOwC4UuJFeG/c+yV7wSc7q96cG/kJ0HiYCnzivD9SB53cLV1MlHFNfOuPaadYSw==}
+
+  rrweb-cssom@0.7.0:
+    resolution: {integrity: sha512-KlSv0pm9kgQSRxXEMgtivPJ4h826YHsuob8pSHcfSZsSXGtvpEAie8S0AnXuObEJ7nhikOb4ahwxDm0H2yW17g==}
 
   rss-parser@3.13.0:
     resolution: {integrity: sha512-7jWUBV5yGN3rqMMj7CZufl/291QAhvrrGpDNE4k/02ZchL0npisiYYqULF71jCEKoIiHvK/Q2e6IkDwPziT7+w==}
@@ -7634,7 +7637,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@vitest/coverage-v8@1.6.0(vitest@1.6.0(@types/node@20.12.12)(jsdom@24.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@vitest/coverage-v8@1.6.0(vitest@1.6.0(@types/node@20.12.12)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -7649,7 +7652,7 @@ snapshots:
       std-env: 3.7.0
       strip-literal: 2.1.0
       test-exclude: 6.0.0
-      vitest: 1.6.0(@types/node@20.12.12)(jsdom@24.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      vitest: 1.6.0(@types/node@20.12.12)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
     transitivePeerDependencies:
       - supports-color
 
@@ -9565,7 +9568,7 @@ snapshots:
 
   jschardet@3.1.2: {}
 
-  jsdom@24.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10):
+  jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
       cssstyle: 4.0.1
       data-urls: 5.0.0
@@ -9577,7 +9580,7 @@ snapshots:
       is-potential-custom-element-name: 1.0.1
       nwsapi: 2.2.10
       parse5: 7.1.2
-      rrweb-cssom: 0.6.0
+      rrweb-cssom: 0.7.0
       saxes: 6.0.0
       symbol-tree: 3.2.4
       tough-cookie: 4.1.4
@@ -10887,6 +10890,8 @@ snapshots:
 
   rrweb-cssom@0.6.0: {}
 
+  rrweb-cssom@0.7.0: {}
+
   rss-parser@3.13.0:
     dependencies:
       entities: 2.2.0
@@ -11552,7 +11557,7 @@ snapshots:
       '@types/node': 20.12.12
       fsevents: 2.3.3
 
-  vitest@1.6.0(@types/node@20.12.12)(jsdom@24.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
+  vitest@1.6.0(@types/node@20.12.12)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
     dependencies:
       '@vitest/expect': 1.6.0
       '@vitest/runner': 1.6.0
@@ -11576,7 +11581,7 @@ snapshots:
       why-is-node-running: 2.2.2
     optionalDependencies:
       '@types/node': 20.12.12
-      jsdom: 24.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      jsdom: 24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - less
       - lightningcss
