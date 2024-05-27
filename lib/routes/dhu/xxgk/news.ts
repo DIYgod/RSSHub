@@ -2,9 +2,10 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import cache from '@/utils/cache';
 
-const base_url = 'https://xxgk.dhu.edu.cn/1737/list.htm';
+const siteUrl = 'https://xxgk.dhu.edu.cn';
+const baseUrl = 'https://xxgk.dhu.edu.cn/1737/list.htm';
 
 export const route: Route = {
     path: '/xxgk/news',
@@ -25,25 +26,54 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = base_url;
-    const response = await got({
-        method: 'get',
-        url: link,
-        headers: {
-            Referer: base_url,
-        },
-    });
+    const link = baseUrl;
+    const { data: response } = await got(link);
 
-    const $ = load(response.data);
+    const $ = load(response);
+
+    // article list
+    const articleList = $('.cols_list > li')
+        .toArray()
+        .map((item) => {
+            item = $(item);
+            const cols_title = item.find('.cols_title > a');
+            const cols_meta = item.find('.cols_meta');
+
+            const link = cols_title.attr('href');
+            const title = cols_title.text();
+            const pubDate = parseDate(cols_meta.text(), 'YYYY-MM-DD', 'zh-cn');
+            return {
+                title,
+                link,
+                pubDate,
+                description: '',
+            };
+        });
+
+    // fetch article content
+    const items = await Promise.all(
+        articleList.map(async (item) => {
+            const url = `${siteUrl}${item.link}`;
+
+            await cache.tryGet(url, async () => {
+                // some contents are only available for internal network
+                try {
+                    const { data: response } = await got(url);
+                    const $ = load(response);
+                    const description = $('.wp_articlecontent').first().html();
+                    item.description = description ?? '';
+                } catch {
+                    item.description = '';
+                }
+                return item;
+            });
+            return item;
+        })
+    );
+
     return {
-        link: base_url,
         title: '东华大学信息公开网-最新公开信息',
-        item: $('.cols')
-            .map((_, elem) => ({
-                link: new URL($('a', elem).attr('href'), base_url),
-                title: $('a', elem).attr('title'),
-                pubDate: timezone(parseDate($('.cols_meta', elem).text()), +8),
-            }))
-            .get(),
+        link,
+        item: items,
     };
 }
