@@ -16,7 +16,6 @@ export const route: Route = {
     example: '/vice/topic/politics/en',
     parameters: {
         topic: 'Can be found in the URL',
-        content: 'Set to true to retrieve the full article (images are blurry), anything else will pull the short text',
         language: 'defaults to `en`, use the website to discover other codes',
     },
     radar: [
