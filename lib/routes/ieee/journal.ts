@@ -14,10 +14,10 @@ export const route: Route = {
     name: 'IEEE Journal Articles',
     maintainers: ['HenryQW'],
     categories: ['journal'],
-    path: '/journal/:punumber/:preprint?',
+    path: '/journal/:punumber/:earlyAccess?',
     parameters: {
         punumber: 'Publication Number, look for `punumber` in the URL',
-        preprint: 'Optional, set any value to get early access preprints',
+        earlyAccess: 'Optional, set any value to get early access articles',
     },
     example: '/ieee/journal/6287639/preprint',
     handler,
@@ -25,11 +25,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const publicationNumber = ctx.req.param('punumber');
-    const preprint = !!ctx.req.param('preprint');
+    const earlyAccess = !!ctx.req.param('earlyAccess');
 
     const metadata = await fetchMetadata(publicationNumber);
     const { displayTitle, currentIssue, preprintIssue, coverImagePath } = metadata;
-    const { issueNumber, volume } = preprint ? preprintIssue : currentIssue;
+    const { issueNumber, volume } = earlyAccess ? preprintIssue : currentIssue;
 
     const tocData = await fetchTOCData(publicationNumber, issueNumber);
     const list = tocData.records.map((item) => {
