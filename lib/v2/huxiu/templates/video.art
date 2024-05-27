@@ -1,7 +1,0 @@
-{{ if video_info }}
-<video controls poster="{{ video_info.cover }}" width="{{ video_info.width }}" height="{{ video_info.height }}">
-{{ if video_info.fhd_link }}<source src="{{ video_info.fhd_link }}" type="video/mp4">{{ /if }}
-{{ if video_info.hd_link }}<source src="{{ video_info.hd_link }}" type="video/mp4">{{ /if }}
-{{ if video_info.sd_link }}<source src="{{ video_info.sd_link }}" type="video/mp4">{{ /if }}
-</video>
-{{ /if }}

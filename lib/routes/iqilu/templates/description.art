@@ -1,0 +1,24 @@
+{{ if image && !video }}
+  <figure>
+    <img src="{{ image.src }}" alt="{{ image.alt }}">
+  </figure>
+{{ /if }}
+
+{{ if video }}
+  <video
+    {{ if image }}
+      poster="{{ image.src }}"
+    {{ /if }}
+    controls>
+    <source
+      src="{{ video.src }}"
+      type="{{ video.type }}">
+    <object data="{{ video.src }}">
+      <embed src="{{ video.src }}">
+    </object>
+  </video>
+{{ /if }}
+
+{{ if description }}
+  <p>{{ description }}</p>
+{{ /if }}

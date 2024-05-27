@@ -1,4 +1,4 @@
-name: publish
+name: npm Publish
 
 on:
   push:
@@ -7,9 +7,6 @@ on:
     paths:
       - '.github/workflows/npm-publish.yml'
       - 'lib/**'
-      - '!**/maintainer.js'
-      - '!**/radar.js'
-      - '!**/radar-rules.js'
 
 permissions:
   contents: read
@@ -25,12 +22,11 @@ jobs:
       HUSKY: 0
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
-          version: 8
-      - uses: actions/setup-node@v3
-        with:
-          node-version: lts/*
+          # pinned to 18 until https://github.com/compulim/version-from-git/issues/16 is fixed
+          node-version: 18
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies (pnpm)

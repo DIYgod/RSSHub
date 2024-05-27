@@ -1,4 +1,5 @@
 name: 'Close stale issues and PRs'
+
 on:
   schedule:
     - cron: '31 23 * * *'
@@ -11,7 +12,7 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v8
+      - uses: actions/stale@v9
         with:
           # Don't stale issues
           days-before-issue-stale: -1
@@ -21,3 +22,6 @@ jobs:
             This PR is stale because it has been opened for more than 3 weeks with no activity. Comment or this will be closed in 7 days.
           close-issue-message: 'This issue was closed because it has been stalled for 7 days with no activity.'
           close-pr-message: 'This PR was closed because it has been stalled for 7 days with no activity.'
+          exempt-issue-labels: 'dependencies,wait for upstream'
+          exempt-pr-labels: 'dependencies,wait for upstream'
+          any-of-issue-labels: 'more data required'

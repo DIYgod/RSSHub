@@ -1,0 +1,4 @@
+<b>{{ title }}</b><br>
+{{ each options option }}
+    {{ option.voteCount }}/{{ version }} {{ option.title }}<br>
+{{ /each }}

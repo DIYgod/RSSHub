@@ -1,5 +1,3 @@
-# name: '[docker] CI for build tests'
-# https://github.community/t/215358
 name: PR - Docker build test
 
 on:
@@ -9,9 +7,6 @@ on:
     paths:
       - '.github/workflows/docker-test.yml'
       - 'lib/**'
-      - '!**/maintainer.js'
-      - '!**/radar.js'
-      - '!**/radar-rules.js'
       - 'Dockerfile'
       - 'package.json'
       - 'pnpm-lock.yaml'
@@ -65,17 +60,17 @@ jobs:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
-          labels: 'Route Test: Failed'
+          labels: 'Auto: Route Test Failed'
 
       - name: Test Docker image
         run: bash scripts/docker/test-docker.sh
 
       - name: Export Docker image
-        run: docker save rsshub:latest | gzip -1cf > rsshub.tar.gz
+        run: docker save rsshub:latest | zstdmt -o rsshub.tar.zst
 
       - name: Upload Docker image
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docker-image
-          path: rsshub.tar.gz
+          path: rsshub.tar.zst
           retention-days: 1

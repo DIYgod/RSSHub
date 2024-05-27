@@ -13,6 +13,9 @@ jobs:
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout the latest code
         uses: actions/checkout@v4
@@ -32,7 +35,7 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: bdougie/take-action@v1.5
+      - uses: bdougie/take-action@v1.6.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           trigger: '/wip'
@@ -50,12 +53,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
+        uses: pnpm/action-setup@v4
 
       - name: Use Node.js Active LTS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: 'pnpm'
@@ -64,8 +65,8 @@ jobs:
         run: pnpm i && pnpm rb
 
       - name: Fetch affected routes
-        id: fetchRoute
-        uses: actions/github-script@v6
+        id: fetch-route
+        uses: actions/github-script@v7
         env:
           EVENT: ${{ toJson(github.event) }}
         with:
@@ -74,8 +75,12 @@ jobs:
             const body = event.comment.body
             const number = event.issue.number
             const sender = event.comment.user.login
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
-            return script({ github, context, core }, body, number, sender)
+            const { default: identify } = await import('${{ github.workspace }}/scripts/workflow/test-route/identify.mjs')
+            return identify({ github, context, core }, body, number, sender)
+
+      - name: Build RSSHub
+        if: env.TEST_CONTINUE
+        run: pnpm build
 
       - name: Start RSSHub
         if: env.TEST_CONTINUE
@@ -88,10 +93,10 @@ jobs:
 
       - name: Generate feedback
         if: env.TEST_CONTINUE
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         env:
           TEST_BASEURL: http://localhost:1200
-          TEST_ROUTES: ${{ steps.fetchRoute.outputs.result }}
+          TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
           EVENT: ${{ toJson(github.event) }}
         with:
           script: |
@@ -100,16 +105,15 @@ jobs:
             const routes = JSON.parse(process.env.TEST_ROUTES)
             const number = event.issue.number
             core.info(`${link}, ${routes}, ${number}`)
-            const got = require("got")
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
-            return script({ github, context, core, got }, link, routes, number)
+            const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
+            await test({ github, context, core }, link, routes, number)
 
       - name: Print logs
         if: (env.TEST_CONTINUE)
         run: cat ${{ github.workspace }}/logs/combined.log
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: logs
           path: logs

@@ -1,0 +1,8 @@
+<ul>
+    <li>{{ vender }}</li>
+    <li>ZDID: {{ code }}</li>
+    <li>風險: {{ risk }}</li>
+    <li>處理狀態: {{ status }}</li>
+    <li>通報者: {{ reporter }}</li>
+    <li>通報日期: {{ date }}</li>
+</ul>
