@@ -69,9 +69,6 @@ async function handler(ctx) {
                                     return render({ body: { html: component.html } });
                                 case 'heading2':
                                     return render({ heading2: { html: component.html } });
-                                case 'article':
-                                case 'divider':
-                                    return '';
                                 case 'image':
                                     return render({
                                         image: {
@@ -85,7 +82,7 @@ async function handler(ctx) {
                                 case 'youtube':
                                     return render({ oembed: { html: component.oembed.html } });
                                 default:
-                                    throw new Error(`Unhandled component: ${component.role} from ${item.link}`);
+                                    return '';
                             }
                         })
                         .join('');
