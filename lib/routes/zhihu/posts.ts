@@ -1,7 +1,6 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { header, getSignedHeader, processImage } from './utils';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -34,15 +33,23 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const usertype = ctx.req.param('usertype');
 
-    const data = await ofetch(`https://www.zhihu.com/${usertype}/${id}/posts`, {
-        headers: {
-            ...header,
-            Referer: `https://www.zhihu.com/${usertype}/${id}/`,
-        },
-    });
-    const $ = load(data);
-    const initialData = JSON.parse($('#js-initialData').text());
-    const userData = initialData?.initialState?.entities?.users?.[id];
+    const user = await (async () => {
+        const apiPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}?${new URLSearchParams({
+            include: 'allow_message,is_followed,is_following,is_org,is_blocking,employments,answer_count,follower_count,articles_count,gender,badge[?(type=best_answerer)].topics',
+        })}`;
+
+        const signedHeader = await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/`, apiPath);
+
+        const response = await ofetch(`https://www.zhihu.com${apiPath}`, {
+            headers: {
+                ...header,
+                ...signedHeader,
+                Referer: `https://www.zhihu.com/${usertype}/${id}/`,
+            },
+        });
+
+        return response;
+    })();
 
     const apiPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}/articles?${new URLSearchParams({
         include:
@@ -72,11 +79,11 @@ async function handler(ctx) {
     }));
 
     return {
-        title: `${userData?.name} 的知乎文章`,
+        title: `${user.name} 的知乎文章`,
         link: `https://www.zhihu.com/${usertype}/${id}/posts`,
-        description: userData?.headline,
-        image: userData?.avatarUrlTemplate?.split('?')[0],
-        banner: userData?.coverUrl?.split('?')[0],
+        description: user.headline,
+        image: user.avatar_url.split('?')[0],
+        // banner: userData?.coverUrl?.split('?')[0],
         item: items,
     };
 }
