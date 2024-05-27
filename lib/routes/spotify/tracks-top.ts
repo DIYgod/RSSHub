@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import utils from './utils';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/top/tracks',
