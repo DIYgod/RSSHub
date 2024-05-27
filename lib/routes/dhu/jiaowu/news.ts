@@ -40,43 +40,39 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    // article list
-    const articleList = $('.list2 > li')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            const news_title = item.find('.news_title > a');
-            const news_meta = item.find('.news_meta');
-
-            const link = news_title.attr('href');
-            const title = news_title.text();
-            const pubDate = parseDate(news_meta.text(), 'YYYY-MM-DD', 'zh-cn');
-            return {
-                title,
-                link,
-                pubDate,
-                description: '',
-            };
-        });
-
-    // fetch article content
     const items = await Promise.all(
-        articleList.map(async (item) => {
-            const url = `${baseUrl}${item.link}`;
-            await cache.tryGet(url, async () => {
-                // some contents are only available for internal network
-                try {
-                    const { data: response } = await got(url);
-                    const $ = load(response);
-                    const description = $('.wp_articlecontent').first().html();
-                    item.description = description ?? '';
-                } catch {
-                    item.description = '';
-                }
-                return item;
-            });
-            return item;
-        })
+        $('.list2 > li')
+            .toArray()
+            .map(async (item) => {
+                item = $(item);
+                const newsTitle = item.find('.news_title > a');
+                const newsMeta = item.find('.news_meta');
+
+                // article meta
+                const link = newsTitle.attr('href');
+                const title = newsTitle.text();
+                const pubDate = parseDate(newsMeta.text(), 'YYYY-MM-DD', 'zh-cn');
+
+                // article content
+                const url = `${baseUrl}${link}`;
+                const description = await cache.tryGet(url, async () => {
+                    // some contents are only available for internal network
+                    try {
+                        const { data: response } = await got(url);
+                        const $ = load(response);
+                        return $('.wp_articlecontent').first().html() ?? '';
+                    } catch {
+                        return '';
+                    }
+                });
+
+                return {
+                    title,
+                    link,
+                    pubDate,
+                    description,
+                };
+            })
     );
 
     return {
