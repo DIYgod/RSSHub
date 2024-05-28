@@ -6,24 +6,15 @@ export const route: Route = {
     path: '/jwc',
     categories: ['university'],
     example: '/jlu/jwc',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
-            source: ['jwc.jlu.edu.cn/', 'jwc.jlu.edu.cn/index.htm'],
+            source: ['jwc.jlu.edu.cn', 'jwc.jlu.edu.cn/index.htm'],
         },
     ],
     name: '教务通知',
     maintainers: ['mayouxi'],
     handler,
-    url: 'jwc.jlu.edu.cn/',
+    url: 'jwc.jlu.edu.cn',
 };
 
 async function handler() {
@@ -38,29 +29,27 @@ async function handler() {
         link: baseUrl,
         description: '吉林大学教务处通知公告',
 
-        item:
-            list &&
-            list.toArray().map((item) => {
-                const el = $(item);
+        item: list?.toArray().map((item) => {
+            const el = $(item);
 
-                const linkEl = el.find('a');
-                const YMDiv = el.find('.tm p');
-                const YMStr = YMDiv.text().trim();
-                const DDiv = el.find('.tm span');
-                const DStr = DDiv.text().trim();
+            const linkEl = el.find('a');
+            const YMDiv = el.find('.tm p');
+            const YMStr = YMDiv.text().trim();
+            const DDiv = el.find('.tm span');
+            const DStr = DDiv.text().trim();
 
-                const titleDiv = el.find('.s3-info p');
-                const title = titleDiv.text().trim();
+            const titleDiv = el.find('.s3-info p');
+            const title = titleDiv.text().trim();
 
-                const link = `${baseUrl}${linkEl.attr('href')}`;
+            const link = `${baseUrl}${linkEl.attr('href')}`;
 
-                const newsDate = new Date(YMStr + '-' + DStr);
+            const newsDate = new Date(YMStr + '-' + DStr);
 
-                return {
-                    title,
-                    link,
-                    pubDate: newsDate,
-                };
-            }),
+            return {
+                title,
+                link,
+                pubDate: newsDate,
+            };
+        }),
     };
 }
