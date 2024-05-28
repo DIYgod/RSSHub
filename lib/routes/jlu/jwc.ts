@@ -41,7 +41,7 @@ async function handler() {
             const titleDiv = el.find('.s3-info p');
             const title = titleDiv.text().trim();
 
-            const link = `${baseUrl}${linkEl.attr('href')}`;
+            const link = `${baseUrl}/${linkEl.attr('href')}`;
 
             const newsDate = new Date(YMStr + '-' + DStr);
 
