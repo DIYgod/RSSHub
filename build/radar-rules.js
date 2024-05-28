@@ -6802,7 +6802,7 @@
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/s/:username" ],
         target:"/telegram/channel/:username" } ] },
-  "tencent.com":{ _name:"王者荣耀",
+  "tencent.com":{ _name:"腾讯",
     cloud:[ { title:"腾讯云开发者社区专栏",
         docs:"https://docs.rsshub.app/routes/programming",
         source:[ "/developer/column" ],
