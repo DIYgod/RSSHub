@@ -27,14 +27,16 @@ export const route: Route = {
 async function handler(ctx) {
     const baseUrl = 'https://www.modb.pro';
     const topicId = ctx.req.param('id');
-    const response = await got({
-        url: `${baseUrl}/api/columns/getKnowledge`,
-        searchParams: {
-            pageNum: 1,
-            pageSize: 20,
-            columnId: topicId,
-        },
-    }).json();
+    const response = (
+        await got({
+            url: `${baseUrl}/api/columns/getKnowledge`,
+            searchParams: {
+                pageNum: 1,
+                pageSize: 20,
+                columnId: topicId,
+            },
+        })
+    ).data;
     const list = response.list.map((item) => {
         let doc = {};
         let baseLink = {};

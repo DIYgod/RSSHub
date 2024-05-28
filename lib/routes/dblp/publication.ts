@@ -35,18 +35,20 @@ async function handler(ctx) {
         result: {
             hits: { hit: data },
         },
-    } = await got({
-        method: 'get',
-        url: 'https://dblp.org/search/publ/api',
-        searchParams: {
-            q: field,
-            format: 'json',
-            h: 10,
-        },
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        },
-    }).json();
+    } = (
+        await got({
+            method: 'get',
+            url: 'https://dblp.org/search/publ/api',
+            searchParams: {
+                q: field,
+                format: 'json',
+                h: 10,
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            },
+        })
+    ).data;
 
     // console.log(data);
 

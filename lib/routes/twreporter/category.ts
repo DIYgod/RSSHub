@@ -31,7 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category');
     const url = `https://go-api.twreporter.org/v2/index_page`;
-    const res = await got(url).json();
+    const res = (await got(url)).data;
     const list = res.data[category];
 
     let name = list[0].category_set[0].category.name;

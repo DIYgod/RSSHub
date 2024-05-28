@@ -20,10 +20,10 @@ async function handler(ctx) {
     const packageDownloadLastDayAPI = `https://api.npmjs.org/downloads/point/last-day/${name}`; // 按天统计
     const packageVersionAPI = `https://registry.npmjs.org/${name}`; // 包基本信息
 
-    const downloadCountLastMonthRes = await got(packageDownloadLastMonthAPI).json();
-    const downloadCountLastWeekRes = await got(packageDownloadLastWeekAPI).json();
-    const downloadCountLastDayRes = await got(packageDownloadLastDayAPI).json();
-    const packageVersionRes = await got(packageVersionAPI).json();
+    const downloadCountLastMonthRes = (await got(packageDownloadLastMonthAPI)).data;
+    const downloadCountLastWeekRes = (await got(packageDownloadLastWeekAPI)).data;
+    const downloadCountLastDayRes = (await got(packageDownloadLastDayAPI)).data;
+    const packageVersionRes = (await got(packageVersionAPI)).data;
 
     const packageVersion = packageVersionRes.time;
     const packageVersionList = Object.keys(packageVersion)

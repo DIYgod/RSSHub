@@ -43,7 +43,7 @@ async function handler(ctx) {
         };
     });
 
-    const posts = (await got(`https://www.luogu.com.cn/api/blog/lists?uid=${blogUid}`).json()).data.result.map((r) => ({
+    const posts = (await got(`https://www.luogu.com.cn/api/blog/lists?uid=${blogUid}`)).data.data.result.map((r) => ({
         title: r.title,
         link: `${blogBaseUrl}${r.identifier}`,
         pubDate: new Date(r.postTime * 1000),

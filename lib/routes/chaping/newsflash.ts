@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler() {
     const newflashAPI = `${host}/api/official/information/newsflash?page=1&limit=21`;
-    const response = await got(newflashAPI).json();
+    const response = (await got(newflashAPI)).data;
     const data = response.data;
 
     return {
