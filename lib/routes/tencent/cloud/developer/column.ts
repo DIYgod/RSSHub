@@ -64,7 +64,7 @@ export const route: Route = {
 
 async function findClassifyById(id) {
     const classifylink = 'https://cloud.tencent.com/developer/api/column/get-classify-list-by-scene';
-    const result = await cache.tryGet(classifylink, async () => {
+    const response = await cache.tryGet(classifylink, async () => {
         const response = await ofetch(classifylink, {
             method: 'POST',
             headers: {
@@ -74,8 +74,8 @@ async function findClassifyById(id) {
                 scene: 0,
             },
         });
-        return response.list.find((classify) => classify.id === Number(id));
+        return response;
     });
 
-    return result;
+    return response.list.find((classify) => classify.id === Number(id));
 }
