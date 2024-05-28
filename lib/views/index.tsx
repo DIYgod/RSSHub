@@ -177,7 +177,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                         <img className="inline" src="https://icons.ly/telegram" alt="telegram channel" width="20" height="20" />
                     </a>
                     <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
-                        <img className="inline" src="https://icons.ly/twitter" alt="github" width="20" height="20" />
+                        <img className="inline" src="https://icons.ly/x" alt="X" width="20" height="20" />
                     </a>
                 </p>
                 <p className="!mt-6">
