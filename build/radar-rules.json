@@ -12927,7 +12927,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/zt2020/page/feiyan.htm"
         ],
@@ -15604,6 +15604,19 @@
           "/s/:username"
         ],
         "target": "/telegram/channel/:username"
+      }
+    ]
+  },
+  "tencent.com": {
+    "_name": "王者荣耀",
+    "cloud": [
+      {
+        "title": "腾讯云开发者社区专栏",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/developer/column"
+        ],
+        "target": "/tencent/cloud/developer/column/:categoryId?"
       }
     ]
   },

@@ -5557,6 +5557,9 @@
   "/telegram/stickerpack/:name": [
     "DIYgod"
   ],
+  "/tencent/cloud/developer/column/:categoryId?": [
+    "lyling"
+  ],
   "/tencent/news/author/:mid": [
     "LogicJake",
     "miles170"

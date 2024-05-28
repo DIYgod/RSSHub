@@ -55982,6 +55982,28 @@
   },
   "tencent": {
     "routes": {
+      "/cloud/developer/column/:categoryId?": {
+        "path": "/cloud/developer/column/:categoryId?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/tencent/cloud/developer/column/1",
+        "parameters": {
+          "categoryId": "categoryId from page url"
+        },
+        "radar": [
+          {
+            "source": [
+              "cloud.tencent.com/developer/column"
+            ]
+          }
+        ],
+        "name": "腾讯云开发者社区专栏",
+        "maintainers": [
+          "lyling"
+        ],
+        "location": "cloud/developer/column.ts"
+      },
       "/news/author/:mid": {
         "path": "/news/author/:mid",
         "categories": [
