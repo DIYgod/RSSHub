@@ -1,7 +1,6 @@
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
 
 export function fetchArticle(item) {
@@ -11,8 +10,8 @@ export function fetchArticle(item) {
         const ldjson = JSON.parse($('#link-ld-json').text())[0];
         $('div.Enhancement').remove();
         return {
-            pubDate: timezone(parseDate(ldjson.datePublished), 0),
-            updated: timezone(parseDate(ldjson.dateModified), 0),
+            pubDate: parseDate(ldjson.datePublished),
+            updated: parseDate(ldjson.dateModified),
             description: $('div.RichTextStoryBody').html(),
             category: [`section:${$("meta[property='article:section']").attr('content')}`, ...ldjson.keywords],
             guid: $("meta[name='brightspot.contentId']").attr('content'),
