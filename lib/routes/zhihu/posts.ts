@@ -58,13 +58,13 @@ async function handler(ctx) {
 
     const signedHeader = await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/posts`, apiPath);
 
-    const articleResponse = await ofetch(`https://www.zhihu.com${apiPath}`, {
+    const articleResponse = await ctx.tryGet(`https://www.zhihu.com/${usertype}/${id}/posts`, ()=>ofetch(`https://www.zhihu.com${apiPath}`, {
         headers: {
             ...header,
             ...signedHeader,
             Referer: `https://www.zhihu.com/${usertype}/${id}/posts`,
         },
-    });
+    }));
 
     const items = articleResponse.data.map((item) => ({
         title: item.title,
