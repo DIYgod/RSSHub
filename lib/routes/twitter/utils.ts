@@ -361,7 +361,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         description += item.full_text;
         description += img;
         description += quote;
-
+        const category = description.match(/(\s)?(#[^\s<]+)/g)?.map((e) => e?.match(/#([^\s<]+)/)?.[1]);
         if (readable) {
             description += `<br clear='both' /><div style='clear: both'></div>`;
         }
@@ -385,7 +385,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             pubDate: parseDate(item.created_at),
             link,
             guid: link.replace('x.com', 'twitter.com'),
-
+            category,
             _extra:
                 (isRetweet && {
                     links: [
