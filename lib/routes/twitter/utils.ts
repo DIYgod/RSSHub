@@ -359,9 +359,10 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         }
 
         description += item.full_text;
+        // 从 description 提取 话题作为 category，放在此处是为了避免 匹配到 quote 中的 # 80808030 颜色字符
+        const category = description.match(/(\s)?(#[^\s;<]+)/g)?.map((e) => e?.match(/#([^\s<]+)/)?.[1]);
         description += img;
         description += quote;
-        const category = description.match(/(\s)?(#[^\s<]+)/g)?.map((e) => e?.match(/#([^\s<]+)/)?.[1]);
         if (readable) {
             description += `<br clear='both' /><div style='clear: both'></div>`;
         }
