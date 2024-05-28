@@ -44,25 +44,28 @@ async function handler() {
                 const title = colsTitle.text();
                 const pubDate = parseDate(colsMeta.text(), 'YYYY-MM-DD', 'zh-cn');
 
-                // article content
+                // fetch article content and return item using cache.tryGet
+                // url as cache key
                 const url = `${siteUrl}${link}`;
-                const description = await cache.tryGet(url, async () => {
+                return await cache.tryGet(url, async () => {
+                    // fetch article content
                     // some contents are only available for internal network
+                    let description = '';
                     try {
                         const { data: response } = await got(url);
                         const $ = load(response);
-                        return $('.wp_articlecontent').first().html() ?? '';
+                        description = $('.wp_articlecontent').first().html() ?? '';
                     } catch {
-                        return '';
+                        description = '';
                     }
-                });
 
-                return {
-                    title,
-                    link,
-                    pubDate,
-                    description,
-                };
+                    return {
+                        title,
+                        link,
+                        pubDate,
+                        description,
+                    };
+                });
             })
     );
 
