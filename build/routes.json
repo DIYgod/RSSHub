@@ -32430,6 +32430,33 @@
     "name": "晋江文学城",
     "url": "jjwxc.net"
   },
+  "jlu": {
+    "routes": {
+      "/jwc": {
+        "path": "/jwc",
+        "categories": [
+          "university"
+        ],
+        "example": "/jlu/jwc",
+        "radar": [
+          {
+            "source": [
+              "jwc.jlu.edu.cn",
+              "jwc.jlu.edu.cn/index.htm"
+            ]
+          }
+        ],
+        "name": "教务通知",
+        "maintainers": [
+          "mayouxi"
+        ],
+        "url": "jwc.jlu.edu.cn",
+        "location": "jwc.ts"
+      }
+    },
+    "name": "吉林大学",
+    "url": "jlu.edu.cn"
+  },
   "jornada": {
     "routes": {
       "/:date?/:category?": {
