@@ -3,11 +3,11 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/:interest',
+    path: '/topic/:interest',
     radar: [
         {
             source: ['academia.edu/Documents/in/:interest'],
-            target: '/:interest',
+            target: '/topic/:interest',
         },
     ],
     name: 'interest',
