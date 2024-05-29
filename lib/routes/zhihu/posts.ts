@@ -3,7 +3,6 @@ import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import { header, getSignedHeader, processImage } from './utils';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/posts/:usertype/:id',
@@ -65,7 +64,7 @@ async function handler(ctx) {
                     ...signedHeader,
                     Referer: `https://www.zhihu.com/${usertype}/${id}/posts`,
                 },
-            });
+    });
 
     const items = articleResponse.data.map((item) => ({
         title: item.title,
