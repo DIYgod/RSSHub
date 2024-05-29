@@ -2444,19 +2444,22 @@
   ],
   "/gov/sasac/:path{.+}": [],
   "/gov/sdb/*": [],
+  "/gov/sh/fgw/:category{.+}?": [
+    "nczitzk"
+  ],
+  "/gov/sh/rsj/ksxm": [
+    "Fatpandac"
+  ],
+  "/gov/sh/wgj/:page?": [
+    "gideonsenku"
+  ],
+  "/gov/sh/wsjkw/yqtb": [
+    "zcf0508"
+  ],
+  "/gov/sh/yjj/*": [],
   "/gov/shaanxi/kjt/:id?": [
     "nczitzk"
   ],
-  "/gov/shanghai/rsj/ksxm": [
-    "Fatpandac"
-  ],
-  "/gov/shanghai/wgj/:page?": [
-    "gideonsenku"
-  ],
-  "/gov/shanghai/wsjkw/yqtb": [
-    "zcf0508"
-  ],
-  "/gov/shanghai/yjj/*": [],
   "/gov/shenzhen/hrss/szksy/:caty/:page?": [
     "zlasd"
   ],

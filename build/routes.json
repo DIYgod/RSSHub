@@ -24636,6 +24636,149 @@
         "maintainers": [],
         "location": "sdb/sdb.ts"
       },
+      "/sh/fgw/:category{.+}?": {
+        "path": "/sh/fgw/:category{.+}?",
+        "name": "上海市发展和改革委员会",
+        "url": "fgw.sh.gov.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/gov/sh/fgw/fgw_zxxxgk",
+        "parameters": {
+          "category": "分类，默认为 `fgw_zxxxgk`，即最新信息公开，可在对应分类页 URL 中找到"
+        },
+        "description": ":::tip\n  若订阅 [最新信息公开](https://fgw.sh.gov.cn/fgw_zxxxgk/index.html)，网址为 `https://fgw.sh.gov.cn/fgw_zxxxgk/index.html`。截取 `https://fgw.sh.gov.cn/` 到末尾 `/index.html` 的部分 `fgw_zxxxgk` 作为参数填入，此时路由为 [`/gov/sh/fgw/fgw_zxxxgk`](https://rsshub.app/gov/sh/fgw/fgw_zxxxgk)。\n  :::\n\n  | 最新信息公开 | 要闻动态   |\n  | ------------ | ---------- |\n  | fgw_zxxxgk   | fgw_fzggdt |\n  ",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "fgw.sh.gov.cn/:category"
+            ]
+          },
+          {
+            "title": "最新信息公开",
+            "source": [
+              "fgw.sh.gov.cn/fgw_zxxxgk/index.html"
+            ],
+            "target": "/sh/fgw/fgw_zxxxgk"
+          },
+          {
+            "title": "要闻动态",
+            "source": [
+              "fgw.sh.gov.cn/fgw_fzggdt/index.html"
+            ],
+            "target": "/sh/fgw/fgw_fzggdt"
+          }
+        ],
+        "location": "sh/fgw/index.ts"
+      },
+      "/sh/rsj/ksxm": {
+        "path": "/sh/rsj/ksxm",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/sh/rsj/ksxm",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "rsj.sh.gov.cn/"
+            ]
+          }
+        ],
+        "name": "上海市职业能力考试院 考试项目",
+        "maintainers": [
+          "Fatpandac"
+        ],
+        "url": "rsj.sh.gov.cn/",
+        "location": "sh/rsj/ksxm.ts"
+      },
+      "/sh/wgj/:page?": {
+        "path": "/sh/wgj/:page?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/sh/wgj",
+        "parameters": {
+          "page": "页数，默认第 1 页"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "wsbs.wgj.sh.gov.cn/"
+            ],
+            "target": "/sh/wgj"
+          }
+        ],
+        "name": "上海市文旅局审批公告",
+        "maintainers": [
+          "gideonsenku"
+        ],
+        "url": "wsbs.wgj.sh.gov.cn/",
+        "location": "sh/wgj/wgj.ts"
+      },
+      "/sh/wsjkw/yqtb": {
+        "path": "/sh/wsjkw/yqtb",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/sh/wsjkw/yqtb",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "wsjkw.sh.gov.cn/"
+            ]
+          }
+        ],
+        "name": "上海卫健委 疫情通报",
+        "maintainers": [
+          "zcf0508"
+        ],
+        "url": "wsjkw.sh.gov.cn/",
+        "location": "sh/wsjkw/yqtb/index.ts"
+      },
+      "/sh/yjj/*": {
+        "path": "/sh/yjj/*",
+        "name": "Unknown",
+        "maintainers": [],
+        "location": "sh/yjj/index.ts"
+      },
       "/shaanxi/kjt/:id?": {
         "path": "/shaanxi/kjt/:id?",
         "categories": [
@@ -24659,102 +24802,6 @@
         ],
         "description": "| 科技头条 | 工作动态 | 基层科技 | 科技博览 | 媒体聚焦 | 通知公告 |\n  | -------- | -------- | -------- | -------- | -------- | -------- |\n  | 1061     | 24       | 27       | 25       | 28       | 221      |",
         "location": "shaanxi/kjt.ts"
-      },
-      "/shanghai/rsj/ksxm": {
-        "path": "/shanghai/rsj/ksxm",
-        "categories": [
-          "government"
-        ],
-        "example": "/gov/shanghai/rsj/ksxm",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "rsj.sh.gov.cn/"
-            ]
-          }
-        ],
-        "name": "上海市职业能力考试院 考试项目",
-        "maintainers": [
-          "Fatpandac"
-        ],
-        "url": "rsj.sh.gov.cn/",
-        "location": "shanghai/rsj/ksxm.ts"
-      },
-      "/shanghai/wgj/:page?": {
-        "path": "/shanghai/wgj/:page?",
-        "categories": [
-          "government"
-        ],
-        "example": "/gov/shanghai/wgj",
-        "parameters": {
-          "page": "页数，默认第 1 页"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "wsbs.wgj.sh.gov.cn/"
-            ],
-            "target": "/shanghai/wgj"
-          }
-        ],
-        "name": "上海市文旅局审批公告",
-        "maintainers": [
-          "gideonsenku"
-        ],
-        "url": "wsbs.wgj.sh.gov.cn/",
-        "location": "shanghai/wgj/wgj.ts"
-      },
-      "/shanghai/wsjkw/yqtb": {
-        "path": "/shanghai/wsjkw/yqtb",
-        "categories": [
-          "government"
-        ],
-        "example": "/gov/shanghai/wsjkw/yqtb",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "wsjkw.sh.gov.cn/"
-            ]
-          }
-        ],
-        "name": "上海卫健委 疫情通报",
-        "maintainers": [
-          "zcf0508"
-        ],
-        "url": "wsjkw.sh.gov.cn/",
-        "location": "shanghai/wsjkw/yqtb/index.ts"
-      },
-      "/shanghai/yjj/*": {
-        "path": "/shanghai/yjj/*",
-        "name": "Unknown",
-        "maintainers": [],
-        "location": "shanghai/yjj/index.ts"
       },
       "/shenzhen/hrss/szksy/:caty/:page?": {
         "path": "/shenzhen/hrss/szksy/:caty/:page?",
@@ -25342,12 +25389,12 @@
         "location": "zj/search.ts"
       }
     },
-    "name": "中国人民银行",
-    "url": "pbc.gov.cn",
+    "name": "上海市人民政府",
+    "url": "sh.gov.cn",
     "categories": [
       "government"
     ],
-    "description": "<details>\n  <summary>*业务咨询* 和 *投诉建议* 可用的站点参数</summary>\n\n  | 上海市   | 北京市  | 天津市  | 河北省 |\n  | -------- | ------- | ------- | ------ |\n  | shanghai | beijing | tianjin | hebei  |\n\n  | 山西省 | 内蒙古自治区 | 辽宁省   | 吉林省 |\n  | ------ | ------------ | -------- | ------ |\n  | shanxi | neimenggu    | liaoning | jilin  |\n\n  | 黑龙江省     | 江苏省  | 浙江省   | 安徽省 |\n  | ------------ | ------- | -------- | ------ |\n  | heilongjiang | jiangsu | zhejiang | anhui  |\n\n  | 福建省 | 江西省  | 山东省   | 河南省 |\n  | ------ | ------- | -------- | ------ |\n  | fujian | jiangxi | shandong | henan  |\n\n  | 湖北省 | 湖南省 | 广东省    | 广西壮族自治区 |\n  | ------ | ------ | --------- | -------------- |\n  | hubei  | hunan  | guangdong | guangxi        |\n\n  | 海南省 | 重庆市    | 四川省  | 贵州省  |\n  | ------ | --------- | ------- | ------- |\n  | hainan | chongqing | sichuan | guizhou |\n\n  | 云南省 | 西藏自治区 | 陕西省  | 甘肃省 |\n  | ------ | ---------- | ------- | ------ |\n  | yunnan | xizang     | shaanxi | gansu  |\n\n  | 青海省  | 宁夏回族自治区 | 新疆维吾尔自治区 | 大连市 |\n  | ------- | -------------- | ---------------- | ------ |\n  | qinghai | ningxia        | xinjiang         | dalian |\n\n  | 宁波市 | 厦门市 | 青岛市  | 深圳市   |\n  | ------ | ------ | ------- | -------- |\n  | ningbo | xiamen | qingdao | shenzhen |\n</details>"
+    "description": ""
   },
   "gq": {
     "routes": {
