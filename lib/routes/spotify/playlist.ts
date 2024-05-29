@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import utils from './utils';
-import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/playlist/:id',
@@ -38,13 +38,12 @@ export const route: Route = {
 async function handler(ctx) {
     const token = await utils.getPublicToken();
     const id = ctx.req.param('id');
-    const meta = await got
-        .get(`https://api.spotify.com/v1/playlists/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        .json();
+    const meta = await ofetch(`https://api.spotify.com/v1/playlists/${id}`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
     const tracks = meta.tracks.items;
 
     return {
