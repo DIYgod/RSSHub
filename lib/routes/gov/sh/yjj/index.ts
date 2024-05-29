@@ -7,17 +7,17 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/shanghai/yjj/*',
+    path: '/sh/yjj/*',
     name: 'Unknown',
     maintainers: [],
     handler,
 };
 
 async function handler(ctx) {
-    const params = getSubPath(ctx) === '/shanghai/yjj' ? '/shanghai/yjj/zx-ylqx' : getSubPath(ctx);
+    const params = getSubPath(ctx) === '/sh/yjj' ? '/sh/yjj/zx-ylqx' : getSubPath(ctx);
 
     const rootUrl = 'https://yjj.sh.gov.cn';
-    const currentUrl = `${rootUrl}${params.replace(/^\/shanghai\/yjj/, '')}/index.html`;
+    const currentUrl = `${rootUrl}${params.replace(/^\/sh\/yjj/, '')}/index.html`;
 
     const response = await got({
         method: 'get',

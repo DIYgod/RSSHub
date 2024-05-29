@@ -4,9 +4,9 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/shanghai/wsjkw/yqtb',
+    path: '/sh/wsjkw/yqtb',
     categories: ['government'],
-    example: '/gov/shanghai/wsjkw/yqtb',
+    example: '/gov/sh/wsjkw/yqtb',
     parameters: {},
     features: {
         requireConfig: false,

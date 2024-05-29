@@ -10,9 +10,9 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/shanghai/wgj/:page?',
+    path: '/sh/wgj/:page?',
     categories: ['government'],
-    example: '/gov/shanghai/wgj',
+    example: '/gov/sh/wgj',
     parameters: { page: '页数，默认第 1 页' },
     features: {
         requireConfig: false,
@@ -25,7 +25,7 @@ export const route: Route = {
     radar: [
         {
             source: ['wsbs.wgj.sh.gov.cn/'],
-            target: '/shanghai/wgj',
+            target: '/sh/wgj',
         },
     ],
     name: '上海市文旅局审批公告',
