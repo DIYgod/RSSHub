@@ -35,7 +35,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const usertype = ctx.req.param('usertype');
 
-    const userProfile = await cache.tryGet(`zhihu:profile:${id}`, async () => {
+    const userProfile = await cache.tryGet(`zhihu:posts:profile:${id}`, async () => {
         const userAPIPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}?${new URLSearchParams({
             include: 'allow_message,is_followed,is_following,is_org,is_blocking,employments,answer_count,follower_count,articles_count,gender,badge[?(type=best_answerer)].topics',
         })}`;
@@ -59,19 +59,13 @@ async function handler(ctx) {
 
     const signedHeader = await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/posts`, apiPath);
 
-    const articleResponse = await cache.tryGet(
-        `https://www.zhihu.com/${usertype}/${id}/posts`,
-        () =>
-            ofetch(`https://www.zhihu.com${apiPath}`, {
+    const articleResponse = await ofetch(`https://www.zhihu.com${apiPath}`, {
                 headers: {
                     ...header,
                     ...signedHeader,
                     Referer: `https://www.zhihu.com/${usertype}/${id}/posts`,
                 },
-            }),
-        config.cache.contentExpire,
-        false
-    );
+            });
 
     const items = articleResponse.data.map((item) => ({
         title: item.title,
