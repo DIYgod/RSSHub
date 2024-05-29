@@ -3,6 +3,7 @@ import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import { header, getSignedHeader, processImage } from './utils';
 import { parseDate } from '@/utils/parse-date';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/posts/:usertype/:id',
@@ -58,14 +59,18 @@ async function handler(ctx) {
 
     const signedHeader = await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/posts`, apiPath);
 
-    const articleResponse = await cache.tryGet(`https://www.zhihu.com/${usertype}/${id}/posts`, () =>
-        ofetch(`https://www.zhihu.com${apiPath}`, {
-            headers: {
-                ...header,
-                ...signedHeader,
-                Referer: `https://www.zhihu.com/${usertype}/${id}/posts`,
-            },
-        })
+    const articleResponse = await cache.tryGet(
+        `https://www.zhihu.com/${usertype}/${id}/posts`,
+        () =>
+            ofetch(`https://www.zhihu.com${apiPath}`, {
+                headers: {
+                    ...header,
+                    ...signedHeader,
+                    Referer: `https://www.zhihu.com/${usertype}/${id}/posts`,
+                },
+            }),
+        config.cache.contentExpire,
+        false
     );
 
     const items = articleResponse.data.map((item) => ({
