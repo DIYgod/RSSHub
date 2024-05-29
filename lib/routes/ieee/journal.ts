@@ -6,8 +6,6 @@ import got from '@/utils/got';
 import path from 'node:path';
 import { art } from '@/utils/render';
 
-import { CookieJar } from 'tough-cookie';
-const cookieJar = new CookieJar();
 const ieeeHost = 'https://ieeexplore.ieee.org';
 
 export const route: Route = {
@@ -51,15 +49,12 @@ async function handler(ctx) {
 }
 
 async function fetchMetadata(punumber) {
-    const response = await got(`${ieeeHost}/rest/publication/home/metadata?pubid=${punumber}`, {
-        cookieJar,
-    });
+    const response = await got(`${ieeeHost}/rest/publication/home/metadata?pubid=${punumber}`);
     return response.data;
 }
 
 async function fetchTOCData(punumber, isnumber) {
     const response = await got.post(`${ieeeHost}/rest/search/pub/${punumber}/issue/${isnumber}/toc`, {
-        cookieJar,
         json: { punumber, isnumber, rowsPerPage: '100' },
     });
     return response.data;
