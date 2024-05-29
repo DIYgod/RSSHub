@@ -67,20 +67,19 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
         const zseCk = $('script:contains("__zse_ck")')
             .text()
             .match(/\|\|"(.*?)",.*;document\.cookie/)?.[1];
-        if (!zseCk) {
-            throw new Error('Failed to extract `__zse_ck` from page');
-        }
 
-        const response2 = await ofetch.raw(url, {
-            headers: {
-                cookie: `${response1.headers
-                    .getSetCookie()
-                    .map((s) => s.split(';')[0])
-                    .join('; ')}; __zse_ck=${zseCk}`,
-            },
-        });
+        const response2 = zseCk
+            ? await ofetch.raw(url, {
+                  headers: {
+                      cookie: `${response1.headers
+                          .getSetCookie()
+                          .map((s) => s.split(';')[0])
+                          .join('; ')}; __zse_ck=${zseCk}`,
+                  },
+              })
+            : null;
 
-        const dc0 = response2.headers
+        const dc0 = (response2 || response1).headers
             .getSetCookie()
             .find((s) => s.startsWith('d_c0='))
             ?.split(';')[0];
