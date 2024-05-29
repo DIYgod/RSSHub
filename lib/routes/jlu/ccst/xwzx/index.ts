@@ -18,7 +18,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: any) {
-    const { category = 'gsl' } = ctx.params || {}; // Default to 'gsl' if category is undefined
+    const { category = 'gsl' } = ctx.params || {};
     const baseUrl = 'https://ccst.jlu.edu.cn';
     const url = `${baseUrl}/xwzx/${category}.htm`;
     const response = await got(url);
