@@ -30,7 +30,7 @@ export const route: Route = {
     radar: [
         {
             source: ['weibo.com/'],
-            target: '/friends',
+            target: '/weibo/user_bookmarks/:uid',
         },
     ],
     name: '用户收藏动态',
@@ -38,7 +38,7 @@ export const route: Route = {
     handler,
     url: 'weibo.com/',
     description: `:::warning
-  此方案必须使用用户\`Cookie\`进行抓取
+  此方案必须使用用户\`Cookie\`进行抓取，只可以获取本人的收藏动态
 
   因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知
 
@@ -66,13 +66,13 @@ async function handler(ctx) {
     }
 
     const uid = await cache.tryGet(
-        `weibo:user_bookmarks:login-user`,
+        'weibo:user_bookmarks:login-user',
         async () => {
             const _r = await got({
                 method: 'get',
                 url: 'https://m.weibo.cn/api/config',
                 headers: {
-                    Referer: `https://m.weibo.cn/`,
+                    Referer: 'https://m.weibo.cn/',
                     'MWeibo-Pwa': 1,
                     'X-Requested-With': 'XMLHttpRequest',
                     Cookie: config.weibo.cookies,
@@ -117,7 +117,7 @@ async function handler(ctx) {
                 method: 'get',
                 url: `https://m.weibo.cn/api/container/getIndex?containerid=${bookmarkContainerId}&openApp=0`,
                 headers: {
-                    Referer: `https://m.weibo.cn/`,
+                    Referer: 'https://m.weibo.cn/',
                     'MWeibo-Pwa': 1,
                     'X-Requested-With': 'XMLHttpRequest',
                     Cookie: config.weibo.cookies,
@@ -135,7 +135,7 @@ async function handler(ctx) {
                 const key = 'weibo:user_bookmarks:' + item.mblog.bid;
                 const data = await cache.tryGet(key, () => weiboUtils.getShowData(uid, item.mblog.bid));
 
-                if (data && data.text) {
+                if (data?.text) {
                     item.mblog.text = data.text;
                     item.mblog.created_at = parseDate(data.created_at);
                     item.mblog.pics = data.pics;
@@ -148,7 +148,7 @@ async function handler(ctx) {
 
                 // 转发的长微博处理
                 const retweet = item.mblog.retweeted_status;
-                if (retweet && retweet.isLongText) {
+                if (retweet?.isLongText) {
                     // TODO: unify cache key and ...
                     const retweetData = await cache.tryGet(`weibo:retweeted:${retweet.user.id}:${retweet.bid}`, () => weiboUtils.getShowData(retweet.user.id, retweet.bid));
                     if (retweetData !== undefined && retweetData.text) {
@@ -184,7 +184,7 @@ async function handler(ctx) {
 
     return weiboUtils.sinaimgTvax({
         title,
-        link: `https://weibo.com`,
+        link: 'https://weibo.com',
         item: resultItems,
     });
 }
