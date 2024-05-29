@@ -3,6 +3,7 @@ import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import { header, getSignedHeader, processImage } from './utils';
 import { parseDate } from '@/utils/parse-date';
+import { Articles, Profile } from './types';
 
 export const route: Route = {
     path: '/posts/:usertype/:id',
@@ -39,7 +40,7 @@ async function handler(ctx) {
             include: 'allow_message,is_followed,is_following,is_org,is_blocking,employments,answer_count,follower_count,articles_count,gender,badge[?(type=best_answerer)].topics',
         })}`;
 
-        return await ofetch(`https://www.zhihu.com${userAPIPath}`, {
+        return await ofetch<Profile>(`https://www.zhihu.com${userAPIPath}`, {
             headers: {
                 ...header,
                 ...(await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/`, userAPIPath)),
@@ -58,12 +59,12 @@ async function handler(ctx) {
 
     const signedHeader = await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/posts`, apiPath);
 
-    const articleResponse = await ofetch(`https://www.zhihu.com${apiPath}`, {
-                headers: {
-                    ...header,
-                    ...signedHeader,
-                    Referer: `https://www.zhihu.com/${usertype}/${id}/posts`,
-                },
+    const articleResponse = await ofetch<Articles>(`https://www.zhihu.com${apiPath}`, {
+        headers: {
+            ...header,
+            ...signedHeader,
+            Referer: `https://www.zhihu.com/${usertype}/${id}/posts`,
+        },
     });
 
     const items = articleResponse.data.map((item) => ({
