@@ -18,7 +18,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: any) {
-    const { category = 'gsl' } = ctx.params || {};
+    const category = ctx.req.param('category');
     const baseUrl = 'https://ccst.jlu.edu.cn';
     const url = `${baseUrl}/xwzx/${category}.htm`;
     const response = await got(url);
@@ -26,7 +26,7 @@ async function handler(ctx: any) {
 
     const list = $('.section.container .main .list3 ul li');
 
-    const titles = {
+    const titles: { [key: string]: string } = {
         gsl: '公示栏',
         xstd: '学生天地',
         xytz: '学院通知',
@@ -34,10 +34,12 @@ async function handler(ctx: any) {
         zsjy: '招生就业',
     };
 
+    const titleSuffix = titles[category] || '新闻中心'; // Fallback to '新闻中心' if category is not found
+
     return {
-        title: `吉林大学计算机科学与技术学院 - 新闻中心${titles[category]}`,
+        title: `吉林大学计算机科学与技术学院 - 新闻中心${titleSuffix}`,
         link: baseUrl,
-        description: `吉林大学计算机科学与技术学院 - 新闻中心${titles[category]}`,
+        description: `吉林大学计算机科学与技术学院 - 新闻中心${titleSuffix}`,
 
         item: list.toArray().map((item) => {
             const el = $(item);
