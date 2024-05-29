@@ -46,7 +46,8 @@ async function handler(ctx: any) {
             const dateEl = el.find('.date');
             const dateStr = dateEl.text().trim();
             const title = linkEl.text().trim();
-            const link = `${baseUrl}${linkEl.attr('href')!.replaceAll(/../g, '')}`;
+            const rawLink = linkEl.attr('href')!.replaceAll('..', ''); // Replace all occurrences of '..'
+            const link = `${baseUrl}${encodeURI(rawLink)}`; // Encode the URL properly
 
             const newsDate = new Date(dateStr);
 
