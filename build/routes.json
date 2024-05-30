@@ -18989,19 +18989,18 @@
         "parameters": {
           "category": "Category, see table below, `new-article` by default"
         },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
+        "radar": [
+          {
+            "source": [
+              "www.famitsu.com/category/:category/page/1"
+            ]
+          }
+        ],
         "name": "Category",
         "maintainers": [
           "TonyRL"
         ],
-        "description": "| 新着        | PS5 | Switch | PS4 | ニュース | ゲームニュース | PR TIMES | 動画   | 特集・企画記事  | インタビュー | 取材・リポート | レビュー | インディーゲーム |\n  | ----------- | --- | ------ | --- | -------- | -------------- | -------- | ------ | --------------- | ------------ | -------------- | -------- | ---------------- |\n  | new-article | ps5 | switch | ps4 | news     | news-game      | prtimes  | videos | special-article | interview    | event-report   | review   | indie-game       |",
+        "description": "| 新着        | Switch | PS5 | PS4 | PC ゲーム | ニュース | 動画   | 特集・企画記事  | インタビュー | 取材・リポート | レビュー | インディーゲーム |\n  | ----------- | ------ | --- | --- | --------- | -------- | ------ | --------------- | ------------ | -------------- | -------- | ---------------- |\n  | new-article | switch | ps5 | ps4 | pc-game   | news     | videos | special-article | interview    | event-report   | review   | indie-game       |",
         "location": "category.ts"
       }
     },
@@ -32499,6 +32498,30 @@
         ],
         "url": "jwc.jlu.edu.cn",
         "location": "jwc.ts"
+      },
+      "/ccst/xwzx/:category": {
+        "path": "/ccst/xwzx/:category",
+        "categories": [
+          "university"
+        ],
+        "example": "/jlu/ccst/xwzx/gsl",
+        "radar": [
+          {
+            "source": [
+              "ccst.jlu.edu.cn/xwzx/gsl.htm",
+              "ccst.jlu.edu.cn/xwzx/xstd.htm",
+              "ccst.jlu.edu.cn/xwzx/xytz.htm",
+              "ccst.jlu.edu.cn/xwzx/xyxw.htm",
+              "ccst.jlu.edu.cn/xwzx/zsjy.htm"
+            ]
+          }
+        ],
+        "name": "吉林大学计算机科学与技术学院 - 新闻中心",
+        "maintainers": [
+          "mayouxi"
+        ],
+        "url": "ccst.jlu.edu.cn",
+        "location": "ccst/xwzx/index.ts"
       }
     },
     "name": "吉林大学",
