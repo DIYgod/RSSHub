@@ -6238,6 +6238,9 @@
   "/winstall/:appId": [
     "TonyRL"
   ],
+  "/wired/tag/:tag": [
+    "Naiqus"
+  ],
   "/wise/pair/:source/:target": [
     "HenryQW"
   ],

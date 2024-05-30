@@ -62595,6 +62595,34 @@
     "name": "winstall",
     "url": "winstall.app"
   },
+  "wired": {
+    "routes": {
+      "/tag/:tag": {
+        "path": "/tag/:tag",
+        "example": "/wired/tag/facebook",
+        "parameters": {
+          "tag": "Tag name"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.wired.com/tag/:tag/"
+            ]
+          }
+        ],
+        "name": "Tags",
+        "maintainers": [
+          "Naiqus"
+        ],
+        "location": "tag.ts"
+      }
+    },
+    "name": "WIRED",
+    "url": "www.wired.com",
+    "categories": [
+      "traditional-media"
+    ]
+  },
   "wise": {
     "routes": {
       "/pair/:source/:target": {

@@ -17397,6 +17397,19 @@
       }
     ]
   },
+  "wired.com": {
+    "_name": "WIRED",
+    "www": [
+      {
+        "title": "Tags",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/tag/:tag/"
+        ],
+        "target": "/wired/tag/:tag"
+      }
+    ]
+  },
   "antibody-software.com": {
     "_name": "WziFile",
     ".": [
