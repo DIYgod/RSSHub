@@ -201,8 +201,8 @@ importers:
         specifier: 3.5.3
         version: 3.5.3
       tldts:
-        specifier: 6.1.22
-        version: 6.1.22
+        specifier: 6.1.23
+        version: 6.1.23
       tosource:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
@@ -386,7 +386,7 @@ importers:
         version: 11.0.4
       vite-tsconfig-paths:
         specifier: 4.3.2
-        version: 4.3.2(typescript@5.4.5)(vite@5.2.11(@types/node@20.12.12))
+        version: 4.3.2(typescript@5.4.5)(vite@5.2.12(@types/node@20.12.12))
       vitest:
         specifier: 1.6.0
         version: 1.6.0(@types/node@20.12.12)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
@@ -2316,8 +2316,8 @@ packages:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
 
-  caniuse-lite@1.0.30001624:
-    resolution: {integrity: sha512-0dWnQG87UevOCPYaOR49CBcLBwoZLpws+k6W37nLjWUhumP1Isusj0p2u+3KhjNloRWK9OKMgjBBzPujQHw4nA==}
+  caniuse-lite@1.0.30001625:
+    resolution: {integrity: sha512-4KE9N2gcRH+HQhpeiRZXd+1niLB/XNLAhSy4z7fI8EzcbcPoAqjNInxVHTiTwWfTIV4w096XG8OtCOCQQKPv3w==}
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -5248,11 +5248,11 @@ packages:
     resolution: {integrity: sha512-GA16+8HXvqtfEnw/DTcwB0UU354QE1n3+wh08oFjr6Znl7ZLAeUgYzCcK+/CCrOyE0vnHR8/pu3XXG3vDijXpQ==}
     hasBin: true
 
-  tldts-core@6.1.22:
-    resolution: {integrity: sha512-TMCyBC7HpvDpBRQCLsODmsclNXGhZLSj76gIlx7QcwvKElMdIzhGN5iYcuTI7yAWJm8zTpsVehWCeOGytDY9fg==}
+  tldts-core@6.1.23:
+    resolution: {integrity: sha512-NoYYa06h5WN9BU4wjpVK/bKg3fw2BlhZSB1omr+CkEygSzhe5Ojp8mTFae93eVV2mv7d/ootxPqVhW1GoCeogw==}
 
-  tldts@6.1.22:
-    resolution: {integrity: sha512-WwWAPp+zJn8oJkpjqJcSuuj5foL9cI8SiTjH+gGS1bw5N163YywM0Cmd9OijwtKjdGG7OC6NEYZVl4EG8HfSMg==}
+  tldts@6.1.23:
+    resolution: {integrity: sha512-TWe4gW7LE1bPt6es6Pg3+pO/KwjWnxurZ5nUxHaMap7LFmKH+9th+JP0TsonIezcie0qJbzgtnA2CMWeS3q7Ig==}
     hasBin: true
 
   tmp@0.0.33:
@@ -5537,8 +5537,8 @@ packages:
       vite:
         optional: true
 
-  vite@5.2.11:
-    resolution: {integrity: sha512-HndV31LWW05i1BLPMUCE1B9E9GFbOu1MbenhS58FuK6owSO5qHm7GiCotrNY1YE5rMeQSFBGmT5ZaLEjFizgiQ==}
+  vite@5.2.12:
+    resolution: {integrity: sha512-/gC8GxzxMK5ntBwb48pR32GGhENnjtY30G4A0jemunsBkiEZFw60s8InGpN8gkhHEkjnRK1aSAxeQgwvFhUHAA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -7921,7 +7921,7 @@ snapshots:
 
   browserslist@4.23.0:
     dependencies:
-      caniuse-lite: 1.0.30001624
+      caniuse-lite: 1.0.30001625
       electron-to-chromium: 1.4.783
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.0)
@@ -7996,7 +7996,7 @@ snapshots:
 
   camelcase@6.3.0: {}
 
-  caniuse-lite@1.0.30001624: {}
+  caniuse-lite@1.0.30001625: {}
 
   caseless@0.12.0: {}
 
@@ -11290,11 +11290,11 @@ snapshots:
 
   tlds@1.252.0: {}
 
-  tldts-core@6.1.22: {}
+  tldts-core@6.1.23: {}
 
-  tldts@6.1.22:
+  tldts@6.1.23:
     dependencies:
-      tldts-core: 6.1.22
+      tldts-core: 6.1.23
 
   tmp@0.0.33:
     dependencies:
@@ -11526,7 +11526,7 @@ snapshots:
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.1
-      vite: 5.2.11(@types/node@20.12.12)
+      vite: 5.2.12(@types/node@20.12.12)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -11537,18 +11537,18 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@4.3.2(typescript@5.4.5)(vite@5.2.11(@types/node@20.12.12)):
+  vite-tsconfig-paths@4.3.2(typescript@5.4.5)(vite@5.2.12(@types/node@20.12.12)):
     dependencies:
       debug: 4.3.4
       globrex: 0.1.2
       tsconfck: 3.0.3(typescript@5.4.5)
     optionalDependencies:
-      vite: 5.2.11(@types/node@20.12.12)
+      vite: 5.2.12(@types/node@20.12.12)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@5.2.11(@types/node@20.12.12):
+  vite@5.2.12(@types/node@20.12.12):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
@@ -11576,7 +11576,7 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.2.11(@types/node@20.12.12)
+      vite: 5.2.12(@types/node@20.12.12)
       vite-node: 1.6.0(@types/node@20.12.12)
       why-is-node-running: 2.2.2
     optionalDependencies:
