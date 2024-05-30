@@ -8812,20 +8812,6 @@
         ],
         "target": "/jlu/jwc"
       }
-    ],
-    "ccst": [
-      {
-        "title": "吉林大学计算机科学与技术学院 - 新闻中心",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/xwzx/gsl.htm",
-          "/xwzx/xstd.htm",
-          "/xwzx/xytz.htm",
-          "/xwzx/xyxw.htm",
-          "/xwzx/zsjy.htm"
-        ],
-        "target": "/jlu/ccst/xwzx/:category"
-      }
     ]
   },
   "jou.edu.cn": {

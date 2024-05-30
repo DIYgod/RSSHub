@@ -32499,30 +32499,6 @@
         ],
         "url": "jwc.jlu.edu.cn",
         "location": "jwc.ts"
-      },
-      "/ccst/xwzx/:category": {
-        "path": "/ccst/xwzx/:category",
-        "categories": [
-          "university"
-        ],
-        "example": "/jlu/ccst/xwzx/gsl",
-        "radar": [
-          {
-            "source": [
-              "ccst.jlu.edu.cn/xwzx/gsl.htm",
-              "ccst.jlu.edu.cn/xwzx/xstd.htm",
-              "ccst.jlu.edu.cn/xwzx/xytz.htm",
-              "ccst.jlu.edu.cn/xwzx/xyxw.htm",
-              "ccst.jlu.edu.cn/xwzx/zsjy.htm"
-            ]
-          }
-        ],
-        "name": "吉林大学计算机科学与技术学院 - 新闻中心",
-        "maintainers": [
-          "mayouxi"
-        ],
-        "url": "ccst.jlu.edu.cn",
-        "location": "ccst/xwzx/index.ts"
       }
     },
     "name": "吉林大学",
