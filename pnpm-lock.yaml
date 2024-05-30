@@ -216,8 +216,8 @@ importers:
         specifier: 1.17.0
         version: 1.17.0
       undici:
-        specifier: 6.18.1
-        version: 6.18.1
+        specifier: 6.18.2
+        version: 6.18.2
       uuid:
         specifier: 9.0.1
         version: 9.0.1
@@ -1751,8 +1751,8 @@ packages:
   '@types/etag@1.8.3':
     resolution: {integrity: sha512-QYHv9Yeh1ZYSMPQOoxY4XC4F1r+xRUiAriB303F4G6uBsT3KKX60DjiogvVv+2VISVDuJhcIzMdbjT+Bm938QQ==}
 
-  '@types/express-serve-static-core@4.19.1':
-    resolution: {integrity: sha512-ej0phymbFLoCB26dbbq5PGScsf2JAJ4IJHjG10LalgUV36XKTmA4GdA+PVllKvRk0sEKt64X8975qFnkSi0hqA==}
+  '@types/express-serve-static-core@4.19.2':
+    resolution: {integrity: sha512-dPSEQElyVJ97BuGduAqQjpBocZWAs0GR94z+ptL7JXQJeJdHw2WBG3EWdFrK36b8Q6j8P4cXOMhgUoi0IIfIsg==}
 
   '@types/express@4.17.21':
     resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
@@ -2189,8 +2189,8 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  bare-events@2.2.2:
-    resolution: {integrity: sha512-h7z00dWdG0PYOQEvChhOSWvOfkIKsdZGkWr083FgN/HyoQuebSew/cgirYqh9SCuy/hRvxc5Vy6Fw8xAmYHLkQ==}
+  bare-events@2.3.1:
+    resolution: {integrity: sha512-sJnSOTVESURZ61XgEleqmP255T6zTYwHPwE4r6SssIh0U9/uDvfpdoJYpVUerJJZH2fueO+CdT8ZT+OC/7aZDA==}
 
   bare-fs@2.3.0:
     resolution: {integrity: sha512-TNFqa1B4N99pds2a5NYHR15o0ZpdNKbAeKTE/+G6ED/UeOavv8RY3dr/Fu99HW3zU3pXpo2kDNO8Sjsm2esfOw==}
@@ -2772,8 +2772,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  electron-to-chromium@1.4.783:
-    resolution: {integrity: sha512-bT0jEz/Xz1fahQpbZ1D7LgmPYZ3iHVY39NcWWro1+hA2IvjiPeaXtfSqrQ+nXjApMvQRE2ASt1itSLRrebHMRQ==}
+  electron-to-chromium@1.4.786:
+    resolution: {integrity: sha512-i/A2UB0sxYViMN0M2zIotQFRIOt1jLuVXudACHBDiJ5gGuAUzf/crZxwlBTdA0O52Hy4CNtTzS7AKRAacs/08Q==}
 
   ellipsize@0.1.0:
     resolution: {integrity: sha512-5gxbEjcb/Z2n6TTmXZx9wVi3N/DOzE7RXY3Xg9dakDuhX/izwumB9rGjeWUV6dTA0D0+juvo+JonZgNR9sgA5A==}
@@ -5320,8 +5320,8 @@ packages:
   ts-xor@1.3.0:
     resolution: {integrity: sha512-RLXVjliCzc1gfKQFLRpfeD0rrWmjnSTgj7+RFhoq3KRkUYa8LE/TIidYOzM5h+IdFBDSjjSgk9Lto9sdMfDFEA==}
 
-  tsconfck@3.0.3:
-    resolution: {integrity: sha512-4t0noZX9t6GcPTfBAbIbbIU4pfpCwh0ueq3S4O/5qXI1VwK1outmxhe9dOiEWqMz3MW2LKgDTpqWV+37IWuVbA==}
+  tsconfck@3.1.0:
+    resolution: {integrity: sha512-CMjc5zMnyAjcS9sPLytrbFmj89st2g+JYtY/c02ug4Q+CZaAtCgbyviI0n1YvjZE/pzoc6FbNsINS13DOL1B9w==}
     engines: {node: ^18 || >=20}
     hasBin: true
     peerDependencies:
@@ -5417,8 +5417,8 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  undici@6.18.1:
-    resolution: {integrity: sha512-/0BWqR8rJNRysS5lqVmfc7eeOErcOP4tZpATVjJOojjHZ71gSYVAtFhEmadcIjwMIUehh5NFyKGsXCnXIajtbA==}
+  undici@6.18.2:
+    resolution: {integrity: sha512-o/MQLTwRm9IVhOqhZ0NQ9oXax1ygPjw6Vs+Vq/4QRjbOAC3B1GCHy7TYxxbExKlb7bzDRzt9vBWU6BDz0RFfYg==}
     engines: {node: '>=18.17'}
 
   unicode-canonical-property-names-ecmascript@2.0.0:
@@ -7344,7 +7344,7 @@ snapshots:
     dependencies:
       '@types/node': 20.12.12
 
-  '@types/express-serve-static-core@4.19.1':
+  '@types/express-serve-static-core@4.19.2':
     dependencies:
       '@types/node': 20.12.12
       '@types/qs': 6.9.15
@@ -7354,7 +7354,7 @@ snapshots:
   '@types/express@4.17.21':
     dependencies:
       '@types/body-parser': 1.19.5
-      '@types/express-serve-static-core': 4.19.1
+      '@types/express-serve-static-core': 4.19.2
       '@types/qs': 6.9.15
       '@types/serve-static': 1.15.7
 
@@ -7849,12 +7849,12 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  bare-events@2.2.2:
+  bare-events@2.3.1:
     optional: true
 
   bare-fs@2.3.0:
     dependencies:
-      bare-events: 2.2.2
+      bare-events: 2.3.1
       bare-path: 2.1.3
       bare-stream: 1.0.0
     optional: true
@@ -7922,7 +7922,7 @@ snapshots:
   browserslist@4.23.0:
     dependencies:
       caniuse-lite: 1.0.30001625
-      electron-to-chromium: 1.4.783
+      electron-to-chromium: 1.4.786
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.0)
 
@@ -8469,7 +8469,7 @@ snapshots:
       minimatch: 9.0.1
       semver: 7.6.2
 
-  electron-to-chromium@1.4.783: {}
+  electron-to-chromium@1.4.786: {}
 
   ellipsize@0.1.0: {}
 
@@ -11100,7 +11100,7 @@ snapshots:
       fast-fifo: 1.3.2
       queue-tick: 1.0.1
     optionalDependencies:
-      bare-events: 2.2.2
+      bare-events: 2.3.1
 
   strict-event-emitter@0.5.1: {}
 
@@ -11350,7 +11350,7 @@ snapshots:
 
   ts-xor@1.3.0: {}
 
-  tsconfck@3.0.3(typescript@5.4.5):
+  tsconfck@3.1.0(typescript@5.4.5):
     optionalDependencies:
       typescript: 5.4.5
 
@@ -11423,7 +11423,7 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  undici@6.18.1: {}
+  undici@6.18.2: {}
 
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
@@ -11541,7 +11541,7 @@ snapshots:
     dependencies:
       debug: 4.3.4
       globrex: 0.1.2
-      tsconfck: 3.0.3(typescript@5.4.5)
+      tsconfck: 3.1.0(typescript@5.4.5)
     optionalDependencies:
       vite: 5.2.12(@types/node@20.12.12)
     transitivePeerDependencies:
