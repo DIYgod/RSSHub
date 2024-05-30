@@ -2957,13 +2957,9 @@
   "/idolypride/news": [
     "Mingxia1"
   ],
-  "/ieee/journal/:journal/earlyaccess/:sortType?": [
-    "5upernova-heng"
+  "/ieee/journal/:punumber/:earlyAccess?": [
+    "HenryQW"
   ],
-  "/ieee/:journal/latest/vol/:sortType?": [],
-  "/ieee/journal/:journal/:sortType?": [],
-  "/ieee/:journal/latest/date/:sortType?": [],
-  "/ieee/journal/:journal/recent/:sortType?": [],
   "/ieee-security/security-privacy": [
     "ZeddYu"
   ],
