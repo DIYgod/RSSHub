@@ -61940,6 +61940,45 @@
         "description": ":::warning\n  需要对应用户打开页面进行授权生成 token 才能生成内容\n\n  自部署需要申请并配置微博 key，具体见部署文档\n  :::",
         "location": "timeline.ts"
       },
+      "/user_bookmarks/:uid/:routeParams?": {
+        "path": "/user_bookmarks/:uid/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/weibo/user_bookmarks/1195230310",
+        "parameters": {
+          "uid": "用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取",
+          "routeParams": "额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "WEIBO_COOKIES",
+              "description": ""
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "weibo.com/"
+            ],
+            "target": "/user_bookmarks/:uid"
+          }
+        ],
+        "name": "用户收藏动态",
+        "maintainers": [
+          "cztchoice"
+        ],
+        "url": "weibo.com/",
+        "description": ":::warning\n  此方案必须使用用户`Cookie`进行抓取，只可以获取本人的收藏动态\n\n  因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知\n\n  微博用户 Cookie 的配置可参照部署文档\n  :::",
+        "location": "user-bookmarks.ts"
+      },
       "/user/:uid/:routeParams?": {
         "path": "/user/:uid/:routeParams?",
         "categories": [

@@ -6170,6 +6170,9 @@
     "DIYgod",
     "Rongronggg9"
   ],
+  "/weibo/user_bookmarks/:uid/:routeParams?": [
+    "cztchoice"
+  ],
   "/weibo/user/:uid/:routeParams?": [
     "DIYgod",
     "iplusx",
