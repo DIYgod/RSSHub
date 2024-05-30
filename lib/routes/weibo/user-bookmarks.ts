@@ -30,7 +30,7 @@ export const route: Route = {
     radar: [
         {
             source: ['weibo.com/'],
-            target: '/weibo/user_bookmarks/:uid',
+            target: '/user_bookmarks/:uid',
         },
     ],
     name: '用户收藏动态',
