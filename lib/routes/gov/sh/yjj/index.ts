@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/sh/yjj/*',
+    path: ['/sh/yjj/*', '/shanghai/yjj/*'],
     name: 'Unknown',
     maintainers: [],
     handler,

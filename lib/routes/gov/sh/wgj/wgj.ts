@@ -10,7 +10,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/sh/wgj/:page?',
+    path: ['/sh/wgj/:page?', '/shanghai/wgj/:page?'],
     categories: ['government'],
     example: '/gov/sh/wgj',
     parameters: { page: '页数，默认第 1 页' },
