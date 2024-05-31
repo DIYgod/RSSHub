@@ -1,8 +1,9 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import cache from '@/utils/cache';
 import { header, getSignedHeader, processImage } from './utils';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import { Articles, Profile } from './types';
 
 export const route: Route = {
     path: '/posts/:usertype/:id',
@@ -34,15 +35,19 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const usertype = ctx.req.param('usertype');
 
-    const data = await ofetch(`https://www.zhihu.com/${usertype}/${id}/posts`, {
-        headers: {
-            ...header,
-            Referer: `https://www.zhihu.com/${usertype}/${id}/`,
-        },
+    const userProfile = await cache.tryGet(`zhihu:posts:profile:${id}`, async () => {
+        const userAPIPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}?${new URLSearchParams({
+            include: 'allow_message,is_followed,is_following,is_org,is_blocking,employments,answer_count,follower_count,articles_count,gender,badge[?(type=best_answerer)].topics',
+        })}`;
+
+        return await ofetch<Profile>(`https://www.zhihu.com${userAPIPath}`, {
+            headers: {
+                ...header,
+                ...(await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/`, userAPIPath)),
+                Referer: `https://www.zhihu.com/${usertype}/${id}/`,
+            },
+        });
     });
-    const $ = load(data);
-    const initialData = JSON.parse($('#js-initialData').text());
-    const userData = initialData?.initialState?.entities?.users?.[id];
 
     const apiPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}/articles?${new URLSearchParams({
         include:
@@ -54,7 +59,7 @@ async function handler(ctx) {
 
     const signedHeader = await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/posts`, apiPath);
 
-    const articleResponse = await ofetch(`https://www.zhihu.com${apiPath}`, {
+    const articleResponse = await ofetch<Articles>(`https://www.zhihu.com${apiPath}`, {
         headers: {
             ...header,
             ...signedHeader,
@@ -72,11 +77,11 @@ async function handler(ctx) {
     }));
 
     return {
-        title: `${userData?.name} 的知乎文章`,
+        title: `${userProfile.name} 的知乎文章`,
         link: `https://www.zhihu.com/${usertype}/${id}/posts`,
-        description: userData?.headline,
-        image: userData?.avatarUrlTemplate?.split('?')[0],
-        banner: userData?.coverUrl?.split('?')[0],
+        description: userProfile.headline,
+        image: userProfile.avatar_url.split('?')[0],
+        // banner: userData?.coverUrl?.split('?')[0],
         item: items,
     };
 }

@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 import fetch from './fetch-article';
 
@@ -31,7 +31,7 @@ export const route: Route = {
 async function handler() {
     const base = `https://www.twreporter.org`;
     const url = `https://go-api.twreporter.org/v2/index_page`;
-    const res = await got(url).json();
+    const res = await ofetch(url);
     const list = res.data.latest_section;
     const out = await Promise.all(
         list.map((item) => {
