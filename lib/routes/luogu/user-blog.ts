@@ -34,7 +34,7 @@ async function handler(ctx) {
     // Fetch the uid & title
     const { uid: blogUid, title: blogTitle } = await cache.tryGet(blogBaseUrl, async () => {
         const rsp = await ofetch(blogBaseUrl);
-        const $ = load(rsp.data);
+        const $ = load(rsp);
         const uid = $("meta[name='blog-uid']").attr('content');
         const name = $("meta[name='blog-name']").attr('content');
         return {
