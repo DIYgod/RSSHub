@@ -7,6 +7,22 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
+const getImageById = async (id) => {
+    const response = await ofetch('https://api.aeonmedia.co/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            query: 'query getImageById($id: ID!) { image(id: $id) { id url alt caption width height } }',
+            variables: { id, site: 'Aeon' },
+            operationName: 'getImageById',
+        }),
+    });
+
+    return response.data.image.url;
+};
+
 function format(article) {
     const type = article.type.toLowerCase();
 
@@ -45,7 +61,6 @@ function format(article) {
 
             const capture = load(article.body);
             capture('p.pullquote').remove();
-            capture('dl').remove();
             block = art(path.join(__dirname, 'templates/essay.art'), { banner, authorsBio, content: capture.html() });
 
             break;
@@ -56,22 +71,29 @@ function format(article) {
     return block;
 }
 
-const getData = async (ctx, list) => {
+const getData = async (list) => {
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
-
-                const data = JSON.parse($('script#__NEXT_DATA__').text());
-                const article = data.props.pageProps.article;
+            cache.tryGet(item.json, async () => {
+                const data = await ofetch(item.json);
+                const article = data.pageProps.article;
                 item.pubDate = new Date(article.publishedAt).toUTCString();
                 const content = format(article);
+                const capture = load(content);
+                await Promise.all(
+                    capture('dl > dt')
+                        .toArray()
+                        .map(async (item) => {
+                            const id = capture(item).text();
+                            const image = await getImageById(id);
+                            capture(item).replaceWith(`<img src="${image}" alt="${id}">`);
+                        })
+                );
 
                 let authors = '';
                 authors = article.type === 'film' ? article.creditsShort : article.authors.map((author) => author.name).join(', ');
 
-                item.description = content;
+                item.description = capture.html();
                 item.author = authors;
 
                 return item;

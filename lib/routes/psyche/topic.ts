@@ -26,15 +26,15 @@ async function handler(ctx) {
 
     const data = JSON.parse($('script#__NEXT_DATA__').text());
     const articles = data.props.pageProps.articles;
-    const list = Object.keys(articles)
-        .flatMap((type) =>
-            articles[type].edges.map((item) => ({
-                title: item.node.title,
-                link: `https://psyche.co/${type}/${item.node.slug}`,
-            }))
-        );
+    const prefix = `https://psyche.co/_next/data/${data.buildId}`;
+    const list = Object.keys(articles).flatMap((type) =>
+        articles[type].edges.map((item) => ({
+            title: item.node.title,
+            json: `${prefix}/${type}/${item.node.slug}.json`,
+        }))
+    );
 
-    const items = await getData(ctx, list);
+    const items = await getData(list);
 
     return {
         title: `Psyche | ${data.props.pageProps.section.title}`,

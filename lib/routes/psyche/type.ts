@@ -36,13 +36,13 @@ async function handler(ctx) {
     const $ = load(response);
 
     const data = JSON.parse($('script#__NEXT_DATA__').text());
-
+    const prefix = `https://psyche.co/_next/data/${data.buildId}`;
     const list = data.props.pageProps.articles.map((item) => ({
         title: item.title,
-        link: `https://psyche.co/${type}/${item.slug}`,
+        json: `${prefix}/${type}/${item.slug}.json`,
     }));
 
-    const items = await getData(ctx, list);
+    const items = await getData(list);
 
     return {
         title: `Psyche | ${capitalizedType}`,
