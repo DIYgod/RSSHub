@@ -7,7 +7,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: 'package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}',
+    path: '/package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}',
     name: 'Unknown',
     maintainers: [],
     handler,

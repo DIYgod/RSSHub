@@ -58,9 +58,11 @@ async function handler() {
         }
     }
 
-    const todayResponse = await ofetch(`${rootUrl}${link}`);
+    const todayResponse = await ofetch(`${rootUrl}${link}`, {
+        parseResponse: (txt) => txt,
+    });
 
-    const $ = load(todayResponse.data);
+    const $ = load(todayResponse);
 
     const list = $('li.clearfix')
         .map((_, item) => ({

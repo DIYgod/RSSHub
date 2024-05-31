@@ -27,8 +27,7 @@ export const route: Route = {
 async function handler(ctx) {
     const baseUrl = 'https://www.modb.pro';
     const topicId = ctx.req.param('id');
-    const response = await ofetch({
-        url: `${baseUrl}/api/columns/getKnowledge`,
+    const response = await ofetch(`${baseUrl}/api/columns/getKnowledge`, {
         query: {
             pageNum: 1,
             pageSize: 20,

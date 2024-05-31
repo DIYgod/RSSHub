@@ -35,10 +35,8 @@ async function handler(ctx) {
         result: {
             hits: { hit: data },
         },
-    } = await ofetch({
-        method: 'get',
-        url: 'https://dblp.org/search/publ/api',
-        searchParams: {
+    } = await ofetch('https://dblp.org/search/publ/api', {
+        query: {
             q: field,
             format: 'json',
             h: 10,

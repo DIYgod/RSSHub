@@ -38,8 +38,8 @@ export const route: Route = {
 
 async function handler() {
     const link = new URL('/articles/', host).href;
-    const response = await got(link);
-    const $ = load(response.data);
+    const response = await ofetch(link, { parseResponse: (txt) => txt });
+    const $ = load(response);
 
     const list = $('a.list-group-item')
         .filter((i, e) => $(e).find('h4.media-heading i').length === 0)
