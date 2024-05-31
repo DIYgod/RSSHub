@@ -45,7 +45,7 @@ async function handler() {
     const day = date.getDate();
 
     const response = await ofetch('http://job.hrbeu.edu.cn/HrbeuJY/Web/Employ/QueryCalendar', {
-        searchParams: {
+        query: {
             yearMonth: year + '-' + strmMonth,
         },
     });
