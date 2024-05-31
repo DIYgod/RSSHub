@@ -2447,16 +2447,29 @@
   "/gov/sh/fgw/:category{.+}?": [
     "nczitzk"
   ],
+  "/gov/shanghai/fgw/:category{.+}?": [
+    "nczitzk"
+  ],
   "/gov/sh/rsj/ksxm": [
+    "Fatpandac"
+  ],
+  "/gov/shanghai/rsj/ksxm": [
     "Fatpandac"
   ],
   "/gov/sh/wgj/:page?": [
     "gideonsenku"
   ],
+  "/gov/shanghai/wgj/:page?": [
+    "gideonsenku"
+  ],
   "/gov/sh/wsjkw/yqtb": [
     "zcf0508"
   ],
+  "/gov/shanghai/wsjkw/yqtb": [
+    "zcf0508"
+  ],
   "/gov/sh/yjj/*": [],
+  "/gov/shanghai/yjj/*": [],
   "/gov/shaanxi/kjt/:id?": [
     "nczitzk"
   ],
