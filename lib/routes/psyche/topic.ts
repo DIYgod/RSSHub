@@ -8,14 +8,6 @@ export const route: Route = {
     categories: ['new-media'],
     example: '/psyche/topic/therapeia',
     parameters: { topic: 'Topic' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['psyche.co/:topic'],
