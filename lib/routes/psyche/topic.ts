@@ -16,7 +16,7 @@ export const route: Route = {
     name: 'Topics',
     maintainers: ['emdoe'],
     handler,
-    description: `Supported categories: Therapeia, Eudaimonia, and Poiesis.`,
+    description: 'Supported categories: Therapeia, Eudaimonia, and Poiesis.',
 };
 
 async function handler(ctx) {
