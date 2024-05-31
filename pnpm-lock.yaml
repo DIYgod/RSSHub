@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@hono/node-server':
-        specifier: 1.11.1
-        version: 1.11.1
+        specifier: 1.11.2
+        version: 1.11.2
       '@hono/swagger-ui':
         specifier: 0.2.2
-        version: 0.2.2(hono@4.4.0)
+        version: 0.2.2(hono@4.4.2)
       '@hono/zod-openapi':
         specifier: 0.14.0
-        version: 0.14.0(hono@4.4.0)(zod@3.23.8)
+        version: 0.14.0(hono@4.4.2)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -84,8 +84,8 @@ importers:
         specifier: 137.1.0
         version: 137.1.0
       hono:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.4.2
+        version: 4.4.2
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -1188,8 +1188,8 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@hono/node-server@1.11.1':
-    resolution: {integrity: sha512-GW1Iomhmm1o4Z+X57xGby8A35Cu9UZLL7pSMdqDBkD99U5cywff8F+8hLk5aBTzNubnsFAvWQ/fZjNwPsEn9lA==}
+  '@hono/node-server@1.11.2':
+    resolution: {integrity: sha512-JhX0nUC66GeDxpIdMKWDRMEwtQBa64CY907iAF1sYqb4m2p2PdSU7zkbnNhAZLg/6IjSlTuj6CF307JlBXVvpg==}
     engines: {node: '>=18.14.1'}
 
   '@hono/swagger-ui@0.2.2':
@@ -3388,8 +3388,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.4.0:
-    resolution: {integrity: sha512-Bb2GHk8jmlLIuxc3U+7UBGOoA5lByJTAFnRdH2N2fqEVy9TEQzJ9saIJUQ/ZqBvEvgEFe7UjPFNSFi8cyeU+3Q==}
+  hono@4.4.2:
+    resolution: {integrity: sha512-bRhZ+BM9r04lRN2i9wiZ18yQNbZxHsmmRIItoAb43nRkHnIDsFhFh4mJ0seEs06FvenibpAgSVNHQ8ZzcDQx2A==}
     engines: {node: '>=16.0.0'}
 
   hosted-git-info@2.8.9:
@@ -5083,8 +5083,8 @@ packages:
   stream-length@1.0.2:
     resolution: {integrity: sha512-aI+qKFiwoDV4rsXiS7WRoCt+v2RX1nUj17+KJC5r2gfh5xoSJIfP6Y3Do/HtvesFcTSWthIuJ3l1cvKQY/+nZg==}
 
-  streamx@2.17.0:
-    resolution: {integrity: sha512-mzRXEeafEA0skX5XLiDht/zdIqEVs4kgayUTFHDoMjiaZ2kC7DoFsQDJVXRILI2Qme/kWXxLpuU6P0B+xcXpFA==}
+  streamx@2.18.0:
+    resolution: {integrity: sha512-LLUC1TWdjVdn1weXGcSxyTR3T4+acB6tVGXT95y0nGbca4t4o/ng1wKAGTljm9VicuCVLvRlqFYXYy5GwgM7sQ==}
 
   strict-event-emitter@0.5.1:
     resolution: {integrity: sha512-vMgjE/GGEPEFnhFub6pa4FmJBRBVOLpIII2hvCZ8Kzb7K0hlHo7mQv6xYrBvCL2LtAIBwFUK8wvuJgTVSQ5MFQ==}
@@ -5205,6 +5205,9 @@ packages:
   test-exclude@6.0.0:
     resolution: {integrity: sha512-cAGWPIyOHU6zlmg88jwm7VRyXnMN7iV68OGAbYDk/Mh/xC/pzVPlQtY6ngoIH/5/tciuhGfvESU8GrHrcxD56w==}
     engines: {node: '>=8'}
+
+  text-decoder@1.1.0:
+    resolution: {integrity: sha512-TmLJNj6UgX8xcUZo4UDStGQtDiTzF7BzWlzn9g7UWrjkpHr5uJTK1ld16wZ3LXb2vb6jH8qU89dW5whuMdXYdw==}
 
   text-hex@1.0.0:
     resolution: {integrity: sha512-uuVGNWzgJ4yhRaNSiubPY7OjISw4sw4E5Uv0wbjp+OzcbmVU/rsT8ujgcXJhn9ypzsgr5vlzpPqP+MBBKcGvbg==}
@@ -6657,22 +6660,22 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@hono/node-server@1.11.1': {}
+  '@hono/node-server@1.11.2': {}
 
-  '@hono/swagger-ui@0.2.2(hono@4.4.0)':
+  '@hono/swagger-ui@0.2.2(hono@4.4.2)':
     dependencies:
-      hono: 4.4.0
+      hono: 4.4.2
 
-  '@hono/zod-openapi@0.14.0(hono@4.4.0)(zod@3.23.8)':
+  '@hono/zod-openapi@0.14.0(hono@4.4.2)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.0.0(zod@3.23.8)
-      '@hono/zod-validator': 0.2.1(hono@4.4.0)(zod@3.23.8)
-      hono: 4.4.0
+      '@hono/zod-validator': 0.2.1(hono@4.4.2)(zod@3.23.8)
+      hono: 4.4.2
       zod: 3.23.8
 
-  '@hono/zod-validator@0.2.1(hono@4.4.0)(zod@3.23.8)':
+  '@hono/zod-validator@0.2.1(hono@4.4.2)(zod@3.23.8)':
     dependencies:
-      hono: 4.4.0
+      hono: 4.4.2
       zod: 3.23.8
 
   '@humanwhocodes/config-array@0.11.14':
@@ -7869,7 +7872,7 @@ snapshots:
 
   bare-stream@1.0.0:
     dependencies:
-      streamx: 2.17.0
+      streamx: 2.18.0
     optional: true
 
   base64-js@1.5.1: {}
@@ -9222,7 +9225,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.4.0: {}
+  hono@4.4.2: {}
 
   hosted-git-info@2.8.9: {}
 
@@ -11095,10 +11098,11 @@ snapshots:
     dependencies:
       bluebird: 2.11.0
 
-  streamx@2.17.0:
+  streamx@2.18.0:
     dependencies:
       fast-fifo: 1.3.2
       queue-tick: 1.0.1
+      text-decoder: 1.1.0
     optionalDependencies:
       bare-events: 2.3.1
 
@@ -11220,7 +11224,7 @@ snapshots:
     dependencies:
       b4a: 1.6.6
       fast-fifo: 1.3.2
-      streamx: 2.17.0
+      streamx: 2.18.0
 
   tar@6.2.1:
     dependencies:
@@ -11258,6 +11262,10 @@ snapshots:
       '@istanbuljs/schema': 0.1.3
       glob: 7.2.3
       minimatch: 3.1.2
+
+  text-decoder@1.1.0:
+    dependencies:
+      b4a: 1.6.6
 
   text-hex@1.0.0: {}
 
