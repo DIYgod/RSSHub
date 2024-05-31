@@ -54,7 +54,7 @@ async function handler(ctx) {
         posts.map((post) =>
             cache.tryGet(post.link, async () => {
                 const rsp = await ofetch(post.link);
-                const $ = load(rsp.data);
+                const $ = load(rsp);
                 return {
                     title: post.title,
                     link: post.link,
