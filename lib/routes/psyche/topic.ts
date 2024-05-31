@@ -30,7 +30,7 @@ async function handler(ctx) {
         .flatMap((type) =>
             articles[type].edges.map((item) => ({
                 title: item.node.title,
-                link: `https://psyche.co/${item.node.type.toLowerCase()}s/${item.node.slug}`,
+                link: `https://psyche.co/${type}/${item.node.slug}`,
             }))
         );
 
