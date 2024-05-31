@@ -55,7 +55,7 @@
         "@hono/zod-openapi": "0.14.0",
         "@notionhq/client": "2.2.15",
         "@postlight/parser": "2.2.3",
-        "@sentry/node": "8.5.0",
+        "@sentry/node": "8.7.0",
         "@tonyrl/rand-user-agent": "2.0.65",
         "aes-js": "3.1.2",
         "art-template": "4.13.2",
@@ -119,7 +119,7 @@
         "tough-cookie": "4.1.4",
         "tsx": "4.11.0",
         "twitter-api-v2": "1.17.0",
-        "undici": "6.18.1",
+        "undici": "6.18.2",
         "uuid": "9.0.1",
         "winston": "3.13.0",
         "xxhash-wasm": "1.0.2",
@@ -147,7 +147,7 @@
         "@types/mailparser": "3.4.4",
         "@types/markdown-it": "14.1.1",
         "@types/module-alias": "2.0.4",
-        "@types/node": "20.12.12",
+        "@types/node": "20.12.13",
         "@types/sanitize-html": "2.11.0",
         "@types/supertest": "6.0.2",
         "@types/tiny-async-pool": "2.0.3",
@@ -180,7 +180,7 @@
         "vite-tsconfig-paths": "4.3.2",
         "vitest": "1.6.0"
     },
-    "packageManager": "pnpm@9.1.2",
+    "packageManager": "pnpm@9.1.4",
     "engines": {
         "node": ">=22"
     }
