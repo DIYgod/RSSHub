@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -50,7 +50,7 @@ async function handler(ctx) {
         },
     };
 
-    const response = await got.get(fapi, options).json();
+    const response = await ofetch(fapi, options);
 
     const items = response.data.data_list.map((item) => ({
         title: item.post_title,

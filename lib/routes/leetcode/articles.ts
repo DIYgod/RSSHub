@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
@@ -59,37 +59,35 @@ async function handler() {
             cache.tryGet(info.link, async () => {
                 const titleSlug = info.link.split('/')[4];
 
-                const questionContent = await got
-                    .post(gqlEndpoint, {
-                        json: {
-                            operationName: 'questionContent',
-                            variables: { titleSlug },
-                            query: `query questionContent($titleSlug: String!) {
+                const questionContent = await ofetch(gqlEndpoint, {
+                    method: 'POST',
+                    body: {
+                        operationName: 'questionContent',
+                        variables: { titleSlug },
+                        query: `query questionContent($titleSlug: String!) {
                                 question(titleSlug: $titleSlug) {
                                     content
                                     mysqlSchemas
                                     dataSchemas
                                 }
                             }`,
-                        },
-                    })
-                    .json();
+                    },
+                });
 
-                const officialSolution = await got
-                    .post(gqlEndpoint, {
-                        json: {
-                            operationName: 'officialSolution',
-                            variables: { titleSlug },
-                            query: `query officialSolution($titleSlug: String!) {
+                const officialSolution = await ofetch(gqlEndpoint, {
+                    method: 'POST',
+                    body: {
+                        operationName: 'officialSolution',
+                        variables: { titleSlug },
+                        query: `query officialSolution($titleSlug: String!) {
                                 question(titleSlug: $titleSlug) {
                                     solution {
                                         content
                                     }
                                 }
                             }`,
-                        },
-                    })
-                    .json();
+                    },
+                });
 
                 const solution = md.render(officialSolution.data.question.solution.content);
 

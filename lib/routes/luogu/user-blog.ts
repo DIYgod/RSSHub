@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
 export const route: Route = {
@@ -33,7 +33,7 @@ async function handler(ctx) {
 
     // Fetch the uid & title
     const { uid: blogUid, title: blogTitle } = await cache.tryGet(blogBaseUrl, async () => {
-        const rsp = await got(blogBaseUrl);
+        const rsp = await ofetch(blogBaseUrl);
         const $ = load(rsp.data);
         const uid = $("meta[name='blog-uid']").attr('content');
         const name = $("meta[name='blog-name']").attr('content');
@@ -43,7 +43,7 @@ async function handler(ctx) {
         };
     });
 
-    const posts = (await got(`https://www.luogu.com.cn/api/blog/lists?uid=${blogUid}`).json()).data.result.map((r) => ({
+    const posts = (await ofetch(`https://www.luogu.com.cn/api/blog/lists?uid=${blogUid}`)).data.result.map((r) => ({
         title: r.title,
         link: `${blogBaseUrl}${r.identifier}`,
         pubDate: new Date(r.postTime * 1000),
@@ -53,7 +53,7 @@ async function handler(ctx) {
     const item = await Promise.all(
         posts.map((post) =>
             cache.tryGet(post.link, async () => {
-                const rsp = await got(post.link);
+                const rsp = await ofetch(post.link);
                 const $ = load(rsp.data);
                 return {
                     title: post.title,
