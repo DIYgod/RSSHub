@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
+import { fetchArticle } from '@/utils/wechat-mp';
 
 const configs = {
     all: {
@@ -111,8 +112,7 @@ async function handler(ctx) {
 
                     item.description = content('.article-detail').html();
                     item.author = content('.article-box__meta .item').first().text();
-                }
-                if (/^https?:\/\/gitee.com\/.*$/.test(item.link)) {
+                } else if (/^https?:\/\/gitee\.com\/.*$/.test(item.link)) {
                     const detail = await got(item.link, {
                         headers: {
                             Referer: config.link,
@@ -121,6 +121,8 @@ async function handler(ctx) {
                     const content = load(detail.data);
 
                     item.description = content('.file_content').html();
+                } else if (/^https?:\/\/osc\.cool\/.*$/.test(item.link)) {
+                    return fetchArticle(item.link, true);
                 }
                 return item;
             })
