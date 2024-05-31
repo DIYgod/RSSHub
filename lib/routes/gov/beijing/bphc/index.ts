@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -36,13 +36,13 @@ async function handler(ctx) {
     const obj = mapping[key];
     const currentUrl = `${rootUrl}${obj.list}`;
 
-    const listResp = await got(currentUrl).json();
+    const listResp = await ofetch(currentUrl);
     const list = listResp.data?.records ?? [];
     const items = await Promise.all(
         list.map((item) => {
             const detail = `${rootUrl}${obj.detail}/${item.id}`;
             return cache.tryGet(detail, async () => {
-                const detailResponse = await got(detail).json();
+                const detailResponse = await ofetch(detail);
                 const description = (detailResponse.data?.content || detailResponse.data?.introduction) ?? '';
                 const single = {
                     title: item.title || item.fullName,
