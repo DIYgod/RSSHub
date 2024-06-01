@@ -30,6 +30,7 @@ async function handler(ctx) {
     const list = Object.keys(articles).flatMap((type) =>
         articles[type].edges.map((item) => ({
             title: item.node.title,
+            link: `https://psyche.co/${type}/${item.node.slug}`,
             json: `${prefix}/${type}/${item.node.slug}.json`,
         }))
     );
