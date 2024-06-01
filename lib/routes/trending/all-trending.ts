@@ -8,7 +8,7 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 dayjs.extend(utc);
 dayjs.extend(timezone);
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
@@ -75,7 +75,7 @@ const filterKeyword = (keywordList) => (res) => res.filter(({ title }) => hasKey
 // Data Fetcher
 // TODO: support channel selection
 const fetchAllData = async (keywordList = [], dateList = [], cache) => {
-    const cachedGetData = (url) => cache.tryGet(url, () => got(url).json(), config.cache.contentExpire, false);
+    const cachedGetData = (url) => cache.tryGet(url, () => ofetch(url), config.cache.contentExpire, false);
 
     let data = await Promise.all(
         dateList.map(async (dateTime) => ({
