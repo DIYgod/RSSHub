@@ -39,7 +39,7 @@ async function handler(ctx) {
     const prefix = `https://psyche.co/_next/data/${data.buildId}`;
     const list = data.props.pageProps.articles.map((item) => ({
         title: item.title,
-        link: `${url}s/${item.slug}`,
+        link: `${url}/${item.slug}`,
         json: `${prefix}/${type}/${item.slug}.json`,
     }));
 

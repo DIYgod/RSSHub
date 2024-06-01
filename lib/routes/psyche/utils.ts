@@ -95,7 +95,6 @@ const getData = async (list) => {
 
                 item.description = capture.html();
                 item.author = authors;
-                delete item.json;
 
                 return item;
             })
