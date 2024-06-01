@@ -89,9 +89,12 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const response = await oftech(item.link);
                 const $ = load(response);
-                item.pubDate = parseDate($('#content > div > div > div > div:nth-child(1) > div > div > div > div > div > div.ArticleHeader_Details__3n5Er > div.Breadcrumbs_Breadcrumbs__3yIKi > div:nth-child(1) > div').text());
-                item.author = $('#content > div > div > div > div:nth-child(1) > div > div > div > div > div > div.ArticleHeader_Details__3n5Er > div.Type_m-body2__3AsD-.Type_d-body3__24mDH.Type_medium__2avgC > a').text();
-                item.description = $('#content > div > div > div > div:nth-child(2) > div > div.GridWrapper_flex__1NgfS.GridWrapper_grow__23Wl1.GridWrapper_gutter-default__1hMKq').html();
+
+                const next_data = JSON.parse($('script#__NEXT_DATA__').html());
+                item.pubDate = parseDate(next_data.props.pageProps.article.displayDate);
+                item.author = next_data.props.pageProps.article.author.name;
+                item.description = next_data.props.pageProps.article.body;
+
                 return item;
             })
         )
