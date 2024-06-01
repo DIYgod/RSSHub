@@ -2,14 +2,15 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    name: 'Data Guidance News',
+    name: 'News',
     example: '/',
     path: '/news',
     radar: [
         {
-            source: ['dataguidance.com/news'],
+            source: ['dataguidance.com/search/news'],
         },
     ],
     maintainers: ['harveyqiu'],
@@ -18,7 +19,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const rootUrl = 'https://www.dataguidance.com/';
+    const rootUrl = 'https://www.dataguidance.com';
     const currentUrl = `${rootUrl}/search/news/`;
 
     const response = await got({
@@ -36,7 +37,7 @@ async function handler() {
 
             return {
                 title: a.text(),
-                link: `${rootUrl}/${a.attr('href')}`,
+                link: `${rootUrl}${a.attr('href')}`,
             };
         });
 
@@ -49,7 +50,7 @@ async function handler() {
                 });
 
                 const content = load(detailResponse.data);
-
+                item.pubDate = parseDate(content('.field-name-post-date').text());
                 item.description = content('.field-name-body').html();
 
                 return item;
