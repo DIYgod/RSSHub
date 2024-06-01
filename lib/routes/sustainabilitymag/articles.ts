@@ -34,20 +34,55 @@ async function handler() {
     const feedLang = 'en';
     const feedDescription = 'Sustainability Magazine Articles';
 
-    const response = await oftech(feedURL);
-    const $ = load(response);
+    const requestEndpoint = `${baseURL}/graphql`;
+    const requestBody = JSON.stringify({
+        query: `query PaginatedQuery($url: String!, $page: Int = 1, $widgetType: String!) {
+          paginatedWidget(url: $url, widgetType: $widgetType) {
+            ... on SimpleArticleGridWidget {
+              articles(page: $page) {
+                results {
+                  _id
+                  headline
+                  fullUrlPath
+                  featured
+                  category
+                  contentType
+                  tags {
+                    tag
+                  }
+                  attribution
+                  subAttribution
+                  sell
+                  images {
+                    thumbnail_widescreen_553 {
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }`,
+        operationName: 'PaginatedQuery',
+        variables: {
+            widgetType: 'simpleArticleGrid',
+            page: 1,
+            url: 'https://sustainabilitymag.com/articles',
+        },
+    });
 
-    const list = $('#content > div > div > div:nth-child(4) > div > div > div > div > div > div:nth-child(2) > div.infinite-scroll-component__outerdiv > div > div > div')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            const title = item.find('h3').first().text();
-            const a = item.find('a').first();
-            return {
-                title,
-                link: `${baseURL}${a.attr('href')}`,
-            };
-        });
+    const results = await oftech(requestEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: requestBody,
+    });
+
+    const list = results.data.paginatedWidget.articles.results.map((item) => ({
+        title: item.headline,
+        link: `${baseURL}${item.fullUrlPath}`,
+        image: item.images && item.images.thumbnail_widescreen_553 ? item.images.thumbnail_widescreen_553.url : null,
+        category: item.category,
+    }));
 
     const items = await Promise.all(
         list.map((item) =>
@@ -66,7 +101,7 @@ async function handler() {
         title: 'Sustainability Magazine Articles',
         language: feedLang,
         description: feedDescription,
-        link: `https://${baseURL}`,
+        link: `https://${feedURL}`,
         item: items,
     };
 }
