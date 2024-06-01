@@ -2,12 +2,12 @@ import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: 'package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}',
+    path: '/package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}',
     name: 'Unknown',
     maintainers: [],
     handler,
@@ -20,10 +20,10 @@ async function handler(ctx) {
     const packageDownloadLastDayAPI = `https://api.npmjs.org/downloads/point/last-day/${name}`; // 按天统计
     const packageVersionAPI = `https://registry.npmjs.org/${name}`; // 包基本信息
 
-    const downloadCountLastMonthRes = await got(packageDownloadLastMonthAPI).json();
-    const downloadCountLastWeekRes = await got(packageDownloadLastWeekAPI).json();
-    const downloadCountLastDayRes = await got(packageDownloadLastDayAPI).json();
-    const packageVersionRes = await got(packageVersionAPI).json();
+    const downloadCountLastMonthRes = await ofetch(packageDownloadLastMonthAPI);
+    const downloadCountLastWeekRes = await ofetch(packageDownloadLastWeekAPI);
+    const downloadCountLastDayRes = await ofetch(packageDownloadLastDayAPI);
+    const packageVersionRes = await ofetch(packageVersionAPI);
 
     const packageVersion = packageVersionRes.time;
     const packageVersionList = Object.keys(packageVersion)

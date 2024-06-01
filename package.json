@@ -50,7 +50,7 @@
         "*.yml": "eslint --cache --fix"
     },
     "dependencies": {
-        "@hono/node-server": "1.11.1",
+        "@hono/node-server": "1.11.2",
         "@hono/swagger-ui": "0.2.2",
         "@hono/zod-openapi": "0.14.0",
         "@notionhq/client": "2.2.15",
@@ -75,7 +75,7 @@
         "fanfou-sdk": "5.0.0",
         "form-data": "4.0.0",
         "googleapis": "137.1.0",
-        "hono": "4.4.0",
+        "hono": "4.4.2",
         "html-to-text": "9.0.5",
         "https-proxy-agent": "7.0.4",
         "iconv-lite": "0.6.3",
@@ -140,7 +140,7 @@
         "@types/html-to-text": "9.0.4",
         "@types/imapflow": "1.0.18",
         "@types/js-beautify": "1.14.3",
-        "@types/jsdom": "21.1.6",
+        "@types/jsdom": "21.1.7",
         "@types/json-bigint": "1.0.4",
         "@types/jsrsasign": "10.5.13",
         "@types/lint-staged": "13.3.0",

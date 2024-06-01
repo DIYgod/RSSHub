@@ -106,7 +106,7 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/sh/fgw/:category{.+}?',
+    path: ['/sh/fgw/:category{.+}?', '/shanghai/fgw/:category{.+}?'],
     name: '上海市发展和改革委员会',
     url: 'fgw.sh.gov.cn',
     maintainers: ['nczitzk'],

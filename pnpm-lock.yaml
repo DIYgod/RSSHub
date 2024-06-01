@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@hono/node-server':
-        specifier: 1.11.1
-        version: 1.11.1
+        specifier: 1.11.2
+        version: 1.11.2
       '@hono/swagger-ui':
         specifier: 0.2.2
-        version: 0.2.2(hono@4.4.0)
+        version: 0.2.2(hono@4.4.2)
       '@hono/zod-openapi':
         specifier: 0.14.0
-        version: 0.14.0(hono@4.4.0)(zod@3.23.8)
+        version: 0.14.0(hono@4.4.2)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -84,8 +84,8 @@ importers:
         specifier: 137.1.0
         version: 137.1.0
       hono:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.4.2
+        version: 4.4.2
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -274,8 +274,8 @@ importers:
         specifier: 1.14.3
         version: 1.14.3
       '@types/jsdom':
-        specifier: 21.1.6
-        version: 21.1.6
+        specifier: 21.1.7
+        version: 21.1.7
       '@types/json-bigint':
         specifier: 1.0.4
         version: 1.0.4
@@ -1188,8 +1188,8 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@hono/node-server@1.11.1':
-    resolution: {integrity: sha512-GW1Iomhmm1o4Z+X57xGby8A35Cu9UZLL7pSMdqDBkD99U5cywff8F+8hLk5aBTzNubnsFAvWQ/fZjNwPsEn9lA==}
+  '@hono/node-server@1.11.2':
+    resolution: {integrity: sha512-JhX0nUC66GeDxpIdMKWDRMEwtQBa64CY907iAF1sYqb4m2p2PdSU7zkbnNhAZLg/6IjSlTuj6CF307JlBXVvpg==}
     engines: {node: '>=18.14.1'}
 
   '@hono/swagger-ui@0.2.2':
@@ -1751,8 +1751,8 @@ packages:
   '@types/etag@1.8.3':
     resolution: {integrity: sha512-QYHv9Yeh1ZYSMPQOoxY4XC4F1r+xRUiAriB303F4G6uBsT3KKX60DjiogvVv+2VISVDuJhcIzMdbjT+Bm938QQ==}
 
-  '@types/express-serve-static-core@4.19.2':
-    resolution: {integrity: sha512-dPSEQElyVJ97BuGduAqQjpBocZWAs0GR94z+ptL7JXQJeJdHw2WBG3EWdFrK36b8Q6j8P4cXOMhgUoi0IIfIsg==}
+  '@types/express-serve-static-core@4.19.3':
+    resolution: {integrity: sha512-KOzM7MhcBFlmnlr/fzISFF5vGWVSvN6fTd4T+ExOt08bA/dA5kpSzY52nMsI1KDFmUREpJelPYyuslLRSjjgCg==}
 
   '@types/express@4.17.21':
     resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
@@ -1778,8 +1778,8 @@ packages:
   '@types/js-beautify@1.14.3':
     resolution: {integrity: sha512-FMbQHz+qd9DoGvgLHxeqqVPaNRffpIu5ZjozwV8hf9JAGpIOzuAf4wGbRSo8LNITHqGjmmVjaMggTT5P4v4IHg==}
 
-  '@types/jsdom@21.1.6':
-    resolution: {integrity: sha512-/7kkMsC+/kMs7gAYmmBR9P0vGTnOoLhQhyhQJSlXGI5bzTHp6xdo0TtKWQAsz6pmSAeVqKSbqeyP6hytqr9FDw==}
+  '@types/jsdom@21.1.7':
+    resolution: {integrity: sha512-yOriVnggzrnQ3a9OKOCxaVuSug3w3/SbOj5i7VwXWZEyUNl3bLF9V3MfxGbZKuwqJOQyRfqXyROBB1CoZLFWzA==}
 
   '@types/json-bigint@1.0.4':
     resolution: {integrity: sha512-ydHooXLbOmxBbubnA7Eh+RpBzuaIiQjh8WGJYQB50JFGFrdxW7JzVlyEV7fAXw0T2sqJ1ysTneJbiyNLqZRAag==}
@@ -2772,8 +2772,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  electron-to-chromium@1.4.786:
-    resolution: {integrity: sha512-i/A2UB0sxYViMN0M2zIotQFRIOt1jLuVXudACHBDiJ5gGuAUzf/crZxwlBTdA0O52Hy4CNtTzS7AKRAacs/08Q==}
+  electron-to-chromium@1.4.787:
+    resolution: {integrity: sha512-d0EFmtLPjctczO3LogReyM2pbBiiZbnsKnGF+cdZhsYzHm/A0GV7W94kqzLD8SN4O3f3iHlgLUChqghgyznvCQ==}
 
   ellipsize@0.1.0:
     resolution: {integrity: sha512-5gxbEjcb/Z2n6TTmXZx9wVi3N/DOzE7RXY3Xg9dakDuhX/izwumB9rGjeWUV6dTA0D0+juvo+JonZgNR9sgA5A==}
@@ -3388,8 +3388,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.4.0:
-    resolution: {integrity: sha512-Bb2GHk8jmlLIuxc3U+7UBGOoA5lByJTAFnRdH2N2fqEVy9TEQzJ9saIJUQ/ZqBvEvgEFe7UjPFNSFi8cyeU+3Q==}
+  hono@4.4.2:
+    resolution: {integrity: sha512-bRhZ+BM9r04lRN2i9wiZ18yQNbZxHsmmRIItoAb43nRkHnIDsFhFh4mJ0seEs06FvenibpAgSVNHQ8ZzcDQx2A==}
     engines: {node: '>=16.0.0'}
 
   hosted-git-info@2.8.9:
@@ -5083,8 +5083,8 @@ packages:
   stream-length@1.0.2:
     resolution: {integrity: sha512-aI+qKFiwoDV4rsXiS7WRoCt+v2RX1nUj17+KJC5r2gfh5xoSJIfP6Y3Do/HtvesFcTSWthIuJ3l1cvKQY/+nZg==}
 
-  streamx@2.16.1:
-    resolution: {integrity: sha512-m9QYj6WygWyWa3H1YY69amr4nVgy61xfjys7xO7kviL5rfIEc2naf+ewFiOA+aEJD7y0JO3h2GoiUv4TDwEGzQ==}
+  streamx@2.18.0:
+    resolution: {integrity: sha512-LLUC1TWdjVdn1weXGcSxyTR3T4+acB6tVGXT95y0nGbca4t4o/ng1wKAGTljm9VicuCVLvRlqFYXYy5GwgM7sQ==}
 
   strict-event-emitter@0.5.1:
     resolution: {integrity: sha512-vMgjE/GGEPEFnhFub6pa4FmJBRBVOLpIII2hvCZ8Kzb7K0hlHo7mQv6xYrBvCL2LtAIBwFUK8wvuJgTVSQ5MFQ==}
@@ -5205,6 +5205,9 @@ packages:
   test-exclude@6.0.0:
     resolution: {integrity: sha512-cAGWPIyOHU6zlmg88jwm7VRyXnMN7iV68OGAbYDk/Mh/xC/pzVPlQtY6ngoIH/5/tciuhGfvESU8GrHrcxD56w==}
     engines: {node: '>=8'}
+
+  text-decoder@1.1.0:
+    resolution: {integrity: sha512-TmLJNj6UgX8xcUZo4UDStGQtDiTzF7BzWlzn9g7UWrjkpHr5uJTK1ld16wZ3LXb2vb6jH8qU89dW5whuMdXYdw==}
 
   text-hex@1.0.0:
     resolution: {integrity: sha512-uuVGNWzgJ4yhRaNSiubPY7OjISw4sw4E5Uv0wbjp+OzcbmVU/rsT8ujgcXJhn9ypzsgr5vlzpPqP+MBBKcGvbg==}
@@ -5389,8 +5392,8 @@ packages:
     resolution: {integrity: sha512-Q08/0IrpvM+NMY9PA2rti9Jb+JejTddwmwmVQGskAlhtcrw1wsRzoR6ode6mR+OAabNa75w/dxedSUY2mlphaQ==}
     engines: {node: '>=16'}
 
-  type@2.7.2:
-    resolution: {integrity: sha512-dzlvlNlt6AXU7EBSfpAscydQ7gXB+pPGsPnfJnZpiNJBDj7IaJzQlBZYGdEi4R9HmPdBv2XmWJ6YUtoTa7lmCw==}
+  type@2.7.3:
+    resolution: {integrity: sha512-8j+1QmAbPvLZow5Qpi6NCaN8FB60p/6x8/vfNqOk/hC+HuvFZhL4+WfekuhQLiqFZXOgQdrs3B+XxEmCc6b3FQ==}
 
   typedarray-to-buffer@3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
@@ -6657,22 +6660,22 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@hono/node-server@1.11.1': {}
+  '@hono/node-server@1.11.2': {}
 
-  '@hono/swagger-ui@0.2.2(hono@4.4.0)':
+  '@hono/swagger-ui@0.2.2(hono@4.4.2)':
     dependencies:
-      hono: 4.4.0
+      hono: 4.4.2
 
-  '@hono/zod-openapi@0.14.0(hono@4.4.0)(zod@3.23.8)':
+  '@hono/zod-openapi@0.14.0(hono@4.4.2)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.0.0(zod@3.23.8)
-      '@hono/zod-validator': 0.2.1(hono@4.4.0)(zod@3.23.8)
-      hono: 4.4.0
+      '@hono/zod-validator': 0.2.1(hono@4.4.2)(zod@3.23.8)
+      hono: 4.4.2
       zod: 3.23.8
 
-  '@hono/zod-validator@0.2.1(hono@4.4.0)(zod@3.23.8)':
+  '@hono/zod-validator@0.2.1(hono@4.4.2)(zod@3.23.8)':
     dependencies:
-      hono: 4.4.0
+      hono: 4.4.2
       zod: 3.23.8
 
   '@humanwhocodes/config-array@0.11.14':
@@ -7344,7 +7347,7 @@ snapshots:
     dependencies:
       '@types/node': 20.12.13
 
-  '@types/express-serve-static-core@4.19.2':
+  '@types/express-serve-static-core@4.19.3':
     dependencies:
       '@types/node': 20.12.13
       '@types/qs': 6.9.15
@@ -7354,7 +7357,7 @@ snapshots:
   '@types/express@4.17.21':
     dependencies:
       '@types/body-parser': 1.19.5
-      '@types/express-serve-static-core': 4.19.2
+      '@types/express-serve-static-core': 4.19.3
       '@types/qs': 6.9.15
       '@types/serve-static': 1.15.7
 
@@ -7377,7 +7380,7 @@ snapshots:
 
   '@types/js-beautify@1.14.3': {}
 
-  '@types/jsdom@21.1.6':
+  '@types/jsdom@21.1.7':
     dependencies:
       '@types/node': 20.12.13
       '@types/tough-cookie': 4.0.5
@@ -7869,7 +7872,7 @@ snapshots:
 
   bare-stream@1.0.0:
     dependencies:
-      streamx: 2.16.1
+      streamx: 2.18.0
     optional: true
 
   base64-js@1.5.1: {}
@@ -7922,7 +7925,7 @@ snapshots:
   browserslist@4.23.0:
     dependencies:
       caniuse-lite: 1.0.30001625
-      electron-to-chromium: 1.4.786
+      electron-to-chromium: 1.4.787
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.0)
 
@@ -8283,7 +8286,7 @@ snapshots:
   d@1.0.2:
     dependencies:
       es5-ext: 0.10.64
-      type: 2.7.2
+      type: 2.7.3
 
   dashdash@1.14.1:
     dependencies:
@@ -8469,7 +8472,7 @@ snapshots:
       minimatch: 9.0.1
       semver: 7.6.2
 
-  electron-to-chromium@1.4.786: {}
+  electron-to-chromium@1.4.787: {}
 
   ellipsize@0.1.0: {}
 
@@ -8736,7 +8739,7 @@ snapshots:
       d: 1.0.2
       es5-ext: 0.10.64
       event-emitter: 0.3.5
-      type: 2.7.2
+      type: 2.7.3
 
   espree@10.0.1:
     dependencies:
@@ -8809,7 +8812,7 @@ snapshots:
 
   ext@1.7.0:
     dependencies:
-      type: 2.7.2
+      type: 2.7.3
 
   extend@3.0.2: {}
 
@@ -9222,7 +9225,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.4.0: {}
+  hono@4.4.2: {}
 
   hosted-git-info@2.8.9: {}
 
@@ -11095,10 +11098,11 @@ snapshots:
     dependencies:
       bluebird: 2.11.0
 
-  streamx@2.16.1:
+  streamx@2.18.0:
     dependencies:
       fast-fifo: 1.3.2
       queue-tick: 1.0.1
+      text-decoder: 1.1.0
     optionalDependencies:
       bare-events: 2.3.1
 
@@ -11220,7 +11224,7 @@ snapshots:
     dependencies:
       b4a: 1.6.6
       fast-fifo: 1.3.2
-      streamx: 2.16.1
+      streamx: 2.18.0
 
   tar@6.2.1:
     dependencies:
@@ -11258,6 +11262,10 @@ snapshots:
       '@istanbuljs/schema': 0.1.3
       glob: 7.2.3
       minimatch: 3.1.2
+
+  text-decoder@1.1.0:
+    dependencies:
+      b4a: 1.6.6
 
   text-hex@1.0.0: {}
 
@@ -11399,7 +11407,7 @@ snapshots:
 
   type-fest@4.18.3: {}
 
-  type@2.7.2: {}
+  type@2.7.3: {}
 
   typedarray-to-buffer@3.1.5:
     dependencies:

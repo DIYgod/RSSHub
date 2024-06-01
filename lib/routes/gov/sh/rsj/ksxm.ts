@@ -11,7 +11,7 @@ import path from 'node:path';
 const rootUrl = 'http://www.rsj.sh.gov.cn';
 
 export const route: Route = {
-    path: '/sh/rsj/ksxm',
+    path: ['/sh/rsj/ksxm', '/shanghai/rsj/ksxm'],
     categories: ['government'],
     example: '/gov/sh/rsj/ksxm',
     parameters: {},
