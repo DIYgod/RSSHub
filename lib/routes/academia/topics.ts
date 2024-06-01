@@ -24,12 +24,19 @@ async function handler(ctx) {
     const list = $('.works > .u-borderBottom1')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const tagsElem = $(item).find('li.InlineList-item.u-positionRelative > span > script').text().replaceAll('}{', '},{');
+            let categories = [];
+            if (tagsElem !== null) {
+                const categoriesJSON = JSON.parse(`[${tagsElem}]`);
+                categories = categoriesJSON.map((category) => category.name);
+            }
+
             return {
-                title: $(item).find('.title > a').first().text(),
-                link: $(item).find('.title > a').first().attr('href'),
+                title: $(item).find('.header .title').text(),
+                link: $(item).find('.header .title > a').attr('href'),
                 author: $(item).find('span[itemprop=author] > a').text(),
-                description: $(item).find('.summarized').text(),
+                description: $(item).find('.complete').text(),
+                category: categories,
             };
         });
     return {
