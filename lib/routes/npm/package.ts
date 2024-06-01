@@ -8,8 +8,15 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}',
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Package',
+    maintainers: ['Fatpandac'],
+    categories: ['program-update'],
+    example: '/npm/package/rsshub',
+    radar: [
+        {
+            source: ['www.npmjs.com/package/:name'],
+        },
+    ],
     handler,
 };
 
