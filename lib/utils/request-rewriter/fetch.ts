@@ -2,8 +2,19 @@ import logger from '@/utils/logger';
 import { config } from '@/config';
 import undici, { Request, RequestInfo, RequestInit } from 'undici';
 import proxy from '@/utils/proxy';
+import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
 
-const wrappedFetch: typeof undici.fetch = (input: RequestInfo, init?: RequestInit) => {
+const limiter = new RateLimiterMemory({
+    points: 10,
+    duration: 1,
+    execEvenly: true,
+});
+
+const limiterQueue = new RateLimiterQueue(limiter, {
+    maxQueueSize: 500,
+});
+
+const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
 
@@ -44,6 +55,7 @@ const wrappedFetch: typeof undici.fetch = (input: RequestInfo, init?: RequestIni
         }
     }
 
+    await limiterQueue.removeTokens(1);
     return undici.fetch(request, options);
 };
 

@@ -22,16 +22,20 @@ const got_ins = got.extend({
  *
  * @param {*} ctx RSSHub 的 ctx 参数，用来设置缓存
  * @param {string} sectionUrl 形如 /realtime/china 的字符串
- * @returns {Promise<{
- *  title: string;
- *  resultList: {
- *    title: string;
- *    description: string;
- *    pubDate: string;
- *    link: string;
- *  }[];}>} 新闻标题以及新闻列表
+ * @returns 新闻标题以及新闻列表
  */
-const parseList = async (ctx, sectionUrl) => {
+const parseList = async (
+    ctx,
+    sectionUrl: string
+): Promise<{
+    title: string;
+    resultList: {
+        title: string;
+        description: string;
+        pubDate: string;
+        link: string;
+    }[];
+}> => {
     const response = await got_ins.get(baseUrl + sectionUrl);
     const $ = load(response.data);
     let data = $('.article-list').find('.article-type');

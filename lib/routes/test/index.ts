@@ -11,7 +11,7 @@ let cacheIndex = 0;
 
 export const route: Route = {
     path: '/:id/:params?',
-    name: 'Unknown',
+    name: 'Test',
     maintainers: ['DIYgod', 'NeverBehave'],
     handler,
 };
@@ -374,6 +374,10 @@ async function handler(ctx) {
 
     if (ctx.req.param('id') === 'slow') {
         await wait(1000);
+    }
+
+    if (ctx.req.param('id') === 'slow4') {
+        await wait(4000);
     }
 
     if (ctx.req.query('mode') === 'fulltext') {

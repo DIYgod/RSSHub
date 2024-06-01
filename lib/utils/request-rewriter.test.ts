@@ -134,4 +134,18 @@ describe('request-rewriter', () => {
             expect(options?.agent).toBeUndefined();
         }
     });
+
+    it('rate limiter', async () => {
+        const time = Date.now();
+        await Promise.all(
+            Array.from({ length: 20 }).map(async () => {
+                try {
+                    await fetch('http://rsshub.test/headers');
+                } catch {
+                    // ignore
+                }
+            })
+        );
+        expect(Date.now() - time).toBeGreaterThan(1500);
+    });
 });
