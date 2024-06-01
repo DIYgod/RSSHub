@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/articles',
     name: 'Articles',
     url: 'sustainabilitymag.com/articles',
-    maintainers: ['@mintyfrankie'],
+    maintainers: ['mintyfrankie'],
     categories: ['other'],
     example: '/sustainabilitymag/articles',
     radar: [
@@ -80,7 +80,7 @@ async function handler() {
     const list = results.data.paginatedWidget.articles.results.map((item) => ({
         title: item.headline,
         link: `${baseURL}${item.fullUrlPath}`,
-        image: item.images && item.images.thumbnail_widescreen_553 ? item.images.thumbnail_widescreen_553.url : null,
+        image: item.images?.thumbnail_widescreen_553?.url,
         category: item.category,
     }));
 
