@@ -14813,6 +14813,32 @@
       "other"
     ]
   },
+  "dataguidance": {
+    "routes": {
+      "/news": {
+        "name": "News",
+        "example": "/dataguidance/news",
+        "path": "/news",
+        "radar": [
+          {
+            "source": [
+              "dataguidance.com/search/news"
+            ]
+          }
+        ],
+        "maintainers": [
+          "harveyqiu"
+        ],
+        "url": "dataguidance.com/news",
+        "location": "index.ts"
+      }
+    },
+    "name": "DataGuidance",
+    "url": "dataguidance.com",
+    "categories": [
+      "other"
+    ]
+  },
   "dayanzai": {
     "routes": {
       "/:category/:fulltext?": {
