@@ -74,7 +74,7 @@ function format(article) {
 const getData = async (list) => {
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.json, async () => {
+            cache.tryGet(item.link, async () => {
                 const data = await ofetch(item.json);
                 const article = data.pageProps.article;
                 item.pubDate = new Date(article.publishedAt).toUTCString();
