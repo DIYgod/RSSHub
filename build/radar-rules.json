@@ -8736,6 +8736,14 @@
           "/"
         ],
         "target": "/javdb/tags/:query?/:category?"
+      },
+      {
+        "title": "番号",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/"
+        ],
+        "target": "/javdb/video_codes/:code/:filter?"
       }
     ]
   },

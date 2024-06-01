@@ -3167,6 +3167,9 @@
   "/javdb/tags/:query?/:category?": [
     "nczitzk"
   ],
+  "/javdb/video_codes/:code/:filter?": [
+    "sgpublic"
+  ],
   "/javlibrary/videos/bestrated/:language?/:mode?": [],
   "/javlibrary/bestrated/:language?/:mode?": [],
   "/javlibrary/bestreviews/:language?/:mode?": [
