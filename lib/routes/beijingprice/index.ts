@@ -58,7 +58,7 @@ export const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (!item.link.startsWith(rootUrl)) {
+                if (!item.link.indexOf('www.beijingprice.cn')) {
                     return item;
                 }
 
@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
                     .toArray()
                     .map((c) => $$(c).text())
                     .slice(1);
-                item.author = fromSplits[0].replace(/来源：/, '');
+                item.author = fromSplit?.[0]?.replace(/来源：/, '') ?? undefined;
                 item.content = {
                     html: description,
                     text: $$('div.news-content').text(),
