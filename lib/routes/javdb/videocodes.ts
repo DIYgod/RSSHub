@@ -2,10 +2,10 @@ import { Route } from '@/types';
 import utils from './utils';
 
 export const route: Route = {
-    path: '/series/:id/:filter?',
+    path: '/video_codes/:code/:filter?',
     categories: ['multimedia'],
-    example: '/javdb/series/1NW',
-    parameters: { id: '编号，可在系列页 URL 中找到', filter: '过滤，见下表，默认为 `全部`' },
+    example: '/javdb/video_codes/SIVR',
+    parameters: { id: '番号前缀', filter: '过滤，见下表，默认为 `全部`' },
     features: {
         requireConfig: [
             {
@@ -26,22 +26,20 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: '系列',
-    maintainers: ['nczitzk'],
+    name: '番号',
+    maintainers: ['sgpublic'],
     handler,
     url: 'javdb.com/',
     description: `| 全部 | 可播放   | 單體作品 | 可下載   | 字幕  | 預覽圖  |
   | ---- | -------- | -------- | -------- | ----- | ------- |
-  |      | playable | single   | download | cnsub | preview |
-
-  所有系列编号参见 [系列庫](https://javdb.com/series)`,
+  |      | playable | single   | download | cnsub | preview |`,
 };
 
 async function handler(ctx) {
-    const id = ctx.req.param('id');
+    const code = ctx.req.param('code');
     const filter = ctx.req.param('filter') ?? '';
 
-    const currentUrl = `/series/${id}${filter ? `?f=${filter}` : ''}`;
+    const currentUrl = `/video_codes/${code}${filter ? `?f=${filter}` : ''}`;
 
     const filters = {
         '': '',
