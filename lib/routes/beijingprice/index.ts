@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
                     .toArray()
                     .map((c) => $$(c).text())
                     .slice(1);
-                item.author = fromSplit?.[0]?.replace(/来源：/, '') ?? undefined;
+                item.author = fromSplits?.[0]?.replace(/来源：/, '') ?? undefined;
                 item.content = {
                     html: description,
                     text: $$('div.news-content').text(),
