@@ -2,7 +2,7 @@ import { Route, DataItem } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/eztv/:imdbid?',
+    path: ':imdbid?',
     categories: ['traditional-media'],
     example: '/eztv/0903747',
     parameters: { imdbid: 'IMBD ID 在IMDb官网地址上可以找到' },
