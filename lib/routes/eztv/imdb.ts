@@ -26,7 +26,7 @@ async function handler(ctx) {
     // 默认给到imdb排名第一的电视剧
     const imdbId = ctx.req.param('imdbid') ?? '0903747';
     const rootUrl = 'https://eztvx.to';
-    const currentUrl = `${rootUrl}/api/get-torrents?imdb_id=${imdbId}`;
+    const currentUrl = rootUrl + '/api/get-torrents?imdb_id=' + imdbId;
 
     const response = await got({
         method: 'get',
@@ -39,8 +39,7 @@ async function handler(ctx) {
     const items: DataItem[] = torrents.map((torrent) => convertTorrentToDataItem(torrent));
 
     return {
-        title: `${imdbId} torrents`,
-        link: `${rootUrl}/api/get-torrents?imdb_id=${imdbId}`,
+        title: `EZTV's Torrents ${imdbId}`,
         item: items,
     };
 
