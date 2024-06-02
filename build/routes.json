@@ -54833,6 +54833,41 @@
     "name": "Surfshark",
     "url": "surfshark.com"
   },
+  "sustainabilitymag": {
+    "routes": {
+      "/articles": {
+        "path": "/articles",
+        "name": "Articles",
+        "url": "sustainabilitymag.com/articles",
+        "maintainers": [
+          "mintyfrankie"
+        ],
+        "categories": [
+          "other"
+        ],
+        "example": "/sustainabilitymag/articles",
+        "radar": [
+          {
+            "source": [
+              "https://sustainabilitymag.com/articles"
+            ],
+            "target": "/sustainabilitymag/articles"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "articles.ts"
+      }
+    },
+    "name": "Sustainability Magazine",
+    "url": "https://sustainabilitymag.com"
+  },
   "sustech": {
     "routes": {
       "/bidding": {

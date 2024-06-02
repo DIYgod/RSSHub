@@ -5443,6 +5443,9 @@
     "nczitzk"
   ],
   "/surfshark/blog/:category{.+}?": [],
+  "/sustainabilitymag/articles": [
+    "mintyfrankie"
+  ],
   "/sustech/bidding": [
     "sparkcyf"
   ],
