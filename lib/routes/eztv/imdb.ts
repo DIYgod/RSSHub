@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     return {
         title: `${imdbId} torrents`,
-        link: `${rootUrl}/get-torrents?imdb_id=${imdbId}`,
+        link: `${rootUrl}/api/get-torrents?imdb_id=${imdbId}`,
         item: items,
     };
 
