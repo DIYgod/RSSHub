@@ -242,6 +242,7 @@ export type RadarItem = {
      *
      * Using `target` as a function is deprecated in RSSHub-Radar 2.0.19
      * @see https://github.com/DIYgod/RSSHub-Radar/commit/5a97647f900bb2bca792787a322b2b1ca512e40b#diff-f84e3c1e16af314bc4ed7c706d7189844663cde9b5142463dc5c0db34c2e8d54L10
+     * @see https://github.com/DIYgod/RSSHub-Radar/issues/692
      */
     target?:
         | string
