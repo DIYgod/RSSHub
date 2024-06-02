@@ -775,6 +775,19 @@
       }
     ]
   },
+  "academia.edu": {
+    "_name": "Academia",
+    ".": [
+      {
+        "title": "interest",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/Documents/in/:interest"
+        ],
+        "target": "/academia/topic/:interest"
+      }
+    ]
+  },
   "accessbriefing.com": {
     "_name": "Access Briefing",
     ".": [

@@ -256,6 +256,9 @@
   "/abskoop/nsfw": [
     "zhenhappy"
   ],
+  "/academia/topic/:interest": [
+    "K33k0"
+  ],
   "/accessbriefing/:category{.+}?": [
     "nczitzk"
   ],
