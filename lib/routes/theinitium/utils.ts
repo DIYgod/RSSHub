@@ -65,7 +65,7 @@ export const processFeed = async (model: string, ctx: Context) => {
             body,
         });
 
-        token = 'Bearer ' + login.data.token;
+        token = 'token ' + login.data.token;
         cache.set('initium:token', token);
     }
 
