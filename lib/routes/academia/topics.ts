@@ -12,7 +12,8 @@ export const route: Route = {
         },
     ],
     name: 'interest',
-    maintainers: ['k33k0'],
+    maintainers: ['K33k0'],
+    categories: ['journal'],
     handler,
     url: 'academia.edu',
 };
