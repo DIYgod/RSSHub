@@ -16,7 +16,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'EZTV',
-    maintainers: ['whitecode'],
+    maintainers: ['whitecodes'],
     handler,
     url: 'eztvx.to/',
     description: `EZTV's Torrents of IMBD ID`,
