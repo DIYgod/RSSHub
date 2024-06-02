@@ -2,7 +2,7 @@ import { Route, DataItem } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: ':imdbid?',
+    path: '/:imdbid?',
     categories: ['traditional-media'],
     example: '/eztv/0903747',
     parameters: { imdbid: 'IMBD ID 在IMDb官网地址上可以找到' },
@@ -26,7 +26,7 @@ async function handler(ctx) {
     // 默认给到imdb排名第一的电视剧
     const imdbId = ctx.req.param('imdbid') ?? '0903747';
     const rootUrl = 'https://eztvx.to';
-    const currentUrl = `${rootUrl}/get-torrents?imdb_id=${imdbId}`;
+    const currentUrl = `${rootUrl}/api/get-torrents?imdb_id=${imdbId}`;
 
     const response = await got({
         method: 'get',
