@@ -28,6 +28,38 @@ export const route: Route = {
     handler,
 };
 
+const findLargestImgKey = (images) =>
+    Object.keys(images)
+        .filter((key) => key.startsWith('inline_free_') || key.startsWith('hero_landscape_'))
+        .sort((a, b) => Number.parseInt(b.split('_')[2]) - Number.parseInt(a.split('_')[2]))[0];
+
+const renderFigure = (url, caption) => `<figure><img src="${url}" alt="${caption}" /><figcaption>${caption}</figcaption></figure>`;
+
+const render = (widgets) =>
+    widgets
+        .map((w) => {
+            switch (w.type) {
+                case 'text':
+                    return w.html;
+                case 'keyFacts':
+                    return `<div><ul>${w.keyFacts.map((k) => `<li>${k.text}</li>`).join('')}</ul></div>`;
+                case 'inlineVideo':
+                    return w.provider === 'youtube'
+                        ? `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${w.videoId}" frameborder="0" allowfullscreen></iframe>`
+                        : new Error(`Unhandled inlineVideo provider: ${w.provider}`);
+                case 'inlineImage':
+                    return w.inlineImageImages
+                        .map((image) => {
+                            const i = image.images[findLargestImgKey(image.images)][0];
+                            return renderFigure(i.url, i.caption);
+                        })
+                        .join('');
+                default:
+                    throw new Error(`Unhandled widget type: ${w.type}`);
+            }
+        })
+        .join('');
+
 async function handler() {
     const baseURL = `https://sustainabilitymag.com`;
     const feedURL = `${baseURL}/articles`;
@@ -90,10 +122,12 @@ async function handler() {
                 const response = await oftech(item.link);
                 const $ = load(response);
 
-                const next_data = JSON.parse($('script#__NEXT_DATA__').html());
-                item.pubDate = parseDate(next_data.props.pageProps.article.displayDate);
-                item.author = next_data.props.pageProps.article.author.name;
-                item.description = next_data.props.pageProps.article.body;
+                const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+                const article = nextData.props.pageProps.article;
+                item.pubDate = parseDate(article.displayDate);
+                item.author = article.author.name;
+                const heroImage = article.images[findLargestImgKey(article.images)][0];
+                item.description = renderFigure(heroImage.url, heroImage.caption) + render(article.body.widgets);
 
                 return item;
             })
