@@ -4642,6 +4642,9 @@
   "/pubmed/trending/:filters?": [
     "nczitzk"
   ],
+  "/pubscholar/explore/:category?/:keyword?": [
+    "TonyRL"
+  ],
   "/pumc/mdadmission": [
     "nczitzk"
   ],
