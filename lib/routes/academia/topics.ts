@@ -5,6 +5,7 @@ import { load } from 'cheerio';
 export const route: Route = {
     path: '/topic/:interest',
     example: '/academia/topic/Urban_History',
+    parameters: { interest: 'interest' },
     radar: [
         {
             source: ['academia.edu/Documents/in/:interest'],
