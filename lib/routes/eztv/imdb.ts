@@ -1,10 +1,9 @@
-import { Route } from '@/types';
+import { Route, DataItem } from '@/types';
 import got from '@/utils/got';
-import { DataItem } from '@/types';
 
 export const route: Route = {
     path: '/imdb/:imdbid?',
-    categories: [''],
+    categories: ['traditional-media'],
     example: '/imdb/tt0903747',
     parameters: { imdbid: 'IMBD ID 在IMDb官网地址上可以找到' },
     features: {
@@ -37,7 +36,7 @@ async function handler(ctx) {
     const responesdata = JSON.parse(response.data);
     const torrents: Torrent[] = responesdata.torrents;
 
-    const items: DataItem[] = torrents.map(convertTorrentToDataItem);
+    const items: DataItem[] = torrents.map(torrent => convertTorrentToDataItem(torrent));
 
     return {
         title: `${imdbId} torrents`,
@@ -62,10 +61,6 @@ function convertTorrentToDataItem(torrent: Torrent): DataItem {
             text: torrent.filename
         },
         image: torrent.large_screenshot,
-        enclosure_url: torrent.torrent_url,
-        enclosure_length: parseInt(torrent.size_bytes, 10),
-        itunes_duration: torrent.seeds,  // This is just an example mapping
-        itunes_item_image: torrent.large_screenshot,
         media: {
             magnet: {
                 url: torrent.magnet_url,
