@@ -2713,6 +2713,9 @@
       "/topic/:interest": {
         "path": "/topic/:interest",
         "example": "/academia/topic/Urban_History",
+        "parameters": {
+          "interest": "interest"
+        },
         "radar": [
           {
             "source": [
