@@ -4631,6 +4631,12 @@
   "/ps/trophy/:id": [
     "DIYgod"
   ],
+  "/psyche/topic/:topic": [
+    "emdoe"
+  ],
+  "/psyche/type/:type": [
+    "emdoe"
+  ],
   "/pts/curations": [
     "nczitzk"
   ],

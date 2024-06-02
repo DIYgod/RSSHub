@@ -46525,6 +46525,66 @@
     "name": "PlayStation Store",
     "url": "www.playstation.com"
   },
+  "psyche": {
+    "routes": {
+      "/topic/:topic": {
+        "path": "/topic/:topic",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/psyche/topic/therapeia",
+        "parameters": {
+          "topic": "Topic"
+        },
+        "radar": [
+          {
+            "source": [
+              "psyche.co/:topic"
+            ]
+          }
+        ],
+        "name": "Topics",
+        "maintainers": [
+          "emdoe"
+        ],
+        "description": "Supported categories: Therapeia, Eudaimonia, and Poiesis.",
+        "location": "topic.ts"
+      },
+      "/type/:type": {
+        "path": "/type/:type",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/psyche/type/ideas",
+        "parameters": {
+          "type": "Type"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "psyche.co/:type"
+            ]
+          }
+        ],
+        "name": "Types",
+        "maintainers": [
+          "emdoe"
+        ],
+        "description": "Supported types: Ideas, Guides, and Films.",
+        "location": "type.ts"
+      }
+    },
+    "name": "Psyche",
+    "url": "psyche.co"
+  },
   "pts": {
     "routes": {
       "/curations": {

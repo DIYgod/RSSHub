@@ -12740,6 +12740,27 @@
       }
     ]
   },
+  "psyche.co": {
+    "_name": "Psyche",
+    ".": [
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:topic"
+        ],
+        "target": "/psyche/topic/:topic"
+      },
+      {
+        "title": "Types",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:type"
+        ],
+        "target": "/psyche/type/:type"
+      }
+    ]
+  },
   "pts.org.tw": {
     "_name": "公視新聞網",
     "news": [
