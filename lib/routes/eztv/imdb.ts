@@ -36,7 +36,7 @@ async function handler(ctx) {
     const responesdata = JSON.parse(response.data);
     const torrents: Torrent[] = responesdata.torrents;
 
-    const items: DataItem[] = torrents.map(torrent => convertTorrentToDataItem(torrent));
+    const items: DataItem[] = torrents.map((torrent) => convertTorrentToDataItem(torrent));
 
     return {
         title: `${imdbId} torrents`,
