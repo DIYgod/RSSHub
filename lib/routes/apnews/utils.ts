@@ -29,6 +29,8 @@ export function fetchArticle(item) {
 
             return {
                 category: ldjson.keywords,
+                pubDate: parseDate(ldjson.coverageStartTime),
+                description: ldjson.description,
                 guid: $("meta[name='brightspot.contentId']").attr('content'),
                 ...item,
             };
