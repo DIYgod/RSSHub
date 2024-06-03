@@ -1,5 +1,5 @@
-import 'dotenv/config';
 import randUserAgent from '@/utils/rand-user-agent';
+import 'dotenv/config';
 import { ofetch } from 'ofetch';
 
 let envs = process.env;
@@ -154,7 +154,6 @@ export type Config = {
         username?: string;
         password?: string;
         bearertoken?: string;
-        iap_receipt?: string;
     };
     instagram: {
         username?: string;

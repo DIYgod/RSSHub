@@ -1,10 +1,10 @@
-import { config } from '@/config';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { Context } from 'hono';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { config } from '@/config';
 import { load } from 'cheerio';
-import { Context } from 'hono';
+import { parseDate } from '@/utils/parse-date';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { FetchError } from 'ofetch';
 
 const TOKEN = 'Basic YW5vbnltb3VzOkdpQ2VMRWp4bnFCY1ZwbnA2Y0xzVXZKaWV2dlJRY0FYTHY=';
@@ -141,7 +141,7 @@ export const processFeed = async (model: string, ctx: Context) => {
     const items = await Promise.all(
         articles
             .filter((a) => a.article)
-            .slice(0, token === TOKEN && key.iapReceipt === undefined ? 25 : articles.length)
+            .slice(0, token === TOKEN ? 25 : articles.length)
             .map(async (item) => {
                 item.article.date = parseDate(item.article.date);
                 item.article.updated = parseDate(item.article.updated);
