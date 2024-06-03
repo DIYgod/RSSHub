@@ -7,11 +7,12 @@ export function fetchArticle(item) {
     return cache.tryGet(item.link, async () => {
         const data = await ofetch(item.link);
         const $ = load(data);
-        const rawLdjson = JSON.parse($('#link-ld-json').text() ?? 'null');
-        let ldjson;
-        if (!rawLdjson) {
+        if ($('#link-ld-json').length === 0) {
             return item;
-        } else if (Array.isArray(rawLdjson)) {
+        }
+        const rawLdjson = JSON.parse($('#link-ld-json').text());
+        let ldjson;
+        if (Array.isArray(rawLdjson)) {
             // Regular
             ldjson = rawLdjson[0];
 

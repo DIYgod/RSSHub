@@ -43,7 +43,7 @@ async function handler(ctx) {
                 link: $(e).find('a').attr('href'),
             }))
             .filter((e) => typeof e.link === 'string')
-            .map((item) => (new URL(item.link).hostname === 'apnews.com' ? fetchArticle(item) : item))
+            .map((item) => fetchArticle(item))
     );
 
     return {
