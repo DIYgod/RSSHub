@@ -874,6 +874,9 @@
   "/buaa/news/:type": [
     "AlanDecode"
   ],
+  "/bugzilla/bug/:site/:bugId": [
+    "FranklinYu"
+  ],
   "/bulianglin/": [
     "cnkmmk"
   ],
