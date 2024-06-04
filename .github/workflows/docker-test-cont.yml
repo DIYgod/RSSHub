@@ -49,7 +49,7 @@ jobs:
 
       - name: Fetch Docker image
         if: (env.TEST_CONTINUE)
-        uses: dawidd6/action-download-artifact@v3
+        uses: dawidd6/action-download-artifact@v4
         with:
           workflow: ${{ github.event.workflow_run.workflow_id }}
           run_id: ${{ github.event.workflow_run.id }}

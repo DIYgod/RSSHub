@@ -1,6 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'MangaDex',
-    url: 'mangadex.org',
+    name: 'ManyVids',
+    url: 'www.manyvids.com',
+    categories: ['multimedia'],
 };

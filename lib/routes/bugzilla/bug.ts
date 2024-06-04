@@ -9,6 +9,7 @@ const INSTANCES = new Map([
     ['apache', 'bz.apache.org/bugzilla'],
     ['apache.ooo', 'bz.apache.org/ooo'], // Apache OpenOffice
     ['apache.SpamAssassin', 'bz.apache.org/SpamAssassin'],
+    ['kernel', 'bugzilla.kernel.org'],
     ['mozilla', 'bugzilla.mozilla.org'],
     ['webkit', 'bugs.webkit.org'],
 ]);
@@ -42,7 +43,7 @@ export const route: Route = {
     name: 'bugs',
     maintainers: ['FranklinYu'],
     handler,
-    example: '/bug/webkit/251528',
+    example: '/bugzilla/bug/webkit/251528',
     parameters: {
         site: 'site identifier',
         bugId: 'numeric identifier of the bug in the site',
