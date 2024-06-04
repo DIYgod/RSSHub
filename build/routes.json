@@ -8968,18 +8968,18 @@
         "maintainers": [
           "FranklinYu"
         ],
-        "example": "/bug/webkit/251528",
+        "example": "/bugzilla/bug/webkit/251528",
         "parameters": {
           "site": "site identifier",
           "bugId": "numeric identifier of the bug in the site"
         },
-        "description": "Supported site identifiers: [`apache`](https://bz.apache.org/bugzilla), [`apache.ooo`](https://bz.apache.org/ooo), [`apache.SpamAssassin`](https://bz.apache.org/SpamAssassin), [`mozilla`](https://bugzilla.mozilla.org), [`webkit`](https://bugs.webkit.org).",
+        "description": "Supported site identifiers: [`apache`](https://bz.apache.org/bugzilla), [`apache.ooo`](https://bz.apache.org/ooo), [`apache.SpamAssassin`](https://bz.apache.org/SpamAssassin), [`kernel`](https://bugzilla.kernel.org), [`mozilla`](https://bugzilla.mozilla.org), [`webkit`](https://bugs.webkit.org).",
         "categories": [
           "programming"
         ],
         "zh": {
           "name": "bugs",
-          "description": "支持的站点标识符：[`apache`](https://bz.apache.org/bugzilla)、[`apache.ooo`](https://bz.apache.org/ooo)、[`apache.SpamAssassin`](https://bz.apache.org/SpamAssassin)、[`mozilla`](https://bugzilla.mozilla.org)、[`webkit`](https://bugs.webkit.org)。"
+          "description": "支持的站点标识符：[`apache`](https://bz.apache.org/bugzilla)、[`apache.ooo`](https://bz.apache.org/ooo)、[`apache.SpamAssassin`](https://bz.apache.org/SpamAssassin)、[`kernel`](https://bugzilla.kernel.org)、[`mozilla`](https://bugzilla.mozilla.org)、[`webkit`](https://bugs.webkit.org)。"
         },
         "location": "bug.ts"
       }
