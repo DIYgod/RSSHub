@@ -509,7 +509,6 @@ const calculateValue = () => {
             username: envs.INITIUM_USERNAME,
             password: envs.INITIUM_PASSWORD,
             bearertoken: envs.INITIUM_BEARER_TOKEN,
-            iap_receipt: envs.INITIUM_IAP_RECEIPT,
         },
         instagram: {
             username: envs.IG_USERNAME,
