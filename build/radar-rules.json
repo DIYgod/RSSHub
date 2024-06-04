@@ -17354,7 +17354,8 @@
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/u/:uid",
-          "/profile/:uid"
+          "/profile/:uid",
+          "/u/:uid"
         ],
         "target": "/weibo/user/:uid"
       },
