@@ -250,6 +250,9 @@ export type Config = {
         clientSecret?: string;
         refreshToken?: string;
     };
+    sspai: {
+        bearertoken?: string;
+    };
     telegram: {
         token?: string;
     };
@@ -605,6 +608,9 @@ const calculateValue = () => {
             clientId: envs.SPOTIFY_CLIENT_ID,
             clientSecret: envs.SPOTIFY_CLIENT_SECRET,
             refreshToken: envs.SPOTIFY_REFRESHTOKEN,
+        },
+        sspai: {
+            bearertoken: envs.SSPAI_BEARERTOKEN,
         },
         telegram: {
             token: envs.TELEGRAM_TOKEN,
