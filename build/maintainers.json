@@ -3623,6 +3623,9 @@
   "/manhuagui/subscribe": [
     "shininome"
   ],
+  "/manyvids/profile/vids/:uid": [
+    "TonyRL"
+  ],
   "/mastodon/account_id/:site/:account_id/statuses/:only_media?": [
     "notofoe"
   ],

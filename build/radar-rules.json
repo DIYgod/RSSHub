@@ -9921,7 +9921,7 @@
     ]
   },
   "mangadex.org": {
-    "_name": "Unknown",
+    "_name": "MangaDex",
     ".": [
       {
         "title": "Unknown",
@@ -9960,6 +9960,20 @@
           "/user/book/shelf"
         ],
         "target": "/manhuagui/subscribe"
+      }
+    ]
+  },
+  "manyvids.com": {
+    "_name": "ManyVids",
+    "www": [
+      {
+        "title": "Creator Videos",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/Profile/:uid/:handle/Store/*",
+          "/Profile/:uid/:handle/Store"
+        ],
+        "target": "/manyvids/profile/vids/:uid"
       }
     ]
   },

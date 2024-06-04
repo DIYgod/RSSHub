@@ -36219,7 +36219,7 @@
         "location": "index.ts"
       }
     },
-    "name": "Unknown",
+    "name": "MangaDex",
     "url": "mangadex.org"
   },
   "manhuagui": {
@@ -36332,6 +36332,35 @@
     },
     "name": "看漫画",
     "url": "www.manhuagui.com"
+  },
+  "manyvids": {
+    "routes": {
+      "/profile/vids/:uid": {
+        "path": "/profile/vids/:uid",
+        "radar": [
+          {
+            "source": [
+              "www.manyvids.com/Profile/:uid/:handle/Store/*",
+              "www.manyvids.com/Profile/:uid/:handle/Store"
+            ]
+          }
+        ],
+        "parameters": {
+          "uid": "User ID, can be found in the URL."
+        },
+        "name": "Creator Videos",
+        "example": "/manyvids/profile/vids/1001213004",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "video.ts"
+      }
+    },
+    "name": "ManyVids",
+    "url": "www.manyvids.com",
+    "categories": [
+      "multimedia"
+    ]
   },
   "mastodon": {
     "routes": {
