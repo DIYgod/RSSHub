@@ -242,7 +242,13 @@ const weiboUtils = {
         const guid = uid ? `https://weibo.com/${uid}/${bid}` : `https://m.weibo.cn/status/${bid}`;
         const link = preferMobileLink ? `https://m.weibo.cn/status/${bid}` : guid;
 
-        const author = status.user?.screen_name;
+        const author = [
+            {
+                name: status.user?.screen_name,
+                url: `https://weibo.com/${uid}`,
+                avatar: status.user?.avatar_hd,
+            },
+        ];
         const pubDate = status.created_at;
 
         return { description: html, title, link, guid, author, pubDate, category };
