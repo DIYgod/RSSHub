@@ -58,9 +58,6 @@ export const processFeed = async (model: string, ctx: Context) => {
                 Accept: 'application/json',
                 Connection: 'keep-alive',
                 Authorization: TOKEN,
-                Origin: `https://theinitium.com/`,
-                Referer: `https://theinitium.com/`,
-                'X-Client-Name': 'Web',
             },
             body,
         });
