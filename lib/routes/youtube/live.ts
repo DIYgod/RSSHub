@@ -68,6 +68,7 @@ async function handler(ctx) {
                 pubDate: parseDate(snippet.publishedAt),
                 guid: liveVideoId,
                 link: `https://www.youtube.com/watch?v=${liveVideoId}`,
+                image: img.url,
             };
         }),
         allowEmpty: true,
