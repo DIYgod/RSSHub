@@ -35,7 +35,13 @@ export type DataItem = {
     pubDate?: number | string | Date;
     link?: string;
     category?: string[];
-    author?: string | { name: string }[];
+    author?:
+        | string
+        | {
+              name: string;
+              url?: string;
+              avatar?: string;
+          }[];
     doi?: string;
     guid?: string;
     id?: string;
