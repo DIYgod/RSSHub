@@ -58,7 +58,7 @@ export const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (!item.link.indexOf('www.beijingprice.cn')) {
+                if (item.link.indexOf('www.beijingprice.cn') === -1) {
                     return item;
                 }
 
