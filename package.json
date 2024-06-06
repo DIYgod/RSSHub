@@ -127,7 +127,7 @@
     },
     "devDependencies": {
         "@babel/preset-env": "7.24.6",
-        "@babel/preset-typescript": "7.24.6",
+        "@babel/preset-typescript": "7.24.7",
         "@microsoft/eslint-formatter-sarif": "3.1.0",
         "@stylistic/eslint-plugin": "2.1.0",
         "@types/aes-js": "3.1.4",
