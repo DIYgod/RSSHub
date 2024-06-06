@@ -322,8 +322,8 @@ importers:
         specifier: 7.12.0
         version: 7.12.0(eslint@8.57.0)(typescript@5.4.5)
       '@vercel/nft':
-        specifier: 0.27.1
-        version: 0.27.1
+        specifier: 0.27.2
+        version: 0.27.2
       '@vitest/coverage-v8':
         specifier: 1.6.0
         version: 1.6.0(vitest@1.6.0(@types/node@20.14.2)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
@@ -1984,8 +1984,8 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@vercel/nft@0.27.1':
-    resolution: {integrity: sha512-K6upzYHCV1cq2gP83r1o8uNV1vwvAlozvMqp7CEjYWxo0CMI8/4jKcDkVjlypVhrfZ54SXwh9QbH0ZIk/vQCsw==}
+  '@vercel/nft@0.27.2':
+    resolution: {integrity: sha512-7LeioS1yE5hwPpQfD3DdH04tuugKjo5KrJk3yK5kAI3Lh76iSsK/ezoFQfzuT08X3ZASQOd1y9ePjLNI9+TxTQ==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -7714,7 +7714,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vercel/nft@0.27.1':
+  '@vercel/nft@0.27.2':
     dependencies:
       '@mapbox/node-pre-gyp': 1.0.11
       '@rollup/pluginutils': 4.2.1
