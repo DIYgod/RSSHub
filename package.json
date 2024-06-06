@@ -180,7 +180,7 @@
         "vite-tsconfig-paths": "4.3.2",
         "vitest": "1.6.0"
     },
-    "packageManager": "pnpm@9.1.4",
+    "packageManager": "pnpm@9.2.0",
     "engines": {
         "node": ">=22"
     }
