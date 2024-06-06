@@ -590,6 +590,9 @@
   "/behance/:user/:type?": [
     "MisteryMonster"
   ],
+  "/beijingprice/:category{.+}?": [
+    "nczitzk"
+  ],
   "/bellroy/new-releases": [
     "EthanWng97"
   ],
