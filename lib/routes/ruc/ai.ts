@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/ai/:category',
+    path: '/ai/:category?',
     categories: ['university'],
     example: '/ruc/ai',
     parameters: { category: '分类，见下方说明，默认为首页公告' },
@@ -25,7 +25,7 @@ export const route: Route = {
     name: '高瓴人工智能学院',
     maintainers: ['yinhanyan'],
     handler: async (ctx) => {
-        const category = ctx.req.param('category')?.replace(/-/g, '/') ?? 'newslist-notice';
+        const category = ctx.req.param('category')?.replace(/-/g, '/') ?? 'newslist/notice';
         const baseURL = `http://ai.ruc.edu.cn/${category}/`;
         const index_url = baseURL + 'index.htm';
         const response = await ofetch(index_url);

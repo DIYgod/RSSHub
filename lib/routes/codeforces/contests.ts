@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import path from 'node:path';
 import { art } from '@/utils/render';
 
@@ -46,7 +46,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const contestsData = await got.get(contestAPI).json();
+    const contestsData = await ofetch(contestAPI);
     const contests = contestsData.result;
 
     const items = contests

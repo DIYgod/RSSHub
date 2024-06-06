@@ -59,6 +59,7 @@ async function handler(ctx) {
         title: `${username} - YouTube`,
         link: `https://www.youtube.com/c/${username}`,
         description: ytInitialData.metadata.channelMetadataRenderer.description,
+        image: ytInitialData.metadata.channelMetadataRenderer.avatar?.thumbnails?.[0]?.url,
         item: data
             .filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video')
             .map((item) => {
@@ -71,6 +72,7 @@ async function handler(ctx) {
                     pubDate: parseDate(snippet.publishedAt),
                     link: `https://www.youtube.com/watch?v=${videoId}`,
                     author: snippet.videoOwnerChannelTitle,
+                    image: img.url,
                 };
             }),
     };
