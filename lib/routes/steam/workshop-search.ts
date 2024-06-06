@@ -18,7 +18,7 @@ export const route: Route = {
     radar: [
         {
             title: 'Workshop Search Results',
-            source: ['steamcommunity.com/app/:appid/workshop/', 'steamcommunity.com/workshop/browse/\?appid\=:appid\&/'],
+            source: ['steamcommunity.com/app/:appid/workshop/'],
             target: '/workshopsearch/:appid',
         },
     ],
@@ -44,60 +44,56 @@ Language Parameter:
         const $ = load(response);
 
         const appName = $('div.apphub_AppName').first().text();
-        const description = $('div.customBrowseText').first().text();
-        const icon = $('div.apphub_AppIcon').children('img').attr('src');
+        const wokrshopDescription = $('div.customBrowseText').first().text();
+        const appIcon = $('div.apphub_AppIcon').children('img').attr('src');
 
         const items = $('div.workshopBrowseItems .workshopItem')
             .toArray()
             .map((item) => {
                 item = $(item);
                 const publishedFileId = item.find('a').first().attr('data-publishedfileid');
-                const title = item.find('.workshopItemTitle').first().text();
-                const author = item.find('.workshopItemAuthorName').first().text()
+                const entryTitle = item.find('.workshopItemTitle').first().text();
+                const entryAuthor = item.find('.workshopItemAuthorName').first().text();
                 const authorNickName = item.find('.workshop_author_link').first().text();
                 const previewImage = item.find('.workshopItemPreviewImage').first().attr('src');
                 const ratingImage = item.find('.fileRating').first().attr('src');
                 // const script_tag = item.next('script');
                 // console.log(`script_tag:${script_tag.text()}`);
                 const hoverContent = item.next('script').text();
-                const regex = /SharedFileBindMouseHover\(\s*"(?:sharedfile_\d+)",\s*(?:true|false),\s*(\{.*?\})\s*\);/;
+                const regex = /SharedFileBindMouseHover\(\s*"sharedfile_\d+",\s*(?:true|false),\s*({.*?})\s*\);/;
                 const match = hoverContent.match(regex);
 
-                let description = '';
+                let entryDescription = '';
 
                 if (match) {
                     const jsonString = match[1];
                     // console.log(jsonString);
-                    try {
-                        const data = JSON.parse(jsonString);
-                        if (data.id === publishedFileId) {
-                            description = data.description;
-                        }
-                    }catch (error) {
-                        console.error('Error parsing hover detail JSON:', error);
+                    const data = JSON.parse(jsonString);
+                    if (data.id === publishedFileId) {
+                        entryDescription = data.description;
                     };
                 };
 
                 return {
-                    title: title,
+                    title: entryTitle,
                     link: `https://steamcommunity.com/sharedfiles/filedetails/?id=${publishedFileId}`,
                     description: art(path.join(__dirname, 'templates/workshop-search-description.art'), {
                         image: previewImage,
                         rating: ratingImage,
-                        title: title,
-                        author: author,
-                        description: description,
+                        title: entryTitle,
+                        author: entryAuthor,
+                        description: entryDescription,
                     }),
                     author: authorNickName,
                 };
             });
-        
+
         return {
             title: `${appName} Steam Workshop Content`,
             link: `https://steamcommunity.com/workshop/browse/?appid=${appid}${routeParams ? `&${routeParams}` : ''}`,
             item: items,
-            icon: icon,
-            description: description,
+            icon: appIcon,
+            description: wokrshopDescription,
         };
     },
 };
