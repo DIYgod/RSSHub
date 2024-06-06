@@ -29,7 +29,7 @@ export const route: Route = {
     url: 'my-formosa.com',
 };
 
-function fetch(url){
+function fetch(url) {
         return ofetch(url, { responseType: 'arrayBuffer' }).then((raw) => {
             const decoder = new TextDecoder('big5');
             return decoder.decode(raw);
