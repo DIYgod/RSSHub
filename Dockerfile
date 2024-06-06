@@ -33,7 +33,7 @@ FROM debian:bookworm-slim AS dep-version-parser
 # This stage is necessary to limit the cache miss scope.
 # With this stage, any modification to package.json won't break the build cache of the next two stages as long as the
 # version unchanged.
-# node:21-bookworm-slim is based on debian:bookworm-slim so this stage would not cause any additional download.
+# node:22-bookworm-slim is based on debian:bookworm-slim so this stage would not cause any additional download.
 
 WORKDIR /ver
 COPY ./package.json /app/
