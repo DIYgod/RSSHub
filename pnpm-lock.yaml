@@ -232,8 +232,8 @@ importers:
         version: 3.23.8
     devDependencies:
       '@babel/preset-env':
-        specifier: 7.24.6
-        version: 7.24.6(@babel/core@7.24.7)
+        specifier: 7.24.7
+        version: 7.24.7(@babel/core@7.24.7)
       '@babel/preset-typescript':
         specifier: 7.24.7
         version: 7.24.7(@babel/core@7.24.7)
@@ -969,8 +969,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
 
-  '@babel/preset-env@7.24.6':
-    resolution: {integrity: sha512-CrxEAvN7VxfjOG8JNF2Y/eMqMJbZPZ185amwGUBp8D9USK90xQmv7dLdFSa+VbD7fdIqcy/Mfv7WtzG8+/qxKg==}
+  '@babel/preset-env@7.24.7':
+    resolution: {integrity: sha512-1YZNsc+y6cTvWlDHidMBsQZrZfEFjRIo/BZCT906PMdzOyXtSLTgqGdrpcuTDCXyd11Am5uQULtDIcCfnTc8fQ==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -6476,7 +6476,7 @@ snapshots:
       '@babel/helper-create-regexp-features-plugin': 7.24.7(@babel/core@7.24.7)
       '@babel/helper-plugin-utils': 7.24.7
 
-  '@babel/preset-env@7.24.6(@babel/core@7.24.7)':
+  '@babel/preset-env@7.24.7(@babel/core@7.24.7)':
     dependencies:
       '@babel/compat-data': 7.24.7
       '@babel/core': 7.24.7
