@@ -56,6 +56,7 @@ async function handler() {
                 return {
                     title,
                     link,
+                    author: $('.page-header~#featured-news h4').text(),
                     category: $("meta[name='keywords']").attr('content').split(','),
                     pubDate: timezone(parseDate($('.date').text()), +8),
                     description: $('.body').html(),
