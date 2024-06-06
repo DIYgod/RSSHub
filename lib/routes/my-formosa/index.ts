@@ -29,14 +29,16 @@ export const route: Route = {
     url: 'my-formosa.com',
 };
 
-async function handler() {
-    const rootUrl = 'http://www.my-formosa.com/';
-
-    const fetch = (url) =>
-        ofetch(url, { responseType: 'arrayBuffer' }).then((raw) => {
+function fetch(url){
+        return ofetch(url, { responseType: 'arrayBuffer' }).then((raw) => {
             const decoder = new TextDecoder('big5');
             return decoder.decode(raw);
         });
+}
+
+async function handler() {
+    const rootUrl = 'http://www.my-formosa.com/';
+
     const res = await fetch(rootUrl);
 
     const $ = load(res);
