@@ -38,7 +38,7 @@ export const route: Route = {
                 const a = item.find('a').first();
                 const link = baseURL + a.attr('href');
                 return {
-                    link: link,
+                    link,
                 };
             });
 
@@ -51,14 +51,14 @@ export const route: Route = {
                     item.title = title;
                     const title_div = $('div.tit');
                     const date = title_div.find('span').first().text();
-                    item.pubDate = timezone(parseDate(/\d+\-\d+-\d+/.exec(date)[0]), +8);
+                    item.pubDate = timezone(parseDate(/\d+-\d+-\d+/.exec(date)[0]), +8);
                     const frame = $('div.fr');
                     item.description = frame
                         .children()
                         .slice(3)
                         .map((i, el) => $.html(el))
                         .get()
-                        .join();
+                        .join(',');
                 } catch {
                     item.description = '';
                 }
