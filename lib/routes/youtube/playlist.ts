@@ -53,6 +53,7 @@ async function handler(ctx) {
                 pubDate: parseDate(snippet.publishedAt),
                 link: `https://www.youtube.com/watch?v=${videoId}`,
                 author: snippet.videoOwnerChannelTitle,
+                image: img.url,
             };
         }),
     };

@@ -374,14 +374,19 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             description += `<small>${parseDate(item.created_at)}</small>`;
         }
 
-        const authorName = originalItem.user.name;
         const link =
             originalItem.user.screen_name && (originalItem.id_str || originalItem.conversation_id_str)
                 ? `https://x.com/${originalItem.user.screen_name}/status/${originalItem.id_str || originalItem.conversation_id_str}`
                 : `https://x.com/${item.user.screen_name}/status/${item.id_str || item.conversation_id_str}`;
         return {
             title,
-            author: authorName,
+            author: [
+                {
+                    name: originalItem.user.name,
+                    url: `https://x.com/${originalItem.user.screen_name}`,
+                    avatar: originalItem.user.profile_image_url_https,
+                },
+            ],
             description,
             pubDate: parseDate(item.created_at),
             link,
