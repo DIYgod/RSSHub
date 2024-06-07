@@ -12,7 +12,7 @@ export const route: Route = {
     categories: ['game'],
     example: '/steam/workshopsearch/730',
     parameters: {
-        appid: 'Steam appid, can be found on the community hub page or store page URL.',
+        appid: 'Steam appid, can be found on the community hub page or store page URL, 730 by default.',
         routeParams: 'Route parameters, can be found on the search result page URL. Route parameters located after the appid.',
     },
     radar: [
@@ -53,7 +53,6 @@ Language Parameter:
                 item = $(item);
                 const publishedFileId = item.find('a').first().attr('data-publishedfileid');
                 const entryTitle = item.find('.workshopItemTitle').first().text();
-                const entryAuthor = item.find('.workshopItemAuthorName').first().text();
                 const authorNickName = item.find('.workshop_author_link').first().text();
                 const previewImage = item.find('.workshopItemPreviewImage').first().attr('src');
                 const ratingImage = item.find('.fileRating').first().attr('src');
@@ -91,8 +90,6 @@ Language Parameter:
                         image: previewImage,
                         rating: ratingImage,
                         checkmark: checkMarkImages,
-                        title: entryTitle,
-                        author: entryAuthor,
                         description: entryDescription,
                     }),
                     author: authorNickName,

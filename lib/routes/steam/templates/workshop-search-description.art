@@ -2,6 +2,4 @@
 <img src="{{ image }}"/><br/>
 {{ /if }}
 {{ if rating }}<img src="{{ rating }}"/>{{ /if }}{{ if checkmark }}{{ each checkmark }} <img src="{{ $value }}"/>{{ /each }}{{ /if }}
-<h1>{{ title }}</h1>
-<h3>{{ author }}</h3>
 <p>{{ description }}</p>
