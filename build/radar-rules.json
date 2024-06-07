@@ -13479,7 +13479,17 @@
     ]
   },
   "ruc.edu.cn": {
-    "_name": "中国人民大学",
+    "_name": "Renmin University of China",
+    "ai": [
+      {
+        "title": "高瓴人工智能学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ruc/ai/:category?"
+      }
+    ],
     "hr": [
       {
         "title": "人事处",
