@@ -13,10 +13,10 @@ importers:
         version: 1.11.2
       '@hono/swagger-ui':
         specifier: 0.2.2
-        version: 0.2.2(hono@4.4.3)
+        version: 0.2.2(hono@4.4.4)
       '@hono/zod-openapi':
         specifier: 0.14.2
-        version: 0.14.2(hono@4.4.3)(zod@3.23.8)
+        version: 0.14.2(hono@4.4.4)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -84,8 +84,8 @@ importers:
         specifier: 140.0.0
         version: 140.0.0
       hono:
-        specifier: 4.4.3
-        version: 4.4.3
+        specifier: 4.4.4
+        version: 4.4.4
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -3407,8 +3407,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.4.3:
-    resolution: {integrity: sha512-G7rTruKzrHXPz1KB4B50deKydPA9+aeei+WC1hikP0abN9N+a6yORuweageaqWocYfYNkpoqA5ezGV2mzQasvw==}
+  hono@4.4.4:
+    resolution: {integrity: sha512-zO5+4K8yf1iuKhBZhwmpZ/0LzPMr8Zt1RugEGM1xvOqgh9DyLb7tslOtoBks4bmm5bIcLtzLCXUpYpXOkwpABA==}
     engines: {node: '>=16.0.0'}
 
   hosted-git-info@2.8.9:
@@ -6747,20 +6747,20 @@ snapshots:
 
   '@hono/node-server@1.11.2': {}
 
-  '@hono/swagger-ui@0.2.2(hono@4.4.3)':
+  '@hono/swagger-ui@0.2.2(hono@4.4.4)':
     dependencies:
-      hono: 4.4.3
+      hono: 4.4.4
 
-  '@hono/zod-openapi@0.14.2(hono@4.4.3)(zod@3.23.8)':
+  '@hono/zod-openapi@0.14.2(hono@4.4.4)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.0.0(zod@3.23.8)
-      '@hono/zod-validator': 0.2.2(hono@4.4.3)(zod@3.23.8)
-      hono: 4.4.3
+      '@hono/zod-validator': 0.2.2(hono@4.4.4)(zod@3.23.8)
+      hono: 4.4.4
       zod: 3.23.8
 
-  '@hono/zod-validator@0.2.2(hono@4.4.3)(zod@3.23.8)':
+  '@hono/zod-validator@0.2.2(hono@4.4.4)(zod@3.23.8)':
     dependencies:
-      hono: 4.4.3
+      hono: 4.4.4
       zod: 3.23.8
 
   '@humanwhocodes/config-array@0.11.14':
@@ -9322,7 +9322,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.4.3: {}
+  hono@4.4.4: {}
 
   hosted-git-info@2.8.9: {}
 
