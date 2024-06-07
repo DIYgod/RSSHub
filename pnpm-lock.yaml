@@ -352,8 +352,8 @@ importers:
         specifier: 11.2.0
         version: 11.2.0
       got:
-        specifier: 14.4.0
-        version: 14.4.0
+        specifier: 14.4.1
+        version: 14.4.1
       husky:
         specifier: 9.0.11
         version: 9.0.11
@@ -3329,8 +3329,8 @@ packages:
     resolution: {integrity: sha512-mThBblvlAF1d4O5oqyvN+ZxLAYwIJK7bpMxgYqPD9okW0C3qm5FFn7k811QrcuEBwaogR3ngOFoCfs6mRv7teQ==}
     engines: {node: '>=14.16'}
 
-  got@14.4.0:
-    resolution: {integrity: sha512-baa2HMfREJ9UQSXOPwWe0DNK+FT8Okcxe9kmTJvaetv2q/MUxq0qFzEnfSbxo+wj45/QioGcH5ZhuT9VBIPJ5Q==}
+  got@14.4.1:
+    resolution: {integrity: sha512-IvDJbJBUeexX74xNQuMIVgCRRuNOm5wuK+OC3Dc2pnSoh1AOmgc7JVj7WC+cJ4u0aPcO9KZ2frTXcqK4W/5qTQ==}
     engines: {node: '>=20'}
 
   graceful-fs@4.2.11:
@@ -9252,7 +9252,7 @@ snapshots:
       p-cancelable: 3.0.0
       responselike: 3.0.0
 
-  got@14.4.0:
+  got@14.4.1:
     dependencies:
       '@sindresorhus/is': 6.3.1
       '@szmarczak/http-timer': 5.0.1
@@ -9265,6 +9265,7 @@ snapshots:
       lowercase-keys: 3.0.0
       p-cancelable: 4.0.1
       responselike: 3.0.0
+      type-fest: 4.19.0
 
   graceful-fs@4.2.11: {}
 
