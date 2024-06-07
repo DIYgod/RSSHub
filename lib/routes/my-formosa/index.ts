@@ -7,8 +7,8 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
-    categories: ['traditional-media'],
-    example: '/my-formosa/',
+    categories: ['new-media'],
+    example: '/my-formosa',
     parameters: {},
     features: {
         requireConfig: false,
@@ -23,8 +23,8 @@ export const route: Route = {
             source: ['my-formosa.com/'],
         },
     ],
-    name: '美麗島電子報',
-    maintainers: [''],
+    name: '首页',
+    maintainers: ['dzx-dzx'],
     handler,
     url: 'my-formosa.com',
 };
@@ -61,7 +61,7 @@ async function handler() {
                     author: $('.page-header~#featured-news h4').text(),
                     category: $("meta[name='keywords']").attr('content').split(','),
                     pubDate: timezone(parseDate($('.date').text()), +8),
-                    description: $('.body').html(),
+                    description: $('.body').html() ?? $('video-post').html(),
                 };
             });
         });
