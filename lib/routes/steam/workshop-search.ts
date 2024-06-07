@@ -58,14 +58,16 @@ Language Parameter:
                 const ratingImage = item.find('.fileRating').first().attr('src');
                 // Some items are flaged as 'accepted for game' and 'incompatible item'
                 const checkMarkImages: string[] = [];
-                $(item).find('.workshop_checkmark').each((index, element) => {
-                    const checkMarkElement = $(element);
-                    const style = checkMarkElement.attr('style');
-                    // Only add checkmark image if it is not set to 'display: none'
-                    if (!style || !style.includes('display: none;')) {
-                        checkMarkImages.push(checkMarkElement.attr('src') || '');
-                    };
-                });
+                $(item)
+                    .find('.workshop_checkmark')
+                    .each((index, element) => {
+                        const checkMarkElement = $(element);
+                        const style = checkMarkElement.attr('style');
+                        // Only add checkmark image if it is not set to 'display: none'
+                        if (!style || !style.includes('display: none;')) {
+                            checkMarkImages.push(checkMarkElement.attr('src') || '');
+                        }
+                    });
                 // const script_tag = item.next('script');
                 // console.log(`script_tag:${script_tag.text()}`);
                 const hoverContent = item.next('script').text();
@@ -80,8 +82,8 @@ Language Parameter:
                     const data = JSON.parse(jsonString);
                     if (data.id === publishedFileId) {
                         entryDescription = data.description;
-                    };
-                };
+                    }
+                }
 
                 return {
                     title: entryTitle,
