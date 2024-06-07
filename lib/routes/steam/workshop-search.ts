@@ -8,7 +8,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/workshopsearch/:appid/:routeParams?',
+    path: '/workshopsearch/:appid?/:routeParams?',
     categories: ['game'],
     example: '/steam/workshopsearch/730',
     parameters: {
