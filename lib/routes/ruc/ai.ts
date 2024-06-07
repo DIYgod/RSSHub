@@ -60,7 +60,7 @@ export const route: Route = {
                             .slice(3)
                             .map((i, el) => $.html(el))
                             .get()
-                            .join(',');
+                            .join('');
                     } catch {
                         item.description = '';
                     }
