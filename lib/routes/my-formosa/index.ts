@@ -30,10 +30,10 @@ export const route: Route = {
 };
 
 function fetch(url) {
-        return ofetch(url, { responseType: 'arrayBuffer' }).then((raw) => {
-            const decoder = new TextDecoder('big5');
-            return decoder.decode(raw);
-        });
+    return ofetch(url, { responseType: 'arrayBuffer' }).then((raw) => {
+        const decoder = new TextDecoder('big5');
+        return decoder.decode(raw);
+    });
 }
 
 async function handler() {
@@ -55,13 +55,15 @@ async function handler() {
                 const res = await fetch(link);
                 const $ = load(res);
 
+                const isTV = /^\/TV/.test(new URL(link).pathname);
+
                 return {
                     title,
                     link,
                     author: $('.page-header~#featured-news h4').text(),
                     category: $("meta[name='keywords']").attr('content').split(','),
-                    pubDate: timezone(parseDate($('.date').text()), +8),
-                    description: $('.body').html() ?? $('video-post').html(),
+                    pubDate: timezone(parseDate(isTV ? $('.icon-calendar')[0].next.data.trim() : $('.date').text()), +8),
+                    description: isTV ? $('.post-item').html() : $('.body').html(),
                 };
             });
         });
