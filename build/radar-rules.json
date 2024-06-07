@@ -15354,6 +15354,14 @@
           "/app/:appid"
         ],
         "target": "/steam/appcommunityfeed/:appid"
+      },
+      {
+        "title": "Workshop Search Results",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid/workshop/"
+        ],
+        "target": "/steam/workshopsearch/:appid"
       }
     ]
   },
