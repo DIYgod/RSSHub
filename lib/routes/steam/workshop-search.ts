@@ -28,9 +28,9 @@ For example, route \`/workshopsearch/730/l=schinese\` will display the simplifie
 
 Language Parameter:
 
-| English  | 简体中文        | 繁體中文        | 日本語       | 한국어        | ภาษาไทย   | български  | čeština  | dansk    | Deutsch | español  | latam    | ελληνικά  | français  | italiano | Bahasa Indonesia | magyar    | Nederlands | norsk     | polski   | português  | brasileiro | română   | русский   | suomi    | svenska  | Türkçe   | Tiếng Việt | українська |
-|----------|----------------|----------------|--------------|---------------|-----------|------------|----------|----------|---------|----------|----------|-----------|-----------|----------|------------------|-----------|------------|-----------|----------|------------|------------|----------|-----------|----------|----------|----------|------------|------------|
-| english  | schinese       | tchinese       | japanese     | koreana       | thai      | bulgarian  | czech    | danish   | german  | spanish  | latam    | greek     | french    | italian  | indonesian       | hungarian | dutch      | norwegian | polish   | portuguese | brazilian  | romanian | russian   | finnish  | swedish  | turkish  | vietnamese | ukrainian  |
+| English | 简体中文 | 繁體中文 | 日本語   | 한국어  | ภาษาไทย | български | čeština | dansk  | Deutsch | español | latam | ελληνικά | français | italiano | Bahasa Indonesia | magyar    | Nederlands | norsk     | polski | português  | brasileiro | română   | русский | suomi   | svenska | Türkçe  | Tiếng Việt | українська |
+| ------- | -------- | -------- | -------- | ------- | ------- | --------- | ------- | ------ | ------- | ------- | ----- | -------- | -------- | -------- | ---------------- | --------- | ---------- | --------- | ------ | ---------- | ---------- | -------- | ------- | ------- | ------- | ------- | ---------- | ---------- |
+| english | schinese | tchinese | japanese | koreana | thai    | bulgarian | czech   | danish | german  | spanish | latam | greek    | french   | italian  | indonesian       | hungarian | dutch      | norwegian | polish | portuguese | brazilian  | romanian | russian | finnish | swedish | turkish | vietnamese | ukrainian  |
 
 `,
     name: 'Steam Community Workshop Search',
