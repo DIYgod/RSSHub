@@ -28,9 +28,9 @@ For example, route \`/workshopsearch/730/l=schinese\` will display the simplifie
 
 Language Parameter:
 
-| English (default) | 简体中文        | 繁體中文        | 日本語       | 한국어        | ภาษาไทย   | български  | čeština  | dansk    | Deutsch | español  | latam    | ελληνικά  | français  | italiano | Bahasa Indonesia | magyar    | Nederlands | norsk     | polski   | português  | brasileiro | română   | русский   | suomi    | svenska  | Türkçe   | Tiếng Việt | українська |
-|-------------------|----------------|----------------|--------------|---------------|-----------|------------|----------|----------|---------|----------|----------|-----------|-----------|----------|------------------|-----------|------------|-----------|----------|------------|------------|----------|-----------|----------|----------|----------|------------|------------|
-| english           | schinese       | tchinese       | japanese     | koreana       | thai      | bulgarian  | czech    | danish   | german  | spanish  | latam    | greek     | french    | italian  | indonesian       | hungarian | dutch      | norwegian | polish   | portuguese | brazilian  | romanian | russian   | finnish  | swedish  | turkish  | vietnamese | ukrainian  |
+| English  | 简体中文        | 繁體中文        | 日本語       | 한국어        | ภาษาไทย   | български  | čeština  | dansk    | Deutsch | español  | latam    | ελληνικά  | français  | italiano | Bahasa Indonesia | magyar    | Nederlands | norsk     | polski   | português  | brasileiro | română   | русский   | suomi    | svenska  | Türkçe   | Tiếng Việt | українська |
+|----------|----------------|----------------|--------------|---------------|-----------|------------|----------|----------|---------|----------|----------|-----------|-----------|----------|------------------|-----------|------------|-----------|----------|------------|------------|----------|-----------|----------|----------|----------|------------|------------|
+| english  | schinese       | tchinese       | japanese     | koreana       | thai      | bulgarian  | czech    | danish   | german  | spanish  | latam    | greek     | french    | italian  | indonesian       | hungarian | dutch      | norwegian | polish   | portuguese | brazilian  | romanian | russian   | finnish  | swedish  | turkish  | vietnamese | ukrainian  |
 
 `,
     name: 'Steam Community Workshop Search',
@@ -44,7 +44,7 @@ Language Parameter:
         const $ = load(response);
 
         const appName = $('div.apphub_AppName').first().text();
-        const wokrshopDescription = $('div.customBrowseText').first().text();
+        const workshopDescription = $('div.customBrowseText').first().text();
         const appIcon = $('div.apphub_AppIcon').children('img').attr('src');
 
         const items = $('div.workshopBrowseItems .workshopItem')
@@ -57,6 +57,16 @@ Language Parameter:
                 const authorNickName = item.find('.workshop_author_link').first().text();
                 const previewImage = item.find('.workshopItemPreviewImage').first().attr('src');
                 const ratingImage = item.find('.fileRating').first().attr('src');
+                // Some items are flaged as 'accepted for game' and 'incompatible item'
+                const checkMarkImages: string[] = [];
+                $(item).find('.workshop_checkmark').each((index, element) => {
+                    const checkMarkElement = $(element);
+                    const style = checkMarkElement.attr('style');
+                    // Only add checkmark image if it is not set to 'display: none'
+                    if (!style || !style.includes('display: none;')) {
+                        checkMarkImages.push(checkMarkElement.attr('src') || '');
+                    };
+                });
                 // const script_tag = item.next('script');
                 // console.log(`script_tag:${script_tag.text()}`);
                 const hoverContent = item.next('script').text();
@@ -80,6 +90,7 @@ Language Parameter:
                     description: art(path.join(__dirname, 'templates/workshop-search-description.art'), {
                         image: previewImage,
                         rating: ratingImage,
+                        checkmark: checkMarkImages,
                         title: entryTitle,
                         author: entryAuthor,
                         description: entryDescription,
@@ -93,7 +104,7 @@ Language Parameter:
             link: `https://steamcommunity.com/workshop/browse/?appid=${appid}${routeParams ? `&${routeParams}` : ''}`,
             item: items,
             icon: appIcon,
-            description: wokrshopDescription,
+            description: workshopDescription,
         };
     },
 };
