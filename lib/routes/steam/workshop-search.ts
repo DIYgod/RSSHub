@@ -33,7 +33,7 @@ Language Parameter:
 | english | schinese | tchinese | japanese | koreana | thai    | bulgarian | czech   | danish | german  | spanish | latam | greek    | french   | italian  | indonesian       | hungarian | dutch      | norwegian | polish | portuguese | brazilian  | romanian | russian | finnish | swedish | turkish | vietnamese | ukrainian  |
 
 `,
-    name: 'Steam Community Workshop Search',
+    name: 'Community Workshop Search',
     maintainers: ['NyaaaDoge'],
 
     handler: async (ctx) => {
