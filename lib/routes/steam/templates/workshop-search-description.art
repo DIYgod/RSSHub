@@ -1,0 +1,5 @@
+{{ if image }}
+<img src="{{ image }}"/><br/>
+{{ /if }}
+{{ if rating }}<img src="{{ rating }}"/>{{ /if }}{{ if checkmark }}{{ each checkmark }} <img src="{{ $value }}"/>{{ /each }}{{ /if }}
+<p>{{ description }}</p>
