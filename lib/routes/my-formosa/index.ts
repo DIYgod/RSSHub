@@ -43,34 +43,32 @@ async function handler() {
 
     const $ = load(res);
 
-    const items = $('#featured-news h3 a')
-        .toArray()
-        .map(async (item) => {
-            item = $(item);
+    const items = await Promise.all(
+        $('#featured-news h3 a')
+            .toArray()
+            .map((item) => {
+                item = $(item);
 
-            const title = item.text();
-            const link = new URL(item.attr('href'), rootUrl).href;
+                const title = item.text();
+                const link = new URL(item.attr('href'), rootUrl).href;
 
-            return await cache.tryGet(link, async () => {
-                const res = await fetch(link);
-                const $ = load(res);
+                return cache.tryGet(link, async () => {
+                    const res = await fetch(link);
+                    const $ = load(res);
 
-                const isTV = /^\/TV/.test(new URL(link).pathname);
+                    const isTV = /^\/TV/.test(new URL(link).pathname);
 
-                return {
-                    title,
-                    link,
-                    author: $('.page-header~#featured-news h4').text(),
-                    category: $("meta[name='keywords']").attr('content').split(','),
-                    pubDate: timezone(parseDate((isTV ? $('.icon-calendar')[0].next.data : $('.date').text()).trim()), +8),
-                    description: isTV
-                        ? $('.post-item').html()
-                        : $('.body')
-                              .html()
-                              .replaceAll(/\/News.*?\.jpg/g, (match) => `http://my-formosa.com${match}`),
-                };
-            });
-        });
+                    return {
+                        title,
+                        link,
+                        author: $('.page-header~#featured-news h4').text(),
+                        category: $("meta[name='keywords']").attr('content').split(','),
+                        pubDate: timezone(parseDate((isTV ? $('.icon-calendar')[0].next.data : $('.date').text()).trim()), +8),
+                        description: (isTV ? $('.post-item').html() : $('.body').html()).replaceAll(/\/News.*?\.jpg/g, (match) => `http://my-formosa.com${match}`),
+                    };
+                });
+            })
+    );
 
     return {
         title: $('title').text(),
