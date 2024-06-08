@@ -38148,6 +38148,41 @@
     "name": "管理世界",
     "url": "mwm.net.cn"
   },
+  "my-formosa": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/my-formosa",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "my-formosa.com/"
+            ]
+          }
+        ],
+        "name": "首页",
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "url": "my-formosa.com",
+        "location": "index.ts"
+      }
+    },
+    "name": "美麗島電子報",
+    "url": "my-formosa.com"
+  },
   "mydrivers": {
     "routes": {
       "/cid/:id?": {

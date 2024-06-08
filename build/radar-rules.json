@@ -10392,6 +10392,19 @@
       }
     ]
   },
+  "my-formosa.com": {
+    "_name": "美麗島電子報",
+    ".": [
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/my-formosa/"
+      }
+    ]
+  },
   "mydrivers.com": {
     "_name": "快科技",
     "m": [
