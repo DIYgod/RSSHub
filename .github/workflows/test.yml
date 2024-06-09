@@ -68,9 +68,14 @@ jobs:
       - name: Build routes
         run: pnpm build
       - name: Test all and generate coverage
-        run: pnpm run vitest:coverage
+        run: pnpm run vitest:coverage --outputFile=tmp/vitest-coverage.xml
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
+      - name: Publish test report
+        uses: mikepenz/action-junit-report@v4
+        if: ${{ matrix.node-version == '20' }}
+        with:
+          report_paths: 'tmp/vitest-coverage.xml'
       - name: Upload coverage to Codecov
         if: ${{ matrix.node-version == '20' }}
         uses: codecov/codecov-action@v4
