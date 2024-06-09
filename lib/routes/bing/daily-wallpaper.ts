@@ -7,8 +7,7 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/:routeParams?',
     parameters: {
-        type: '返回的壁纸格式,取值为: UHD/1920x1080/1920x1200/768x1366/1080x1920/1080x1920_logo;默认值与输入的值不在范围内时设为1920x1080;1920x1200与1080x1920_logo会带有水印',
-        story: '是否开启壁纸对应故事, 取值为: 1/0;默认值为0即不开启故事输出',
+        routeParams: '额外参数type和story；请参阅以下说明和表格',
     },
     radar: [
         {
@@ -21,6 +20,11 @@ export const route: Route = {
     handler,
     url: 'cn.bing.com/',
     example: '/bing/type=UHD&story=1',
+    description: `| 参数    | 含义        | 接受的值                                                      | 默认值       | 备注                                                     |
+|-------|-----------|-----------------------------------------------------------|-----------|--------------------------------------------------------|
+| type  | 输出图片的像素类型 | UHD/1920x1080/1920x1200/768x1366/1080x1920/1080x1920_logo | 1920x1080 | 1920x1200与1080x1920_logo带有水印,输入的值不在接受范围内都会输出成1920x1080 |
+| story | 是否输出图片的故事 | 1/0                                                       | 0         | 输入的值不为1都不会输出故事                                         |
+`,
 };
 
 async function handler(ctx) {
@@ -32,10 +36,10 @@ async function handler(ctx) {
         type = '1920x1080';
     }
     const story = routeParams.get('story') === '1';
-    const api_url = `https://cn.bing.com/hp/api/model`;
+    const apiUrl = `https://cn.bing.com/hp/api/model`;
     const resp = await got({
         method: 'get',
-        url: api_url,
+        url: apiUrl,
     });
     const items = await Promise.all(
         resp.data.MediaContents.map((item) => {
