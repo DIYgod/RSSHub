@@ -24,7 +24,6 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    // type UHD 1920x1080 1920x1200 768x1366 1080x1920 1080x1920_logo
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
     const lang = 'zh-CN';
     let type = routeParams.get('type') || '1920x1080';
@@ -38,18 +37,15 @@ async function handler(ctx) {
         method: 'get',
         url: api_url,
     });
-    return {
-        title: 'Bing每日壁纸',
-        link: 'https://cn.bing.com/',
-        description: 'Bing每日壁纸',
-        item: resp.data.MediaContents.map((item) => {
+    const items = await Promise.all(
+        resp.data.MediaContents.map((item) => {
             const ssd = item.Ssd;
             const key = `bing_${ssd}_${lang}_${type}_${story}`;
             return cache.tryGet(key, () => {
                 const link = `https://cn.bing.com${item.ImageContent.Image.Url.match(/\/th\?id=[^_]+_[^_]+/)[0].replace(/(_\d+x\d+\.webp)$/i, '')}_${type}.jpg`;
                 let description = `<img src="${link}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
                 if (story) {
-                    description += `<b>${item.ImageContent.Headline}</b><br><br>`;
+                    description += `<b>${item.ImageContent.Headline}</b>`;
                     description += `<i>${item.ImageContent.QuickFact.MainText}</i><br>`;
                     description += `<p>${item.ImageContent.Description}<p>`;
                 }
@@ -61,6 +57,12 @@ async function handler(ctx) {
                     pubDate: timezone(parseDate(ssd, 'YYYYMMDD_HHmm'), -8),
                 };
             });
-        }),
+        })
+    );
+    return {
+        title: 'Bing每日壁纸',
+        link: 'https://cn.bing.com/',
+        description: 'Bing每日壁纸',
+        item: items,
     };
 }
