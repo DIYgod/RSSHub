@@ -17,10 +17,10 @@ export const route: Route = {
     maintainers: ['FHYunCai', 'LLLLLFish'],
     handler,
     url: 'cn.bing.com/',
-    example: '/bing/lang=en-US&type=UHD&story=1',
+    example: '/bing/type=UHD&story=1',
     description: `
-    type 壁纸的类型 取值为: UHD | 1920x1080 | 1920x1200| 768x1366 | 1080x1920 | 1080x1920_logo;缺省则为1920x1080,1920x1200与1080x1920_logo会带有水印；
-    story 必应上的今天 取值为 1 | 0;缺省则为0,语言受lang控制
+    type 壁纸的类型 取值为: UHD/1920x1080/1920x1200/768x1366/1080x1920/1080x1920_logo;默认值与输入的值不在范围内时设为1920x1080;1920x1200与1080x1920_logo会带有水印；
+    story 壁纸对应的故事 取值为 1/0;默认值为0,即不输出壁纸对应的故事;
     `,
 };
 
