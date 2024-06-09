@@ -76,11 +76,11 @@ async function handler(ctx) {
             },
         });
         const $ = load(response);
-        const targetLink = $('table.group-table tr').eq(1).find('td a').eq(0).attr('href');
+        const targetLink = new URL($('table.group-table tr').eq(1).find('td a').eq(0).attr('href')).href;
         return targetLink;
     });
 
-    const currentUrl = `${entranceDomain}/2048/thread.php?fid-${id}.html`;
+    const currentUrl = `${entranceDomain}2048/thread.php?fid-${id}.html`;
 
     const response = await ofetch.raw(currentUrl);
 
