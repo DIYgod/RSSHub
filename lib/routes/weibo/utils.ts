@@ -74,6 +74,10 @@ const weiboUtils = {
         if (!showLinkIconInDescription) {
             htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/(<a\s[^>]*>)<span class=["']?url-icon["']?><img\s[^>]*><\/span>[^<>]*?<span class=["']?surl-text["']?>([^<>]*?)<\/span><\/a>/g, '$1$2</a>');
         }
+
+        // 提取 话题作为 category
+        const category: string[] = htmlNewLineUnreplaced.match(/<span class=["']?surl-text["']?>#([^<>]*?)#<\/span>/g)?.map((e) => e?.match(/#([^#]+)#/)?.[1]);
+
         // 去掉乱七八糟的图标  // 不需要，上述的替换应该已经把所有的图标都替换掉了，且这条 regex 会破坏上述替换不发生时的输出
         // htmlNewLineUnreplaced = htmlNewLineUnreplaced.replace(/<span class=["']?url-icon["']?>(<img\s[^>]*?>)<\/span>/g, '');
         // 将行内图标的高度设置为一行，改善阅读体验。但有些阅读器删除了 style 属性，无法生效  // 不需要，微博已经作此设置
@@ -238,10 +242,16 @@ const weiboUtils = {
         const guid = uid ? `https://weibo.com/${uid}/${bid}` : `https://m.weibo.cn/status/${bid}`;
         const link = preferMobileLink ? `https://m.weibo.cn/status/${bid}` : guid;
 
-        const author = status.user?.screen_name;
+        const author = [
+            {
+                name: status.user?.screen_name,
+                url: `https://weibo.com/${uid}`,
+                avatar: status.user?.avatar_hd,
+            },
+        ];
         const pubDate = status.created_at;
 
-        return { description: html, title, link, guid, author, pubDate };
+        return { description: html, title, link, guid, author, pubDate, category };
     },
     getShowData: async (uid, bid) => {
         const link = `https://m.weibo.cn/statuses/show?id=${bid}`;

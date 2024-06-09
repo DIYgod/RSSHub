@@ -150,6 +150,11 @@ jobs:
       - run: pnpm i
       - name: Build radar and maintainer
         run: npm run build
+      - name: Upload assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-assets-${{ matrix.node-version }}
+          path: assets/build/
 
   automerge:
     if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'

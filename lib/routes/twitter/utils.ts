@@ -359,9 +359,10 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         }
 
         description += item.full_text;
+        // 从 description 提取 话题作为 category，放在此处是为了避免 匹配到 quote 中的 # 80808030 颜色字符
+        const category = description.match(/(\s)?(#[^\s;<]+)/g)?.map((e) => e?.match(/#([^\s<]+)/)?.[1]);
         description += img;
         description += quote;
-
         if (readable) {
             description += `<br clear='both' /><div style='clear: both'></div>`;
         }
@@ -373,19 +374,24 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             description += `<small>${parseDate(item.created_at)}</small>`;
         }
 
-        const authorName = originalItem.user.name;
         const link =
             originalItem.user.screen_name && (originalItem.id_str || originalItem.conversation_id_str)
                 ? `https://x.com/${originalItem.user.screen_name}/status/${originalItem.id_str || originalItem.conversation_id_str}`
                 : `https://x.com/${item.user.screen_name}/status/${item.id_str || item.conversation_id_str}`;
         return {
             title,
-            author: authorName,
+            author: [
+                {
+                    name: originalItem.user.name,
+                    url: `https://x.com/${originalItem.user.screen_name}`,
+                    avatar: originalItem.user.profile_image_url_https,
+                },
+            ],
             description,
             pubDate: parseDate(item.created_at),
             link,
             guid: link.replace('x.com', 'twitter.com'),
-
+            category,
             _extra:
                 (isRetweet && {
                     links: [

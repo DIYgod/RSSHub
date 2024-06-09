@@ -1,6 +1,6 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: '王者荣耀',
-    url: 'mp.weixin.qq.com',
+    name: '腾讯',
+    url: 'tencent.com',
 };
