@@ -1,10 +1,12 @@
 import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/',
+    path: '/:routeParams?',
+    parameters: { type: '类型', story: '故事' },
     radar: [
         {
             source: ['cn.bing.com/'],
@@ -12,30 +14,54 @@ export const route: Route = {
         },
     ],
     name: '每日壁纸',
-    maintainers: ['FHYunCai'],
+    maintainers: ['FHYunCai', 'LLLLLFish'],
     handler,
     url: 'cn.bing.com/',
+    example: '/bing/lang=en-US&type=UHD&story=1',
+    description: `
+    type 壁纸的类型 取值为: UHD | 1920x1080 | 1920x1200| 768x1366 | 1080x1920 | 1080x1920_logo;缺省则为1920x1080,1920x1200与1080x1920_logo会带有水印；
+    story 必应上的今天 取值为 1 | 0;缺省则为0,语言受lang控制
+    `,
 };
 
 async function handler(ctx) {
-    const response = await ofetch('HPImageArchive.aspx', {
-        baseURL: 'https://cn.bing.com',
-        query: {
-            format: 'js',
-            idx: 0,
-            n: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 7,
-            mkt: 'zh-CN',
-        },
+    // type UHD 1920x1080 1920x1200 768x1366 1080x1920 1080x1920_logo
+    const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
+    const lang = 'zh-CN';
+    let type = routeParams.get('type') || '1920x1080';
+    const allowedTypes = ['UHD', '1920x1080', '1920x1200', '768x1366', '1080x1920', '1080x1920_logo'];
+    if (!allowedTypes.includes(type)) {
+        type = '1920x1080';
+    }
+    const story = routeParams.get('story') === '1';
+    const api_url = `https://www.bing.com/hp/api/model`;
+    const resp = await got({
+        method: 'get',
+        url: api_url,
     });
-    const data = response;
     return {
         title: 'Bing每日壁纸',
-        link: 'https://cn.bing.com/',
-        item: data.images.map((item) => ({
-            title: item.copyright,
-            description: `<img src="https://cn.bing.com${item.url}">`,
-            link: item.copyrightlink,
-            pubDate: timezone(parseDate(item.fullstartdate), 0),
-        })),
+        link: 'https://www.bing.com/',
+        description: 'Bing每日壁纸',
+        item: resp.data.MediaContents.map((item) => {
+            const ssd = item.Ssd;
+            const key = `bing_${ssd}_${lang}_${type}_${story}`;
+            return cache.tryGet(key, () => {
+                const link = `https://www.bing.com${item.ImageContent.Image.Url.match(/\/th\?id=[^_]+_[^_]+/)[0].replace(/(_\d+x\d+\.webp)$/i, '')}_${type}.jpg`;
+                let description = `<img src="${link}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
+                if (story) {
+                    description += `<b>${item.ImageContent.Headline}</b><br><br>`;
+                    description += `<i>${item.ImageContent.QuickFact.MainText}</i><br>`;
+                    description += `<p>${item.ImageContent.Description}<p>`;
+                }
+                return {
+                    title: item.ImageContent.Title,
+                    description,
+                    link: `https://www.bing.com${item.ImageContent.BackstageUrl}`,
+                    author: String(item.ImageContent.Copyright),
+                    pubDate: timezone(parseDate(ssd, 'YYYYMMDD_HHmm'), -8),
+                };
+            });
+        }),
     };
 }
