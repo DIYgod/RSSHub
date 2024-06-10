@@ -18497,7 +18497,8 @@
         "title": "用户文章",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
-          "/:usertype/:id/posts"
+          "/:usertype/:id/posts",
+          "/:usertype/:id"
         ],
         "target": "/zhihu/posts/:usertype/:id"
       },

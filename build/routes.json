@@ -67478,7 +67478,8 @@
         "radar": [
           {
             "source": [
-              "www.zhihu.com/:usertype/:id/posts"
+              "www.zhihu.com/:usertype/:id/posts",
+              "www.zhihu.com/:usertype/:id"
             ]
           }
         ],
