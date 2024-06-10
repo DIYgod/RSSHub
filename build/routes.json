@@ -20034,7 +20034,7 @@
           "nczitzk"
         ],
         "url": "finviz.com/news.ashx",
-        "description": "| News | Blog |\n  | ---- | ---- |\n  | news | blog |",
+        "description": "| News | Blogs |\n  | ---- | ---- |\n  | news | blogs |",
         "location": "news.ts"
       },
       "/news/:ticker": {
