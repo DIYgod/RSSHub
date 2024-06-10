@@ -732,8 +732,9 @@
   "/binance/launchpool": [
     "zhenlohuang"
   ],
-  "/bing/": [
-    "FHYunCai"
+  "/bing/:routeParams?": [
+    "FHYunCai",
+    "LLLLLFish"
   ],
   "/bing/search/:keyword": [
     "CaoMeiYouRen"
