@@ -51,7 +51,7 @@ async function handler(ctx) {
         baseURL: apiUrl,
         method: 'GET',
         query: {
-            mtk: 'zh-CN',
+            mtk: lang,
         },
     });
     const items = await Promise.all(
