@@ -31,7 +31,7 @@ async function handler(ctx) {
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
     let type = routeParams.get('type') || '1920x1080';
     let lang = routeParams.get('lang');
-    let apiUrl = 'https://cn.bing.com/hp/api/model';
+    let apiUrl = '';
     const allowedTypes = ['UHD', '1920x1080', '1920x1200', '768x1366', '1080x1920', '1080x1920_logo'];
     if (lang !== 'zh' && lang !== 'en') {
         lang = 'zh';
@@ -54,25 +54,23 @@ async function handler(ctx) {
             mtk: lang,
         },
     });
-    const items = await Promise.all(
-        resp.MediaContents.map((item) => {
-            const ssd = item.Ssd;
-            const link = `${apiUrl}${item.ImageContent.Image.Url.match(/\/th\?id=[^_]+_[^_]+/)[0].replace(/(_\d+x\d+\.webp)$/i, '')}_${type}.jpg`;
-            let description = `<img src="${link}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
-            if (story) {
-                description += `<b>${item.ImageContent.Headline}</b>`;
-                description += `<i>${item.ImageContent.QuickFact.MainText}</i><br>`;
-                description += `<p>${item.ImageContent.Description}<p>`;
-            }
-            return {
-                title: item.ImageContent.Title,
-                description,
-                link: `${apiUrl}${item.ImageContent.BackstageUrl}`,
-                author: String(item.ImageContent.Copyright),
-                pubDate: timezone(parseDate(ssd, 'YYYYMMDD_HHmm'), -8),
-            };
-        })
-    );
+    const items = resp.MediaContents.map((item) => {
+        const ssd = item.Ssd;
+        const link = `${apiUrl}${item.ImageContent.Image.Url.match(/\/th\?id=[^_]+_[^_]+/)[0].replace(/(_\d+x\d+\.webp)$/i, '')}_${type}.jpg`;
+        let description = `<img src="${link}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
+        if (story) {
+            description += `<b>${item.ImageContent.Headline}</b>`;
+            description += `<i>${item.ImageContent.QuickFact.MainText}</i><br>`;
+            description += `<p>${item.ImageContent.Description}<p>`;
+        }
+        return {
+            title: item.ImageContent.Title,
+            description,
+            link: `${apiUrl}${item.ImageContent.BackstageUrl}`,
+            author: item.ImageContent.Copyright,
+            pubDate: timezone(parseDate(ssd, 'YYYYMMDD_HHmm'), 0),
+        };
+    });
     return {
         title: 'Bing每日壁纸',
         link: apiUrl,
