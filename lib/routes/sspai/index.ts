@@ -42,10 +42,7 @@ async function handler() {
             return cache.tryGet(key, async () => {
                 const response = await got({ method: 'get', url: link });
                 const articleData = response.data.data;
-                let banner = articleData.banner;
-                if (articleData.keywords.includes('派早报')) {
-                    banner = `https://cdnfile.sspai.com/${banner}`;
-                }
+                const banner = articleData.promote_image;
                 if (banner) {
                     description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
                 }

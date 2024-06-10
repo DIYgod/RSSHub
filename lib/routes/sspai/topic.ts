@@ -52,7 +52,13 @@ async function handler(ctx) {
             }
             return cache.tryGet(`sspai: ${item.id}`, async () => {
                 const response = await got(link);
-                const description = response.data.data.body;
+                let description = '';
+                const articleData = response.data.data;
+                const banner = articleData.promote_image;
+                if (banner) {
+                    description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
+                }
+                description += articleData.body;
 
                 const single = {
                     title,
