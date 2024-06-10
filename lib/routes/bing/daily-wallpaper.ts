@@ -36,7 +36,7 @@ async function handler(ctx) {
         type = '1920x1080';
     }
     const story = routeParams.get('story') === '1';
-    const apiUrl = `https://cn.bing.com/hp/api/model`;
+    const apiUrl = 'https://cn.bing.com/hp/api/model';
     const resp = await got({
         method: 'get',
         url: apiUrl,
