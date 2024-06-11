@@ -2477,8 +2477,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -4610,8 +4610,8 @@ packages:
   rrweb-cssom@0.6.0:
     resolution: {integrity: sha512-APM0Gt1KoXBz0iIkkdB/kfvGOwC4UuJFeG/c+yV7wSc7q96cG/kJ0HiYCnzivD9SB53cLV1MlHFNfOuPaadYSw==}
 
-  rrweb-cssom@0.7.0:
-    resolution: {integrity: sha512-KlSv0pm9kgQSRxXEMgtivPJ4h826YHsuob8pSHcfSZsSXGtvpEAie8S0AnXuObEJ7nhikOb4ahwxDm0H2yW17g==}
+  rrweb-cssom@0.7.1:
+    resolution: {integrity: sha512-TrEMa7JGdVm0UThDJSx7ddw5nVm3UJS9o9CCIZ72B1vSyEZoziDqBYP3XIoi/12lKrJR8rE3jeFHMok2F/Mnsg==}
 
   rss-parser@3.13.0:
     resolution: {integrity: sha512-7jWUBV5yGN3rqMMj7CZufl/291QAhvrrGpDNE4k/02ZchL0npisiYYqULF71jCEKoIiHvK/Q2e6IkDwPziT7+w==}
@@ -6672,7 +6672,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.7
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -7861,7 +7861,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -8304,7 +8304,7 @@ snapshots:
 
   extract-zip@2.0.1:
     dependencies:
-      debug: 4.3.5
+      debug: 4.3.4
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
@@ -9051,7 +9051,7 @@ snapshots:
       is-potential-custom-element-name: 1.0.1
       nwsapi: 2.2.10
       parse5: 7.1.2
-      rrweb-cssom: 0.7.0
+      rrweb-cssom: 0.7.1
       saxes: 6.0.0
       symbol-tree: 3.2.4
       tough-cookie: 4.1.4
@@ -10002,7 +10002,7 @@ snapshots:
   proxy-agent@6.4.0:
     dependencies:
       agent-base: 7.1.1
-      debug: 4.3.5
+      debug: 4.3.4
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.4
       lru-cache: 7.18.3
@@ -10328,7 +10328,7 @@ snapshots:
 
   rrweb-cssom@0.6.0: {}
 
-  rrweb-cssom@0.7.0: {}
+  rrweb-cssom@0.7.1: {}
 
   rss-parser@3.13.0:
     dependencies:
