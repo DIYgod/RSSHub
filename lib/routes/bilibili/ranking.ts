@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/ranking/:rid?/:day?/:arc_type?/:disableEmbed?',
     name: '排行榜',
     maintainers: ['DIYgod'],
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/bilibili/ranking/0/3/1',
     parameters: {
         rid: '排行榜分区 id, 默认 0',
@@ -15,8 +15,8 @@ export const route: Route = {
         disableEmbed: '默认为开启内嵌视频, 任意值为关闭',
     },
     description: `| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 数码 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
-    | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-    | 0    | 1    | 168      | 3    | 129  | 4    | 36   | 188  | 160  | 119  | 155  | 5    | 181  |`,
+| ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 1    | 168      | 3    | 129  | 4    | 36   | 188  | 160  | 119  | 155  | 5    | 181  |`,
     handler,
 };
 

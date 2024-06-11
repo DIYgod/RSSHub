@@ -9,7 +9,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/user/:username/:embed?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/youtube/user/@JFlaMusic',
     parameters: { username: 'YouTuber username with @', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {
@@ -45,12 +45,21 @@ async function handler(ctx) {
 
     let playlistId;
     let channelName;
+    let image;
+    let description;
     if (username.startsWith('@')) {
         const link = `https://www.youtube.com/${username}`;
         const response = await got(link);
         const $ = load(response.data);
-        const channelId = $('meta[itemprop="identifier"]').attr('content');
-        channelName = $('meta[itemprop="name"]').attr('content');
+        const ytInitialData = JSON.parse(
+            $('script')
+                .text()
+                .match(/ytInitialData = ({.*?});/)?.[1] || '{}'
+        );
+        const channelId = ytInitialData.metadata.channelMetadataRenderer.externalId;
+        channelName = ytInitialData.metadata.channelMetadataRenderer.title;
+        image = ytInitialData.metadata.channelMetadataRenderer.avatar?.thumbnails?.[0]?.url;
+        description = ytInitialData.metadata.channelMetadataRenderer.description;
         playlistId = (await utils.getChannelWithId(channelId, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
     }
     playlistId = playlistId || (await utils.getChannelWithUsername(username, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
@@ -60,7 +69,8 @@ async function handler(ctx) {
     return {
         title: `${channelName || username} - YouTube`,
         link: username.startsWith('@') ? `https://www.youtube.com/${username}` : `https://www.youtube.com/user/${username}`,
-        description: `YouTube user ${username}`,
+        description: description || `YouTube user ${username}`,
+        image,
         item: data
             .filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video')
             .map((item) => {
@@ -73,6 +83,7 @@ async function handler(ctx) {
                     pubDate: parseDate(snippet.publishedAt),
                     link: `https://www.youtube.com/watch?v=${videoId}`,
                     author: snippet.videoOwnerChannelTitle,
+                    image: img.url,
                 };
             }),
     };

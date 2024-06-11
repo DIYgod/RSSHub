@@ -46,7 +46,13 @@ async function handler(ctx) {
             const key = `sspai: ${item.id}`;
             return cache.tryGet(key, async () => {
                 const response = await got({ method: 'get', url: link, headers: { Referer: host } });
-                description = response.data.data.body;
+                // description = response.data.data.body;
+                const articleData = response.data.data;
+                const banner = articleData.promote_image;
+                if (banner) {
+                    description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
+                }
+                description += articleData.body;
 
                 return {
                     title: item.title.trim(),

@@ -1,7 +1,7 @@
 import { type NotFoundHandler, type ErrorHandler } from 'hono';
 import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
 import { config } from '@/config';
-import Sentry from '@sentry/node';
+import * as Sentry from '@sentry/node';
 import logger from '@/utils/logger';
 import Error from '@/views/error';
 

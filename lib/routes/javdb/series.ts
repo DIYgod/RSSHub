@@ -52,7 +52,7 @@ async function handler(ctx) {
         preview: '預覽圖',
     };
 
-    const title = `JavDB${filters[filter] === '' ? '' : ` - ${filter[filter]}`} `;
+    const title = `JavDB${filters[filter] === '' ? '' : ` - ${filters[filter]}`} `;
 
     return await utils.ProcessItems(ctx, currentUrl, title);
 }

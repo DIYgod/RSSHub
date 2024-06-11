@@ -10,7 +10,7 @@ import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/bilibili/user/dynamic/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', routeParams: '额外参数；请参阅以下说明和表格' },
     features: {
@@ -275,7 +275,7 @@ async function handler(ctx) {
 
             let description = getDes(data) || '';
             const title = getTitle(data) || description; // 没有 title 的时候使用 desc 填充
-
+            const category: string[] = [];
             // emoji
             if (data.module_dynamic?.desc?.rich_text_nodes?.length) {
                 const nodes = data.module_dynamic.desc.rich_text_nodes;
@@ -300,6 +300,20 @@ async function handler(ctx) {
                                 )
                                 .join('<br>')
                         );
+                    }
+                    if (node?.type === 'RICH_TEXT_NODE_TYPE_TOPIC') {
+                        // 将话题作为 category
+                        category.push(node.text.match(/#(\S+)#/)?.[1] || '');
+                    }
+                }
+            }
+
+            if (data.module_dynamic?.major?.opus?.summary?.rich_text_nodes?.length) {
+                const nodes = data.module_dynamic.major.opus.summary.rich_text_nodes;
+                for (const node of nodes) {
+                    if (node?.type === 'RICH_TEXT_NODE_TYPE_TOPIC') {
+                        // 将话题作为 category
+                        category.push(node.text.match(/#(\S+)#/)?.[1] || '');
                     }
                 }
             }
@@ -353,6 +367,7 @@ async function handler(ctx) {
                 pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                 link,
                 author,
+                category: category.length ? category : undefined,
             };
         })
     );

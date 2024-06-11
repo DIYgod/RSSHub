@@ -53,7 +53,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     // https://stackoverflow.com/questions/1497885/remove-control-characters-from-php-string/1497928#1497928
                     // remove unicode control characters
                     // see #14940 #14943 #15262
-                    item.description = item.description.replaceAll(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F]/g, '');
+                    item.description = item.description.replaceAll(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F\u200B\uFFFF]/g, '');
                 }
 
                 if (typeof item.author === 'string') {

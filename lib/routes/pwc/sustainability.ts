@@ -1,22 +1,45 @@
 import { Route } from '@/types';
-import { load } from 'cheerio';
-import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import ofetch from '@/utils/ofetch';
+
+interface PlayerOptions {
+    link: string;
+    image: string;
+    flashplayer: string;
+    width: string;
+    height: string;
+    aspectratio: string;
+    title: string;
+    description: string;
+    autostart: boolean;
+}
+
+interface Element {
+    index: number;
+    href: string;
+    relativeHref: string;
+    text: string;
+    thumbnailText: string;
+    title: string;
+    image: string;
+    tags: string[];
+    filterTags: string;
+    publishDate: string;
+    playerOptions: PlayerOptions;
+    damSize: string;
+    template: string;
+    itemUrl: string;
+    itemWidth: string;
+    itemHeight: string;
+    isPage: boolean;
+    isVideo: boolean;
+    itemVideoTranscriptLink: string;
+}
 
 export const route: Route = {
     path: '/strategyand/sustainability',
     categories: ['other'],
     example: '/pwc/strategyand/sustainability',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['strategyand.pwc.com/at/en/functions/sustainability-strategy/publications.html', 'strategyand.pwc.com/'],
@@ -33,46 +56,27 @@ async function handler() {
     const feedLang = 'en';
     const feedDescription = 'Sustainability Publications from PwC Strategy&';
 
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    logger.http(`Requesting ${baseUrl}`);
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
-    });
-    await page.goto(baseUrl, {
-        waitUntil: 'domcontentloaded',
-    });
-    const response = await page.content();
-    page.close();
+    const response = await ofetch(
+        'https://www.strategyand.pwc.com/content/pwc/03/en/functions/sustainability-strategy/publications/jcr:content/root/container/content-free-container/section_545483788/collection_v2.filter-dynamic.html',
+        {
+            query: {
+                currentPagePath: '/content/pwc/03/en/functions/sustainability-strategy/publications',
+                list: { menu_0: [] },
+                defaultImagePath: '/content/dam/pwc/network/strategyand-collection-fallback-images',
+            },
+        }
+    );
+    const elements = JSON.parse(response.elements) as Element[];
 
-    const $ = load(response);
-
-    const list = $('div#wrapper article')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
-            const div = item.find('div.collection__item-content').first();
-
-            const link = a.attr('href');
-            const title = div.find('h4').find('span').text();
-            const pubDate = parseDate(div.find('time').attr('datetime'), 'DD/MM/YY');
-            const description = div.find('p.paragraph').text();
-
-            return {
-                title,
-                link,
-                pubDate,
-                description,
-            };
-        });
-
-    const items = list;
+    const items = elements.map((item) => ({
+        title: item.title,
+        link: item.href,
+        pubDate: parseDate(item.publishDate, 'DD/MM/YY'),
+        description: item.text,
+        category: item.tags,
+    }));
 
     // TODO: Add full text support
-
-    browser.close();
 
     return {
         title: 'PwC Strategy& - Sustainability Publications',

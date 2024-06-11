@@ -4,7 +4,7 @@ import { hash } from './utils';
 
 export const route: Route = {
     path: '/build/:owner/:image/:tag?',
-    categories: ['program-update'],
+    categories: ['program-update', 'popular'],
     example: '/dockerhub/build/wangqiru/ttrss',
     parameters: { owner: 'Image owner', image: 'Image name', tag: 'Image tag，default to latest' },
     features: {

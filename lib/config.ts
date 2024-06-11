@@ -1,5 +1,5 @@
-import 'dotenv/config';
 import randUserAgent from '@/utils/rand-user-agent';
+import 'dotenv/config';
 import { ofetch } from 'ofetch';
 
 let envs = process.env;
@@ -154,7 +154,6 @@ export type Config = {
         username?: string;
         password?: string;
         bearertoken?: string;
-        iap_receipt?: string;
     };
     instagram: {
         username?: string;
@@ -250,6 +249,9 @@ export type Config = {
         clientSecret?: string;
         refreshToken?: string;
     };
+    sspai: {
+        bearertoken?: string;
+    };
     telegram: {
         token?: string;
     };
@@ -285,6 +287,10 @@ export type Config = {
     };
     xueqiu: {
         cookies?: string;
+    };
+    yamibo: {
+        salt?: string;
+        auth?: string;
     };
     youtube: {
         key?: string;
@@ -506,7 +512,6 @@ const calculateValue = () => {
             username: envs.INITIUM_USERNAME,
             password: envs.INITIUM_PASSWORD,
             bearertoken: envs.INITIUM_BEARER_TOKEN,
-            iap_receipt: envs.INITIUM_IAP_RECEIPT,
         },
         instagram: {
             username: envs.IG_USERNAME,
@@ -602,6 +607,9 @@ const calculateValue = () => {
             clientSecret: envs.SPOTIFY_CLIENT_SECRET,
             refreshToken: envs.SPOTIFY_REFRESHTOKEN,
         },
+        sspai: {
+            bearertoken: envs.SSPAI_BEARERTOKEN,
+        },
         telegram: {
             token: envs.TELEGRAM_TOKEN,
             session: envs.TELEGRAM_SESSION,
@@ -641,6 +649,10 @@ const calculateValue = () => {
         },
         xueqiu: {
             cookies: envs.XUEQIU_COOKIES,
+        },
+        yamibo: {
+            salt: envs.YAMIBO_SALT,
+            auth: envs.YAMIBO_AUTH,
         },
         youtube: {
             key: envs.YOUTUBE_KEY,
