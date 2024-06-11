@@ -1,8 +1,7 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
+import { fetchArticle } from './utils';
 const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
@@ -44,20 +43,7 @@ async function handler(ctx) {
                 link: $(e).find('a').attr('href'),
             }))
             .filter((e) => typeof e.link === 'string')
-            .map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const { data: response } = await got(item.link);
-                    const $ = load(response);
-                    $('div.Enhancement').remove();
-                    return Object.assign(item, {
-                        pubDate: timezone(new Date($("meta[property='article:published_time']").attr('content')), 0),
-                        updated: timezone(new Date($("meta[property='article:modified_time']").attr('content')), 0),
-                        description: $('div.RichTextStoryBody').html(),
-                        category: $("meta[property='article:section']").attr('content'),
-                        guid: $("meta[name='brightspot.contentId']").attr('content'),
-                    });
-                })
-            )
+            .map((item) => fetchArticle(item))
     );
 
     return {

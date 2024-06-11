@@ -1,19 +1,34 @@
-import dayjs from 'dayjs';
-import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+import cache from '@/utils/cache';
+import { config } from '@/config';
 
-const getData = async (graphqlQuery) =>
-    (
-        await got
-            .post('https://app.daily.dev/api/graphql', {
-                json: graphqlQuery,
-            })
-            .json()
-    ).data.page.edges;
+const baseUrl = 'https://app.daily.dev';
+
+const getBuildId = () =>
+    cache.tryGet(
+        'daily:buildId',
+        async () => {
+            const response = await ofetch(`${baseUrl}/onboarding`);
+            const buildId = response.match(/"buildId":"(.*?)"/)[1];
+            return buildId;
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+const getData = async (graphqlQuery) => {
+    const response = await ofetch(`${baseUrl}/api/graphql`, {
+        method: 'POST',
+        body: graphqlQuery,
+    });
+    return response.data.page.edges;
+};
 
 const getList = (data) =>
     data.map((value) => {
         const { id, title, image, permalink, summary, createdAt, numUpvotes, author, tags, numComments } = value.node;
-        const pubDate = dayjs(createdAt);
+        const pubDate = parseDate(createdAt);
         return {
             id,
             title,
@@ -30,10 +45,12 @@ const getList = (data) =>
 
 const getRedirectedLink = (data) =>
     Promise.all(
-        data.map(async (v) => {
-            const resp = await got(v.link);
-            return { ...v, link: resp.headers.link.split(/[<>]/g)[1] };
-        })
+        data.map((v) =>
+            cache.tryGet(v.link, async () => {
+                const resp = await ofetch.raw(v.link);
+                return { ...v, link: resp.headers.get('location') };
+            })
+        )
     );
 
-export { getData, getList, getRedirectedLink };
+export { baseUrl, getBuildId, getData, getList, getRedirectedLink };

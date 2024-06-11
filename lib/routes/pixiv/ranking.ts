@@ -60,7 +60,7 @@ const alias = {
 
 export const route: Route = {
     path: '/ranking/:mode/:date?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/pixiv/ranking/week',
     parameters: { mode: 'rank type', date: 'format: `2018-4-25`' },
     features: {
@@ -111,9 +111,15 @@ async function handler(ctx) {
             return {
                 title: `#${index + 1} ${illust.title}`,
                 pubDate: parseDate(illust.create_date),
-                description: `<p>画师：${illust.user.name} - 阅览数：${illust.total_view} - 收藏数：${illust.total_bookmarks}</p><br>${images.join('')}`,
+                description: `${illust.caption}<br><p>画师：${illust.user.name} - 阅览数：${illust.total_view} - 收藏数：${illust.total_bookmarks}</p><br>${images.join('')}`,
                 link: `https://www.pixiv.net/artworks/${illust.id}`,
-                author: illust.user.name,
+                author: [
+                    {
+                        name: illust.user.name,
+                        url: `https://www.pixiv.net/users/${illust.user.id}`,
+                        avatar: illust.user.profile_image_urls.medium,
+                    },
+                ],
                 category: illust.tags.map((tag) => tag.name),
             };
         }),

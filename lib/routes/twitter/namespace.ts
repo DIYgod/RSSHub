@@ -1,8 +1,8 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Twitter',
-    url: 'twitter.com',
+    name: 'X (Twitter)',
+    url: 'x.com',
     description: `Specify options (in the format of query string) in parameter \`routeParams\` to control some extra features for Tweets
 
 | Key                            | Description                                                                                                                          | Accepts                | Defaults to                               |
@@ -40,8 +40,8 @@ generates
 
 Currently supports two authentication methods:
 
-- Using TWITTER_COOKIE (recommended): Configure the cookies of logged-in Twitter Web, at least including the fields auth_token and ct0. RSSHub will use this information to directly access Twitter's web API to obtain data.
+- Using \`TWITTER_COOKIE\` (recommended): Configure the cookies of logged-in Twitter Web, at least including the fields auth_token and ct0. RSSHub will use this information to directly access Twitter's web API to obtain data.
 
-- Using TWITTER_USERNAME TWITTER_PASSWORD: Configure the Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.
+- Using \`TWITTER_USERNAME\` \`TWITTER_PASSWORD\` and \`TWITTER_AUTHENTICATION_SECRET\`: Configure the Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.
 `,
 };

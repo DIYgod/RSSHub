@@ -53,9 +53,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 8
+        uses: pnpm/action-setup@v4
 
       - name: Use Node.js Active LTS
         uses: actions/setup-node@v4

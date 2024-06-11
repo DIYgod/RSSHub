@@ -82,4 +82,4 @@ const getRealKey = (imgKey, token = DEFAULT_TOKEN) => {
     };
 };
 
-export { getBook, getChapter, getChapters, getImgEncrypted, getImgKey, getUuid, decrypt, token2Key, getRealKey };
+export { apiHost, getBook, getChapter, getChapters, getImgEncrypted, getImgKey, getUuid, decrypt, token2Key, getRealKey };

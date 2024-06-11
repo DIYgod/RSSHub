@@ -6,7 +6,7 @@ import { headers, parseItems } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
-    path: '/:language?/category_url/:url?',
+    path: '/category_url/:url?/:language?',
     categories: ['multimedia'],
     example: '/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp',
     parameters: { language: 'language, see below', url: 'relative path after `pornhub.com/`, need to be URL encoded' },

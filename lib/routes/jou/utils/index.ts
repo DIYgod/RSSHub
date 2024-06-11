@@ -1,26 +1,22 @@
 import cache from '@/utils/cache';
-// 导入got库，该库用来请求网页数据
-import got from '@/utils/got';
-// 导入cheerio库，该库用来解析网页数据
+import ofetch from '@/utils/ofetch'; // 使用ofetch库
 import { load } from 'cheerio';
-// 导入parseDate函数，该函数用于日期处理
 import { parseDate } from '@/utils/parse-date';
-// 导入timezone库，该库用于时区处理
 import timezone from '@/utils/timezone';
 
 async function getItems(ctx, url, host, tableClass, timeStyleClass1, titleStyleClass, timeStyleClass2) {
-    // 发起Http请求，获取网页数据
-    const response = await got({ url, https: { rejectUnauthorized: false } });
-    // 解析网页数据
-    const $ = load(response.data);
+    const response = await ofetch(url).catch(() => null);
+    if (!response) {
+        return [];
+    }
+    const $ = load(response);
 
-    // 通知公告的items的标题、url链接、发布日期
     const list = $(`table.${tableClass} > tbody > tr[height=20]`)
         .toArray()
         .map((item) => {
-            const currentItem = $(item); // 获取当前tr元素的jQuery对象
-            const item1 = currentItem.find('td:eq(1)'); // 获取当前tr元素下的第二个td
-            const item2 = currentItem.find('td:eq(2)'); // 获取当前tr元素下的第三个td
+            const currentItem = $(item);
+            const item1 = currentItem.find('td:eq(1)');
+            const item2 = currentItem.find('td:eq(2)');
             const link = new URL(item1.find('a').attr('href'), host).href;
 
             return {
@@ -32,22 +28,36 @@ async function getItems(ctx, url, host, tableClass, timeStyleClass1, titleStyleC
 
     const out = await Promise.all(
         list.map((item) =>
-            // 使用缓存
             cache.tryGet(item.link, async () => {
-                const response = await got({ url: item.link, https: { rejectUnauthorized: false } });
-                if (response.redirectUrls.length) {
-                    item.link = response.redirectUrls[0];
+                const response = await ofetch(item.link).catch(() => null);
+                if (!response || (response.status >= 300 && response.status < 400)) {
+                    // 响应为空或状态码表明发生了重定向
+                    return {
+                        ...item,
+                        description: '该通知无法直接预览，请点击原文链接↑查看',
+                    };
+                }
+                const $ = load(response);
+
+                item.title = $(`.${titleStyleClass}`).text();
+                const hasEmbeddedPDFScript = $('script:contains("showVsbpdfIframe")').length > 0;
+
+                if (hasEmbeddedPDFScript) {
                     item.description = '该通知无法直接预览，请点击原文链接↑查看';
                 } else {
-                    const $ = load(response.data);
-                    item.title = $(`.${titleStyleClass}`).text();
-                    item.description = $('.v_news_content')
-                        .html()
-                        .replaceAll('src="/', `src="${new URL('.', host).href}`)
-                        .replaceAll('href="/', `href="${new URL('.', host).href}`)
-                        .trim();
-                    item.pubDate = timezone(parseDate($(`.${timeStyleClass2}`).text().replace('发布时间：', '')), +8);
+                    const contentHtml = $('.v_news_content').html();
+                    const $content = load(contentHtml);
+                    $content('a').each(function () {
+                        const a = $(this);
+                        const href = a.attr('href');
+                        if (href && !href.startsWith('http')) {
+                            a.attr('href', new URL(href, host).href);
+                        }
+                    });
+                    item.description = $content.html();
                 }
+                item.pubDate = timezone(parseDate($(`.${timeStyleClass2}`).text().replace('发布时间：', '')), +8);
+
                 return item;
             })
         )

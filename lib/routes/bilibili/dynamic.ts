@@ -10,7 +10,7 @@ import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/bilibili/user/dynamic/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', routeParams: '额外参数；请参阅以下说明和表格' },
     features: {
@@ -275,17 +275,45 @@ async function handler(ctx) {
 
             let description = getDes(data) || '';
             const title = getTitle(data) || description; // 没有 title 的时候使用 desc 填充
-
+            const category: string[] = [];
             // emoji
-            if (data.module_dynamic?.desc?.rich_text_nodes?.length && showEmoji) {
-                const nodes = data.module_dynamic?.desc?.rich_text_nodes;
+            if (data.module_dynamic?.desc?.rich_text_nodes?.length) {
+                const nodes = data.module_dynamic.desc.rich_text_nodes;
                 for (const node of nodes) {
-                    if (node?.emoji) {
+                    // 处理 emoji 的情况
+                    if (showEmoji && node?.emoji) {
                         const emoji = node.emoji;
                         description = description.replaceAll(
                             emoji.text,
-                            `<img alt="${emoji.text}" src="${emoji.icon_url}"style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                            `<img alt="${emoji.text}" src="${emoji.icon_url}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
                         );
+                    }
+                    // 处理转发带图评论的情况
+                    if (node?.pics?.length) {
+                        const { pics, text } = node;
+                        description = description.replaceAll(
+                            text,
+                            pics
+                                .map(
+                                    (pic) =>
+                                        `<img alt="${text}" src="${pic.src}" style="margin: 0px 0px 0px; display: inline-block; width: ${pic.width}px; height: ${pic.height}px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                                )
+                                .join('<br>')
+                        );
+                    }
+                    if (node?.type === 'RICH_TEXT_NODE_TYPE_TOPIC') {
+                        // 将话题作为 category
+                        category.push(node.text.match(/#(\S+)#/)?.[1] || '');
+                    }
+                }
+            }
+
+            if (data.module_dynamic?.major?.opus?.summary?.rich_text_nodes?.length) {
+                const nodes = data.module_dynamic.major.opus.summary.rich_text_nodes;
+                for (const node of nodes) {
+                    if (node?.type === 'RICH_TEXT_NODE_TYPE_TOPIC') {
+                        // 将话题作为 category
+                        category.push(node.text.match(/#(\S+)#/)?.[1] || '');
                     }
                 }
             }
@@ -339,6 +367,7 @@ async function handler(ctx) {
                 pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                 link,
                 author,
+                category: category.length ? category : undefined,
             };
         })
     );

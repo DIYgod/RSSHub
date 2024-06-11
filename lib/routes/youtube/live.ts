@@ -13,7 +13,12 @@ export const route: Route = {
     example: '/youtube/live/@GawrGura',
     parameters: { username: 'YouTuber id', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'YOUTUBE_KEY',
+                description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -63,6 +68,7 @@ async function handler(ctx) {
                 pubDate: parseDate(snippet.publishedAt),
                 guid: liveVideoId,
                 link: `https://www.youtube.com/watch?v=${liveVideoId}`,
+                image: img.url,
             };
         }),
         allowEmpty: true,

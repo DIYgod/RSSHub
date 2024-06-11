@@ -28,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const xhuCookie = await auth.getCookie(ctx);
+    const xhuCookie = await auth.getCookie();
     const hexId = ctx.req.param('hexId');
     const link = `https://www.zhihu.com/people/${hexId}/answers`;
     const url = `https://api.zhihuvvv.workers.dev/people/${hexId}/answers?limit=20&offset=0`;

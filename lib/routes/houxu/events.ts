@@ -11,15 +11,6 @@ export const route: Route = {
     path: '/events',
     categories: ['new-media'],
     example: '/houxu/events',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['houxu.app/events', 'houxu.app/'],

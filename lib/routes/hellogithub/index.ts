@@ -15,7 +15,7 @@ const sorts = {
 };
 
 export const route: Route = {
-    path: ['/article/:sort?/:id?', '/:sort?/:id?'],
+    path: ['/article/:sort?/:id?'],
     categories: ['programming'],
     example: '/hellogithub/article',
     parameters: { sort: '排序方式，见下表，默认为 `hot`，即热门', id: '标签 id，可在对应标签页 URL 中找到，默认为全部标签' },
@@ -61,7 +61,7 @@ async function handler(ctx) {
 
         const $ = load(tagResponse.data);
 
-        tag = $('meta[property="og:title"]').attr('content').split(' ').pop();
+        tag = $('meta[property="og:title"]')?.attr('content')?.split(' ').pop();
         buildId = tagResponse.data.match(/"buildId":"(.*?)",/)[1];
     }
 

@@ -1,15 +1,15 @@
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
 export default async function fetch(slug: string) {
     const url = `https://go-api.twreporter.org/v2/posts/${slug}?full=true`;
-    const res = await got(url);
-    const post = res.data.data;
+    const res = await ofetch(url);
+    const post = res.data;
 
     const time = post.published_date;
     // For `writers`
@@ -33,9 +33,9 @@ export default async function fetch(slug: string) {
         authors += '；' + photographers;
     }
 
-    const bannerImage = post.og_image.resized_targets.desktop.url;
+    const bannerImage = post.hero_image.resized_targets.desktop.url;
     const caption = post.leading_image_description;
-    const bannerDescription = post.og_image.description;
+    const bannerDescription = post.hero_image.description;
     const ogDescription = post.og_description;
     const banner = art(path.join(__dirname, 'templates/image.art'), { image: bannerImage, description: bannerDescription, caption });
 
@@ -74,6 +74,12 @@ export default async function fetch(slug: string) {
                     const video = content[0].youtubeId;
                     const id = video.split('?')[0];
                     block = art(path.join(__dirname, 'templates/youtube.art'), { video: id });
+
+                    break;
+                }
+                case 'quoteby': {
+                    const quote = content[0];
+                    block = `<blockquote>${quote.quote}</blockquote><p>${quote.quoteBy}</p>`;
 
                     break;
                 }

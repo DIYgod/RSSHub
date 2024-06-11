@@ -97,7 +97,19 @@ const getUserMedia = (id: string, params?: Record<string, any>) =>
         );
     });
 
-const getUserLikes = (id: string, params?: Record<string, any>) => cacheTryGet(id, params, async (id, params = {}) => gatherLegacyFromData(await paginationTweets('Likes', id, params)));
+const getUserLikes = (id: string, params?: Record<string, any>) =>
+    cacheTryGet(id, params, async (id, params = {}) =>
+        gatherLegacyFromData(
+            await paginationTweets('Likes', id, {
+                ...params,
+                includeHasBirdwatchNotes: false,
+                includePromotedContent: false,
+                withBirdwatchNotes: false,
+                withVoice: false,
+                withV2Timeline: true,
+            })
+        )
+    );
 
 const getUserTweet = (id: string, params?: Record<string, any>) =>
     cacheTryGet(id, params, async (id, params = {}) =>

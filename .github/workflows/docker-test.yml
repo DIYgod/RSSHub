@@ -66,11 +66,11 @@ jobs:
         run: bash scripts/docker/test-docker.sh
 
       - name: Export Docker image
-        run: docker save rsshub:latest | gzip -1cf > rsshub.tar.gz
+        run: docker save rsshub:latest | zstdmt -o rsshub.tar.zst
 
       - name: Upload Docker image
         uses: actions/upload-artifact@v4
         with:
           name: docker-image
-          path: rsshub.tar.gz
+          path: rsshub.tar.zst
           retention-days: 1

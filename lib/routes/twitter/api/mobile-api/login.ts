@@ -6,12 +6,14 @@ import ofetch from '@/utils/ofetch';
 import crypto from 'crypto';
 import { config } from '@/config';
 import { v5 as uuidv5 } from 'uuid';
+import { authenticator } from 'otplib';
 import logger from '@/utils/logger';
 import cache from '@/utils/cache';
 
 const NAMESPACE = 'd41d092b-b007-48f7-9129-e9538d2d8fe9';
 const username = config.twitter.username;
 const password = config.twitter.password;
+const authenticationSecret = config.twitter.authenticationSecret;
 
 let authentication = null;
 
@@ -49,7 +51,7 @@ async function login() {
             headers['x-guest-token'] = guestToken.data.guest_token;
 
             const task1 = await ofetch.raw(
-                'https://api.twitter.com/1.1/onboarding/task.json?' +
+                'https://api.x.com/1.1/onboarding/task.json?' +
                     new URLSearchParams({
                         flow_name: 'login',
                         api_version: '1',
@@ -82,7 +84,7 @@ async function login() {
 
             headers.att = task1.headers.get('att');
 
-            const task2 = await got.post('https://api.twitter.com/1.1/onboarding/task.json', {
+            const task2 = await got.post('https://api.x.com/1.1/onboarding/task.json', {
                 headers,
                 json: {
                     flow_token: task1._data.flow_token,
@@ -100,7 +102,7 @@ async function login() {
             });
             logger.debug('Twitter login 3 finished: LoginEnterUserIdentifier.');
 
-            const task3 = await got.post('https://api.twitter.com/1.1/onboarding/task.json', {
+            const task3 = await got.post('https://api.x.com/1.1/onboarding/task.json', {
                 headers,
                 json: {
                     flow_token: task2.data.flow_token,
@@ -117,7 +119,7 @@ async function login() {
             });
             logger.debug('Twitter login 4 finished: LoginEnterPassword.');
 
-            const task4 = await got.post('https://api.twitter.com/1.1/onboarding/task.json', {
+            const task4 = await got.post('https://api.x.com/1.1/onboarding/task.json', {
                 headers,
                 json: {
                     flow_token: task3.data.flow_token,
@@ -133,38 +135,37 @@ async function login() {
             });
             logger.debug('Twitter login 5 finished: AccountDuplicationCheck.');
 
-            for (const subtask of task4.data?.subtasks || []) {
+            for await (const subtask of task4.data?.subtasks || []) {
                 if (subtask.open_account) {
                     authentication = subtask.open_account;
                     break;
                 } else if (subtask.subtask_id === 'LoginTwoFactorAuthChallenge') {
-                    // const token = authenticator.generate(authenticationSecret);
+                    const token = authenticator.generate(authenticationSecret);
 
-                    // // eslint-disable-next-line no-await-in-loop
-                    // const task5 = await got.post('https://api.twitter.com/1.1/onboarding/task.json', {
-                    //     headers,
-                    //     json: {
-                    //         flow_token: task4.data.flow_token,
-                    //         subtask_inputs: [
-                    //             {
-                    //                 enter_text: {
-                    //                     suggestion_id: null,
-                    //                     text: token,
-                    //                     link: 'next_link',
-                    //                 },
-                    //                 subtask_id: 'LoginTwoFactorAuthChallenge',
-                    //             },
-                    //         ],
-                    //     },
-                    // });
-                    // logger.debug('Twitter login 6 finished: LoginTwoFactorAuthChallenge.');
+                    const task5 = await got.post('https://api.x.com/1.1/onboarding/task.json', {
+                        headers,
+                        json: {
+                            flow_token: task4.data.flow_token,
+                            subtask_inputs: [
+                                {
+                                    enter_text: {
+                                        suggestion_id: null,
+                                        text: token,
+                                        link: 'next_link',
+                                    },
+                                    subtask_id: 'LoginTwoFactorAuthChallenge',
+                                },
+                            ],
+                        },
+                    });
+                    logger.debug('Twitter login 6 finished: LoginTwoFactorAuthChallenge.');
 
-                    // for (const subtask of task5.data?.subtasks || []) {
-                    //     if (subtask.open_account) {
-                    //         authentication = subtask.open_account;
-                    //         break;
-                    //     }
-                    // }
+                    for (const subtask of task5.data?.subtasks || []) {
+                        if (subtask.open_account) {
+                            authentication = subtask.open_account;
+                            break;
+                        }
+                    }
                     break;
                 }
             }

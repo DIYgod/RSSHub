@@ -64,13 +64,13 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const MUST_FETCH_BY_TOPICS = new Set(['authors']);
+    const MUST_FETCH_BY_TOPICS = new Set(['authors', 'tags']);
     const CAN_USE_SOPHI = ['world'];
 
     const category = ctx.req.param('category');
     const topic = ctx.req.param('topic') ?? (category === 'authors' ? 'reuters' : '');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
-    const useSophi = ctx.req.query('sophi') === 'true' && 'topic' !== '' && CAN_USE_SOPHI.includes(category);
+    const useSophi = ctx.req.query('sophi') === 'true' && topic !== '' && CAN_USE_SOPHI.includes(category);
 
     const section_id = `/${category}/${topic ? `${topic}/` : ''}`;
     const { title, description, rootUrl, response } = await (async () => {

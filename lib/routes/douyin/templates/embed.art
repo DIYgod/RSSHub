@@ -1,4 +1,4 @@
-<video controls preload="none" referrerpolicy="no-referrer"
+<video controls preload="metadata" referrerpolicy="no-referrer"
 style="width:50%"
 {{ if img }}
 poster="{{ img }}"

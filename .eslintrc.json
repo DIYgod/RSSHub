@@ -59,7 +59,7 @@
         "unicorn/explicit-length-check": 0,
         "unicorn/filename-case": ["error", { "case": "kebabCase", "ignore": [".*\\.(yaml|yml)$", "RequestInProgress\\.js$"] }],
         "unicorn/new-for-builtins": 0,
-        "unicorn/no-array-callback-reference": 0,
+        "unicorn/no-array-callback-reference": 1,
         "unicorn/no-array-reduce": 1,
         "unicorn/no-await-expression-member": 0,
         "unicorn/no-empty-file": 1,

@@ -16,7 +16,7 @@ const query = `
       ...FeedPostConnection
     }
   }
-  
+
   fragment FeedPostConnection on PostConnection {
     edges {
       node {
@@ -24,11 +24,11 @@ const query = `
       }
     }
   }
-  
+
   fragment FeedPost on Post {
     ...SharedPostInfo
   }
-  
+
   fragment SharedPostInfo on Post {
     id
     title
@@ -44,7 +44,7 @@ const query = `
     }
     tags
   }
-  
+
   fragment UserShortInfo on User {
     id
     name
@@ -53,7 +53,7 @@ const query = `
     username
     bio
   }
-  
+
 `;
 
 const graphqlQuery = {
@@ -63,21 +63,10 @@ const graphqlQuery = {
 
 export const route: Route = {
     path: '/upvoted',
-    categories: ['social-media'],
     example: '/daily/upvoted',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['daily.dev/popular'],
-            target: '',
         },
     ],
     name: 'Most upvoted',

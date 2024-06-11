@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
+import { parseToken } from '@/routes/xueqiu/cookies';
 
 export const route: Route = {
     path: '/hots',
@@ -29,12 +30,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const res1 = await got({
-        method: 'get',
-        url: 'https://xueqiu.com/',
-    });
-    const token = res1.headers['set-cookie'].find((s) => s.startsWith('xq_a_token=')).split(';')[0];
-
+    const token = await parseToken();
     const res2 = await got({
         method: 'get',
         url: 'https://xueqiu.com/statuses/hots.json',

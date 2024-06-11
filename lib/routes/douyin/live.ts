@@ -46,7 +46,7 @@ async function handler(ctx) {
             await page.setRequestInterception(true);
 
             page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+                request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
             });
             page.on('response', async (response) => {
                 const request = response.request();

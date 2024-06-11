@@ -30,7 +30,7 @@ export const route: Route = {
             target: '/channel/:id',
         },
     ],
-    name: 'Channel',
+    name: 'Channel with id',
     maintainers: ['DIYgod'],
     handler,
     description: `:::tip
@@ -69,6 +69,7 @@ async function handler(ctx) {
                     pubDate: parseDate(snippet.publishedAt),
                     link: `https://www.youtube.com/watch?v=${videoId}`,
                     author: snippet.videoOwnerChannelTitle,
+                    image: img.url,
                 };
             }),
     };

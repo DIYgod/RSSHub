@@ -18,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Tag',
-    maintainers: ['hoilc', 'nczitzk'],
+    maintainers: ['hoilc', 'nczitzk', 'LucunJi'],
     handler,
     description: `| new  | date | week | month | total |
   | ---- | ---- | ---- | ----- | ----- |
@@ -38,7 +38,7 @@ async function handler(ctx) {
     const response = await got({
         method: 'post',
         url: apiUrl,
-        form: {
+        body: new URLSearchParams({
             callCount: 1,
             scriptSessionId: '${scriptSessionId}187',
             httpSessionId: '',
@@ -55,7 +55,7 @@ async function handler(ctx) {
             'c0-param7': `number:${startingIndex}`,
             'c0-param8': 'number:0',
             batchId: 493053,
-        },
+        }),
     });
 
     const dom = new JSDOM(

@@ -61,22 +61,35 @@ async function handler(ctx) {
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+                const linkURL = new URL(item.link);
+                if (linkURL.hostname === 'www.bbc.com') {
+                    linkURL.hostname = 'www.bbc.co.uk';
+                }
+
+                const response = await ofetch(linkURL.href);
 
                 const $ = load(response);
 
-                const description = new URL(item.link).pathname.startsWith('/news/av') ? item.content : utils.ProcessFeed($);
+                const path = linkURL.pathname;
 
-                let section = 'sport';
-                const urlSplit = item.link.split('/');
-                const sectionSplit = urlSplit.at(-1).split('-');
-                if (sectionSplit.length > 1) {
-                    section = sectionSplit[0];
+                let description;
+
+                switch (true) {
+                    case path.startsWith('/sport'):
+                        description = item.content;
+                        break;
+                    case path.startsWith('/sounds/play'):
+                        description = item.content;
+                        break;
+                    case path.startsWith('/news/live'):
+                        description = item.content;
+                        break;
+                    default:
+                        description = utils.ProcessFeed($);
                 }
-                section = section[0].toUpperCase() + section.slice(1);
 
                 return {
-                    title: `[${section}] ${item.title}`,
+                    title: item.title,
                     description,
                     pubDate: item.pubDate,
                     link: item.link,

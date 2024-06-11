@@ -57,9 +57,9 @@ async function handler(ctx) {
             const href = $(item).find('a').attr('href');
 
             let absolute_path;
-            if (href.search('\\./') === 0) {
+            if (href.search(String.raw`\./`) === 0) {
                 absolute_path = `${url}${href.slice(2)}`;
-            } else if (href.search('\\./') === 1) {
+            } else if (href.search(String.raw`\./`) === 1) {
                 absolute_path = `${baseUrl}${href.slice(3)}`;
             } else {
                 absolute_path = href;

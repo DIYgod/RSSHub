@@ -1,5 +1,5 @@
 {{ if previewVideo }}
-<video controls preload="none" poster="{{ poster }}">
+<video controls preload="metadata" poster="{{ poster }}">
     <source src="{{ previewVideo }}" type="video/webm">
 </video>
 {{ /if }}

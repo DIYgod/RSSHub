@@ -4,14 +4,14 @@ import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
 import type { MiddlewareHandler } from 'hono';
 import { Data } from '@/types';
 
-// Set RSS <ttl> (minute) according to the availability of cache
-// * available: max(config.cache.routeExpire / 60, 1)
-// * unavailable: 1
-// The minimum <ttl> is limited to 1 minute to prevent potential misuse
 import cacheModule from '@/utils/cache/index';
-const ttl = (cacheModule.status.available && Math.trunc(config.cache.routeExpire / 60)) || 1;
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
+    // Set RSS <ttl> (minute) according to the availability of cache
+    // * available: max(config.cache.routeExpire / 60, 1)
+    // * unavailable: 1
+    // The minimum <ttl> is limited to 1 minute to prevent potential misuse
+    const ttl = (cacheModule.status.available && Math.trunc(config.cache.routeExpire / 60)) || 1;
     await next();
 
     const data: Data = ctx.get('data');
@@ -53,7 +53,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     // https://stackoverflow.com/questions/1497885/remove-control-characters-from-php-string/1497928#1497928
                     // remove unicode control characters
                     // see #14940 #14943 #15262
-                    item.description = item.description.replaceAll(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F]/g, '');
+                    item.description = item.description.replaceAll(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F\u200B\uFFFF]/g, '');
                 }
 
                 if (typeof item.author === 'string') {

@@ -70,14 +70,13 @@ async function handler(ctx) {
         },
     });
 
-    let isPaid = false;
+    const {
+        data: { data: channelInfo },
+    } = await got(`https://i.qingting.fm/capi/v3/channel/${channelId}?user_id=${qingtingId}`);
 
-    if (qingtingId) {
-        const {
-            data: { data: channelInfo },
-        } = await got(`https://i.qingting.fm/capi/v3/channel/${channelId}?user_id=${qingtingId}`);
-        isPaid = channelInfo.user_relevance.sale_status === 'paid';
-    }
+    const isCharged = channelInfo.purchase?.item_type !== 0;
+
+    const isPaid = channelInfo.user_relevance?.sale_status === 'paid';
 
     const resultItems = await Promise.all(
         programs.map(async (item) => {
@@ -106,7 +105,7 @@ async function handler(ctx) {
                 return rssItem;
             })) as DataItem;
 
-            if (isPaid || item.isfree) {
+            if (!isCharged || isPaid || item.isfree) {
                 data.enclosure_url = getMediaUrl(channelId, item.id);
                 data.enclosure_type = 'audio/x-m4a';
             }

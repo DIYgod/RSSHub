@@ -5,18 +5,9 @@ import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
 
 export const route: Route = {
-    path: ['/express', '/newsflash'],
+    path: '/express',
     categories: ['finance'],
     example: '/techflowpost/express',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['techflowpost.com/newsletter/index.html'],
@@ -26,7 +17,6 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'techflowpost.com/',
-    url: 'techflowpost.com/newsletter/index.html',
 };
 
 async function handler(ctx) {

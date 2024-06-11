@@ -11,15 +11,6 @@ export const route: Route = {
     path: '/memory',
     categories: ['new-media'],
     example: '/houxu/memory',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['houxu.app/memory', 'houxu.app/'],

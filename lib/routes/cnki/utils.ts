@@ -24,4 +24,4 @@ const ProcessItem = async (item) => {
     return item;
 };
 
-export default { ProcessItem };
+export { ProcessItem };

@@ -1,23 +1,41 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import path from 'path';
+import { art } from '@/utils/render';
+import { getCurrentPath } from '@/utils/helpers';
+
+const __dirname = getCurrentPath(import.meta.url);
 
 const domain = 'theblockbeats.info';
 const rootUrl = `https://www.${domain}`;
 const apiBase = `https://api.${domain}`;
 
+const render = (data) => {
+    const html = art(path.join(__dirname, 'templates/description.art'), data);
+    const $ = load(html, null, false);
+
+    $('img').each((_, e) => {
+        const $e = $(e);
+        const src = $e.attr('src');
+        $e.attr('src', src?.split('?')[0]);
+    });
+
+    return $.html();
+};
+
 const channelMap = {
     newsflash: {
         title: '快讯',
         link: `${rootUrl}/newsflash`,
-        api: `${apiBase}/v5/newsflash/select`,
+        api: `${apiBase}/v2/newsflash/list`,
     },
     article: {
         title: '文章',
         link: `${rootUrl}/article`,
-        api: `${apiBase}/v5/Information/newsall`,
+        api: `${apiBase}/v2/article/list`,
     },
 };
 
@@ -26,17 +44,21 @@ export const route: Route = {
     categories: ['finance'],
     example: '/theblockbeats/newsflash',
     parameters: { channel: '类型，见下表，默认为快讯' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: '新闻快讯',
     maintainers: ['Fatpandac', 'jameshih'],
     handler,
+    radar: [
+        {
+            title: '文章',
+            source: ['www.theblockbeats.info/article'],
+            target: '/article',
+        },
+        {
+            title: '快讯',
+            source: ['www.theblockbeats.info/newsflash'],
+            target: '/newsflash',
+        },
+    ],
     description: `|    快讯   |   文章  |
   | :-------: | :-----: |
   | newsflash | article |`,
@@ -45,23 +67,32 @@ export const route: Route = {
 async function handler(ctx) {
     const { channel = 'newsflash' } = ctx.req.param();
 
-    const { data: response } = await got(channelMap[channel].api);
+    const response = await ofetch(channelMap[channel].api, {
+        query: {
+            limit: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20,
+        },
+    });
 
-    const { data } = channel === 'newsflash' ? response.data : response;
-    let list = data.map((item) => ({
+    let list = response.data.list.map((item) => ({
         title: item.title,
-        link: `${rootUrl}/${channel === 'newsflash' ? 'flash' : 'news'}/${item.id}`,
-        description: item.content ?? item.im_abstract,
+        link: `${rootUrl}/${channel === 'newsflash' ? 'flash' : 'news'}/${item.article_id}`,
+        description: item.content ?? item.abstract,
         pubDate: parseDate(item.add_time, 'X'),
+        author: item.author?.nickname,
+        category: item.tag_list,
+        imgUrl: item.img_url,
     }));
 
     if (channel !== 'newsflash') {
         list = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const { data: response } = await got(item.link);
+                    const response = await ofetch(item.link);
                     const $ = load(response);
-                    item.description = $('div.news-content').html();
+                    item.description = render({
+                        image: item.imgUrl,
+                        description: $('div.news-content').html(),
+                    });
                     return item;
                 })
             )

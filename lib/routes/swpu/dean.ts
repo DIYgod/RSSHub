@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { DataItem, Route, Data } from '@/types';
 import cache from '@/utils/cache';
 import { joinUrl } from './utils';
 import { parseDate } from '@/utils/parse-date';
@@ -34,7 +34,7 @@ export const route: Route = {
   | 代码 | tzgg     | xwbd     | sdsy     |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const url = `https://www.swpu.edu.cn/dean/${ctx.req.param('code')}.htm`;
 
     const res = await got.get(url);
@@ -44,39 +44,37 @@ async function handler(ctx) {
     title = title.substring(title.indexOf('：') + 1);
 
     // 获取标题、时间及链接
-    const items = [];
-    $('.r_list > ul > li').each((i, elem) => {
-        items.push({
+    const items: DataItem[] = $('.r_list > ul > li')
+        .toArray()
+        .map((elem) => ({
             title: $('label:eq(0)', elem).text().trim(),
             link: joinUrl('https://www.swpu.edu.cn/dean/', $('a', elem).attr('href')),
-        });
-    });
+        }));
 
     // 请求全文
     const out = await Promise.all(
-        items.map(async (item) => {
-            const $ = await cache.tryGet(item.link, async () => {
-                const res = await got.get(item.link);
-                return load(res.data);
-            });
-
-            if ($('title').text().startsWith('系统提示')) {
-                item.author = '系统';
-                item.description = '无权访问';
-            } else {
-                item.author = '教务处';
-                item.description = $('.v_news_content').html();
-                item.pubDate = timezone(parseDate($('#lbDate').text(), '更新时间：YYYY年MM月DD日'), +8);
-                for (const elem of $('.v_news_content p')) {
-                    if ($(elem).css('text-align') === 'right') {
-                        item.author = $(elem).text();
-                        break;
+        items.map(
+            async (item) =>
+                (await cache.tryGet(item.link!, async () => {
+                    const resp = await got.get(item.link);
+                    const $ = load(resp.data);
+                    if ($('title').text().startsWith('系统提示')) {
+                        item.author = '系统';
+                        item.description = '无权访问';
+                    } else {
+                        item.author = '教务处';
+                        item.description = $('.v_news_content').html()!;
+                        item.pubDate = timezone(parseDate($('#lbDate').text(), '更新时间：YYYY年MM月DD日'), +8);
+                        for (const elem of $('.v_news_content p')) {
+                            if ($(elem).css('text-align') === 'right') {
+                                item.author = $(elem).text();
+                                break;
+                            }
+                        }
                     }
-                }
-            }
-
-            return item;
-        })
+                    return item;
+                })) as DataItem
+        )
     );
 
     return {

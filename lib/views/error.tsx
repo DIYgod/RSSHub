@@ -1,29 +1,7 @@
 import type { FC } from 'hono/jsx';
 
+import { Layout } from '@/views/layout';
 import { gitHash, gitDate } from '@/utils/git-hash';
-
-const Layout: FC = (props) => (
-    <html>
-        <head>
-            <title>Welcome to RSSHub!</title>
-            <script src="https://cdn.tailwindcss.com"></script>
-            <style>
-                {`
-                details::-webkit-scrollbar {
-                    width: 0.25rem;
-                }
-                details::-webkit-scrollbar-thumb {
-                    border-radius: 0.125rem;
-                    background-color: #e4e4e7;
-                }
-                details::-webkit-scrollbar-thumb:hover {
-                    background-color: #a1a1aa;
-                }`}
-            </style>
-        </head>
-        <body className="antialiased text-zinc-700">{props.children}</body>
-    </html>
-);
 
 const Index: FC<{
     requestPath: string;
@@ -103,7 +81,7 @@ const Index: FC<{
                             Telegram channel
                         </a>{' '}
                         and{' '}
-                        <a target="_blank" href="https://twitter.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
+                        <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
                             Twitter
                         </a>{' '}
                         to get community support and news.
@@ -118,7 +96,7 @@ const Index: FC<{
                             Telegram 频道
                         </a>
                         和{' '}
-                        <a target="_blank" href="https://twitter.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
+                        <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
                             Twitter
                         </a>{' '}
                         获取社区支持和新闻。
@@ -137,8 +115,8 @@ const Index: FC<{
                 <a target="_blank" href="https://t.me/awesomeRSSHub">
                     <img className="inline" src="https://icons.ly/telegram" alt="telegram channel" width="20" height="20" />
                 </a>
-                <a target="_blank" href="https://twitter.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
-                    <img className="inline" src="https://icons.ly/twitter" alt="github" width="20" height="20" />
+                <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
+                    <img className="inline" src="https://icons.ly/x" alt="X" width="20" height="20" />
                 </a>
             </p>
             <p className="!mt-6">

@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import { parseToken } from '@/routes/xueqiu/cookies';
 
 export const route: Route = {
     path: '/today',
@@ -35,13 +36,7 @@ async function handler(ctx) {
     const currentUrl = `${rootUrl}/today`;
     const apiUrl = `${rootUrl}/statuses/hot/listV2.json?since_id=-1&size=${size}`;
 
-    const firstResponse = await got({
-        method: 'get',
-        url: rootUrl,
-    });
-
-    const token = firstResponse.headers['set-cookie'].join(',').match(/(xq_a_token=.*?;)/)[1];
-
+    const token = await parseToken();
     const response = await got({
         method: 'get',
         url: apiUrl,

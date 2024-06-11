@@ -19,7 +19,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ycombinator.com/:section', 'ycombinator.com/'],
+            source: ['news.ycombinator.com/:section', 'news.ycombinator.com/'],
         },
     ],
     name: '用户',

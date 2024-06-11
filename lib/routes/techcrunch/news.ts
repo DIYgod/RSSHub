@@ -44,6 +44,8 @@ async function handler() {
                 const description = $('#root');
                 description.find('.article__title').remove();
                 description.find('.article__byline__meta').remove();
+                description.find('.mobile-header-nav').remove();
+                description.find('.desktop-nav').remove();
                 return {
                     title: item.title,
                     pubDate: item.pubDate,

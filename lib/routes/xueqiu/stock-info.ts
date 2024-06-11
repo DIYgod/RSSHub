@@ -4,6 +4,7 @@ import { load } from 'cheerio';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
+import { parseToken } from '@/routes/xueqiu/cookies';
 
 export const route: Route = {
     path: '/stock_info/:id/:type?',
@@ -49,8 +50,8 @@ async function handler(ctx) {
         method: 'get',
         url: `https://xueqiu.com/S/${id}`,
     });
-    const token = res1.headers['set-cookie'].find((s) => s.startsWith('xq_a_token=')).split(';')[0];
 
+    const token = await parseToken();
     const $ = load(res1.data); // 使用 cheerio 加载返回的 HTML
     const stock_name = $('.stock-name').text().split('(')[0];
 

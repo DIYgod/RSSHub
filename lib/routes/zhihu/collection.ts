@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import utils from './utils';
+import { header } from './utils';
 import { generateData } from './pin/utils';
 import { parseDate } from '@/utils/parse-date';
 
@@ -38,7 +38,7 @@ async function handler(ctx) {
         method: 'get',
         url: `https://www.zhihu.com/api/v4/collections/${id}/items?offset=0&limit=20`,
         headers: {
-            ...utils.header,
+            ...header,
             Referer: `https://www.zhihu.com/collection/${id}`,
         },
     });
@@ -56,7 +56,7 @@ async function handler(ctx) {
                         method: 'get',
                         url: `https://www.zhihu.com/api/v4/collections/${id}/items?offset=${offset}&limit=20`,
                         headers: {
-                            ...utils.header,
+                            ...header,
                             Referer: `https://www.zhihu.com/collection/${id}`,
                         },
                     });
@@ -72,7 +72,7 @@ async function handler(ctx) {
         method: 'get',
         url: `https://www.zhihu.com/collection/${id}`,
         headers: {
-            ...utils.header,
+            ...header,
             Referer: `https://www.zhihu.com/collection/${id}`,
         },
     });

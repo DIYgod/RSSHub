@@ -6,7 +6,7 @@ import { headers, parseItems } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
-    path: '/:language?/pornstar/:username/:sort?',
+    path: '/pornstar/:username/:language?/:sort?',
     categories: ['multimedia'],
     example: '/pornhub/pornstar/june-liu',
     parameters: { language: 'language, see below', username: 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`', sort: 'sorting method, see below' },
@@ -36,19 +36,19 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language = 'www', username, sort = 'mr' } = ctx.req.param();
-    const link = `https://${language}.pornhub.com/pornstar/${username}/videos?o=${sort}`;
+    const link = `https://${language}.pornhub.com/pornstar/${username}?o=${sort}`;
     if (!isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');
     }
 
     const { data: response } = await got(link, { headers });
     const $ = load(response);
-    const items = $('#mostRecentVideosSection .videoBox')
+    const items = $('#pornstarsVideoSection .videoBox')
         .toArray()
         .map((e) => parseItems($(e)));
 
     return {
-        title: $('title').first().text(),
+        title: $('h1').first().text(),
         description: $('section.aboutMeSection').text().trim(),
         link,
         image: $('#coverPictureDefault').attr('src'),

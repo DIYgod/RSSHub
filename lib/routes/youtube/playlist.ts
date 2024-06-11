@@ -11,7 +11,12 @@ export const route: Route = {
     example: '/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z',
     parameters: { id: 'YouTube playlist id', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'YOUTUBE_KEY',
+                description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -48,6 +53,7 @@ async function handler(ctx) {
                 pubDate: parseDate(snippet.publishedAt),
                 link: `https://www.youtube.com/watch?v=${videoId}`,
                 author: snippet.videoOwnerChannelTitle,
+                image: img.url,
             };
         }),
     };
