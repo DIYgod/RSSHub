@@ -17,12 +17,12 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'The Banker - News in Brief',
-    maintainers: ['username'],
-    handler,
+    maintainers: ['benjaminyzhang'],
     description: 'RSS feed for The Banker website news briefs.',
+    handler,
 };
 
-async function handler(ctx) {
+async function handler(_) {
     const url = 'https://www.thebanker.com/News-in-Brief';
     const response = await got(url);
     const $ = load(response.data);
@@ -42,7 +42,7 @@ async function handler(ctx) {
     }
 
     const result = await Promise.all(
-        list.map(item => cache.tryGet(item.link, async () => item))
+        list.map((item) => cache.tryGet(item.link, () => Promise.resolve(item)))
     );
 
     return {
