@@ -17,8 +17,8 @@ const typeMap = {
 export const route: Route = {
     path: '/notice/:type?',
     categories: ['programming'],
-    example: '/notice/1',
-    parameters: { type: 'N' },
+    example: '/dangdang/notice/1',
+    parameters: { type: '公告分类，默认为全部' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -28,7 +28,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '公告',
-    maintainers: [],
+    maintainers: ['zhijunchai'],
     handler,
     description: `| 类型     | type |
   | -------- | ---- |
