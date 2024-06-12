@@ -28,7 +28,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '公告',
-    maintainers: ['zhijunchai'],
+    maintainers: ['353325487'],
     handler,
     description: `| 类型     | type |
   | -------- | ---- |
