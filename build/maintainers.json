@@ -1431,6 +1431,9 @@
   "/damai/activity/:city/:category/:subcategory/:keyword?": [
     "hoilc"
   ],
+  "/dangdang/notice/:type?": [
+    "zhijunchai"
+  ],
   "/dapenti/subject/:id": [
     "xyqfer"
   ],

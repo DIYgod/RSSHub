@@ -14903,6 +14903,36 @@
     "name": "大麦网",
     "url": "search.damai.cn"
   },
+  "dangdang": {
+    "routes": {
+      "/notice/:type?": {
+        "path": "/notice/:type?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/dangdang/notice/1",
+        "parameters": {
+          "type": "公告分类，默认为全部"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "公告",
+        "maintainers": [
+          "zhijunchai"
+        ],
+        "description": "| 类型     | type |\n  | -------- | ---- |\n  | 全部      | 0    |\n  | 其他      | 1    |\n  | 规则变更   | 2    |",
+        "location": "notice.ts"
+      }
+    },
+    "name": "当当开放平台",
+    "url": "open.dangdang.com"
+  },
   "dapenti": {
     "routes": {
       "/subject/:id": {
