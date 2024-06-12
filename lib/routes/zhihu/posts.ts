@@ -20,7 +20,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.zhihu.com/:usertype/:id/posts'],
+            source: ['www.zhihu.com/:usertype/:id/posts', 'www.zhihu.com/:usertype/:id'],
         },
     ],
     name: '用户文章',

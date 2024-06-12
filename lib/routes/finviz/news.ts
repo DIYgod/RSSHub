@@ -32,9 +32,9 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'finviz.com/news.ashx',
-    description: `| News | Blog |
+    description: `| News | Blogs |
   | ---- | ---- |
-  | news | blog |`,
+  | news | blogs |`,
 };
 
 async function handler(ctx) {
@@ -54,7 +54,7 @@ async function handler(ctx) {
 
     const items = $('table.table-fixed')
         .eq(categories[category.toLowerCase()])
-        .find('tr.nn')
+        .find('tr')
         .slice(0, limit)
         .toArray()
         .map((item) => {
@@ -77,7 +77,7 @@ async function handler(ctx) {
                 link: a.prop('href'),
                 description: descriptionMatches ? descriptionMatches[1] : undefined,
                 author: authorMatches ? authorMatches[1].replaceAll('-', ' ') : 'finviz',
-                pubDate: timezone(parseDate(item.find('td.nn-date').text(), ['HH:mmA', 'MMM-DD']), -4),
+                pubDate: timezone(parseDate(item.find('td.news_date-cell').text(), ['HH:mmA', 'MMM-DD']), -4),
             };
         })
         .filter((item) => item.title);
