@@ -14924,7 +14924,7 @@
         },
         "name": "公告",
         "maintainers": [
-          "zhijunchai"
+          "353325487"
         ],
         "description": "| 类型     | type |\n  | -------- | ---- |\n  | 全部      | 0    |\n  | 其他      | 1    |\n  | 规则变更   | 2    |",
         "location": "notice.ts"
