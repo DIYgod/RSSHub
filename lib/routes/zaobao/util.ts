@@ -41,7 +41,7 @@ const parseList = async (
     let data = $('.article-list').find('.article-type');
     if (data.length === 0) {
         // for HK version
-        data = $('.clearfix').find('.list-block');
+        data = $('.on-listing-pages');
     }
 
     const title = $('meta[property="og:title"]').attr('content');
