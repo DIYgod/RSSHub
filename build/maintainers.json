@@ -5427,6 +5427,9 @@
   "/steam/search/:params": [
     "moppman"
   ],
+  "/steam/sharefile-changelog/:sharefileID/:routeParams?": [
+    "NyaaaDoge"
+  ],
   "/steam/workshopsearch/:appid?/:routeParams?": [
     "NyaaaDoge"
   ],

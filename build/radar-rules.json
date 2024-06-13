@@ -15372,6 +15372,14 @@
         "target": "/steam/appcommunityfeed/:appid"
       },
       {
+        "title": "Sharefile Changelog",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/sharedfiles/filedetails/changelog/:sharefileID"
+        ],
+        "target": "/steam/sharefile-changelog/:sharefileID"
+      },
+      {
         "title": "Workshop Search Results",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
