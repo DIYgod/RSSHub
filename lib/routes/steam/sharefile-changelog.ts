@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/sharefile-changelog/:sharefileID/:routeParams?',
     categories: ['game'],
-    example: '/sharefile-changelog/2851063440/l=schinese',
+    example: '/steam/sharefile-changelog/2851063440/l=schinese',
     parameters: {
         sharefileID: 'Steam community sharefile id. Usually refers to a workshop item.',
         routeParams: 'Route parameters.',
