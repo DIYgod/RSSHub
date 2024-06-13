@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/sharefile-changelog/:sharefileID/:routeParams?',
@@ -50,12 +50,12 @@ Helpful route parameters:
                     title: changelogHeadline,
                     link: `https://steamcommunity.com/sharedfiles/filedetails/changelog/${sharefileID}`,
                     description: changeDetail,
-                    pubDate: dayjs.unix(changelogTimestamp).toDate(),
+                    pubDate: parseDate(changelogTimestamp),
                 };
             });
 
         return {
-            title: String(itemTitle),
+            title: itemTitle,
             link: `https://steamcommunity.com/sharedfiles/filedetails/changelog/${sharefileID}`,
             description: `${appName} steam community sharefile changelog`,
             item: items,
