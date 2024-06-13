@@ -50,7 +50,7 @@ Helpful route parameters:
                     title: changelogHeadline,
                     link: `https://steamcommunity.com/sharedfiles/filedetails/changelog/${sharefileID}`,
                     description: changeDetail,
-                    pubDate: parseDate(changelogTimestamp),
+                    pubDate: parseDate(changelogTimestamp, 'X'),
                 };
             });
 
