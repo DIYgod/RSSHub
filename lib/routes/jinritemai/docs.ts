@@ -20,7 +20,7 @@ export const route: Route = {
     path: '/docs/:dirId?',
     categories: ['programming'],
     example: '/jinritemai/docs/19',
-    parameters: { categoryId: '公告分类, 可在页面URL获取 默认为全部' },
+    parameters: { dirId: '公告分类, 可在页面URL获取 默认为全部' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
