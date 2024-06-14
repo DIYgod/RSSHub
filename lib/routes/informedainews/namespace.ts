@@ -8,7 +8,7 @@ export const namespace: Namespace = {
 informed AI RSS feeds:
 
 -   World News Daily: 'https://rsshub.app/informedainews/zh-Hans/docs/world-news-daily'
--   Tech Enthusiast Weekly: 'https://rsshub.app/informedainews/zh-Hans/docs/tech-enthusiast-daily'
+-   Tech Enthusiast Weekly: 'https://rsshub.app/informedainews/zh-Hans/docs/tech-enthusiast-weekly'
 -   AI Enthusiast Weekly: 'https://rsshub.app/informedainews/zh-Hans/docs/ai-enthusiast-daily'
 :::`,
 

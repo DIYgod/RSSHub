@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/zh-Hans/docs/:type',
     categories: ['new-media'],
     example: '/informedainews/zh-Hans/docs/world-news-daily',
-    parameters: { type: 'world-news-daily|tech-enthusiast-daily|ai-enthusiast-daily' },
+    parameters: { type: 'world-news-daily|tech-enthusiast-weekly|ai-enthusiast-daily' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
