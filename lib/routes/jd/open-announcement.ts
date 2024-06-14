@@ -40,12 +40,12 @@ async function handler(ctx) {
     const url = `https://open.jd.com/bffapi/doc/getNewJosChannelInfo?channelId=${listId}&pageIndex=1`;
     const response = await got({ method: 'get', url });
 
-    const channels = response.data.responseData.josCmsChannels
-        ? response.data.responseData.josCmsChannels.reduce((acc, item) => {
-              acc[item.id] = item.channelName;
-              return acc;
-          }, {})
-        : {};
+    const channels = {};
+    if (response.data.responseData.josCmsChannels) {
+        for (const item of response.data.responseData.josCmsChannels) {
+            channels[item.id] = item.channelName;
+        }
+    }
 
     const list = response.data.responseData.josCmsArticle.map((item) => ({
         title: item.articleTitle,

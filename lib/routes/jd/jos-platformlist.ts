@@ -11,7 +11,7 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/jos/platformlist/:listId?',
     categories: ['programming'],
-    example: '/jd/jos/platformlist/851',
+    example: '/jd/jos/platformlist/328',
     parameters: { listId: '公告分类, 可在页面URL获取' },
     features: {
         requireConfig: false,
@@ -39,12 +39,12 @@ async function handler(ctx) {
     const url = `https://joshome.jd.com/doc/getNewJosChannelInfo?channelId=${listId}&pageIndex=1&pageSize=20`;
     const response = await got({ method: 'get', url });
 
-    const channels = response.data.data.josCmsChannels
-        ? response.data.data.josCmsChannels.reduce((acc, item) => {
-              acc[item.id] = item.channelName;
-              return acc;
-          }, {})
-        : {};
+    const channels = {};
+    if (response.data.data.josCmsChannels) {
+        for (const item of response.data.data.josCmsChannels) {
+            channels[item.id] = item.channelName;
+        }
+    }
 
     const list = response.data.data.josCmsArticle.map((item) => ({
         title: item.articleTitle,
