@@ -6,8 +6,8 @@ import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/zh-Hans/docs/:type',
-    categories: ['journal'],
-    example: '/docs/world-news-daily',
+    categories: ['new-media'],
+    example: '/informedainews/zh-Hans/docs/world-news-daily',
     parameters: { type: 'world-news-daily|tech-enthusiast-daily|ai-enthusiast-daily' },
     features: {
         requireConfig: false,
@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '知闻AI',
-    maintainers: ['xirizhi'],
+    maintainers: ['guicaiyue'],
     handler,
 };
 
@@ -48,7 +48,7 @@ async function handler(ctx) {
                 title: text,
                 link: `https://informedainews.com${a.attr('href')}`,
                 pubDate: parseDate(date),
-                author: `AI`,
+                author: 'AI',
             };
         });
 

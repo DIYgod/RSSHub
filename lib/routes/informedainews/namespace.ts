@@ -7,9 +7,9 @@ export const namespace: Namespace = {
 :::tip
 informed AI RSS feeds:
 
--   World News Daily: \`https://informedainews.com/docs/world-news-daily\`
--   Tech Enthusiast Weekly: \`https://informedainews.com/docs/tech-enthusiast-daily\`
--   AI Enthusiast Weekly: \`https://informedainews.com/docs/ai-enthusiast-daily\`
+-   World News Daily: 'https://rsshub.app/informedainews/zh-Hans/docs/world-news-daily'
+-   Tech Enthusiast Weekly: 'https://rsshub.app/informedainews/zh-Hans/docs/tech-enthusiast-daily'
+-   AI Enthusiast Weekly: 'https://rsshub.app/informedainews/zh-Hans/docs/ai-enthusiast-daily'
 :::`,
 
     zh: {
