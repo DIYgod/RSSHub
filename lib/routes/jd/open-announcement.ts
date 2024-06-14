@@ -22,7 +22,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '平台公告',
-    maintainers: ['zhijunchai'],
+    maintainers: ['blade0910'],
     handler,
     description: `| 类型        | type       |
   | ---------- | ---------- |
@@ -36,7 +36,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const listId = ctx.req.param('listId') ? ctx.req.param('listId') : '';
+    const listId = ctx.req.param('listId') || '';
     const url = `https://open.jd.com/bffapi/doc/getNewJosChannelInfo?channelId=${listId}&pageIndex=1`;
     const response = await got({ method: 'get', url });
 
