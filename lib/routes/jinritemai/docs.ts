@@ -1,8 +1,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import dayjs from 'dayjs';
 import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/parse-date';
 
 const typeMap = {
     '5': '全部公告',
@@ -30,7 +30,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '平台公告',
-    maintainers: ['zhijunchai'],
+    maintainers: ['blade0910'],
     handler,
     description: `| 类型    | type    |
   | --------- | ---------- |
@@ -42,9 +42,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const dirId = ctx.req.param('dirId') ? ctx.req.param('dirId') : '5';
-    const limit = ctx.req.param('limit') ? Number.parseInt(ctx.req.param('limit')) : 10;
-    const url = `https://op.jinritemai.com/doc/external/open/queryDocArticleList?pageIndex=0&pageSize=${limit}&status=1&dirId=${dirId}&orderType=3`;
+    const dirId = ctx.req.param('dirId') || '5';
+    const url = `https://op.jinritemai.com/doc/external/open/queryDocArticleList?pageIndex=0&pageSize=10&status=1&dirId=${dirId}&orderType=3`;
     const response = await got({ method: 'get', url });
 
     const list = response.data.data.articles.map((item) => ({
@@ -52,7 +51,7 @@ async function handler(ctx) {
         id: item.id,
         dirName: item.dirName,
         link: `https://op.jinritemai.com/docs/notice-docs/${dirId}/${item.id}`,
-        pubDate: timezone(dayjs.unix(item.createTime).format('YYYY-MM-DD HH:mm:ss'), +8),
+        pubDate: timezone(parseDate(item.updateTime * 1000), +8),
     }));
 
     const result = await Promise.all(

@@ -29,7 +29,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '平台公告',
-    maintainers: ['zhijunchai'],
+    maintainers: ['blade0910'],
     handler,
     description: `| 类型             | type       |
   | ---------------- | ---------- |
@@ -64,7 +64,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const itemResponse = await got({
                     method: 'post',
-                    url: `https://open.dewu.com/api/v1/h5/merchant-study/open/document/getDocumentDetail`,
+                    url: 'https://open.dewu.com/api/v1/h5/merchant-study/open/document/getDocumentDetail',
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -80,7 +80,7 @@ async function handler(ctx) {
 
     return {
         title: `得物开放平台 - ${typeMap[categoryId] ?? '平台公告'}`,
-        link: `https://open.dewu.com/#/declaration/read`,
+        link: 'https://open.dewu.com/#/declaration/read',
         item: result,
     };
 }
