@@ -1,7 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
 const typeMap = {
@@ -51,7 +50,7 @@ async function handler(ctx) {
         id: item.id,
         dirName: item.dirName,
         link: `https://op.jinritemai.com/docs/notice-docs/${dirId}/${item.id}`,
-        pubDate: timezone(parseDate(item.updateTime * 1000), +8),
+        pubDate: parseDate(item.updateTime * 1000),
     }));
 
     const result = await Promise.all(
