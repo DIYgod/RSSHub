@@ -15667,6 +15667,36 @@
     "name": "DevolverDigital",
     "url": "devolverdigital.com"
   },
+  "dewu": {
+    "routes": {
+      "/declaration/:categoryId?": {
+        "path": "/declaration/:categoryId?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/dewu/declaration/1010580020",
+        "parameters": {
+          "categoryId": "公告分类, 可在页面URL获取 默认为1010580020"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "平台公告",
+        "maintainers": [
+          "blade0910"
+        ],
+        "description": "| 类型             | type       |\n  | ---------------- | ---------- |\n  | 技术变更         | 1010580020 |\n  | 服务市场规则中心 | 1014821004 |\n  | 规则变更         | 1011202692 |\n  | 维护公告         | 1010568195 |",
+        "location": "declaration.ts"
+      }
+    },
+    "name": "得物",
+    "url": "dewu.com"
+  },
   "dgjyw": {
     "routes": {
       "*": {
@@ -32671,6 +32701,36 @@
     },
     "name": "精真估",
     "url": "www.jingzhengu.com"
+  },
+  "jinritemai": {
+    "routes": {
+      "/docs/:dirId?": {
+        "path": "/docs/:dirId?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/jinritemai/docs/19",
+        "parameters": {
+          "dirId": "公告分类, 可在页面URL获取 默认为全部"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "平台公告",
+        "maintainers": [
+          "blade0910"
+        ],
+        "description": "| 类型    | type    |\n  | --------- | ---------- |\n  | 全部公告    | 5    |\n  | 产品发布    | 19   |\n  | 规则变更    | 21   |\n  | 维护公告    | 20   |\n  | 其他公告    | 22   |",
+        "location": "docs.ts"
+      }
+    },
+    "name": "抖店开放平台",
+    "url": "op.jinritemai.com"
   },
   "jinse": {
     "routes": {

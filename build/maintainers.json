@@ -1506,6 +1506,9 @@
   "/devolverdigital/blog": [
     "XXY233"
   ],
+  "/dewu/declaration/:categoryId?": [
+    "blade0910"
+  ],
   "/dgjyw*": [],
   "/dhu/jiaowu/news/:type?": [
     "KiraKiseki"
@@ -3249,6 +3252,9 @@
   ],
   "/jingzhengu/news": [
     "TonyRL"
+  ],
+  "/jinritemai/docs/:dirId?": [
+    "blade0910"
   ],
   "/jinse/:category?": [
     "nczitzk"
