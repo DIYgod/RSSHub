@@ -127,7 +127,7 @@ async function handler(ctx) {
         },
     });
 
-    const categoryObject = categoryResponse.data.filter((c) => c.name === category).pop();
+    const categoryObject = categoryResponse.data.findLast((c) => c.name === category);
 
     const { data: response } = await got(apiUrl, {
         searchParams: {
