@@ -52503,6 +52503,34 @@
         "description": "| 通知公告 | 学院动态 | 教学管理 | 动科大讲堂 | 就业信息 |\n  | -------- | -------- | -------- | ---------- | -------- |\n  | tzgg     | xydt     | jxgl     | dkdjt      | zpxx     |",
         "location": "dky.ts"
       },
+      "/jiaowu/jxtz": {
+        "path": "/jiaowu/jxtz",
+        "categories": [
+          "university"
+        ],
+        "example": "/sicau/jiaowu/jxtz",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "jiaowu.sicau.edu.cn/"
+            ]
+          }
+        ],
+        "name": "教务处",
+        "maintainers": [
+          "hualiong"
+        ],
+        "url": "jiaowu.sicau.edu.cn/",
+        "location": "jiaowu.ts"
+      },
       "/yan/:category?": {
         "path": "/yan/:category?",
         "categories": [
@@ -52569,7 +52597,7 @@
       }
     },
     "name": "四川农业大学",
-    "url": "dky.sicau.edu.cn"
+    "url": "www.sicau.edu.cn"
   },
   "sigsac": {
     "routes": {
