@@ -77,6 +77,7 @@
         "googleapis": "140.0.0",
         "hono": "4.4.6",
         "html-to-text": "9.0.5",
+        "http-cookie-agent": "6.0.5",
         "https-proxy-agent": "7.0.4",
         "iconv-lite": "0.6.3",
         "imapflow": "1.0.162",
