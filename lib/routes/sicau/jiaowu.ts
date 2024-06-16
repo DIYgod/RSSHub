@@ -2,6 +2,8 @@ import { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const $get = async (url: string, encoding = 'gb2312') => new TextDecoder(encoding).decode(await ofetch(url, { responseType: 'arrayBuffer' }));
 
@@ -12,7 +14,7 @@ const handleJxtz = async (item: DataItem) => {
     item.title = $('body > .page-title-2').text();
 
     const date = $('body > p.page-title-3').text();
-    item.pubDate = date.match(/(\d{4}(?:-\d{1,2}){2})/)![0];
+    item.pubDate = timezone(parseDate(date.match(/(\d{4}(?:-\d{1,2}){2})/)![0], 'YYYY-M-D'), +8);
 
     const str = $('.text1[valign="bottom"]').text();
     const match = str.match(/起草：(.+?)\[(.+?)]/)!;
@@ -33,7 +35,7 @@ const handleXwdt = async (item: DataItem) => {
     const info = $('#article > div.info').text();
     const match = info.match(/作者：(.+?) .+?\s.*?发布日期：(\d{4}(?:\/\d{1,2}){2})/)!;
     item.author = match[1];
-    item.pubDate = match[2];
+    item.pubDate = timezone(parseDate(match[2], 'YYYY/M/D'), +8);
 
     item.description = $('#article > div.content').html()!;
 
