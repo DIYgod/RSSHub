@@ -201,8 +201,8 @@ importers:
         specifier: 3.5.3
         version: 3.5.3
       tldts:
-        specifier: 6.1.25
-        version: 6.1.25
+        specifier: 6.1.26
+        version: 6.1.26
       tosource:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
@@ -2553,8 +2553,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  electron-to-chromium@1.4.802:
-    resolution: {integrity: sha512-TnTMUATbgNdPXVSHsxvNVSG0uEd6cSZsANjm8c9HbvflZVVn1yTRcmVXYT1Ma95/ssB/Dcd30AHweH2TE+dNpA==}
+  electron-to-chromium@1.4.803:
+    resolution: {integrity: sha512-61H9mLzGOCLLVsnLiRzCbc63uldP0AniRYPV3hbGVtONA1pI7qSGILdbofR7A8TMbOypDocEAjH/e+9k1QIe3g==}
 
   ellipsize@0.1.0:
     resolution: {integrity: sha512-5gxbEjcb/Z2n6TTmXZx9wVi3N/DOzE7RXY3Xg9dakDuhX/izwumB9rGjeWUV6dTA0D0+juvo+JonZgNR9sgA5A==}
@@ -2917,8 +2917,8 @@ packages:
     resolution: {integrity: sha512-SKmowqGTJoPzLO1T0BBJpkfp3EMacCMOuH40hOUbrbzElVktk4DioXVM99QkLCyKoiuOmyjgcWMpVz2xjE7LZw==}
     engines: {node: '>=0.10.0'}
 
-  foreground-child@3.2.0:
-    resolution: {integrity: sha512-CrWQNaEl1/6WeZoarcM9LHupTo3RpZO2Pdk1vktwzPiQTsJnAKJmm3TACKeG5UZbWDfaH2AbvYxzP96y0MT7fA==}
+  foreground-child@3.2.1:
+    resolution: {integrity: sha512-PXUUyLqrR2XCWICfv6ukppP96sdFwWbNEnfEMt7jNsISjMsvaLNinAHNDYyvkyU+SZG2BTSbT5NjG+vZslfGTA==}
     engines: {node: '>=14'}
 
   forever-agent@0.6.1:
@@ -4995,11 +4995,15 @@ packages:
     resolution: {integrity: sha512-GA16+8HXvqtfEnw/DTcwB0UU354QE1n3+wh08oFjr6Znl7ZLAeUgYzCcK+/CCrOyE0vnHR8/pu3XXG3vDijXpQ==}
     hasBin: true
 
-  tldts-core@6.1.25:
-    resolution: {integrity: sha512-hbSsjJOeDMV91JiqcrrFQ46D7EepH880zVmPjnBDmt3P+h0Aowz8Nh1adIcqkdhJbgpzZYQr6aM8/N3tZC6JyA==}
+  tlds@1.253.0:
+    resolution: {integrity: sha512-lNov5nt5/xw6nK00gtoQSA2I4HcpAnot1TMJccTNw2rtL5jdLN26h3f+mT8VF4JBv5/rBNXyuUPWcogceyKJJw==}
+    hasBin: true
 
-  tldts@6.1.25:
-    resolution: {integrity: sha512-UmjB1dVArio9hny1D84VFeEvE37nCyfW5sWHr7AUV2MxJgxD8NR/kdmEMyjx5o/kRuOOBbaaXStce2R5C6I1Gg==}
+  tldts-core@6.1.26:
+    resolution: {integrity: sha512-JNBagViFBIxokJaINH6N4CX0ucHm/keeZi+brVa10zFJ5AorX3nsEzlb6x2bPpr8rsP79tE117I7fGRhbSMZpQ==}
+
+  tldts@6.1.26:
+    resolution: {integrity: sha512-VX7k1GM3fMwOSKssJKDyJMrXE690h26Raddp37DAD3ve0JA8Yk/LscaQAWkm2+Q2ZsWAf29aYE/gB/6zjWtBRQ==}
     hasBin: true
 
   tmp@0.0.33:
@@ -7406,7 +7410,7 @@ snapshots:
   browserslist@4.23.1:
     dependencies:
       caniuse-lite: 1.0.30001634
-      electron-to-chromium: 1.4.802
+      electron-to-chromium: 1.4.803
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.1)
 
@@ -7955,7 +7959,7 @@ snapshots:
       minimatch: 9.0.1
       semver: 7.6.2
 
-  electron-to-chromium@1.4.802: {}
+  electron-to-chromium@1.4.803: {}
 
   ellipsize@0.1.0: {}
 
@@ -8406,7 +8410,7 @@ snapshots:
     dependencies:
       for-in: 1.0.2
 
-  foreground-child@3.2.0:
+  foreground-child@3.2.1:
     dependencies:
       cross-spawn: 7.0.3
       signal-exit: 4.1.0
@@ -8553,7 +8557,7 @@ snapshots:
 
   glob@10.4.1:
     dependencies:
-      foreground-child: 3.2.0
+      foreground-child: 3.2.1
       jackspeak: 3.4.0
       minimatch: 9.0.4
       minipass: 7.1.2
@@ -10734,11 +10738,13 @@ snapshots:
 
   tlds@1.252.0: {}
 
-  tldts-core@6.1.25: {}
+  tlds@1.253.0: {}
 
-  tldts@6.1.25:
+  tldts-core@6.1.26: {}
+
+  tldts@6.1.26:
     dependencies:
-      tldts-core: 6.1.25
+      tldts-core: 6.1.26
 
   tmp@0.0.33:
     dependencies:
@@ -10918,7 +10924,7 @@ snapshots:
   url-regex-safe@3.0.0:
     dependencies:
       ip-regex: 4.3.0
-      tlds: 1.252.0
+      tlds: 1.253.0
 
   url-template@2.0.8: {}
 
