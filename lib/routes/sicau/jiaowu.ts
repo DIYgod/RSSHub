@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '教务处',
-    maintainers: ['Hualiang'],
+    maintainers: ['hualiong'],
     url: 'jiaowu.sicau.edu.cn/',
     handler: async () => {
         const baseUrl = 'https://jiaowu.sicau.edu.cn/web/web/web';
