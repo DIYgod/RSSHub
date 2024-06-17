@@ -27,9 +27,10 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const user = ctx.req.param('user');
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
     const userInfo = await parseUserData(user);
 
-    const api = `${API_HOST}/posts/getAllByUser?slug=${userInfo.slug}&take=15`;
+    const api = `${API_HOST}/posts/getAllByUser?slug=${userInfo.slug}&take=${limit}`;
 
     const timelineResponse = await customFetch<PostsResponse>(api);
 
