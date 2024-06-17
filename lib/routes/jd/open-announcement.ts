@@ -2,7 +2,6 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 /**
  *
@@ -51,7 +50,7 @@ async function handler(ctx) {
         title: item.articleTitle,
         id: item.id,
         link: `https://open.jd.com/home/home/#/announcement/detail?listId=${listId}&itemId=${item.id}`,
-        pubDate: timezone(parseDate(item.modified), +8),
+        pubDate: parseDate(item.created),
     }));
 
     const result = await Promise.all(
