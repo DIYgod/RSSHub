@@ -204,8 +204,8 @@ importers:
         specifier: 3.5.3
         version: 3.5.3
       tldts:
-        specifier: 6.1.26
-        version: 6.1.26
+        specifier: 6.1.27
+        version: 6.1.27
       tosource:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
@@ -5015,8 +5015,8 @@ packages:
   tldts-core@6.1.27:
     resolution: {integrity: sha512-uGoj4yLqgFdgF82UpR1wCweJUcd/qMdm97VA3Xo6q7PoEYmlgQxJiVZq1b1cwshmgaLj5q86sj0smoO4QngdKw==}
 
-  tldts@6.1.26:
-    resolution: {integrity: sha512-VX7k1GM3fMwOSKssJKDyJMrXE690h26Raddp37DAD3ve0JA8Yk/LscaQAWkm2+Q2ZsWAf29aYE/gB/6zjWtBRQ==}
+  tldts@6.1.27:
+    resolution: {integrity: sha512-FoCm8k5dd2Aw0waigesduQAbOXWVi31XMo0+DcCJc67wolyy0dORRf7CUkIxl49ZgI8N4zelPehy3QanbOLnKQ==}
     hasBin: true
 
   tmp@0.0.33:
@@ -10764,7 +10764,7 @@ snapshots:
 
   tldts-core@6.1.27: {}
 
-  tldts@6.1.26:
+  tldts@6.1.27:
     dependencies:
       tldts-core: 6.1.27
 
