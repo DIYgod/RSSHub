@@ -44,6 +44,7 @@ async function handler(ctx) {
             link: item.url,
             author: item.member.username,
             comments: item.replies,
+            category: [item.node.title],
         })),
     };
 }
