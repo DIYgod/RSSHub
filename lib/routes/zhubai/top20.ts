@@ -60,7 +60,7 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const matches = item.link.match(/\/(?:fp|pq|pu)\/([\w-]+)\/(\d+)/);
+                const matches = item.link.match(/\/(?:pl|pq|fp)\/([\w-]+)\/(\d+)/);
 
                 const { data } = await got(`https://${matches[1]}.zhubai.love/api/posts/${matches[2]}`);
 
