@@ -27,8 +27,8 @@ importers:
         specifier: 7.116.0
         version: 7.116.0
       '@tonyrl/rand-user-agent':
-        specifier: 2.0.67
-        version: 2.0.67
+        specifier: 2.0.68
+        version: 2.0.68
       aes-js:
         specifier: 3.1.2
         version: 3.1.2
@@ -1539,8 +1539,8 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@tonyrl/rand-user-agent@2.0.67':
-    resolution: {integrity: sha512-B929n41Ywxl75ocDqUp9/+C+aoevdWNS/bKr6SUZHuGGVZrPl6tfHajVImYuNMPSoJOLcjZsZDl0qpYqbyfroA==}
+  '@tonyrl/rand-user-agent@2.0.68':
+    resolution: {integrity: sha512-Y3MD0nrEGzZoy67evy3XhYPabHDcNgB/OF/RE0IitvEGETeh8Xdbpk6kcnKc/Q+Y2UM+LkVFbT1lVls5jnQvFw==}
     engines: {node: '>=14.16'}
 
   '@tootallnate/quickjs-emscripten@0.23.0':
@@ -2094,8 +2094,8 @@ packages:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
 
-  caniuse-lite@1.0.30001634:
-    resolution: {integrity: sha512-fbBYXQ9q3+yp1q1gBk86tOFs4pyn/yxFm5ZNP18OXJDfA3txImOY9PhfxVggZ4vRHDqoU8NrKU81eN0OtzOgRA==}
+  caniuse-lite@1.0.30001636:
+    resolution: {integrity: sha512-bMg2vmr8XBsbL6Lr0UHXy/21m84FTxDLWn2FSqMd5PrlbMxwJlQnC2YWYxVgp66PZE+BBNF2jYQUBKCo1FDeZg==}
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -5012,8 +5012,8 @@ packages:
     resolution: {integrity: sha512-lNov5nt5/xw6nK00gtoQSA2I4HcpAnot1TMJccTNw2rtL5jdLN26h3f+mT8VF4JBv5/rBNXyuUPWcogceyKJJw==}
     hasBin: true
 
-  tldts-core@6.1.26:
-    resolution: {integrity: sha512-JNBagViFBIxokJaINH6N4CX0ucHm/keeZi+brVa10zFJ5AorX3nsEzlb6x2bPpr8rsP79tE117I7fGRhbSMZpQ==}
+  tldts-core@6.1.27:
+    resolution: {integrity: sha512-uGoj4yLqgFdgF82UpR1wCweJUcd/qMdm97VA3Xo6q7PoEYmlgQxJiVZq1b1cwshmgaLj5q86sj0smoO4QngdKw==}
 
   tldts@6.1.26:
     resolution: {integrity: sha512-VX7k1GM3fMwOSKssJKDyJMrXE690h26Raddp37DAD3ve0JA8Yk/LscaQAWkm2+Q2ZsWAf29aYE/gB/6zjWtBRQ==}
@@ -5454,8 +5454,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  ws@8.17.0:
-    resolution: {integrity: sha512-uJq6108EgZMAl20KagGkzCKfMEjxmKvZHG7Tlq0Z6nOky7YF7aq4mOx6xK8TJ/i1LeK4Qus7INktacctDgY8Ow==}
+  ws@8.17.1:
+    resolution: {integrity: sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -6883,7 +6883,7 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tonyrl/rand-user-agent@2.0.67': {}
+  '@tonyrl/rand-user-agent@2.0.68': {}
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
@@ -7422,7 +7422,7 @@ snapshots:
 
   browserslist@4.23.1:
     dependencies:
-      caniuse-lite: 1.0.30001634
+      caniuse-lite: 1.0.30001636
       electron-to-chromium: 1.4.803
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.1)
@@ -7497,7 +7497,7 @@ snapshots:
 
   camelcase@6.3.0: {}
 
-  caniuse-lite@1.0.30001634: {}
+  caniuse-lite@1.0.30001636: {}
 
   caseless@0.12.0: {}
 
@@ -9089,7 +9089,7 @@ snapshots:
       whatwg-encoding: 3.1.1
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.0.0
-      ws: 8.17.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      ws: 8.17.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -10762,11 +10762,11 @@ snapshots:
 
   tlds@1.253.0: {}
 
-  tldts-core@6.1.26: {}
+  tldts-core@6.1.27: {}
 
   tldts@6.1.26:
     dependencies:
-      tldts-core: 6.1.26
+      tldts-core: 6.1.27
 
   tmp@0.0.33:
     dependencies:
@@ -11180,7 +11180,7 @@ snapshots:
       bufferutil: 4.0.8
       utf-8-validate: 5.0.10
 
-  ws@8.17.0(bufferutil@4.0.8)(utf-8-validate@5.0.10):
+  ws@8.17.1(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     optionalDependencies:
       bufferutil: 4.0.8
       utf-8-validate: 5.0.10
