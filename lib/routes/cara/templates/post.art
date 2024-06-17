@@ -1,0 +1,9 @@
+{{ if title }}
+<h1>{{ title }}</h1>
+{{ /if }}
+{{ if content }}
+<p>{{ content }}</p>
+{{ /if }}
+{{ each images image }}
+<img src="{{ image.src }}" />
+{{ /each }}
