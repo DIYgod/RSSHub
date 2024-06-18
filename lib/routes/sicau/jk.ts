@@ -82,27 +82,31 @@ export const route: Route = {
             headers: { 'x-access-token': token },
             method: 'post',
         });
+        const query = async (page: number) =>
+            await $post(`/getUserSchoolActList`, {
+                query: {
+                    gid: gidDict[gid],
+                    typeId: typeDict[typeId],
+                    sortType,
+                    page,
+                },
+            });
 
-        const { code, message, content } = await $post(`/getUserSchoolActList`, {
-            query: {
-                gid: gidDict[gid],
-                typeId: typeDict[typeId],
-                sortType,
-                page: 1,
-            },
-        });
+        const res1 = await query(1);
+        const res2 = await query(2);
 
-        if (code !== '0') {
-            throw new Error(message);
+        if (res1.code !== '0' || res2.code !== '0') {
+            throw new Error(`${res1.message} | ${res2.message}`);
         }
 
-        const list: DataItem[] = content.map((each) => ({
-            id: each.id,
-            guid: each.id,
-            title: each.title,
-            image: each.logo,
-            pubDate: timezone(parseDate(each.startTime, 'YYYY-MM-DD HH:mm:ss'), +8),
-        }));
+        const list: DataItem[] = [...res1.content, ...res2.content]
+            .filter((e) => e.statusName !== '待发学时')
+            .map((each) => ({
+                id: each.id,
+                guid: each.id,
+                title: each.title,
+                image: each.logo,
+            }));
 
         const items = await Promise.all(
             list.map((item) =>
