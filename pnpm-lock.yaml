@@ -250,8 +250,8 @@ importers:
         specifier: 3.1.4
         version: 3.1.4
       '@types/babel__preset-env':
-        specifier: 7.9.6
-        version: 7.9.6
+        specifier: 7.9.7
+        version: 7.9.7
       '@types/crypto-js':
         specifier: 4.2.2
         version: 4.2.2
@@ -400,8 +400,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@asteasolutions/zod-to-openapi@7.1.0':
-    resolution: {integrity: sha512-7E0k56zXV01GaSSWIuVVcHonBBPDtM6DKJqcHTNz4cfRjy1nQTAEslYjEvJd83PZ7gvhXs8NJ5aR1y/L76zt/Q==}
+  '@asteasolutions/zod-to-openapi@7.1.1':
+    resolution: {integrity: sha512-lF0d1gAc0lYLO9/BAGivwTwE2Sh9h6CHuDcbk5KnGBfIuAsAkDC+Fdat4dkQY3CS/zUWKHRmFEma0B7X132Ymw==}
     peerDependencies:
       zod: ^3.20.2
 
@@ -1549,8 +1549,8 @@ packages:
   '@types/aes-js@3.1.4':
     resolution: {integrity: sha512-v3D66IptpUqh+pHKVNRxY8yvp2ESSZXe0rTzsGdzUhEwag7ljVfgCllkWv2YgiYXDhWFBrEywll4A5JToyTNFA==}
 
-  '@types/babel__preset-env@7.9.6':
-    resolution: {integrity: sha512-PaOA2V4J3CZZopQaTGT1e8WEWCqHWc1k12zLlci4T9eR2lQIlA/GbnVbloFDqYVFr1BNiCXnotH32Up8WdgTxQ==}
+  '@types/babel__preset-env@7.9.7':
+    resolution: {integrity: sha512-m63P4DQR9d0/g8GwRsmyizGqfCGWI6LVnuNg4OV8YhNM+VMBAepJ4394Z/rJA0pBYV+AXgFfHP4RiIlk9mYVVQ==}
 
   '@types/bluebird@3.5.42':
     resolution: {integrity: sha512-Jhy+MWRlro6UjVi578V/4ZGNfeCOcNCp0YaFNIUGFKlImowqwb1O/22wDVk3FDGMLqxdpOV3qQHD5fPEH4hK6A==}
@@ -5575,7 +5575,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@asteasolutions/zod-to-openapi@7.1.0(zod@3.23.8)':
+  '@asteasolutions/zod-to-openapi@7.1.1(zod@3.23.8)':
     dependencies:
       openapi3-ts: 4.3.3
       zod: 3.23.8
@@ -6522,7 +6522,7 @@ snapshots:
 
   '@hono/zod-openapi@0.14.4(hono@4.4.6)(zod@3.23.8)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.1.0(zod@3.23.8)
+      '@asteasolutions/zod-to-openapi': 7.1.1(zod@3.23.8)
       '@hono/zod-validator': 0.2.2(hono@4.4.6)(zod@3.23.8)
       hono: 4.4.6
       zod: 3.23.8
@@ -6916,7 +6916,7 @@ snapshots:
 
   '@types/aes-js@3.1.4': {}
 
-  '@types/babel__preset-env@7.9.6': {}
+  '@types/babel__preset-env@7.9.7': {}
 
   '@types/bluebird@3.5.42': {}
 
