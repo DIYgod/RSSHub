@@ -5210,6 +5210,9 @@
   "/sicau/jiaowu/jxtz": [
     "hualiong"
   ],
+  "/sicau/jk/:gid/:typeId/:sortType/:token": [
+    "hualiong"
+  ],
   "/sicau/yan/:category?": [
     "nczitzk"
   ],
