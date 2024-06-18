@@ -91,7 +91,7 @@ importers:
         version: 9.0.5
       http-cookie-agent:
         specifier: 6.0.5
-        version: 6.0.5(tough-cookie@4.1.4)(undici@6.19.0)
+        version: 6.0.5(tough-cookie@4.1.4)(undici@6.19.2)
       https-proxy-agent:
         specifier: 7.0.4
         version: 7.0.4
@@ -219,8 +219,8 @@ importers:
         specifier: 1.17.1
         version: 1.17.1
       undici:
-        specifier: 6.19.0
-        version: 6.19.0
+        specifier: 6.19.2
+        version: 6.19.2
       uuid:
         specifier: 10.0.0
         version: 10.0.0
@@ -5181,8 +5181,8 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  undici@6.19.0:
-    resolution: {integrity: sha512-9gGwbSLgYMjp4r6M5P9bhqhx1E+RyUIHqZE0r7BmrRoqroJUG6xlVu5TXH9DnwmCPLkcaVNrcYtxUE9d3InnyQ==}
+  undici@6.19.2:
+    resolution: {integrity: sha512-JfjKqIauur3Q6biAtHJ564e3bWa8VvT+7cSiOJHFbX4Erv6CLGDpg8z+Fmg/1OI/47RA+GI2QZaF48SSaLvyBA==}
     engines: {node: '>=18.17'}
 
   unicode-canonical-property-names-ecmascript@2.0.0:
@@ -8779,12 +8779,12 @@ snapshots:
 
   http-cache-semantics@4.1.1: {}
 
-  http-cookie-agent@6.0.5(tough-cookie@4.1.4)(undici@6.19.0):
+  http-cookie-agent@6.0.5(tough-cookie@4.1.4)(undici@6.19.2):
     dependencies:
       agent-base: 7.1.1
       tough-cookie: 4.1.4
     optionalDependencies:
-      undici: 6.19.0
+      undici: 6.19.2
     transitivePeerDependencies:
       - supports-color
 
@@ -10895,7 +10895,7 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  undici@6.19.0: {}
+  undici@6.19.2: {}
 
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
