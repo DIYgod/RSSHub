@@ -123,8 +123,8 @@ export const route: Route = {
 
         const { code, message, content } = await $post(`/getUserSchoolActList`, {
             query: {
-                gid: gidDict[gid] || 0,
-                typeId: typeDict[typeId] || 0,
+                gid: gidDict[gid],
+                typeId: typeDict[typeId],
                 sortType,
                 page: 1,
             },
