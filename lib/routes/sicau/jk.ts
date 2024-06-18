@@ -150,7 +150,7 @@ export const route: Route = {
                         item.author = content.groupName;
                         item.pubDate = timezone(parseDate(content.startDate, 'YYYY-MM-DD HH:mm:ss'), +8);
                         item.category = [content.typeName, content.levelName];
-                        item.description = `<img src="${item.image}" alt="${item.title}" /><p>${content.description}</p>`;
+                        item.description = `<img src="${item.image}" alt="${item.title}" /><p style='white-space: pre-wrap'>${content.description}</p>`;
 
                         return item;
                     }
