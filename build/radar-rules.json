@@ -14820,7 +14820,7 @@
         "title": "教务处",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
-          "/"
+          "/web/web/web/index.asp"
         ],
         "target": "/sicau/jiaowu/jxtz"
       }

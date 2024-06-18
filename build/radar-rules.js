@@ -6451,7 +6451,7 @@
         target:"/sicau/zsjy/:category?" } ],
     jiaowu:[ { title:"教务处",
         docs:"https://docs.rsshub.app/routes/university",
-        source:[ "/" ],
+        source:[ "/web/web/web/index.asp" ],
         target:"/sicau/jiaowu/jxtz" } ],
     yan:[ { title:"研究生院",
         docs:"https://docs.rsshub.app/routes/university",
