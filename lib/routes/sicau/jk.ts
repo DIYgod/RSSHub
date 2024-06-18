@@ -26,8 +26,9 @@ export const route: Route = {
     maintainers: ['hualiong'],
     url: 'jk.sicau.edu.cn',
     description: `
+
 :::tip
-**本校学生**可以直接 POST \`https://jk.sicau.edu.cn//user/login/v1.0.0/snoLogin\` 从返回结果中的 \`token\` 字段拿到个人令牌
+**本校学生**可以直接 POST \`https://jk.sicau.edu.cn/user/login/v1.0.0/snoLogin\` 从返回结果中的 \`token\` 字段拿到个人令牌
 记得在url后添加以下**查询参数**：
 
 -   sid: \`f1c97a0e81c24e98adb1ebdadca0699b\`
@@ -35,10 +36,13 @@ export const route: Route = {
 -   password: \`你的i川农密码\`
 
 :::
+
 :::warning
 由于i川农后台有请求限制，为避免一次性大量请求而被限流，每次订阅只请求结果的第一页数据，即前20条
 :::
+
 **活动所属组织ID：**
+
 0.  全部组织
 1.  管理学院
 2.  学生心理健康服务中心
@@ -93,7 +97,9 @@ export const route: Route = {
 51.  校学生会
 52.  动物科技学院
 53.  信息工程学院
+
 **活动类别ID：**
+
 0. 所有类别
 1. 党团学习
 2. 学生干部社会工作
@@ -108,7 +114,9 @@ export const route: Route = {
 11. 文化艺术活动
 12. 文艺演出或讲座
 13. 劳动教育
+
 **排序方式：**
+
 | 即将开始 | 最新活动 | 可参与 |
 | -------- | -------- | -------- |
 | 1     | 2     | 4     |
