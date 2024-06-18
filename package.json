@@ -118,7 +118,7 @@
         "tldts": "6.1.27",
         "tosource": "2.0.0-alpha.3",
         "tough-cookie": "4.1.4",
-        "tsx": "4.15.5",
+        "tsx": "4.15.6",
         "twitter-api-v2": "1.17.1",
         "undici": "6.19.2",
         "uuid": "10.0.0",
@@ -181,7 +181,7 @@
         "vite-tsconfig-paths": "4.3.2",
         "vitest": "1.6.0"
     },
-    "packageManager": "pnpm@9.2.0",
+    "packageManager": "pnpm@9.4.0",
     "engines": {
         "node": ">=22"
     }
