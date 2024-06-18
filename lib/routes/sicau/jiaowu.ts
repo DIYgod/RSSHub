@@ -14,14 +14,15 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     radar: [
         {
-            source: ['jiaowu.sicau.edu.cn/'],
+            source: ['jiaowu.sicau.edu.cn/web/web/web/index.asp'],
+            target: '/jiaowu/jxtz',
         },
     ],
     name: '教务处',
