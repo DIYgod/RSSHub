@@ -8162,6 +8162,30 @@
   },
   "bjx": {
     "routes": {
+      "/fd/:type": {
+        "path": "/fd/:type",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/bjx/fd/yw",
+        "parameters": {
+          "type": "文章分类"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "风电",
+        "maintainers": [
+          "hualiong"
+        ],
+        "description": "`:type` 类型可选如下\n\n  | 要闻 | 政策 | 数据 | 市场 | 企业 | 招标 | 技术 | 报道 |\n| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n| yw   | zc   | sj   | sc   | mq   | zb   | js   | bd   |",
+        "location": "fd.ts"
+      },
       "/huanbao": {
         "path": "/huanbao",
         "categories": [
@@ -8218,7 +8242,7 @@
       }
     },
     "name": "北极星电力网",
-    "url": "guangfu.bjx.com.cn"
+    "url": "www.bjx.com.cn"
   },
   "blizzard": {
     "routes": {
