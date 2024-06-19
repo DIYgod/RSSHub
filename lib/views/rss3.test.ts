@@ -61,8 +61,7 @@ describe('rss3', () => {
                             related_urls: ['https://example.com/post1'],
                         },
                     ],
-                    // eslint-disable-next-line unicorn/numeric-separators-style
-                    timestamp: 1704153600,
+                    timestamp: 1_704_153_600,
                 },
                 {
                     owner: 'example.com',
@@ -91,8 +90,7 @@ describe('rss3', () => {
                             related_urls: ['https://example.com/post2'],
                         },
                     ],
-                    // eslint-disable-next-line unicorn/numeric-separators-style
-                    timestamp: 1704153600,
+                    timestamp: 1_704_153_600,
                 },
             ],
         };
