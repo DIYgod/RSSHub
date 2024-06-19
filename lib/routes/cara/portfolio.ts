@@ -1,7 +1,8 @@
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import type { PortfolioResponse } from './types';
-import { asyncPoolAll, customFetch, fetchPortfolioItem, parseUserData } from './utils';
+import { customFetch, fetchPortfolioItem, parseUserData } from './utils';
 import { API_HOST, CDN_HOST, HOST } from './constant';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: ['/portfolio/:user'],
@@ -28,7 +29,7 @@ async function handler(ctx): Promise<Data> {
 
     const portfolioResponse = await customFetch<PortfolioResponse>(api);
 
-    const items = await asyncPoolAll(5, portfolioResponse.data, async (item) => await fetchPortfolioItem(item));
+    const items = await Promise.all(portfolioResponse.data.map((item) => cache.tryGet(`${HOST}/post/${item.postId}`, async () => await fetchPortfolioItem(item)) as unknown as DataItem));
 
     return {
         title: `Portfolio - ${userInfo.name}`,
