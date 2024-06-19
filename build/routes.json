@@ -9835,6 +9835,90 @@
     "name": "参考消息",
     "url": "cankaoxiaoxi.com"
   },
+  "cara": {
+    "routes": {
+      "/likes/:user": {
+        "path": [
+          "/likes/:user"
+        ],
+        "categories": [
+          "social-media"
+        ],
+        "example": "/cara/likes/fengz",
+        "parameters": {
+          "user": "username"
+        },
+        "name": "Likes",
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "radar": [
+          {
+            "source": [
+              "cara.app/:user",
+              "cara.app/:user/*"
+            ],
+            "target": "/likes/:user"
+          }
+        ],
+        "location": "likes.ts"
+      },
+      "/portfolio/:user": {
+        "path": [
+          "/portfolio/:user"
+        ],
+        "categories": [
+          "social-media"
+        ],
+        "example": "/cara/portfolio/fengz",
+        "parameters": {
+          "user": "username"
+        },
+        "name": "Portfolio",
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "radar": [
+          {
+            "source": [
+              "cara.app/:user",
+              "cara.app/:user/*"
+            ],
+            "target": "/portfolio/:user"
+          }
+        ],
+        "location": "portfolio.ts"
+      },
+      "/timeline/:user": {
+        "path": [
+          "/timeline/:user"
+        ],
+        "categories": [
+          "social-media"
+        ],
+        "example": "/cara/timeline/fengz",
+        "parameters": {
+          "user": "username"
+        },
+        "name": "Timeline",
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "radar": [
+          {
+            "source": [
+              "cara.app/:user",
+              "cara.app/:user/*"
+            ],
+            "target": "/timeline/:user"
+          }
+        ],
+        "location": "timeline.ts"
+      }
+    },
+    "name": "Cara",
+    "url": "cara.app"
+  },
   "cartoonmad": {
     "routes": {
       "/comic/:id": {

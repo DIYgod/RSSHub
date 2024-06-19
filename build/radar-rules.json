@@ -2709,6 +2709,38 @@
       }
     ]
   },
+  "cara.app": {
+    "_name": "Cara",
+    ".": [
+      {
+        "title": "Likes",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:user",
+          "/:user/*"
+        ],
+        "target": "/cara/likes/:user"
+      },
+      {
+        "title": "Portfolio",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:user",
+          "/:user/*"
+        ],
+        "target": "/cara/portfolio/:user"
+      },
+      {
+        "title": "Timeline",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:user",
+          "/:user/*"
+        ],
+        "target": "/cara/timeline/:user"
+      }
+    ]
+  },
   "cartoonmad.com": {
     "_name": "動漫狂",
     ".": [

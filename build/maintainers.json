@@ -956,6 +956,15 @@
     "yuxinliu-alex",
     "nczitzk"
   ],
+  "/cara/likes/:user": [
+    "KarasuShin"
+  ],
+  "/cara/portfolio/:user": [
+    "KarasuShin"
+  ],
+  "/cara/timeline/:user": [
+    "KarasuShin"
+  ],
   "/cartoonmad/comic/:id": [
     "KellyHwong"
   ],
