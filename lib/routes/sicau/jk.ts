@@ -92,14 +92,15 @@ export const route: Route = {
                 },
             });
 
-        const res1 = await query(1);
-        const res2 = await query(2);
+        const res = await Promise.all([query(1), query(2)]);
 
-        if (res1.code !== '0' || res2.code !== '0') {
-            throw new Error(`${res1.message} | ${res2.message}`);
+        for (const each of res) {
+            if (each.code !== '0') {
+                throw new Error(each.message);
+            }
         }
 
-        const list: DataItem[] = [...res1.content, ...res2.content]
+        const list: DataItem[] = [...res[0].content, ...res[1].content]
             .filter((e) => e.statusName !== '待发学时')
             .map((each) => ({
                 id: each.id,
