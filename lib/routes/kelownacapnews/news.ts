@@ -76,10 +76,8 @@ export const route: Route = {
             )
         );
 
-        const dict = { 'local-news': 'Local News', 'national-news': 'Canadian News', 'world-news': 'World News' };
-
         return {
-            title: `${dict[type]} - Kelowna Capital News`,
+            title: `${$('.body-title').text()} - Kelowna Capital News`,
             link: `${baseURL}/${type}`,
             item: items as DataItem[],
         };
