@@ -29,9 +29,9 @@ export const route: Route = {
     url: 'www.kelownacapnews.com',
     description: `\`Type\` is as follows:
   
-| Local News | Canadian News | World News |
-| ---------- | ------------- | ---------- |
-| local-news | national-news | world-news |`,
+| News | Local News | Canadian News | World News |
+| ---- | ---------- | ------------- | ---------- |
+| news | local-news | national-news | world-news |`,
     handler: async (ctx) => {
         const type = ctx.req.param('type');
         const baseURL = 'https://www.kelownacapnews.com';
