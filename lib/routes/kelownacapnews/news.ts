@@ -27,11 +27,15 @@ export const route: Route = {
     name: 'News',
     maintainers: ['hualiong'],
     url: 'www.kelownacapnews.com',
-    description: `\`Type\` is as follows:
+    description: `\`type\` is as follows:
   
-| News | Local News | Canadian News | World News |
-| ---- | ---------- | ------------- | ---------- |
-| news | local-news | national-news | world-news |`,
+| News type     | Value         | News type    | Value        |
+| ------------- | ------------- | ------------ | ------------ |
+| News          | news          | Sports       | sports       |
+| Local News    | local-news    | Business     | business     |
+| Canadian News | national-news | Trending Now | trending-now |
+| World News    | world-news    | Opinion      | opinion      |
+| Entertainment | entertainment |              |              |`,
     handler: async (ctx) => {
         const type = ctx.req.param('type');
         const baseURL = 'https://www.kelownacapnews.com';
