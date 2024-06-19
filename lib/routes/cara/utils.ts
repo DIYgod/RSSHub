@@ -7,6 +7,7 @@ import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { API_HOST, CDN_HOST, HOST } from './constant';
 import { load } from 'cheerio';
+import cache from '@/utils/cache';
 
 export function customFetch<T = any, R extends ResponseType = 'json'>(request: FetchRequest, options?: FetchOptions<R>) {
     return ofetch<T, R>(request, {
@@ -18,11 +19,20 @@ export function customFetch<T = any, R extends ResponseType = 'json'>(request: F
 }
 
 export async function parseUserData(user: string) {
-    const url = `${HOST}/${user}`;
-    const res = await customFetch(url);
-    const $ = load(res);
-    const nextData = JSON.parse($('#__NEXT_DATA__')?.html() ?? '{}') as UserNextData;
-    return nextData.props.pageProps.user;
+    const buildId = await cache.tryGet(
+        `${HOST}:buildId`,
+        async () => {
+            const res = await customFetch(`${HOST}/explore`);
+            const $ = load(res);
+            return JSON.parse($('#__NEXT_DATA__')?.text() ?? '{}').buildId;
+        },
+        config.cache.routeExpire,
+        false
+    );
+    return (await cache.tryGet(`${HOST}:${user}`, async () => {
+        const data = await customFetch<UserNextData>(`${HOST}/_next/data/${buildId}/${user}.json`);
+        return data.pageProps.user;
+    })) as Promise<UserNextData['pageProps']['user']>;
 }
 
 export async function asyncPoolAll<IN, OUT>(poolLimit: number, array: readonly IN[], iteratorFn: (generator: IN) => Promise<OUT>) {

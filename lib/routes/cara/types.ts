@@ -1,12 +1,10 @@
 export interface UserNextData {
-    props: {
-        pageProps: {
-            user: {
-                id: string;
-                name: string;
-                slug: string;
-                photo: string;
-            };
+    pageProps: {
+        user: {
+            id: string;
+            name: string;
+            slug: string;
+            photo: string;
         };
     };
 }
