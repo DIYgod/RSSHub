@@ -36,7 +36,6 @@ async function handler(ctx): Promise<Data> {
 
     const items = timelineResponse.data.map((item) => {
         const description = art(path.join(__dirname, 'templates/post.art'), {
-            title: item.title,
             content: item.content,
             images: item.images.filter((i) => !i.isCoverImg).map((i) => ({ ...i, src: `${CDN_HOST}/${i.src}` })),
         });
