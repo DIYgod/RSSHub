@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/mv/:number/:domain?',
     categories: ['multimedia'],
-    example: '/mv/35575567',
+    example: '/mv/35575567/2',
     parameters: { domain: '1-9,默认 2', number: '影视详情id' },
     features: {
         requireConfig: false,
@@ -18,18 +18,17 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.2bt0.com/mv/:number'],
-            target: '/mv/:number',
+            source: ['2bt0.com/mv/'],
         },
     ],
     name: '影视资源下载列表',
     maintainers: ['miemieYaho'],
+    handler,
     description: `:::tip
   (1-9)bt0.com 都能访问, 就拿 2bt0.com 为默认了
   影视详情id 是\`https://www.2bt0.com/mv/{id}.html\`其中的 id 的值
   可选参数\`domain\` 是 \`https://www.{domain}bt0.com\` 其中的 domain 的值,可以是 1-9,访问的都是同一个东西
   :::`,
-    handler,
 };
 
 async function handler(ctx) {
