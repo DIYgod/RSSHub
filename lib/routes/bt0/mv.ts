@@ -53,12 +53,11 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
             const torrent_info = item.find('.torrent-title').first();
-            const _title = torrent_info.text();
-            const len = item.find('.tag-sm.tag-size.text-center').first().text();
+            const _title = `${torrent_info.text()}[${item.find('.tag-sm.tag-size.text-center').first().text()}]`;
             return {
                 title: _title,
                 guid: _title,
-                description: `${_title}[${len}]`,
+                description: _title,
                 link: host + torrent_info.attr('href'),
                 pubDate: parseDate(item.find('.tag-sm.tag-download.text-center').eq(1).text()),
                 enclosure_type: 'application/x-bittorrent',
