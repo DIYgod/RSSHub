@@ -7,7 +7,7 @@ export const route: Route = {
     path: '/mv/:number/:domain?',
     categories: ['multimedia'],
     example: '/mv/35575567',
-    parameters: { domain: '1-9,默认 2', number: '影视详情页' },
+    parameters: { domain: '1-9,默认 2', number: '影视详情id' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,9 +22,13 @@ export const route: Route = {
             target: '/mv/:number',
         },
     ],
-    name: '影视详情',
+    name: '影视资源下载列表',
     maintainers: ['miemieYaho'],
-    description: '描述',
+    description: `:::tip
+  (1-9)bt0.com 都能访问, 就拿 2bt0.com 为默认了
+  影视详情id 是\`https://www.2bt0.com/mv/{id}.html\`其中的 id 的值
+  可选参数\`domain\` 是 \`https://www.{domain}bt0.com\` 其中的 domain 的值,可以是 1-9,访问的都是同一个东西
+  :::`,
     handler,
 };
 
@@ -57,7 +61,7 @@ async function handler(ctx) {
             const len = item.find('.tag-sm.tag-size.text-center').first().text();
             return {
                 title: _title,
-                // guid: torrent_info.text(),
+                guid: _title,
                 description: `${_title}[${len}]`,
                 link: host + torrent_info.attr('href'),
                 pubDate: parseDate(item.find('.tag-sm.tag-download.text-center').eq(1).text()),
@@ -69,7 +73,6 @@ async function handler(ctx) {
     browser.close();
     return {
         title: name,
-        description: name,
         link: _link,
         item: items,
     };
@@ -98,6 +101,5 @@ function convertToBytes(sizeStr) {
         default:
             bytes = 0;
     }
-
     return bytes;
 }
