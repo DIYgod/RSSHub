@@ -3,7 +3,6 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:type',
@@ -49,7 +48,7 @@ export const route: Route = {
                 const a = $(item);
                 return {
                     title: a.find('.media-heading').text(),
-                    pubDate: timezone(parseDate(a.find('.media-links time').attr('datetime')!), +8),
+                    pubDate: parseDate(a.find('.media-links time').attr('datetime')!),
                     link: baseURL + a.attr('href'),
                 };
             });
@@ -61,15 +60,14 @@ export const route: Route = {
                     const $ = load(response);
 
                     const details = $('.details-file');
-                    item.image = details.length ? details.find('img').attr('src') : $('#sliderImgs .tablist-item:nth-child(1) img').attr('src');
+                    const image = details.length ? details.find('img').attr('src') : $('#sliderImgs .tablist-item:nth-child(1) img').attr('src');
 
                     const byline = $('.details-byline');
                     const profileTitle = byline.find('.profile-title');
                     if (profileTitle.length) {
                         item.author = profileTitle.find('a').text();
                     }
-
-                    item.description = `<img src='${item.image}'></img>${$('.details-body').html()!}`;
+                    item.description = `<img src='${image}'></img>${$('.details-body').html()!}`;
 
                     return item;
                 })
