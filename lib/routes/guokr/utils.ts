@@ -23,7 +23,7 @@ export const parseItem = (item) =>
         $('#meta_content').remove();
         $('div').each((_, elem) => {
             const $elem = $(elem);
-            $elem.attr('style', $elem.attr('style')?.replaceAll(/display:none;|visibility: hidden;/g, ''));
+            $elem.attr('style', $elem.attr('style')?.replaceAll(/(?:display:\s*none|visibility:\s*hidden|opacity:\s*0);?/g, ''));
         });
         $('img').each((_, elem) => {
             const $elem = $(elem);

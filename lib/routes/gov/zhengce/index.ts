@@ -70,19 +70,16 @@ async function handler(ctx) {
                     const agencyEl = content('table.bd1')
                         .find('td')
                         .toArray()
-                        .filter((a) => content(a).text().startsWith('发文机关'))
-                        .pop();
+                        .findLast((a) => content(a).text().startsWith('发文机关'));
 
                     const sourceEl = content('span.font-zyygwj')
                         .toArray()
-                        .filter((a) => content(a).text().startsWith('来源'))
-                        .pop();
+                        .findLast((a) => content(a).text().startsWith('来源'));
 
                     const subjectEl = content('table.bd1')
                         .find('td')
                         .toArray()
-                        .filter((a) => content(a).text().startsWith('主题分类'))
-                        .pop();
+                        .findLast((a) => content(a).text().startsWith('主题分类'));
 
                     const agency = agencyEl ? processElementText(agencyEl) : undefined;
                     const source = sourceEl ? processElementText(sourceEl) : undefined;

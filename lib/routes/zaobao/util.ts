@@ -38,7 +38,7 @@ const parseList = async (
 }> => {
     const response = await got_ins.get(baseUrl + sectionUrl);
     const $ = load(response.data);
-    let data = $('.article-list').find('.article-type');
+    let data = /realtime/.test(sectionUrl) ? $('.on-listing-pages') : $('.article-list').find('.article-type');
     if (data.length === 0) {
         // for HK version
         data = $('.clearfix').find('.list-block');

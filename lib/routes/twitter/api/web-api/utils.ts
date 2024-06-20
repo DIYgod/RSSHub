@@ -3,25 +3,67 @@ import { baseUrl, gqlFeatures, bearerToken, gqlMap } from './constants';
 import { config } from '@/config';
 import got from '@/utils/got';
 import queryString from 'query-string';
-import { Cookie } from 'tough-cookie';
+import { Cookie, CookieJar } from 'tough-cookie';
+import { CookieAgent } from 'http-cookie-agent/undici';
+
+const dispatchers = {};
+let authTokenIndex = 0;
 
 export const twitterGot = async (url, params) => {
-    if (!config.twitter.cookie) {
+    if (!config.twitter.cookie && !config.twitter.authToken) {
         throw new ConfigNotFoundError('Twitter cookie is not configured');
     }
-    const jsonCookie = Object.fromEntries(
-        config.twitter.cookie
-            .split(';')
-            .map((c) => Cookie.parse(c)?.toJSON())
-            .map((c) => [c?.key, c?.value])
-    );
-    if (!jsonCookie || !jsonCookie.auth_token || !jsonCookie.ct0) {
-        throw new ConfigNotFoundError('Twitter cookie is not valid');
+    let requestData;
+    if (config.twitter.cookie) {
+        const jsonCookie = Object.fromEntries(
+            config.twitter.cookie
+                .split(';')
+                .map((c) => Cookie.parse(c)?.toJSON())
+                .map((c) => [c?.key, c?.value])
+        );
+        if (!jsonCookie || !jsonCookie.auth_token || !jsonCookie.ct0) {
+            throw new ConfigNotFoundError('Twitter cookie is not valid');
+        }
+
+        requestData = {
+            headers: {
+                cookie: config.twitter.cookie,
+                'x-csrf-token': jsonCookie.ct0,
+            },
+        };
+    } else if (config.twitter.authToken) {
+        const token = config.twitter.authToken[authTokenIndex++ % config.twitter.authToken.length];
+        if (!dispatchers[token]) {
+            const jar = new CookieJar();
+            jar.setCookieSync(`auth_token=${token}`, 'https://x.com');
+            dispatchers[token] = {
+                jar,
+                agent: new CookieAgent({ cookies: { jar } }),
+            };
+            try {
+                await got('https://x.com', {
+                    dispatcher: dispatchers[token].agent,
+                });
+            } catch {
+                // ignore
+            }
+        }
+        const jsonCookie = Object.fromEntries(
+            dispatchers[token].jar
+                .getCookieStringSync(url)
+                .split(';')
+                .map((c) => Cookie.parse(c)?.toJSON())
+                .map((c) => [c?.key, c?.value])
+        );
+        requestData = {
+            headers: {
+                'x-csrf-token': jsonCookie.ct0,
+            },
+            dispatcher: dispatchers[token].agent,
+        };
     }
 
-    const requestData = {
-        url: `${url}?${queryString.stringify(params)}`,
-        method: 'GET',
+    const response = await got(`${url}?${queryString.stringify(params)}`, {
         headers: {
             authority: 'x.com',
             accept: '*/*',
@@ -29,19 +71,15 @@ export const twitterGot = async (url, params) => {
             authorization: bearerToken,
             'cache-control': 'no-cache',
             'content-type': 'application/json',
-            cookie: config.twitter.cookie,
             dnt: '1',
             pragma: 'no-cache',
             referer: 'https://x.com/narendramodi',
-            'x-csrf-token': jsonCookie.ct0,
             'x-twitter-active-user': 'yes',
             'x-twitter-auth-type': 'OAuth2Session',
             'x-twitter-client-language': 'en',
+            ...requestData.headers,
         },
-    };
-
-    const response = await got(requestData.url, {
-        headers: requestData.headers,
+        dispatcher: requestData.dispatcher,
     });
 
     return response.data;
