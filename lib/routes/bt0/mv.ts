@@ -12,7 +12,7 @@ export const route: Route = {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
-        supportBT: false,
+        supportBT: true,
         supportPodcast: false,
         supportScihub: false,
     },
@@ -31,7 +31,6 @@ export const route: Route = {
 async function handler(ctx) {
     const domain = ctx.req.param('domain') ?? '2';
     const number = ctx.req.param('number');
-    const ic = ctx.req.query('ic');
 
     const host = `https://www.${domain}bt0.com`;
     const _link = host + `/mv/${number}.html`;
@@ -53,21 +52,20 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             item = $(item);
-            const _title = item.find('.torrent-title').first().text();
-            if (ic && !_title.includes(ic)) {
-                return;
-            }
+            const torrent_info = item.find('.torrent-title').first();
+            const _title = torrent_info.text();
+            const len = item.find('.tag-sm.tag-size.text-center').first().text();
             return {
                 title: _title,
                 guid: _title,
-                link: host + item.find('.torrent-title').first().attr('href'),
+                description: `${_title}[${len}]`,
+                link: host + torrent_info.attr('href'),
                 pubDate: parseDate(item.find('.tag-sm.tag-download.text-center').eq(1).text()),
                 enclosure_type: 'application/x-bittorrent',
                 enclosure_url: item.find('.col-md-3 a').first().attr('href'),
                 enclosure_length: 1,
             };
-        })
-        .filter((item) => item !== undefined);
+        });
     browser.close();
     return {
         title: name,
