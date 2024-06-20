@@ -63,7 +63,7 @@ async function handler(ctx) {
                 guid: _title,
                 description: `${_title}[${len}]`,
                 link: host + torrent_info.attr('href'),
-                pubDate: parseDate(item.find('.tag-sm.tag-download.text-center').eq(1).text()),
+                pubDate: timezone(parseDate(item.find('.tag-sm.tag-download.text-center').eq(1).text()), 8),
                 enclosure_type: 'application/x-bittorrent',
                 enclosure_url: item.find('.col-md-3 a').first().attr('href'),
                 enclosure_length: convertToBytes(len),
