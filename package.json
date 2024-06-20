@@ -51,10 +51,10 @@
     },
     "dependencies": {
         "@hono/node-server": "1.11.3",
-        "@hono/swagger-ui": "0.3.0",
         "@hono/zod-openapi": "0.14.5",
         "@notionhq/client": "2.2.15",
         "@postlight/parser": "2.2.3",
+        "@scalar/hono-api-reference": "0.5.76",
         "@sentry/node": "7.116.0",
         "@tonyrl/rand-user-agent": "2.0.68",
         "aes-js": "3.1.2",
