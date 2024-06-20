@@ -1,7 +1,6 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
 import puppeteer from '@/utils/puppeteer';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/mv/:number/:domain?',
@@ -63,7 +62,7 @@ async function handler(ctx) {
                 guid: _title,
                 description: `${_title}[${len}]`,
                 link: host + torrent_info.attr('href'),
-                pubDate: timezone(parseDate(item.find('.tag-sm.tag-download.text-center').eq(1).text()), 8),
+                pubDate: item.find('.tag-sm.tag-download.text-center').eq(1).text(),
                 enclosure_type: 'application/x-bittorrent',
                 enclosure_url: item.find('.col-md-3 a').first().attr('href'),
                 enclosure_length: convertToBytes(len),
