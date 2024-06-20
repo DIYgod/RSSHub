@@ -60,14 +60,22 @@ export const route: Route = {
                     const $ = load(response);
 
                     const details = $('.details-file');
-                    const image = details.length ? details.find('img').attr('src') : $('#sliderImgs .tablist-item:nth-child(1) img').attr('src');
+                    const image = details.length ? details.find('img').attr('src') : $('#sliderImgs .tablist-item .galleryWrap').toArray();
 
                     const byline = $('.details-byline');
                     const profileTitle = byline.find('.profile-title');
                     if (profileTitle.length) {
                         item.author = profileTitle.find('a').text();
                     }
-                    item.description = `<img src='${image}'></img>${$('.details-body').html()!}`;
+                    let label = '';
+                    if (typeof image === 'string') {
+                        label = `<img src='${image}' />`;
+                    } else {
+                        for (const e of image!) {
+                            label += `<img src='${$(e).data('src')}' />`;
+                        }
+                    }
+                    item.description = label + $('.details-body').html()!;
 
                     return item;
                 })
