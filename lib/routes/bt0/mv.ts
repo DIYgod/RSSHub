@@ -53,16 +53,17 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
             const torrent_info = item.find('.torrent-title').first();
-            const _title = `${torrent_info.text()}[${item.find('.tag-sm.tag-size.text-center').first().text()}]`;
+            const _title = torrent_info.text();
+            const len = item.find('.tag-sm.tag-size.text-center').first().text();
             return {
                 title: _title,
-                guid: _title,
-                description: _title,
+                // guid: torrent_info.text(),
+                description: `${_title}[${len}]`,
                 link: host + torrent_info.attr('href'),
                 pubDate: parseDate(item.find('.tag-sm.tag-download.text-center').eq(1).text()),
                 enclosure_type: 'application/x-bittorrent',
                 enclosure_url: item.find('.col-md-3 a').first().attr('href'),
-                enclosure_length: 1,
+                enclosure_length: convertToBytes(len),
             };
         });
     browser.close();
@@ -72,4 +73,31 @@ async function handler(ctx) {
         link: _link,
         item: items,
     };
+}
+
+function convertToBytes(sizeStr) {
+    // 正则表达式，用于匹配数字和单位 GB 或 MB
+    const regex = /^(\d+(\.\d+)?)\s*(gb|mb)$/i;
+    const match = sizeStr.match(regex);
+
+    if (!match) {
+        throw new Error('Invalid size format');
+    }
+
+    const value = Number.parseFloat(match[1]);
+    const unit = match[3].toUpperCase();
+
+    let bytes;
+    switch (unit) {
+        case 'GB':
+            bytes = Math.floor(value * 1024 * 1024 * 1024);
+            break;
+        case 'MB':
+            bytes = Math.floor(value * 1024 * 1024);
+            break;
+        default:
+            bytes = 0;
+    }
+
+    return bytes;
 }
