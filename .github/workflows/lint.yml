@@ -75,7 +75,7 @@ jobs:
 
   labeler:
     name: Pull Request Labeler
-    if: ${{ github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' }}
+    if: ${{ github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' && github.repository == 'DIYgod/RSSHub' }}
     permissions:
       contents: read
       pull-requests: write
