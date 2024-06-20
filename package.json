@@ -50,7 +50,7 @@
         "*.yml": "eslint --cache --fix"
     },
     "dependencies": {
-        "@hono/node-server": "1.11.3",
+        "@hono/node-server": "1.11.4",
         "@hono/zod-openapi": "0.14.5",
         "@notionhq/client": "2.2.15",
         "@postlight/parser": "2.2.3",
