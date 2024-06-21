@@ -9265,6 +9265,19 @@
       }
     ]
   },
+  "kelownacapnews.com": {
+    "_name": "Kelowna Capital News",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:type"
+        ],
+        "target": "/kelownacapnews/:type"
+      }
+    ]
+  },
   "kemono.su": {
     "_name": "Kemono",
     ".": [
