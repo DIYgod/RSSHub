@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
 import puppeteer from '@/utils/puppeteer';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/mv/:number/:domain?',
@@ -33,6 +34,13 @@ export const route: Route = {
 async function handler(ctx) {
     const domain = ctx.req.param('domain') ?? '2';
     const number = ctx.req.param('number');
+    if (!/^[1-9]$/.test(domain)) {
+        throw new InvalidParameterError('Invalid domain');
+    }
+    const regex = /^\d{6,}$/;
+    if (!regex.test(number)) {
+        throw new InvalidParameterError('Invalid number');
+    }
 
     const host = `https://www.${domain}bt0.com`;
     const _link = host + `/mv/${number}.html`;
