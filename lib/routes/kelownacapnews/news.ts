@@ -59,23 +59,25 @@ export const route: Route = {
                     const response = await ofetch(item.link!);
                     const $ = load(response);
 
-                    const details = $('.details-file');
-                    const image = details.length ? details.find('img').attr('src') : $('#sliderImgs .tablist-item .galleryWrap').toArray();
-
+                    let image = $('.details-file')!;
+                    if (!image.length) {
+                        image = $('#sliderImgs .tablist-item .galleryWrap');
+                    }
                     const byline = $('.details-byline');
                     const profileTitle = byline.find('.profile-title');
                     if (profileTitle.length) {
                         item.author = profileTitle.find('a').text();
                     }
                     let label = '';
-                    if (typeof image === 'string') {
-                        label = `<img src='${image}' />`;
-                    } else {
-                        for (const e of image!) {
-                            label += `<img src='${$(e).data('src')}' />`;
+                    if (image.length > 1) {
+                        for (const e of image.toArray()) {
+                            const img = $(e);
+                            label += `<img src='${img.data('src')}' /><figcaption style='margin-bottom: 10px'>${img.attr('title')}</figcaption>`;
                         }
+                    } else {
+                        label = image.html()!;
                     }
-                    item.description = label + $('.details-body').html()!;
+                    item.description = `<figure style="margin: 0">${label}</figure>${$('.details-body').html()!}`;
 
                     return item;
                 })
