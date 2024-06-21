@@ -1693,6 +1693,19 @@
       }
     ]
   },
+  "bc3ts.net": {
+    "_name": "爆料公社",
+    "web": [
+      {
+        "title": "動態",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/bc3ts/post/list/:sort?"
+      }
+    ]
+  },
   "beijingprice.cn": {
     "_name": "北京价格",
     ".": [
