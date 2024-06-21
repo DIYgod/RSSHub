@@ -72,12 +72,12 @@ export const route: Route = {
                     if (image.length > 1) {
                         for (const e of image.toArray()) {
                             const img = $(e);
-                            label += `<img src='${img.data('src')}' /><figcaption style='margin-bottom: 10px'>${img.attr('title')}</figcaption>`;
+                            label += `<figure style="margin: 10px 0 0 0"><img src='${img.data('src')}' /><figcaption>${img.attr('title')}</figcaption></figure>`;
                         }
                     } else {
-                        label = image.html()!;
+                        label = `<figure style="margin: 0">${image.html()!}</figure>`;
                     }
-                    item.description = `<figure style="margin: 0">${label}</figure>${$('.details-body').html()!}`;
+                    item.description = label + $('.details-body').html()!;
 
                     return item;
                 })
