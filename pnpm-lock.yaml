@@ -1748,11 +1748,11 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@tanstack/virtual-core@3.5.1':
-    resolution: {integrity: sha512-046+AUSiDru/V9pajE1du8WayvBKeCvJ2NmKPy/mR8/SbKKrqmSbj7LJBfXE+nSq4f5TBXvnCzu0kcYebI9WdQ==}
+  '@tanstack/virtual-core@3.6.0':
+    resolution: {integrity: sha512-hQERxVckATdWMCk7uEyq0pLaLGtQTZzgmDrpHivJZra8p3Gw3ANH5SURitYiqrBD5JUHCjwp7h7BnWU7FNkv4w==}
 
-  '@tanstack/vue-virtual@3.5.1':
-    resolution: {integrity: sha512-6mc4HtDPieDVKD6GqzHiJkdzuqRNdQZuoIbkwE6af939WV+w62YmSF69jN+BOqClqh/ObiW+X1VOQx1Pftrx1A==}
+  '@tanstack/vue-virtual@3.6.0':
+    resolution: {integrity: sha512-AfKwREqqI+kRodDBv7nApcNBRNNT2EJYrzTTwiutkS0qDs+yqpuSjJmdMnnG1sSYSZ8MW5yl5q/WCmqWcfGpvw==}
     peerDependencies:
       vue: ^2.7.0 || ^3.0.0
 
@@ -2959,8 +2959,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -7715,7 +7715,7 @@ snapshots:
 
   '@headlessui/vue@1.7.22(vue@3.4.29(typescript@5.5.2))':
     dependencies:
-      '@tanstack/vue-virtual': 3.5.1(vue@3.4.29(typescript@5.5.2))
+      '@tanstack/vue-virtual': 3.6.0(vue@3.4.29(typescript@5.5.2))
       vue: 3.4.29(typescript@5.5.2)
 
   '@hono/node-server@1.11.4': {}
@@ -7959,7 +7959,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.7
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8518,11 +8518,11 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tanstack/virtual-core@3.5.1': {}
+  '@tanstack/virtual-core@3.6.0': {}
 
-  '@tanstack/vue-virtual@3.5.1(vue@3.4.29(typescript@5.5.2))':
+  '@tanstack/vue-virtual@3.6.0(vue@3.4.29(typescript@5.5.2))':
     dependencies:
-      '@tanstack/virtual-core': 3.5.1
+      '@tanstack/virtual-core': 3.6.0
       vue: 3.4.29(typescript@5.5.2)
 
   '@testing-library/dom@9.3.4':
@@ -9860,7 +9860,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
