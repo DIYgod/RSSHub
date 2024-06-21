@@ -872,6 +872,9 @@
   "/bsky/profile/:handle": [
     "TonyRL"
   ],
+  "/bt0/mv/:number/:domain?": [
+    "miemieYaho"
+  ],
   "/btzj/:category?": [
     "nczitzk"
   ],

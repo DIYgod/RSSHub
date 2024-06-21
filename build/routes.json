@@ -8996,6 +8996,45 @@
     "name": "Bluesky (bsky)",
     "url": "bsky.app"
   },
+  "bt0": {
+    "routes": {
+      "/mv/:number/:domain?": {
+        "path": "/mv/:number/:domain?",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/mv/35575567/2",
+        "parameters": {
+          "domain": "1-9,默认 2",
+          "number": "影视详情id"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": true,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "2bt0.com/mv/"
+            ]
+          }
+        ],
+        "name": "影视资源下载列表",
+        "maintainers": [
+          "miemieYaho"
+        ],
+        "description": ":::tip\n  (1-9)bt0.com 都能访问, 就拿 2bt0.com 为默认了\n  影视详情id 是`https://www.2bt0.com/mv/{id}.html`其中的 id 的值\n  可选参数`domain` 是 `https://www.{domain}bt0.com` 其中的 domain 的值,可以是 1-9,访问的都是同一个东西\n  :::",
+        "location": "mv.ts"
+      }
+    },
+    "name": "不太灵影视",
+    "url": "2bt0.com",
+    "description": ":::tip\n  (1-9)bt0.com 都指向同一个\n  :::"
+  },
   "btzj": {
     "routes": {
       "/:category?": {
