@@ -42,6 +42,9 @@ export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
     name: 'Unknown',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
+    features: {
+        requirePuppeteer: true,
+    },
     handler,
     description: `**原创 BT 电影**
 
@@ -67,7 +70,7 @@ async function handler(ctx) {
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {
-        request.continue();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
     });
     logger.http(`Requesting ${link}`);
     await page.goto(link, {
