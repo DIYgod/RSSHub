@@ -102,12 +102,16 @@ async function handler(ctx) {
         list.map((info) =>
             cache.tryGet(info.link, async () => {
                 const page = await browser.newPage();
+                await page.setRequestInterception(true);
+                page.on('request', (request) => {
+                    request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+                });
+
                 await page.goto(info.link, {
                     // 指定页面等待载入的时间
                     waitUntil: 'domcontentloaded',
                 });
                 const response = await page.content();
-                page.close();
 
                 const $ = load(response);
                 const postMessage = $("td[id^='postmessage']").slice(0, 1);
@@ -152,7 +156,7 @@ async function handler(ctx) {
             })
         )
     );
-    browser.close();
+    await browser.close();
     return {
         title: `色花堂 - ${$('#pt > div:nth-child(1) > a:last-child').text()}`,
         link,
