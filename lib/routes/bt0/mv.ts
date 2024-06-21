@@ -1,7 +1,9 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
-import puppeteer from '@/utils/puppeteer';
+import got from '@/utils/got';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { CookieJar } from 'tough-cookie';
+const cookieJar = new CookieJar();
 
 export const route: Route = {
     path: '/mv/:number/:domain?',
@@ -43,20 +45,9 @@ async function handler(ctx) {
     }
 
     const host = `https://www.${domain}bt0.com`;
-    const _link = host + `/mv/${number}.html`;
+    const _link = `${host}/mv/${number}.html`;
 
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
-    });
-    await page.goto(_link, {
-        waitUntil: 'domcontentloaded',
-    });
-    const response = await page.content();
-    page.close();
-    const $ = load(response);
+    const $ = await doGot(0, host, _link);
     const name = $('span.info-title.lh32').text();
     const items = $('div.container .container .col-md-10.tex_l')
         .toArray()
@@ -76,12 +67,30 @@ async function handler(ctx) {
                 enclosure_length: convertToBytes(len),
             };
         });
-    browser.close();
+    // browser.close();
     return {
         title: name,
         link: _link,
         item: items,
     };
+}
+
+async function doGot(num, host, link) {
+    if (num > 4) {
+        throw new Error('The number of attempts has exceeded 5 times');
+    }
+    const response = await got.get(link, {
+        cookieJar,
+    });
+    const $ = load(response.data);
+    const script = $('script').text();
+    const regex = /document\.cookie\s*=\s*"([^"]*)"/;
+    const match = script.match(regex);
+    if (script && match) {
+        cookieJar.setCookieSync(match[1], host);
+        return doGot(++num, host, link);
+    }
+    return $;
 }
 
 function convertToBytes(sizeStr) {
@@ -90,7 +99,7 @@ function convertToBytes(sizeStr) {
     const match = sizeStr.match(regex);
 
     if (!match) {
-        throw new Error('Invalid size format');
+        return 0;
     }
 
     const value = Number.parseFloat(match[1]);
