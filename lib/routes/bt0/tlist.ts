@@ -54,16 +54,16 @@ async function handler(ctx) {
             item = $(item);
             const ah = item.find('a');
             const _title = ah.eq(1).text();
-            const len = item.find('.marl10.bgzise').first().text();
+            const ds = item.find('.huise2.fs12 .left');
             return {
                 title: _title,
                 guid: _title,
-                description: `${_title}[${len}]`,
+                description: `${ds.eq(0).text()}  ${ds.eq(1).text()}<br>${ds.eq(2).text()}<br>${ds.eq(3).text()}<br>${ds.eq(4).text()}`,
                 link: host + ah.eq(1).attr('href'),
                 pubDate: item.find('.bghuise9').first().text(),
                 enclosure_type: 'application/x-bittorrent',
                 enclosure_url: ah.eq(2).attr('href'),
-                enclosure_length: genSize(len),
+                enclosure_length: genSize(item.find('.marl10.bgzise').first().text()),
             };
         });
     return {
