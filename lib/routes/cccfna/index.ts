@@ -13,14 +13,11 @@ export const route: Route = {
         category: '文章种类，即一级分类，详情见下表',
         type: '文章类型，即二级分类，详情见下表',
     },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
+    radar: [
+        {
+            source: ['www.cccfna.org.cn/:category/:type?'],
+        },
+    ],
     description: `
 :::tip
 存在**二级分类**的**一级分类**不能单独当作参数，如：\`/cccfna/hangyezixun\`
