@@ -8,11 +8,11 @@ import { config } from '@/config';
 
 export const route: Route = {
     name: 'Packages',
-    categories: ['programming'],
+    categories: ['program-update'],
     maintainers: ['CaoMeiYouRen'],
     path: '/pkgs/:name/:routeParams?',
     parameters: { name: 'Packages name', routeParams: 'Filters of packages type. E.g. branch=edge&repo=main&arch=armv7&maintainer=Jakub%20Jirutka' },
-    example: '/pkgs/nodejs',
+    example: '/alpinelinux/pkgs/nodejs',
     description: `Alpine Linux packages update`,
     handler,
     radar: [
@@ -23,7 +23,7 @@ export const route: Route = {
                 const name = searchParams.get('name');
                 searchParams.delete('name');
                 const routeParams = searchParams.toString();
-                return `/pkgs/${name}/${routeParams}`;
+                return `/alpinelinux/pkgs/${name}/${routeParams}`;
             },
         },
     ],
@@ -48,10 +48,9 @@ type RowData = {
 
 function parseTableToJSON(tableHTML: string) {
     const $ = load(tableHTML);
-    const data: RowData[] = [];
-
-    $('tbody tr').each((_, row) => {
-        const rowData = {
+    const data: RowData[] = $('tbody tr')
+        .toArray()
+        .map((row) => ({
             package: $(row).find('.package a').text().trim(),
             packageUrl: $(row).find('.package a').attr('href')?.trim(),
             version: $(row).find('.version a').text().trim(),
@@ -62,9 +61,7 @@ function parseTableToJSON(tableHTML: string) {
             architecture: $(row).find('.arch a').text().trim(),
             maintainer: $(row).find('.maintainer a').text().trim(),
             buildDate: $(row).find('.bdate').text().trim(),
-        };
-        data.push(rowData);
-    });
+        }));
 
     return data;
 }
