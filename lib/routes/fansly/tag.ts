@@ -1,5 +1,4 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getTagId, getTagSuggestion, findAccountById, parseDescription, baseUrl, icon } from './utils';
 
@@ -29,7 +28,7 @@ export const route: Route = {
 async function handler(ctx) {
     const tag = ctx.req.param('tag');
 
-    const tagId = await getTagId(tag, cache.tryGet);
+    const tagId = await getTagId(tag);
     const suggestion = await getTagSuggestion(tagId);
 
     const items = suggestion.aggregationData?.posts.map((post) => {
