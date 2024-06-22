@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { doGot, genSize } from './util';
 
-const category_dict = {
+const categoryDict = {
     1: '电影',
     2: '电视剧',
     3: '周热门',
@@ -67,7 +67,7 @@ async function handler(ctx) {
             };
         });
     return {
-        title: `不太灵-最新资源列表-${category_dict[sc]}`,
+        title: `不太灵-最新资源列表-${categoryDict[sc]}`,
         link: _link,
         item: items,
     };
