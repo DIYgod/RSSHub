@@ -3,11 +3,19 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { doGot, genSize } from './util';
 
+const category_dict = {
+    1: '电影',
+    2: '电视剧',
+    3: '周热门',
+    4: '月热门',
+    5: '年度热门',
+};
+
 export const route: Route = {
-    path: '/mv/:number/:domain?',
+    path: '/tlist/:sc/:domain?',
     categories: ['multimedia'],
-    example: '/mv/35575567/2',
-    parameters: { number: '影视详情id, 网页路径为`/mv/{id}.html`其中的id部分, 一般为8位纯数字', domain: '数字1-9, 比如1表示请求域名为 1bt0.com, 默认为 2' },
+    example: '/tlist/1',
+    parameters: { sc: '分类(1-5), 1:电影, 2:电视剧, 3:周热门, 4:月热门, 5:年度热门', domain: '数字1-9, 比如1表示请求域名为 1bt0.com, 默认为 2' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,50 +26,48 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['2bt0.com/mv/'],
+            source: ['2bt0.com/tlist/'],
         },
     ],
-    name: '影视资源下载列表',
+    name: '最新资源列表',
     maintainers: ['miemieYaho'],
     handler,
 };
 
 async function handler(ctx) {
     const domain = ctx.req.param('domain') ?? '2';
-    const number = ctx.req.param('number');
+    const sc = ctx.req.param('sc');
     if (!/^[1-9]$/.test(domain)) {
         throw new InvalidParameterError('Invalid domain');
     }
-    const regex = /^\d{6,}$/;
-    if (!regex.test(number)) {
-        throw new InvalidParameterError('Invalid number');
+    if (!/^[1-5]$/.test(sc)) {
+        throw new InvalidParameterError('Invalid sc');
     }
 
     const host = `https://www.${domain}bt0.com`;
-    const _link = `${host}/mv/${number}.html`;
+    const _link = `${host}/tlist.php?sc=${sc}`;
 
     const $ = load(await doGot(0, host, _link));
-    const name = $('span.info-title.lh32').text();
-    const items = $('div.container .container .col-md-10.tex_l')
+    const items = $('div.left.bf100.hig90.ov_hid.po_rel.trall3.dou3')
         .toArray()
         .map((item) => {
             item = $(item);
-            const torrent_info = item.find('.torrent-title').first();
-            const _title = torrent_info.text();
-            const len = item.find('.tag-sm.tag-size.text-center').first().text();
+            const ah = item.find('a');
+            const _title = ah.eq(1).text();
+            const len = item.find('.marl10.bgzise').first().text();
             return {
                 title: _title,
                 guid: _title,
                 description: `${_title}[${len}]`,
-                link: host + torrent_info.attr('href'),
-                pubDate: item.find('.tag-sm.tag-download.text-center').eq(1).text(),
+                link: host + ah.eq(1).attr('href'),
+                pubDate: item.find('.bghuise9').first().text(),
                 enclosure_type: 'application/x-bittorrent',
-                enclosure_url: item.find('.col-md-3 a').first().attr('href'),
+                enclosure_url: ah.eq(2).attr('href'),
                 enclosure_length: genSize(len),
             };
         });
     return {
-        title: name,
+        title: `不太灵-最新资源列表-${category_dict[sc]}`,
         link: _link,
         item: items,
     };
