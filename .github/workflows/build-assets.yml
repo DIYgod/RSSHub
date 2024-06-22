@@ -43,19 +43,27 @@ jobs:
           keep_files: true
       - name: Build docs
         run: pnpm build:docs
+      - id: check-env
+        env:
+          DOCS_API_TOKEN: ${{ secrets.DOCS_API_TOKEN }}
+        if: ${{ env.DOCS_API_TOKEN != '' }}
+        run: echo "defined=true" >> $GITHUB_OUTPUT
       - name: Checkout docs
         uses: actions/checkout@v4
+        if: steps.check-env.outputs.defined == 'true'
         with:
           repository: 'RSSNext/rsshub-docs'
           token: ${{ secrets.DOCS_API_TOKEN }}
           path: rsshub-docs
       - name: Update docs
+        if: steps.check-env.outputs.defined == 'true'
         run: |
           cp -r ./assets/build/docs/en/* ./rsshub-docs/src/routes
           cp -r ./assets/build/docs/zh/* ./rsshub-docs/src/zh/routes
           cp ./lib/types.ts ./rsshub-docs/.vitepress/theme/types.ts
           cp ./scripts/workflow/data.ts ./rsshub-docs/.vitepress/config/data.ts
       - name: Commit docs
+        if: steps.check-env.outputs.defined == 'true'
         run: |
           cd rsshub-docs
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
