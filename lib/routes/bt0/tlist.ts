@@ -12,9 +12,9 @@ const categoryDict = {
 };
 
 export const route: Route = {
-    path: '/tlist/:sc/:domain?',
+    path: '/bt0/tlist/:sc/:domain?',
     categories: ['multimedia'],
-    example: '/tlist/1',
+    example: '/bt0/tlist/1',
     parameters: { sc: '分类(1-5), 1:电影, 2:电视剧, 3:周热门, 4:月热门, 5:年度热门', domain: '数字1-9, 比如1表示请求域名为 1bt0.com, 默认为 2' },
     features: {
         requireConfig: false,

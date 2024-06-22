@@ -4,9 +4,9 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { doGot, genSize } from './util';
 
 export const route: Route = {
-    path: '/mv/:number/:domain?',
+    path: '/bt0/mv/:number/:domain?',
     categories: ['multimedia'],
-    example: '/mv/35575567/2',
+    example: '/bt0/mv/35575567/2',
     parameters: { number: '影视详情id, 网页路径为`/mv/{id}.html`其中的id部分, 一般为8位纯数字', domain: '数字1-9, 比如1表示请求域名为 1bt0.com, 默认为 2' },
     features: {
         requireConfig: false,
