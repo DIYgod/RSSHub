@@ -5,18 +5,13 @@ import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
 import { ofetch } from 'ofetch';
 
-const dict = {
-    industry: { id: 434, name: '行业资讯' },
-    dynamic: { id: 436, name: '协会动态' },
-    notices: { id: 438, name: '重要通知' },
-    policies: { id: 440, name: '政策法规' },
-};
+const dict = { '434': '行业资讯', '436': '协会动态', '438': '重要通知', '440': '政策法规' };
 
 export const route: Route = {
-    path: 'news/:type',
+    path: 'news/:typeId',
     categories: ['government'],
-    example: '/samd/news/policies',
-    parameters: { type: '文章类型' },
+    example: '/samd/news/440',
+    parameters: { type: '文章类型ID，见下表' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -26,13 +21,13 @@ export const route: Route = {
         supportScihub: false,
     },
     description: `| 行业资讯 | 协会动态 | 重要通知 | 政策法规 |
-| -------- | ------- | ------- | -------- |
-| industry | dynamic | notices | policies |`,
+| --- | --- | --- | --- |
+| 434 | 436 | 438 | 440 |`,
     name: '资讯信息',
     maintainers: ['hualiong'],
     handler: async (ctx) => {
         const baseURL = 'https://www.samd.org.cn/home';
-        const type = ctx.req.param('type');
+        const typeId = ctx.req.param('typeId');
 
         const { rows } = await ofetch('/GetNewsByTagId', {
             baseURL,
@@ -40,23 +35,21 @@ export const route: Route = {
             query: {
                 page: 1,
                 rows: 10,
-                typeId: dict[type].id,
+                typeId,
                 status: 1,
             },
         });
 
         const list: DataItem[] = rows.map((row) => ({
-            id: row.auto_id,
-            guid: row.auto_id,
             title: row.title,
             category: [row.tag_names],
-            link: `${baseURL}/newsDetail?id=${row.auto_id}&typeId=${dict[type].id}`,
+            link: `${baseURL}/newsDetail?id=${row.auto_id}&typeId=${typeId}`,
             image: row.img_url ? baseURL + row.img_url : null,
         }));
 
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(String(item.id), async () => {
+                cache.tryGet(item.link!, async () => {
                     const $ = load(await ofetch(item.link!));
 
                     const content = $('.content');
@@ -73,7 +66,7 @@ export const route: Route = {
         );
 
         return {
-            title: `${dict[type].name} - 深圳市医疗器械行业协会`,
+            title: `${dict[typeId]} - 深圳市医疗器械行业协会`,
             link: 'https://www.samd.org.cn/home/newsList',
             item: items as DataItem[],
         };
