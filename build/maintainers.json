@@ -878,6 +878,9 @@
   "/bt0/mv/:number/:domain?": [
     "miemieYaho"
   ],
+  "/bt0/tlist/:sc/:domain?": [
+    "miemieYaho"
+  ],
   "/btzj/:category?": [
     "nczitzk"
   ],
