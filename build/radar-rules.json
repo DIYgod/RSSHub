@@ -10515,6 +10515,20 @@
       }
     ]
   },
+  "myfans.jp": {
+    "_name": "myfans",
+    ".": [
+      {
+        "title": "User Posts",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:username",
+          "/:language/:username"
+        ],
+        "target": "/myfans/user/:username"
+      }
+    ]
+  },
   "myfigurecollection.net": {
     "_name": "MyFigureCollection",
     "zh": [

@@ -38635,6 +38635,43 @@
     "name": "快科技",
     "url": "m.mydrivers.com"
   },
+  "myfans": {
+    "routes": {
+      "/user/:username": {
+        "path": "/user/:username",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/myfans/user/secret_japan",
+        "parameters": {
+          "username": "User handle"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "myfans.jp/:username",
+              "myfans.jp/:language/:username"
+            ]
+          }
+        ],
+        "name": "User Posts",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "post.ts"
+      }
+    },
+    "name": "myfans",
+    "url": "myfans.jp"
+  },
   "myfigurecollection": {
     "routes": {
       "/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?": {
