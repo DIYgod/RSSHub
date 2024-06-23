@@ -53,7 +53,7 @@ async function handler(ctx) {
             return {
                 title: `${details.name} - ${tag.name}`,
                 author: details.publisher,
-                description: descriptionItems.join(', '),
+                description: descriptionItems.join('<br />'),
                 pubDate: new Date(tag.lastModifiedDate),
                 guid: `mcr::${product}::${tag.name}::${tag.digest}`,
                 link: `https://mcr.microsoft.com/en-us/product/${product}/tags`,
