@@ -89,6 +89,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: `${e.package}@${e.version}/${e.architecture}`,
         description: `Version: ${e.version}<br>Project: ${e.project}<br>License: ${e.license}<br>Branch: ${e.branch}<br>Repository: ${e.repository}<br>Maintainer: ${e.maintainer}<br>Build Date: ${e.buildDate}`,
         link: e.packageUrl,
+        guid: `${e.packageUrl}#${e.version}`,
         author: e.maintainer,
         pubDate: parseDate(e.buildDate),
     }));
