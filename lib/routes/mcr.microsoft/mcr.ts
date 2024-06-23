@@ -43,10 +43,7 @@ async function handler(ctx) {
         item: tags.map((tag: any) => ({
             title: `${details.name} - ${tag.name}`,
             author: details.publisher,
-            description: `Digest: \`${tag.digest}\`\n\n` +
-                `Last modified date: ${new Date(tag.lastModifiedDate).toDateString()}\n\n` +
-                tag.architecture ? 'Architecture: ' + tag.architecture + '\n\n' : '' +
-                    tag.operatingSystem ? 'Operating system: ' + tag.operatingSystem + '\n\n' : '',
+            description: `Digest: \`${tag.digest}\`\n\nLast modified date: ${new Date(tag.lastModifiedDate).toDateString()}\n\n${tag.architecture ? 'Architecture: ' + tag.architecture + '\n\n' : ''}${tag.operatingSystem ? 'Operating system: ' + tag.operatingSystem + '\n\n' : ''}`,
             pubDate: new Date(tag.lastModifiedDate),
             guid: `mcr::${product}::${tag.name}::${tag.digest}`,
             link: `https://mcr.microsoft.com/en-us/product/${product}/tags/${tag.name}/${tag.digest}`,
