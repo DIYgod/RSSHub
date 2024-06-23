@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/product/:product',
-    categories: ['programming', 'program-update'],
+    categories: ['program-update'],
     example: '/mcr.microsoft/product/dotnet/framework/runtime',
     parameters: { product: 'repository path in mcr.microsoft.com' },
     features: {
