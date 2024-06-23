@@ -10582,6 +10582,36 @@
     "name": "Macau Independent Commission Against Corruption 澳门廉政公署",
     "url": "ccac.org.mo"
   },
+  "cccfna": {
+    "routes": {
+      "/:category/:type?": {
+        "path": "/:category/:type?",
+        "categories": [
+          "government"
+        ],
+        "example": "/cccfna/meirigengxin",
+        "parameters": {
+          "category": "文章种类，即一级分类，详情见下表",
+          "type": "文章类型，即二级分类，详情见下表"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.cccfna.org.cn/:category/:type?"
+            ]
+          }
+        ],
+        "description": "\n:::tip\n存在**二级分类**的**一级分类**不能单独当作参数，如：`/cccfna/hangyezixun`\n:::\n    \n文章的目录分级如下:\n\n- shanghuidongtai（商会通知）\n- meirigengxin（每日更新）\n- tongzhigonggao（通知公告）\n- hangyezixun（行业资讯）\n  - zhengcedaohang（政策导航）\n  - yujinxinxi（预警信息）\n  - shichangdongtai（市场动态）\n  - gongxuxinxi（供需信息）\n- maoyitongji（贸易统计）\n  - tongjikuaibao（统计快报）\n  - hangyetongji（行业统计）\n  - guobiemaoyi（国别贸易）\n  - maoyizhinan（贸易指南）\n- nongchanpinbaogao（农产品报告）\n  - nongchanpinyuebao（农产品月报）\n  - zhongdianchanpinyuebao（重点产品月报）\n  - zhongdianchanpinzoushi（重点产品走势）",
+        "name": "资讯信息",
+        "maintainers": [
+          "hualiong"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "中国食品土畜进出口商会",
+    "url": "www.cccfna.org.cn"
+  },
   "ccf": {
     "routes": {
       "/news/:category?": {
@@ -49861,6 +49891,36 @@
     },
     "name": "Sakamichi Series 坂道系列官网资讯",
     "url": "sakurazaka46.com"
+  },
+  "samd": {
+    "routes": {
+      "news/:typeId": {
+        "path": "news/:typeId",
+        "categories": [
+          "government"
+        ],
+        "example": "/samd/news/440",
+        "parameters": {
+          "type": "文章类型ID，见下表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "description": "| 行业资讯 | 协会动态 | 重要通知 | 政策法规 |\n| --- | --- | --- | --- |\n| 434 | 436 | 438 | 440 |",
+        "name": "资讯信息",
+        "maintainers": [
+          "hualiong"
+        ],
+        "location": "news.ts"
+      }
+    },
+    "name": "深圳市医疗器械行业协会",
+    "url": "www.samd.org.cn"
   },
   "samsung": {
     "routes": {

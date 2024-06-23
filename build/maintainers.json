@@ -1029,6 +1029,9 @@
   "/ccac/news/:type/:lang?": [
     "linbuxiao"
   ],
+  "/cccfna/:category/:type?": [
+    "hualiong"
+  ],
   "/ccf/news/:category?": [
     "nczitzk"
   ],
@@ -4960,6 +4963,9 @@
   ],
   "/sakurazaka46/news": [
     "nczitzk"
+  ],
+  "/samdnews/:typeId": [
+    "hualiong"
   ],
   "/samsung/research/blog": [
     "nczitzk"

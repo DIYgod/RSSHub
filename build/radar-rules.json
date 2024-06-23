@@ -2927,6 +2927,19 @@
       }
     ]
   },
+  "cccfna.org.cn": {
+    "_name": "中国食品土畜进出口商会",
+    "www": [
+      {
+        "title": "资讯信息",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/:category/:type"
+        ],
+        "target": "/cccfna/:category/:type?"
+      }
+    ]
+  },
   "ccf.org.cn": {
     "_name": "中国计算机学会",
     ".": [
