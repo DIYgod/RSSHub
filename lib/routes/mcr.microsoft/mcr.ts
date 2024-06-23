@@ -48,5 +48,5 @@ async function handler(ctx) {
             guid: `mcr::${product}::${tag.name}::${tag.digest}`,
             link: `https://mcr.microsoft.com/en-us/product/${product}/tags/${tag.name}/${tag.digest}`,
         }))
-    }
-}
+    };
+};
