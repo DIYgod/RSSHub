@@ -4,7 +4,7 @@ import got from '@/utils/got';
 export const route: Route = {
     path: '/product/*',
     categories: ['program-update'],
-    example: '/mcr.microsoft/product/dotnet/framework/runtime',
+    example: '/microsoft/mcr/product/dotnet/framework/runtime',
     parameters: { product: 'repository path in mcr.microsoft.com' },
     features: {
         requireConfig: false,
@@ -25,7 +25,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const product = ctx.req.path.replace('/mcr.microsoft/product/', '');
+    const product = ctx.req.path.replace('/microsoft/mcr/product/', '');
     const { data: details } = await got({
         method: 'get',
         url: `https://mcr.microsoft.com/api/v1/catalog/${product}/details`,
