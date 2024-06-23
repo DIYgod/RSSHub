@@ -56,7 +56,7 @@ async function handler(ctx) {
                 description: descriptionItems.join(', '),
                 pubDate: new Date(tag.lastModifiedDate),
                 guid: `mcr::${product}::${tag.name}::${tag.digest}`,
-                link: `https://mcr.microsoft.com/en-us/product/${product}/tags/${tag.name}/${tag.digest}`,
+                link: `https://mcr.microsoft.com/en-us/product/${product}/tags`,
             };
         }),
     };
