@@ -384,6 +384,9 @@
   "/ally/rail/:category?/:topic?": [
     "Rongronggg9"
   ],
+  "/alpinelinux/pkgs/:name/:routeParams?": [
+    "CaoMeiYouRen"
+  ],
   "/alternativeto/platform/:name/:routeParams?": [
     "JimenezLi"
   ],

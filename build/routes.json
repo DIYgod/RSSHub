@@ -4040,6 +4040,45 @@
     "name": "艾莱资讯",
     "url": "rail.ally.net.cn"
   },
+  "alpinelinux": {
+    "routes": {
+      "/pkgs/:name/:routeParams?": {
+        "name": "Packages",
+        "categories": [
+          "program-update"
+        ],
+        "maintainers": [
+          "CaoMeiYouRen"
+        ],
+        "path": "/pkgs/:name/:routeParams?",
+        "parameters": {
+          "name": "Packages name",
+          "routeParams": "Filters of packages type. E.g. branch=edge&repo=main&arch=armv7&maintainer=Jakub%20Jirutka"
+        },
+        "example": "/alpinelinux/pkgs/nodejs",
+        "description": "Alpine Linux packages update",
+        "radar": [
+          {
+            "source": [
+              "https://pkgs.alpinelinux.org/packages"
+            ]
+          }
+        ],
+        "zh": {
+          "name": "软件包",
+          "description": "Alpine Linux 软件包更新"
+        },
+        "location": "pkgs.ts"
+      }
+    },
+    "name": "Alpine Linux",
+    "url": "alpinelinux.org",
+    "description": "Alpine Linux is a security-oriented, lightweight Linux distribution based on musl libc and busybox.",
+    "zh": {
+      "name": "Alpine Linux",
+      "description": "Alpine Linux 是一个基于 musl libc 和 busybox 的面向安全的轻量级 Linux 发行版。"
+    }
+  },
   "alternativeto": {
     "routes": {
       "/platform/:name/:routeParams?": {
