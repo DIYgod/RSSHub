@@ -37,6 +37,7 @@ type RowData = {
     package: string;
     packageUrl?: string;
     version: string;
+    description?: string;
     project?: string;
     license: string;
     branch: string;
@@ -53,6 +54,7 @@ function parseTableToJSON(tableHTML: string) {
         .map((row) => ({
             package: $(row).find('.package a').text().trim(),
             packageUrl: $(row).find('.package a').attr('href')?.trim(),
+            description: $(row).find('.package a').attr('aria-label')?.trim(),
             version: $(row).find('.version a').text().trim(),
             project: $(row).find('.url a').attr('href')?.trim(),
             license: $(row).find('.license').text().trim(),
@@ -87,9 +89,9 @@ async function handler(ctx: Context): Promise<Data> {
 
     const items = rowData.map((e) => ({
         title: `${e.package}@${e.version}/${e.architecture}`,
-        description: `Version: ${e.version}<br>Project: ${e.project}<br>License: ${e.license}<br>Branch: ${e.branch}<br>Repository: ${e.repository}<br>Maintainer: ${e.maintainer}<br>Build Date: ${e.buildDate}`,
-        link: e.packageUrl,
-        guid: `${e.packageUrl}#${e.version}`,
+        description: `Version: ${e.version}<br>Project: ${e.project}<br>Description: ${e.description}<br>License: ${e.license}<br>Branch: ${e.branch}<br>Repository: ${e.repository}<br>Maintainer: ${e.maintainer}<br>Build Date: ${e.buildDate}`,
+        link: `https://pkgs.alpinelinux.org${e.packageUrl}`,
+        guid: `https://pkgs.alpinelinux.org${e.packageUrl}#${e.version}`,
         author: e.maintainer,
         pubDate: parseDate(e.buildDate),
     }));
