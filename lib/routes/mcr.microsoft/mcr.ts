@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/product/:product',
+    path: '/product/*',
     categories: ['program-update'],
     example: '/mcr.microsoft/product/dotnet/framework/runtime',
     parameters: { product: 'repository path in mcr.microsoft.com' },
@@ -25,7 +25,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const product = ctx.req.param('product');
+    const product = ctx.req.path.replace('/mcr.microsoft/product/', '');
     const details = await got({
         method: 'get',
         url: `https://mcr.microsoft.com/api/v1/catalog/${product}/details`,
@@ -47,6 +47,6 @@ async function handler(ctx) {
             pubDate: new Date(tag.lastModifiedDate),
             guid: `mcr::${product}::${tag.name}::${tag.digest}`,
             link: `https://mcr.microsoft.com/en-us/product/${product}/tags/${tag.name}/${tag.digest}`,
-        }))
+        })),
     };
-};
+}
