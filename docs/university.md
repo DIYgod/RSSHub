@@ -5663,11 +5663,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生网
 
-<Route author="yanbot-team" example="/swu/yanzhao/news1" path="/swu/yanzhao/:type" :paramsDesc="['分类名，见下表']" radar="1">
+<Route author="yanbot-team" example="/swu/yz/zsxx-sszs-tzgg" path="/swu/yz/:type" :paramsDesc="['分类名，见下表']" radar="1">
 
-| 最新动态 | 全日制硕士招生 | 博士招生 | 非全日制硕士 |
-| -------- | -------------- | -------- | ------------ |
-| news1    | news2          | news3    | news4        |
+| 硕士招生通知公告 | 硕士招生招生简章 | 推免通知         | 夏令营通知        |
+| ---------------- | ---------------- | ---------------- | ----------------- |
+| zsxx-sszs-tzgg   | zsxx-sszs-zsjz   | zsxx-xly_tm-tmtz | zsxx-xly_tm-xlytz |
 
 </Route>
 
