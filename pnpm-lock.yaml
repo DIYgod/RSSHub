@@ -27,8 +27,8 @@ importers:
         specifier: 7.116.0
         version: 7.116.0
       '@tonyrl/rand-user-agent':
-        specifier: 2.0.68
-        version: 2.0.68
+        specifier: 2.0.69
+        version: 2.0.69
       aes-js:
         specifier: 3.1.2
         version: 3.1.2
@@ -1787,8 +1787,8 @@ packages:
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
 
-  '@tonyrl/rand-user-agent@2.0.68':
-    resolution: {integrity: sha512-Y3MD0nrEGzZoy67evy3XhYPabHDcNgB/OF/RE0IitvEGETeh8Xdbpk6kcnKc/Q+Y2UM+LkVFbT1lVls5jnQvFw==}
+  '@tonyrl/rand-user-agent@2.0.69':
+    resolution: {integrity: sha512-yw+SCKzSMLnpL7k4HsRFj8F6YbxMGlcV0o4rSY/ggQSTC6fhbbiupi+Jm9bGVJc0AvKHknRsC83nwduZfdgD+g==}
     engines: {node: '>=14.16'}
 
   '@tootallnate/quickjs-emscripten@0.23.0':
@@ -2959,8 +2959,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -7959,7 +7959,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.7
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8553,7 +8553,7 @@ snapshots:
     dependencies:
       '@testing-library/dom': 9.3.4
 
-  '@tonyrl/rand-user-agent@2.0.68': {}
+  '@tonyrl/rand-user-agent@2.0.69': {}
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
@@ -9860,7 +9860,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
