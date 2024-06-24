@@ -3831,6 +3831,9 @@
   "/modrinth/project/:id/versions/:routeParams?": [
     "SettingDust"
   ],
+  "/moduzy/:type/:hours?": [
+    "hualiong"
+  ],
   "/mohw/clarification": [
     "nczitzk"
   ],

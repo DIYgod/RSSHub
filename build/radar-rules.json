@@ -10448,6 +10448,31 @@
       }
     ]
   },
+  "moduzy.cc": {
+    "_name": "魔都资源网",
+    ".": [
+      {
+        "title": "最新资源",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/",
+          "/",
+          "/",
+          "/",
+          "/",
+          "/",
+          "/",
+          "/",
+          "/",
+          "/",
+          "/",
+          "/",
+          "/"
+        ],
+        "target": "/moduzy/:type/:hours?"
+      }
+    ]
+  },
   "mohw.gov.tw": {
     "_name": "台灣衛生福利部",
     ".": [
