@@ -2176,9 +2176,15 @@ category 列表：
 
 ## 海南大学
 
-### 硕士研究生招生动态
+### 研究生院
 
-<Route author="OdinZhang" example="/hainanu/ssszs" path="/hainanu/ssszs"/>
+<Route author="yanbot-team" example="/hainanu/gs/ssszs" path="/hainanu/gs/:type" :paramsDesc="['分类名，见下表']" >
+
+| 硕士生招生 |
+| ---------- |
+| ssszs      |
+
+</Route>
 
 ## 杭州电子科技大学
 
