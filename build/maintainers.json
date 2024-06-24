@@ -3738,6 +3738,9 @@
     "hoilc",
     "DIYgod"
   ],
+  "/microsoft/mcr/product/*": [
+    "margani"
+  ],
   "/mihoyo/bbs/follow-list/:uid": [
     "CaoMeiYouRen"
   ],

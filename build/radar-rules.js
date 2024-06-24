@@ -4465,7 +4465,7 @@
         docs:"https://docs.rsshub.app/routes/bbs",
         source:[ "/" ],
         target:"/meteor/boards" } ] },
-  "microsoft.com":{ _name:"Microsoft Edge",
+  "microsoft.com":{ _name:"Microsoft",
     microsoftedge:[ { title:"Addons Update",
         docs:"https://docs.rsshub.app/routes/program-update",
         source:[ "/addons/detail/:name/:crxid" ],

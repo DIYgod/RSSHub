@@ -37460,10 +37460,40 @@
           "DIYgod"
         ],
         "location": "addon.ts"
+      },
+      "/mcr/product/*": {
+        "path": "/mcr/product/*",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/microsoft/mcr/product/dotnet/framework/runtime",
+        "parameters": {
+          "product": "repository path in mcr.microsoft.com"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "https://mcr.microsoft.com/en-us/product/:product/tags"
+            ]
+          }
+        ],
+        "name": "Product tags in mcr.microsoft.com",
+        "maintainers": [
+          "margani"
+        ],
+        "location": "mcr.ts"
       }
     },
-    "name": "Microsoft Edge",
-    "url": "microsoftedge.microsoft.com"
+    "name": "Microsoft",
+    "url": "microsoft.com"
   },
   "mihoyo": {
     "routes": {
