@@ -150,8 +150,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1
       proxy-chain:
-        specifier: 2.4.1
-        version: 2.4.1
+        specifier: 2.5.1
+        version: 2.5.1
       puppeteer:
         specifier: 22.6.2
         version: 22.6.2(bufferutil@4.0.8)(typescript@5.5.2)(utf-8-validate@5.0.10)
@@ -1700,8 +1700,8 @@ packages:
   '@storybook/core-events@8.1.10':
     resolution: {integrity: sha512-aS4zsBVyJds74+rAW0IfTEjULDCQwXecVpQfv11B8/89/07s3bOPssGGoTtCTaN4pHbduywE6MxbmFvTmXOFCA==}
 
-  '@storybook/csf@0.1.8':
-    resolution: {integrity: sha512-Ntab9o7LjBCbFIao5l42itFiaSh/Qu+l16l/r/9qmV9LnYZkO+JQ7tzhdlwpgJfhs+B5xeejpdAtftDRyXNajw==}
+  '@storybook/csf@0.1.9':
+    resolution: {integrity: sha512-JlZ6v/iFn+iKohKGpYXnMeNeTiiAMeFoDhYnPLIC8GnyyIWqEI9wJYrOK9i9rxlJ8NZAH/ojGC/u/xVC41qSgQ==}
 
   '@storybook/global@5.0.0':
     resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
@@ -5244,8 +5244,8 @@ packages:
     resolution: {integrity: sha512-u0piLU+nCOHMgGjRbimiXmA9kM/L9EHh3zL81xCdp7m+Y2pHIsnmbdDoEDoAz5geaonNR6q6+yOPQs6n4T6sBQ==}
     engines: {node: '>= 14'}
 
-  proxy-chain@2.4.1:
-    resolution: {integrity: sha512-s3cb4cXMqyfINLhohN+BHGxhq5vGxx0Z48f0SbuYnge2wEoKxS1xeHATVXG2lkUvrDnSaQ8JhwuEWkKlrO23Gg==}
+  proxy-chain@2.5.1:
+    resolution: {integrity: sha512-gGKYJdqE/uk/ncp2LGjbTT7ivjYuRAfhPU4/2VnccF2sSbQDR4YJROVnDkjLbBSLIDesAaoKav8WBLLv6YXwfA==}
     engines: {node: '>=14'}
 
   proxy-from-env@1.1.0:
@@ -8430,10 +8430,10 @@ snapshots:
 
   '@storybook/core-events@8.1.10':
     dependencies:
-      '@storybook/csf': 0.1.8
+      '@storybook/csf': 0.1.9
       ts-dedent: 2.2.0
 
-  '@storybook/csf@0.1.8':
+  '@storybook/csf@0.1.9':
     dependencies:
       type-fest: 2.19.0
 
@@ -8454,7 +8454,7 @@ snapshots:
       '@storybook/channels': 8.1.10
       '@storybook/client-logger': 8.1.10
       '@storybook/core-events': 8.1.10
-      '@storybook/csf': 0.1.8
+      '@storybook/csf': 0.1.9
       '@storybook/global': 5.0.0
       '@storybook/types': 8.1.10
       '@types/qs': 6.9.15
@@ -12596,9 +12596,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  proxy-chain@2.4.1:
+  proxy-chain@2.5.1:
     dependencies:
+      socks: 2.8.3
+      socks-proxy-agent: 8.0.3
       tslib: 2.6.3
+    transitivePeerDependencies:
+      - supports-color
 
   proxy-from-env@1.1.0: {}
 
