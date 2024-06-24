@@ -34,8 +34,8 @@ export const route: Route = {
     maintainers: ['hualiong'],
     url: 'moduzy.net',
     description: `
-:::tip
-不建议订阅全部类别，即 \`type\` 为0，因为全部类型每天的更新量可能会超过单次抓取的最大上限40条而被截断
+:::warning
+不建议订阅\`全部类别\`和\`国产动漫\`，因为该类型每天的更新量会大幅超过单次抓取的最大上限20条而被截断
 **温馨提醒**：该资源网以**动漫资源**为主，部分影视类别可能会没有资源
 :::
 
@@ -56,15 +56,14 @@ export const route: Route = {
     handler: async (ctx) => {
         const { type, hours = '' } = ctx.req.param();
         const query = async (pg: number) =>
-            await ofetch('https://moduzy.net/api.php/provide/vod', {
+            await ofetch<Result>('https://moduzy.net/api.php/provide/vod', {
                 parseResponse: JSON.parse,
                 query: { ac: 'detail', t: type || '', h: hours, pg },
             });
 
-        // 某些资源一天更新的量可能会超过单页最大上限20条，所以提前取两页
-        const res = await Promise.all<[Promise<Result>, Promise<Result>]>([query(1), query(2)]);
+        const res = await query(1);
 
-        const items: DataItem[] = [...res[0].list, ...res[1].list].map((each) => ({
+        const items: DataItem[] = res.list.map((each) => ({
             title: each.vod_name,
             image: each.vod_pic,
             link: `https://moduzy.net/vod/${each.vod_id}/`,
@@ -74,18 +73,10 @@ export const route: Route = {
             description: render(each, `https://moduzy.net/vod/${each.vod_id}/`) + each.vod_content,
         }));
 
-        // 有些类别是没有资源的，此处防止返回空列表
-        if (!items.length) {
-            items.push({
-                title: '很抱歉，目前暂无资源',
-                category: ['资源'],
-                description: '如果您设置了时间限制，那么可能是在该时间段内暂无新的资源发布，请稍后查看。若无限制，则代表本站可能暂无该类型的影视资源',
-            });
-        }
-
         return {
-            title: `最新${type ? items[0].category![0] : '资源'} - 魔都资源网`,
+            title: `最新${type && items.length ? items[0].category![0] : '资源'} - 魔都资源网`,
             link: 'https://moduzy.net',
+            allowEmpty: true,
             language: 'zh-cn',
             item: items,
         };
