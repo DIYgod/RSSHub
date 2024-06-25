@@ -59,7 +59,7 @@ async function handler(ctx) {
         );
     }
 
-    const { about } = await cache.tryGet(link, async () => await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key } }), config.cache.contentExpire, false);
+    const { about } = await cache.tryGet(link, async () => await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key } }), config.cache.routeExpire, false);
     return {
         title: `${about.title} - Notifications`,
         description: about.description,
