@@ -151,7 +151,7 @@ async function handler(ctx) {
                     info.enclosure_url = enclosureUrl;
                     info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
                 }
-
+                await page.close();
                 return info;
             })
         )
