@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     description: `
-        期刊《回归线》 | 泰拉创作者协会
+        期刊《回归线》 | 泰拉创作者联合会
     `,
     handler,
 };
