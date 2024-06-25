@@ -3,7 +3,6 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { config } from '@/config';
 const baseUrl = 'https://xsijishe.com';
 
 export const route: Route = {
@@ -12,12 +11,7 @@ export const route: Route = {
     example: '/xsijishe/rank/weekly',
     parameters: { type: '排行榜类型: weekly | monthly' },
     features: {
-        requireConfig: [
-            {
-                name: 'XSIJISHE_COOKIE',
-                description: '',
-            },
-        ],
+        requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -43,14 +37,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid rank type');
     }
     const url = `${baseUrl}/portal.php`;
-    const headers = {
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-        Cookie: config.xsijishe.cookie,
-    };
-    const resp = await got(url, {
-        headers,
-    });
+    const resp = await got(url);
     const $ = load(resp.data);
     let items = $(`#${rankId} dd`)
         .toArray()
