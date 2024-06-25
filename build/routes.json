@@ -65627,7 +65627,12 @@
           "fid": "子论坛 id"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "XSIJISHE_COOKIE",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
