@@ -84,7 +84,7 @@ const app = new Hono();
 for (const namespace in namespaces) {
     const subApp = app.basePath(`/${namespace}`);
     for (const path in namespaces[namespace].routes) {
-        const wrapedHandler: Handler = async (ctx) => {
+        const wrappedHandler: Handler = async (ctx) => {
             if (!ctx.get('data')) {
                 if (typeof namespaces[namespace].routes[path].handler !== 'function') {
                     const { route } = await import(`./routes/${namespace}/${namespaces[namespace].routes[path].location}`);
@@ -93,7 +93,7 @@ for (const namespace in namespaces) {
                 ctx.set('data', await namespaces[namespace].routes[path].handler(ctx));
             }
         };
-        subApp.get(path, wrapedHandler);
+        subApp.get(path, wrappedHandler);
     }
 }
 
