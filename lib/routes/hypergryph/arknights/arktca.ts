@@ -23,7 +23,6 @@ export const route: Route = {
     radar: [
         {
             source: ['aneot.arktca.com'],
-            target: '/arknights/arktca',
         },
     ],
     description: `
