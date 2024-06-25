@@ -5,9 +5,9 @@ import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 
 export const route: Route = {
-    path: '/posts',
+    path: '/arknights/arktca',
     categories: ['game'],
-    example: 'arktca/posts',
+    example: '/hypergryph/arknights/arktca',
     parameters: {},
     features: {
         requireConfig: false,
@@ -23,6 +23,7 @@ export const route: Route = {
     radar: [
         {
             source: ['aneot.arktca.com'],
+            target: '/arknights/arktca',
         },
     ],
     description: `
@@ -60,47 +61,51 @@ async function handler() {
 
     const journals = await Promise.all(
         journalList.map((item) =>
-            cache.tryGet(`item:urls`, async () => await Promise.all(
-                    item.urls.map(async (url) => {
-                        const { data: response } = await got(url);
-                        const $$ = load(response);
-                        $$(`div.ads-container`).remove();
+            cache.tryGet(
+                `item:urls`,
+                async () =>
+                    await Promise.all(
+                        item.urls.map(async (url) => {
+                            const { data: response } = await got(url);
+                            const $$ = load(response);
+                            $$(`div.ads-container`).remove();
 
-                        const language = $$(`html`).prop('lang');
+                            const language = $$(`html`).prop('lang');
 
-                        const page_title = $$('div.vp-page-title');
-                        const title = `Vol. ${item.volume} ` + page_title.children('h1').text();
+                            const page_title = $$('div.vp-page-title');
+                            const title = `Vol. ${item.volume} ` + page_title.children('h1').text();
 
-                        const page_info = page_title.children('div.page-info');
+                            const page_info = page_title.children('div.page-info');
 
-                        const page_author_info = page_info.children(`span.page-author-info`);
-                        const author = page_author_info.find('span.page-author-item').text();
+                            const page_author_info = page_info.children(`span.page-author-info`);
+                            const author = page_author_info.find('span.page-author-item').text();
 
-                        const page_date_info = page_info.children(`span.page-date-info`);
-                        const date = page_date_info.children(`meta`).prop(`content`);
-                        const pubDate = parseDate(date);
+                            const page_date_info = page_info.children(`span.page-date-info`);
+                            const date = page_date_info.children(`meta`).prop(`content`);
+                            const pubDate = parseDate(date);
 
-                        const page_category_info = page_info.find('span.page-category-info');
-                        const category = page_category_info.children('meta').prop('content');
+                            const page_category_info = page_info.find('span.page-category-info');
+                            const category = page_category_info.children('meta').prop('content');
 
-                        const article = $$(`div.theme-hope-content`);
-                        const description = article.html();
+                            const article = $$(`div.theme-hope-content`);
+                            const description = article.html();
 
-                        const comments = Number.parseInt($$(`span.wl-num`).text());
+                            const comments = Number.parseInt($$(`span.wl-num`).text());
 
-                        return {
-                            title,
-                            language,
-                            author,
-                            pubDate,
-                            category,
-                            description,
-                            comments,
-                            guid: url,
-                            link: url,
-                        };
-                    })
-                ))
+                            return {
+                                title,
+                                language,
+                                author,
+                                pubDate,
+                                category,
+                                description,
+                                comments,
+                                guid: url,
+                                link: url,
+                            };
+                        })
+                    )
+            )
         )
     );
 
