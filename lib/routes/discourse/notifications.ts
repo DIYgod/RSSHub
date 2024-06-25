@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getConfig } from './utils';
 import ofetch from '@/utils/ofetch';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/:configId/notifications/:fulltext?',
@@ -58,7 +59,7 @@ async function handler(ctx) {
         );
     }
 
-    const { about } = await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key } });
+    const { about } = await cache.tryGet(link, async () => await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key } }), config.cache.routeExpire, false);
     return {
         title: `${about.title} - Notifications`,
         description: about.description,
