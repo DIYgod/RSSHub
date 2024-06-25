@@ -286,6 +286,9 @@ export type Config = {
     ximalaya: {
         token?: string;
     };
+    xsijishe: {
+        cookie?: string;
+    };
     xueqiu: {
         cookies?: string;
     };
@@ -648,6 +651,9 @@ const calculateValue = () => {
         },
         ximalaya: {
             token: envs.XIMALAYA_TOKEN,
+        },
+        xsijishe: {
+            cookie: envs.XSIJISHE_COOKIE,
         },
         xueqiu: {
             cookies: envs.XUEQIU_COOKIES,
