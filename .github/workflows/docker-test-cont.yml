@@ -53,12 +53,13 @@ jobs:
         with:
           workflow: ${{ github.event.workflow_run.workflow_id }}
           run_id: ${{ github.event.workflow_run.id }}
+          name: docker-image
 
       - name: Import Docker image and set up Docker container
         if: (env.TEST_CONTINUE)
         run: |
           set -ex
-          zstd -d --stdout docker-image/rsshub.tar.zst | docker load
+          zstd -d --stdout rsshub.tar.zst | docker load
           docker run -d \
             --name rsshub \
             -e NODE_ENV=dev \

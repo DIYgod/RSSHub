@@ -1,0 +1,6 @@
+{{ if content }}
+<p>{{ content }}</p>
+{{ /if }}
+{{ each images image }}
+<img src="{{ image.src }}" />
+{{ /each }}

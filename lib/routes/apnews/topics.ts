@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { fetchArticle } from './utils';
+import { fetchArticle, removeDuplicateByKey } from './utils';
 const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
@@ -50,7 +50,7 @@ async function handler(ctx) {
         title: $('title').text(),
         description: $("meta[property='og:description']").text(),
         link: url,
-        item: items,
+        item: removeDuplicateByKey(items, 'guid'),
         language: $('html').attr('lang'),
     };
 }

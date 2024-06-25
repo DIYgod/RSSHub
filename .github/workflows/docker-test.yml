@@ -41,7 +41,7 @@ jobs:
           flavor: latest=true
 
       - name: Build Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           build-args: PUPPETEER_SKIP_DOWNLOAD=0  # also test bundling Chromium

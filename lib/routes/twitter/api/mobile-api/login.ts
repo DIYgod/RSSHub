@@ -4,16 +4,12 @@ import { bearerToken, guestActivateUrl } from './constants';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import crypto from 'crypto';
-import { config } from '@/config';
 import { v5 as uuidv5 } from 'uuid';
 import { authenticator } from 'otplib';
 import logger from '@/utils/logger';
 import cache from '@/utils/cache';
 
 const NAMESPACE = 'd41d092b-b007-48f7-9129-e9538d2d8fe9';
-const username = config.twitter.username;
-const password = config.twitter.password;
-const authenticationSecret = config.twitter.authenticationSecret;
 
 let authentication = null;
 
@@ -29,8 +25,8 @@ const headers = {
     Authorization: bearerToken,
 };
 
-async function login() {
-    return await cache.tryGet(
+async function login({ username, password, authenticationSecret }) {
+    return (await cache.tryGet(
         `twitter:authentication:${username}`,
         async () => {
             logger.debug('Twitter login start.');
@@ -179,7 +175,10 @@ async function login() {
         },
         60 * 60 * 24 * 30, // 30 days
         false
-    );
+    )) as {
+        oauth_token: string;
+        oauth_token_secret: string;
+    } | null;
 }
 
 export default login;
