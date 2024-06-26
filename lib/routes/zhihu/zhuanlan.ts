@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
-import { header } from './utils';
+import { getSignedHeader, header } from './utils';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
@@ -56,7 +56,13 @@ async function handler(ctx) {
         url = `https://www.zhihu.com/column/${id}`;
     }
 
-    const infoRes = await got(url);
+    const signedHeader = await getSignedHeader(url, `https://www.zhihu.com/api/v4/columns/${id}/items`);
+    const infoRes = await got(url, {
+        headers: {
+            ...signedHeader,
+            Referer: url,
+        },
+    });
     const $ = load(infoRes.data);
     const title = $('.css-zyehvu').text();
     const description = $('.css-1bnklpv').text();

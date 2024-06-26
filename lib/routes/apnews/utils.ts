@@ -3,6 +3,10 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
+export function removeDuplicateByKey(items, key: string) {
+    return [...new Map(items.map((x) => [x[key], x])).values()];
+}
+
 export function fetchArticle(item) {
     return cache.tryGet(item.link, async () => {
         const data = await ofetch(item.link);

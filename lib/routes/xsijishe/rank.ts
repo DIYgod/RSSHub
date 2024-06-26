@@ -53,7 +53,9 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const resp = await got(item.link);
+                const resp = await got(item.link, {
+                    headers,
+                });
                 const $ = load(resp.data);
                 const firstViewBox = $('.t_f').first();
 

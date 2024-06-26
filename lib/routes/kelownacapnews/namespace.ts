@@ -1,6 +1,6 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Microsoft',
-    url: 'microsoft.com',
+    name: 'Kelowna Capital News',
+    url: 'www.kelownacapnews.com',
 };
