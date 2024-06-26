@@ -112,7 +112,7 @@ async function handler(ctx) {
                     waitUntil: 'domcontentloaded',
                 });
                 const response = await page.content();
-
+                await page.close();
                 const $ = load(response);
                 const postMessage = $("td[id^='postmessage']").slice(0, 1);
                 const images = $(postMessage).find('img');
@@ -151,7 +151,6 @@ async function handler(ctx) {
                     info.enclosure_url = enclosureUrl;
                     info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
                 }
-                await page.close();
                 return info;
             })
         )
