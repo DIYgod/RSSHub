@@ -4378,15 +4378,18 @@
   },
   "apnews": {
     "routes": {
-      "/rss/:rss?": {
-        "path": "/rss/:rss?",
+      "/rss/:category?": {
+        "path": "/rss/:category?",
         "categories": [
           "traditional-media",
           "popular"
         ],
         "example": "/apnews/rss/business",
         "parameters": {
-          "rss": "Route name from the first segment of the corresponding site, or `index` for the front page(default)."
+          "category": {
+            "description": "Category from the first segment of the corresponding site, or `index` for the front page.",
+            "default": "index"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -4404,7 +4407,7 @@
             "target": "/rss/:rss"
           }
         ],
-        "name": "RSS",
+        "name": "News",
         "maintainers": [
           "zoenglinghou",
           "mjysci",
@@ -7186,12 +7189,103 @@
         ],
         "example": "/bilibili/ranking/0/3/1",
         "parameters": {
-          "rid": "排行榜分区 id, 默认 0",
-          "day": "时间跨度, 可为 1 3 7 30",
-          "arc_type": "投稿时间, 可为 0(全部投稿) 1(近期投稿) , 默认 1",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "rid": {
+            "description": "排行榜分区 id",
+            "default": "0",
+            "options": [
+              {
+                "label": "全站",
+                "value": "0"
+              },
+              {
+                "label": "动画",
+                "value": "1"
+              },
+              {
+                "label": "国创相关",
+                "value": "168"
+              },
+              {
+                "label": "音乐",
+                "value": "3"
+              },
+              {
+                "label": "舞蹈",
+                "value": "129"
+              },
+              {
+                "label": "游戏",
+                "value": "4"
+              },
+              {
+                "label": "科技",
+                "value": "36"
+              },
+              {
+                "label": "数码",
+                "value": "188"
+              },
+              {
+                "label": "生活",
+                "value": "160"
+              },
+              {
+                "label": "鬼畜",
+                "value": "119"
+              },
+              {
+                "label": "时尚",
+                "value": "155"
+              },
+              {
+                "label": "娱乐",
+                "value": "5"
+              },
+              {
+                "label": "影视",
+                "value": "181"
+              }
+            ]
+          },
+          "day": {
+            "description": "时间跨度",
+            "options": [
+              {
+                "value": "1",
+                "label": "1日"
+              },
+              {
+                "value": "3",
+                "label": "3日"
+              },
+              {
+                "value": "7",
+                "label": "7日"
+              },
+              {
+                "value": "30",
+                "label": "30日"
+              }
+            ]
+          },
+          "arc_type": {
+            "description": "投稿时间",
+            "default": "1",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部投稿"
+              },
+              {
+                "value": "1",
+                "label": "近期投稿"
+              }
+            ]
+          },
+          "disableEmbed": {
+            "description": "默认为开启内嵌视频, 任意值为关闭"
+          }
         },
-        "description": "| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 数码 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |\n| ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n| 0    | 1    | 168      | 3    | 129  | 4    | 36   | 188  | 160  | 119  | 155  | 5    | 181  |",
         "location": "ranking.ts"
       },
       "/readlist/:listid": {
@@ -16706,7 +16800,10 @@
         "parameters": {
           "owner": "Image owner",
           "image": "Image name",
-          "tag": "Image tag，default to latest"
+          "tag": {
+            "description": "Image tag",
+            "default": "latest"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -17444,7 +17541,23 @@
         "example": "/douban/group/648102",
         "parameters": {
           "groupid": "豆瓣小组的 id",
-          "type": "缺省 最新，essence 最热，elite 精华"
+          "type": {
+            "description": "类型",
+            "options": [
+              {
+                "label": "最新",
+                "value": ""
+              },
+              {
+                "label": "最热",
+                "value": "essence"
+              },
+              {
+                "label": "精华",
+                "value": "elite"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -22772,7 +22885,24 @@
         "parameters": {
           "user": "GitHub username",
           "repo": "GitHub repo name",
-          "state": "the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.",
+          "state": {
+            "description": "the state of the issues.",
+            "default": "open",
+            "options": [
+              {
+                "label": "Open",
+                "value": "open"
+              },
+              {
+                "label": "Closed",
+                "value": "closed"
+              },
+              {
+                "label": "All",
+                "value": "all"
+              }
+            ]
+          },
           "labels": "a list of comma separated label names"
         },
         "radar": [
@@ -32073,6 +32203,12 @@
           "popular"
         ],
         "url": "www.javbus.com",
+        "example": "/javbus/star/rwt",
+        "parameters": {
+          "path": {
+            "description": "Any path of list page on javbus"
+          }
+        },
         "location": "index.ts"
       }
     },
@@ -46153,11 +46289,41 @@
           "social-media",
           "popular"
         ],
-        "example": "/pixiv/search/Nezuko/popular/2",
+        "example": "/pixiv/search/Nezuko/popular",
         "parameters": {
           "keyword": "keyword",
-          "order": "rank mode, empty or other for time order, popular for popular order",
-          "mode": "filte R18 content"
+          "order": {
+            "description": "rank mode, empty or other for time order, popular for popular order",
+            "default": "date",
+            "options": [
+              {
+                "label": "time order",
+                "value": "date"
+              },
+              {
+                "label": "popular order",
+                "value": "popular"
+              }
+            ]
+          },
+          "mode": {
+            "description": "filte R18 content",
+            "default": "no",
+            "options": [
+              {
+                "label": "only not R18",
+                "value": "safe"
+              },
+              {
+                "label": "only R18",
+                "value": "r18"
+              },
+              {
+                "label": "no filter",
+                "value": "no"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -46171,7 +46337,6 @@
         "maintainers": [
           "DIYgod"
         ],
-        "description": "| only not R18 | only R18 | no filter      |\n  | ------------ | -------- | -------------- |\n  | safe         | r18      | empty or other |",
         "location": "search.ts"
       },
       "/user/:id": {
@@ -49574,7 +49739,20 @@
         ],
         "example": "/rsshub/routes/en",
         "parameters": {
-          "lang": "Language, `zh` means Chinese docs, other values or null means English docs, `en` by default"
+          "lang": {
+            "description": "Language",
+            "options": [
+              {
+                "label": "Chinese",
+                "value": "zh"
+              },
+              {
+                "label": "English",
+                "value": "en"
+              }
+            ],
+            "default": "en"
+          }
         },
         "radar": [
           {

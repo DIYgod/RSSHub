@@ -552,7 +552,7 @@
           "/" ],
         target:"/annualreviews/:id" } ] },
   "apnews.com":{ _name:"AP News",
-    ".":[ { title:"RSS",
+    ".":[ { title:"News",
         docs:"https://docs.rsshub.app/routes/traditional-media",
         source:[ "/:rss" ],
         target:"/apnews/rss/:rss" },
