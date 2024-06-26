@@ -4,9 +4,9 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 
-const rssDescription = `期刊《回归线》 | 泰拉创作者联合会`;
-const Url = 'aneot.arktca.com';
-const Author = `Bendancom`;
+const rssDescription = '期刊《回归线》 | 泰拉创作者联合会';
+const url = 'aneot.arktca.com';
+const author = 'Bendancom';
 
 export const route: Route = {
     path: '/arknights/arktca',
@@ -22,26 +22,26 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '期刊',
-    url: String(Url),
-    maintainers: [String(Author)],
+    url,
+    maintainers: [author],
     radar: [
         {
-            source: [String(Url)],
+            source: [url],
         },
     ],
-    description: String(rssDescription),
+    description: rssDescription,
     handler,
 };
 
 async function handler() {
-    const baseUrl = `https://${Url}`;
+    const baseUrl = `https://${url}`;
     const { data: allResponse } = await got(`${baseUrl}/posts`);
     const $ = load(allResponse);
 
-    const allUrlList = $(`div.theme-hope-content > table`)
+    const allUrlList = $('div.theme-hope-content > table')
         .find('a')
         .toArray()
-        .map((item) => baseUrl + $(item).prop(`href`));
+        .map((item) => baseUrl + $(item).prop('href'));
 
     const journalList = await Promise.all(
         allUrlList.map(async (item) => {
@@ -50,12 +50,12 @@ async function handler() {
             const regVol = /(?<=Vol. )(\w+)/;
             const match = regVol.exec($$('div.vp-page-title').find('h1').text());
             const volume = match ? match[0] : '';
-            const urls = $$('div.theme-hope-content > ul a')
+            const links = $$('div.theme-hope-content > ul a')
                 .toArray()
                 .map((e) => baseUrl + $(e).prop('href'));
             return {
                 volume,
-                urls,
+                links,
             };
         })
     );
@@ -64,33 +64,33 @@ async function handler() {
         journalList.map(
             async (item) =>
                 await Promise.all(
-                    item.urls.map((url) =>
-                        cache.tryGet(`url`, async () => {
-                            const { data: response } = await got(url);
+                    item.links.map((link) =>
+                        cache.tryGet(link, async () => {
+                            const { data: response } = await got(link);
                             const $$ = load(response);
 
-                            $$(`div.ads-container`).remove();
-                            const language = $$(`html`).prop('lang');
+                            $$('div.ads-container').remove();
+                            const language = $$('html').prop('lang');
 
                             const pageTitle = $$('div.vp-page-title');
 
                             const title = `Vol.${item.volume} ` + pageTitle.children('h1').text();
                             const pageInfo = pageTitle.children('div.page-info');
 
-                            const pageAuthorInfo = pageInfo.children(`span.page-author-info`);
+                            const pageAuthorInfo = pageInfo.children('span.page-author-info');
                             const author = pageAuthorInfo.find('span.page-author-item').text();
 
-                            const pageDateInfo = pageInfo.children(`span.page-date-info`);
-                            const date = pageDateInfo.children(`meta`).prop(`content`);
+                            const pageDateInfo = pageInfo.children('span.page-date-info');
+                            const date = pageDateInfo.children('meta').prop('content');
                             const pubDate = parseDate(date);
 
                             const pageCategoryInfo = pageInfo.find('span.page-category-info');
                             const category = pageCategoryInfo.children('meta').prop('content');
 
-                            const article = $$(`div.theme-hope-content`);
+                            const article = $$('div.theme-hope-content');
                             const description = article.html();
 
-                            const comments = Number.parseInt($$(`span.wl-num`).text());
+                            const comments = Number.parseInt($$('span.wl-num').text());
                             return {
                                 title,
                                 language,
@@ -108,14 +108,16 @@ async function handler() {
         )
     );
 
+    const logoUrl = `${baseUrl}/logo.svg`;
+
     return {
-        title: `回归线`,
-        link: String(baseUrl),
-        description: String(rssDescription),
-        icon: `${baseUrl}/logo.svg`,
-        logo: `${baseUrl}/logo.svg`,
-        image: `${baseUrl}/logo.svg`,
-        author: String(Author),
+        title: '回归线',
+        link: baseUrl,
+        description: rssDescription,
+        icon: logoUrl,
+        logo: logoUrl,
+        image: logoUrl,
+        author,
         language: 'zh-CN',
         item: journals.flat(Infinity),
     };
