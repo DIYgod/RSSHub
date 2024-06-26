@@ -62,7 +62,70 @@ export const route: Route = {
     path: '/ranking/:mode/:date?',
     categories: ['social-media', 'popular'],
     example: '/pixiv/ranking/week',
-    parameters: { mode: 'rank type', date: 'format: `2018-4-25`' },
+    parameters: {
+        mode: {
+            description: 'rank type',
+            options: [
+                {
+                    value: 'day',
+                    label: 'daily rank',
+                },
+                {
+                    value: 'week',
+                    label: 'weekly rank',
+                },
+                {
+                    value: 'month',
+                    label: 'monthly rank',
+                },
+                {
+                    value: 'day_male',
+                    label: 'male rank',
+                },
+                {
+                    value: 'day_felame',
+                    label: 'female rank',
+                },
+                {
+                    value: 'day_ai',
+                    label: 'AI-generated work Rankings',
+                },
+                {
+                    value: 'week_original',
+                    label: 'original rank',
+                },
+                {
+                    value: 'week_rookie',
+                    label: 'rookie user rank',
+                },
+                {
+                    value: 'day_r18',
+                    label: 'R-18 daily rank',
+                },
+                {
+                    value: 'day_r18_ai',
+                    label: 'R-18 AI-generated work',
+                },
+                {
+                    value: 'day_male_r18',
+                    label: 'R-18 male rank',
+                },
+                {
+                    value: 'day_female_r18',
+                    label: 'R-18 female rank',
+                },
+                {
+                    value: 'week_r18',
+                    label: 'R-18 weekly rank',
+                },
+                {
+                    value: 'week_r18g',
+                    label: 'R-18G rank',
+                },
+            ],
+        },
+        date: 'format: `2018-4-25`',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -74,13 +137,6 @@ export const route: Route = {
     name: 'Rankings',
     maintainers: ['EYHN'],
     handler,
-    description: `| daily rank | weekly rank | monthly rank | male rank | female rank | AI-generated work Rankings | original rank  | rookie user rank |
-  | ---------- | ----------- | ------------ | --------- | ----------- | -------------------------- | -------------- | ---------------- |
-  | day        | week        | month        | day\_male | day\_female | day\_ai                    | week\_original | week\_rookie     |
-
-  | R-18 daily rank | R-18 AI-generated work | R-18 male rank | R-18 female rank | R-18 weekly rank | R-18G rank |
-  | --------------- | ---------------------- | -------------- | ---------------- | ---------------- | ---------- |
-  | day\_r18        | day\_r18\_ai           | day\_male\_r18 | day\_female\_r18 | week\_r18        | week\_r18g |`,
 };
 
 async function handler(ctx) {

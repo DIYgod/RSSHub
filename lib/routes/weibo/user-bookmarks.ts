@@ -18,6 +18,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'WEIBO_COOKIES',
+                optional: true,
                 description: '',
             },
         ],

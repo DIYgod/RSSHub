@@ -7,7 +7,7 @@ export const route: Route = {
     categories: ['program-update', 'popular'],
     example: '/dockerhub/build/wangqiru/ttrss',
     parameters: {
-        owner: 'Image owner',
+        owner: 'Image owner, the owner of the official image fills in the library, for example: /dockerhub/build/library/mysql',
         image: 'Image name',
         tag: {
             description: 'Image tag',
@@ -25,9 +25,6 @@ export const route: Route = {
     name: 'Image New Build',
     maintainers: ['HenryQW'],
     handler,
-    description: `:::warning
-  The owner of the official image fills in the library, for example: [https://rsshub.app/dockerhub/build/library/mysql](https://rsshub.app/dockerhub/build/library/mysql)
-  :::`,
 };
 
 async function handler(ctx) {
