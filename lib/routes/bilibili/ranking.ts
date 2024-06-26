@@ -69,6 +69,7 @@ export const route: Route = {
         },
         day: {
             description: '时间跨度',
+            default: '3',
             options: [
                 {
                     value: '1',

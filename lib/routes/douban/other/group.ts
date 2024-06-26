@@ -11,10 +11,11 @@ export const route: Route = {
         groupid: '豆瓣小组的 id',
         type: {
             description: '类型',
+            default: 'latest',
             options: [
                 {
                     label: '最新',
-                    value: '',
+                    value: 'latest',
                 },
                 {
                     label: '最热',
@@ -50,7 +51,7 @@ async function handler(ctx) {
     const groupid = ctx.req.param('groupid');
     const type = ctx.req.param('type');
 
-    const url = `https://www.douban.com/group/${groupid}/${type ? `?type=${type}` : ''}`;
+    const url = `https://www.douban.com/group/${groupid}/${type && type !== 'latest' ? `?type=${type}` : ''}`;
     const response = await got({
         method: 'get',
         url,
