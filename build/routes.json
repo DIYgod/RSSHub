@@ -4418,11 +4418,15 @@
       "/topics/:topic?": {
         "path": "/topics/:topic?",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
         "example": "/apnews/topics/apf-topnews",
         "parameters": {
-          "topic": "Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default"
+          "topic": {
+            "description": "Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`",
+            "default": "trending-news"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -6564,7 +6568,7 @@
             }
           ],
           "requirePuppeteer": false,
-          "antiCrawler": true,
+          "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -7474,7 +7478,7 @@
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
-          "antiCrawler": true,
+          "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -32995,8 +32999,7 @@
       "/topic/:id/:showUid?": {
         "path": "/topic/:id/:showUid?",
         "categories": [
-          "social-media",
-          "popular"
+          "social-media"
         ],
         "example": "/jike/topic/556688fae4b00c57d9dd46ee",
         "parameters": {
@@ -33029,8 +33032,7 @@
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "social-media",
-          "popular"
+          "social-media"
         ],
         "example": "/jike/user/3EE02BC9-C5B3-4209-8750-4ED1EE0F67BB",
         "parameters": {
@@ -49491,7 +49493,8 @@
       "/:category/:topic?": {
         "path": "/:category/:topic?",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
         "example": "/reuters/world/us",
         "parameters": {
@@ -49547,7 +49550,7 @@
         "location": "investigates.ts"
       }
     },
-    "name": "Reuters 路透社",
+    "name": "Reuters",
     "url": "reuters.com",
     "description": ":::tip\nYou can use `sophi=true` query parameter to invoke the **experimental** method, which can, if possible, fetch more articles(between 20 and 100) with `limit` given. But some articles from the old method might not be available.\n:::"
   },
@@ -51757,8 +51760,7 @@
       "/user/:uid": {
         "path": "/user/:uid",
         "categories": [
-          "multimedia",
-          "popular"
+          "multimedia"
         ],
         "example": "/sehuatang/user/411096",
         "parameters": {
@@ -65386,8 +65388,7 @@
           "/:type/:id/:all/:shownote?"
         ],
         "categories": [
-          "multimedia",
-          "popular"
+          "multimedia"
         ],
         "example": "/ximalaya/album/299146",
         "parameters": {

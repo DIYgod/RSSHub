@@ -5921,7 +5921,7 @@
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/profile/:username" ],
         target:"/researchgate/publications/:username" } ] },
-  "reuters.com":{ _name:"Reuters 路透社",
+  "reuters.com":{ _name:"Reuters",
     ".":[ { title:"Category/Topic/Author",
         docs:"https://docs.rsshub.app/routes/traditional-media",
         source:[ "/:category/:topic",
