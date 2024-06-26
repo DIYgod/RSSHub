@@ -798,7 +798,7 @@
         docs:"https://docs.rsshub.app/routes/finance",
         source:[ "/" ],
         target:"/bigquant/collections" } ] },
-  "bilibili.com":{ _name:"Bilibili",
+  "bilibili.com":{ _name:"哔哩哔哩 bilibili",
     space:[ { title:"UP 主专栏",
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/:uid" ],
