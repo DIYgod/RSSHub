@@ -13,7 +13,29 @@ export const route: Route = {
     path: '/issue/:user/:repo/:state?/:labels?',
     categories: ['programming', 'popular'],
     example: '/github/issue/vuejs/core/all/wontfix',
-    parameters: { user: 'GitHub username', repo: 'GitHub repo name', state: 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', labels: 'a list of comma separated label names' },
+    parameters: {
+        user: 'GitHub username',
+        repo: 'GitHub repo name',
+        state: {
+            description: 'the state of the issues.',
+            default: 'open',
+            options: [
+                {
+                    label: 'Open',
+                    value: 'open',
+                },
+                {
+                    label: 'Closed',
+                    value: 'closed',
+                },
+                {
+                    label: 'All',
+                    value: 'all',
+                },
+            ],
+        },
+        labels: 'a list of comma separated label names',
+    },
     radar: [
         {
             source: ['github.com/:user/:repo/issues', 'github.com/:user/:repo/issues/:id', 'github.com/:user/:repo'],

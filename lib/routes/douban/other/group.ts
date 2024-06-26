@@ -7,7 +7,26 @@ export const route: Route = {
     path: '/group/:groupid/:type?',
     categories: ['social-media', 'popular'],
     example: '/douban/group/648102',
-    parameters: { groupid: '豆瓣小组的 id', type: '缺省 最新，essence 最热，elite 精华' },
+    parameters: {
+        groupid: '豆瓣小组的 id',
+        type: {
+            description: '类型',
+            options: [
+                {
+                    label: '最新',
+                    value: '',
+                },
+                {
+                    label: '最热',
+                    value: 'essence',
+                },
+                {
+                    label: '精华',
+                    value: 'elite',
+                },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

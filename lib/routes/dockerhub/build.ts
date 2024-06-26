@@ -6,7 +6,14 @@ export const route: Route = {
     path: '/build/:owner/:image/:tag?',
     categories: ['program-update', 'popular'],
     example: '/dockerhub/build/wangqiru/ttrss',
-    parameters: { owner: 'Image owner', image: 'Image name', tag: 'Image tag，default to latest' },
+    parameters: {
+        owner: 'Image owner',
+        image: 'Image name',
+        tag: {
+            description: 'Image tag',
+            default: 'latest',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
