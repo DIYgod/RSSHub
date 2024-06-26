@@ -26,11 +26,11 @@ async function handler() {
     const items = $('a.group.border-b.py-10')
         .toArray()
         .map((item) => ({
-                title: $(item).children('h2').first().text(),
-                link: baseUrl + $(item).attr('href'),
-                pubDate: parseDate($(item).children('h3').first().text()),
-                description: $(item).children('p').first().text(),
-            }));
+            title: $(item).children('h2').first().text(),
+            link: baseUrl + $(item).attr('href'),
+            pubDate: parseDate($(item).children('h3').first().text()),
+            description: $(item).children('p').first().text(),
+        }));
     return {
         title: 'ollama blog',
         link: 'https://ollama.com/blog',
