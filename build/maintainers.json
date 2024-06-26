@@ -1949,6 +1949,9 @@
     "nczitzk"
   ],
   "/fda/cdrh/:titleOnly?": [],
+  "/fediverse/timeline/:account": [
+    "DIYgod"
+  ],
   "/feng/forum/:id/:type?": [
     "TonyRL"
   ],
@@ -4364,7 +4367,8 @@
     "fang63625"
   ],
   "/ollama/library": [
-    "Nick22nd"
+    "Nick22nd",
+    "gavrilov"
   ],
   "/oncc/:language/:channel?": [
     "Fatpandac"

@@ -20151,6 +20151,36 @@
     "name": "U.S. Food and Drug Administration",
     "url": "fda.gov"
   },
+  "fediverse": {
+    "routes": {
+      "/timeline/:account": {
+        "path": "/timeline/:account",
+        "categories": [
+          "social-media",
+          "popular"
+        ],
+        "example": "/fediverse/timeline/Mastodon@mastodon.social",
+        "parameters": {
+          "account": "username@domain"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Timeline",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "timeline.ts"
+      }
+    },
+    "name": "Fediverse",
+    "url": "fediverse.observer"
+  },
   "feng": {
     "routes": {
       "/forum/:id/:type?": {
@@ -44050,7 +44080,8 @@
         ],
         "name": "Models",
         "maintainers": [
-          "Nick22nd"
+          "Nick22nd",
+          "gavrilov"
         ],
         "location": "models.ts"
       }
