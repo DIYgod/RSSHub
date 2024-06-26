@@ -1949,9 +1949,6 @@
     "nczitzk"
   ],
   "/fda/cdrh/:titleOnly?": [],
-  "/fediverse/timeline/:account": [
-    "DIYgod"
-  ],
   "/feng/forum/:id/:type?": [
     "TonyRL"
   ],
