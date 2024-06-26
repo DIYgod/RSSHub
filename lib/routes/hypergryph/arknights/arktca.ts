@@ -47,8 +47,8 @@ async function handler() {
         allUrlList.map(async (item) => {
             const { data: response } = await got(item);
             const $$ = load(response);
-            const reg_vol = /(?<=Vol. )(\w+)/;
-            const match = reg_vol.exec($$('div.vp-page-title').find('h1').text());
+            const regVol = /(?<=Vol. )(\w+)/;
+            const match = regVol.exec($$('div.vp-page-title').find('h1').text());
             const volume = match ? match[0] : '';
             const urls = $$('div.theme-hope-content > ul a')
                 .toArray()
@@ -61,48 +61,51 @@ async function handler() {
     );
 
     const journals = await Promise.all(
-        journalList.map(async (item) => await Promise.all(
-                item.urls.map((url) =>
-                    cache.tryGet(`url`, async () => {
-                        const { data: response } = await got(url);
-                        const $$ = load(response);
+        journalList.map(
+            async (item) =>
+                await Promise.all(
+                    item.urls.map((url) =>
+                        cache.tryGet(`url`, async () => {
+                            const { data: response } = await got(url);
+                            const $$ = load(response);
 
-                        $$(`div.ads-container`).remove();
-                        const language = $$(`html`).prop('lang');
+                            $$(`div.ads-container`).remove();
+                            const language = $$(`html`).prop('lang');
 
-                        const pageTitle = $$('div.vp-page-title');
+                            const pageTitle = $$('div.vp-page-title');
 
-                        const title = `Vol.${item.volume} ` + pageTitle.children('h1').text();
-                        const pageInfo = pageTitle.children('div.page-info');
+                            const title = `Vol.${item.volume} ` + pageTitle.children('h1').text();
+                            const pageInfo = pageTitle.children('div.page-info');
 
-                        const pageAuthorInfo = pageInfo.children(`span.page-author-info`);
-                        const author = pageAuthorInfo.find('span.page-author-item').text();
+                            const pageAuthorInfo = pageInfo.children(`span.page-author-info`);
+                            const author = pageAuthorInfo.find('span.page-author-item').text();
 
-                        const pageDateInfo = pageInfo.children(`span.page-date-info`);
-                        const date = pageDateInfo.children(`meta`).prop(`content`);
-                        const pubDate = parseDate(date);
+                            const pageDateInfo = pageInfo.children(`span.page-date-info`);
+                            const date = pageDateInfo.children(`meta`).prop(`content`);
+                            const pubDate = parseDate(date);
 
-                        const pageCategoryInfo = pageInfo.find('span.page-category-info');
-                        const category = pageCategoryInfo.children('meta').prop('content');
+                            const pageCategoryInfo = pageInfo.find('span.page-category-info');
+                            const category = pageCategoryInfo.children('meta').prop('content');
 
-                        const article = $$(`div.theme-hope-content`);
-                        const description = article.html();
+                            const article = $$(`div.theme-hope-content`);
+                            const description = article.html();
 
-                        const comments = Number.parseInt($$(`span.wl-num`).text());
-                        return {
-                            title,
-                            language,
-                            author,
-                            pubDate,
-                            category,
-                            description,
-                            comments,
-                            guid: url,
-                            link: url,
-                        };
-                    })
+                            const comments = Number.parseInt($$(`span.wl-num`).text());
+                            return {
+                                title,
+                                language,
+                                author,
+                                pubDate,
+                                category,
+                                description,
+                                comments,
+                                guid: url,
+                                link: url,
+                            };
+                        })
+                    )
                 )
-            ))
+        )
     );
 
     return {
