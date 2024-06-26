@@ -26,7 +26,7 @@ export const route: Route = {
             },
         ],
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,

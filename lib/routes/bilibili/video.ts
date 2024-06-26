@@ -12,7 +12,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
