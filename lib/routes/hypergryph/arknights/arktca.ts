@@ -4,6 +4,10 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 
+const rssDescription = `期刊《回归线》 | 泰拉创作者联合会`;
+const Url = 'aneot.arktca.com';
+const Author = `Bendancom`;
+
 export const route: Route = {
     path: '/arknights/arktca',
     categories: ['game'],
@@ -18,31 +22,29 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '期刊',
-    url: 'aneot.arktca.com',
-    maintainers: ['Bendancom'],
+    url: String(Url),
+    maintainers: [String(Author)],
     radar: [
         {
-            source: ['aneot.arktca.com'],
+            source: [String(Url)],
         },
     ],
-    description: `
-        期刊《回归线》 | 泰拉创作者联合会
-    `,
+    description: String(rssDescription),
     handler,
 };
 
 async function handler() {
-    const baseURL = 'https://aneot.arktca.com';
-    const { data: allResponse } = await got(`${baseURL}/posts`);
+    const baseUrl = `https://${Url}`;
+    const { data: allResponse } = await got(`${baseUrl}/posts`);
     const $ = load(allResponse);
 
-    const allURLList = $(`div.theme-hope-content > table`)
+    const allUrlList = $(`div.theme-hope-content > table`)
         .find('a')
         .toArray()
-        .map((item) => baseURL + $(item).prop(`href`));
+        .map((item) => baseUrl + $(item).prop(`href`));
 
     const journalList = await Promise.all(
-        allURLList.map(async (item) => {
+        allUrlList.map(async (item) => {
             const { data: response } = await got(item);
             const $$ = load(response);
             const reg_vol = /(?<=Vol. )(\w+)/;
@@ -50,7 +52,7 @@ async function handler() {
             const volume = match ? match[0] : '';
             const urls = $$('div.theme-hope-content > ul a')
                 .toArray()
-                .map((e) => baseURL + $(e).prop('href'));
+                .map((e) => baseUrl + $(e).prop('href'));
             return {
                 volume,
                 urls,
@@ -59,67 +61,59 @@ async function handler() {
     );
 
     const journals = await Promise.all(
-        journalList.map((item) =>
-            cache.tryGet(
-                `item:urls`,
-                async () =>
-                    await Promise.all(
-                        item.urls.map(async (url) => {
-                            const { data: response } = await got(url);
-                            const $$ = load(response);
-                            $$(`div.ads-container`).remove();
+        journalList.map(async (item) => await Promise.all(
+                item.urls.map((url) =>
+                    cache.tryGet(`url`, async () => {
+                        const { data: response } = await got(url);
+                        const $$ = load(response);
 
-                            const language = $$(`html`).prop('lang');
+                        $$(`div.ads-container`).remove();
+                        const language = $$(`html`).prop('lang');
 
-                            const page_title = $$('div.vp-page-title');
-                            const title = `Vol. ${item.volume} ` + page_title.children('h1').text();
+                        const pageTitle = $$('div.vp-page-title');
 
-                            const page_info = page_title.children('div.page-info');
+                        const title = `Vol.${item.volume} ` + pageTitle.children('h1').text();
+                        const pageInfo = pageTitle.children('div.page-info');
 
-                            const page_author_info = page_info.children(`span.page-author-info`);
-                            const author = page_author_info.find('span.page-author-item').text();
+                        const pageAuthorInfo = pageInfo.children(`span.page-author-info`);
+                        const author = pageAuthorInfo.find('span.page-author-item').text();
 
-                            const page_date_info = page_info.children(`span.page-date-info`);
-                            const date = page_date_info.children(`meta`).prop(`content`);
-                            const pubDate = parseDate(date);
+                        const pageDateInfo = pageInfo.children(`span.page-date-info`);
+                        const date = pageDateInfo.children(`meta`).prop(`content`);
+                        const pubDate = parseDate(date);
 
-                            const page_category_info = page_info.find('span.page-category-info');
-                            const category = page_category_info.children('meta').prop('content');
+                        const pageCategoryInfo = pageInfo.find('span.page-category-info');
+                        const category = pageCategoryInfo.children('meta').prop('content');
 
-                            const article = $$(`div.theme-hope-content`);
-                            const description = article.html();
+                        const article = $$(`div.theme-hope-content`);
+                        const description = article.html();
 
-                            const comments = Number.parseInt($$(`span.wl-num`).text());
-
-                            return {
-                                title,
-                                language,
-                                author,
-                                pubDate,
-                                category,
-                                description,
-                                comments,
-                                guid: url,
-                                link: url,
-                            };
-                        })
-                    )
-            )
-        )
+                        const comments = Number.parseInt($$(`span.wl-num`).text());
+                        return {
+                            title,
+                            language,
+                            author,
+                            pubDate,
+                            category,
+                            description,
+                            comments,
+                            guid: url,
+                            link: url,
+                        };
+                    })
+                )
+            ))
     );
-
-    const items = journals.flat(Infinity);
 
     return {
         title: `回归线`,
-        link: `http://aneot.arktca.com`,
-        description: `期刊《回归线》| 泰拉创作者联合会
-        `,
-        icon: `http://aneot.arktca.com/logo.svg`,
-        logo: 'http://aneot.arktca.com/logo.svg',
-        image: 'http://aneot.arktca.com/logo.svg',
-        author: `Bendancom`,
+        link: String(baseUrl),
+        description: String(rssDescription),
+        icon: `${baseUrl}/logo.svg`,
+        logo: `${baseUrl}/logo.svg`,
+        image: `${baseUrl}/logo.svg`,
+        author: String(Author),
         language: 'zh-CN',
-        item: items,
+        item: journals.flat(Infinity),
     };
 }
