@@ -6,7 +6,14 @@ export const route: Route = {
     path: '/build/:owner/:image/:tag?',
     categories: ['program-update', 'popular'],
     example: '/dockerhub/build/wangqiru/ttrss',
-    parameters: { owner: 'Image owner', image: 'Image name', tag: 'Image tag，default to latest' },
+    parameters: {
+        owner: 'Image owner, the owner of the official image fills in the library, for example: /dockerhub/build/library/mysql',
+        image: 'Image name',
+        tag: {
+            description: 'Image tag',
+            default: 'latest',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,9 +25,6 @@ export const route: Route = {
     name: 'Image New Build',
     maintainers: ['HenryQW'],
     handler,
-    description: `:::warning
-  The owner of the official image fills in the library, for example: [https://rsshub.app/dockerhub/build/library/mysql](https://rsshub.app/dockerhub/build/library/mysql)
-  :::`,
 };
 
 async function handler(ctx) {

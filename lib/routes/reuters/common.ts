@@ -11,7 +11,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/:category/:topic?',
-    categories: ['traditional-media'],
+    categories: ['traditional-media', 'popular'],
     example: '/reuters/world/us',
     parameters: { category: 'find it in the URL, or tables below', topic: 'find it in the URL, or tables below' },
     features: {

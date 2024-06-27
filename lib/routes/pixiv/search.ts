@@ -11,8 +11,42 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 export const route: Route = {
     path: '/search/:keyword/:order?/:mode?',
     categories: ['social-media', 'popular'],
-    example: '/pixiv/search/Nezuko/popular/2',
-    parameters: { keyword: 'keyword', order: 'rank mode, empty or other for time order, popular for popular order', mode: 'filte R18 content' },
+    example: '/pixiv/search/Nezuko/popular',
+    parameters: {
+        keyword: 'keyword',
+        order: {
+            description: 'rank mode, empty or other for time order, popular for popular order',
+            default: 'date',
+            options: [
+                {
+                    label: 'time order',
+                    value: 'date',
+                },
+                {
+                    label: 'popular order',
+                    value: 'popular',
+                },
+            ],
+        },
+        mode: {
+            description: 'filte R18 content',
+            default: 'no',
+            options: [
+                {
+                    label: 'only not R18',
+                    value: 'safe',
+                },
+                {
+                    label: 'only R18',
+                    value: 'r18',
+                },
+                {
+                    label: 'no filter',
+                    value: 'no',
+                },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -24,9 +58,6 @@ export const route: Route = {
     name: 'Keyword',
     maintainers: ['DIYgod'],
     handler,
-    description: `| only not R18 | only R18 | no filter      |
-  | ------------ | -------- | -------------- |
-  | safe         | r18      | empty or other |`,
 };
 
 async function handler(ctx) {
