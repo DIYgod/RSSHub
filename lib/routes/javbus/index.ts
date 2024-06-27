@@ -32,6 +32,12 @@ export const route: Route = {
     categories: ['multimedia', 'popular'],
     handler,
     url: 'www.javbus.com',
+    example: '/javbus/star/rwt',
+    parameters: {
+        path: {
+            description: 'Any path of list page on javbus',
+        },
+    },
 };
 
 async function handler(ctx) {

@@ -83,7 +83,7 @@ function judgeTrue(str, ...validStrings) {
 
 export const route: Route = {
     path: ['/:type/:id/:all/:shownote?'],
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     example: '/ximalaya/album/299146',
     parameters: { type: '专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到', id: '专辑 id, 可在对应专辑页面的 URL 中找到', all: '是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。' },
     features: {

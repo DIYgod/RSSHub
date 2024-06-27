@@ -161,7 +161,18 @@ interface RouteItem {
     /**
      * The description of the route parameters
      */
-    parameters?: Record<string, string>;
+    parameters?: Record<
+        string,
+        | string
+        | {
+              description: string;
+              default?: string;
+              options?: {
+                  value: string;
+                  label: string;
+              }[];
+          }
+    >;
 
     /**
      * Hints and additional explanations for users using this route, it will be appended after the route component, supports markdown

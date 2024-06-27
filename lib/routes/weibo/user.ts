@@ -14,7 +14,13 @@ export const route: Route = {
     example: '/weibo/user/1195230310',
     parameters: { uid: '用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', routeParams: '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'WEIBO_COOKIES',
+                optional: true,
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
@@ -31,11 +37,7 @@ export const route: Route = {
     maintainers: ['DIYgod', 'iplusx', 'Rongronggg9'],
     handler,
     description: `:::warning
-  部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 \`https://m.weibo.cn/u/:uid\` 验证。如需要订阅该部分博主，可配置 Cookie 后订阅。
-
-  未提供 Cookie 的情况下偶尔会触发反爬限制，提供 Cookie 可缓解该情况。
-
-  微博用户 Cookie 的配置可参照部署文档
+  部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 \`https://m.weibo.cn/u/:uid\` 验证
   :::`,
 };
 
