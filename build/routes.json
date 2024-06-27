@@ -37554,6 +37554,41 @@
     "name": "梅斯医学 MedSci",
     "url": "medsci.cn"
   },
+  "meituan": {
+    "routes": {
+      "/tech": {
+        "path": "/tech",
+        "categories": [
+          "programming"
+        ],
+        "example": "/meituan/tech",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "tech.meituan.com"
+            ]
+          }
+        ],
+        "name": "技术团队博客",
+        "url": "tech.meituan.com",
+        "maintainers": [
+          "ktKongTong"
+        ],
+        "location": "tech.ts"
+      }
+    },
+    "name": "美团",
+    "url": "meituan.com"
+  },
   "metacritic": {
     "routes": {
       "/:type?/:sort?/:filter?": {

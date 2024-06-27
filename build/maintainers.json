@@ -3729,6 +3729,9 @@
   "/medsci/:sid?/:tid?": [
     "nczitzk"
   ],
+  "/meituan/tech": [
+    "ktKongTong"
+  ],
   "/metacritic/:type?/:sort?/:filter?": [],
   "/meteor/boards": [
     "TonyRL"

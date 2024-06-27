@@ -10232,6 +10232,19 @@
       }
     ]
   },
+  "meituan.com": {
+    "_name": "美团",
+    "tech": [
+      {
+        "title": "技术团队博客",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/meituan/tech"
+      }
+    ]
+  },
   "meteor.today": {
     "_name": "Meteor",
     ".": [
