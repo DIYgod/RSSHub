@@ -2997,6 +2997,9 @@
   "/hypergryph/arknights/announce/:platform?/:group?": [
     "swwind"
   ],
+  "/hypergryph/arknights/arktca": [
+    "Bendancom"
+  ],
   "/hypergryph/arknights/japan": [
     "ofyark"
   ],

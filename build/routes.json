@@ -30368,7 +30368,37 @@
           "swwind"
         ],
         "description": "平台\n\n  |  安卓服 | iOS 服 |   B 服   |\n  | :-----: | :----: | :------: |\n  | Android |   IOS  | Bilibili |\n\n  分组\n\n  | 全部 | 系统公告 | 活动公告 |\n  | :--: | :------: | :------: |\n  |  ALL |  SYSTEM  | ACTIVITY |",
-        "location": "announce.ts"
+        "location": "arknights/announce.ts"
+      },
+      "/arknights/arktca": {
+        "path": "/arknights/arktca",
+        "categories": [
+          "game"
+        ],
+        "example": "/hypergryph/arknights/arktca",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "期刊",
+        "url": "aneot.arktca.com",
+        "maintainers": [
+          "Bendancom"
+        ],
+        "radar": [
+          {
+            "source": [
+              "aneot.arktca.com"
+            ]
+          }
+        ],
+        "description": "期刊《回归线》 | 泰拉创作者联合会",
+        "location": "arknights/arktca.ts"
       },
       "/arknights/japan": {
         "path": "/arknights/japan",
@@ -30389,7 +30419,7 @@
           "ofyark"
         ],
         "url": "ak.arknights.jp/news",
-        "location": "japan.ts"
+        "location": "arknights/japan.ts"
       },
       "/arknights/news/:group?": {
         "path": "/arknights/news/:group?",
@@ -30413,7 +30443,7 @@
         ],
         "url": "ak-conf.hypergryph.com/news",
         "description": "\n  | 全部 | 最新   | 公告         | 活动     | 新闻 |\n  | ---- | ------ | ------------ | -------- | ---- |\n  | ALL  | LATEST | ANNOUNCEMENT | ACTIVITY | NEWS |",
-        "location": "news.ts"
+        "location": "arknights/news.ts"
       }
     },
     "name": "鹰角网络",
