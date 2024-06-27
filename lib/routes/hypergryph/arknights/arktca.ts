@@ -99,8 +99,8 @@ async function handler() {
                                 category,
                                 description,
                                 comments,
-                                guid: url,
-                                link: url,
+                                guid: link,
+                                link,
                             };
                         })
                     )
