@@ -827,6 +827,9 @@
   "/bloomberg/:site?": [
     "bigfei"
   ],
+  "/bluearchive/news/:server/:type?": [
+    "equt"
+  ],
   "/bluestacks/release/5": [
     "TonyRL"
   ],
