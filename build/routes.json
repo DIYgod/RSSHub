@@ -31651,6 +31651,105 @@
     "name": "Instructables",
     "url": "instructables.com"
   },
+  "investor": {
+    "routes": {
+      "/:category{.+}?": {
+        "path": "/:category{.+}?",
+        "name": "分类",
+        "url": "investor.org.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/investor/information_release/news_release_from_authorities/zjhfb",
+        "parameters": {
+          "category": "分类，默认为证监会发布 `information_release/news_release_from_authorities/zjhfb`，可在对应分类页 URL 中找到"
+        },
+        "description": ":::tip\n  若订阅 [证监会发布](https://www.investor.org.cn/information_release/news_release_from_authorities/zjhfb/)，网址为 `https://www.investor.org.cn/information_release/news_release_from_authorities/zjhfb/`。截取 `https://www.investor.org.cn/` 到末尾 `/` 的部分 `information_release/news_release_from_authorities/zjhfb` 作为参数填入，此时路由为 [`/investor/information_release/news_release_from_authorities/zjhfb`](https://rsshub.app/investor/information_release/news_release_from_authorities/zjhfb)。\n  :::\n\n  #### [权威发布](https://www.investor.org.cn/information_release/news_release_from_authorities/)\n\n  | [证监会发布](https://www.investor.org.cn/information_release/news_release_from_authorities/zjhfb/)                                                                  | [证券交易所发布](https://www.investor.org.cn/information_release/news_release_from_authorities/hsjysfb/)                                                                | [期货交易所发布](https://www.investor.org.cn/information_release/news_release_from_authorities/qhjysfb/)                                                                | [行业协会发布](https://www.investor.org.cn/information_release/news_release_from_authorities/hyxhfb/)                                                                 | [其他](https://www.investor.org.cn/information_release/news_release_from_authorities/otner/)                                                                        |\n  | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n  | [/investor/information_release/news_release_from_authorities/zjhfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/zjhfb/) | [/investor/information_release/news_release_from_authorities/hsjysfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/hsjysfb/) | [/investor/information_release/news_release_from_authorities/qhjysfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/qhjysfb/) | [/investor/information_release/news_release_from_authorities/hyxhfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/hyxhfb/) | [/investor/information_release/news_release_from_authorities/otner/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/otner/) |\n\n  #### [市场资讯](https://www.investor.org.cn/information_release/market_news/)\n\n  | [市场资讯](https://www.investor.org.cn/information_release/market_news/)                                   |\n  | ---------------------------------------------------------------------------------------------------------- |\n  | [/investor/information_release/market_news/](https://rsshub.app/investor/information_release/market_news/) |\n\n  #### [政策解读](https://www.investor.org.cn/information_release/policy_interpretation/)\n\n  | [政策解读](https://www.investor.org.cn/information_release/policy_interpretation/)                                  |\n  | ------------------------------------------------------------------------------------------------------------------- |\n  | [/investorinformation_release/policy_interpretation/](https://rsshub.appinformation_release/policy_interpretation/) |\n\n  #### [国际交流](https://www.investor.org.cn/information_release/international_communication/)\n\n  | [国际交流](https://www.investor.org.cn/information_release/international_communication/)                                          |\n  | --------------------------------------------------------------------------------------------------------------------------------- |\n  | [/investor/information_release/international_communication/](https://rsshub.app/information_release/international_communication/) |\n  ",
+        "categories": [
+          "finance"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "investor.org.cn/:category"
+            ]
+          },
+          {
+            "title": "权威发布 - 证监会发布",
+            "source": [
+              "www.investor.org.cn/information_release/news_release_from_authorities/zjhfb/"
+            ],
+            "target": "/information_release/news_release_from_authorities/zjhfb/"
+          },
+          {
+            "title": "权威发布 - 证券交易所发布",
+            "source": [
+              "www.investor.org.cn/information_release/news_release_from_authorities/hsjysfb/"
+            ],
+            "target": "/information_release/news_release_from_authorities/hsjysfb/"
+          },
+          {
+            "title": "权威发布 - 期货交易所发布",
+            "source": [
+              "www.investor.org.cn/information_release/news_release_from_authorities/qhjysfb/"
+            ],
+            "target": "/information_release/news_release_from_authorities/qhjysfb/"
+          },
+          {
+            "title": "权威发布 - 行业协会发布",
+            "source": [
+              "www.investor.org.cn/information_release/news_release_from_authorities/hyxhfb/"
+            ],
+            "target": "/information_release/news_release_from_authorities/hyxhfb/"
+          },
+          {
+            "title": "权威发布 - 其他",
+            "source": [
+              "www.investor.org.cn/information_release/news_release_from_authorities/otner/"
+            ],
+            "target": "/information_release/news_release_from_authorities/otner/"
+          },
+          {
+            "title": "市场资讯",
+            "source": [
+              "www.investor.org.cn/information_release/market_news/"
+            ],
+            "target": "/information_release/market_news/"
+          },
+          {
+            "title": "政策解读",
+            "source": [
+              "www.investor.org.cn/information_release/policy_interpretation/"
+            ],
+            "target": "/information_release/policy_interpretation/"
+          },
+          {
+            "title": "国际交流",
+            "source": [
+              "www.investor.org.cn/information_release/international_communication/"
+            ],
+            "target": "/information_release/international_communication/"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "中国投资者网",
+    "url": "investor.org.cn",
+    "categories": [
+      "finance"
+    ],
+    "description": ""
+  },
   "ippa": {
     "routes": {
       "/": {

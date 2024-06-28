@@ -3124,6 +3124,9 @@
   "/instructables/projects/:category?": [
     "wolfg1969"
   ],
+  "/investor/:category{.+}?": [
+    "nczitzk"
+  ],
   "/ippa/": [
     "cnkmmk"
   ],
