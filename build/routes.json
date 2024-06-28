@@ -49529,6 +49529,35 @@
     "name": "Rawkuma",
     "url": "rawkuma.com"
   },
+  "raycast": {
+    "routes": {
+      "/changelog": {
+        "path": "/changelog",
+        "name": "Changelog",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/raycast/changelog",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "maintainers": [
+          "equt"
+        ],
+        "location": "changelog.ts"
+      }
+    },
+    "name": "Raycast",
+    "url": "raycast.com",
+    "categories": [
+      "program-update"
+    ]
+  },
   "reactiflux": {
     "routes": {
       "/transcripts": {
