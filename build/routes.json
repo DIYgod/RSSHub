@@ -8555,7 +8555,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "description": "| 全て | メンテナンス | お知らせ | イベント |\n| :--: | :--: | :--: | :--: |\n| 0 | 1 | 2 | 3 |",
+        "description": "| 全て | イベント | お知らせ | メンテナンス |\n| :--: | :--: | :--: | :--: |\n| 0 | 1 | 2 | 3 |",
         "location": "news.ts"
       }
     },
