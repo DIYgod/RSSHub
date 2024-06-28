@@ -3,6 +3,8 @@ import { Route } from '@/types';
 
 import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/timeline/:account',
@@ -22,6 +24,8 @@ export const route: Route = {
     handler,
 };
 
+const allowedDomain = new Set(['mastodon.social', 'pawoo.net', config.mastodon.apiHost].filter(Boolean));
+
 async function handler(ctx) {
     const account = ctx.req.param('account');
     const domain = account.split('@')[1];
@@ -29,6 +33,9 @@ async function handler(ctx) {
 
     if (!domain || !username) {
         throw new InvalidParameterError('Invalid account');
+    }
+    if (!config.feature.allow_user_supply_unsafe_domain && !allowedDomain.has(domain.toLowerCase())) {
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
     const requestOptions = {
