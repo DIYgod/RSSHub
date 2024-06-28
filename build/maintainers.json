@@ -479,6 +479,9 @@
     "TonyRL"
   ],
   "/asiantolick/:category{.+}?": [],
+  "/asmr-200/works/:order?/:subtitle?/:sort?": [
+    "hualiong"
+  ],
   "/asus/bios/:model": [
     "Fatpandac"
   ],

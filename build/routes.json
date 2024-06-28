@@ -4988,6 +4988,47 @@
     "name": "Asian to lick",
     "url": "asiantolick.com"
   },
+  "asmr-200": {
+    "routes": {
+      "/works/:order?/:subtitle?/:sort?": {
+        "path": "/works/:order?/:subtitle?/:sort?",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/works",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "parameters": {
+          "order": "排序字段，默认按照资源的收录日期来排序，详见下表",
+          "sort": "排序方式，可选 `asc` 和 `desc` ，默认倒序",
+          "subtitle": "筛选带字幕音频，可选 `0` 和 `1` ，默认关闭"
+        },
+        "radar": [
+          {
+            "source": [
+              "asmr-200.com"
+            ],
+            "target": "asmr-200/works"
+          }
+        ],
+        "name": "最新资源",
+        "maintainers": [
+          "hualiong"
+        ],
+        "url": "asmr-200.com",
+        "description": "| 发售日期 | 收录日期 | 销量 | 价格 | 评价 | 随机 | RJ号 |\n| ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n| release | create_date | dl_count | price | rate_average_2dp | random | id |",
+        "location": "index.ts"
+      }
+    },
+    "name": "ASMR Online",
+    "url": "asmr-200.com"
+  },
   "asus": {
     "routes": {
       "/bios/:model": {
