@@ -10,7 +10,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const render = (work: Work, link: string) => art(path.join(getCurrentPath(import.meta.url), 'templates', 'work.art'), { work, link });
 
 export const route: Route = {
-    path: '/works/:order?/:sort?/:subtitle?',
+    path: '/works/:order?/:subtitle?/:sort?',
     categories: ['multimedia'],
     example: '/works',
     features: {

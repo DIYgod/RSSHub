@@ -69,6 +69,7 @@ export interface Work {
         id: number;
         name: string;
     }[];
+    category: string;
     thumbnailCoverUrl: string;
     title: string;
     translation_info: {
@@ -90,5 +91,6 @@ export interface Work {
         id: string;
         name: string;
     }[];
+    cv: string;
     work_attributes: string;
 }
