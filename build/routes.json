@@ -62404,12 +62404,12 @@
   },
   "utgd": {
     "routes": {
-      "/:category?": {
-        "path": "/:category?",
+      "/category/:category?": {
+        "path": "/category/:category?",
         "categories": [
           "new-media"
         ],
-        "example": "/utgd/method",
+        "example": "/utgd/category/method",
         "parameters": {
           "category": "分类，可在对应分类页的 URL 中找到，默认为方法"
         },
@@ -62427,7 +62427,7 @@
               "utgd.net/category/s/:category",
               "utgd.net/"
             ],
-            "target": "/:category"
+            "target": "/category/:category"
           }
         ],
         "name": "分类",

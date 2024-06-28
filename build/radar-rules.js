@@ -7572,7 +7572,7 @@
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/category/s/:category",
           "/" ],
-        target:"/utgd/:category" },
+        target:"/utgd/category/:category" },
       { title:"时间线",
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/" ],

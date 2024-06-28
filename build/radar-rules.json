@@ -17374,7 +17374,7 @@
           "/category/s/:category",
           "/"
         ],
-        "target": "/utgd/:category"
+        "target": "/utgd/category/:category"
       },
       {
         "title": "时间线",
