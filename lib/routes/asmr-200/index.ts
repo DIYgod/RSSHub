@@ -12,7 +12,7 @@ const render = (work: Work, link: string) => art(path.join(getCurrentPath(import
 export const route: Route = {
     path: '/works/:order?/:subtitle?/:sort?',
     categories: ['multimedia'],
-    example: '/works',
+    example: '/asmr-200/works',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -32,7 +32,7 @@ export const route: Route = {
             target: 'asmr-200/works',
         },
     ],
-    name: '最新资源',
+    name: '最新收录',
     maintainers: ['hualiong'],
     url: 'asmr-200.com',
     description: `| 发售日期 | 收录日期 | 销量 | 价格 | 评价 | 随机 | RJ号 |
@@ -60,7 +60,6 @@ export const route: Route = {
         return {
             title: '最新收录 - ASMR Online',
             link: 'https://asmr-200.com/',
-            language: 'zh-cn',
             item: items,
         };
     },
