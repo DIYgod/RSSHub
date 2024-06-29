@@ -2,13 +2,18 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from 'markdown-it';
+const md = MarkdownIt({
+    html: true,
+    linkify: true,
+});
 
 const baseUrl = 'https://deadbydaylight.com';
 
 export const route: Route = {
     path: '/blog',
-    categories: ['programming'],
-    example: '/blog',
+    categories: ['game'],
+    example: '/deadbydaylight/blog',
     parameters: {},
     features: {
         requireConfig: false,
@@ -21,10 +26,10 @@ export const route: Route = {
     radar: [
         {
             source: ['deadbydaylight.com/news'],
-            target: '/news',
+            target: '/deadbydaylight/news',
         },
     ],
-    name: 'DeadByDaylight --- Latest News',
+    name: 'Latest News',
     maintainers: ['NeverBehave'],
     handler,
 };
@@ -48,7 +53,7 @@ async function handler() {
                 return {
                     title: pageData.title,
                     link: `${baseUrl}${articleData.path}`,
-                    description: pageData.content,
+                    description: md.render(pageData.content),
                     pubDate: parseDate(pageData.published_at),
                     category: pageData.article_category.name,
                 };
@@ -57,8 +62,8 @@ async function handler() {
     );
 
     return {
-        title: `DeadbyDaylight --- Latest News`,
-        link: `https://deadbydaylight.com/news`,
+        title: 'Latest News',
+        link: 'https://deadbydaylight.com/news',
         item: items,
     };
 }
