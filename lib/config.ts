@@ -258,6 +258,9 @@ export type Config = {
     tophub: {
         cookie?: string;
     };
+    tsdm39: {
+        cookie: string;
+    };
     twitter: {
         username?: string[];
         password?: string[];
@@ -621,6 +624,9 @@ const calculateValue = () => {
         },
         tophub: {
             cookie: envs.TOPHUB_COOKIE,
+        },
+        tsdm39: {
+            cookie: envs.TSDM39_COOKIES,
         },
         twitter: {
             username: envs.TWITTER_USERNAME?.split(','),
