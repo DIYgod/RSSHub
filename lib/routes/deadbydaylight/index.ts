@@ -26,7 +26,7 @@ export const route: Route = {
     radar: [
         {
             source: ['deadbydaylight.com/news'],
-            target: '/deadbydaylight/news',
+            target: '/news',
         },
     ],
     name: 'Latest News',
