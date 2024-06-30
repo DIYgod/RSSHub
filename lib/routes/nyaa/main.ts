@@ -32,7 +32,7 @@ async function handler(ctx) {
 
     const { query, username } = ctx.req.param();
 
-    const rootURL = ctx.routerPath.split('/')[1] === 'sukebei' ? 'https://sukebei.nyaa.si' : 'https://nyaa.si';
+    const rootURL = ctx.routerPath?.split('/')[1] === 'sukebei' ? 'https://sukebei.nyaa.si' : 'https://nyaa.si';
 
     let currentRSSURL = `${rootURL}/?page=rss`;
     let currentLink = `${rootURL}/`;
