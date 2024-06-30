@@ -63,7 +63,7 @@ export const route: Route = {
         username: 'channel username',
         routeParams: `extra parameters, see the table below
 | Key                    | Description                                                           | Accepts                                            | Defaults to  |
-| ---------------------- | --------------------------------------------------------------------- | -------------------------------------------------- | ------------ |
+| :--------------------: | :-------------------------------------------------------------------: | :------------------------------------------------: | :----------: |
 | showLinkPreview        | Show the link preview from Telegram                                   | 0/1/true/false                                     | true         |
 | showViaBot             | For messages sent via bot, show the bot                               | 0/1/true/false                                     | true         |
 | showReplyTo            | For reply messages, show the target of the reply                      | 0/1/true/false                                     | true         |
