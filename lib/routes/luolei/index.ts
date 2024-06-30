@@ -39,7 +39,7 @@ export const handler = async (ctx) => {
     const language = $('html').prop('lang');
     const themeEl = $('link[rel="modulepreload"]')
         .toArray()
-        .findLast((l) => /theme\.\w+\.js$/.test($(l).prop('href')));
+        .findLast((l) => /theme\..*\.js$/.test($(l).prop('href')));
     const themeUrl = themeEl ? new URL($(themeEl).prop('href'), rootUrl).href : undefined;
 
     const { data: themeResponse } = await got(themeUrl);
