@@ -1,48 +1,80 @@
 import { Route } from '@/types';
 
 import cache from '@/utils/cache';
-import { ofetch } from 'ofetch';
+import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
+// Collected from https://www.investor.org.cn/images/docSearchData.js.
+
+const channelIds = {
+    63: 298519,
+    958: 244863,
+    3966: 244863,
+};
 
 export const handler = async (ctx) => {
     const { category = 'information_release/news_release_from_authorities/zjhfb' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
     const rootUrl = 'https://www.investor.org.cn';
+    const apiUrl = new URL('was5/web/search', rootUrl).href;
     const currentUrl = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;
 
-    const response = await ofetch(currentUrl);
+    const { data: response } = await got(currentUrl);
 
     const $ = load(response);
 
     const language = 'zh';
 
-    let items = $('div.hotlist dd')
-        .slice(0, limit)
-        .toArray()
-        .map((item) => {
-            item = $(item);
+    let items = [];
 
-            const href = item.find('a').prop('href');
+    if ($('div.hotlist dd').length === 0) {
+        const channelId = response.match(/params.channelId='(\d+)';/)?.[1] ?? undefined;
 
-            return {
-                title: item.find('a').prop('title'),
-                pubDate: parseDate(item.find('span.date').text()),
-                link: href.startsWith('javascript')
-                    ? item
-                          .find('a')
-                          .attr('onclick')
-                          .match(/,'(http.*)','/)?.[1]
-                    : new URL(href, currentUrl).href,
-                language,
-            };
+        const {
+            data: { rows },
+        } = await got.post(apiUrl, {
+            form: {
+                channelid: channelIds?.[channelId] ?? undefined,
+                searchword: `CHANNELID=${channelId}`,
+                page: 1,
+                perpage: limit,
+            },
         });
+
+        items = rows.map((item) => ({
+            title: item.DOCTITLE,
+            pubDate: parseDate(item.DOCPUBTIME),
+            link: item.DOCURL,
+            language,
+        }));
+    } else {
+        items = $('div.hotlist dd')
+            .slice(0, limit)
+            .toArray()
+            .map((item) => {
+                item = $(item);
+
+                const href = item.find('a').prop('href');
+
+                return {
+                    title: item.find('a').prop('title'),
+                    pubDate: parseDate(item.find('span.date').text()),
+                    link: new URL(href, currentUrl).href,
+                    language,
+                };
+            });
+    }
 
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+                if (!item.link.endsWith('html')) {
+                    return item;
+                }
+
+                const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
 
