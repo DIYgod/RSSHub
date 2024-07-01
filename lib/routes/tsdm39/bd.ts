@@ -65,7 +65,7 @@ const handler: Route['handler'] = async (ctx) => {
     })) as DataItem[];
 
     return {
-        title: `天使动漫论坛 - BD`,
+        title: '天使动漫论坛 - BD',
         link: 'https://www.tsdm39.com/forum.php?mod=forumdisplay&fid=85',
         language: 'zh-Hans',
         item,
