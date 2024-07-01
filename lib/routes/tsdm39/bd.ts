@@ -4,6 +4,7 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 // type id => display name
 type Mapping = Record<string, string>;
@@ -35,6 +36,9 @@ const handler: Route['handler'] = async (ctx) => {
     const { type } = ctx.req.param();
 
     const cookie = config.tsdm39.cookie;
+    if (!cookie) {
+        throw new ConfigNotFoundError('缺少 TSDM39 用户登录后的 Cookie 值 <a href="https://docs.rsshub.app/zh/deploy/config#route-specific-configurations">TSDM 相关路由</a>');
+    }
 
     const item = (await cache.tryGet(`tsdm39:bd:${type ?? 'all'}`, async () => {
         const html = await ofetch(`https://www.tsdm39.com/forum.php?mod=forumdisplay&fid=85${type ? `&filter=typeid&typeid=${type}` : ''}`, {
