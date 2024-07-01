@@ -75,7 +75,7 @@ const handler: Route['handler'] = async (ctx) => {
 export const route: Route = {
     path: '/bd/:type?',
     name: 'BD',
-    categories: ['anime', 'bbs'],
+    categories: ['anime'],
     maintainers: ['equt'],
     example: '/tsdm39/bd',
     parameters: {
