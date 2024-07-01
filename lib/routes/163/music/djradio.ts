@@ -37,6 +37,7 @@ async function handler(ctx) {
                 radioId: id,
                 limit,
                 offset,
+                asc: true,
             },
         });
 
