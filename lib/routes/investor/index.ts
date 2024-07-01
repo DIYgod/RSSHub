@@ -81,14 +81,8 @@ export const handler = async (ctx) => {
                 const title = $$('div.contentText h2').text();
                 const description = $$('div.TRS_Editor').html();
 
-                item.title = title;
+                item.title = title || item.title;
                 item.description = description;
-                item.pubDate = parseDate(
-                    $$('span.timeSpan')
-                        .text()
-                        .trim()
-                        .match(/(\d{4}-\d{2}-\d{2})/)?.[1] ?? ''
-                );
                 item.author = $$('span.timeSpan')
                     .text()
                     .trim()
