@@ -2,7 +2,6 @@ import type { DataItem, Route } from '@/types';
 import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
@@ -40,33 +39,31 @@ const handler: Route['handler'] = async (ctx) => {
         throw new ConfigNotFoundError('缺少 TSDM39 用户登录后的 Cookie 值 <a href="https://docs.rsshub.app/zh/deploy/config#route-specific-configurations">TSDM 相关路由</a>');
     }
 
-    const item = (await cache.tryGet(`tsdm39:bd:${type ?? 'all'}`, async () => {
-        const html = await ofetch(`https://www.tsdm39.com/forum.php?mod=forumdisplay&fid=85${type ? `&filter=typeid&typeid=${type}` : ''}`, {
-            headers: {
-                Cookie: cookie,
-            },
+    const html = await ofetch(`https://www.tsdm39.com/forum.php?mod=forumdisplay&fid=85${type ? `&filter=typeid&typeid=${type}` : ''}`, {
+        headers: {
+            Cookie: cookie,
+        },
+    });
+
+    const $ = load(html);
+
+    const item = $('tbody.tsdm_normalthread')
+        .toArray()
+        .map<DataItem>((item) => {
+            const $ = load(item);
+
+            const title = $('a.xst').text();
+            const price = $('span.xw1').last().text();
+            const link = $('a.xst').attr('href');
+            const date = $('td.by em').first().text().trim();
+
+            return {
+                title,
+                description: `价格：${price}`,
+                link,
+                pubDate: parseDate(date),
+            };
         });
-
-        const $ = load(html);
-
-        return $('tbody.tsdm_normalthread')
-            .toArray()
-            .map<DataItem>((item) => {
-                const $ = load(item);
-
-                const title = $('a.xst').text();
-                const price = $('span.xw1').last().text();
-                const link = $('a.xst').attr('href');
-                const date = $('td.by em').first().text().trim();
-
-                return {
-                    title,
-                    description: `价格：${price}`,
-                    link,
-                    pubDate: parseDate(date),
-                };
-            });
-    })) as DataItem[];
 
     return {
         title: '天使动漫论坛 - BD',
