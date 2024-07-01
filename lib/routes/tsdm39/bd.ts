@@ -57,7 +57,7 @@ const handler: Route['handler'] = async (ctx) => {
 
                 return {
                     title,
-                    description: [`价格：${price}`].join('\n'),
+                    description: `价格：${price}`,
                     link,
                     pubDate: parseDate(date),
                 };
