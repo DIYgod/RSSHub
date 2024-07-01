@@ -13,7 +13,7 @@ const handler: Route['handler'] = async () => {
         return await Promise.all(
             $('article')
                 .toArray()
-                .slice(0, 1)
+                .slice(0, 20)
                 .map<Promise<DataItem>>(async (item) => {
                     const $ = load(item);
 
