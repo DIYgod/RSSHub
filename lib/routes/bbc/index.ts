@@ -66,7 +66,7 @@ async function handler(ctx) {
                     linkURL.hostname = 'www.bbc.co.uk';
                 }
 
-                const response = await ofetch(linkURL.href);
+                const response = await ofetch.native(linkURL.href).then((e) => e.text());
 
                 const $ = load(response);
 
