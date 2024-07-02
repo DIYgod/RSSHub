@@ -87,6 +87,9 @@ async function handler(ctx) {
                 content('.mod-info, .title, .eval-zan, .eval-pic, .sae-more, .ugo-kol, .word-text .word-box .word-cn').remove();
 
                 item.description = content(item.link.includes('content') ? '.contain .text' : '.contain .top').html();
+                if (item.link.includes('jingxuan')) {
+                    item.description += content('.eval-mod_ugo').html();
+                }
 
                 return item;
             })
