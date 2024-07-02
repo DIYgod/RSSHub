@@ -176,7 +176,7 @@
         "prettier": "3.3.2",
         "remark-parse": "11.0.0",
         "supertest": "7.0.0",
-        "typescript": "5.5.2",
+        "typescript": "5.5.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "4.3.2",
         "vitest": "1.6.0"
