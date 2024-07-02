@@ -1,5 +1,6 @@
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 
@@ -20,7 +21,7 @@ const handler: Route['handler'] = async () => {
                 const link = `https://nextjs.org${h.attr('href')}`;
                 const date = $('p').first().text(); // not reliable, but works for now
 
-                const data = await ofetch(link);
+                const data = (await cache.tryGet(`nextjs:blog:${link}`, () => ofetch(link))) as string;
 
                 return {
                     title,
