@@ -44,7 +44,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let items = $('.main')
-        .find('h3 a')
+        .find(category === '' ? 'a:has(h2)' : 'h2 a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
         .toArray()
         .map((item) => {
@@ -64,11 +64,14 @@ async function handler(ctx) {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1',
+                    },
                 });
 
                 const content = load(detailResponse.data);
 
-                const spans = content('.mod-info span').text();
+                const spans = content('.date').text();
                 let matches = spans.match(/(\d{4}-\d{2}-\d{2})/);
                 if (matches) {
                     item.pubDate = parseDate(matches[1]);
@@ -79,11 +82,11 @@ async function handler(ctx) {
                     }
                 }
 
-                item.author = content('.name').text();
+                item.author = content('.author').text();
 
                 content('.mod-info, .title, .eval-zan, .eval-pic, .sae-more, .ugo-kol, .word-text .word-box .word-cn').remove();
 
-                item.description = content('#articleContent, .eval-desc').html();
+                item.description = content(item.link.includes('content') ? '.contain .text' : '.contain .top').html();
 
                 return item;
             })
