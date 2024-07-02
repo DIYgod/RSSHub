@@ -25,26 +25,25 @@ const handler: Route['handler'] = async () => {
         $('div[class^="releasePreviewsSection"] h3 a[href^="/releases/"]')
             .toArray()
             .slice(0, 5)
-            .map(async (item) => {
+            .map((item) => {
                 const link = `https://notion.so${item.attribs.href}`;
 
-                const data = (await cache.tryGet(`notion:release:${link}`, () =>
-                    ofetch(link, {
+                return cache.tryGet(`notion:release:${link}`, async () => {
+                    const data = await ofetch(link, {
                         headers: {
-                            'Accept-Language': 'en-US', // TODO accept param
-                            Referer: 'https://notion.so/releases',
+                            'Accept-Language': 'en-US', // Notion will adjust returned content based on this header
                         },
-                    })
-                )) as string;
+                    });
 
-                const $ = load(data);
+                    const $ = load(data);
 
-                return {
-                    title: $('h2').first().text() ?? '',
-                    pubDate: parseDate($('time').first().text()),
-                    description: $('article.release article').first().html() ?? '',
-                    link,
-                };
+                    return {
+                        title: $('h2').first().text() ?? '',
+                        pubDate: parseDate($('time').first().text()),
+                        description: $('article.release article').first().html() ?? '',
+                        link,
+                    };
+                });
             })
     )) as DataItem[];
 
