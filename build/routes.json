@@ -49784,6 +49784,32 @@
       "program-update"
     ]
   },
+  "react": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "categories": [
+          "blog"
+        ],
+        "maintainers": [
+          "equt"
+        ],
+        "example": "/react/blog",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "blog.ts"
+      }
+    },
+    "name": "React",
+    "url": "react.dev"
+  },
   "reactiflux": {
     "routes": {
       "/transcripts": {
