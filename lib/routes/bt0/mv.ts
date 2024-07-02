@@ -40,15 +40,8 @@ async function handler(ctx) {
     const _link = `${host}/prod/core/system/getVideoDetail/${number}`;
 
     const data = (await doGot(0, host, _link)).data;
-    const items = Object.keys(data.ecca)
-        .reduce((acc, key) => {
-            const targets = data.ecca[key];
-            if (Array.isArray(targets)) {
-                acc.push(...targets);
-            }
-            return acc;
-        }, [])
-        .map((item) => ({
+    const items = Object.keys(data.ecca).flatMap((key) =>
+        data.ecca[key].map((item) => ({
             title: item.zname,
             guid: item.zname,
             description: `${item.zname}[${item.zsize}]`,
@@ -58,7 +51,8 @@ async function handler(ctx) {
             enclosure_url: item.zlink,
             enclosure_length: genSize(item.zsize),
             category: strsJoin(item.zqxd, item.text_html, item.audio_html),
-        }));
+        }))
+    );
     return {
         title: data.title,
         link: _link,
