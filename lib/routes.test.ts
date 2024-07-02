@@ -26,6 +26,28 @@ if (process.env.FULL_ROUTES_TEST) {
             }
         }
     }
+} else if (process.env.TESTED_NAMESPACES) {
+    const { namespaces } = await import('@/registry');
+    const ns_to_test = process.env.TESTED_NAMESPACES.split(',');
+    for (const namespace of ns_to_test) {
+        if (!(namespace in namespaces)) {
+            // ignoring unknown namespace
+            continue;
+        }
+        for (const route in namespaces[namespace].routes) {
+            const requireConfig = namespaces[namespace].routes[route].features?.requireConfig;
+            let configs;
+            if (typeof requireConfig !== 'boolean') {
+                configs = requireConfig
+                    ?.filter((config) => !config.optional)
+                    .map((config) => config.name)
+                    .filter((name) => name !== 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN');
+            }
+            if (namespaces[namespace].routes[route].example && !configs?.length) {
+                routes[`/${namespace}${route}`] = namespaces[namespace].routes[route].example;
+            }
+        }
+    }
 }
 
 async function checkRSS(response) {
