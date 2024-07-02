@@ -47,8 +47,8 @@ const handler: Route['handler'] = async () => {
 
 export const route: Route = {
     path: '/blog',
-    name: 'Next.js Blog',
-    categories: ['blog'],
+    name: 'Blog',
+    categories: ['program-update'],
     maintainers: ['equt'],
     example: '/nextjs/blog',
     features: {
