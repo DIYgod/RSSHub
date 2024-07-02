@@ -9,28 +9,33 @@ const handler: Route['handler'] = async () => {
 
     const $ = load(data);
 
-    const item = await Promise.all(
+    const item = (await Promise.all(
         $('article')
             .toArray()
             .slice(0, 20)
-            .map<Promise<DataItem>>(async (item) => {
+            .map((item) => {
                 const $ = load(item);
+                const link = `https://nextjs.org${$('a[href^="/blog"]').attr('href')}`;
 
-                const h = $('a[href^="/blog"]');
-                const title = h.text().trim();
-                const link = `https://nextjs.org${h.attr('href')}`;
-                const date = $('p').first().text(); // not reliable, but works for now
+                return cache.tryGet(`nextjs:blog:${link}`, async () => {
+                    const data = await ofetch(link);
 
-                const data = (await cache.tryGet(`nextjs:blog:${link}`, () => ofetch(link))) as string;
+                    const $ = load(data);
 
-                return {
-                    title,
-                    link,
-                    description: load(data)('div.prose').html() ?? '',
-                    pubDate: parseDate(date.replace(/st|nd|rd|th/, '')),
-                };
+                    return {
+                        title: $('h1').first().text().trim(),
+                        link,
+                        description: $('div.prose').html() ?? '',
+                        pubDate: parseDate(
+                            $('p[data-version="v1"]')
+                                .first()
+                                .text()
+                                .replace(/st|nd|rd|th/, '')
+                        ),
+                    };
+                });
             })
-    );
+    )) as DataItem[];
 
     return {
         title: 'Next.js Blog',
