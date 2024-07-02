@@ -1,5 +1,6 @@
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 
@@ -19,7 +20,7 @@ const handler: Route['handler'] = async () => {
                 const link = `https://react.dev${item.attribs.href}`;
                 const date = $('div > div:nth-child(2) > div:nth-child(1)').text(); // not reliable, but works for now
 
-                const data = await ofetch(link);
+                const data = (await cache.tryGet(`react:blog:${link}`, () => ofetch(link))) as string;
 
                 return {
                     title,
