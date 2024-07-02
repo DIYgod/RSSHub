@@ -4,7 +4,6 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import day from 'dayjs';
-import wait from '@/utils/wait';
 
 const handler: Route['handler'] = async () => {
     const data = await ofetch('https://notion.so/releases', {
@@ -23,21 +22,20 @@ const handler: Route['handler'] = async () => {
 
     // archive
     const item = (await Promise.all(
-        $('a[href^="/releases/"]')
+        $('div[class^="releasePreviewsSection"] h3 a[href^="/releases/"]')
             .toArray()
-            .slice(0, 2)
-            .map(async (item, i) => {
+            .slice(0, 5)
+            .map(async (item) => {
                 const link = `https://notion.so${item.attribs.href}`;
 
-                const data = (await cache.tryGet(`notion:release:${link}`, async () => {
-                    await wait(500 * i);
-                    return await ofetch(link, {
+                const data = (await cache.tryGet(`notion:release:${link}`, () =>
+                    ofetch(link, {
                         headers: {
                             'Accept-Language': 'en-US', // TODO accept param
                             Referer: 'https://notion.so/releases',
                         },
-                    });
-                })) as string;
+                    })
+                )) as string;
 
                 const $ = load(data);
 
@@ -45,6 +43,7 @@ const handler: Route['handler'] = async () => {
                     title: $('h2').first().text() ?? '',
                     pubDate: parseDate($('time').first().text()),
                     description: $('article.release article').first().html() ?? '',
+                    link,
                 };
             })
     )) as DataItem[];
