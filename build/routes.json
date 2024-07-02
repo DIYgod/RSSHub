@@ -38423,6 +38423,32 @@
     "name": "Mirror",
     "url": "mirror.xyz"
   },
+  "mirrormedia": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/mirrormedia",
+        "parameters": {},
+        "name": "首页",
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "radar": [
+          {
+            "source": [
+              "mirrormedia.mg"
+            ]
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "鏡週刊 Mirror Media",
+    "url": "mirrormedia.mg"
+  },
   "missav": {
     "routes": {
       "/new": {

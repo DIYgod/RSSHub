@@ -10452,6 +10452,19 @@
       }
     ]
   },
+  "mirrormedia.mg": {
+    "_name": "鏡週刊 Mirror Media",
+    ".": [
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/mirrormedia/"
+      }
+    ]
+  },
   "missav.com": {
     "_name": "MissAV.com",
     ".": [
