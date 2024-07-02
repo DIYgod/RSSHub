@@ -42883,6 +42883,27 @@
         ],
         "description": "There is an optional query parameter called `properties=` that can be used to customize field mapping. There are three built-in fields: author, pubTime and link, which can be used to add additional information.\n\n  For example, if you have set up three properties in your database - \"Publish Time\", \"Author\", and \"Original Article Link\" - then execute the following JavaScript code to get the result for the properties parameter.\n\n  ```js\n  encodeURIComponent(JSON.stringify({\"pubTime\": \"Publish Time\", \"author\": \"Author\", \"link\": \"Original Article Link\"}))\n  ```\n\n  There is an optional query parameter called `query=` that can be used to customize the search rules for your database, such as custom sorting and filtering rules.\n\n  please refer to the [Notion API documentation](https://developers.notion.com/reference/post-database-query) and execute `encodeURIComponent(JSON.stringify(custom rules))` to provide the query parameter.",
         "location": "database.ts"
+      },
+      "/release": {
+        "name": "Release",
+        "path": "/release",
+        "url": "notion.so/releases",
+        "example": "/notion/release",
+        "categories": [
+          "program-update"
+        ],
+        "maintainers": [
+          "equt"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "release.ts"
       }
     },
     "name": "Notion",

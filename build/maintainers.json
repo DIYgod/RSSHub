@@ -4221,6 +4221,9 @@
   "/notion/database/:databaseId": [
     "curly210102"
   ],
+  "/notion/release": [
+    "equt"
+  ],
   "/now/news/:category?/:id?": [
     "nczitzk"
   ],
