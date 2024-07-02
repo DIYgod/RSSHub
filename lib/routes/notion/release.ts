@@ -4,6 +4,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import day from 'dayjs';
+import wait from '@/utils/wait';
 
 const handler: Route['handler'] = async () => {
     const data = await ofetch('https://notion.so/releases', {
@@ -24,16 +25,19 @@ const handler: Route['handler'] = async () => {
     const item = (await Promise.all(
         $('a[href^="/releases/"]')
             .toArray()
-            .map(async (item) => {
+            .slice(0, 2)
+            .map(async (item, i) => {
                 const link = `https://notion.so${item.attribs.href}`;
 
-                const data = (await cache.tryGet(`notion:release:${link}`, () =>
-                    ofetch(link, {
+                const data = (await cache.tryGet(`notion:release:${link}`, async () => {
+                    await wait(500 * i);
+                    return await ofetch(link, {
                         headers: {
                             'Accept-Language': 'en-US', // TODO accept param
+                            Referer: 'https://notion.so/releases',
                         },
-                    })
-                )) as string;
+                    });
+                })) as string;
 
                 const $ = load(data);
 
