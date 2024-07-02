@@ -4027,6 +4027,9 @@
   "/nextapple/realtime/:category?": [
     "miles170"
   ],
+  "/nextjs/blog": [
+    "equt"
+  ],
   "/nga/forum/:fid/:recommend?": [
     "xyqfer"
   ],
