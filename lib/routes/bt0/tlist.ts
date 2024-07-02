@@ -61,7 +61,7 @@ async function handler(ctx) {
     }));
     return {
         title: `不太灵-最新资源列表-${categoryDict[sc]}`,
-        link: _link,
+        link: `${host}/tlist/${sc}_1.html`,
         item: items,
     };
 }

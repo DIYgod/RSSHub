@@ -40,22 +40,22 @@ async function handler(ctx) {
     const _link = `${host}/prod/core/system/getVideoDetail/${number}`;
 
     const data = (await doGot(0, host, _link)).data;
-    const items = Object.keys(data.ecca).flatMap((key) =>
-        data.ecca[key].map((item) => ({
-            title: item.zname,
-            guid: item.zname,
-            description: `${item.zname}[${item.zsize}]`,
-            link: `${host}/tr/${item.id}.html`,
-            pubDate: item.ezt,
+    const items = Object.values(data.ecca).flatMap((item) =>
+        item.map((i) => ({
+            title: i.zname,
+            guid: i.zname,
+            description: `${i.zname}[${i.zsize}]`,
+            link: `${host}/tr/${i.id}.html`,
+            pubDate: i.ezt,
             enclosure_type: 'application/x-bittorrent',
-            enclosure_url: item.zlink,
-            enclosure_length: genSize(item.zsize),
-            category: strsJoin(item.zqxd, item.text_html, item.audio_html),
+            enclosure_url: i.zlink,
+            enclosure_length: genSize(i.zsize),
+            category: strsJoin(i.zqxd, i.text_html, i.audio_html, i.new === 1 ? '新' : ''),
         }))
     );
     return {
         title: data.title,
-        link: _link,
+        link: `${host}/mv/${number}.html`,
         item: items,
     };
 }
