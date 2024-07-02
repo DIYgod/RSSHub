@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@hono/node-server':
-        specifier: 1.11.4
-        version: 1.11.4
+        specifier: 1.11.5
+        version: 1.11.5
       '@hono/zod-openapi':
         specifier: 0.14.7
         version: 0.14.7(hono@4.4.10)(zod@3.23.8)
@@ -1222,8 +1222,8 @@ packages:
     peerDependencies:
       vue: ^3.2.0
 
-  '@hono/node-server@1.11.4':
-    resolution: {integrity: sha512-8TOiiiAqcFC6f62P7M9p6adQREAlWdVi1awehAwgWW+3R65/rKzHnLARO/Hu/466z01VNViBoogqatqXJMyItA==}
+  '@hono/node-server@1.11.5':
+    resolution: {integrity: sha512-hbPmhyShiYE70DAf/glaRvA+IWbk48yldh/5jF5SC2qLqVcXQlJR/D7l7W4XQAblgVmzv0276QkOydVX7NcjtA==}
     engines: {node: '>=18.14.1'}
 
   '@hono/zod-openapi@0.14.7':
@@ -7413,7 +7413,7 @@ snapshots:
       '@tanstack/vue-virtual': 3.8.1(vue@3.4.31(typescript@5.5.3))
       vue: 3.4.31(typescript@5.5.3)
 
-  '@hono/node-server@1.11.4': {}
+  '@hono/node-server@1.11.5': {}
 
   '@hono/zod-openapi@0.14.7(hono@4.4.10)(zod@3.23.8)':
     dependencies:
