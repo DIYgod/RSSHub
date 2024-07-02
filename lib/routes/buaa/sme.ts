@@ -56,6 +56,8 @@ async function handler(ctx) {
         link: url,
         // 源文章
         item: await getItems(list),
+        // 语言
+        language: 'zh-CN',
     };
 }
 
@@ -69,13 +71,13 @@ async function getList(url) {
         .join(' - ');
     const list = $("div[class='Newslist'] > ul > li")
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item_) => {
+            const item = $(item_);
             const $a = item.find('a');
             const link = $a.attr('href');
             return {
                 title: item.find('a').text(),
-                link: link.startsWith('http') ? link : `${BASE_URL}/${link}`, // 有些链接是相对路径
+                link: link?.startsWith('http') ? link : `${BASE_URL}/${link}`, // 有些链接是相对路径
                 pubDate: timezone(parseDate(item.find('span').text()), +8),
             };
         });
