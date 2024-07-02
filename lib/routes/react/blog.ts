@@ -41,7 +41,7 @@ const handler: Route['handler'] = async () => {
 
 export const route: Route = {
     path: '/blog',
-    name: 'React Blog',
+    name: 'Blog',
     categories: ['blog'],
     maintainers: ['equt'],
     example: '/react/blog',
