@@ -1619,8 +1619,8 @@ packages:
   '@storybook/core-events@8.1.11':
     resolution: {integrity: sha512-vXaNe2KEW9BGlLrg0lzmf5cJ0xt+suPjWmEODH5JqBbrdZ67X6ApA2nb6WcxDQhykesWCuFN5gp1l+JuDOBi7A==}
 
-  '@storybook/csf@0.1.9':
-    resolution: {integrity: sha512-JlZ6v/iFn+iKohKGpYXnMeNeTiiAMeFoDhYnPLIC8GnyyIWqEI9wJYrOK9i9rxlJ8NZAH/ojGC/u/xVC41qSgQ==}
+  '@storybook/csf@0.1.10':
+    resolution: {integrity: sha512-DQG5NGkc9/+11v97P1RqW7hlgskmNQCtoOfPH80gMyUvN7PViux3gqZG2mCM6/MGZ9dcYE8dldpq3VBB24at5Q==}
 
   '@storybook/global@5.0.0':
     resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
@@ -2854,8 +2854,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -3975,8 +3975,8 @@ packages:
     resolution: {integrity: sha512-GCfE1mtsHGOELCU8e/Z7YWzpmybrx/+dSTfLrvY8qRmaY6zXTKWn6WQIjaAFw069icm6GVMNkgu0NzI4iPZUNw==}
     engines: {node: '>=10'}
 
-  istanbul-lib-source-maps@5.0.5:
-    resolution: {integrity: sha512-gKf4eJ8bHmSX/ljiOCpnd8vtmHTwG71uugm0kXYd5aqFCl6z8cj8k7QduXSwU6QOst6LCdSXTlaoc8W4554crQ==}
+  istanbul-lib-source-maps@5.0.6:
+    resolution: {integrity: sha512-yg2d+Em4KizZC5niWhQaIomgf5WlL4vOOjZ5xGCmF8SnPE/mDWWXgvRExdcpCgh9lLRRa1/fSYp2ymmbJ1pI+A==}
     engines: {node: '>=10'}
 
   istanbul-reports@3.1.7:
@@ -7624,7 +7624,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.7
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -7994,10 +7994,10 @@ snapshots:
 
   '@storybook/core-events@8.1.11':
     dependencies:
-      '@storybook/csf': 0.1.9
+      '@storybook/csf': 0.1.10
       ts-dedent: 2.2.0
 
-  '@storybook/csf@0.1.9':
+  '@storybook/csf@0.1.10':
     dependencies:
       type-fest: 2.19.0
 
@@ -8018,7 +8018,7 @@ snapshots:
       '@storybook/channels': 8.1.11
       '@storybook/client-logger': 8.1.11
       '@storybook/core-events': 8.1.11
-      '@storybook/csf': 0.1.9
+      '@storybook/csf': 0.1.10
       '@storybook/global': 5.0.0
       '@storybook/types': 8.1.11
       '@types/qs': 6.9.15
@@ -8484,7 +8484,7 @@ snapshots:
       debug: 4.3.5
       istanbul-lib-coverage: 3.2.2
       istanbul-lib-report: 3.0.1
-      istanbul-lib-source-maps: 5.0.5
+      istanbul-lib-source-maps: 5.0.6
       istanbul-reports: 3.1.7
       magic-string: 0.30.10
       magicast: 0.3.4
@@ -9385,7 +9385,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -9838,7 +9838,7 @@ snapshots:
 
   extract-zip@2.0.1:
     dependencies:
-      debug: 4.3.5
+      debug: 4.3.4
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
@@ -10728,7 +10728,7 @@ snapshots:
       make-dir: 4.0.0
       supports-color: 7.2.0
 
-  istanbul-lib-source-maps@5.0.5:
+  istanbul-lib-source-maps@5.0.6:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       debug: 4.3.5
@@ -11983,7 +11983,7 @@ snapshots:
   proxy-agent@6.4.0:
     dependencies:
       agent-base: 7.1.1
-      debug: 4.3.5
+      debug: 4.3.4
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.5
       lru-cache: 7.18.3
