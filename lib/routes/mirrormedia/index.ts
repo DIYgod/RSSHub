@@ -41,10 +41,9 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                return {
-                    ...item,
-                    description: content("div[data-contents='true']").html(),
-                };
+                item.description = content("div[data-contents='true']").html();
+
+                return item;
             })
         )
     );
