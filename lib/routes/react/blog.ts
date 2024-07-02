@@ -9,27 +9,27 @@ const handler: Route['handler'] = async () => {
 
     const $ = load(data);
 
-    const item = await Promise.all(
+    const item = (await Promise.all(
         $('a[href^="/blog/"]')
             .toArray()
             .slice(0, 20)
-            .map<Promise<DataItem>>(async (item) => {
-                const $ = load(item);
-
-                const title = $('h2').text();
+            .map((item) => {
                 const link = `https://react.dev${item.attribs.href}`;
-                const date = $('div > div:nth-child(2) > div:nth-child(1)').text(); // not reliable, but works for now
 
-                const data = (await cache.tryGet(`react:blog:${link}`, () => ofetch(link))) as string;
+                return cache.tryGet(`react:blog:${link}`, async () => {
+                    const data = await ofetch(link);
 
-                return {
-                    title,
-                    link,
-                    description: load(data)('article div:nth-child(2)').html() ?? '',
-                    pubDate: parseDate(date),
-                };
+                    const $ = load(data);
+
+                    return {
+                        title: $('h1').first().text().trim(),
+                        link,
+                        description: $('article div:nth-child(2)').html() ?? '',
+                        pubDate: parseDate($('p.whitespace-pre-wrap').first().text().split(/\s+by/)[0]),
+                    };
+                });
             })
-    );
+    )) as DataItem[];
 
     return {
         title: 'React Blog',
