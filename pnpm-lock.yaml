@@ -13,7 +13,7 @@ importers:
         version: 1.12.0
       '@hono/zod-openapi':
         specifier: 0.14.7
-        version: 0.14.7(hono@4.4.10)(zod@3.23.8)
+        version: 0.14.7(hono@4.4.11)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -84,8 +84,8 @@ importers:
         specifier: 140.0.1
         version: 140.0.1
       hono:
-        specifier: 4.4.10
-        version: 4.4.10
+        specifier: 4.4.11
+        version: 4.4.11
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -3744,8 +3744,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.4.10:
-    resolution: {integrity: sha512-z6918u9rXRU5CCisMHd2uUVoQXcNyUrUMmYY7VH10v4HJG7+hqgMK/G8YNTd13C6s4rBfzF09iz8VpOip9qG3A==}
+  hono@4.4.11:
+    resolution: {integrity: sha512-R5RADpjoRsR3/VsnFovpsYNLPnC1f+FgdfsePk3qIgjb4D41Sg7uW5QCj41kzEOwXCjBg0sVvOZMvUNZ0DKB7g==}
     engines: {node: '>=16.0.0'}
 
   hookable@5.5.3:
@@ -7620,16 +7620,16 @@ snapshots:
 
   '@hono/node-server@1.12.0': {}
 
-  '@hono/zod-openapi@0.14.7(hono@4.4.10)(zod@3.23.8)':
+  '@hono/zod-openapi@0.14.7(hono@4.4.11)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.1.1(zod@3.23.8)
-      '@hono/zod-validator': 0.2.2(hono@4.4.10)(zod@3.23.8)
-      hono: 4.4.10
+      '@hono/zod-validator': 0.2.2(hono@4.4.11)(zod@3.23.8)
+      hono: 4.4.11
       zod: 3.23.8
 
-  '@hono/zod-validator@0.2.2(hono@4.4.10)(zod@3.23.8)':
+  '@hono/zod-validator@0.2.2(hono@4.4.11)(zod@3.23.8)':
     dependencies:
-      hono: 4.4.10
+      hono: 4.4.11
       zod: 3.23.8
 
   '@humanwhocodes/config-array@0.11.14':
@@ -8099,7 +8099,7 @@ snapshots:
   '@scalar/hono-api-reference@0.5.90(postcss@8.4.39)(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.9)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@scalar/api-reference': 1.24.29(postcss@8.4.39)(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.9)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
-      hono: 4.4.10
+      hono: 4.4.11
     transitivePeerDependencies:
       - '@jest/globals'
       - '@types/bun'
@@ -10692,7 +10692,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.4.10: {}
+  hono@4.4.11: {}
 
   hookable@5.5.3: {}
 
