@@ -893,6 +893,9 @@
   "/btzj/:category?": [
     "nczitzk"
   ],
+  "/buaa/jiaowu/:cddm?": [
+    "OverflowCat"
+  ],
   "/buaa/sme/:path{.+}?": [
     "MeanZhang"
   ],
