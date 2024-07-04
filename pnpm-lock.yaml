@@ -213,8 +213,8 @@ importers:
         specifier: 4.1.4
         version: 4.1.4
       tsx:
-        specifier: 4.16.1
-        version: 4.16.1
+        specifier: 4.16.2
+        version: 4.16.2
       twitter-api-v2:
         specifier: 1.17.1
         version: 1.17.1
@@ -6017,8 +6017,8 @@ packages:
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
-  tsx@4.16.1:
-    resolution: {integrity: sha512-UAKkKOFMJI4M3U4xTJuoqECBMydJbqwNuACoMvwHjqDhbQyo/SYd8ZYNCpF5F8rAjcdKrO+z9CbvBlBiFKhBLA==}
+  tsx@4.16.2:
+    resolution: {integrity: sha512-C1uWweJDgdtX2x600HjaFaucXTilT7tgUZHbOE4+ypskZ1OP8CRCSDkCxG6Vya9EwaFIVagWwpaVAn5wzypaqQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -13292,7 +13292,7 @@ snapshots:
 
   tslib@2.6.3: {}
 
-  tsx@4.16.1:
+  tsx@4.16.2:
     dependencies:
       esbuild: 0.21.5
       get-tsconfig: 4.7.5
