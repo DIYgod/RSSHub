@@ -49,10 +49,17 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
                     return await fetchArticle(item.link);
-                } else {
+                } else if (new URL(item.link).hostname === 'www.shmeea.edu.cn') {
+                    const detailResponse = await ofetch(item.link.replace('http://', 'https://'));
+                    const content = load(detailResponse);
+                    item.description = content('.Article_content').html();
+                    return item;
+                } else if (new URL(item.link).hostname === 'yzb.sjtu.edu.cn') {
                     const detailResponse = await ofetch(item.link);
                     const content = load(detailResponse);
                     item.description = content('[id^=vsb_content]').html();
+                    return item;
+                } else {
                     return item;
                 }
             })
