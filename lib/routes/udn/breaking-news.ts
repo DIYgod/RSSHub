@@ -85,6 +85,15 @@ async function handler(ctx) {
                     description += body.html();
                 }
 
+                if (data.publisher.name === '轉角國際 udn Global') {
+                    // 轉角24小時
+                    description += $('.story_body_content')
+                        .html()
+                        .split(/<!--\d+?-->/g)
+                        .slice(1, -1)
+                        .join(',');
+                }
+
                 return {
                     title: item.title,
                     author: data.author.name,
