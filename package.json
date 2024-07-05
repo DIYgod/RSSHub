@@ -189,7 +189,7 @@
         "unified": "11.0.5",
         "vite-tsconfig-paths": "4.3.2",
         "vitest": "1.6.0",
-        "yaml-eslint-parser": "^1.2.3"
+        "yaml-eslint-parser": "1.2.3"
     },
     "packageManager": "pnpm@9.4.0",
     "engines": {
