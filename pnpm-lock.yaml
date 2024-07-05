@@ -1297,12 +1297,12 @@ packages:
     resolution: {integrity: sha512-DnIVVAiXR4tfWERTiQxr1Prrs/uFEbC1C4gTGORMvbF4k7ENyVQeLcoUfNyhlAj2MB/OeorCrN3wSnYuDOUS6Q==}
     engines: {node: '>=8.0.0'}
 
-  '@inquirer/confirm@3.1.13':
-    resolution: {integrity: sha512-N9knAyc9w4E57vimoYWDalDwuLfDNrgJFJzfdiIIsB1jT4id/GGpwexXtM4fehkxqv8ob3YYWzGANt4cA+5hRw==}
+  '@inquirer/confirm@3.1.14':
+    resolution: {integrity: sha512-nbLSX37b2dGPtKWL3rPuR/5hOuD30S+pqJ/MuFiUEgN6GiMs8UMxiurKAMDzKt6C95ltjupa8zH6+3csXNHWpA==}
     engines: {node: '>=18'}
 
-  '@inquirer/core@9.0.1':
-    resolution: {integrity: sha512-Kd3uUrkAoADpcocgk3Vk5DN2N6Yid+QlO8ceZWluFiLtVzUBdv/wK1GgZOq30OMDQNOZVTBsbSO3f/E0sOTk8w==}
+  '@inquirer/core@9.0.2':
+    resolution: {integrity: sha512-nguvH3TZar3ACwbytZrraRTzGqyxJfYJwv+ZwqZNatAosdWQMP1GV8zvmkNlBe2JeZSaw0WYBHZk52pDpWC9qA==}
     engines: {node: '>=18'}
 
   '@inquirer/figures@1.0.3':
@@ -1761,8 +1761,8 @@ packages:
     resolution: {integrity: sha512-trbLTilB7i+vZ6tsso7aJexQDAuLxQYSoWieHoIpIHUGihZUWRUqvimp67uTzEL3mbn24Tym3ht4DqFu6u6sXA==}
     engines: {node: '>=18'}
 
-  '@scalar/openapi-parser@0.7.1':
-    resolution: {integrity: sha512-FR2ezONBF0OOe5w5fa8uBInWvlGjC2+hEEmRZnJn/n1VMII8gg88VmBpE1wD2TqE4d6KIPCp/yxr5h10a8D1vw==}
+  '@scalar/openapi-parser@0.7.2':
+    resolution: {integrity: sha512-kgzFox4KzC3NLrOZeT9m/iQ2VMNvL7JNz8ec+hz0sYulvMtYQ1qTqEyjQjALyCDzmzrSJA11Vg8JMMHDw3AA7A==}
     engines: {node: '>=18'}
 
   '@scalar/snippetz-core@0.1.4':
@@ -3149,8 +3149,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -7897,12 +7897,12 @@ snapshots:
       chalk: 2.4.2
       lodash: 4.17.21
 
-  '@inquirer/confirm@3.1.13':
+  '@inquirer/confirm@3.1.14':
     dependencies:
-      '@inquirer/core': 9.0.1
+      '@inquirer/core': 9.0.2
       '@inquirer/type': 1.4.0
 
-  '@inquirer/core@9.0.1':
+  '@inquirer/core@9.0.2':
     dependencies:
       '@inquirer/figures': 1.0.3
       '@inquirer/type': 1.4.0
@@ -8323,7 +8323,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.7
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8442,7 +8442,7 @@ snapshots:
       '@scalar/draggable': 0.1.3(typescript@5.5.3)
       '@scalar/oas-utils': 0.2.10
       '@scalar/object-utils': 1.1.3
-      '@scalar/openapi-parser': 0.7.1
+      '@scalar/openapi-parser': 0.7.2
       '@scalar/themes': 0.9.11(typescript@5.5.3)
       '@scalar/use-codemirror': 0.11.4(typescript@5.5.3)
       '@scalar/use-toasts': 0.7.4(typescript@5.5.3)
@@ -8477,7 +8477,7 @@ snapshots:
       '@scalar/api-client': 2.0.8(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.9)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@scalar/components': 0.12.9(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.9)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@scalar/oas-utils': 0.2.10
-      '@scalar/openapi-parser': 0.7.1
+      '@scalar/openapi-parser': 0.7.2
       '@scalar/snippetz': 0.1.6
       '@scalar/themes': 0.9.11(typescript@5.5.3)
       '@scalar/use-toasts': 0.7.4(typescript@5.5.3)
@@ -8588,7 +8588,7 @@ snapshots:
     dependencies:
       just-clone: 6.2.0
 
-  '@scalar/openapi-parser@0.7.1':
+  '@scalar/openapi-parser@0.7.2':
     dependencies:
       ajv: 8.16.0
       ajv-draft-04: 1.0.0(ajv@8.16.0)
@@ -10232,7 +10232,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -12394,7 +12394,7 @@ snapshots:
     dependencies:
       '@bundled-es-modules/cookie': 2.0.0
       '@bundled-es-modules/statuses': 1.0.1
-      '@inquirer/confirm': 3.1.13
+      '@inquirer/confirm': 3.1.14
       '@mswjs/cookies': 1.1.1
       '@mswjs/interceptors': 0.29.1
       '@open-draft/until': 2.1.0
