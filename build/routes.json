@@ -32460,11 +32460,16 @@
   "japanpost": {
     "routes": {
       "/track/:reqCode/:locale?": {
+        "name": "Track & Trace Service",
         "path": "/track/:reqCode/:locale?",
+        "example": "/japanpost/track/EJ123456789JP/en",
+        "url": "trackings.post.japanpost.jp/services/srv/search/",
         "categories": [
           "other"
         ],
-        "example": "/japanpost/track/EJ123456789JP/en",
+        "maintainers": [
+          "tuzi3040"
+        ],
         "parameters": {
           "reqCode": "Package Number",
           "locale": "Language, default to japanese `ja`"
@@ -32473,20 +32478,31 @@
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": false,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Track & Trace Service 郵便追跡サービス",
-        "maintainers": [
-          "tuzi3040"
-        ],
-        "description": "| Japanese | English |\n  | -------- | ------- |\n  | ja       | en      |",
-        "location": "track.ts"
+        "description": "| Japanese | English |\n| -------- | ------- |\n| ja       | en      |",
+        "zh": {
+          "name": "邮件追踪查询",
+          "description": "| 日语 | 英语 |\n| ---- | ---- |\n| ja   | en   |"
+        },
+        "ja": {
+          "name": "郵便追跡サービス",
+          "description": "| 日本語 | 英語 |\n| ---- | ---- |\n| ja   | en   |"
+        },
+        "location": "router.ts"
       }
     },
-    "name": "Japanpost 日本郵便",
-    "url": "trackings.post.japanpost.jp"
+    "name": "Japanpost",
+    "url": "trackings.post.japanpost.jp",
+    "zh": {
+      "name": "日本邮政"
+    },
+    "ja": {
+      "name": "日本郵便"
+    }
   },
   "javbus": {
     "routes": {
