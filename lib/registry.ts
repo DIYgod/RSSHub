@@ -7,6 +7,7 @@ import { serveStatic } from '@hono/node-server/serve-static';
 
 import index from '@/routes/index';
 import robotstxt from '@/routes/robots.txt';
+import metrics from '@/routes/metrics';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -99,6 +100,7 @@ for (const namespace in namespaces) {
 
 app.get('/', index);
 app.get('/robots.txt', robotstxt);
+app.get('/metrics', metrics);
 app.use(
     '/*',
     serveStatic({
