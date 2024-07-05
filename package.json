@@ -136,13 +136,14 @@
     "devDependencies": {
         "@babel/preset-env": "7.24.7",
         "@babel/preset-typescript": "7.24.7",
+        "@eslint/eslintrc": "3.1.0",
+        "@eslint/js": "9.6.0",
         "@microsoft/eslint-formatter-sarif": "3.1.0",
         "@stylistic/eslint-plugin": "2.3.0",
         "@types/aes-js": "3.1.4",
         "@types/babel__preset-env": "7.9.7",
         "@types/crypto-js": "4.2.2",
         "@types/eslint": "8.56.10",
-        "@types/eslint-config-prettier": "6.11.3",
         "@types/etag": "1.8.3",
         "@types/fs-extra": "11.0.4",
         "@types/html-to-text": "9.0.4",
@@ -166,7 +167,7 @@
         "@typescript-eslint/parser": "7.15.0",
         "@vercel/nft": "0.27.2",
         "@vitest/coverage-v8": "1.6.0",
-        "eslint": "8.57.0",
+        "eslint": "9.6.0",
         "eslint-config-prettier": "9.1.0",
         "eslint-nibble": "8.1.0",
         "eslint-plugin-n": "17.9.0",
@@ -174,6 +175,7 @@
         "eslint-plugin-unicorn": "54.0.0",
         "eslint-plugin-yml": "1.14.0",
         "fs-extra": "11.2.0",
+        "globals": "15.8.0",
         "got": "14.4.1",
         "husky": "9.0.11",
         "js-beautify": "1.15.1",
@@ -186,7 +188,8 @@
         "typescript": "5.5.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "4.3.2",
-        "vitest": "1.6.0"
+        "vitest": "1.6.0",
+        "yaml-eslint-parser": "1.2.3"
     },
     "packageManager": "pnpm@9.4.0",
     "engines": {
