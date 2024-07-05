@@ -1,14 +1,14 @@
-import prettier from "eslint-plugin-prettier";
-import stylistic from "@stylistic/eslint-plugin";
-import unicorn from "eslint-plugin-unicorn";
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import globals from "globals";
-import tsParser from "@typescript-eslint/parser";
-import parser from "yaml-eslint-parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import prettier from 'eslint-plugin-prettier';
+import stylistic from '@stylistic/eslint-plugin';
+import unicorn from 'eslint-plugin-unicorn';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import globals from 'globals';
+import tsParser from '@typescript-eslint/parser';
+import parser from 'yaml-eslint-parser';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import js from '@eslint/js';
+import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,28 +20,28 @@ const compat = new FlatCompat({
 
 export default [{
     ignores: [
-        "**/coverage",
-        "**/.vscode",
-        "**/docker-compose.yml",
-        "!.github",
-        "lib/routes-deprecated",
-        "lib/router.js",
-        "**/babel.config.js",
-        "scripts/docker/minify-docker.js",
+        '**/coverage',
+        '**/.vscode',
+        '**/docker-compose.yml',
+        '!.github',
+        'lib/routes-deprecated',
+        'lib/router.js',
+        '**/babel.config.js',
+        'scripts/docker/minify-docker.js',
     ],
 }, ...compat.extends(
-    "eslint:recommended",
-    "plugin:n/recommended",
-    "plugin:unicorn/recommended",
-    "plugin:prettier/recommended",
-    "plugin:yml/recommended",
-    "plugin:@typescript-eslint/recommended",
+    'eslint:recommended',
+    'plugin:n/recommended',
+    'plugin:unicorn/recommended',
+    'plugin:prettier/recommended',
+    'plugin:yml/recommended',
+    'plugin:@typescript-eslint/recommended',
 ), {
     plugins: {
         prettier,
-        "@stylistic": stylistic,
+        '@stylistic': stylistic,
         unicorn,
-        "@typescript-eslint": typescriptEslint,
+        '@typescript-eslint': typescriptEslint,
     },
 
     languageOptions: {
@@ -51,91 +51,98 @@ export default [{
         },
 
         parser: tsParser,
-        ecmaVersion: "latest",
-        sourceType: "module",
+        ecmaVersion: 'latest',
+        sourceType: 'module',
     },
 
     rules: {
-        "array-callback-return": ["error", {
+        // possible problems
+        'array-callback-return': ['error', {
             allowImplicit: true,
         }],
 
-        "no-await-in-loop": 2,
-        "no-control-regex": 0,
-        "no-duplicate-imports": 2,
-        "no-prototype-builtins": 0,
-        "arrow-body-style": 2,
-        "block-scoped-var": 2,
-        curly: 2,
-        "dot-notation": 2,
-        eqeqeq: 2,
+        'no-await-in-loop': 'error',
+        'no-control-regex': 'off',
+        'no-duplicate-imports': 'error',
+        'no-prototype-builtins': 'off',
 
-        "default-case": ["warn", {
-            commentPattern: "^no default$",
+        // suggestions
+        'arrow-body-style': 'error',
+        'block-scoped-var': 'error',
+        curly: 'error',
+        'dot-notation': 'error',
+        eqeqeq: 'error',
+
+        'default-case': ['warn', {
+            commentPattern: '^no default$',
         }],
 
-        "default-case-last": 2,
-        "no-console": 2,
-        "no-eval": 2,
-        "no-extend-native": 2,
-        "no-extra-label": 2,
+        'default-case-last': 'error',
+        'no-console': 'error',
+        'no-eval': 'error',
+        'no-extend-native': 'error',
+        'no-extra-label': 'error',
 
-        "no-implicit-coercion": ["error", {
+        'no-implicit-coercion': ['error', {
             boolean: false,
             number: false,
             string: false,
             disallowTemplateShorthand: true,
         }],
 
-        "no-implicit-globals": 2,
-        "no-labels": 2,
-        "no-multi-str": 2,
-        "no-new-func": 2,
-        "no-restricted-imports": 2,
-        "no-unneeded-ternary": 2,
-        "no-useless-computed-key": 2,
-        "no-useless-concat": 1,
-        "no-useless-rename": 2,
-        "no-var": 2,
-        "object-shorthand": 2,
-        "prefer-arrow-callback": 2,
-        "prefer-const": 2,
-        "prefer-object-has-own": 2,
-        "no-useless-escape": 1,
+        'no-implicit-globals': 'error',
+        'no-labels': 'error',
+        'no-multi-str': 'error',
+        'no-new-func': 'error',
+        'no-restricted-imports': 'error',
+        'no-unneeded-ternary': 'error',
+        'no-useless-computed-key': 'error',
+        'no-useless-concat': 'warn',
+        'no-useless-rename': 'error',
+        'no-var': 'error',
+        'object-shorthand': 'error',
+        'prefer-arrow-callback': 'error',
+        'prefer-const': 'error',
+        'prefer-object-has-own': 'error',
+        'no-useless-escape': 'warn',
 
-        "prefer-regex-literals": ["error", {
+        'prefer-regex-literals': ['error', {
             disallowRedundantWrapping: true,
         }],
 
-        "require-await": 2,
-        "@typescript-eslint/ban-ts-comment": 0,
-        "@typescript-eslint/no-explicit-any": 0,
-        "@typescript-eslint/no-var-requires": 0,
-        "unicorn/consistent-destructuring": 1,
-        "unicorn/consistent-function-scoping": 1,
-        "unicorn/explicit-length-check": 0,
+        'require-await': 'error',
 
-        "unicorn/filename-case": ["error", {
-            case: "kebabCase",
+        // typescript
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
+
+        // unicorn
+        'unicorn/consistent-destructuring': 'warn',
+        'unicorn/consistent-function-scoping': 'warn',
+        'unicorn/explicit-length-check': 'off',
+
+        'unicorn/filename-case': ['error', {
+            case: 'kebabCase',
             ignore: [String.raw`.*\.(yaml|yml)$`, String.raw`RequestInProgress\.js$`],
         }],
 
-        "unicorn/new-for-builtins": 0,
-        "unicorn/no-array-callback-reference": 1,
-        "unicorn/no-array-reduce": 1,
-        "unicorn/no-await-expression-member": 0,
-        "unicorn/no-empty-file": 1,
-        "unicorn/no-hex-escape": 1,
-        "unicorn/no-null": 0,
-        "unicorn/no-object-as-default-parameter": 1,
-        "unicorn/no-process-exit": 0,
-        "unicorn/no-useless-switch-case": 0,
+        'unicorn/new-for-builtins': 'off',
+        'unicorn/no-array-callback-reference': 'warn',
+        'unicorn/no-array-reduce': 'warn',
+        'unicorn/no-await-expression-member': 'off',
+        'unicorn/no-empty-file': 'warn',
+        'unicorn/no-hex-escape': 'warn',
+        'unicorn/no-null': 'off',
+        'unicorn/no-object-as-default-parameter': 'warn',
+        'unicorn/no-process-exit': 'off',
+        'unicorn/no-useless-switch-case': 'off',
 
-        "unicorn/no-useless-undefined": ["error", {
+        'unicorn/no-useless-undefined': ['error', {
             checkArguments: false,
         }],
 
-        "unicorn/numeric-separators-style": ["warn", {
+        'unicorn/numeric-separators-style': ['warn', {
             onlyIfContainsSeparator: false,
 
             number: {
@@ -159,85 +166,89 @@ export default [{
             },
         }],
 
-        "unicorn/prefer-code-point": 1,
-        "unicorn/prefer-logical-operator-over-ternary": 1,
-        "unicorn/prefer-module": 0,
-        "unicorn/prefer-node-protocol": 0,
+        'unicorn/prefer-code-point': 'warn',
+        'unicorn/prefer-logical-operator-over-ternary': 'warn',
+        'unicorn/prefer-module': 'off',
+        'unicorn/prefer-node-protocol': 'off',
 
-        "unicorn/prefer-number-properties": ["warn", {
+        'unicorn/prefer-number-properties': ['warn', {
             checkInfinity: false,
         }],
 
-        "unicorn/prefer-object-from-entries": 1,
-        "unicorn/prefer-regexp-test": 1,
-        "unicorn/prefer-spread": 1,
-        "unicorn/prefer-string-replace-all": 1,
-        "unicorn/prefer-string-slice": 0,
+        'unicorn/prefer-object-from-entries': 'warn',
+        'unicorn/prefer-regexp-test': 'warn',
+        'unicorn/prefer-spread': 'warn',
+        'unicorn/prefer-string-replace-all': 'warn',
+        'unicorn/prefer-string-slice': 'off',
 
-        "unicorn/prefer-switch": ["warn", {
-            emptyDefaultCase: "do-nothing-comment",
+        'unicorn/prefer-switch': ['warn', {
+            emptyDefaultCase: 'do-nothing-comment',
         }],
 
-        "unicorn/prefer-top-level-await": 0,
-        "unicorn/prevent-abbreviations": 0,
-        "unicorn/switch-case-braces": ["error", "avoid"],
-        "unicorn/text-encoding-identifier-case": 0,
-        "@stylistic/arrow-parens": 2,
-        "@stylistic/arrow-spacing": 2,
-        "@stylistic/comma-spacing": 2,
-        "@stylistic/comma-style": 2,
-        "@stylistic/function-call-spacing": 2,
-        "@stylistic/keyword-spacing": 2,
-        "@stylistic/linebreak-style": 2,
+        'unicorn/prefer-top-level-await': 'off',
+        'unicorn/prevent-abbreviations': 'off',
+        'unicorn/switch-case-braces': ['error', 'avoid'],
+        'unicorn/text-encoding-identifier-case': 'off',
 
-        "@stylistic/lines-around-comment": ["error", {
+        // formatting rules
+        '@stylistic/arrow-parens': 'error',
+        '@stylistic/arrow-spacing': 'error',
+        '@stylistic/comma-spacing': 'error',
+        '@stylistic/comma-style': 'error',
+        '@stylistic/function-call-spacing': 'error',
+        '@stylistic/keyword-spacing': 'error',
+        '@stylistic/linebreak-style': 'error',
+
+        '@stylistic/lines-around-comment': ['error', {
             beforeBlockComment: false,
         }],
 
-        "@stylistic/no-multiple-empty-lines": 2,
-        "@stylistic/no-trailing-spaces": 2,
-        "@stylistic/rest-spread-spacing": 2,
-        "@stylistic/semi": 2,
-        "@stylistic/space-before-blocks": 2,
-        "@stylistic/space-in-parens": 2,
-        "@stylistic/space-infix-ops": 2,
-        "@stylistic/space-unary-ops": 2,
-        "@stylistic/spaced-comment": 2,
+        '@stylistic/no-multiple-empty-lines': 'error',
+        '@stylistic/no-trailing-spaces': 'error',
+        '@stylistic/rest-spread-spacing': 'error',
+        '@stylistic/semi': 'error',
+        '@stylistic/space-before-blocks': 'error',
+        '@stylistic/space-in-parens': 'error',
+        '@stylistic/space-infix-ops': 'error',
+        '@stylistic/space-unary-ops': 'error',
+        '@stylistic/spaced-comment': 'error',
 
-        "n/no-extraneous-require": ["error", {
+        // https://github.com/eslint-community/eslint-plugin-n
+        // node specific rules
+        'n/no-extraneous-require': ['error', {
             allowModules: [
-                "puppeteer-extra-plugin-user-preferences",
-                "puppeteer-extra-plugin-user-data-dir",
+                'puppeteer-extra-plugin-user-preferences',
+                'puppeteer-extra-plugin-user-data-dir',
             ],
         }],
 
-        "n/no-deprecated-api": 1,
-        "n/no-missing-import": 0,
-        "n/no-missing-require": 0,
-        "n/no-process-exit": 0,
-        "n/no-unpublished-import": 0,
+        'n/no-deprecated-api': 'warn',
+        'n/no-missing-import': 'off',
+        'n/no-missing-require': 'off',
+        'n/no-process-exit': 'off',
+        'n/no-unpublished-import': 'off',
 
-        "n/no-unpublished-require": ["error", {
-            allowModules: ["tosource"],
+        'n/no-unpublished-require': ['error', {
+            allowModules: ['tosource'],
         }],
 
-        "prettier/prettier": 0,
+        'prettier/prettier': 'off',
 
-        "yml/quotes": ["error", {
-            prefer: "single",
+        'yml/quotes': ['error', {
+            prefer: 'single',
         }],
 
-        "yml/no-empty-mapping-value": 0,
+        'yml/no-empty-mapping-value': 'off',
     },
 }, {
-    files: ["**/*.yaml", "**/*.yml"],
+    files: ['**/*.yaml', '**/*.yml'],
 
     languageOptions: {
         parser,
     },
 
     rules: {
-        "lines-around-comment": ["error", {
+        'lines-around-comment': ['error', {
             beforeBlockComment: false,
         }],
     },
