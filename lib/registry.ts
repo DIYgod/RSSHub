@@ -4,9 +4,11 @@ import { Hono, type Handler } from 'hono';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { serveStatic } from '@hono/node-server/serve-static';
+import { config } from '@/config';
 
 import index from '@/routes/index';
 import robotstxt from '@/routes/robots.txt';
+import metrics from '@/routes/metrics';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -99,6 +101,10 @@ for (const namespace in namespaces) {
 
 app.get('/', index);
 app.get('/robots.txt', robotstxt);
+if (config.debugInfo) {
+    // Only enable tracing in debug mode
+    app.get('/metrics', metrics);
+}
 app.use(
     '/*',
     serveStatic({
