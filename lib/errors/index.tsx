@@ -7,6 +7,8 @@ import Error from '@/views/error';
 
 import NotFoundError from './types/not-found';
 
+import { requestMetric } from '@/utils/otel';
+
 export const errorHandler: ErrorHandler = (error, ctx) => {
     const requestPath = ctx.req.path;
     const matchedRoute = ctx.req.routePath;
@@ -61,6 +63,7 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     const message = `${error.name}: ${errorMessage}`;
 
     logger.error(`Error in ${requestPath}: ${message}`);
+    requestMetric.error({ path: requestPath, method: ctx.req.method, status: ctx.res.status });
 
     return config.isPackage
         ? ctx.json({
