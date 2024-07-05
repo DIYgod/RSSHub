@@ -66033,6 +66033,47 @@
     "name": "喜马拉雅",
     "url": "ximalaya.com"
   },
+  "xinhuanet": {
+    "routes": {
+      "/app": {
+        "path": "/app",
+        "name": "客户端",
+        "url": "app.xinhuanet.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/xinhuanet/app",
+        "description": "",
+        "categories": [
+          "traditional-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "app.xinhuanet.com"
+            ],
+            "target": "/app"
+          }
+        ],
+        "location": "app.ts"
+      }
+    },
+    "name": "新华网",
+    "url": "xinhuanet.com",
+    "categories": [
+      "traditional-media"
+    ],
+    "description": ""
+  },
   "xinpianchang": {
     "routes": {
       "/discover/:params?": {
