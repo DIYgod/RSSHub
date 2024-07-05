@@ -4,7 +4,6 @@ import unicorn from "eslint-plugin-unicorn";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
-// eslint-disable-next-line n/no-extraneous-import
 import parser from "yaml-eslint-parser";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
