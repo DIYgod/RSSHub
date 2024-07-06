@@ -42,8 +42,8 @@ async function handler(ctx) {
 
     const genres = currentUrlParams.getAll('genre').join(',').toLowerCase();
     const releaseTypes = currentUrlParams.getAll('releaseType').join(',');
-    const releaseYearMin = currentUrlParams.getAll('releaseYearMin')[0];
-    const releaseYearMax = currentUrlParams.getAll('releaseYearMax')[0];
+    const releaseYearMin = currentUrlParams.get('releaseYearMin');
+    const releaseYearMax = currentUrlParams.get('releaseYearMax');
 
     if (genres) {
         searchParams.genres = genres;
