@@ -60,7 +60,7 @@ async function handler(ctx) {
     if (releaseYearMax) {
         searchParams.releaseYearMax = releaseYearMax;
     }
- 
+
     const platforms = currentUrlParams.getAll('platform');
     const networks = currentUrlParams.getAll('network');
 
