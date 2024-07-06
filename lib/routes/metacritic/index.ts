@@ -42,6 +42,8 @@ async function handler(ctx) {
 
     const genres = currentUrlParams.getAll('genre').join(',').toLowerCase();
     const releaseTypes = currentUrlParams.getAll('releaseType').join(',');
+    const releaseYearMin = currentUrlParams.get('releaseYearMin');
+    const releaseYearMax = currentUrlParams.get('releaseYearMax');
 
     if (genres) {
         searchParams.genres = genres;
@@ -49,6 +51,14 @@ async function handler(ctx) {
 
     if (releaseTypes) {
         searchParams.releaseType = releaseTypes;
+    }
+
+    if (releaseYearMin) {
+        searchParams.releaseYearMin = releaseYearMin;
+    }
+
+    if (releaseYearMax) {
+        searchParams.releaseYearMax = releaseYearMax;
     }
 
     const platforms = currentUrlParams.getAll('platform');
