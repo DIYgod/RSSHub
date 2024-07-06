@@ -42,7 +42,9 @@ async function handler(ctx) {
 
     const genres = currentUrlParams.getAll('genre').join(',').toLowerCase();
     const releaseTypes = currentUrlParams.getAll('releaseType').join(',');
-
+    const releaseYearMin = currentUrlParams.getAll('releaseYearMin')[0];
+    const releaseYearMax = currentUrlParams.getAll('releaseYearMax')[0];
+    
     if (genres) {
         searchParams.genres = genres;
     }
@@ -50,7 +52,15 @@ async function handler(ctx) {
     if (releaseTypes) {
         searchParams.releaseType = releaseTypes;
     }
+    
+    if (releaseYearMin) {
+        searchParams.releaseYearMin = releaseYearMin;
+    }
 
+    if (releaseYearMax) {
+        searchParams.releaseYearMax = releaseYearMax;
+    }
+    
     const platforms = currentUrlParams.getAll('platform');
     const networks = currentUrlParams.getAll('network');
 
