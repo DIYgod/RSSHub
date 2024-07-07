@@ -109,7 +109,7 @@ const parseItem = (item, tryGet) =>
             ele = $(ele);
             if (ele.data('type') === 'youtube') {
                 ele.replaceWith(
-                    art(path.join(__dirname, '../../templates/youtube.art'), {
+                    art(path.join(__dirname, '../templates/youtube.art'), {
                         id: ele.find('blockquote').data('src').split('/').pop()?.split('?')?.[0],
                     })
                 );
