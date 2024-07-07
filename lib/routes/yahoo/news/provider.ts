@@ -25,18 +25,18 @@ export const route: Route = {
     maintainers: ['TonyRL', 'williamgateszhao'],
     handler,
     description: `
-    \`Region\`
+\`Region\`
 
-    | 香港 | 台灣 |
-    | ---- | ---- |
-    | hk   | tw   |
+| 香港 | 台灣 |
+| ---- | ---- |
+| hk   | tw   |
 
-    \`ProviderId\`
+\`ProviderId\`
 
-    除了可以通过路由"新聞來源列表"获得外, 也可通过 hk.news.yahoo.com/archive 和 tw.news.yahoo.com/archive 选择"新闻来源"后通过页面 Url 来获得。
+除了可以通过路由"新聞來源列表"获得外, 也可通过 hk.news.yahoo.com/archive 和 tw.news.yahoo.com/archive 选择"新闻来源"后通过页面 Url 来获得。
 
-    例如 hk.news.yahoo.com/yahoo_movies_hk_660--所有分類/archive, \`yahoo_movies_hk_660\` 就是 ProviderId 。
-    `,
+例如 hk.news.yahoo.com/yahoo_movies_hk_660--所有分類/archive, \`yahoo_movies_hk_660\` 就是 ProviderId 。
+`,
 };
 
 async function handler(ctx) {
