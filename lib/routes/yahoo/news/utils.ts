@@ -86,31 +86,32 @@ const parseItem = (item, tryGet) =>
 
         body.find('noscript').remove();
         // remove padding
-        body.find('.caas-figure-with-pb, .caas-img-container').each((_, ele: any) => {
-            ele = $(ele);
-            ele.removeAttr('style');
+        body.find('.caas-figure-with-pb, .caas-img-container').each((_, ele) => {
+            const $ele = $(ele);
+            $ele.removeAttr('style');
         });
 
-        body.find('img').each((_, ele: any) => {
-            ele = $(ele);
-            let dataSrc = ele.data('src');
+        body.find('img').each((_, ele) => {
+            const $ele = $(ele);
+            let dataSrc = $ele.data('src') as string;
 
             if (dataSrc) {
                 const match = dataSrc.match(/.*--\/.*--\/(.*)/);
                 if (match?.[1]) {
                     dataSrc = match?.[1];
                 }
-                ele.attr('src', dataSrc);
-                ele.removeAttr('data-src');
+                $ele.attr('src', dataSrc);
+                $ele.removeAttr('data-src');
             }
         });
         // fix blockquote iframe
-        body.find('.caas-iframe').each((_, ele: any) => {
-            ele = $(ele);
-            if (ele.data('type') === 'youtube') {
-                ele.replaceWith(
+        body.find('.caas-iframe').each((_, ele) => {
+            const $ele = $(ele);
+            if ($ele.data('type') === 'youtube') {
+                const blockquoteSrc = $ele.find('blockquote').data('src') as string;
+                $ele.replaceWith(
                     art(path.join(__dirname, '../templates/youtube.art'), {
-                        id: ele.find('blockquote').data('src').split('/').pop()?.split('?')?.[0],
+                        id: blockquoteSrc.split('/').pop()?.split('?')?.[0],
                     })
                 );
             }
