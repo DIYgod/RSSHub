@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
 import { art } from '@/utils/render';
 
-const getArchive = async (region, limit, tag, providerId) => {
+const getArchive = async (region, limit, tag, providerId?) => {
     const { data: response } = await got(
         `https://${region}.news.yahoo.com/_td-news/api/resource/NCPListService;api=archive;ncpParams=${encodeURIComponent(
             JSON.stringify({
@@ -61,7 +61,7 @@ const getStores = (region, tryGet) =>
         const appData = JSON.parse(
             $('script:contains("root.App.main")')
                 .text()
-                .match(/root.App.main\s+=\s+({.+});/)[1]
+                .match(/root.App.main\s+=\s+({.+});/)?.[1] as string
         );
 
         return appData.context.dispatcher.stores;
@@ -81,16 +81,17 @@ const parseItem = (item, tryGet) =>
         const $ = load(response);
 
         const ldJson = JSON.parse($('script[type="application/ld+json"]').first().text());
+        const author = `${$('span.caas-author-byline-collapse').text()} @${$('span.caas-attr-provider').text()}`;
         const body = $('.caas-body');
 
         body.find('noscript').remove();
         // remove padding
-        body.find('.caas-figure-with-pb, .caas-img-container').each((_, ele) => {
+        body.find('.caas-figure-with-pb, .caas-img-container').each((_, ele: any) => {
             ele = $(ele);
             ele.removeAttr('style');
         });
 
-        body.find('img').each((_, ele) => {
+        body.find('img').each((_, ele: any) => {
             ele = $(ele);
             let dataSrc = ele.data('src');
 
@@ -104,7 +105,7 @@ const parseItem = (item, tryGet) =>
             }
         });
         // fix blockquote iframe
-        body.find('.caas-iframe').each((_, ele) => {
+        body.find('.caas-iframe').each((_, ele: any) => {
             ele = $(ele);
             if (ele.data('type') === 'youtube') {
                 ele.replaceWith(
@@ -116,6 +117,7 @@ const parseItem = (item, tryGet) =>
         });
 
         item.description = body.html();
+        item.author = author;
         item.category = ldJson.keywords;
         item.updated = parseDate(ldJson.dateModified);
 
