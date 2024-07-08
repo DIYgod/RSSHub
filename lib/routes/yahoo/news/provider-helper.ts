@@ -4,10 +4,10 @@ import { getProviderList } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
-    path: '/news/providers/:region',
+    path: '/news/providers/:region/list',
     categories: ['new-media'],
-    example: '/yahoo/news/providers/tw',
-    parameters: { region: '地區，見上表' },
+    example: '/yahoo/news/providers/tw/list',
+    parameters: { region: '地区, 同路由"新闻来源"中的支持地区, 即 hk 或 tw' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -16,8 +16,13 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['hk.news.yahoo.com/', 'tw.news.yahoo.com/'],
+        },
+    ],
     name: '新聞來源列表',
-    maintainers: ['TonyRL'],
+    maintainers: ['TonyRL', 'williamgateszhao'],
     handler,
 };
 
