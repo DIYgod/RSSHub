@@ -59,7 +59,7 @@
         "@opentelemetry/resources": "1.22.0",
         "@opentelemetry/sdk-metrics": "1.22.0",
         "@opentelemetry/sdk-trace-base": "1.22.0",
-        "@opentelemetry/semantic-conventions": "1.22.0",
+        "@opentelemetry/semantic-conventions": "1.25.1",
         "@postlight/parser": "2.2.3",
         "@scalar/hono-api-reference": "0.5.97",
         "@sentry/node": "7.116.0",
