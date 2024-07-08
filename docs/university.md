@@ -1783,11 +1783,11 @@ pageClass: routes
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/gxmu/yjs/zsgz-zsgg" path="/gxmu/yjs/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
+<Route author="yanbot-team" example="/gxmu/yjs/zsgz" path="/gxmu/yjs/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
 
-| 招生工作  |
-| --------- |
-| zsgz-zsgg |
+| 招生工作 |
+| -------- |
+| zsgz     |
 
 </Route>
 
