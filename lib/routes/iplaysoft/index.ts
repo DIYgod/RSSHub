@@ -6,9 +6,9 @@ import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
-    path: '/index',
+    path: '/',
     categories: ['new-media'],
-    example: '/iplaysoft/index',
+    example: '/iplaysoft',
     parameters: {},
     features: {
         requireConfig: false,
@@ -20,7 +20,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.iplaysoft.com/'],
+            source: ['www.iplaysoft.com'],
         },
     ],
     name: '全部文章',
@@ -30,7 +30,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const feed = await parser.parseURL(`https://www.iplaysoft.com/feed/atom`);
-    const filteredItems = feed.items.filter((item) => item?.link && item?.pubDate && new URL(item.link).hostname.match(/.*\.iplaysoft\.com$/)) as DataItem[];
+    const filteredItems = feed.items
+        .filter((item) => item?.link && item?.pubDate && new URL(item.link).hostname.match(/.*\.iplaysoft\.com$/))
+        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20) as DataItem[];
+
     const items: DataItem[] = await Promise.all(
         filteredItems.map(
             (item) =>
@@ -55,10 +58,6 @@ async function handler(ctx) {
                 }) as Promise<DataItem>
         )
     );
-
-    ctx.set('json', {
-        items,
-    });
 
     return {
         title: '异次元软件世界',
