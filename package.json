@@ -61,7 +61,7 @@
         "@opentelemetry/sdk-trace-base": "1.22.0",
         "@opentelemetry/semantic-conventions": "1.22.0",
         "@postlight/parser": "2.2.3",
-        "@scalar/hono-api-reference": "0.5.94",
+        "@scalar/hono-api-reference": "0.5.97",
         "@sentry/node": "7.116.0",
         "@tonyrl/rand-user-agent": "2.0.70",
         "aes-js": "3.1.2",
