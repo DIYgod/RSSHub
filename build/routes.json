@@ -31856,6 +31856,40 @@
     ],
     "description": ""
   },
+  "iplaysoft": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/iplaysoft",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.iplaysoft.com"
+            ]
+          }
+        ],
+        "name": "全部文章",
+        "maintainers": [
+          "williamgateszhao"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "异次元软件世界",
+    "url": "www.iplaysoft.com"
+  },
   "ippa": {
     "routes": {
       "/": {

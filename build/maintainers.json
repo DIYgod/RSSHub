@@ -3136,6 +3136,9 @@
   "/investor/:category{.+}?": [
     "nczitzk"
   ],
+  "/iplaysoft/": [
+    "williamgateszhao"
+  ],
   "/ippa/": [
     "cnkmmk"
   ],

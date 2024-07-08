@@ -8822,6 +8822,19 @@
       }
     ]
   },
+  "iplaysoft.com": {
+    "_name": "异次元软件世界",
+    "www": [
+      {
+        "title": "全部文章",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/"
+        ],
+        "target": "/iplaysoft/"
+      }
+    ]
+  },
   "ippa.top": {
     "_name": "子方有料",
     ".": [
