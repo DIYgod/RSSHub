@@ -36,8 +36,8 @@ importers:
         specifier: 1.22.0
         version: 1.22.0(@opentelemetry/api@1.8.0)
       '@opentelemetry/semantic-conventions':
-        specifier: 1.22.0
-        version: 1.22.0
+        specifier: 1.25.1
+        version: 1.25.1
       '@postlight/parser':
         specifier: 2.2.3
         version: 2.2.3
@@ -1537,6 +1537,10 @@ packages:
 
   '@opentelemetry/semantic-conventions@1.22.0':
     resolution: {integrity: sha512-CAOgFOKLybd02uj/GhCdEeeBjOS0yeoDeo/CA7ASBSmenpZHAKGB3iDm/rv3BQLcabb/OprDEsSQ1y0P8A7Siw==}
+    engines: {node: '>=14'}
+
+  '@opentelemetry/semantic-conventions@1.25.1':
+    resolution: {integrity: sha512-ZDjMJJQRlyk8A1KZFCc+bCbsyrn1wTwdNt56F7twdfUfnHUZUq77/WfONCj8p72NZOyP7pNTdUWSTYC3GTbuuQ==}
     engines: {node: '>=14'}
 
   '@otplib/core@12.0.1':
@@ -8052,6 +8056,8 @@ snapshots:
       '@opentelemetry/semantic-conventions': 1.22.0
 
   '@opentelemetry/semantic-conventions@1.22.0': {}
+
+  '@opentelemetry/semantic-conventions@1.25.1': {}
 
   '@otplib/core@12.0.1': {}
 
