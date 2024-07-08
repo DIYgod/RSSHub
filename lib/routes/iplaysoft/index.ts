@@ -7,7 +7,7 @@ import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/',
-    categories: ['new-media'],
+    categories: ['program-update'],
     example: '/iplaysoft',
     parameters: {},
     features: {
@@ -29,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const feed = await parser.parseURL(`https://www.iplaysoft.com/feed/atom`);
+    const feed = await parser.parseURL('https://www.iplaysoft.com/feed/atom');
     const filteredItems = feed.items
         .filter((item) => item?.link && item?.pubDate && new URL(item.link).hostname.match(/.*\.iplaysoft\.com$/))
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20) as DataItem[];
@@ -61,7 +61,7 @@ async function handler(ctx) {
 
     return {
         title: '异次元软件世界',
-        link: 'www.iplaysoft.com',
+        link: 'https://www.iplaysoft.com',
         language: 'zh-CN',
         item: items,
     };
