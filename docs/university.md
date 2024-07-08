@@ -964,11 +964,11 @@ pageClass: routes
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/cqupt/yjs/1180" path="/cqupt/yjs/:type" :paramsDesc="['分类，见下表, 未列出的type可在对应页 URL 中找到']" radar="1">
+<Route author="yanbot-team" example="/cqupt/yjs/zsxx-sszs" path="/cqupt/yjs/:type" :paramsDesc="['分类，见下表, 未列出的type可在对应页 URL 中找到']" radar="1">
 
-| 硕士招生 |
-| -------- |
-| 1180     |
+| 硕士招生  |
+| --------- |
+| zsxx-sszs |
 
 </Route>
 
