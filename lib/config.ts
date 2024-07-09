@@ -232,6 +232,9 @@ export type Config = {
     qingting: {
         id?: string;
     };
+    readwise: {
+        accessToken?: string;
+    };
     saraba1st: {
         cookie?: string;
     };
@@ -594,6 +597,9 @@ const calculateValue = () => {
         },
         qingting: {
             id: envs.QINGTING_ID,
+        },
+        readwise: {
+            accessToken: envs.READWISE_ACCESS_TOKEN,
         },
         saraba1st: {
             cookie: envs.SARABA1ST_COOKIE,
