@@ -16503,6 +16503,19 @@
       }
     ]
   },
+  "thoughtworks.com": {
+    "_name": "ThoughtWorks",
+    "www": [
+      {
+        "title": "Inside Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/zh-cn/insights/blog"
+        ],
+        "target": "/thoughtworks/blog"
+      }
+    ]
+  },
   "thwiki.cc": {
     "_name": "THBWiki",
     ".": [

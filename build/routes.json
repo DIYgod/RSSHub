@@ -59231,6 +59231,31 @@
     "name": "ThoughtCo",
     "url": "thoughtco.com"
   },
+  "thoughtworks": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/thoughtworks/blog",
+        "radar": [
+          {
+            "source": [
+              "www.thoughtworks.com/zh-cn/insights/blog"
+            ]
+          }
+        ],
+        "name": "Inside Blog",
+        "maintainers": [
+          "Hyvi"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "ThoughtWorks",
+    "url": "www.thoughtworks.com/zh-cn/insights/blog"
+  },
   "threads": {
     "routes": {
       "/:user/:routeParams?": {

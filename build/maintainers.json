@@ -5851,6 +5851,9 @@
   "/thoughtco/:category?": [
     "nczitzk"
   ],
+  "/thoughtworks/blog": [
+    "Hyvi"
+  ],
   "/threads/:user/:routeParams?": [
     "ninboy"
   ],
