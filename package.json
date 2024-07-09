@@ -58,7 +58,7 @@
         "@opentelemetry/exporter-trace-otlp-http": "0.52.1",
         "@opentelemetry/resources": "1.25.1",
         "@opentelemetry/sdk-metrics": "1.22.0",
-        "@opentelemetry/sdk-trace-base": "1.22.0",
+        "@opentelemetry/sdk-trace-base": "1.25.1",
         "@opentelemetry/semantic-conventions": "1.25.1",
         "@postlight/parser": "2.2.3",
         "@scalar/hono-api-reference": "0.5.97",
