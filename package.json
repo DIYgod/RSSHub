@@ -163,7 +163,7 @@
         "@types/title": "3.4.3",
         "@types/tough-cookie": "4.0.5",
         "@types/uuid": "10.0.0",
-        "@typescript-eslint/eslint-plugin": "7.15.0",
+        "@typescript-eslint/eslint-plugin": "7.16.0",
         "@typescript-eslint/parser": "7.16.0",
         "@vercel/nft": "0.27.2",
         "@vitest/coverage-v8": "1.6.0",
