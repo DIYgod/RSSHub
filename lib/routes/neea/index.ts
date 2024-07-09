@@ -5,57 +5,41 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-function loadContent(link) {
-    return cache.tryGet(link, async () => {
-        // 开始加载页面
-        const response = await got.get(link);
-        const $ = load(response.data);
-        // 获取标题
-        const title = $('#Content1 > div > ul > li > h1').text();
-        // 获取正文内容
-        const introduce = $('#ReportIDtext').html();
-
-        return {
-            title,
-            description: introduce,
-            link,
-        };
-    });
-}
-
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const host = `https://${type}.neea.edu.cn${typeDic[type].url}`;
-    const response = await got({
-        method: 'get',
-        url: host,
-    });
-    const data = response.data;
-
-    const $ = load(data);
+    const response = await got.get(host);
+    const $ = load(response.data);
     const list = $(`#ReportIDname > a`).parent().parent().get();
-
-    const process = await Promise.all(
+    const items = await Promise.all(
         list.map(async (item) => {
-            const ReportIDname = $(item).find('#ReportIDname > a');
-            const ReportIDIssueTime = $(item).find('#ReportIDIssueTime');
-            const itemUrl = `https://${type}.neea.edu.cn` + $(ReportIDname).attr('href');
-            const time = ReportIDIssueTime.text();
-            const single = {
-                title: $(ReportIDname).text(),
-                link: itemUrl,
-                guid: itemUrl,
-                pubDate: timezone(parseDate(time), +8),
+            const reportIDname = $(item).find('#ReportIDname > a');
+            const reportIDIssueTime = $(item).find('#ReportIDIssueTime');
+            const title = $(reportIDname).text();
+            const link = `https://${type}.neea.edu.cn` + $(reportIDname).attr('href');
+            const date = reportIDIssueTime.text();
+            const data = await cache.get(link);
+            if (data) {
+                return JSON.parse(data);
+            }
+            const response = await got.get(link);
+            const $$ = load(response.data);
+            const description = $$('#ReportIDtext').html();
+            const ret = {
+                title,
+                link,
+                description,
+                pubDate: timezone(parseDate(date), +8),
             };
-            const other = await loadContent(String(itemUrl));
-            return Object.assign({}, single, other);
+            cache.set(link, ret);
+            return ret;
         })
     );
+
     return {
         title: `${typeDic[String(type)].title}动态`,
         link: host,
-        description: `${typeDic[String(type)].title}动态 `,
-        item: process,
+        item: items,
     };
 }
 

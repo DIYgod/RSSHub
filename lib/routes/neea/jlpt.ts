@@ -25,42 +25,34 @@ export const route: Route = {
     handler,
 };
 
-function loadContent(link: string) {
-    return cache.tryGet(link, async () => {
-        const response = await got.get(link);
-        const $ = load(response.data);
-        const description = $('.dvContent').html();
-        return {
-            description,
-            link,
-        };
-    });
-}
-
 async function handler() {
     const baseUrl = 'https://news.neea.edu.cn/JLPT/1';
     const newsUrl = `${baseUrl}/newslist.htm`;
-
     const response = await got.get(newsUrl);
-
     const $ = load(response.data);
-
     const list = $('a').get();
-
     const items = await Promise.all(
         list.map(async (item) => {
             const title = $(item).text();
             const link = `${baseUrl}/${$(item).attr('href')}`;
-            const time = $(item)
+            const date = $(item)
                 .text()
                 .match(/(\d{4}-\d{2}-\d{2})/);
-            const chunk = {
+            const data = await cache.get(link);
+            if (data) {
+                return JSON.parse(data);
+            }
+            const response = await got.get(link);
+            const $$ = load(response.data);
+            const description = $$('.dvContent').html();
+            const ret = {
                 title,
                 link,
-                pubDate: time ? timezone(parseDate(time[1]), +8) : '',
+                pubDate: date ? timezone(parseDate(date[1]), +8) : '',
+                description,
             };
-            const other = await loadContent(link);
-            return Object.assign({}, chunk, other);
+            cache.set(link, ret);
+            return ret;
         })
     );
 
