@@ -17,6 +17,10 @@ export const route: Route = {
                 name: 'XSIJISHE_COOKIE',
                 description: '',
             },
+            {
+                name: 'XSIJISHE_USER_AGENT',
+                description: '',
+            },
         ],
         requirePuppeteer: false,
         antiCrawler: false,
@@ -39,6 +43,7 @@ async function handler(ctx) {
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
         Cookie: config.xsijishe.cookie,
+        'User-Agent': config.xsijishe.userAgent,
     };
     const resp = await got(url, {
         headers,

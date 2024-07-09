@@ -289,6 +289,7 @@ export type Config = {
     };
     xsijishe: {
         cookie?: string;
+        userAgent?: string;
     };
     xueqiu: {
         cookies?: string;
@@ -656,6 +657,7 @@ const calculateValue = () => {
         },
         xsijishe: {
             cookie: envs.XSIJISHE_COOKIE,
+            user_agent: envs.XSIJISHE_USER_AGENT,
         },
         xueqiu: {
             cookies: envs.XUEQIU_COOKIES,
