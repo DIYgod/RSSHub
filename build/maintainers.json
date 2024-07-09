@@ -4946,6 +4946,9 @@
     "nczitzk",
     "Fatpandac"
   ],
+  "/readwise/list/:routeParams?": [
+    "xbot"
+  ],
   "/remnote/changelog": [
     "TonyRL",
     "amakerlife"

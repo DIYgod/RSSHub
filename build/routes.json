@@ -50028,6 +50028,50 @@
     "name": "Readhub",
     "url": "readhub.cn"
   },
+  "readwise": {
+    "routes": {
+      "/list/:routeParams?": {
+        "path": "/list/:routeParams?",
+        "categories": [
+          "reading"
+        ],
+        "example": "/readwise/list/location=new&category=article",
+        "parameters": {
+          "routeParams": "Parameter combinations, see the description above."
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "READWISE_ACCESS_TOKEN",
+              "optional": false,
+              "description": "Visit `https://readwise.io/access_token` to get your access token."
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "read.readwise.io"
+            ],
+            "target": "/list"
+          }
+        ],
+        "name": "Reader Document List",
+        "maintainers": [
+          "xbot"
+        ],
+        "description": "Specify options (in the format of query string) in parameter `routeParams` to filter documents.\n\n| Parameter                  | Description                                                                            |   Values                                                                                    |  Default                             |\n| -------------------------- | -------------------------------------------------------------------------------------- |   ----------------------------------------------------------------------------------------- |  ----------------------------------- |\n| `location`               | The document's location.                                                               |   `new`/`later`/`shortlist`/`archive`/`feed`                                      |                                      |\n| `category`               | The document's category.                                                               |   `article`/`email`/`rss`/`highlight`/`note`/`pdf`/`epub`/`tweet`/`video` |                                      |\n| `updatedAfter`           | Fetch only documents updated after this date.                                          |   string (formatted as ISO 8601 date)                                                       ||\n| `tag`                    | The document's tag, can be specified once or multiple times.                           |||\n| `tagStrategy`            | If multiple tags are specified, should the documents match all of them or any of them. |   `any`/`all`                                                                           |  `any`                             |\n\nCustomise parameter values to fetch specific documents, for example:\n\n```\nhttps://rsshub.app/readwise/list/location=new&category=article\n```\n\nfetches articles in the Inbox.\n\n```\nhttps://rsshub.app/readwise/list/category=article&tag=shortlist&tag=AI&tagStrategy=all\n```\n\nfetches articles tagged both by `shortlist` and `AI`. ",
+        "location": "list.ts"
+      }
+    },
+    "name": "Readwise",
+    "url": "readwise.io"
+  },
   "remnote": {
     "routes": {
       "/changelog": {

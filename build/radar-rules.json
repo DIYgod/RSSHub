@@ -13668,6 +13668,19 @@
       }
     ]
   },
+  "readwise.io": {
+    "_name": "Readwise",
+    "read": [
+      {
+        "title": "Reader Document List",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/"
+        ],
+        "target": "/readwise/list"
+      }
+    ]
+  },
   "remnote.com": {
     "_name": "RemNote",
     ".": [
