@@ -19,7 +19,7 @@ const handler = async () => {
     }));
 
     return {
-        title: 'ブログ - わたすけのへや' || baseUrl,
+        title: 'ブログ - わたすけのへや',
         link: `${baseUrl}/blog/`,
         item: articles,
         language: 'ja',

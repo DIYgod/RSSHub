@@ -6,8 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 export const route: Route = {
     path: '/news/provider/:region/:providerId',
     categories: ['new-media'],
-    example: '/yahoo/news/provider/tw/udn.com',
-    parameters: { region: '地區，見下表', providerId: '新聞來源 ID，可透過下方新聞來源列表獲得' },
+    example: '/yahoo/news/provider/tw/yahoo_tech_tw_942',
+    parameters: { region: '地區, hk 或 tw, 分别表示香港雅虎和台湾雅虎', providerId: '新聞來源 ID, 可透過路由"新聞來源列表"獲得' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -16,12 +16,27 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['hk.news.yahoo.com/', 'tw.news.yahoo.com/'],
+        },
+    ],
     name: '新聞來源',
-    maintainers: ['TonyRL'],
+    maintainers: ['TonyRL', 'williamgateszhao'],
     handler,
-    description: `| 香港 | 台灣 |
-  | ---- | ---- |
-  | hk   | tw   |`,
+    description: `
+\`Region\`
+
+| 香港 | 台灣 |
+| ---- | ---- |
+| hk   | tw   |
+
+\`ProviderId\`
+
+除了可以通过路由"新聞來源列表"获得外, 也可通过 hk.news.yahoo.com/archive 和 tw.news.yahoo.com/archive 选择"新闻来源"后通过页面 Url 来获得。
+
+例如 hk.news.yahoo.com/yahoo_movies_hk_660--所有分類/archive, \`yahoo_movies_hk_660\` 就是 ProviderId 。
+`,
 };
 
 async function handler(ctx) {

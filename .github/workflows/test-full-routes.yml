@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build assets
-    timeout-minutes: 60
+    timeout-minutes: 120
     permissions:
       contents: write
     steps:

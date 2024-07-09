@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
 import { art } from '@/utils/render';
 
-const getArchive = async (region, limit, tag, providerId) => {
+const getArchive = async (region, limit, tag, providerId?) => {
     const { data: response } = await got(
         `https://${region}.news.yahoo.com/_td-news/api/resource/NCPListService;api=archive;ncpParams=${encodeURIComponent(
             JSON.stringify({
@@ -61,7 +61,7 @@ const getStores = (region, tryGet) =>
         const appData = JSON.parse(
             $('script:contains("root.App.main")')
                 .text()
-                .match(/root.App.main\s+=\s+({.+});/)[1]
+                .match(/root.App.main\s+=\s+({.+});/)?.[1] as string
         );
 
         return appData.context.dispatcher.stores;
@@ -81,41 +81,44 @@ const parseItem = (item, tryGet) =>
         const $ = load(response);
 
         const ldJson = JSON.parse($('script[type="application/ld+json"]').first().text());
+        const author = `${$('span.caas-author-byline-collapse').text()} @${$('span.caas-attr-provider').text()}`;
         const body = $('.caas-body');
 
         body.find('noscript').remove();
         // remove padding
         body.find('.caas-figure-with-pb, .caas-img-container').each((_, ele) => {
-            ele = $(ele);
-            ele.removeAttr('style');
+            const $ele = $(ele);
+            $ele.removeAttr('style');
         });
 
         body.find('img').each((_, ele) => {
-            ele = $(ele);
-            let dataSrc = ele.data('src');
+            const $ele = $(ele);
+            let dataSrc = $ele.data('src') as string;
 
             if (dataSrc) {
                 const match = dataSrc.match(/.*--\/.*--\/(.*)/);
                 if (match?.[1]) {
                     dataSrc = match?.[1];
                 }
-                ele.attr('src', dataSrc);
-                ele.removeAttr('data-src');
+                $ele.attr('src', dataSrc);
+                $ele.removeAttr('data-src');
             }
         });
         // fix blockquote iframe
         body.find('.caas-iframe').each((_, ele) => {
-            ele = $(ele);
-            if (ele.data('type') === 'youtube') {
-                ele.replaceWith(
-                    art(path.join(__dirname, '../../templates/youtube.art'), {
-                        id: ele.find('blockquote').data('src').split('/').pop()?.split('?')?.[0],
+            const $ele = $(ele);
+            if ($ele.data('type') === 'youtube') {
+                const blockquoteSrc = $ele.find('blockquote').data('src') as string;
+                $ele.replaceWith(
+                    art(path.join(__dirname, '../templates/youtube.art'), {
+                        id: blockquoteSrc.split('/').pop()?.split('?')?.[0],
                     })
                 );
             }
         });
 
         item.description = body.html();
+        item.author = author;
         item.category = ldJson.keywords;
         item.updated = parseDate(ldJson.dateModified);
 
