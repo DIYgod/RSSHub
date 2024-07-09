@@ -42,8 +42,8 @@ importers:
         specifier: 2.2.3
         version: 2.2.3
       '@scalar/hono-api-reference':
-        specifier: 0.5.97
-        version: 0.5.97(postcss@8.4.39)(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+        specifier: 0.5.100
+        version: 0.5.100(postcss@8.4.39)(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@sentry/node':
         specifier: 7.116.0
         version: 7.116.0
@@ -1736,32 +1736,32 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@scalar/api-client@2.0.13':
-    resolution: {integrity: sha512-hwWMKQaiDDjAZbCeNpUOENvzgjAQ6gME4rktqiGuedRM0z+C2/hm2wR3W1yUlzNunJkX5ucd23C9cElV66X2mQ==}
+  '@scalar/api-client@2.0.15':
+    resolution: {integrity: sha512-k/DEkS3kWALOM4KacMXrd6v01V086fuyYRsiBIvdzyyUb1GwXXqrYMlPYVU80HDRZCjGUiovObixbTdour8AiQ==}
     engines: {node: '>=18'}
 
-  '@scalar/api-reference@1.24.36':
-    resolution: {integrity: sha512-0Fx2rnYq+IipoFLoVqZjcd95PZBDXoVP6qYXbuHBlHmyvhpKpzZfgu4uZ2w8xKLaktqgUH2GxFFJnb/uYckw7w==}
+  '@scalar/api-reference@1.24.39':
+    resolution: {integrity: sha512-H2WJVQdT5W9GiEWNCCiBEmjnfZ3nQl1H2zNDJJ3nv8UR3vWcTZ9JfwyX7vqeNCZAio0CNAzamGqau+j19Q4u0g==}
     engines: {node: '>=18'}
 
-  '@scalar/code-highlight@0.0.6':
-    resolution: {integrity: sha512-yhek4nZgGSxiP0V1Dc/7qmF8kPg3R60GEkSyyW/th+zdumamWuKQayGDroscuNDRXpUEZ9cESJiTYOdCDnLN3A==}
+  '@scalar/code-highlight@0.0.7':
+    resolution: {integrity: sha512-YUSlnNapSUuLKDFiiQ54ok+gHD9ufCifI2CAU5HtIvt8pS/Ns4r0D/N+RuEWu5HccbBt/S4cLYkwlg4q76ym/A==}
     engines: {node: '>=18'}
 
-  '@scalar/components@0.12.10':
-    resolution: {integrity: sha512-eFMNgsI3jdXjP1Uk/9LpN2chlV8nSW5o2MxZLUg1JFDH5rOTB8HlrC6tnQW0jf+pCONpF6QdzQGeE2JM9gWjFA==}
+  '@scalar/components@0.12.12':
+    resolution: {integrity: sha512-zer4YrrMo15KW7SE8wkHEYZ5LGSXi47a4DCO5zZAk/V/XPZrRMt/5ZEV4z+m9zpBkYYClcJDpGZUiqT5GqHjOg==}
     engines: {node: '>=18'}
 
   '@scalar/draggable@0.1.3':
     resolution: {integrity: sha512-A6lUgTV8q/zJGkzHerY1T+X3l3GXmCCg09Z7OU7j6yDyyuj2BSTblthncoD5sN3BdwLjHwkm9ecehfvaE0pj5w==}
     engines: {node: '>=18'}
 
-  '@scalar/hono-api-reference@0.5.97':
-    resolution: {integrity: sha512-c+7+xenk5RWjFoGPpBKNac1sdN5QKb0HKmZp55Nug4aLMuLNza4xrIoRsFSlTlMmh/wgZkY9Wx7CzWGzDjz64g==}
+  '@scalar/hono-api-reference@0.5.100':
+    resolution: {integrity: sha512-/C/YSCt4ixqHP8Sf4UN1efKnpu4MAjTu3+sBroaOI5tXR5wyMd7c2uIsghcO7c9HCoMMqJr3m9XXCIavXximzg==}
     engines: {node: '>=18'}
 
-  '@scalar/oas-utils@0.2.12':
-    resolution: {integrity: sha512-Jv/iNdQ5flEewoE78fq6X/1WmuALEs4K9FOZmwvgJc1302sscbXvTkk19MJGBekBniG/DGJRJCkUY/bjawYARg==}
+  '@scalar/oas-utils@0.2.13':
+    resolution: {integrity: sha512-wYlOuSE49pD3TQ4wmw1sHdMJMFajuu3x1DYsWzpJtKnJX8ij3UtKi8EaPgjxvH9GZ8sNzIlI9ZddPU1llYjQhg==}
     engines: {node: '>=18'}
 
   '@scalar/object-utils@1.1.4':
@@ -1797,8 +1797,8 @@ packages:
     resolution: {integrity: sha512-ok1hC5ez9cYnVr2F8WF0FyE5P0GWiim12H3aOoPvq1VFI+ASoFjJNgo7rT4nhVbO3htcBh1Le9KfIFTyO7bhYA==}
     engines: {node: '>=18'}
 
-  '@scalar/use-codemirror@0.11.4':
-    resolution: {integrity: sha512-pS1uefkmV7Guaou8cyltcCLtt1EReq1ZqYHwDbZlzPyQYPEVoFWgA14U+ChvHzvUVlLogMvGbcRL4PNZDHfUSQ==}
+  '@scalar/use-codemirror@0.11.5':
+    resolution: {integrity: sha512-JPAkSukziVpkASpTFejxP0cnopiBrNvTFEbwGCGJXbxklKSyHQ9FQXo0iIv/USRBI6l64x+kSIljFk0SKXiD3Q==}
     engines: {node: '>=18'}
 
   '@scalar/use-toasts@0.7.4':
@@ -3131,8 +3131,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -8205,7 +8205,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.7
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8331,17 +8331,17 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.18.1':
     optional: true
 
-  '@scalar/api-client@2.0.13(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/api-client@2.0.15(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@headlessui/tailwindcss': 0.2.1(tailwindcss@3.4.4)
       '@headlessui/vue': 1.7.22(vue@3.4.31(typescript@5.5.3))
-      '@scalar/components': 0.12.10(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/components': 0.12.12(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@scalar/draggable': 0.1.3(typescript@5.5.3)
-      '@scalar/oas-utils': 0.2.12(typescript@5.5.3)
+      '@scalar/oas-utils': 0.2.13(typescript@5.5.3)
       '@scalar/object-utils': 1.1.4(vue@3.4.31(typescript@5.5.3))
       '@scalar/openapi-parser': 0.7.2
       '@scalar/themes': 0.9.13(typescript@5.5.3)
-      '@scalar/use-codemirror': 0.11.4(typescript@5.5.3)
+      '@scalar/use-codemirror': 0.11.5(typescript@5.5.3)
       '@scalar/use-toasts': 0.7.4(typescript@5.5.3)
       '@scalar/use-tooltip': 1.0.2(typescript@5.5.3)
       '@vueuse/core': 10.11.0(vue@3.4.31(typescript@5.5.3))
@@ -8367,13 +8367,13 @@ snapshots:
       - typescript
       - vitest
 
-  '@scalar/api-reference@1.24.36(postcss@8.4.39)(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/api-reference@1.24.39(postcss@8.4.39)(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@floating-ui/vue': 1.1.1(vue@3.4.31(typescript@5.5.3))
       '@headlessui/vue': 1.7.22(vue@3.4.31(typescript@5.5.3))
-      '@scalar/api-client': 2.0.13(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
-      '@scalar/components': 0.12.10(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
-      '@scalar/oas-utils': 0.2.12(typescript@5.5.3)
+      '@scalar/api-client': 2.0.15(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/components': 0.12.12(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/oas-utils': 0.2.13(typescript@5.5.3)
       '@scalar/openapi-parser': 0.7.2
       '@scalar/snippetz': 0.1.6
       '@scalar/themes': 0.9.13(typescript@5.5.3)
@@ -8404,7 +8404,7 @@ snapshots:
       - typescript
       - vitest
 
-  '@scalar/code-highlight@0.0.6':
+  '@scalar/code-highlight@0.0.7':
     dependencies:
       hast-util-to-text: 4.0.2
       highlight.js: 11.10.0
@@ -8425,12 +8425,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@scalar/components@0.12.10(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/components@0.12.12(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@floating-ui/utils': 0.2.4
       '@floating-ui/vue': 1.1.1(vue@3.4.31(typescript@5.5.3))
       '@headlessui/vue': 1.7.22(vue@3.4.31(typescript@5.5.3))
-      '@scalar/code-highlight': 0.0.6
+      '@scalar/code-highlight': 0.0.7
       '@storybook/test': 8.1.11(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@vueuse/core': 10.11.0(vue@3.4.31(typescript@5.5.3))
       cva: 1.0.0-beta.1(typescript@5.5.3)
@@ -8454,9 +8454,9 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@scalar/hono-api-reference@0.5.97(postcss@8.4.39)(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/hono-api-reference@0.5.100(postcss@8.4.39)(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@scalar/api-reference': 1.24.36(postcss@8.4.39)(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/api-reference': 1.24.39(postcss@8.4.39)(tailwindcss@3.4.4)(typescript@5.5.3)(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       hono: 4.4.12
     transitivePeerDependencies:
       - '@jest/globals'
@@ -8471,7 +8471,7 @@ snapshots:
       - typescript
       - vitest
 
-  '@scalar/oas-utils@0.2.12(typescript@5.5.3)':
+  '@scalar/oas-utils@0.2.13(typescript@5.5.3)':
     dependencies:
       '@scalar/themes': 0.9.13(typescript@5.5.3)
       axios: 1.7.2
@@ -8538,7 +8538,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@scalar/use-codemirror@0.11.4(typescript@5.5.3)':
+  '@scalar/use-codemirror@0.11.5(typescript@5.5.3)':
     dependencies:
       '@codemirror/autocomplete': 6.17.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(@lezer/common@1.2.1)
       '@codemirror/commands': 6.6.0
@@ -8547,6 +8547,7 @@ snapshots:
       '@codemirror/lang-json': 6.0.1
       '@codemirror/lang-yaml': 6.1.1(@codemirror/view@6.28.4)
       '@codemirror/language': 6.10.2
+      '@codemirror/lint': 6.8.1
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.28.4
       '@lezer/common': 1.2.1
@@ -10083,7 +10084,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
