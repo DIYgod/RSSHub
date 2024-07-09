@@ -25,7 +25,7 @@ function loadContent(link) {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const host = `http://${type}.neea.edu.cn${typeDic[type].url}`;
+    const host = `https://${type}.neea.edu.cn${typeDic[type].url}`;
     const response = await got({
         method: 'get',
         url: host,
@@ -39,7 +39,7 @@ async function handler(ctx) {
         list.map(async (item) => {
             const ReportIDname = $(item).find('#ReportIDname > a');
             const ReportIDIssueTime = $(item).find('#ReportIDIssueTime');
-            const itemUrl = `http://${type}.neea.edu.cn` + $(ReportIDname).attr('href');
+            const itemUrl = `https://${type}.neea.edu.cn` + $(ReportIDname).attr('href');
             const time = ReportIDIssueTime.text();
             const single = {
                 title: $(ReportIDname).text(),
