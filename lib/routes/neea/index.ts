@@ -114,11 +114,11 @@ const typeDic = {
 };
 
 export const route: Route = {
-    path: '/:type',
-    name: '考试动态',
+    path: '/local/:type',
+    name: '国内考试动态',
     url: 'www.neea.edu.cn',
     maintainers: ['SunShinenny'],
-    example: '/neea/cet',
+    example: '/neea/local/cet',
     parameters: { type: '考试项目，见下表' },
     categories: ['study'],
     features: {
@@ -127,7 +127,7 @@ export const route: Route = {
     radar: Object.entries(typeDic).map(([type, value]) => ({
         title: `${value.title}动态`,
         source: [`${type}.neea.edu.cn`, `${type}.neea.cn`],
-        target: `/${type}`,
+        target: `/local/${type}`,
     })),
     handler,
     description: `|              | 考试项目                      | type     |
