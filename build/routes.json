@@ -66496,6 +66496,10 @@
             {
               "name": "XSIJISHE_COOKIE",
               "description": ""
+            },
+            {
+              "name": "XSIJISHE_USER_AGENT",
+              "description": ""
             }
           ],
           "requirePuppeteer": false,
@@ -66521,7 +66525,16 @@
           "type": "排行榜类型: weekly | monthly"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "XSIJISHE_COOKIE",
+              "description": ""
+            },
+            {
+              "name": "XSIJISHE_USER_AGENT",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
