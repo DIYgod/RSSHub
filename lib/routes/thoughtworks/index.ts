@@ -26,7 +26,7 @@ async function handler() {
     });
 
     // 'Bearer ' + token
-    const bearerToken = 'Bearer ' +  tokenData.BLOG_SEARCH_TOKEN;
+    const bearerToken = 'Bearer ' + tokenData.BLOG_SEARCH_TOKEN;
 
     const data = await ofetch('https://platform-eu.cloud.coveo.com/rest/search/v2?organizationId=thoughtworksproductionhcqoag0q', {
         method: 'POST',
@@ -36,7 +36,13 @@ async function handler() {
             origin: 'https://www.thoughtworks.com',
             referer: 'https://www.thoughtworks.com/',
         },
-        body: {"context":{"countryLocale":"zh-cn"}, "fieldsToInclude":["author", "language", "objecttype", "collection", "source", "tw_content_type", "tw_topic", "tw_published_date"], "sortCriteria":"@tw_published_date descending", "numberOfResults":10, "firstResult":0},
+        body: {
+            context: { countryLocale: 'zh-cn' },
+            fieldsToInclude: ['author', 'language', 'objecttype', 'collection', 'source', 'tw_content_type', 'tw_topic', 'tw_published_date'],
+            sortCriteria: '@tw_published_date descending',
+            numberOfResults: 10,
+            firstResult: 0,
+        },
     });
     // 从 API 响应中提取相关数据
     const items = data.results.map((item) => ({
