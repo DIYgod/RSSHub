@@ -12,7 +12,7 @@ import path from 'node:path';
 
 export const handler = async (ctx) => {
     const { id = '0' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 2;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
     const rootUrl = 'https://fashionnetwork.cn';
     const currentUrl = new URL(`lists/${id}`, rootUrl).href;
@@ -106,27 +106,27 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/lists/:id?',
-    name: '新闻',
+    path: '/cn/lists/:id?',
+    name: 'FashionNetwork 中国',
     url: 'fashionnetwork.cn',
     maintainers: ['nczitzk'],
     handler,
-    example: '/fashionnetwork-cn/lists/0',
+    example: '/fashionnetwork/cn/lists/0',
     parameters: { category: '分类，默认为 0，可在对应分类页 URL 中找到' },
     description: `:::tip
-  若订阅 [独家新闻](https://fashionnetwork.cn)，网址为 \`https://fashionnetwork.cn/lists/13.html\`。截取 \`https://fashionnetwork.cn/\` 到末尾 \`.html\` 的部分 \`13\` 作为参数填入，此时路由为 [\`/fashionnetwork-cn/lists/13\`](https://rsshub.app/fashionnetwork-cn/lists/13)。
+  若订阅 [独家新闻](https://fashionnetwork.cn)，网址为 \`https://fashionnetwork.cn/lists/13.html\`。截取 \`https://fashionnetwork.cn/\` 到末尾 \`.html\` 的部分 \`13\` 作为参数填入，此时路由为 [\`/fashionnetwork/cn/lists/13\`](https://rsshub.app/fashionnetwork/cn/lists/13)。
   :::
 
   | 分类                                           | ID                                                  |
   | ---------------------------------------------- | --------------------------------------------------- |
-  | [独家](https://fashionnetwork.cn/lists/13)     | [13](https://rsshub.app/fashionnetwork-cn/lists/13) |
-  | [商业](https://fashionnetwork.cn/lists/1)      | [1](https://rsshub.app/fashionnetwork-cn/lists/1)   |
-  | [人物](https://fashionnetwork.cn/lists/8)      | [8](https://rsshub.app/fashionnetwork-cn/lists/8)   |
-  | [设计](https://fashionnetwork.cn/lists/3)      | [3](https://rsshub.app/fashionnetwork-cn/lists/3)   |
-  | [产业](https://fashionnetwork.cn/lists/5)      | [5](https://rsshub.app/fashionnetwork-cn/lists/5)   |
-  | [创新研究](https://fashionnetwork.cn/lists/6)  | [6](https://rsshub.app/fashionnetwork-cn/lists/6)   |
-  | [人事变动](https://fashionnetwork.cn/lists/12) | [12](https://rsshub.app/fashionnetwork-cn/lists/12) |
-  | [新闻资讯](https://fashionnetwork.cn/lists/11) | [11](https://rsshub.app/fashionnetwork-cn/lists/11) |
+  | [独家](https://fashionnetwork.cn/lists/13)     | [13](https://rsshub.app/fashionnetwork/cn/lists/13) |
+  | [商业](https://fashionnetwork.cn/lists/1)      | [1](https://rsshub.app/fashionnetwork/cn/lists/1)   |
+  | [人物](https://fashionnetwork.cn/lists/8)      | [8](https://rsshub.app/fashionnetwork/cn/lists/8)   |
+  | [设计](https://fashionnetwork.cn/lists/3)      | [3](https://rsshub.app/fashionnetwork/cn/lists/3)   |
+  | [产业](https://fashionnetwork.cn/lists/5)      | [5](https://rsshub.app/fashionnetwork/cn/lists/5)   |
+  | [创新研究](https://fashionnetwork.cn/lists/6)  | [6](https://rsshub.app/fashionnetwork/cn/lists/6)   |
+  | [人事变动](https://fashionnetwork.cn/lists/12) | [12](https://rsshub.app/fashionnetwork/cn/lists/12) |
+  | [新闻资讯](https://fashionnetwork.cn/lists/11) | [11](https://rsshub.app/fashionnetwork/cn/lists/11) |
   `,
     categories: ['new-media'],
 
@@ -145,48 +145,48 @@ export const route: Route = {
             target: (params) => {
                 const id = params.id;
 
-                return `/fashionnetwork-cn/lists${id ? `/${id}` : ''}`;
+                return `/fashionnetwork/cn/lists${id ? `/${id}` : ''}`;
             },
         },
         {
             title: '独家',
             source: ['fashionnetwork.cn/lists/13'],
-            target: '/lists/13',
+            target: '/cn/lists/13',
         },
         {
             title: '商业',
             source: ['fashionnetwork.cn/lists/1'],
-            target: '/lists/1',
+            target: '/cn/lists/1',
         },
         {
             title: '人物',
             source: ['fashionnetwork.cn/lists/8'],
-            target: '/lists/8',
+            target: '/cn/lists/8',
         },
         {
             title: '设计',
             source: ['fashionnetwork.cn/lists/3'],
-            target: '/lists/3',
+            target: '/cn/lists/3',
         },
         {
             title: '产业',
             source: ['fashionnetwork.cn/lists/5'],
-            target: '/lists/5',
+            target: '/cn/lists/5',
         },
         {
             title: '创新研究',
             source: ['fashionnetwork.cn/lists/6'],
-            target: '/lists/6',
+            target: '/cn/lists/6',
         },
         {
             title: '人事变动',
             source: ['fashionnetwork.cn/lists/12'],
-            target: '/lists/12',
+            target: '/cn/lists/12',
         },
         {
             title: '新闻资讯',
             source: ['fashionnetwork.cn/lists/11'],
-            target: '/lists/11',
+            target: '/cn/lists/11',
         },
     ],
 };
