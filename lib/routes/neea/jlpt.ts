@@ -3,29 +3,26 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/jlpt',
-    categories: ['study'],
-    example: '/neea/jlpt',
+    path: '/global/jlpt',
+    name: '日本语能力测试(JLPT)通知',
+    url: 'jlpt.neea.edu.cn',
+    maintainers: ['nczitzk'],
+    example: '/neea/global/jlpt',
     parameters: {},
+    categories: ['study'],
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
+        supportRadar: true,
     },
     radar: [
         {
-            source: ['jlpt.neea.cn/'],
+            source: ['jlpt.neea.edu.cn', 'jlpt.neea.cn'],
+            target: '/global/jlpt',
         },
     ],
-    name: '教育部考试中心日本语能力测试重要通知',
-    maintainers: ['nczitzk'],
     handler,
-    url: 'jlpt.neea.cn/',
 };
 
 async function handler() {
@@ -49,7 +46,7 @@ async function handler() {
             return {
                 title: item.text(),
                 link: `${rootUrl}/JLPT/1/${item.attr('href')}`,
-                pubDate: matches ? parseDate(matches[1]) : '',
+                pubDate: matches ? timezone(parseDate(matches[1]), +8) : '',
             };
         });
 
@@ -71,7 +68,7 @@ async function handler() {
     );
 
     return {
-        title: '重要通知 - 教育部考试中心日本语能力测试',
+        title: '日本语能力测试(JLPT)通知',
         link: currentUrl,
         item: items,
     };
