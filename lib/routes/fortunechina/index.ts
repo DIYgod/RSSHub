@@ -90,9 +90,6 @@ async function handler(ctx) {
                 if (item.link.includes('jingxuan')) {
                     item.description += content('.eval-mod_ugo').html();
                 }
-                else if (item.link.includes('events')) {
-                    item.description += content('#website_con').html();
-                }
 
                 return item;
             })
