@@ -5,41 +5,57 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+function loadContent(link) {
+    return cache.tryGet(link, async () => {
+        // 开始加载页面
+        const response = await got.get(link);
+        const $ = load(response.data);
+        // 获取标题
+        const title = $('#Content1 > div > ul > li > h1').text();
+        // 获取正文内容
+        const introduce = $('#ReportIDtext').html();
+
+        return {
+            title,
+            description: introduce,
+            link,
+        };
+    });
+}
+
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const host = `https://${type}.neea.edu.cn${typeDic[type].url}`;
-    const response = await got.get(host);
-    const $ = load(response.data);
+    const host = `http://${type}.neea.edu.cn${typeDic[type].url}`;
+    const response = await got({
+        method: 'get',
+        url: host,
+    });
+    const data = response.data;
+
+    const $ = load(data);
     const list = $(`#ReportIDname > a`).parent().parent().get();
-    const items = await Promise.all(
+
+    const process = await Promise.all(
         list.map(async (item) => {
-            const reportIDname = $(item).find('#ReportIDname > a');
-            const reportIDIssueTime = $(item).find('#ReportIDIssueTime');
-            const title = $(reportIDname).text();
-            const link = `https://${type}.neea.edu.cn` + $(reportIDname).attr('href');
-            const date = reportIDIssueTime.text();
-            const data = await cache.get(link);
-            if (data) {
-                return JSON.parse(data);
-            }
-            const response = await got.get(link);
-            const $$ = load(response.data);
-            const description = $$('#ReportIDtext').html();
-            const ret = {
-                title,
-                link,
-                description,
-                pubDate: timezone(parseDate(date), +8),
+            const ReportIDname = $(item).find('#ReportIDname > a');
+            const ReportIDIssueTime = $(item).find('#ReportIDIssueTime');
+            const itemUrl = `http://${type}.neea.edu.cn` + $(ReportIDname).attr('href');
+            const time = ReportIDIssueTime.text();
+            const single = {
+                title: $(ReportIDname).text(),
+                link: itemUrl,
+                guid: itemUrl,
+                pubDate: timezone(parseDate(time), +8),
             };
-            cache.set(link, ret);
-            return ret;
+            const other = await loadContent(String(itemUrl));
+            return Object.assign({}, single, other);
         })
     );
-
     return {
         title: `${typeDic[String(type)].title}动态`,
         link: host,
-        item: items,
+        description: `${typeDic[String(type)].title}动态 `,
+        item: process,
     };
 }
 
@@ -98,11 +114,11 @@ const typeDic = {
 };
 
 export const route: Route = {
-    path: '/local/:type',
-    name: '国内考试动态',
+    path: '/:type',
+    name: '考试动态',
     url: 'www.neea.edu.cn',
     maintainers: ['SunShinenny'],
-    example: '/neea/local/cet',
+    example: '/neea/cet',
     parameters: { type: '考试项目，见下表' },
     categories: ['study'],
     features: {
@@ -111,7 +127,7 @@ export const route: Route = {
     radar: Object.entries(typeDic).map(([type, value]) => ({
         title: `${value.title}动态`,
         source: [`${type}.neea.edu.cn`, `${type}.neea.cn`],
-        target: `/local/${type}`,
+        target: `/${type}`,
     })),
     handler,
     description: `|              | 考试项目                      | type     |
