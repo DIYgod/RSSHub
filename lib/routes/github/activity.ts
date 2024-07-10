@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/activity/:user',
     name: 'User Activities',
     maintainers: ['hyoban'],
-    example: '/activity/DIYgod',
+    example: '/github/activity/DIYgod',
     categories: ['programming'],
     parameters: {
         user: 'GitHub username',
