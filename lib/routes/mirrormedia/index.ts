@@ -27,7 +27,7 @@ async function handler(ctx) {
     const items = [...response.choices.map((e) => ({ __from: 'choices', ...e })), ...response.latest.map((e) => ({ __from: 'latest', ...e }))]
         .map((e) => ({
             title: e.title,
-            pubDate: parseDate(e.publishDate),
+            pubDate: parseDate(e.publishedDate),
             category: [...(e.sections ?? []).map((_) => _.name), e.__from],
             link: `${rootUrl}/${e.style === '' ? 'external' : 'story'}/${e.slug}`,
         }))

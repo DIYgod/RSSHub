@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     const items = response.data.posts.map((e) => ({
         title: e.title,
-        pubDate: parseDate(e.publishDate),
+        pubDate: parseDate(e.publishedDate),
         category: [...(e.sections ?? []).map((_) => `section:${_.name}`), ...(e.categories ?? []).map((_) => `category:${_.name}`)],
         link: `${rootUrl}/${'story'}/${e.slug}`,
     }));
