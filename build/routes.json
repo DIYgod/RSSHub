@@ -22967,6 +22967,38 @@
   },
   "github": {
     "routes": {
+      "/activity/:user": {
+        "path": "/activity/:user",
+        "name": "User Activities",
+        "maintainers": [
+          "hyoban"
+        ],
+        "example": "/github/activity/DIYgod",
+        "categories": [
+          "programming"
+        ],
+        "parameters": {
+          "user": "GitHub username"
+        },
+        "description": "Get the activities of a user on GitHub, based on the GitHub official RSS feed",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/:user"
+            ],
+            "target": "/activity/:user"
+          }
+        ],
+        "location": "activity.ts"
+      },
       "/branches/:user/:repo": {
         "path": "/branches/:user/:repo",
         "categories": [

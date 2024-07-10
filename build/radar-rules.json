@@ -6239,6 +6239,14 @@
     "_name": "GitHub",
     ".": [
       {
+        "title": "User Activities",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:user"
+        ],
+        "target": "/github/activity/:user"
+      },
+      {
         "title": "Repo Branches",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [

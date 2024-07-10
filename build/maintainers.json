@@ -2209,6 +2209,9 @@
   "/gitee/events/:username": [
     "TonyRL"
   ],
+  "/github/activity/:user": [
+    "hyoban"
+  ],
   "/github/branches/:user/:repo": [
     "max-arnold"
   ],
