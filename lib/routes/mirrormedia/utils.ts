@@ -8,7 +8,9 @@ export function getArticle(item) {
 
         const content = load(detailResponse);
 
-        item.description = content("div[data-contents='true']").html();
+        item.description = item.link.includes('external')
+            ? content(':is([class^=external-article-brief],[class^=external-article-content])').html()
+            : content(':is([class^=brief__BriefContainer],[class^=article-content__Wrapper])').html();
 
         return item;
     });
