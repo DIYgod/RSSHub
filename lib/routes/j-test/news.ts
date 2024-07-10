@@ -32,7 +32,7 @@ async function handler() {
     const $ = load(response);
 
     const list = $('#content1 > .center > .col_box1 > .col_body1 > ul > li')
-        .get()
+        .toArray()
         .map((item) => {
             const [title, date] = $(item).text().trim().replaceAll(']', '').split(' [');
             const link = new URL($(item).children('a').attr('href')!, baseUrl).href;
