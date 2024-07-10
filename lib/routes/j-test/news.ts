@@ -46,21 +46,18 @@ async function handler() {
         });
 
     const items = await Promise.all(
-        list.map(async (item) => {
-            const res = await cache.get(item.link);
-            if (res) {
-                return JSON.parse(res);
-            }
-            const response = await ofetch(item.link);
-            const $ = load(response);
-            item.description = $('.content > table').html() ?? '';
-            cache.set(item.link, JSON.stringify(item));
-            return item;
-        })
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link);
+                const $ = load(response);
+                item.description = $('.content > table').html() ?? '';
+                return item;
+            })
+        )
     );
 
     return {
-        title: '实用日本语鉴定考试 (J-Test) 公告',
+        title: '实用日本语鉴定考试（J-Test）公告',
         link: 'http://www.j-test.com',
         item: items,
     };
