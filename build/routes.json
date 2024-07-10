@@ -32601,6 +32601,38 @@
     "name": "西瓜视频",
     "url": "ixigua.com"
   },
+  "j-test": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "name": "公告",
+        "url": "www.j-test.com",
+        "maintainers": [
+          "kuhahku"
+        ],
+        "example": "/j-test/news",
+        "parameters": {},
+        "categories": [
+          "study"
+        ],
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.j-test.com"
+            ],
+            "target": "/news"
+          }
+        ],
+        "description": "",
+        "location": "news.ts"
+      }
+    },
+    "name": "实用日本语鉴定考试（J.TEST）",
+    "url": "www.j-test.com"
+  },
   "jandan": {
     "routes": {
       "/": {

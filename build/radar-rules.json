@@ -9050,6 +9050,19 @@
       }
     ]
   },
+  "j-test.com": {
+    "_name": "实用日本语鉴定考试（J.TEST）",
+    "www": [
+      {
+        "title": "公告",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/"
+        ],
+        "target": "/j-test/news"
+      }
+    ]
+  },
   "javbus.com": {
     "_name": "JavBus",
     "www": [
