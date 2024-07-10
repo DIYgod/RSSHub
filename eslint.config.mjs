@@ -95,6 +95,12 @@ export default [{
         'no-multi-str': 'error',
         'no-new-func': 'error',
         'no-restricted-imports': 'error',
+
+        'no-restricted-syntax': ['warn', {
+            selector: "CallExpression[callee.property.name='get'][arguments.length=0]",
+            message: "Please use toArray instead.",
+        }],
+
         'no-unneeded-ternary': 'error',
         'no-useless-computed-key': 'error',
         'no-useless-concat': 'warn',
