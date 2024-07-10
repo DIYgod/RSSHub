@@ -5445,6 +5445,83 @@
       }
     ]
   },
+  "fashionnetwork.cn": {
+    "_name": "FashionNetwork",
+    ".": [
+      {
+        "title": "FashionNetwork 中国",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lists/:id"
+        ],
+        "target": "/fashionnetworkparams=>{const id=params.id;return`/fashionnetwork/cn/lists${id?`/${id}`:\"\"}`}"
+      },
+      {
+        "title": "独家",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lists/13"
+        ],
+        "target": "/fashionnetwork/cn/lists/13"
+      },
+      {
+        "title": "商业",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lists/1"
+        ],
+        "target": "/fashionnetwork/cn/lists/1"
+      },
+      {
+        "title": "人物",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lists/8"
+        ],
+        "target": "/fashionnetwork/cn/lists/8"
+      },
+      {
+        "title": "设计",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lists/3"
+        ],
+        "target": "/fashionnetwork/cn/lists/3"
+      },
+      {
+        "title": "产业",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lists/5"
+        ],
+        "target": "/fashionnetwork/cn/lists/5"
+      },
+      {
+        "title": "创新研究",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lists/6"
+        ],
+        "target": "/fashionnetwork/cn/lists/6"
+      },
+      {
+        "title": "人事变动",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lists/12"
+        ],
+        "target": "/fashionnetwork/cn/lists/12"
+      },
+      {
+        "title": "新闻资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lists/11"
+        ],
+        "target": "/fashionnetwork/cn/lists/11"
+      }
+    ]
+  },
   "fastbull.cn": {
     "_name": "法布财经",
     ".": [

@@ -1951,6 +1951,9 @@
   "/farmatters/:type/:id/:locale?": [
     "nczitzk"
   ],
+  "/fashionnetwork/cn/lists/:id?": [
+    "nczitzk"
+  ],
   "/fastbull/express-news": [
     "nczitzk"
   ],
