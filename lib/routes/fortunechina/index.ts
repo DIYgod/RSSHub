@@ -1,8 +1,11 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import randUserAgent from '@/utils/rand-user-agent';
+
+const UA = randUserAgent({ browser: 'mobile safari', os: 'ios', device: 'mobile' });
 
 export const route: Route = {
     path: '/:category?',
@@ -36,12 +39,9 @@ async function handler(ctx) {
     const rootUrl = 'https://www.fortunechina.com';
     const currentUrl = `${rootUrl}${category ? `/${category}` : ''}`;
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
+    const response = await ofetch(currentUrl);
 
-    const $ = load(response.data);
+    const $ = load(response);
 
     let items = $('.main')
         .find(category === '' ? 'a:has(h2)' : 'h2 a')
@@ -61,15 +61,13 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
+                const detailResponse = await ofetch(item.link, {
                     headers: {
-                        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1',
-                    },
+                        'User-Agent': UA,
+                    }
                 });
 
-                const content = load(detailResponse.data);
+                const content = load(detailResponse);
 
                 const spans = content('.date').text();
                 let matches = spans.match(/(\d{4}-\d{2}-\d{2})/);
@@ -89,6 +87,9 @@ async function handler(ctx) {
                 item.description = content(item.link.includes('content') ? '.contain .text' : '.contain .top').html();
                 if (item.link.includes('jingxuan')) {
                     item.description += content('.eval-mod_ugo').html();
+                }
+                else if (item.link.includes('events')) {
+                    item.description += await ofetch(`https://www.bagevent.com/event/${item.link.match(/\d+/)[0]}`);
                 }
 
                 return item;
