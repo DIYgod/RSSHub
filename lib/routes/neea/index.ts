@@ -25,7 +25,7 @@ function loadContent(link) {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const host = `http://${type}.neea.edu.cn${typeDic[type].url}`;
+    const host = `https://${type}.neea.edu.cn${typeDic[type].url}`;
     const response = await got({
         method: 'get',
         url: host,
@@ -39,7 +39,7 @@ async function handler(ctx) {
         list.map(async (item) => {
             const ReportIDname = $(item).find('#ReportIDname > a');
             const ReportIDIssueTime = $(item).find('#ReportIDIssueTime');
-            const itemUrl = `http://${type}.neea.edu.cn` + $(ReportIDname).attr('href');
+            const itemUrl = `https://${type}.neea.edu.cn` + $(ReportIDname).attr('href');
             const time = ReportIDIssueTime.text();
             const single = {
                 title: $(ReportIDname).text(),
@@ -101,24 +101,24 @@ const typeDic = {
 
     pets: {
         url: '/html1/category/1507/1570-1.htm',
-        title: '全国英语等级考试 (PETS)',
+        title: '全国英语等级考试（PETS）',
     },
     wsk: {
         url: '/html1/category/1507/1646-1.htm',
-        title: '全国外语水平考试 (WSK)',
+        title: '全国外语水平考试（WSK）',
     },
     ccpt: {
         url: '/html1/category/1507/2035-1.htm',
-        title: '书画等级考试 (CCPT)',
+        title: '书画等级考试（CCPT）',
     },
 };
 
 export const route: Route = {
-    path: '/:type',
-    name: '考试动态',
+    path: '/local/:type',
+    name: '国内考试动态',
     url: 'www.neea.edu.cn',
     maintainers: ['SunShinenny'],
-    example: '/neea/cet',
+    example: '/neea/local/cet',
     parameters: { type: '考试项目，见下表' },
     categories: ['study'],
     features: {
@@ -127,7 +127,7 @@ export const route: Route = {
     radar: Object.entries(typeDic).map(([type, value]) => ({
         title: `${value.title}动态`,
         source: [`${type}.neea.edu.cn`, `${type}.neea.cn`],
-        target: `/${type}`,
+        target: `/local/${type}`,
     })),
     handler,
     description: `|              | 考试项目                      | type     |
@@ -141,7 +141,7 @@ export const route: Route = {
 | 社会证书考试 | 全国四六级考试（CET）         | cet      |
 |              | 全国计算机等级考试（NCRE）    | ncre     |
 |              | 全国计算机应用水平考试（NIT） | nit      |
-|              | 全国英语等级考试 (PETS)       | pets     |
-|              | 全国外语水平考试 (WSK)        | wsk      |
-|              | 书画等级考试 (CCPT)           | ccpt     |`,
+|              | 全国英语等级考试（PETS）      | pets     |
+|              | 全国外语水平考试（WSK）       | wsk      |
+|              | 书画等级考试（CCPT）          | ccpt     |`,
 };
