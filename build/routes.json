@@ -40707,46 +40707,153 @@
   },
   "neea": {
     "routes": {
-      "/:type?": {
-        "path": "/:type?",
-        "name": "Unknown",
+      "/local/:type": {
+        "path": "/local/:type",
+        "name": "国内考试动态",
+        "url": "www.neea.edu.cn",
         "maintainers": [
           "SunShinenny"
         ],
-        "location": "index.ts"
-      },
-      "/jlpt": {
-        "path": "/jlpt",
+        "example": "/neea/local/cet",
+        "parameters": {
+          "type": "考试项目，见下表"
+        },
         "categories": [
           "study"
         ],
-        "example": "/neea/jlpt",
-        "parameters": {},
         "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "title": "普通高考动态",
+            "source": [
+              "gaokao.neea.edu.cn",
+              "gaokao.neea.cn"
+            ],
+            "target": "/local/gaokao"
+          },
+          {
+            "title": "成人高考动态",
+            "source": [
+              "chengkao.neea.edu.cn",
+              "chengkao.neea.cn"
+            ],
+            "target": "/local/chengkao"
+          },
+          {
+            "title": "研究生考试动态",
+            "source": [
+              "yankao.neea.edu.cn",
+              "yankao.neea.cn"
+            ],
+            "target": "/local/yankao"
+          },
+          {
+            "title": "自学考试动态",
+            "source": [
+              "zikao.neea.edu.cn",
+              "zikao.neea.cn"
+            ],
+            "target": "/local/zikao"
+          },
+          {
+            "title": "中小学教师资格考试动态",
+            "source": [
+              "ntce.neea.edu.cn",
+              "ntce.neea.cn"
+            ],
+            "target": "/local/ntce"
+          },
+          {
+            "title": "同等学力申请硕士学位考试动态",
+            "source": [
+              "tdxl.neea.edu.cn",
+              "tdxl.neea.cn"
+            ],
+            "target": "/local/tdxl"
+          },
+          {
+            "title": "全国四六级考试（CET）动态",
+            "source": [
+              "cet.neea.edu.cn",
+              "cet.neea.cn"
+            ],
+            "target": "/local/cet"
+          },
+          {
+            "title": "全国计算机等级考试（NCRE）动态",
+            "source": [
+              "ncre.neea.edu.cn",
+              "ncre.neea.cn"
+            ],
+            "target": "/local/ncre"
+          },
+          {
+            "title": "全国计算机应用水平考试（NIT）动态",
+            "source": [
+              "nit.neea.edu.cn",
+              "nit.neea.cn"
+            ],
+            "target": "/local/nit"
+          },
+          {
+            "title": "全国英语等级考试（PETS）动态",
+            "source": [
+              "pets.neea.edu.cn",
+              "pets.neea.cn"
+            ],
+            "target": "/local/pets"
+          },
+          {
+            "title": "全国外语水平考试（WSK）动态",
+            "source": [
+              "wsk.neea.edu.cn",
+              "wsk.neea.cn"
+            ],
+            "target": "/local/wsk"
+          },
+          {
+            "title": "书画等级考试（CCPT）动态",
+            "source": [
+              "ccpt.neea.edu.cn",
+              "ccpt.neea.cn"
+            ],
+            "target": "/local/ccpt"
+          }
+        ],
+        "description": "|              | 考试项目                      | type     |\n| ------------ | ----------------------------- | -------- |\n| 国家教育考试 | 普通高考                      | gaokao   |\n|              | 成人高考                      | chengkao |\n|              | 研究生考试                    | yankao   |\n|              | 自学考试                      | zikao    |\n|              | 中小学教师资格考试            | ntce     |\n|              | 同等学力申请硕士学位考试      | tdxl     |\n| 社会证书考试 | 全国四六级考试（CET）         | cet      |\n|              | 全国计算机等级考试（NCRE）    | ncre     |\n|              | 全国计算机应用水平考试（NIT） | nit      |\n|              | 全国英语等级考试（PETS）      | pets     |\n|              | 全国外语水平考试（WSK）       | wsk      |\n|              | 书画等级考试（CCPT）          | ccpt     |",
+        "location": "index.ts"
+      },
+      "/global/jlpt": {
+        "path": "/global/jlpt",
+        "name": "日本语能力测试(JLPT)通知",
+        "url": "jlpt.neea.edu.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/neea/global/jlpt",
+        "parameters": {},
+        "categories": [
+          "study"
+        ],
+        "features": {
+          "supportRadar": true
         },
         "radar": [
           {
             "source": [
-              "jlpt.neea.cn/"
-            ]
+              "jlpt.neea.edu.cn",
+              "jlpt.neea.cn"
+            ],
+            "target": "/global/jlpt"
           }
         ],
-        "name": "教育部考试中心日本语能力测试重要通知",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "jlpt.neea.cn/",
         "location": "jlpt.ts"
       }
     },
-    "name": "NEEA 中国教育考试网",
-    "url": "jlpt.neea.cn"
+    "name": "中国教育考试网",
+    "url": "www.neea.edu.cn"
   },
   "nenu": {
     "routes": {
