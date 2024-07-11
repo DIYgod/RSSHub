@@ -93,7 +93,7 @@ async function handler(ctx) {
                     const $event = load(eventDetails);
                     item.description = $event(".page_con").html();
                 }
-                else if (item.link.includes('zhuanlan')){
+                else if (item.link.includes('zhuanlan')) {
                     item.description += content('.mod-word').html();
                 }
 
