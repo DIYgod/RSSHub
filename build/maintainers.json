@@ -3674,6 +3674,9 @@
     "Kiotlin"
   ],
   "/m4/:id?/:category{.+}?": [],
+  "/maccms/:domain/:type?/:size?": [
+    "hualiong"
+  ],
   "/macfilos/blog": [
     "nczitzk"
   ],
@@ -3869,9 +3872,6 @@
   ],
   "/modrinth/project/:id/versions/:routeParams?": [
     "SettingDust"
-  ],
-  "/moduzy/:type/:hours?": [
-    "hualiong"
   ],
   "/mohw/clarification": [
     "nczitzk"
