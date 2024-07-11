@@ -89,7 +89,9 @@ async function handler(ctx) {
                     item.description += content('.eval-mod_ugo').html();
                 }
                 else if (item.link.includes('events')) {
-                    item.description += await ofetch(`https://www.bagevent.com/event/${item.link.match(/\d+/)[0]}`);
+                    const eventDetails = await ofetch(`https://www.bagevent.com/event/${item.link.match(/\d+/)[0]}`);
+                    const $event = load(eventDetails);
+                    item.description = $event(".page_con").html();
                 }
 
                 return item;
