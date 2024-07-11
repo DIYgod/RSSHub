@@ -1,4 +1,4 @@
-import { Result, Vod } from '@/routes/cms/type';
+import { Result, Vod } from '@/routes/maccms/type';
 import { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import path from 'node:path';
@@ -10,9 +10,9 @@ import { getCurrentPath } from '@/utils/helpers';
 const render = (vod: Vod, link: string) => art(path.join(getCurrentPath(import.meta.url), 'templates', 'vod.art'), { vod, link });
 
 export const route: Route = {
-    path: ':domain/:type?/:size?',
+    path: '/:domain/:type?/:size?',
     categories: ['multimedia'],
-    example: '/cms/moduzy.net/2',
+    example: '/maccms/moduzy.net/2',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -33,12 +33,12 @@ export const route: Route = {
 每个采集站提供的影视类别ID是不同的，即参数中的 \`type\` 是不同的。**可以先访问一次站点提供的采集接口，然后从返回结果中的 \`class\` 字段中的 \`type_id\`获取相应的类别ID**
 :::
 
-| 站名 | 域名 | 站名 | 域名 | 站名 | 域名 |
-| --- | --- | --- | --- | --- | --- |
-| 魔都资源网 | moduzy.net | 华为吧影视资源站 | hw8.live | 360资源站 | 360zy.com |
-| jkun爱坤联盟资源网 | ikunzyapi.com | 奥斯卡资源站 | aosikazy.com | 飞速资源采集网 | www.feisuzyapi.com |
-| 森林资源网 | slapibf.com | 天空资源采集网 | api.tiankongapi.com | 百度云资源 | api.apibdzy.com |
-| 红牛资源站 | www.hongniuzy2.com | 乐视资源网 | leshiapi.com | 暴风资源 | bfzyapi.com |`,
+| 站名                | 域名                                             | 站名             | 域名                                               | 站名           | 域名                                            |
+| ------------------- | ------------------------------------------------ | ---------------- | -------------------------------------------------- | -------------- | ----------------------------------------------- |
+| 魔都资源网          | [moduzy.net](https://moduzy.net)                 | 华为吧影视资源站 | [hw8.live](https://hw8.live)                       | 360 资源站     | [360zy.com](https://360zy.com)                  |
+| jkun 爱坤联盟资源网 | [ikunzyapi.com](https://ikunzyapi.com)           | 奥斯卡资源站     | [aosikazy.com](https://aosikazy.com)               | 飞速资源采集网 | [www.feisuzyapi.com](http://www.feisuzyapi.com) |
+| 森林资源网          | [slapibf.com](https://slapibf.com)               | 天空资源采集网   | [api.tiankongapi.com](https://api.tiankongapi.com) | 百度云资源     | [api.apibdzy.com](https://api.apibdzy.com)      |
+| 红牛资源站          | [www.hongniuzy2.com](https://www.hongniuzy2.com) | 乐视资源网       | [leshiapi.com](https://leshiapi.com)               | 暴风资源       | [bfzyapi.com](https://bfzyapi.com)              |`,
     handler: async (ctx) => {
         const { domain, type = '0', size = '30' } = ctx.req.param();
         if (!list.has(domain)) {
