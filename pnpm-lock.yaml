@@ -295,8 +295,8 @@ importers:
         specifier: 9.0.4
         version: 9.0.4
       '@types/imapflow':
-        specifier: 1.0.18
-        version: 1.0.18
+        specifier: 1.0.19
+        version: 1.0.19
       '@types/js-beautify':
         specifier: 1.14.3
         version: 1.14.3
@@ -2035,8 +2035,8 @@ packages:
   '@types/http-errors@2.0.4':
     resolution: {integrity: sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==}
 
-  '@types/imapflow@1.0.18':
-    resolution: {integrity: sha512-BoWZUoMktji2YJmkRY8z0KsjvyDNpBzeC/rLVMFKcHkPxaKp+SHBFfx/kj7ltKh3l010Lc9RZqnJs8KUMNhf6Q==}
+  '@types/imapflow@1.0.19':
+    resolution: {integrity: sha512-U48VZXe4XYhS3AFNI+4ougW8OXI4VaKjyF0nGXgVzIN8SPs9lh2LPNRM0HmIM+hUTw60l7MHgbQO8hsf+Q4U5w==}
 
   '@types/js-beautify@1.14.3':
     resolution: {integrity: sha512-FMbQHz+qd9DoGvgLHxeqqVPaNRffpIu5ZjozwV8hf9JAGpIOzuAf4wGbRSo8LNITHqGjmmVjaMggTT5P4v4IHg==}
@@ -9228,7 +9228,7 @@ snapshots:
 
   '@types/http-errors@2.0.4': {}
 
-  '@types/imapflow@1.0.18':
+  '@types/imapflow@1.0.19':
     dependencies:
       '@types/node': 20.14.10
 
