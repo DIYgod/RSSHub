@@ -129,7 +129,7 @@
         "twitter-api-v2": "1.17.1",
         "undici": "6.19.2",
         "uuid": "10.0.0",
-        "winston": "3.13.0",
+        "winston": "3.13.1",
         "xxhash-wasm": "1.0.2",
         "zod": "3.23.8"
     },
