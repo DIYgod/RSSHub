@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export function getArticle(item) {
     return cache.tryGet(item.link, async () => {
@@ -11,6 +12,9 @@ export function getArticle(item) {
         item.description = item.link.includes('external')
             ? content(':is([class^=external-article-brief],[class^=external-article-content])').html()
             : content(':is([class^=brief__BriefContainer],[class^=article-content__Wrapper])').html();
+
+        item.category = [...item.category, ...(content("meta[name='keywords']").attr("content") ?? "").split(",")];
+
 
         return item;
     });
