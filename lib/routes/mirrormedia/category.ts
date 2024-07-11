@@ -37,7 +37,49 @@ async function handler(ctx) {
                     ...categoryFilter, ...sectionFilter,
                 },
             },
-            query: `fragment section on Section {\n  id\n  name\n  slug\n  state\n  __typename\n}\n\nfragment category on Category {\n  id\n  name\n  slug\n  state\n  __typename\n}\n\nfragment listingPost on Post {\n  id\n  slug\n  title\n  brief\n  publishedDate\n  state\n  sections(where: {state: {equals: "active"}}) {\n    ...section\n    __typename\n  }\n  categories(where: {state: {equals: "active"}}) {\n    ...category\n    __typename\n  }\n  isFeatured\n  __typename\n}\n\nquery ($take: Int, $skip: Int, $orderBy: [PostOrderByInput!]!, $filter: PostWhereInput!) {\n  postsCount(where: $filter)\n  posts(take: $take, skip: $skip, orderBy: $orderBy, where: $filter) {\n    ...listingPost\n    __typename\n  }\n}`,
+            query: `
+fragment section on Section {
+  id
+  name
+  slug
+  state
+  __typename
+}
+
+fragment category on Category {
+  id
+  name
+  slug
+  state
+  __typename
+}
+
+fragment listingPost on Post {
+  id
+  slug
+  title
+  brief
+  publishedDate
+  state
+  sections(where: {state: {equals: "active"}}) {
+    ...section
+    __typename
+  }
+  categories(where: {state: {equals: "active"}}) {
+    ...category
+    __typename
+  }
+  isFeatured
+  __typename
+}
+
+query ($take: Int, $skip: Int, $orderBy: [PostOrderByInput!]!, $filter: PostWhereInput!) {
+  postsCount(where: $filter)
+  posts(take: $take, skip: $skip, orderBy: $orderBy, where: $filter) {
+    ...listingPost
+    __typename
+  }
+}`,
         },
     });
 

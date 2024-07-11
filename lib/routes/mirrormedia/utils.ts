@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
 export function getArticle(item) {
     return cache.tryGet(item.link, async () => {
