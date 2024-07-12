@@ -3,6 +3,7 @@ import { config } from '@/config';
 import logger from '@/utils/logger';
 
 const rofetch = createFetch().create({
+    retryStatusCodes: [400, 408, 409, 425, 429, 500, 502, 503, 504],
     retry: config.requestRetry,
     retryDelay: 1000,
     // timeout: config.requestTimeout,
