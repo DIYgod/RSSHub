@@ -8,6 +8,7 @@ import { v5 as uuidv5 } from 'uuid';
 import { authenticator } from 'otplib';
 import logger from '@/utils/logger';
 import cache from '@/utils/cache';
+import { RateLimiterRedis, RateLimiterQueue } from 'rate-limiter-flexible';
 
 const NAMESPACE = 'd41d092b-b007-48f7-9129-e9538d2d8fe9';
 
@@ -25,11 +26,24 @@ const headers = {
     Authorization: bearerToken,
 };
 
+const loginLimiter = new RateLimiterRedis({
+    points: 1,
+    duration: 20,
+    execEvenly: true,
+    storeClient: cache.clients.redisClient,
+});
+
+const loginLimiterQueue = new RateLimiterQueue(loginLimiter, {
+    maxQueueSize: 100,
+});
+
 async function login({ username, password, authenticationSecret }) {
     return (await cache.tryGet(
         `twitter:authentication:${username}`,
         async () => {
             try {
+                await loginLimiterQueue.removeTokens(1);
+
                 logger.debug('Twitter login start.');
                 const android_id = uuidv5(username, NAMESPACE);
                 headers['X-Twitter-Client-DeviceID'] = android_id;
