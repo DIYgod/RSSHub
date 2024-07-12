@@ -39,8 +39,8 @@ export type Config = {
         port?: string;
         auth?: string;
         url_regex: string;
+        strategy: 'on_retry' | 'all';
     };
-    proxyStrategy: string;
     pacUri?: string;
     pacScript?: string;
     accessKey?: string;
@@ -399,8 +399,8 @@ const calculateValue = () => {
             port: envs.PROXY_PORT,
             auth: envs.PROXY_AUTH,
             url_regex: envs.PROXY_URL_REGEX || '.*',
+            strategy: envs.PROXY_STRATEGY || 'all', // all / on_retry
         },
-        proxyStrategy: envs.PROXY_STRATEGY || 'all', // all / on_retry
         pacUri: envs.PAC_URI,
         pacScript: envs.PAC_SCRIPT,
         // access control

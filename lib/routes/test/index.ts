@@ -23,7 +23,7 @@ async function handler(ctx) {
     if (ctx.req.param('id') === 'httperror') {
         await got({
             method: 'get',
-            url: 'https://httpbingo.org/status/404',
+            url: 'https://httpbingo.org/status/429',
         });
     }
     if (ctx.req.param('id') === 'config-not-found-error') {

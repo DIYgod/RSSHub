@@ -40,8 +40,14 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         }
     }
 
+    let isRetry = false;
+    if (request.headers.get('x-retry')) {
+        isRetry = true;
+        request.headers.delete('x-retry');
+    }
+
     // proxy
-    if (!options.dispatcher && proxy.dispatcher) {
+    if (!options.dispatcher && proxy.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {
         const proxyRegex = new RegExp(proxy.proxyObj.url_regex);
         let urlHandler;
         try {
