@@ -52,6 +52,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
 
         if (proxyRegex.test(request.url) && request.url.startsWith('http') && !(urlHandler && urlHandler.host === proxy.proxyUrlHandler?.host)) {
             options.dispatcher = proxy.dispatcher;
+            logger.debug(`Proxying request: ${request.url}`);
         }
     }
 
