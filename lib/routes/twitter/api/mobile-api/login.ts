@@ -8,7 +8,7 @@ import { v5 as uuidv5 } from 'uuid';
 import { authenticator } from 'otplib';
 import logger from '@/utils/logger';
 import cache from '@/utils/cache';
-import { RateLimiterRedis, RateLimiterQueue } from 'rate-limiter-flexible';
+import { RateLimiterMemory, RateLimiterRedis, RateLimiterQueue } from 'rate-limiter-flexible';
 
 const NAMESPACE = 'd41d092b-b007-48f7-9129-e9538d2d8fe9';
 
@@ -26,12 +26,18 @@ const headers = {
     Authorization: bearerToken,
 };
 
-const loginLimiter = new RateLimiterRedis({
-    points: 1,
-    duration: 20,
-    execEvenly: true,
-    storeClient: cache.clients.redisClient,
-});
+const loginLimiter = cache.clients.redisClient
+    ? new RateLimiterRedis({
+          points: 1,
+          duration: 20,
+          execEvenly: true,
+          storeClient: cache.clients.redisClient,
+      })
+    : new RateLimiterMemory({
+          points: 1,
+          duration: 20,
+          execEvenly: true,
+      });
 
 const loginLimiterQueue = new RateLimiterQueue(loginLimiter, {
     maxQueueSize: 100,
