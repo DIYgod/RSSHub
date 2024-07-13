@@ -7,9 +7,28 @@ import { Cookie, CookieJar } from 'tough-cookie';
 import { CookieAgent } from 'http-cookie-agent/undici';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
+import { RateLimiterMemory, RateLimiterRedis, RateLimiterQueue } from 'rate-limiter-flexible';
+import ofetch from '@/utils/ofetch';
 
 const dispatchers = {};
 let authTokenIndex = 0;
+
+const loginLimiter = cache.clients.redisClient
+    ? new RateLimiterRedis({
+          points: 1,
+          duration: 5,
+          execEvenly: true,
+          storeClient: cache.clients.redisClient,
+      })
+    : new RateLimiterMemory({
+          points: 1,
+          duration: 5,
+          execEvenly: true,
+      });
+
+const loginLimiterQueue = new RateLimiterQueue(loginLimiter, {
+    maxQueueSize: 200,
+});
 
 const token2Cookie = (token) =>
     cache.tryGet(`twitter:cookie:${token}`, async () => {
@@ -30,6 +49,7 @@ export const twitterGot = async (url, params) => {
     if (!config.twitter.authToken) {
         throw new ConfigNotFoundError('Twitter cookie is not configured');
     }
+    await loginLimiterQueue.removeTokens(1);
     const token = config.twitter.authToken[authTokenIndex++ % config.twitter.authToken.length];
     let cookie = await token2Cookie(token);
     if (cookie) {
@@ -53,7 +73,7 @@ export const twitterGot = async (url, params) => {
             .map((c) => [c?.key, c?.value])
     );
 
-    const response = await got(`${url}?${queryString.stringify(params)}`, {
+    const response = await ofetch.raw(`${url}?${queryString.stringify(params)}`, {
         headers: {
             authority: 'x.com',
             accept: '*/*',
@@ -76,8 +96,11 @@ export const twitterGot = async (url, params) => {
         logger.debug(`Reset twitter cookie for token ${token}`);
         await cache.set(`twitter:cookie:${token}`, JSON.stringify(dispatchers[token].jar.serializeSync()), config.cache.contentExpire);
     }
+    if (response.status === 403) {
+        await cache.set(`twitter:cookie:${token}`, '', config.cache.contentExpire);
+    }
 
-    return response.data;
+    return response._data;
 };
 
 export const paginationTweets = async (endpoint: string, userId: number | undefined, variables: Record<string, any>, path?: string[]) => {
@@ -99,7 +122,7 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
         if (data?.user?.result?.timeline_v2?.timeline?.instructions) {
             instructions = data.user.result.timeline_v2.timeline.instructions;
         } else {
-            throw new Error('Because Twitter Premium has features that hide your likes, this RSS link is not available for Twitter Premium accounts.');
+            // throw new Error('Because Twitter Premium has features that hide your likes, this RSS link is not available for Twitter Premium accounts.');
         }
     }
 
