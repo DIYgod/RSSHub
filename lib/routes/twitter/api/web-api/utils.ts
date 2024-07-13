@@ -123,6 +123,8 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
             instructions = data.user.result.timeline_v2.timeline.instructions;
         } else {
             // throw new Error('Because Twitter Premium has features that hide your likes, this RSS link is not available for Twitter Premium accounts.');
+            logger.debug('Instructions not found in data', data);
+            instructions = [];
         }
     }
 
