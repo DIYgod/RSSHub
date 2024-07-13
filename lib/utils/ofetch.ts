@@ -7,13 +7,17 @@ const rofetch = createFetch().create({
     retry: config.requestRetry,
     retryDelay: 1000,
     // timeout: config.requestTimeout,
-    onResponseError({ request, options }) {
+    onResponseError({ request, response, options }) {
         if (options.retry) {
-            logger.warn(`Request ${request} remaining retry attempts: ${options.retry}`);
+            logger.warn(`Request ${request} with error ${response.status} remaining retry attempts: ${options.retry}`);
             if (!options.headers) {
                 options.headers = {};
             }
-            options.headers['x-retry'] = options.retry;
+            if (options.headers instanceof Headers) {
+                options.headers.set('x-prefer-proxy', '1');
+            } else {
+                options.headers['x-prefer-proxy'] = '1';
+            }
         }
     },
     onRequestError({ request, error }) {

@@ -41,9 +41,9 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
     }
 
     let isRetry = false;
-    if (request.headers.get('x-retry')) {
+    if (request.headers.get('x-prefer-proxy')) {
         isRetry = true;
-        request.headers.delete('x-retry');
+        request.headers.delete('x-prefer-proxy');
     }
 
     // proxy
