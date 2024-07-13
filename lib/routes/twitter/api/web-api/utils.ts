@@ -97,6 +97,7 @@ export const twitterGot = async (url, params) => {
         await cache.set(`twitter:cookie:${token}`, JSON.stringify(dispatchers[token].jar.serializeSync()), config.cache.contentExpire);
     }
     if (response.status === 403) {
+        logger.debug(`Delete twitter cookie for token ${token}`);
         await cache.set(`twitter:cookie:${token}`, '', config.cache.contentExpire);
     }
 
