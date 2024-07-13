@@ -47,7 +47,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
     }
 
     // proxy
-    if (!options.dispatcher && proxy.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {
+    if (!init?.dispatcher && proxy.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {
         const proxyRegex = new RegExp(proxy.proxyObj.url_regex);
         let urlHandler;
         try {
