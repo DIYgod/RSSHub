@@ -10557,6 +10557,24 @@
     "_name": "鏡週刊 Mirror Media",
     ".": [
       {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/category/:category",
+          "/section/:section"
+        ],
+        "target": "/mirrormedia/category/:category"
+      },
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/category/:category",
+          "/section/:section"
+        ],
+        "target": "/mirrormedia/section/:section"
+      },
+      {
         "title": "首页",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [

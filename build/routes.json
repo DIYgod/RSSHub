@@ -38696,6 +38696,60 @@
   },
   "mirrormedia": {
     "routes": {
+      "/category/:category": {
+        "path": [
+          "/category/:category",
+          "/section/:section"
+        ],
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/mirrormedia/category/political",
+        "parameters": {
+          "category": "分类名",
+          "section": "子板名"
+        },
+        "name": "分类",
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "radar": [
+          {
+            "source": [
+              "mirrormedia.mg/category/:category",
+              "mirrormedia.mg/section/:section"
+            ]
+          }
+        ],
+        "location": "category.ts"
+      },
+      "/section/:section": {
+        "path": [
+          "/category/:category",
+          "/section/:section"
+        ],
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/mirrormedia/category/political",
+        "parameters": {
+          "category": "分类名",
+          "section": "子板名"
+        },
+        "name": "分类",
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "radar": [
+          {
+            "source": [
+              "mirrormedia.mg/category/:category",
+              "mirrormedia.mg/section/:section"
+            ]
+          }
+        ],
+        "location": "category.ts"
+      },
       "/": {
         "path": "/",
         "categories": [

@@ -3830,6 +3830,12 @@
     "rde9",
     "nczitzk"
   ],
+  "/mirrormedia/category/:category": [
+    "dzx-dzx"
+  ],
+  "/mirrormedia/section/:section": [
+    "dzx-dzx"
+  ],
   "/mirrormedia/": [
     "dzx-dzx"
   ],
