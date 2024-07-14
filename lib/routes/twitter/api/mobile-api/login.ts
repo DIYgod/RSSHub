@@ -39,9 +39,7 @@ const loginLimiter = cache.clients.redisClient
           execEvenly: true,
       });
 
-const loginLimiterQueue = new RateLimiterQueue(loginLimiter, {
-    maxQueueSize: 100,
-});
+const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
 async function login({ username, password, authenticationSecret }) {
     return (await cache.tryGet(

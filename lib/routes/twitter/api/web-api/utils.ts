@@ -26,9 +26,7 @@ const loginLimiter = cache.clients.redisClient
           execEvenly: true,
       });
 
-const loginLimiterQueue = new RateLimiterQueue(loginLimiter, {
-    maxQueueSize: 200,
-});
+const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
 const token2Cookie = (token) =>
     cache.tryGet(`twitter:cookie:${token}`, async () => {

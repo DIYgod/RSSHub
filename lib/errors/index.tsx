@@ -15,8 +15,12 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     const hasMatchedRoute = matchedRoute !== '/*';
 
     const debug = getDebugInfo();
-    if (ctx.res.headers.get('RSSHub-Cache-Status')) {
-        debug.hitCache++;
+    try {
+        if (ctx.res.headers.get('RSSHub-Cache-Status')) {
+            debug.hitCache++;
+        }
+    } catch {
+        // ignore
     }
     debug.error++;
 
