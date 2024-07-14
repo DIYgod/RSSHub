@@ -12,8 +12,7 @@ export function getArticle(item) {
             ? content(':is([class^=external-article-brief],[class^=external-article-content])').html()
             : content(':is([class^=brief__BriefContainer],[class^=article-content__Wrapper])').html();
 
-        item.category = [...item.category, ...(content("meta[name='keywords']").attr("content") ?? "").split(",")];
-
+        item.category = [...item.category, ...(content("meta[name='keywords']").attr('content') ?? '').split(',')];
 
         return item;
     });

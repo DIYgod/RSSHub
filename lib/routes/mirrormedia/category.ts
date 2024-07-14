@@ -34,7 +34,8 @@ async function handler(ctx) {
                 orderBy: { publishedDate: 'desc' },
                 filter: {
                     state: { equals: 'published' },
-                    ...categoryFilter, ...sectionFilter,
+                    ...categoryFilter,
+                    ...sectionFilter,
                 },
             },
             query: `
