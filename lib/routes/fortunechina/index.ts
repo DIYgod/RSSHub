@@ -64,7 +64,7 @@ async function handler(ctx) {
                 const detailResponse = await ofetch(item.link, {
                     headers: {
                         'User-Agent': UA,
-                    }
+                    },
                 });
 
                 const content = load(detailResponse);
@@ -87,13 +87,11 @@ async function handler(ctx) {
                 item.description = content(item.link.includes('content') ? '.contain .text' : '.contain .top').html();
                 if (item.link.includes('jingxuan')) {
                     item.description += content('.eval-mod_ugo').html();
-                }
-                else if (item.link.includes('events')) {
+                } else if (item.link.includes('events')) {
                     const eventDetails = await ofetch(`https://www.bagevent.com/event/${item.link.match(/\d+/)[0]}`);
                     const $event = load(eventDetails);
-                    item.description = $event(".page_con").html();
-                }
-                else if (item.link.includes('zhuanlan')) {
+                    item.description = $event('.page_con').html();
+                } else if (item.link.includes('zhuanlan')) {
                     item.description += content('.mod-word').html();
                 }
 
