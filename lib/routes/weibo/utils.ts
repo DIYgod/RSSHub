@@ -92,6 +92,24 @@ const weiboUtils = {
         // 处理图片的链接
         htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a\s+href="https?:\/\/[^"]+\.(jpg|png|gif)"/g, (match) => `${match} data-rsshub-image="href"`);
 
+        // 处理带有图片的转发
+        if(htmlNewLineUnreplaced.match('评论配图')){
+            let style = '';
+            let retweetedImg = htmlNewLineUnreplaced.match(/href="([^"]*)"/)[1];
+            htmlNewLineUnreplaced += '<img ';
+            htmlNewLineUnreplaced += readable ? 'vspace="8" hspace="4"' : '';
+            if (widthOfPics >= 0) {
+                htmlNewLineUnreplaced += ` width="${widthOfPics}"`;
+                style += `width: ${widthOfPics}px;`;
+            }
+            if (heightOfPics >= 0) {
+                htmlNewLineUnreplaced += ` height="${heightOfPics}"`;
+                style += `height: ${heightOfPics}px;`;
+            }
+            htmlNewLineUnreplaced += ` style="${style}"` + ' src="' + retweetedImg + '">';
+
+        }
+
         let html = htmlNewLineUnreplaced.replaceAll('\n', '<br>');
 
         // 添加用户名和头像
@@ -426,9 +444,24 @@ const weiboUtils = {
                 for (const comment of comments) {
                     itemDesc += '<p style="margin-bottom: 0.5em;margin-top: 0.5em">';
                     itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${comment.user.screen_name}</a>: ${comment.text}`;
+                    if(comment.text.includes('图片评论')||comment.text.includes('评论配图')){
+                        itemDesc+= `<br><img src="${comment.pic.url}">`;
+                    }
                     if (comment.comments) {
                         itemDesc += '<blockquote style="border-left:0.2em solid #80808080; margin-left: 0.3em; padding-left: 0.5em; margin-bottom: 0.5em; margin-top: 0.25em">';
                         for (const com of comment.comments) {
+                            if(com.text.includes('图片评论')||com.text.includes('评论配图')||com.text.includes('查看动图')){
+                                console.log(com.text);
+                                itemDesc += '<div style="font-size: 0.9em">';
+                                itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${com.user.screen_name}</a>: ${'评论配图'}`;
+                                itemDesc += `<br><img src="${((htmlString) => {
+                                    const hrefRegex = /href="(https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)|[^"]*)"/;
+                                    const match = htmlString.match(hrefRegex);
+                                    return match ? (match[2] ? decodeURIComponent(match[2]) : match[1]) : '';
+                                  })(com.text)}">`;
+                                itemDesc += '</div>';
+                                continue;
+                            }
                             itemDesc += '<div style="font-size: 0.9em">';
                             itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${com.user.screen_name}</a>: ${com.text}`;
                             itemDesc += '</div>';
