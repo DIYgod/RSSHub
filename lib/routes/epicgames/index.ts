@@ -72,7 +72,7 @@ async function handler(ctx) {
                     ? item.catalogNs.mappings[0].pageSlug
                     : item.offerMappings && item.offerMappings.length > 0
                       ? item.offerMappings[0].pageSlug
-                      : item.productSlug ?? item.urlSlug;
+                      : (item.productSlug ?? item.urlSlug);
             if (item.offerType === 'ADD_ON') {
                 linkSlug = item.offerMappings[0].pageSlug;
             }

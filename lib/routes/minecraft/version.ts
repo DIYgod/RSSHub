@@ -120,7 +120,7 @@ async function handler(ctx?: Context) {
         data = data.filter((item) => item.type === versionType);
     }
 
-    const title = `Minecraft Java版${versionType === 'all' ? '' : typeName[versionType] ?? versionType}游戏更新`;
+    const title = `Minecraft Java版${versionType === 'all' ? '' : (typeName[versionType] ?? versionType)}游戏更新`;
 
     return {
         title,

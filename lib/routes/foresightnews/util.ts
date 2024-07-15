@@ -61,7 +61,7 @@ const processItems = async (apiUrl, limit, ...searchParams) => {
             column,
             item.event_type,
             item.is_hot ? constants.labelHot : undefined,
-            item.is_important ? item.important_tag?.name ?? constants.labelImportant : '',
+            item.is_important ? (item.important_tag?.name ?? constants.labelImportant) : '',
             item.label,
             ...(item.tags?.map((c) => c.name) ?? []),
         ].filter((v, index, self) => v && self.indexOf(v) === index);

@@ -376,7 +376,7 @@ const processItems = async (items, limit, tryGet) => {
                 }),
                 author: item.user_info?.username ?? item.brief_column?.name ?? item.author_info?.username ?? item.author,
                 guid,
-                pubDate: item.publish_time ?? item.dateline ? parseDate(item.publish_time ?? item.dateline, 'X') : undefined,
+                pubDate: (item.publish_time ?? item.dateline) ? parseDate(item.publish_time ?? item.dateline, 'X') : undefined,
                 upvotes: Number.parseInt(upvotes, 10),
                 downvotes: Number.parseInt(downvotes, 10),
                 comments: Number.parseInt(comments, 10),
