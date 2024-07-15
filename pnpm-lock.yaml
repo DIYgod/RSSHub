@@ -1907,8 +1907,8 @@ packages:
     peerDependencies:
       eslint: '>=8.40.0'
 
-  '@swc/helpers@0.5.11':
-    resolution: {integrity: sha512-YNlnKRWF2sVojTpIyzwou9XoTNbzbzONwRhOoniEioF1AtaitTvVZblaQRrAzChWQ1bLYyYSWzM18y4WwgzJ+A==}
+  '@swc/helpers@0.5.12':
+    resolution: {integrity: sha512-KMZNXiGibsW9kvZAO1Pam2JPTDBm+KSHMMHWdsyI/1DbIZjT2A6Gy3hblVXUMEDvUAKq+e0vL0X0o54owWji7g==}
 
   '@szmarczak/http-timer@5.0.1':
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
@@ -2229,17 +2229,17 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@unhead/dom@1.9.15':
-    resolution: {integrity: sha512-4sdP/2Unt4zFRO8pBZVXvebidGmrLEvnDU6ZpasZfInjiiuuaQOVTJaiKnEnug3cmW2YjglPG2d1c2xAsHr3NQ==}
+  '@unhead/dom@1.9.16':
+    resolution: {integrity: sha512-aZIAnnc89Csi1vV4mtlHYI765B7m1yuaXUuQiYHwr6glE9FLyy2X87CzEci4yPH/YbkKm0bGQRfcxXq6Eq0W7g==}
 
-  '@unhead/schema@1.9.15':
-    resolution: {integrity: sha512-9ADZuXOH+tOKHIjXsgg+SPINnh/YJEBMCjpg+8VLGgE2r5med3jAnOU8g7ALfuVEBRBrbFgs1qVKoKm1NkTXJQ==}
+  '@unhead/schema@1.9.16':
+    resolution: {integrity: sha512-V2BshX+I6D2wN4ys5so8RQDUgsggsxW9FVBiuQi4h8oPWtHclogxzDiHa5BH2TgvNIoUxLnLYNAShMGipmVuUw==}
 
-  '@unhead/shared@1.9.15':
-    resolution: {integrity: sha512-+U5r04eRtCNcniWjzNPRtwVuF9rW/6EXxhGvuohJBDaIE57J6BHWo5cEp7Pqts7DlTFs7LiDtH8ONNDv4QqRaw==}
+  '@unhead/shared@1.9.16':
+    resolution: {integrity: sha512-pfJnArULCY+GBr7OtYyyxihRiQLkT31TpyK6nUKIwyax4oNOGyhNfk0RFzNq16BwLg60d1lrc5bd5mZGbfClMA==}
 
-  '@unhead/vue@1.9.15':
-    resolution: {integrity: sha512-h866wYOs6Q6+lc0av4EU0CPTtTvaz9UWwwsiNoulzJa95QyUN/gDPI/NiDuKweHswY+a0SSzEqe9Nhg+LlmHew==}
+  '@unhead/vue@1.9.16':
+    resolution: {integrity: sha512-kpMWWwm8cOwo4gw4An43pz30l2CqNtmJpX5Xsu79rwf6Viq8jHAjk6BGqyKy220M2bpa0Va4fnR532SgGO1YgQ==}
     peerDependencies:
       vue: '>=2.7 || >=3'
 
@@ -2394,8 +2394,8 @@ packages:
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
-  ajv@8.16.0:
-    resolution: {integrity: sha512-F0twR8U1ZU67JIEtekUcLkXkoO5mMMmgGD8sK/xUFzJ805jxHQl92hImFAqqXMyMYjSPOyUPAwHYhB72g5sTXw==}
+  ajv@8.17.1:
+    resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
 
   ansi-escapes@4.3.2:
     resolution: {integrity: sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==}
@@ -2722,8 +2722,8 @@ packages:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
 
-  caniuse-lite@1.0.30001641:
-    resolution: {integrity: sha512-Phv5thgl67bHYo1TtMY/MurjkHhV4EDaCosezRXgZ8jzA/Ub+wjxAvbGvjoFENStinwi5kCyOYV3mi5tOGykwA==}
+  caniuse-lite@1.0.30001642:
+    resolution: {integrity: sha512-3XQ0DoRgLijXJErLSl+bLnJ+Et4KqV1PY6JJBGAFlsNsz31zeAIncyeZfLCabHK/jtSh+671RM9YMldxjUPZtA==}
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -3228,8 +3228,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -3512,8 +3512,8 @@ packages:
     resolution: {integrity: sha512-dOt21O7lTMhDM+X9mB4GX+DZrZtCUJPL/wlcTqxyrx5IvO0IYtILdtrQGQp+8n5S0gwSVmOf9NQrjMOgfQZlIg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  eslint-scope@8.0.1:
-    resolution: {integrity: sha512-pL8XjgP4ZOmmwfFE8mEhSxA7ZY4C+LWyqjQ3o4yWkkmD0qcMT9kkW3zWHOczhWcjTSgqycYAgwSlXvZltv65og==}
+  eslint-scope@8.0.2:
+    resolution: {integrity: sha512-6E4xmrTw5wtxnLA5wYL3WDfhZ/1bUBGOXV0zQvVRDOtrR8D0p6W7fs3JweNYhwRYeGvd/1CKX2se0/2s7Q/nJA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   eslint-summary@1.0.0:
@@ -3663,6 +3663,9 @@ packages:
 
   fast-safe-stringify@2.1.1:
     resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
+
+  fast-uri@3.0.1:
+    resolution: {integrity: sha512-MWipKbbYiYI0UC7cl8m/i/IWTqfC8YXsqjzybjddLsFjStroQzsHXkc73JutMvBiXmOvapk+axIl79ig5t55Bw==}
 
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
@@ -5572,11 +5575,6 @@ packages:
     resolution: {integrity: sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==}
     engines: {node: '>=6.0.0'}
 
-  prettier@3.3.2:
-    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
-    engines: {node: '>=14'}
-    hasBin: true
-
   prettier@3.3.3:
     resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
@@ -6670,8 +6668,8 @@ packages:
     resolution: {integrity: sha512-JfjKqIauur3Q6biAtHJ564e3bWa8VvT+7cSiOJHFbX4Erv6CLGDpg8z+Fmg/1OI/47RA+GI2QZaF48SSaLvyBA==}
     engines: {node: '>=18.17'}
 
-  unhead@1.9.15:
-    resolution: {integrity: sha512-/99Wft1CT0fxsWzmBeOwuH/k4HdMeyfDGyB4wFNVZVNTffRHDOqaqQ6RS+LHPsIiCKmm9FP7Vq7Rz09Zs/fQJQ==}
+  unhead@1.9.16:
+    resolution: {integrity: sha512-FOoXkuRNDwt7PUaNE0LXNCb6RCz4vTpkGymz4tJ8rcaG5uUJ0lxGK536hzCFwFw3Xkp3n+tkt2yCcbAZE/FOvA==}
 
   unicode-canonical-property-names-ecmascript@2.0.0:
     resolution: {integrity: sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ==}
@@ -8310,11 +8308,11 @@ snapshots:
 
   '@internationalized/date@3.5.4':
     dependencies:
-      '@swc/helpers': 0.5.11
+      '@swc/helpers': 0.5.12
 
   '@internationalized/number@3.5.3':
     dependencies:
-      '@swc/helpers': 0.5.11
+      '@swc/helpers': 0.5.12
 
   '@ioredis/commands@1.2.0': {}
 
@@ -8574,7 +8572,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.8
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8749,8 +8747,8 @@ snapshots:
       '@scalar/themes': 0.9.13(typescript@5.5.3)
       '@scalar/use-toasts': 0.7.4(typescript@5.5.3)
       '@scalar/use-tooltip': 1.0.2(typescript@5.5.3)
-      '@unhead/schema': 1.9.15
-      '@unhead/vue': 1.9.15(vue@3.4.31(typescript@5.5.3))
+      '@unhead/schema': 1.9.16
+      '@unhead/vue': 1.9.16(vue@3.4.31(typescript@5.5.3))
       '@vueuse/core': 10.11.0(vue@3.4.31(typescript@5.5.3))
       axios: 1.7.2
       fuse.js: 7.0.0
@@ -8758,7 +8756,7 @@ snapshots:
       httpsnippet-lite: 3.0.5
       nanoid: 5.0.7
       postcss-nested: 6.0.1(postcss@8.4.39)
-      unhead: 1.9.15
+      unhead: 1.9.16
       unified: 11.0.5
       vue: 3.4.31(typescript@5.5.3)
     transitivePeerDependencies:
@@ -8865,9 +8863,9 @@ snapshots:
 
   '@scalar/openapi-parser@0.7.2':
     dependencies:
-      ajv: 8.16.0
-      ajv-draft-04: 1.0.0(ajv@8.16.0)
-      ajv-formats: 3.0.1(ajv@8.16.0)
+      ajv: 8.17.1
+      ajv-draft-04: 1.0.0(ajv@8.17.1)
+      ajv-formats: 3.0.1(ajv@8.17.1)
       jsonpointer: 5.0.1
       leven: 4.0.0
       yaml: 2.4.5
@@ -9010,7 +9008,7 @@ snapshots:
       globby: 14.0.2
       jscodeshift: 0.15.2(@babel/preset-env@7.24.8(@babel/core@7.24.8))
       lodash: 4.17.21
-      prettier: 3.3.2
+      prettier: 3.3.3
       recast: 0.23.9
       tiny-invariant: 1.3.3
     transitivePeerDependencies:
@@ -9114,7 +9112,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@swc/helpers@0.5.11':
+  '@swc/helpers@0.5.12':
     dependencies:
       tslib: 2.6.3
 
@@ -9465,26 +9463,26 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@unhead/dom@1.9.15':
+  '@unhead/dom@1.9.16':
     dependencies:
-      '@unhead/schema': 1.9.15
-      '@unhead/shared': 1.9.15
+      '@unhead/schema': 1.9.16
+      '@unhead/shared': 1.9.16
 
-  '@unhead/schema@1.9.15':
+  '@unhead/schema@1.9.16':
     dependencies:
       hookable: 5.5.3
       zhead: 2.2.4
 
-  '@unhead/shared@1.9.15':
+  '@unhead/shared@1.9.16':
     dependencies:
-      '@unhead/schema': 1.9.15
+      '@unhead/schema': 1.9.16
 
-  '@unhead/vue@1.9.15(vue@3.4.31(typescript@5.5.3))':
+  '@unhead/vue@1.9.16(vue@3.4.31(typescript@5.5.3))':
     dependencies:
-      '@unhead/schema': 1.9.15
-      '@unhead/shared': 1.9.15
+      '@unhead/schema': 1.9.16
+      '@unhead/shared': 1.9.16
       hookable: 5.5.3
-      unhead: 1.9.15
+      unhead: 1.9.16
       vue: 3.4.31(typescript@5.5.3)
 
   '@vercel/nft@0.27.3':
@@ -9698,13 +9696,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ajv-draft-04@1.0.0(ajv@8.16.0):
+  ajv-draft-04@1.0.0(ajv@8.17.1):
     optionalDependencies:
-      ajv: 8.16.0
+      ajv: 8.17.1
 
-  ajv-formats@3.0.1(ajv@8.16.0):
+  ajv-formats@3.0.1(ajv@8.17.1):
     optionalDependencies:
-      ajv: 8.16.0
+      ajv: 8.17.1
 
   ajv@6.12.6:
     dependencies:
@@ -9713,12 +9711,12 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
-  ajv@8.16.0:
+  ajv@8.17.1:
     dependencies:
       fast-deep-equal: 3.1.3
+      fast-uri: 3.0.1
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
-      uri-js: 4.4.1
 
   ansi-escapes@4.3.2:
     dependencies:
@@ -9970,7 +9968,7 @@ snapshots:
 
   browserslist@4.23.2:
     dependencies:
-      caniuse-lite: 1.0.30001641
+      caniuse-lite: 1.0.30001642
       electron-to-chromium: 1.4.827
       node-releases: 2.0.14
       update-browserslist-db: 1.1.0(browserslist@4.23.2)
@@ -10051,7 +10049,7 @@ snapshots:
 
   camelcase@6.3.0: {}
 
-  caniuse-lite@1.0.30001641: {}
+  caniuse-lite@1.0.30001642: {}
 
   caseless@0.12.0: {}
 
@@ -10542,7 +10540,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -10870,7 +10868,7 @@ snapshots:
       esrecurse: 4.3.0
       estraverse: 5.3.0
 
-  eslint-scope@8.0.1:
+  eslint-scope@8.0.2:
     dependencies:
       esrecurse: 4.3.0
       estraverse: 5.3.0
@@ -10942,7 +10940,7 @@ snapshots:
       cross-spawn: 7.0.3
       debug: 4.3.5
       escape-string-regexp: 4.0.0
-      eslint-scope: 8.0.1
+      eslint-scope: 8.0.2
       eslint-visitor-keys: 4.0.0
       espree: 10.1.0
       esquery: 1.6.0
@@ -11146,6 +11144,8 @@ snapshots:
   fast-redact@3.5.0: {}
 
   fast-safe-stringify@2.1.1: {}
+
+  fast-uri@3.0.1: {}
 
   fastq@1.17.1:
     dependencies:
@@ -13379,8 +13379,6 @@ snapshots:
     dependencies:
       fast-diff: 1.3.0
 
-  prettier@3.3.2: {}
-
   prettier@3.3.3: {}
 
   pretty-bytes@6.1.1: {}
@@ -14170,7 +14168,7 @@ snapshots:
       jscodeshift: 0.15.2(@babel/preset-env@7.24.8(@babel/core@7.24.8))
       leven: 3.1.0
       ora: 5.4.1
-      prettier: 3.3.2
+      prettier: 3.3.3
       prompts: 2.4.2
       semver: 7.6.2
       strip-json-comments: 3.1.1
@@ -14624,11 +14622,11 @@ snapshots:
 
   undici@6.19.2: {}
 
-  unhead@1.9.15:
+  unhead@1.9.16:
     dependencies:
-      '@unhead/dom': 1.9.15
-      '@unhead/schema': 1.9.15
-      '@unhead/shared': 1.9.15
+      '@unhead/dom': 1.9.16
+      '@unhead/schema': 1.9.16
+      '@unhead/shared': 1.9.16
       hookable: 5.5.3
 
   unicode-canonical-property-names-ecmascript@2.0.0: {}
