@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: '用户文章',
-    maintainers: ['Maecenas'],
+    maintainers: ['Maecenas', 'nsnans'],
     handler,
 };
 
@@ -37,7 +37,7 @@ async function handler(ctx) {
     const data = await fetchDataWithCursors(id, perPage);
 
     let username: string = '';
-    if (data && data?.lengtnth) {
+    if (data && data?.length) {
         username = data[0] && data[0].author_user_info && data[0].author_user_info.user_name;
     }
 
@@ -81,7 +81,11 @@ async function fetchDataWithCursors(id, perPage) {
     const dataArray = await Promise.all(promises); // 等待所有请求完成
 
     // 将所有数据合并
-    const mergedData = dataArray.reduce((acc, curr) => acc.concat(curr ?? []), []);
+    // 使用for循环将数组合并为一个新数组
+    let mergedData: any[] = [];
+    for (const arr of dataArray) {
+        mergedData = [...mergedData, ...arr];
+    }
 
     return mergedData;
 }
