@@ -167,7 +167,7 @@
         "@typescript-eslint/parser": "7.16.0",
         "@vercel/nft": "0.27.3",
         "@vitest/coverage-v8": "2.0.2",
-        "eslint": "9.6.0",
+        "eslint": "9.7.0",
         "eslint-config-prettier": "9.1.0",
         "eslint-nibble": "8.1.0",
         "eslint-plugin-n": "17.9.0",
