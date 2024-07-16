@@ -18416,6 +18416,33 @@
     "name": "DT 财经",
     "url": "dtcj.com"
   },
+  "duckdb": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "programming"
+        ],
+        "example": "/duckdb/news",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "新闻",
+        "maintainers": [
+          "mocusez"
+        ],
+        "location": "news.ts"
+      }
+    },
+    "name": "DuckDB Foundation",
+    "url": "duckdb.org"
+  },
   "duozhuayu": {
     "routes": {
       "/search/:wd": {
