@@ -17,7 +17,7 @@ export const route: Route = {
                 description: 'Please see above for details.',
             },
             {
-                name: 'TWITTER_COOKIE',
+                name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
             },
         ],
