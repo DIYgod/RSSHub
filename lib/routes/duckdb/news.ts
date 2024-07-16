@@ -38,7 +38,6 @@ async function handler() {
                 title: item.find('h3').text().trim(),
                 link: `https://duckdb.org${item.find('a').eq(2).attr('href')}`,
                 pubDate: timezone(parseDate(item.find('.date').text(), 'YYYY-MM-DD'), 0),
-                author: 'DuckDB Organization',
             };
         });
 
@@ -46,7 +45,8 @@ async function handler() {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
-                const $ = load(response);
+                const $ = load(response.body);
+                item.author = $('.author').text();
                 item.description = $('.singleentry').html();
 
                 // 上面每个列表项的每个属性都在此重用，
