@@ -65,7 +65,7 @@ async function handler() {
     return {
         title: `全国今日生猪价格`,
         desription: '中国养猪网猪价频道是中国猪价权威平台,提供每日猪评,猪价和行情分析,并且预测猪价和分析每天的猪价排行。',
-        link: 'https://www.zhuwang.com.cn/',
+        link: baseUrl,
         item: priceItems,
     };
 }
