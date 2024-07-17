@@ -10,7 +10,7 @@ export const route: Route = {
     features: {
         requireConfig: [
             {
-                name: 'TWITTER_COOKIE',
+                name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
             },
         ],
