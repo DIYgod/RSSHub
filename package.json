@@ -62,7 +62,7 @@
         "@opentelemetry/semantic-conventions": "1.25.1",
         "@postlight/parser": "2.2.3",
         "@scalar/hono-api-reference": "0.5.107",
-        "@sentry/node": "7.116.0",
+        "@sentry/node": "8.18.0",
         "@tonyrl/rand-user-agent": "2.0.72",
         "aes-js": "3.1.2",
         "art-template": "4.13.2",
