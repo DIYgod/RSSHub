@@ -1,12 +1,12 @@
 import { Data, Route } from '@/types';
 import parser from '@/utils/rss-parser';
-import cache from '@/utils/cache';
 
 export const route: Route = {
-    path: '',
-    name: 'Автоцентр.ua',
+    path: '/',
+    name: 'Автоцентр.ua: автоновини - Автомобільний сайт N1 в Україні',
+    categories: ['traditional-media'],
     maintainers: ['driversti'],
-    example: 'autocentre',
+    example: '/autocentre',
     handler,
 };
 
@@ -16,8 +16,6 @@ const createItem = (item) => ({
     description: item.contentSnippet,
 });
 
-const getFromCacheOrNew = (item) => cache.tryGet(item.link, () => createItem(item));
-
 async function handler(): Promise<Data> {
     const feed = await parser.parseURL('https://autocentre.ua/rss');
 
@@ -26,7 +24,6 @@ async function handler(): Promise<Data> {
         link: feed.link,
         description: feed.description,
         language: 'uk',
-        date: feed.lastBuildDate,
-        item: await Promise.all(feed.items.map((item) => getFromCacheOrNew(item))),
+        item: await Promise.all(feed.items.map((item) => createItem(item))),
     };
 }
