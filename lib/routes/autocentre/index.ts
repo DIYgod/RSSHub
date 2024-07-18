@@ -26,6 +26,7 @@ async function handler(): Promise<Data> {
         link: feed.link,
         description: feed.description,
         language: 'uk',
+        date: feed.lastBuildDate,
         item: await Promise.all(feed.items.map((item) => getFromCacheOrNew(item))),
     };
 }
