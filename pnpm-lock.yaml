@@ -397,8 +397,8 @@ importers:
         specifier: 3.0.5
         version: 3.0.5
       msw:
-        specifier: 2.3.1
-        version: 2.3.1(typescript@5.5.3)
+        specifier: 2.3.2
+        version: 2.3.2(typescript@5.5.3)
       prettier:
         specifier: 3.3.3
         version: 3.3.3
@@ -5102,8 +5102,8 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  msw@2.3.1:
-    resolution: {integrity: sha512-ocgvBCLn/5l3jpl1lssIb3cniuACJLoOfZu01e3n5dbJrpA5PeeWn28jCLgQDNt6d7QT8tF2fYRzm9JoEHtiig==}
+  msw@2.3.2:
+    resolution: {integrity: sha512-vDn6d6a50vxPE+HnaKQfpmZ4SVXlOjF97yD5FJcUT3v2/uZ65qvTYNL25yOmnrfCNWZ4wtAS7EbtXxygMug2Tw==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -12912,7 +12912,7 @@ snapshots:
 
   ms@2.1.3: {}
 
-  msw@2.3.1(typescript@5.5.3):
+  msw@2.3.2(typescript@5.5.3):
     dependencies:
       '@bundled-es-modules/cookie': 2.0.0
       '@bundled-es-modules/statuses': 1.0.1
