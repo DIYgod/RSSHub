@@ -4998,6 +4998,9 @@
   "/rsc/journal/:id/:category?": [
     "nczitzk"
   ],
+  "/rss3/:account/:network?/:tag?": [
+    "DIYgod"
+  ],
   "/rsshub/routes/:lang?": [
     "DIYgod"
   ],
