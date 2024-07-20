@@ -99,8 +99,7 @@ const weiboUtils = {
                 let style = '';
                 // href内容
                 const retweetedImg = match.match(/href="(https?:\/\/[^"]+\.(jpg|png|gif))"/)[1];
-                let imgTag = '<img ';
-                imgTag += readable ? 'vspace="8" hspace="4"' : '';
+                let imgTag = `<img ${readable ? 'vspace="8" hspace="4"' : ''}`;
                 if (widthOfPics >= 0) {
                     imgTag += ` width="${widthOfPics}"`;
                     style += `width: ${widthOfPics}px;`;
@@ -109,9 +108,9 @@ const weiboUtils = {
                     imgTag += ` height="${heightOfPics}"`;
                     style += `height: ${heightOfPics}px;`;
                 }
-                imgTag += ` style="${style}"` + ' src="' + retweetedImg + '">';
+                imgTag += ` style="${style}" src="${retweetedImg}">`;
 
-                // 替换 <a href="xxxxx">查看图片|评论配图</a>  →  <img> 标签
+                // 替换 <a href="xxxxx">查看图片|评论配图</a> → <img> 标签
                 htmlNewLineUnreplaced = htmlNewLineUnreplaced.replace(match, imgTag);
             }
         }
