@@ -93,20 +93,27 @@ const weiboUtils = {
         htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a\s+href="https?:\/\/[^"]+\.(jpg|png|gif)"/g, (match) => `${match} data-rsshub-image="href"`);
 
         // 处理带有图片的转发
-        if (htmlNewLineUnreplaced.match('评论配图')) {
-            let style = '';
-            const retweetedImg = htmlNewLineUnreplaced.match(/href="([^"]*)"/)[1];
-            htmlNewLineUnreplaced += '<img ';
-            htmlNewLineUnreplaced += readable ? 'vspace="8" hspace="4"' : '';
-            if (widthOfPics >= 0) {
-                htmlNewLineUnreplaced += ` width="${widthOfPics}"`;
-                style += `width: ${widthOfPics}px;`;
+        const matches = htmlNewLineUnreplaced.match(/<a\s+href="(https?:\/\/[^"]+\.(jpg|png|gif))"[^>]*>(查看图片|评论配图)<\/a>/g);
+        if (matches) {
+            for (const match of matches) {
+                let style = '';
+                // href内容
+                const retweetedImg = match.match(/href="(https?:\/\/[^"]+\.(jpg|png|gif))"/)[1];
+                let imgTag = '<img ';
+                imgTag += readable ? 'vspace="8" hspace="4"' : '';
+                if (widthOfPics >= 0) {
+                    imgTag += ` width="${widthOfPics}"`;
+                    style += `width: ${widthOfPics}px;`;
+                }
+                if (heightOfPics >= 0) {
+                    imgTag += ` height="${heightOfPics}"`;
+                    style += `height: ${heightOfPics}px;`;
+                }
+                imgTag += ` style="${style}"` + ' src="' + retweetedImg + '">';
+
+                // 替换 <a href="xxxxx">查看图片|评论配图</a>  →  <img> 标签
+                htmlNewLineUnreplaced = htmlNewLineUnreplaced.replace(match, imgTag);
             }
-            if (heightOfPics >= 0) {
-                htmlNewLineUnreplaced += ` height="${heightOfPics}"`;
-                style += `height: ${heightOfPics}px;`;
-            }
-            htmlNewLineUnreplaced += ` style="${style}"` + ' src="' + retweetedImg + '">';
         }
 
         let html = htmlNewLineUnreplaced.replaceAll('\n', '<br>');
@@ -444,23 +451,26 @@ const weiboUtils = {
                     itemDesc += '<p style="margin-bottom: 0.5em;margin-top: 0.5em">';
                     itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${comment.user.screen_name}</a>: ${comment.text}`;
                     // 带有图片的评论直接输出图片
-                    if (comment.text.includes('图片评论') || comment.text.includes('评论配图')) {
+                    if ('pic' in comment) {
                         itemDesc += `<br><img src="${comment.pic.url}">`;
                     }
                     if (comment.comments) {
                         itemDesc += '<blockquote style="border-left:0.2em solid #80808080; margin-left: 0.3em; padding-left: 0.5em; margin-bottom: 0.5em; margin-top: 0.25em">';
                         for (const com of comment.comments) {
                             // 评论的带有图片的评论直接输出图片
-                            if (com.text.includes('图片评论') || com.text.includes('评论配图') || com.text.includes('查看动图')) {
-                                itemDesc += '<div style="font-size: 0.9em">';
-                                itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${com.user.screen_name}</a>: ${'评论配图'}`;
-                                itemDesc += `<br><img src="${((htmlString) => {
-                                    const hrefRegex = /href="(https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)|[^"]*)"/;
-                                    const match = htmlString.match(hrefRegex);
-                                    return match ? (match[2] ? decodeURIComponent(match[2]) : match[1]) : '';
-                                })(com.text)}">`;
-                                itemDesc += '</div>';
-                                continue;
+                            const pattern = /<a\s+href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"[^>]*><span class='url-icon'><img[^>]*><\/span><span class="surl-text">(查看图片|评论配图|查看动图)<\/span><\/a>/g;
+                            const matches = com.text.match(pattern);
+                            if (matches) {
+                                for (const match of matches) {
+                                    const hrefMatch = match.match(/href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"/);
+                                    if (hrefMatch) {
+                                        // 获取并解码 href 中的图片 URL
+                                        const imgSrc = decodeURIComponent(hrefMatch[1]);
+                                        const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
+                                        // 用替换后的 img 标签替换原来的 <a> 标签部分
+                                        com.text = com.text.replace(match, imgTag);
+                                    }
+                                }
                             }
                             itemDesc += '<div style="font-size: 0.9em">';
                             itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${com.user.screen_name}</a>: ${com.text}`;
