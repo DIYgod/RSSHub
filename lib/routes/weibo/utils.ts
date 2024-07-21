@@ -93,27 +93,20 @@ const weiboUtils = {
         htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a\s+href="https?:\/\/[^"]+\.(jpg|png|gif)"/g, (match) => `${match} data-rsshub-image="href"`);
 
         // 处理带有图片的转发
-        const matches = htmlNewLineUnreplaced.match(/<a\s+href="(https?:\/\/[^"]+\.(jpg|png|gif))"[^>]*>(查看图片|评论配图)<\/a>/g);
-        if (matches) {
-            for (const match of matches) {
-                let style = '';
-                // href内容
-                const retweetedImg = match.match(/href="(https?:\/\/[^"]+\.(jpg|png|gif))"/)[1];
-                let imgTag = `<img ${readable ? 'vspace="8" hspace="4"' : ''}`;
-                if (widthOfPics >= 0) {
-                    imgTag += ` width="${widthOfPics}"`;
-                    style += `width: ${widthOfPics}px;`;
-                }
-                if (heightOfPics >= 0) {
-                    imgTag += ` height="${heightOfPics}"`;
-                    style += `height: ${heightOfPics}px;`;
-                }
-                imgTag += ` style="${style}" src="${retweetedImg}">`;
-
-                // 替换 <a href="xxxxx">查看图片|评论配图</a> → <img> 标签
-                htmlNewLineUnreplaced = htmlNewLineUnreplaced.replace(match, imgTag);
+        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a\s+href="(https?:\/\/[^"]+\.(jpg|png|gif))"[^>]*>(查看图片|评论配图)<\/a>/g, (match, url) => {
+            let style = '';
+            let imgTag = `<img ${readable ? 'vspace="8" hspace="4"' : ''}`;
+            if (widthOfPics >= 0) {
+                imgTag += ` width="${widthOfPics}"`;
+                style += `width: ${widthOfPics}px;`;
             }
-        }
+            if (heightOfPics >= 0) {
+                imgTag += ` height="${heightOfPics}"`;
+                style += `height: ${heightOfPics}px;`;
+            }
+            imgTag += ` style="${style}" src="${url}">`;
+            return imgTag;
+        });
 
         let html = htmlNewLineUnreplaced.replaceAll('\n', '<br>');
 
