@@ -3,8 +3,8 @@ import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/',
-    name: 'Автоцентр.ua: автоновини - Автомобільний сайт N1 в Україні',
-    categories: ['traditional-media'],
+    name: 'Автомобільний сайт N1 в Україні',
+    categories: ['new-media'],
     maintainers: ['driversti'],
     example: '/autocentre',
     handler,
