@@ -4346,27 +4346,33 @@
   ],
   "/nyaa/search/:query?": [
     "Lava-Swimmer",
-    "noname1776"
+    "noname1776",
+    "camera-2018"
   ],
   "/nyaa/user/:username?": [
     "Lava-Swimmer",
-    "noname1776"
+    "noname1776",
+    "camera-2018"
   ],
   "/nyaa/user/:username/search/:query?": [
     "Lava-Swimmer",
-    "noname1776"
+    "noname1776",
+    "camera-2018"
   ],
   "/nyaa/sukebei/search/:query?": [
     "Lava-Swimmer",
-    "noname1776"
+    "noname1776",
+    "camera-2018"
   ],
   "/nyaa/sukebei/user/:username?": [
     "Lava-Swimmer",
-    "noname1776"
+    "noname1776",
+    "camera-2018"
   ],
   "/nyaa/sukebei/user/:username/search/:query?": [
     "Lava-Swimmer",
-    "noname1776"
+    "noname1776",
+    "camera-2018"
   ],
   "/nymity/censorbib": [
     "xtexChooser"
