@@ -92,22 +92,6 @@ const weiboUtils = {
         // 处理图片的链接
         htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a\s+href="https?:\/\/[^"]+\.(jpg|png|gif)"/g, (match) => `${match} data-rsshub-image="href"`);
 
-        // 处理带有图片的转发
-        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a\s+href="(https?:\/\/[^"]+\.(jpg|png|gif))"[^>]*>(查看图片|评论配图)<\/a>/g, (match, url) => {
-            let style = '';
-            let imgTag = `<img ${readable ? 'vspace="8" hspace="4"' : ''}`;
-            if (widthOfPics >= 0) {
-                imgTag += ` width="${widthOfPics}"`;
-                style += `width: ${widthOfPics}px;`;
-            }
-            if (heightOfPics >= 0) {
-                imgTag += ` height="${heightOfPics}"`;
-                style += `height: ${heightOfPics}px;`;
-            }
-            imgTag += ` style="${style}" src="${url}">`;
-            return imgTag;
-        });
-
         let html = htmlNewLineUnreplaced.replaceAll('\n', '<br>');
 
         // 添加用户名和头像
