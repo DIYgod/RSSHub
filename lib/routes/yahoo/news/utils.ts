@@ -24,6 +24,11 @@ const getArchive = async (region, limit, tag, providerId?) => {
     return response;
 };
 
+const getList = async (region, listId) => {
+    const { data: response } = await got(`https://${region}.news.yahoo.com/_td-news/api/resource/StreamService;category=LISTID%3A${listId};useNCP=true`);
+    return response;
+};
+
 const getCategories = (region, tryGet) =>
     tryGet(`yahoo:${region}:categoryMap`, async () => {
         const { PageStore } = await getStores(region, tryGet);
@@ -70,7 +75,7 @@ const getStores = (region, tryGet) =>
 const parseList = (region, response) =>
     response.map((item) => ({
         title: item.title,
-        link: new URL(item.url, `https://${region}.news.yahoo.com`).href,
+        link: item.url.startsWith('http') ? item.url : new URL(item.url, `https://${region}.news.yahoo.com`).href,
         description: item.summary,
         pubDate: parseDate(item.published_at, 'X'),
     }));
@@ -120,9 +125,10 @@ const parseItem = (item, tryGet) =>
         item.description = body.html();
         item.author = author;
         item.category = ldJson.keywords;
+        item.pubDate = parseDate(ldJson.datePublished);
         item.updated = parseDate(ldJson.dateModified);
 
         return item;
     });
 
-export { getArchive, getCategories, getProviderList, getStores, parseList, parseItem };
+export { getArchive, getList, getCategories, getProviderList, getStores, parseList, parseItem };
