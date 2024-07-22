@@ -713,6 +713,26 @@ calculateValue();
             logger.error('Remote config load failed.', error);
         }
     }
+
+    if (!envs.DISABLE_UMAMI) {
+        ofetch(`https://umami.rss3.io/api/send`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+            },
+            body: JSON.stringify({
+                payload: {
+                    hostname: 'rsshub.app',
+                    language: 'en-US',
+                    referrer: 'rsshub.app',
+                    url: 'rsshub.app',
+                    website: '239067cd-231f-4a3f-a478-cced11a84876',
+                },
+                type: 'event',
+            }),
+        });
+    }
 })();
 
 // @ts-expect-error value is set
