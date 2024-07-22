@@ -58,7 +58,7 @@ const mediaTagDict = {
 export const route: Route = {
     path: '/channel/:username/:routeParams?',
     categories: ['social-media', 'popular'],
-    example: '/telegram/channel/awesomeDIYgod/searchQuery=twitter',
+    example: '/telegram/channel/awesomeRSSHub',
     parameters: {
         username: 'channel username',
         routeParams: `extra parameters, see the table below

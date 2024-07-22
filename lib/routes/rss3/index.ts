@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/:account/:network?/:tag?',
     categories: ['social-media'],
-    example: '/rss3/diygod.eth',
+    example: '/rss3/vitalik.eth',
     name: 'Account Activities',
     maintainers: ['DIYgod'],
     url: 'docs.rss3.io/api-reference#tag/decentralized/GET/decentralized/%7Baccount%7D',

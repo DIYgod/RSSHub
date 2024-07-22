@@ -12,7 +12,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/issue/:user/:repo/:state?/:labels?',
     categories: ['programming', 'popular'],
-    example: '/github/issue/vuejs/core/all/wontfix',
+    example: '/github/issue/DIYgod/RSSHub/open',
     parameters: {
         user: 'GitHub username',
         repo: 'GitHub repo name',

@@ -60,7 +60,23 @@ export const route: Route = {
     path: '/:category/:key',
     categories: ['social-media', 'popular'],
     example: '/instagram/user/stefaniejoosten',
-    parameters: { category: 'Feed category, see table above', key: 'Username / Hashtag name' },
+    parameters: {
+        category: {
+            description: 'Feed category',
+            default: 'user',
+            options: [
+                {
+                    label: 'User',
+                    value: 'user',
+                },
+                {
+                    label: 'Tags',
+                    value: 'tags',
+                },
+            ],
+        },
+        key: 'Username / Hashtag name',
+    },
     features: {
         requireConfig: [
             {
