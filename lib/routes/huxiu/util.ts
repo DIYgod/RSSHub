@@ -188,7 +188,7 @@ const fetchItem = async (item) => {
     const { data: detailResponse } = await got(item.link);
 
     const state = parseInitialState(detailResponse);
-    const data = state.briefStoreModule?.brief_detail.brief ?? state.articleDetail?.articleDetail ?? undefined;
+    const data = state?.briefStoreModule?.brief_detail.brief ?? state?.articleDetail?.articleDetail ?? undefined;
 
     if (!data) {
         return item;

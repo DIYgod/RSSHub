@@ -5,7 +5,7 @@ import api from './api';
 export const route: Route = {
     path: '/user/:id/:routeParams?',
     categories: ['social-media', 'popular'],
-    example: '/twitter/user/DIYgod',
+    example: '/twitter/user/_RSSHub',
     parameters: {
         id: 'username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`',
         routeParams:

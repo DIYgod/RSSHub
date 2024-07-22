@@ -5,7 +5,7 @@ import utils from './utils';
 export const route: Route = {
     path: '/media/:id/:routeParams?',
     categories: ['social-media', 'popular'],
-    example: '/twitter/media/DIYgod',
+    example: '/twitter/media/_RSSHub',
     parameters: { id: 'username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', routeParams: 'extra parameters, see the table above.' },
     features: {
         requireConfig: [
