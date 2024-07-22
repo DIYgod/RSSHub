@@ -444,7 +444,7 @@ const weiboUtils = {
                                         const imgSrc = decodeURIComponent(hrefMatch[1]);
                                         const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
                                         // 用替换后的 img 标签替换原来的 <a> 标签部分
-                                        com.text = com.text.replace(match, imgTag);
+                                        com.text = com.text.replaceAll(match, imgTag);
                                     }
                                 }
                             }
@@ -456,6 +456,7 @@ const weiboUtils = {
                     }
                     itemDesc += '</p>';
                 }
+
                 itemDesc += '</div>';
             }
         }
