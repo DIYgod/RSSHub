@@ -133,8 +133,8 @@ async function handler(ctx) {
         title: `${account} activities`,
         link: 'https://rss3.io',
         item: data.map((item) => ({
-            title: `${item.tag} ${item.type} action on ${item.network}`,
-            description: `From: ${item.from}<br/>To: ${item.to}`,
+            title: `New ${item.tag} ${item.type} action on ${item.network}`,
+            description: `New ${item.tag} ${item.type} action on ${item.network}<br /><br />From: ${item.from}<br/>To: ${item.to}`,
             link: item.actions?.[0]?.related_urls?.[0],
             guid: item.id,
             author: [
