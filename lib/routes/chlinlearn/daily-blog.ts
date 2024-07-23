@@ -38,9 +38,9 @@ export const route: Route = {
         }));
         return {
             // 源标题
-            title: `值得一读技术博客`,
+            title: '值得一读技术博客',
             // 源链接
-            link: `https://daily-blog.chlinlearn.top/blogs/1`,
+            link: 'https://daily-blog.chlinlearn.top/blogs/1',
             // 源文章
             item: items,
         };
