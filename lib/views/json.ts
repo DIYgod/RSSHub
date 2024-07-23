@@ -11,7 +11,7 @@ const json = (data: Data) => {
         title: data.title || 'RSSHub',
         home_page_url: data.link || 'https://docs.rsshub.app',
         feed_url: data.feedLink,
-        description: `${data.description || data.title} - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)`,
+        description: `${data.description || data.title} - Powered by RSSHub`,
         icon: data.image,
         authors: typeof data.author === 'string' ? [{ name: data.author }] : data.author,
         language: data.language || 'zh-cn',
