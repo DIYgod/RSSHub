@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,9 +10,19 @@ import dayjs from 'dayjs';
 
 export const route: Route = {
     path: '/freegames/:locale?/:country?',
-    categories: ['game'],
+    categories: ['game', 'popular'],
+    view: ViewType.Notifications,
     example: '/epicgames/freegames',
-    parameters: { locale: 'Locale, en_US by default', country: 'Country, US by default' },
+    parameters: {
+        locale: {
+            description: 'Locale',
+            default: 'en-US',
+        },
+        country: {
+            description: 'Country',
+            default: 'US',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

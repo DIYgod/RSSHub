@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/scholar/:query',
-    categories: ['journal'],
+    categories: ['journal', 'popular'],
     example: '/google/scholar/data+visualization',
     parameters: { query: 'query statement which supports「Basic」and「Advanced」modes' },
     features: {
@@ -15,7 +15,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Keywords Monitoring',
+    name: 'Scholar Keywords Monitoring',
     maintainers: ['HenryQW'],
     handler,
     description: `:::warning

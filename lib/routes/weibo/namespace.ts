@@ -1,7 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: '微博绿洲',
+    name: '微博',
     url: 'weibo.com',
     description: `:::warning
 微博会针对请求的来源地区返回不同的结果。\

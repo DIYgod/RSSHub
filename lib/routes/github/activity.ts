@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import Parser from 'rss-parser';
@@ -10,7 +10,8 @@ export const route: Route = {
     name: 'User Activities',
     maintainers: ['hyoban'],
     example: '/github/activity/DIYgod',
-    categories: ['programming'],
+    categories: ['programming', 'popular'],
+    view: ViewType.Articles,
     parameters: {
         user: 'GitHub username',
     },

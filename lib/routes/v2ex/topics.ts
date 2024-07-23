@@ -1,12 +1,27 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topics/:type',
-    categories: ['bbs'],
+    categories: ['bbs', 'popular'],
+    view: ViewType.Articles,
     example: '/v2ex/topics/latest',
-    parameters: { type: 'hot 或 latest' },
+    parameters: {
+        type: {
+            description: '主题类型',
+            options: [
+                {
+                    value: 'hot',
+                    label: '最热主题',
+                },
+                {
+                    value: 'latest',
+                    label: '最新主题',
+                },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
