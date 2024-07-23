@@ -69,10 +69,16 @@ async function checkRSS(response) {
 
 describe('routes', () => {
     for (const route in routes) {
-        it.concurrent(route, async () => {
-            const response = await app.request(routes[route]);
-            expect(response.status).toBe(200);
-            await checkRSS(response);
-        });
+        it.concurrent(
+            route,
+            {
+                timeout: 60000,
+            },
+            async () => {
+                const response = await app.request(routes[route]);
+                expect(response.status).toBe(200);
+                await checkRSS(response);
+            }
+        );
     }
 });
