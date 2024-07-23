@@ -10857,7 +10857,7 @@
     ]
   },
   "nasa.govundefined": {
-    "_name": "NASA Astronomy Picture of the Day",
+    "_name": "NASA",
     "apod": [
       {
         "title": "NASA 中文",
@@ -10876,7 +10876,7 @@
         "target": "/nasa/apod-ncku"
       },
       {
-        "title": "NASA",
+        "title": "Astronomy Picture of the Day",
         "docs": "https://docs.rsshub.app/routes/picture",
         "source": [
           "/"
@@ -13581,7 +13581,7 @@
     ],
     "book": [
       {
-        "title": "章节",
+        "title": "作品章节",
         "docs": "https://docs.rsshub.app/routes/reading",
         "source": [
           "/info/:id"
@@ -18015,7 +18015,7 @@
     ]
   },
   "weibo.com": {
-    "_name": "微博绿洲",
+    "_name": "微博",
     ".": [
       {
         "title": "最新关注时间线",
@@ -18054,7 +18054,7 @@
     ]
   },
   "weibo.cn": {
-    "_name": "微博绿洲",
+    "_name": "微博",
     "m": [
       {
         "title": "博主",
@@ -19102,14 +19102,6 @@
           "/collection/:id"
         ],
         "target": "/zhihu/collection/:id"
-      },
-      {
-        "title": "知乎热榜",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/hot"
-        ],
-        "target": "/zhihu/hotlist"
       },
       {
         "title": "用户文章",

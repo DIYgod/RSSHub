@@ -4503,13 +4503,35 @@
       "/apps/update/:country/:id/:platform?": {
         "path": "/apps/update/:country/:id/:platform?",
         "categories": [
-          "program-update"
+          "program-update",
+          "popular"
         ],
+        "view": 5,
         "example": "/apple/apps/update/us/id408709785",
         "parameters": {
           "country": "App Store Country, obtain from the app URL, see below",
           "id": "App id, obtain from the app URL",
-          "platform": "App Platform, see below, all by default"
+          "platform": {
+            "description": "App Platform, see below, all by default",
+            "options": [
+              {
+                "value": "All",
+                "label": "all"
+              },
+              {
+                "value": "iOS",
+                "label": "iOS"
+              },
+              {
+                "value": "macOS",
+                "label": "macOS"
+              },
+              {
+                "value": "tvOS",
+                "label": "tvOS"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -4533,7 +4555,7 @@
           "EkkoG",
           "nczitzk"
         ],
-        "description": "| All | iOS | macOS | tvOS |\n  | --- | --- | ----- | ---- |\n  |     | iOS | macOS | tvOS |\n\n  :::tip\n  For example, the URL of [GarageBand](https://apps.apple.com/us/app/messages/id408709785) in the App Store is `https://apps.apple.com/us/app/messages/id408709785`. In this case, the `App Store Country` parameter for the route is `us`, and the `App id` parameter is `id1146560473`. So the route should be [`/apple/apps/update/us/id408709785`](https://rsshub.app/apple/apps/update/us/id408709785).\n  :::",
+        "description": "\n  :::tip\n  For example, the URL of [GarageBand](https://apps.apple.com/us/app/messages/id408709785) in the App Store is `https://apps.apple.com/us/app/messages/id408709785`. In this case, the `App Store Country` parameter for the route is `us`, and the `App id` parameter is `id1146560473`. So the route should be [`/apple/apps/update/us/id408709785`](https://rsshub.app/apple/apps/update/us/id408709785).\n  :::",
         "location": "apps.ts"
       },
       "/exchange_repair/:country?": {
@@ -19594,12 +19616,20 @@
       "/freegames/:locale?/:country?": {
         "path": "/freegames/:locale?/:country?",
         "categories": [
-          "game"
+          "game",
+          "popular"
         ],
+        "view": 5,
         "example": "/epicgames/freegames",
         "parameters": {
-          "locale": "Locale, en_US by default",
-          "country": "Country, US by default"
+          "locale": {
+            "description": "Locale",
+            "default": "en-US"
+          },
+          "country": {
+            "description": "Country",
+            "default": "US"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -23010,8 +23040,10 @@
         ],
         "example": "/github/activity/DIYgod",
         "categories": [
-          "programming"
+          "programming",
+          "popular"
         ],
+        "view": 0,
         "parameters": {
           "user": "GitHub username"
         },
@@ -23419,9 +23451,11 @@
       "/stars/:user/:repo": {
         "path": "/stars/:user/:repo",
         "categories": [
-          "programming"
+          "programming",
+          "popular"
         ],
-        "example": "/github/stars/DIYGod/RSSHub",
+        "example": "/github/stars/DIYgod/RSSHub",
+        "view": 5,
         "parameters": {
           "user": "GitHub username",
           "repo": "GitHub repo name"
@@ -23515,13 +23549,36 @@
       "/trending/:since/:language/:spoken_language?": {
         "path": "/trending/:since/:language/:spoken_language?",
         "categories": [
-          "programming"
+          "programming",
+          "popular"
         ],
         "example": "/github/trending/daily/javascript/en",
+        "view": 0,
         "parameters": {
-          "since": "time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, possible values are: `daily`, `weekly` or `monthly`",
-          "language": "the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, don't filter option is `any`",
-          "spoken_language": "natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL"
+          "since": {
+            "description": "time range",
+            "options": [
+              {
+                "value": "daily",
+                "label": "Today"
+              },
+              {
+                "value": "weekly",
+                "label": "This week"
+              },
+              {
+                "value": "monthly",
+                "label": "This month"
+              }
+            ]
+          },
+          "language": {
+            "description": "the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, don't filter option is `any`",
+            "default": "any"
+          },
+          "spoken_language": {
+            "description": "natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL"
+          }
         },
         "features": {
           "requireConfig": [
@@ -23890,7 +23947,8 @@
       "/citations/:id": {
         "path": "/citations/:id",
         "categories": [
-          "journal"
+          "journal",
+          "popular"
         ],
         "example": "/google/citations/mlmE4JMAAAAJ",
         "parameters": {
@@ -23904,7 +23962,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Author Citations",
+        "name": "Scholar Author Citations",
         "maintainers": [
           "KellyHwong",
           "const7"
@@ -24021,7 +24079,8 @@
       "/scholar/:query": {
         "path": "/scholar/:query",
         "categories": [
-          "journal"
+          "journal",
+          "popular"
         ],
         "example": "/google/scholar/data+visualization",
         "parameters": {
@@ -24035,7 +24094,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Keywords Monitoring",
+        "name": "Scholar Keywords Monitoring",
         "maintainers": [
           "HenryQW"
         ],
@@ -31818,8 +31877,7 @@
       "/:category/:key": {
         "path": "/:category/:key",
         "categories": [
-          "social-media",
-          "popular"
+          "social-media"
         ],
         "view": 1,
         "example": "/instagram/user/stefaniejoosten",
@@ -33932,8 +33990,10 @@
       "/book/:id?": {
         "path": "/book/:id?",
         "categories": [
-          "reading"
+          "reading",
+          "popular"
         ],
+        "view": 5,
         "example": "/jjwxc/book/7013024",
         "parameters": {
           "id": "作品 id，可在对应作品页中找到"
@@ -33946,7 +34006,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "作品",
+        "name": "作品章节",
         "maintainers": [
           "nczitzk"
         ],
@@ -39880,8 +39940,10 @@
       "/apod": {
         "path": "/apod",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/nasa/apod",
         "parameters": {},
         "features": {
@@ -39899,7 +39961,7 @@
             ]
           }
         ],
-        "name": "NASA",
+        "name": "Astronomy Picture of the Day",
         "maintainers": [
           "nczitzk",
           "williamgateszhao"
@@ -39908,7 +39970,7 @@
         "location": "apod.ts"
       }
     },
-    "name": "NASA Astronomy Picture of the Day",
+    "name": "NASA",
     "url": "apod.nasa.gov"
   },
   "natgeo": {
@@ -41452,8 +41514,10 @@
       "/forum/:fid/:recommend?": {
         "path": "/forum/:fid/:recommend?",
         "categories": [
-          "bbs"
+          "bbs",
+          "popular"
         ],
+        "view": 0,
         "example": "/nga/forum/489",
         "parameters": {
           "fid": "分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用",
@@ -46680,7 +46744,8 @@
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/picnob/user/xlisa_olivex",
         "parameters": {
@@ -46707,12 +46772,12 @@
           "TonyRL",
           "micheal-death"
         ],
+        "view": 2,
         "location": "user.ts"
       }
     },
     "name": "Instagram",
-    "url": "picnob.com",
-    "description": ":::tip\nIt's highly recommended to deploy with Redis cache enabled.\n:::"
+    "url": "www.instagram.com"
   },
   "picuki": {
     "routes": {
@@ -46723,8 +46788,8 @@
         ],
         "example": "/picuki/profile/stefaniejoosten",
         "parameters": {
-          "id": "Instagram id",
-          "functionalFlag": "functional flag, see the table below"
+          "id": "Instagram user id",
+          "functionalFlag": "functional flag, see the table below\n| functionalFlag | Video embedding                         | Fetching Instagram Stories |\n| -------------- | --------------------------------------- | -------------------------- |\n| 0              | off, only show video poster as an image | off                        |\n| 1 (default)    | on                                      | off                        |\n| 10             | on                                      | on                         |\n"
         },
         "features": {
           "requireConfig": false,
@@ -46748,13 +46813,12 @@
           "Rongronggg9",
           "devinmugen"
         ],
-        "description": "| functionalFlag | Video embedding                         | Fetching Instagram Stories |\n  | -------------- | --------------------------------------- | -------------------------- |\n  | 0              | off, only show video poster as an image | off                        |\n  | 1 (default)    | on                                      | off                        |\n  | 10             | on                                      | on                         |\n\n  :::warning\n  Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.\n  Though, every Story expires after 24 hours, so it may be not so serious.\n  :::",
+        "description": "\n  :::warning\n  Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.\n  Though, every Story expires after 24 hours, so it may be not so serious.\n  :::",
         "location": "profile.ts"
       }
     },
     "name": "Instagram",
-    "url": "www.picuki.com",
-    "description": ":::tip\nIt's highly recommended to deploy with Redis cache enabled.\n:::"
+    "url": "www.instagram.com"
   },
   "pikabu": {
     "routes": {
@@ -48347,8 +48411,10 @@
       "/monthly-games": {
         "path": "/monthly-games",
         "categories": [
-          "game"
+          "game",
+          "popular"
         ],
+        "view": 5,
         "example": "/ps/monthly-games",
         "parameters": {},
         "features": {
@@ -48977,8 +49043,10 @@
       "/chapter/:id": {
         "path": "/chapter/:id",
         "categories": [
-          "reading"
+          "reading",
+          "popular"
         ],
+        "view": 5,
         "example": "/qidian/chapter/1010400217",
         "parameters": {
           "id": "小说 id, 可在对应小说页 URL 中找到"
@@ -48998,7 +49066,7 @@
             ]
           }
         ],
-        "name": "章节",
+        "name": "作品章节",
         "maintainers": [
           "fuzy112"
         ],
@@ -55088,8 +55156,10 @@
       "/keyword/:keyword": {
         "path": "/keyword/:keyword",
         "categories": [
-          "shopping"
+          "shopping",
+          "popular"
         ],
+        "view": 5,
         "example": "/smzdm/keyword/女装",
         "parameters": {
           "keyword": "你想订阅的关键词"
@@ -55112,13 +55182,187 @@
       "/ranking/:rank_type/:rank_id/:hour": {
         "path": "/ranking/:rank_type/:rank_id/:hour",
         "categories": [
-          "shopping"
+          "shopping",
+          "popular"
         ],
+        "view": 5,
         "example": "/smzdm/ranking/pinlei/11/3",
         "parameters": {
-          "rank_type": "榜单类型",
-          "rank_id": "榜单ID",
-          "hour": "时间跨度"
+          "rank_type": {
+            "description": "榜单类型",
+            "options": [
+              {
+                "value": "pinlei",
+                "label": "好价品类榜"
+              },
+              {
+                "value": "dianshang",
+                "label": "好价电商榜"
+              },
+              {
+                "value": "haitao",
+                "label": "海淘 TOP 榜"
+              },
+              {
+                "value": "haowen",
+                "label": "好文排行榜"
+              },
+              {
+                "value": "haowu",
+                "label": "好物排行榜"
+              }
+            ]
+          },
+          "rank_id": {
+            "description": "榜单ID",
+            "options": [
+              {
+                "label": "好价品类榜 - 全部",
+                "value": "11"
+              },
+              {
+                "label": "好价品类榜 - 食品生鲜",
+                "value": "12"
+              },
+              {
+                "label": "好价品类榜 - 电脑数码",
+                "value": "13"
+              },
+              {
+                "label": "好价品类榜 - 运动户外",
+                "value": "14"
+              },
+              {
+                "label": "好价品类榜 - 家用电器",
+                "value": "15"
+              },
+              {
+                "label": "好价品类榜 - 白菜",
+                "value": "17"
+              },
+              {
+                "label": "好价品类榜 - 服饰鞋包",
+                "value": "74"
+              },
+              {
+                "label": "好价品类榜 - 日用百货",
+                "value": "75"
+              },
+              {
+                "label": "好价电商榜 - 券活动",
+                "value": "24"
+              },
+              {
+                "label": "好价电商榜 - 京东",
+                "value": "23"
+              },
+              {
+                "label": "好价电商榜 - 天猫",
+                "value": "25"
+              },
+              {
+                "label": "好价电商榜 - 亚马逊中国",
+                "value": "26"
+              },
+              {
+                "label": "好价电商榜 - 国美在线",
+                "value": "27"
+              },
+              {
+                "label": "好价电商榜 - 苏宁易购",
+                "value": "28"
+              },
+              {
+                "label": "好价电商榜 - 网易",
+                "value": "29"
+              },
+              {
+                "label": "好价电商榜 - 西集网",
+                "value": "30"
+              },
+              {
+                "label": "好价电商榜 - 美国亚马逊",
+                "value": "31"
+              },
+              {
+                "label": "好价电商榜 - 日本亚马逊",
+                "value": "32"
+              },
+              {
+                "label": "好价电商榜 - ebay",
+                "value": "33"
+              },
+              {
+                "label": "海淘 TOP 榜 - 全部",
+                "value": "39"
+              },
+              {
+                "label": "海淘 TOP 榜 - 海外直邮",
+                "value": "34"
+              },
+              {
+                "label": "海淘 TOP 榜 - 美国榜",
+                "value": "35"
+              },
+              {
+                "label": "海淘 TOP 榜 - 欧洲榜",
+                "value": "36"
+              },
+              {
+                "label": "海淘 TOP 榜 - 澳新榜",
+                "value": "37"
+              },
+              {
+                "label": "海淘 TOP 榜 - 亚洲榜",
+                "value": "38"
+              },
+              {
+                "label": "海淘 TOP 榜 - 晒物榜",
+                "value": "hsw"
+              },
+              {
+                "label": "好文排行榜 - 原创",
+                "value": "yc"
+              },
+              {
+                "label": "好文排行榜 - 资讯",
+                "value": "zx"
+              },
+              {
+                "label": "好物排行榜 - 新晋榜",
+                "value": "hwall"
+              },
+              {
+                "label": "好物排行榜 - 消费众测",
+                "value": "zc"
+              },
+              {
+                "label": "好物排行榜 - 新锐品牌",
+                "value": "nb"
+              },
+              {
+                "label": "好物排行榜 - 好物榜单",
+                "value": "hw"
+              }
+            ]
+          },
+          "hour": {
+            "description": "时间跨度",
+            "options": [
+              {
+                "value": "3",
+                "label": "3 小时"
+              },
+              {
+                "value": "12",
+                "label": "12 小时"
+              },
+              {
+                "value": "24",
+                "label": "24 小时"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -55132,7 +55376,6 @@
         "maintainers": [
           "DIYgod"
         ],
-        "description": "-   榜单类型\n\n  | 好价品类榜 | 好价电商榜 | 海淘 TOP 榜 | 好文排行榜 | 好物排行榜 |\n  | ---------- | ---------- | ----------- | ---------- | ---------- |\n  | pinlei     | dianshang  | haitao      | haowen     | haowu      |\n\n  -   榜单 ID\n\n  好价品类榜\n\n  | 全部 | 食品生鲜 | 电脑数码 | 运动户外 | 家用电器 | 白菜 | 服饰鞋包 | 日用百货 |\n  | ---- | -------- | -------- | -------- | -------- | ---- | -------- | -------- |\n  | 11   | 12       | 13       | 14       | 15       | 17   | 74       | 75       |\n\n  好价电商榜\n\n  | 券活动 | 京东 | 天猫 | 亚马逊中国 | 国美在线 | 苏宁易购 | 网易 | 西集网 | 美国亚马逊 | 日本亚马逊 | ebay |\n  | ------ | ---- | ---- | ---------- | -------- | -------- | ---- | ------ | ---------- | ---------- | ---- |\n  | 24     | 23   | 25   | 26         | 27       | 28       | 29   | 30     | 31         | 32         | 33   |\n\n  海淘 TOP 榜\n\n  | 全部 | 海外直邮 | 美国榜 | 欧洲榜 | 澳新榜 | 亚洲榜 | 晒物榜 |\n  | ---- | -------- | ------ | ------ | ------ | ------ | ------ |\n  | 39   | 34       | 35     | 36     | 37     | 38     | hsw    |\n\n  好文排行榜\n\n  | 原创 | 资讯 |\n  | ---- | ---- |\n  | yc   | zx   |\n\n  好物排行榜\n\n  | 新晋榜 | 消费众测 | 新锐品牌 | 好物榜单 |\n  | ------ | -------- | -------- | -------- |\n  | hwall  | zc       | nb       | hw       |\n\n  -   时间跨度\n\n  | 3 小时 | 12 小时 | 24 小时 |\n  | ------ | ------- | ------- |\n  | 3      | 12      | 24      |",
         "location": "ranking.ts"
       }
     },
@@ -55553,8 +55796,10 @@
       "/artist/:id": {
         "path": "/artist/:id",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
+        "view": 4,
         "example": "/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1",
         "parameters": {
           "id": "Artist ID"
@@ -55634,8 +55879,10 @@
       "/playlist/:id": {
         "path": "/playlist/:id",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
+        "view": 4,
         "example": "/spotify/playlist/4UBVy1LttvodwivPUuwJk2",
         "parameters": {
           "id": "Playlist ID"
@@ -56204,8 +56451,10 @@
       "/index": {
         "path": "/index",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/sspai/index",
         "parameters": {},
         "features": {
@@ -63419,8 +63668,10 @@
       "/tab/:tabid": {
         "path": "/tab/:tabid",
         "categories": [
-          "bbs"
+          "bbs",
+          "popular"
         ],
+        "view": 0,
         "example": "/v2ex/tab/hot",
         "parameters": {
           "tabid": "tab标签ID,在 URL 可以找到"
@@ -63442,11 +63693,25 @@
       "/topics/:type": {
         "path": "/topics/:type",
         "categories": [
-          "bbs"
+          "bbs",
+          "popular"
         ],
+        "view": 0,
         "example": "/v2ex/topics/latest",
         "parameters": {
-          "type": "hot 或 latest"
+          "type": {
+            "description": "主题类型",
+            "options": [
+              {
+                "value": "hot",
+                "label": "最热主题"
+              },
+              {
+                "value": "latest",
+                "label": "最新主题"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -64790,11 +65055,15 @@
       "/search/hot/:fulltext?": {
         "path": "/search/hot/:fulltext?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 1,
         "example": "/weibo/search/hot",
         "parameters": {
-          "fulltext": "N"
+          "fulltext": {
+            "description": "\n-   使用`/weibo/search/hot`可以获取热搜条目列表；\n-   使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；\n-   使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）\n-   使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -64817,11 +65086,10 @@
           "shinemoon"
         ],
         "url": "s.weibo.com/top/summary",
-        "description": "-   使用`/weibo/search/hot`可以获取热搜条目列表；\n-   使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；\n-   使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）\n-   使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）",
         "location": "search/hot.ts"
       }
     },
-    "name": "微博绿洲",
+    "name": "微博",
     "url": "weibo.com",
     "description": ":::warning\n微博会针对请求的来源地区返回不同的结果。一个已知的例子为：部分视频因未知原因仅限中国大陆境内访问 (CDN 域名为 `locallimit.us.sinaimg.cn` 而非 `f.video.weibocdn.com`)。若一条微博含有这种视频且 RSSHub 实例部署在境外，抓取到的微博可能不含视频。将 RSSHub 部署在境内有助于抓取这种视频，但阅读器也必须处于境内网络环境以加载视频。\n:::\n\n对于微博内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制输出的样式\n\n| 键                         | 含义                                                               | 接受的值       | 默认值                              |\n| -------------------------- | ------------------------------------------------------------------ | -------------- | ----------------------------------- |\n| readable                   | 是否开启细节排版可读性优化                                         | 0/1/true/false | false                               |\n| authorNameBold             | 是否加粗作者名字                                                   | 0/1/true/false | false                               |\n| showAuthorInTitle          | 是否在标题处显示作者                                               | 0/1/true/false | false（`/weibo/keyword/`中为 true） |\n| showAuthorInDesc           | 是否在正文处显示作者                                               | 0/1/true/false | false（`/weibo/keyword/`中为 true） |\n| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）     | 0/1/true/false | false                               |\n| showEmojiForRetweet        | 显示 “🔁” 取代 “转发” 两个字                                       | 0/1/true/false | false                               |\n| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发微博）        | 0/1/true/false | true                                |\n| addLinkForPics             | 为图片添加可点击的链接                                             | 0/1/true/false | false                               |\n| showTimestampInDescription | 在正文处显示被转发微博的时间戳                                     | 0/1/true/false | false                               |\n| widthOfPics                | 微博配图宽（生效取决于阅读器）                                     | 不指定 / 数字  | 不指定                              |\n| heightOfPics               | 微博配图高（生效取决于阅读器）                                     | 不指定 / 数字  | 不指定                              |\n| sizeOfAuthorAvatar         | 作者头像大小                                                       | 数字           | 48                                  |\n| displayVideo               | 是否直接显示微博视频和 Live Photo，只在博主或个人时间线 RSS 中有效 | 0/1/true/false | true                                |\n| displayArticle             | 是否直接显示微博文章，只在博主或个人时间线 RSS 中有效              | 0/1/true/false | false                               |\n| displayComments            | 是否直接显示热门评论，只在博主或个人时间线 RSS 中有效              | 0/1/true/false | false                               |\n| showEmojiInDescription     | 是否展示正文中的微博表情，关闭则替换为 `[表情名]`                  | 0/1/true/false | true                                |\n| showLinkIconInDescription  | 是否展示正文中的链接图标                                           | 0/1/true/false | true                                |\n| preferMobileLink           | 是否使用移动版链接（默认使用 PC 版）                               | 0/1/true/false | false                               |\n\n指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如\n\n[https://rsshub.app/weibo/user/1642909335/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showTimestampInDescription=1&heightOfPics=150](https://rsshub.app/weibo/user/1642909335/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showTimestampInDescription=1&heightOfPics=150)\n\n的效果为\n\n<img loading=\"lazy\" src=\"/img/readable-weibo.png\" alt=\"微博小秘书的可读微博 RSS\" />"
   },
@@ -69582,11 +69850,62 @@
       "/hot/:category?": {
         "path": "/hot/:category?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/zhihu/hot",
+        "view": 0,
         "parameters": {
-          "category": "分类，见下表，默认为全站"
+          "category": {
+            "description": "分类",
+            "default": "total",
+            "options": [
+              {
+                "value": "total",
+                "label": "全站"
+              },
+              {
+                "value": "focus",
+                "label": "国际"
+              },
+              {
+                "value": "science",
+                "label": "科学"
+              },
+              {
+                "value": "car",
+                "label": "汽车"
+              },
+              {
+                "value": "zvideo",
+                "label": "视频"
+              },
+              {
+                "value": "fashion",
+                "label": "时尚"
+              },
+              {
+                "value": "depth",
+                "label": "时事"
+              },
+              {
+                "value": "digital",
+                "label": "数码"
+              },
+              {
+                "value": "sport",
+                "label": "体育"
+              },
+              {
+                "value": "school",
+                "label": "校园"
+              },
+              {
+                "value": "film",
+                "label": "影视"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -69596,41 +69915,11 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "知乎分类热榜",
+        "name": "知乎热榜",
         "maintainers": [
           "nczitzk"
         ],
-        "description": "| 全站  | 国际  | 科学    | 汽车 | 视频   | 时尚    | 时事  | 数码    | 体育  | 校园   | 影视 |\n  | ----- | ----- | ------- | ---- | ------ | ------- | ----- | ------- | ----- | ------ | ---- |\n  | total | focus | science | car  | zvideo | fashion | depth | digital | sport | school | film |",
         "location": "hot.ts"
-      },
-      "/hotlist": {
-        "path": "/hotlist",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/zhihu/hotlist",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.zhihu.com/hot"
-            ]
-          }
-        ],
-        "name": "知乎热榜",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "url": "www.zhihu.com/hot",
-        "location": "hotlist.ts"
       },
       "/posts/:usertype/:id": {
         "path": "/posts/:usertype/:id",

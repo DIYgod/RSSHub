@@ -6874,9 +6874,6 @@
   "/zhihu/hot/:category?": [
     "nczitzk"
   ],
-  "/zhihu/hotlist": [
-    "DIYgod"
-  ],
   "/zhihu/posts/:usertype/:id": [
     "whtsky",
     "Colin-XKL"
