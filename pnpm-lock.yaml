@@ -189,8 +189,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.5.3)(utf-8-validate@5.0.10)))
       query-string:
-        specifier: 9.0.0
-        version: 9.0.0
+        specifier: 9.1.0
+        version: 9.1.0
       rate-limiter-flexible:
         specifier: 5.0.3
         version: 5.0.3
@@ -3258,8 +3258,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -5769,8 +5769,8 @@ packages:
     resolution: {integrity: sha512-hh2WYhq4fi8+b+/2Kg9CEge4fDPvHS534aOOvOZeQ3+Vf2mCFsaFBYj0i+iXcAq6I9Vzp5fjMFBlONvayDC1qg==}
     engines: {node: '>=6'}
 
-  query-string@9.0.0:
-    resolution: {integrity: sha512-4EWwcRGsO2H+yzq6ddHcVqkCQ2EFUSfDMEjF8ryp8ReymyZhIuaFRGLomeOQLkrzacMHoyky2HW0Qe30UbzkKw==}
+  query-string@9.1.0:
+    resolution: {integrity: sha512-t6dqMECpCkqfyv2FfwVS1xcB6lgXW/0XZSaKdsCNGYkqMO76AFiJEg4vINzoDKcZa6MS7JX+OHIjwh06K5vczw==}
     engines: {node: '>=18'}
 
   querystringify@2.2.0:
@@ -8596,7 +8596,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.8
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -10606,7 +10606,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -13628,7 +13628,7 @@ snapshots:
       split-on-first: 1.1.0
       strict-uri-encode: 2.0.0
 
-  query-string@9.0.0:
+  query-string@9.1.0:
     dependencies:
       decode-uri-component: 0.4.1
       filter-obj: 5.1.0
