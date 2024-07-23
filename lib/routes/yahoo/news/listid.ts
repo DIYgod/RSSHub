@@ -46,7 +46,11 @@ async function handler(ctx) {
     }
 
     const response = await getList(region, listId);
-    const list = parseList(region, response);
+
+    // console.log('Response:', response.stream_items);
+    // console.log('Type of response:', typeof response.stream_items);
+    // console.log('Is response an array?', Array.isArray(response.stream_items));
+    const list = parseList(region, response.stream_items);
 
     const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
 
