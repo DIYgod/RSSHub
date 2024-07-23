@@ -714,7 +714,7 @@ calculateValue();
         }
     }
 
-    if (!envs.DISABLE_UMAMI) {
+    if (!envs.DISABLE_UMAMI && envs.NODE_ENV === 'production') {
         ofetch(`https://umami.rss3.io/api/send`, {
             method: 'POST',
             headers: {
