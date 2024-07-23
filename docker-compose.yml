@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
     rsshub:
         # two ways to enable puppeteer:
