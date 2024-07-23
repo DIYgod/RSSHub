@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { hash } from './utils';
 
 export const route: Route = {
     path: '/build/:owner/:image/:tag?',
     categories: ['program-update', 'popular'],
+    view: ViewType.Notifications,
     example: '/dockerhub/build/diygod/rsshub',
     parameters: {
         owner: 'Image owner, the owner of the official image fills in the library, for example: /dockerhub/build/library/mysql',

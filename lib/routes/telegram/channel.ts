@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 import cache from '@/utils/cache';
 import { config } from '@/config';
@@ -58,6 +58,7 @@ const mediaTagDict = {
 export const route: Route = {
     path: '/channel/:username/:routeParams?',
     categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/telegram/channel/awesomeRSSHub',
     parameters: {
         username: 'channel username',

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import JSONbig from 'json-bigint';
@@ -11,6 +11,7 @@ import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
     categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/bilibili/user/dynamic/2267573',
     parameters: {
         uid: '用户 id, 可在 UP 主主页中找到',

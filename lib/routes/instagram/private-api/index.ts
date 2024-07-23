@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { ig, login } from './utils';
 import logger from '@/utils/logger';
@@ -59,6 +59,7 @@ async function loadContent(category, nameOrId, tryGet) {
 export const route: Route = {
     path: '/:category/:key',
     categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/instagram/user/stefaniejoosten',
     parameters: {
         category: {

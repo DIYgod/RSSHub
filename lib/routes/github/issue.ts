@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 import MarkdownIt from 'markdown-it';
@@ -12,6 +12,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/issue/:user/:repo/:state?/:labels?',
     categories: ['programming', 'popular'],
+    view: ViewType.Notifications,
     example: '/github/issue/DIYgod/RSSHub/open',
     parameters: {
         user: 'GitHub username',

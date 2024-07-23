@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getToken } from './token';
 import getIllusts from './api/get-illusts';
@@ -10,6 +10,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 export const route: Route = {
     path: '/user/:id',
     categories: ['social-media', 'popular'],
+    view: ViewType.Pictures,
     example: '/pixiv/user/15288095',
     parameters: { id: "user id, available in user's homepage URL" },
     features: {

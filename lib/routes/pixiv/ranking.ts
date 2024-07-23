@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getToken } from './token';
 import getRanking from './api/get-ranking';
@@ -61,6 +61,7 @@ const alias = {
 export const route: Route = {
     path: '/ranking/:mode/:date?',
     categories: ['social-media', 'popular'],
+    view: ViewType.Pictures,
     example: '/pixiv/ranking/week',
     parameters: {
         mode: {

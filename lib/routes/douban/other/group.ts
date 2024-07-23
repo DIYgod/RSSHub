@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,6 +6,7 @@ import { load } from 'cheerio';
 export const route: Route = {
     path: '/group/:groupid/:type?',
     categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/douban/group/648102',
     parameters: {
         groupid: '豆瓣小组的 id',

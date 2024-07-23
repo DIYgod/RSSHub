@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 
@@ -7,6 +7,7 @@ export const route: Route = {
     name: '排行榜',
     maintainers: ['DIYgod'],
     categories: ['social-media', 'popular'],
+    view: ViewType.Videos,
     example: '/bilibili/ranking/0/3/1',
     parameters: {
         rid: {

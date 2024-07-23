@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import utils from './utils';
@@ -7,6 +7,7 @@ import logger from '@/utils/logger';
 export const route: Route = {
     path: '/user/video/:uid/:disableEmbed?',
     categories: ['social-media', 'popular'],
+    view: ViewType.Videos,
     example: '/bilibili/user/video/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {

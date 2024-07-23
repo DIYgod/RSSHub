@@ -1,5 +1,5 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 
 import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
@@ -9,6 +9,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 export const route: Route = {
     path: '/timeline/:account',
     categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/fediverse/timeline/Mastodon@mastodon.social',
     parameters: { account: 'username@domain' },
     features: {

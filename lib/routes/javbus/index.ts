@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -30,6 +30,7 @@ export const route: Route = {
     name: 'Works',
     maintainers: ['MegrezZhu', 'CoderTonyChan', 'nczitzk', 'Felix2yu'],
     categories: ['multimedia', 'popular'],
+    view: ViewType.Videos,
     handler,
     url: 'www.javbus.com',
     example: '/javbus/star/rwt',

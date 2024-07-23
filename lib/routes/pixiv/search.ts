@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getToken } from './token';
 import searchPopularIllust from './api/search-popular-illust';
@@ -11,6 +11,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 export const route: Route = {
     path: '/search/:keyword/:order?/:mode?',
     categories: ['social-media', 'popular'],
+    view: ViewType.Pictures,
     example: '/pixiv/search/Nezuko/popular',
     parameters: {
         keyword: 'keyword',
