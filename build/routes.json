@@ -4385,6 +4385,7 @@
           "popular"
         ],
         "example": "/apnews/rss/business",
+        "view": 0,
         "parameters": {
           "category": {
             "description": "Category from the first segment of the corresponding site, or `index` for the front page.",
@@ -4422,6 +4423,7 @@
           "popular"
         ],
         "example": "/apnews/topics/apf-topnews",
+        "view": 0,
         "parameters": {
           "topic": {
             "description": "Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`",
@@ -6595,6 +6597,7 @@
           "social-media",
           "popular"
         ],
+        "view": 1,
         "example": "/bilibili/user/dynamic/2267573",
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
@@ -7231,6 +7234,7 @@
           "social-media",
           "popular"
         ],
+        "view": 3,
         "example": "/bilibili/ranking/0/3/1",
         "parameters": {
           "rid": {
@@ -7511,6 +7515,7 @@
           "social-media",
           "popular"
         ],
+        "view": 3,
         "example": "/bilibili/user/video/2267573",
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
@@ -16939,6 +16944,7 @@
           "program-update",
           "popular"
         ],
+        "view": 5,
         "example": "/dockerhub/build/diygod/rsshub",
         "parameters": {
           "owner": "Image owner, the owner of the official image fills in the library, for example: /dockerhub/build/library/mysql",
@@ -17680,6 +17686,7 @@
           "social-media",
           "popular"
         ],
+        "view": 1,
         "example": "/douban/group/648102",
         "parameters": {
           "groupid": "豆瓣小组的 id",
@@ -20424,6 +20431,7 @@
           "social-media",
           "popular"
         ],
+        "view": 1,
         "example": "/fediverse/timeline/Mastodon@mastodon.social",
         "parameters": {
           "account": "username@domain"
@@ -23212,6 +23220,7 @@
           "programming",
           "popular"
         ],
+        "view": 5,
         "example": "/github/issue/DIYgod/RSSHub/open",
         "parameters": {
           "user": "GitHub username",
@@ -31812,6 +31821,7 @@
           "social-media",
           "popular"
         ],
+        "view": 1,
         "example": "/instagram/user/stefaniejoosten",
         "parameters": {
           "category": {
@@ -32764,6 +32774,7 @@
           "multimedia",
           "popular"
         ],
+        "view": 3,
         "url": "www.javbus.com",
         "example": "/javbus/star/rwt",
         "parameters": {
@@ -36499,6 +36510,7 @@
           "popular"
         ],
         "example": "/lofter/user/i",
+        "view": 0,
         "parameters": {
           "name": "Lofter user name, can be found in the URL"
         },
@@ -47099,6 +47111,7 @@
           "social-media",
           "popular"
         ],
+        "view": 2,
         "example": "/pixiv/ranking/week",
         "parameters": {
           "mode": {
@@ -47184,6 +47197,7 @@
           "social-media",
           "popular"
         ],
+        "view": 2,
         "example": "/pixiv/search/Nezuko/popular",
         "parameters": {
           "keyword": "keyword",
@@ -47240,6 +47254,7 @@
           "social-media",
           "popular"
         ],
+        "view": 2,
         "example": "/pixiv/user/15288095",
         "parameters": {
           "id": "user id, available in user's homepage URL"
@@ -50488,6 +50503,7 @@
           "traditional-media",
           "popular"
         ],
+        "view": 0,
         "example": "/reuters/world/us",
         "parameters": {
           "category": "find it in the URL, or tables below",
@@ -50858,6 +50874,7 @@
           "program-update",
           "popular"
         ],
+        "view": 5,
         "example": "/rsshub/routes/en",
         "parameters": {
           "lang": {
@@ -58667,6 +58684,7 @@
           "social-media",
           "popular"
         ],
+        "view": 1,
         "example": "/telegram/channel/awesomeRSSHub",
         "parameters": {
           "username": "channel username",
@@ -61204,6 +61222,7 @@
           "social-media",
           "popular"
         ],
+        "view": 1,
         "example": "/twitter/keyword/RSSHub",
         "parameters": {
           "keyword": "keyword",
@@ -61327,6 +61346,7 @@
           "social-media",
           "popular"
         ],
+        "view": 2,
         "example": "/twitter/media/_RSSHub",
         "parameters": {
           "id": "username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`",
@@ -61433,6 +61453,7 @@
           "social-media",
           "popular"
         ],
+        "view": 1,
         "example": "/twitter/user/_RSSHub",
         "parameters": {
           "id": "username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`",
@@ -64556,6 +64577,7 @@
           "social-media",
           "popular"
         ],
+        "view": 1,
         "example": "/weibo/keyword/RSSHub",
         "parameters": {
           "keyword": "你想订阅的微博关键词",
@@ -64694,6 +64716,7 @@
           "social-media",
           "popular"
         ],
+        "view": 1,
         "example": "/weibo/user/1195230310",
         "parameters": {
           "uid": "用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取",
@@ -66475,6 +66498,7 @@
           "multimedia",
           "popular"
         ],
+        "view": 4,
         "example": "/xiaoyuzhou/podcast/6021f949a789fca4eff4492c",
         "parameters": {
           "id": "播客id，可以在小宇宙播客的 URL 中找到"
@@ -68607,6 +68631,7 @@
           "social-media",
           "popular"
         ],
+        "view": 3,
         "example": "/youtube/user/@JFlaMusic",
         "parameters": {
           "username": "YouTuber username with @",
@@ -69402,6 +69427,7 @@
           "social-media",
           "popular"
         ],
+        "view": 0,
         "example": "/zhihu/people/activities/diygod",
         "parameters": {
           "id": "作者 id，可在用户主页 URL 中找到"
