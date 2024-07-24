@@ -225,8 +225,8 @@ importers:
         specifier: 3.5.3
         version: 3.5.3
       tldts:
-        specifier: 6.1.33
-        version: 6.1.33
+        specifier: 6.1.34
+        version: 6.1.34
       tosource:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
@@ -6473,8 +6473,8 @@ packages:
   tldts-core@6.1.34:
     resolution: {integrity: sha512-Hb/jAm14h5x5+gO5Cv5wabKO0pbLlRoryvCC9v0t8OleZ4vXEKego7Mq1id/X1C8Vw1E0QCCQzGdWHkKFtxFrQ==}
 
-  tldts@6.1.33:
-    resolution: {integrity: sha512-U0rcEJftDwy6LfRdj5aQNvHlXpLpVCMUBkdp5nqtrhT7nva1+DT8O+cQfwJmOk62lOIHdz4EkAyrHKkH5I1Jtw==}
+  tldts@6.1.34:
+    resolution: {integrity: sha512-ErJIL8DMj1CLBER2aFrjI3IfhtuJD/jEYJA/iQg9wW8dIEPXNl4zcI/SGUihMsM/lP/Jyd8c2ETv6Cwtnk0/RQ==}
     hasBin: true
 
   tmp@0.0.33:
@@ -6898,8 +6898,8 @@ packages:
     peerDependencies:
       vue: ^3.2.0
 
-  vue-sonner@1.1.3:
-    resolution: {integrity: sha512-6I+5GNobKvE2nR5MPhO+T59d4j2LXRQoc/ZCmGtCoBWKDQr5nzSqjFaOOdPysHFI2p42wNLhQMafd0N540UW9Q==}
+  vue-sonner@1.1.4:
+    resolution: {integrity: sha512-ATt+o38ALfPBfmaT3rfr10K+mkZ/7EdqZewEZVI3krSc1RaIDK8fI9gQro0Jlh8HZcOHv2oUDJufSIUl/qpdOA==}
 
   vue@3.4.33:
     resolution: {integrity: sha512-VdMCWQOummbhctl4QFMcW6eNtXHsFyDlX60O/tsSQuCcuDOnJ1qPOhhVla65Niece7xq/P2zyZReIO5mP+LGTQ==}
@@ -8935,7 +8935,7 @@ snapshots:
     dependencies:
       nanoid: 5.0.7
       vue: 3.4.33(typescript@5.5.4)
-      vue-sonner: 1.1.3
+      vue-sonner: 1.1.4
     transitivePeerDependencies:
       - typescript
 
@@ -14469,7 +14469,7 @@ snapshots:
 
   tldts-core@6.1.34: {}
 
-  tldts@6.1.33:
+  tldts@6.1.34:
     dependencies:
       tldts-core: 6.1.34
 
@@ -14849,7 +14849,7 @@ snapshots:
       '@vue/devtools-api': 6.6.3
       vue: 3.4.33(typescript@5.5.4)
 
-  vue-sonner@1.1.3: {}
+  vue-sonner@1.1.4: {}
 
   vue@3.4.33(typescript@5.5.4):
     dependencies:
