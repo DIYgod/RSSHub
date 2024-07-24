@@ -155,7 +155,7 @@ async function handler(ctx) {
                     }
 
                     enclosureInfo = {
-                        enclosure_url: src,
+                        enclosure_url: new URL(src, rootUrl).toString(),
                         enclosure_type: mimeType,
                     };
                 });
