@@ -33,7 +33,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     const items = $('div.xna-entry-main-container')
         .toArray()
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
+        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
         .map((dom) => {
             const link = $(dom).find('.xna-entry-title > a');
             const author = $(dom).find('.xna-source-author > a').text();
