@@ -12104,6 +12104,40 @@
     "name": "中国作家网",
     "url": "chinawriter.com.cn"
   },
+  "chlinlearn": {
+    "routes": {
+      "/daily-blog": {
+        "path": "/daily-blog",
+        "name": "值得一读技术博客",
+        "maintainers": [
+          "huyyi"
+        ],
+        "categories": [
+          "programming"
+        ],
+        "example": "/chlinlearn/daily-blog",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "daily-blog.chlinlearn.top/blogs/*"
+            ],
+            "target": "/chlinlearn/daily-blog"
+          }
+        ],
+        "location": "daily-blog.ts"
+      }
+    },
+    "name": "chlinlearn的技术博客",
+    "url": "daily-blog.chlinlearn.top"
+  },
   "chsi": {
     "routes": {
       "/hotnews": {
