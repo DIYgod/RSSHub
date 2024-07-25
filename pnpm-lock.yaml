@@ -42,8 +42,8 @@ importers:
         specifier: 2.2.3
         version: 2.2.3
       '@scalar/hono-api-reference':
-        specifier: 0.5.115
-        version: 0.5.115(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+        specifier: 0.5.118
+        version: 0.5.118(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@sentry/node':
         specifier: 7.116.0
         version: 7.116.0
@@ -1737,36 +1737,36 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@scalar/api-client@2.0.29':
-    resolution: {integrity: sha512-NT0+L/D+IdGNwbPo373mfpYANG/62XWzf7Z5jgTK3vEEv0BYxxfK4bHVjnwoPcKNVCtBRlcWUtS3HZ2R78rgcw==}
+  '@scalar/api-client@2.0.32':
+    resolution: {integrity: sha512-LgIcNEh/vUPPHu3LEhI/JjLt526D0MmF0wA5WyrlTEAX8fRnicBwUumktTyMjAKPaVVrYvcmn4/v09iv9N/+Gg==}
     engines: {node: '>=18'}
 
-  '@scalar/api-reference@1.24.54':
-    resolution: {integrity: sha512-UHQTZuXwYgXdRBSijlofHHaAyHPkFrNAum4VoI2QUxhOHZndIteBhJkhPoqKUtULcC2yx6WHqmeLivLVRrOslw==}
+  '@scalar/api-reference@1.24.57':
+    resolution: {integrity: sha512-cnRFF/0fHeayr2Su5kEosu7fFT1Sy2lL5kO8nmwAuxC+uTA81xTsjaTny8NKduqAo+iwUuDn1pHjtDrY8OuKKA==}
     engines: {node: '>=18'}
 
   '@scalar/code-highlight@0.0.7':
     resolution: {integrity: sha512-YUSlnNapSUuLKDFiiQ54ok+gHD9ufCifI2CAU5HtIvt8pS/Ns4r0D/N+RuEWu5HccbBt/S4cLYkwlg4q76ym/A==}
     engines: {node: '>=18'}
 
-  '@scalar/components@0.12.18':
-    resolution: {integrity: sha512-niKlrLeMBzVa7cbrJey33nHEu4Tdwv/EhoL5X0D/uPBPQXsFQhDpkgqP5zwINtiFpxWnQ1LgXUVJQuxrt6txqw==}
+  '@scalar/components@0.12.19':
+    resolution: {integrity: sha512-pbSXOC7Jo+6hxV9N5UCu9ZzbI3a4V2F03lziaPFtiTk0rOxJwNU1T1R5ioBYhP/Jz3PujVj5G5lnEdwqukLthg==}
     engines: {node: '>=18'}
 
   '@scalar/draggable@0.1.3':
     resolution: {integrity: sha512-A6lUgTV8q/zJGkzHerY1T+X3l3GXmCCg09Z7OU7j6yDyyuj2BSTblthncoD5sN3BdwLjHwkm9ecehfvaE0pj5w==}
     engines: {node: '>=18'}
 
-  '@scalar/hono-api-reference@0.5.115':
-    resolution: {integrity: sha512-Y6Gjk8l7eqnL9uD9TrZPlQZoUmvmCOYzjbpIakTxqqWCWz36BIMvRzt/3/5CHXAxAZYKm9dZp71bZ3J0A9GDhw==}
+  '@scalar/hono-api-reference@0.5.118':
+    resolution: {integrity: sha512-9GwWqQtb1HkgckzWVybeYLWWbt4SAxPqbfflCIW3H5g2WyHPhRPFp96pHXHJzYUpOADHUl4IT38P0gr4cIAtHQ==}
     engines: {node: '>=18'}
 
-  '@scalar/oas-utils@0.2.16':
-    resolution: {integrity: sha512-kyghGlR+ip5RXMiDJQTCwBLlvcZkHFT/ocSdtjqyjkt7pmOBpHPr5YeT3BlcVHdaQizZCoADbii6T4K2Rif5zQ==}
+  '@scalar/oas-utils@0.2.17':
+    resolution: {integrity: sha512-mQT1RQJKZanjV4+h5xfcrzgDiqAbxiR6FnxuzJ7JJhRc5VCIO37voLDxc+v2ZeupvGctGjUfkEdQYALTr14MfQ==}
     engines: {node: '>=18'}
 
-  '@scalar/object-utils@1.1.4':
-    resolution: {integrity: sha512-9+aPspcxdi7NfcFE/CflbmAVClRbSeiXvxaEtk0At7sYG3tQHyP9OrD3fFGqmlPKruvxX9aWJ2OWeC+5Q9vh0A==}
+  '@scalar/object-utils@1.1.5':
+    resolution: {integrity: sha512-3uZwlfVU2v8k2Qt5sXLHGSUl0eJMvxZLRsNRzFMXPEwXcCxpgA5/YwhcX/jnQUXI4rjBEVoUVxdInCd/GeoENw==}
     engines: {node: '>=18'}
 
   '@scalar/openapi-parser@0.7.2':
@@ -1794,8 +1794,8 @@ packages:
   '@scalar/snippetz@0.1.6':
     resolution: {integrity: sha512-z3DEpT/FIZq9yeHL/tz2v6WvdHIiZ4uvK96RdeTPKUUJ0IXvA5vONG3PF5LE0Q/408PCzWsZpGs9f97ztaeJSQ==}
 
-  '@scalar/themes@0.9.15':
-    resolution: {integrity: sha512-imRx+r0DOqRfzzJaqHwSNyMBWKsRF8sXnPn9o50tFvXKPpWlzG6E9gz7tenfOlkCg2OW5xEGuAB4LlSCrvCVvQ==}
+  '@scalar/themes@0.9.16':
+    resolution: {integrity: sha512-B5S8Hrvnt+gh/M+AJqMEIiHWEtp5qghz6seYzp8AOB71XEIacLYudG4g8Pb8xROlDsZhAPKv/mDYvDtzBVLRMA==}
     engines: {node: '>=18'}
 
   '@scalar/use-codemirror@0.11.8':
@@ -3230,8 +3230,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -8576,7 +8576,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.8
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8702,16 +8702,16 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.19.0':
     optional: true
 
-  '@scalar/api-client@2.0.29(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/api-client@2.0.32(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@headlessui/tailwindcss': 0.2.1(tailwindcss@3.4.6)
       '@headlessui/vue': 1.7.22(vue@3.4.34(typescript@5.5.4))
-      '@scalar/components': 0.12.18(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/components': 0.12.19(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@scalar/draggable': 0.1.3(typescript@5.5.4)
-      '@scalar/oas-utils': 0.2.16(typescript@5.5.4)
-      '@scalar/object-utils': 1.1.4(vue@3.4.34(typescript@5.5.4))
+      '@scalar/oas-utils': 0.2.17(typescript@5.5.4)
+      '@scalar/object-utils': 1.1.5(vue@3.4.34(typescript@5.5.4))
       '@scalar/openapi-parser': 0.7.2
-      '@scalar/themes': 0.9.15(typescript@5.5.4)
+      '@scalar/themes': 0.9.16(typescript@5.5.4)
       '@scalar/use-codemirror': 0.11.8(typescript@5.5.4)
       '@scalar/use-toasts': 0.7.4(typescript@5.5.4)
       '@scalar/use-tooltip': 1.0.2(typescript@5.5.4)
@@ -8739,16 +8739,16 @@ snapshots:
       - typescript
       - vitest
 
-  '@scalar/api-reference@1.24.54(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/api-reference@1.24.57(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@floating-ui/vue': 1.1.2(vue@3.4.34(typescript@5.5.4))
       '@headlessui/vue': 1.7.22(vue@3.4.34(typescript@5.5.4))
-      '@scalar/api-client': 2.0.29(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
-      '@scalar/components': 0.12.18(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
-      '@scalar/oas-utils': 0.2.16(typescript@5.5.4)
+      '@scalar/api-client': 2.0.32(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/components': 0.12.19(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/oas-utils': 0.2.17(typescript@5.5.4)
       '@scalar/openapi-parser': 0.7.2
       '@scalar/snippetz': 0.1.6
-      '@scalar/themes': 0.9.15(typescript@5.5.4)
+      '@scalar/themes': 0.9.16(typescript@5.5.4)
       '@scalar/use-toasts': 0.7.4(typescript@5.5.4)
       '@scalar/use-tooltip': 1.0.2(typescript@5.5.4)
       '@unhead/schema': 1.9.16
@@ -8798,7 +8798,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@scalar/components@0.12.18(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/components@0.12.19(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@floating-ui/utils': 0.2.5
       '@floating-ui/vue': 1.1.2(vue@3.4.34(typescript@5.5.4))
@@ -8828,9 +8828,9 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@scalar/hono-api-reference@0.5.115(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/hono-api-reference@0.5.118(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@scalar/api-reference': 1.24.54(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/api-reference': 1.24.57(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.6)(typescript@5.5.4)(vitest@2.0.4(@types/node@20.14.12)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       hono: 4.5.1
     transitivePeerDependencies:
       - '@jest/globals'
@@ -8846,9 +8846,9 @@ snapshots:
       - typescript
       - vitest
 
-  '@scalar/oas-utils@0.2.16(typescript@5.5.4)':
+  '@scalar/oas-utils@0.2.17(typescript@5.5.4)':
     dependencies:
-      '@scalar/themes': 0.9.15(typescript@5.5.4)
+      '@scalar/themes': 0.9.16(typescript@5.5.4)
       axios: 1.7.2
       nanoid: 5.0.7
       yaml: 2.5.0
@@ -8857,7 +8857,7 @@ snapshots:
       - debug
       - typescript
 
-  '@scalar/object-utils@1.1.4(vue@3.4.34(typescript@5.5.4))':
+  '@scalar/object-utils@1.1.5(vue@3.4.34(typescript@5.5.4))':
     dependencies:
       '@vueuse/core': 10.11.0(vue@3.4.34(typescript@5.5.4))
       just-clone: 6.2.0
@@ -8907,7 +8907,7 @@ snapshots:
       '@scalar/snippetz-plugin-node-ofetch': 0.1.1
       '@scalar/snippetz-plugin-node-undici': 0.1.6
 
-  '@scalar/themes@0.9.15(typescript@5.5.4)':
+  '@scalar/themes@0.9.16(typescript@5.5.4)':
     dependencies:
       vue: 3.4.34(typescript@5.5.4)
     transitivePeerDependencies:
@@ -10548,7 +10548,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
