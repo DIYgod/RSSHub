@@ -63779,6 +63779,29 @@
           "WhiteWorld"
         ],
         "location": "topics.ts"
+      },
+      "/xna": {
+        "path": "/xna",
+        "categories": [
+          "bbs",
+          "blog"
+        ],
+        "view": 0,
+        "example": "/v2ex/xna",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "XNA",
+        "maintainers": [
+          "luckyscript"
+        ],
+        "location": "xna.ts"
       }
     },
     "name": "V2EX",

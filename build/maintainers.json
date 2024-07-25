@@ -6246,6 +6246,9 @@
   "/v2ex/topics/:type": [
     "WhiteWorld"
   ],
+  "/v2ex/xna": [
+    "luckyscript"
+  ],
   "/v2rayshare/": [
     "77taibai"
   ],
