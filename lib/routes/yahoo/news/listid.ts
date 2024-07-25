@@ -25,18 +25,18 @@ export const route: Route = {
     maintainers: ['TonyRL', 'williamgateszhao', 'tpnonthealps'],
     handler,
     description: `
-    | 合作媒體     | \`:listId\`                              |
-    | ------------ | ---------------------------------------- |
-    | 最新新聞     | \`09fcf7b0-0ab2-11e8-bf1f-4d52d4f79454\` |
-    | 東方日報     | \`33ddd580-0ab3-11e8-bfe1-4b555fb1e429\` |
-    | now.com      | \`01b4d760-0ab4-11e8-af3a-54037d3dced3\` |
-    | am730        | \`c4842090-0ab2-11e8-af7f-041a72ce7398\` |
-    | BBC          | \`4d3fc9a0-fac8-11e9-87f2-564ca250983e\` |
-    | 信報財經新聞 | \`5a8a0aa0-0ab3-11e8-b3dc-d990c79d6cb1\` |
-    | 香港電台     | \`b4bfc2d0-0ab3-11e8-bf9f-c888fc09923f\` |
-    | 法新社       | \`1cc44280-facb-11e9-ad7c-f3ba971275c8\` |
-    | Bloomberg    | \`40023670-facc-11e9-9dde-9175ff306602\` |
-    | 香港動物報   | \`6058fa9c-d74d-487a-8b49-aa99a2a2978e\` |`,
+| 合作媒體     | \`:listId\`                              |
+| ------------ | ---------------------------------------- |
+| 最新新聞     | \`09fcf7b0-0ab2-11e8-bf1f-4d52d4f79454\` |
+| 東方日報     | \`33ddd580-0ab3-11e8-bfe1-4b555fb1e429\` |
+| now.com      | \`01b4d760-0ab4-11e8-af3a-54037d3dced3\` |
+| am730        | \`c4842090-0ab2-11e8-af7f-041a72ce7398\` |
+| BBC          | \`4d3fc9a0-fac8-11e9-87f2-564ca250983e\` |
+| 信報財經新聞 | \`5a8a0aa0-0ab3-11e8-b3dc-d990c79d6cb1\` |
+| 香港電台     | \`b4bfc2d0-0ab3-11e8-bf9f-c888fc09923f\` |
+| 法新社       | \`1cc44280-facb-11e9-ad7c-f3ba971275c8\` |
+| Bloomberg    | \`40023670-facc-11e9-9dde-9175ff306602\` |
+| 香港動物報   | \`6058fa9c-d74d-487a-8b49-aa99a2a2978e\` |`,
 };
 
 async function handler(ctx) {
