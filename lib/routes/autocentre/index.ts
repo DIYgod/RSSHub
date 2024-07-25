@@ -17,7 +17,7 @@ const createItem = (item) => ({
 });
 
 async function handler(): Promise<Data> {
-    const feed = await parser.parseURL('https://autocentre.ua/rss');
+    const feed = await parser.parseURL('https://www.autocentre.ua/rss');
 
     return {
         title: feed.title as string,
