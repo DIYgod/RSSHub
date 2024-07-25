@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/:cat',
     categories: ['traditional-media'],
     example: '/bjnews/depth',
-    parameters: {},
+    parameters: { cat: '分类, 可从URL中找到' },
     features: {},
     radar: [
         {
@@ -17,7 +17,7 @@ export const route: Route = {
         },
     ],
     name: '分类',
-    maintainers: [''],
+    maintainers: ['dzx-dzx'],
     handler,
     url: 'www.bjnews.com.cn',
 };
@@ -28,11 +28,11 @@ async function handler(ctx) {
     const $ = load(res);
     const list = $('#waterfall-container .pin_demo > a')
         .toArray()
+        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
         .map((a) => ({
             title: $(a).text(),
             link: $(a).attr('href'),
-        }))
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15);
+        }));
 
     const out = await Promise.all(
         list.map((item) =>
@@ -41,13 +41,11 @@ async function handler(ctx) {
                 const $d = load(responses);
                 // $d('img').each((i, e) => $(e).attr('referrerpolicy', 'no-referrer'));
 
-                const single = {
-                    ...item,
-                    pubDate: timezone(parseDate($d('.left-info .timer').text()), +8),
-                    author: $d('.left-info .reporter').text(),
-                    description: $d('#contentStr').html(),
-                };
-                return single;
+                item.pubDate = timezone(parseDate($d('.left-info .timer').text()), +8);
+                item.author = $d('.left-info .reporter').text();
+                item.description = $d('#contentStr').html();
+
+                return item;
             })
         )
     );
