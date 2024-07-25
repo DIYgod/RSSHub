@@ -79,7 +79,9 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
         const dc0 = (response2 || response1).headers
             .getSetCookie()
             .find((s) => s.startsWith('d_c0='))
-            ?.split(';')[0];
+            ?.split(';')[0]
+            .trim()
+            .slice('d_c0='.length);
         if (!dc0) {
             throw new Error('Failed to extract `d_c0` from cookies');
         }
