@@ -38,7 +38,7 @@ export const route: Route = {
         const image = raw.match(/<media:thumbnail height="30" width="30" url="(.+?)"/)?.[1];
         const feed = await parser.parseString(raw);
         return {
-            title: `${user}'s GitHub Public Timeline Feed`,
+            title: `${user}'s GitHub activities`,
             link: feed.link,
             image,
             item: feed.items.map((item) => ({
@@ -47,7 +47,7 @@ export const route: Route = {
                 description: item.content?.replace(/href="(.+?)"/g, `href="https://github.com$1"`),
                 pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                 author: item.author,
-                id: item.id,
+                guid: item.id,
                 image,
             })),
         };
