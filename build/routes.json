@@ -5236,6 +5236,25 @@
     "name": "中国汽车工业协会统计信息网",
     "url": "auto-stats.org.cn"
   },
+  "autocentre": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "name": "Автомобільний сайт N1 в Україні",
+        "categories": [
+          "new-media"
+        ],
+        "maintainers": [
+          "driversti"
+        ],
+        "example": "/autocentre",
+        "location": "index.ts"
+      }
+    },
+    "name": "Автоцентр.ua",
+    "url": "autocentre.ua",
+    "description": "Автоцентр.ua: автоновини - Автомобільний сайт N1 в Україні"
+  },
   "baai": {
     "routes": {
       "/hub/events": {
