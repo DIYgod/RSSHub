@@ -8818,6 +8818,27 @@
       }
     ]
   },
+  "inspirehep.net": {
+    "_name": "INSPIRE",
+    ".": [
+      {
+        "title": "Author Search",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/authors/:id"
+        ],
+        "target": "/inspirehep/authors/:id"
+      },
+      {
+        "title": "Literature Search",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/literature"
+        ],
+        "target": "/inspirehep(_params,url)=>`/inspirehep/literature/${new URL(url).searchParams.get(\"q\")}`"
+      }
+    ]
+  },
   "instructables.com": {
     "_name": "Instructables",
     ".": [

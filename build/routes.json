@@ -31925,6 +31925,53 @@
     "name": "Inoreader",
     "url": "inoreader.com"
   },
+  "inspirehep": {
+    "routes": {
+      "/authors/:id": {
+        "path": "/authors/:id",
+        "example": "/inspirehep/authors/1696909",
+        "parameters": {
+          "id": "Author ID"
+        },
+        "name": "Author Search",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "radar": [
+          {
+            "source": [
+              "inspirehep.net/authors/:id"
+            ]
+          }
+        ],
+        "location": "author.ts"
+      },
+      "/literature/:q": {
+        "path": "/literature/:q",
+        "example": "/inspirehep/literature/Physics",
+        "parameters": {
+          "q": "Search keyword"
+        },
+        "name": "Literature Search",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "radar": [
+          {
+            "source": [
+              "inspirehep.net/literature"
+            ]
+          }
+        ],
+        "location": "literature.ts"
+      }
+    },
+    "name": "INSPIRE",
+    "url": "inspirehep.net",
+    "categories": [
+      "journal"
+    ]
+  },
   "instagram": {
     "routes": {
       "/:category/:key": {

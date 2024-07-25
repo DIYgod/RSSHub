@@ -3138,6 +3138,12 @@
   "/inoreader/rss/:user/:tag": [
     "EthanWng97"
   ],
+  "/inspirehep/authors/:id": [
+    "TonyRL"
+  ],
+  "/inspirehep/literature/:q": [
+    "TonyRL"
+  ],
   "/instagram/:category/:key": [
     "oppilate",
     "DIYgod"
