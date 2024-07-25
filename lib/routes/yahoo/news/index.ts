@@ -66,6 +66,7 @@ For Yahoo Hong Kong and Yahoo Taiwan, please use another "news source" route.
 
 For other Yahoo News, this route's RSS provides the author field. You can use RSSHub's built-in "content filtering" feature. For example, /yahoo-wg/news/tw/technology?filter_author=Yahoo%20Tech|Engadget can filter out news with authors containing Yahoo Tech or Engadget from Yahoo Taiwan's technology news, which is the Chinese version of Engadget.
 `,
+
     zh: {
         name: '新闻',
         description: `
