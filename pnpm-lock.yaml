@@ -225,8 +225,8 @@ importers:
         specifier: 3.5.3
         version: 3.5.3
       tldts:
-        specifier: 6.1.34
-        version: 6.1.34
+        specifier: 6.1.35
+        version: 6.1.35
       tosource:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
@@ -3230,8 +3230,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -5722,7 +5722,7 @@ packages:
   puppeteer@22.6.2:
     resolution: {integrity: sha512-3GMAJ9adPUSdIHGuYV1b1RqRB6D2UScjnq779uZsvpAP6HOWw2+9ezZiUZaAXVST+Ku7KWsxOjkctEvRasJClA==}
     engines: {node: '>=18'}
-    deprecated: < 22.6.4 is no longer supported
+    deprecated: < 22.8.2 is no longer supported
     hasBin: true
 
   qs@6.11.0:
@@ -6469,11 +6469,11 @@ packages:
     resolution: {integrity: sha512-YY4ei7K7gPGifqNSrfMaPdqTqiHcwYKUJ7zhLqQOK2ildlGgti5TSwJiXXN1YqG17I2GYZh5cZqv2r5fwBUM+w==}
     hasBin: true
 
-  tldts-core@6.1.34:
-    resolution: {integrity: sha512-Hb/jAm14h5x5+gO5Cv5wabKO0pbLlRoryvCC9v0t8OleZ4vXEKego7Mq1id/X1C8Vw1E0QCCQzGdWHkKFtxFrQ==}
+  tldts-core@6.1.35:
+    resolution: {integrity: sha512-JAwaxYLdlXI00Ch86/YlSCTJwadCHkedtZ9BTVsUpI2pVAJdGP0byEF3V8jV4nRMyG29ApXQeDzm1z9uYq5DjA==}
 
-  tldts@6.1.34:
-    resolution: {integrity: sha512-ErJIL8DMj1CLBER2aFrjI3IfhtuJD/jEYJA/iQg9wW8dIEPXNl4zcI/SGUihMsM/lP/Jyd8c2ETv6Cwtnk0/RQ==}
+  tldts@6.1.35:
+    resolution: {integrity: sha512-hs38YswUGXTsFBeW/HkJ0F6zYV/wO9N5TxpWtAz4zei8ppwCRYCuDIpmcU4DoB2ni2kIWh/9WJH9Tw9xZizUvA==}
     hasBin: true
 
   tmp@0.0.33:
@@ -8576,7 +8576,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.24.8
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -10548,7 +10548,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -14471,11 +14471,11 @@ snapshots:
 
   tlds@1.254.0: {}
 
-  tldts-core@6.1.34: {}
+  tldts-core@6.1.35: {}
 
-  tldts@6.1.34:
+  tldts@6.1.35:
     dependencies:
-      tldts-core: 6.1.34
+      tldts-core: 6.1.35
 
   tmp@0.0.33:
     dependencies:
