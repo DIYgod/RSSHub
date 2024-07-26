@@ -6681,6 +6681,11 @@
     "KeiLongW",
     "williamgateszhao"
   ],
+  "/yahoo/news/list/:region/:listId": [
+    "TonyRL",
+    "williamgateszhao",
+    "tpnonthealps"
+  ],
   "/yahoo/news/providers/:region/list": [
     "TonyRL",
     "williamgateszhao"

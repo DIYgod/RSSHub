@@ -18713,6 +18713,15 @@
     ],
     "hk.news": [
       {
+        "title": "合作媒體",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/",
+          "/"
+        ],
+        "target": "/yahoo/news/list/:region/:listId"
+      },
+      {
         "title": "新聞來源列表",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
