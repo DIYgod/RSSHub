@@ -66,8 +66,8 @@ importers:
         specifier: 2.7.6
         version: 2.7.6
       city-timezones:
-        specifier: 1.2.1
-        version: 1.2.1
+        specifier: 1.3.0
+        version: 1.3.0
       cross-env:
         specifier: 7.0.3
         version: 7.0.3
@@ -2822,8 +2822,8 @@ packages:
   citty@0.1.6:
     resolution: {integrity: sha512-tskPPKEs8D2KPafUypv2gxwJP8h/OaJmC82QQGGDQcHvXX43xF2VDACcJVmZ0EuSxkpO9Kc4MlrA3q0+FG58AQ==}
 
-  city-timezones@1.2.1:
-    resolution: {integrity: sha512-hruuB611QFoUFMsan7xd9B2VPMrA8XC716O/999WW34kmaJUT1hxKF2W8TSXAWkhSqgvbu70DjcDv7/wpM6vow==}
+  city-timezones@1.3.0:
+    resolution: {integrity: sha512-S/FiU8F/1HgMvbd8POvb+8xorp0tp5VJwUfYC/ssnbxykLbwEZ9poZWFMPfBVuh1KlXxP63DGCkdr0D8aFEADQ==}
 
   class-transformer@0.3.1:
     resolution: {integrity: sha512-cKFwohpJbuMovS8xVLmn8N2AUbAuc8pVo4zEfsUVo8qgECOogns1WVk/FkOZoxhOPTyTYFckuoH+13FO+MQ8GA==}
@@ -10198,7 +10198,7 @@ snapshots:
     dependencies:
       consola: 3.2.3
 
-  city-timezones@1.2.1:
+  city-timezones@1.3.0:
     dependencies:
       lodash: 4.17.21
 
