@@ -1,14 +1,13 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+import { fetchArticle } from './utils';
 
 export const route: Route = {
-    path: '/:cat',
+    path: '/cat/:cat',
     categories: ['traditional-media'],
-    example: '/bjnews/depth',
+    example: '/bjnews/cat/depth',
     parameters: { cat: '分类, 可从URL中找到' },
     features: {},
     radar: [
@@ -35,21 +34,7 @@ async function handler(ctx) {
             category: [`source:${$(a).parent().find('.source').text().trim()}`],
         }));
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const responses = await ofetch(item.link);
-                const $d = load(responses);
-                // $d('img').each((i, e) => $(e).attr('referrerpolicy', 'no-referrer'));
-
-                item.pubDate = timezone(parseDate($d('.left-info .timer').text()), +8);
-                item.author = $d('.left-info .reporter').text();
-                item.description = $d('#contentStr').html();
-
-                return item;
-            })
-        )
-    );
+    const out = await Promise.all(list.map((item) => fetchArticle(item)));
     return {
         title: $('title').text(),
         link: url,
