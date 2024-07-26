@@ -11489,6 +11489,43 @@
     "name": "中国期货业协会",
     "url": "cfachina.org"
   },
+  "cffex": {
+    "routes": {
+      "/announcement": {
+        "path": "/announcement",
+        "name": "交易所公告",
+        "url": "www.cffex.com.cn",
+        "maintainers": [
+          "ChenXiangcheng1"
+        ],
+        "example": "/cffex/announcement",
+        "parameters": {},
+        "description": "",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "cffex.com.cn"
+            ],
+            "target": "/announcement"
+          }
+        ],
+        "location": "announcement.ts"
+      }
+    },
+    "name": "中国金融期货交易所",
+    "url": "cffex.com.cn"
+  },
   "cfmmc": {
     "routes": {
       "/:id{.+}?": {
