@@ -797,6 +797,12 @@
   "/bjfu/news/:type": [
     "markmingjie"
   ],
+  "/bjnews/cat/:cat": [
+    "dzx-dzx"
+  ],
+  "/bjnews/column/:column": [
+    "dzx-dzx"
+  ],
   "/bjp/apod": [
     "HenryQW"
   ],

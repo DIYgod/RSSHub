@@ -2162,6 +2162,29 @@
       }
     ]
   },
+  "bjnews.com.cn": {
+    "_name": "新京报",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:cat"
+        ],
+        "target": "/bjnews/cat/:cat"
+      }
+    ],
+    "m": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/column/:column.htm"
+        ],
+        "target": "/bjnews/column/:column"
+      }
+    ]
+  },
   "bjp.org.cn": {
     "_name": "北京天文馆",
     ".": [
