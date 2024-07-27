@@ -8423,7 +8423,7 @@
         ],
         "example": "/bjx/fd/yw",
         "parameters": {
-          "type": "文章分类"
+          "type": "文章分类，详见下表"
         },
         "features": {
           "requireConfig": false,
