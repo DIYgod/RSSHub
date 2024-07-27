@@ -31,7 +31,7 @@ async function handler(ctx) {
         .map((a) => ({
             title: $(a).text(),
             link: $(a).attr('href'),
-            category: [`source:${$(a).parent().find('.source').text().trim()}`],
+            category: $(a).parent().find('.source').text().trim(),
         }));
 
     const out = await Promise.all(list.map((item) => fetchArticle(item)));
