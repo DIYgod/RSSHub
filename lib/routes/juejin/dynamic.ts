@@ -75,7 +75,7 @@ async function handler(ctx) {
                 pubDate = parseDate(Number(ctime) * 1000);
                 author = author_user_info.user_name;
                 link = `https://juejin.cn/post/${article_id}`;
-                category = [target_data.category.category_name, ...tags.map((t) => t.tag_name)];
+                category = [...new Set([target_data.category.category_name, ...tags.map((t) => t.tag_name)])];
                 if (action === 1) {
                     title = `${username} 赞了这篇文章<br>//@${author}：${title}`;
                     description = `${username} 赞了这篇文章<br>//@${author}：${description}`;
