@@ -38,7 +38,7 @@ async function handler(ctx) {
     });
     const list = response.data.data.list;
 
-    const username = list?.[0]?.user?.user_name;
+    const username = list[0].user.user_name;
 
     const items = list.map((e) => {
         const { target_type, target_data, action, time } = e; // action: 0.发布文章；1.点赞文章；2.发布沸点；3.点赞沸点；4.关注用户
