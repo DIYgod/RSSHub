@@ -23,7 +23,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const url = `https://api.bjnews.com.cn/api/v101/news/column_news.php?column_id=${ctx.req.param('column')}`;
+    const columnID = ctx.req.param('column');
+    const url = `https://api.bjnews.com.cn/api/v101/news/column_news.php?column_id=${columnID}`;
     const res = await ofetch(url);
     const list = res.data.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15).map((e) => ({
         title: e.row.title,
@@ -36,7 +37,7 @@ async function handler(ctx) {
     const out = await Promise.all(list.map((item) => fetchArticle(item)));
     return {
         title: `新京报 - 栏目 - ${res.data[0].row.column_info[0].column_name}`,
-        link: url,
+        link: `https://m.bjnews.com.cn/column/${columnID}.html`,
         item: out,
     };
 }
