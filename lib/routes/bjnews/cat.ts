@@ -36,7 +36,7 @@ async function handler(ctx) {
 
     const out = await Promise.all(list.map((item) => fetchArticle(item)));
     return {
-        title: $('title').text(),
+        title: `新京报 - 分类 - ${$(".cur").text().trim()}`,
         link: url,
         item: out,
     };
