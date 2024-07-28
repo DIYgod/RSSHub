@@ -1,6 +1,6 @@
 import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
-import { load } from 'cheerio';
+import ofetch from '@/utils/ofetch';
+import * as cheerio from 'cheerio';
 
 export const route: Route = {
     path: '/routes/:lang?',
@@ -66,11 +66,9 @@ async function handler(ctx) {
     ];
     const all = await Promise.all(
         types.map(async (type) => {
-            const response = await got(`https://docs.rsshub.app/${lang}routes/${type}`);
+            const response = await ofetch(`https://docs.rsshub.app/${lang}routes/${type}`);
 
-            const data = response.data;
-
-            const $ = load(data);
+            const $ = cheerio.load(response);
             const page = $('.page').toArray();
             const item = $('.routeBlock').toArray();
             return { page, item, type };
@@ -84,15 +82,23 @@ async function handler(ctx) {
         description: isEnglish ? 'Everything is RSSible' : '万物皆可 RSS',
         language: isEnglish ? 'en-us' : 'zh-cn',
         item: list.map(({ page, item, type }) => {
-            const $ = load(page);
-            item = $(item);
-            const h2Title = item.prevAll('h2').eq(0);
-            const h3Title = item.prevAll('h3').eq(0);
+            const $ = cheerio.load(page);
+            const $item = $(item);
+            const h2Title = $item.prevAll('h2').eq(0);
+            const h3Title = $item.prevAll('h3').eq(0);
+
+            $item.find('.VPBadge').each((_, ele) => {
+                const $ele = $(ele);
+                if ($ele.text().includes('Test')) {
+                    $ele.remove();
+                }
+            });
+
             return {
                 title: `${h2Title.text().trim()} - ${h3Title.text().trim()}`,
-                description: item.html(),
+                description: $item.html()?.replaceAll(/<!--.*?-->/g, ''),
                 link: `https://docs.rsshub.app/${lang}routes/${type}#${encodeURIComponent(h2Title.find('.header-anchor').attr('href') && h3Title.find('.header-anchor').attr('href')?.substring(1))}`,
-                guid: item.attr('id'),
+                guid: $item.attr('id'),
             };
         }),
     };
