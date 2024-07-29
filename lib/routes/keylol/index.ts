@@ -1,5 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
+import { config } from '@/config';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
@@ -8,6 +9,9 @@ import parser from '@/utils/rss-parser';
 import queryString from 'query-string';
 
 const threadIdRegex = /(\d+)-\d+-\d+/;
+const header = {
+    Cookie: config.keylol.cookie ?? undefined,
+};
 
 export const route: Route = {
     path: '/:path',
@@ -58,7 +62,11 @@ async function handler(ctx) {
     const rootUrl = 'https://keylol.com';
     const currentUrl = queryString.stringifyUrl({ url: `${rootUrl}/forum.php`, query: queryParams });
 
-    const { data: response } = await got(currentUrl);
+    const { data: response } = await got({
+        method: 'get',
+        url: currentUrl,
+        headers: header,
+    });
 
     const $ = load(response);
 
@@ -80,7 +88,11 @@ async function handler(ctx) {
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 const threadId = threadIdRegex.test(item.link) ? item.link.match(threadIdRegex)[1] : queryString.parseUrl(item.link).query.tid;
-                const { data: detailResponse } = await got(item.link);
+                const { data: detailResponse } = await got({
+                    method: 'get',
+                    url: item.link,
+                    headers: header,
+                });
 
                 const content = load(detailResponse);
 
@@ -164,7 +176,11 @@ function getDescription($) {
 }
 
 async function getPage(url, pageTitle) {
-    const { data: detailResponse } = await got(url);
+    const { data: detailResponse } = await got({
+        method: 'get',
+        url,
+        headers: header,
+    });
 
     const $ = load(detailResponse, { xmlMode: true });
     const content = $('root').text();

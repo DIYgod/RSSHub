@@ -168,6 +168,9 @@ export type Config = {
     javdb: {
         session?: string;
     };
+    keylol: {
+        cookie?: string;
+    };
     lastfm: {
         api_key?: string;
     };
@@ -533,6 +536,9 @@ const calculateValue = () => {
         },
         javdb: {
             session: envs.JAVDB_SESSION,
+        },
+        keylol: {
+            cookie: envs.KEYLOL_COOKIE,
         },
         lastfm: {
             api_key: envs.LASTFM_API_KEY,
