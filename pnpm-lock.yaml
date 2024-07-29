@@ -225,8 +225,8 @@ importers:
         specifier: 3.5.3
         version: 3.5.3
       tldts:
-        specifier: 6.1.35
-        version: 6.1.35
+        specifier: 6.1.36
+        version: 6.1.36
       tosource:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
@@ -3226,8 +3226,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -6480,8 +6480,8 @@ packages:
   tldts-core@6.1.36:
     resolution: {integrity: sha512-znSW/7cUdiw7UQ662gfDhnMdDZrhsC6MpZt/cu07Ulmw1S2Gh4tr0pqGtHtDqKs9S2Sy9k7irSzvBnN98iGoLA==}
 
-  tldts@6.1.35:
-    resolution: {integrity: sha512-hs38YswUGXTsFBeW/HkJ0F6zYV/wO9N5TxpWtAz4zei8ppwCRYCuDIpmcU4DoB2ni2kIWh/9WJH9Tw9xZizUvA==}
+  tldts@6.1.36:
+    resolution: {integrity: sha512-ajpVQSfbng6tsuAI8fDV9WWE+J6ItELCQvf9+S7w23DhCyvdLG5TV1FZXHEt9yvF4GpNLJegdY+lwgnqlHQhJw==}
     hasBin: true
 
   tmp@0.0.33:
@@ -8578,7 +8578,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.0
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -10552,7 +10552,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -14485,7 +14485,7 @@ snapshots:
 
   tldts-core@6.1.36: {}
 
-  tldts@6.1.35:
+  tldts@6.1.36:
     dependencies:
       tldts-core: 6.1.36
 
