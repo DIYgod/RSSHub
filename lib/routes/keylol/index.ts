@@ -84,7 +84,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                let descriptionList: any[] = [];
+                let descriptionList: string[] = [];
                 const indexDiv = content('div#threadindex');
                 if (indexDiv.length > 0) {
                     // post with page
