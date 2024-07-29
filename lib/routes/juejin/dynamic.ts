@@ -61,8 +61,8 @@ async function handler(ctx) {
                 link = `https://juejin.cn/pin/${msg_id}`;
                 category = topic.title;
                 if (action === 3) {
-                    title = `${username} 赞了这篇沸点<br>//@${author}：${title}`;
-                    description = `${username} 赞了这篇沸点<br>//@${author}：${description}`;
+                    title = `${username} 赞了这篇沸点//@${author}：${title}`;
+                    description = `${username} 赞了这篇沸点//@${author}：${description}`;
                 }
                 break;
             }
@@ -77,8 +77,7 @@ async function handler(ctx) {
                 link = `https://juejin.cn/post/${article_id}`;
                 category = [...new Set([target_data.category.category_name, ...tags.map((t) => t.tag_name)])];
                 if (action === 1) {
-                    title = `${username} 赞了这篇文章<br>//@${author}：${title}`;
-                    description = `${username} 赞了这篇文章<br>//@${author}：${description}`;
+                    title = `${username} 赞了这篇文章//@${author}：${title}`;
                 }
                 break;
             }
