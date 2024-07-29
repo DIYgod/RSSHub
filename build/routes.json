@@ -47460,8 +47460,8 @@
         ],
         "location": "ranking.ts"
       },
-      "/search/:keyword/:order?/:mode?": {
-        "path": "/search/:keyword/:order?/:mode?",
+      "/search/:keyword/:order?/:mode?/:include_ai?": {
+        "path": "/search/:keyword/:order?/:mode?/:include_ai?",
         "categories": [
           "social-media",
           "popular"
@@ -47499,6 +47499,20 @@
               {
                 "label": "no filter",
                 "value": "no"
+              }
+            ]
+          },
+          "include_ai": {
+            "description": "whether AI-generated content is included",
+            "default": "yes",
+            "options": [
+              {
+                "label": "does not include AI-generated content",
+                "value": "no"
+              },
+              {
+                "label": "include AI-generated content",
+                "value": "yes"
               }
             ]
           }
