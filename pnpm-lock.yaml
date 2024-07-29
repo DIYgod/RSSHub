@@ -385,8 +385,8 @@ importers:
         specifier: 14.4.2
         version: 14.4.2
       husky:
-        specifier: 9.1.2
-        version: 9.1.2
+        specifier: 9.1.3
+        version: 9.1.3
       js-beautify:
         specifier: 1.15.1
         version: 1.15.1
@@ -4199,8 +4199,8 @@ packages:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
 
-  husky@9.1.2:
-    resolution: {integrity: sha512-1/aDMXZdhr1VdJJTLt6e7BipM0Jd9qkpubPiIplon1WmCeOy3nnzsCMeBqS9AsL5ioonl8F8y/F2CLOmk19/Pw==}
+  husky@9.1.3:
+    resolution: {integrity: sha512-ET3TQmQgdIu0pt+jKkpo5oGyg/4MQZpG6xcam5J5JyNJV+CBT23OBpCF15bKHKycRyMH9k6ONy8g2HdGIsSkMQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -11830,7 +11830,7 @@ snapshots:
 
   human-signals@5.0.0: {}
 
-  husky@9.1.2: {}
+  husky@9.1.3: {}
 
   iconv-lite@0.4.24:
     dependencies:
