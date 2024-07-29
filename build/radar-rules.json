@@ -9473,6 +9473,14 @@
         "target": "/juejin/column/:id"
       },
       {
+        "title": "用户动态",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/user/:id"
+        ],
+        "target": "/juejin/dynamic/:id"
+      },
+      {
         "title": "收藏集",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [

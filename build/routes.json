@@ -34658,6 +34658,36 @@
         ],
         "location": "column.ts"
       },
+      "/dynamic/:id": {
+        "path": "/dynamic/:id",
+        "categories": [
+          "programming"
+        ],
+        "example": "/juejin/dynamic/3051900006845944",
+        "parameters": {
+          "id": "用户 id, 可在用户页 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "juejin.cn/user/:id"
+            ]
+          }
+        ],
+        "name": "用户动态",
+        "maintainers": [
+          "CaoMeiYouRen"
+        ],
+        "location": "dynamic.ts"
+      },
       "/collections/:userId": {
         "path": "/collections/:userId",
         "categories": [

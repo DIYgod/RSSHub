@@ -3418,6 +3418,9 @@
   "/juejin/column/:id": [
     "xiangzy1"
   ],
+  "/juejin/dynamic/:id": [
+    "CaoMeiYouRen"
+  ],
   "/juejin/collections/:userId": [
     "isQ"
   ],
