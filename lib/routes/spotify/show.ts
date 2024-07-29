@@ -63,7 +63,7 @@ async function handler(ctx) {
             pubDate: parseDate(x.release_date),
             link: x.external_urls.spotify,
             itunes_item_image: x.images[0].url,
-            itunes_duration: x.duration_ms * 1000,
+            itunes_duration: x.duration_ms / 1000,
             enclosure_url: x.audio_preview_url,
             enclosure_type: 'audio/mpeg',
         })),
