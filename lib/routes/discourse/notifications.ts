@@ -39,7 +39,7 @@ async function handler(ctx) {
         link: `${link}/${Object.hasOwn(e.data, 'badge_id') ? `badges/${e.data.badge_id}/${e.data.badge_slug}?username=${e.data.username}` : `t/topic/${e.topic_id}/${e.post_number}`}`,
         pubDate: new Date(e.created_at),
         author: e.data.display_username ?? e.data.username,
-        category: `notification_type:${e.notification_type}`,
+        category: [`notification_type:${e.notification_type}`, `read:${e.read}`, `high_priority:${e.high_priority}`],
         original_post_id: e.data.original_post_id,
     }));
 
@@ -64,5 +64,6 @@ async function handler(ctx) {
         title: `${about.title} - Notifications`,
         description: about.description,
         item: items,
+        allowEmpty: true,
     };
 }
