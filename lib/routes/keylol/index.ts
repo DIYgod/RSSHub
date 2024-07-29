@@ -19,6 +19,20 @@ export const route: Route = {
     parameters: { path: '路径，默认为热点聚焦' },
     categories: ['game'],
     example: '/keylol/f161-1',
+    features: {
+        requireConfig: [
+            {
+                name: 'KEYLOL_COOKIE',
+                optional: true,
+                description: `配置后可抓取具有阅读权限的帖子內容`,
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['keylol.com/:path'],
