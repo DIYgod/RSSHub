@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 import queryString from 'query-string';
 
@@ -62,15 +62,17 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    let items = $('tbody[id^="normalthread_"] a.xst')
+    let items = $('tbody[id^="normalthread_"]')
         .slice(0, limit)
         .toArray()
         .map((item) => {
             item = $(item);
 
             return {
-                title: item.text(),
-                link: new URL(item.prop('href').split('&extra=')[0], rootUrl).href,
+                title: item.find('a.xst').text(),
+                link: new URL(item.find(' a.xst').prop('href').split('&extra=')[0], rootUrl).href,
+                author: item.find('td.by-author cite').text(),
+                pubDate: parseRelativeDate(item.find('td.by-author em').text().replaceAll(' 发表', '')),
             };
         });
 
@@ -110,8 +112,10 @@ async function handler(ctx) {
                 }
 
                 item.description = descriptionList.join('<br/>');
-                const authorName = authorNameMap.find((a) => a.threadId === threadId);
-                item.author = authorName && authorName.length > 0 ? authorName[0].author : content('a.xw1').first().text();
+                const realAuthorName = authorNameMap.find((a) => a.threadId === threadId);
+                if (realAuthorName) {
+                    item.author = realAuthorName.author;
+                }
                 item.category = content('#keyloL_thread_tags a')
                     .toArray()
                     .map((c) => content(c).text());
@@ -156,7 +160,7 @@ async function handler(ctx) {
 function getDescription($) {
     const descriptionEl = $('td.t_f');
     descriptionEl.find('div.rnd_ai_pr').remove(); // remove ad image
-    return descriptionEl.html();
+    return descriptionEl.length > 0 ? descriptionEl.html() : $('div.alert_info').html();
 }
 
 async function getPage(url, pageTitle) {
