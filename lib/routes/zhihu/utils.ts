@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import g_encrypt from './execlib/x-zse-96-v3';
 import md5 from '@/utils/md5';
+import { config } from '@/config';
 
 export const header = {
     'x-api-version': '3.0.91',
@@ -93,8 +94,13 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
     const xzse93 = '101_3_3.0';
     const f = `${xzse93}+${apiPath}+${dc0}`;
     const xzse96 = '2.0_' + g_encrypt(md5(f));
+
+    const zc0 = config.zhihu.cookies
+        ?.split(';')
+        .find((e) => e.includes('z_c0'))
+        ?.slice('z_c0='.length);
     return {
-        cookie: `d_c0=${dc0}`,
+        cookie: `d_c0=${dc0}${zc0 ? `;z_c0=${zc0}` : ''}`,
         'x-zse-96': xzse96,
         'x-app-za': 'OS=Web',
         'x-zse-93': xzse93,
