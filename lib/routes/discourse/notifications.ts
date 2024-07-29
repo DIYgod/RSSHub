@@ -64,5 +64,6 @@ async function handler(ctx) {
         title: `${about.title} - Notifications`,
         description: about.description,
         item: items,
+        allowEmpty: true,
     };
 }
