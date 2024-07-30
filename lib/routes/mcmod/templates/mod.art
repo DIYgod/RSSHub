@@ -1,6 +1,4 @@
 <img src="{{ mod.pic }}" referrerpolicy="no-referrer">
-<h1>{{ mod.title }}</h1>
-<p><b>作者：</b>{{ mod.author }}</p>
 {{ each mod.label l }}
   <p>{{ l }}</p>
 {{ /each }}

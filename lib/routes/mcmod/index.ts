@@ -85,8 +85,6 @@ export const route: Route = {
                     item.description =
                         render({
                             pic: 'https:' + item.image,
-                            title: item.title,
-                            author: item.author.map((e) => e.name).join('，'),
                             label: $('.class-info  li.col-lg-4')
                                 .toArray()
                                 .map((e) => $(e).text()),
