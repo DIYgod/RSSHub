@@ -3762,6 +3762,9 @@
   "/mckinsey/cn/:category?": [
     "laampui"
   ],
+  "/mcmod/:type": [
+    "hualiong"
+  ],
   "/mdpi/:journal": [
     "Derekmini"
   ],

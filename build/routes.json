@@ -38142,6 +38142,36 @@
     "name": "麦肯锡",
     "url": "mckinsey.com.cn"
   },
+  "mcmod": {
+    "routes": {
+      "/:type": {
+        "path": "/:type",
+        "categories": [
+          "game"
+        ],
+        "example": "/mcmod/new",
+        "parameters": {
+          "type": "查询类型，详见下表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "最新MOD",
+        "maintainers": [
+          "hualiong"
+        ],
+        "description": "`:type` 类型可选如下\n\n| 随机显示MOD | 最新收录MOD | 最近编辑MOD |\n| ------ | --- | ---- |\n| random | new | edit |",
+        "location": "index.ts"
+      }
+    },
+    "name": "MC百科",
+    "url": "www.mcmod.cn"
+  },
   "mdpi": {
     "routes": {
       "/:journal": {
