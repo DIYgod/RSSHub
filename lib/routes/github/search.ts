@@ -1,6 +1,5 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { load } from 'cheerio';
+import { DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import * as url from 'node:url';
 
 const host = 'https://github.com';
@@ -40,22 +39,25 @@ async function handler(ctx) {
 
     const suffix = 'search?o='.concat(order, '&q=', encodeURIComponent(query), '&s=', sort, '&type=Repositories');
     const link = url.resolve(host, suffix);
-    const response = await got.get(link);
-    const $ = load(response.data);
+    const response = await ofetch(link, {
+        headers: {
+            accept: 'application/json',
+        },
+    });
 
-    const out = $('.repo-list li')
-        .slice(0, 10)
-        .map(function () {
-            const a = $(this).find('.f4.text-normal > a');
-            const single = {
-                title: a.text(),
-                author: a.text().split('/')[0].trim(),
-                link: host.concat(a.attr('href')),
-                description: $(this).find('div p').text().trim(),
-            };
-            return single;
-        })
-        .get();
+    const out = response.payload.results.map((item) => {
+        const {
+            repo: { repository },
+            hl_trunc_description,
+        } = item;
+
+        return {
+            title: repository.name,
+            author: repository.owner_login,
+            link: host.concat(`/${repository.owner_login}/${repository.name}`),
+            description: hl_trunc_description,
+        } as DataItem;
+    });
 
     return {
         allowEmpty: true,
