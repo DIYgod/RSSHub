@@ -4,11 +4,13 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
-import { CookieAgent } from 'http-cookie-agent/undici';
+import { CookieAgent, CookieClient } from 'http-cookie-agent/undici';
+import { ProxyAgent } from 'undici';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { RateLimiterMemory, RateLimiterRedis, RateLimiterQueue } from 'rate-limiter-flexible';
 import ofetch from '@/utils/ofetch';
+import proxy from '@/utils/proxy';
 
 const dispatchers = {};
 let authTokenIndex = 0;
@@ -33,8 +35,14 @@ const token2Cookie = (token) =>
         const jar = new CookieJar();
         jar.setCookieSync(`auth_token=${token}`, 'https://x.com');
         try {
+            const agent = proxy.proxyUri
+                ? new ProxyAgent({
+                      factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
+                      uri: proxy.proxyUri,
+                  })
+                : new CookieAgent({ cookies: { jar } });
             await got('https://x.com', {
-                dispatcher: new CookieAgent({ cookies: { jar } }),
+                dispatcher: agent,
             });
             return JSON.stringify(jar.serializeSync());
         } catch {
@@ -56,9 +64,15 @@ export const twitterGot = async (url, params) => {
             cookie = JSON.parse(cookie);
         }
         const jar = CookieJar.deserializeSync(cookie as any);
+        const agent = proxy.proxyUri
+            ? new ProxyAgent({
+                  factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
+                  uri: proxy.proxyUri,
+              })
+            : new CookieAgent({ cookies: { jar } });
         dispatchers[token] = {
             jar,
-            agent: new CookieAgent({ cookies: { jar } }),
+            agent,
         };
     } else {
         throw new ConfigNotFoundError(`Twitter cookie for token ${token} is not valid`);

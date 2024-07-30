@@ -28,7 +28,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Home timeline',
-    maintainers: ['DIYgod'],
+    maintainers: ['DIYgod', 'CaoMeiYouRen'],
     handler,
     radar: [
         {
