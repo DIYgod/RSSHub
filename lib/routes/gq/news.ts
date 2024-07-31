@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 const host = 'https://www.gq.com';
 export const route: Route = {
     path: '/news',
