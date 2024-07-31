@@ -21,7 +21,7 @@ interface NewsItem {
 export const route: Route = {
     path: '/wutheringwaves/news',
     categories: ['game'],
-    example: '/wutheringwaves/news',
+    example: '/kurogames/wutheringwaves/news',
     name: '鸣潮 — 游戏公告、新闻与活动',
     radar: [
         {
