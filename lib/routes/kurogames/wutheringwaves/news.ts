@@ -1,5 +1,7 @@
 import { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 import * as cheerio from 'cheerio';
 import { ofetch } from 'ofetch';
 
@@ -34,20 +36,20 @@ export const route: Route = {
             title: '《鸣潮》— 游戏公告、新闻和活动',
             link: 'https://mc.kurogames.com/main#news',
             item: await Promise.all(
-                res.map((i) => {
+                res.map(async (i) => {
                     const contentUrl = `https://media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/zh/article/${i.articleId}.json`;
-                    return cache.tryGet(contentUrl, async () => {
+                    const description = (await cache.tryGet(contentUrl, async () => {
                         const data = await ofetch<NewsItem>(contentUrl, { query: { t: Date.now() } });
-
                         const $ = cheerio.load(data.articleContent);
+                        return $('body').html() ?? '';
+                    })) as string;
 
-                        return {
-                            title: i.articleTitle,
-                            pubDate: i.createTime,
-                            description: $('body').html(),
-                            link: `https://mc.kurogames.com/main/news/detail/${i.articleId}`,
-                        } as DataItem;
-                    }) as Promise<DataItem>;
+                    return {
+                        title: i.articleTitle,
+                        pubDate: timezone(parseDate(i.createTime), +8),
+                        description,
+                        link: `https://mc.kurogames.com/main/news/detail/${i.articleId}`,
+                    } as DataItem;
                 })
             ),
             language: 'zh-cn',
