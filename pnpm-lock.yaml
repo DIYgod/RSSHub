@@ -354,6 +354,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: 2.0.4
         version: 2.0.4(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      discord-api-types:
+        specifier: 0.37.93
+        version: 0.37.93
       eslint:
         specifier: 9.8.0
         version: 9.8.0
@@ -3234,6 +3237,9 @@ packages:
   directory-import@3.3.1:
     resolution: {integrity: sha512-d9paCbverdqmuwR+B40phSqiHhgPKiP8dpsMz5WT9U6ug2VVQ3tqXNCedpa6iGHg6mgv9lHaoq5DJUu2IXMjsQ==}
     engines: {node: '>=18.17.0'}
+
+  discord-api-types@0.37.93:
+    resolution: {integrity: sha512-M5jn0x3bcXk8EI2c6F6V6LeOWq10B/cJf+YJSyqNmg7z4bdXK+Z7g9zGJwHS0h9Bfgs0nun2LQISFOzwck7G9A==}
 
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
@@ -10557,6 +10563,8 @@ snapshots:
       path-type: 4.0.0
 
   directory-import@3.3.1: {}
+
+  discord-api-types@0.37.93: {}
 
   dlv@1.1.3: {}
 
