@@ -3993,7 +3993,9 @@
       "*": {
         "path": "*",
         "name": "Unknown",
-        "maintainers": [],
+        "maintainers": [
+          "nczitzk"
+        ],
         "location": "index.ts"
       }
     },
@@ -10899,7 +10901,7 @@
             ]
           }
         ],
-        "description": "\n:::tip\n存在**二级分类**的**一级分类**不能单独当作参数，如：`/cccfna/hangyezixun`\n:::\n    \n文章的目录分级如下:\n\n- shanghuidongtai（商会通知）\n- meirigengxin（每日更新）\n- tongzhigonggao（通知公告）\n- hangyezixun（行业资讯）\n  - zhengcedaohang（政策导航）\n  - yujinxinxi（预警信息）\n  - shichangdongtai（市场动态）\n  - gongxuxinxi（供需信息）\n- maoyitongji（贸易统计）\n  - tongjikuaibao（统计快报）\n  - hangyetongji（行业统计）\n  - guobiemaoyi（国别贸易）\n  - maoyizhinan（贸易指南）\n- nongchanpinbaogao（农产品报告）\n  - nongchanpinyuebao（农产品月报）\n  - zhongdianchanpinyuebao（重点产品月报）\n  - zhongdianchanpinzoushi（重点产品走势）",
+        "description": "\n:::tip\n存在**二级分类**的**一级分类**不能单独当作参数，如：`/cccfna/hangyezixun`\n:::\n\n文章的目录分级如下:\n\n- shanghuidongtai（商会通知）\n- meirigengxin（每日更新）\n- tongzhigonggao（通知公告）\n- hangyezixun（行业资讯）\n  - zhengcedaohang（政策导航）\n  - yujinxinxi（预警信息）\n  - shichangdongtai（市场动态）\n  - gongxuxinxi（供需信息）\n- maoyitongji（贸易统计）\n  - tongjikuaibao（统计快报）\n  - hangyetongji（行业统计）\n  - guobiemaoyi（国别贸易）\n  - maoyizhinan（贸易指南）\n- nongchanpinbaogao（农产品报告）\n  - nongchanpinyuebao（农产品月报）\n  - zhongdianchanpinyuebao（重点产品月报）\n  - zhongdianchanpinzoushi（重点产品走势）",
         "name": "资讯信息",
         "maintainers": [
           "hualiong"
