@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import * as cheerio from 'cheerio';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 interface NewsItem {
     articleContent: string;
