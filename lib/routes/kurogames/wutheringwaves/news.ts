@@ -32,26 +32,27 @@ export const route: Route = {
     description: '',
     async handler() {
         const res = await ofetch<NewsItem[]>('https://media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/zh/ArticleMenu.json', { query: { t: Date.now() } });
+        const item = await Promise.all(
+            res.map((i) => {
+                const contentUrl = `https://media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/zh/article/${i.articleId}.json`;
+                const item = {
+                    title: i.articleTitle,
+                    pubDate: timezone(parseDate(i.createTime), +8),
+                    link: `https://mc.kurogames.com/main/news/detail/${i.articleId}`,
+                } as DataItem;
+                return cache.tryGet(contentUrl, async () => {
+                    const data = await ofetch<NewsItem>(contentUrl, { query: { t: Date.now() } });
+                    const $ = cheerio.load(data.articleContent);
+
+                    item.description = $.html() ?? i.articleDesc ?? '';
+                    return item;
+                }) as Promise<DataItem>;
+            })
+        );
         return {
             title: '《鸣潮》— 游戏公告、新闻和活动',
             link: 'https://mc.kurogames.com/main#news',
-            item: await Promise.all(
-                res.map(async (i) => {
-                    const contentUrl = `https://media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/zh/article/${i.articleId}.json`;
-                    const description = (await cache.tryGet(contentUrl, async () => {
-                        const data = await ofetch<NewsItem>(contentUrl, { query: { t: Date.now() } });
-                        const $ = cheerio.load(data.articleContent);
-                        return $('body').html() ?? '';
-                    })) as string;
-
-                    return {
-                        title: i.articleTitle,
-                        pubDate: timezone(parseDate(i.createTime), +8),
-                        description,
-                        link: `https://mc.kurogames.com/main/news/detail/${i.articleId}`,
-                    } as DataItem;
-                })
-            ),
+            item,
             language: 'zh-cn',
         };
     },
