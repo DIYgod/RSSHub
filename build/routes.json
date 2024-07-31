@@ -16647,7 +16647,7 @@
           "requireConfig": [
             {
               "name": "DISCORD_AUTHORIZATION",
-              "description": ""
+              "description": "Discord authorization header from the browser"
             }
           ],
           "requirePuppeteer": false,
