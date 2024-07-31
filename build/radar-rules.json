@@ -9723,6 +9723,20 @@
       }
     ]
   },
+  "kurogames.com": {
+    "_name": "库洛游戏",
+    "mc": [
+      {
+        "title": "鸣潮 — 游戏公告、新闻与活动",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/m/main/news",
+          "/main"
+        ],
+        "target": "/kurogames/wutheringwaves/news"
+      }
+    ]
+  },
   "kuwaitlocal.com": {
     "_name": "Kuwait Local",
     ".": [
