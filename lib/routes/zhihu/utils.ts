@@ -97,6 +97,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
 
     const zc0 = config.zhihu.cookies
         ?.split(';')
+        .map((e) => e.trim())
         .find((e) => e.includes('z_c0'))
         ?.slice('z_c0='.length);
     return {
