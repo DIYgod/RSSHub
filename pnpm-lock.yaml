@@ -43,7 +43,7 @@ importers:
         version: 2.2.3
       '@scalar/hono-api-reference':
         specifier: 0.5.124
-        version: 0.5.124(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+        version: 0.5.124(postcss@8.4.40)(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@sentry/node':
         specifier: 7.116.0
         version: 7.116.0
@@ -256,8 +256,8 @@ importers:
         version: 3.23.8
     devDependencies:
       '@babel/preset-env':
-        specifier: 7.25.2
-        version: 7.25.2(@babel/core@7.25.2)
+        specifier: 7.25.3
+        version: 7.25.3(@babel/core@7.25.2)
       '@babel/preset-typescript':
         specifier: 7.24.7
         version: 7.24.7(@babel/core@7.25.2)
@@ -1020,8 +1020,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
 
-  '@babel/preset-env@7.25.2':
-    resolution: {integrity: sha512-Y2Vkwy3ITW4id9c6KXshVV/x5yCGK7VdJmKkzOzNsDZMojRKfSA/033rRbLqlRozmhRXCejxWHLSJOg/wUHfzw==}
+  '@babel/preset-env@7.25.3':
+    resolution: {integrity: sha512-QsYW7UeAaXvLPX9tdVliMJE7MD7M6MLYVTovRTIwhoYQVFHR1rM4wO8wqAezYi3/BpSD+NzVCZ69R6smWiIi8g==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1854,11 +1854,11 @@ packages:
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
     engines: {node: '>=18'}
 
-  '@storybook/codemod@8.2.6':
-    resolution: {integrity: sha512-+mFJ6R+JhJLpU7VPDlXU5Yn6nqIBq745GaEosnIiFOdNo3jaxJ58wq/sGhbQvoCHPUxMA+sDQvR7pS62YFoLRQ==}
+  '@storybook/codemod@8.2.7':
+    resolution: {integrity: sha512-D2sJcZMUO6Y7DNja4LvdT6uBee4bZbQKB904kEG9Kpr0XF20IHAP9BbkfG8HEFaS0GbJwvGvE03Sg+S1y+vO6Q==}
 
-  '@storybook/core@8.2.6':
-    resolution: {integrity: sha512-XY71g3AcpD6IiER9k9Lt+vlUMYfPIYgWekd7e0Ggzz2gJkPuLunKEdQccLGDSHf5OFAobHhrTJc7ZsvWhmDMag==}
+  '@storybook/core@8.2.7':
+    resolution: {integrity: sha512-vgw5MYN9Bq2/ZsObCOEHbBHwi4RpbYCHPFtKkr4kTnWID++FCSiSVd7jY3xPvcNxWqCxOyH6dThpBi+SsB/ZAA==}
 
   '@storybook/csf@0.1.11':
     resolution: {integrity: sha512-dHYFQH3mA+EtnCkHXzicbLgsvzYjcDJ1JWsogbItZogkPHgSJM/Wr71uMkcvw8v9mmCyP4NpXJuu6bPoVsOnzg==}
@@ -1866,15 +1866,15 @@ packages:
   '@storybook/global@5.0.0':
     resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
 
-  '@storybook/instrumenter@8.2.6':
-    resolution: {integrity: sha512-RxtpcMTUSq8/wPM6cR6EXVrPEiNuRbC71cIFVFZagOFYvnnOKwSPV+GOLPK0wxMbGB4c5/+Xe8ADefmZTvxOsA==}
+  '@storybook/instrumenter@8.2.7':
+    resolution: {integrity: sha512-Zm6Ty4uWFTNchKUviuJ9vfcMb7+qU8eyrFXVY80XRpr62JEWkYj4eCwx4OG8GzlQahTh9aSv9+hzV6p/5Ld4mw==}
     peerDependencies:
-      storybook: ^8.2.6
+      storybook: ^8.2.7
 
-  '@storybook/test@8.2.6':
-    resolution: {integrity: sha512-nTzNxReBcMRlX1+8PNU/MuA9ArFbeQhfZXMBIwJJoHOhnNe1knYpyn1++xINxAHKOh0BBhQ0NIMoKdcGmW3V6w==}
+  '@storybook/test@8.2.7':
+    resolution: {integrity: sha512-7xypGR0zjJaM5MkxIz513SYiGs5vDJZL1bbkG1YKeBMff+ZRpa8y8VDYn/WDWuDw76KcFEXoPsPzKwktGhvnpw==}
     peerDependencies:
-      storybook: ^8.2.6
+      storybook: ^8.2.7
 
   '@stylistic/eslint-plugin-js@2.6.0':
     resolution: {integrity: sha512-6oN0Djdy8gTRhx2qS1m4P+CeDKqmZZwc4ibgzzJS+8iBW3Ts1c2mAvi+OH6TN4bt0AHm0FnDv2+KtTqqueMATw==}
@@ -5599,8 +5599,8 @@ packages:
     resolution: {integrity: sha512-YF2kKIUzAofPMpfH6hOi2cGnv/HrUlfucspc7pDyvv7kGdqXrfj8SCl/t8owkEgKEuu8ZcRjSOxFxVLqwChZ2Q==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postman-request@2.88.1-postman.36:
-    resolution: {integrity: sha512-frYz62rp/C9Ip+l0KrOuPuFfv9UhkczCUK6sITc+0AZ1z/8Lcr7brs8AQ38VjxBFmaEyL/ITjy6u0uHyFLV5RQ==}
+  postman-request@2.88.1-postman.37:
+    resolution: {integrity: sha512-TpHeMnvO5xvlYCYp8QntLR1Fq0hohWGOLbf9RBqO5JTMdPWZpGBbR8xs11tHsZRVMDXWFg4m960ItkcDxiaWSA==}
     engines: {node: '>= 16'}
 
   prelude-ls@1.1.2:
@@ -6274,8 +6274,8 @@ packages:
   store2@2.14.3:
     resolution: {integrity: sha512-4QcZ+yx7nzEFiV4BMLnr/pRa5HYzNITX2ri0Zh6sT9EyQHbBHacC6YigllUPU9X3D0f/22QCgfokpKs52YRrUg==}
 
-  storybook@8.2.6:
-    resolution: {integrity: sha512-8j30wDxQmkcqI0fWcSYFsUCjErsY1yTWbTW+yjbwM8DyW18Cud6CwbFRCxjFsH+2M0CjP6Pqs/m1PGI0vcQscQ==}
+  storybook@8.2.7:
+    resolution: {integrity: sha512-Jb9DXue1sr3tKkpuq66VP5ItOKTpxL6t99ze1wXDbjCvPiInTdPA5AyFEjBuKjOBIh28bayYoOZa6/xbMJV+Wg==}
     hasBin: true
 
   stream-length@1.0.2:
@@ -7864,7 +7864,7 @@ snapshots:
       '@babel/helper-create-regexp-features-plugin': 7.25.2(@babel/core@7.25.2)
       '@babel/helper-plugin-utils': 7.24.8
 
-  '@babel/preset-env@7.25.2(@babel/core@7.25.2)':
+  '@babel/preset-env@7.25.3(@babel/core@7.25.2)':
     dependencies:
       '@babel/compat-data': 7.25.2
       '@babel/core': 7.25.2
@@ -8619,7 +8619,7 @@ snapshots:
       iconv-lite: 0.5.0
       moment: 2.30.1
       moment-parseformat: 3.0.0
-      postman-request: 2.88.1-postman.36
+      postman-request: 2.88.1-postman.37
       string-direction: 0.1.2
       turndown: 7.2.0
       valid-url: 1.0.9
@@ -8740,11 +8740,11 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.19.2':
     optional: true
 
-  '@scalar/api-client@2.0.38(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/api-client@2.0.38(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@headlessui/tailwindcss': 0.2.1(tailwindcss@3.4.7)
       '@headlessui/vue': 1.7.22(vue@3.4.35(typescript@5.5.4))
-      '@scalar/components': 0.12.24(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/components': 0.12.24(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@scalar/draggable': 0.1.3(typescript@5.5.4)
       '@scalar/oas-utils': 0.2.20(typescript@5.5.4)
       '@scalar/object-utils': 1.1.5(vue@3.4.35(typescript@5.5.4))
@@ -8777,12 +8777,12 @@ snapshots:
       - typescript
       - vitest
 
-  '@scalar/api-reference@1.24.63(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/api-reference@1.24.63(postcss@8.4.40)(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@floating-ui/vue': 1.1.2(vue@3.4.35(typescript@5.5.4))
       '@headlessui/vue': 1.7.22(vue@3.4.35(typescript@5.5.4))
-      '@scalar/api-client': 2.0.38(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
-      '@scalar/components': 0.12.24(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/api-client': 2.0.38(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/components': 0.12.24(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@scalar/oas-utils': 0.2.20(typescript@5.5.4)
       '@scalar/openapi-parser': 0.7.2
       '@scalar/snippetz': 0.1.6
@@ -8836,13 +8836,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@scalar/components@0.12.24(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/components@0.12.24(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@floating-ui/utils': 0.2.5
       '@floating-ui/vue': 1.1.2(vue@3.4.35(typescript@5.5.4))
       '@headlessui/vue': 1.7.22(vue@3.4.35(typescript@5.5.4))
       '@scalar/code-highlight': 0.0.7
-      '@storybook/test': 8.2.6(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@storybook/test': 8.2.7(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@vueuse/core': 10.11.0(vue@3.4.35(typescript@5.5.4))
       cva: 1.0.0-beta.1(typescript@5.5.4)
       nanoid: 5.0.7
@@ -8866,9 +8866,9 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@scalar/hono-api-reference@0.5.124(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/hono-api-reference@0.5.124(postcss@8.4.40)(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@scalar/api-reference': 1.24.63(postcss@8.4.40)(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/api-reference': 1.24.63(postcss@8.4.40)(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       hono: 4.5.3
     transitivePeerDependencies:
       - '@jest/globals'
@@ -9038,17 +9038,17 @@ snapshots:
 
   '@sindresorhus/merge-streams@2.3.0': {}
 
-  '@storybook/codemod@8.2.6(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@storybook/codemod@8.2.7(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@babel/core': 7.25.2
-      '@babel/preset-env': 7.25.2(@babel/core@7.25.2)
+      '@babel/preset-env': 7.25.3(@babel/core@7.25.2)
       '@babel/types': 7.25.2
-      '@storybook/core': 8.2.6(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@storybook/core': 8.2.7(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@storybook/csf': 0.1.11
       '@types/cross-spawn': 6.0.6
       cross-spawn: 7.0.3
       globby: 14.0.2
-      jscodeshift: 0.15.2(@babel/preset-env@7.25.2(@babel/core@7.25.2))
+      jscodeshift: 0.15.2(@babel/preset-env@7.25.3(@babel/core@7.25.2))
       lodash: 4.17.21
       prettier: 3.3.3
       recast: 0.23.9
@@ -9058,7 +9058,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@storybook/core@8.2.6(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@storybook/core@8.2.7(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@storybook/csf': 0.1.11
       '@types/express': 4.17.21
@@ -9082,23 +9082,23 @@ snapshots:
 
   '@storybook/global@5.0.0': {}
 
-  '@storybook/instrumenter@8.2.6(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))':
+  '@storybook/instrumenter@8.2.7(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))':
     dependencies:
       '@storybook/global': 5.0.0
       '@vitest/utils': 1.6.0
-      storybook: 8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      storybook: 8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       util: 0.12.5
 
-  '@storybook/test@8.2.6(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@storybook/test@8.2.7(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@storybook/csf': 0.1.11
-      '@storybook/instrumenter': 8.2.6(storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      '@storybook/instrumenter': 8.2.7(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       '@testing-library/dom': 10.1.0
       '@testing-library/jest-dom': 6.4.5(vitest@2.0.4(@types/node@22.0.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@testing-library/user-event': 14.5.2(@testing-library/dom@10.1.0)
       '@vitest/expect': 1.6.0
       '@vitest/spy': 1.6.0
-      storybook: 8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      storybook: 8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       util: 0.12.5
     transitivePeerDependencies:
       - '@jest/globals'
@@ -12193,7 +12193,7 @@ snapshots:
 
   jschardet@3.1.3: {}
 
-  jscodeshift@0.15.2(@babel/preset-env@7.25.2(@babel/core@7.25.2)):
+  jscodeshift@0.15.2(@babel/preset-env@7.25.3(@babel/core@7.25.2)):
     dependencies:
       '@babel/core': 7.25.2
       '@babel/parser': 7.25.3
@@ -12216,7 +12216,7 @@ snapshots:
       temp: 0.8.4
       write-file-atomic: 2.4.3
     optionalDependencies:
-      '@babel/preset-env': 7.25.2(@babel/core@7.25.2)
+      '@babel/preset-env': 7.25.3(@babel/core@7.25.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -13437,7 +13437,7 @@ snapshots:
       picocolors: 1.0.1
       source-map-js: 1.2.0
 
-  postman-request@2.88.1-postman.36:
+  postman-request@2.88.1-postman.37:
     dependencies:
       '@postman/form-data': 3.1.1
       '@postman/tough-cookie': 4.1.3-postman.1
@@ -14236,12 +14236,12 @@ snapshots:
 
   store2@2.14.3: {}
 
-  storybook@8.2.6(@babel/preset-env@7.25.2(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10):
+  storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
       '@babel/core': 7.25.2
       '@babel/types': 7.25.2
-      '@storybook/codemod': 8.2.6(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      '@storybook/core': 8.2.6(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@storybook/codemod': 8.2.7(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@storybook/core': 8.2.7(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@types/semver': 7.5.8
       '@yarnpkg/fslib': 2.10.3
       '@yarnpkg/libzip': 2.3.0
@@ -14256,7 +14256,7 @@ snapshots:
       fs-extra: 11.2.0
       giget: 1.2.3
       globby: 14.0.2
-      jscodeshift: 0.15.2(@babel/preset-env@7.25.2(@babel/core@7.25.2))
+      jscodeshift: 0.15.2(@babel/preset-env@7.25.3(@babel/core@7.25.2))
       leven: 3.1.0
       ora: 5.4.1
       prettier: 3.3.3
