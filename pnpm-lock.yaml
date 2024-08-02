@@ -400,8 +400,8 @@ importers:
         specifier: 3.0.5
         version: 3.0.5
       msw:
-        specifier: 2.3.4
-        version: 2.3.4(typescript@5.5.4)
+        specifier: 2.3.5
+        version: 2.3.5(typescript@5.5.4)
       prettier:
         specifier: 3.3.3
         version: 3.3.3
@@ -3259,8 +3259,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -5141,8 +5141,8 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  msw@2.3.4:
-    resolution: {integrity: sha512-sHMlwrajgmZSA2l1o7qRSe+azm/I+x9lvVVcOxAzi4vCtH8uVPJk1K5BQYDkzGl+tt0RvM9huEXXdeGrgcc79g==}
+  msw@2.3.5:
+    resolution: {integrity: sha512-+GUI4gX5YC5Bv33epBrD+BGdmDvBg2XGruiWnI3GbIbRmMMBeZ5gs3mJ51OWSGHgJKztZ8AtZeYMMNMVrje2/Q==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -8632,7 +8632,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.0
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -10642,7 +10642,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -13015,7 +13015,7 @@ snapshots:
 
   ms@2.1.3: {}
 
-  msw@2.3.4(typescript@5.5.4):
+  msw@2.3.5(typescript@5.5.4):
     dependencies:
       '@bundled-es-modules/cookie': 2.0.0
       '@bundled-es-modules/statuses': 1.0.1
