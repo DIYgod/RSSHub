@@ -36,16 +36,16 @@ export const route: Route = {
 
   所有演员编号参见 [演員庫](https://javdb.com/actors)
 
-  可用 addon_tags 参数添加额外的过滤 tag，例如 \\\`/javdb/actors/R2Vg?addon_tags=212\\\` 可筛选 VR。`,
+  可用 addon_tags 参数添加额外的过滤 tag，可从网页 url 中获取，例如 \`/javdb/actors/R2Vg?addon_tags=212,18\` 可筛选 \`VR\` 和 \`中出\`。`,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const filter = ctx.req.param('filter') ?? '';
-    const addon_tags = ctx.req.query('addon_tags') ?? '';
+    const addonTags = ctx.req.query('addon_tags') ?? '';
 
-    const final_tags = addon_tags && filter ? `${filter},${addon_tags}` : `${filter}${addon_tags}`;
-    const currentUrl = `/actors/${id}${final_tags ? `?t=${final_tags}` : ''}`;
+    const finalTags = addonTags && filter ? `${filter},${addonTags}` : `${filter}${addonTags}`;
+    const currentUrl = `/actors/${id}${finalTags ? `?t=${finalTags}` : ''}`;
 
     const filters = {
         '': '',
