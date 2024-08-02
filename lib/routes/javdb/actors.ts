@@ -34,14 +34,18 @@ export const route: Route = {
   | ---- | ------ | -------- | ------ | ------ |
   |      | p      | s        | d      | c      |
 
-  所有演员编号参见 [演員庫](https://javdb.com/actors)`,
+  所有演员编号参见 [演員庫](https://javdb.com/actors)
+
+  可用 addon_tags 参数添加额外的过滤 tag，例如 \\\`/javdb/actors/R2Vg?addon_tags=212\\\` 可筛选 VR。`,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const filter = ctx.req.param('filter') ?? '';
+    const addon_tags = ctx.req.query('addon_tags') ?? '';
 
-    const currentUrl = `/actors/${id}${filter ? `?t=${filter}` : ''}`;
+    const final_tags = addon_tags && filter ? `${filter},${addon_tags}` : `${filter}${addon_tags}`;
+    const currentUrl = `/actors/${id}${final_tags ? `?t=${final_tags}` : ''}`;
 
     const filters = {
         '': '',
