@@ -4,6 +4,10 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import cache from '@/utils/cache';
+import { art } from '@/utils/render';
+import path from 'path';
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
 
 interface Book {
     bibId: string;
@@ -64,40 +68,39 @@ interface Info {
 export const route: Route = {
     path: String.raw`/lib/space/:path{newbook.*}`,
     name: '图书馆 - 新书速递',
-    url: 'https://space.lib.buaa.edu.cn/mspace/newBook',
+    url: 'space.lib.buaa.edu.cn/mspace/newBook',
     maintainers: ['OverflowCat'],
     example: '/buaa/lib/space/newbook/',
     handler,
     description: `可通过参数进行筛选：\`/buaa/lib/space/newbook/key1=value1&key2=value2...\`
+- \`dcpCode\`：学科分类代码
+  - 例：
+    - 工学：\`08\`
+    - 工学 > 计算机 > 计算机科学与技术：\`080901\`
+  - 默认值：\`nolimit\`
+  - 注意事项：不可与 \`clsNo\` 同时使用。
+- \`clsNo\`：中图分类号
+  - 例：
+    - 计算机科学：\`TP3\`
+  - 默认值：无
+  - 注意事项
+    - 不可与 \`dcpCode\` 同时使用。
+    - 此模式下获取不到上架日期。
+- \`libCode\`：图书馆代码
+  - 例：
+    - 本馆：\`00000\`
+  - 默认值：无
+  - 注意事项：只有本馆一个可选值。
+- \`locaCode\`：馆藏地代码
+  - 例：
+    - 五层西-中文新书借阅室(A-Z类)：\`02503\`
+  - 默认值：无
+  - 注意事项：必须与 \`libCode\` 同时使用。
 
-    - \`dcpCode\`：学科分类代码
-        - 例：
-            - 工学：\`08\`
-            - 工学 > 计算机 > 计算机科学与技术：\`080901\`
-        - 默认值：\`nolimit\`
-        - 注意事项：不可与 \`clsNo\` 同时使用。
-    - \`clsNo\`：中图分类号
-        - 例：
-            - 计算机科学：\`TP3\`
-        - 默认值：无
-        - 注意事项
-            - 不可与 \`dcpCode\` 同时使用。
-            - 此模式下获取不到上架日期。
-    - \`libCode\`：图书馆代码
-        - 例：
-            - 本馆：\`00000\`
-        - 默认值：无
-        - 注意事项：只有本馆一个可选值。
-    - \`locaCode\`：馆藏地代码
-        - 例：
-            - 五层西-中文新书借阅室(A-Z类)：\`02503\`
-        - 默认值：无
-        - 注意事项：必须与 \`libCode\` 同时使用。
-
-    例：
-        - \`buaa/lib/space/newbook\` 为所有新书
-        - \`buaa/lib/space/newbook/clsNo=U&libCode=00000&locaCode=60001\` 为沙河教2图书馆所有中图分类号为 U（交通运输）的书籍
-    `,
+示例：
+- \`buaa/lib/space/newbook\` 为所有新书
+- \`buaa/lib/space/newbook/clsNo=U&libCode=00000&locaCode=60001\` 为沙河教2图书馆所有中图分类号为 U（交通运输）的书籍
+`,
     categories: ['university'],
 
     features: {
@@ -129,8 +132,9 @@ async function handler(ctx: Context): Promise<Data> {
     const list = (data?.data?.dataList || []) as Book[];
     const item = await Promise.all(list.map(async (item: Book) => await getItem(item)));
     const res: Data = {
-        title: '图书馆 - 新书速递',
+        title: '北航图书馆 - 新书速递',
         item,
+        description: '北京航空航天大学图书馆新书速递',
         language: 'zh-CN',
         link: 'https://space.lib.buaa.edu.cn/space/newBook',
         author: '北京航空航天大学图书馆',
@@ -142,45 +146,13 @@ async function handler(ctx: Context): Promise<Data> {
 
 async function getItem(item: Book): Promise<DataItem> {
     const info = await getItemInfo(item.isbn);
-    const holdings = (JSON.parse(item.holdings) as Holding[])
-        .map(
-            (holding) => `
-<tr><th>所属馆藏地</th><td>${holding.location}</td></tr>
-<tr><th>索书号</th><td>${holding.callNo}</td></tr>
-<tr><th>条码号</th><td>${holding.barCode}</td></tr>
-<tr><th>编号</th><td>${holding.itemId}</td></tr>
-<tr><th>书刊状态</th><td style="color: ${holding.status === '可借' ? '#458f57' : '#d86d02'}">${holding.status}</td></tr>`
-        )
-        .join('');
+    const holdings = JSON.parse(item.holdings) as Holding[];
     const link = `https://space.lib.buaa.edu.cn/space/searchDetailLocal/${item.bibId}`;
-    const content = `
-<h1 itemprop="title">
-<a href="${link}" style="color: #006fcc;">${item.title}</a>
-</h1>
-${info?.imageUrl ? `<aside><img src="${info?.imageUrl}" alt="封面"></aside>` : ''}
-<h2>书籍信息</h2>
-<div><span class="call-no" style="font-family: JetBrainsMono, monospace; font-style: italic; font-weight: 700; color: #458f57;">${item.callno?.at(0) || '无'}</span> / <span class="author">${item.author}</span> / <span class="publisher">${item.publisher}</span> / <span class="pub-year">${item.pub_year}</span></div>
-<h3>简介</h3>
-<div itemprop="description">${info?.content}</div>
-<table>
-    <tr><th>ISBN</th><td itemprop="isbn">${item.isbn}</td></tr>
-    <tr><th>语言</th><td itemprop="language">${item.language}</td></tr>
-    <tr><th>类型</th><td itemprop="docType">${item.docTypeDesc}</td></tr>
-</table>
-<h3>作者简介</h3>
-<div itemprop="authorInfo">${info?.authorInfo}</div>
-<h2>馆藏信息</h2>
-${
-    item.onSelfDate
-        ? `<strong>上架时间</strong>：
-    <date datetime="${item.onSelfDate}">${item.onSelfDate}</date>`
-        : ''
-}
-<br>
-<h3>馆藏地点</h3>
-<table>${holdings}</table>
-${info?.catalog ? `<h2>目录</h2><div itemprop="catalog">${info?.catalog}</div>` : ''}
-`;
+    const content = art(path.join(__dirname, 'templates/newbook.art'), {
+        item,
+        info,
+        holdings,
+    });
     return {
         language: item.language === 'eng' ? 'en' : 'zh-CN',
         title: item.title,
