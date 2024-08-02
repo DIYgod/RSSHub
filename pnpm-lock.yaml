@@ -207,8 +207,8 @@ importers:
         specifier: 2.13.0
         version: 2.13.0
       simplecc-wasm:
-        specifier: 0.1.5
-        version: 0.1.5
+        specifier: 1.0.0
+        version: 1.0.0
       socks-proxy-agent:
         specifier: 8.0.4
         version: 8.0.4
@@ -3259,8 +3259,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -6156,8 +6156,8 @@ packages:
   simple-swizzle@0.2.2:
     resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
 
-  simplecc-wasm@0.1.5:
-    resolution: {integrity: sha512-cf7QTS/ubpNH4Nk4YiSvlRgMSirpg2bj7NLPV6GqZewz5uHljea4XCGB3DriNh1QgmjIjpbA0pt34cN+MDO6BQ==}
+  simplecc-wasm@1.0.0:
+    resolution: {integrity: sha512-mb9+D3yeGpuXpMiDNVOMtF/ACDGa5to2lE0tgAHvz6XyxWVnTBTYTA+ez2DR/doeDAU56AoWJPA5FdWETClf1Q==}
 
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
@@ -8632,7 +8632,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.0
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -10642,7 +10642,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -14145,7 +14145,7 @@ snapshots:
     dependencies:
       is-arrayish: 0.3.2
 
-  simplecc-wasm@0.1.5: {}
+  simplecc-wasm@1.0.0: {}
 
   sisteransi@1.0.5: {}
 
