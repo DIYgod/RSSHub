@@ -1,5 +1,5 @@
-import got from '@/utils/got';
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
 
 const uuid = (length = 20) => {
     const e = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' + Date.now();
@@ -38,7 +38,8 @@ const getAccessToken = async () => {
 const post = async (requestPath: string, accessToken = md5(Date.now().toString()), payload?: any) => {
     const traceId = uuid(32) + Date.now();
 
-    const { data: response } = await got.post(`https://www.showstart.com/api${requestPath}`, {
+    const response = await ofetch(`https://www.showstart.com/api${requestPath}`, {
+        method: 'POST',
         headers: {
             cdeviceinfo: encodeURIComponent(JSON.stringify(devioceInfo)),
             cdeviceno: cookieMap.get('token'),
@@ -53,8 +54,8 @@ const post = async (requestPath: string, accessToken = md5(Date.now().toString()
             cusname: '',
             cusut: '',
             cversion: '999',
-        },
-        json: payload,
+        } as HeadersInit,
+        body: payload,
     });
 
     return response;
