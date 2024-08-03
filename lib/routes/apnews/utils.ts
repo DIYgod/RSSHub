@@ -26,7 +26,7 @@ export function fetchArticle(item) {
                 pubDate: parseDate(ldjson.datePublished),
                 updated: parseDate(ldjson.dateModified),
                 description: $('div.RichTextStoryBody').html() || $(':is(.VideoLead, .VideoPage-pageSubHeading)').html(),
-                category: [...(section ? [`section:${section}`] : []), ...(ldjson.keywords ?? [])],
+                category: [...(section ? [section] : []), ...(ldjson.keywords ?? [])],
                 guid: $("meta[name='brightspot.contentId']").attr('content'),
                 author: ldjson.author,
                 ...item,
