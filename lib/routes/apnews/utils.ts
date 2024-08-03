@@ -16,16 +16,17 @@ export function fetchArticle(item) {
         }
         const rawLdjson = JSON.parse($('#link-ld-json').text());
         let ldjson;
-        if (Array.isArray(rawLdjson)) {
+        if (rawLdjson['@type'] === 'NewsArticle' || (Array.isArray(rawLdjson) && rawLdjson.some((e) => e['@type'] === 'NewsArticle'))) {
             // Regular
-            ldjson = rawLdjson[0];
+            ldjson = Array.isArray(rawLdjson) ? rawLdjson.find((e) => e['@type'] === 'NewsArticle') : rawLdjson;
 
             $('div.Enhancement').remove();
+            const section = $("meta[property='article:section']").attr('content');
             return {
                 pubDate: parseDate(ldjson.datePublished),
                 updated: parseDate(ldjson.dateModified),
-                description: $('div.RichTextStoryBody').html(),
-                category: [`section:${$("meta[property='article:section']").attr('content')}`, ...(ldjson.keywords ?? [])],
+                description: $('div.RichTextStoryBody').html() || $(':is(.VideoLead, .VideoPage-pageSubHeading)').html(),
+                category: [...(section ? [section] : []), ...(ldjson.keywords ?? [])],
                 guid: $("meta[name='brightspot.contentId']").attr('content'),
                 author: ldjson.author,
                 ...item,
