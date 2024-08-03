@@ -90,6 +90,36 @@ async function fetchBrandInfo(params: { brandId: string }) {
     };
 }
 
+async function fetchSiteList(
+    params: Partial<{
+        pageNo: string;
+        pageSize: string;
+        searchKeyword: string;
+    }>
+) {
+    params.pageNo = params.pageNo || '1';
+    params.pageSize = params.pageSize || '30';
+    const accessToken = await getAccessToken();
+    const resp = await post('/web/site/list', accessToken, params);
+    return resp.result.result.map((item) => ({
+        title: `${item.cityName} - ${item.name}`,
+        link: `${HOST}/venue/${item.id}`,
+        description: `id: ${item.id}`,
+    }));
+}
+
+async function fetchSiteInfo(params: { siteId: string }) {
+    const accessToken = await getAccessToken();
+    const resp = await post('/web/site/info', accessToken, params);
+    return {
+        id: params.siteId,
+        name: `${resp.result.cityName} - ${resp.result.name}`,
+        address: resp.result.address,
+        avatar: resp.result.avatar,
+        poster: resp.result.poster,
+    };
+}
+
 async function fetchBrandList(
     params: Partial<{
         pageNo: string;
@@ -153,4 +183,4 @@ async function fetchDictionary(cityCode: string, showStyle: string) {
     };
 }
 
-export { fetchActivityList, fetchCityList, fetchStyleList, fetchPerformerList, fetchPerformerInfo, fetchBrandList, fetchBrandInfo, fetchDictionary };
+export { fetchActivityList, fetchCityList, fetchStyleList, fetchPerformerList, fetchPerformerInfo, fetchSiteList, fetchSiteInfo, fetchBrandList, fetchBrandInfo, fetchDictionary };

@@ -1,6 +1,6 @@
 import { Data, Route } from '@/types';
 import { TITLE, HOST } from './const';
-import { fetchActivityList, fetchPerformerList, fetchBrandList, fetchCityList, fetchStyleList } from './service';
+import { fetchActivityList, fetchPerformerList, fetchSiteList, fetchBrandList, fetchCityList, fetchStyleList } from './service';
 import { Context } from 'hono';
 
 export const route: Route = {
@@ -37,6 +37,12 @@ async function handler(ctx: Context): Promise<Data> {
                 title: `${TITLE} - 搜艺人 - ${keyword || '全部'}`,
                 link: HOST,
                 item: await fetchPerformerList({ searchKeyword: keyword }),
+            };
+        case 'site':
+            return {
+                title: `${TITLE} - 搜场地 - ${keyword || '全部'}`,
+                link: HOST,
+                item: await fetchSiteList({ searchKeyword: keyword }),
             };
         case 'brand':
             return {
