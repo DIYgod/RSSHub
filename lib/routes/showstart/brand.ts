@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import { Data, Route } from '@/types';
 import { TITLE, HOST } from './const';
 import { fetchBrandInfo } from './service';
+import { Context } from 'hono';
 
 export const route: Route = {
     path: '/brand/:id',
@@ -28,7 +29,7 @@ export const route: Route = {
 :::`,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context): Promise<Data> {
     const id = ctx.req.param('id');
     const brand = await fetchBrandInfo({
         brandId: id,

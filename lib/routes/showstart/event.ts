@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import { Data, Route } from '@/types';
 import { TITLE, HOST } from './const';
 import { fetchActivityList, fetchDictionary } from './service';
+import { Context } from 'hono';
 
 export const route: Route = {
     path: '/event/:cityCode/:showStyle?',
@@ -25,9 +26,9 @@ export const route: Route = {
 :::`,
 };
 
-async function handler(ctx) {
-    const cityCode = Number.parseInt(ctx.req.param('cityCode'));
-    const showStyle = Number.parseInt(ctx.req.param('showStyle'));
+async function handler(ctx: Context): Promise<Data> {
+    const cityCode = Number.parseInt(ctx.req.param('cityCode')).toString();
+    const showStyle = Number.parseInt(ctx.req.param('showStyle')).toString();
     const items = await fetchActivityList({
         cityCode,
         showStyle,
