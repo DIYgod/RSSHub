@@ -20,7 +20,7 @@ export const route: Route = {
             source: ['www.showstart.com/host/:id'],
         },
     ],
-    name: '厂牌 - 演出更新',
+    name: '按厂牌 - 演出更新',
     maintainers: ['lchtao26'],
     handler,
     description: `:::tip

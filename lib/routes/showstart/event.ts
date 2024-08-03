@@ -15,7 +15,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '演出更新',
+    name: '按城市 - 演出更新',
     maintainers: ['lchtao26'],
     handler,
     description: `:::tip
