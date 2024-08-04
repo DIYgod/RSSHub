@@ -65,9 +65,12 @@ async function handler(ctx) {
     const itemResolvers = [] as Promise<any>[];
 
     for (const item of items) {
+        if (!['Announce', 'Create', 'Update'].includes(item.type)) {
+            continue;
+        }
         if (typeof item.object === 'string') {
             itemResolvers.push(
-                (async (item: any) => {
+                (async (item) => {
                     item.object = await ofetch(item.object, requestOptions);
                     return item;
                 })(item)
@@ -85,11 +88,11 @@ async function handler(ctx) {
         image: self.icon?.url || self.image?.url,
         link,
         item: resolvedItems.map((item) => ({
-                title: item.object.content,
-                description: `${item.object.content}\n${item.object.attachment?.map((attachment) => `<img src="${attachment.url}" width="${attachment.width}" height="${attachment.height}" />`).join('\n') || ''}`,
-                link: item.url,
-                pubDate: parseDate(item.published),
-                guid: item.id,
-            })),
+            title: item.object.content,
+            description: `${item.object.content}\n${item.object.attachment?.map((attachment) => `<img src="${attachment.url}" width="${attachment.width}" height="${attachment.height}" />`).join('\n') || ''}`,
+            link: item.url,
+            pubDate: parseDate(item.published),
+            guid: item.id,
+        })),
     };
 }
