@@ -42,7 +42,7 @@ async function handler(ctx) {
 
     const requestOptions = {
         headers: {
-            Accept: 'application/activity+json',
+            Accept: 'application/ld+json; profile="https://www.w3.org/ns/activitystreams"',
         },
     };
 
