@@ -26,6 +26,7 @@ export const route: Route = {
 };
 
 const allowedDomain = new Set(['mastodon.social', 'pawoo.net', config.mastodon.apiHost].filter(Boolean));
+const activityPubTypes = new Set(['application/activity+json', 'application/ld+json; profile="https://www.w3.org/ns/activitystreams"']);
 
 async function handler(ctx) {
     const account = ctx.req.param('account');
@@ -47,7 +48,7 @@ async function handler(ctx) {
 
     const acc = await ofetch(`https://${domain}/.well-known/webfinger?resource=acct:${account}`, requestOptions);
 
-    const jsonLink = acc.links.find((link) => link.rel === 'self')?.href;
+    const jsonLink = acc.links.find((link) => link.rel === 'self' && activityPubTypes.has(link.type))?.href;
     const link = acc.links.find((link) => link.rel === 'http://webfinger.net/rel/profile-page')?.href;
 
     const self = await ofetch(jsonLink, requestOptions);
