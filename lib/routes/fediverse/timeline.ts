@@ -46,7 +46,11 @@ async function handler(ctx) {
         },
     };
 
-    const acc = await ofetch(`https://${domain}/.well-known/webfinger?resource=acct:${account}`, requestOptions);
+    const acc = await ofetch(`https://${domain}/.well-known/webfinger?resource=acct:${account}`, {
+        headers: {
+            Accept: 'application/jrd+json',
+        },
+    });
 
     const jsonLink = acc.links.find((link) => link.rel === 'self' && activityPubTypes.has(link.type))?.href;
     const link = acc.links.find((link) => link.rel === 'http://webfinger.net/rel/profile-page')?.href;
