@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/:id/:type?',
     categories: ['multimedia'],
     example: '/t66y/20/2',
-    parameters: { id: '分区 id, 可在分区页 URL 中找到', type: '类型 id, 可在分区类型过滤后的 URL 中找到', search: '主题类型筛选，可在分区主题类型筛选后的 URL 中找到' },
+    parameters: { id: '分区 id, 可在分区页 URL 中找到', type: '类型 id, 可在分区类型过滤后的 URL 中找到' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
