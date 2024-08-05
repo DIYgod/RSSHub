@@ -6526,6 +6526,19 @@
       }
     ]
   },
+  "research.google": {
+    "_name": "Google",
+    ".": [
+      {
+        "title": "Research Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/google/research"
+      }
+    ]
+  },
   "ah.gov.cn": {
     "_name": "上海市人民政府",
     "kjt": [

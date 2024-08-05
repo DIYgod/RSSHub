@@ -24230,6 +24230,25 @@
         ],
         "location": "news.ts"
       },
+      "/research": {
+        "path": "/research",
+        "categories": [
+          "blog"
+        ],
+        "example": "/google/research",
+        "name": "Research Blog",
+        "maintainers": [
+          "Levix"
+        ],
+        "radar": [
+          {
+            "source": [
+              "research.google"
+            ]
+          }
+        ],
+        "location": "research.ts"
+      },
       "/scholar/:query": {
         "path": "/scholar/:query",
         "categories": [
