@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/:id/:type?',
     categories: ['multimedia'],
     example: '/t66y/20/2',
-    parameters: { id: '分区 id, 可在分区页 URL 中找到', type: '类型 id, 可在分区类型过滤后的 URL 中找到' },
+    parameters: { id: '分区 id, 可在分区页 URL 中找到', type: '类型 id, 可在分区类型过滤后的 URL 中找到', search: '主题类型筛选，可在分区主题类型筛选后的 URL 中找到' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -33,13 +33,27 @@ export const route: Route = {
 
   | 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 | 成人文学交流 |
   | ---------- | ------------ | ------------ | ------------ |
-  | 7          | 8            | 16           | 20           |`,
+  | 7          | 8            | 16           | 20           |
+
+  **主题过滤(参数: search, 默认 today, 例如: https://rsshub.app/t66y/20?search=hot, 该参数无法搭配子类型使用)**
+
+  | 今日主题 | 热门主题 | 精华主题 | 今日新作 |
+  | ------- | ------- | ------- | ------- |
+  | today   | hot     | digest  | 2       |`,
+};
+
+const SEARCH_NAMES = {
+    today: '今日主题',
+    hot: '热门主题',
+    digest: '精华主题',
+    2: '今日新作',
 };
 
 async function handler(ctx) {
     const { id, type } = ctx.req.param();
+    const search = ctx.req.query('search') ?? 'today';
 
-    const url = new URL(`thread0806.php?fid=${id}&search=today`, baseUrl);
+    const url = new URL(`thread0806.php?fid=${id}&search=${search}`, baseUrl);
     type && url.searchParams.set('type', type);
 
     const { data: res } = await got(url);
@@ -80,7 +94,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: (type ? `[${$('.t .fn b').text()}]` : '') + $('head title').text(),
+        title: (type ? `[${$('.t .fn b').text()}] ` : '') + (search ? `[${SEARCH_NAMES[search]}] ` : '') + $('head title').text(),
         link: url.href,
         item: out,
     };
