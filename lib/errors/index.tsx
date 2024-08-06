@@ -69,10 +69,15 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     logger.error(`Error in ${requestPath}: ${message}`);
     requestMetric.error({ path: requestPath, method: ctx.req.method, status: ctx.res.status });
 
-    return config.isPackage
+    const url = ctx.req.raw.url;
+    const search = new URL(url, 'https://rsshub.app').searchParams;
+    const format = search.get('format');
+    return config.isPackage || format === 'json'
         ? ctx.json({
               error: {
                   message: error.message ?? error,
+                  requestPath,
+                  errorRoute: hasMatchedRoute ? matchedRoute : requestPath,
               },
           })
         : ctx.html(<Error requestPath={requestPath} message={message} errorRoute={hasMatchedRoute ? matchedRoute : requestPath} nodeVersion={process.version} />);
