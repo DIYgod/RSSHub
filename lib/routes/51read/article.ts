@@ -46,9 +46,6 @@ async function handler(ctx) {
         .toArray().length;
 
     const item: DataItem[] = [];
-    if (pageLength > 1) {
-        item.push(...(await createItem(chapter, pageLength - 1)));
-    }
     item.push(...(await createItem(chapter, pageLength)));
 
     return {
@@ -84,7 +81,7 @@ const buildItem = (url: string) =>
         };
     }) as Promise<DataItem>;
 
-const get = async (url: string, encoding = 'UTF-8') => {
+const get = async (url: string) => {
     const response = await ofetch(url, { responseType: 'arrayBuffer' });
-    return new TextDecoder(encoding).decode(response);
+    return new TextDecoder().decode(response);
 };
