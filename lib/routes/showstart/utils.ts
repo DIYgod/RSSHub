@@ -1,9 +1,9 @@
-import got from '@/utils/got';
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
 
 const uuid = (length = 20) => {
     const e = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' + Date.now();
-    const r = [];
+    const r: string[] = [];
     for (let i = 0; i < length; i++) {
         r.push(e.charAt(Math.floor(Math.random() * e.length)));
     }
@@ -35,10 +35,11 @@ const getAccessToken = async () => {
     return cookieMap.get('accessToken');
 };
 
-const post = async (requestPath, accessToken = md5(Date.now().toString()), payload) => {
+const post = async (requestPath: string, accessToken = md5(Date.now().toString()), payload?: any) => {
     const traceId = uuid(32) + Date.now();
 
-    const { data: response } = await got.post(`https://www.showstart.com/api${requestPath}`, {
+    const response = await ofetch(`https://www.showstart.com/api${requestPath}`, {
+        method: 'POST',
         headers: {
             cdeviceinfo: encodeURIComponent(JSON.stringify(devioceInfo)),
             cdeviceno: cookieMap.get('token'),
@@ -53,14 +54,14 @@ const post = async (requestPath, accessToken = md5(Date.now().toString()), paylo
             cusname: '',
             cusut: '',
             cversion: '999',
-        },
-        json: payload,
+        } as HeadersInit,
+        body: payload,
     });
 
     return response;
 };
 
-function sortBy(items, key) {
+function sortBy(items: any[], key: string) {
     return items.sort((a, b) => {
         if (a[key] < b[key]) {
             return -1;
@@ -72,7 +73,7 @@ function sortBy(items, key) {
     });
 }
 
-function uniqBy(items, key) {
+function uniqBy(items: any[], key: string) {
     const set = new Set();
     return items.filter((item) => {
         if (set.has(item[key])) {
