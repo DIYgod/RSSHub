@@ -13,7 +13,7 @@ importers:
         version: 1.12.0
       '@hono/zod-openapi':
         specifier: 0.15.1
-        version: 0.15.1(hono@4.5.3)(zod@3.23.8)
+        version: 0.15.1(hono@4.5.4)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -105,8 +105,8 @@ importers:
         specifier: 140.0.1
         version: 140.0.1
       hono:
-        specifier: 4.5.3
-        version: 4.5.3
+        specifier: 4.5.4
+        version: 4.5.4
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -3259,8 +3259,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -4150,8 +4150,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.5.3:
-    resolution: {integrity: sha512-r26WwwbKD3BAYdfB294knNnegNda7VfV1tVn66D9Kvl9WQTdrR+5eKdoeaQNHQcC3Gr0KBikzAtjd6VsRGVSaw==}
+  hono@4.5.4:
+    resolution: {integrity: sha512-k2IguJfRgNCpDbAfpxk+o+fZBLFHl4+eIZUpjc1ItZWHeZ37SmT3efA1UpkIaC0hSf1NJg0E79/wWn6g9LQ4Cw==}
     engines: {node: '>=16.0.0'}
 
   hookable@5.5.3:
@@ -8299,16 +8299,16 @@ snapshots:
 
   '@hono/node-server@1.12.0': {}
 
-  '@hono/zod-openapi@0.15.1(hono@4.5.3)(zod@3.23.8)':
+  '@hono/zod-openapi@0.15.1(hono@4.5.4)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.1.1(zod@3.23.8)
-      '@hono/zod-validator': 0.2.2(hono@4.5.3)(zod@3.23.8)
-      hono: 4.5.3
+      '@hono/zod-validator': 0.2.2(hono@4.5.4)(zod@3.23.8)
+      hono: 4.5.4
       zod: 3.23.8
 
-  '@hono/zod-validator@0.2.2(hono@4.5.3)(zod@3.23.8)':
+  '@hono/zod-validator@0.2.2(hono@4.5.4)(zod@3.23.8)':
     dependencies:
-      hono: 4.5.3
+      hono: 4.5.4
       zod: 3.23.8
 
   '@humanwhocodes/config-array@0.11.14':
@@ -8627,7 +8627,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.0
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8883,7 +8883,7 @@ snapshots:
   '@scalar/hono-api-reference@0.5.132(postcss@8.4.41)(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@scalar/api-reference': 1.24.71(postcss@8.4.41)(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
-      hono: 4.5.3
+      hono: 4.5.4
     transitivePeerDependencies:
       - '@jest/globals'
       - '@types/bun'
@@ -10637,7 +10637,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -11810,7 +11810,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.5.3: {}
+  hono@4.5.4: {}
 
   hookable@5.5.3: {}
 
