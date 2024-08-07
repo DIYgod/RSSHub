@@ -1,7 +1,7 @@
 import { Data, Route } from '@/types';
 import { TITLE, HOST } from './const';
 import { fetchPerformerInfo } from './service';
-import { Context } from 'hono';
+import type { Context } from 'hono';
 
 export const route: Route = {
     path: '/artist/:id',
