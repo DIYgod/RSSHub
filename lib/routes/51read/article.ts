@@ -65,6 +65,7 @@ const createItem = async (baseUrl: string, page: number) => {
         $latest('.kb-jp li>a')
             .map((_, chapter) => buildItem(chapter.attribs.href))
             .toArray()
+            .toReversed()
     );
     return item;
 };
