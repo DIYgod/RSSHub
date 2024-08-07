@@ -15377,7 +15377,7 @@
     "_name": "秀动网",
     "www": [
       {
-        "title": "音乐人 - 演出更新",
+        "title": "按音乐人 - 演出更新",
         "docs": "https://docs.rsshub.app/routes/shopping",
         "source": [
           "/artist/:id"
@@ -15385,12 +15385,20 @@
         "target": "/showstart/artist/:id"
       },
       {
-        "title": "厂牌 - 演出更新",
+        "title": "按厂牌 - 演出更新",
         "docs": "https://docs.rsshub.app/routes/shopping",
         "source": [
           "/host/:id"
         ],
         "target": "/showstart/brand/:id"
+      },
+      {
+        "title": "按场地 - 演出更新",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/venue/:id"
+        ],
+        "target": "/showstart/site/:siteId"
       }
     ]
   },
