@@ -1905,6 +1905,50 @@
     "name": "51CTO",
     "url": "51cto.com"
   },
+  "51read": {
+    "routes": {
+      "/article/:id": {
+        "path": "/article/:id",
+        "name": "章节",
+        "url": "m.51read.org",
+        "maintainers": [
+          "lazwa34"
+        ],
+        "example": "/51read/article/152685",
+        "parameters": {
+          "id": "小说 id, 可在对应小说页 URL 中找到"
+        },
+        "categories": [
+          "reading"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "m.51read.org/xiaoshuo/:id"
+            ],
+            "target": "/article/:id"
+          },
+          {
+            "source": [
+              "51read.org/xiaoshuo/:id"
+            ],
+            "target": "/article/:id"
+          }
+        ],
+        "location": "article.ts"
+      }
+    },
+    "name": "51Read",
+    "url": "m.51read.org"
+  },
   "52hrtt": {
     "routes": {
       "/:area?/:type?": {
