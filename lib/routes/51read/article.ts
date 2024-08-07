@@ -35,18 +35,17 @@ export const route: Route = {
 async function handler(ctx) {
     const { id } = ctx.req.param();
     const link = `https://m.51read.org/xiaoshuo/${id}`;
-    const $book = load(await get(link));
+    const $book = load(await ofetch(link));
 
     const chapter = `https://m.51read.org/zhangjiemulu/${id}`;
-    const $chapter = load(await get(chapter));
+    const $chapter = load(await ofetch(chapter));
 
     const pageLength = $chapter('.ml-page select')
         .find('option')
         .map((_, option) => option.attribs.value)
         .toArray().length;
 
-    const item: DataItem[] = [];
-    item.push(...(await createItem(chapter, pageLength)));
+    const item = await createItem(chapter, pageLength);
 
     return {
         title: $book('h1').text(),
@@ -61,7 +60,7 @@ async function handler(ctx) {
 
 const createItem = async (baseUrl: string, page: number) => {
     const url = `${baseUrl}/${page}`;
-    const $latest = load(await get(url));
+    const $latest = load(await ofetch(url));
     const item = await Promise.all(
         $latest('.kb-jp li>a')
             .map((_, chapter) => buildItem(chapter.attribs.href))
@@ -72,7 +71,7 @@ const createItem = async (baseUrl: string, page: number) => {
 
 const buildItem = (url: string) =>
     cache.tryGet(url, async () => {
-        const $ = load(await get(url));
+        const $ = load(await ofetch(url));
 
         return {
             title: $('h1').text(),
@@ -80,8 +79,3 @@ const buildItem = (url: string) =>
             link: url,
         };
     }) as Promise<DataItem>;
-
-const get = async (url: string) => {
-    const response = await ofetch(url, { responseType: 'arrayBuffer' });
-    return new TextDecoder().decode(response);
-};
