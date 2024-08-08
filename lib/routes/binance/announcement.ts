@@ -36,6 +36,19 @@ function assertAnnouncementsConfig(playlist: any): playlist is AnnouncementFragm
     return true;
 }
 
+function assertAnnouncementsConfigList(o: unknown): o is { list: AnnouncementsConfig[] } {
+    if (!o || typeof o !== 'object') {
+        return false;
+    }
+    if (!('config' in o)) {
+        return false;
+    }
+    if (!('list' in (o.config as { list: AnnouncementsConfig[] }))) {
+        return false;
+    }
+    return true;
+}
+
 const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.binance.com';
     const announcementCategoryUrl = `${baseUrl}/support/announcement`;
@@ -51,15 +64,19 @@ const handler: Route['handler'] = async (ctx) => {
 
         const appData = JSON.parse($('#__APP_DATA').text());
 
-        const announcements = Object.values(appData.appState.loader.dataByRouteId as Record<string, any>).find((value) => 'playlist' in value) as { playlist: any };
+        const announcements = Object.values(appData.appState.loader.dataByRouteId as Record<string, object>).find((value) => 'playlist' in value) as { playlist: unknown };
 
         if (!assertAnnouncementsConfig(announcements.playlist)) {
             throw new Error('Get announcement config failed');
         }
 
-        const announcementsConfig: AnnouncementsConfig[] = announcements.playlist.reactRoot[0].children.find((i) => i.id === 'TopicCardList')?.props?.config.list;
+        const listConfig = announcements.playlist.reactRoot[0].children.find((i) => i.id === 'TopicCardList')?.props?.config;
 
-        return announcementsConfig;
+        if (!assertAnnouncementsConfigList(listConfig)) {
+            throw new Error("Can't get announcement config list");
+        }
+
+        return listConfig.list;
     })) as AnnouncementsConfig[];
 
     const announcementCatalogId = ROUTE_PARAMETERS_CATALOGID_MAPPING[type];
