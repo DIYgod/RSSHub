@@ -74,7 +74,7 @@ const handler: Route['handler'] = async (ctx) => {
         throw new Error('Unexpected announcements config');
     }
 
-    const link = `${baseUrl}${targetItem.url}`;
+    const link = `${baseUrl}${targetItem.url.replace(baseUrl, '')}`;
 
     const response = await ofetch<string>(link, { headers, redirect: 'follow' });
 
@@ -111,6 +111,9 @@ const handler: Route['handler'] = async (ctx) => {
     };
 };
 
+/**
+ * @deprecated
+ */
 export const route: Route = {
     path: '/announcement/:type',
     categories: ['finance'],
