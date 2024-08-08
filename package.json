@@ -61,7 +61,7 @@
         "@opentelemetry/sdk-trace-base": "1.25.1",
         "@opentelemetry/semantic-conventions": "1.25.1",
         "@postlight/parser": "2.2.3",
-        "@scalar/hono-api-reference": "0.5.132",
+        "@scalar/hono-api-reference": "0.5.133",
         "@sentry/node": "7.116.0",
         "@tonyrl/rand-user-agent": "2.0.73",
         "aes-js": "3.1.2",
@@ -129,7 +129,7 @@
         "twitter-api-v2": "1.17.2",
         "undici": "6.19.5",
         "uuid": "10.0.0",
-        "winston": "3.13.1",
+        "winston": "3.14.0",
         "xxhash-wasm": "1.0.2",
         "zod": "3.23.8"
     },
@@ -188,7 +188,7 @@
         "supertest": "7.0.0",
         "typescript": "5.5.4",
         "unified": "11.0.5",
-        "vite-tsconfig-paths": "4.3.2",
+        "vite-tsconfig-paths": "5.0.0",
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
