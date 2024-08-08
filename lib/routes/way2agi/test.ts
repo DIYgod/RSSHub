@@ -1,6 +1,6 @@
 import { TypedResponse } from 'hono';
 import { StatusCode, RedirectStatusCode } from 'hono/utils/http-status';
-import { route } from './news';
+import { route } from './way2agi';
 
 async function main() {
     try {
