@@ -32,7 +32,9 @@ async function handler(ctx) {
         responseType: 'buffer',
     });
 
-    const $ = load(iconv.decode(response, 'gbk'));
+    const encoding = site === 'www' ? 'gbk' : 'utf-8';
+    const decodedResponse = iconv.decode(response, encoding);
+    const $ = load(decodedResponse);
 
     $('em').remove();
     $('.bshare-more, .page_n, .page').remove();
@@ -64,7 +66,7 @@ async function handler(ctx) {
                         responseType: 'buffer',
                     });
 
-                    const data = iconv.decode(detailResponse, 'gbk');
+                    const data = iconv.decode(detailResponse, encoding);
                     const content = load(data);
 
                     content('.paper_num, #rwb_tjyd').remove();
