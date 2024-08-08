@@ -9,6 +9,22 @@ export const route: Route = {
     maintainers: [],
     handler,
     example: '/xiaohoingshu/user/52d8c541b4c4d60e6c867480/notes',
+    parameters: {
+        user_id: 'user id, length 24 characters',
+        category: {
+            description: 'category, notes or unspecified',
+            options: [
+                {
+                    value: 'notes',
+                    label: 'notes',
+                },
+                {
+                    value: 'unspecified',
+                    label: 'unspecified',
+                },
+            ],
+        },
+    },
 };
 
 async function handler(ctx) {
