@@ -13,7 +13,7 @@ export const route: Route = {
     name: '笔记 • 小红书 / RED',
     maintainers: [],
     handler,
-    example: '/xiaohoingshu/user/52d8c541b4c4d60e6c867480/notes/fulltext',
+    example: '/xiaohongshu/user/52d8c541b4c4d60e6c867480/notes/fulltext',
     parameters: {
         user_id: 'user id, length 24 characters',
     },
