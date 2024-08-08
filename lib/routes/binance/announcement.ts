@@ -6,7 +6,7 @@ import * as cheerio from 'cheerio';
 import { AnnouncementCatalog, AnnouncementsConfig } from './types';
 
 interface AnnouncementFragment {
-    reactRoot: [{ id: 'Fragment'; children: { id: string; props: any }[]; props: object }];
+    reactRoot: [{ id: 'Fragment'; children: { id: string; props: object }[]; props: object }];
 }
 
 const ROUTE_PARAMETERS_CATALOGID_MAPPING = {
@@ -20,30 +20,30 @@ const ROUTE_PARAMETERS_CATALOGID_MAPPING = {
     delisting: 161,
 };
 
-function assertAnnouncementsConfig(playlist: any): playlist is AnnouncementFragment {
-    if (typeof playlist !== 'object') {
+function assertAnnouncementsConfig(playlist: unknown): playlist is AnnouncementFragment {
+    if (!playlist || typeof playlist !== 'object') {
         return false;
     }
-    if (!('reactRoot' in playlist)) {
+    if (!('reactRoot' in (playlist as { reactRoot: unknown[] }))) {
         return false;
     }
-    if (!Array.isArray(playlist.reactRoot)) {
+    if (!Array.isArray((playlist as { reactRoot: unknown[] }).reactRoot)) {
         return false;
     }
-    if (playlist.reactRoot?.[0]?.id !== 'Fragment') {
+    if ((playlist as { reactRoot: { id: string }[] }).reactRoot?.[0]?.id !== 'Fragment') {
         return false;
     }
     return true;
 }
 
-function assertAnnouncementsConfigList(o: unknown): o is { list: AnnouncementsConfig[] } {
-    if (!o || typeof o !== 'object') {
+function assertAnnouncementsConfigList(props: unknown): props is { config: { list: AnnouncementsConfig[] } } {
+    if (!props || typeof props !== 'object') {
         return false;
     }
-    if (!('config' in o)) {
+    if (!('config' in props)) {
         return false;
     }
-    if (!('list' in (o.config as { list: AnnouncementsConfig[] }))) {
+    if (!('list' in (props.config as { list: AnnouncementsConfig[] }))) {
         return false;
     }
     return true;
@@ -70,13 +70,13 @@ const handler: Route['handler'] = async (ctx) => {
             throw new Error('Get announcement config failed');
         }
 
-        const listConfig = announcements.playlist.reactRoot[0].children.find((i) => i.id === 'TopicCardList')?.props?.config;
+        const listConfigProps = announcements.playlist.reactRoot[0].children.find((i) => i.id === 'TopicCardList')?.props;
 
-        if (!assertAnnouncementsConfigList(listConfig)) {
+        if (!assertAnnouncementsConfigList(listConfigProps)) {
             throw new Error("Can't get announcement config list");
         }
 
-        return listConfig.list;
+        return listConfigProps.config.list;
     })) as AnnouncementsConfig[];
 
     const announcementCatalogId = ROUTE_PARAMETERS_CATALOGID_MAPPING[type];
@@ -98,8 +98,8 @@ const handler: Route['handler'] = async (ctx) => {
     const $ = cheerio.load(response);
     const appData = JSON.parse($('#__APP_DATA').text());
 
-    const values = Object.values(appData.appState.loader.dataByRouteId as Record<string, any>);
-    const catalogs: { catalogs: AnnouncementCatalog[] } = values.find((value) => 'catalogs' in value);
+    const values = Object.values(appData.appState.loader.dataByRouteId as Record<string, object>);
+    const catalogs = values.find((value) => 'catalogs' in value) as { catalogs: AnnouncementCatalog[] };
     const catalog = catalogs.catalogs.find((catalog) => catalog.catalogId === announcementCatalogId);
 
     const item = await Promise.all(
