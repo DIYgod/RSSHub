@@ -31,13 +31,13 @@ const parseNotes = (data, site) =>
     });
 
 async function getUserTimelineByUsername(username, site) {
-    const search_url = `https://${site}/api/users/search-by-username-and-host`;
+    const searchUrl = `https://${site}/api/users/search-by-username-and-host`;
     const cacheUid = `misskey_username/${site}/${username}`;
 
-    const account_id = await cache.tryGet(cacheUid, async () => {
-        const search_response = await got({
+    const accountId = await cache.tryGet(cacheUid, async () => {
+        const searchResponse = await got({
             method: 'post',
-            url: search_url,
+            url: searchUrl,
             json: {
                 username,
                 host: site,
@@ -45,27 +45,27 @@ async function getUserTimelineByUsername(username, site) {
                 limit: 1,
             },
         });
-        const userData = search_response.data.filter((item) => item.username === username);
+        const userData = searchResponse.data.find((item) => item.username === username);
 
         if (userData.length === 0) {
             throw new Error(`username ${username} not found`);
         }
-        return userData[0].id;
+        return userData.id;
     });
 
-    const usernotes_url = `https://${site}/api/users/notes`;
-    const usernotes_response = await got({
+    const usernotesUrl = `https://${site}/api/users/notes`;
+    const usernotesResponse = await got({
         method: 'post',
-        url: usernotes_url,
+        url: usernotesUrl,
         json: {
-            userId: account_id,
+            userId: accountId,
             withChannelNotes: true,
             limit: 10,
             offset: 0,
         },
     });
-    const account_data = usernotes_response.data;
-    return { site, account_id, account_data };
+    const accountData = usernotesResponse.data;
+    return { site, accountId, accountData };
 }
 
 export default { parseNotes, getUserTimelineByUsername, allowSiteList };
