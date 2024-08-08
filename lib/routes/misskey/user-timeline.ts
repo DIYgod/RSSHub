@@ -7,8 +7,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 export const route: Route = {
     path: '/users/notes/:username',
     categories: ['social-media'],
-    example: '/misskey/users/notes/@support@misskey.io',
-    parameters: { username: 'misskey username format, like @support@misskey.io' },
+    example: '/misskey/users/notes/support@misskey.io',
+    parameters: { username: 'misskey username format, like support@misskey.io' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -24,7 +24,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const username = ctx.req.param('username');
-    const [, pureUsername, site] = username.match(/@(\w+)@(\w+\.\w+)/) || [];
+    const [, pureUsername, site] = username.match(/@?(\w+)@(\w+\.\w+)/) || [];
     if (!pureUsername || !site) {
         throw new InvalidParameterError('Provide a valid Misskey username');
     }
