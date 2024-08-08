@@ -43,7 +43,7 @@ importers:
         version: 2.2.3
       '@scalar/hono-api-reference':
         specifier: 0.5.133
-        version: 0.5.133(postcss@8.4.41)(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+        version: 0.5.133(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.8)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@sentry/node':
         specifier: 7.116.0
         version: 7.116.0
@@ -419,7 +419,7 @@ importers:
         version: 11.0.5
       vite-tsconfig-paths:
         specifier: 4.3.2
-        version: 4.3.2(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0))
+        version: 4.3.2(typescript@5.5.4)(vite@5.4.0(@types/node@22.1.0))
       vitest:
         specifier: 2.0.5
         version: 2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10))
@@ -1310,17 +1310,17 @@ packages:
     resolution: {integrity: sha512-BsWiH1yFGjXXS2yvrf5LyuoSIIbPrGUWob917o+BTKuZ7qJdxX8aJLRxs1fS9n6r7vESrq1OUqb68dANcFXuQQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@floating-ui/core@1.6.6':
-    resolution: {integrity: sha512-Vkvsw6EcpMHjvZZdMkSY+djMGFbt7CRssW99Ne8tar2WLnZ/l3dbxeTShbLQj+/s35h+Qb4cmnob+EzwtjrXGQ==}
+  '@floating-ui/core@1.6.7':
+    resolution: {integrity: sha512-yDzVT/Lm101nQ5TCVeK65LtdN7Tj4Qpr9RTXJ2vPFLqtLxwOrpoxAHAJI8J3yYWUc40J0BDBheaitK5SJmno2g==}
 
-  '@floating-ui/dom@1.6.9':
-    resolution: {integrity: sha512-zB1PcI350t4tkm3rvUhSRKa9sT7vH5CrAbQxW+VaPYJXKAO0gsg4CTueL+6Ajp7XzAQC8CW4Jj1Wgqc0sB6oUQ==}
+  '@floating-ui/dom@1.6.10':
+    resolution: {integrity: sha512-fskgCFv8J8OamCmyun8MfjB1Olfn+uZKjOKZ0vhYF3gRmEUXcGOjxWL8bBr7i4kIuPZ2KD2S3EUIOxnjC8kl2A==}
 
-  '@floating-ui/utils@0.2.6':
-    resolution: {integrity: sha512-0KI3zGxIUs1KDR/pjQPdJH4Z8nGBm0yJ5WRoRfdw1Kzeh45jkIfA0rmD0kBF6fKHH+xaH7g8y4jIXyAV5MGK3g==}
+  '@floating-ui/utils@0.2.7':
+    resolution: {integrity: sha512-X8R8Oj771YRl/w+c1HqAC1szL8zWQRwFvgDwT129k9ACdBoud/+/rX9V0qiMl6LWUdP9voC2nDVZYPMQQsb6eA==}
 
-  '@floating-ui/vue@1.1.3':
-    resolution: {integrity: sha512-1YlBnfamNCwT85JZJ2HH9t5DO6DAArhQHAiDQW5l+d9MzlN8atywXw2wI9vitPkoZZSurrDJ2viMzrbhPTmLmQ==}
+  '@floating-ui/vue@1.1.4':
+    resolution: {integrity: sha512-ammH7T3vyCx7pmm9OF19Wc42zrGnUw0QvLoidgypWsCLJMtGXEwY7paYIHO+K+oLC3mbWpzIHzeTVienYenlNg==}
 
   '@headlessui/tailwindcss@0.2.1':
     resolution: {integrity: sha512-2+5+NZ+RzMyrVeCZOxdbvkUSssSxGvcUxphkIfSVLpRiKsj+/63T2TOL9dBYMXVfj/CGr6hMxSRInzXv6YY7sA==}
@@ -1860,11 +1860,11 @@ packages:
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
     engines: {node: '>=18'}
 
-  '@storybook/codemod@8.2.7':
-    resolution: {integrity: sha512-D2sJcZMUO6Y7DNja4LvdT6uBee4bZbQKB904kEG9Kpr0XF20IHAP9BbkfG8HEFaS0GbJwvGvE03Sg+S1y+vO6Q==}
+  '@storybook/codemod@8.2.8':
+    resolution: {integrity: sha512-dqD4j6JTsS8BM2y1yHBIe5fHvsGM08qpJQXkE77aXJIm5UfUeuWC7rY0xAheX3fU5G98l3BJk0ySUGspQL5pNg==}
 
-  '@storybook/core@8.2.7':
-    resolution: {integrity: sha512-vgw5MYN9Bq2/ZsObCOEHbBHwi4RpbYCHPFtKkr4kTnWID++FCSiSVd7jY3xPvcNxWqCxOyH6dThpBi+SsB/ZAA==}
+  '@storybook/core@8.2.8':
+    resolution: {integrity: sha512-Wwm/Txh87hbxqU9OaxXwdGAmdRBjDn7rlZEPjNBx0tt43SQ11fKambY7nVWrWuw46YsJpdF9V/PQr4noNEXXEA==}
 
   '@storybook/csf@0.1.11':
     resolution: {integrity: sha512-dHYFQH3mA+EtnCkHXzicbLgsvzYjcDJ1JWsogbItZogkPHgSJM/Wr71uMkcvw8v9mmCyP4NpXJuu6bPoVsOnzg==}
@@ -1872,15 +1872,15 @@ packages:
   '@storybook/global@5.0.0':
     resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
 
-  '@storybook/instrumenter@8.2.7':
-    resolution: {integrity: sha512-Zm6Ty4uWFTNchKUviuJ9vfcMb7+qU8eyrFXVY80XRpr62JEWkYj4eCwx4OG8GzlQahTh9aSv9+hzV6p/5Ld4mw==}
+  '@storybook/instrumenter@8.2.8':
+    resolution: {integrity: sha512-6Gk3CzoYQQXBXpW86PKqYSozOB/C9dSYiFvwPRo4XsEfjARDi8yglqkbOtG+FVqKDL66I5krcveB8bTWigqc9g==}
     peerDependencies:
-      storybook: ^8.2.7
+      storybook: ^8.2.8
 
-  '@storybook/test@8.2.7':
-    resolution: {integrity: sha512-7xypGR0zjJaM5MkxIz513SYiGs5vDJZL1bbkG1YKeBMff+ZRpa8y8VDYn/WDWuDw76KcFEXoPsPzKwktGhvnpw==}
+  '@storybook/test@8.2.8':
+    resolution: {integrity: sha512-Lbt4DHP8WhnakTPw981kP85DeoONKN+zVLjFPa5ptllyT+jazZANjIdGhNUlBdIzOw3oyDXhGlWIdtqztS3pSA==}
     peerDependencies:
-      storybook: ^8.2.7
+      storybook: ^8.2.8
 
   '@stylistic/eslint-plugin-js@2.6.1':
     resolution: {integrity: sha512-iLOiVzcvqzDGD9U0EuVOX680v+XOPiPAjkxWj+Q6iV2GLOM5NB27tKVOpJY7AzBhidwpRbaLTgg3T4UzYx09jw==}
@@ -2753,8 +2753,8 @@ packages:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
 
-  caniuse-lite@1.0.30001650:
-    resolution: {integrity: sha512-fgEc7hP/LB7iicdXHUI9VsBsMZmUmlVJeQP2qqQW+3lkqVhbmjEU8zp+h5stWeilX+G7uXuIUIIlWlDw9jdt8g==}
+  caniuse-lite@1.0.30001651:
+    resolution: {integrity: sha512-9Cf+Xv1jJNe1xPZLGuUXLNkE1BoDkqRqYyFJ9TDYSqhduqA4hu4oR9HluGoWYQC/aj8WHjsGVV+bwkh0+tegRg==}
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -3259,8 +3259,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   dir-glob@3.0.1:
@@ -3775,8 +3775,8 @@ packages:
   flatted@3.3.1:
     resolution: {integrity: sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==}
 
-  flow-parser@0.242.1:
-    resolution: {integrity: sha512-E3ml21Q1S5cMAyPbtYslkvI6yZO5oCS/S2EoteeFH8Kx9iKOv/YOJ+dGd/yMf+H3YKfhMKjnOpyNwrO7NdddWA==}
+  flow-parser@0.243.0:
+    resolution: {integrity: sha512-HCDBfH+kZcY5etWYeAqatjW78gkIryzb9XixRsA8lGI1uyYc7aCpElkkO4H+KIpoyQMiY0VAZPI4cyac3wQe8w==}
     engines: {node: '>=0.4.0'}
 
   fn.name@1.1.0:
@@ -3806,8 +3806,8 @@ packages:
     resolution: {integrity: sha512-SKmowqGTJoPzLO1T0BBJpkfp3EMacCMOuH40hOUbrbzElVktk4DioXVM99QkLCyKoiuOmyjgcWMpVz2xjE7LZw==}
     engines: {node: '>=0.10.0'}
 
-  foreground-child@3.2.1:
-    resolution: {integrity: sha512-PXUUyLqrR2XCWICfv6ukppP96sdFwWbNEnfEMt7jNsISjMsvaLNinAHNDYyvkyU+SZG2BTSbT5NjG+vZslfGTA==}
+  foreground-child@3.3.0:
+    resolution: {integrity: sha512-Ld2g8rrAyMYFXBhEqMz8ZAHBi4J4uS1i/CxGMDnjyFWddMXLVcDp051DZfu+t7+ab7Wv6SMqpWmyFIj5UbfFvg==}
     engines: {node: '>=14'}
 
   forever-agent@0.6.1:
@@ -6277,8 +6277,8 @@ packages:
   store2@2.14.3:
     resolution: {integrity: sha512-4QcZ+yx7nzEFiV4BMLnr/pRa5HYzNITX2ri0Zh6sT9EyQHbBHacC6YigllUPU9X3D0f/22QCgfokpKs52YRrUg==}
 
-  storybook@8.2.7:
-    resolution: {integrity: sha512-Jb9DXue1sr3tKkpuq66VP5ItOKTpxL6t99ze1wXDbjCvPiInTdPA5AyFEjBuKjOBIh28bayYoOZa6/xbMJV+Wg==}
+  storybook@8.2.8:
+    resolution: {integrity: sha512-sh4CNCXkieVgJ5GXrCOESS0BjRbQ9wG7BVnurQPl6izNnB9zR8rag+aUmjPZWBwbj55V1BFA5A/vEsCov21qjg==}
     hasBin: true
 
   stream-length@1.0.2:
@@ -6405,8 +6405,8 @@ packages:
   tailwind-merge@2.4.0:
     resolution: {integrity: sha512-49AwoOQNKdqKPd9CViyH5wJoSKsCDjUlzL8DxuGp3P1FsGY36NJDAa18jLZcaHAUUuTj+JB8IAo8zWgBNvBF7A==}
 
-  tailwindcss@3.4.7:
-    resolution: {integrity: sha512-rxWZbe87YJb4OcSopb7up2Ba4U82BoiSGUdoDr3Ydrg9ckxFS/YWsvhN323GMcddgU65QRy7JndC7ahhInhvlQ==}
+  tailwindcss@3.4.8:
+    resolution: {integrity: sha512-GkP17r9GQkxgZ9FKHJQEnjJuKBcbFhMFzKu5slmN6NjlCuFnYJMQ8N4AZ6VrUyiRXlDtPKHkesuQ/MS913Nvdg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -6879,8 +6879,8 @@ packages:
       vite:
         optional: true
 
-  vite@5.3.5:
-    resolution: {integrity: sha512-MdjglKR6AQXQb9JGiS7Rc2wC6uMjcm7Go/NHNO63EwiJXfuk9PgqiP/n5IDJCziMkfw9n4Ubp7lttNwz+8ZVKA==}
+  vite@5.4.0:
+    resolution: {integrity: sha512-5xokfMX0PIiwCMCMb9ZJcMyh5wbBun0zUzKib+L65vAZ8GY9ePZMXxFrHbr/Kyll2+LSCY7xtERPpxkBDKngwg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -6888,6 +6888,7 @@ packages:
       less: '*'
       lightningcss: ^1.21.0
       sass: '*'
+      sass-embedded: '*'
       stylus: '*'
       sugarss: '*'
       terser: ^5.4.0
@@ -6899,6 +6900,8 @@ packages:
       lightningcss:
         optional: true
       sass:
+        optional: true
+      sass-embedded:
         optional: true
       stylus:
         optional: true
@@ -8272,29 +8275,29 @@ snapshots:
 
   '@eslint/object-schema@2.1.4': {}
 
-  '@floating-ui/core@1.6.6':
+  '@floating-ui/core@1.6.7':
     dependencies:
-      '@floating-ui/utils': 0.2.6
+      '@floating-ui/utils': 0.2.7
 
-  '@floating-ui/dom@1.6.9':
+  '@floating-ui/dom@1.6.10':
     dependencies:
-      '@floating-ui/core': 1.6.6
-      '@floating-ui/utils': 0.2.6
+      '@floating-ui/core': 1.6.7
+      '@floating-ui/utils': 0.2.7
 
-  '@floating-ui/utils@0.2.6': {}
+  '@floating-ui/utils@0.2.7': {}
 
-  '@floating-ui/vue@1.1.3(vue@3.4.36(typescript@5.5.4))':
+  '@floating-ui/vue@1.1.4(vue@3.4.36(typescript@5.5.4))':
     dependencies:
-      '@floating-ui/dom': 1.6.9
-      '@floating-ui/utils': 0.2.6
+      '@floating-ui/dom': 1.6.10
+      '@floating-ui/utils': 0.2.7
       vue-demi: 0.14.10(vue@3.4.36(typescript@5.5.4))
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
 
-  '@headlessui/tailwindcss@0.2.1(tailwindcss@3.4.7)':
+  '@headlessui/tailwindcss@0.2.1(tailwindcss@3.4.8)':
     dependencies:
-      tailwindcss: 3.4.7
+      tailwindcss: 3.4.8
 
   '@headlessui/vue@1.7.22(vue@3.4.36(typescript@5.5.4))':
     dependencies:
@@ -8631,7 +8634,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.0
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8757,11 +8760,11 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.20.0':
     optional: true
 
-  '@scalar/api-client@2.0.47(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/api-client@2.0.47(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.8)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@headlessui/tailwindcss': 0.2.1(tailwindcss@3.4.7)
+      '@headlessui/tailwindcss': 0.2.1(tailwindcss@3.4.8)
       '@headlessui/vue': 1.7.22(vue@3.4.36(typescript@5.5.4))
-      '@scalar/components': 0.12.29(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/components': 0.12.29(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@scalar/draggable': 0.1.4(typescript@5.5.4)
       '@scalar/oas-utils': 0.2.28(typescript@5.5.4)(vue@3.4.36(typescript@5.5.4))
       '@scalar/object-utils': 1.1.6(vue@3.4.36(typescript@5.5.4))
@@ -8795,13 +8798,13 @@ snapshots:
       - typescript
       - vitest
 
-  '@scalar/api-reference@1.24.72(postcss@8.4.41)(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/api-reference@1.24.72(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.8)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@floating-ui/vue': 1.1.3(vue@3.4.36(typescript@5.5.4))
+      '@floating-ui/vue': 1.1.4(vue@3.4.36(typescript@5.5.4))
       '@headlessui/vue': 1.7.22(vue@3.4.36(typescript@5.5.4))
-      '@scalar/api-client': 2.0.47(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/api-client': 2.0.47(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.8)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@scalar/code-highlight': 0.0.8
-      '@scalar/components': 0.12.29(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/components': 0.12.29(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@scalar/oas-utils': 0.2.28(typescript@5.5.4)(vue@3.4.36(typescript@5.5.4))
       '@scalar/openapi-parser': 0.7.2
       '@scalar/snippetz': 0.1.6
@@ -8856,13 +8859,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@scalar/components@0.12.29(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/components@0.12.29(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@floating-ui/utils': 0.2.6
-      '@floating-ui/vue': 1.1.3(vue@3.4.36(typescript@5.5.4))
+      '@floating-ui/utils': 0.2.7
+      '@floating-ui/vue': 1.1.4(vue@3.4.36(typescript@5.5.4))
       '@headlessui/vue': 1.7.22(vue@3.4.36(typescript@5.5.4))
       '@scalar/code-highlight': 0.0.8
-      '@storybook/test': 8.2.7(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@storybook/test': 8.2.8(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@vueuse/core': 10.11.0(vue@3.4.36(typescript@5.5.4))
       cva: 1.0.0-beta.1(typescript@5.5.4)
       nanoid: 5.0.7
@@ -8886,9 +8889,9 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@scalar/hono-api-reference@0.5.133(postcss@8.4.41)(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/hono-api-reference@0.5.133(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.8)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@scalar/api-reference': 1.24.72(postcss@8.4.41)(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.7)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/api-reference': 1.24.72(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.8)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       hono: 4.5.4
     transitivePeerDependencies:
       - '@jest/globals'
@@ -9063,12 +9066,12 @@ snapshots:
 
   '@sindresorhus/merge-streams@2.3.0': {}
 
-  '@storybook/codemod@8.2.7(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@storybook/codemod@8.2.8(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@babel/core': 7.25.2
       '@babel/preset-env': 7.25.3(@babel/core@7.25.2)
       '@babel/types': 7.25.2
-      '@storybook/core': 8.2.7(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@storybook/core': 8.2.8(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@storybook/csf': 0.1.11
       '@types/cross-spawn': 6.0.6
       cross-spawn: 7.0.3
@@ -9083,7 +9086,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@storybook/core@8.2.7(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@storybook/core@8.2.8(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@storybook/csf': 0.1.11
       '@types/express': 4.17.21
@@ -9107,23 +9110,23 @@ snapshots:
 
   '@storybook/global@5.0.0': {}
 
-  '@storybook/instrumenter@8.2.7(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))':
+  '@storybook/instrumenter@8.2.8(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))':
     dependencies:
       '@storybook/global': 5.0.0
       '@vitest/utils': 1.6.0
-      storybook: 8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      storybook: 8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       util: 0.12.5
 
-  '@storybook/test@8.2.7(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@storybook/test@8.2.8(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@storybook/csf': 0.1.11
-      '@storybook/instrumenter': 8.2.7(storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      '@storybook/instrumenter': 8.2.8(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       '@testing-library/dom': 10.1.0
       '@testing-library/jest-dom': 6.4.5(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@testing-library/user-event': 14.5.2(@testing-library/dom@10.1.0)
       '@vitest/expect': 1.6.0
       '@vitest/spy': 1.6.0
-      storybook: 8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      storybook: 8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       util: 0.12.5
     transitivePeerDependencies:
       - '@jest/globals'
@@ -10075,7 +10078,7 @@ snapshots:
 
   browserslist@4.23.3:
     dependencies:
-      caniuse-lite: 1.0.30001650
+      caniuse-lite: 1.0.30001651
       electron-to-chromium: 1.5.5
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.23.3)
@@ -10156,7 +10159,7 @@ snapshots:
 
   camelcase@6.3.0: {}
 
-  caniuse-lite@1.0.30001650: {}
+  caniuse-lite@1.0.30001651: {}
 
   caseless@0.12.0: {}
 
@@ -10647,7 +10650,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -11337,7 +11340,7 @@ snapshots:
 
   flatted@3.3.1: {}
 
-  flow-parser@0.242.1: {}
+  flow-parser@0.243.0: {}
 
   fn.name@1.1.0: {}
 
@@ -11355,7 +11358,7 @@ snapshots:
     dependencies:
       for-in: 1.0.2
 
-  foreground-child@3.2.1:
+  foreground-child@3.3.0:
     dependencies:
       cross-spawn: 7.0.3
       signal-exit: 4.1.0
@@ -11528,7 +11531,7 @@ snapshots:
 
   glob@10.4.5:
     dependencies:
-      foreground-child: 3.2.1
+      foreground-child: 3.3.0
       jackspeak: 3.4.3
       minimatch: 9.0.5
       minipass: 7.1.2
@@ -12228,7 +12231,7 @@ snapshots:
       '@babel/register': 7.24.6(@babel/core@7.25.2)
       babel-core: 7.0.0-bridge.0(@babel/core@7.25.2)
       chalk: 4.1.2
-      flow-parser: 0.242.1
+      flow-parser: 0.243.0
       graceful-fs: 4.2.11
       micromatch: 4.0.7
       neo-async: 2.6.2
@@ -13694,8 +13697,8 @@ snapshots:
 
   radix-vue@1.9.3(vue@3.4.36(typescript@5.5.4)):
     dependencies:
-      '@floating-ui/dom': 1.6.9
-      '@floating-ui/vue': 1.1.3(vue@3.4.36(typescript@5.5.4))
+      '@floating-ui/dom': 1.6.10
+      '@floating-ui/vue': 1.1.4(vue@3.4.36(typescript@5.5.4))
       '@internationalized/date': 3.5.5
       '@internationalized/number': 3.5.3
       '@tanstack/vue-virtual': 3.8.5(vue@3.4.36(typescript@5.5.4))
@@ -14257,12 +14260,12 @@ snapshots:
 
   store2@2.14.3: {}
 
-  storybook@8.2.7(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10):
+  storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
       '@babel/core': 7.25.2
       '@babel/types': 7.25.2
-      '@storybook/codemod': 8.2.7(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      '@storybook/core': 8.2.7(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@storybook/codemod': 8.2.8(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@storybook/core': 8.2.8(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@types/semver': 7.5.8
       '@yarnpkg/fslib': 2.10.3
       '@yarnpkg/libzip': 2.3.0
@@ -14432,7 +14435,7 @@ snapshots:
 
   tailwind-merge@2.4.0: {}
 
-  tailwindcss@3.4.7:
+  tailwindcss@3.4.8:
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -14893,29 +14896,30 @@ snapshots:
       debug: 4.3.6
       pathe: 1.1.2
       tinyrainbow: 1.2.0
-      vite: 5.3.5(@types/node@22.1.0)
+      vite: 5.4.0(@types/node@22.1.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
       - lightningcss
       - sass
+      - sass-embedded
       - stylus
       - sugarss
       - supports-color
       - terser
 
-  vite-tsconfig-paths@4.3.2(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)):
+  vite-tsconfig-paths@4.3.2(typescript@5.5.4)(vite@5.4.0(@types/node@22.1.0)):
     dependencies:
       debug: 4.3.6
       globrex: 0.1.2
       tsconfck: 3.1.1(typescript@5.5.4)
     optionalDependencies:
-      vite: 5.3.5(@types/node@22.1.0)
+      vite: 5.4.0(@types/node@22.1.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@5.3.5(@types/node@22.1.0):
+  vite@5.4.0(@types/node@22.1.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.41
@@ -14942,7 +14946,7 @@ snapshots:
       tinybench: 2.9.0
       tinypool: 1.0.0
       tinyrainbow: 1.2.0
-      vite: 5.3.5(@types/node@22.1.0)
+      vite: 5.4.0(@types/node@22.1.0)
       vite-node: 2.0.5(@types/node@22.1.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
@@ -14952,6 +14956,7 @@ snapshots:
       - less
       - lightningcss
       - sass
+      - sass-embedded
       - stylus
       - sugarss
       - supports-color
