@@ -56,7 +56,7 @@ const getArticle = (item) =>
             cookieJar,
         });
         const $ = load(response.data);
-        const responseUrl = new URL(response.url);
+        const responseUrl = new URL(item.link);
 
         if (responseUrl.pathname.startsWith('/immersive/')) {
             const meta = getDataLayer($);
