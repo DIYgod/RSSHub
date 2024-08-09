@@ -188,7 +188,7 @@
         "supertest": "7.0.0",
         "typescript": "5.5.4",
         "unified": "11.0.5",
-        "vite-tsconfig-paths": "5.0.0",
+        "vite-tsconfig-paths": "5.0.1",
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
