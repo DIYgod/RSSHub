@@ -5,9 +5,26 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/user/:user_id/:category',
-    name: 'Unknown',
+    name: 'User • 小红书 / RED',
     maintainers: [],
     handler,
+    example: '/xiaohongshu/user/52d8c541b4c4d60e6c867480/notes',
+    parameters: {
+        user_id: 'user id, length 24 characters',
+        category: {
+            description: 'category, notes or unspecified',
+            options: [
+                {
+                    value: 'notes',
+                    label: 'notes',
+                },
+                {
+                    value: 'unspecified',
+                    label: 'unspecified',
+                },
+            ],
+        },
+    },
 };
 
 async function handler(ctx) {

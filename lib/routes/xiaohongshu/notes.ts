@@ -10,9 +10,13 @@ export const route: Route = {
             target: '/user/:user_id/notes',
         },
     ],
-    name: 'Unknown',
+    name: '笔记 • 小红书 / RED',
     maintainers: [],
     handler,
+    example: '/xiaohongshu/user/52d8c541b4c4d60e6c867480/notes/fulltext',
+    parameters: {
+        user_id: 'user id, length 24 characters',
+    },
 };
 
 async function handler(ctx) {
