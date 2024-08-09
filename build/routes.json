@@ -39315,6 +39315,29 @@
           "Misaka13514"
         ],
         "location": "featured-notes.ts"
+      },
+      "/users/notes/:username": {
+        "path": "/users/notes/:username",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/misskey/users/notes/support@misskey.io",
+        "parameters": {
+          "username": "misskey username format, like support@misskey.io"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "User timeline",
+        "maintainers": [
+          "siygle"
+        ],
+        "location": "user-timeline.ts"
       }
     },
     "name": "Misskey",

@@ -3886,6 +3886,9 @@
   "/misskey/notes/featured/:site": [
     "Misaka13514"
   ],
+  "/misskey/users/notes/:username": [
+    "siygle"
+  ],
   "/mittrchina/:type?": [
     "EsuRt",
     "queensferryme"
