@@ -12,17 +12,17 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['http://rsj.ningbo.gov.cn'],
+            source: ['rsj.ningbo.gov.cn/col/col1229676740/index.html'],
             target: '/zj/ningborsjnotice/:colId?',
         },
     ],
     name: '宁波市人力资源和社会保障局-公告',
-    url: 'http://rsj.ningbo.gov.cn',
+    url: 'rsj.ningbo.gov.cn',
     maintainers: ['HaoyuLee'],
     description: `
-    | 公告类别         | colId |
-    | ------------ | -- |
-    | 事业单位进人公告     | 1229676740  |
+| 公告类别         | colId |
+| ------------ | -- |
+| 事业单位进人公告     | 1229676740  |
     `,
     async handler(ctx) {
         const { colId = '1229676740' } = ctx.req.param();

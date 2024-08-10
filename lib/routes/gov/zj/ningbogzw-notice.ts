@@ -12,17 +12,17 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['http://gzw.ningbo.gov.cn'],
+            source: ['gzw.ningbo.gov.cn/col/col1229116730/index.html'],
             target: '/zj/ningbogzw-notice/:colId?',
         },
     ],
     name: '宁波市国资委-公告',
-    url: 'http://gzw.ningbo.gov.cn',
+    url: 'gzw.ningbo.gov.cn',
     maintainers: ['HaoyuLee'],
     description: `
-    | 公告类别         | colId |
-    | ------------ | -- |
-    | 首页-市属国企招聘信息-招聘公告     | 1229116730  |
+| 公告类别         | colId |
+| ------------ | -- |
+| 首页-市属国企招聘信息-招聘公告     | 1229116730  |
     `,
     async handler(ctx) {
         const { colId = '1229116730' } = ctx.req.param();
