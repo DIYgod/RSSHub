@@ -8,7 +8,7 @@ export const route: Route = {
     name: 'User • 小红书 / RED',
     maintainers: [],
     handler,
-    example: '/xiaohongshu/user/52d8c541b4c4d60e6c867480/notes',
+    example: '/xiaohongshu/user/593032945e87e77791e03696/notes',
     parameters: {
         user_id: 'user id, length 24 characters',
         category: {
