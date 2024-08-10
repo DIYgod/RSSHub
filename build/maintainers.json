@@ -5721,7 +5721,7 @@
   "/szu/yz/:type?": [
     "NagaruZ"
   ],
-  "/t66y/:id/:type?": [
+  "/t66y/:id/:type?/:search?": [
     "zhboner"
   ],
   "/t66y/post/:tid": [
