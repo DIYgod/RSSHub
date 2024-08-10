@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/user/:user_id/:category',
-    name: 'User • 小红书 / RED',
+    name: '用户笔记',
     maintainers: [],
     handler,
     example: '/xiaohongshu/user/593032945e87e77791e03696/notes',
