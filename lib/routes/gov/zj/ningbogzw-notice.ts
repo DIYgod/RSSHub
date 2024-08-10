@@ -17,7 +17,7 @@ export const route: Route = {
         },
     ],
     name: '宁波市国资委-公告',
-    url: 'http://gzw.ningbo.gov.cn',
+    url: 'gzw.ningbo.gov.cn',
     maintainers: ['HaoyuLee'],
     description: `
         | 公告类别         | colId |
