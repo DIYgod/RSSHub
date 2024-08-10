@@ -12,7 +12,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['http://gzw.ningbo.gov.cn'],
+            source: ['gzw.ningbo.gov.cn/col/col1229116730/index.html'],
             target: '/zj/ningbogzw-notice/:colId?',
         },
     ],
