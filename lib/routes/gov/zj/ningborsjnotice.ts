@@ -12,7 +12,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['http://rsj.ningbo.gov.cn'],
+            source: ['rsj.ningbo.gov.cn/col/col1229676740/index.html'],
             target: '/zj/ningborsjnotice/:colId?',
         },
     ],
