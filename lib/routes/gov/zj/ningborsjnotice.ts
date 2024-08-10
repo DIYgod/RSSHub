@@ -20,9 +20,9 @@ export const route: Route = {
     url: 'http://rsj.ningbo.gov.cn',
     maintainers: ['HaoyuLee'],
     description: `
-        | 公告类别         | colId |
-        | ------------ | -- |
-        | 事业单位进人公告     | 1229676740  |
+    | 公告类别         | colId |
+    | ------------ | -- |
+    | 事业单位进人公告     | 1229676740  |
     `,
     async handler(ctx) {
         const { colId = '1229676740' } = ctx.req.param();
