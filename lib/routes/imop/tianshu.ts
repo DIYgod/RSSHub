@@ -21,7 +21,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler() {
     const { data: response } = await got(`${baseUrl}/list/0-1.htm`, { responseType: 'buffer' });
     const $ = load(iconv.decode(response, 'gbk'));
     const list = $('.right .right_top .right_bot .list2 .ul1 ul')
