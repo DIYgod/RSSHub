@@ -5,6 +5,6 @@ export const namespace: Namespace = {
     url: 'imop.com',
 
     zh: {
-        name: '猫扑网',
+        name: '千橡游戏',
     },
 };
