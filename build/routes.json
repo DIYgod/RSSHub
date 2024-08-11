@@ -31763,6 +31763,35 @@
     "name": "米课",
     "url": "imiker.com"
   },
+  "imop": {
+    "routes": {
+      "/tianshu": {
+        "path": "/tianshu",
+        "categories": [
+          "game"
+        ],
+        "example": "/imop/tianshu",
+        "radar": [
+          {
+            "source": [
+              "t.imop.com"
+            ],
+            "target": "/tianshu"
+          }
+        ],
+        "name": "全部消息",
+        "maintainers": [
+          "zhkgo"
+        ],
+        "location": "tianshu.ts"
+      }
+    },
+    "name": "imop",
+    "url": "imop.com",
+    "zh": {
+      "name": "千橡游戏"
+    }
+  },
   "indiansinkuwait": {
     "routes": {
       "/latest": {

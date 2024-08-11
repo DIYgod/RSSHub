@@ -8814,6 +8814,19 @@
       }
     ]
   },
+  "imop.com": {
+    "_name": "imop",
+    "t": [
+      {
+        "title": "全部消息",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/imop/tianshu"
+      }
+    ]
+  },
   "indiansinkuwait.com": {
     "_name": "Indians in Kuwait",
     ".": [
