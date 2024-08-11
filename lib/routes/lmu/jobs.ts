@@ -86,7 +86,7 @@ export const route: Route = {
     maintainers: ['StarDxxx'],
     radar: [
         {
-            source: ['/en/about-lmu/working-at-lmu/job-portal/academic-staff/'],
+            source: ['www.lmu.de/en/about-lmu/working-at-lmu/job-portal/academic-staff/'],
             target: '/lmu/jobs',
         },
     ],
