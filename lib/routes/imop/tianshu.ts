@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 const baseUrl = 'http://t.imop.com';
 
 export const route: Route = {
-    path: '/tianshu/:page?',
+    path: '/tianshu',
     categories: ['game'],
     example: '/imop/tianshu',
     radar: [
@@ -22,8 +22,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const page = ctx.req.param('page') || 1;
-    const { data: response } = await got(`${baseUrl}/list/0-${page}.htm`, { responseType: 'buffer' });
+    const { data: response } = await got(`${baseUrl}/list/0-1.htm`, { responseType: 'buffer' });
     const $ = load(iconv.decode(response, 'gbk'));
     const list = $('.right .right_top .right_bot .list2 .ul1 ul')
         .toArray()
@@ -48,7 +47,7 @@ async function handler(ctx) {
 
     return {
         title: '天书最新消息',
-        link: `${baseUrl}/list/0-${page}.htm`,
+        link: `${baseUrl}/list/0-1.htm`,
         item: items,
     };
 }
