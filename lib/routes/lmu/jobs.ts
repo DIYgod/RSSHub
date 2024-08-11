@@ -1,6 +1,8 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+import path from 'node:path';
 
 const apiUrl = 'https://jobs.b-ite.com/api/v1/postings/search';
 
@@ -51,22 +53,17 @@ async function handler() {
         const institutionLabel = findLabel(job.custom.bereich, bereichOptions);
         const RemunerationGroupLabel = findLabel(job.custom.verguetung, verguetungOptions);
 
+        // 渲染模板
+        const description = art(path.join(__dirname, 'templates/jobPosting.art'), {
+            institutionLabel,
+            RemunerationGroupLabel,
+            job,
+        });
+
         return {
             title: job.title,
             link: job.url,
-            description: `
-                <p><strong>Institution:</strong> ${institutionLabel}</p>
-                <p><strong>Remuneration:</strong> ${RemunerationGroupLabel}</p>
-                <p><strong>Application deadline:</strong> ${job.endsOn}</p>
-                <p><strong>Job Details:</strong></p>
-                <p><strong>About us:</strong></p>
-                ${job.custom.das_sind_wir || ''}<br>
-                <p><strong>Your qualifications:</strong></p>
-                ${job.custom.das_sind_sie || ''}<br>
-                <p><strong>Benefits:</strong></p>
-                ${job.custom.das_ist_unser_angebot || ''}<br>
-                <p><strong>Contact:</strong> ${job.custom.kontakt || ''}</p>
-            `,
+            description,
             pubDate,
         };
     });
@@ -84,6 +81,7 @@ export const route: Route = {
     url: 'lmu.de',
     example: '/lmu/jobs',
     maintainers: ['StarDxxx'],
+    categories: ['university', 'study'],
     radar: [
         {
             source: ['/en/about-lmu/working-at-lmu/job-portal/academic-staff/'],
