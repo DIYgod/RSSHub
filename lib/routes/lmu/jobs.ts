@@ -80,7 +80,7 @@ async function handler() {
 
 export const route: Route = {
     path: '/jobs',
-    name: 'LMU Job Openings',
+    name: 'Job Openings',
     url: 'lmu.de',
     example: '/lmu/jobs',
     maintainers: ['StarDxxx'],
