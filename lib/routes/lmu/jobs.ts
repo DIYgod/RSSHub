@@ -9,7 +9,7 @@ const apiUrl = 'https://jobs.b-ite.com/api/v1/postings/search';
 // 辅助函数：根据 value 查找对应的 label
 function findLabel(value: string, options: Array<{ value: string; label: string }>): string {
     const option = options.find((option) => option.value === value);
-    return option ? option.label : value; // 如果找不到匹配项，返回 value 本身
+    return option?.label ?? value; // 如果找不到匹配项，返回 value 本身
 }
 
 async function handler() {
@@ -77,14 +77,14 @@ async function handler() {
 
 export const route: Route = {
     path: '/jobs',
-    name: 'LMU Job Openings',
+    name: 'Job Openings',
     url: 'lmu.de',
     example: '/lmu/jobs',
     maintainers: ['StarDxxx'],
     categories: ['university', 'study'],
     radar: [
         {
-            source: ['/en/about-lmu/working-at-lmu/job-portal/academic-staff/'],
+            source: ['www.lmu.de/en/about-lmu/working-at-lmu/job-portal/academic-staff/'],
             target: '/lmu/jobs',
         },
     ],

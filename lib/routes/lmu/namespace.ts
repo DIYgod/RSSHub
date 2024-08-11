@@ -1,7 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'LMU',
+    name: 'Ludwig Maximilian University of Munich',
     url: 'www.lmu.de',
     description: `
 This namespace provides RSS feeds for various sections of the Ludwig Maximilian University of Munich (LMU) website, particularly for job openings in the academic staff section.
