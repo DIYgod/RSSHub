@@ -2626,6 +2626,12 @@
   "/gov/zhengce/zhengceku/:department": [
     "zxx-457"
   ],
+  "/gov/zj/ningbogzw-notice/:colId?": [
+    "HaoyuLee"
+  ],
+  "/gov/zj/ningborsjnotice/:colId?": [
+    "HaoyuLee"
+  ],
   "/gov/zj/search/:websiteid?/:word/:cateid?": [
     "HaoyuLee"
   ],
