@@ -35144,7 +35144,7 @@
         "categories": [
           "new-media"
         ],
-        "example": "/news/zh-hans",
+        "example": "/kaopu/news/zh-hans",
         "parameters": {
           "language": "语言"
         },
@@ -35159,7 +35159,7 @@
         "maintainers": [
           "fashioncj"
         ],
-        "description": "| 简体中文    | 繁体中文     | \n  | ------- | -------- | \n  | zh-hans | zh-hant | ",
+        "description": "| 简体中文    | 繁体中文     |\n  | ------- | -------- |\n  | zh-hans | zh-hant | ",
         "location": "news.ts"
       }
     },
