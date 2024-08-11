@@ -10195,6 +10195,19 @@
       }
     ]
   },
+  "lmu.de": {
+    "_name": "Ludwig Maximilian University of Munich",
+    "www": [
+      {
+        "title": "Job Openings",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/en/about-lmu/working-at-lmu/job-portal/academic-staff/"
+        ],
+        "target": "/lmu/lmu/jobs"
+      }
+    ]
+  },
   "logonews.cn": {
     "_name": "LogoNews 标志情报局",
     ".": [
