@@ -47,6 +47,8 @@ function fetchFullArticles(items, tryGet) {
 
             const content = load(detailResponse.data);
 
+            item.pubDate = item.pubDate ?? timezone(parseDate(content('em.f-fl').text()), +8);
+
             content('h1').remove();
             content('.u-btn6, .m-smallshare, .topic-hot').remove();
 
@@ -56,4 +58,4 @@ function fetchFullArticles(items, tryGet) {
         })
     );
 }
-export { rootUrl, ProcessItems, fetchFullArticles};
+export { rootUrl, ProcessItems, fetchFullArticles };
