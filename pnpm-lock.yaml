@@ -12,8 +12,8 @@ importers:
         specifier: 1.12.0
         version: 1.12.0
       '@hono/zod-openapi':
-        specifier: 0.15.1
-        version: 0.15.1(hono@4.5.4)(zod@3.23.8)
+        specifier: 0.15.3
+        version: 0.15.3(hono@4.5.4)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -1482,8 +1482,8 @@ packages:
     resolution: {integrity: sha512-e6oHjNiErRxsZRZBmc2KucuvY3btlO/XPncIpP2X75bRdTilF9GLjm3NHvKKunpJbbJJj31/FoPTksTf8djAVw==}
     engines: {node: '>=18.14.1'}
 
-  '@hono/zod-openapi@0.15.1':
-    resolution: {integrity: sha512-2Un3D5xD1j4tIvUwzQ/XkB6xwrEA0Ne23TRjB8UVw0PgUWzsB3xiB8Hl/y2ZEMfcIfrA15/ga4P6Bkct8uYaLg==}
+  '@hono/zod-openapi@0.15.3':
+    resolution: {integrity: sha512-9oc4Bbs+L5oGjUOCrApCrx8BSWa5ctOBjRcwxplxkWPYFPhyOhdkMg47QKenGkESfFz0K6zb4F/c0LGPEmR62g==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=4.3.6'
@@ -8527,7 +8527,7 @@ snapshots:
 
   '@hono/node-server@1.12.0': {}
 
-  '@hono/zod-openapi@0.15.1(hono@4.5.4)(zod@3.23.8)':
+  '@hono/zod-openapi@0.15.3(hono@4.5.4)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.1.1(zod@3.23.8)
       '@hono/zod-validator': 0.2.2(hono@4.5.4)(zod@3.23.8)
