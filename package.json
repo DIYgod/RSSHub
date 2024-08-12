@@ -127,7 +127,7 @@
         "tough-cookie": "4.1.4",
         "tsx": "4.17.0",
         "twitter-api-v2": "1.17.2",
-        "undici": "6.19.6",
+        "undici": "6.19.7",
         "uuid": "10.0.0",
         "winston": "3.14.1",
         "xxhash-wasm": "1.0.2",
