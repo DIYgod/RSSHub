@@ -913,6 +913,9 @@
   "/buaa/sme/:path{.+}?": [
     "MeanZhang"
   ],
+  "/buaa/lib/space/:path{newbook.*}": [
+    "OverflowCat"
+  ],
   "/buaa/news/:type": [
     "AlanDecode"
   ],
