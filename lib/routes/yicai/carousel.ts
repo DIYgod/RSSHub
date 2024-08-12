@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import { rootUrl, ProcessItems, fetchFullArticles } from './utils';
+import { rootUrl, fetchFullArticles } from './utils';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
@@ -28,11 +28,15 @@ export const route: Route = {
     url: 'yicai.com/',
 };
 
-async function handler(ctx) {
-    const rootUrl = "https://www.yicai.com";
+async function handler() {
     const res = await ofetch(rootUrl);
     const $ = load(res);
-    const items = await fetchFullArticles($("#breaknews a").toArray().map((e) => ({ link: (new URL($(e).attr("href"), rootUrl)).href, title: $(e).text() })), cache.tryGet);
+    const items = await fetchFullArticles(
+        $('#breaknews a')
+            .toArray()
+            .map((e) => ({ link: new URL($(e).attr('href'), rootUrl).href, title: $(e).text() })),
+        cache.tryGet
+    );
 
     return {
         title: '第一财经 - 轮播',
