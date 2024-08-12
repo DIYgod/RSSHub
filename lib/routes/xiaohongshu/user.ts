@@ -12,15 +12,15 @@ export const route: Route = {
     parameters: {
         user_id: 'user id, length 24 characters',
         category: {
-            description: 'category, notes or unspecified',
+            description: 'category, notes or collect',
             options: [
                 {
                     value: 'notes',
                     label: 'notes',
                 },
                 {
-                    value: 'unspecified',
-                    label: 'unspecified',
+                    value: 'collect',
+                    label: 'collect',
                 },
             ],
         },
