@@ -145,27 +145,27 @@ async function handler(ctx: Context): Promise<Data> {
 }
 
 async function getItem(item: Book): Promise<DataItem> {
-    const info = await getItemInfo(item.isbn);
-    const holdings = JSON.parse(item.holdings) as Holding[];
-    const link = `https://space.lib.buaa.edu.cn/space/searchDetailLocal/${item.bibId}`;
-    const content = art(path.join(__dirname, 'templates/newbook.art'), {
-        item,
-        info,
-        holdings,
-    });
-    return {
-        language: item.language === 'eng' ? 'en' : 'zh-CN',
-        title: item.title,
-        pubDate: item.onSelfDate ? timezone(parseDate(item.onSelfDate), +8) : undefined,
-        description: content,
-        link,
-    };
+    return (await cache.tryGet(item.isbn, async () => {
+        const info = await getItemInfo(item.isbn);
+        const holdings = JSON.parse(item.holdings) as Holding[];
+        const link = `https://space.lib.buaa.edu.cn/space/searchDetailLocal/${item.bibId}`;
+        const content = art(path.join(__dirname, 'templates/newbook.art'), {
+            item,
+            info,
+            holdings,
+        });
+        return {
+            language: item.language === 'eng' ? 'en' : 'zh-CN',
+            title: item.title,
+            pubDate: item.onSelfDate ? timezone(parseDate(item.onSelfDate), +8) : undefined,
+            description: content,
+            link,
+        };
+    })) as DataItem;
 }
 
 async function getItemInfo(isbn: string): Promise<Info | null> {
     const url = `https://space.lib.buaa.edu.cn/meta-local/opac/third_api/douban/${isbn}/info`;
-    return (await cache.tryGet(url, async () => {
-        const response = await got(url);
-        return JSON.parse(response.body).data;
-    })) as Promise<Info | null>;
+    const response = await got(url);
+    return JSON.parse(response.body).data;
 }

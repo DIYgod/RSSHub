@@ -1,6 +1,3 @@
-<h1 itemprop="title">
-    <a href="https://space.lib.buaa.edu.cn/space/searchDetailLocal/{{item.bibId}}" style="color: #006fcc;">{{item.title}}</a>
-</h1>
 {{if info.imageUrl}}
 <aside><img src="{{info.imageUrl}}" alt="封面"></aside>
 {{/if}}
