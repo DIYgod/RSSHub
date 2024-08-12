@@ -42,8 +42,8 @@ importers:
         specifier: 2.2.3
         version: 2.2.3
       '@scalar/hono-api-reference':
-        specifier: 0.5.134
-        version: 0.5.134(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+        specifier: 0.5.135
+        version: 0.5.135(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@sentry/node':
         specifier: 7.116.0
         version: 7.116.0
@@ -1886,32 +1886,32 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@scalar/api-client@2.0.48':
-    resolution: {integrity: sha512-ZCOaJ3teZdzWCwUrDfgGsvkiGWGpnOfm5dCf4ovhrzFCf8Um9r/8H/cg/RG/rq5T7TssaB0gMG1hAUK9xiSB0w==}
+  '@scalar/api-client@2.0.49':
+    resolution: {integrity: sha512-AJ+BPiTQx0kStZbpyXnQLz/nbIZzN2rt/0Urhyulx3FU/8YxELUWXlGVHlMP4/CzaESWw7h+XNpqaeWa8ntdHQ==}
     engines: {node: '>=18'}
 
-  '@scalar/api-reference@1.24.73':
-    resolution: {integrity: sha512-IXZAVmdkdFUbGdIQMfYqLHMW78S/lR9VTKuTAOgGeaKPoL6pZtgE1mHuaQheCunGO3JbXJH7c9mzelVK/IalFw==}
+  '@scalar/api-reference@1.24.74':
+    resolution: {integrity: sha512-SG4ibTL2zcEMyHqekP10664xq1ydUaAOFBWjewmwbGhGU97YVi182rVtxQCXgfO4OBF5NiqT1Lm/8Lp9Rh4FgA==}
     engines: {node: '>=18'}
 
-  '@scalar/code-highlight@0.0.9':
-    resolution: {integrity: sha512-k1M5zEKm4wmwgH6Hcv3Ia6+ROtpSAYu1kt4qUztbQjqKh0ADgV7YqL4ohdci+JoPZnZhbEg1QhEq764j8Z/NeA==}
+  '@scalar/code-highlight@0.0.10':
+    resolution: {integrity: sha512-Jpj2u1lWmQ1VuWbd4hU8pu1b9gvo1AZhe1cpB9Ib9mi2QQzr6fu73ezRIfn7dxIiCLAVLsyoR/cgqo3JJ6+rPg==}
     engines: {node: '>=18'}
 
-  '@scalar/components@0.12.30':
-    resolution: {integrity: sha512-pUaTiWUWQfWwsfYpjXNsfA8Kh5pT9jDvhWqIHuD/O5friVWnRU4VcjwOr+cIAbN9b5J4peK3K5oI1gy37JI8+A==}
+  '@scalar/components@0.12.31':
+    resolution: {integrity: sha512-BfVlAlqsRX8fDudE84aLQb5Qxwdkcwc1mvR9HDcWggzT2yFWXaAWnh9ck/3B8+Jpx9xEeMBU0tx2Skfm85xYKA==}
     engines: {node: '>=18'}
 
   '@scalar/draggable@0.1.4':
     resolution: {integrity: sha512-hj8SY6umXcl++rToznM33x/Iow65dYRmUA2nEgppkHml1RvTSR6Smfkio3hp8m4VUOGjQCTjt5gjuMe09pLlPQ==}
     engines: {node: '>=18'}
 
-  '@scalar/hono-api-reference@0.5.134':
-    resolution: {integrity: sha512-RSO2o5hadLSJcfBWRAwBKJH8uARrKstLgFCNx1ISCQyqRz1C7saESe4BBsQ6/FDbuJdssyxm9CfYDwWNlGU0eA==}
+  '@scalar/hono-api-reference@0.5.135':
+    resolution: {integrity: sha512-ODik2hAH93N9SL7VpQdAEt6lafLXwkbHE1S1t5L27mC1hrR1ne9GcluOpOauPvU6YgMAp0evsQyqQBOqroFn1A==}
     engines: {node: '>=18'}
 
-  '@scalar/oas-utils@0.2.29':
-    resolution: {integrity: sha512-ktq+PAfcAT1sSr1adUnBiR5F7xAhGxAFR3cQ+1Za7nql/2l9zKGRX+zZqabETD5WlqfbgceXeasGFLdIu7l1Mg==}
+  '@scalar/oas-utils@0.2.30':
+    resolution: {integrity: sha512-UQb2AAZ0LjThdRmH+/iS1MLf80eGNpVrMHCzmk4bZ1fqpboXAbg6egEPP4N7+yR87Mq59rkgSJr0Cu1vyzN9Lg==}
     engines: {node: '>=18'}
 
   '@scalar/object-utils@1.1.7':
@@ -1943,8 +1943,8 @@ packages:
   '@scalar/snippetz@0.1.6':
     resolution: {integrity: sha512-z3DEpT/FIZq9yeHL/tz2v6WvdHIiZ4uvK96RdeTPKUUJ0IXvA5vONG3PF5LE0Q/408PCzWsZpGs9f97ztaeJSQ==}
 
-  '@scalar/themes@0.9.22':
-    resolution: {integrity: sha512-8g4esUb+zKDTb/IMSteKRJUCl1il1R/wbvIZf63kYQtA/UOXnNFL9FOPvYx/HM2zF00VsVuZ+sAUHChWYcF/Xw==}
+  '@scalar/themes@0.9.23':
+    resolution: {integrity: sha512-LFVPBegRF8GRNR24e8AAJwTfW1DP9Jj6NwsPjIq58ztD16DyzMBc48HY5fpacQRfcNORsuBsnOPXWT+kOu4/jw==}
     engines: {node: '>=18'}
 
   '@scalar/use-codemirror@0.11.10':
@@ -8981,16 +8981,16 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.20.0':
     optional: true
 
-  '@scalar/api-client@2.0.48(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/api-client@2.0.49(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@headlessui/tailwindcss': 0.2.1(tailwindcss@3.4.9)
       '@headlessui/vue': 1.7.22(vue@3.4.37(typescript@5.5.4))
-      '@scalar/components': 0.12.30(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/components': 0.12.31(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@scalar/draggable': 0.1.4(typescript@5.5.4)
-      '@scalar/oas-utils': 0.2.29(typescript@5.5.4)(vue@3.4.37(typescript@5.5.4))
+      '@scalar/oas-utils': 0.2.30(typescript@5.5.4)(vue@3.4.37(typescript@5.5.4))
       '@scalar/object-utils': 1.1.7(vue@3.4.37(typescript@5.5.4))
       '@scalar/openapi-parser': 0.7.2
-      '@scalar/themes': 0.9.22(typescript@5.5.4)
+      '@scalar/themes': 0.9.23(typescript@5.5.4)
       '@scalar/use-codemirror': 0.11.10(typescript@5.5.4)
       '@scalar/use-toasts': 0.7.5(typescript@5.5.4)
       '@scalar/use-tooltip': 1.0.2(typescript@5.5.4)
@@ -9019,17 +9019,17 @@ snapshots:
       - typescript
       - vitest
 
-  '@scalar/api-reference@1.24.73(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/api-reference@1.24.74(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@floating-ui/vue': 1.1.4(vue@3.4.37(typescript@5.5.4))
       '@headlessui/vue': 1.7.22(vue@3.4.37(typescript@5.5.4))
-      '@scalar/api-client': 2.0.48(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
-      '@scalar/code-highlight': 0.0.9
-      '@scalar/components': 0.12.30(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
-      '@scalar/oas-utils': 0.2.29(typescript@5.5.4)(vue@3.4.37(typescript@5.5.4))
+      '@scalar/api-client': 2.0.49(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/code-highlight': 0.0.10
+      '@scalar/components': 0.12.31(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/oas-utils': 0.2.30(typescript@5.5.4)(vue@3.4.37(typescript@5.5.4))
       '@scalar/openapi-parser': 0.7.2
       '@scalar/snippetz': 0.1.6
-      '@scalar/themes': 0.9.22(typescript@5.5.4)
+      '@scalar/themes': 0.9.23(typescript@5.5.4)
       '@scalar/use-toasts': 0.7.5(typescript@5.5.4)
       '@scalar/use-tooltip': 1.0.2(typescript@5.5.4)
       '@unhead/schema': 1.9.16
@@ -9058,7 +9058,7 @@ snapshots:
       - typescript
       - vitest
 
-  '@scalar/code-highlight@0.0.9':
+  '@scalar/code-highlight@0.0.10':
     dependencies:
       hast-util-to-text: 4.0.2
       highlight.js: 11.10.0
@@ -9080,12 +9080,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@scalar/components@0.12.30(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/components@0.12.31(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@floating-ui/utils': 0.2.7
       '@floating-ui/vue': 1.1.4(vue@3.4.37(typescript@5.5.4))
       '@headlessui/vue': 1.7.22(vue@3.4.37(typescript@5.5.4))
-      '@scalar/code-highlight': 0.0.9
+      '@scalar/code-highlight': 0.0.10
       '@storybook/test': 8.2.8(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@vueuse/core': 10.11.1(vue@3.4.37(typescript@5.5.4))
       cva: 1.0.0-beta.1(typescript@5.5.4)
@@ -9110,9 +9110,9 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@scalar/hono-api-reference@0.5.134(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@scalar/hono-api-reference@0.5.135(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@scalar/api-reference': 1.24.73(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+      '@scalar/api-reference': 1.24.74(postcss@8.4.41)(storybook@8.2.8(@babel/preset-env@7.25.3(@babel/core@7.25.2))(bufferutil@4.0.8)(utf-8-validate@5.0.10))(tailwindcss@3.4.9)(typescript@5.5.4)(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       hono: 4.5.4
     transitivePeerDependencies:
       - '@jest/globals'
@@ -9128,10 +9128,10 @@ snapshots:
       - typescript
       - vitest
 
-  '@scalar/oas-utils@0.2.29(typescript@5.5.4)(vue@3.4.37(typescript@5.5.4))':
+  '@scalar/oas-utils@0.2.30(typescript@5.5.4)(vue@3.4.37(typescript@5.5.4))':
     dependencies:
       '@scalar/object-utils': 1.1.7(vue@3.4.37(typescript@5.5.4))
-      '@scalar/themes': 0.9.22(typescript@5.5.4)
+      '@scalar/themes': 0.9.23(typescript@5.5.4)
       axios: 1.7.3
       nanoid: 5.0.7
       yaml: 2.5.0
@@ -9194,7 +9194,7 @@ snapshots:
       '@scalar/snippetz-plugin-node-ofetch': 0.1.1
       '@scalar/snippetz-plugin-node-undici': 0.1.6
 
-  '@scalar/themes@0.9.22(typescript@5.5.4)':
+  '@scalar/themes@0.9.23(typescript@5.5.4)':
     dependencies:
       vue: 3.4.37(typescript@5.5.4)
     transitivePeerDependencies:
