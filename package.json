@@ -164,7 +164,7 @@
         "@types/tough-cookie": "4.0.5",
         "@types/uuid": "10.0.0",
         "@typescript-eslint/eslint-plugin": "8.0.1",
-        "@typescript-eslint/parser": "8.0.1",
+        "@typescript-eslint/parser": "8.1.0",
         "@vercel/nft": "0.27.3",
         "@vitest/coverage-v8": "2.0.5",
         "discord-api-types": "0.37.93",
