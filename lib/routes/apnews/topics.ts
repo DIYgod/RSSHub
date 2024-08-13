@@ -36,7 +36,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { topic = 'trending-news', nav = '' } = ctx.req.param();
-    const useNav = ctx.req.matchedRoutes.some((e) => e.path === '/apnews/nav/:nav{.*}?');
+    const useNav = ctx.req.routePath === '/apnews/nav/:nav{.*}?';
     const url = useNav ? `${HOME_PAGE}/${nav}` : `${HOME_PAGE}/hub/${topic}`;
     const response = await got(url);
     const $ = load(response.data);
