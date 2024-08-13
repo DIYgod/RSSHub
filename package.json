@@ -180,7 +180,7 @@
         "got": "14.4.2",
         "husky": "9.1.4",
         "js-beautify": "1.15.1",
-        "lint-staged": "15.2.8",
+        "lint-staged": "15.2.9",
         "mockdate": "3.0.5",
         "msw": "2.3.5",
         "prettier": "3.3.3",
