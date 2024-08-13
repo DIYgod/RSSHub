@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import { load } from 'cheerio';
 import { ofetch } from 'ofetch';
 
@@ -37,7 +37,7 @@ async function handler() {
     };
 }
 
-async function fetchPage(pageNumger: number, items: any[] = []): Promise<any[]> {
+async function fetchPage(pageNumger, items: DataItem[] = []) {
     const baseUrl = 'https://www.devolverdigital.com/blog?page=' + pageNumger;
     const response = await ofetch(baseUrl);
     const $ = load(response, { scriptingEnabled: false });
@@ -52,13 +52,12 @@ async function fetchPage(pageNumger: number, items: any[] = []): Promise<any[]> 
     $titleDivs.each((index, titleDiv) => {
         const content = $contentDivs[index];
 
-        const $postAuthorElement = $(titleDiv).find('div.font-xs.leading-none.mb-1');
-        const postAuthor: string = $postAuthorElement.text().replace('By ', '') || 'Devolver Digital';
-        const postDate = parseDate($(titleDiv).find('div.font-2xs.leading-none.mb-1').text());
+        const postAuthor = parsePostAuthor($, titleDiv);
+        const postDate = parsePostDate($, titleDiv);
         const postTitle = $(titleDiv).find('h1').text();
         const postLink = $(content).find('div.ml-auto.flex.items-center a').attr('href');
         // Modify the src attribute of the image
-        parseImages($, content);
+        parsePostImages($, content);
         const postContent = $.html($(content).find('div.cms-content'));
         items.push({
             title: postTitle,
@@ -79,18 +78,18 @@ async function fetchPage(pageNumger: number, items: any[] = []): Promise<any[]> 
     return items;
 }
 
-function parseDate(dateStr) {
-    const cleanedDateStr = dateStr.replace(/(\d+)(st|nd|rd|th)/, '$1');
-    const parsedDate = new Date(cleanedDateStr);
-
-    if (Number.isNaN(parsedDate)) {
-        return new Date();
-    }
-
-    return parsedDate;
+function parsePostAuthor($, titleDiv) {
+    const $postAuthorElement = $(titleDiv).find('div.font-xs.leading-none.mb-1');
+    return $postAuthorElement.text().replace('By ', '') || 'Devolver Digital';
 }
 
-function parseImages($, content) {
+function parsePostDate($, titleDiv) {
+    const dateStr = $(titleDiv).find('div.font-2xs.leading-none.mb-1').text();
+    const cleanedDateStr = dateStr.replace(/(\d+)(st|nd|rd|th)/, '$1');
+    return new Date(cleanedDateStr);
+}
+
+function parsePostImages($, content) {
     $(content)
         .find('img')
         .each((index, img) => {
