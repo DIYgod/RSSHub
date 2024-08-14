@@ -90,7 +90,7 @@ async function handler(ctx) {
         item: resolvedItems.map((item) => ({
             title: item.object.content,
             description: `${item.object.content}\n${item.object.attachment?.map((attachment) => `<img src="${attachment.url}" width="${attachment.width}" height="${attachment.height}" />`).join('\n') || ''}`,
-            link: item.url,
+            link: item.object.url,
             pubDate: parseDate(item.published),
             guid: item.id,
         })),
