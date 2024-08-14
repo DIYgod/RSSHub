@@ -67,13 +67,13 @@ async function handler(ctx) {
             if (title) {
                 res = Object.assign(res, { title });
             }
-            if (pubDate && pubDate.toString() !== 'Invalid Date') {
+            if (pubDate.toString() !== 'Invalid Date') {
                 res = Object.assign(res, { pubDate });
             }
             if (language) {
                 res = Object.assign(res, { language });
             }
-            if (lastmod && lastmod.toString() !== 'Invalid Date') {
+            if (lastmod.toString() !== 'Invalid Date') {
                 res = Object.assign(res, { lastmod });
             }
             return res;
