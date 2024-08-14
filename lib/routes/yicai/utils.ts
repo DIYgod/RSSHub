@@ -47,12 +47,15 @@ function fetchFullArticles(items, tryGet) {
 
             const content = load(detailResponse.data);
 
-            item.pubDate = item.pubDate ?? timezone(parseDate(content('em.f-fl').text()), +8);
+            const dataScript = content("script[src='/js/alert.min.js']").next().text();
+            const pb = new Map(JSON.parse(dataScript.match(/_pb = (\[.*?]);/)[1].replaceAll("'", '"')));
+
+            item.pubDate = item.pubDate ?? parseDate([...pb.get('actime'), ':00']);
 
             content('h1').remove();
             content('.u-btn6, .m-smallshare, .topic-hot').remove();
 
-            item.description += content('.multiText, #multi-text, .txt').html() ?? '';
+            item.description = (item.description ?? '') + (content('.multiText, #multi-text, .txt').html() ?? '');
 
             return item;
         })
