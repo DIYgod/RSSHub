@@ -37,10 +37,11 @@ async function handler() {
     };
 }
 
-async function fetchPage(pageNumger, items: DataItem[] = []) {
+async function fetchPage(pageNumger) {
     const baseUrl = 'https://www.devolverdigital.com/blog?page=' + pageNumger;
     const response = await ofetch(baseUrl);
     const $ = load(response, { scriptingEnabled: false });
+    const items: DataItem[] = [];
 
     // Extract all posts of this page
     const $titleDivs = $('div.w-full.flex.justify-center.py-4.bg-red-400.undefined');
@@ -67,13 +68,6 @@ async function fetchPage(pageNumger, items: DataItem[] = []) {
             description: postContent,
         });
     });
-
-    // Checks if the next page exists.
-    const $nextPage = $('span.flex.items-center:not(.opacity-50)');
-    const hasNextPage = $nextPage.length === 1 && $nextPage.text().includes('Older');
-    if (hasNextPage) {
-        return fetchPage(pageNumger + 1, items);
-    }
 
     return items;
 }
