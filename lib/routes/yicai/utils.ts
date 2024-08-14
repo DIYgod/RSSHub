@@ -47,10 +47,11 @@ function fetchFullArticles(items, tryGet) {
 
             const content = load(detailResponse.data);
 
-            const dataScript = content("script[src='/js/alert.min.js']").next().text();
-            const pb = new Map(JSON.parse(dataScript.match(/_pb = (\[.*?]);/)[1].replaceAll("'", '"')));
-
-            item.pubDate = item.pubDate ?? parseDate([...pb.get('actime'), ':00']);
+            if (!item.pubDate) {
+                const dataScript = content("script[src='/js/alert.min.js']").next().text() || content('title').next().text();
+                const pb = new Map(JSON.parse(dataScript.match(/_pb = (\[.*?]);/)[1].replaceAll("'", '"')));
+                item.pubDate = parseDate([...pb.get('actime'), ':00']);
+            }
 
             content('h1').remove();
             content('.u-btn6, .m-smallshare, .topic-hot').remove();
