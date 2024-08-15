@@ -18,11 +18,8 @@ export const route: Route = {
     handler,
 };
 
-export const baseUrl = 'https://www.infzm.com/contents';
-
 async function handler(ctx): Promise<Data> {
-    const id = ctx.req.param('id');
-    const link = `${baseUrl}?term_id=${id}`;
+    const link = 'https://www.infzm.com/';
     const { data } = await got<ContentsResponse>({
         method: 'get',
         url: `https://www.infzm.com/hot_contents`,
