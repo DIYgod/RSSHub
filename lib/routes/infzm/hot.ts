@@ -18,7 +18,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx): Promise<Data> {
+async function handler(): Promise<Data> {
     const link = 'https://www.infzm.com/';
     const { data } = await got<ContentsResponse>({
         method: 'get',
