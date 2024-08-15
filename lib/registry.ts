@@ -100,6 +100,7 @@ for (const namespace in namespaces) {
 }
 
 app.get('/', index);
+app.get('/healthz', (ctx) => ctx.text('ok'));
 app.get('/robots.txt', robotstxt);
 if (config.debugInfo) {
     // Only enable tracing in debug mode
