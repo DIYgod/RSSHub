@@ -68953,6 +68953,35 @@
         "url": "yicai.com/brief",
         "location": "brief.ts"
       },
+      "/carousel": {
+        "path": "/carousel",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/yicai/carousel",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "yicai.com/"
+            ]
+          }
+        ],
+        "name": "轮播",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "url": "yicai.com/",
+        "location": "carousel.ts"
+      },
       "/dt/:column?/:category?": {
         "path": "/dt/:column?/:category?",
         "categories": [

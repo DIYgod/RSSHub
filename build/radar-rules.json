@@ -19053,6 +19053,14 @@
         "target": "/yicai/brief"
       },
       {
+        "title": "轮播",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/yicai/carousel"
+      },
+      {
         "title": "关注",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
