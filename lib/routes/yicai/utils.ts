@@ -50,7 +50,7 @@ function fetchFullArticles(items, tryGet) {
             if (!item.pubDate) {
                 const dataScript = content("script[src='/js/alert.min.js']").next().text() || content('title').next().text();
                 const pb = new Map(JSON.parse(dataScript.match(/_pb = (\[.*?]);/)[1].replaceAll("'", '"')));
-                item.pubDate = parseDate([...pb.get('actime'), ':00']);
+                item.pubDate = parseDate(`${pb.get('actime')}:00`);
             }
 
             content('h1').remove();
