@@ -5,7 +5,7 @@ import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
 import { baseUrl } from '.';
 
-export async function fetchArticles(data: any) {
+export async function fetchArticles(data) {
     return await Promise.all(
         data.map(({ id, subject, author, publish_time }) => {
             const link = `${baseUrl}/${id}`;
