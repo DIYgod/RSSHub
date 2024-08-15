@@ -27,7 +27,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const items = await fetchPage(1);
+    const items = await fetchPage();
 
     return {
         title: 'DevolverDigital Blog',
@@ -37,22 +37,16 @@ async function handler() {
     };
 }
 
-async function fetchPage(pageNumger) {
-    const baseUrl = 'https://www.devolverdigital.com/blog?page=' + pageNumger;
+async function fetchPage() {
+    const baseUrl = 'https://www.devolverdigital.com/blog';
     const response = await ofetch(baseUrl);
     const $ = load(response, { scriptingEnabled: false });
-    const items: DataItem[] = [];
 
     // Extract all posts of this page
     const $titleDivs = $('div.w-full.flex.justify-center.py-4.bg-red-400.undefined');
     const $contentDivs = $('div.bg-gray-800.flex.justify-center.font-sm.py-4');
-    if ($titleDivs.length === 0 && $contentDivs.length === 0) {
-        return items;
-    }
-
-    $titleDivs.each((index, titleDiv) => {
+    const items: DataItem[] = $titleDivs.toArray().map((titleDiv, index) => {
         const content = $contentDivs[index];
-
         const postAuthor = parsePostAuthor($, titleDiv);
         const postDate = parsePostDate($, titleDiv);
         const postTitle = $(titleDiv).find('h1').text();
@@ -60,13 +54,13 @@ async function fetchPage(pageNumger) {
         // Modify the src attribute of the image
         parsePostImages($, content);
         const postContent = $.html($(content).find('div.cms-content'));
-        items.push({
+        return {
             title: postTitle,
             link: postLink,
             author: postAuthor,
             pubDate: postDate,
             description: postContent,
-        });
+        };
     });
 
     return items;
