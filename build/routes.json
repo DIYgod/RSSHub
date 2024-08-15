@@ -16399,7 +16399,7 @@
       "/blog": {
         "path": "/blog",
         "categories": [
-          "blog"
+          "game"
         ],
         "example": "/devolverdigital/blog",
         "parameters": {},

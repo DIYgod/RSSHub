@@ -1995,7 +1995,7 @@
         target:"/deltaio/blog" } ] },
   "devolverdigital.com":{ _name:"DevolverDigital",
     ".":[ { title:"Official Blogs",
-        docs:"https://docs.rsshub.app/routes/blog",
+        docs:"https://docs.rsshub.app/routes/game",
         source:[ "/blog" ],
         target:"/devolverdigital/blog" } ] },
   "dhu.edu.cn":{ _name:"东华大学",
