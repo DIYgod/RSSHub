@@ -1,6 +1,6 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Geopolitical Intelligence Services',
+    name: 'gisreportsonline',
     url: 'www.gisreportsonline.com',
 };
