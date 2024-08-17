@@ -21,11 +21,11 @@ const departmentMap = {
     innovate: '/cxcy.htm',
     library: '/tsgtz.htm',
     security: '/bwctz.htm',
-    industry: '/cxytz.htm',
-}
+    industry: '/cxytz.htm'
+};
 const titleMap = {
     notify: '学校通知',
-    department: '部门通知',
+    department: '部门通知'
 };
 const suffixMap = {
     educational: '教务通知',
@@ -38,7 +38,7 @@ const suffixMap = {
     innovate: '创新通知',
     library: '图书馆通知',
     security: '保卫处通知',
-    industry: '产学研通知',
+    industry: '产学研通知'
 };
 
 export const route: Route = {
@@ -71,12 +71,10 @@ async function handler(ctx){
     const type = ctx.req.param('type') ?? 'notify';
     const departmentChoose = type === 'department' ? ctx.req.param('department') ?? '' : '';
     const link = departmentChoose === '' ? host+typeMap[type] : host+typeMap['departmentChoose']+departmentMap[departmentChoose];
-
     const title = '重庆理工' + departmentChoose === '' ? titleMap[type] : suffixMap[departmentChoose];
     const response = await got.get(link);
     const $ = load(response.data);
     const list = $('div[class="sub_list075 ul-inline"] ul').find('li');
-
     const items = await Promise.all(
         list.map(async (i, item) => {
             const pageUrl = host + $(item).find('a').attr('href');
@@ -97,6 +95,6 @@ async function handler(ctx){
     return {
         title,
         link,
-        item: items,
+        item: items
     };
 }
