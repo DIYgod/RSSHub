@@ -7,21 +7,21 @@ const host = 'https://www.cqut.edu.cn';
 const typeMap = {
     notify: '/tzgg/xxtz1.htm',
     department: '/tzgg/bmtz.htm',
-    departmentChoose: '/tzgg/bmtz/'
+    departmentChoose: '/tzgg/bmtz'
 };
 const departmentMap = {
     educational: '/jwtz.htm',
     scientific: '/kytz.htm',
-    graduate: 'yjsytz.htm',
+    graduate: '/yjsytz.htm',
     student: '/xsgztz.htm',
-    informatization: 'xxhtz.htm',
-    employement: 'zzjytz.htm',
-    logisstics: 'jjhqtz.htm',
+    informatization: '/xxhtz.htm',
+    employement: '/zzjytz.htm',
+    logisstics: '/jjhqtz.htm',
     // 创新创业通知页面为 "cxcy.htm" 而不是 "cxcytz.htm"
-    innovate: 'cxcy.htm',
-    library: 'tsgtz.htm',
-    security: 'bwctz.htm',
-    industry: 'cxytz.htm',
+    innovate: '/cxcy.htm',
+    library: '/tsgtz.htm',
+    security: '/bwctz.htm',
+    industry: '/cxytz.htm',
 }
 const titleMap = {
     notify: '学校通知',
@@ -72,7 +72,7 @@ async function handler(ctx){
     const departmentChoose = type === 'department' ? ctx.req.param('department') ?? '' : '';
     const link = departmentChoose === '' ? host+typeMap[type] : host+typeMap['departmentChoose']+departmentMap[departmentChoose];
 
-    const title = '重庆理工' + departmentChoose === '' ? titleMap[type] : departmentMap[departmentChoose];
+    const title = '重庆理工' + departmentChoose === '' ? titleMap[type] : suffixMap[departmentChoose];
     const response = await got.get(link);
     const $ = load(response.data);
     const list = $('div[class="sub_list075 ul-inline"] ul').find('li');
