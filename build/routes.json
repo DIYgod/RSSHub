@@ -32137,6 +32137,28 @@
   "infzm": {
     "name": "infzm",
     "routes": {
+      "/hot": {
+        "path": "/hot",
+        "parameters": {},
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/infzm/hot",
+        "radar": [
+          {
+            "source": [
+              "infzm.com/"
+            ]
+          }
+        ],
+        "name": "热门文章",
+        "maintainers": [
+          "KarasuShin",
+          "ranpox",
+          "xyqfer"
+        ],
+        "location": "hot.ts"
+      },
       "/:id": {
         "path": "/:id",
         "parameters": {

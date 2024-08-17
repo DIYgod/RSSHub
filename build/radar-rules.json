@@ -8930,6 +8930,14 @@
     "_name": "infzm",
     ".": [
       {
+        "title": "热门文章",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/infzm/hot"
+      },
+      {
         "title": "频道",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
