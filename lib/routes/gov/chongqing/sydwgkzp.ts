@@ -35,7 +35,7 @@ async function handler(ctx: Context): Promise<Data> {
     const $ = load(response);
 
     // 获取所有的标题
-    const list = $('div[class="p-rt rt"] .tab-item > li')
+    const list = $('ul[class="rsj-list1"] > li')
         .toArray()
         .map((item) => {
             item = $(item);
