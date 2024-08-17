@@ -53,6 +53,27 @@ const summarizeArticle = async (articleText: string) => {
     return response.choices[0].message.content;
 };
 
+const translateTitle = async (titleText: string) => {
+    const apiUrl = `${config.openaiTitle.endpoint}/chat/completions`;
+    const response = await ofetch(apiUrl, {
+        method: 'POST',
+        body: {
+            model: config.openaiTitle.model,
+            max_tokens: config.openaiTitle.maxTokens,
+            messages: [
+                { role: 'system', content: config.openaiTitle.prompt },
+                { role: 'user', content: titleText },
+            ],
+            temperature: config.openaiTitle.temperature,
+        },
+        headers: {
+            Authorization: `Bearer ${config.openaiTitle.apiKey}`,
+        },
+    });
+
+    return response.choices[0].message.content;
+};
+
 const getAuthorString = (item) => {
     let author = '';
     if (item.author) {
@@ -343,6 +364,30 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                             }
                         } catch {
                             // when openai failed, return default description and not write cache
+                        }
+                    }
+                    return item;
+                })
+            );
+        }
+
+        // openai title
+        if (ctx.req.query('chatgptTitle') && config.openaiTitle.apiKey) {
+            data.item = await Promise.all(
+                data.item.map(async (item) => {
+                    if (item.title) {
+                        try {
+                            const translated_title = await cache.tryGet(`openaiTitle:${item.link}`, async () => {
+                                const title = convert(item.title!);
+                                const translated_title = await translateTitle(title);
+                                return translated_title;
+                            });
+                            // replace title
+                            if (translated_title !== '') {
+                                item.title = translated_title + '';
+                            }
+                        } catch {
+                            // when failed, return default title and not write cache
                         }
                     }
                     return item;

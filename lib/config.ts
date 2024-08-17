@@ -72,6 +72,14 @@ export type Config = {
         endpoint: string;
         prompt?: string;
     };
+    openaiTitle: {
+        apiKey?: string;
+        model?: string;
+        temperature?: number;
+        maxTokens?: number;
+        endpoint: string;
+        prompt?: string;
+    };
     bilibili: {
         cookies: Record<string, string | undefined>;
         dmImgList?: string;
@@ -437,6 +445,14 @@ const calculateValue = () => {
             maxTokens: toInt(envs.OPENAI_MAX_TOKENS, 0) || undefined,
             endpoint: envs.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
             prompt: envs.OPENAI_PROMPT || 'Please summarize the following article and reply with markdown format.',
+        },
+        openaiTitle: {
+            apiKey: envs.OPENAI_TITLE_API_KEY,
+            model: envs.OPENAI_TITLE_MODEL || 'gpt-3.5-turbo-16k',
+            temperature: toInt(envs.OPENAI_TITLE_TEMPERATURE, 0.2),
+            maxTokens: toInt(envs.OPENAI_TITLE_MAX_TOKENS, 0) || undefined,
+            endpoint: envs.OPENAI_TITLE_API_ENDPOINT || 'https://api.openai.com/v1',
+            prompt: envs.OPENAI_TITLE_PROMPT || 'Please translate the following title into Simplified Chinese and output only translated text.',
         },
 
         // Route-specific Configurations
