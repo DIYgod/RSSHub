@@ -427,6 +427,12 @@
     "mjysci",
     "TonyRL"
   ],
+  "/apnews/sitemap/:route": [
+    "zoenglinghou",
+    "mjysci",
+    "TonyRL",
+    "dzx-dzx"
+  ],
   "/apnews/topics/:topic?": [
     "zoenglinghou",
     "mjysci",

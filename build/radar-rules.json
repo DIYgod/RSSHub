@@ -1279,6 +1279,14 @@
         "target": "/apnews/rss/:rss"
       },
       {
+        "title": "Sitemap",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/apnews/sitemap/:route"
+      },
+      {
         "title": "Topics",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [

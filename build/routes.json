@@ -4470,6 +4470,42 @@
         ],
         "location": "rss.ts"
       },
+      "/sitemap/:route": {
+        "path": "/sitemap/:route",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/apnews/sitemap/ap-sitemap-latest",
+        "view": 0,
+        "parameters": {
+          "route": {
+            "description": "Route for sitemap, excluding the `.xml` extension"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "apnews.com/"
+            ]
+          }
+        ],
+        "name": "Sitemap",
+        "maintainers": [
+          "zoenglinghou",
+          "mjysci",
+          "TonyRL",
+          "dzx-dzx"
+        ],
+        "location": "sitemap.ts"
+      },
       "/topics/:topic?": {
         "path": "/topics/:topic?",
         "categories": [
