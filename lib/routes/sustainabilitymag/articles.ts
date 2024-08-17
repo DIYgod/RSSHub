@@ -42,7 +42,7 @@ const render = (widgets) =>
                 case 'text':
                     return w.html;
                 case 'blockquote':
-                    return w.html;
+                    return `<blockquote>${w.html}</blockquote>`;
                 case 'keyFacts':
                     return `<div><ul>${w.keyFacts.map((k) => `<li>${k.text}</li>`).join('')}</ul></div>`;
                 case 'inlineVideo':
