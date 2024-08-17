@@ -6620,8 +6620,12 @@
   "/xiaohongshu/board/:board_id": [
     "lotosbin"
   ],
-  "/xiaohongshu/user/:user_id/notes/fulltext": [],
-  "/xiaohongshu/user/:user_id/:category": [],
+  "/xiaohongshu/user/:user_id/notes/fulltext": [
+    "howerhe"
+  ],
+  "/xiaohongshu/user/:user_id/:category": [
+    "lotosbin"
+  ],
   "/xiaomiyoupin/crowdfunding": [
     "bigfei"
   ],

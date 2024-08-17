@@ -8152,7 +8152,7 @@
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/board/:board_id" ],
         target:"/xiaohongshu/board/:board_id" },
-      { title:"Unknown",
+      { title:"用户笔记 全文",
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/user/profile/:user_id" ],
         target:"/xiaohongshu/user/:user_id/notes" } ] },
