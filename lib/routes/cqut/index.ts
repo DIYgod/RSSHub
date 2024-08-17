@@ -70,7 +70,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'notify';
     const department = type === 'department' ? ctx.req.param('department') ?? '' : '';
-    const link = department === '' ? host+typeMap[type] : host + typeMap['choice'] + departmentMap[department];
+    const link = department === '' ? host + typeMap[type] : host + typeMap.choice + departmentMap[department];
     const title = '重庆理工' + department === '' ? titleMap[type] : suffixMap[department];
     const response = await got.get(link);
     const $ = load(response.data);
@@ -78,7 +78,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map(async (i, item) => {
             const pageUrl = host + $(item).find('a').attr('href');
-            const { desc } = await cache.tryGet(pageUrl, async()=> {
+            const { desc } = await cache.tryGet(pageUrl, async() => {
                 const page = await got.get(pageUrl);
                 const $ = load(page.data);
                 return {                
