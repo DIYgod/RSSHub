@@ -7,10 +7,10 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:path{.*}',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/gis/c/security-challenges/',
     parameters: { path: '包含"Reports"页面下的路径' },
-    name: '',
+    name: '报告',
     maintainers: ['dzx-dzx'],
     radar: [
         {
