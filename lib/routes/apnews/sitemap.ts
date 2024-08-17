@@ -30,8 +30,8 @@ export const route: Route = {
             source: ['apnews.com/'],
         },
     ],
-    name: 'News',
-    maintainers: ['zoenglinghou', 'mjysci', 'TonyRL'],
+    name: 'Sitemap',
+    maintainers: ['zoenglinghou', 'mjysci', 'TonyRL', 'dzx-dzx'],
     handler,
 };
 
