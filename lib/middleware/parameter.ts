@@ -32,7 +32,7 @@ const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl
     }
 };
 
-const summarizeArticle = async (articleText: string) => {
+const getAiCompletion = async (prompt: string, text: string) => {
     const apiUrl = `${config.openai.endpoint}/chat/completions`;
     const response = await ofetch(apiUrl, {
         method: 'POST',
@@ -40,34 +40,13 @@ const summarizeArticle = async (articleText: string) => {
             model: config.openai.model,
             max_tokens: config.openai.maxTokens,
             messages: [
-                { role: 'system', content: config.openai.prompt },
-                { role: 'user', content: articleText },
+                { role: 'system', content: prompt },
+                { role: 'user', content: text },
             ],
             temperature: config.openai.temperature,
         },
         headers: {
             Authorization: `Bearer ${config.openai.apiKey}`,
-        },
-    });
-
-    return response.choices[0].message.content;
-};
-
-const translateTitle = async (titleText: string) => {
-    const apiUrl = `${config.openaiTitle.endpoint}/chat/completions`;
-    const response = await ofetch(apiUrl, {
-        method: 'POST',
-        body: {
-            model: config.openaiTitle.model,
-            max_tokens: config.openaiTitle.maxTokens,
-            messages: [
-                { role: 'system', content: config.openaiTitle.prompt },
-                { role: 'user', content: titleText },
-            ],
-            temperature: config.openaiTitle.temperature,
-        },
-        headers: {
-            Authorization: `Bearer ${config.openaiTitle.apiKey}`,
         },
     });
 
@@ -348,47 +327,53 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         if (ctx.req.query('chatgpt') && config.openai.apiKey) {
             data.item = await Promise.all(
                 data.item.map(async (item) => {
-                    if (item.description) {
-                        try {
-                            const summary = await cache.tryGet(`openai:${item.link}`, async () => {
-                                const text = convert(item.description!);
-                                if (text.length < 300) {
-                                    return '';
-                                }
-                                const summary_md = await summarizeArticle(text);
-                                return md.render(summary_md);
+                    try {
+                        // handle description
+                        if (config.openai.inputOption === 'description' && item.description) {
+                            const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
+                                const description = convert(item.description!);
+                                const description_md = await getAiCompletion(config.openai.promptDescription, description);
+                                return md.render(description_md);
                             });
-                            // 将总结结果添加到文章数据中
-                            if (summary !== '') {
-                                item.description = summary + '<hr/><br/>' + item.description;
+                            // add it to the description
+                            if (description !== '') {
+                                item.description = description + '<hr/><br/>' + item.description;
                             }
-                        } catch {
-                            // when openai failed, return default description and not write cache
                         }
-                    }
-                    return item;
-                })
-            );
-        }
-
-        // openai title
-        if (ctx.req.query('chatgptTitle') && config.openaiTitle.apiKey) {
-            data.item = await Promise.all(
-                data.item.map(async (item) => {
-                    if (item.title) {
-                        try {
-                            const translated_title = await cache.tryGet(`openaiTitle:${item.link}`, async () => {
+                        // handle title
+                        else if (config.openai.inputOption === 'title' && item.title) {
+                            const title = await cache.tryGet(`openai:title:${item.link}`, async () => {
                                 const title = convert(item.title!);
-                                const translated_title = await translateTitle(title);
-                                return translated_title;
+                                return await getAiCompletion(config.openai.promptTitle, title);
                             });
-                            // replace title
-                            if (translated_title !== '') {
-                                item.title = translated_title + '';
+                            // replace the title
+                            if (title !== '') {
+                                item.title = title + '';
                             }
-                        } catch {
-                            // when failed, return default title and not write cache
                         }
+                        // handle both
+                        else if (config.openai.inputOption === 'both' && item.title && item.description) {
+                            const title = await cache.tryGet(`openai:title:${item.link}`, async () => {
+                                const title = convert(item.title!);
+                                return await getAiCompletion(config.openai.promptTitle, title);
+                            });
+                            // replace the title
+                            if (title !== '') {
+                                item.title = title + '';
+                            }
+
+                            const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
+                                const description = convert(item.description!);
+                                const description_md = await getAiCompletion(config.openai.promptDescription, description);
+                                return md.render(description_md);
+                            });
+                            // add it to the description
+                            if (description !== '') {
+                                item.description = description + '<hr/><br/>' + item.description;
+                            }
+                        }
+                    } catch {
+                        // when openai failed, return default content and not write cache
                     }
                     return item;
                 })
