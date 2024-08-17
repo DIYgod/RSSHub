@@ -57,7 +57,7 @@ async function handler(ctx: Context): Promise<Data> {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 // 主题正文
-                item.description = $('div[class="trs_editor_view TRS_UEDITOR trs_paper_default trs_web"]').first().html();
+                item.description = $('.trs_editor_view').first().html();
                 return item;
             })
         )
