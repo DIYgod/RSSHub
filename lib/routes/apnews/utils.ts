@@ -17,12 +17,13 @@ export function fetchArticle(item) {
         const rawLdjson = JSON.parse($('#link-ld-json').text());
         let ldjson;
         if (rawLdjson['@type'] === 'NewsArticle' || (Array.isArray(rawLdjson) && rawLdjson.some((e) => e['@type'] === 'NewsArticle'))) {
-            // Regular
+            // Regular(Articles, Videos)
             ldjson = Array.isArray(rawLdjson) ? rawLdjson.find((e) => e['@type'] === 'NewsArticle') : rawLdjson;
 
             $('div.Enhancement').remove();
             const section = $("meta[property='article:section']").attr('content');
             return {
+                title: ldjson.headline,
                 pubDate: parseDate(ldjson.datePublished),
                 updated: parseDate(ldjson.dateModified),
                 description: $('div.RichTextStoryBody').html() || $(':is(.VideoLead, .VideoPage-pageSubHeading)').html(),
