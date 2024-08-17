@@ -69,9 +69,9 @@ export const route: Route = {
 
 async function handler(ctx){
     const type = ctx.req.param('type') ?? 'notify';
-    const departmentChoose = type === 'department' ? ctx.req.param('department') ?? '' : '';
-    const link = departmentChoose === '' ? host+typeMap[type] : host+typeMap['departmentChoose']+departmentMap[departmentChoose];
-    const title = '重庆理工' + departmentChoose === '' ? titleMap[type] : suffixMap[departmentChoose];
+    const department = type === 'department' ? ctx.req.param('department') ?? '' : '';
+    const link = department === '' ? host+typeMap[type] : host+typeMap['departmentChoose']+departmentMap[department];
+    const title = '重庆理工' + department === '' ? titleMap[type] : suffixMap[department];
     const response = await got.get(link);
     const $ = load(response.data);
     const list = $('div[class="sub_list075 ul-inline"] ul').find('li');
@@ -88,7 +88,7 @@ async function handler(ctx){
             return {
                 title: $(item).find('.title').text(),
                 link: pageUrl,
-                description: desc,
+                description: desc
             };
         })
     );
