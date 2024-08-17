@@ -332,8 +332,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         if (config.openai.inputOption === 'description' && item.description) {
                             const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
                                 const description = convert(item.description!);
-                                const description_md = await getAiCompletion(config.openai.promptDescription, description);
-                                return md.render(description_md);
+                                const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
+                                return md.render(descriptionMd);
                             });
                             // add it to the description
                             if (description !== '') {
@@ -364,8 +364,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                             const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
                                 const description = convert(item.description!);
-                                const description_md = await getAiCompletion(config.openai.promptDescription, description);
-                                return md.render(description_md);
+                                const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
+                                return md.render(descriptionMd);
                             });
                             // add it to the description
                             if (description !== '') {
