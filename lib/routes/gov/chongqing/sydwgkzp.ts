@@ -30,7 +30,7 @@ async function handler(ctx: Context): Promise<Data> {
     // 替换 url
     const sydwgkzpUrl = `https://rlsbj.cq.gov.cn/zwxx_182/sydw/sydwgkzp${year}/`;
 
-    const { data: response }: { data: any } = await got(sydwgkzpUrl);
+    const { data: response } = await got(sydwgkzpUrl);
 
     const $ = load(response);
 
@@ -54,7 +54,7 @@ async function handler(ctx: Context): Promise<Data> {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response }: { data: any } = await got(item.link);
+                const { data: response } = await got(item.link);
                 const $ = load(response);
                 // 主题正文
                 item.description = $('div[class="trs_editor_view TRS_UEDITOR trs_paper_default trs_web"]').first().html();
