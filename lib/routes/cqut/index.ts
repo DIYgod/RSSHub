@@ -7,7 +7,7 @@ const host = 'https://www.cqut.edu.cn';
 const typeMap = {
     notify: '/tzgg/xxtz1.htm',
     department: '/tzgg/bmtz.htm',
-    departmentChoose: '/tzgg/bmtz'
+    choice: '/tzgg/bmtz'
 };
 const departmentMap = {
     educational: '/jwtz.htm',
@@ -67,10 +67,10 @@ export const route: Route = {
   | educational | scientific | graduate | student | informatization | employement | logisstics | innovate | library | security | industry |`,
 };
 
-async function handler(ctx){
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'notify';
     const department = type === 'department' ? ctx.req.param('department') ?? '' : '';
-    const link = department === '' ? host+typeMap[type] : host+typeMap['departmentChoose']+departmentMap[department];
+    const link = department === '' ? host+typeMap[type] : host + typeMap['choice'] + departmentMap[department];
     const title = '重庆理工' + department === '' ? titleMap[type] : suffixMap[department];
     const response = await got.get(link);
     const $ = load(response.data);
@@ -78,7 +78,7 @@ async function handler(ctx){
     const items = await Promise.all(
         list.map(async (i, item) => {
             const pageUrl = host + $(item).find('a').attr('href');
-            const { desc } = await cache.tryGet(pageUrl, async () => {
+            const { desc } = await cache.tryGet(pageUrl, async()=> {
                 const page = await got.get(pageUrl);
                 const $ = load(page.data);
                 return {                
