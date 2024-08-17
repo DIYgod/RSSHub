@@ -9,6 +9,10 @@ export const route: Route = {
     maintainers: ['lotosbin'],
     handler,
     example: '/xiaohongshu/user/593032945e87e77791e03696/notes',
+    features: {
+        antiCrawler: true,
+        requirePuppeteer: true,
+    },
     parameters: {
         user_id: 'user id, length 24 characters',
         category: {
