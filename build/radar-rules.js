@@ -1368,7 +1368,7 @@
         docs:"https://docs.rsshub.app/routes/traditional-media",
         source:[ "/lm/xwlb",
           "/" ],
-        target:"/cctv/xwlb" } ],
+        target:"/cctv/:site/:category/:name" } ],
     navi:[ { title:"栏目",
         docs:"https://docs.rsshub.app/routes/multimedia",
         source:[ "/" ],

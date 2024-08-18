@@ -3144,7 +3144,7 @@
           "/lm/xwlb",
           "/"
         ],
-        "target": "/cctv/xwlb"
+        "target": "/cctv/:site/:category/:name"
       }
     ],
     "navi": [
