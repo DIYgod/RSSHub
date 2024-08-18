@@ -11,10 +11,13 @@ export const route: Route = {
             source: ['hottoys.com.hk/'],
         },
     ],
-    name: 'hottoys',
-    maintainers: ['@lin'],
+    name: 'Toys List',
+    maintainers: ['jw0903'],
     handler,
     url: 'hottoys.com.hk/',
+    features: {
+        requirePuppeteer: true,
+    },
 };
 
 async function handler() {
