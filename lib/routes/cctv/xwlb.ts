@@ -12,7 +12,19 @@ export const route: Route = {
     path: '/:site/:category/:name',
     categories: ['traditional-media'],
     example: '/cctv/tv/lm/xwlb',
-    parameters: {},
+    parameters: {
+        site: "站点, 可选值如'tv', 既'央视节目'",
+        category: "分类名, 官网对应分类, 当前可选值'lm', 既'栏目大全'",
+        name: {
+            "description":"栏目名称, 可在对应栏目页面 URL 中找到, 可选值如'xwlb',既'新闻联播'",
+            "options": [
+                {
+                    "value": "xwlb",
+                    "label": "新闻联播"
+                }
+            ]
+        }
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
