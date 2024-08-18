@@ -56,10 +56,11 @@ export const processImage = (content: string) => {
     return $.html();
 };
 
-export const getZc0Cookie = () => config.zhihu.cookies
+export const getCookie = (key: string) =>
+    config.zhihu.cookies
         ?.split(';')
         .map((e) => e.trim())
-        .find((e) => e.includes('z_c0'))
+        .find((e) => e.startsWith(key + '='))
         ?.slice('z_c0='.length);
 
 export const getSignedHeader = async (url: string, apiPath: string) => {
@@ -101,7 +102,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
     const f = `${xzse93}+${apiPath}+${dc0}`;
     const xzse96 = '2.0_' + g_encrypt(md5(f));
 
-    const zc0 = getZc0Cookie();
+    const zc0 = getCookie('z_c0');
 
     return {
         cookie: `d_c0=${dc0}${zc0 ? `;z_c0=${zc0}` : ''}`,
