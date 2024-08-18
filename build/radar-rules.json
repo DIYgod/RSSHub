@@ -8058,6 +8058,19 @@
       }
     ]
   },
+  "hottoys.com.hk": {
+    "_name": "Hot Toys",
+    ".": [
+      {
+        "title": "Toys List",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/"
+        ],
+        "target": "/hottoys/"
+      }
+    ]
+  },
   "hotukdeals.com": {
     "_name": "hotukdeals",
     "www": [

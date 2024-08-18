@@ -29376,6 +29376,35 @@
     "name": "全球主机监控",
     "url": "stock.hostmonit.com"
   },
+  "hottoys": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/hottoys",
+        "radar": [
+          {
+            "source": [
+              "hottoys.com.hk/"
+            ]
+          }
+        ],
+        "name": "Toys List",
+        "maintainers": [
+          "jw0903"
+        ],
+        "url": "hottoys.com.hk/",
+        "features": {
+          "requirePuppeteer": true
+        },
+        "location": "index.ts"
+      }
+    },
+    "name": "Hot Toys",
+    "url": "www.hottoys.com.hk"
+  },
   "hotukdeals": {
     "routes": {
       "/hottest": {
