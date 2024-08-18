@@ -1,9 +1,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { header, processImage } from './utils';
+import { getZc0Cookie, header, processImage } from './utils';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/people/answers/:id',
@@ -31,11 +30,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const zc0 = config.zhihu.cookies
-        ?.split(';')
-        .map((e) => e.trim())
-        .find((e) => e.includes('z_c0'))
-        ?.slice('z_c0='.length);
+    const zc0 = getZc0Cookie();
 
     const headers = {
         'User-Agent': 'ZhihuHybrid com.zhihu.android/Futureve/6.59.0 Mozilla/5.0 (Linux; Android 10; GM1900 Build/QKQ1.190716.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/85.0.4183.127 Mobile Safari/537.36',
