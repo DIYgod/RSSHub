@@ -7,6 +7,7 @@ import { serveStatic } from '@hono/node-server/serve-static';
 import { config } from '@/config';
 
 import index from '@/routes/index';
+import healthz from '@/routes/healthz';
 import robotstxt from '@/routes/robots.txt';
 import metrics from '@/routes/metrics';
 
@@ -100,6 +101,7 @@ for (const namespace in namespaces) {
 }
 
 app.get('/', index);
+app.get('/healthz', healthz);
 app.get('/robots.txt', robotstxt);
 if (config.debugInfo) {
     // Only enable tracing in debug mode

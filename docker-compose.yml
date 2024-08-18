@@ -6,29 +6,45 @@ services:
         image: diygod/rsshub
         restart: always
         ports:
-            - '1200:1200'
+            - "1200:1200"
         environment:
             NODE_ENV: production
             CACHE_TYPE: redis
-            REDIS_URL: 'redis://redis:6379/'
-            PUPPETEER_WS_ENDPOINT: 'ws://browserless:3000'  # marked
+            REDIS_URL: "redis://redis:6379/"
+            PUPPETEER_WS_ENDPOINT: "ws://browserless:3000" # marked
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:1200/healthz"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
         depends_on:
             - redis
-            - browserless  # marked
+            - browserless # marked
 
-    browserless:  # marked
-        image: browserless/chrome  # marked
-        restart: always  # marked
-        ulimits:  # marked
-          core:  # marked
-            hard: 0  # marked
-            soft: 0  # marked
+    browserless: # marked
+        image: browserless/chrome # marked
+        restart: always # marked
+        ulimits: # marked
+            core: # marked
+                hard: 0 # marked
+                soft: 0 # marked
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:3000/pressure"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
 
     redis:
         image: redis:alpine
         restart: always
         volumes:
             - redis-data:/data
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 5s
 
 volumes:
     redis-data:

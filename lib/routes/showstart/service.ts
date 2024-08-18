@@ -173,13 +173,13 @@ async function fetchStyleList(keyword = '') {
 
 async function fetchDictionary(cityCode: string, showStyle: string) {
     const resp = await fetchParams();
-    const target = resp.result.find((item) => item.cityCode === cityCode);
+    const target = resp.result.find((item) => String(item.cityCode) === cityCode);
     if (!target) {
         return {};
     }
     return {
         cityName: target.cityName,
-        showName: target.styles.find((item) => item.key === showStyle)?.showName,
+        showName: target.styles.find((item) => String(item.key) === showStyle)?.showName,
     };
 }
 
