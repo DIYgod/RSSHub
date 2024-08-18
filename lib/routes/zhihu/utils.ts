@@ -56,12 +56,12 @@ export const processImage = (content: string) => {
     return $.html();
 };
 
-export const getCookie = (key: string) =>
+export const getCookieValueByKey = (key: string) =>
     config.zhihu.cookies
         ?.split(';')
         .map((e) => e.trim())
         .find((e) => e.startsWith(key + '='))
-        ?.slice('z_c0='.length);
+        ?.slice(key.length + 1);
 
 export const getSignedHeader = async (url: string, apiPath: string) => {
     // Because the API of zhihu.com has changed, we must use the value of `d_c0` (extracted from cookies) to calculate
@@ -102,7 +102,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
     const f = `${xzse93}+${apiPath}+${dc0}`;
     const xzse96 = '2.0_' + g_encrypt(md5(f));
 
-    const zc0 = getCookie('z_c0');
+    const zc0 = getCookieValueByKey('z_c0');
 
     return {
         cookie: `d_c0=${dc0}${zc0 ? `;z_c0=${zc0}` : ''}`,

@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { getCookie, header, processImage } from './utils';
+import { getCookieValueByKey, header, processImage } from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -30,7 +30,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const zc0 = getCookie('z_c0');
+    const zc0 = getCookieValueByKey('z_c0');
 
     const headers = {
         'User-Agent': 'ZhihuHybrid com.zhihu.android/Futureve/6.59.0 Mozilla/5.0 (Linux; Android 10; GM1900 Build/QKQ1.190716.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/85.0.4183.127 Mobile Safari/537.36',
