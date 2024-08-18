@@ -32,31 +32,21 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
-    let responseData;
 
     switch (category) {
-    case 'mzzlbg':
-        // 每周质量报告
-        responseData = await getMzzlbg();
+        case 'mzzlbg':
+            // 每周质量报告
+            return await getMzzlbg();
 
-    break;
+        case 'xinwen1j1':
+            // 新闻1+1
+            return await xinwen1j1();
 
-    case 'xinwen1j1':
-        // 新闻1+1
-        responseData = await xinwen1j1();
+        case 'xwlb':
+            return await getXWLB();
 
-    break;
-
-    case 'xwlb':
-        responseData = await getXWLB();
-
-    break;
-
-    default:
-        // 央视新闻
-        responseData = await getNews(category);
-
+        default:
+            // 央视新闻
+            return await getNews(category);
     }
-
-    return responseData;
 }
