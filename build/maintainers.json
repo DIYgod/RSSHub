@@ -3404,6 +3404,9 @@
   "/jlu/ccst/xwzx/:category": [
     "mayouxi"
   ],
+  "/joins/chinese/:category?": [
+    "nczitzk"
+  ],
   "/jornada/:date?/:category?": [
     "Thealf154"
   ],
