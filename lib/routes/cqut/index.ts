@@ -71,7 +71,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'notify';
     const department = type === 'department' ? ctx.req.param('department') ?? '' : '';
     const link = department === '' ? host + typeMap[type] : host + typeMap.choice + departmentMap[department];
-    const title = '重庆理工' + department === '' ? titleMap[type] : suffixMap[department];
+    const title = '重庆理工' + (department === '' ? titleMap[type] : suffixMap[department]);
     const response = await got.get(link);
     const $ = load(response.data);
     const list = $('div[class="sub_list075 ul-inline"] ul').find('li');
@@ -81,8 +81,8 @@ async function handler(ctx) {
             const { desc } = await cache.tryGet(pageUrl, async() => {
                 const page = await got.get(pageUrl);
                 const $ = load(page.data);
-                return {                
-                    desc: $('.Section0').html(),
+                return {
+                    desc: $('.Section0').html()
                 };
             });
             return {
