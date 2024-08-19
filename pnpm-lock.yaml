@@ -325,8 +325,8 @@ importers:
         specifier: 22.3.0
         version: 22.3.0
       '@types/sanitize-html':
-        specifier: 2.11.0
-        version: 2.11.0
+        specifier: 2.13.0
+        version: 2.13.0
       '@types/supertest':
         specifier: 6.0.2
         version: 6.0.2
@@ -1947,8 +1947,8 @@ packages:
   '@types/request@2.48.12':
     resolution: {integrity: sha512-G3sY+NpsA9jnwm0ixhAFQSJ3Q9JkpLZpJbI3GMv0mIAT0y3mRabYeINzal5WOChIiaTEGQYlHOKgkaM9EisWHw==}
 
-  '@types/sanitize-html@2.11.0':
-    resolution: {integrity: sha512-7oxPGNQHXLHE48r/r/qjn7q0hlrs3kL7oZnGj0Wf/h9tj/6ibFyRkNbsDxaBBZ4XUZ0Dx5LGCyDJ04ytSofacQ==}
+  '@types/sanitize-html@2.13.0':
+    resolution: {integrity: sha512-X31WxbvW9TjIhZZNyNBZ/p5ax4ti7qsNDBDEnH4zAgmEh35YnFD1UiS6z9Cd34kKm0LslFW0KPmTQzu/oGtsqQ==}
 
   '@types/statuses@2.0.5':
     resolution: {integrity: sha512-jmIUGWrAiwu3dZpxntxieC+1n/5c3mjrImkmOSQ2NC5uP6cYO4aAZDdSmRcI5C1oiTmqlZGHC+/NmJrKogbP5A==}
@@ -7529,7 +7529,7 @@ snapshots:
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.1
 
-  '@types/sanitize-html@2.11.0':
+  '@types/sanitize-html@2.13.0':
     dependencies:
       htmlparser2: 8.0.2
 
