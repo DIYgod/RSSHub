@@ -9,7 +9,7 @@ export const route: Route = {
     radar: [
         {
             source: ['rebase.network/geekdaily'],
-            target: '/rebase/geekdaily',
+            target: '/geekdaily',
         },
     ],
     name: 'Web3 Geek Daily',
