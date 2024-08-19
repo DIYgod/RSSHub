@@ -102,8 +102,8 @@ importers:
         specifier: 4.0.0
         version: 4.0.0
       googleapis:
-        specifier: 140.0.1
-        version: 140.0.1
+        specifier: 142.0.0
+        version: 142.0.0
       hono:
         specifier: 4.5.5
         version: 4.5.5
@@ -3406,8 +3406,8 @@ packages:
     resolution: {integrity: sha512-/fhDZEJZvOV3X5jmD+fKxMqma5q2Q9nZNSF3kn1F18tpxmA86BcTxAGBQdM0N89Z3bEaIs+HVznSmFJEAmMTjA==}
     engines: {node: '>=14.0.0'}
 
-  googleapis@140.0.1:
-    resolution: {integrity: sha512-ZGvBX4mQcFXO9ACnVNg6Aqy3KtBPB5zTuue43YVLxwn8HSv8jB7w+uDKoIPSoWuxGROgnj2kbng6acXncOQRNA==}
+  googleapis@142.0.0:
+    resolution: {integrity: sha512-LsU1ynez4/KNPwnFMSDI93pBEsETNdQPCrT3kz2qgiNg5H2pW4dKW+1VmENMkZ4u9lMxA89nnXD3nqWBJ0rruQ==}
     engines: {node: '>=14.0.0'}
 
   gopd@1.0.1:
@@ -9246,7 +9246,7 @@ snapshots:
       - encoding
       - supports-color
 
-  googleapis@140.0.1:
+  googleapis@142.0.0:
     dependencies:
       google-auth-library: 9.13.0
       googleapis-common: 7.2.0
