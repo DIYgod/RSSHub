@@ -14244,6 +14244,19 @@
       }
     ]
   },
+  "rebase.network": {
+    "_name": "Rebase Network",
+    ".": [
+      {
+        "title": "Web3 Geek Daily",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/geekdaily"
+        ],
+        "target": "/rebase/geekdaily"
+      }
+    ]
+  },
   "remnote.com": {
     "_name": "RemNote",
     ".": [

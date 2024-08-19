@@ -5046,6 +5046,9 @@
   "/readwise/list/:routeParams?": [
     "xbot"
   ],
+  "/rebase/geekdaily": [
+    "gaoyifan"
+  ],
   "/remnote/changelog": [
     "TonyRL",
     "amakerlife"

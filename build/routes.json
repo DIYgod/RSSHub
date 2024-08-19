@@ -51288,6 +51288,32 @@
     "name": "Readwise",
     "url": "readwise.io"
   },
+  "rebase": {
+    "routes": {
+      "/geekdaily": {
+        "path": "/geekdaily",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/rebase/geekdaily",
+        "radar": [
+          {
+            "source": [
+              "rebase.network/geekdaily"
+            ],
+            "target": "/geekdaily"
+          }
+        ],
+        "name": "Web3 Geek Daily",
+        "maintainers": [
+          "gaoyifan"
+        ],
+        "location": "geekdaily.ts"
+      }
+    },
+    "name": "Rebase Network",
+    "url": "rebase.network"
+  },
   "remnote": {
     "routes": {
       "/changelog": {
