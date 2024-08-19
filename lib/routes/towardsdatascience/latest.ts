@@ -24,8 +24,12 @@ async function handler() {
     const feedLang = 'en';
     const feedDescription = 'Latest articles from Towards Data Science';
 
-    const response = await ofetch(baseUrl);
-    const $ = load(response);
+    const response = await ofetch('https://medium.com/towards-data-science/latest?posts=true', {
+        headers: {
+            accept: 'application/json',
+        },
+    });
+    const data = JSON.parse(response.slice(16));
 
     const list = $('div.postArticle')
         .toArray()
