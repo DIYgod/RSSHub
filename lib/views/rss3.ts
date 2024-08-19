@@ -1,3 +1,4 @@
+import { getActivities } from '@rss3/sdk';
 import dayjs from 'dayjs';
 
 /**
@@ -49,6 +50,8 @@ const rss3 = (data) => {
     return umsResult;
 };
 
+const a = await getActivities();
+a.data[0].actions;
 // we treat the domain as the owner of the content
 function getOwnershipFieldFromURL(item) {
     try {
