@@ -2229,6 +2229,9 @@
   "/gihyo/list/group/:id": [
     "masakichi"
   ],
+  "/gisreportsonline/:path{.*}": [
+    "dzx-dzx"
+  ],
   "/gitee/commits/:owner/:repo": [
     "TonyRL"
   ],

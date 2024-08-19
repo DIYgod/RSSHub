@@ -6278,6 +6278,19 @@
       }
     ]
   },
+  "gisreportsonline.com": {
+    "_name": "GIS Reports",
+    "www": [
+      {
+        "title": "报告",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/gisreportsonline/:path{.*}"
+      }
+    ]
+  },
   "gitee.com": {
     "_name": "Gitee",
     ".": [
