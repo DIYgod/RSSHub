@@ -45,7 +45,7 @@ async function handler(ctx) {
 
                 item.description = content('header.entry-header ~ :not(#pos-conclusion ~ *)')
                     .toArray()
-                    .map((e) => content(e).html())
+                    .map((e) => content(e).prop('outerHTML'))
                     .join('');
 
                 return item;
