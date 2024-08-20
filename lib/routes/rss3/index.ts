@@ -2,11 +2,10 @@
 /* eslint-disable default-case */
 import { Route } from '@/types';
 
-import ofetch from '@/utils/ofetch';
-import type { GetRSS3DataMetadata } from './interfaces/metadata';
-import { join } from 'path';
-import type { Action } from '@rss3/sdk';
 import { camelcaseKeys } from '@/utils/camelcase-keys';
+import ofetch from '@/utils/ofetch';
+import type { Action } from '@rss3/sdk';
+import type { GetRSS3DataMetadata } from './interfaces/metadata';
 
 export const route: Route = {
     path: '/:account/:network?/:tag?',
@@ -176,8 +175,18 @@ function parseItemActionToContent(actions: Action[]): string | undefined {
             case 'social':
                 joint += renderSocialTagContent(action);
                 break;
-            case 'rss':
-                joint += renderRssTagContent(action);
+            case 'collectible':
+                joint += renderCollectibleTagContent(action);
+                break;
+            case 'metaverse':
+                joint += renderMetaverseTagContent(action);
+
+                break;
+            case 'exchange':
+                joint += renderExchange(action);
+                break;
+            case 'transaction':
+                joint += renderTransaction(action);
                 break;
         }
     }
@@ -185,12 +194,297 @@ function parseItemActionToContent(actions: Action[]): string | undefined {
     return joint;
 }
 
-const renderRssTagContent = (action: Action) => '';
-// let joint = '';
-// const { from, to, platform, type } = action;
-// const tag = 'rss';
-// switch (type) {
-// }
+const renderTransaction = (action: Action) => {
+    let joint = '';
+    const { type, platform } = action;
+    const tag = 'transaction';
+    switch (type) {
+        case 'transfer':
+        case 'burn':
+        case 'mint':
+        case 'approval': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Transaction ${type.toUpperCase().at(0) + type.slice(1)}</h4>`,
+                /* html */ `<p><strong>Name:</strong> ${metadata.name}</p>`,
+                /* html */ `<p><strong>Value:</strong> ${metadata.value}</p>`,
+                /* html */ `<p><strong>Standard:</strong> ${metadata.standard}</p>`,
+                /* html */ `<p><strong>Symbol:</strong> ${metadata.symbol}</p>`,
+                /* html */ `<p><strong>Decimals:</strong> ${metadata.decimals}</p>`,
+                /* html */ `<p><strong>Address:</strong> ${metadata.address}</p>`,
+            ]);
+            break;
+        }
+        case 'event': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([/* html */ `<h4>Transaction Event</h4>`, /* html */ `<p><strong>Block Hash:</strong> ${metadata.block.hash}</p>`, /* html */ `<p><strong>Transaction Hash:</strong> ${metadata.transaction.hash}</p>`]);
+            break;
+        }
+        case 'bridge': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Transaction Bridge</h4>`,
+                /* html */ `<p><strong>Action:</strong> ${metadata.action}</p>`,
+                /* html */ `<p><strong>Source Network:</strong> ${metadata.sourceNetwork}</p>`,
+                /* html */ `<p><strong>Target Network:</strong> ${metadata.targetNetwork}</p>`,
+                metadata.token && /* html */ `<p><strong>Token name:</strong> ${metadata.token.name}</p>`,
+                metadata.token && /* html */ `<p><strong>Token Symbol:</strong> ${metadata.token.symbol}</p>`,
+                metadata.token && /* html */ `<p><strong>Token Value:</strong> ${metadata.token.value}</p>`,
+                metadata.token && /* html */ `<p><strong>Token Address:</strong> ${metadata.token.address}</p>`,
+            ]);
+            break;
+        }
+    }
+
+    return /* html */ `${joint}<p><strong>Platform:</strong> ${platform}</p><br/><ul><li>${action.relatedUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`).join('</li><li>')}</li></ul>`;
+};
+
+const renderExchange = (action: Action) => {
+    let joint = '';
+    const { type, platform } = action;
+    const tag = 'exchange';
+    switch (type) {
+        case 'liquidity': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Exchange Liquidity</h4>`,
+                /* html */ `<p><strong>Action:</strong> ${metadata.action}</p>`,
+                /* html */ `<p>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Address</th>
+                    <th>Value</th>
+                    <th>Name</th>
+                    <th>Symbol</th>
+                    <th>Decimals</th>
+                    <th>Standard</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${metadata.tokens.map(
+                      (token) => /* html */ `<tr>
+                    <td>${token.address}</td>
+                    <td>${token.value}</td>
+                    <td>${token.name}</td>
+                    <td>${token.symbol}</td>
+                    <td>${token.decimals}</td>
+                    <td>${token.standard}</td>
+                  </tr>`
+                  )}
+                </tbody>
+            </table>
+          </p>`,
+            ]);
+            break;
+        }
+        case 'staking': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Exchange Liquidity</h4>`,
+                /* html */ `<p><strong>Action:</strong> ${metadata.action}</p>`,
+                metadata.token &&
+                    /* html */ `<p>
+               
+             <strong>Token:</strong>
+             <ul>
+              <li><strong>Address:</strong> ${metadata.token.address}</li>
+              <li><strong>Value:</strong> ${metadata.token.value}</li>
+              <li><strong>Name:</strong> ${metadata.token.name}</li>
+              <li><strong>Symbol:</strong> ${metadata.token.symbol}</li>
+              <li><strong>Decimals:</strong> ${metadata.token.decimals}</li>
+              <li><strong>Standard:</strong> ${metadata.token.standard}</li>
+             </ul>
+          </p>`,
+            ]);
+            break;
+        }
+        case 'swap': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Exchange Swap</h4>`,
+                /* html */ metadata.from && `<p><strong>From:</strong> ${metadata.from.address}</p>`,
+                /* html */ metadata.to && `<p><strong>To:</strong> ${metadata.to?.address}</p>`,
+            ]);
+        }
+    }
+
+    return /* html */ `${joint}<p><strong>Platform:</strong> ${platform}</p><br/><ul><li>${action.relatedUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`).join('</li><li>')}</li></ul>`;
+};
+
+const renderMetaverseTagContent = (action: Action) => {
+    let joint = '';
+    const { from, to, type, platform } = action;
+    const tag = 'metaverse';
+    switch (type) {
+        case 'burn': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Metaverse Burn</h4>`,
+                /* html */ `<p><strong>Name:</strong> ${metadata.name}</p>`,
+                /* html */ `<p><strong>Address:</strong> ${metadata.address}</p>`,
+                /* html */ `<p><strong>Symbol:</strong> ${metadata.symbol}</p>`,
+                /* html */ `<p><strong>Value:</strong> ${metadata.value}</p>`,
+                /* html */ `<p>${from} --> ${to}</p>`,
+            ]);
+            break;
+        }
+        case 'trade': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Metaverse Trade</h4>`,
+                /* html */ `<p><strong>Name:</strong> ${metadata.name}</p>`,
+                /* html */ `<p><strong>Address:</strong> ${metadata.address}</p>`,
+                /* html */ `<p><strong>Symbol:</strong> ${metadata.symbol}</p>`,
+                /* html */ `<p><strong>Value:</strong> ${metadata.value}</p>`,
+                /* html */ `<p>${from} --> ${to}</p>`,
+            ]);
+            break;
+        }
+        case 'mint':
+            {
+                const metadata = extractMetadata(tag, type, action);
+                if (!metadata) {
+                    break;
+                }
+                joint += buildHTML([
+                    /* html */ `<h4>Metaverse Mint</h4>`,
+                    /* html */ `<p><strong>Name:</strong> ${metadata.name}</p>`,
+                    /* html */ `<p><strong>Address:</strong> ${metadata.address}</p>`,
+                    /* html */ `<p><strong>Symbol:</strong> ${metadata.symbol}</p>`,
+                    /* html */ `<p><strong>Value:</strong> ${metadata.value}</p>`,
+                    /* html */ `<p>${from} --> ${to}</p>`,
+                ]);
+            }
+            break;
+        case 'transfer': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Metaverse Transfer</h4>`,
+                /* html */ `<p><strong>Name:</strong> ${metadata.name}</p>`,
+                /* html */ `<p><strong>Address:</strong> ${metadata.address}</p>`,
+                /* html */ `<p><strong>Symbol:</strong> ${metadata.symbol}</p>`,
+                /* html */ `<p><strong>Value:</strong> ${metadata.value}</p>`,
+                /* html */ `<p>${from} --> ${to}</p>`,
+            ]);
+        }
+    }
+
+    return /* html */ `${joint}<p><strong>Platform:</strong> ${platform}</p><br/><ul><li>${action.relatedUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`).join('</li><li>')}</li></ul>`;
+};
+const renderCollectibleTagContent = (action: Action) => {
+    let joint = '';
+    const { from, to, type, platform } = action;
+    const tag = 'collectible';
+    switch (type) {
+        case 'approval': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Collectible Approval</h4>`,
+                /* html */ `<p><strong>Name:</strong> ${metadata.name}</p>`,
+                /* html */ `<p><strong>Address:</strong> ${metadata.address}</p>`,
+                /* html */ `<p><strong>Symbol:</strong> ${metadata.symbol}</p>`,
+                /* html */ `<p><strong>Value:</strong> ${metadata.value}</p>`,
+                /* html */ `<p>${from} --> ${to}</p>`,
+            ]);
+
+            break;
+        }
+        case 'burn': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Collectible Burn</h4>`,
+                /* html */ `<p><strong>Name:</strong> ${metadata.name}</p>`,
+                /* html */ `<p><strong>Address:</strong> ${metadata.address}</p>`,
+                /* html */ `<p><strong>Symbol:</strong> ${metadata.symbol}</p>`,
+                /* html */ `<p><strong>Value:</strong> ${metadata.value}</p>`,
+                /* html */ `<p>${from} --> ${to}</p>`,
+            ]);
+            break;
+        }
+        case 'trade': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Collectible Trade</h4>`,
+                /* html */ `<p><strong>Name:</strong> ${metadata.name}</p>`,
+                /* html */ `<p><strong>Address:</strong> ${metadata.address}</p>`,
+                /* html */ `<p><strong>Symbol:</strong> ${metadata.symbol}</p>`,
+                /* html */ `<p><strong>Value:</strong> ${metadata.value}</p>`,
+                /* html */ `<p>${from} --> ${to}</p>`,
+            ]);
+            break;
+        }
+        case 'mint':
+            {
+                const metadata = extractMetadata(tag, type, action);
+                if (!metadata) {
+                    break;
+                }
+                joint += buildHTML([
+                    /* html */ `<h4>Collectible Mint</h4>`,
+                    /* html */ `<p><strong>Name:</strong> ${metadata.name}</p>`,
+                    /* html */ `<p><strong>Address:</strong> ${metadata.address}</p>`,
+                    /* html */ `<p><strong>Symbol:</strong> ${metadata.symbol}</p>`,
+                    /* html */ `<p><strong>Value:</strong> ${metadata.value}</p>`,
+                    /* html */ `<p>${from} --> ${to}</p>`,
+                ]);
+            }
+            break;
+        case 'transfer': {
+            const metadata = extractMetadata(tag, type, action);
+            if (!metadata) {
+                break;
+            }
+            joint += buildHTML([
+                /* html */ `<h4>Collectible Transfer</h4>`,
+                /* html */ `<p><strong>Name:</strong> ${metadata.name}</p>`,
+                /* html */ `<p><strong>Address:</strong> ${metadata.address}</p>`,
+                /* html */ `<p><strong>Symbol:</strong> ${metadata.symbol}</p>`,
+                /* html */ `<p><strong>Value:</strong> ${metadata.value}</p>`,
+                /* html */ `<p>${from} --> ${to}</p>`,
+            ]);
+        }
+    }
+
+    return /* html */ `${joint}<p><strong>Platform:</strong> ${platform}</p><br/><ul><li>${action.relatedUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`).join('</li><li>')}</li></ul>`;
+};
+
 const renderSocialTagContent = (action: Action) => {
     let joint = '';
     const { from, to, platform, type } = action;

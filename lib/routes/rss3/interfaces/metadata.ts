@@ -1,10 +1,12 @@
 import {
-    RssFeed,
     CollectibleApproval,
     CollectibleBurn,
     CollectibleMint,
     CollectibleTrade,
     CollectibleTransfer,
+    ExchangeLiquidity,
+    ExchangeStaking,
+    ExchangeSwap,
     MetaverseBurn,
     MetaverseMint,
     MetaverseTrade,
@@ -29,7 +31,6 @@ import {
     TransactionTransfer,
 } from '@rss3/sdk';
 export type RSS3DataModels = {
-    RssFeed: RssFeed;
     CollectibleApproval: CollectibleApproval;
     CollectibleBurn: CollectibleBurn;
     CollectibleMint: CollectibleMint;
@@ -57,6 +58,9 @@ export type RSS3DataModels = {
     TransactionEvent: TransactionEvent;
     TransactionMint: TransactionMint;
     TransactionTransfer: TransactionTransfer;
+    ExchangeLiquidity: ExchangeLiquidity;
+    ExchangeStaking: ExchangeStaking;
+    ExchangeSwap: ExchangeSwap;
 };
 export type GetRSS3DataMetadata<FirstKey extends string, SecondKey extends string> = `${Capitalize<FirstKey>}${Capitalize<SecondKey>}` extends keyof RSS3DataModels
     ? RSS3DataModels[`${Capitalize<FirstKey>}${Capitalize<SecondKey>}`]
