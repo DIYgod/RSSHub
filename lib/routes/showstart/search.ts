@@ -4,10 +4,41 @@ import { fetchActivityList, fetchPerformerList, fetchSiteList, fetchBrandList, f
 import type { Context } from 'hono';
 
 export const route: Route = {
-    path: '/search/:type/:keyword?',
+    path: '/search/:type?/:keyword?',
     categories: ['shopping'],
     example: '/showstart/search/live',
-    parameters: { type: '类别', keyword: '搜索关键词' },
+    parameters: {
+        keyword: '搜索关键词',
+        type: {
+            description: '类别',
+            options: [
+                {
+                    value: 'event',
+                    label: '演出',
+                },
+                {
+                    value: 'artist',
+                    label: '音乐人',
+                },
+                {
+                    value: 'site',
+                    label: '场地',
+                },
+                {
+                    value: 'brand',
+                    label: '厂牌',
+                },
+                {
+                    value: 'city',
+                    label: '城市',
+                },
+                {
+                    value: 'style',
+                    label: '风格',
+                },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -25,48 +56,42 @@ async function handler(ctx: Context): Promise<Data> {
     const type = ctx.req.param('type') || '';
     const keyword = ctx.req.param('keyword') || '';
 
+    let items;
+    let title;
     switch (type) {
         case 'event':
-            return {
-                title: `${TITLE} - 搜演出 - ${keyword || '全部'}`,
-                link: HOST,
-                item: await fetchActivityList({ keyword }),
-            };
+            title = `${TITLE} - 搜演出 - ${keyword || '全部'}`;
+            items = await fetchActivityList({ keyword });
+            break;
         case 'artist':
-            return {
-                title: `${TITLE} - 搜艺人 - ${keyword || '全部'}`,
-                link: HOST,
-                item: await fetchPerformerList({ searchKeyword: keyword }),
-            };
+            title = `${TITLE} - 搜艺人 - ${keyword || '全部'}`;
+            items = await fetchPerformerList({ searchKeyword: keyword });
+            break;
         case 'site':
-            return {
-                title: `${TITLE} - 搜场地 - ${keyword || '全部'}`,
-                link: HOST,
-                item: await fetchSiteList({ searchKeyword: keyword }),
-            };
+            title = `${TITLE} - 搜场地 - ${keyword || '全部'}`;
+            items = await fetchSiteList({ searchKeyword: keyword });
+            break;
         case 'brand':
-            return {
-                title: `${TITLE} - 搜厂牌 - ${keyword || '全部'}`,
-                link: HOST,
-                item: await fetchBrandList({ searchKeyword: keyword }),
-            };
+            title = `${TITLE} - 搜厂牌 - ${keyword || '全部'}`;
+            items = await fetchBrandList({ searchKeyword: keyword });
+            break;
         case 'city':
-            return {
-                title: `${TITLE} - 搜城市 - ${keyword || '全部'}`,
-                link: HOST,
-                item: await fetchCityList(keyword),
-            };
+            title = `${TITLE} - 搜城市 - ${keyword || '全部'}`;
+            items = await fetchCityList(keyword);
+            break;
         case 'style':
-            return {
-                title: `${TITLE} - 搜风格 - ${keyword || '全部'}`,
-                link: HOST,
-                item: await fetchStyleList(keyword),
-            };
+            title = `${TITLE} - 搜风格 - ${keyword || '全部'}`;
+            items = await fetchStyleList(keyword);
+            break;
         default:
-            return {
-                title: `${TITLE} - 搜演出 - ${type || '全部'}`,
-                link: HOST,
-                item: await fetchActivityList({ keyword: type }),
-            };
+            title = `${TITLE} - 搜演出 - ${type || '全部'}`;
+            items = await fetchActivityList({ keyword: type });
     }
+    return {
+        title,
+        link: HOST,
+        allowEmpty: true,
+        language: 'zh-CN',
+        item: items,
+    };
 }
