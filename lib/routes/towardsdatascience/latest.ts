@@ -31,32 +31,25 @@ async function handler() {
     });
     const data = JSON.parse(response.slice(16));
 
-    const list = $('div.postArticle')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-
-            const a = item.find('div.postArticle-content a');
-            const title = a.find('h3').text();
-            const originalLink = a.attr('href').split('?')[0];
-            const link = `https://freedium.cfd/${originalLink}`;
-
-            const header = item.find('div.postMetaInline-authorLockup');
-            const author = header.find('a.ds-link').text().replace('Towards Data Science', '').trim();
-            const pubDate = parseDate(header.find('time').attr('datetime'));
-
-            return {
-                title,
-                link,
-                author,
-                pubDate,
-            };
-        });
+    const list = data.payload.posts.map((item) => {
+        const title = item.title;
+        const link = `https://towardsdatascience.com/${item.uniqueSlug}`;
+        const freediumLink = `https://freedium.cfd/https://towardsdatascience.com/${item.uniqueSlug}`;
+        const author = data.payload.references.User[item.creatorId].name;
+        const pubDate = parseDate(item.createdAt);
+        return {
+            title,
+            link,
+            freediumLink,
+            author,
+            pubDate,
+        };
+    });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.freediumLink, async () => {
+                const response = await ofetch(item.freediumLink);
                 const $ = load(response);
                 item.description = $('div.main-content').first().html();
                 return item;
