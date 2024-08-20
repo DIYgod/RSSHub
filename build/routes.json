@@ -42166,14 +42166,14 @@
   },
   "newyorker": {
     "routes": {
-      "/:category/:subCategory?": {
-        "path": "/:category/:subCategory?",
+      "/:category": {
+        "path": "/:category",
         "categories": [
           "traditional-media"
         ],
-        "example": "/newyorker/everything",
+        "example": "/newyorker/latest",
         "parameters": {
-          "category": "rss category. can be found at `https://www.newyorker.com/about/feeds`"
+          "category": "tab name. can be found at url"
         },
         "features": {
           "requireConfig": false,
@@ -42186,7 +42186,7 @@
         "radar": [
           {
             "source": [
-              "newyorker.com/feed/:category/:subCategory?"
+              "newyorker.com/:category?"
             ]
           }
         ],

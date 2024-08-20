@@ -4121,7 +4121,7 @@
   "/newsmarket/:category?": [
     "nczitzk"
   ],
-  "/newyorker/:category/:subCategory?": [
+  "/newyorker/:category": [
     "EthanWng97"
   ],
   "/newzmz/:id?/:downLinkType?": [

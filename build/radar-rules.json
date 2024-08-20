@@ -11965,9 +11965,9 @@
         "title": "The New Yorker",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/feed/:category/:subCategory"
+          "/:category"
         ],
-        "target": "/newyorker/:category/:subCategory?"
+        "target": "/newyorker/:category"
       }
     ]
   },
