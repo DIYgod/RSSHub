@@ -1,6 +1,6 @@
 /* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
-import { Route } from '@/types';
+import { Route, type DataItem } from '@/types';
 
 import { camelcaseKeys } from '@/utils/camelcase-keys';
 import ofetch from '@/utils/ofetch';
@@ -138,11 +138,12 @@ async function handler(ctx) {
         title: `${account} activities`,
         link: 'https://rss3.io',
         item: data.map((item) => {
-            const content = parseItemActionToContent(item.actions);
+            const content = parseItemActionToContent(camelcaseKeys(item.actions));
+
             const description = `New ${item.tag} ${item.type} action on ${item.network}<br /><br />From: ${item.from}<br/>To: ${item.to}`;
             return {
                 title: `New ${item.tag} ${item.type} action on ${item.network}`,
-                description,
+                description: content ? `${description}<br /><br />${content}` : description,
                 link: item.actions?.[0]?.related_urls?.[0],
                 guid: item.id,
                 author: [
@@ -151,9 +152,9 @@ async function handler(ctx) {
                         avatar: `https://cdn.stamp.fyi/avatar/eth:${item.owner}`,
                     },
                 ],
-                content: content ? `${description}<br /><br />${content}` : description,
-                raw: item,
-            };
+
+                _extra: { raw: item },
+            } as DataItem;
         }),
     };
 }
@@ -189,6 +190,8 @@ function parseItemActionToContent(actions: Action[]): string | undefined {
                 joint += renderTransaction(action);
                 break;
         }
+
+        joint += '<hr />';
     }
 
     return joint;
@@ -196,7 +199,7 @@ function parseItemActionToContent(actions: Action[]): string | undefined {
 
 const renderTransaction = (action: Action) => {
     let joint = '';
-    const { type, platform } = action;
+    const { type } = action;
     const tag = 'transaction';
     switch (type) {
         case 'transfer':
@@ -245,12 +248,12 @@ const renderTransaction = (action: Action) => {
         }
     }
 
-    return /* html */ `${joint}<p><strong>Platform:</strong> ${platform}</p><br/><ul><li>${action.relatedUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`).join('</li><li>')}</li></ul>`;
+    return buildSectionFooterHTML(joint, action);
 };
 
 const renderExchange = (action: Action) => {
     let joint = '';
-    const { type, platform } = action;
+    const { type } = action;
     const tag = 'exchange';
     switch (type) {
         case 'liquidity': {
@@ -327,12 +330,12 @@ const renderExchange = (action: Action) => {
         }
     }
 
-    return /* html */ `${joint}<p><strong>Platform:</strong> ${platform}</p><br/><ul><li>${action.relatedUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`).join('</li><li>')}</li></ul>`;
+    return buildSectionFooterHTML(joint, action);
 };
 
 const renderMetaverseTagContent = (action: Action) => {
     let joint = '';
-    const { from, to, type, platform } = action;
+    const { from, to, type } = action;
     const tag = 'metaverse';
     switch (type) {
         case 'burn': {
@@ -397,11 +400,11 @@ const renderMetaverseTagContent = (action: Action) => {
         }
     }
 
-    return /* html */ `${joint}<p><strong>Platform:</strong> ${platform}</p><br/><ul><li>${action.relatedUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`).join('</li><li>')}</li></ul>`;
+    return buildSectionFooterHTML(joint, action);
 };
 const renderCollectibleTagContent = (action: Action) => {
     let joint = '';
-    const { from, to, type, platform } = action;
+    const { from, to, type } = action;
     const tag = 'collectible';
     switch (type) {
         case 'approval': {
@@ -482,7 +485,7 @@ const renderCollectibleTagContent = (action: Action) => {
         }
     }
 
-    return /* html */ `${joint}<p><strong>Platform:</strong> ${platform}</p><br/><ul><li>${action.relatedUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`).join('</li><li>')}</li></ul>`;
+    return buildSectionFooterHTML(joint, action);
 };
 
 const renderSocialTagContent = (action: Action) => {
@@ -543,7 +546,7 @@ const renderSocialTagContent = (action: Action) => {
             joint += buildHTML([
                 /* html*/ `<h4>Social Comment</h4>`,
                 /* html*/ `<p><strong>Comment Anchor:</strong><a href="${metadata.authorUrl}" target="_blank">${metadata.handle}</a></p>`,
-                metadata.target && /* html*/ `<p><strong>Comment Target:</strong> <a href="${metadata.targetUrl}" target="_blank">${metadata.target.title}</a></p>`,
+                metadata.target && /* html*/ `<p><strong>Comment Target:</strong> <a href="${metadata.targetUrl}" target="_blank">${metadata.target.title || metadata.targetUrl}</a></p>`,
             ]);
         }
         case 'reward':
@@ -565,5 +568,14 @@ function extractMetadata<T1 extends string, T2 extends string>(tag: T1, type: T2
 }
 
 function buildHTML(arr: (string | boolean | undefined | null)[]): string {
-    return arr.filter(Boolean).join('\n') + '<br />';
+    return arr.filter(Boolean).join('\n');
 }
+
+const buildSectionFooterHTML = (string: string, action: Action) =>
+    buildHTML([
+        string,
+        !!action.platform && `<p><strong>Platform:</strong> ${action.platform}</p>`,
+
+        /* html */ `<p><strong>Related URLs:</strong>
+        <ul><li>${action.relatedUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`).join('</li><li>')}</li></ul></p>`,
+    ]);
