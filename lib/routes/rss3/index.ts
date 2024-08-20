@@ -1,4 +1,3 @@
-/* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
 import { Route, type DataItem } from '@/types';
 
@@ -548,6 +547,8 @@ const renderSocialTagContent = (action: Action) => {
                 /* html*/ `<p><strong>Comment Anchor:</strong><a href="${metadata.authorUrl}" target="_blank">${metadata.handle}</a></p>`,
                 metadata.target && /* html*/ `<p><strong>Comment Target:</strong> <a href="${metadata.targetUrl}" target="_blank">${metadata.target.title || metadata.targetUrl}</a></p>`,
             ]);
+
+            break;
         }
         case 'reward':
         case 'revise':
