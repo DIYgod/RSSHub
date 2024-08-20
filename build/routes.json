@@ -61921,6 +61921,32 @@
     "name": "TOPYS",
     "url": "topys.cn"
   },
+  "towardsdatascience": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "blog"
+        ],
+        "example": "/latest",
+        "radar": [
+          {
+            "source": [
+              "towardsdatascience.com/"
+            ]
+          }
+        ],
+        "name": "Towards Data Science",
+        "maintainers": [
+          "mintyfrankie"
+        ],
+        "url": "towardsdatascience.com/latest",
+        "location": "latest.ts"
+      }
+    },
+    "name": "Towards Data Science",
+    "url": "towardsdatascience.com"
+  },
   "tradingview": {
     "routes": {
       "/blog/:category{.+}?": {

@@ -17439,6 +17439,19 @@
       }
     ]
   },
+  "towardsdatascience.com": {
+    "_name": "Towards Data Science",
+    ".": [
+      {
+        "title": "Towards Data Science",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/towardsdatascience/latest"
+      }
+    ]
+  },
   "tradingview.com": {
     "_name": "TradingView",
     ".": [
