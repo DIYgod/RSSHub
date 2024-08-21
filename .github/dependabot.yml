@@ -4,7 +4,8 @@ updates:
     directory: '/'
     schedule:
       interval: daily
-    open-pull-requests-limit: 10
+      time: '08:00'
+    open-pull-requests-limit: 100
     target-branch: 'deploy'
     labels:
       - dependencies
@@ -16,6 +17,7 @@ updates:
     directory: '/'
     schedule:
       interval: daily
-    open-pull-requests-limit: 10
+      time: '08:00'
+    open-pull-requests-limit: 100
     labels:
       - dependencies

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { fetchArticle, removeDuplicateByKey } from './utils';
@@ -8,6 +8,7 @@ export const route: Route = {
     path: '/topics/:topic?',
     categories: ['traditional-media', 'popular'],
     example: '/apnews/topics/apf-topnews',
+    view: ViewType.Articles,
     parameters: {
         topic: {
             description: 'Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`',

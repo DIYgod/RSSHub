@@ -39,8 +39,8 @@ export type Config = {
         port?: string;
         auth?: string;
         url_regex: string;
+        strategy: 'on_retry' | 'all';
     };
-    proxyStrategy: string;
     pacUri?: string;
     pacScript?: string;
     accessKey?: string;
@@ -168,6 +168,9 @@ export type Config = {
     javdb: {
         session?: string;
     };
+    keylol: {
+        cookie?: string;
+    };
     lastfm: {
         api_key?: string;
     };
@@ -232,6 +235,9 @@ export type Config = {
     qingting: {
         id?: string;
     };
+    readwise: {
+        accessToken?: string;
+    };
     saraba1st: {
         cookie?: string;
     };
@@ -258,11 +264,13 @@ export type Config = {
     tophub: {
         cookie?: string;
     };
+    tsdm39: {
+        cookie: string;
+    };
     twitter: {
         username?: string[];
         password?: string[];
         authenticationSecret?: string[];
-        cookie?: string;
         authToken?: string[];
     };
     weibo: {
@@ -286,6 +294,7 @@ export type Config = {
     };
     xsijishe: {
         cookie?: string;
+        userAgent?: string;
     };
     xueqiu: {
         cookies?: string;
@@ -392,8 +401,8 @@ const calculateValue = () => {
             port: envs.PROXY_PORT,
             auth: envs.PROXY_AUTH,
             url_regex: envs.PROXY_URL_REGEX || '.*',
+            strategy: envs.PROXY_STRATEGY || 'all', // all / on_retry
         },
-        proxyStrategy: envs.PROXY_STRATEGY || 'all', // all / on_retry
         pacUri: envs.PAC_URI,
         pacScript: envs.PAC_SCRIPT,
         // access control
@@ -528,6 +537,9 @@ const calculateValue = () => {
         javdb: {
             session: envs.JAVDB_SESSION,
         },
+        keylol: {
+            cookie: envs.KEYLOL_COOKIE,
+        },
         lastfm: {
             api_key: envs.LASTFM_API_KEY,
         },
@@ -592,6 +604,9 @@ const calculateValue = () => {
         qingting: {
             id: envs.QINGTING_ID,
         },
+        readwise: {
+            accessToken: envs.READWISE_ACCESS_TOKEN,
+        },
         saraba1st: {
             cookie: envs.SARABA1ST_COOKIE,
         },
@@ -622,11 +637,13 @@ const calculateValue = () => {
         tophub: {
             cookie: envs.TOPHUB_COOKIE,
         },
+        tsdm39: {
+            cookie: envs.TSDM39_COOKIES,
+        },
         twitter: {
             username: envs.TWITTER_USERNAME?.split(','),
             password: envs.TWITTER_PASSWORD?.split(','),
             authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
-            cookie: envs.TWITTER_COOKIE,
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
         },
         weibo: {
@@ -650,6 +667,7 @@ const calculateValue = () => {
         },
         xsijishe: {
             cookie: envs.XSIJISHE_COOKIE,
+            user_agent: envs.XSIJISHE_USER_AGENT,
         },
         xueqiu: {
             cookies: envs.XUEQIU_COOKIES,

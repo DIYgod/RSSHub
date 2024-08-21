@@ -129,13 +129,13 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
     return (
         <Layout>
             <div
-                className="pointer-events-none absolute w-full h-screen"
+                className="pointer-events-none absolute w-full min-h-screen"
                 style={{
                     backgroundImage: `url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMicgd2lkdGg9JzMyJyBoZWlnaHQ9JzMyJyBmaWxsPSdub25lJyBzdHJva2U9J3JnYigxNSAyMyA0MiAvIDAuMDQpJz48cGF0aCBkPSdNMCAuNUgzMS41VjMyJy8+PC9zdmc+')`,
                     maskImage: 'linear-gradient(transparent, black, transparent)',
                 }}
             ></div>
-            <div className="w-full h-screen flex items-center justify-center flex-col space-y-4">
+            <div className="w-full grow shrink-0 py-8 flex items-center justify-center flex-col space-y-4">
                 <img src="/logo.png" alt="RSSHub" width="100" loading="lazy" />
                 <h1 className="text-4xl font-bold">
                     Welcome to <span className="text-[#F5712C]">RSSHub</span>!
@@ -165,7 +165,8 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                     </details>
                 ) : null}
             </div>
-            <div className="absolute bottom-10 text-center w-full text-sm font-medium space-y-2">
+
+            <div className="text-center pt-4 pb-8 w-full text-sm font-medium space-y-2">
                 <p className="space-x-4">
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub">
                         <img className="inline" src="https://icons.ly/github/_/fff" alt="github" width="20" height="20" />

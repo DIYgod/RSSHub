@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getToken } from './token';
 import searchPopularIllust from './api/search-popular-illust';
@@ -9,8 +9,9 @@ import { parseDate } from '@/utils/parse-date';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
-    path: '/search/:keyword/:order?/:mode?',
+    path: '/search/:keyword/:order?/:mode?/:include_ai?',
     categories: ['social-media', 'popular'],
+    view: ViewType.Pictures,
     example: '/pixiv/search/Nezuko/popular',
     parameters: {
         keyword: 'keyword',
@@ -46,6 +47,20 @@ export const route: Route = {
                 },
             ],
         },
+        include_ai: {
+            description: 'whether AI-generated content is included',
+            default: 'yes',
+            options: [
+                {
+                    label: 'does not include AI-generated content',
+                    value: 'no',
+                },
+                {
+                    label: 'include AI-generated content',
+                    value: 'yes',
+                },
+            ],
+        },
     },
     features: {
         requireConfig: false,
@@ -68,6 +83,7 @@ async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
     const order = ctx.req.param('order') || 'date';
     const mode = ctx.req.param('mode');
+    const includeAI = ctx.req.param('include_ai');
 
     const token = await getToken(cache.tryGet);
     if (!token) {
@@ -81,6 +97,10 @@ async function handler(ctx) {
         illusts = illusts.filter((item) => item.x_restrict === 0);
     } else if (mode === 'r18' || mode === '2') {
         illusts = illusts.filter((item) => item.x_restrict === 1);
+    }
+
+    if (includeAI === 'no' || includeAI === '0') {
+        illusts = illusts.filter((item) => item.illust_ai_type <= 1);
     }
 
     return {

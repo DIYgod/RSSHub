@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { header, processImage, getSignedHeader } from './utils';
 import { parseDate } from '@/utils/parse-date';
@@ -6,6 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/people/activities/:id',
     categories: ['social-media', 'popular'],
+    view: ViewType.Articles,
     example: '/zhihu/people/activities/diygod',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
     features: {

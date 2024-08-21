@@ -115,8 +115,8 @@ FROM node:22-bookworm-slim AS app
 
 LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 
-ENV NODE_ENV production
-ENV TZ Asia/Shanghai
+ENV NODE_ENV=production
+ENV TZ=Asia/Shanghai
 
 WORKDIR /app
 

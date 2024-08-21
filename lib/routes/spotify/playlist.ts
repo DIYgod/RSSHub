@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/playlist/:id',
-    categories: ['multimedia'],
+    categories: ['multimedia', 'popular'],
+    view: ViewType.Audios,
     example: '/spotify/playlist/4UBVy1LttvodwivPUuwJk2',
     parameters: { id: 'Playlist ID' },
     features: {

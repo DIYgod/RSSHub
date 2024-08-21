@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import g_encrypt from './execlib/x-zse-96-v3';
 import md5 from '@/utils/md5';
+import { config } from '@/config';
 
 export const header = {
     'x-api-version': '3.0.91',
@@ -55,6 +56,13 @@ export const processImage = (content: string) => {
     return $.html();
 };
 
+export const getCookieValueByKey = (key: string) =>
+    config.zhihu.cookies
+        ?.split(';')
+        .map((e) => e.trim())
+        .find((e) => e.startsWith(key + '='))
+        ?.slice(key.length + 1);
+
 export const getSignedHeader = async (url: string, apiPath: string) => {
     // Because the API of zhihu.com has changed, we must use the value of `d_c0` (extracted from cookies) to calculate
     // `x-zse-96`. So first get `d_c0`, then get the actual data of a ZhiHu question. In this way, we don't need to
@@ -63,10 +71,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
     // fisrt: get cookie(dc_0) from zhihu.com
     const dc0 = await cache.tryGet('zhihu:cookies:d_c0', async () => {
         const response1 = await ofetch.raw(url);
-        const $ = load(response1._data);
-        const zseCk = $('script:contains("__zse_ck")')
-            .text()
-            .match(/\|\|"(.*?)",.*;document\.cookie/)?.[1];
+        const zseCk = response1._data.match(/var e="__zse_ck",t=\(typeof __g\.ck == 'string' && __g\.ck\)\|\|"([\w+/=]*?)",_=6048e5;/)?.[1];
 
         const response2 = zseCk
             ? await ofetch.raw(url, {
@@ -82,7 +87,9 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
         const dc0 = (response2 || response1).headers
             .getSetCookie()
             .find((s) => s.startsWith('d_c0='))
-            ?.split(';')[0];
+            ?.split(';')[0]
+            .trim()
+            .slice('d_c0='.length);
         if (!dc0) {
             throw new Error('Failed to extract `d_c0` from cookies');
         }
@@ -94,8 +101,11 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
     const xzse93 = '101_3_3.0';
     const f = `${xzse93}+${apiPath}+${dc0}`;
     const xzse96 = '2.0_' + g_encrypt(md5(f));
+
+    const zc0 = getCookieValueByKey('z_c0');
+
     return {
-        cookie: `d_c0=${dc0}`,
+        cookie: `d_c0=${dc0}${zc0 ? `;z_c0=${zc0}` : ''}`,
         'x-zse-96': xzse96,
         'x-app-za': 'OS=Web',
         'x-zse-93': xzse93,

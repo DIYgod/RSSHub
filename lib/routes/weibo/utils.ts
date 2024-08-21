@@ -426,9 +426,28 @@ const weiboUtils = {
                 for (const comment of comments) {
                     itemDesc += '<p style="margin-bottom: 0.5em;margin-top: 0.5em">';
                     itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${comment.user.screen_name}</a>: ${comment.text}`;
+                    // 带有图片的评论直接输出图片
+                    if ('pic' in comment) {
+                        itemDesc += `<br><img src="${comment.pic.url}">`;
+                    }
                     if (comment.comments) {
                         itemDesc += '<blockquote style="border-left:0.2em solid #80808080; margin-left: 0.3em; padding-left: 0.5em; margin-bottom: 0.5em; margin-top: 0.25em">';
                         for (const com of comment.comments) {
+                            // 评论的带有图片的评论直接输出图片
+                            const pattern = /<a\s+href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"[^>]*><span class='url-icon'><img[^>]*><\/span><span class="surl-text">(查看图片|评论配图|查看动图)<\/span><\/a>/g;
+                            const matches = com.text.match(pattern);
+                            if (matches) {
+                                for (const match of matches) {
+                                    const hrefMatch = match.match(/href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"/);
+                                    if (hrefMatch) {
+                                        // 获取并解码 href 中的图片 URL
+                                        const imgSrc = decodeURIComponent(hrefMatch[1]);
+                                        const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
+                                        // 用替换后的 img 标签替换原来的 <a> 标签部分
+                                        com.text = com.text.replaceAll(match, imgTag);
+                                    }
+                                }
+                            }
                             itemDesc += '<div style="font-size: 0.9em">';
                             itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${com.user.screen_name}</a>: ${com.text}`;
                             itemDesc += '</div>';
@@ -437,6 +456,7 @@ const weiboUtils = {
                     }
                     itemDesc += '</p>';
                 }
+
                 itemDesc += '</div>';
             }
         }

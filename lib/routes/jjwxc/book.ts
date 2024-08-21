@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -13,7 +13,8 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/book/:id?',
-    categories: ['reading'],
+    categories: ['reading', 'popular'],
+    view: ViewType.Notifications,
     example: '/jjwxc/book/7013024',
     parameters: { id: '作品 id，可在对应作品页中找到' },
     features: {
@@ -24,7 +25,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '作品',
+    name: '作品章节',
     maintainers: ['nczitzk'],
     handler,
 };

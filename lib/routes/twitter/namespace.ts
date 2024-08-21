@@ -40,8 +40,8 @@ generates
 
 Currently supports two authentication methods:
 
-- Using \`TWITTER_COOKIE\` (recommended): Configure the cookies of logged-in Twitter Web, at least including the fields auth_token and ct0. RSSHub will use this information to directly access Twitter's web API to obtain data.
+- Using \`TWITTER_AUTH_TOKEN\` (recommended): Configure a comma-separated list of \`auth_token\` cookies of logged-in Twitter Web. RSSHub will use this information to directly access Twitter's web API to obtain data.
 
-- Using \`TWITTER_USERNAME\` \`TWITTER_PASSWORD\` and \`TWITTER_AUTHENTICATION_SECRET\`: Configure the Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.
+- Using \`TWITTER_USERNAME\` \`TWITTER_PASSWORD\` and \`TWITTER_AUTHENTICATION_SECRET\`: Configure a comma-separated list of Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.
 `,
 };

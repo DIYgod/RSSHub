@@ -7,9 +7,9 @@ type Mapping = Record<string, string>;
 
 const JP: Mapping = {
     '0': '全て',
-    '1': 'メンテナンス',
+    '1': 'イベント',
     '2': 'お知らせ',
-    '3': 'イベント',
+    '3': 'メンテナンス',
 };
 
 // render into MD table

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -13,7 +13,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/picnob/user/xlisa_olivex',
     parameters: { id: 'Instagram id' },
     features: {
@@ -33,6 +33,7 @@ export const route: Route = {
     name: 'User Profile - Picnob',
     maintainers: ['TonyRL', 'micheal-death'],
     handler,
+    view: ViewType.Pictures,
 };
 
 async function handler(ctx) {

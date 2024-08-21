@@ -1,8 +1,7 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import cache from '@/utils/cache';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -19,7 +18,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'DISCORD_AUTHORIZATION',
-                description: '',
+                description: 'Discord authorization header from the browser',
             },
         ],
         requirePuppeteer: false,
@@ -45,17 +44,17 @@ async function handler(ctx) {
     const { authorization } = config.discord;
     const channelId = ctx.req.param('channelId');
 
-    const channelInfo = await getChannel(channelId, authorization, cache.tryGet);
-    const messagesRaw = await getChannelMessages(channelId, authorization, cache.tryGet, ctx.req.query('limit') ?? 100);
+    const channelInfo = await getChannel(channelId, authorization);
+    const messagesRaw = await getChannelMessages(channelId, authorization, ctx.req.query('limit') ?? 100);
     const { name: channelName, topic: channelTopic, guild_id: guildId } = channelInfo;
 
-    const guildInfo = await getGuild(guildId, authorization, cache.tryGet);
+    const guildInfo = await getGuild(guildId, authorization);
     const { name: guildName, icon: guidIcon } = guildInfo;
 
     const messages = messagesRaw.map((message) => ({
-        title: message.content,
-        description: art(path.join(__dirname, 'templates/message.art'), { message }),
-        author: `${message.author.username}#${message.author.discriminator}`,
+        title: message.content.split('\n')[0],
+        description: art(path.join(__dirname, 'templates/message.art'), { message, guildInfo }),
+        author: `${message.author.global_name ?? message.author.username}(${message.author.username})`,
         pubDate: parseDate(message.timestamp),
         updated: message.edited_timestamp ? parseDate(message.edited_timestamp) : undefined,
         category: `#${channelName}`,
@@ -67,6 +66,7 @@ async function handler(ctx) {
         description: channelTopic,
         link: `${baseUrl}/channels/${guildId}/${channelId}`,
         image: `https://cdn.discordapp.com/icons/${guildId}/${guidIcon}.webp`,
-        item: messages,
+        item: messages as unknown as DataItem[],
+        allowEmpty: true,
     };
 }

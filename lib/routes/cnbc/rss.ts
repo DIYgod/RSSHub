@@ -65,7 +65,7 @@ async function handler(ctx) {
                     }
 
                     const meta = JSON.parse($('[type=application/ld+json]').last().text());
-                    item.author = meta.author ? meta.author.name ?? meta.author.map((a) => a.name).join(', ') : null;
+                    item.author = meta.author ? (meta.author.name ?? meta.author.map((a) => a.name).join(', ')) : null;
                     item.category = meta.keywords;
 
                     return item;

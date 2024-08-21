@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 const dict = { '434': '行业资讯', '436': '协会动态', '438': '重要通知', '440': '政策法规' };
 

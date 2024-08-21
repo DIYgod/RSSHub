@@ -140,6 +140,26 @@ async function handler(ctx) {
                     desc += kemonoFile;
                 }
 
+                let enclosureInfo = {};
+                load(desc)('audio source, video source').each(function () {
+                    const src = $(this).attr('src') ?? '';
+                    const mimeType =
+                        {
+                            m4a: 'audio/mp4',
+                            mp3: 'audio/mpeg',
+                            mp4: 'video/mp4',
+                        }[src.replace(/.*\./, '').toLowerCase()] || null;
+
+                    if (mimeType === null) {
+                        return;
+                    }
+
+                    enclosureInfo = {
+                        enclosure_url: new URL(src, rootUrl).toString(),
+                        enclosure_type: mimeType,
+                    };
+                });
+
                 return {
                     title: i.title,
                     description: desc,
@@ -147,6 +167,7 @@ async function handler(ctx) {
                     pubDate: parseDate(i.published),
                     guid: `${apiUrl}/${i.service}/user/${i.user}/post/${i.id}`,
                     link: `${rootUrl}/${i.service}/user/${i.user}/post/${i.id}`,
+                    ...enclosureInfo,
                 };
             });
     }

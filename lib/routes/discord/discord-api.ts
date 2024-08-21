@@ -1,55 +1,50 @@
-import got from '@/utils/got';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
+import { RESTGetAPIGuildResult, RESTGetAPIGuildChannelsResult, RESTGetAPIChannelResult, RESTGetAPIChannelMessagesQuery, RESTGetAPIChannelMessagesResult } from 'discord-api-types/rest/v10';
 
-const baseUrl = 'https://discord.com';
+export const baseUrl = 'https://discord.com';
 const apiUrl = `${baseUrl}/api/v10`;
 
-const getGuild = (guildId, authorization, tryGet) =>
-    tryGet(`discord:guilds:${guildId}`, async () => {
-        const response = await got(`${apiUrl}/guilds/${guildId}`, {
+export const getGuild = (guildId, authorization) =>
+    cache.tryGet(`discord:guilds:${guildId}`, () =>
+        ofetch(`${apiUrl}/guilds/${guildId}`, {
             headers: {
                 authorization,
             },
-        });
-        return response.data;
-    });
+        })
+    ) as Promise<RESTGetAPIGuildResult>;
 
-const getGuildChannels = (guildId, authorization, tryGet) =>
-    tryGet(`discord:guilds:${guildId}:channels`, async () => {
-        const response = await got(`${apiUrl}/guilds/${guildId}/channels`, {
+export const getGuildChannels = (guildId, authorization) =>
+    cache.tryGet(`discord:guilds:${guildId}:channels`, () =>
+        ofetch(`${apiUrl}/guilds/${guildId}/channels`, {
             headers: {
                 authorization,
             },
-        });
-        return response.data;
-    });
+        })
+    ) as Promise<RESTGetAPIGuildChannelsResult>;
 
-const getChannel = (channelId, authorization, tryGet) =>
-    tryGet(`discord:channels:${channelId}`, async () => {
-        const response = await got(`${apiUrl}/channels/${channelId}`, {
+export const getChannel = (channelId, authorization) =>
+    cache.tryGet(`discord:channels:${channelId}`, () =>
+        ofetch(`${apiUrl}/channels/${channelId}`, {
             headers: {
                 authorization,
             },
-        });
-        return response.data;
-    });
+        })
+    ) as Promise<RESTGetAPIChannelResult>;
 
-const getChannelMessages = (channelId, authorization, tryGet, limit = 100) =>
-    tryGet(
+export const getChannelMessages = (channelId, authorization, limit = 100) =>
+    cache.tryGet(
         `discord:channels:${channelId}:messages`,
-        async () => {
-            const response = await got(`${apiUrl}/channels/${channelId}/messages`, {
+        () =>
+            ofetch(`${apiUrl}/channels/${channelId}/messages`, {
                 headers: {
                     authorization,
                 },
-                searchParams: {
+                query: {
                     limit,
-                },
-            });
-            return response.data;
-        },
+                } as RESTGetAPIChannelMessagesQuery,
+            }),
         config.cache.routeExpire,
         false
-    );
-
-export { baseUrl, getGuild, getGuildChannels, getChannel, getChannelMessages };
+    ) as Promise<RESTGetAPIChannelMessagesResult>;

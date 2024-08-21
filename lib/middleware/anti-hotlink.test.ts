@@ -36,7 +36,7 @@ const expects = {
                 `<a href="https://mock.com/DIYgod/RSSHub"></a>
 <img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`,
             ],
-            desc: '<img src="http://mock.com/DIYgod/DIYgod/RSSHub"> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)',
+            desc: '<img src="http://mock.com/DIYgod/DIYgod/RSSHub"> - Powered by RSSHub',
         },
         processed: {
             items: [
@@ -54,7 +54,7 @@ const expects = {
                 `<a href="https://mock.com/DIYgod/RSSHub"></a>
 <img src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`,
             ],
-            desc: '<img src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)',
+            desc: '<img src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"> - Powered by RSSHub',
         },
         urlencoded: {
             items: [
@@ -72,7 +72,7 @@ const expects = {
                 `<a href="https://mock.com/DIYgod/RSSHub"></a>
 <img src="https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.jpg" referrerpolicy="no-referrer">`,
             ],
-            desc: '<img src="https://images.weserv.nl?url=http%3A%2F%2Fmock.com%2FDIYgod%2FDIYgod%2FRSSHub"> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)',
+            desc: '<img src="https://images.weserv.nl?url=http%3A%2F%2Fmock.com%2FDIYgod%2FDIYgod%2FRSSHub"> - Powered by RSSHub',
         },
     },
     multimedia: {
@@ -87,7 +87,7 @@ const expects = {
 <audio src="https://mock.com/DIYgod/RSSHub.mp3"></audio>
 <iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>`,
             ],
-            desc: '<video src="http://mock.com/DIYgod/DIYgod/RSSHub"></video> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)',
+            desc: '<video src="http://mock.com/DIYgod/DIYgod/RSSHub"></video> - Powered by RSSHub',
         },
         relayed: {
             items: [
@@ -100,7 +100,7 @@ const expects = {
 <audio src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp3"></audio>
 <iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>`,
             ],
-            desc: '<video src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"></video> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)',
+            desc: '<video src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"></video> - Powered by RSSHub',
         },
         partlyRelayed: {
             items: [
@@ -113,7 +113,7 @@ const expects = {
 <audio src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp3"></audio>
 <iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>`,
             ],
-            desc: '<video src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"></video> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)',
+            desc: '<video src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"></video> - Powered by RSSHub',
         },
     },
 };

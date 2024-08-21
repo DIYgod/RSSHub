@@ -1,10 +1,10 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { load } from 'cheerio';
+import ofetch from '@/utils/ofetch';
+import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import path from 'node:path';
@@ -40,8 +40,12 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['china.hket.com/:category/*', 'inews.hket.com/:category/*', 'topick.hket.com/:category/*', 'wealth.hket.com/:category/*'],
+            target: '/:category',
+        },
+        {
             source: ['www.hket.com/'],
-            target: '',
+            target: '/',
         },
     ],
     name: '新闻',
@@ -55,57 +59,57 @@ export const route: Route = {
   <details>
     <summary>分类</summary>
 
-    | sran001  | sran008  | sran010  | sran011  | sran012  | srat006  |
-    | -------- | -------- | -------- | -------- | -------- | -------- |
-    | 全部新闻 | 财经地产 | 科技信息 | 国际新闻 | 商业新闻 | 香港新闻 |
+| sran001  | sran008  | sran010  | sran011  | sran012  | srat006  |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 全部新闻 | 财经地产 | 科技信息 | 国际新闻 | 商业新闻 | 香港新闻 |
 
-    | sran009  | sran009-1 | sran009-2 | sran009-3  | sran009-4 | sran009-5 | sran009-6 |
-    | -------- | --------- | --------- | ---------- | --------- | --------- | --------- |
-    | 即时财经 | 股市      | 新股 IPO  | 新经济追踪 | 当炒股    | 宏观解读  | Hot Talk  |
+| sran009  | sran009-1 | sran009-2 | sran009-3  | sran009-4 | sran009-5 | sran009-6 |
+| -------- | --------- | --------- | ---------- | --------- | --------- | --------- |
+| 即时财经 | 股市      | 新股 IPO  | 新经济追踪 | 当炒股    | 宏观解读  | Hot Talk  |
 
-    | sran011-1 | sran011-2    | sran011-3    |
-    | --------- | ------------ | ------------ |
-    | 环球政治  | 环球经济金融 | 环球社会热点 |
+| sran011-1 | sran011-2    | sran011-3    |
+| --------- | ------------ | ------------ |
+| 环球政治  | 环球经济金融 | 环球社会热点 |
 
-    | sran016    | sran016-1  | sran016-2  | sran016-3  | sran016-4  | sran016-5      |
-    | ---------- | ---------- | ---------- | ---------- | ---------- | -------------- |
-    | 大湾区主页 | 大湾区发展 | 大湾区工作 | 大湾区买楼 | 大湾区消费 | 大湾区投资理财 |
+| sran016    | sran016-1  | sran016-2  | sran016-3  | sran016-4  | sran016-5      |
+| ---------- | ---------- | ---------- | ---------- | ---------- | -------------- |
+| 大湾区主页 | 大湾区发展 | 大湾区工作 | 大湾区买楼 | 大湾区消费 | 大湾区投资理财 |
 
-    | srac002  | srac003  | srac004  | srac005  |
-    | -------- | -------- | -------- | -------- |
-    | 即时中国 | 经济脉搏 | 国情动向 | 社会热点 |
+| srac002  | srac003  | srac004  | srac005  |
+| -------- | -------- | -------- | -------- |
+| 即时中国 | 经济脉搏 | 国情动向 | 社会热点 |
 
-    | srat001 | srat008 | srat055  | srat069  | srat070   |
-    | ------- | ------- | -------- | -------- | --------- |
-    | 话题    | 观点    | 休闲消费 | 娱乐新闻 | TOPick TV |
+| srat001 | srat008 | srat055  | srat069  | srat070   |
+| ------- | ------- | -------- | -------- | --------- |
+| 话题    | 观点    | 休闲消费 | 娱乐新闻 | TOPick TV |
 
-    | srat052  | srat052-1 | srat052-2  | srat052-3 |
-    | -------- | --------- | ---------- | --------- |
-    | 健康主页 | 食用安全  | 医生诊症室 | 保健美颜  |
+| srat052  | srat052-1 | srat052-2  | srat052-3 |
+| -------- | --------- | ---------- | --------- |
+| 健康主页 | 食用安全  | 医生诊症室 | 保健美颜  |
 
-    | srat053  | srat053-1 | srat053-2 | srat053-3 | srat053-4  |
-    | -------- | --------- | --------- | --------- | ---------- |
-    | 亲子主页 | 儿童健康  | 育儿经    | 教育      | 亲子好去处 |
+| srat053  | srat053-1 | srat053-2 | srat053-3 | srat053-4  |
+| -------- | --------- | --------- | --------- | ---------- |
+| 亲子主页 | 儿童健康  | 育儿经    | 教育      | 亲子好去处 |
 
-    | srat053-6   | srat053-61 | srat053-62 | srat053-63 | srat053-64 |
-    | ----------- | ---------- | ---------- | ---------- | ---------- |
-    | Band 1 学堂 | 幼稚园     | 中小学     | 尖子教室   | 海外升学   |
+| srat053-6   | srat053-61 | srat053-62 | srat053-63 | srat053-64 |
+| ----------- | ---------- | ---------- | ---------- | ---------- |
+| Band 1 学堂 | 幼稚园     | 中小学     | 尖子教室   | 海外升学   |
 
-    | srat072-1  | srat072-2  | srat072-3        | srat072-4         |
-    | ---------- | ---------- | ---------------- | ----------------- |
-    | 健康身心活 | 抗癌新方向 | 「糖」「心」解密 | 风湿不再 你我自在 |
+| srat072-1  | srat072-2  | srat072-3        | srat072-4         |
+| ---------- | ---------- | ---------------- | ----------------- |
+| 健康身心活 | 抗癌新方向 | 「糖」「心」解密 | 风湿不再 你我自在 |
 
-    | sraw007  | sraw009  | sraw010  | sraw011  | sraw012  | sraw014  | sraw018  | sraw019  |
-    | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-    | 全部博客 | Bloggers | 收息攻略 | 精明消费 | 退休规划 | 个人增值 | 财富管理 | 绿色金融 |
+| sraw007  | sraw009  | sraw010  | sraw011  | sraw012  | sraw014  | sraw018  | sraw019  |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 全部博客 | Bloggers | 收息攻略 | 精明消费 | 退休规划 | 个人增值 | 财富管理 | 绿色金融 |
 
-    | sraw015  | sraw015-07 | sraw015-08 | sraw015-09 | sraw015-10 |
-    | -------- | ---------- | ---------- | ---------- | ---------- |
-    | 移民百科 | 海外置业   | 移民攻略   | 移民点滴   | 海外理财   |
+| sraw015  | sraw015-07 | sraw015-08 | sraw015-09 | sraw015-10 |
+| -------- | ---------- | ---------- | ---------- | ---------- |
+| 移民百科 | 海外置业   | 移民攻略   | 移民点滴   | 海外理财   |
 
-    | sraw020  | sraw020-1    | sraw020-2 | sraw020-3 | sraw020-4 |
-    | -------- | ------------ | --------- | --------- | --------- |
-    | ESG 主页 | ESG 趋势政策 | ESG 投资  | ESG 企业  | ESG 社会  |
+| sraw020  | sraw020-1    | sraw020-2 | sraw020-3 | sraw020-4 |
+| -------- | ------------ | --------- | --------- | --------- |
+| ESG 主页 | ESG 趋势政策 | ESG 投资  | ESG 企业  | ESG 社会  |
   </details>`,
 };
 
@@ -113,49 +117,45 @@ async function handler(ctx) {
     const { category = 'sran001' } = ctx.req.param();
     const baseUrl = urlMap[category.substring(0, 4)].baseUrl;
 
-    const { data: response } = await got(`${baseUrl}/${category}`);
+    const response = await ofetch(`${baseUrl}/${category}`);
 
-    const $ = load(response);
+    const $ = cheerio.load(response);
 
     const list = $('div.listing-title > a')
         .toArray()
         .map((item) => {
             item = $(item);
+            const url = item.parent().parent().find('.share-button').data('url');
             return {
                 title: item.text().trim(),
-                link: item.attr('href').startsWith('http')
-                    ? // remove tracking parameters
-                      baseUrl + item.attr('href').split('?')[0].substring(0, item.attr('href').lastIndexOf('/'))
-                    : item.attr('href').split('?')[0].substring(0, item.attr('href').lastIndexOf('/')),
+                link: url.startsWith('http') ? url : baseUrl + url,
             };
-        });
+        }) as DataItem[];
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.link.startsWith('https://invest.hket.com/') || item.link.startsWith('https://ps.hket.com/')) {
-                    let data;
-
-                    data = await (item.link.startsWith('https://invest.hket.com/')
-                        ? got.post('https://invest.hket.com/content-api-middleware/content', {
+            cache.tryGet(item.link!, async () => {
+                if (item.link!.startsWith('https://invest.hket.com/') || item.link!.startsWith('https://ps.hket.com/')) {
+                    const data = await (item.link!.startsWith('https://invest.hket.com/')
+                        ? ofetch('https://invest.hket.com/content-api-middleware/content', {
                               headers: {
-                                  referer: item.link,
+                                  referer: item.link!,
                               },
-                              json: {
-                                  id: item.link.split('/').pop(),
+                              method: 'POST',
+                              body: {
+                                  id: item.link!.split('/').pop(),
                                   channel: 'invest',
                               },
                           })
-                        : got('https://data02.hket.com/content', {
+                        : ofetch('https://data02.hket.com/content', {
                               headers: {
-                                  referer: item.link,
+                                  referer: item.link!,
                               },
-                              searchParams: {
-                                  id: item.link.split('/').pop(),
+                              query: {
+                                  id: item.link!.split('/').pop(),
                                   channel: 'epc',
                               },
                           }));
-                    data = data.data;
 
                     item.pubDate = timezone(parseDate(data.displayDate), +8);
                     item.updated = timezone(parseDate(data.lastModifiedDate), +8);
@@ -166,8 +166,8 @@ async function handler(ctx) {
                     return item;
                 }
 
-                const { data: response } = await got(item.link);
-                const $ = load(response);
+                const response = await ofetch(item.link!);
+                const $ = cheerio.load(response);
 
                 item.category = $('.contentTags-container > .hotkey-container-wrapper > .hotkey-container > a')
                     .toArray()
@@ -194,28 +194,32 @@ async function handler(ctx) {
                     e = $(e);
                     e.replaceWith(
                         art(path.join(__dirname, 'templates/image.art'), {
-                            alt: e.attr('data-alt'),
-                            src: e.attr('data-src') ?? e.attr('src'),
+                            alt: e.data('alt'),
+                            src: e.data('src') ?? e.attr('src'),
                         })
                     );
                 });
 
-                item.description = $('div.article-detail-body-container').html();
-                item.pubDate = timezone(parseDate($('.article-details-info-container_date, .publish-date-time').text().trim()), +8);
+                const ldJson = JSON.parse(
+                    $('script[type="application/ld+json"]')
+                        .toArray()
+                        .find((e) => $(e).text().includes('NewsArticle'))?.children[0].data
+                );
+
+                item.description = $('div.article-detail-body-container').html()!;
+                item.pubDate = parseDate(ldJson.datePublished);
+                item.updated = parseDate(ldJson.dateModified);
 
                 return item;
             })
         )
     );
 
-    const ret = {
-        title: $('head meta[name=title]').attr('content').trim(),
+    return {
+        title: $('head meta[name=title]').attr('content')?.trim(),
         link: baseUrl + '/' + category,
-        description: $('head meta[name=description]').attr('content').trim(),
+        description: $('head meta[name=description]').attr('content')?.trim(),
         item: items,
         language: 'zh-hk',
     };
-
-    ctx.set('json', ret);
-    return ret;
 }

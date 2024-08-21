@@ -10,9 +10,12 @@ async function doGot(num, host, link) {
         cookieJar,
     });
     const data = response.data;
-    const regex = /document\.cookie\s*=\s*"([^"]*)"/;
-    const match = data.match(regex);
-    if (match) {
+    if (typeof data === 'string') {
+        const regex = /document\.cookie\s*=\s*"([^"]*)"/;
+        const match = data.match(regex);
+        if (!match) {
+            throw new Error('api error');
+        }
         cookieJar.setCookieSync(match[1], host);
         return doGot(++num, host, link);
     }

@@ -1,3 +1,4 @@
+import { requestMetric } from '@/utils/otel';
 import { MiddlewareHandler } from 'hono';
 import logger from '@/utils/logger';
 import { getPath, time } from '@/utils/helpers';
@@ -34,7 +35,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     await next();
 
-    logger.info(`${LogPrefix.Outgoing} ${method} ${path} ${colorStatus(ctx.res.status)} ${time(start)}`);
+    const status = ctx.res.status;
+
+    logger.info(`${LogPrefix.Outgoing} ${method} ${path} ${colorStatus(status)} ${time(start)}`);
+    requestMetric.success(Date.now() - start, { path, method, status });
 };
 
 export default middleware;

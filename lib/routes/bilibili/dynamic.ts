@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import JSONbig from 'json-bigint';
@@ -11,6 +11,7 @@ import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
     categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/bilibili/user/dynamic/2267573',
     parameters: {
         uid: '用户 id, 可在 UP 主主页中找到',
@@ -314,6 +315,10 @@ async function handler(ctx) {
                     }
                 }
             }
+            if (data.module_dynamic?.topic?.name) {
+                // 将话题作为 category
+                category.push(data.module_dynamic.topic.name);
+            }
 
             if (item.type === 'DYNAMIC_TYPE_ARTICLE' && displayArticle) {
                 // 抓取专栏全文
@@ -364,7 +369,7 @@ async function handler(ctx) {
                 pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                 link,
                 author,
-                category: category.length ? category : undefined,
+                category: category.length ? [...new Set(category)] : undefined,
             };
         })
     );

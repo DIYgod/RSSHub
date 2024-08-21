@@ -234,7 +234,7 @@ const getFilterByKeyAndKeyword = async (key, keyword) => {
 const getFilterKeyForSearchParams = (key, isApi = false) => {
     const keys = isApi ? filterApiKeys : filterKeys;
 
-    return Object.hasOwn(keys, key) ? keys[key] ?? key : undefined;
+    return Object.hasOwn(keys, key) ? (keys[key] ?? key) : undefined;
 };
 
 /**

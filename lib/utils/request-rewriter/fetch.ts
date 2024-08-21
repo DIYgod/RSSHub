@@ -40,8 +40,14 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         }
     }
 
+    let isRetry = false;
+    if (request.headers.get('x-prefer-proxy')) {
+        isRetry = true;
+        request.headers.delete('x-prefer-proxy');
+    }
+
     // proxy
-    if (!options.dispatcher && proxy.dispatcher) {
+    if (!init?.dispatcher && proxy.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {
         const proxyRegex = new RegExp(proxy.proxyObj.url_regex);
         let urlHandler;
         try {
@@ -52,6 +58,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
 
         if (proxyRegex.test(request.url) && request.url.startsWith('http') && !(urlHandler && urlHandler.host === proxy.proxyUrlHandler?.host)) {
             options.dispatcher = proxy.dispatcher;
+            logger.debug(`Proxying request: ${request.url}`);
         }
     }
 

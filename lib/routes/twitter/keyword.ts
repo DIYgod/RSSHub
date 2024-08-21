@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import api from './api';
 import utils from './utils';
 
 export const route: Route = {
     path: '/keyword/:keyword/:routeParams?',
     categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/twitter/keyword/RSSHub',
     parameters: { keyword: 'keyword', routeParams: 'extra parameters, see the table above' },
     features: {
@@ -18,7 +19,7 @@ export const route: Route = {
                 description: 'Please see above for details.',
             },
             {
-                name: 'TWITTER_COOKIE',
+                name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
             },
         ],

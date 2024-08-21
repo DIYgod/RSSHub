@@ -26,7 +26,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const baseUrl = 'https://zhujia.zhuwang.cc/';
+    const baseUrl = 'https://zhujia.zhuwang.com.cn/';
     const now = new Date();
     const date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
     const response = await got(`${baseUrl}/api/chartData`, {
