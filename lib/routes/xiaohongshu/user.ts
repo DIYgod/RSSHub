@@ -5,9 +5,30 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/user/:user_id/:category',
-    name: 'Unknown',
-    maintainers: [],
+    name: '用户笔记',
+    maintainers: ['lotosbin'],
     handler,
+    example: '/xiaohongshu/user/593032945e87e77791e03696/notes',
+    features: {
+        antiCrawler: true,
+        requirePuppeteer: true,
+    },
+    parameters: {
+        user_id: 'user id, length 24 characters',
+        category: {
+            description: 'category, notes or collect',
+            options: [
+                {
+                    value: 'notes',
+                    label: 'notes',
+                },
+                {
+                    value: 'collect',
+                    label: 'collect',
+                },
+            ],
+        },
+    },
 };
 
 async function handler(ctx) {
