@@ -21332,7 +21332,7 @@
         "categories": [
           "blog"
         ],
-        "example": "/blog",
+        "example": "/flashcat/blog",
         "parameters": {},
         "features": {
           "requireConfig": false,
