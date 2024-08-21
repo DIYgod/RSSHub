@@ -41,6 +41,9 @@ importers:
       '@postlight/parser':
         specifier: 2.2.3
         version: 2.2.3
+      '@rss3/sdk':
+        specifier: 0.0.13
+        version: 0.0.13
       '@scalar/hono-api-reference':
         specifier: 0.5.141
         version: 0.5.141(hono@4.5.7)
@@ -1739,6 +1742,15 @@ packages:
     resolution: {integrity: sha512-2jsCDZwtQvRhejHLfZ1JY6w6kEuEtfF9nzYsZxzSlNVKDX+DpsDJ+Rbjkm74nvg2rdx0gwBS+IMdvwJuq3S9pQ==}
     cpu: [x64]
     os: [win32]
+
+  '@rss3/api-core@0.0.13':
+    resolution: {integrity: sha512-5CRVS0FpCZ8YiS/ttHM0ZxPxM05+WkcEPE7a5klX9NvULbDCISdpYQkiUkdVjZw+hPD7MCtlvBc9tFqTQKojJw==}
+
+  '@rss3/api-utils@0.0.13':
+    resolution: {integrity: sha512-ucN9myX/E0DlA3Q+KkpCD/HwpB6fQSMlaHqRhDDV3tuyYrQnP/PjRKpGibx1Sz2x519SJNnsfyDL931H00iDJA==}
+
+  '@rss3/sdk@0.0.13':
+    resolution: {integrity: sha512-5QcC9NeMiKeay/H1JEGlG2ZtmKhZxlyLTA5f6dcIdGZUrSNk4DCM/J+8u0ED73bMQupi6xnUm+dIJdn6A1kHyA==}
 
   '@scalar/hono-api-reference@0.5.141':
     resolution: {integrity: sha512-EFGgjf91RRRlyOJgZfCH/aiD8UXhgIeFdNEdHQZF20UoJr5NvugKUsK3YYm8StkJ3Q7ApXm9ASnkeU2oiGgbnA==}
@@ -4445,6 +4457,12 @@ packages:
     resolution: {integrity: sha512-VXJjc87FScF88uafS3JllDgvAm+c/Slfz06lorj2uAY34rlUu0Nt+v8wreiImcrgAjjIHp1rXpTDlLOGw29WwQ==}
     engines: {node: '>=18'}
 
+  openapi-fetch@0.11.1:
+    resolution: {integrity: sha512-WtDQsrvxjXuCmo6u6WMQPfUaya8cLfL+ZCaXorPo9MMumqlU/Km/SrCXsEcJH234D4iykOkvJ6Q/iWBzK7+3rA==}
+
+  openapi-typescript-helpers@0.0.12:
+    resolution: {integrity: sha512-FO+5kTWO6KDutigamr2MRwciYkAUYhqdctlyVRrQOe2uxif2/O2+GcS07jNnP36AUK6ubSsGu3GeBiYIc6eQzA==}
+
   openapi3-ts@4.3.3:
     resolution: {integrity: sha512-LKkzBGJcZ6wdvkKGMoSvpK+0cbN5Xc3XuYkJskO+vjEQWJgs1kgtyUk0pjf8KwPuysv323Er62F5P17XQl96Qg==}
 
@@ -5407,6 +5425,9 @@ packages:
     engines: {node: '>=16'}
     peerDependencies:
       typescript: '>=4.2.0'
+
+  ts-case-convert@2.0.7:
+    resolution: {integrity: sha512-Kqj8wrkuduWsKUOUNRczrkdHCDt4ZNNd6HKjVw42EnMIGHQUABS4pqfy0acETVLwUTppc1fzo/yi11+uMTaqzw==}
 
   ts-custom-error@2.2.2:
     resolution: {integrity: sha512-I0FEdfdatDjeigRqh1JFj67bcIKyRNm12UVGheBjs2pXgyELg2xeiQLVaWu1pVmNGXZVnz/fvycSU41moBIpOg==}
@@ -7302,6 +7323,21 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.21.0':
     optional: true
+
+  '@rss3/api-core@0.0.13':
+    dependencies:
+      openapi-fetch: 0.11.1
+      ts-case-convert: 2.0.7
+      type-fest: 4.25.0
+
+  '@rss3/api-utils@0.0.13':
+    dependencies:
+      '@rss3/api-core': 0.0.13
+
+  '@rss3/sdk@0.0.13':
+    dependencies:
+      '@rss3/api-core': 0.0.13
+      '@rss3/api-utils': 0.0.13
 
   '@scalar/hono-api-reference@0.5.141(hono@4.5.7)':
     dependencies:
@@ -10402,6 +10438,12 @@ snapshots:
     dependencies:
       mimic-function: 5.0.1
 
+  openapi-fetch@0.11.1:
+    dependencies:
+      openapi-typescript-helpers: 0.0.12
+
+  openapi-typescript-helpers@0.0.12: {}
+
   openapi3-ts@4.3.3:
     dependencies:
       yaml: 2.5.0
@@ -11442,6 +11484,8 @@ snapshots:
   ts-api-utils@1.3.0(typescript@5.5.4):
     dependencies:
       typescript: 5.5.4
+
+  ts-case-convert@2.0.7: {}
 
   ts-custom-error@2.2.2: {}
 
