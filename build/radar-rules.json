@@ -5816,6 +5816,19 @@
       }
     ]
   },
+  "flashcat.cloud": {
+    "_name": "Flashcat",
+    ".": [
+      {
+        "title": "快猫星云博客",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog"
+        ],
+        "target": "/flashcat/blog"
+      }
+    ]
+  },
   "flyert.com": {
     "_name": "飞客茶馆",
     ".": [

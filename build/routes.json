@@ -21325,6 +21325,41 @@
     "name": "福建考试报名网",
     "url": "fjksbm.com"
   },
+  "flashcat": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/blog",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "flashcat.cloud/blog"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "name": "快猫星云博客",
+        "maintainers": [
+          "chesha1"
+        ],
+        "location": "blog.ts"
+      }
+    },
+    "name": "Flashcat",
+    "url": "flashcat.cloud"
+  },
   "flyert": {
     "routes": {
       "/creditcard/:bank": {
