@@ -4,7 +4,7 @@ import { fetchActivityList, fetchPerformerList, fetchSiteList, fetchBrandList, f
 import type { Context } from 'hono';
 
 export const route: Route = {
-    path: '/search/:type?/:keyword?',
+    path: '/search/:type/:keyword?',
     categories: ['shopping'],
     example: '/showstart/search/live',
     parameters: {
@@ -56,42 +56,49 @@ async function handler(ctx: Context): Promise<Data> {
     const type = ctx.req.param('type') || '';
     const keyword = ctx.req.param('keyword') || '';
 
-    let items;
-    let title;
     switch (type) {
         case 'event':
-            title = `${TITLE} - 搜演出 - ${keyword || '全部'}`;
-            items = await fetchActivityList({ keyword });
-            break;
+            return {
+                title: `${TITLE} - 搜演出 - ${keyword || '全部'}`,
+                link: HOST,
+                item: await fetchActivityList({ keyword }),
+            };
         case 'artist':
-            title = `${TITLE} - 搜艺人 - ${keyword || '全部'}`;
-            items = await fetchPerformerList({ searchKeyword: keyword });
-            break;
+            return {
+                title: `${TITLE} - 搜艺人 - ${keyword || '全部'}`,
+                link: HOST,
+                item: await fetchPerformerList({ searchKeyword: keyword }),
+            };
         case 'site':
-            title = `${TITLE} - 搜场地 - ${keyword || '全部'}`;
-            items = await fetchSiteList({ searchKeyword: keyword });
-            break;
+            return {
+                title: `${TITLE} - 搜场地 - ${keyword || '全部'}`,
+                link: HOST,
+                item: await fetchSiteList({ searchKeyword: keyword }),
+            };
         case 'brand':
-            title = `${TITLE} - 搜厂牌 - ${keyword || '全部'}`;
-            items = await fetchBrandList({ searchKeyword: keyword });
-            break;
+            return {
+                title: `${TITLE} - 搜厂牌 - ${keyword || '全部'}`,
+                link: HOST,
+                item: await fetchBrandList({ searchKeyword: keyword }),
+            };
         case 'city':
-            title = `${TITLE} - 搜城市 - ${keyword || '全部'}`;
-            items = await fetchCityList(keyword);
-            break;
+            return {
+                title: `${TITLE} - 搜城市 - ${keyword || '全部'}`,
+                link: HOST,
+                item: await fetchCityList(keyword),
+            };
         case 'style':
-            title = `${TITLE} - 搜风格 - ${keyword || '全部'}`;
-            items = await fetchStyleList(keyword);
-            break;
+            return {
+                title: `${TITLE} - 搜风格 - ${keyword || '全部'}`,
+                link: HOST,
+                item: await fetchStyleList(keyword),
+            };
         default:
-            title = `${TITLE} - 搜演出 - ${type || '全部'}`;
-            items = await fetchActivityList({ keyword: type });
+            return {
+                title: `${TITLE} - 搜演出 - ${type || '全部'}`,
+                link: HOST,
+                allowEmpty: true,
+                item: await fetchActivityList({ keyword: type }),
+            };
     }
-    return {
-        title,
-        link: HOST,
-        allowEmpty: true,
-        language: 'zh-CN',
-        item: items,
-    };
 }
