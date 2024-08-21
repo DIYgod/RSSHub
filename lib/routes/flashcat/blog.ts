@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/blog',
     categories: ['blog'],
-    example: '/blog',
+    example: '/flashcat/blog',
     parameters: {},
     features: {
         requireConfig: false,
