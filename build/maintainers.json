@@ -2445,6 +2445,9 @@
   "/gov/jinan/healthcommission/medical_exam_notice": [
     "tzjyxb"
   ],
+  "/gov/lswz/:category{.+}?": [
+    "nczitzk"
+  ],
   "/gov/maoming/*": [],
   "/gov/maonan/:category": [
     "ShuiHuo"

@@ -6884,6 +6884,227 @@
       }
     ]
   },
+  "lswz.gov.cn": {
+    "_name": "上海市人民政府",
+    "www": [
+      {
+        "title": "国家粮食和物资储备局",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/:category"
+        ],
+        "target": "/govparams=>{const category=params.category;return`/gov/lswz${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "新闻发布",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/xinwen/index.shtml"
+        ],
+        "target": "/gov/lswz/html/xinwen/index"
+      },
+      {
+        "title": "党建工作",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/djgz/index.shtml"
+        ],
+        "target": "/gov/lswz/html/djgz/index"
+      },
+      {
+        "title": "业务频道 - 粮食调控",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/lstk/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/lstk/index"
+      },
+      {
+        "title": "业务频道 - 物资储备",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/wzcb/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/wzcb/index"
+      },
+      {
+        "title": "业务频道 - 能源储备",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/nycb/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/nycb/index"
+      },
+      {
+        "title": "业务频道 - 安全应急",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/aqyj/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/aqyj/index"
+      },
+      {
+        "title": "业务频道 - 法规体改",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/fgtg/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/fgtg/index"
+      },
+      {
+        "title": "业务频道 - 规划建设",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/gjks/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/gjks/index"
+      },
+      {
+        "title": "业务频道 - 财务审计",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/cwsj/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/cwsj/index"
+      },
+      {
+        "title": "业务频道 - 仓储科技",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/cckj/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/cckj/index"
+      },
+      {
+        "title": "业务频道 - 执法督查",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/zfdc/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/zfdc/index"
+      },
+      {
+        "title": "业务频道 - 国际交流",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/gjjl/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/gjjl/index"
+      },
+      {
+        "title": "业务频道 - 人事人才",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/rsrc/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/rsrc/index"
+      },
+      {
+        "title": "业务频道 - 标准质量",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/bzzl/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/bzzl/index"
+      },
+      {
+        "title": "业务频道 - 粮食和储备研究",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/ywpd/lshcbyj/index.shtml"
+        ],
+        "target": "/gov/lswz/html/ywpd/lshcbyj/index"
+      },
+      {
+        "title": "政策发布 - 文件",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/zcfb/wenjian.shtml"
+        ],
+        "target": "/gov/lswz/html/zcfb/wenjian"
+      },
+      {
+        "title": "政策发布 - 法律法规",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/zcfb/fggz-fg.shtml"
+        ],
+        "target": "/gov/lswz/html/zcfb/fggz-fg"
+      },
+      {
+        "title": "政策发布 - 规章",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/zcfb/fggz-gz.shtml"
+        ],
+        "target": "/gov/lswz/html/zcfb/fggz-gz"
+      },
+      {
+        "title": "通知公告 - 行政通知",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/tzgg/xztz.shtml"
+        ],
+        "target": "/gov/lswz/html/tzgg/xztz"
+      },
+      {
+        "title": "通知公告 - 公告通告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/tzgg/ggtg.shtml"
+        ],
+        "target": "/gov/lswz/html/tzgg/ggtg"
+      },
+      {
+        "title": "粮食收购 - 收购数据",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/zmhd/lysj/lssg-szym.shtml"
+        ],
+        "target": "/gov/lswz/html/zmhd/lysj/lssg-szym"
+      },
+      {
+        "title": "粮食收购 - 政策·解读",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/zmhd/lysj/lssg-gzdt.shtml"
+        ],
+        "target": "/gov/lswz/html/zmhd/lysj/lssg-gzdt"
+      },
+      {
+        "title": "粮食价格 - 市场监测",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/zmhd/lysj/lsjg-scjc.shtml"
+        ],
+        "target": "/gov/lswz/html/zmhd/lysj/lsjg-scjc"
+      },
+      {
+        "title": "粮食价格 - 市场价格",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/zmhd/lysj/lsjg-scjg.shtml"
+        ],
+        "target": "/gov/lswz/html/zmhd/lysj/lsjg-scjg"
+      },
+      {
+        "title": "粮食交易",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/zmhd/lysj/lsjy.shtml"
+        ],
+        "target": "/gov/lswz/html/zmhd/lysj/lsjy"
+      },
+      {
+        "title": "粮食质量",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/html/zmhd/lysj/lszl.shtml"
+        ],
+        "target": "/gov/lswz/html/zmhd/lysj/lszl"
+      }
+    ]
+  },
   "mee.gov.cn": {
     "_name": "上海市人民政府",
     "www": [
