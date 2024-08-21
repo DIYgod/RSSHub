@@ -17974,7 +17974,8 @@
         "title": "Engineering",
         "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
-          "/blog/pittsburgh/engineering"
+          "/:language/blog/engineering",
+          "/:language/blog"
         ],
         "target": "/uber/blog"
       }
