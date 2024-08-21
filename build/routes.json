@@ -55050,8 +55050,36 @@
         ],
         "example": "/showstart/search/live",
         "parameters": {
-          "type": "类别",
-          "keyword": "搜索关键词"
+          "keyword": "搜索关键词",
+          "type": {
+            "description": "类别",
+            "options": [
+              {
+                "value": "event",
+                "label": "演出"
+              },
+              {
+                "value": "artist",
+                "label": "音乐人"
+              },
+              {
+                "value": "site",
+                "label": "场地"
+              },
+              {
+                "value": "brand",
+                "label": "厂牌"
+              },
+              {
+                "value": "city",
+                "label": "城市"
+              },
+              {
+                "value": "style",
+                "label": "风格"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
