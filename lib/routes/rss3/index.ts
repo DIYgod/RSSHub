@@ -560,7 +560,7 @@ const renderSocialTagContent = (action: Action) => {
     return joint;
 };
 
-function extractMetadata<T1 extends string, T2 extends string>(tag: T1, type: T2, data: any): GetRSS3DataMetadata<T1, T2> | null {
+function extractMetadata<T1 extends string, T2 extends string>(_tag: T1, _type: T2, data: any): GetRSS3DataMetadata<T1, T2> | null {
     const metadata = data.metadata;
     if (!metadata) {
         return null;
