@@ -16,13 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    // TODO
-    // radar: [
-    //     {
-    //         source: ['github.com/:user/:repo/issues', 'github.com/:user/:repo/issues/:id', 'github.com/:user/:repo'],
-    //         target: '/issue/:user/:repo',
-    //     },
-    // ],
+    radar: [
+        {
+            source: ['flashcat.cloud/blog'],
+            target: '/blog',
+        },
+    ],
     name: 'Flashcat 快猫星云博客',
     maintainers: ['chesha1'],
     handler: handlerRoute,
@@ -32,7 +31,6 @@ async function handlerRoute(): Promise<Data> {
     const response = await ofetch('https://flashcat.cloud/blog/');
     const $ = load(response);
 
-    // get class post-preview
     const items = $('.post-preview')
         .toArray()
         .map((elem) => {
