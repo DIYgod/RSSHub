@@ -22,7 +22,7 @@ export const route: Route = {
             target: '/blog',
         },
     ],
-    name: 'Flashcat 快猫星云博客',
+    name: '快猫星云博客',
     maintainers: ['chesha1'],
     handler: handlerRoute,
 };
