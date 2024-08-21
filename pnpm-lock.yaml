@@ -13,7 +13,7 @@ importers:
         version: 1.12.1
       '@hono/zod-openapi':
         specifier: 0.15.3
-        version: 0.15.3(hono@4.5.6)(zod@3.23.8)
+        version: 0.15.3(hono@4.5.7)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -43,7 +43,7 @@ importers:
         version: 2.2.3
       '@scalar/hono-api-reference':
         specifier: 0.5.141
-        version: 0.5.141(hono@4.5.6)
+        version: 0.5.141(hono@4.5.7)
       '@sentry/node':
         specifier: 7.116.0
         version: 7.116.0
@@ -105,8 +105,8 @@ importers:
         specifier: 142.0.0
         version: 142.0.0
       hono:
-        specifier: 4.5.6
-        version: 4.5.6
+        specifier: 4.5.7
+        version: 4.5.7
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -3495,8 +3495,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.5.6:
-    resolution: {integrity: sha512-9SuUC/zLQv8YAcnIxJko0KCeLI0Q6menPsDWuJ9jaH+r8ZkVXeLqeLs1QJXCPKKbURAWj9x0SJBSFh803EnAUw==}
+  hono@4.5.7:
+    resolution: {integrity: sha512-7GeBa+zuZ6rXQEcsYvoAafLNgDr3IMxoMlU1JUc23Buy99FaUpjB0viKIFOsfnzMdEp7RhPL6uLYsVuddjdMvw==}
     engines: {node: '>=16.0.0'}
 
   hookable@5.5.3:
@@ -6915,16 +6915,16 @@ snapshots:
 
   '@hono/node-server@1.12.1': {}
 
-  '@hono/zod-openapi@0.15.3(hono@4.5.6)(zod@3.23.8)':
+  '@hono/zod-openapi@0.15.3(hono@4.5.7)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.1.1(zod@3.23.8)
-      '@hono/zod-validator': 0.2.2(hono@4.5.6)(zod@3.23.8)
-      hono: 4.5.6
+      '@hono/zod-validator': 0.2.2(hono@4.5.7)(zod@3.23.8)
+      hono: 4.5.7
       zod: 3.23.8
 
-  '@hono/zod-validator@0.2.2(hono@4.5.6)(zod@3.23.8)':
+  '@hono/zod-validator@0.2.2(hono@4.5.7)(zod@3.23.8)':
     dependencies:
-      hono: 4.5.6
+      hono: 4.5.7
       zod: 3.23.8
 
   '@humanwhocodes/config-array@0.11.14':
@@ -7303,10 +7303,10 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.21.0':
     optional: true
 
-  '@scalar/hono-api-reference@0.5.141(hono@4.5.6)':
+  '@scalar/hono-api-reference@0.5.141(hono@4.5.7)':
     dependencies:
       '@scalar/types': 0.0.3
-      hono: 4.5.6
+      hono: 4.5.7
 
   '@scalar/openapi-types@0.0.1': {}
 
@@ -9341,7 +9341,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.5.6: {}
+  hono@4.5.7: {}
 
   hookable@5.5.3: {}
 
