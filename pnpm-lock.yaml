@@ -13,7 +13,7 @@ importers:
         version: 1.12.1
       '@hono/zod-openapi':
         specifier: 0.15.3
-        version: 0.15.3(hono@4.5.7)(zod@3.23.8)
+        version: 0.15.3(hono@4.5.8)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -46,7 +46,7 @@ importers:
         version: 0.0.13
       '@scalar/hono-api-reference':
         specifier: 0.5.141
-        version: 0.5.141(hono@4.5.7)
+        version: 0.5.141(hono@4.5.8)
       '@sentry/node':
         specifier: 7.116.0
         version: 7.116.0
@@ -108,8 +108,8 @@ importers:
         specifier: 142.0.0
         version: 142.0.0
       hono:
-        specifier: 4.5.7
-        version: 4.5.7
+        specifier: 4.5.8
+        version: 4.5.8
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -3507,8 +3507,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.5.7:
-    resolution: {integrity: sha512-7GeBa+zuZ6rXQEcsYvoAafLNgDr3IMxoMlU1JUc23Buy99FaUpjB0viKIFOsfnzMdEp7RhPL6uLYsVuddjdMvw==}
+  hono@4.5.8:
+    resolution: {integrity: sha512-pqpSlcdqGkpTTRpLYU1PnCz52gVr0zVR9H5GzMyJWuKQLLEBQxh96q45QizJ2PPX8NATtz2mu31/PKW/Jt+90Q==}
     engines: {node: '>=16.0.0'}
 
   hookable@5.5.3:
@@ -3685,8 +3685,8 @@ packages:
     resolution: {integrity: sha512-BSLE3HnV2syZ0FK0iMA/yUGplUeMmNz4AW5fnTunbCIqZi4vG3WjJT9FHMy5D69xmAYBHXQhJdALdpwVxV501A==}
     engines: {node: '>=6'}
 
-  is-core-module@2.15.0:
-    resolution: {integrity: sha512-Dd+Lb2/zvk9SKy1TGCt1wFJFo/MWBPMX5x7KcvLajWTGuomczdQX61PvY5yK6SVACwpoexWo81IfFyoKY2QnTA==}
+  is-core-module@2.15.1:
+    resolution: {integrity: sha512-z0vtXSwucUJtANQWldhbtbt7BnL0vxiFjIdDLAatwhDYty2bad6s+rijD6Ri4YuYJubLzIJLUidCh09e1djEVQ==}
     engines: {node: '>= 0.4'}
 
   is-extendable@0.1.1:
@@ -4682,8 +4682,8 @@ packages:
   proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
 
-  protobufjs@7.3.2:
-    resolution: {integrity: sha512-RXyHaACeqXeqAKGLDl68rQKbmObRsTIn4TYVUUug1KfS47YWCo5MacGITEryugIgZqORCvJWEk4l449POg5Txg==}
+  protobufjs@7.3.3:
+    resolution: {integrity: sha512-HaYi2CVjiPoBR1d2zTVKVHXr9IUnpJizCjUu19vxdD3B8o4z+vfOHpIEB1358w8nv8dfUNEfDHFvMsH7QlLt/Q==}
     engines: {node: '>=12.0.0'}
 
   proxy-agent@6.4.0:
@@ -5193,8 +5193,8 @@ packages:
   stream-length@1.0.2:
     resolution: {integrity: sha512-aI+qKFiwoDV4rsXiS7WRoCt+v2RX1nUj17+KJC5r2gfh5xoSJIfP6Y3Do/HtvesFcTSWthIuJ3l1cvKQY/+nZg==}
 
-  streamx@2.18.0:
-    resolution: {integrity: sha512-LLUC1TWdjVdn1weXGcSxyTR3T4+acB6tVGXT95y0nGbca4t4o/ng1wKAGTljm9VicuCVLvRlqFYXYy5GwgM7sQ==}
+  streamx@2.19.0:
+    resolution: {integrity: sha512-5z6CNR4gtkPbwlxyEqoDGDmWIzoNJqCBt4Eac1ICP9YaIT08ct712cFj0u1rx4F8luAuL+3Qc+RFIdI4OX00kg==}
 
   strict-event-emitter@0.5.1:
     resolution: {integrity: sha512-vMgjE/GGEPEFnhFub6pa4FmJBRBVOLpIII2hvCZ8Kzb7K0hlHo7mQv6xYrBvCL2LtAIBwFUK8wvuJgTVSQ5MFQ==}
@@ -6936,16 +6936,16 @@ snapshots:
 
   '@hono/node-server@1.12.1': {}
 
-  '@hono/zod-openapi@0.15.3(hono@4.5.7)(zod@3.23.8)':
+  '@hono/zod-openapi@0.15.3(hono@4.5.8)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.1.1(zod@3.23.8)
-      '@hono/zod-validator': 0.2.2(hono@4.5.7)(zod@3.23.8)
-      hono: 4.5.7
+      '@hono/zod-validator': 0.2.2(hono@4.5.8)(zod@3.23.8)
+      hono: 4.5.8
       zod: 3.23.8
 
-  '@hono/zod-validator@0.2.2(hono@4.5.7)(zod@3.23.8)':
+  '@hono/zod-validator@0.2.2(hono@4.5.8)(zod@3.23.8)':
     dependencies:
-      hono: 4.5.7
+      hono: 4.5.8
       zod: 3.23.8
 
   '@humanwhocodes/config-array@0.11.14':
@@ -7133,7 +7133,7 @@ snapshots:
       '@opentelemetry/sdk-logs': 0.52.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-metrics': 1.25.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-trace-base': 1.25.1(@opentelemetry/api@1.9.0)
-      protobufjs: 7.3.2
+      protobufjs: 7.3.3
 
   '@opentelemetry/resources@1.25.1(@opentelemetry/api@1.9.0)':
     dependencies:
@@ -7339,10 +7339,10 @@ snapshots:
       '@rss3/api-core': 0.0.13
       '@rss3/api-utils': 0.0.13
 
-  '@scalar/hono-api-reference@0.5.141(hono@4.5.7)':
+  '@scalar/hono-api-reference@0.5.141(hono@4.5.8)':
     dependencies:
       '@scalar/types': 0.0.3
-      hono: 4.5.7
+      hono: 4.5.8
 
   '@scalar/openapi-types@0.0.1': {}
 
@@ -7936,7 +7936,7 @@ snapshots:
 
   bare-stream@2.1.3:
     dependencies:
-      streamx: 2.18.0
+      streamx: 2.19.0
     optional: true
 
   base64-js@1.5.1: {}
@@ -9377,7 +9377,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.5.7: {}
+  hono@4.5.8: {}
 
   hookable@5.5.3: {}
 
@@ -9617,7 +9617,7 @@ snapshots:
     dependencies:
       builtin-modules: 3.3.0
 
-  is-core-module@2.15.0:
+  is-core-module@2.15.1:
     dependencies:
       hasown: 2.0.2
 
@@ -10682,7 +10682,7 @@ snapshots:
 
   proto-list@1.2.4: {}
 
-  protobufjs@7.3.2:
+  protobufjs@7.3.3:
     dependencies:
       '@protobufjs/aspromise': 1.1.2
       '@protobufjs/base64': 1.1.2
@@ -10976,7 +10976,7 @@ snapshots:
 
   resolve@1.22.8:
     dependencies:
-      is-core-module: 2.15.0
+      is-core-module: 2.15.1
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
@@ -11231,7 +11231,7 @@ snapshots:
     dependencies:
       bluebird: 2.11.0
 
-  streamx@2.18.0:
+  streamx@2.19.0:
     dependencies:
       fast-fifo: 1.3.2
       queue-tick: 1.0.1
@@ -11353,7 +11353,7 @@ snapshots:
     dependencies:
       b4a: 1.6.6
       fast-fifo: 1.3.2
-      streamx: 2.18.0
+      streamx: 2.19.0
 
   tar@6.2.1:
     dependencies:
