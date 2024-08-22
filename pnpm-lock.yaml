@@ -325,8 +325,8 @@ importers:
         specifier: 2.0.4
         version: 2.0.4
       '@types/node':
-        specifier: 22.4.2
-        version: 22.4.2
+        specifier: 22.5.0
+        version: 22.5.0
       '@types/sanitize-html':
         specifier: 2.13.0
         version: 2.13.0
@@ -356,7 +356,7 @@ importers:
         version: 0.27.3
       '@vitest/coverage-v8':
         specifier: 2.0.5
-        version: 2.0.5(vitest@2.0.5(@types/node@22.4.2)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+        version: 2.0.5(vitest@2.0.5(@types/node@22.5.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       discord-api-types:
         specifier: 0.37.96
         version: 0.37.96
@@ -422,10 +422,10 @@ importers:
         version: 11.0.5
       vite-tsconfig-paths:
         specifier: 5.0.1
-        version: 5.0.1(typescript@5.5.4)(vite@5.4.2(@types/node@22.4.2))
+        version: 5.0.1(typescript@5.5.4)(vite@5.4.2(@types/node@22.5.0))
       vitest:
         specifier: 2.0.5
-        version: 2.0.5(@types/node@22.4.2)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+        version: 2.0.5(@types/node@22.5.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       yaml-eslint-parser:
         specifier: 1.2.3
         version: 1.2.3
@@ -1947,8 +1947,8 @@ packages:
   '@types/node-fetch@2.6.11':
     resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
 
-  '@types/node@22.4.2':
-    resolution: {integrity: sha512-nAvM3Ey230/XzxtyDcJ+VjvlzpzoHwLsF7JaDRfoI0ytO0mVheerNmM45CtA0yOILXwXXxOrcUWH3wltX+7PSw==}
+  '@types/node@22.5.0':
+    resolution: {integrity: sha512-DkFrJOe+rfdHTqqMg0bSNlGlQ85hSoh2TPzZyhHsXnMtligRWpxUySiyw8FY14ITt24HVCiQPWxS3KO/QlGmWg==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -6977,7 +6977,7 @@ snapshots:
       '@inquirer/figures': 1.0.5
       '@inquirer/type': 1.5.2
       '@types/mute-stream': 0.0.4
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
       '@types/wrap-ansi': 3.0.0
       ansi-escapes: 4.3.2
       cli-spinners: 2.9.2
@@ -7479,12 +7479,12 @@ snapshots:
 
   '@types/etag@1.8.3':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
 
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
 
   '@types/html-to-text@9.0.4': {}
 
@@ -7492,13 +7492,13 @@ snapshots:
 
   '@types/imapflow@1.0.19':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
 
   '@types/js-beautify@1.14.3': {}
 
   '@types/jsdom@21.1.7':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
       '@types/tough-cookie': 4.0.5
       parse5: 7.1.2
 
@@ -7508,7 +7508,7 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
 
   '@types/jsrsasign@10.5.13': {}
 
@@ -7518,7 +7518,7 @@ snapshots:
 
   '@types/mailparser@3.4.4':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
       iconv-lite: 0.6.3
 
   '@types/markdown-it@14.1.2':
@@ -7540,14 +7540,14 @@ snapshots:
 
   '@types/mute-stream@0.0.4':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
 
   '@types/node-fetch@2.6.11':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
       form-data: 4.0.0
 
-  '@types/node@22.4.2':
+  '@types/node@22.5.0':
     dependencies:
       undici-types: 6.19.8
 
@@ -7561,7 +7561,7 @@ snapshots:
   '@types/request@2.48.12':
     dependencies:
       '@types/caseless': 0.12.5
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.1
 
@@ -7575,7 +7575,7 @@ snapshots:
     dependencies:
       '@types/cookiejar': 2.1.5
       '@types/methods': 1.1.4
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
       form-data: 4.0.0
 
   '@types/supertest@6.0.2':
@@ -7599,7 +7599,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.2.0(@typescript-eslint/parser@8.2.0(eslint@9.9.0)(typescript@5.5.4))(eslint@9.9.0)(typescript@5.5.4)':
@@ -7708,7 +7708,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@vitest/coverage-v8@2.0.5(vitest@2.0.5(@types/node@22.4.2)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@vitest/coverage-v8@2.0.5(vitest@2.0.5(@types/node@22.5.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -7722,7 +7722,7 @@ snapshots:
       std-env: 3.7.0
       test-exclude: 7.0.1
       tinyrainbow: 1.2.0
-      vitest: 2.0.5(@types/node@22.4.2)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      vitest: 2.0.5(@types/node@22.5.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10))
     transitivePeerDependencies:
       - supports-color
 
@@ -10694,7 +10694,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
       long: 5.2.3
 
   proxy-agent@6.4.0:
@@ -11663,13 +11663,13 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite-node@2.0.5(@types/node@22.4.2):
+  vite-node@2.0.5(@types/node@22.5.0):
     dependencies:
       cac: 6.7.14
       debug: 4.3.6
       pathe: 1.1.2
       tinyrainbow: 1.2.0
-      vite: 5.4.2(@types/node@22.4.2)
+      vite: 5.4.2(@types/node@22.5.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -11681,27 +11681,27 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@5.0.1(typescript@5.5.4)(vite@5.4.2(@types/node@22.4.2)):
+  vite-tsconfig-paths@5.0.1(typescript@5.5.4)(vite@5.4.2(@types/node@22.5.0)):
     dependencies:
       debug: 4.3.6
       globrex: 0.1.2
       tsconfck: 3.1.1(typescript@5.5.4)
     optionalDependencies:
-      vite: 5.4.2(@types/node@22.4.2)
+      vite: 5.4.2(@types/node@22.5.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@5.4.2(@types/node@22.4.2):
+  vite@5.4.2(@types/node@22.5.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.41
       rollup: 4.21.0
     optionalDependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
       fsevents: 2.3.3
 
-  vitest@2.0.5(@types/node@22.4.2)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
+  vitest@2.0.5(@types/node@22.5.0)(jsdom@24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@vitest/expect': 2.0.5
@@ -11719,11 +11719,11 @@ snapshots:
       tinybench: 2.9.0
       tinypool: 1.0.1
       tinyrainbow: 1.2.0
-      vite: 5.4.2(@types/node@22.4.2)
-      vite-node: 2.0.5(@types/node@22.4.2)
+      vite: 5.4.2(@types/node@22.5.0)
+      vite-node: 2.0.5(@types/node@22.5.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.0
       jsdom: 24.1.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - less
