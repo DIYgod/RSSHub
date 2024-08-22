@@ -427,7 +427,8 @@ describe('multi parameter', () => {
 });
 
 describe('openai', () => {
-    it(`chatgpt`, async () => {
+    it('processes both title and description', async () => {
+        config.openai.inputOption = 'both';
         const responseWithGpt = await app.request('/test/gpt?chatgpt=true');
         const responseNormal = await app.request('/test/gpt');
 
@@ -437,9 +438,25 @@ describe('openai', () => {
         const parsedGpt = await parser.parseString(await responseWithGpt.text());
         const parsedNormal = await parser.parseString(await responseNormal.text());
 
-        expect(parsedGpt.items[0].content).not.toBe(undefined);
-        expect(parsedGpt.items[0].content).toBe(parsedNormal.items[0].content);
-        expect(parsedGpt.items[1].content).not.toBe(undefined);
-        expect(parsedGpt.items[1].content).not.toBe(parsedNormal.items[1].content);
+        expect(parsedGpt.items[0].title).not.toBe(parsedNormal.items[0].title);
+        expect(parsedGpt.items[0].title).toContain('AI processed content.');
+        expect(parsedGpt.items[0].content).not.toBe(parsedNormal.items[0].content);
+        expect(parsedGpt.items[0].content).toContain('AI processed content.');
+    });
+
+    it('processes title or description', async () => {
+        // test title
+        config.openai.inputOption = 'title';
+        const responseTitleOnly = await app.request('/test/gpt?chatgpt=true');
+        const parsedTitleOnly = await parser.parseString(await responseTitleOnly.text());
+        expect(parsedTitleOnly.items[0].title).toContain('AI processed content.');
+        expect(parsedTitleOnly.items[0].content).not.toContain('AI processed content.');
+
+        // test description
+        config.openai.inputOption = 'description';
+        const responseDescriptionOnly = await app.request('/test/gpt?chatgpt=true');
+        const parsedDescriptionOnly = await parser.parseString(await responseDescriptionOnly.text());
+        expect(parsedDescriptionOnly.items[0].title).not.toContain('AI processed content.');
+        expect(parsedDescriptionOnly.items[0].content).toContain('AI processed content.');
     });
 });
