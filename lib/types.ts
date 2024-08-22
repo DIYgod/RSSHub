@@ -286,3 +286,9 @@ export type RadarItem = {
               document: Document
           ) => string);
 };
+
+export type RadarDomain = {
+    _name: string;
+} & {
+    [subdomain: string]: RadarItem[];
+};
