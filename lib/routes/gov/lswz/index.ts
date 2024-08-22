@@ -43,15 +43,16 @@ export const handler = async (ctx) => {
                 $$('div.pub-right-source, div.detail_links_pane').remove();
 
                 const title = $$('meta[name="ArticleTitle"]').prop('content') || $$('div.pub-det-title').text();
-                const description = $$('table.pages_content').html();
+                const description = $$('table.pages_content, div.article-content, div.TRS_UEDITOR, div.TRS_PreAppend').html();
+                const pubDate = $$('meta[name="PubDate"]').prop('content');
 
-                item.title = title;
+                item.title = title || item.title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('meta[name="PubDate"]').prop('content')), +8);
+                item.pubDate = pubDate ? timezone(parseDate(pubDate), +8) : item.pubDate;
                 item.author = $$('meta[name="ContentSource"]').prop('content')?.trim() ?? undefined;
                 item.content = {
                     html: description,
-                    text: $$('table.pages_content').text(),
+                    text: $$('table.pages_content, div.article-content, div.TRS_UEDITOR, div.TRS_PreAppend').text(),
                 };
                 item.language = language;
 
