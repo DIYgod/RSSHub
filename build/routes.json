@@ -22093,6 +22093,32 @@
     "name": "FT 中文网",
     "url": "ftchinese.com"
   },
+  "ftm": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/ftm",
+        "parameters": {},
+        "name": "文章",
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.ftm.eu"
+            ]
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "Follow The Money",
+    "url": "www.ftm.eu"
+  },
   "fuliba": {
     "routes": {
       "/latest": {

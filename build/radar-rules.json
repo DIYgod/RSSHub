@@ -6024,6 +6024,19 @@
       }
     ]
   },
+  "ftm.eu": {
+    "_name": "Follow The Money",
+    "www": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/ftm/"
+      }
+    ]
+  },
   "fuliba2023.net": {
     "_name": "福利吧",
     ".": [
