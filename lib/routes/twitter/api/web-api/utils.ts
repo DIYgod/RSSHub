@@ -8,28 +8,12 @@ import { CookieAgent, CookieClient } from 'http-cookie-agent/undici';
 import { ProxyAgent } from 'undici';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { RateLimiterMemory, RateLimiterRedis, RateLimiterQueue } from 'rate-limiter-flexible';
 import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
 import login from './login';
 
 const dispatchers = {};
 let authTokenIndex = 0;
-
-const loginLimiter = cache.clients.redisClient
-    ? new RateLimiterRedis({
-          points: 1,
-          duration: 5,
-          execEvenly: true,
-          storeClient: cache.clients.redisClient,
-      })
-    : new RateLimiterMemory({
-          points: 1,
-          duration: 5,
-          execEvenly: true,
-      });
-
-const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
 const token2Cookie = (token) =>
     cache.tryGet(`twitter:cookie:${token}`, async () => {
@@ -56,7 +40,6 @@ export const twitterGot = async (url, params) => {
     if (!config.twitter.authToken) {
         throw new ConfigNotFoundError('Twitter cookie is not configured');
     }
-    await loginLimiterQueue.removeTokens(1);
     const index = authTokenIndex++ % config.twitter.authToken.length;
     const token = config.twitter.authToken[index];
     let cookie: string | Record<string, any> | null | undefined = await token2Cookie(token);
