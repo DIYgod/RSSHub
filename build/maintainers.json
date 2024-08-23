@@ -5497,6 +5497,9 @@
     "DIYgod",
     "MeanZhang"
   ],
+  "/smzdm/product/:id": [
+    "chesha1"
+  ],
   "/smzdm/ranking/:rank_type/:rank_id/:hour": [
     "DIYgod"
   ],

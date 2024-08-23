@@ -16173,6 +16173,16 @@
         ],
         "target": "/smzdm/haowen/fenlei/:name"
       }
+    ],
+    "wiki": [
+      {
+        "title": "商品",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/p/:id"
+        ],
+        "target": "/smzdm/product/:id"
+      }
     ]
   },
   "snowpeak.com": {

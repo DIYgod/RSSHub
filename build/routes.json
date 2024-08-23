@@ -56388,6 +56388,37 @@
         ],
         "location": "keyword.ts"
       },
+      "/product/:id": {
+        "path": "/product/:id",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/smzdm/product/zm5vzpe",
+        "parameters": {
+          "id": "商品 id，网址上直接可以看到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "wiki.smzdm.com/p/:id"
+            ],
+            "target": "/product/:id"
+          }
+        ],
+        "name": "商品",
+        "maintainers": [
+          "chesha1"
+        ],
+        "location": "product.ts"
+      },
       "/ranking/:rank_type/:rank_id/:hour": {
         "path": "/ranking/:rank_type/:rank_id/:hour",
         "categories": [
