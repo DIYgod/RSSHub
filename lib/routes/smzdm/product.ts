@@ -53,7 +53,7 @@ async function handler(ctx) {
     // get detail info from each item
     const out = await Promise.all(
         items.map(async (item) => {
-            const response = await ofetch(item.link);
+            const response = await ofetch(item.link as string);
             const $ = load(response);
 
             // filter outdated articles
@@ -64,7 +64,7 @@ async function handler(ctx) {
                 item.pubDate = pubDate;
 
                 if (item.description === '阅读全文') {
-                    item.description = $('p[itemprop="description"]').first().html();
+                    item.description = $('p[itemprop="description"]').first().html() as string;
                 }
 
                 return item;
