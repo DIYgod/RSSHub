@@ -58,7 +58,7 @@ const outPuppeteer = async (
         () => {
             browser.close();
         },
-        process.env.NODE_ENV === 'test' ? 30000 : 5 * 60 * 1000
+        5 * 60 * 1000
     );
 
     return browser;
