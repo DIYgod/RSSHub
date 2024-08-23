@@ -33,22 +33,22 @@ async function handler(ctx) {
     const $ = load(response);
     const title = $('title').text();
 
-    const items: DataItem[] = [];
-
     // get simple info from list
-    $('ul#feed-main-list li').each(function () {
-        const altText = $(this).find('img').attr('alt');
-        const link = $(this).find('h5.feed-block-title a').attr('href');
-        const price = $(this).find('.z-highlight').text();
-        const title = altText + ' ' + price;
-        const description = $(this).find('.feed-block-descripe').text().replaceAll(/\s+/g, '');
-        const item = {
-            title,
-            link,
-            description,
-        };
-        items.push(item);
-    });
+    const items: DataItem[] = $('ul#feed-main-list li')
+        .map(function () {
+            const altText = $(this).find('img').attr('alt');
+            const link = $(this).find('h5.feed-block-title a').attr('href');
+            const price = $(this).find('.z-highlight').text();
+            const title = altText + ' ' + price;
+            const description = $(this).find('.feed-block-descripe').text().replaceAll(/\s+/g, '');
+
+            return {
+                title,
+                link,
+                description,
+            };
+        })
+        .toArray();
 
     // get detail info from each item
     const out = await Promise.all(
