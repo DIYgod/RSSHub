@@ -17,7 +17,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://wiki.smzdm.com/p/:id'],
+            source: ['wiki.smzdm.com/p/:id'],
             target: '/product/:id',
         },
     ],
