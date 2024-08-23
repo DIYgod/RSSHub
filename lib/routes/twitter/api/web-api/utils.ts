@@ -19,13 +19,13 @@ let authTokenIndex = 0;
 const loginLimiter = cache.clients.redisClient
     ? new RateLimiterRedis({
           points: 1,
-          duration: 5,
+          duration: 1,
           execEvenly: true,
           storeClient: cache.clients.redisClient,
       })
     : new RateLimiterMemory({
           points: 1,
-          duration: 5,
+          duration: 1,
           execEvenly: true,
       });
 
