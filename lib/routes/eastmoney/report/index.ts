@@ -64,13 +64,16 @@ async function handler(ctx) {
             .match(/var initdata(.=?)(.*?);/)[2]
     );
 
-    const list = initData.data.map((item) => ({
-        title: `[${item.orgSName}]${item.title}`,
-        link: `${baseUrl}/report/${linkType[category]}` + (category === 'stock' ? `/${item.infoCode}.html` : `.jshtml?encodeUrl=${item.encodeUrl}`),
-        pubDate: parseDate(item.publishDate),
-        author: item.researcher,
-        originItem: item, // temp use
-    }));
+    const list = initData.data.map((item) => {
+        const stockName = category === 'stock' ? `[${item.stockName}]` : '';
+        return {
+            title: `[${item.orgSName}]${stockName}${item.title}`,
+            link: `${baseUrl}/report/${linkType[category]}` + (category === 'stock' ? `/${item.infoCode}.html` : `.jshtml?encodeUrl=${item.encodeUrl}`),
+            pubDate: parseDate(item.publishDate),
+            author: item.researcher,
+            originItem: item, // temp use
+        };
+    });
 
     const items = await Promise.all(
         list.map((item) => {
