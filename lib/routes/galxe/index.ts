@@ -7,7 +7,7 @@ export const route: Route = {
     name: 'Galxe',
     url: 'app.galxe.com',
     maintainers: ['cxheng315'],
-    example: '/galxe/MissionWeb3',
+    example: '/quest/MissionWeb3',
     categories: ['other'],
     features: {
         requireConfig: false,
