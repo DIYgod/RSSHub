@@ -1,6 +1,8 @@
 import { Route, DataItem } from '@/types';
 import { ofetch } from 'ofetch';
 import { load } from 'cheerio';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/product/:id',
@@ -52,25 +54,28 @@ async function handler(ctx) {
 
     // get detail info from each item
     const out = await Promise.all(
-        items.map(async (item) => {
-            const response = await ofetch(item.link as string);
-            const $ = load(response);
+        items.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const { data: response } = await got(item.link);
+                const $ = load(response);
 
-            // filter outdated articles
-            if ($('span.old').length > 0) {
-                return null;
-            } else {
-                const pubDate = $('meta[name="weibo:webpage:create_at"]').attr('content');
-                item.pubDate = pubDate;
+                // filter outdated articles
+                if ($('span.old').length > 0) {
+                    return null;
+                } else {
+                    const pubDate = $('meta[name="weibo:webpage:create_at"]').attr('content');
+                    item.pubDate = pubDate;
 
-                if (item.description === '阅读全文') {
-                    item.description = $('p[itemprop="description"]').first().html() as string;
+                    if (item.description === '阅读全文') {
+                        item.description = $('p[itemprop="description"]').first().html() as string;
+                    }
+
+                    return item;
                 }
-
-                return item;
-            }
-        })
+            })
+        )
     );
+
     const filteredOut = out.filter((result) => result !== null);
 
     return {
