@@ -77,13 +77,12 @@ async function handler(ctx) {
 
     const space = response.data.space;
 
-    const items = 
-        space.campaigns.list.map((campaign) => ({
-            title: campaign.name,
-            link: `https://app.galxe.com/quest/${alias}/${campaign.id}`,
-            description: campaign.description,
-            pubDate: campaign.startTime ? parseDate(campaign.startTime * 1000) : null,
-        }));
+    const items = space.campaigns.list.map((campaign) => ({
+        title: campaign.name,
+        link: `https://app.galxe.com/quest/${alias}/${campaign.id}`,
+        description: campaign.description,
+        pubDate: campaign.startTime ? parseDate(campaign.startTime * 1000) : null,
+    }));
 
     return {
         title: space.name,
