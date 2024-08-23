@@ -101,6 +101,7 @@ export const twitterGot = async (url, params) => {
     );
 
     const response = await ofetch.raw(requestUrl, {
+        retry: 0,
         headers: {
             authority: 'x.com',
             accept: '*/*',
