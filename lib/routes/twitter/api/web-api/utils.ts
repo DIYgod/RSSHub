@@ -119,7 +119,7 @@ export const twitterGot = async (url, params) => {
         },
         dispatcher: dispatchers[token].agent,
         onResponse: async ({ response }) => {
-            if (response.status === 403 || response.status === 401) {
+            if (response.status === 403 || response.status === 401 || response.status === 429) {
                 logger.debug(`Delete twitter cookie for token ${token}`);
                 const newCookie = await login({
                     username: config.twitter.username?.[index],
