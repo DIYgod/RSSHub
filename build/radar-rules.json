@@ -6094,6 +6094,19 @@
       }
     ]
   },
+  "galxe.com": {
+    "_name": "Galxe",
+    "app": [
+      {
+        "title": "Galxe",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/quest/:alias"
+        ],
+        "target": "/galxe/quest/:alias"
+      }
+    ]
+  },
   "gameapps.hk": {
     "_name": "GameApps.hk 香港手机游戏网",
     ".": [

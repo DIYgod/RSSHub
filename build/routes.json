@@ -22416,6 +22416,44 @@
     "name": "福州地铁",
     "url": "www.fzmtr.com"
   },
+  "galxe": {
+    "routes": {
+      "/quest/:alias": {
+        "path": "/quest/:alias",
+        "name": "Galxe",
+        "url": "app.galxe.com",
+        "maintainers": [
+          "cxheng315"
+        ],
+        "example": "/galxe/quest/MissionWeb3",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "app.galxe.com/quest/:alias"
+            ],
+            "target": "/quest/:alias"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "Galxe",
+    "url": "app.galxe.com",
+    "zh": {
+      "name": "銀河"
+    }
+  },
   "gameapps": {
     "routes": {
       "/": {
