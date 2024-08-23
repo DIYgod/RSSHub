@@ -42,6 +42,9 @@ export const twitterGot = async (url, params) => {
     }
     const index = authTokenIndex++ % config.twitter.authToken.length;
     const token = config.twitter.authToken[index];
+
+    const requestUrl = `${url}?${queryString.stringify(params)}`;
+
     let cookie: string | Record<string, any> | null | undefined = await token2Cookie(token);
     if (!cookie) {
         cookie = await login({
@@ -62,6 +65,9 @@ export const twitterGot = async (url, params) => {
                   uri: proxy.proxyUri,
               })
             : new CookieAgent({ cookies: { jar } });
+        if (proxy.proxyUri) {
+            logger.debug(`Proxying request: ${requestUrl}`);
+        }
         dispatchers[token] = {
             jar,
             agent,
@@ -77,7 +83,7 @@ export const twitterGot = async (url, params) => {
             .map((c) => [c?.key, c?.value])
     );
 
-    const response = await ofetch.raw(`${url}?${queryString.stringify(params)}`, {
+    const response = await ofetch.raw(requestUrl, {
         headers: {
             authority: 'x.com',
             accept: '*/*',
