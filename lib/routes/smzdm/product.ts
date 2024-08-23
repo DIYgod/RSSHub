@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, DataItem } from '@/types';
 import { ofetch } from 'ofetch';
 import { load } from 'cheerio';
 
@@ -33,7 +33,7 @@ async function handler(ctx) {
     const $ = load(response);
     const title = $('title').text();
 
-    const items: any[] = [];
+    const items: DataItem[] = [];
 
     // get simple info from list
     $('ul#feed-main-list li').each(function () {
