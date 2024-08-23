@@ -32,7 +32,7 @@ async function login({ username, password, authenticationSecret }) {
             stealth: true,
         });
         const page = await browser.newPage();
-        await page.goto('https://x.com/i/flow/login', { waitUntil: 'domcontentloaded' });
+        await page.goto('https://x.com/i/flow/login');
         await page.waitForSelector('input[autocomplete="username"]');
         await page.type('input[autocomplete="username"]', username);
         const buttons = await page.$$('button');
