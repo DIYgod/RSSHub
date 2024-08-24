@@ -428,9 +428,40 @@ async function handler(ctx) {
                                 const background = $node.css('background-image');
                                 const backgroundUrl = background && background.match(/url\('(.*)'\)/);
                                 const backgroundUrlSrc = backgroundUrl && backgroundUrl[1];
-                                const width = Number.parseFloat($node.css('width') || '0');
-                                const height = ((Number.parseFloat($node.find('.tgme_widget_message_photo').css('padding-top') || '0') / 100) * width).toFixed(2);
-                                tag_media += backgroundUrlSrc ? `<img width="${width}" height="${height}" src="${backgroundUrlSrc}">` : '';
+                                const attrs = [`src="${backgroundUrlSrc}"`];
+                                /*
+                                 * If the width is not in px, it is either a percentage (Link Preview/Instant view)
+                                 * or absent (ditto).
+                                 * Only accept px to prevent images from being invisible or too small.
+                                 */
+                                let width = 0;
+                                const widthStr = $node.css('width');
+                                if (widthStr && widthStr.endsWith('px')) {
+                                    width = Number.parseFloat(widthStr);
+                                }
+                                /*
+                                 * Height is present when the message is an album but does not exist in other cases.
+                                 * Ditto, only accept px.
+                                 * !!!NOTE: images in albums may have smaller width and height.
+                                 */
+                                let height = 0;
+                                const heightStr = $node.css('height');
+                                if (heightStr && heightStr.endsWith('px')) {
+                                    height = Number.parseFloat(heightStr);
+                                }
+                                /*
+                                 * Only calculate height when needed.
+                                 * The aspect ratio is either a percentage (single image) or absent (Link Preview).
+                                 * Only accept percentage to prevent images from being invisible or distorted.
+                                 */
+                                const aspectRatioStr = $node.find('.tgme_widget_message_photo').css('padding-top');
+                                if (height <= 0 && width > 0 && aspectRatioStr && aspectRatioStr.endsWith('%')) {
+                                    height = (Number.parseFloat(aspectRatioStr) / 100) * width;
+                                }
+                                // Only set width/height when >32 to avoid invisible images.
+                                width > 32 && attrs.push(`width="${width}"`);
+                                height > 32 && attrs.push(`height="${height.toFixed(2).replace('.00', '')}"`);
+                                tag_media += backgroundUrlSrc ? `<img ${attrs.join(' ')}>` : '';
                             }
                             if (tag_media) {
                                 tag_media_all += tag_media;
