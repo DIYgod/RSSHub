@@ -19203,7 +19203,7 @@
         "maintainers": [
           "syzq"
         ],
-        "description": "| 策略报告       | 宏观研究    | 券商晨报     | 行业研究 |\n  | -------------- | ----------- | ------------ | -------- |\n  | strategyreport | macresearch | brokerreport | industry |",
+        "description": "| 策略报告       | 宏观研究    | 券商晨报     | 行业研究 | 个股研报 |\n  | -------------- | ----------- | ------------ | -------- | -------- |\n  | strategyreport | macresearch | brokerreport | industry | stock    |",
         "location": "report/index.ts"
       },
       "/search/:keyword": {
