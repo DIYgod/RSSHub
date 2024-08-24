@@ -4,10 +4,11 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/profile/:handle',
-    name: 'Link3',
+    name: 'Link3 Profile',
     url: 'link3.to',
     maintainers: ['cxheng315'],
     example: '/link3/profile/synfutures_defi',
+    parameters: { handle: 'Profile handle' },
     categories: ['other'],
     features: {
         requireConfig: false,

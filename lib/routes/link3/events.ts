@@ -4,7 +4,7 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/events',
-    name: 'Link3',
+    name: 'Link3 Events',
     url: 'link3.to',
     maintainers: ['cxheng315'],
     example: '/link3/events',
