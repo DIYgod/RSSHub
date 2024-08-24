@@ -64,6 +64,10 @@ export type Config = {
     };
     suffix?: string;
     titleLengthLimit: number;
+    apple: {
+        auth?: string;
+        cookie?: string;
+    };
     openai: {
         apiKey?: string;
         model?: string;
@@ -444,6 +448,10 @@ const calculateValue = () => {
         },
 
         // Route-specific Configurations
+        apple: {
+            auth: envs.APPLE_AUTH,
+            cookie: envs.APPLE_COOKIE,
+        },
         bilibili: {
             cookies: bilibili_cookies,
             dmImgList: envs.BILIBILI_DM_IMG_LIST,
