@@ -25,12 +25,11 @@ async function handler() {
     const items = $('li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a.title').text();
-            const link = item.find('a.title').attr('href');
-            const author = item.find('p.author').text();
-            const time = item.find('p.time').text();
-            const description = item.find('p.text').text();
+            const title = $(item).find('a.title').text();
+            const link = $(item).find('a.title').attr('href');
+            const author = $(item).find('p.author').text();
+            const time = $(item).find('p.time').text();
+            const description = $(item).find('p.text').text();
             return {
                 title,
                 link,
