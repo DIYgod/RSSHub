@@ -4,7 +4,7 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/quest/:alias',
-    name: 'Galxe',
+    name: 'Quest',
     url: 'app.galxe.com',
     maintainers: ['cxheng315'],
     example: '/galxe/quest/MissionWeb3',
