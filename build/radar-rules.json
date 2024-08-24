@@ -7708,6 +7708,19 @@
       }
     ]
   },
+  "gs.com": {
+    "_name": "Goldman Sachs",
+    "developer": [
+      {
+        "title": "Goldman Sachs Developer Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog/posts"
+        ],
+        "target": "/gs/developer/blog"
+      }
+    ]
+  },
   "guancha.cn": {
     "_name": "观察者网",
     ".": [
