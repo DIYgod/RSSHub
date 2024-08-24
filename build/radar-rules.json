@@ -6098,7 +6098,7 @@
     "_name": "Galxe",
     "app": [
       {
-        "title": "Galxe",
+        "title": "Quest",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/quest/:alias"

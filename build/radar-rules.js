@@ -2648,7 +2648,7 @@
         source:[ "/kx" ],
         target:"/fx678/kx" } ] },
   "galxe.com":{ _name:"Galxe",
-    app:[ { title:"Galxe",
+    app:[ { title:"Quest",
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/quest/:alias" ],
         target:"/galxe/quest/:alias" } ] },
