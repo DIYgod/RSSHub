@@ -30,13 +30,7 @@ export const route: Route = {
 };
 
 async function handlerRoute(): Promise<Data> {
-    const response = await ofetch('https://developer.gs.com/blog/posts', {
-        headers: {
-            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
-        },
-        body: null,
-        method: 'GET',
-    });
+    const response = await ofetch('https://developer.gs.com/blog/posts');
     const $ = load(response);
 
     const items = $('div[data-cy="blog-card-grid"] a')
