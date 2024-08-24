@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getRatingChangeStr, getEpsStr, getPeStr } from '../utils';
+import { getRatingChangeStr, getEpsOrPeStr } from '../utils';
 
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -92,10 +92,10 @@ async function handler(ctx) {
                         const nextYear = currentYear + 1;
                         const description = $('.newsContent').html();
                         const enclosureUrl = $('#ContentBody .rightlab').attr('href');
-                        const predictThisYearEps = getEpsStr(tempOriginItem.predictThisYearEps);
-                        const predictThisYearPe = getPeStr(tempOriginItem.predictThisYearPe);
-                        const predictNextYearEps = getEpsStr(tempOriginItem.predictNextYearEps);
-                        const predictNextYearPe = getPeStr(tempOriginItem.predictNextYearPe);
+                        const predictThisYearEps = getEpsOrPeStr(tempOriginItem.predictThisYearEps, 3);
+                        const predictThisYearPe = getEpsOrPeStr(tempOriginItem.predictThisYearPe, 2);
+                        const predictNextYearEps = getEpsOrPeStr(tempOriginItem.predictNextYearEps, 3);
+                        const predictNextYearPe = getEpsOrPeStr(tempOriginItem.predictNextYearPe, 2);
 
                         item.enclosure_url = enclosureUrl;
                         item.description = art(path.join(__dirname, '../templates/stock_description.art'), {

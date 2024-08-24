@@ -23,20 +23,13 @@ function getRatingChangeStr(ratingChange) {
     return ratingChangeName;
 }
 
-function getEpsStr(eps) {
-    let EpsStr = '';
-    if (eps !== undefined) {
-        EpsStr = eps === '' ? '' : Number(eps).toFixed(3);
+// 按照东方财富的 js 规则：收益是保留三位小数，市盈率是保留两位小数
+function getEpsOrPeStr(epsOrPe, keepDecimal) {
+    let EpsOrPeStr = '';
+    if (epsOrPe !== undefined) {
+        EpsOrPeStr = epsOrPe === '' ? '' : Number(epsOrPe).toFixed(keepDecimal);
     }
-    return EpsStr;
+    return EpsOrPeStr;
 }
 
-function getPeStr(pe) {
-    let PeStr = '';
-    if (pe !== undefined) {
-        PeStr = pe === '' ? '' : Number(pe).toFixed(2);
-    }
-    return PeStr;
-}
-
-export { getRatingChangeStr, getEpsStr, getPeStr };
+export { getRatingChangeStr, getEpsOrPeStr };
