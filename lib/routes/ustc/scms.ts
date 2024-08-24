@@ -4,7 +4,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+// import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const map = new Map([
     ['kydt', { title: '中国科学技术大学化学与材料科学学院 - 科研动态', id: '2404' }],
@@ -38,17 +38,17 @@ export const route: Route = {
     maintainers: ['boxie123'],
     handler,
     url: 'scms.ustc.edu.cn/',
-    description: `| 院内新闻 | 通知公告 | 科研动态 | 学术活动 |
-  | -------- | -------- | -------- | -------- |
-  | ynxw     | tzgg     | kydt     | xshd     |`,
+    description: `| 院内新闻 | 通知公告 | 科研动态 | 学术活动 | 其他 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | ynxw     | tzgg     | kydt     | xshd     | 自定义id  |`,
 };
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'tzgg';
-    const info = map.get(type);
-    if (!info) {
-        throw new InvalidParameterError('invalid type');
-    }
+    const info = map.get(type) ?? { title: `中国科学技术大学化学与材料科学学院 - ${type}`, id: type };
+    // if (!info) {
+    //     throw new InvalidParameterError('invalid type');
+    // }
     const id = info.id;
 
     const response = await got(`${host}/${id}/list.htm`);
