@@ -3,9 +3,9 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/blog',
+    path: '/developer/blog',
     categories: ['blog'],
-    example: '/gs-developer/blog',
+    example: '/gs/developer/blog',
     parameters: {},
     features: {
         requireConfig: false,
@@ -18,12 +18,12 @@ export const route: Route = {
     radar: [
         {
             source: ['developer.gs.com/blog/posts'],
-            target: '/blog',
+            target: '/developer/blog',
         },
     ],
-    name: 'blog',
+    name: 'Goldman Sachs Developer Blog',
     zh: {
-        name: '博客',
+        name: '高盛开发者博客',
     },
     maintainers: ['chesha1'],
     handler: handlerRoute,
@@ -57,7 +57,7 @@ async function handlerRoute(): Promise<Data> {
         });
 
     return {
-        title: 'GOLDMAN SACHS DEVELOPER BLOG',
+        title: 'Goldman Sachs Developer Blog',
         link: 'https://developer.gs.com/blog/posts',
         item: items,
     };

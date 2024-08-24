@@ -1,9 +1,9 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Goldman Sachs Developer',
-    url: 'developer.gs.com',
+    name: 'Goldman Sachs',
+    url: 'goldmansachs.com',
     zh: {
-        name: '高盛开发者',
+        name: '高盛',
     },
 };
