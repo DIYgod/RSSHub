@@ -13,7 +13,9 @@ const getCookie = () => {
     }
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
-        const browser = await puppeteer();
+        const browser = await puppeteer({
+            stealth: true,
+        });
         const page = await browser.newPage();
         const waitForRequest = new Promise<string>((resolve) => {
             page.on('requestfinished', async (request) => {
