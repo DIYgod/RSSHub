@@ -27,7 +27,7 @@ const handler = async () => {
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                const newLocal = $('div.xxy3');
+                const newLocal = $('div.xxy3 .content');
                 // 选择类名为“comment-body”的第一个元素
                 item.description = newLocal.html();
 
@@ -66,7 +66,7 @@ export const route: Route = {
 
     radar: [
         {
-            source: ['https://www.wchscu.cn/public/notice/recruit'],
+            source: ['www.wchscu.cn/public/notice/recruit'],
         },
     ],
     handler,
