@@ -18734,6 +18734,19 @@
       }
     ]
   },
+  "wchscu.cn": {
+    "_name": "华西医院",
+    "www": [
+      {
+        "title": "招聘公告",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/public/notice/recruit"
+        ],
+        "target": "/wchscu/recruit"
+      }
+    ]
+  },
   "web.dev": {
     "_name": "web.dev",
     ".": [

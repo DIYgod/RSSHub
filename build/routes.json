@@ -65901,6 +65901,41 @@
       "blog"
     ]
   },
+  "wchscu": {
+    "routes": {
+      "/recruit": {
+        "name": "招聘公告",
+        "path": "/recruit",
+        "example": "/wchscu/recruit",
+        "url": "www.wchscu.cn",
+        "maintainers": [
+          "ViggoC"
+        ],
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.wchscu.cn/public/notice/recruit"
+            ]
+          }
+        ],
+        "location": "recruit.ts"
+      }
+    },
+    "name": "华西医院",
+    "url": "www.wchscu.cn"
+  },
   "wdc": {
     "routes": {
       "/download/:id?": {
