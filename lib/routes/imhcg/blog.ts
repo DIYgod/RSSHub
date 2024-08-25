@@ -41,7 +41,7 @@ async function handler() {
 
     return {
         title: `Engineering Blogs`,
-        link: `https://infos.imhcg.cn/'`,
+        link: 'https://infos.imhcg.cn/',
         item: items,
     };
 }
