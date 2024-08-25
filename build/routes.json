@@ -32220,6 +32220,35 @@
     "name": "IMDb",
     "url": "www.imdb.com"
   },
+  "imhcg": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "blog"
+        ],
+        "view": 5,
+        "example": "/",
+        "parameters": {},
+        "radar": [
+          {
+            "source": [
+              "infos.imhcg.cn"
+            ]
+          }
+        ],
+        "name": "Engineering blogs",
+        "maintainers": [
+          "ZiHao256"
+        ],
+        "url": "https://infos.imhcg.cn/",
+        "location": "blog.ts"
+      }
+    },
+    "name": "imhcg的信息站",
+    "url": "infos.imhcg.cn",
+    "description": "包含多种技术和新闻信息的网站"
+  },
   "imiker": {
     "routes": {
       "/ask/jinghua": {

@@ -9121,6 +9121,19 @@
       }
     ]
   },
+  "imhcg.cn": {
+    "_name": "imhcg的信息站",
+    "infos": [
+      {
+        "title": "Engineering blogs",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/imhcg/"
+      }
+    ]
+  },
   "imiker.com": {
     "_name": "米课",
     ".": [
