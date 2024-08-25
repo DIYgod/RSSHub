@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/',
-    categories: ['programming', 'blog'],
+    categories: ['blog'],
     view: ViewType.Notifications,
     example: '/',
     parameters: {},
