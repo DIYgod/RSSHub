@@ -10,4 +10,4 @@ const parseFilterStr = (filterStr) => {
     return filters;
 };
 
-module.exports = { parseFilterStr };
+export { parseFilterStr };
