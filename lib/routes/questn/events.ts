@@ -41,7 +41,7 @@ export const route: Route = {
 async function handler(ctx) {
     const url = 'https://api.questn.com/consumer/explore/list/';
 
-    const parsedFilter = parseFilterStr(ctx.req.param('filter')) || {};
+    const parsedFilter = parseFilterStr(ctx.req.param('filter'));
 
     const params = {
         category: parsedFilter.category || '200',
