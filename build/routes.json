@@ -37270,6 +37270,73 @@
     "name": "LINE",
     "url": "today.line.me"
   },
+  "link3": {
+    "routes": {
+      "/events": {
+        "path": "/events",
+        "name": "Link3 Events",
+        "url": "link3.to",
+        "maintainers": [
+          "cxheng315"
+        ],
+        "example": "/link3/events",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "link3.to/events"
+            ],
+            "target": "/events"
+          }
+        ],
+        "location": "events.ts"
+      },
+      "/profile/:handle": {
+        "path": "/profile/:handle",
+        "name": "Link3 Profile",
+        "url": "link3.to",
+        "maintainers": [
+          "cxheng315"
+        ],
+        "example": "/link3/profile/synfutures_defi",
+        "parameters": {
+          "handle": "Profile handle"
+        },
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "link3.to/:handle"
+            ],
+            "target": "/:handle"
+          }
+        ],
+        "location": "profile.ts"
+      }
+    },
+    "name": "Link3",
+    "url": "link3.to"
+  },
   "linkedin": {
     "routes": {
       "/jobs/:job_types/:exp_levels/:keywords?/:routeParams?": {

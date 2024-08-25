@@ -3641,6 +3641,12 @@
   "/line/today/:edition?/:tab?": [
     "nczitzk"
   ],
+  "/link3/events": [
+    "cxheng315"
+  ],
+  "/link3/profile/:handle": [
+    "cxheng315"
+  ],
   "/linkedin/jobs/:job_types/:exp_levels/:keywords?/:routeParams?": [
     "BrandNewLifeJackie26",
     "zhoukuncheng"

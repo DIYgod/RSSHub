@@ -10547,6 +10547,27 @@
       }
     ]
   },
+  "link3.to": {
+    "_name": "Link3",
+    ".": [
+      {
+        "title": "Link3 Events",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/events"
+        ],
+        "target": "/link3/events"
+      },
+      {
+        "title": "Link3 Profile",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:handle"
+        ],
+        "target": "/link3/:handle"
+      }
+    ]
+  },
   "linkedin.com": {
     "_name": "LinkedIn 领英",
     "www": [
