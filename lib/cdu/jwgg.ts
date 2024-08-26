@@ -30,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = 'https://jw.cdu.edu.cn/jwgg.html';
+    const url = 'https://jw.cdu.edu.cn/jwgg.htm';
     const response = await got.get(url);
     const data = response.data;
     const $ = load(data);
