@@ -6,9 +6,9 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/gwgg',
+    path: '/jwgg',
     categories: ['university'],
-    example: '/cdu/gwgg',
+    example: '/cdu/jwgg',
     parameters: {},
     features: {
         requireConfig: false,
