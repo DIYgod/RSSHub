@@ -51,7 +51,7 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                item.description = item.link.startsWith('https://mp.weixin.qq.com') ? $('div.rich_media_content section').html() : $('div.wp_articlecontent').html();
+                item.description = item.link.startsWith('https://mp.weixin.qq.com/') ? $('div.rich_media_content section').html() : $('div.wp_articlecontent').html();
                 return item;
             })
         )
