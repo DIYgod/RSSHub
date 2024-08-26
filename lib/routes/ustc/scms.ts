@@ -30,7 +30,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['scms.ustc.edu.cn/'],
+            source: ['scms.ustc.edu.cn/:id/list.htm'],
             target: '/scms',
         },
     ],
