@@ -21,13 +21,13 @@ export const route: Route = {
     maintainers: ['gdzhht'],
     handler,
     description: `:::warning
-    由于学校网站对非大陆 IP 的访问存在限制，可能需自行部署。
-    :::`,
+由于学校网站对非大陆 IP 的访问存在限制，可能需自行部署。
+:::`,
 };
 
 async function handler() {
     const baseUrl = 'https://www2.scut.edu.cn';
-    const url = `https://www2.scut.edu.cn/gzic/30279/list.htm`;
+    const url = 'https://www2.scut.edu.cn/gzic/30279/list.htm';
 
     const { data: response } = await got(url);
     const $ = load(response);
@@ -40,7 +40,7 @@ async function handler() {
             const pubDate = item.find('.li-img a span');
             return {
                 title: item.find('.li-img a p').text(),
-                link: a.attr('href')?.includes('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
+                link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text().replaceAll(/年|月/g, '-').replaceAll('日', '')),
                 itunes_item_image: `${baseUrl}${item.find('.li-img img').attr('src')}`,
             };
@@ -51,14 +51,14 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                item.description = item.link.includes('mp.weixin.qq.com') ? $('div.rich_media_content section').html() : $('div.wp_articlecontent').html();
+                item.description = item.link.startsWith('https://mp.weixin.qq.com') ? $('div.rich_media_content section').html() : $('div.wp_articlecontent').html();
                 return item;
             })
         )
     );
 
     return {
-        title: `华南理工大学广州国际校区 - 新闻聚焦`,
+        title: '华南理工大学广州国际校区 - 新闻聚焦',
         link: url,
         item: items,
     };

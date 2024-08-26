@@ -21,12 +21,12 @@ export const route: Route = {
     maintainers: ['gdzhht'],
     handler,
     description: `:::warning
-    由于学校网站对非大陆 IP 的访问存在限制，可能需自行部署。
-    :::`,
+由于学校网站对非大陆 IP 的访问存在限制，可能需自行部署。
+:::`,
 };
 
 async function handler() {
-    const url = `https://www2.scut.edu.cn/gzic/30281/list.htm`;
+    const url = 'https://www2.scut.edu.cn/gzic/30281/list.htm';
 
     const { data: response } = await got(url);
     const $ = load(response);
@@ -39,7 +39,7 @@ async function handler() {
             const pubDate = item.find('.thr-box a span');
             return {
                 title: item.find('.thr-box a p').text(),
-                link: a.attr('href')?.includes('http') ? a.attr('href') : `https://www2.scut.edu.cn${a.attr('href')}`,
+                link: a.attr('href')?.startsWith('http') ? a.attr('href') : `https://www2.scut.edu.cn${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text()),
             };
         });
@@ -64,7 +64,7 @@ async function handler() {
     );
 
     return {
-        title: `华南理工大学广州国际校区 - 媒体报道`,
+        title: '华南理工大学广州国际校区 - 媒体报道',
         link: url,
         item: items,
     };

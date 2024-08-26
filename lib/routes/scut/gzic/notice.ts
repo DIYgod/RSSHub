@@ -31,10 +31,11 @@ export const route: Route = {
     description: `| 学术预告 | 教研通知 | 海外学习 | 事务通知 |
   | -------- | -------- | -------- | -------- |
   | xsyg     | jytz     | hwxx     | swtz     |
-    :::warning
-    由于学校网站对非大陆 IP 的访问存在限制，可能需自行部署。
-    部分通知详情页可能会被删除（返回 404），或在校园网外无法访问。
-    :::`,
+
+:::warning
+由于学校网站对非大陆 IP 的访问存在限制，可能需自行部署。
+部分通知详情页可能会被删除（返回 404），或在校园网外无法访问。
+:::`,
 };
 
 async function handler(ctx) {
@@ -55,7 +56,7 @@ async function handler(ctx) {
             const pubDate = item.find('.thr-box a span');
             return {
                 title: item.find('.thr-box a p').text(),
-                link: a.attr('href')?.includes('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
+                link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text()),
             };
         });
