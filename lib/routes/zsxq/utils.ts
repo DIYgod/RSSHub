@@ -1,10 +1,10 @@
 import got from '@/utils/got';
-import type { TopicImage, Topic, BasicResponse } from './types';
+import type { TopicImage, Topic, BasicResponse, ResponseData } from './types';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 
-export async function customFetch<T extends BasicResponse<any>>(path: string, retryCount = 0): Promise<T['resp_data']> {
+export async function customFetch<T extends BasicResponse<ResponseData>>(path: string, retryCount = 0): Promise<T['resp_data']> {
     const apiUrl = 'https://api.zsxq.com/v2';
 
     const response = await got(apiUrl + path, {
