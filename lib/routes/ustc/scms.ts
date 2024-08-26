@@ -7,10 +7,10 @@ import timezone from '@/utils/timezone';
 // import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const map = new Map([
-    ['kydt', { title: '中国科学技术大学化学与材料科学学院 - 科研动态', id: '2404' }],
-    ['tzgg', { title: '中国科学技术大学化学与材料科学学院 - 通知公告', id: '2402' }],
-    ['xshd', { title: '中国科学技术大学化学与材料科学学院 - 学术活动', id: 'xshd' }],
-    ['ynxw', { title: '中国科学技术大学化学与材料科学学院 - 院内新闻', id: '2405' }],
+    ['kydt', { title: '科研动态', id: '2404' }],
+    ['tzgg', { title: '通知公告', id: '2402' }],
+    ['xshd', { title: '学术活动', id: 'xshd' }],
+    ['ynxw', { title: '院内新闻', id: '2405' }],
 ]);
 
 const host = 'https://scms.ustc.edu.cn';
@@ -45,14 +45,17 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'tzgg';
-    const info = map.get(type) ?? { title: `中国科学技术大学化学与材料科学学院 - ${type}`, id: type };
+    const info = map.get(type);
+    //  ?? { title: `中国科学技术大学化学与材料科学学院 - ${type}`, id: type };
     // if (!info) {
     //     throw new InvalidParameterError('invalid type');
     // }
-    const id = info.id;
+    const id = info?.id ?? type;
 
     const response = await got(`${host}/${id}/list.htm`);
     const $ = load(response.data);
+
+    const pageTitle = info?.title ?? $('head > title').text();
 
     let items = $('#wp_news_w6 > .wp_article_list > .list_item')
         .toArray()
@@ -87,7 +90,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: info.title,
+        title: `中国科学技术大学化学与材料科学学院 - ${pageTitle}`,
         link: `${host}/${id}/list.htm`,
         item: items,
     };
