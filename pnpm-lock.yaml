@@ -219,8 +219,8 @@ importers:
         specifier: 0.7.4
         version: 0.7.4
       telegram:
-        specifier: 2.23.10
-        version: 2.23.10
+        specifier: 2.24.11
+        version: 2.24.11
       tiny-async-pool:
         specifier: 2.1.0
         version: 2.1.0
@@ -5314,8 +5314,8 @@ packages:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
 
-  telegram@2.23.10:
-    resolution: {integrity: sha512-ofn6Jhig83GW0wHxpDPoP4EffNKMloZMOhSdN6ltgWUSi3rE6+KWQDi2Gcvem2Xp+sodUw9uBDyq71aLcE3iKA==}
+  telegram@2.24.11:
+    resolution: {integrity: sha512-d4rqMeOI7itNzLXRIcRHdZrCXXV8K6h/aFiJXdMVNWhl0PsCePytsdtjpgmgAuO1tQ8k6jW+aR/DoZk5nE0x9g==}
 
   test-exclude@7.0.1:
     resolution: {integrity: sha512-pFYqmTw68LXVjeWJMST4+borgQP2AyMNbg1BpZh9LbyhUeNkeaPF9gzfPGUAnSMV3qPYdWUwDIjjCLiSDOl7vg==}
@@ -11376,7 +11376,7 @@ snapshots:
       mkdirp: 1.0.4
       yallist: 4.0.0
 
-  telegram@2.23.10:
+  telegram@2.24.11:
     dependencies:
       '@cryptography/aes': 0.1.1
       async-mutex: 0.3.2
