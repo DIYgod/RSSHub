@@ -4,7 +4,7 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/community/:community_url',
-    name: 'QuestN Community Events',
+    name: 'Community Events',
     url: 'app.questn.com',
     maintainers: ['cxheng315'],
     example: '/questn/community/gmnetwork',

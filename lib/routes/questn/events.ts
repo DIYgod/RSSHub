@@ -6,20 +6,26 @@ import { parseFilterStr } from './util';
 
 export const route: Route = {
     path: '/events/:filter?',
-    name: 'QuestN Events',
+    name: 'Events',
     url: 'app.questn.com',
     maintainers: ['cxheng315'],
     example: '/questn/events',
     parameters: {
-        category: 'Category of the event', // 100: trending, 200: newest, 300: top
-        status_filter: 'Status of the event', // 0: all, 100: available, 400: missed
-        community_filter: 'Status of the community', // 0: all community, 100: verified, 200: followed
-        rewards_filter: 'Type of the reward', // 0: all rewards, 100: nft, 200: token, 400: whitelist
-        chain_filter: 'Chain id of the event', // 0: all chains, 1: ethereum, 56: bsc, 137: polygon, 42161: arb, 10: op, 324: zksync, 43114: avax
-        search: 'Search keyword',
-        count: 'Number of events to fetch',
-        page: 'Page number',
+        filter: 'Filter string',
     },
+    description: `
+    :::tip
+
+    Filter parameters:
+    - category: 100: trending, 200: newest, 300: top
+    - status_filter: 0: all, 100: available, 400: missed
+    - community_filter: 0: all community, 100: verified, 200: followed
+    - rewards_filter: 0: all rewards, 100: nft, 200: token, 400: whitelist
+    - chain_filter: 0: all chains, 1: ethereum, 56: bsc, 137: polygon, 42161: arb, 10: op, 324: zksync, 43114: avax
+    - search: 'Search keyword',
+    - count: 'Number of events to fetch',
+    - page: 'Page number',
+    :::`,
     categories: ['other'],
     features: {
         requireConfig: false,
