@@ -6693,6 +6693,9 @@
   "/xiaozhuanlan/column/:id": [
     "TonyRL"
   ],
+  "/xidian/cs/:category?": [
+    "ZiHao256"
+  ],
   "/xidian/gr/:category?": [
     "ZiHao256"
   ],
