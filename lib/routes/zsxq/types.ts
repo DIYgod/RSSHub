@@ -63,6 +63,13 @@ export interface QATopic extends BasicTopic {
     question: {
         images?: TopicImage[];
         text?: string;
+        owner?: {
+            avatar_url: string;
+            description: string;
+            location: string;
+            name: string;
+            user_id: number;
+        };
     };
 }
 

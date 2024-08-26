@@ -46,8 +46,9 @@ export function generateTopicDataItem(topics: Topic[]): DataItem[] {
             case 'q&a':
                 title = topic.question?.text?.split('\n')[0] ?? '问答';
                 description = parseTopicContent(topic.question?.text, topic.question?.images);
+                description = `<blockquote>${String(topic.question?.owner?.name)} 提问：${description}</blockquote>`;
                 if (topic.answered) {
-                    description += '<br><br>';
+                    description += '<br>' + topic.answer?.owner.name + ' 回答：<br><br>';
                     description += parseTopicContent(topic.answer?.text, topic.answer?.images);
                 }
                 break;
