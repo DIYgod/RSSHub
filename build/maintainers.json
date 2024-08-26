@@ -5227,6 +5227,15 @@
   "/scut/yjs": [
     "shengmaosu"
   ],
+  "/scut/gzic/media": [
+    "gdzhht"
+  ],
+  "/scut/gzic/news": [
+    "gdzhht"
+  ],
+  "/scut/gzic/notice/:category?": [
+    "gdzhht"
+  ],
   "/scut/jwc/news": [
     "imkero"
   ],
