@@ -18447,6 +18447,16 @@
         "target": "/ustc/math"
       }
     ],
+    "scms": [
+      {
+        "title": "化学与材料科学学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:id/list.htm"
+        ],
+        "target": "/ustc/scms"
+      }
+    ],
     "sist": [
       {
         "title": "信息科学技术学院",

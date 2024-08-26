@@ -65000,6 +65000,39 @@
         "description": "| 学院新闻 | 通知公告 | 学术交流 | 学术报告 |\n  | -------- | -------- | -------- | -------- |\n  | xyxw     | tzgg     | xsjl     | xsbg     |",
         "location": "math.ts"
       },
+      "/scms/:type?": {
+        "path": "/scms/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/ustc/scms/tzgg",
+        "parameters": {
+          "type": "分类，见下表，默认为通知公告"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "scms.ustc.edu.cn/:id/list.htm"
+            ],
+            "target": "/scms"
+          }
+        ],
+        "name": "化学与材料科学学院",
+        "maintainers": [
+          "boxie123"
+        ],
+        "url": "scms.ustc.edu.cn/",
+        "description": "| 院内新闻 | 通知公告 | 科研动态 | 学术活动 | 其他 |\n  | -------- | -------- | -------- | -------- | -------- |\n  | ynxw     | tzgg     | kydt     | xshd     | 自定义id  |",
+        "location": "scms.ts"
+      },
       "/sist/:type?": {
         "path": "/sist/:type?",
         "categories": [
