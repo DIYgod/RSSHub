@@ -3,7 +3,7 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/',
+    path: '/imhcg',
     categories: ['blog'],
     view: ViewType.Notifications,
     example: '/imhcg',
