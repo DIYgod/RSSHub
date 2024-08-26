@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/',
     categories: ['blog'],
     view: ViewType.Notifications,
-    example: '/',
+    example: '/imhcg',
     parameters: {},
     radar: [
         {
