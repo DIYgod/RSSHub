@@ -22,8 +22,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['app.questn.com/:community_url'],
-            target: '/community/:community_url',
+            source: ['app.questn.com/:communityUrl'],
+            target: '/community/:communityUrl',
         },
     ],
     handler,
