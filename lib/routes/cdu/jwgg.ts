@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '教务公告--教务处',
-    maintainers: ['MR.Mai'],
+    maintainers: ['MR.MAI'],
     handler,
     url: 'jw.cdu.edu.cn/',
 };
@@ -34,23 +34,23 @@ async function handler() {
     const response = await got.get(url);
     const data = response.data;
     const $ = load(data);
-    const list = $('.itemList li')
-        .slice(0, 10)
+    const list = $('.tbDownload tbody')
+        .slice(2, 12)
         .toArray()
         .map((e) => {
             const element = $(e);
-            const title = element.find('li a').attr('title');
-            const link = element.find('li a').attr('href');
+            const title = element.find('.tr a').text();
+            const link = element.find('tr a').attr('href');
             const date = element
-                .find('li a')
+                .find('tr')
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/);
             const pubDate = timezone(parseDate(date), 8);
 
             return {
                 title,
-                link: 'https://jw.cdu.edu.cn/info/' + link,
-                author: '成都大学教务处--公告',
+                link: 'https://jw.cdu.edu.cn/' + link,
+                author: '成都大学教务处通知公告',
                 pubDate,
             };
         });
@@ -62,7 +62,8 @@ async function handler() {
                 const data = itemReponse.data;
                 const itemElement = load(data);
 
-                item.description = itemElement('.articleTxt').html();
+                item.description = itemElement('articleTxt').html();
+                item.title = item.title.includes('...') ? itemElement('#a_con_l_title').text() : item.title;
 
                 return item;
             })
@@ -70,7 +71,7 @@ async function handler() {
     );
 
     return {
-        title: '成大教务处公告',
+        title: '成大教务处通知',
         link: url,
         item: result,
     };
