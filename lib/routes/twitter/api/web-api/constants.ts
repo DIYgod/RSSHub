@@ -4,6 +4,7 @@ const graphQLEndpointsPlain = [
     '/graphql/eS7LO5Jy3xgmd3dbL044EA/UserTweets',
     '/graphql/k5XapwcSikNsEsILW5FvgA/UserByScreenName',
     '/graphql/k3YiLNE_MAy5J-NANLERdg/HomeTimeline',
+    '/graphql/DiTkXJgLqBBxCs7zaYsbtA/HomeLatestTimeline',
     '/graphql/3GeIaLmNhTm1YsUmxR57tg/UserTweetsAndReplies',
     '/graphql/TOU4gQw8wXIqpSzA4TYKgg/UserMedia',
     '/graphql/B8I_QCljDBVfin21TTWMqA/Likes',
@@ -87,6 +88,7 @@ const gqlFeatures = {
     SearchTimeline: gqlFeatureFeed,
     ListLatestTweetsTimeline: gqlFeatureFeed,
     HomeTimeline: gqlFeatureFeed,
+    HomeLatestTimeline: TweetDetailFeatures,
     TweetDetail: TweetDetailFeatures,
     Likes: gqlFeatureFeed,
 };
