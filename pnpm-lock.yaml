@@ -4774,7 +4774,7 @@ packages:
   puppeteer@22.6.2:
     resolution: {integrity: sha512-3GMAJ9adPUSdIHGuYV1b1RqRB6D2UScjnq779uZsvpAP6HOWw2+9ezZiUZaAXVST+Ku7KWsxOjkctEvRasJClA==}
     engines: {node: '>=18'}
-    deprecated: < 22.8.2 is no longer supported
+    deprecated: < 22.6.4 is no longer supported
     hasBin: true
 
   qs@6.13.0:
