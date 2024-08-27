@@ -14443,6 +14443,27 @@
       }
     ]
   },
+  "questn.com": {
+    "_name": "QuestN",
+    "app": [
+      {
+        "title": "Community Events",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:communityUrl"
+        ],
+        "target": "/questn/community/:communityUrl"
+      },
+      {
+        "title": "Events",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/explore"
+        ],
+        "target": "/questn/events/:category?/:status_filter?/:community_filter?/:reward_filter?/:chain_filter?/:search?/:count?/:page?"
+      }
+    ]
+  },
   "getquicker.net": {
     "_name": "Quicker",
     ".": [

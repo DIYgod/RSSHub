@@ -4998,6 +4998,12 @@
   "/questmobile/report/:industry?/:label?": [
     "nczitzk"
   ],
+  "/questn/community/:communityUrl": [
+    "cxheng315"
+  ],
+  "/questn/events/:filter?": [
+    "cxheng315"
+  ],
   "/quicker/qa/:category?/:state?": [
     "Cesaryuan",
     "nczitzk"

@@ -51122,6 +51122,77 @@
     "name": "QuestMobile",
     "url": "questmobile.com.cn"
   },
+  "questn": {
+    "routes": {
+      "/community/:communityUrl": {
+        "path": "/community/:communityUrl",
+        "name": "Community Events",
+        "url": "app.questn.com",
+        "maintainers": [
+          "cxheng315"
+        ],
+        "example": "/questn/community/gmnetwork",
+        "parameters": {
+          "community_url": "Community URL"
+        },
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "app.questn.com/:communityUrl"
+            ],
+            "target": "/community/:communityUrl"
+          }
+        ],
+        "location": "community.ts"
+      },
+      "/events/:filter?": {
+        "path": "/events/:filter?",
+        "name": "Events",
+        "url": "app.questn.com",
+        "maintainers": [
+          "cxheng315"
+        ],
+        "example": "/questn/events",
+        "parameters": {
+          "filter": "Filter string"
+        },
+        "description": "\n:::tip\n\nFilter parameters:\n- category: 100: trending, 200: newest, 300: top\n- status_filter: 0: all, 100: available, 400: missed\n- community_filter: 0: all community, 100: verified, 200: followed\n- rewards_filter: 0: all rewards, 100: nft, 200: token, 400: whitelist\n- chain_filter: 0: all chains, 1: ethereum, 56: bsc, 137: polygon, 42161: arb, 10: op, 324: zksync, 43114: avax\n- search: 'Search keyword',\n- count: 'Number of events to fetch',\n- page: 'Page number',\n:::",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "app.questn.com/explore"
+            ],
+            "target": "/events/:category?/:status_filter?/:community_filter?/:reward_filter?/:chain_filter?/:search?/:count?/:page?"
+          }
+        ],
+        "location": "events.ts"
+      }
+    },
+    "name": "QuestN",
+    "url": "app.questn.com"
+  },
   "quicker": {
     "routes": {
       "/qa/:category?/:state?": {
