@@ -34,7 +34,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = `https://amp-api.podcasts.apple.com/v1/me/library/latest-episodes`;
+    const link = 'https://amp-api.podcasts.apple.com/v1/me/library/latest-episodes';
     const auth = config.apple.auth;
     const cookie = config.apple.cookie;
 
