@@ -72,6 +72,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '计算机科学与技术学院',
+    url: 'cs.xidian.edu.cn',
     maintainers: ['ZiHao256'],
     handler,
     description: `| 文章来源                   | 参数          |
