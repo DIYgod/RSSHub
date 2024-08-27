@@ -14,18 +14,18 @@ export const route: Route = {
         filter: 'Filter string',
     },
     description: `
-    :::tip
+:::tip
 
-    Filter parameters:
-    - category: 100: trending, 200: newest, 300: top
-    - status_filter: 0: all, 100: available, 400: missed
-    - community_filter: 0: all community, 100: verified, 200: followed
-    - rewards_filter: 0: all rewards, 100: nft, 200: token, 400: whitelist
-    - chain_filter: 0: all chains, 1: ethereum, 56: bsc, 137: polygon, 42161: arb, 10: op, 324: zksync, 43114: avax
-    - search: 'Search keyword',
-    - count: 'Number of events to fetch',
-    - page: 'Page number',
-    :::`,
+Filter parameters:
+- category: 100: trending, 200: newest, 300: top
+- status_filter: 0: all, 100: available, 400: missed
+- community_filter: 0: all community, 100: verified, 200: followed
+- rewards_filter: 0: all rewards, 100: nft, 200: token, 400: whitelist
+- chain_filter: 0: all chains, 1: ethereum, 56: bsc, 137: polygon, 42161: arb, 10: op, 324: zksync, 43114: avax
+- search: 'Search keyword',
+- count: 'Number of events to fetch',
+- page: 'Page number',
+:::`,
     categories: ['other'],
     features: {
         requireConfig: false,
