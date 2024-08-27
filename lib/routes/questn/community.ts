@@ -3,7 +3,7 @@ import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
-    path: '/community/:community_url',
+    path: '/community/:communityUrl',
     name: 'Community Events',
     url: 'app.questn.com',
     maintainers: ['cxheng315'],
@@ -35,7 +35,7 @@ async function handler(ctx) {
     const params = {
         count: ctx.req.query('limit') || '20',
         page: '1',
-        community_url: ctx.req.param('community_url') || 'questn', // default to questn
+        community_url: ctx.req.param('communityUrl') || 'questn', // default to questn
     };
 
     const response = await ofetch(`${url}?${new URLSearchParams(params)}`, {
