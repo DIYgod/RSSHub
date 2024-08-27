@@ -68572,6 +68572,7 @@
           "supportScihub": false
         },
         "name": "计算机科学与技术学院",
+        "url": "cs.xidian.edu.cn",
         "maintainers": [
           "ZiHao256"
         ],
@@ -68603,6 +68604,7 @@
           "supportScihub": false
         },
         "name": "研究生院/卓越工程师学院",
+        "url": "gr.xidian.edu.cn",
         "maintainers": [
           "ZiHao256"
         ],
@@ -68634,6 +68636,7 @@
           "supportScihub": false
         },
         "name": "教务处",
+        "url": "jwc.xidian.edu.cn",
         "maintainers": [
           "ShadowySpirits"
         ],
@@ -68642,7 +68645,7 @@
       }
     },
     "name": "西安电子科技大学",
-    "url": "xidian.edu.cn"
+    "url": "www.xidian.edu.cn"
   },
   "ximalaya": {
     "routes": {
