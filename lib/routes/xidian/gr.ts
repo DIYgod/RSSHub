@@ -186,6 +186,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '研究生院/卓越工程师学院',
+    url: 'gr.xidian.edu.cn',
     maintainers: ['ZiHao256'],
     handler,
     description: `| 文章来源          | 参数           |
