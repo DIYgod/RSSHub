@@ -30,7 +30,7 @@ export const route: Route = {
     name: '播客',
     maintainers: ['EthanWng97'],
     handler,
-    url: 'https://podcasts.apple.com/us/library/latest-episodes',
+    url: 'podcasts.apple.com/us/library/latest-episodes',
 };
 
 async function handler() {
