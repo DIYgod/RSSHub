@@ -17918,6 +17918,14 @@
     "_name": "X (Twitter)",
     ".": [
       {
+        "title": "Home latest timeline",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/home"
+        ],
+        "target": "/twitter/home_latest"
+      },
+      {
         "title": "Home timeline",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [

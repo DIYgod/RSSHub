@@ -6139,6 +6139,10 @@
   "/twitch/video/:login/:filter?": [
     "hoilc"
   ],
+  "/twitter/home_latest/:routeParams?": [
+    "DIYgod",
+    "CaoMeiYouRen"
+  ],
   "/twitter/home/:routeParams?": [
     "DIYgod",
     "CaoMeiYouRen"

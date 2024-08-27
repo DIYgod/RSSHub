@@ -63015,6 +63015,48 @@
   },
   "twitter": {
     "routes": {
+      "/home_latest/:routeParams?": {
+        "path": "/home_latest/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/twitter/home_latest",
+        "features": {
+          "requireConfig": [
+            {
+              "name": "TWITTER_USERNAME",
+              "description": "Please see above for details."
+            },
+            {
+              "name": "TWITTER_PASSWORD",
+              "description": "Please see above for details."
+            },
+            {
+              "name": "TWITTER_AUTH_TOKEN",
+              "description": "Please see above for details."
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Home latest timeline",
+        "maintainers": [
+          "DIYgod",
+          "CaoMeiYouRen"
+        ],
+        "radar": [
+          {
+            "source": [
+              "x.com/home"
+            ],
+            "target": "/home_latest"
+          }
+        ],
+        "location": "home-latest.ts"
+      },
       "/home/:routeParams?": {
         "path": "/home/:routeParams?",
         "categories": [
