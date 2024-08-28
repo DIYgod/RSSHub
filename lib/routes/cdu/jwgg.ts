@@ -23,26 +23,26 @@ export const route: Route = {
             source: ['jw.cdu.edu.cn/'],
         },
     ],
-    name: '教务公告--教务处',
+    name: '教务处通知公告',
     maintainers: ['MR.MAI'],
     handler,
     url: 'jw.cdu.edu.cn/',
 };
 
 async function handler() {
-    const url = 'https://jw.cdu.edu.cn/jwgg.htm';
+    const url = 'https://jw.cdu.edu.cn/jwgg.htm';//数据来源网页（待提取网页）
     const response = await got.get(url);
     const data = response.data;
     const $ = load(data);
-    const list = $('.tbDownload tbody')
-        .slice(2, 12)
+    const list = $('.ListTable.dataTable.no-footer tbody tr[role="row"].odd')
+        .slice(0, 10)
         .toArray()
         .map((e) => {
             const element = $(e);
-            const title = element.find('.tr a').text();
-            const link = element.find('tr a').attr('href');
+            const title = element.find('tr.odd a').text().trim();//1.选择器 tr.odd a：这个选择器查找具有 class="odd" 的 <tr> 元素下的 <a> 标签。2..text()：该方法获取选中元素的文本内容。3..trim()：用于去掉字符串前后的空格，确保得到干净的文本。
+            const link = element.find('tr.odd a').attr('href');
             const date = element
-                .find('tr')
+                .find('tr.odd td.columnDate')
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/);
             const pubDate = timezone(parseDate(date), 8);
@@ -62,8 +62,7 @@ async function handler() {
                 const data = itemReponse.data;
                 const itemElement = load(data);
 
-                item.description = itemElement('articleTxt').html();
-                item.title = item.title.includes('...') ? itemElement('#a_con_l_title').text() : item.title;
+                item.description = itemElement('.articleTxt').html();
 
                 return item;
             })
@@ -71,7 +70,7 @@ async function handler() {
     );
 
     return {
-        title: '成大教务处通知',
+        title: '成大教务处通知公告',
         link: url,
         item: result,
     };
