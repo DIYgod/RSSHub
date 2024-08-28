@@ -18,6 +18,7 @@ let api: {
     getSearch: ApiItem;
     getList: ApiItem;
     getHomeTimeline: ApiItem;
+    getHomeLatestTimeline: ApiItem;
 } = {
     init: () => {
         throw new ConfigNotFoundError('Twitter API is not configured');
@@ -31,6 +32,7 @@ let api: {
     getSearch: () => null,
     getList: () => null,
     getHomeTimeline: () => null,
+    getHomeLatestTimeline: () => null,
 };
 
 if (enableWebApi) {
