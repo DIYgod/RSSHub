@@ -1114,6 +1114,9 @@
   "/cdi/:id?": [
     "nczitzk"
   ],
+  "/cdu/jwgg": [
+    "uuwor"
+  ],
   "/cdzjryb/zw/projectList": [
     "TonyRL"
   ],
@@ -5795,7 +5798,7 @@
   "/szse/projectdynamic/:type?/:stage?/:status?": [
     "nczitzk"
   ],
-  "/szse/rule": [
+  "/szse/rule/:channel{.+}?": [
     "nczitzk"
   ],
   "/szu/yz/:type?": [
