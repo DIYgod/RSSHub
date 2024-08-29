@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '教务处通知公告',
-    maintainers: ['MR.MAI'],
+    maintainers: ['uuwor'],
     handler,
     url: 'jw.cdu.edu.cn/',
 };
