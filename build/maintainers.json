@@ -5795,7 +5795,7 @@
   "/szse/projectdynamic/:type?/:stage?/:status?": [
     "nczitzk"
   ],
-  "/szse/rule": [
+  "/szse/rule/:channel{.+}?": [
     "nczitzk"
   ],
   "/szu/yz/:type?": [
