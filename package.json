@@ -56,7 +56,7 @@
         "@opentelemetry/api": "1.9.0",
         "@opentelemetry/exporter-prometheus": "0.52.1",
         "@opentelemetry/exporter-trace-otlp-http": "0.52.1",
-        "@opentelemetry/resources": "1.25.1",
+        "@opentelemetry/resources": "1.26.0",
         "@opentelemetry/sdk-metrics": "1.25.1",
         "@opentelemetry/sdk-trace-base": "1.25.1",
         "@opentelemetry/semantic-conventions": "1.26.0",
