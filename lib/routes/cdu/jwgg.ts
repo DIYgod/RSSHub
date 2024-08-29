@@ -30,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = 'https://jw.cdu.edu.cn/jwgg.htm';    /* 数据来源网页（待提取网页）*/
+    const url = 'https://jw.cdu.edu.cn/jwgg.htm';//数据来源网页（待提取网页）
     const response = await got.get(url);
     const data = response.data;
     const $ = load(data);
@@ -39,7 +39,7 @@ async function handler() {
         .toArray()
         .map((e) => {
             const element = $(e);
-            const title = element.find('tr.odd a').text().trim();    /* 1.选择器 tr.odd a：这个选择器查找具有 class="odd" 的 <tr> 元素下的 <a> 标签。2..text()：该方法获取选中元素的文本内容。3..trim()：用于去掉字符串前后的空格，确保得到干净的文本。*/
+            const title = element.find('tr.odd a').text().trim();//1.选择器 tr.odd a：这个选择器查找具有 class="odd" 的 <tr> 元素下的 <a> 标签。2..text()：该方法获取选中元素的文本内容。3..trim()：用于去掉字符串前后的空格，确保得到干净的文本。
             const link = element.find('tr.odd a').attr('href');
             const date = element
                 .find('tr.odd td.columnDate')
@@ -62,7 +62,7 @@ async function handler() {
                 const data = itemReponse.data;
                 const itemElement = load(data);
 
-                item.description = itemElement('.articleTxt').html();
+                item.description = itemElement('.v_news_content').html();
 
                 return item;
             })
