@@ -39,7 +39,9 @@ async function handler() {
         .toArray()
         .map((e) => {
             const element = $(e);
-            const title = element.find('tr.odd a').text().trim();// 1.选择器 tr.odd a：这个选择器查找具有 class="odd" 的 <tr> 元素下的 <a> 标签。2..text()：该方法获取选中元素的文本内容。3..trim()：用于去掉字符串前后的空格，确保得到干净的文本。
+            const title = element.find('tr.odd a').text().trim();/* 1.选择器 tr.odd a：这个选择器查找具有 class="odd" 的 <tr> 元素下的 <a> 标签。
+                                                                    2..text()：该方法获取选中元素的文本内容。
+                                                                    3..trim()：用于去掉字符串前后的空格，确保得到干净的文本。*/
             const link = element.find('tr.odd a').attr('href');
             const date = element
                 .find('tr.odd td.columnDate')
