@@ -18,7 +18,7 @@ export const route: Route = {
         },
     ],
     name: '推荐',
-    maintainers: ['cnkmmk'],
+    maintainers: ['cnkmmk', 'ovo-tim'],
     handler,
     url: '51cto.com/',
 };
@@ -37,16 +37,9 @@ async function get_fullcontent(item, cookie = '') {
     fullContent = item.url.includes('ost.51cto.com') ? $('.posts-content').html() : $('article').html();
 
     if (!fullContent && cookie === '') {
-        // try {
-        //     const matches = fullContent!.match(pattern)!.slice(0, 3);
-        //     const [v1, v2, v3] = matches as unknown as number[];
-        //     const cookie = '__tst_status=' + (v1 + v2 + v3) + ';';
-        //     console.log(cookie);
-        //     return await get_fullcontent(item, cookie);
-        // } catch (error) {
-        //     logger.error(error);
-        // }
+        // If fullContent is null and cookie is empty, try to get fullContent with cookie
         try {
+            // More details: https://github.com/DIYgod/RSSHub/pull/16583#discussion_r1738643033
             const _matches = articleResponse!.match(pattern)!.slice(0, 3);
             const matches = _matches.map((str) => Number(str.split(':')[1]));
             const [v1, v2, v3] = matches;
