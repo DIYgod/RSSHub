@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { Route, DataItem } from '@/types';
 import { config } from '@/config';
+import { fetchArticles } from './utils';
 
 export const route: Route = {
     path: '/index',
@@ -13,15 +14,15 @@ export const route: Route = {
     description: '通过请求 HTML 获取机器之心首页，可获取10条',
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handler: async (_) => {
+        // Parse HTML to get latest 10 articles
         const baseUrl = 'https://www.jiqizhixin.com';
         const response = await ofetch(baseUrl, {
             headers: {
                 'User-Agent': config.ua,
             },
         });
-
         const $ = load(response);
-
+        const csfr_token = $('meta[name="csrf-token"]').attr('content');
         const items: DataItem[] = $('article')
             .map((_index, article) => {
                 const titleTag = $(article).find('a.article-item__title');
@@ -36,6 +37,12 @@ export const route: Route = {
                 };
             })
             .toArray();
+
+        // Get more articles by requesting graphql
+        const articles = await fetchArticles(csfr_token);
+        if (articles) {
+            items.push(...articles);
+        }
 
         return {
             title: '机器之心',
