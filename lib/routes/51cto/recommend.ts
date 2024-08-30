@@ -4,7 +4,8 @@ import got from '@/utils/got';
 import { getToken, sign } from './utils';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
-import puppeteer from '@/utils/puppeteer';
+import { ofetch } from 'ofetch';
+import { config } from '@/config';
 import logger from '@/utils/logger';
 
 export const route: Route = {
@@ -22,34 +23,39 @@ export const route: Route = {
     url: '51cto.com/',
 };
 
-async function init_page(browser) {
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
-    });
-    // Load for setting up cookies
-    await page.goto('https://www.51cto.com/', {
-        waitUntil: 'domcontentloaded',
-    });
-    return page;
-}
+const pattern = /'(WTKkN|bOYDu|wyeCN)':\s*(\d+)/g;
 
-async function puppeteer_get(link, page) {
-    logger.http(`Requesting ${link}`);
-    await page.goto(link, {
-        waitUntil: 'domcontentloaded',
-    });
-    const response = await page.content();
-
-    return response;
-}
-
-async function get_fullcontent(item, page) {
+async function get_fullcontent(item, cookie = '') {
     let fullContent: null | string = null;
-    const articleResponse = await puppeteer_get(item.url, page);
+    const articleResponse = await ofetch(item.url, {
+        headers: {
+            cookie,
+            'user-agent': config.ua,
+        },
+    });
     const $ = load(articleResponse);
     fullContent = item.url.includes('ost.51cto.com') ? $('.posts-content').html() : $('article').html();
+
+    if (!fullContent && cookie === '') {
+        // try {
+        //     const matches = fullContent!.match(pattern)!.slice(0, 3);
+        //     const [v1, v2, v3] = matches as unknown as number[];
+        //     const cookie = '__tst_status=' + (v1 + v2 + v3) + ';';
+        //     console.log(cookie);
+        //     return await get_fullcontent(item, cookie);
+        // } catch (error) {
+        //     logger.error(error);
+        // }
+        try {
+            const _matches = articleResponse!.match(pattern)!.slice(0, 3);
+            const matches = _matches.map((str) => Number(str.split(':')[1]));
+            const [v1, v2, v3] = matches;
+            const cookie = '__tst_status=' + (v1 + v2 + v3) + ';';
+            return await get_fullcontent(item, cookie);
+        } catch (error) {
+            logger.error(error);
+        }
+    }
 
     return {
         title: item.title,
@@ -81,23 +87,8 @@ async function handler(ctx) {
     });
     const list = response.data.data.data.list;
 
-    const browser = await puppeteer();
-    // let page = await init_page(browser);
-    // Create a list that includes 5 pages
-    const numPages = 50;
-    const pages = Array.from({ length: numPages }, () => init_page(browser));
-    let n = 0;
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.url, async () => await get_fullcontent(item))));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.url, async () => {
-                n++;
-                return get_fullcontent(item, await pages[n % numPages]);
-            })
-        )
-    );
-
-    browser.close();
     return {
         title: '51CTO',
         link: 'https://www.51cto.com/',
