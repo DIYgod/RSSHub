@@ -37,7 +37,7 @@ async function get_fullcontent(item, cookie = '') {
     fullContent = item.url.includes('ost.51cto.com') ? $('.posts-content').html() : $('article').html();
 
     if (!fullContent && cookie === '') {
-        // If fullContent is null and cookie is empty, try to get fullContent with cookie
+        // If fullContent is null and haven't tried to request with cookie, try to get fullContent with cookie
         try {
             // More details: https://github.com/DIYgod/RSSHub/pull/16583#discussion_r1738643033
             const _matches = articleResponse!.match(pattern)!.slice(0, 3);
