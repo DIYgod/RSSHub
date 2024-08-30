@@ -2,6 +2,7 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { Route, DataItem } from '@/types';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/index',
@@ -15,7 +16,7 @@ export const route: Route = {
         const baseUrl = 'https://www.jiqizhixin.com';
         const response = await ofetch(baseUrl, {
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+                'User-Agent': config.ua,
             },
         });
 
