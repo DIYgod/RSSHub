@@ -4,8 +4,7 @@ import got from '@/utils/got';
 import { getToken, sign } from './utils';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
-import { ofetch } from 'ofetch';
-import { config } from '@/config';
+import ofetch from '@/utils/ofetch';
 import logger from '@/utils/logger';
 
 export const route: Route = {
@@ -25,12 +24,11 @@ export const route: Route = {
 
 const pattern = /'(WTKkN|bOYDu|wyeCN)':\s*(\d+)/g;
 
-async function get_fullcontent(item, cookie = '') {
+async function getFullcontent(item, cookie = '') {
     let fullContent: null | string = null;
     const articleResponse = await ofetch(item.url, {
         headers: {
             cookie,
-            'user-agent': config.ua,
         },
     });
     const $ = load(articleResponse);
@@ -43,8 +41,8 @@ async function get_fullcontent(item, cookie = '') {
             const _matches = articleResponse!.match(pattern)!.slice(0, 3);
             const matches = _matches.map((str) => Number(str.split(':')[1]));
             const [v1, v2, v3] = matches;
-            const cookie = '__tst_status=' + (v1 + v2 + v3) + ';';
-            return await get_fullcontent(item, cookie);
+            const cookie = '__tst_status=' + (v1 + v2 + v3) + '#;';
+            return await getFullcontent(item, cookie);
         } catch (error) {
             logger.error(error);
         }
@@ -54,7 +52,7 @@ async function get_fullcontent(item, cookie = '') {
         title: item.title,
         link: item.url,
         pubDate: parseDate(item.pubdate, +8),
-        description: fullContent || item.abstract + '(RSSHub: Failed to get fullContent)', // Return item.abstract if fullContent is null
+        description: fullContent || item.abstract, // Return item.abstract if fullContent is null
     };
 }
 
@@ -80,7 +78,7 @@ async function handler(ctx) {
     });
     const list = response.data.data.data.list;
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.url, async () => await get_fullcontent(item))));
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.url, async () => await getFullcontent(item))));
 
     return {
         title: '51CTO',
