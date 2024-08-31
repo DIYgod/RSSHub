@@ -2,6 +2,7 @@ import { Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import Parser from 'rss-parser';
+import sanitizeHtml from 'sanitize-html';
 
 const parser = new Parser();
 
@@ -44,7 +45,7 @@ export const route: Route = {
             item: feed.items.map((item) => ({
                 title: item.title ?? '',
                 link: item.link,
-                description: item.content?.replace(/href="(.+?)"/g, `href="https://github.com$1"`),
+                description: sanitizeHtml(item.content?.replace(/href="(.+?)"/g, `href="https://github.com$1"`) ?? '', { allowedTags: [...sanitizeHtml.defaults.allowedTags, 'img'] }),
                 pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                 author: item.author,
                 guid: item.id,
