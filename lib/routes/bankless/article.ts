@@ -13,8 +13,8 @@ export const route: Route = {
             source: ['bankless.com/read'],
         },
     ],
-    name: 'Bankless articles',
-    maintainers: ['Colin'],
+    name: 'Articles',
+    maintainers: ['colin4k'],
     handler,
 };
 async function handler() {
@@ -39,7 +39,10 @@ async function handler() {
                 const $ = load(response);
                 const urlList = $('#article').first();
                 const $u = $(urlList);
-                item.description = $u.find('#focalAnchor.contents').text();
+                item.description = $u.find('#focalAnchor.contents').html();
+                const src = $u.find('img').prop('src');
+                const alt = $u.find('img').prop('alt');
+                item.image = { src, alt };
                 item.pubDate = parseDate($u.find('#intro .meta.wow.fadeInUp').children('span')[1].childNodes[0].data);
                 item.author = $u.find('#intro .meta.wow.fadeInUp .authorName').text();
                 return item;
@@ -48,9 +51,9 @@ async function handler() {
     );
     // console.log(items);
     return {
-        title: `Bankless Articles`,
+        title: 'Bankless Articles',
         link: baseUrl,
-        description: `Bankless is a global community to help you on your crypto journey.`,
+        description: 'Bankless is a global community to help you on your crypto journey.',
         item: items,
     };
 }
