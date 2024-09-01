@@ -1,4 +1,4 @@
-import type { Route, Data } from '@/types';
+import type { Route, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -46,7 +46,7 @@ async function handler() {
                 description: itemElement.find('.list-article-intro').text(),
             };
             return info;
-        }) satisfies Data[];
+        }) satisfies DataItem[];
 
     const items = (await Promise.all(
         itemList.map(
@@ -56,9 +56,9 @@ async function handler() {
                     const $ = load(resp);
                     item.description = $('#main section.article-section .doc-content > div').html() || item.description;
                     return item;
-                }) as Promise<Data>
+                }) as Promise<DataItem>
         )
-    )) satisfies Data[];
+    )) satisfies DataItem[];
 
     return {
         title: '游研社-' + $('title').text(),
