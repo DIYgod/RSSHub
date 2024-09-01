@@ -69,7 +69,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx: Context<any, any, any>) {
+async function handler(ctx: Context) {
     const type = ctx.req.param('type') ?? 'pc';
 
     const index = idNameMap.findIndex((item) => item.type === type);
