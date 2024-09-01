@@ -35,18 +35,18 @@ async function handler() {
     const $ = load(response);
 
     const itemList = $('.list-container li')
-        .slice(0, 18)
-        .map(function () {
+        .toArray()
+        .map((item) => {
+            const itemElement = $(item);
             const info = {
-                title: $('.list-article-title', this).text(),
-                link: 'https://www.yystv.cn' + $('a', this).attr('href'),
-                pubDate: parseRelativeDate($('.c-999', this).text()),
-                author: $('.handler-author-link', this).text(),
-                description: $('.list-article-intro', this).text(),
+                title: itemElement.find('.list-article-title').text(),
+                link: 'https://www.yystv.cn' + itemElement.find('a').attr('href'),
+                pubDate: parseRelativeDate(itemElement.find('.c-999').text()),
+                author: itemElement.find('.handler-author-link').text(),
+                description: itemElement.find('.list-article-intro').text(),
             };
             return info;
-        })
-        .get() satisfies Data[];
+        }) satisfies Data[];
 
     const items = (await Promise.all(
         itemList.map(
