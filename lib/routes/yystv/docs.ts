@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
+import type { Route, Data } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/docs',
@@ -22,22 +23,18 @@ export const route: Route = {
         },
     ],
     name: '游研社 - 全部文章',
-    maintainers: ['HaitianLiu'],
+    maintainers: ['HaitianLiu', 'yy4382'],
     handler,
     url: 'yystv.cn/docs',
 };
 
 async function handler() {
     const url = `https://www.yystv.cn/docs`;
-    const response = await got({
-        method: 'get',
-        url,
-    });
+    const response = await ofetch(url);
 
-    const data = response.data;
-    const $ = load(data);
+    const $ = load(response);
 
-    const items = $('.list-container li')
+    const itemList = $('.list-container li')
         .slice(0, 18)
         .map(function () {
             const info = {
@@ -49,7 +46,19 @@ async function handler() {
             };
             return info;
         })
-        .get();
+        .get() satisfies Data[];
+
+    const items = (await Promise.all(
+        itemList.map(
+            (item) =>
+                cache.tryGet(item.link, async () => {
+                    const resp = await ofetch(item.link);
+                    const $ = load(resp);
+                    item.description = $('#main section.article-section .doc-content > div').html() || item.description;
+                    return item;
+                }) as Promise<Data>
+        )
+    )) satisfies Data[];
 
     return {
         title: '游研社-' + $('title').text(),
