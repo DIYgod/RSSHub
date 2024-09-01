@@ -47,7 +47,7 @@ export const route: Route = {
     categories: ['game'],
     example: '/gamersky/news/pc',
     parameters: {
-        type: '资讯类型，见表',
+        type: '资讯类型，见表，默认为 `pc`',
     },
     features: {
         requireConfig: false,
