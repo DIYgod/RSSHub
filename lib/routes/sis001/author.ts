@@ -23,7 +23,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { id = 13_131_575 } = ctx.req.param();
+    const { id = '13131575' } = ctx.req.param();
     const url = `${baseUrl}/forum/space.php?uid=${id}`;
 
     const response = await got(url);
