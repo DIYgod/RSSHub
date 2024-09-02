@@ -3028,6 +3028,9 @@
   "/hupu/:category?": [
     "nczitzk"
   ],
+  "/hust/gs/:category{.+}?": [
+    "nczitzk"
+  ],
   "/hust/yjs": [
     "shengmaosu"
   ],
