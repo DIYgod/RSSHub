@@ -82,7 +82,8 @@ async function handler(ctx) {
 
     const list = await Promise.all(
         posts.items.map(async (item) => {
-            const { shortcode, type, sum_pure, time } = item;
+            const { shortcode, sum, type, time } = item;
+
             const link = `${baseUrl}/post/${shortcode}/`;
             if (type === 'img_multi') {
                 item.images = await cache.tryGet(link, async () => {
@@ -111,8 +112,15 @@ async function handler(ctx) {
             }
 
             return {
-                title: sum_pure,
-                description: art(path.join(__dirname, 'templates/desc.art'), { item }),
+                // sum_pure lacks linebreaks/spaces between lines
+                title: load(sum, null, false).text().replaceAll('\n', ' '),
+                description: art(path.join(__dirname, 'templates/desc.art'), {
+                    item: {
+                        ...item,
+                        // Fix linebreaks
+                        sum: sum.replaceAll('\n', '<br>'),
+                    },
+                }),
                 link,
                 pubDate: parseDate(time, 'X'),
             };
