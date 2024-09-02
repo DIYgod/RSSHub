@@ -42,8 +42,8 @@ importers:
         specifier: 2.2.3
         version: 2.2.3
       '@rss3/sdk':
-        specifier: 0.0.13
-        version: 0.0.13
+        specifier: 0.0.15
+        version: 0.0.15
       '@scalar/hono-api-reference':
         specifier: 0.5.143
         version: 0.5.143(hono@4.5.9)
@@ -1745,14 +1745,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rss3/api-core@0.0.13':
-    resolution: {integrity: sha512-5CRVS0FpCZ8YiS/ttHM0ZxPxM05+WkcEPE7a5klX9NvULbDCISdpYQkiUkdVjZw+hPD7MCtlvBc9tFqTQKojJw==}
+  '@rss3/api-core@0.0.15':
+    resolution: {integrity: sha512-+3sTJqmWAVWFvOLHVtb9kht7jPDcz/icUa46AqWNsaXVBrTdkhq+UEnjtbNp/TYAJfxNxL//0LGCVd9EaWZjXA==}
 
-  '@rss3/api-utils@0.0.13':
-    resolution: {integrity: sha512-ucN9myX/E0DlA3Q+KkpCD/HwpB6fQSMlaHqRhDDV3tuyYrQnP/PjRKpGibx1Sz2x519SJNnsfyDL931H00iDJA==}
+  '@rss3/api-utils@0.0.15':
+    resolution: {integrity: sha512-j3uyM5wcNdlCOQb17BxYO/wnl9XwgnzOKqqnbL8IYr/BTJp2d30zgno3F4xZiiIGJm5fAwISNkIcPZhcs/DfBw==}
 
-  '@rss3/sdk@0.0.13':
-    resolution: {integrity: sha512-5QcC9NeMiKeay/H1JEGlG2ZtmKhZxlyLTA5f6dcIdGZUrSNk4DCM/J+8u0ED73bMQupi6xnUm+dIJdn6A1kHyA==}
+  '@rss3/sdk@0.0.15':
+    resolution: {integrity: sha512-refr0jRJ422G0kO3vU+S3D/6rXTVDAG/thiZYtg68FVuJc7OMmmiPrrRKf/8X/gOTa3BWsUNpyHRnEFNdJa09w==}
 
   '@scalar/hono-api-reference@0.5.143':
     resolution: {integrity: sha512-Rojp75Ma2HB2uUsmOQqsB6mJG8ydg1FB8ful3W8rhrahNZv76zK/wXmNl9B9OsK6AFIf8a7/kZuXMrAoHfHBSA==}
@@ -7283,20 +7283,20 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.21.2':
     optional: true
 
-  '@rss3/api-core@0.0.13':
+  '@rss3/api-core@0.0.15':
     dependencies:
       openapi-fetch: 0.11.2
       ts-case-convert: 2.0.7
       type-fest: 4.26.0
 
-  '@rss3/api-utils@0.0.13':
+  '@rss3/api-utils@0.0.15':
     dependencies:
-      '@rss3/api-core': 0.0.13
+      '@rss3/api-core': 0.0.15
 
-  '@rss3/sdk@0.0.13':
+  '@rss3/sdk@0.0.15':
     dependencies:
-      '@rss3/api-core': 0.0.13
-      '@rss3/api-utils': 0.0.13
+      '@rss3/api-core': 0.0.15
+      '@rss3/api-utils': 0.0.15
 
   '@scalar/hono-api-reference@0.5.143(hono@4.5.9)':
     dependencies:
