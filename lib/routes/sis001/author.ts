@@ -5,10 +5,10 @@ import { load } from 'cheerio';
 import { baseUrl, getThread } from './common';
 
 export const route: Route = {
-    path: '/forum/:id?',
+    path: '/author/:id?',
     categories: ['bbs'],
-    example: '/sis001/forum/322',
-    parameters: { id: '子版块 ID，可在子论坛 URL 找到，默认为 `Funny Jokes | 短篇笑话区`' },
+    example: '/sis001/author/13131575',
+    parameters: { id: '作者 ID，可以在作者的个人空间地址找到' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -17,30 +17,28 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '子版块',
-    maintainers: [],
+    name: '作者',
+    maintainers: ['keocheung'],
     handler,
 };
 
 async function handler(ctx) {
-    const { id = 76 } = ctx.req.param();
-    const url = `${baseUrl}/forum/forum-${id}-1.html`;
+    const { id = 13_131_575 } = ctx.req.param();
+    const url = `${baseUrl}/forum/space.php?uid=${id}`;
 
     const response = await got(url);
-
     const $ = load(response.data);
 
-    let items = $('form table')
-        .last()
-        .find('tbody')
+    const username = $('div.username').text();
+
+    let items = $('div.center_subject ul li a[href^=thread]')
         .toArray()
-        .slice(1) // skip first empty row
         .map((item) => {
             item = $(item);
             return {
-                title: item.find('th em').text() + ' ' + item.find('span a').eq(0).text(),
-                link: new URL(item.find('span a').eq(0).attr('href'), `${baseUrl}/forum/`).href,
-                author: item.find('.author a').text(),
+                title: item.text(),
+                link: `${baseUrl}/forum/${item.attr('href')}`,
+                author: username,
             };
         });
 
@@ -51,8 +49,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('head title').text(),
-        description: $('meta[name=description]').attr('content'),
+        title: `${username}的主题`,
         link: url,
         item: items,
     };
