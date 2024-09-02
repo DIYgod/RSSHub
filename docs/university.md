@@ -6727,9 +6727,9 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 中国石油大学（华东）
 
-### 中国石油大学研究生院通知公告
+### 中国石油大学研究生院首页
 
-<Route author="shengmaosu" example="/upcyjs" path="/upcyjs" />
+<Route author="yanbot-team" example="/upc/yz-index" path="/upc/yz-index" />
 
 ### 主页
 
