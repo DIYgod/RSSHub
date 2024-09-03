@@ -8673,32 +8673,6 @@
     "name": "Blizzard",
     "url": "news.blizzard.com"
   },
-  "blockbeats": {
-    "routes": {
-      "/article-choice": {
-        "path": "/article-choice",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/blockbeats/article-choice",
-        "name": "文章精选",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "radar": [
-          {
-            "source": [
-              "www.theblockbeats.info/article_choice"
-            ],
-            "target": "/article-choice"
-          }
-        ],
-        "location": "article-choice.ts"
-      }
-    },
-    "name": "BlockBeats 律动",
-    "url": "www.theblockbeats.info"
-  },
   "blogread": {
     "routes": {
       "/newest": {
@@ -62162,14 +62136,15 @@
   },
   "theblockbeats": {
     "routes": {
-      "/:channel?": {
-        "path": "/:channel?",
+      "/:channel?/:original?": {
+        "path": "/:channel?/:original?",
         "categories": [
           "finance"
         ],
         "example": "/theblockbeats/newsflash",
         "parameters": {
-          "channel": "类型，见下表，默认为快讯"
+          "channel": "类型，见下表，默认为快讯",
+          "original": "文章类型，仅 `channel` 为 `article` 时有效，见下表，留空为全部"
         },
         "name": "新闻快讯",
         "maintainers": [
@@ -62192,7 +62167,7 @@
             "target": "/newsflash"
           }
         ],
-        "description": "|    快讯   |   文章  |\n  | :-------: | :-----: |\n  | newsflash | article |",
+        "description": "|    快讯   |   文章  |\n  | :-------: | :-----: |\n  | newsflash | article |\n\n  | 全部 | 深度 | 精选 | 热点追踪 |\n  | :--: | :--: | :--: | :---: |\n  |     | -2  | 1    |  2     |",
         "location": "index.ts"
       }
     },

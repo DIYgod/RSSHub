@@ -841,9 +841,6 @@
   "/blizzard/news/:language?/:category?": [
     "nczitzk"
   ],
-  "/blockbeats/article-choice": [
-    "DIYgod"
-  ],
   "/blogread/newest": [
     "fashioncj"
   ],
@@ -5954,7 +5951,7 @@
   "/theatlantic/:category": [
     "EthanWng97"
   ],
-  "/theblockbeats/:channel?": [
+  "/theblockbeats/:channel?/:original?": [
     "Fatpandac",
     "jameshih"
   ],
