@@ -1,11 +1,6 @@
-import type { DataItem, Route } from '@/types';
-import { load } from 'cheerio';
+import type { Route } from '@/types';
 import type { Context } from 'hono';
-import { ofetch } from 'ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-import cache from '@/utils/cache';
-import { mdTableBuilder } from './review';
+import { getArticleList, parseArticleList, getArticle, mdTableBuilder } from './utils';
 
 const idNameMap = [
     {
@@ -85,64 +80,9 @@ async function handler(ctx: Context) {
         throw new Error(`Invalid type: ${type}`);
     }
 
-    const response = await ofetch(
-        `https://db2.gamersky.com/LabelJsonpAjax.aspx?${new URLSearchParams({
-            jsondata: JSON.stringify({
-                type: 'updatenodelabel',
-                isCache: true,
-                cacheTime: 60,
-                nodeId: idName.nodeId,
-                isNodeId: 'true',
-                page: 1,
-            }),
-        })}`,
-        {
-            parseResponse: (txt) => JSON.parse(txt.match(/\((.+)\);/)?.[1] ?? '{}'),
-        }
-    );
-    const $ = load(response.body);
-    const list = $('li')
-        .toArray()
-        .map((item) => {
-            const ele = $(item);
-            const title = ele.find('.tit > a').text();
-            const link = ele.find('.tit > a').attr('href');
-            const pubDate = timezone(parseDate(ele.find('.time').text()), 8);
-            const description = ele.find('.txt').text();
-            if (!link) {
-                return;
-            }
-            return {
-                title,
-                link,
-                pubDate,
-                description,
-            };
-        })
-        .filter((item) => item !== undefined) satisfies DataItem[];
-    const fullTextList = await Promise.all(
-        list.map(
-            (item) =>
-                cache.tryGet(item.link, async () => {
-                    const response = await ofetch(item.link);
-                    const $ = load(response);
-                    const content = $('.Mid2L_con');
-                    content.find('.appGameBuyCardIframe, .GSAppButton, .Mid2L_down').remove();
-                    content.find('a').each((_, item) => {
-                        if (item.attribs.href?.startsWith('https://www.gamersky.com/showimage/id_gamersky.shtml?')) {
-                            item.attribs.href = item.attribs.href.replace('https://www.gamersky.com/showimage/id_gamersky.shtml?', '');
-                        }
-                    });
-                    content.find('img').each((_, item) => {
-                        if (item.attribs.src === 'http://image.gamersky.com/webimg13/zhuanti/common/blank.png') {
-                            item.attribs.src = item.attribs['data-origin'];
-                        }
-                    });
-                    item.description = content.html() || item.description;
-                    return item satisfies DataItem;
-                }) as Promise<DataItem>
-        )
-    );
+    const response = await getArticleList(idName.nodeId);
+    const list = parseArticleList(response);
+    const fullTextList = await Promise.all(list.map((item) => getArticle(item)));
     return {
         title: `${idName.name} - 游民星空`,
         link: 'https://www.gamersky.com/news',
