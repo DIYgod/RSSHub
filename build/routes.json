@@ -56875,6 +56875,29 @@
   },
   "sis001": {
     "routes": {
+      "/author/:id?": {
+        "path": "/author/:id?",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/sis001/author/13131575",
+        "parameters": {
+          "id": "作者 ID，可以在作者的个人空间地址找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "作者",
+        "maintainers": [
+          "keocheung"
+        ],
+        "location": "author.ts"
+      },
       "/forum/:id?": {
         "path": "/forum/:id?",
         "categories": [
