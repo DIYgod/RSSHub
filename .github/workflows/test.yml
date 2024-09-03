@@ -129,6 +129,7 @@ jobs:
         run: |
           set -eux
           export CHROMIUM_EXECUTABLE_PATH="$(which ${{ matrix.chromium.dependency }})"
+          export PUPPETEER_EXECUTABLE_PATH="$(CHROMIUM_EXECUTABLE_PATH)"
           pnpm run vitest puppeteer
         env: ${{ fromJSON(matrix.chromium.environment) }}
 
