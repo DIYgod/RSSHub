@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
-import { parseToken } from '@/routes/xueqiu/cookies';
-
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 const rootUrl = 'https://xueqiu.com';
 
 export const route: Route = {
@@ -36,6 +36,11 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    const cookie = config.xueqiu.cookies;
+    if (cookie === undefined) {
+        throw new ConfigNotFoundError('缺少雪球用户登录后的 Cookie 值');
+    }
+
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') || 10;
     const source = type === '11' ? '买卖' : '';
@@ -48,7 +53,6 @@ async function handler(ctx) {
         11: '交易',
     };
 
-    const token = await parseToken();
     const res2 = await got({
         method: 'get',
         url: `${rootUrl}/v4/statuses/user_timeline.json`,
@@ -58,7 +62,7 @@ async function handler(ctx) {
             source,
         }),
         headers: {
-            Cookie: token,
+            Cookie: cookie,
             Referer: `${rootUrl}/u/${id}`,
         },
     });
@@ -72,7 +76,7 @@ async function handler(ctx) {
                     url: rootUrl + item.target,
                     headers: {
                         Referer: `${rootUrl}/u/${id}`,
-                        Cookie: token,
+                        Cookie: cookie,
                     },
                 });
 
