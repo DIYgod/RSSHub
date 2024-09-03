@@ -10,6 +10,7 @@ interface idNameMap {
     type: string;
     name: string;
     nodeId: string;
+    suffix?: string;
 }
 interface ArticleList {
     status: string;
@@ -42,8 +43,9 @@ export const parseArticleList = (response: string) => {
         .toArray()
         .map((item) => {
             const ele = $(item);
-            const title = ele.find('.tit > a').text();
-            const link = ele.find('.tit > a').attr('href');
+            const a = ele.find('.tt').length ? ele.find('.tt') : ele.find('a');
+            const title = a.text();
+            const link = a.attr('href');
             const pubDate = timezone(parseDate(ele.find('.time').text()), 8);
             const description = ele.find('.txt').text();
             if (!link) {
