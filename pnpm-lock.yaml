@@ -45,8 +45,8 @@ importers:
         specifier: 0.0.15
         version: 0.0.15
       '@scalar/hono-api-reference':
-        specifier: 0.5.143
-        version: 0.5.143(hono@4.5.10)
+        specifier: 0.5.144
+        version: 0.5.144(hono@4.5.10)
       '@sentry/node':
         specifier: 7.116.0
         version: 7.116.0
@@ -1754,22 +1754,22 @@ packages:
   '@rss3/sdk@0.0.15':
     resolution: {integrity: sha512-refr0jRJ422G0kO3vU+S3D/6rXTVDAG/thiZYtg68FVuJc7OMmmiPrrRKf/8X/gOTa3BWsUNpyHRnEFNdJa09w==}
 
-  '@scalar/hono-api-reference@0.5.143':
-    resolution: {integrity: sha512-Rojp75Ma2HB2uUsmOQqsB6mJG8ydg1FB8ful3W8rhrahNZv76zK/wXmNl9B9OsK6AFIf8a7/kZuXMrAoHfHBSA==}
+  '@scalar/hono-api-reference@0.5.144':
+    resolution: {integrity: sha512-ZeboJSlH8ZvdUjVGOZ1XEXKCvyls/s2MS+3Qif8EuTPGi6BG7hjYlcIk74perMc+zZfJl0b61aeaHlqqQ+El+A==}
     engines: {node: '>=18'}
     peerDependencies:
       hono: ^4.0.0
 
-  '@scalar/openapi-types@0.0.1':
-    resolution: {integrity: sha512-qMcUrhe+JRXlI9VGWcY/xGHkGplHdZ5UdGFXJ0q9e20gFVk2HMApE98Mo2iUp42Gff0xHIcNHaEQKAhdfW3R2Q==}
+  '@scalar/openapi-types@0.1.0':
+    resolution: {integrity: sha512-UxyIkRqC2rbvQJhenA+KdgAbLNUPjqI5CHhZmTuxiv7De9ZJLRVTQCa0JxNqSJ/b51VKpqZ/pDLvjbQpxGFWcA==}
     engines: {node: '>=18'}
 
   '@scalar/themes@0.9.28':
     resolution: {integrity: sha512-2pFGnjSBL2daPA5roRNRDy8xAHpeTI5QYpfyTj88iIaYT68EVnDUheUA2i3vRB705FCGEbDR0xKD7poTSfAYng==}
     engines: {node: '>=18'}
 
-  '@scalar/types@0.0.5':
-    resolution: {integrity: sha512-aRPKMt6tXUn+jN/YReJ1CCyjM5rAwJYRJrW+XP4YzlCQf6d4N2dOTmkC2GLEu4iPvhy1Pig6Bnbl7fLiPiKEYg==}
+  '@scalar/types@0.0.6':
+    resolution: {integrity: sha512-MeL08EQO+lA8rJwS8Efch7KYs15G3Bm4XtNmJPRS1Ae85exWXkVS73TDlIyNBfk4eV+COs3tbBBLaUHpxUlRbQ==}
     engines: {node: '>=18'}
 
   '@sec-ant/readable-stream@0.4.1':
@@ -2746,8 +2746,8 @@ packages:
   dezalgo@1.0.4:
     resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   directory-import@3.3.1:
@@ -7163,7 +7163,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.6
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -7298,18 +7298,18 @@ snapshots:
       '@rss3/api-core': 0.0.15
       '@rss3/api-utils': 0.0.15
 
-  '@scalar/hono-api-reference@0.5.143(hono@4.5.10)':
+  '@scalar/hono-api-reference@0.5.144(hono@4.5.10)':
     dependencies:
-      '@scalar/types': 0.0.5
+      '@scalar/types': 0.0.6
       hono: 4.5.10
 
-  '@scalar/openapi-types@0.0.1': {}
+  '@scalar/openapi-types@0.1.0': {}
 
   '@scalar/themes@0.9.28': {}
 
-  '@scalar/types@0.0.5':
+  '@scalar/types@0.0.6':
     dependencies:
-      '@scalar/openapi-types': 0.0.1
+      '@scalar/openapi-types': 0.1.0
       '@scalar/themes': 0.9.28
       '@unhead/schema': 1.10.0
 
@@ -8366,7 +8366,7 @@ snapshots:
       asap: 2.0.6
       wrappy: 1.0.2
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
