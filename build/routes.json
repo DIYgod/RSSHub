@@ -8673,6 +8673,32 @@
     "name": "Blizzard",
     "url": "news.blizzard.com"
   },
+  "blockbeats": {
+    "routes": {
+      "/article-choice": {
+        "path": "/article-choice",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/blockbeats/article-choice",
+        "name": "文章精选",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.theblockbeats.info/article_choice"
+            ],
+            "target": "/article-choice"
+          }
+        ],
+        "location": "article-choice.ts"
+      }
+    },
+    "name": "BlockBeats 律动",
+    "url": "www.theblockbeats.info"
+  },
   "blogread": {
     "routes": {
       "/newest": {

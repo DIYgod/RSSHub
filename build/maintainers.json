@@ -841,6 +841,9 @@
   "/blizzard/news/:language?/:category?": [
     "nczitzk"
   ],
+  "/blockbeats/article-choice": [
+    "DIYgod"
+  ],
   "/blogread/newest": [
     "fashioncj"
   ],

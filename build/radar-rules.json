@@ -2272,6 +2272,35 @@
       }
     ]
   },
+  "theblockbeats.info": {
+    "_name": "BlockBeats 律动",
+    "www": [
+      {
+        "title": "文章精选",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/article_choice"
+        ],
+        "target": "/blockbeats/article-choice"
+      },
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article"
+        ],
+        "target": "/theblockbeats/article"
+      },
+      {
+        "title": "快讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/newsflash"
+        ],
+        "target": "/theblockbeats/newsflash"
+      }
+    ]
+  },
   "blogread.cn": {
     "_name": "技术头条",
     ".": [
@@ -18497,27 +18526,6 @@
           "/:category"
         ],
         "target": "/theatlantic/:category"
-      }
-    ]
-  },
-  "theblockbeats.info": {
-    "_name": "律动 BlockBeats",
-    "www": [
-      {
-        "title": "文章",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/article"
-        ],
-        "target": "/theblockbeats/article"
-      },
-      {
-        "title": "快讯",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/newsflash"
-        ],
-        "target": "/theblockbeats/newsflash"
       }
     ]
   },
