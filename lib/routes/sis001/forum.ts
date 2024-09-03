@@ -44,11 +44,7 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => await getThread(item))
-        )
-    );
+    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(item))));
 
     return {
         title: $('head title').text(),
