@@ -11,34 +11,42 @@ const idNameMap = [
     {
         type: 'today',
         name: '今日推荐',
+        nodeId: '11007',
     },
     {
         name: '单机电玩',
         type: 'pc',
+        nodeId: '129',
     },
     {
         name: 'NS',
         type: 'ns',
+        nodeId: '21160',
     },
     {
         name: '手游',
         type: 'mobile',
+        nodeId: '20260',
     },
     {
         name: '网游',
         type: 'web',
+        nodeId: '20225',
     },
     {
         name: '业界',
         type: 'industry',
+        nodeId: '21163',
     },
     {
         name: '硬件',
         type: 'hardware',
+        nodeId: '20070',
     },
     {
         name: '科技',
         type: 'tech',
+        nodeId: '20547',
     },
 ];
 
@@ -63,7 +71,7 @@ export const route: Route = {
             target: '/news',
         },
     ],
-    name: '游民星空 - 资讯',
+    name: '资讯',
     maintainers: ['yy4382'],
     description: mdTableBuilder(idNameMap),
     handler,
@@ -72,16 +80,29 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const type = ctx.req.param('type') ?? 'pc';
 
-    const index = idNameMap.findIndex((item) => item.type === type);
-    if (index === -1) {
+    const idName = idNameMap.find((item) => item.type === type);
+    if (!idName) {
         throw new Error(`Invalid type: ${type}`);
     }
 
-    const response = await ofetch('https://www.gamersky.com/news');
-    const $ = load(response);
-    const list = $(`div.Mid2_L > div:nth-child(${3 + index}) > ul > li`)
+    const response = await ofetch(
+        `https://db2.gamersky.com/LabelJsonpAjax.aspx?${new URLSearchParams({
+            jsondata: JSON.stringify({
+                type: 'updatenodelabel',
+                isCache: true,
+                cacheTime: 60,
+                nodeId: idName.nodeId,
+                isNodeId: 'true',
+                page: 1,
+            }),
+        })}`,
+        {
+            parseResponse: (txt) => JSON.parse(txt.match(/\((.+)\);/)?.[1] ?? '{}'),
+        }
+    );
+    const $ = load(response.body);
+    const list = $('li')
         .toArray()
-        .slice(0, 20)
         .map((item) => {
             const ele = $(item);
             const title = ele.find('.tit > a').text();
@@ -105,13 +126,25 @@ async function handler(ctx: Context) {
                 cache.tryGet(item.link, async () => {
                     const response = await ofetch(item.link);
                     const $ = load(response);
-                    item.description = $('.Mid2L_con').html() || item.description;
+                    const content = $('.Mid2L_con');
+                    content.find('.appGameBuyCardIframe, .GSAppButton, .Mid2L_down').remove();
+                    content.find('a').each((_, item) => {
+                        if (item.attribs.href?.startsWith('https://www.gamersky.com/showimage/id_gamersky.shtml?')) {
+                            item.attribs.href = item.attribs.href.replace('https://www.gamersky.com/showimage/id_gamersky.shtml?', '');
+                        }
+                    });
+                    content.find('img').each((_, item) => {
+                        if (item.attribs.src === 'http://image.gamersky.com/webimg13/zhuanti/common/blank.png') {
+                            item.attribs.src = item.attribs['data-origin'];
+                        }
+                    });
+                    item.description = content.html() || item.description;
                     return item satisfies DataItem;
                 }) as Promise<DataItem>
         )
     );
     return {
-        title: `${idNameMap[index].name} - 游民星空`,
+        title: `${idName.name} - 游民星空`,
         link: 'https://www.gamersky.com/news',
         item: fullTextList,
     };
