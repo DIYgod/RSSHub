@@ -91,7 +91,7 @@ async function handler(ctx) {
     if (channel !== 'newsflash') {
         list = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(`theblockbeats:${item.link}`, async () => {
                     const response = await ofetch(item.link);
                     const $ = load(response);
                     item.description = render({
