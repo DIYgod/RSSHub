@@ -232,14 +232,8 @@ async function handler(ctx) {
 
     const cookie = await cacheIn.getCookie();
 
-    const response = await got({
-        method: 'get',
-        url: `https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space`,
-        searchParams: {
-            host_mid: uid,
-            platform: 'web',
-            features: 'itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote',
-        },
+    const params = utils.addDmVerifyInfo(`host_mid=${uid}&platform=web&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote`, utils.getDmImgList());
+    const response = await got(`https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?${params}`, {
         headers: {
             Referer: `https://space.bilibili.com/${uid}/`,
             Cookie: cookie,
