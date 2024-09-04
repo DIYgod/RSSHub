@@ -352,8 +352,8 @@ importers:
         specifier: 8.4.0
         version: 8.4.0(eslint@9.9.1)(typescript@5.5.4)
       '@vercel/nft':
-        specifier: 0.27.3
-        version: 0.27.3
+        specifier: 0.27.4
+        version: 0.27.4
       '@vitest/coverage-v8':
         specifier: 2.0.5
         version: 2.0.5(vitest@2.0.5(@types/node@22.5.3)(jsdom@25.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
@@ -2037,8 +2037,8 @@ packages:
   '@unhead/schema@1.10.4':
     resolution: {integrity: sha512-nX9sJgKPy2t4GHB9ky/vkMLbYqXl9Num5NZToTr0rKrIGkshzHhUrbn/EiHreIjcGI1eIpu+edniCDIwGTJgmw==}
 
-  '@vercel/nft@0.27.3':
-    resolution: {integrity: sha512-oySTdDSzUAFDXpsSLk9Q943o+/Yu/+TCFxnehpFQEf/3khi2stMpTHPVNwFdvZq/Z4Ky93lE+MGHpXCRpMkSCA==}
+  '@vercel/nft@0.27.4':
+    resolution: {integrity: sha512-Rioz3LJkEKicKCi9BSyc1RXZ5R6GmXosFMeBSThh6msWSOiArKhb7c75MiWwZEgPL7x0/l3TAfH/l0cxKNuUFA==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -2746,8 +2746,8 @@ packages:
   dezalgo@1.0.4:
     resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   directory-import@3.3.1:
@@ -7163,7 +7163,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.6
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -7617,7 +7617,7 @@ snapshots:
       hookable: 5.5.3
       zhead: 2.2.4
 
-  '@vercel/nft@0.27.3':
+  '@vercel/nft@0.27.4':
     dependencies:
       '@mapbox/node-pre-gyp': 1.0.11
       '@rollup/pluginutils': 4.2.1
@@ -8367,7 +8367,7 @@ snapshots:
       asap: 2.0.6
       wrappy: 1.0.2
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
