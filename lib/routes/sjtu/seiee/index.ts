@@ -101,7 +101,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('title').text(),
+        title: $('title').text() || load(await ofetch(currentUrl))('title').text(),
         link: currentUrl,
         item: items,
     };
