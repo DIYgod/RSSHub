@@ -2912,8 +2912,8 @@ packages:
   dezalgo@1.0.4:
     resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   directory-import@3.3.1:
@@ -4788,8 +4788,8 @@ packages:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
 
-  postcss@8.4.44:
-    resolution: {integrity: sha512-Aweb9unOEpQ3ezu4Q00DPvvM2ZTUitJdNKeP/+uQgr1IBIqu574IaZoURId7BKtWMREwzKa9OgzPzezWGPWFQw==}
+  postcss@8.4.45:
+    resolution: {integrity: sha512-7KTLTdzdZZYscUc65XmjFiB73vBhBfbPztCYdUNvlaso9PrzjzcmjqBPR0lNGkcVlcO4BjiO5rK/qNz+XAen1Q==}
     engines: {node: ^10 || ^12 || >=14}
 
   postgres-array@2.0.0:
@@ -7563,7 +7563,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.6
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8828,7 +8828,7 @@ snapshots:
       asap: 2.0.6
       wrappy: 1.0.2
 
-  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -11030,7 +11030,7 @@ snapshots:
 
   pluralize@8.0.0: {}
 
-  postcss@8.4.44:
+  postcss@8.4.45:
     dependencies:
       nanoid: 3.3.7
       picocolors: 1.1.0
@@ -11477,7 +11477,7 @@ snapshots:
       htmlparser2: 8.0.2
       is-plain-object: 5.0.0
       parse-srcset: 1.0.2
-      postcss: 8.4.44
+      postcss: 8.4.45
 
   sax@1.4.1: {}
 
@@ -12109,7 +12109,7 @@ snapshots:
   vite@5.4.3(@types/node@22.5.3):
     dependencies:
       esbuild: 0.21.5
-      postcss: 8.4.44
+      postcss: 8.4.45
       rollup: 4.21.2
     optionalDependencies:
       '@types/node': 22.5.3
