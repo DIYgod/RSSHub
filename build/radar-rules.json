@@ -1068,6 +1068,203 @@
       }
     ]
   },
+  "agri.cn": {
+    "_name": "中国农业农村信息网",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/agriparams=>{const category=params.category;return category?`/${category}`:\"\"}"
+      },
+      {
+        "title": "机构 - 成果展示",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/jg/cgzs/"
+        ],
+        "target": "/agri/jg/cgzs"
+      },
+      {
+        "title": "资讯 - 最新发布",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zx/zxfb/"
+        ],
+        "target": "/agri/zx/zxfb"
+      },
+      {
+        "title": "资讯 - 农业要闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zx/nyyw/"
+        ],
+        "target": "/agri/zx/nyyw"
+      },
+      {
+        "title": "资讯 - 中心动态",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zx/zxdt/"
+        ],
+        "target": "/agri/zx/zxdt"
+      },
+      {
+        "title": "资讯 - 通知公告",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zx/hxgg/"
+        ],
+        "target": "/agri/zx/hxgg"
+      },
+      {
+        "title": "资讯 - 全国信息联播",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zx/xxlb/"
+        ],
+        "target": "/agri/zx/xxlb"
+      },
+      {
+        "title": "生产 - 生产动态",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/sc/scdt/"
+        ],
+        "target": "/agri/sc/scdt"
+      },
+      {
+        "title": "生产 - 农业品种",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/sc/nypz/"
+        ],
+        "target": "/agri/sc/nypz"
+      },
+      {
+        "title": "生产 - 农事指导",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/sc/nszd/"
+        ],
+        "target": "/agri/sc/nszd"
+      },
+      {
+        "title": "生产 - 农业气象",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/sc/nyqx/"
+        ],
+        "target": "/agri/sc/nyqx"
+      },
+      {
+        "title": "生产 - 专项监测",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/sc/zxjc/"
+        ],
+        "target": "/agri/sc/zxjc"
+      },
+      {
+        "title": "数据 - 市场动态",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/sj/scdt/"
+        ],
+        "target": "/agri/sj/scdt"
+      },
+      {
+        "title": "数据 - 供需形势",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/sj/gxxs/"
+        ],
+        "target": "/agri/sj/gxxs"
+      },
+      {
+        "title": "数据 - 监测预警",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/sj/jcyj/"
+        ],
+        "target": "/agri/sj/jcyj"
+      },
+      {
+        "title": "信息化 - 智慧农业",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/xxh/zhny/"
+        ],
+        "target": "/agri/xxh/zhny"
+      },
+      {
+        "title": "信息化 - 信息化标准",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/xxh/xxhbz/"
+        ],
+        "target": "/agri/xxh/xxhbz"
+      },
+      {
+        "title": "信息化 - 中国乡村资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/xxh/zgxczx/"
+        ],
+        "target": "/agri/xxh/zgxczx"
+      },
+      {
+        "title": "视频 - 新闻资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/video/xwzx/nyxw/"
+        ],
+        "target": "/agri/video/xwzx/nyxw"
+      },
+      {
+        "title": "视频 - 致富天地",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/video/zftd/"
+        ],
+        "target": "/agri/video/zftd"
+      },
+      {
+        "title": "视频 - 地方农业",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/video/dfny/beijing/"
+        ],
+        "target": "/agri/video/dfny/beijing"
+      },
+      {
+        "title": "视频 - 气象农业",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/video/qxny/"
+        ],
+        "target": "/agri/video/qxny"
+      },
+      {
+        "title": "视频 - 讲座培训",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/video/jzpx/"
+        ],
+        "target": "/agri/video/jzpx"
+      },
+      {
+        "title": "视频 - 文化生活",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/video/whsh/"
+        ],
+        "target": "/agri/video/whsh"
+      }
+    ]
+  },
   "ahjzu.edu.cn": {
     "_name": "安徽建筑大学",
     "news": [

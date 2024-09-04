@@ -319,6 +319,9 @@
   "/agora0/pen0": [
     "TonyRL"
   ],
+  "/agri/:category{.+}?": [
+    "nczitzk"
+  ],
   "/ahjzu/news": [
     "Yuk-0v0"
   ],
