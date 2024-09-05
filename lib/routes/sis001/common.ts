@@ -31,7 +31,7 @@ async function getThread(item) {
             .replaceAll(/\u3000{2}.+?(((?:<br>){2})|(&nbsp;))/g, (str) => `<p>${str.replaceAll('<br>', '')}</p>`)
             .replaceAll(/<p>\u3000{6,}(.+?)<\/p>/g, '<p style="text-align:center;">$1</p>')
             .replaceAll('&nbsp;', '')
-            .replaceAll(/<br><br> +<br><br>/g, '') + ($('.defaultpost .postattachlist').html() ?? '');
+            .replace(/<br><br> +<br><br>/, '') + ($('.defaultpost .postattachlist').html() ?? '');
     return item;
 }
 
