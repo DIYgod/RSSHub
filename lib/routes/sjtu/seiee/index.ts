@@ -30,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { path, cat_id = '', search_cat_code = '' } = ctx.req.param();
+    const { path, catID = '', searchCatCode = '' } = ctx.req.param();
 
     const rootUrl = 'https://www.seiee.sjtu.edu.cn';
     const currentUrl = `${rootUrl}/${path}.html`;
@@ -41,8 +41,8 @@ async function handler(ctx) {
                   method: 'POST',
                   body: new URLSearchParams({
                       page: '1',
-                      cat_id,
-                      search_cat_code,
+                      cat_id: catID,
+                      search_cat_code: searchCatCode,
                       search_cat_title: '',
                       template: 'v_ajax_normal_list1',
                   }),
