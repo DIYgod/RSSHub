@@ -755,6 +755,9 @@
   "/bilibili/weekly/:disableEmbed?": [
     "ttttmr"
   ],
+  "/binance/announcement/:type": [
+    "enpitsulin"
+  ],
   "/binance/launchpool": [
     "zhenlohuang"
   ],

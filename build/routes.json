@@ -7971,6 +7971,59 @@
   },
   "binance": {
     "routes": {
+      "/announcement/:type": {
+        "path": "/announcement/:type",
+        "categories": [
+          "finance"
+        ],
+        "example": "/binance/announcement/new-cryptocurrency-listing",
+        "parameters": {
+          "type": {
+            "description": "Binance Announcement type",
+            "default": "new-cryptocurrency-listing",
+            "options": [
+              {
+                "value": "new-cryptocurrency-listing",
+                "label": "New Cryptocurrency Listing"
+              },
+              {
+                "value": "latest-binance-news",
+                "label": "Latest Binance News"
+              },
+              {
+                "value": "latest-activities",
+                "label": "Latest Activities"
+              },
+              {
+                "value": "new-fiat-listings",
+                "label": "New Fiat Listings"
+              },
+              {
+                "value": "api-updates",
+                "label": "API Updates"
+              },
+              {
+                "value": "crypto-airdrop",
+                "label": "Crypto Airdrop"
+              },
+              {
+                "value": "wallet-maintenance-updates",
+                "label": "Wallet Maintenance Updates"
+              },
+              {
+                "value": "delisting",
+                "label": "Delisting"
+              }
+            ]
+          }
+        },
+        "name": "Announcement",
+        "description": "\nType category\n\n - new-cryptocurrency-listing => New Cryptocurrency Listing \n - latest-binance-news        => Latest Binance News        \n - latest-activities          => Latest Activities          \n - new-fiat-listings          => New Fiat Listings          \n - api-updates                => API Updates                \n - crypto-airdrop             => Crypto Airdrop             \n - wallet-maintenance-updates => Wallet Maintenance Updates \n - delisting                  => Delisting                  \n",
+        "maintainers": [
+          "enpitsulin"
+        ],
+        "location": "announcement.ts"
+      },
       "/launchpool": {
         "path": "/launchpool",
         "categories": [
