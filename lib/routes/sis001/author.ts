@@ -29,7 +29,7 @@ async function handler(ctx) {
     const response = await got(url);
     const $ = load(response.data);
 
-    const username = $('div.username').text();
+    const username = $('div.bg div.title').text().replace('的个人空间', '');
 
     let items = $('div.center_subject ul li a[href^=thread]')
         .toArray()
