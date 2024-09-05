@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     handler: async () => {
-        const r = '17ecb9e849c105bc';
+        const r = CryptoJS.lib.WordArray.random(8).toString(CryptoJS.enc.Hex);
         const n = Date.now();
         const o = CryptoJS.SHA256('pHVp671B0tLkW40KCwyPrb6W1GEMEGyT' + r + n).toString(CryptoJS.enc.Hex);
         const data = await ofetch('https://daily-blog.chlinlearn.top/api/daily-blog/getBlogs/new?type=new&pageNum=1&pageSize=20', {
