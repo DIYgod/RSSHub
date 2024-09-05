@@ -56,27 +56,16 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const list = cat_id
-        ? $('li')
-              .toArray()
-              .map((item) => {
-                  item = $(item);
+    const list = $(cat_id ? 'li' : '.u10 li')
+        .toArray()
+        .map((item) => {
+            item = $(item);
 
-                  return {
-                      title: item.find('.name').text().trim(),
-                      link: item.find('a').attr('href'),
-                  };
-              })
-        : $('.u10 li')
-              .toArray()
-              .map((item) => {
-                  item = $(item);
-
-                  return {
-                      title: item.find('.name').text().trim(),
-                      link: item.find('a').attr('href'),
-                  };
-              });
+            return {
+                title: item.find('.name').text().trim(),
+                link: item.find('a').attr('href'),
+            };
+        });
 
     const items = await Promise.all(
         list.map((item) =>
