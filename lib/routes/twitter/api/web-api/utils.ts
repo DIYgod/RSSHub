@@ -8,27 +8,12 @@ import { CookieAgent, CookieClient } from 'http-cookie-agent/undici';
 import { ProxyAgent } from 'undici';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { RateLimiterMemory, RateLimiterRedis, RateLimiterQueue } from 'rate-limiter-flexible';
 import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
+import login from './login';
 
 const dispatchers = {};
 let authTokenIndex = 0;
-
-const loginLimiter = cache.clients.redisClient
-    ? new RateLimiterRedis({
-          points: 1,
-          duration: 5,
-          execEvenly: true,
-          storeClient: cache.clients.redisClient,
-      })
-    : new RateLimiterMemory({
-          points: 1,
-          duration: 5,
-          execEvenly: true,
-      });
-
-const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
 const token2Cookie = (token) =>
     cache.tryGet(`twitter:cookie:${token}`, async () => {
@@ -55,9 +40,19 @@ export const twitterGot = async (url, params) => {
     if (!config.twitter.authToken) {
         throw new ConfigNotFoundError('Twitter cookie is not configured');
     }
-    await loginLimiterQueue.removeTokens(1);
-    const token = config.twitter.authToken[authTokenIndex++ % config.twitter.authToken.length];
-    let cookie = await token2Cookie(token);
+    const index = authTokenIndex++ % config.twitter.authToken.length;
+    const token = config.twitter.authToken[index];
+
+    const requestUrl = `${url}?${queryString.stringify(params)}`;
+
+    let cookie: string | Record<string, any> | null | undefined = await token2Cookie(token);
+    if (!cookie) {
+        cookie = await login({
+            username: config.twitter.username?.[index],
+            password: config.twitter.password?.[index],
+            authenticationSecret: config.twitter.authenticationSecret?.[index],
+        });
+    }
     if (cookie) {
         logger.debug(`Got twitter cookie for token ${token}`);
         if (typeof cookie === 'string') {
@@ -70,6 +65,9 @@ export const twitterGot = async (url, params) => {
                   uri: proxy.proxyUri,
               })
             : new CookieAgent({ cookies: { jar } });
+        if (proxy.proxyUri) {
+            logger.debug(`Proxying request: ${requestUrl}`);
+        }
         dispatchers[token] = {
             jar,
             agent,
@@ -85,7 +83,8 @@ export const twitterGot = async (url, params) => {
             .map((c) => [c?.key, c?.value])
     );
 
-    const response = await ofetch.raw(`${url}?${queryString.stringify(params)}`, {
+    const response = await ofetch.raw(requestUrl, {
+        retry: 0,
         headers: {
             authority: 'x.com',
             accept: '*/*',
@@ -103,15 +102,28 @@ export const twitterGot = async (url, params) => {
         },
         dispatcher: dispatchers[token].agent,
         onResponse: async ({ response }) => {
-            if (response.status === 403) {
-                logger.debug(`Delete twitter cookie for token ${token}`);
-                await cache.set(`twitter:cookie:${token}`, '', config.cache.contentExpire);
+            if (response.status === 403 || response.status === 401 || response.status === 429) {
+                const newCookie = await login({
+                    username: config.twitter.username?.[index],
+                    password: config.twitter.password?.[index],
+                    authenticationSecret: config.twitter.authenticationSecret?.[index],
+                });
+                if (newCookie) {
+                    await cache.set(`twitter:cookie:${token}`, newCookie, config.cache.contentExpire);
+                    logger.debug(`Reset twitter cookie for token ${token}`);
+                } else {
+                    config.twitter.authToken?.splice(index, 1);
+                    config.twitter.username?.splice(index, 1);
+                    config.twitter.password?.splice(index, 1);
+                    await cache.set(`twitter:cookie:${token}`, '', config.cache.contentExpire);
+                    logger.debug(`Delete twitter cookie for token ${token}, remaining tokens: ${config.twitter.authToken?.length}`);
+                }
             }
         },
     });
 
     if (token) {
-        logger.debug(`Reset twitter cookie for token ${token}`);
+        logger.debug(`Update twitter cookie for token ${token}`);
         await cache.set(`twitter:cookie:${token}`, JSON.stringify(dispatchers[token].jar.serializeSync()), config.cache.contentExpire);
     }
 

@@ -85,7 +85,7 @@ function getArticleUrl(onclick?: string) {
 async function getList(url: string | URL, form: Record<string, string> = {}) {
     const { body } = await got.post(url, { form });
     const $ = load(body);
-    const title = $('#main > div.dqwz > a').last().text();
+    const title = $('#main > div.dqwz > a').last().text() || '北京航空航天大学教务部';
     const list = $('#main div.news_list > ul > li')
         .toArray()
         .map((item) => {

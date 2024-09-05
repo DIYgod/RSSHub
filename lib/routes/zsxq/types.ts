@@ -63,6 +63,13 @@ export interface QATopic extends BasicTopic {
     question: {
         images?: TopicImage[];
         text?: string;
+        owner?: {
+            avatar_url: string;
+            description: string;
+            location: string;
+            name: string;
+            user_id: number;
+        };
     };
 }
 
@@ -139,6 +146,8 @@ export interface TopicImage {
 }
 
 export type Topic = TalkTopic | QATopic | TaskTopic | SolutionTopic;
+
+export type ResponseData = UserInfo | GroupInfo | Topic[];
 
 export type UserInfoResponse = BasicResponse<UserInfo>;
 

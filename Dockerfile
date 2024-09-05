@@ -132,7 +132,7 @@ RUN \
     set -ex && \
     apt-get update && \
     apt-get install -yq --no-install-recommends \
-        dumb-init git \
+        dumb-init git curl \
     ; \
     if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ]; then \
         if [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
