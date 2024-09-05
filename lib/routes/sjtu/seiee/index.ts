@@ -6,10 +6,10 @@ import timezone from '@/utils/timezone';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
-    path: '/seiee/:path/:cat_id?/:search_cat_code?',
+    path: '/seiee/:path/:catID?/:searchCatCode?',
     categories: ['university'],
     example: '/sjtu/seiee/xzzx_notice_bks',
-    parameters: { path: "不含'.html'的最后一部分路径", cat_id: "'本科生人才培养'与'研究生人才培养'的类别ID", search_cat_code: "'本科生人才培养'与'研究生人才培养'下类别名" },
+    parameters: { path: "不含'.html'的最后一部分路径", catID: "'本科生人才培养'与'研究生人才培养'的类别ID", searchCatCode: "'本科生人才培养'与'研究生人才培养'下类别名" },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -35,7 +35,7 @@ async function handler(ctx) {
     const rootUrl = 'https://www.seiee.sjtu.edu.cn';
     const currentUrl = `${rootUrl}/${path}.html`;
     const ajaxUrl = `${rootUrl}/active/ajax_article_list.html`;
-    const response = cat_id
+    const response = catID
         ? (
               await ofetch(ajaxUrl, {
                   method: 'POST',
@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const list = $(cat_id ? 'li' : '.u10 li')
+    const list = $(catID ? 'li' : '.u10 li')
         .toArray()
         .map((item) => {
             item = $(item);
