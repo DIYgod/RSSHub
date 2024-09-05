@@ -29,7 +29,7 @@ async function getThread(item) {
             .html()
             ?.replaceAll('\n', '')
             .replaceAll(/\u3000{2}.+?(((?:<br>){2})|(&nbsp;))/g, (str) => `<p>${str.replaceAll('<br>', '')}</p>`)
-            .replaceAll(/<p>\u3000{6,}(.+?)<\/p>/g, '<p style="text-align:center;">$1</p>')
+            .replaceAll(/<p>\u3000{6,}(.+?)<\/p>/g, '<h3 style="text-align:center;">$1</h3>')
             .replaceAll('&nbsp;', '')
             .replace(/^.+?((?:作者)|(?:<p>))/, '$1') + ($('.defaultpost .postattachlist').html() ?? '');
     return item;
