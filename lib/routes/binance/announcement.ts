@@ -59,7 +59,7 @@ const handler: Route['handler'] = async (ctx) => {
         'Accept-Language': language ?? 'en-US,en;q=0.9',
     };
     const announcementsConfig = (await cache.tryGet(`binance:announcements:${language}`, async () => {
-        const announcementRes = await ofetch<string>(announcementCategoryUrl, { headers, redirect: 'follow' });
+        const announcementRes = await ofetch<string>(announcementCategoryUrl, { headers });
         const $ = cheerio.load(announcementRes);
 
         const appData = JSON.parse($('#__APP_DATA').text());
@@ -91,9 +91,9 @@ const handler: Route['handler'] = async (ctx) => {
         throw new Error('Unexpected announcements config');
     }
 
-    const link = `${baseUrl}${targetItem.url.replace(baseUrl, '')}`;
+    const link = new URL(targetItem.url, baseUrl).toString();
 
-    const response = await ofetch<string>(link, { headers, redirect: 'follow' });
+    const response = await ofetch<string>(link, { headers });
 
     const $ = cheerio.load(response);
     const appData = JSON.parse($('#__APP_DATA').text());
@@ -112,9 +112,11 @@ const handler: Route['handler'] = async (ctx) => {
                 pubDate: parseDate(i.releaseDate),
             } as DataItem;
             return cache.tryGet(`binance:announcement:${i.code}:${language}`, async () => {
-                const res = await ofetch(link, { headers, redirect: 'follow' });
+                const res = await ofetch(link, { headers });
                 const $ = cheerio.load(res);
-                item.description = $('#support_article').html() ?? '';
+                const descriptionEl = $('#support_article > div').first();
+                descriptionEl.find('style').remove();
+                item.description = descriptionEl.html() ?? '';
                 return item;
             }) as Promise<DataItem>;
         })
@@ -128,9 +130,6 @@ const handler: Route['handler'] = async (ctx) => {
     };
 };
 
-/**
- * @deprecated
- */
 export const route: Route = {
     path: '/announcement/:type',
     categories: ['finance'],
@@ -151,7 +150,7 @@ export const route: Route = {
             ],
         },
     },
-    name: 'Binance Announcement',
+    name: 'Announcement',
     description: `
 Type category
 

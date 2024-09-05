@@ -14,7 +14,7 @@ export interface AnnouncementCatalog {
     description: null;
     icon: string;
     parentCatalogId: null;
-    total: 69;
+    total: number;
 }
 
 export interface AnnouncementArticle {
