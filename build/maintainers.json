@@ -5517,6 +5517,9 @@
   "/sjtu/jwc/:type?": [
     "SeanChao"
   ],
+  "/sjtu/seiee/:path/:catID?/:searchCatCode?": [
+    "dzx-dzx"
+  ],
   "/sjtu/tongqu/:type?": [
     "SeanChao"
   ],

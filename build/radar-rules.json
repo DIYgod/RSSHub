@@ -16894,6 +16894,16 @@
         ],
         "target": "/sjtu/gs/:type"
       }
+    ],
+    "www.seiee": [
+      {
+        "title": "电子信息与电气工程学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:path.html"
+        ],
+        "target": "/sjtu/seiee/:path"
+      }
     ]
   },
   "sketis.net": {
