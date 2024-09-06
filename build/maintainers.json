@@ -2338,6 +2338,9 @@
   "/globallawreview/": [
     "nczitzk"
   ],
+  "/go/niid/idwr-dl/:year?": [
+    "nczitzk"
+  ],
   "/gocn/jobs": [
     "AtlanCI",
     "CcccFz"
