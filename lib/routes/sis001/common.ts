@@ -22,15 +22,16 @@ async function getThread(item) {
         ),
         8
     );
-    $('div[id^=postmessage_] table, fieldset, .posttags, strong font').remove();
+    $('div[id^=postmessage_] table, fieldset, .posttags, strong font, span:empty').remove();
     item.description =
         $('div[id^=postmessage_]')
             .eq(0)
             .html()
             ?.replaceAll('\n', '')
             .replaceAll(/\u3000{2}.+?(((?:<br>){2})|(&nbsp;))/g, (str) => `<p>${str.replaceAll('<br>', '')}</p>`)
+            .replaceAll(/<p>\u3000{6,}(.+?)<\/p>/g, '<p style="text-align:center;">$1</p>')
             .replaceAll('&nbsp;', '')
-            .replace(/^.+?((?:作者)|(?:<p>))/, '$1') + ($('.defaultpost .postattachlist').html() ?? '');
+            .replace(/<br><br> +<br><br>/, '') + ($('.defaultpost .postattachlist').html() ?? '');
     return item;
 }
 

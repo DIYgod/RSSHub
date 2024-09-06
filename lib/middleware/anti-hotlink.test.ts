@@ -116,6 +116,148 @@ const expects = {
             desc: '<video src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"></video> - Powered by RSSHub',
         },
     },
+    extraComplicated: {
+        origin: {
+            items: [
+                {
+                    content:
+                        '<a href="https://mock.com/DIYgod/RSSHub"></a>\n<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n\n<a href="http://mock.com/DIYgod/RSSHub"></a>\n<img src="https://mock.com/DIYgod/RSSHub.jpg" data-src="/DIYgod/RSSHub0.jpg" referrerpolicy="no-referrer">\n<img data-src="/DIYgod/RSSHub.jpg" src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<img data-mock="/DIYgod/RSSHub.png" src="https://mock.com/DIYgod/RSSHub.png" referrerpolicy="no-referrer">\n<img mock="/DIYgod/RSSHub.gif" src="https://mock.com/DIYgod/RSSHub.gif" referrerpolicy="no-referrer">\n<img src="http://mock.com/DIYgod/DIYgod/RSSHub" referrerpolicy="no-referrer">\n<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" referrerpolicy="no-referrer">',
+                    itunes: {},
+                },
+                {
+                    content: '<a href="https://mock.com/DIYgod/RSSHub"></a>\n<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">',
+                    itunes: {},
+                },
+                {
+                    content:
+                        '<a href="https://mock.com/DIYgod/RSSHub"></a>\n<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" referrerpolicy="no-referrer">',
+                    enclosure: {
+                        url: 'https://mock.com/DIYgod/RSSHub.png',
+                        type: 'image/png',
+                    },
+                    itunes: {
+                        image: 'https://mock.com/DIYgod/RSSHub.gif',
+                    },
+                },
+            ],
+            image: {
+                link: 'https://github.com/DIYgod/RSSHub',
+                url: 'https://mock.com/DIYgod/RSSHub.png',
+                title: 'Test complicated',
+            },
+            description: '<img src="http://mock.com/DIYgod/DIYgod/RSSHub"> - Powered by RSSHub',
+        },
+        processed: {
+            items: [
+                {
+                    content:
+                        '<a href="https://mock.com/DIYgod/RSSHub"></a>\n<img src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n\n<a href="http://mock.com/DIYgod/RSSHub"></a>\n<img src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" data-src="/DIYgod/RSSHub0.jpg" referrerpolicy="no-referrer">\n<img data-src="/DIYgod/RSSHub.jpg" src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<img data-mock="/DIYgod/RSSHub.png" src="https://i3.wp.com/mock.com/DIYgod/RSSHub.png" referrerpolicy="no-referrer">\n<img mock="/DIYgod/RSSHub.gif" src="https://i3.wp.com/mock.com/DIYgod/RSSHub.gif" referrerpolicy="no-referrer">\n<img src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub" referrerpolicy="no-referrer">\n<img src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" referrerpolicy="no-referrer">',
+                    itunes: {},
+                },
+                {
+                    content: '<a href="https://mock.com/DIYgod/RSSHub"></a>\n<img src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">',
+                    itunes: {},
+                },
+                {
+                    content:
+                        '<a href="https://mock.com/DIYgod/RSSHub"></a>\n<img src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" referrerpolicy="no-referrer">',
+                    enclosure: {
+                        url: 'https://i3.wp.com/mock.com/DIYgod/RSSHub.png',
+                        type: 'image/png',
+                    },
+                    itunes: {
+                        image: 'https://i3.wp.com/mock.com/DIYgod/RSSHub.gif',
+                    },
+                },
+            ],
+            image: {
+                link: 'https://github.com/DIYgod/RSSHub',
+                url: 'https://i3.wp.com/mock.com/DIYgod/RSSHub.png',
+                title: 'Test complicated',
+            },
+            description: '<img src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"> - Powered by RSSHub',
+        },
+        urlencoded: {
+            items: [
+                {
+                    content:
+                        '<a href="https://mock.com/DIYgod/RSSHub"></a>\n<img src="https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.jpg" referrerpolicy="no-referrer">\n\n<a href="http://mock.com/DIYgod/RSSHub"></a>\n<img src="https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.jpg" data-src="/DIYgod/RSSHub0.jpg" referrerpolicy="no-referrer">\n<img data-src="/DIYgod/RSSHub.jpg" src="https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.jpg" referrerpolicy="no-referrer">\n<img data-mock="/DIYgod/RSSHub.png" src="https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.png" referrerpolicy="no-referrer">\n<img mock="/DIYgod/RSSHub.gif" src="https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.gif" referrerpolicy="no-referrer">\n<img src="https://images.weserv.nl?url=http%3A%2F%2Fmock.com%2FDIYgod%2FDIYgod%2FRSSHub" referrerpolicy="no-referrer">\n<img src="https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.jpg" referrerpolicy="no-referrer">\n<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" referrerpolicy="no-referrer">',
+                    itunes: {},
+                },
+                {
+                    content: '<a href="https://mock.com/DIYgod/RSSHub"></a>\n<img src="https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.jpg" referrerpolicy="no-referrer">',
+                    itunes: {},
+                },
+                {
+                    content:
+                        '<a href="https://mock.com/DIYgod/RSSHub"></a>\n<img src="https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.jpg" referrerpolicy="no-referrer">\n<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" referrerpolicy="no-referrer">',
+                    enclosure: {
+                        url: 'https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.png',
+                        type: 'image/png',
+                    },
+                    itunes: {
+                        image: 'https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.gif',
+                    },
+                },
+            ],
+            image: {
+                link: 'https://github.com/DIYgod/RSSHub',
+                url: 'https://images.weserv.nl?url=https%3A%2F%2Fmock.com%2FDIYgod%2FRSSHub.png',
+                title: 'Test complicated',
+            },
+            description: '<img src="https://images.weserv.nl?url=http%3A%2F%2Fmock.com%2FDIYgod%2FDIYgod%2FRSSHub"> - Powered by RSSHub',
+        },
+    },
+    extraMultimedia: {
+        origin: {
+            items: [
+                {
+                    content:
+                        '<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<video src="https://mock.com/DIYgod/RSSHub.mp4"></video>\n<video poster="https://mock.com/DIYgod/RSSHub.jpg">\n<source src="https://mock.com/DIYgod/RSSHub.mp4" type="video/mp4">\n<source src="https://mock.com/DIYgod/RSSHub.webm" type="video/webm">\n</video>\n<audio src="https://mock.com/DIYgod/RSSHub.mp3"></audio>\n<iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>',
+                },
+                {
+                    content: '<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<video src="https://mock.com/DIYgod/RSSHub.mp4"></video>',
+                    enclosure: {
+                        url: 'https://mock.com/DIYgod/RSSHub.mp4',
+                        type: 'video/mp4',
+                    },
+                },
+            ],
+            description: '<video src="http://mock.com/DIYgod/DIYgod/RSSHub"></video> - Powered by RSSHub',
+        },
+        relayed: {
+            items: [
+                {
+                    content:
+                        '<img src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<video src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp4"></video>\n<video poster="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg">\n<source src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp4" type="video/mp4">\n<source src="https://i3.wp.com/mock.com/DIYgod/RSSHub.webm" type="video/webm">\n</video>\n<audio src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp3"></audio>\n<iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>',
+                },
+                {
+                    content: '<img src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<video src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp4"></video>',
+                    enclosure: {
+                        url: 'https://i3.wp.com/mock.com/DIYgod/RSSHub.mp4',
+                        type: 'video/mp4',
+                    },
+                },
+            ],
+            description: '<video src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"></video> - Powered by RSSHub',
+        },
+        partlyRelayed: {
+            items: [
+                {
+                    content:
+                        '<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<video src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp4"></video>\n<video poster="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg">\n<source src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp4" type="video/mp4">\n<source src="https://i3.wp.com/mock.com/DIYgod/RSSHub.webm" type="video/webm">\n</video>\n<audio src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp3"></audio>\n<iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>',
+                },
+                {
+                    content: '<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">\n<video src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp4"></video>',
+                    enclosure: {
+                        url: 'https://i3.wp.com/mock.com/DIYgod/RSSHub.mp4',
+                        type: 'video/mp4',
+                    },
+                },
+            ],
+            description: '<video src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"></video> - Powered by RSSHub',
+        },
+    },
 };
 
 const testAntiHotlink = async (path, expectObj, query?: string | Record<string, any>) => {
@@ -142,12 +284,55 @@ const testAntiHotlink = async (path, expectObj, query?: string | Record<string, 
     return parsed;
 };
 
-const expectImgOrigin = (query?: string | Record<string, any>) => testAntiHotlink('/test/complicated', expects.complicated.origin, query);
-const expectImgProcessed = (query?: string | Record<string, any>) => testAntiHotlink('/test/complicated', expects.complicated.processed, query);
-const expectImgUrlencoded = (query?: string | Record<string, any>) => testAntiHotlink('/test/complicated', expects.complicated.urlencoded, query);
-const expectMultimediaOrigin = (query?: string | Record<string, any>) => testAntiHotlink('/test/multimedia', expects.multimedia.origin, query);
-const expectMultimediaRelayed = (query?: string | Record<string, any>) => testAntiHotlink('/test/multimedia', expects.multimedia.relayed, query);
-const expectMultimediaPartlyRelayed = (query?: string | Record<string, any>) => testAntiHotlink('/test/multimedia', expects.multimedia.partlyRelayed, query);
+const testAntiHotlinkExtra = async (path, expectObj, query?: string | Record<string, any>) => {
+    const app = (await import('@/app')).default;
+
+    path += query ? `?${new URLSearchParams(query).toString()}` : '';
+
+    const response = await app.request(path);
+    const parsed = await parser.parseString(await response.text());
+    const obj = {
+        description: parsed.description,
+        image: parsed.image,
+        items: parsed.items.slice(0, expectObj.items.length).map((e) => ({
+            content: e.content,
+            enclosure: e.enclosure,
+            itunes: e.itunes,
+        })),
+    };
+    expect(obj).toEqual(expectObj);
+
+    return parsed;
+};
+
+const expectImgOrigin = async (query?: string | Record<string, any>) => {
+    await testAntiHotlink('/test/complicated', expects.complicated.origin, query);
+    await testAntiHotlinkExtra('/test/complicated', expects.extraComplicated.origin, query);
+};
+const expectImgProcessed = async (query?: string | Record<string, any>) => {
+    await testAntiHotlink('/test/complicated', expects.complicated.processed, query);
+    await testAntiHotlinkExtra('/test/complicated', expects.extraComplicated.processed, query);
+};
+
+const expectImgUrlencoded = async (query?: string | Record<string, any>) => {
+    await testAntiHotlink('/test/complicated', expects.complicated.urlencoded, query);
+    await testAntiHotlinkExtra('/test/complicated', expects.extraComplicated.urlencoded, query);
+};
+
+const expectMultimediaOrigin = async (query?: string | Record<string, any>) => {
+    await testAntiHotlink('/test/multimedia', expects.multimedia.origin, query);
+    await testAntiHotlinkExtra('/test/multimedia', expects.extraMultimedia.origin, query);
+};
+
+const expectMultimediaRelayed = async (query?: string | Record<string, any>) => {
+    await testAntiHotlink('/test/multimedia', expects.multimedia.relayed, query);
+    await testAntiHotlinkExtra('/test/multimedia', expects.extraMultimedia.relayed, query);
+};
+
+const expectMultimediaPartlyRelayed = async (query?: string | Record<string, any>) => {
+    await testAntiHotlink('/test/multimedia', expects.multimedia.partlyRelayed, query);
+    await testAntiHotlinkExtra('/test/multimedia', expects.extraMultimedia.partlyRelayed, query);
+};
 
 describe('anti-hotlink', () => {
     it('template-legacy', async () => {
