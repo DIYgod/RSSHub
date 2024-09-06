@@ -38,7 +38,7 @@ async function handler(ctx) {
             items = response.data.featured_items.map((item) => ({
                 title: item.event.name,
                 link: 'https://lu.ma/' + item.event.url,
-                author: item.hosts.map((host) => host.name).join(', '),
+                author: item.hosts ? item.hosts.map((host) => host.name).join(', ') : '',
                 guid: item.event.api_id,
                 pubDate: parseDate(item.event.start_at),
                 itunes_item_image: item.event.cover_url,
@@ -50,7 +50,7 @@ async function handler(ctx) {
                 {
                     title: response.data.event.name,
                     link: 'https://lu.ma/' + response.data.event.url,
-                    author: response.data.hosts.map((host) => host.name).join(', '),
+                    author: response.data.hosts ? response.data.hosts.map((host) => host.name).join(', ') : '',
                     guid: response.data.event.api_id,
                     pubDate: parseDate(response.data.event.start_at),
                     itunes_item_image: response.data.event.cover_url,
@@ -62,7 +62,7 @@ async function handler(ctx) {
             items = response.data.events.map((item) => ({
                 title: item.event.name,
                 link: 'https://lu.ma/' + item.event.url,
-                author: item.hosts.map((host) => host.name).join(', '),
+                author: item.hosts ? item.hosts.map((host) => host.name).join(', ') : '',
                 guid: item.event.api_id,
                 pubDate: parseDate(item.event.start_at),
                 itunes_item_image: item.event.cover_url,
