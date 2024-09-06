@@ -1,4 +1,4 @@
-import { Route } from "@/types";
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
@@ -7,7 +7,7 @@ const host = 'https://www.cqut.edu.cn';
 const typeMap = {
     notify: '/tzgg/xxtz1.htm',
     department: '/tzgg/bmtz.htm',
-    choice: '/tzgg/bmtz'
+    choice: '/tzgg/bmtz',
 };
 const departmentMap = {
     educational: '/jwtz.htm',
@@ -21,11 +21,11 @@ const departmentMap = {
     innovate: '/cxcy.htm',
     library: '/tsgtz.htm',
     security: '/bwctz.htm',
-    industry: '/cxytz.htm'
+    industry: '/cxytz.htm',
 };
 const titleMap = {
     notify: '学校通知',
-    department: '部门通知'
+    department: '部门通知',
 };
 const suffixMap = {
     educational: '教务通知',
@@ -38,14 +38,14 @@ const suffixMap = {
     innovate: '创新通知',
     library: '图书馆通知',
     security: '保卫处通知',
-    industry: '产学研通知'
+    industry: '产学研通知',
 };
 
 export const route: Route = {
     path: '/inform/:type/:department?',
     categories: ['university'],
     example: '/cqut/inform/department/educational',
-    parameters: { type: '通知类型，默认为学校通知', department:'部门，默认为空，仅部门通知有效' },
+    parameters: { type: '通知类型，默认为学校通知', department: '部门，默认为空，仅部门通知有效' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -69,32 +69,32 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'notify';
-    const department = type === 'department' ? ctx.req.param('department') ?? '' : '';
+    const department = type === 'department' ? (ctx.req.param('department') ?? '') : '';
     const link = department === '' ? host + typeMap[type] : host + typeMap.choice + departmentMap[department];
     const title = '重庆理工' + (department === '' ? titleMap[type] : suffixMap[department]);
-    const response = await got.get(link.replace('\"', ''));
+    const response = await got.get(link.replace('"', ''));
     const $ = load(response.data);
     const list = $('div[class="sub_list075 ul-inline"] ul').find('li');
     const items = await Promise.all(
         list.map(async (i, item) => {
             const pageUrl = host + $(item).find('a').attr('href');
-            const { desc } = await cache.tryGet(pageUrl, async() => {
+            const { desc } = await cache.tryGet(pageUrl, async () => {
                 const page = await got.get(pageUrl);
                 const $ = load(page.data);
                 return {
-                    desc: $('.Section0').html()
+                    desc: $('.Section0').html(),
                 };
             });
             return {
                 title: $(item).find('.title').text(),
                 link: pageUrl,
-                description: desc
+                description: desc,
             };
         })
     );
     return {
         title,
         link,
-        item: items
+        item: items,
     };
 }
