@@ -72,7 +72,7 @@ async function handler(ctx) {
     const department = type === 'department' ? (ctx.req.param('department') ?? '') : '';
     const link = department === '' ? host + typeMap[type] : host + typeMap.choice + departmentMap[department];
     const title = '重庆理工' + (department === '' ? titleMap[type] : suffixMap[department]);
-    const response = await got.get(link.replace('"', ''));
+    const response = await got.get(link.replace('&quot', ''));
     const $ = load(response.data);
     const list = $('div[class="sub_list075 ul-inline"] ul').find('li');
     const items = await Promise.all(
