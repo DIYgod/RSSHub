@@ -625,6 +625,9 @@
   "/bendibao/news/:city": [
     "nczitzk"
   ],
+  "/bestblogs/feeds/:category?": [
+    "zhenlohuang"
+  ],
   "/bgmlist/onair/:lang?": [
     "x2cf"
   ],

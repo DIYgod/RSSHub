@@ -6711,6 +6711,35 @@
     "name": "本地宝",
     "url": "bendibao.com"
   },
+  "bestblogs": {
+    "routes": {
+      "/feeds/:category?": {
+        "path": "/feeds/:category?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/bestblogs/feeds/featured",
+        "parameters": {
+          "category": "the category of articles. Can be `programming`, `ai`, `product`, `business` or `featured`. Default is `featured`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "文章列表",
+        "maintainers": [
+          "zhenlohuang"
+        ],
+        "location": "feeds.ts"
+      }
+    },
+    "name": "bestblogs.dev",
+    "url": "www.bestblogs.dev"
+  },
   "bgmlist": {
     "routes": {
       "/onair/:lang?": {
