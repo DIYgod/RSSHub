@@ -20,7 +20,7 @@ export const route: Route = {
     path: '/:type',
     categories: ['university'],
     example: '/nbt/importance',
-    parameters: { type: '通知类型，默认为理工要问' },
+    parameters: { type: '通知类型，默认为理工要闻' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -30,7 +30,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '理工要问',
-    maintainers: ['A-normal'],
+    maintainers: ['bellongyan'],
     handler,
     description: `| 理工要闻 | 媒体理工 | 理工快讯 |
   | ---------- | ----- | ------ |
@@ -50,13 +50,14 @@ async function handler(ctx) {
         list.map(async (i, item) => {
             const info = $(item).find('a').attr('href');
             const pageUrl = host + info;
-            const { desc } = await cache.tryGet(pageUrl, async () => {
+            const result = await cache.tryGet(pageUrl, async () => {
                 const page = await got.get(pageUrl);
                 const $ = load(page.data);
                 return {
                     desc: $('form[name="_newscontent_fromname"]').html(),
                 };
             });
+            const desc = typeof result === 'object' && result !== null ? result.desc : null;
             return {
                 title: $(item).find('a').text(),
                 link: pageUrl,
