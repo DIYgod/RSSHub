@@ -15,21 +15,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['bestblogs.dev/feeds?featured=y'],
-            target: '/feeds/featured',
-        },
-        {
-            source: ['bestblogs.dev', 'bestblogs.dev/feeds', 'bestblogs.dev/feeds?featured=y'],
-            target: '/feeds/featured',
-        },
-        {
-            source: ['bestblogs.dev/feeds?category=:category'],
-            target: '/feeds/:category',
-        },
-    ],
-    name: 'BestBlogs.dev文章列表',
+    name: '文章列表',
     maintainers: ['zhenlohuang'],
     handler,
 };
@@ -109,7 +95,7 @@ async function handler(ctx) {
         link: article.url,
         description: article.summary,
         pubDate: parseDate(article.publishDateTimeStr),
-        author: article.authors ? article.authors[0] : 'Unknown',
+        author: Array.isArray(article.authors) ? article.authors.map((author) => ({ name: author })) : [{ name: article.authors }],
         category: article.category,
     }));
 
