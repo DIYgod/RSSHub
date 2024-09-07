@@ -4,11 +4,14 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:url',
-    name: 'LuMa Events',
+    name: 'Events',
     url: 'lu.ma',
     maintainers: ['cxheng315'],
     example: '/luma/yieldnest',
     categories: ['other'],
+    parameters: {
+        url: 'LuMa URL',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
