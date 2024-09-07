@@ -85,7 +85,7 @@ async function handler(ctx) {
     return {
         title: response.data.calendar ? response.data.calendar.name : response.data.place.name,
         description: response.data.place ? response.data.place.description : '',
-        link: 'https://lu.ma/' + (response.data.calendar ? response.data.calendar.url : response.data.place.url),
+        link: 'https://lu.ma/' + ctx.req.param('url'),
         image: response.data.calendar ? response.data.calendar.cover_url : response.data.place.cover_url,
         item: items,
     };
