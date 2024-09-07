@@ -39125,6 +39125,44 @@
     "name": "乐山师范学院",
     "url": "lsnu.edu.cn"
   },
+  "luma": {
+    "routes": {
+      "/:url": {
+        "path": "/:url",
+        "name": "Events",
+        "url": "lu.ma",
+        "maintainers": [
+          "cxheng315"
+        ],
+        "example": "/luma/yieldnest",
+        "categories": [
+          "other"
+        ],
+        "parameters": {
+          "url": "LuMa URL"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "lu.ma/:url"
+            ],
+            "target": "/:url"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "LuMa",
+    "url": "lu.ma"
+  },
   "luogu": {
     "routes": {
       "/contest": {

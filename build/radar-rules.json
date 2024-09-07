@@ -11606,6 +11606,19 @@
       }
     ]
   },
+  "lu.ma": {
+    "_name": "LuMa",
+    ".": [
+      {
+        "title": "Events",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:url"
+        ],
+        "target": "/luma/:url"
+      }
+    ]
+  },
   "luogu.com.cn": {
     "_name": "洛谷",
     ".": [
