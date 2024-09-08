@@ -48,9 +48,9 @@ async function handler(ctx) {
 
     const renderNote = (notes) =>
         notes.flatMap((n) =>
-            n.map(({ noteCard }) => ({
+            n.map(({ id, noteCard }) => ({
                 title: noteCard.displayTitle,
-                link: `${url}/${noteCard.noteId || noteCard.id}`,
+                link: `${url}/${noteCard.noteId || id}`,
                 description: `<img src ="${noteCard.cover.infoList.pop().url}"><br>${noteCard.displayTitle}`,
                 author: noteCard.user.nickname,
                 upvotes: noteCard.interactInfo.likedCount,
