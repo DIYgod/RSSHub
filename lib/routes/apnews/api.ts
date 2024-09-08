@@ -1,6 +1,8 @@
 import { Route, ViewType } from '@/types';
 import { fetchArticle } from './utils';
 import ofetch from '@/utils/ofetch';
+import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/api/:tags?',
@@ -37,10 +39,14 @@ async function handler(ctx) {
     const url = `${apiRootUrl}?tags=${tags}`;
     const res = await ofetch(url);
 
-    const list = res.cards.map((e) => ({
-        title: e.contents[0].headline,
-        link: e.contents[0].localLinkUrl,
-    }));
+    const list = res.cards
+        .map((e) => ({
+            title: e.contents[0].headline,
+            link: e.contents[0].localLinkUrl,
+            pubDate: timezone(parseDate(e.publishedDate), 0),
+        }))
+        .sort((a, b) => b.pubDate - a.pubDate)
+        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
 
     const items = await Promise.all(list.map((item) => fetchArticle(item)));
 
