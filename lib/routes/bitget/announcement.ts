@@ -19,7 +19,15 @@ const handler: Route['handler'] = async (ctx) => {
     };
 
     // stationLetterType: 0 表示全部通知，02 表示新币上线，01 表示最新活动，06 表示最新公告
-    const reqBody = {
+    const reqBody: {
+        pageSize: number | string;
+        openUnread: number;
+        stationLetterType: string;
+        isPre: boolean;
+        lastEndId: null;
+        languageType: number;
+        excludeStationLetterType?: string;
+    } = {
         pageSize,
         openUnread: 0,
         stationLetterType: '0',
@@ -32,27 +40,23 @@ const handler: Route['handler'] = async (ctx) => {
     switch (type) {
         case 'new-listing':
             reqBody.stationLetterType = '02';
-
             break;
 
         case 'latest-activities':
             reqBody.stationLetterType = '01';
-
             break;
 
         case 'new-announcement':
             reqBody.stationLetterType = '06';
-
             break;
 
         case 'all':
             reqBody.stationLetterType = '0';
             reqBody.excludeStationLetterType = '00';
-
             break;
 
         default:
-        // Do nothing
+            throw new Error('Invalid type');
     }
 
     const response = (await cache.tryGet(`bitget:announcement:${type}:${pageSize}:${lang}`, async () => {
