@@ -23,6 +23,7 @@ export const handler = async (ctx) => {
 
     apiSearchParams.append('_embed', 'true');
     apiSearchParams.append('per_page', String(limit));
+    apiSearchParams.append('page', '1');
 
     const apiUrl = bakeUrl(`${apiSlug}/posts`, rootUrl, apiSearchParams);
     const currentUrl = bakeUrl(getFilterParamsForUrl(filtersWithPair) ?? '', rootUrl, searchParams);
