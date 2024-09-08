@@ -7083,6 +7083,19 @@
       }
     ]
   },
+  "mhlw.go.jp": {
+    "_name": "JapanGov",
+    "www": [
+      {
+        "title": "PDF",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/"
+        ],
+        "target": "/go(_,url)=>{const category=new URL(url).href.match(/mhlw\\.go\\.jp\\/(.*)$/)?.[1]??void 0;return`/mhlw/pdf${category?`/${category}`:\"\"}`}"
+      }
+    ]
+  },
   "niid.go.jp": {
     "_name": "JapanGov",
     "www": [

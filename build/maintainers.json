@@ -2341,6 +2341,9 @@
   "/globallawreview/": [
     "nczitzk"
   ],
+  "/go/mhlw/pdf/:category{.+}?": [
+    "nczitzk"
+  ],
   "/go/niid/idwr-dl/:year?": [
     "nczitzk"
   ],
