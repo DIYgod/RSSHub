@@ -42,7 +42,7 @@ async function handler(ctx) {
         collect,
     } = await getUser(url, cache);
 
-    const title = `${basicInfo.nickname} - ${category === 'notes' ? '笔记' : '收藏'} • 小红书 / RED`;
+    const title = `${basicInfo.nickname} - 小红书${category === 'notes' ? '笔记' : '收藏'}`;
     const description = `${basicInfo.desc} ${tags.map((t) => t.name).join(' ')} ${interactions.map((i) => `${i.count} ${i.name}`).join(' ')}`;
     const image = basicInfo.imageb || basicInfo.images;
 
