@@ -3797,6 +3797,20 @@
       }
     ]
   },
+  "chikubi.jp": {
+    "_name": "乳首ふぇち",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:category",
+          "/"
+        ],
+        "target": "/chikubi/:category"
+      }
+    ]
+  },
   "china.com": {
     "_name": "China.com 中华网",
     "finance": [

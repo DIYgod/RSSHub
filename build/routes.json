@@ -12346,6 +12346,45 @@
     "name": "通識・現代中國",
     "url": "chiculture.org.hk"
   },
+  "chikubi": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/chikubi",
+        "parameters": {
+          "category": "分類，見下表，默認爲最新"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Category",
+        "maintainers": [
+          "snowagar25"
+        ],
+        "description": "| 最新 | 殿堂 | 動畫 | VR | 漫畫 | 音聲 | CG |\n  | ------ | ---- | ----- | -- | ----- | ----- | -- |\n  | (empty) | best | video | vr | comic | voice | cg |",
+        "radar": [
+          {
+            "source": [
+              "chikubi.jp/:category",
+              "chikubi.jp/"
+            ],
+            "target": "/:category"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "乳首ふぇち",
+    "url": "chikubi.jp"
+  },
   "china": {
     "routes": {
       "/finance/:category?": {
