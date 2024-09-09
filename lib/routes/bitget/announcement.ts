@@ -117,7 +117,7 @@ const handler: Route['handler'] = async (ctx) => {
 
     return {
         title: `Bitget | ${findTypeLabel(type)}`,
-        link: `https://www.bitget.com/${languageCode.replace('_', '-')}/inmail`,
+        link: `https://www.bitget.com/${lang}/inmail`,
         item: data,
     };
 };
