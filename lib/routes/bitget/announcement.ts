@@ -3,7 +3,8 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { BitgetResponse } from './type';
-import dayjs from 'dayjs';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.bitget.com';
@@ -81,11 +82,11 @@ const handler: Route['handler'] = async (ctx) => {
             (item) =>
                 cache.tryGet(`bitget:announcement:${item.id}:${pageSize}:${lang}`, async () => {
                     // 从 unix 时间戳转换为日期
-                    const date = dayjs.unix(Number(item.sendTime?.slice(0, 10))).toDate();
+                    const date = parseDate(Number(item.sendTime));
                     const reqItem: DataItem = {
                         title: item.title ?? '',
                         link: item.openUrl ?? '',
-                        pubDate: item.sendTime ? date : undefined,
+                        pubDate: item.sendTime ? timezone(date, +8) : undefined,
                         description: item.content ?? '',
                     };
 
