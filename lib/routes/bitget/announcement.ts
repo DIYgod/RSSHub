@@ -135,7 +135,7 @@ const findTypeLabel = (type: string) => {
 export const route: Route = {
     path: '/announcement/:type/:lang?',
     categories: ['finance'],
-    example: '/bitget/announcement/latest-activities/10/zh-CN',
+    example: '/bitget/announcement/all/zh-CN',
     parameters: {
         type: {
             description: 'Bitget 通知类型',
@@ -146,10 +146,6 @@ export const route: Route = {
                 { value: 'latest-activities', label: '最新活动' },
                 { value: 'new-announcement', label: '最新公告' },
             ],
-        },
-        pageSize: {
-            description: '每页显示的通知数量',
-            default: '10',
         },
         lang: {
             description: '语言',
