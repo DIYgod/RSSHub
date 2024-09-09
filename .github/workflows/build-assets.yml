@@ -8,9 +8,6 @@ on:
     paths:
       - 'lib/**/*.ts'
 
-permissions:
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -42,15 +42,15 @@ async function handler(ctx) {
         collect,
     } = await getUser(url, cache);
 
-    const title = `${basicInfo.nickname} - ${category === 'notes' ? '笔记' : '收藏'} • 小红书 / RED`;
+    const title = `${basicInfo.nickname} - 小红书${category === 'notes' ? '笔记' : '收藏'}`;
     const description = `${basicInfo.desc} ${tags.map((t) => t.name).join(' ')} ${interactions.map((i) => `${i.count} ${i.name}`).join(' ')}`;
     const image = basicInfo.imageb || basicInfo.images;
 
     const renderNote = (notes) =>
         notes.flatMap((n) =>
-            n.map(({ noteCard }) => ({
+            n.map(({ id, noteCard }) => ({
                 title: noteCard.displayTitle,
-                link: `${url}/${noteCard.noteId}`,
+                link: `${url}/${noteCard.noteId || id}`,
                 description: `<img src ="${noteCard.cover.infoList.pop().url}"><br>${noteCard.displayTitle}`,
                 author: noteCard.user.nickname,
                 upvotes: noteCard.interactInfo.likedCount,

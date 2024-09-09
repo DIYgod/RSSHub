@@ -36,7 +36,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: read
       security-events: write
     steps:
       - uses: actions/checkout@v4
@@ -63,8 +62,6 @@ jobs:
     name: Validate PR title
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions:
-      pull-requests: read
     steps:
       - uses: amannn/action-semantic-pull-request@v5
         env:
@@ -77,7 +74,6 @@ jobs:
     name: Pull Request Labeler
     if: ${{ github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' && github.repository == 'DIYgod/RSSHub' }}
     permissions:
-      contents: read
       pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 5
