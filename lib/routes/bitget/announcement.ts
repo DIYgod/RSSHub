@@ -4,7 +4,6 @@ import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { BitgetResponse } from './type';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.bitget.com';
@@ -86,7 +85,7 @@ const handler: Route['handler'] = async (ctx) => {
                     const dataItem: DataItem = {
                         title: item.title ?? '',
                         link: item.openUrl ?? '',
-                        pubDate: item.sendTime ? timezone(date) : undefined,
+                        pubDate: item.sendTime ? date : undefined,
                         description: item.content ?? '',
                     };
 
