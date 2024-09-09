@@ -101,7 +101,7 @@ const handler: Route['handler'] = async (ctx) => {
                             });
                             const $ = load(itemResponse);
                             const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-                            dataItem.description = nextData.props.pageProps.details.content || item.content || '';
+                            dataItem.description = nextData.props.pageProps.details?.content || nextData.props.pageProps.pageInitInfo?.ruleContent || item.content || '';
                         } catch (error: any) {
                             if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
                                 dataItem.description = item.content ?? '';
