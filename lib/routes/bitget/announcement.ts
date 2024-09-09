@@ -100,10 +100,14 @@ const handler: Route['handler'] = async (ctx) => {
                                 headers,
                             });
                             const $ = load(itemResponse);
-                            const content = $('div > div.ArticleDetails_actice_details_main__oIjfu');
-                            reqItem.description = content.html() || item.content || '';
-                        } catch {
-                            throw new Error('Failed to fetch announcement details');
+                            const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+                            reqItem.description = nextData.props.pageProps.details.content || item.content || '';
+                        } catch (error: any) {
+                            if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
+                                reqItem.description = item.content ?? '';
+                            } else {
+                                throw error;
+                            }
                         }
                     }
                     return reqItem;
