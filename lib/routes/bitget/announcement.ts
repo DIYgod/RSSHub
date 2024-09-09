@@ -83,7 +83,7 @@ const handler: Route['handler'] = async (ctx) => {
                 cache.tryGet(`bitget:announcement:${item.id}:${pageSize}:${lang}`, async () => {
                     // 从 unix 时间戳转换为日期
                     const date = parseDate(Number(item.sendTime));
-                    const reqItem: DataItem = {
+                    const dataItem: DataItem = {
                         title: item.title ?? '',
                         link: item.openUrl ?? '',
                         pubDate: item.sendTime ? timezone(date, +8) : undefined,
@@ -91,7 +91,7 @@ const handler: Route['handler'] = async (ctx) => {
                     };
 
                     if (item.imgUrl) {
-                        reqItem.image = item.imgUrl;
+                        dataItem.image = item.imgUrl;
                     }
 
                     if (item.stationLetterType === '01' || item.stationLetterType === '06') {
@@ -101,16 +101,16 @@ const handler: Route['handler'] = async (ctx) => {
                             });
                             const $ = load(itemResponse);
                             const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-                            reqItem.description = nextData.props.pageProps.details.content || item.content || '';
+                            dataItem.description = nextData.props.pageProps.details.content || item.content || '';
                         } catch (error: any) {
                             if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
-                                reqItem.description = item.content ?? '';
+                                dataItem.description = item.content ?? '';
                             } else {
                                 throw error;
                             }
                         }
                     }
-                    return reqItem;
+                    return dataItem;
                 }) as Promise<DataItem>
         )
     );
