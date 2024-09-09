@@ -6,12 +6,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/api/:tags?',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     example: '/apnews/api/business',
     view: ViewType.Articles,
     parameters: {
         tags: {
-            description: 'See https://github.com/kovidgoyal/calibre/blob/81666219718b5f57d56b149a7ac017cc2a76b931/recipes/ap.recipe#L43-L46',
+            description: 'Getting a list of articles from a public API based on tags. See https://github.com/kovidgoyal/calibre/blob/81666219718b5f57d56b149a7ac017cc2a76b931/recipes/ap.recipe#L43-L46',
             default: 'apf-topnews',
         },
     },
@@ -29,7 +29,7 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    maintainers: ['zoenglinghou', 'mjysci', 'TonyRL'],
+    maintainers: ['dzx-dzx'],
     handler,
 };
 
@@ -41,8 +41,8 @@ async function handler(ctx) {
 
     const list = res.cards
         .map((e) => ({
-            title: e.contents[0].headline,
-            link: e.contents[0].localLinkUrl,
+            title: e.contents[0]?.headline,
+            link: e.contents[0]?.localLinkUrl,
             pubDate: timezone(parseDate(e.publishedDate), 0),
         }))
         .sort((a, b) => b.pubDate - a.pubDate)
