@@ -86,7 +86,7 @@ const handler: Route['handler'] = async (ctx) => {
                     const dataItem: DataItem = {
                         title: item.title ?? '',
                         link: item.openUrl ?? '',
-                        pubDate: item.sendTime ? timezone(date, +8) : undefined,
+                        pubDate: item.sendTime ? timezone(date) : undefined,
                         description: item.content ?? '',
                     };
 
