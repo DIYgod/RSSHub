@@ -12,7 +12,6 @@ interface ListItem {
 interface ContentSelectors {
     title: string;
     description: string[];
-    date?: string;
 }
 
 const contentTypes: Record<string, ContentSelectors> = {
@@ -27,7 +26,6 @@ const contentTypes: Record<string, ContentSelectors> = {
     article: {
         title: '.article_title',
         description: ['.article_icatch', '.article_contents'],
-        date: '.date time',
     },
 };
 
@@ -62,16 +60,13 @@ export async function processItems(list: ListItem[]): Promise<DataItem[]> {
                     .map((selector) =>
                         $(selector)
                             .map((_, el) => $(el).clone().wrap('<div>').parent().html())
-                            .get()
+                            .toArray()
                             .join('')
                     )
                     .join('');
 
-                let pubDate: Date | undefined;
-                if (selectors.date) {
-                    const dateStr = $(selectors.date).attr('datetime');
-                    pubDate = dateStr ? parseDate(dateStr) : undefined;
-                }
+                const pubDateStr = $('meta[property="article:published_time"]').attr('content');
+                const pubDate = pubDateStr ? parseDate(pubDateStr) : undefined;
 
                 return {
                     title,

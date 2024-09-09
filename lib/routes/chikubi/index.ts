@@ -5,7 +5,7 @@ import { processItems } from './utils';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['other'],
+    categories: ['multimedia'],
     example: '/chikubi',
     parameters: { category: '分類，見下表，默認爲最新' },
     features: {
