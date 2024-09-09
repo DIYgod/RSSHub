@@ -111,13 +111,13 @@ const handler: Route['handler'] = async (ctx) => {
     );
 
     return {
-        title: `Bitget | ${find_type_label(type)}`,
+        title: `Bitget | ${findTypeLabel(type)}`,
         link: `https://www.bitget.com/${languageCode.replace('_', '-')}/inmail`,
         item: data,
     };
 };
 
-const find_type_label = (type: string) => {
+const findTypeLabel = (type: string) => {
     const typeMap = {
         all: 'All',
         'new-listing': 'New Listing',
