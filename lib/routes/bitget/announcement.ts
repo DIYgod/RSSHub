@@ -162,6 +162,12 @@ export const route: Route = {
             ],
         },
     },
+    radar: [
+        {
+            source: ['www.bitget.com/:lang/inmail'],
+            target: '/announcement/all/:lang',
+        },
+    ],
     name: 'Announcement',
     description: `
 type:
