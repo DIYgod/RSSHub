@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.bitget.com';
     const announcementApiUrl = `${baseUrl}/v1/msg/push/stationLetterNew`;
-    const { type, pageSize = 10, lang = 'zh-CN' } = ctx.req.param<'/bitget/announcement/:type/:pageSize?/:lang?'>();
+    const { type, lang = 'zh-CN' } = ctx.req.param<'/bitget/announcement/:type/:lang?'>();
     const languageCode = lang.replace('-', '_');
     const headers = {
         Referer: baseUrl,
@@ -17,10 +17,11 @@ const handler: Route['handler'] = async (ctx) => {
         language: languageCode,
         locale: languageCode,
     };
+    const pageSize = ctx.req.query('limit') ?? '10';
 
     // stationLetterType: 0 表示全部通知，02 表示新币上线，01 表示最新活动，06 表示最新公告
     const reqBody: {
-        pageSize: number | string;
+        pageSize: string;
         openUnread: number;
         stationLetterType: string;
         isPre: boolean;
@@ -127,7 +128,7 @@ const find_type_label = (type: string) => {
 };
 
 export const route: Route = {
-    path: '/announcement/:type/:pageSize?/:lang?',
+    path: '/announcement/:type/:lang?',
     categories: ['finance'],
     example: '/bitget/announcement/latest-activities/10/zh-CN',
     parameters: {
