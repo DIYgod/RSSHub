@@ -53783,8 +53783,8 @@
   },
   "samd": {
     "routes": {
-      "news/:typeId": {
-        "path": "news/:typeId",
+      "/news/:typeId": {
+        "path": "/news/:typeId",
         "categories": [
           "government"
         ],
