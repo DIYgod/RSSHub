@@ -129,12 +129,12 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/t/:column?',
+    path: '/:column?',
     name: '极客公园',
     url: 'geekpark.net',
     maintainers: ['nczitzk'],
     handler,
-    example: '/geekpark/:column?',
+    example: '/geekpark',
     parameters: { column: '栏目 id，默认为空，即首页资讯，可在对应栏目页 URL 中找到' },
     description: `:::tip
   若订阅 [综合报道](https://www.geekpark.net/column/179)，网址为 \`https://www.geekpark.net/column/179\`。截取 \`https://www.geekpark.net/column/\` 到末尾的部分 \`179\` 作为参数填入，此时路由为 [\`/geekpark/179\`](https://rsshub.app/geekpark/179)。
