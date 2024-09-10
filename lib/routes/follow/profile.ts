@@ -5,12 +5,12 @@ import type { FollowResponse, Profile, Subscription } from './types';
 
 export const route: Route = {
     name: '订阅列表',
-    path: '/subscriptions/:uid',
-    example: '/subscriptions/41279032429549568',
+    path: '/profile/:uid',
+    example: '/profile/41279032429549568',
     radar: [
         {
             source: ['app.follow.is/profile/:uid'],
-            target: '/follow/subscriptions/:uid',
+            target: '/follow/profile/:uid',
         },
     ],
     handler,
