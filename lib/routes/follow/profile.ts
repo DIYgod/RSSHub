@@ -4,7 +4,7 @@ import ofetch from '@/utils/ofetch';
 import type { FollowResponse, Profile, Subscription } from './types';
 
 export const route: Route = {
-    name: '订阅列表',
+    name: 'User subscriptions',
     path: '/profile/:uid',
     example: '/profile/41279032429549568',
     radar: [
@@ -27,7 +27,7 @@ async function handler(ctx: Context): Promise<Data> {
     const [profile, subscriptions] = await Promise.all([ofetch<FollowResponse<Profile>>(`${host}/profiles?id=${uid}`), ofetch<FollowResponse<Subscription[]>>(`${host}/subscriptions?userId=${uid}`)]);
 
     return {
-        title: `${profile.data.name} - 订阅列表`,
+        title: `${profile.data.name} - User subscriptions`,
         item: subscriptions.data.map((subscription) => ({
             title: subscription.feeds.title,
             description: subscription.feeds.description,
