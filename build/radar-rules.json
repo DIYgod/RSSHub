@@ -10838,6 +10838,19 @@
       }
     ]
   },
+  "kakuyomu.jp": {
+    "_name": "カクヨム",
+    ".": [
+      {
+        "title": "投稿",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/works/:id"
+        ],
+        "target": "/kakuyomu/works/:id"
+      }
+    ]
+  },
   "kaopu.news": {
     "_name": "靠谱新闻",
     ".": [

@@ -36839,6 +36839,38 @@
     ],
     "description": "TAIWAN KADOKAWA"
   },
+  "kakuyomu": {
+    "routes": {
+      "/works/:id": {
+        "name": "投稿",
+        "categories": [
+          "reading"
+        ],
+        "path": "/works/:id",
+        "example": "/kakuyomu/works/1177354054894027232",
+        "parameters": {
+          "id": "投稿 ID"
+        },
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "kakuyomu.jp/works/:id"
+            ],
+            "target": "/works/:id"
+          }
+        ],
+        "location": "works.ts"
+      }
+    },
+    "name": "カクヨム",
+    "url": "kakuyomu.jp"
+  },
   "kamen-rider-official": {
     "routes": {
       "/news/:category?": {

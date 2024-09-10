@@ -3543,6 +3543,9 @@
   "/kadokawa/blog": [
     "nczitzk"
   ],
+  "/kakuyomu/works/:id": [
+    "KarasuShin"
+  ],
   "/kamen-rider-official/news/:category?": [
     "nczitzk"
   ],
