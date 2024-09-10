@@ -2088,6 +2088,9 @@
   "/focustaiwan/:category?": [
     "nczitzk"
   ],
+  "/follow/profile/:uid": [
+    "KarasuShin"
+  ],
   "/followin/:categoryId?/:lang?": [
     "TonyRL"
   ],

@@ -21851,6 +21851,32 @@
     "name": "Focus Taiwan",
     "url": "focustaiwan.tw"
   },
+  "follow": {
+    "routes": {
+      "/profile/:uid": {
+        "name": "User subscriptions",
+        "path": "/profile/:uid",
+        "example": "/profile/41279032429549568",
+        "radar": [
+          {
+            "source": [
+              "app.follow.is/profile/:uid"
+            ],
+            "target": "/follow/profile/:uid"
+          }
+        ],
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "features": {
+          "supportRadar": true
+        },
+        "location": "profile.ts"
+      }
+    },
+    "name": "Follow",
+    "url": "app.follow.is"
+  },
   "followin": {
     "routes": {
       "/:categoryId?/:lang?": {
