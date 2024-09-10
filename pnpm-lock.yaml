@@ -347,10 +347,10 @@ importers:
         version: 10.0.0
       '@typescript-eslint/eslint-plugin':
         specifier: 8.4.0
-        version: 8.4.0(@typescript-eslint/parser@8.4.0(eslint@9.10.0)(typescript@5.5.4))(eslint@9.10.0)(typescript@5.5.4)
+        version: 8.4.0(@typescript-eslint/parser@8.5.0(eslint@9.10.0)(typescript@5.5.4))(eslint@9.10.0)(typescript@5.5.4)
       '@typescript-eslint/parser':
-        specifier: 8.4.0
-        version: 8.4.0(eslint@9.10.0)(typescript@5.5.4)
+        specifier: 8.5.0
+        version: 8.5.0(eslint@9.10.0)(typescript@5.5.4)
       '@vercel/nft':
         specifier: 0.27.4
         version: 0.27.4
@@ -1989,8 +1989,8 @@ packages:
       typescript:
         optional: true
 
-  '@typescript-eslint/parser@8.4.0':
-    resolution: {integrity: sha512-NHgWmKSgJk5K9N16GIhQ4jSobBoJwrmURaLErad0qlLjrpP5bECYg+wxVTGlGZmJbU03jj/dfnb6V9bw+5icsA==}
+  '@typescript-eslint/parser@8.5.0':
+    resolution: {integrity: sha512-gF77eNv0Xz2UJg/NbpWJ0kqAm35UMsvZf1GHj8D9MRFTj/V3tAciIWXfmPLsAAF/vUlpWPvUDyH1jjsr0cMVWw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
@@ -2273,8 +2273,8 @@ packages:
   bare-events@2.4.2:
     resolution: {integrity: sha512-qMKFd2qG/36aA4GwvKq8MxnPgCQAmBWmSyLWsJcbn8v03wvIPQ/hG1Ms8bPzndZxMDoHpxez5VOS+gC9Yi24/Q==}
 
-  bare-fs@2.3.3:
-    resolution: {integrity: sha512-7RYKL+vZVCyAsMLi5SPu7QGauGGT8avnP/HO571ndEuV4MYdGXvLhtW67FuLPeEI8EiIY7zbbRR9x7x7HU0kgw==}
+  bare-fs@2.3.4:
+    resolution: {integrity: sha512-7YyxitZEq0ey5loOF5gdo1fZQFF7290GziT+VbAJ+JbYTJYaPZwuEz2r/Nq23sm4fjyTgUf2uJI2gkT3xAuSYA==}
 
   bare-os@2.4.2:
     resolution: {integrity: sha512-HZoJwzC+rZ9lqEemTMiO0luOePoGYNBgsLLgegKR/cljiJvcDNhDZQkzC+NC5Oh0aHbdBNSOHpghwMuB5tqhjg==}
@@ -5353,8 +5353,8 @@ packages:
     resolution: {integrity: sha512-YY4ei7K7gPGifqNSrfMaPdqTqiHcwYKUJ7zhLqQOK2ildlGgti5TSwJiXXN1YqG17I2GYZh5cZqv2r5fwBUM+w==}
     hasBin: true
 
-  tldts-core@6.1.43:
-    resolution: {integrity: sha512-iO1G3F2NqtmJUYlTfcH2liSdaqDnjpYn6iGftbLRNx8DF6IRIjbknVt+q0ijwZ2KGZX3J8zeYGFoiI+ZtHT5MQ==}
+  tldts-core@6.1.44:
+    resolution: {integrity: sha512-DMOTcn8pGmuY65zDPH+M1xAOVtBj7Phrah0HxuspKEu33hOArCDmk3R4UEVymtuN+HveeUlVgX0+RNf4mFkoAw==}
 
   tldts@6.1.43:
     resolution: {integrity: sha512-5J2v/CbNH8CkwsQV+igsuu0+3eeTfRDn1CFf38a24ZD6FIrbm3DZFu4UrrpoOSejhuP4N1PNDNUvJcw+f4nXNw==}
@@ -7561,10 +7561,10 @@ snapshots:
       '@types/node': 22.5.4
     optional: true
 
-  '@typescript-eslint/eslint-plugin@8.4.0(@typescript-eslint/parser@8.4.0(eslint@9.10.0)(typescript@5.5.4))(eslint@9.10.0)(typescript@5.5.4)':
+  '@typescript-eslint/eslint-plugin@8.4.0(@typescript-eslint/parser@8.5.0(eslint@9.10.0)(typescript@5.5.4))(eslint@9.10.0)(typescript@5.5.4)':
     dependencies:
       '@eslint-community/regexpp': 4.11.0
-      '@typescript-eslint/parser': 8.4.0(eslint@9.10.0)(typescript@5.5.4)
+      '@typescript-eslint/parser': 8.5.0(eslint@9.10.0)(typescript@5.5.4)
       '@typescript-eslint/scope-manager': 8.4.0
       '@typescript-eslint/type-utils': 8.4.0(eslint@9.10.0)(typescript@5.5.4)
       '@typescript-eslint/utils': 8.4.0(eslint@9.10.0)(typescript@5.5.4)
@@ -7579,12 +7579,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@8.4.0(eslint@9.10.0)(typescript@5.5.4)':
+  '@typescript-eslint/parser@8.5.0(eslint@9.10.0)(typescript@5.5.4)':
     dependencies:
-      '@typescript-eslint/scope-manager': 8.4.0
-      '@typescript-eslint/types': 8.4.0
-      '@typescript-eslint/typescript-estree': 8.4.0(typescript@5.5.4)
-      '@typescript-eslint/visitor-keys': 8.4.0
+      '@typescript-eslint/scope-manager': 8.5.0
+      '@typescript-eslint/types': 8.5.0
+      '@typescript-eslint/typescript-estree': 8.5.0(typescript@5.5.4)
+      '@typescript-eslint/visitor-keys': 8.5.0
       debug: 4.3.7
       eslint: 9.10.0
     optionalDependencies:
@@ -7914,7 +7914,7 @@ snapshots:
   bare-events@2.4.2:
     optional: true
 
-  bare-fs@2.3.3:
+  bare-fs@2.3.4:
     dependencies:
       bare-events: 2.4.2
       bare-path: 2.1.3
@@ -11323,7 +11323,7 @@ snapshots:
       pump: 3.0.0
       tar-stream: 3.1.7
     optionalDependencies:
-      bare-fs: 2.3.3
+      bare-fs: 2.3.4
       bare-path: 2.1.3
 
   tar-stream@3.1.7:
@@ -11408,11 +11408,11 @@ snapshots:
 
   tlds@1.254.0: {}
 
-  tldts-core@6.1.43: {}
+  tldts-core@6.1.44: {}
 
   tldts@6.1.43:
     dependencies:
-      tldts-core: 6.1.43
+      tldts-core: 6.1.44
 
   tmp@0.0.33:
     dependencies:
