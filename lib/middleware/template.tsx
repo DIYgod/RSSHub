@@ -77,6 +77,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     item.pubDate && (item.pubDate = convertDateToISO8601(item.pubDate) || '');
                     item.updated && (item.updated = convertDateToISO8601(item.updated) || '');
                 }
+
+                if (item.itunes_item_image) {
+                    item.image = item.itunes_item_image;
+                }
             }
         }
     }
