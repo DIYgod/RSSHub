@@ -33,5 +33,6 @@ async function handler(ctx: Context): Promise<Data> {
             description: subscription.feeds.description,
             link: `https://app.follow.is/feed/${subscription.feedId}`,
         })),
+        link: `https://app.follow.is/profile/${uid}`,
     };
 }
