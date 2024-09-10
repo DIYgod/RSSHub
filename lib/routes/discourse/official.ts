@@ -4,7 +4,7 @@ import got from '@/utils/got';
 import RSSParser from '@/utils/rss-parser';
 
 export const route: Route = {
-    path: '/:configId/:param1/:param2?/:param3?',
+    path: '/:configId/official/:param1/:param2?/:param3?',
     categories: ['bbs'],
     example: '/discourse/0/latest',
     parameters: { configId: 'Environment variable configuration id, see above', id: 'Category id' },
