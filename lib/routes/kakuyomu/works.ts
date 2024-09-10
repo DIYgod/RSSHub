@@ -46,12 +46,12 @@ async function handler(ctx: Context): Promise<Data> {
     } = __APOLLO_STATE__;
 
     const values = Object.values(__APOLLO_STATE__);
-    const episodes = values.filter((value: any) => value.__typename === 'Episode') as NextDataEpisode[];
+    const episodes = values.filter((value) => value.__typename === 'Episode') as NextDataEpisode[];
     const items = (await Promise.all(
         episodes
             .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
             .slice(0, limit)
-            .map((item: any) => {
+            .map((item) => {
                 const episodeUrl = `https://kakuyomu.jp/works/${id}/episodes/${item.id}`;
                 return cache.tryGet(episodeUrl, async () => {
                     const $ = load(await ofetch(episodeUrl));
