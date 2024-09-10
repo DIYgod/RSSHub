@@ -425,6 +425,9 @@
   "/apkpure/versions/:pkg/:region?": [
     "maple3142"
   ],
+  "/apnews/api/:tags?": [
+    "dzx-dzx"
+  ],
   "/apnews/rss/:category?": [
     "zoenglinghou",
     "mjysci",

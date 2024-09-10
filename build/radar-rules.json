@@ -1471,6 +1471,14 @@
         "title": "News",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
+          "/"
+        ],
+        "target": "/apnews/api/:tags?"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
           "/:rss"
         ],
         "target": "/apnews/rss/:rss"
