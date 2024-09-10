@@ -140,7 +140,7 @@ async function handler(ctx) {
             const description = `New ${item.tag} ${item.type} action on ${item.network}<br /><br />From: ${item.from}<br/>To: ${item.to}`;
             return {
                 title: `New ${item.tag} ${item.type} action on ${item.network}`,
-                description: content ? `${description}<br /><br />${content}` : description,
+                description: content ?? description,
                 link: item.actions?.[0]?.related_urls?.[0],
                 guid: item.id,
                 author: [

@@ -171,10 +171,6 @@ const weiboUtils = {
                     html += '</a>';
                 }
 
-                if (!readable) {
-                    html += '<br><br>';
-                }
-
                 htmlNewLineUnreplaced += '<img src="" />';
             }
         }
