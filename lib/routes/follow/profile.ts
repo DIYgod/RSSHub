@@ -10,7 +10,7 @@ export const route: Route = {
     radar: [
         {
             source: ['app.follow.is/profile/:uid'],
-            target: '/follow/profile/:uid',
+            target: '/profile/:uid',
         },
     ],
     handler,
