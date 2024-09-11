@@ -44,7 +44,7 @@ async function handler(ctx) {
             title: e.contents[0]?.headline,
             link: e.contents[0]?.localLinkUrl,
             pubDate: timezone(parseDate(e.publishedDate), 0),
-            categories: e.tagObjs.map((tag) => tag.name),
+            category: e.tagObjs.map((tag) => tag.name),
             updated: timezone(parseDate(e.contents[0]?.updated), 0),
             description: e.contents[0]?.storyHTML,
             author: e.contents[0]?.reporters.map((author) => ({ name: author.displayName })),
