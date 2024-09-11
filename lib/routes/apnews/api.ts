@@ -57,5 +57,6 @@ async function handler(ctx) {
     return {
         title: `${res.tagObjs[0].name} - AP News`,
         item: items,
+        link: 'https://apnews.com',
     };
 }

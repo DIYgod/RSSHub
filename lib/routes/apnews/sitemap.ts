@@ -87,6 +87,7 @@ async function handler(ctx) {
     return {
         title: `AP News sitemap:${route}`,
         item: items,
+        link: 'https://apnews.com',
     };
 }
 async function asyncPoolAll<IN, OUT>(poolLimit: number, array: readonly IN[], iteratorFn: (generator: IN) => Promise<OUT>) {
