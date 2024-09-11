@@ -1,5 +1,5 @@
 import type { Data, Route } from '@/types';
-import { Context } from 'hono';
+import type { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
 import type { FollowResponse, Profile, Subscription } from './types';
 
@@ -10,7 +10,7 @@ export const route: Route = {
     radar: [
         {
             source: ['app.follow.is/profile/:uid'],
-            target: '/follow/profile/:uid',
+            target: '/profile/:uid',
         },
     ],
     handler,
@@ -34,5 +34,6 @@ async function handler(ctx: Context): Promise<Data> {
             link: `https://app.follow.is/feed/${subscription.feedId}`,
         })),
         link: `https://app.follow.is/profile/${uid}`,
+        image: profile.data.image,
     };
 }
