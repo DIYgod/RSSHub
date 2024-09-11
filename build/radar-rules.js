@@ -2804,7 +2804,7 @@
     app:[ { title:"User subscriptions",
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/profile/:uid" ],
-        target:"/follow/follow/profile/:uid" } ] },
+        target:"/follow/profile/:uid" } ] },
   "followin.io":{ _name:"Followin",
     ".":[ { title:"KOL",
         docs:"https://docs.rsshub.app/routes/finance",
