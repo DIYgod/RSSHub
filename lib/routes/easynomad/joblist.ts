@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
-    categories: ['popular'],
+    categories: ['other'],
     view: ViewType.Notifications,
     example: '/easynomad',
     radar: [
@@ -17,8 +17,8 @@ export const route: Route = {
             source: ['easynomad.cn'],
         },
     ],
-    name: '轻松游牧-远程工作聚集地',
-    maintainers: ['oldj'],
+    name: '远程工作列表',
+    maintainers: ['jiangsong216'],
     handler,
 
     features: {
@@ -32,8 +32,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const host = `https://easynomad.cn`;
-    const url = 'https://easynomad.cn/api/posts/list?limit=80&page=1&jobCategory=&contractType=';
+    const host = 'https://easynomad.cn';
+    const url = 'https://easynomad.cn/api/posts/list?limit=15&page=1&jobCategory=&contractType=';
     const response = await got({
         method: 'get',
         url,
@@ -48,8 +48,8 @@ async function handler() {
     }));
 
     return {
-        title: `轻松游牧-远程工作聚合列表`,
-        description: `支持国内远程的招聘列表，远程全职，远程兼职`,
+        title: '轻松游牧-远程工作聚合列表',
+        description: '支持国内远程的招聘列表，远程全职，远程兼职',
         link: host,
         item: items,
     };
