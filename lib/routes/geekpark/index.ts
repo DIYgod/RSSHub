@@ -130,7 +130,7 @@ export const handler = async (ctx) => {
 
 export const route: Route = {
     path: '/:column?',
-    name: '极客公园',
+    name: '栏目',
     url: 'geekpark.net',
     maintainers: ['nczitzk'],
     handler,
