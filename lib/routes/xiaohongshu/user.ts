@@ -51,7 +51,7 @@ async function handler(ctx) {
             n.map(({ id, noteCard }) => ({
                 title: noteCard.displayTitle,
                 link: `${url}/${noteCard.noteId || id}`,
-                guid: noteCard.noteId || id || noteCard.cover?.infoList?.[0]?.url || noteCard.displayTitle,
+                guid: noteCard.noteId || id || noteCard.displayTitle,
                 description: `<img src ="${noteCard.cover.infoList.pop().url}"><br>${noteCard.displayTitle}`,
                 author: noteCard.user.nickname,
                 upvotes: noteCard.interactInfo.likedCount,
