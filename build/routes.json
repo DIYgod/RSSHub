@@ -19650,6 +19650,40 @@
     "name": "东方财富",
     "url": "data.eastmoney.com"
   },
+  "easynomad": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "other"
+        ],
+        "view": 5,
+        "example": "/easynomad",
+        "radar": [
+          {
+            "source": [
+              "easynomad.cn"
+            ]
+          }
+        ],
+        "name": "远程工作列表",
+        "maintainers": [
+          "jiangsong216"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "joblist.ts"
+      }
+    },
+    "name": "轻松游牧-远程工作聚集地",
+    "url": "easynomad.cn"
+  },
   "ecnu": {
     "routes": {
       "/acm/contest/:category?": {

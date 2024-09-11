@@ -5659,6 +5659,19 @@
       }
     ]
   },
+  "easynomad.cn": {
+    "_name": "轻松游牧-远程工作聚集地",
+    ".": [
+      {
+        "title": "远程工作列表",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/easynomad/"
+      }
+    ]
+  },
   "ecnu.edu.cn": {
     "_name": "East China Normal University 华东师范大学",
     "acm": [

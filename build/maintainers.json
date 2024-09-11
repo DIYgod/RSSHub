@@ -1883,6 +1883,9 @@
   "/eastmoney/ttjj/user/:uid": [
     "zidekuls"
   ],
+  "/easynomad/": [
+    "jiangsong216"
+  ],
   "/ecnu/acm/contest/:category?": [
     "a180285"
   ],
