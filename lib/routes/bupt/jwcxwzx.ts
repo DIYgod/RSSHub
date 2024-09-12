@@ -23,7 +23,7 @@ export const route: Route = {
             source: ['jwc.bupt.edu.cn/'],
         },
     ],
-    name: '教务处通知公告',
+    name: '教务处新闻资讯',
     maintainers: ['Yoruet'],
     handler,
     url: 'https://jwc.bupt.edu.cn/',
