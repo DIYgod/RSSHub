@@ -22031,6 +22031,7 @@
         "features": {
           "supportRadar": true
         },
+        "view": 5,
         "location": "profile.ts"
       }
     },
