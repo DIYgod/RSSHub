@@ -258,6 +258,11 @@ export default [{
             '@typescript-eslint/no-require-imports': 'off',
         }
 }, {
+    files: ['route-helper.js'],
+    rules: {
+        'no-console': 'off',
+    }
+}, {
     files: ['**/*.yaml', '**/*.yml'],
 
     languageOptions: {
