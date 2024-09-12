@@ -2099,7 +2099,8 @@
     "nczitzk"
   ],
   "/follow/profile/:uid": [
-    "KarasuShin"
+    "KarasuShin",
+    "DIYgod"
   ],
   "/followin/:categoryId?/:lang?": [
     "TonyRL"

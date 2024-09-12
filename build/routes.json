@@ -22008,8 +22008,14 @@
     "routes": {
       "/profile/:uid": {
         "name": "User subscriptions",
+        "categories": [
+          "social-media"
+        ],
         "path": "/profile/:uid",
-        "example": "/profile/41279032429549568",
+        "example": "/follow/profile/41279032429549568",
+        "parameters": {
+          "uid": "User ID or user handle"
+        },
         "radar": [
           {
             "source": [
@@ -22019,7 +22025,8 @@
           }
         ],
         "maintainers": [
-          "KarasuShin"
+          "KarasuShin",
+          "DIYgod"
         ],
         "features": {
           "supportRadar": true

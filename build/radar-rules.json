@@ -6403,7 +6403,7 @@
     "app": [
       {
         "title": "User subscriptions",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/profile/:uid"
         ],

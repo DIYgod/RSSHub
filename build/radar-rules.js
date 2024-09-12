@@ -2807,7 +2807,7 @@
         target:"/flyert/preferential" } ] },
   "follow.is":{ _name:"Follow",
     app:[ { title:"User subscriptions",
-        docs:"https://docs.rsshub.app/routes/other",
+        docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/profile/:uid" ],
         target:"/follow/profile/:uid" } ] },
   "followin.io":{ _name:"Followin",
