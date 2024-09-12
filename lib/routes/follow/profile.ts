@@ -1,4 +1,4 @@
-import type { Data, Route } from '@/types';
+import { ViewType, type Data, type Route } from '@/types';
 import type { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
 import type { FollowResponse, Profile, Subscription } from './types';
@@ -23,6 +23,7 @@ export const route: Route = {
     features: {
         supportRadar: true,
     },
+    view: ViewType.Notifications,
 };
 
 async function handler(ctx: Context): Promise<Data> {
@@ -35,7 +36,7 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title: `${profile.data.name}'s subscriptions`,
         item: subscriptions.data.map((subscription) => ({
-            title: `Subscribed to ${subscription.feeds.title}`,
+            title: subscription.feeds.title,
             description: subscription.feeds.description,
             link: `https://app.follow.is/feed/${subscription.feedId}`,
             image: getUrlIcon(subscription.feeds.siteUrl).src,
