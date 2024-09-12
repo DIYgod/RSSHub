@@ -41,19 +41,16 @@ Refer to [Deployment](https://docs.rsshub.app/deploy/)
 
 ## Special Thanks
 
-### Contributors
+<div align="center">
 
 [![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
 Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
-<p align="center">
-  <a href="https://github.com/DIYgod/sponsors">
-    <img src="https://raw.githubusercontent.com/DIYgod/sponsors/main/sponsors.wide.svg" />
-  </a>
-</p>
+[![](https://raw.githubusercontent.com/DIYgod/sponsors/main/sponsors.simple.svg)](https://github.com/DIYgod/sponsors)
 
 <a href="https://www.cloudflare.com" target="_blank"><img height="50px" src="https://i.imgur.com/7Ph27Fq.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.netlify.com" target="_blank"><img height="40px" src="https://i.imgur.com/cU01915.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://1password.com" target="_blank"><img height="40px" src="https://i.imgur.com/a2XjflO.png"></a>
+</div>
 
 ## Author
 
