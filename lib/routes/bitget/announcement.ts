@@ -4,6 +4,7 @@ import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { BitgetResponse } from './type';
 import { parseDate } from '@/utils/parse-date';
+import { config } from '@/config';
 
 const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.bitget.com';
@@ -60,17 +61,22 @@ const handler: Route['handler'] = async (ctx) => {
             throw new Error('Invalid type');
     }
 
-    const response = (await cache.tryGet(`bitget:announcement:${type}:${pageSize}:${lang}`, async () => {
-        const result = await ofetch<BitgetResponse>(announcementApiUrl, {
-            method: 'POST',
-            body: reqBody,
-            headers,
-        });
-        if (result?.code !== '200') {
-            throw new Error('Failed to fetch announcements, error code: ' + result?.code);
-        }
-        return result;
-    })) as BitgetResponse;
+    const response = (await cache.tryGet(
+        `bitget:announcement:${type}:${pageSize}:${lang}`,
+        async () => {
+            const result = await ofetch<BitgetResponse>(announcementApiUrl, {
+                method: 'POST',
+                body: reqBody,
+                headers,
+            });
+            if (result?.code !== '200') {
+                throw new Error('Failed to fetch announcements, error code: ' + result?.code);
+            }
+            return result;
+        },
+        config.cache.routeExpire,
+        false
+    )) as BitgetResponse;
 
     if (!response) {
         throw new Error('Failed to fetch announcements');
