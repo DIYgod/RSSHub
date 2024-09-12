@@ -4,6 +4,7 @@ import cache from './cache';
 import { config } from '@/config';
 import utils from './utils';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/followings/video/:uid/:disableEmbed?',
@@ -53,10 +54,15 @@ async function handler(ctx) {
             Cookie: cookie,
         },
     });
-    if (response.data.code === -6) {
-        throw new ConfigNotFoundError('对应 uid 的 Bilibili 用户的 Cookie 已过期');
+    const data = response.data;
+    if (data.code) {
+        logger.error(JSON.stringify(data));
+        if (data.code === -6 || data.code === 4_100_000) {
+            throw new ConfigNotFoundError('对应 uid 的 Bilibili 用户的 Cookie 已过期');
+        }
+        throw new Error(`Got error code ${data.code} while fetching: ${data.message}`);
     }
-    const cards = response.data.data.cards;
+    const cards = data.data.cards;
 
     const out = cards.map((card) => {
         const card_data = JSON.parse(card.card);
