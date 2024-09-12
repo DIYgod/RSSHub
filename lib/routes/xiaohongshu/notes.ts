@@ -10,9 +10,17 @@ export const route: Route = {
             target: '/user/:user_id/notes',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '用户笔记 全文',
+    maintainers: ['howerhe'],
     handler,
+    example: '/xiaohongshu/user/52d8c541b4c4d60e6c867480/notes/fulltext',
+    features: {
+        antiCrawler: true,
+        requirePuppeteer: true,
+    },
+    parameters: {
+        user_id: 'user id, length 24 characters',
+    },
 };
 
 async function handler(ctx) {

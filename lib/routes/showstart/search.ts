@@ -7,7 +7,38 @@ export const route: Route = {
     path: '/search/:type/:keyword?',
     categories: ['shopping'],
     example: '/showstart/search/live',
-    parameters: { type: '类别', keyword: '搜索关键词' },
+    parameters: {
+        keyword: '搜索关键词',
+        type: {
+            description: '类别',
+            options: [
+                {
+                    value: 'event',
+                    label: '演出',
+                },
+                {
+                    value: 'artist',
+                    label: '音乐人',
+                },
+                {
+                    value: 'site',
+                    label: '场地',
+                },
+                {
+                    value: 'brand',
+                    label: '厂牌',
+                },
+                {
+                    value: 'city',
+                    label: '城市',
+                },
+                {
+                    value: 'style',
+                    label: '风格',
+                },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -66,6 +97,7 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: `${TITLE} - 搜演出 - ${type || '全部'}`,
                 link: HOST,
+                allowEmpty: true,
                 item: await fetchActivityList({ keyword: type }),
             };
     }

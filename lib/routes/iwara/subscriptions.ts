@@ -69,7 +69,7 @@ async function handler() {
                 headers: {
                     'content-type': 'application/json',
                 },
-                data: JSON.stringify({
+                body: JSON.stringify({
                     email: username,
                     password,
                 }),

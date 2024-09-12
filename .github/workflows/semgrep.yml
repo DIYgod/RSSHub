@@ -12,9 +12,6 @@ on:
     # random HH:MM to avoid a load spike on GitHub Actions at 00:00
     - cron: 21 20 * * *
 
-permissions:
-  contents: read
-
 jobs:
   semgrep:
     name: Scan
@@ -23,7 +20,6 @@ jobs:
       image: returntocorp/semgrep
     if: (github.triggering_actor != 'dependabot[bot]')
     permissions:
-      contents: read
       security-events: write
     steps:
       - uses: actions/checkout@v4

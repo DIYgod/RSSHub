@@ -1,6 +1,8 @@
-import { Route } from '@/types';
+import { Route, type DataItem } from '@/types';
 
+import { camelcaseKeys } from '@/utils/camelcase-keys';
 import ofetch from '@/utils/ofetch';
+import { renderItemActionToHTML } from '@rss3/sdk';
 
 export const route: Route = {
     path: '/:account/:network?/:tag?',
@@ -132,17 +134,24 @@ async function handler(ctx) {
     return {
         title: `${account} activities`,
         link: 'https://rss3.io',
-        item: data.map((item) => ({
-            title: `New ${item.tag} ${item.type} action on ${item.network}`,
-            description: `New ${item.tag} ${item.type} action on ${item.network}<br /><br />From: ${item.from}<br/>To: ${item.to}`,
-            link: item.actions?.[0]?.related_urls?.[0],
-            guid: item.id,
-            author: [
-                {
-                    name: item.owner,
-                    avatar: `https://cdn.stamp.fyi/avatar/eth:${item.owner}`,
-                },
-            ],
-        })),
+        item: data.map((item) => {
+            const content = renderItemActionToHTML(camelcaseKeys(item.actions));
+
+            const description = `New ${item.tag} ${item.type} action on ${item.network}<br /><br />From: ${item.from}<br/>To: ${item.to}`;
+            return {
+                title: `New ${item.tag} ${item.type} action on ${item.network}`,
+                description: content ?? description,
+                link: item.actions?.[0]?.related_urls?.[0],
+                guid: item.id,
+                author: [
+                    {
+                        name: item.owner,
+                        avatar: `https://cdn.stamp.fyi/avatar/eth:${item.owner}`,
+                    },
+                ],
+
+                _extra: { raw: item },
+            } as DataItem;
+        }),
     };
 }
