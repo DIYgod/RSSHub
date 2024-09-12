@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.pconline.com.cn';
@@ -47,12 +48,27 @@ const categories = {
     },
 };
 
+const getContent = (item) =>
+    cache.tryGet(item.link, async () => {
+        const detailResponse = await got({
+            method: 'get',
+            url: `https:${item.link}`,
+            responseType: 'arrayBuffer',
+        });
+
+        const utf8decoder = new TextDecoder('GBK');
+        const html = utf8decoder.decode(detailResponse.data);
+        const $ = load(html);
+        item.description = $('.context-box .context-table tbody td').html();
+        return item;
+    });
+
 export const handler = async (ctx) => {
     const { category = 'all' } = ctx.req.param();
     const cate = categories[category] || categories.all;
     const currentUrl = `${rootUrl}/3g/other/focus/${cate.path}index.html`;
 
-    let item = [];
+    let items = [];
 
     try {
         let dataString = await cache.get(currentUrl);
@@ -67,28 +83,29 @@ export const handler = async (ctx) => {
                 .split('\n')
                 .filter((e) => e.indexOf('"tags":') !== 0)
                 .join('\n')
-                .replaceAll('\'', '"');
+                .replaceAll("'", '"');
             const tinyData = resString.replaceAll(/[\n\r]/g, '');
             dataString = tinyData.replaceAll(',}', '}');
         }
         const data = JSON.parse(dataString || '');
         const { articleList } = data;
-        item = articleList.map((item: Item) => ({
-                id: item.id,
-                title: item.title,
-                author: [
-                    {
-                        name: item.authorname,
-                        avatar: item.authorImg,
-                    },
-                ],
-                pubDate: parseDate(item.pc_pubDate),
-                link: item.url,
-                description: item.summary,
-                category: item.channelName,
-                image: item.cover,
-            }));
-        cache.set(currentUrl, JSON.stringify(item));
+        items = articleList.map((item: Item) => ({
+            id: item.id,
+            title: item.title,
+            author: [
+                {
+                    name: item.authorname,
+                    avatar: item.authorImg,
+                },
+            ],
+            pubDate: parseDate(item.pc_pubDate),
+            link: item.url,
+            description: item.summary,
+            category: item.channelName,
+            image: item.cover,
+        }));
+        await Promise.all(items.map((item) => getContent(item)));
+        cache.set(currentUrl, JSON.stringify(items));
     } catch {
         // console.error(error);
     }
@@ -96,7 +113,7 @@ export const handler = async (ctx) => {
     return {
         title: `太平洋科技-${cate.title}`,
         link: currentUrl,
-        item,
+        item: items,
     };
 };
 
