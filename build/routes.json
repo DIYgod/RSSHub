@@ -8460,6 +8460,95 @@
     "name": "Bitbucket",
     "url": "bitbucket.com"
   },
+  "bitget": {
+    "routes": {
+      "/announcement/:type/:lang?": {
+        "path": "/announcement/:type/:lang?",
+        "categories": [
+          "finance"
+        ],
+        "example": "/bitget/announcement/all/zh-CN",
+        "parameters": {
+          "type": {
+            "description": "Bitget 通知类型",
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "label": "全部通知"
+              },
+              {
+                "value": "new-listing",
+                "label": "新币上线"
+              },
+              {
+                "value": "latest-activities",
+                "label": "最新活动"
+              },
+              {
+                "value": "new-announcement",
+                "label": "最新公告"
+              }
+            ]
+          },
+          "lang": {
+            "description": "语言",
+            "default": "zh-CN",
+            "options": [
+              {
+                "value": "zh-CN",
+                "label": "中文"
+              },
+              {
+                "value": "en-US",
+                "label": "English"
+              },
+              {
+                "value": "es-ES",
+                "label": "Español"
+              },
+              {
+                "value": "fr-FR",
+                "label": "Français"
+              },
+              {
+                "value": "de-DE",
+                "label": "Deutsch"
+              },
+              {
+                "value": "ja-JP",
+                "label": "日本語"
+              },
+              {
+                "value": "ru-RU",
+                "label": "Русский"
+              },
+              {
+                "value": "ar-SA",
+                "label": "العربية"
+              }
+            ]
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "www.bitget.com/:lang/inmail"
+            ],
+            "target": "/announcement/all/:lang"
+          }
+        ],
+        "name": "Announcement",
+        "description": "\ntype:\n| Type | Description |\n| --- | --- |\n| all | 全部通知 |\n| new-listing | 新币上线 |\n| latest-activities | 最新活动 |\n| new-announcement | 最新公告 |\n\nlang:\n| Lang | Description |\n| ---   | ---   |\n| zh-CN | 中文 |\n| en-US | English |\n| es-ES | Español |\n| fr-FR | Français |\n| de-DE | Deutsch |\n| ja-JP | 日本語 |\n| ru-RU | Русский |\n| ar-SA | العربية |\n",
+        "maintainers": [
+          "YukiCoco"
+        ],
+        "location": "announcement.ts"
+      }
+    },
+    "name": "Bitget",
+    "url": "bitget.com"
+  },
   "bitmovin": {
     "routes": {
       "/blog": {

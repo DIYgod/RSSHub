@@ -2331,6 +2331,19 @@
       }
     ]
   },
+  "bitget.com": {
+    "_name": "Bitget",
+    "www": [
+      {
+        "title": "Announcement",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/:lang/inmail"
+        ],
+        "target": "/bitget/announcement/all/:lang"
+      }
+    ]
+  },
   "bitmovin.com": {
     "_name": "Bitmovin",
     ".": [
