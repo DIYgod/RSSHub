@@ -6933,6 +6933,29 @@
         ],
         "location": "bangumi.ts"
       },
+      "/precious/:disableEmbed?": {
+        "path": "/precious/:disableEmbed?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/bilibili/precious",
+        "parameters": {
+          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "入站必刷",
+        "maintainers": [
+          "liuyuhe666"
+        ],
+        "location": "bilibili-recommend.ts"
+      },
       "/user/coin/:uid/:disableEmbed?": {
         "path": "/user/coin/:uid/:disableEmbed?",
         "categories": [
@@ -6999,7 +7022,7 @@
         "example": "/bilibili/user/dynamic/2267573",
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
-          "routeParams": "\n| 键           | 含义                              | 接受的值       | 默认值 |\n| ------------ | --------------------------------- | -------------- | ------ |\n| showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |\n| disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |\n| useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |\n| directLink   | 使用内容直链                      | 0/1/true/false | false  |\n\n用例：`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1`"
+          "routeParams": "\n| 键           | 含义                              | 接受的值       | 默认值 |\n| ------------ | --------------------------------- | -------------- | ------ |\n| showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |\n| disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |\n| useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |\n| directLink   | 使用内容直链                      | 0/1/true/false | false  |\n| hideGoods    | 隐藏带货动态                      | 0/1/true/false | false  |\n\n用例：`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1`"
         },
         "features": {
           "requireConfig": [
