@@ -1,6 +1,7 @@
 import { CheerioAPI } from 'cheerio';
 import { config } from '@/config';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 const multiImagePrompt = {
     en: (count) => `${count} images in total`,
@@ -104,7 +105,7 @@ async function fetchTweet(id: string): Promise<Tweet | null> {
         url.searchParams.set('token', getToken(id));
 
         try {
-            const res = await fetch(url.toString());
+            const res = await got(url.toString());
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
