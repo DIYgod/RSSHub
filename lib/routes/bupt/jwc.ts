@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import type { Context } from 'hono';
 
 export const route: Route = {
     path: '/jwc/:type',
@@ -26,7 +27,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['jwc.bupt.edu.cn/'],
+            source: ['jwc.bupt.edu.cn/tzgg1.htm'],
+            target: '/jwc/tzgg',
+        },
+        {
+            source: ['jwc.bupt.edu.cn/xwzx2.htm'],
+            target: '/jwc/xwzx',
         },
     ],
     name: '北京邮电大学教务处',
