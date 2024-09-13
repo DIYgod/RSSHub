@@ -38,7 +38,7 @@ export const route: Route = {
 };
 
 interface Card {
-    card_group: Card[];
+    card_group?: Card[];
 }
 
 async function handler(ctx) {
@@ -66,8 +66,8 @@ async function handler(ctx) {
         config.cache.routeExpire,
         false
     )) as {
-        cards: Card[];
-        pageInfo: {
+        cards?: Card[];
+        pageInfo?: {
             page_title: string;
         };
     };
@@ -85,15 +85,15 @@ async function handler(ctx) {
         if (!('card_group' in card)) {
             continue;
         }
-        for (const mblogCard of card.card_group) {
+        for (const mblogCard of card.card_group!) {
             handleCard(ctx, mblogCard, resultItems);
         }
     }
 
     return weiboUtils.sinaimgTvax({
-        title: `微博超话 - ${containerData.pageInfo.page_title}`,
+        title: `微博超话 - ${containerData?.pageInfo?.page_title}`,
         link: `https://weibo.com/p/${id}/super_index`,
-        description: `#${containerData.pageInfo.page_title}# 的超话`,
+        description: `#${containerData?.pageInfo?.page_title}# 的超话`,
         item: resultItems,
     });
 }
