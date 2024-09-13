@@ -22,7 +22,6 @@ export const route: Route = {
     description: ``,
 };
 
-// 在lofter/user.ts 的基础上修改而成
 async function handler(ctx) {
     const collectionID = ctx.req.param('collectionID');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : '50';
