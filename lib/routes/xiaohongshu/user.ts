@@ -52,7 +52,7 @@ async function handler(ctx) {
                 title: noteCard.displayTitle,
                 link: `${url}/${noteCard.noteId || id}`,
                 guid: noteCard.noteId || id || noteCard.cover?.infoList?.[0]?.url || noteCard.displayTitle,
-                description: `<img src ="${noteCard.cover.infoList.pop().url}"><br>${noteCard.displayTitle}`,
+                description: `<img src ="${noteCard.cover?.infoList?.pop()?.url}"><br>${noteCard.displayTitle}`,
                 author: noteCard.user.nickname,
                 upvotes: noteCard.interactInfo.likedCount,
             }))
