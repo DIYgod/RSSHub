@@ -6,10 +6,16 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/jwctzgg',
+    path: '/jwc/:type',
     categories: ['university'],
-    example: '/bupt/jwctzgg',
-    parameters: {},
+    example: '/bupt/jwc/tzgg',
+    parameters: {
+        type: {
+            type: 'string',
+            optional: false,
+            description: '信息类型，可选值：tzgg（通知公告），xwzx（新闻资讯）',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -23,15 +29,31 @@ export const route: Route = {
             source: ['jwc.bupt.edu.cn/'],
         },
     ],
-    name: '教务处通知公告',
+    name: '北京邮电大学教务处',
     maintainers: ['Yoruet'],
     handler,
     url: 'https://jwc.bupt.edu.cn/',
 };
 
-async function handler() {
+async function handler(ctx: Context) {
+    const type = ctx.req.param('type'); // 默认类型为通知公告
+    if (!type) {
+        type = 'tzgg';
+    }
     const rootUrl = 'https://jwc.bupt.edu.cn';
-    const currentUrl = `${rootUrl}/tzgg1.htm`; // 更改为教务处通知公告页面
+
+    let currentUrl;
+    let pageTitle;
+
+    if (type === 'tzgg') {
+        currentUrl = `${rootUrl}/tzgg1.htm`;
+        pageTitle = '通知公告';
+    } else if (type === 'xwzx') {
+        currentUrl = `${rootUrl}/xwzx2.htm`;
+        pageTitle = '新闻资讯';
+    } else {
+        throw new Error('Invalid type parameter');
+    }
 
     const response = await got({
         method: 'get',
@@ -90,7 +112,7 @@ async function handler() {
     );
 
     return {
-        title: $('title').text(),
+        title: `北京邮电大学教务处 - ${pageTitle}`,
         link: currentUrl,
         item: items,
     };
