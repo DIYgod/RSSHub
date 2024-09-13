@@ -61,7 +61,7 @@ export const handler = async (ctx) => {
 
               return {
                   title,
-                  pubDate: parseDate(item.dateline, 'YYYY-M-D'),
+                  pubDate: item.datelines ? parseDate(item.datelines, 'X') : parseDate(item.dateline, 'YYYY-M-D'),
                   link: new URL(`recipe-${item.id}.html`, rootUrl).href,
                   category: item.mainingredient.replace(/。$/, '').split('、'),
                   author: item.username,
@@ -114,8 +114,12 @@ export const handler = async (ctx) => {
                 const description = $$('div.recipDetail').html();
                 const image = $$('div#recipe_De_imgBox img').prop('src')?.split(/\?/)[0] ?? undefined;
 
+                const pubDate = detailResponse.match(/"pubDate":\s"(.*?)",/)?.[1] ?? undefined;
+                const updated = detailResponse.match(/"upDate":\s"(.*?)",/)?.[1] ?? undefined;
+
                 item.title = title;
                 item.description = description;
+                item.pubDate = pubDate ? parseDate(pubDate) : item.pubDate;
                 item.category = [
                     ...new Set([
                         ...$$('div.recipeTip a')
@@ -133,6 +137,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
+                item.updated = updated ? parseDate(updated) : item.updated;
 
                 return item;
             })
