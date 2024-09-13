@@ -36,12 +36,11 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const type = ctx.req.param('type'); // 默认类型为通知公告
+    let type = ctx.req.param('type'); // 默认类型为通知公告
     if (!type) {
         type = 'tzgg';
     }
     const rootUrl = 'https://jwc.bupt.edu.cn';
-
     let currentUrl;
     let pageTitle;
 
