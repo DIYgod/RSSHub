@@ -65,8 +65,8 @@ async function handler(ctx) {
 
     return {
         title: `${response.data.response.collection.name} | LOFTER`,
-        link: `${items[0].link}`,
+        link: String(items[0].link),
         item: items,
-        description:  `${response.data.response.collection.description}`,
+        description: String(response.data.response.collection.description),
     };
 }
