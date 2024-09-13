@@ -650,9 +650,6 @@
   "/bilibili/bangumi/media/:mediaid": [
     "DIYgod"
   ],
-  "/bilibili/precious/:disableEmbed?": [
-    "liuyuhe666"
-  ],
   "/bilibili/user/coin/:uid/:disableEmbed?": [
     "DIYgod"
   ],
