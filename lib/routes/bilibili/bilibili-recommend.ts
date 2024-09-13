@@ -15,7 +15,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '哔哩哔哩入站必刷',
+    name: '入站必刷',
     maintainers: ['liuyuhe666'],
     handler,
 };
@@ -24,9 +24,9 @@ async function handler(ctx) {
     const disableEmbed = ctx.req.param('disableEmbed');
     const response = await got({
         method: 'get',
-        url: `https://api.bilibili.com/x/web-interface/popular/precious`,
+        url: 'https://api.bilibili.com/x/web-interface/popular/precious',
         headers: {
-            Referer: `https://www.bilibili.com/v/popular/history`,
+            Referer: 'https://www.bilibili.com/v/popular/history',
         },
     });
     const data = response.data.data.list;
