@@ -6933,6 +6933,29 @@
         ],
         "location": "bangumi.ts"
       },
+      "/precious/:disableEmbed?": {
+        "path": "/precious/:disableEmbed?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/bilibili/precious",
+        "parameters": {
+          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "入站必刷",
+        "maintainers": [
+          "liuyuhe666"
+        ],
+        "location": "bilibili-recommend.ts"
+      },
       "/user/coin/:uid/:disableEmbed?": {
         "path": "/user/coin/:uid/:disableEmbed?",
         "categories": [
