@@ -37,6 +37,10 @@ export const route: Route = {
 | feed       | 最新评论         |`,
 };
 
+interface Card {
+    card_group: Card[];
+}
+
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'feed';
@@ -61,9 +65,14 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as Record<string, any>;
+    )) as {
+        cards: Card[];
+        pageInfo: {
+            page_title: string;
+        };
+    };
 
-    const resultItems: any[] = [];
+    const resultItems = [];
 
     function handleCard(ctx, card, resultItems) {
         if (card.card_type === '9' && 'mblog' in card) {
@@ -71,7 +80,6 @@ async function handler(ctx) {
             resultItems.push(formatExtended);
         }
     }
-
     for (const card of containerData?.cards ?? []) {
         handleCard(ctx, card, resultItems);
         if (!('card_group' in card)) {
