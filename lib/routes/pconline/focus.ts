@@ -68,28 +68,23 @@ export const handler = async (ctx) => {
     const cate = categories[category] || categories.all;
     const currentUrl = `${rootUrl}/3g/other/focus/${cate.path}index.html`;
 
-    let items = [];
+    const items = await cache.tryGet(currentUrl, async () => {
+        const response = await got({
+            method: 'get',
+            url: currentUrl,
+        });
 
-    try {
-        let dataString = await cache.get(currentUrl);
-        if (!dataString) {
-            const response = await got({
-                method: 'get',
-                url: currentUrl,
-            });
-
-            const resString = response.data
-                .replace(/Module\.callback\((.*)\)/s, '$1')
-                .split('\n')
-                .filter((e) => e.indexOf('"tags":') !== 0)
-                .join('\n')
-                .replaceAll("'", '"');
-            const tinyData = resString.replaceAll(/[\n\r]/g, '');
-            dataString = tinyData.replaceAll(',}', '}');
-        }
+        const resString = response.data
+            .replace(/Module\.callback\((.*)\)/s, '$1')
+            .split('\n')
+            .filter((e) => e.indexOf('"tags":') !== 0)
+            .join('\n')
+            .replaceAll("'", '"');
+        const tinyData = resString.replaceAll(/[\n\r]/g, '');
+        const dataString = tinyData.replaceAll(',}', '}');
         const data = JSON.parse(dataString || '');
         const { articleList } = data;
-        items = articleList.map((item: Item) => ({
+        const items: Item[] = articleList.map((item: Item) => ({
             id: item.id,
             title: item.title,
             author: [
@@ -104,16 +99,16 @@ export const handler = async (ctx) => {
             category: item.channelName,
             image: item.cover,
         }));
+
         await Promise.all(items.map((item) => getContent(item)));
-        cache.set(currentUrl, JSON.stringify(items));
-    } catch {
-        // console.error(error);
-    }
+
+        return items;
+    });
 
     return {
         title: `太平洋科技-${cate.title}`,
         link: currentUrl,
-        item: items,
+        item: items as Item[],
     };
 };
 
