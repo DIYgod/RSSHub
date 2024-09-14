@@ -22,7 +22,7 @@ export const route: Route = {
     handler,
 };
 
-async function fetchCollection(collectionID, limit, offset = 0, items = []) {
+async function fetchCollection(collectionID, limit, offset = 0, items: any[] = []) {
     const response = await got({
         method: 'post',
         url: `https://api.lofter.com/v1.1/postCollection.api?product=lofter-android-7.6.12`,
@@ -40,7 +40,7 @@ async function fetchCollection(collectionID, limit, offset = 0, items = []) {
     }
 
     const total = response.data.response.collection.postCount;
-    const newItems = items.concat(response.data.response.items);
+    const newItems = [...items, ...response.data.response.items];
 
     if (offset + limit < total) {
         return fetchCollection(collectionID, limit, offset + limit, newItems);
