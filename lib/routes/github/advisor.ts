@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/advisor/data/:category?',
-    categories: ['game'],
+    categories: ['programming'],
     example: '/github/advisor/data/go',
     features: {
         requireConfig: false,
