@@ -30,7 +30,7 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const { keyword } = ctx.req.param();
     const baseUrl = 'https://chikubi.jp';
-    const url = `/tag/${keyword}`;
+    const url = `/tag/${encodeURIComponent(keyword)}`;
 
     const feed = await new Parser().parseURL(`${baseUrl}${url}/feed`);
 
