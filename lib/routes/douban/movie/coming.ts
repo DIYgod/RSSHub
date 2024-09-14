@@ -9,7 +9,7 @@ const __dirname = getCurrentPath(import.meta.url);
 export const route: Route = {
     path: '/movie/coming',
     categories: ['social-media'],
-    example: '/douban/coming',
+    example: '/douban/movie/coming',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
