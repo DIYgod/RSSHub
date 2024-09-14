@@ -20,7 +20,6 @@ export const route: Route = {
     name: 'Collection',
     maintainers: ['SrakhiuMeow'],
     handler,
-    description: ``,
 };
 
 async function fetchCollection(collectionID, limit, offset = 0, items = []) {
@@ -36,7 +35,7 @@ async function fetchCollection(collectionID, limit, offset = 0, items = []) {
         }),
     });
 
-    if (!response.data.response || response.data.response.items.length === 0) {
+    if (!response.data.response) {
         throw new Error('Collection Not Found');
     }
 
@@ -77,11 +76,11 @@ async function handler(ctx) {
                     if (photo.raw?.match(/\/\/nos\.netease\.com\//)) {
                         photo.raw = `https://${photo.raw.match(/(imglf\d)/)[0]}.lf127.net${photo.raw.match(/\/\/nos\.netease\.com\/imglf\d(.*)/)[1]}`;
                     }
-                    return `<img src="${photo.raw || photo.orign}">`;
+                    return `<img src='${photo.raw || photo.orign}'>`;
                 })
                 .join('') +
             JSON.parse(item.post.embed ? `[${item.post.embed}]` : `[]`)
-                .map((video) => `<video src="${video.originUrl}" poster="${video.video_img_url}" controls="controls"></video>`)
+                .map((video) => `<video src='${video.originUrl}' poster='${video.video_img_url}' controls='controls'></video>`)
                 .join('') +
             item.post.content,
         pubDate: parseDate(item.post.publishTime),
