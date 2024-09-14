@@ -550,6 +550,9 @@ const calculateValue = () => {
         lightnovel: {
             cookie: envs.SECURITY_KEY,
         },
+        malaysiakini: {
+            refreshToken: envs.MALAYSIAKINI_REFRESHTOKEN,
+        },
         manhuagui: {
             cookie: envs.MHGUI_COOKIE,
         },
