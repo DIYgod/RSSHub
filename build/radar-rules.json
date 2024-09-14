@@ -12033,6 +12033,2459 @@
       }
     ]
   },
+  "meishichina.com": {
+    "_name": "美食天下",
+    "home": [
+      {
+        "title": "最新推荐",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe.html"
+        ],
+        "target": "/meishichina/recipe/最新推荐"
+      },
+      {
+        "title": "最新发布",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe.html"
+        ],
+        "target": "/meishichina/recipe/最新发布"
+      },
+      {
+        "title": "热菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe.html"
+        ],
+        "target": "/meishichina/recipe/热菜"
+      },
+      {
+        "title": "凉菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe.html"
+        ],
+        "target": "/meishichina/recipe/凉菜"
+      },
+      {
+        "title": "汤羹",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe.html"
+        ],
+        "target": "/meishichina/recipe/汤羹"
+      },
+      {
+        "title": "主食",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe.html"
+        ],
+        "target": "/meishichina/recipe/主食"
+      },
+      {
+        "title": "小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe.html"
+        ],
+        "target": "/meishichina/recipe/小吃"
+      },
+      {
+        "title": "西餐",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe.html"
+        ],
+        "target": "/meishichina/recipe/西餐"
+      },
+      {
+        "title": "烘焙",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe.html"
+        ],
+        "target": "/meishichina/recipe/烘焙"
+      },
+      {
+        "title": "自制食材",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe.html"
+        ],
+        "target": "/meishichina/recipe/自制食材"
+      },
+      {
+        "title": "常见菜式 - 热菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/recai/"
+        ],
+        "target": "/meishichina/recipe/recai"
+      },
+      {
+        "title": "常见菜式 - 凉菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/liangcai/"
+        ],
+        "target": "/meishichina/recipe/liangcai"
+      },
+      {
+        "title": "常见菜式 - 汤羹",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/tanggeng/"
+        ],
+        "target": "/meishichina/recipe/tanggeng"
+      },
+      {
+        "title": "常见菜式 - 主食",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zhushi/"
+        ],
+        "target": "/meishichina/recipe/zhushi"
+      },
+      {
+        "title": "常见菜式 - 小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiaochi/"
+        ],
+        "target": "/meishichina/recipe/xiaochi"
+      },
+      {
+        "title": "常见菜式 - 家常菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jiachang/"
+        ],
+        "target": "/meishichina/recipe/jiachang"
+      },
+      {
+        "title": "常见菜式 - 泡酱腌菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jiangpaoyancai/"
+        ],
+        "target": "/meishichina/recipe/jiangpaoyancai"
+      },
+      {
+        "title": "常见菜式 - 西餐",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xican/"
+        ],
+        "target": "/meishichina/recipe/xican"
+      },
+      {
+        "title": "常见菜式 - 烘焙",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/hongbei/"
+        ],
+        "target": "/meishichina/recipe/hongbei"
+      },
+      {
+        "title": "常见菜式 - 烤箱菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/kaoxiangcai/"
+        ],
+        "target": "/meishichina/recipe/kaoxiangcai"
+      },
+      {
+        "title": "常见菜式 - 饮品",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yinpin/"
+        ],
+        "target": "/meishichina/recipe/yinpin"
+      },
+      {
+        "title": "常见菜式 - 零食",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/lingshi/"
+        ],
+        "target": "/meishichina/recipe/lingshi"
+      },
+      {
+        "title": "常见菜式 - 火锅",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/huoguo/"
+        ],
+        "target": "/meishichina/recipe/huoguo"
+      },
+      {
+        "title": "常见菜式 - 自制食材",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zizhishicai/"
+        ],
+        "target": "/meishichina/recipe/zizhishicai"
+      },
+      {
+        "title": "常见菜式 - 海鲜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/haixian/"
+        ],
+        "target": "/meishichina/recipe/haixian"
+      },
+      {
+        "title": "常见菜式 - 宴客菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yankecai/"
+        ],
+        "target": "/meishichina/recipe/yankecai"
+      },
+      {
+        "title": "主食/小吃 - 米饭",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/mifan/"
+        ],
+        "target": "/meishichina/recipe/mifan"
+      },
+      {
+        "title": "主食/小吃 - 炒饭",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chaofan/"
+        ],
+        "target": "/meishichina/recipe/chaofan"
+      },
+      {
+        "title": "主食/小吃 - 面食",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/mianshi/"
+        ],
+        "target": "/meishichina/recipe/mianshi"
+      },
+      {
+        "title": "主食/小吃 - 包子",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/baozi/"
+        ],
+        "target": "/meishichina/recipe/baozi"
+      },
+      {
+        "title": "主食/小吃 - 饺子",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jiaozi/"
+        ],
+        "target": "/meishichina/recipe/jiaozi"
+      },
+      {
+        "title": "主食/小吃 - 馒头花卷",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/mantou/"
+        ],
+        "target": "/meishichina/recipe/mantou"
+      },
+      {
+        "title": "主食/小吃 - 面条",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/miantiao/"
+        ],
+        "target": "/meishichina/recipe/miantiao"
+      },
+      {
+        "title": "主食/小吃 - 饼",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/bing/"
+        ],
+        "target": "/meishichina/recipe/bing"
+      },
+      {
+        "title": "主食/小吃 - 粥",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zhou/"
+        ],
+        "target": "/meishichina/recipe/zhou"
+      },
+      {
+        "title": "主食/小吃 - 馄饨",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/hundun/"
+        ],
+        "target": "/meishichina/recipe/hundun"
+      },
+      {
+        "title": "主食/小吃 - 五谷杂粮",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/wuguzaliang/"
+        ],
+        "target": "/meishichina/recipe/wuguzaliang"
+      },
+      {
+        "title": "主食/小吃 - 北京小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/beijingxiaochi/"
+        ],
+        "target": "/meishichina/recipe/beijingxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 陕西小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/shanxixiaochi/"
+        ],
+        "target": "/meishichina/recipe/shanxixiaochi"
+      },
+      {
+        "title": "主食/小吃 - 广东小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/guangdongxiaochi/"
+        ],
+        "target": "/meishichina/recipe/guangdongxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 四川小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/sichuanxiaochi/"
+        ],
+        "target": "/meishichina/recipe/sichuanxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 重庆小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chongqingxiaochi/"
+        ],
+        "target": "/meishichina/recipe/chongqingxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 天津小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/tianjinxiaochi/"
+        ],
+        "target": "/meishichina/recipe/tianjinxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 上海小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/shanghaixiochi/"
+        ],
+        "target": "/meishichina/recipe/shanghaixiochi"
+      },
+      {
+        "title": "主食/小吃 - 福建小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/fujianxiaochi/"
+        ],
+        "target": "/meishichina/recipe/fujianxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 湖南小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/hunanxiaochi/"
+        ],
+        "target": "/meishichina/recipe/hunanxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 湖北小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/hubeixiaochi/"
+        ],
+        "target": "/meishichina/recipe/hubeixiaochi"
+      },
+      {
+        "title": "主食/小吃 - 江西小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jiangxixiaochi/"
+        ],
+        "target": "/meishichina/recipe/jiangxixiaochi"
+      },
+      {
+        "title": "主食/小吃 - 山东小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/shandongxiaochi/"
+        ],
+        "target": "/meishichina/recipe/shandongxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 山西小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jinxiaochi/"
+        ],
+        "target": "/meishichina/recipe/jinxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 河南小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/henanxiaochi/"
+        ],
+        "target": "/meishichina/recipe/henanxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 台湾小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/taiwanxiaochi/"
+        ],
+        "target": "/meishichina/recipe/taiwanxiaochi"
+      },
+      {
+        "title": "主食/小吃 - 江浙小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jiangzhexiaochi/"
+        ],
+        "target": "/meishichina/recipe/jiangzhexiaochi"
+      },
+      {
+        "title": "主食/小吃 - 云贵小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yunguixiaochi/"
+        ],
+        "target": "/meishichina/recipe/yunguixiaochi"
+      },
+      {
+        "title": "主食/小吃 - 东北小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/dongbeixiaochi/"
+        ],
+        "target": "/meishichina/recipe/dongbeixiaochi"
+      },
+      {
+        "title": "主食/小吃 - 西北小吃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xibeixiaochi/"
+        ],
+        "target": "/meishichina/recipe/xibeixiaochi"
+      },
+      {
+        "title": "甜品/饮品 - 甜品",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/tianpin/"
+        ],
+        "target": "/meishichina/recipe/tianpin"
+      },
+      {
+        "title": "甜品/饮品 - 冰品",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/bingpin/"
+        ],
+        "target": "/meishichina/recipe/bingpin"
+      },
+      {
+        "title": "甜品/饮品 - 果汁",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/guozhi/"
+        ],
+        "target": "/meishichina/recipe/guozhi"
+      },
+      {
+        "title": "甜品/饮品 - 糖水",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/tangshui/"
+        ],
+        "target": "/meishichina/recipe/tangshui"
+      },
+      {
+        "title": "甜品/饮品 - 布丁",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/buding/"
+        ],
+        "target": "/meishichina/recipe/buding"
+      },
+      {
+        "title": "甜品/饮品 - 果酱",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/guojiang/"
+        ],
+        "target": "/meishichina/recipe/guojiang"
+      },
+      {
+        "title": "甜品/饮品 - 果冻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/guodong/"
+        ],
+        "target": "/meishichina/recipe/guodong"
+      },
+      {
+        "title": "甜品/饮品 - 酸奶",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/suannai/"
+        ],
+        "target": "/meishichina/recipe/suannai"
+      },
+      {
+        "title": "甜品/饮品 - 鸡尾酒",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jiweijiu/"
+        ],
+        "target": "/meishichina/recipe/jiweijiu"
+      },
+      {
+        "title": "甜品/饮品 - 咖啡",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/kafei/"
+        ],
+        "target": "/meishichina/recipe/kafei"
+      },
+      {
+        "title": "甜品/饮品 - 豆浆",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/doujiang/"
+        ],
+        "target": "/meishichina/recipe/doujiang"
+      },
+      {
+        "title": "甜品/饮品 - 奶昔",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/naixi/"
+        ],
+        "target": "/meishichina/recipe/naixi"
+      },
+      {
+        "title": "甜品/饮品 - 冰淇淋",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/bingqilin/"
+        ],
+        "target": "/meishichina/recipe/bingqilin"
+      },
+      {
+        "title": "适宜人群 - 孕妇",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yunfu/"
+        ],
+        "target": "/meishichina/recipe/yunfu"
+      },
+      {
+        "title": "适宜人群 - 产妇",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chanfu/"
+        ],
+        "target": "/meishichina/recipe/chanfu"
+      },
+      {
+        "title": "适宜人群 - 婴儿",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yinger/"
+        ],
+        "target": "/meishichina/recipe/yinger"
+      },
+      {
+        "title": "适宜人群 - 儿童",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/ertong/"
+        ],
+        "target": "/meishichina/recipe/ertong"
+      },
+      {
+        "title": "适宜人群 - 老人",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/laoren/"
+        ],
+        "target": "/meishichina/recipe/laoren"
+      },
+      {
+        "title": "适宜人群 - 幼儿",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/youer/"
+        ],
+        "target": "/meishichina/recipe/youer"
+      },
+      {
+        "title": "适宜人群 - 哺乳期",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/buruqi/"
+        ],
+        "target": "/meishichina/recipe/buruqi"
+      },
+      {
+        "title": "适宜人群 - 青少年",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qingshaonian/"
+        ],
+        "target": "/meishichina/recipe/qingshaonian"
+      },
+      {
+        "title": "食疗食补 - 健康食谱",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jiankangshipu/"
+        ],
+        "target": "/meishichina/recipe/jiankangshipu"
+      },
+      {
+        "title": "食疗食补 - 减肥瘦身",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/shoushen/"
+        ],
+        "target": "/meishichina/recipe/shoushen"
+      },
+      {
+        "title": "食疗食补 - 贫血",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/pinxue/"
+        ],
+        "target": "/meishichina/recipe/pinxue"
+      },
+      {
+        "title": "食疗食补 - 痛经",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/tongjing/"
+        ],
+        "target": "/meishichina/recipe/tongjing"
+      },
+      {
+        "title": "食疗食补 - 清热祛火",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qingrequhuo/"
+        ],
+        "target": "/meishichina/recipe/qingrequhuo"
+      },
+      {
+        "title": "食疗食补 - 滋阴",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/ziyin/"
+        ],
+        "target": "/meishichina/recipe/ziyin"
+      },
+      {
+        "title": "食疗食补 - 壮阳",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zhuangyang/"
+        ],
+        "target": "/meishichina/recipe/zhuangyang"
+      },
+      {
+        "title": "食疗食补 - 便秘",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/bianmi/"
+        ],
+        "target": "/meishichina/recipe/bianmi"
+      },
+      {
+        "title": "食疗食补 - 排毒养颜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/paiduyangyan/"
+        ],
+        "target": "/meishichina/recipe/paiduyangyan"
+      },
+      {
+        "title": "食疗食补 - 滋润补水",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/ziyinbushuui/"
+        ],
+        "target": "/meishichina/recipe/ziyinbushuui"
+      },
+      {
+        "title": "食疗食补 - 健脾养胃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jianbiyangwei/"
+        ],
+        "target": "/meishichina/recipe/jianbiyangwei"
+      },
+      {
+        "title": "食疗食补 - 护肝明目",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/huganmingmu/"
+        ],
+        "target": "/meishichina/recipe/huganmingmu"
+      },
+      {
+        "title": "食疗食补 - 清肺止咳",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qingfeizhike/"
+        ],
+        "target": "/meishichina/recipe/qingfeizhike"
+      },
+      {
+        "title": "食疗食补 - 下奶",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xianai/"
+        ],
+        "target": "/meishichina/recipe/xianai"
+      },
+      {
+        "title": "食疗食补 - 补钙",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/bugai/"
+        ],
+        "target": "/meishichina/recipe/bugai"
+      },
+      {
+        "title": "食疗食补 - 醒酒",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xingjiu/"
+        ],
+        "target": "/meishichina/recipe/xingjiu"
+      },
+      {
+        "title": "食疗食补 - 抗过敏",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/kangguomin/"
+        ],
+        "target": "/meishichina/recipe/kangguomin"
+      },
+      {
+        "title": "食疗食补 - 防辐射",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/fangfushe/"
+        ],
+        "target": "/meishichina/recipe/fangfushe"
+      },
+      {
+        "title": "食疗食补 - 提高免疫力",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/tigaomianyili/"
+        ],
+        "target": "/meishichina/recipe/tigaomianyili"
+      },
+      {
+        "title": "食疗食补 - 流感",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/liugan/"
+        ],
+        "target": "/meishichina/recipe/liugan"
+      },
+      {
+        "title": "食疗食补 - 驱寒暖身",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/quhannuanshen/"
+        ],
+        "target": "/meishichina/recipe/quhannuanshen"
+      },
+      {
+        "title": "食疗食补 - 秋冬进补",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qiudongjinbu/"
+        ],
+        "target": "/meishichina/recipe/qiudongjinbu"
+      },
+      {
+        "title": "食疗食补 - 消暑解渴",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiaoshujieke/"
+        ],
+        "target": "/meishichina/recipe/xiaoshujieke"
+      },
+      {
+        "title": "场景 - 早餐",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zaocan/"
+        ],
+        "target": "/meishichina/recipe/zaocan"
+      },
+      {
+        "title": "场景 - 下午茶",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiawucha/"
+        ],
+        "target": "/meishichina/recipe/xiawucha"
+      },
+      {
+        "title": "场景 - 二人世界",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/erren/"
+        ],
+        "target": "/meishichina/recipe/erren"
+      },
+      {
+        "title": "场景 - 野餐",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yecan/"
+        ],
+        "target": "/meishichina/recipe/yecan"
+      },
+      {
+        "title": "场景 - 开胃菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/kaiweicai/"
+        ],
+        "target": "/meishichina/recipe/kaiweicai"
+      },
+      {
+        "title": "场景 - 私房菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/sifangcai/"
+        ],
+        "target": "/meishichina/recipe/sifangcai"
+      },
+      {
+        "title": "场景 - 快餐",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/kuaican/"
+        ],
+        "target": "/meishichina/recipe/kuaican"
+      },
+      {
+        "title": "场景 - 快手菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/kuaishoucai/"
+        ],
+        "target": "/meishichina/recipe/kuaishoucai"
+      },
+      {
+        "title": "场景 - 宿舍时代",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/susheshidai/"
+        ],
+        "target": "/meishichina/recipe/susheshidai"
+      },
+      {
+        "title": "场景 - 中式宴请",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zhongshiyanqing/"
+        ],
+        "target": "/meishichina/recipe/zhongshiyanqing"
+      },
+      {
+        "title": "场景 - 西式宴请",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xishiyanqing/"
+        ],
+        "target": "/meishichina/recipe/xishiyanqing"
+      },
+      {
+        "title": "饮食方式 - 素食",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/sushi/"
+        ],
+        "target": "/meishichina/recipe/sushi"
+      },
+      {
+        "title": "饮食方式 - 素菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/sucai2/"
+        ],
+        "target": "/meishichina/recipe/sucai2"
+      },
+      {
+        "title": "饮食方式 - 清真菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qingzhencai/"
+        ],
+        "target": "/meishichina/recipe/qingzhencai"
+      },
+      {
+        "title": "饮食方式 - 春季食谱",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chunji/"
+        ],
+        "target": "/meishichina/recipe/chunji"
+      },
+      {
+        "title": "饮食方式 - 夏季食谱",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiaji/"
+        ],
+        "target": "/meishichina/recipe/xiaji"
+      },
+      {
+        "title": "饮食方式 - 秋季食谱",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qiuji/"
+        ],
+        "target": "/meishichina/recipe/qiuji"
+      },
+      {
+        "title": "饮食方式 - 冬季食谱",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/dongji/"
+        ],
+        "target": "/meishichina/recipe/dongji"
+      },
+      {
+        "title": "饮食方式 - 小清新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiaoqingxin/"
+        ],
+        "target": "/meishichina/recipe/xiaoqingxin"
+      },
+      {
+        "title": "饮食方式 - 高颜值",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/gaoyanzhi/"
+        ],
+        "target": "/meishichina/recipe/gaoyanzhi"
+      },
+      {
+        "title": "中式菜系 - 川菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chuancai/"
+        ],
+        "target": "/meishichina/recipe/chuancai"
+      },
+      {
+        "title": "中式菜系 - 鲁菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/lucai/"
+        ],
+        "target": "/meishichina/recipe/lucai"
+      },
+      {
+        "title": "中式菜系 - 闽菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/mincai/"
+        ],
+        "target": "/meishichina/recipe/mincai"
+      },
+      {
+        "title": "中式菜系 - 粤菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yuecai/"
+        ],
+        "target": "/meishichina/recipe/yuecai"
+      },
+      {
+        "title": "中式菜系 - 苏菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/sucai/"
+        ],
+        "target": "/meishichina/recipe/sucai"
+      },
+      {
+        "title": "中式菜系 - 浙菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zhecai/"
+        ],
+        "target": "/meishichina/recipe/zhecai"
+      },
+      {
+        "title": "中式菜系 - 湘菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiangcai/"
+        ],
+        "target": "/meishichina/recipe/xiangcai"
+      },
+      {
+        "title": "中式菜系 - 徽菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/huicai/"
+        ],
+        "target": "/meishichina/recipe/huicai"
+      },
+      {
+        "title": "中式菜系 - 淮扬菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/huaiyangcai/"
+        ],
+        "target": "/meishichina/recipe/huaiyangcai"
+      },
+      {
+        "title": "中式菜系 - 豫菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yucai/"
+        ],
+        "target": "/meishichina/recipe/yucai"
+      },
+      {
+        "title": "中式菜系 - 晋菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jincai/"
+        ],
+        "target": "/meishichina/recipe/jincai"
+      },
+      {
+        "title": "中式菜系 - 鄂菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/ecai/"
+        ],
+        "target": "/meishichina/recipe/ecai"
+      },
+      {
+        "title": "中式菜系 - 云南菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yunnancai/"
+        ],
+        "target": "/meishichina/recipe/yunnancai"
+      },
+      {
+        "title": "中式菜系 - 北京菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/beijingcai/"
+        ],
+        "target": "/meishichina/recipe/beijingcai"
+      },
+      {
+        "title": "中式菜系 - 东北菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/dongbeicai/"
+        ],
+        "target": "/meishichina/recipe/dongbeicai"
+      },
+      {
+        "title": "中式菜系 - 西北菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xibeicai/"
+        ],
+        "target": "/meishichina/recipe/xibeicai"
+      },
+      {
+        "title": "中式菜系 - 贵州菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/guizhoucai/"
+        ],
+        "target": "/meishichina/recipe/guizhoucai"
+      },
+      {
+        "title": "中式菜系 - 上海菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/shanghaicai/"
+        ],
+        "target": "/meishichina/recipe/shanghaicai"
+      },
+      {
+        "title": "中式菜系 - 新疆菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xinjiangcai/"
+        ],
+        "target": "/meishichina/recipe/xinjiangcai"
+      },
+      {
+        "title": "中式菜系 - 客家菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/kejiacai/"
+        ],
+        "target": "/meishichina/recipe/kejiacai"
+      },
+      {
+        "title": "中式菜系 - 台湾美食",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/taiwancai/"
+        ],
+        "target": "/meishichina/recipe/taiwancai"
+      },
+      {
+        "title": "中式菜系 - 香港美食",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xianggangcai/"
+        ],
+        "target": "/meishichina/recipe/xianggangcai"
+      },
+      {
+        "title": "中式菜系 - 澳门美食",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/aomeicai/"
+        ],
+        "target": "/meishichina/recipe/aomeicai"
+      },
+      {
+        "title": "中式菜系 - 赣菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/gancai/"
+        ],
+        "target": "/meishichina/recipe/gancai"
+      },
+      {
+        "title": "中式菜系 - 中式菜系",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zhongshicaixi/"
+        ],
+        "target": "/meishichina/recipe/zhongshicaixi"
+      },
+      {
+        "title": "外国美食 - 日本料理",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/ribencai/"
+        ],
+        "target": "/meishichina/recipe/ribencai"
+      },
+      {
+        "title": "外国美食 - 韩国料理",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/hanguocai/"
+        ],
+        "target": "/meishichina/recipe/hanguocai"
+      },
+      {
+        "title": "外国美食 - 泰国菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/taiguocai/"
+        ],
+        "target": "/meishichina/recipe/taiguocai"
+      },
+      {
+        "title": "外国美食 - 印度菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yiducai/"
+        ],
+        "target": "/meishichina/recipe/yiducai"
+      },
+      {
+        "title": "外国美食 - 法国菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/faguocai/"
+        ],
+        "target": "/meishichina/recipe/faguocai"
+      },
+      {
+        "title": "外国美食 - 意大利菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yidalicai/"
+        ],
+        "target": "/meishichina/recipe/yidalicai"
+      },
+      {
+        "title": "外国美食 - 西班牙菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xibanya/"
+        ],
+        "target": "/meishichina/recipe/xibanya"
+      },
+      {
+        "title": "外国美食 - 英国菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yingguocai/"
+        ],
+        "target": "/meishichina/recipe/yingguocai"
+      },
+      {
+        "title": "外国美食 - 越南菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yuenancai/"
+        ],
+        "target": "/meishichina/recipe/yuenancai"
+      },
+      {
+        "title": "外国美食 - 墨西哥菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/moxigecai/"
+        ],
+        "target": "/meishichina/recipe/moxigecai"
+      },
+      {
+        "title": "外国美食 - 外国美食",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/waiguomeishi/"
+        ],
+        "target": "/meishichina/recipe/waiguomeishi"
+      },
+      {
+        "title": "烘焙 - 蛋糕",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/dangao/"
+        ],
+        "target": "/meishichina/recipe/dangao"
+      },
+      {
+        "title": "烘焙 - 面包",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/mianbao/"
+        ],
+        "target": "/meishichina/recipe/mianbao"
+      },
+      {
+        "title": "烘焙 - 饼干",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/binggan/"
+        ],
+        "target": "/meishichina/recipe/binggan"
+      },
+      {
+        "title": "烘焙 - 派塔",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/paita/"
+        ],
+        "target": "/meishichina/recipe/paita"
+      },
+      {
+        "title": "烘焙 - 吐司",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/tusi/"
+        ],
+        "target": "/meishichina/recipe/tusi"
+      },
+      {
+        "title": "烘焙 - 戚风蛋糕",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qifeng/"
+        ],
+        "target": "/meishichina/recipe/qifeng"
+      },
+      {
+        "title": "烘焙 - 纸杯蛋糕",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zhibei/"
+        ],
+        "target": "/meishichina/recipe/zhibei"
+      },
+      {
+        "title": "烘焙 - 蛋糕卷",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/dangaojuan/"
+        ],
+        "target": "/meishichina/recipe/dangaojuan"
+      },
+      {
+        "title": "烘焙 - 玛芬蛋糕",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/mafen/"
+        ],
+        "target": "/meishichina/recipe/mafen"
+      },
+      {
+        "title": "烘焙 - 乳酪蛋糕",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/rulao/"
+        ],
+        "target": "/meishichina/recipe/rulao"
+      },
+      {
+        "title": "烘焙 - 芝士蛋糕",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zhishi/"
+        ],
+        "target": "/meishichina/recipe/zhishi"
+      },
+      {
+        "title": "烘焙 - 奶油蛋糕",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/naiyou/"
+        ],
+        "target": "/meishichina/recipe/naiyou"
+      },
+      {
+        "title": "烘焙 - 批萨",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/pisa/"
+        ],
+        "target": "/meishichina/recipe/pisa"
+      },
+      {
+        "title": "烘焙 - 慕斯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/musi/"
+        ],
+        "target": "/meishichina/recipe/musi"
+      },
+      {
+        "title": "烘焙 - 曲奇",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/quqi/"
+        ],
+        "target": "/meishichina/recipe/quqi"
+      },
+      {
+        "title": "烘焙 - 翻糖",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/fantang/"
+        ],
+        "target": "/meishichina/recipe/fantang"
+      },
+      {
+        "title": "传统美食 - 粽子",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zongzi/"
+        ],
+        "target": "/meishichina/recipe/zongzi"
+      },
+      {
+        "title": "传统美食 - 月饼",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yuebing/"
+        ],
+        "target": "/meishichina/recipe/yuebing"
+      },
+      {
+        "title": "传统美食 - 春饼",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chunbing/"
+        ],
+        "target": "/meishichina/recipe/chunbing"
+      },
+      {
+        "title": "传统美食 - 元宵",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yuanxiao/"
+        ],
+        "target": "/meishichina/recipe/yuanxiao"
+      },
+      {
+        "title": "传统美食 - 汤圆",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/tangyuan/"
+        ],
+        "target": "/meishichina/recipe/tangyuan"
+      },
+      {
+        "title": "传统美食 - 青团",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qingtuan/"
+        ],
+        "target": "/meishichina/recipe/qingtuan"
+      },
+      {
+        "title": "传统美食 - 腊八粥",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/labazhou/"
+        ],
+        "target": "/meishichina/recipe/labazhou"
+      },
+      {
+        "title": "传统美食 - 春卷",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chunjuan/"
+        ],
+        "target": "/meishichina/recipe/chunjuan"
+      },
+      {
+        "title": "传统美食 - 传统美食",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chuantongmeishi/"
+        ],
+        "target": "/meishichina/recipe/chuantongmeishi"
+      },
+      {
+        "title": "节日食俗 - 立冬",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/lidong/"
+        ],
+        "target": "/meishichina/recipe/lidong"
+      },
+      {
+        "title": "节日食俗 - 冬至",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/dongzhi/"
+        ],
+        "target": "/meishichina/recipe/dongzhi"
+      },
+      {
+        "title": "节日食俗 - 腊八",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/laba/"
+        ],
+        "target": "/meishichina/recipe/laba"
+      },
+      {
+        "title": "节日食俗 - 端午节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/duanwu/"
+        ],
+        "target": "/meishichina/recipe/duanwu"
+      },
+      {
+        "title": "节日食俗 - 中秋",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/zhongqiu/"
+        ],
+        "target": "/meishichina/recipe/zhongqiu"
+      },
+      {
+        "title": "节日食俗 - 立春",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/lichun/"
+        ],
+        "target": "/meishichina/recipe/lichun"
+      },
+      {
+        "title": "节日食俗 - 元宵节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yuanxiaojie/"
+        ],
+        "target": "/meishichina/recipe/yuanxiaojie"
+      },
+      {
+        "title": "节日食俗 - 贴秋膘",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/tieqiubiao/"
+        ],
+        "target": "/meishichina/recipe/tieqiubiao"
+      },
+      {
+        "title": "节日食俗 - 清明",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qingming/"
+        ],
+        "target": "/meishichina/recipe/qingming"
+      },
+      {
+        "title": "节日食俗 - 年夜饭",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/nianyefan/"
+        ],
+        "target": "/meishichina/recipe/nianyefan"
+      },
+      {
+        "title": "节日食俗 - 圣诞节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/shengdanjie/"
+        ],
+        "target": "/meishichina/recipe/shengdanjie"
+      },
+      {
+        "title": "节日食俗 - 感恩节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/ganenjie/"
+        ],
+        "target": "/meishichina/recipe/ganenjie"
+      },
+      {
+        "title": "节日食俗 - 万圣节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/wanshengjie/"
+        ],
+        "target": "/meishichina/recipe/wanshengjie"
+      },
+      {
+        "title": "节日食俗 - 情人节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qingrenjie/"
+        ],
+        "target": "/meishichina/recipe/qingrenjie"
+      },
+      {
+        "title": "节日食俗 - 复活节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/fuhuojie/"
+        ],
+        "target": "/meishichina/recipe/fuhuojie"
+      },
+      {
+        "title": "节日食俗 - 雨水",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/yushui/"
+        ],
+        "target": "/meishichina/recipe/yushui"
+      },
+      {
+        "title": "节日食俗 - 惊蛰",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jingzhi/"
+        ],
+        "target": "/meishichina/recipe/jingzhi"
+      },
+      {
+        "title": "节日食俗 - 春分",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chunfen/"
+        ],
+        "target": "/meishichina/recipe/chunfen"
+      },
+      {
+        "title": "节日食俗 - 谷雨",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/guyu/"
+        ],
+        "target": "/meishichina/recipe/guyu"
+      },
+      {
+        "title": "节日食俗 - 立夏",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/lixia/"
+        ],
+        "target": "/meishichina/recipe/lixia"
+      },
+      {
+        "title": "节日食俗 - 小满",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiaoman/"
+        ],
+        "target": "/meishichina/recipe/xiaoman"
+      },
+      {
+        "title": "节日食俗 - 芒种",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/mangzhong/"
+        ],
+        "target": "/meishichina/recipe/mangzhong"
+      },
+      {
+        "title": "节日食俗 - 夏至",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiazhi/"
+        ],
+        "target": "/meishichina/recipe/xiazhi"
+      },
+      {
+        "title": "节日食俗 - 小暑",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiaoshu/"
+        ],
+        "target": "/meishichina/recipe/xiaoshu"
+      },
+      {
+        "title": "节日食俗 - 大暑",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/dashu/"
+        ],
+        "target": "/meishichina/recipe/dashu"
+      },
+      {
+        "title": "节日食俗 - 立秋",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiqiu/"
+        ],
+        "target": "/meishichina/recipe/xiqiu"
+      },
+      {
+        "title": "节日食俗 - 处暑",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chushu/"
+        ],
+        "target": "/meishichina/recipe/chushu"
+      },
+      {
+        "title": "节日食俗 - 白露",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/bailu/"
+        ],
+        "target": "/meishichina/recipe/bailu"
+      },
+      {
+        "title": "节日食俗 - 秋分",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qiufen/"
+        ],
+        "target": "/meishichina/recipe/qiufen"
+      },
+      {
+        "title": "节日食俗 - 寒露",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/hanlu/"
+        ],
+        "target": "/meishichina/recipe/hanlu"
+      },
+      {
+        "title": "节日食俗 - 霜降",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/shuangjiang/"
+        ],
+        "target": "/meishichina/recipe/shuangjiang"
+      },
+      {
+        "title": "节日食俗 - 小雪",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiaoxue/"
+        ],
+        "target": "/meishichina/recipe/xiaoxue"
+      },
+      {
+        "title": "节日食俗 - 大雪",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/daxue/"
+        ],
+        "target": "/meishichina/recipe/daxue"
+      },
+      {
+        "title": "节日食俗 - 小寒",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/xiaohan/"
+        ],
+        "target": "/meishichina/recipe/xiaohan"
+      },
+      {
+        "title": "节日食俗 - 大寒",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/dahan/"
+        ],
+        "target": "/meishichina/recipe/dahan"
+      },
+      {
+        "title": "节日食俗 - 二月二",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/eryueer/"
+        ],
+        "target": "/meishichina/recipe/eryueer"
+      },
+      {
+        "title": "节日食俗 - 母亲节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/muqinjie/"
+        ],
+        "target": "/meishichina/recipe/muqinjie"
+      },
+      {
+        "title": "节日食俗 - 父亲节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/fuqinjie/"
+        ],
+        "target": "/meishichina/recipe/fuqinjie"
+      },
+      {
+        "title": "节日食俗 - 儿童节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/ertongjie/"
+        ],
+        "target": "/meishichina/recipe/ertongjie"
+      },
+      {
+        "title": "节日食俗 - 七夕",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/qixi/"
+        ],
+        "target": "/meishichina/recipe/qixi"
+      },
+      {
+        "title": "节日食俗 - 重阳节",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/chongyangjie/"
+        ],
+        "target": "/meishichina/recipe/chongyangjie"
+      },
+      {
+        "title": "节日食俗 - 节日习俗",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe/jierixisu/"
+        ],
+        "target": "/meishichina/recipe/jierixisu"
+      },
+      {
+        "title": "按制作难度 - 简单",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-level-view-1.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-level-view-1"
+      },
+      {
+        "title": "按制作难度 - 普通",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-level-view-2.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-level-view-2"
+      },
+      {
+        "title": "按制作难度 - 高级",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-level-view-3.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-level-view-3"
+      },
+      {
+        "title": "按制作难度 - 神级",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-level-view-4.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-level-view-4"
+      },
+      {
+        "title": "按所需时间 - 十分钟",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-during-view-1.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-during-view-1"
+      },
+      {
+        "title": "按所需时间 - 廿分钟",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-during-view-2.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-during-view-2"
+      },
+      {
+        "title": "按所需时间 - 半小时",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-during-view-3.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-during-view-3"
+      },
+      {
+        "title": "按所需时间 - 三刻钟",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-during-view-4.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-during-view-4"
+      },
+      {
+        "title": "按所需时间 - 一小时",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-during-view-5.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-during-view-5"
+      },
+      {
+        "title": "按所需时间 - 数小时",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-during-view-6.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-during-view-6"
+      },
+      {
+        "title": "按所需时间 - 一天",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-during-view-7.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-during-view-7"
+      },
+      {
+        "title": "按所需时间 - 数天",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-during-view-8.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-during-view-8"
+      },
+      {
+        "title": "按菜品口味 - 微辣",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-1.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-1"
+      },
+      {
+        "title": "按菜品口味 - 中辣",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-2.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-2"
+      },
+      {
+        "title": "按菜品口味 - 超辣",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-3.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-3"
+      },
+      {
+        "title": "按菜品口味 - 麻辣",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-4.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-4"
+      },
+      {
+        "title": "按菜品口味 - 酸辣",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-5.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-5"
+      },
+      {
+        "title": "按菜品口味 - 甜辣",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-29.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-29"
+      },
+      {
+        "title": "按菜品口味 - 香辣",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-31.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-31"
+      },
+      {
+        "title": "按菜品口味 - 酸甜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-6.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-6"
+      },
+      {
+        "title": "按菜品口味 - 酸咸",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-7.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-7"
+      },
+      {
+        "title": "按菜品口味 - 咸鲜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-8.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-8"
+      },
+      {
+        "title": "按菜品口味 - 咸甜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-9.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-9"
+      },
+      {
+        "title": "按菜品口味 - 甜味",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-10.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-10"
+      },
+      {
+        "title": "按菜品口味 - 苦味",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-11.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-11"
+      },
+      {
+        "title": "按菜品口味 - 原味",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-12.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-12"
+      },
+      {
+        "title": "按菜品口味 - 清淡",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-13.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-13"
+      },
+      {
+        "title": "按菜品口味 - 五香",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-14.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-14"
+      },
+      {
+        "title": "按菜品口味 - 鱼香",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-15.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-15"
+      },
+      {
+        "title": "按菜品口味 - 葱香",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-16.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-16"
+      },
+      {
+        "title": "按菜品口味 - 蒜香",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-17.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-17"
+      },
+      {
+        "title": "按菜品口味 - 奶香",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-18.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-18"
+      },
+      {
+        "title": "按菜品口味 - 酱香",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-19.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-19"
+      },
+      {
+        "title": "按菜品口味 - 糟香",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-20.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-20"
+      },
+      {
+        "title": "按菜品口味 - 咖喱",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-21.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-21"
+      },
+      {
+        "title": "按菜品口味 - 孜然",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-22.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-22"
+      },
+      {
+        "title": "按菜品口味 - 果味",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-23.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-23"
+      },
+      {
+        "title": "按菜品口味 - 香草",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-24.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-24"
+      },
+      {
+        "title": "按菜品口味 - 怪味",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-25.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-25"
+      },
+      {
+        "title": "按菜品口味 - 咸香",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-26.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-26"
+      },
+      {
+        "title": "按菜品口味 - 甜香",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-27.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-27"
+      },
+      {
+        "title": "按菜品口味 - 麻香",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-28.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-28"
+      },
+      {
+        "title": "按菜品口味 - 其他",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-cuisine-view-50.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-cuisine-view-50"
+      },
+      {
+        "title": "按主要工艺 - 烧",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-1.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-1"
+      },
+      {
+        "title": "按主要工艺 - 炒",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-2.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-2"
+      },
+      {
+        "title": "按主要工艺 - 爆",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-3.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-3"
+      },
+      {
+        "title": "按主要工艺 - 焖",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-4.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-4"
+      },
+      {
+        "title": "按主要工艺 - 炖",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-5.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-5"
+      },
+      {
+        "title": "按主要工艺 - 蒸",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-6.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-6"
+      },
+      {
+        "title": "按主要工艺 - 煮",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-7.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-7"
+      },
+      {
+        "title": "按主要工艺 - 拌",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-8.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-8"
+      },
+      {
+        "title": "按主要工艺 - 烤",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-9.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-9"
+      },
+      {
+        "title": "按主要工艺 - 炸",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-10.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-10"
+      },
+      {
+        "title": "按主要工艺 - 烩",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-11.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-11"
+      },
+      {
+        "title": "按主要工艺 - 溜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-12.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-12"
+      },
+      {
+        "title": "按主要工艺 - 氽",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-13.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-13"
+      },
+      {
+        "title": "按主要工艺 - 腌",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-14.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-14"
+      },
+      {
+        "title": "按主要工艺 - 卤",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-15.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-15"
+      },
+      {
+        "title": "按主要工艺 - 炝",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-16.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-16"
+      },
+      {
+        "title": "按主要工艺 - 煎",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-17.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-17"
+      },
+      {
+        "title": "按主要工艺 - 酥",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-18.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-18"
+      },
+      {
+        "title": "按主要工艺 - 扒",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-19.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-19"
+      },
+      {
+        "title": "按主要工艺 - 熏",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-20.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-20"
+      },
+      {
+        "title": "按主要工艺 - 煨",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-21.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-21"
+      },
+      {
+        "title": "按主要工艺 - 酱",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-22.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-22"
+      },
+      {
+        "title": "按主要工艺 - 煲",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-30.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-30"
+      },
+      {
+        "title": "按主要工艺 - 烘焙",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-23.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-23"
+      },
+      {
+        "title": "按主要工艺 - 火锅",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-24.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-24"
+      },
+      {
+        "title": "按主要工艺 - 砂锅",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-25.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-25"
+      },
+      {
+        "title": "按主要工艺 - 拔丝",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-26.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-26"
+      },
+      {
+        "title": "按主要工艺 - 生鲜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-27.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-27"
+      },
+      {
+        "title": "按主要工艺 - 调味",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-28.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-28"
+      },
+      {
+        "title": "按主要工艺 - 技巧",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-29.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-29"
+      },
+      {
+        "title": "按主要工艺 - 烙",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-31.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-31"
+      },
+      {
+        "title": "按主要工艺 - 榨汁",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-32.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-32"
+      },
+      {
+        "title": "按主要工艺 - 冷冻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-33.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-33"
+      },
+      {
+        "title": "按主要工艺 - 焗",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-34.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-34"
+      },
+      {
+        "title": "按主要工艺 - 焯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-35.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-35"
+      },
+      {
+        "title": "按主要工艺 - 干煸",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-36.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-36"
+      },
+      {
+        "title": "按主要工艺 - 干锅",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-37.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-37"
+      },
+      {
+        "title": "按主要工艺 - 铁板",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-38.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-38"
+      },
+      {
+        "title": "按主要工艺 - 微波",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-39.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-39"
+      },
+      {
+        "title": "按主要工艺 - 其他",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recipe-type-do-technics-view-50.html"
+        ],
+        "target": "/meishichina/recipe/recipe-type-do-technics-view-50"
+      }
+    ]
+  },
   "meituan.com": {
     "_name": "美团",
     "tech": [

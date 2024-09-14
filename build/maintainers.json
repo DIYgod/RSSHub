@@ -3921,6 +3921,9 @@
   "/medsci/:sid?/:tid?": [
     "nczitzk"
   ],
+  "/meishichina/recipe/:category{.+}?": [
+    "nczitzk"
+  ],
   "/meituan/tech": [
     "ktKongTong"
   ],
