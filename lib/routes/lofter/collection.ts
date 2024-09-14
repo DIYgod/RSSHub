@@ -22,7 +22,7 @@ export const route: Route = {
     handler,
 };
 
-async function fetchCollection(collectionID, limit, offset = 0, items: any[] = []) {
+async function fetchCollection(collectionID, limit, offset = 0, items = []) {
     const response = await got({
         method: 'post',
         url: `https://api.lofter.com/v1.1/postCollection.api?product=lofter-android-7.6.12`,
@@ -50,7 +50,7 @@ async function fetchCollection(collectionID, limit, offset = 0, items: any[] = [
         title: response.data.response.collection.name || 'Lofter Collection',
         link: response.data.response.blogInfo.homePageUrl || 'https://www.lofter.com/',
         description: response.data.response.collection.description || 'No description provided.',
-        items: newItems || [],
+        items: newItems,
     } as object;
 }
 
@@ -60,12 +60,7 @@ async function handler(ctx) {
 
     const response = await cache.tryGet(collectionID, () => fetchCollection(collectionID, Number(limit)), config.cache.routeExpire, false);
 
-    const { title, link, description, items } = response as {
-        title: string;
-        link: string;
-        description: string;
-        items: any[];
-    };
+    const { title, link, description, items } = response;
 
     const itemsArray = items.map((item) => ({
         title: item.post.title,
