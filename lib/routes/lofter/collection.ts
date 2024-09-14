@@ -1,13 +1,14 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
+import cache from '@/utils/cache';
+import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
-
 
 export const route: Route = {
     path: '/collection/:collectionID',
     categories: ['social-media'],
     example: '/lofter/collection/collectionID',
-    parameters: { collectionID: 'Lofter collection ID, can be found in the share URL'},
+    parameters: { collectionID: 'Lofter collection ID, can be found in the share URL' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,11 +23,7 @@ export const route: Route = {
     description: ``,
 };
 
-async function handler(ctx) {
-    const collectionID = ctx.req.param('collectionID');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : '50';
-
-
+async function fetchCollection(collectionID, limit, offset = 0, items = []) {
     const response = await got({
         method: 'post',
         url: `https://api.lofter.com/v1.1/postCollection.api?product=lofter-android-7.6.12`,
@@ -34,7 +31,8 @@ async function handler(ctx) {
             collectionid: collectionID,
             limit: limit.toString(),
             method: 'getCollectionDetail',
-            offset: '0',
+            offset: offset.toString(),
+            order: '0',
         }),
     });
 
@@ -42,7 +40,35 @@ async function handler(ctx) {
         throw new Error('Collection Not Found');
     }
 
-    const items = response.data.response.items.map((item) => ({
+    const total = response.data.response.collection.postCount;
+    const newItems = items.concat(response.data.response.items);
+
+    if (offset + limit < total) {
+        return fetchCollection(collectionID, limit, offset + limit, newItems);
+    }
+
+    return {
+        title: response.data.response.collection.name || 'Lofter Collection',
+        link: response.data.response.blogInfo.homePageUrl || 'https://www.lofter.com/',
+        description: response.data.response.collection.description || 'No description provided.',
+        items: newItems || [],
+    } as object;
+}
+
+async function handler(ctx) {
+    const collectionID = ctx.req.param('collectionID');
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : '50';
+
+    const response = await cache.tryGet(collectionID, () => fetchCollection(collectionID, Number(limit)), config.cache.routeExpire, false);
+
+    const { title, link, description, items } = response as {
+        title: string;
+        link: string;
+        description: string;
+        items: any[];
+    };
+
+    const itemsArray = items.map((item) => ({
         title: item.post.title,
         link: item.post.blogPageUr,
         description:
@@ -64,9 +90,9 @@ async function handler(ctx) {
     }));
 
     return {
-        title: `${response.data.response.collection.name} | LOFTER`,
-        link: String(items[0].link),
-        item: items,
-        description: String(response.data.response.collection.description),
+        title: `${title} | LOFTER`,
+        link: String(link),
+        item: itemsArray,
+        description: String(description),
     };
 }
