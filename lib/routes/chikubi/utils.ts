@@ -4,11 +4,6 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-interface ListItem {
-    title: string;
-    link: string;
-}
-
 interface ContentSelectors {
     title: string;
     description: string[];
@@ -45,7 +40,7 @@ function getContentType(link: string): keyof typeof contentTypes {
     throw new Error(`Unknown content type for link: ${link}`);
 }
 
-export async function processItems(list: ListItem[]): Promise<DataItem[]> {
+export async function processItems(list): Promise<DataItem[]> {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
