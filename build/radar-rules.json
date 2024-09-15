@@ -16953,6 +16953,20 @@
       }
     ]
   },
+  "pconline.com.cn": {
+    "_name": "太平洋科技",
+    ".": [
+      {
+        "title": "科技新闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/focus/",
+          "/"
+        ],
+        "target": "/pconline/focus"
+      }
+    ]
+  },
   "penguinrandomhouse.com": {
     "_name": "Penguin Random House",
     ".": [

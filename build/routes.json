@@ -51449,6 +51449,49 @@
     "name": "Paul Graham",
     "url": "paulgraham.com"
   },
+  "pconline": {
+    "routes": {
+      "/focus/:category?": {
+        "path": "/focus/:category?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/pconline/focus",
+        "parameters": {
+          "category": {
+            "description": "科技新闻的类别，获取最新的一页，分别：all, tech, finance, life, company, character",
+            "default": "all"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "pconline.com.cn/focus/",
+              "pconline.com.cn/"
+            ],
+            "target": "/focus"
+          }
+        ],
+        "name": "科技新闻",
+        "maintainers": [
+          "CH563"
+        ],
+        "description": "::: tip\n| 全部 | 科技 | 财经 | 生活 | 公司 | 人物 |\n| --- | --- | --- | --- | --- | --- |\n| all | tech | finance | life | company | character |\n:::",
+        "location": "focus.ts"
+      }
+    },
+    "name": "太平洋科技",
+    "url": "pconline.com.cn",
+    "description": "\n:::tip\n太平洋科技是专业IT门户网站,为用户和经销商提供IT资讯和行情报价,涉及电脑,手机,数码产品,软件等.\n:::"
+  },
   "penguin-random-house": {
     "routes": {
       "/articles": {
