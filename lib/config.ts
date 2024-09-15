@@ -179,6 +179,9 @@ export type Config = {
     lightnovel: {
         cookie?: string;
     };
+    malaysiakini: {
+        refreshToken?: string;
+    };
     manhuagui: {
         cookie?: string;
     };

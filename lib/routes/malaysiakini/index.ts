@@ -7,7 +7,7 @@ import { config } from '@/config';
 export const route: Route = {
     path: '/:lang/:category?',
     categories: ['new-media'],
-    example: '/malaysiakini',
+    example: '/malaysiakini/en',
     parameters: {
         lang: 'Language, see below',
         category: 'Category, see below, news by default',
@@ -76,9 +76,9 @@ async function handler(ctx) {
                 } else {
                     item.description = response.data.stories.teaser;
                     if (cookie) {
-                        let full_response;
+                        let fullResponse;
                         try {
-                            full_response = await got({
+                            fullResponse = await got({
                                 method: 'get',
                                 url: `https://www.malaysiakini.com/api/full_content/${item.guid}`,
                                 headers: {
@@ -86,8 +86,8 @@ async function handler(ctx) {
                                 },
                             });
                         } finally {
-                            if (full_response) {
-                                item.description = full_response.data.content;
+                            if (fullResponse) {
+                                item.description = fullResponse.data.content;
                             }
                         }
                     }
