@@ -37,7 +37,7 @@ export const route: Route = {
             },
         ],
     },
-    name: 'Malaysiakini',
+    name: 'News',
     maintainers: ['quiniapiezoelectricity'],
     handler,
     description: `
