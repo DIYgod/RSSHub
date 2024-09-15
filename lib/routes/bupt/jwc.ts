@@ -35,7 +35,7 @@ export const route: Route = {
             target: '/jwc/xwzx',
         },
     ],
-    name: '北京邮电大学教务处',
+    name: '教务处',
     maintainers: ['Yoruet'],
     handler,
     url: 'https://jwc.bupt.edu.cn/',
