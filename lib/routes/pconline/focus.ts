@@ -48,18 +48,19 @@ const categories = {
     },
 };
 
-const getContent = (link: string) => cache.tryGet(link, async () => {
+const getContent = (item) =>
+    cache.tryGet(item.link, async () => {
         const detailResponse = await got({
             method: 'get',
-            url: `https:${link}`,
+            url: `https:${item.link}`,
             responseType: 'arrayBuffer',
         });
 
         const utf8decoder = new TextDecoder('GBK');
         const html = utf8decoder.decode(detailResponse.data);
         const $ = load(html);
-        const content = $('.context-box .context-table tbody td').html() || '';
-        return content;
+        item.description = $('.context-box .context-table tbody td').html();
+        return item;
     });
 
 export const handler = async (ctx) => {
@@ -82,24 +83,23 @@ export const handler = async (ctx) => {
     const dataString = tinyData.replaceAll(',}', '}');
     const data = JSON.parse(dataString || '');
     const { articleList } = data;
-    const items = articleList.map(async (item: Item) => {
-        const content = await getContent(item.url);
-        return {
-            id: item.id,
-            title: item.title,
-            author: [
-                {
-                    name: item.authorname,
-                    avatar: item.authorImg,
-                },
-            ],
-            pubDate: parseDate(item.pc_pubDate),
-            link: item.url,
-            description: content || item.summary,
-            category: item.channelName,
-            image: item.cover,
-        };
-    });
+    const list = articleList.map((item: Item) => ({
+        id: item.id,
+        title: item.title,
+        author: [
+            {
+                name: item.authorname,
+                avatar: item.authorImg,
+            },
+        ],
+        pubDate: parseDate(item.pc_pubDate),
+        link: item.url,
+        description: item.summary,
+        category: item.channelName,
+        image: item.cover,
+    }));
+
+    const items = await Promise.all(list.map((item) => getContent(item)));
 
     return {
         title: `太平洋科技-${cate.title}`,
