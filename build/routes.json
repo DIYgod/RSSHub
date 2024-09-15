@@ -10132,6 +10132,48 @@
   },
   "bupt": {
     "routes": {
+      "/jwc/:type": {
+        "path": "/jwc/:type",
+        "categories": [
+          "university"
+        ],
+        "example": "/bupt/jwc/tzgg",
+        "parameters": {
+          "type": {
+            "type": "string",
+            "optional": false,
+            "description": "信息类型，可选值：tzgg（通知公告），xwzx（新闻资讯）"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "jwc.bupt.edu.cn/tzgg1.htm"
+            ],
+            "target": "/jwc/tzgg"
+          },
+          {
+            "source": [
+              "jwc.bupt.edu.cn/xwzx2.htm"
+            ],
+            "target": "/jwc/xwzx"
+          }
+        ],
+        "name": "教务处",
+        "maintainers": [
+          "Yoruet"
+        ],
+        "url": "https://jwc.bupt.edu.cn/",
+        "location": "jwc.ts"
+      },
       "/rczp": {
         "path": "/rczp",
         "categories": [
