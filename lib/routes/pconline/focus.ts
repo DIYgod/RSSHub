@@ -48,19 +48,18 @@ const categories = {
     },
 };
 
-const getContent = (item) =>
-    cache.tryGet(item.link, async () => {
+const getContent = (link: string) => cache.tryGet(link, async () => {
         const detailResponse = await got({
             method: 'get',
-            url: `https:${item.link}`,
+            url: `https:${link}`,
             responseType: 'arrayBuffer',
         });
 
         const utf8decoder = new TextDecoder('GBK');
         const html = utf8decoder.decode(detailResponse.data);
         const $ = load(html);
-        item.description = $('.context-box .context-table tbody td').html();
-        return item;
+        const content = $('.context-box .context-table tbody td').html() || '';
+        return content;
     });
 
 export const handler = async (ctx) => {
@@ -83,28 +82,29 @@ export const handler = async (ctx) => {
     const dataString = tinyData.replaceAll(',}', '}');
     const data = JSON.parse(dataString || '');
     const { articleList } = data;
-    const items: Item[] = articleList.map((item: Item) => ({
-        id: item.id,
-        title: item.title,
-        author: [
-            {
-                name: item.authorname,
-                avatar: item.authorImg,
-            },
-        ],
-        pubDate: parseDate(item.pc_pubDate),
-        link: item.url,
-        description: item.summary,
-        category: item.channelName,
-        image: item.cover,
-    }));
-
-    await Promise.all(items.map((item) => getContent(item)));
+    const items = articleList.map(async (item: Item) => {
+        const content = await getContent(item.url);
+        return {
+            id: item.id,
+            title: item.title,
+            author: [
+                {
+                    name: item.authorname,
+                    avatar: item.authorImg,
+                },
+            ],
+            pubDate: parseDate(item.pc_pubDate),
+            link: item.url,
+            description: content || item.summary,
+            category: item.channelName,
+            image: item.cover,
+        };
+    });
 
     return {
         title: `太平洋科技-${cate.title}`,
         link: currentUrl,
-        item: items as Item[],
+        item: items,
     };
 };
 
