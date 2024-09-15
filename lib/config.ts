@@ -183,6 +183,11 @@ export type Config = {
     lightnovel: {
         cookie?: string;
     };
+    malaysiakini: {
+        email?: string;
+        password?: string;
+        refreshToken?: string;
+    };
     manhuagui: {
         cookie?: string;
     };
@@ -557,6 +562,11 @@ const calculateValue = () => {
         },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
+        },
+        malaysiakini: {
+            email: envs.MALAYSIAKINI_EMAIL,
+            password: envs.MALAYSIAKINI_PASSWORD,
+            refreshToken: envs.MALAYSIAKINI_REFRESHTOKEN,
         },
         manhuagui: {
             cookie: envs.MHGUI_COOKIE,
