@@ -180,6 +180,8 @@ export type Config = {
         cookie?: string;
     };
     malaysiakini: {
+        email?: string;
+        password?: string;
         refreshToken?: string;
     };
     manhuagui: {
@@ -554,6 +556,8 @@ const calculateValue = () => {
             cookie: envs.SECURITY_KEY,
         },
         malaysiakini: {
+            email: envs.MALAYSIAKINI_EMAIL,
+            password: envs.MALAYSIAKINI_PASSWORD,
             refreshToken: envs.MALAYSIAKINI_REFRESHTOKEN,
         },
         manhuagui: {

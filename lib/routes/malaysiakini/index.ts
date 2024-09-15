@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
 import { config } from '@/config';
+import { FetchError } from 'ofetch';
 
 export const route: Route = {
     path: '/:lang/:category?',
@@ -19,6 +20,16 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
         requireConfig: [
+            {
+                name: 'MALAYSIAKINI_EMAIL',
+                optional: true,
+                description: `Malaysiakini Email or Username`,
+            },
+            {
+                name: 'MALAYSIAKINI_PASSWORD',
+                optional: true,
+                description: `Malaysiakini Password`,
+            },
             {
                 name: 'MALAYSIAKINI_REFRESHTOKEN',
                 optional: true,
@@ -58,14 +69,63 @@ export const route: Route = {
 async function handler(ctx) {
     const lang = ctx.req.param('lang');
     const category = ctx.req.param('category') ?? 'news';
+    const apiKey = 'UFXL7F1EL53S8DZ5SGJUMG5IIFVRY4WI'; // Assuming the apiKey is static
+
+    const key = {
+        email: config.malaysiakini.email,
+        password: config.malaysiakini.password,
+        apiKey,
+    };
+    const body = JSON.stringify(key);
+
     let cookie;
-    if (config.malaysiakini.refreshToken) {
-        cookie = `nl____refreshToken=${config.malaysiakini.refreshToken}`;
+
+    const cacheIn = await cache.get('malaysiakini:cookie');
+    if (cacheIn) {
+        cookie = cacheIn;
+    }
+
+    if (cookie === undefined && config.malaysiakini.email && config.malaysiakini.password) {
+        const login = await got.post(`https://membership.malaysiakini.com/api/v1/auth/local`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*',
+                Connection: 'keep-alive',
+            },
+            body,
+        });
+        if (login.data.accessToken && login.data.refreshToken) {
+            cookie = `nl____accessToken=${login.data.accessToken}; nl____refreshToken=${login.data.refreshToken};`;
+            // Refresh token should be sufficient for authenticating for full text, but access token is included for good measure.
+            cache.set('malaysiakini:cookie', cookie);
+        }
+    }
+
+    if (cookie === undefined && config.malaysiakini.refreshToken) {
+        cookie = `nl____refreshToken=${config.malaysiakini.refreshToken};`;
+        cache.set('malaysiakini:cookie', cookie);
     }
 
     const link = `https://www.malaysiakini.com/rss/${lang}/${category}.rss`;
-
     const feed = await parser.parseURL(link);
+
+    if (cookie) {
+        // Testing the cookie with the first item of the feed
+        try {
+            await got({
+                method: 'get',
+                url: `https://www.malaysiakini.com/api/full_content/${feed.items[0].guid}`,
+                headers: {
+                    Cookie: cookie,
+                },
+            });
+        } catch (error) {
+            if (error instanceof FetchError && error.statusCode === 401) {
+                await cache.set('malaysiakini:cookie', '');
+            }
+            throw error;
+        }
+    }
 
     const items = await Promise.all(
         feed.items.map((item) =>
