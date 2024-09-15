@@ -23,17 +23,17 @@ export const route: Route = {
             {
                 name: 'MALAYSIAKINI_EMAIL',
                 optional: true,
-                description: `Malaysiakini Email or Username`,
+                description: 'Malaysiakini Email or Username',
             },
             {
                 name: 'MALAYSIAKINI_PASSWORD',
                 optional: true,
-                description: `Malaysiakini Password`,
+                description: 'Malaysiakini Password',
             },
             {
                 name: 'MALAYSIAKINI_REFRESHTOKEN',
                 optional: true,
-                description: `To obtain the refresh token, log into Malaysiakini and look for the cookie 'nl____refreshToken' within document.cookie in the browser console. The token is the value of the cookie.`,
+                description: 'To obtain the refresh token, log into Malaysiakini and look for the cookie `nl____refreshToken` within document.cookie in the browser console. The token is the value of the cookie.',
             },
         ],
     },
@@ -86,7 +86,7 @@ async function handler(ctx) {
     }
 
     if (cookie === undefined && config.malaysiakini.email && config.malaysiakini.password) {
-        const login = await got.post(`https://membership.malaysiakini.com/api/v1/auth/local`, {
+        const login = await got.post('https://membership.malaysiakini.com/api/v1/auth/local', {
             headers: {
                 'Content-Type': 'application/json',
                 Accept: '*/*',
