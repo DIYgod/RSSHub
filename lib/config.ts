@@ -32,10 +32,6 @@ export type Config = {
     redis: {
         url: string;
     };
-    otel: {
-        seconds_bucket?: string;
-        milliseconds_bucket?: string;
-    };
     proxyUri?: string;
     proxy: {
         protocol?: string;
@@ -51,6 +47,10 @@ export type Config = {
     debugInfo: string;
     loggerLevel: string;
     noLogfiles?: boolean;
+    otel: {
+        seconds_bucket?: string;
+        milliseconds_bucket?: string;
+    };
     showLoggerTimestamp?: boolean;
     sentry: {
         dsn?: string;
@@ -399,10 +399,6 @@ const calculateValue = () => {
         redis: {
             url: envs.REDIS_URL || 'redis://localhost:6379/',
         },
-        otel: {
-            seconds_bucket: envs.OTEL_SECONDS_BUCKET || '0.01,0.1,1,2,5,15,30,60',
-            milliseconds_bucket: envs.OTEL_MILLISECONDS_BUCKET || '10,20,50,100,250,500,1000,5000,15000',
-        },
         // proxy
         proxyUri: envs.PROXY_URI,
         proxy: {
@@ -422,6 +418,10 @@ const calculateValue = () => {
         debugInfo: envs.DEBUG_INFO || 'true',
         loggerLevel: envs.LOGGER_LEVEL || 'info',
         noLogfiles: toBoolean(envs.NO_LOGFILES, false),
+        otel: {
+            seconds_bucket: envs.OTEL_SECONDS_BUCKET || '0.01,0.1,1,2,5,15,30,60',
+            milliseconds_bucket: envs.OTEL_MILLISECONDS_BUCKET || '10,20,50,100,250,500,1000,5000,15000',
+        },
         showLoggerTimestamp: toBoolean(envs.SHOW_LOGGER_TIMESTAMP, false),
         sentry: {
             dsn: envs.SENTRY,
