@@ -69,13 +69,19 @@ async function handler(ctx: Context) {
 
     const list = $('.txt-elise')
         .map((_, item) => {
-            item = $(item);
+            const $item = $(item);
+            const $link = $item.find('a');
+            // Skip elements without links or with empty href
+            if ($link.length === 0 || !$link.attr('href')) {
+                return null;
+            }
             return {
-                title: item.children().first().text(),
-                link: `${rootUrl}/${item.children().first().attr('href')}`,
+                title: $link.text().trim(),
+                link: rootUrl + '/' + $link.attr('href'),
             };
         })
-        .get();
+        .get()
+        .filter(Boolean);
 
     const items = await Promise.all(
         list.map((item) =>
