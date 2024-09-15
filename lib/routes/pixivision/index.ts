@@ -63,7 +63,7 @@ async function handler(ctx): Promise<Data> {
                 const { data: articleData } = await got(item.link, headers);
                 const $article = load(articleData);
 
-                const processedDescription = await processContent($article, lang);
+                const processedDescription = processContent($article, lang);
 
                 return {
                     title: item.title,
