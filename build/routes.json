@@ -18355,6 +18355,35 @@
         ],
         "location": "event/hot.ts"
       },
+      "/movie/coming": {
+        "path": "/movie/coming",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/movie/coming",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "电影即将上映",
+        "maintainers": [
+          "reonokiy"
+        ],
+        "radar": [
+          {
+            "title": "豆瓣电影-即将上映",
+            "source": [
+              "movie.douban.com/coming"
+            ],
+            "target": "/movie/coming"
+          }
+        ],
+        "location": "movie/coming.ts"
+      },
       "/bookstore": {
         "path": "/bookstore",
         "categories": [

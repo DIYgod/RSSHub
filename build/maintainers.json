@@ -1738,6 +1738,9 @@
   "/douban/event/hot/:locationId": [
     "xyqfer"
   ],
+  "/douban/movie/coming": [
+    "reonokiy"
+  ],
   "/douban/bookstore": [
     "xyqfer"
   ],
