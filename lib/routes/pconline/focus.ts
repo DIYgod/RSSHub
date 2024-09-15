@@ -68,42 +68,38 @@ export const handler = async (ctx) => {
     const cate = categories[category] || categories.all;
     const currentUrl = `${rootUrl}/3g/other/focus/${cate.path}index.html`;
 
-    const items = await cache.tryGet(currentUrl, async () => {
-        const response = await got({
-            method: 'get',
-            url: currentUrl,
-        });
-
-        const resString = response.data
-            .replace(/Module\.callback\((.*)\)/s, '$1')
-            .split('\n')
-            .filter((e) => e.indexOf('"tags":') !== 0)
-            .join('\n')
-            .replaceAll("'", '"');
-        const tinyData = resString.replaceAll(/[\n\r]/g, '');
-        const dataString = tinyData.replaceAll(',}', '}');
-        const data = JSON.parse(dataString || '');
-        const { articleList } = data;
-        const items: Item[] = articleList.map((item: Item) => ({
-            id: item.id,
-            title: item.title,
-            author: [
-                {
-                    name: item.authorname,
-                    avatar: item.authorImg,
-                },
-            ],
-            pubDate: parseDate(item.pc_pubDate),
-            link: item.url,
-            description: item.summary,
-            category: item.channelName,
-            image: item.cover,
-        }));
-
-        await Promise.all(items.map((item) => getContent(item)));
-
-        return items;
+    const response = await got({
+        method: 'get',
+        url: currentUrl,
     });
+
+    const resString = response.data
+        .replace(/Module\.callback\((.*)\)/s, '$1')
+        .split('\n')
+        .filter((e) => e.indexOf('"tags":') !== 0)
+        .join('\n')
+        .replaceAll("'", '"');
+    const tinyData = resString.replaceAll(/[\n\r]/g, '');
+    const dataString = tinyData.replaceAll(',}', '}');
+    const data = JSON.parse(dataString || '');
+    const { articleList } = data;
+    const items: Item[] = articleList.map((item: Item) => ({
+        id: item.id,
+        title: item.title,
+        author: [
+            {
+                name: item.authorname,
+                avatar: item.authorImg,
+            },
+        ],
+        pubDate: parseDate(item.pc_pubDate),
+        link: item.url,
+        description: item.summary,
+        category: item.channelName,
+        image: item.cover,
+    }));
+
+    await Promise.all(items.map((item) => getContent(item)));
 
     return {
         title: `太平洋科技-${cate.title}`,
