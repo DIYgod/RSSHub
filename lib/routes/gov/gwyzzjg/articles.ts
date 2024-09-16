@@ -5,9 +5,9 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/huiyi',
+    path: '/gwyzzjg/huiyi',
     categories: ['government'],
-    example: '/gwyzzjg/huiyi',
+    example: '/gov/gwyzzjg/huiyi',
     parameters: {},
     features: {
         requireConfig: false,
