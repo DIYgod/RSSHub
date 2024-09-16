@@ -83,6 +83,7 @@ async function handler(ctx) {
                         item.category = [...item.category, ...item.taxonomy.sections];
                     }
                 }
+                item.category = [...new Set(item.category)];
                 const response = await got(item.shareurl);
                 const $ = load(response.data);
                 const article = $('.pp-article__body');
