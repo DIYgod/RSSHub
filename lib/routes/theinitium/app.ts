@@ -77,10 +77,10 @@ async function handler(ctx) {
                 }
                 if (item.taxonomy) {
                     if (item.taxonomy.collection_tag) {
-                        item.category = item.category.concat(item.taxonomy.collection_tag);
+                        item.category = [...item.category, ...item.taxonomy.collection_tag];
                     }
                     if (item.taxonomy.sections) {
-                        item.category = item.category.concat(item.taxonomy.sections);
+                        item.category = [...item.category, ...item.taxonomy.sections];
                     }
                 }
                 const response = await got(item.shareurl);
