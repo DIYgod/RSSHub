@@ -66557,6 +66557,7 @@
         },
         "name": "College of Intelligence and Computing",
         "maintainers": [
+          "AlanZeng423",
           "SuperPung"
         ],
         "description": "| College News | Notification | TJU Forum for CIC |\n  | :----------: | :----------: | :---------------: |\n  |     news     | notification |       forum       |",
@@ -66581,6 +66582,7 @@
         },
         "name": "News",
         "maintainers": [
+          "AlanZeng423",
           "SuperPung"
         ],
         "description": "| Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |\n  | :----------: | :----------: | :-----------: | :----------: | :-------------: |\n  |     focus    |    general   |    internal   |     media    |     picture     |",
@@ -66605,6 +66607,7 @@
         },
         "name": "The Office of Academic Affairs",
         "maintainers": [
+          "AlanZeng423",
           "AmosChenYQ",
           "SuperPung"
         ],
