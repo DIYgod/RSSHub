@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 export const route: Route = {
     path: '/app/:category?',
     categories: ['new-media'],
-    example: '/initium/app',
+    example: '/theinitium/app',
     parameters: {
         category: 'Category, see below, latest_sc by default',
     },
