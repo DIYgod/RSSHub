@@ -32,7 +32,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'News',
-    maintainers: ['SuperPung'],
+    maintainers: ['AlanZeng423', 'SuperPung'],
     handler,
     description: `| Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |
   | :----------: | :----------: | :-----------: | :----------: | :-------------: |

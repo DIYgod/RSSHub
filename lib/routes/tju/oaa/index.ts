@@ -37,7 +37,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'The Office of Academic Affairs',
-    maintainers: ['AmosChenYQ', 'SuperPung'],
+    maintainers: ['AlanZeng423', 'AmosChenYQ', 'SuperPung'],
     handler,
     description: `| News | Notification |
   | :--: | :----------: |
