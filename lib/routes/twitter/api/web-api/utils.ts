@@ -1,7 +1,6 @@
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { baseUrl, gqlFeatures, bearerToken, gqlMap } from './constants';
 import { config } from '@/config';
-import got from '@/utils/got';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
 import { CookieAgent, CookieClient } from 'http-cookie-agent/undici';
@@ -26,7 +25,7 @@ const token2Cookie = (token) =>
                       uri: proxy.proxyUri,
                   })
                 : new CookieAgent({ cookies: { jar } });
-            await got('https://x.com', {
+            await ofetch('https://x.com', {
                 dispatcher: agent,
             });
             return JSON.stringify(jar.serializeSync());
