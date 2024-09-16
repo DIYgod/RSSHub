@@ -7,7 +7,6 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/collection/:collectionID',
     categories: ['social-media'],
-    example: '/lofter/collection/collectionID',
     parameters: { collectionID: 'Lofter collection ID, can be found in the share URL' },
     features: {
         requireConfig: false,
@@ -25,7 +24,7 @@ export const route: Route = {
 async function fetchCollection(collectionID, limit, offset = 0, items = []) {
     const response = await got({
         method: 'post',
-        url: `https://api.lofter.com/v1.1/postCollection.api?product=lofter-android-7.6.12`,
+        url: 'https://api.lofter.com/v1.1/postCollection.api?product=lofter-android-7.6.12',
         body: new URLSearchParams({
             collectionid: collectionID,
             limit: limit.toString(),
@@ -85,8 +84,8 @@ async function handler(ctx) {
 
     return {
         title: `${title} | LOFTER`,
-        link: String(link),
+        link: link,
         item: itemsArray,
-        description: String(description),
+        description: description,
     };
 }
