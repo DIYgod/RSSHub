@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@hono/node-server':
-        specifier: 1.12.2
-        version: 1.12.2(hono@4.6.1)
+        specifier: 1.13.0
+        version: 1.13.0(hono@4.6.1)
       '@hono/zod-openapi':
         specifier: 0.16.0
         version: 0.16.0(hono@4.6.1)(zod@3.23.8)
@@ -1386,8 +1386,8 @@ packages:
     resolution: {integrity: sha512-autAXT203ixhqei9xt+qkYOvY8l6LAFIdT2UXc/RPNeUVfqRF1BV94GTJyVPFKT8nFM6MyVJhjLj9E8JWvf5zQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@hono/node-server@1.12.2':
-    resolution: {integrity: sha512-xjzhqhSWUE/OhN0g3KCNVzNsQMlFUAL+/8GgPUr3TKcU7cvgZVBGswFofJ8WwGEHTqobzze1lDpGJl9ZNckDhA==}
+  '@hono/node-server@1.13.0':
+    resolution: {integrity: sha512-kz323qIQkNQElEGroo/E9MKPDuIR5pkuk/XEWd50K+cSEKdmdiYx0PKWUdaNY2ecJYngtF+njDMsMKplL6zfEg==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
@@ -6905,7 +6905,7 @@ snapshots:
     dependencies:
       levn: 0.4.1
 
-  '@hono/node-server@1.12.2(hono@4.6.1)':
+  '@hono/node-server@1.13.0(hono@4.6.1)':
     dependencies:
       hono: 4.6.1
 
