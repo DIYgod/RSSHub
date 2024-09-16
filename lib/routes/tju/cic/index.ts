@@ -38,7 +38,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = ctx.params && ctx.req.param('type');
+    const type = ctx.req.param('type');
     let path, subtitle;
 
     switch (type) {
