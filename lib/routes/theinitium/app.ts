@@ -84,7 +84,8 @@ async function handler(ctx) {
                     }
                 }
                 item.category = [...new Set(item.category)];
-                const response = await got(item.shareurl);
+                const link = 'https://app.theinitium.com/' + item.url.replace('../', '');
+                const response = await got(link);
                 const $ = load(response.data);
                 const article = $('.pp-article__body');
                 article.find('.block-related-articles').remove();
