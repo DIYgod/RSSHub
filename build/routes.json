@@ -26183,6 +26183,31 @@
         "maintainers": [],
         "location": "cmse/index.ts"
       },
+      "/cn/news/:uid": {
+        "path": "/cn/news/:uid",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/cn/news/bm",
+        "parameters": {
+          "uid": "分类名"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "政府新闻",
+        "maintainers": [
+          "EsuRt",
+          "howfool"
+        ],
+        "description": "| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 国务院工作会议 | 政策文件 |\n| :------: | :------: | :------: | :--------: | :------------: | :------: |\n|    bm    |    gd    |    yw    |     gwy    |     gwyzzjg    |  zhengce |",
+        "location": "cn/news/index.ts"
+      },
       "/cnnic/*": {
         "path": "/cnnic/*",
         "name": "Unknown",
@@ -27243,30 +27268,6 @@
         ],
         "url": "nea.gov.cn/sjzz/ghs/",
         "location": "nea/ghs.ts"
-      },
-      "/news/:uid": {
-        "path": "/news/:uid",
-        "categories": [
-          "government"
-        ],
-        "example": "/gov/news/bm",
-        "parameters": {
-          "uid": "分类名"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "政府新闻",
-        "maintainers": [
-          "EsuRt"
-        ],
-        "description": "| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |\n  | :------: | :------: | :------: | :--------: | :------: |\n  |    bm    |    gd    |    yw    |     gwy    |  zhengce |",
-        "location": "news/index.ts"
       },
       "/nifdc/:path{.+}?": {
         "path": "/nifdc/:path{.+}?",

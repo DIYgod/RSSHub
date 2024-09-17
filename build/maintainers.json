@@ -2472,6 +2472,10 @@
     "nczitzk"
   ],
   "/gov/cmse/*": [],
+  "/gov/cn/news/:uid": [
+    "EsuRt",
+    "howfool"
+  ],
   "/gov/cnnic/*": [],
   "/gov/csrc/auditstatus/:apply_id": [
     "hillerliao"
@@ -2583,9 +2587,6 @@
   "/gov/ndrc/xwdt/:category{.+}?": [],
   "/gov/nea/sjzz/ghs": [
     "nczitzk"
-  ],
-  "/gov/news/:uid": [
-    "EsuRt"
   ],
   "/gov/nifdc/:path{.+}?": [],
   "/gov/nmpa/*": [],
