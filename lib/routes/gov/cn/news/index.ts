@@ -7,9 +7,9 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/news/:uid',
+    path: '/cn/news/:uid',
     categories: ['government'],
-    example: '/gov/news/bm',
+    example: '/gov/cn/news/bm',
     parameters: { uid: '分类名' },
     features: {
         requireConfig: false,
@@ -20,11 +20,11 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '政府新闻',
-    maintainers: ['EsuRt'],
+    maintainers: ['EsuRt', 'howfool'],
     handler,
-    description: `| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |
-  | :------: | :------: | :------: | :--------: | :------: |
-  |    bm    |    gd    |    yw    |     gwy    |  zhengce |`,
+    description: `| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 国务院工作会议 | 政策文件 |
+| :------: | :------: | :------: | :--------: | :------------: | :------: |
+|    bm    |    gd    |    yw    |     gwy    |     gwyzzjg    |  zhengce |`,
 };
 
 async function handler(ctx) {
@@ -54,6 +54,10 @@ async function handler(ctx) {
         case 'zhengce':
             url = 'http://sousuo.gov.cn/s.htm?t=zhengcelibrary';
             title = '中国政府网 - 政策文件';
+            break;
+        case 'gwyzzjg':
+            url = `${originDomain}/gwyzzjg/huiyi/`;
+            title = '中国政府网 - 国务院工作会议';
             break;
         default:
             logger.error('pattern not matched');
@@ -119,7 +123,7 @@ async function handler(ctx) {
                         link: contentUrl,
                         pubDate,
                         author,
-                        category,
+                        category: category.filter(Boolean),
                     };
                 });
             })
