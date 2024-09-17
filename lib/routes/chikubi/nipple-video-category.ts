@@ -1,6 +1,6 @@
 import { Route, Data } from '@/types';
 import { processItems } from './utils';
-import Parser from 'rss-parser';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/nipple-video-category/:keyword',
@@ -32,7 +32,7 @@ async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://chikubi.jp';
     const url = `/nipple-video-category/${keyword}`;
 
-    const feed = await new Parser().parseURL(`${baseUrl}${url}/feed`);
+    const feed = await parser.parseURL(`${baseUrl}${url}/feed`);
 
     const list = feed.items.map((item) => ({
         title: item.title,
