@@ -123,7 +123,7 @@ async function handler(ctx) {
                         link: contentUrl,
                         pubDate,
                         author,
-                        category,
+                        category: category.filter(Boolean),
                     };
                 });
             })
