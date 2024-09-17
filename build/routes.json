@@ -52429,6 +52429,51 @@
     "name": "pixiv",
     "url": "www.pixiv.net"
   },
+  "pixivision": {
+    "routes": {
+      "/:lang/:category?": {
+        "path": "/:lang/:category?",
+        "categories": [
+          "anime"
+        ],
+        "example": "/pixivision/zh-tw",
+        "parameters": {
+          "lang": "Language",
+          "category": "Category"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Category",
+        "maintainers": [
+          "SnowAgar25"
+        ],
+        "description": ":::tip\n  `https://www.pixivision.net/zh-tw/c/interview` → `/pixivision/zh-tw/interview`\n  :::",
+        "radar": [
+          {
+            "source": [
+              "www.pixivision.net/:lang"
+            ],
+            "target": "/:lang"
+          },
+          {
+            "source": [
+              "www.pixivision.net/:lang/c/:category"
+            ],
+            "target": "/:lang/:category"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "pixivision",
+    "url": "www.pixivision.net"
+  },
   "piyao": {
     "routes": {
       "/jrpy": {

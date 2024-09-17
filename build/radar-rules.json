@@ -17196,6 +17196,27 @@
       }
     ]
   },
+  "pixivision.net": {
+    "_name": "pixivision",
+    "www": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/:lang"
+        ],
+        "target": "/pixivision/:lang"
+      },
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/:lang/c/:category"
+        ],
+        "target": "/pixivision/:lang/:category"
+      }
+    ]
+  },
   "piyao.org.cn": {
     "_name": "中国互联网联合辟谣平台",
     ".": [

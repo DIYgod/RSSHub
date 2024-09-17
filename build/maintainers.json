@@ -4824,6 +4824,9 @@
   "/pixiv/user/:id": [
     "DIYgod"
   ],
+  "/pixivision/:lang/:category?": [
+    "SnowAgar25"
+  ],
   "/piyao/jrpy": [
     "Fatpandac"
   ],
