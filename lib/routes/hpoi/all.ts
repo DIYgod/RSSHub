@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/items/all/:order?',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Pictures,
     example: '/hpoi/items/all',
     parameters: { order: '排序, 见下表，默认为 add' },
     features: {

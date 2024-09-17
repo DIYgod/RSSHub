@@ -1,5 +1,5 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -14,7 +14,8 @@ const FILTER_NODE_TYPE_MAP = {
 
 export const route: Route = {
     path: '/video/:login/:filter?',
-    categories: ['live'],
+    categories: ['live', 'popular'],
+    view: ViewType.Videos,
     example: '/twitch/video/riotgames/highlights',
     parameters: { login: 'Twitch username', filter: 'Video type, Default to all' },
     features: {

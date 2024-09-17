@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import utils from './utils';
 
 export const route: Route = {
     path: '/acct/:acct/statuses/:only_media?',
-    categories: ['social-media'],
-    example: '/mastodon/acct/CatWhitney@mastodon.social/statuses',
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
+    example: '/mastodon/acct/Mastodon@mastodon.social/statuses',
     parameters: { acct: 'Webfinger account URI, like `user@host`', only_media: 'whether only display media content, default to false, any value to true' },
     features: {
         requireConfig: false,
