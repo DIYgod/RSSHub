@@ -55,9 +55,9 @@ export const route: Route = {
             target: '/cg',
         },
     ],
-    description: `| 最新 | 殿堂 | 動畫 | VR | 漫畫 | 音聲 | CG |
-    | ------ | ---- | ----- | -- | ----- | ----- | -- |
-    | (empty) | best | video | vr | comic | voice | cg |`,
+    description: `| 最新 | 殿堂 | 動畫 | VR | 漫畫 | 音聲 | CG・イラスト |
+  | ------ | ---- | ----- | -- | ----- | ----- | -- |
+  | (empty) | best | video | vr | comic | voice | cg |`,
 };
 
 const navigationItems = {
