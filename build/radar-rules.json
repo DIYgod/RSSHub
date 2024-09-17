@@ -17428,7 +17428,7 @@
     "_name": "PornHub",
     ".": [
       {
-        "title": "Verified amateur / Model",
+        "title": "Model",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/model/:username/*"
@@ -17436,7 +17436,7 @@
         "target": "/pornhub/model/:username"
       },
       {
-        "title": "Verified model / Pornstar",
+        "title": "Pornstar",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/pornstar/:username/*"
