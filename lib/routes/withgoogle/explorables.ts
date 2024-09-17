@@ -9,6 +9,12 @@ export const route: Route = {
     path: '/explorables',
     maintainers: ['cesar'],
     example: '/withgoogle/explorables',
+    radar: [
+        {
+            source: ['pair.withgoogle.com/explorables'],
+            target: '',
+        },
+    ],
     handler: async () => {
         const baseUrl = 'https://pair.withgoogle.com';
         const response = await ofetch(baseUrl + '/explorables', {
