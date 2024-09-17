@@ -1,16 +1,11 @@
 import { Route, Data } from '@/types';
-import { processItems } from './utils';
+import { getPostsByIdList } from './utils';
 import got from '@/utils/got';
-
-interface SearchItem {
-    title: string;
-    url: string;
-}
 
 export const route: Route = {
     path: '/search/:keyword',
     categories: ['multimedia'],
-    example: '/chikubi/search/電流',
+    example: '/chikubi/search/ギャップ',
     parameters: { keyword: 'Keyword' },
     features: {
         requireConfig: false,
@@ -31,14 +26,10 @@ async function handler(ctx): Promise<Data> {
     const searchUrl = `${baseUrl}/wp-json/wp/v2/search?search=${keyword}`;
 
     const response = await got.get(searchUrl);
-    const searchResults: SearchItem[] = response.data;
+    const searchResults = response.data;
 
-    const list = searchResults.map((item) => ({
-        title: item.title,
-        link: item.url,
-    }));
-
-    const items = await processItems(list);
+    const postIds = searchResults.map((item) => item.id.toString());
+    const items = await getPostsByIdList(postIds);
 
     return {
         title: `Search: ${keyword} - chikubi.jp`,
