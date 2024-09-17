@@ -68,7 +68,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         feed.map((item) =>
             cache.tryGet(item.shareurl, async () => {
-                item.link = item.shareurl;
+                item.link = 'https://app.theinitium.com/' + item.url.replaceAll('../', '');
                 item.description = item.summary;
                 item.pubDate = item.published;
                 item.category = [];
@@ -84,8 +84,7 @@ async function handler(ctx) {
                     }
                 }
                 item.category = [...new Set(item.category)];
-                const link = 'https://app.theinitium.com/' + item.url.replaceAll('../', '');
-                const response = await got(link);
+                const response = await got(item.link);
                 const $ = load(response.data);
                 const article = $('.pp-article__body');
                 article.find('.block-related-articles').remove();
