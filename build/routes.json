@@ -61151,6 +61151,38 @@
     "name": "希望之声",
     "url": "soundofhope.org"
   },
+  "soundon": {
+    "routes": {
+      "/p/:id": {
+        "path": "/p/:id",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/soundon/p/33a68cdc-18ad-4192-84cc-22bd7fdc6a31",
+        "parameters": {
+          "id": "Podcast ID"
+        },
+        "features": {
+          "supportPodcast": true
+        },
+        "radar": [
+          {
+            "source": [
+              "player.soundon.fm/p/:id"
+            ]
+          }
+        ],
+        "name": "Podcast",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "view": 4,
+        "location": "podcast.ts"
+      }
+    },
+    "name": "SoundOn",
+    "url": "player.soundon.fm"
+  },
   "sourceforge": {
     "routes": {
       "/:routeParams?": {

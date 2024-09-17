@@ -19831,6 +19831,19 @@
       }
     ]
   },
+  "soundon.fm": {
+    "_name": "SoundOn",
+    "player": [
+      {
+        "title": "Podcast",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/p/:id"
+        ],
+        "target": "/soundon/p/:id"
+      }
+    ]
+  },
   "spotify.com": {
     "_name": "Spotify",
     "open": [

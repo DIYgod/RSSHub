@@ -5652,6 +5652,9 @@
   "/soundofhope/:channel/:id": [
     "Fatpandac"
   ],
+  "/soundon/p/:id": [
+    "TonyRL"
+  ],
   "/sourceforge/:routeParams?": [
     "JimenezLi"
   ],
