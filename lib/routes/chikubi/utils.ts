@@ -40,6 +40,44 @@ function getContentType(link: string): keyof typeof contentTypes {
     throw new Error(`Unknown content type for link: ${link}`);
 }
 
+function processDescription(description: string): string {
+    const $ = load(description);
+    return $('body')
+        .children()
+        .map((_, el) => $(el).clone().wrap('<div>').parent().html())
+        .toArray()
+        .join('');
+}
+
+export async function getPostById(id: string): Promise<DataItem> {
+    const baseUrl = 'https://chikubi.jp';
+    const url = `${baseUrl}/wp-json/wp/v2/posts/${id}`;
+
+    const response = await got(url);
+    const data = JSON.parse(response.body);
+
+    return {
+        title: data.title.rendered,
+        link: data.link,
+        pubDate: parseDate(data.date),
+        description: processDescription(data.content.rendered),
+    };
+}
+
+export async function getPostsByIdList(ids: string[]): Promise<DataItem[]> {
+    const items = await Promise.all(
+        ids.map(async (id) => {
+            try {
+                return await getPostById(id);
+            } catch (error) {
+                throw new Error(`Error processing post ${id}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            }
+        })
+    );
+
+    return items.filter((item): item is DataItem => item !== null);
+}
+
 export async function processItems(list): Promise<DataItem[]> {
     const items = await Promise.all(
         list.map((item) =>
@@ -51,14 +89,7 @@ export async function processItems(list): Promise<DataItem[]> {
                 const selectors = contentTypes[contentType];
 
                 const title = $(selectors.title).text().trim() || item.title;
-                const description = selectors.description
-                    .map((selector) =>
-                        $(selector)
-                            .map((_, el) => $(el).clone().wrap('<div>').parent().html())
-                            .toArray()
-                            .join('')
-                    )
-                    .join('');
+                const description = processDescription(selectors.description.map((selector) => $(selector).prop('outerHTML')).join(''));
 
                 const pubDateStr = $('meta[property="article:published_time"]').attr('content');
                 const pubDate = pubDateStr ? parseDate(pubDateStr) : undefined;
