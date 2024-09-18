@@ -6,8 +6,8 @@ import { parseDate } from '@/utils/parse-date';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 const host = 'https://www.cs.sdu.edu.cn/';
-const typelist = ['学院公告', '学术报告', '科技简讯'];
-const urlList = ['xygg.htm', 'xsbg.htm', 'kjjx.htm'];
+const typelist = ['学院公告', '学术报告', '科技简讯', '本科教育', '研究生教育'];
+const urlList = ['xygg.htm', 'xsbg.htm', 'kjjx.htm', 'bkjy.htm', 'yjsjy.htm'];
 
 export const route: Route = {
     path: '/cs/:type?',
@@ -25,9 +25,9 @@ export const route: Route = {
     name: '计算机科学与技术学院通知',
     maintainers: ['Ji4n1ng'],
     handler,
-    description: `| 学院公告 | 学术报告 | 科技简讯 |
-  | -------- | -------- | -------- |
-  | 0        | 1        | 2        |`,
+    description: `| 学院公告 | 学术报告 | 科技简讯 | 本科教育 | 研究生教育 | 
+  | -------- | -------- | -------- | -------- | -------- |
+  | 0        | 1        | 2        | 3        | 4        |`,
 };
 
 async function handler(ctx) {
@@ -72,7 +72,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `山东大学计算机科学与技术学院${typelist[type]}通知`,
+        title: `山东大学计算机科学与技术学院${typelist[type]}`,
         description: $('title').text(),
         link,
         item,
