@@ -1,18 +1,16 @@
 import type { Data, Route } from '@/types';
-import { getPostItems, CategoryParam } from './base';
+import { getPostItems, CategoryParam, CommonRouteProperties } from './base';
 
 export const route: Route = {
+    ...CommonRouteProperties,
     name: "Editor's Pick Posts",
-    url: 'voronoiapp.com',
     path: '/editors-pick/:category?',
-    categories: ['reading'],
     radar: [
         {
             source: ['www.voronoiapp.com/posts/editors-pick'],
             target: '/editors-pick',
         },
     ],
-    maintainers: ['cesaryuan'],
     example: '/voronoiapp/editors-pick',
     parameters: {
         category: CategoryParam,

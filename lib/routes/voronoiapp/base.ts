@@ -1,4 +1,4 @@
-import type { DataItem } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { ofetch } from 'ofetch';
 
@@ -308,4 +308,10 @@ export const TabParam = {
             label: 'Most Viewed',
         },
     ],
+};
+
+export const CommonRouteProperties: Pick<Route, 'url' | 'categories' | 'maintainers'> = {
+    url: 'voronoiapp.com',
+    categories: ['reading'],
+    maintainers: ['cesaryuan'],
 };

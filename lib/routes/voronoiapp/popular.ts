@@ -1,10 +1,10 @@
 import type { Data, Route } from '@/types';
-import { CategoryParam, getPostItems, TabMap, TabParam, TimeRangeParam } from './base';
+import { CategoryParam, CommonRouteProperties, getPostItems, TabMap, TabParam, TimeRangeParam } from './base';
+
 export const route: Route = {
+    ...CommonRouteProperties,
     name: 'Popular Posts',
-    url: 'voronoiapp.com',
     path: '/popular/:tab?/:time_range?/:category?',
-    categories: ['reading'],
     radar: [
         {
             title: 'Most Liked Posts',
@@ -27,7 +27,6 @@ export const route: Route = {
         time_range: TimeRangeParam,
         category: CategoryParam,
     },
-    maintainers: ['cesaryuan'],
     example: '/voronoiapp/popular/most-popular/MONTH',
     handler: async (ctx) => {
         const { tab = 'most-popular', time_range = 'MONTH', category = '' } = ctx.req.param();

@@ -1,18 +1,16 @@
 import type { Data, Route } from '@/types';
-import { getPostItems, CategoryParam } from './base';
+import { getPostItems, CategoryParam, CommonRouteProperties } from './base';
 
 export const route: Route = {
+    ...CommonRouteProperties,
     name: 'Latest Posts',
-    url: 'voronoiapp.com',
     path: '/latest/:category?',
-    categories: ['reading'],
     radar: [
         {
             source: ['www.voronoiapp.com/posts/latest'],
             target: '/latest',
         },
     ],
-    maintainers: ['cesaryuan'],
     example: '/voronoiapp/latest',
     parameters: {
         category: CategoryParam,

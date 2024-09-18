@@ -1,11 +1,10 @@
 import type { Data, Route } from '@/types';
-import { getPostItems, CategoryParam } from './base';
+import { getPostItems, CategoryParam, CommonRouteProperties } from './base';
 
 export const route: Route = {
+    ...CommonRouteProperties,
     name: 'Home Posts',
-    url: 'voronoiapp.com',
     path: '/home/:category?',
-    categories: ['reading'],
     description: 'This is the home page of Voronoi App',
     radar: [
         {
@@ -13,7 +12,6 @@ export const route: Route = {
             target: '/home',
         },
     ],
-    maintainers: ['cesaryuan'],
     example: '/voronoiapp/home',
     parameters: {
         category: CategoryParam,

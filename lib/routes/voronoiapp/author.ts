@@ -1,20 +1,18 @@
 import type { Data, Route } from '@/types';
-import { getPostItems } from './base';
+import { CommonRouteProperties, getPostItems } from './base';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 
 export const route: Route = {
+    ...CommonRouteProperties,
     name: 'Author Posts',
-    url: 'voronoiapp.com',
     path: '/author/:username',
-    categories: ['reading'],
     radar: [
         {
             source: ['www.voronoiapp.com/author/:username'],
             target: '/author/:username',
         },
     ],
-    maintainers: ['cesaryuan'],
     example: '/voronoiapp/author/visualcapitalist',
     parameters: {
         username: 'The username of the author',

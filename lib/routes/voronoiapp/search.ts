@@ -1,11 +1,10 @@
 import type { Data, Route } from '@/types';
-import { getPostItems } from './base';
+import { CommonRouteProperties, getPostItems } from './base';
 
 export const route: Route = {
+    ...CommonRouteProperties,
     name: 'Search Keyword Posts',
-    url: 'voronoiapp.com',
     path: '/search/:keyword',
-    categories: ['reading'],
     radar: [
         {
             source: ['www.voronoiapp.com/explore'],
@@ -17,7 +16,6 @@ export const route: Route = {
             },
         },
     ],
-    maintainers: ['cesaryuan'],
     example: '/voronoiapp/search/china',
     parameters: {
         keyword: 'The keyword to search for',
