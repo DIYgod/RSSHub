@@ -1,5 +1,5 @@
 import type { Data, Route } from '@/types';
-import { CommonRouteProperties, getPostItems } from './base';
+import { CommonRouteProperties, getPostItems } from './common';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 
