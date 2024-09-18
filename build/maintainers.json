@@ -1094,6 +1094,9 @@
   "/ccf/tfbd/:caty/:id": [
     "tudou027"
   ],
+  "/ccfa/:type?": [
+    "nczitzk"
+  ],
   "/ccnu/career": [
     "jackyu1996"
   ],
