@@ -81,6 +81,10 @@ interface Post {
     published_at: number;
 }
 
+export function ValidTimeRange(timeRange: string) {
+    return ['WEEK', 'MONTH', 'YEAR', ''].includes(timeRange.toUpperCase());
+}
+
 export async function getPostItems(params: {
     feed?: string;
     search?: string;
@@ -102,6 +106,19 @@ export async function getPostItems(params: {
         },
         params
     );
+    if (finalSearchParams.time_range !== undefined) {
+        finalSearchParams.time_range = finalSearchParams.time_range.toUpperCase();
+        if (!ValidTimeRange(finalSearchParams.time_range)) {
+            throw new Error(`Invalid time range: ${finalSearchParams.time_range}`);
+        }
+    }
+    if (finalSearchParams.category !== undefined && finalSearchParams.category !== null) {
+        const category = finalSearchParams.category;
+        finalSearchParams.category = CategoryParam.options.find((option) => option.value.toLowerCase() === category.toLowerCase())?.value;
+        if (finalSearchParams.category === undefined) {
+            throw new Error(`Invalid category: ${finalSearchParams.category}`);
+        }
+    }
     for (const key in finalSearchParams) {
         if (finalSearchParams[key] !== undefined && finalSearchParams[key] !== null) {
             url.searchParams.set(key, finalSearchParams[key]);
@@ -238,6 +255,3 @@ export const CategoryParam = {
         },
     ],
 };
-
-export const ValidTimeRange = ['WEEK', 'MONTH', 'YEAR', ''];
-export const ValidCategory = CategoryParam.options.map((item) => item.value);

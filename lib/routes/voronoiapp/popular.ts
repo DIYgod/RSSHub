@@ -1,5 +1,5 @@
 import type { Data, Route } from '@/types';
-import { CategoryParam, getPostItems, ValidTimeRange, ValidCategory } from './base';
+import { CategoryParam, getPostItems } from './base';
 const TabMap = {
     'most-popular': 'POPULAR',
     'most-discussed': 'DISCUSSED',
@@ -77,12 +77,6 @@ export const route: Route = {
         const { tab = 'most-popular', time_range = 'MONTH', category = '' } = ctx.req.param();
         if (!TabMap[tab]) {
             throw new Error(`Invalid tab: ${tab}`);
-        }
-        if (!ValidTimeRange.includes(time_range.toUpperCase())) {
-            throw new Error(`Invalid time range: ${time_range}`);
-        }
-        if (!ValidCategory.includes(category)) {
-            throw new Error(`Invalid category: ${category}`);
         }
         const items = await getPostItems({
             swimlane: 'POPULAR',

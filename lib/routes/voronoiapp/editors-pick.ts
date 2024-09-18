@@ -1,5 +1,5 @@
 import type { Data, Route } from '@/types';
-import { getPostItems, CategoryParam, ValidCategory } from './base';
+import { getPostItems, CategoryParam } from './base';
 
 export const route: Route = {
     name: "Editor's Pick Posts",
@@ -19,9 +19,6 @@ export const route: Route = {
     },
     handler: async (ctx) => {
         const { category = '' } = ctx.req.param();
-        if (!ValidCategory.includes(category)) {
-            throw new Error(`Invalid category: ${category}`);
-        }
         const items = await getPostItems({ swimlane: 'CURATED', category: category === '' ? undefined : category });
         return {
             title: "Voronoi Editor's Pick Posts",
