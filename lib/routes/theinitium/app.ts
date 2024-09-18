@@ -29,7 +29,8 @@ export const route: Route = {
         },
     ],
     handler,
-    description: `
+    description: `抓取[The Initium App](https://app.theinitium.com/)的文章列表
+
 :::warning
 此路由暂不支持登陆认证
 :::
@@ -56,7 +57,8 @@ async function handler(ctx) {
 
     const feedList = await cache.tryGet(
         feedListLink,
-        async () => await got({
+        async () =>
+            await got({
                 method: 'get',
                 url: feedListLink,
             }),
