@@ -38,7 +38,7 @@ export const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (!item.link.includes(rootUrl)) {
+                if (!item.link.includes('ccfa.org.cn')) {
                     return item;
                 }
 
