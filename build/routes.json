@@ -39216,6 +39216,29 @@
   },
   "lofter": {
     "routes": {
+      "/collection/:collectionID": {
+        "path": "/collection/:collectionID",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/lofter/collection/552041",
+        "parameters": {
+          "collectionID": "Lofter collection ID, can be found in the share URL"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Collection",
+        "maintainers": [
+          "SrakhiuMeow"
+        ],
+        "location": "collection.ts"
+      },
       "/tag/:name?/:type?": {
         "path": "/tag/:name?/:type?",
         "categories": [
