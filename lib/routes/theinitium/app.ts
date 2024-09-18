@@ -5,6 +5,7 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
+import { getCurrentPath } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/app/:category?',
@@ -53,6 +54,8 @@ Category 栏目：
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'latest_sc';
+    const __dirname = getCurrentPath(import.meta.url);
+
     const feedListLink = 'https://app.theinitium.com/timelines.json';
 
     const feedList = await cache.tryGet(
