@@ -30,7 +30,7 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const { keyword } = ctx.req.param();
     const baseUrl = 'https://chikubi.jp';
-    const url = `/nipple-video-maker/${keyword}`;
+    const url = `/nipple-video-maker/${encodeURIComponent(keyword)}`;
 
     const feed = await parser.parseURL(`${baseUrl}${url}/feed`);
 
