@@ -22,7 +22,7 @@ export const route: Route = {
     handler,
 };
 
-async function fetchCollection(collectionID, limit, offset = 0, items = []) {
+async function fetchCollection(collectionID, limit, offset = 0) {
     const response = await got({
         method: 'post',
         url: 'https://api.lofter.com/v1.1/postCollection.api?product=lofter-android-7.6.12',
@@ -39,13 +39,13 @@ async function fetchCollection(collectionID, limit, offset = 0, items = []) {
         throw new Error('Collection Not Found');
     }
 
-    const newItems = [...items, ...response.data.response.items];
+    const data = response.data.response;
 
     return {
-        title: response.data.response.collection.name || 'Lofter Collection',
-        link: response.data.response.blogInfo.homePageUrl || 'https://www.lofter.com/',
-        description: response.data.response.collection.description || 'No description provided.',
-        items: newItems,
+        title: data.collection.name || 'Lofter Collection',
+        link: data.blogInfo.homePageUrl || 'https://www.lofter.com/',
+        description: data.collection.description || 'No description provided.',
+        items: data.items,
     } as object;
 }
 
@@ -58,8 +58,8 @@ async function handler(ctx) {
     const { title, link, description, items } = response;
 
     const itemsArray = items.map((item) => ({
-        title: item.post.title,
-        link: item.post.blogPageUr,
+        title: item.post.title || item.post.noticeLinkTitle,
+        link: item.post.blogPageUrl,
         description:
             JSON.parse(item.post.photoLinks || `[]`)
                 .map((photo) => {
