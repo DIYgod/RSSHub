@@ -1481,6 +1481,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生院 all
+
+<Route author="yanbot-team" example="/nenu/yjsy_all" path="/nenu/yjsy_all" :paramsDesc="['分类 id 见下表，也可在页面URL中找到']" radar="1">
+
+| Id  | 名称         |
+| --- | ------------ |
+| all | 各个板块随机 |
+
+</Route>
+
 ## 东莞理工学院
 
 ### 教务处通知
