@@ -81,10 +81,6 @@ interface Post {
     published_at: number;
 }
 
-export function ValidTimeRange(timeRange: string) {
-    return ['WEEK', 'MONTH', 'YEAR', ''].includes(timeRange.toUpperCase());
-}
-
 export async function getPostItems(params: {
     feed?: string;
     search?: string;
@@ -108,8 +104,12 @@ export async function getPostItems(params: {
     );
     if (finalSearchParams.time_range !== undefined) {
         finalSearchParams.time_range = finalSearchParams.time_range.toUpperCase();
-        if (!ValidTimeRange(finalSearchParams.time_range)) {
+        if (!TimeRangeParam.options.some((option) => option.value === finalSearchParams.time_range)) {
             throw new Error(`Invalid time range: ${finalSearchParams.time_range}`);
+        }
+        // The Voronoi API doesn't support "ALL"
+        if (finalSearchParams.time_range === 'ALL') {
+            finalSearchParams.time_range = undefined;
         }
     }
     if (finalSearchParams.category !== undefined && finalSearchParams.category !== null) {
@@ -117,6 +117,12 @@ export async function getPostItems(params: {
         finalSearchParams.category = CategoryParam.options.find((option) => option.value.toLowerCase() === category.toLowerCase())?.value;
         if (finalSearchParams.category === undefined) {
             throw new Error(`Invalid category: ${finalSearchParams.category}`);
+        }
+    }
+    if (finalSearchParams.tab !== undefined && finalSearchParams.tab !== null) {
+        finalSearchParams.tab = finalSearchParams.tab.toUpperCase();
+        if (!Object.values(TabMap).includes(finalSearchParams.tab)) {
+            throw new Error(`Invalid tab: ${finalSearchParams.tab}`);
         }
     }
     for (const key in finalSearchParams) {
@@ -252,6 +258,54 @@ export const CategoryParam = {
         {
             value: 'Other',
             label: "Diverse Data Visualizations - Explore a variety of data visualizations that don't neatly fit into any single category but offer unique insights.",
+        },
+    ],
+};
+
+export const TimeRangeParam = {
+    description: 'Time range between which the posts are popular.',
+    default: 'MONTH',
+    options: [
+        {
+            value: 'WEEK',
+            label: 'Last 7 days',
+        },
+        {
+            value: 'MONTH',
+            label: 'Last 30 days',
+        },
+        {
+            value: 'YEAR',
+            label: 'Last 12 months',
+        },
+        {
+            value: 'ALL',
+            label: 'All time',
+        },
+    ],
+};
+
+export const TabMap = {
+    'most-popular': 'POPULAR',
+    'most-discussed': 'DISCUSSED',
+    'most-viewed': 'VIEWED',
+};
+
+export const TabParam = {
+    description: 'The tab to get the popular posts from.',
+    default: 'most-popular',
+    options: [
+        {
+            value: 'most-popular',
+            label: 'Most Liked',
+        },
+        {
+            value: 'most-discussed',
+            label: 'Most Discussed',
+        },
+        {
+            value: 'most-viewed',
+            label: 'Most Viewed',
         },
     ],
 };

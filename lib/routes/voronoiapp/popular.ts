@@ -1,11 +1,5 @@
 import type { Data, Route } from '@/types';
-import { CategoryParam, getPostItems } from './base';
-const TabMap = {
-    'most-popular': 'POPULAR',
-    'most-discussed': 'DISCUSSED',
-    'most-viewed': 'VIEWED',
-};
-
+import { CategoryParam, getPostItems, TabMap, TabParam, TimeRangeParam } from './base';
 export const route: Route = {
     name: 'Popular Posts',
     url: 'voronoiapp.com',
@@ -29,58 +23,20 @@ export const route: Route = {
         },
     ],
     parameters: {
-        tab: {
-            description: 'The tab to get the popular posts from.',
-            default: 'most-popular',
-            options: [
-                {
-                    value: 'most-popular',
-                    label: 'Most Liked',
-                },
-                {
-                    value: 'most-discussed',
-                    label: 'Most Discussed',
-                },
-                {
-                    value: 'most-viewed',
-                    label: 'Most Viewed',
-                },
-            ],
-        },
-        time_range: {
-            description: 'Time range between which the posts are popular.',
-            default: 'MONTH',
-            options: [
-                {
-                    value: 'WEEK',
-                    label: 'Last 7 days',
-                },
-                {
-                    value: 'MONTH',
-                    label: 'Last 30 days',
-                },
-                {
-                    value: 'YEAR',
-                    label: 'Last 12 months',
-                },
-                {
-                    value: '',
-                    label: 'All time',
-                },
-            ],
-        },
+        tab: TabParam,
+        time_range: TimeRangeParam,
         category: CategoryParam,
     },
     maintainers: ['cesaryuan'],
     example: '/voronoiapp/popular/most-popular/MONTH',
     handler: async (ctx) => {
         const { tab = 'most-popular', time_range = 'MONTH', category = '' } = ctx.req.param();
-        if (!TabMap[tab]) {
+        if (!TabMap[tab.toLowerCase()]) {
             throw new Error(`Invalid tab: ${tab}`);
         }
         const items = await getPostItems({
             swimlane: 'POPULAR',
-            tab: TabMap[tab],
+            tab: TabMap[tab.toLowerCase()],
             time_range: time_range === '' ? undefined : time_range.toUpperCase(),
             category: category === '' ? undefined : category,
         });
