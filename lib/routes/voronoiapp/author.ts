@@ -21,6 +21,9 @@ export const route: Route = {
     },
     handler: async (ctx) => {
         const { username } = ctx.req.param();
+        if (!username) {
+            throw new Error('Missing username');
+        }
         const uid = await getUidFromUsername(username);
         const items = await getPostItems({ order: 'DESC', author: uid });
         return {
