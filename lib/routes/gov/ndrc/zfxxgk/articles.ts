@@ -5,9 +5,9 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/zfxxgk/iteminfo',
+    path: '/ndrc/zfxxgk/iteminfo',
     categories: ['government'],
-    example: '/gov/zfxxgk/iteminfo',
+    example: '/gov/ndrc/zfxxgk/iteminfo',
     parameters: {},
     features: {
         requireConfig: false,
@@ -20,7 +20,7 @@ export const route: Route = {
     name: '国家发展改革委 - 政府信息公开',
     maintainers: ['howfool'],
     handler,
-    url: 'https://zfxxgk.ndrc.gov.cn/web/dirlist.jsp',
+    url: 'zfxxgk.ndrc.gov.cn/web/dirlist.jsp',
 };
 
 async function handler() {
