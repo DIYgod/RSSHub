@@ -35,7 +35,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const mid = ctx.req.param('mid');
-    const homePageInfoUrl = `https://i.news.qq.com/i/getUserHomepageInfo?apptype=web&from_scene=103&isInGuest=1&guestSuid=${mid}`;
+    const userType = /^\d+$/.test(mid) ? "chlid" : "guestSuid"
+    const homePageInfoUrl = `https://i.news.qq.com/i/getUserHomepageInfo?${userType}=${mid}`;
     const userInfo = await cache.tryGet(homePageInfoUrl, async () => (await got(homePageInfoUrl)).data.userinfo);
     const title = userInfo.nick;
     const description = userInfo.user_desc;
