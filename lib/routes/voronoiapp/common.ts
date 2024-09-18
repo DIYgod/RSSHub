@@ -1,4 +1,4 @@
-import type { DataItem, Route } from '@/types';
+import { ViewType, type DataItem, type Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { ofetch } from 'ofetch';
 import type { Post } from './types';
@@ -232,8 +232,9 @@ export const TabParam = {
     ],
 };
 
-export const CommonRouteProperties: Pick<Route, 'url' | 'categories' | 'maintainers'> = {
+export const CommonRouteProperties: Pick<Route, 'url' | 'categories' | 'maintainers' | 'view'> = {
     url: 'voronoiapp.com',
-    categories: ['reading'],
+    categories: ['picture'],
+    view: ViewType.Pictures,
     maintainers: ['cesaryuan'],
 };
