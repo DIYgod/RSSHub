@@ -58,25 +58,4 @@ async function fetchPage() {
         };
     });
     return items;
-    // const $titleDivs = $('div.w-full.flex.justify-center.py-4.bg-red-400.undefined');
-    // const $contentDivs = $('div.bg-gray-800.flex.justify-center.font-sm.py-4');
-    // const items: DataItem[] = $titleDivs.toArray().map((titleDiv, index) => {
-    //     const content = $contentDivs[index];
-    //     const postAuthor = parsePostAuthor($, titleDiv);
-    //     const postDate = parsePostDate($, titleDiv);
-    //     const postTitle = $(titleDiv).find('h1').text();
-    //     const postLink = $(content).find('div.ml-auto.flex.items-center a').attr('href');
-    //     // Modify the src attribute of the image
-    //     parsePostImages($, content);
-    //     const postContent = $.html($(content).find('div.cms-content'));
-    //     return {
-    //         title: postTitle,
-    //         link: postLink,
-    //         author: postAuthor,
-    //         pubDate: postDate,
-    //         description: postContent,
-    //     };
-    // });
-
-    // return items;
 }
