@@ -2,6 +2,9 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
+import { art } from '@/utils/render';
+import path from 'node:path';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/app/:category?',
@@ -49,11 +52,18 @@ Category 栏目：
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'latest_sc';
+    const feedListLink = 'https://app.theinitium.com/timelines.json';
 
-    const feedList = await got({
-        method: 'get',
-        url: `https://app.theinitium.com/timelines.json`,
-    });
+    const feedList = await cache.tryGet(
+        feedListLink,
+        async () => await got({
+                method: 'get',
+                url: feedListLink,
+            }),
+        config.cache.routeExpire,
+        false
+    );
+
     const feedInfo = feedList.data.timelines.find((timeline) => timeline.id === category);
 
     const link = `https://app.theinitium.com${feedInfo.feed.slice(1)}`;
@@ -67,7 +77,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.map((item) =>
-            cache.tryGet(item.shareurl, async () => {
+            cache.tryGet('https://app.theinitium.com/' + item.url.replaceAll('../', ''), async () => {
                 item.link = 'https://app.theinitium.com/' + item.url.replaceAll('../', '');
                 item.description = item.summary;
                 item.pubDate = item.published;
@@ -88,27 +98,13 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const article = $('.pp-article__body');
                 article.find('.block-related-articles').remove();
-                item.description = article.html();
-                let cover;
-                const coverImage = $('.pp-media__image').attr('src');
-                if (coverImage) {
-                    cover = `<img src=${coverImage}>`;
-                }
-                const coverCaption = $('.pp-media__caption').html();
-                if (coverCaption) {
-                    cover = cover + `<figcaption>${coverCaption}</figcaption>`;
-                }
-                if (cover) {
-                    item.description = `<figure class>${cover}</figure>` + item.description;
-                }
-                const header = $('.pp-header-group__standfirst');
-                if (header) {
-                    item.description = `<h4>${header.html()}</h4>` + item.description;
-                }
-                const copyright = $('.copyright');
-                if (copyright) {
-                    item.description = item.description + `<figure><small>${copyright.html()}</small></figure>`;
-                }
+                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                    header: $('.pp-header-group__standfirst').html(),
+                    coverImage: $('.pp-media__image').attr('src'),
+                    coverCaption: $('.pp-media__caption').html(),
+                    article: article.html(),
+                    copyright: $('.copyright').html(),
+                });
                 return item;
             })
         )
