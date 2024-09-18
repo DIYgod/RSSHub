@@ -7,6 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/collection/:collectionID',
     categories: ['social-media'],
+    example: '/lofter/collection/552041',
     parameters: { collectionID: 'Lofter collection ID, can be found in the share URL' },
     features: {
         requireConfig: false,
@@ -38,12 +39,7 @@ async function fetchCollection(collectionID, limit, offset = 0, items = []) {
         throw new Error('Collection Not Found');
     }
 
-    const total = response.data.response.collection.postCount;
     const newItems = [...items, ...response.data.response.items];
-
-    if (offset + limit < total) {
-        return fetchCollection(collectionID, limit, offset + limit, newItems);
-    }
 
     return {
         title: response.data.response.collection.name || 'Lofter Collection',
@@ -83,9 +79,9 @@ async function handler(ctx) {
     }));
 
     return {
-        title: `${title} | LOFTER`,
-        link: link,
+        title,
+        link,
         item: itemsArray,
-        description: description,
+        description,
     };
 }
