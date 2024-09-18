@@ -22,7 +22,7 @@ export const route: Route = {
         const { category = '' } = ctx.req.param();
         const items = await getPostItems({ feed: 'VORONOI', category: category === '' ? undefined : category });
         return {
-            title: 'Voronoi Home Posts',
+            title: `Voronoi Home Posts${category ? ` - ${category}` : ''}`,
             link: 'https://www.voronoiapp.com',
             item: items,
             allowEmpty: true,

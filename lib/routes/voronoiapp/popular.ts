@@ -41,7 +41,7 @@ export const route: Route = {
             category: category === '' ? undefined : category,
         });
         return {
-            title: 'Voronoi Popular Posts',
+            title: `Voronoi ${TabParam.options.find((option) => option.value === tab.toLowerCase())?.label} Posts in ${TimeRangeParam.options.find((option) => option.value === time_range.toUpperCase())?.label}${category ? ` - ${category}` : ''}`,
             link: `https://www.voronoiapp.com/posts/${tab}`,
             item: items,
             allowEmpty: true,

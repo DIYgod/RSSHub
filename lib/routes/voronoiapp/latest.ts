@@ -21,7 +21,7 @@ export const route: Route = {
         const { category = '' } = ctx.req.param();
         const items = await getPostItems({ swimlane: 'LATEST', category: category === '' ? undefined : category });
         return {
-            title: 'Voronoi Latest Posts',
+            title: `Voronoi Latest Posts${category ? ` - ${category}` : ''}`,
             link: 'https://www.voronoiapp.com/latest',
             item: items,
             allowEmpty: true,

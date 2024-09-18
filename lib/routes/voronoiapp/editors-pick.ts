@@ -21,7 +21,7 @@ export const route: Route = {
         const { category = '' } = ctx.req.param();
         const items = await getPostItems({ swimlane: 'CURATED', category: category === '' ? undefined : category });
         return {
-            title: "Voronoi Editor's Pick Posts",
+            title: `Voronoi Editor's Pick Posts${category ? ` - ${category}` : ''}`,
             link: 'https://www.voronoiapp.com/editors-pick',
             item: items,
             allowEmpty: true,
