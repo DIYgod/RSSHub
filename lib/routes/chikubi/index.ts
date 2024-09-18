@@ -1,12 +1,11 @@
 import { Route, Data } from '@/types';
-import { processItems } from './utils';
-import parser from '@/utils/rss-parser';
+import got from '@/utils/got';
+import { getPostsByIdList } from './utils';
 
 export const route: Route = {
-    path: '/:keyword?',
+    path: '/',
     categories: ['multimedia'],
     example: '/chikubi',
-    parameters: { keyword: '導覽列，見下表，默認爲最新' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -15,12 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Navigation',
+    name: '最新記事',
     maintainers: ['SnowAgar25'],
     handler,
     radar: [
         {
-            title: 'ホーム',
+            title: '最新記事',
             source: ['chikubi.jp/'],
             target: '/',
         },
@@ -55,40 +54,20 @@ export const route: Route = {
             target: '/cg',
         },
     ],
-    description: `| 最新 | 殿堂 | 動畫 | VR | 漫畫 | 音聲 | CG・イラスト |
-  | ------ | ---- | ----- | -- | ----- | ----- | -- |
-  | (empty) | best | video | vr | comic | voice | cg |`,
 };
 
-const navigationItems = {
-    '': { url: '', title: '最新' },
-    best: { url: '/category/nipple-best', title: '殿堂' },
-    video: { url: '/nipple-video', title: '動畫' },
-    vr: { url: '/nipple-video-category/cat-nipple-video-vr', title: 'VR' },
-    comic: { url: '/comic', title: '漫畫' },
-    voice: { url: '/voice', title: '音聲' },
-    cg: { url: '/cg', title: 'CG' },
-};
+async function handler(): Promise<Data> {
+    const Url = 'https://chikubi.jp/wp-json/wp/v2/posts';
 
-async function handler(ctx): Promise<Data> {
-    const keyword = ctx.req.param('keyword') ?? '';
-    const baseUrl = 'https://chikubi.jp';
+    const response = await got.get(Url);
+    const searchResults = response.data;
 
-    const { url, title } = navigationItems[keyword];
-
-    const feed = await parser.parseURL(`${baseUrl}${url}/feed`);
-
-    const list = feed.items.map((item) => ({
-        title: item.title,
-        link: item.link,
-    }));
-
-    // 獲取內文
-    const items = await processItems(list);
+    const postIds = searchResults.map((item) => item.id.toString());
+    const items = await getPostsByIdList(postIds);
 
     return {
-        title: `${title} - chikubi.jp`,
-        link: `${baseUrl}${url}`,
+        title: '最新記事 - chikubi.jp',
+        link: 'https://chikubi.jp',
         item: items,
     };
 }
