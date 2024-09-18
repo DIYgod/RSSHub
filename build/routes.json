@@ -65582,6 +65582,37 @@
   },
   "theinitium": {
     "routes": {
+      "/app/:category?": {
+        "path": "/app/:category?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/theinitium/app",
+        "parameters": {
+          "category": "Category, see below, latest_sc by default"
+        },
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "App",
+        "maintainers": [
+          "quiniapiezoelectricity"
+        ],
+        "radar": [
+          {
+            "source": [
+              "app.theinitium.com/t/latest/:category"
+            ],
+            "target": "/app/:category"
+          }
+        ],
+        "description": "抓取[The Initium App](https://app.theinitium.com/)的文章列表\n\n:::warning\n此路由暂不支持登陆认证\n:::\n\nCategory 栏目：\n\n| ----- | 简体中文     | 繁體中文      |\n| ----- | ----------------- | ---------------- |\n| 最新   | latest_sc | latest_tc |\n| 日报   | daily_brief_sc | daily_brief_tc |\n| 速递   | whats_new_sc | whats_new_tc |\n| 专题   | report_sc | report_tc |\n| 评论   | opinion_sc | opinion_tc |\n| 国际   | international_sc | international_tc |\n| 大陆   | mainland_sc | mainland_tc |\n| 香港   | hongkong_sc | hongkong_tc |\n| 台湾   | taiwan_sc | taiwan_tc |\n| 播客   | article_audio_sc | article_audio_tc |",
+        "location": "app.ts"
+      },
       "/author/:type/:language?": {
         "path": "/author/:type/:language?",
         "name": "作者",

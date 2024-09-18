@@ -6036,6 +6036,9 @@
   "/thehindu/topic/:topic": [
     "TonyRL"
   ],
+  "/theinitium/app/:category?": [
+    "quiniapiezoelectricity"
+  ],
   "/theinitium/author/:type/:language?": [
     "AgFlore"
   ],

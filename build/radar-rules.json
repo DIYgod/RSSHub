@@ -21524,6 +21524,16 @@
   },
   "theinitium.com": {
     "_name": "端传媒",
+    "app": [
+      {
+        "title": "App",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/t/latest/:category"
+        ],
+        "target": "/theinitium/app/:category"
+      }
+    ],
     ".": [
       {
         "title": "作者",
