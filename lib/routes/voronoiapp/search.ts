@@ -1,5 +1,5 @@
 import type { Data, Route } from '@/types';
-import { CommonRouteProperties, getPostItems } from './common';
+import { CommonDataProperties, CommonRouteProperties, getPostItems } from './common';
 
 export const route: Route = {
     ...CommonRouteProperties,
@@ -24,10 +24,10 @@ export const route: Route = {
         const { keyword } = ctx.req.param();
         const items = await getPostItems({ search: keyword });
         return {
+            ...CommonDataProperties,
             title: `Voronoi Posts for "${keyword}"`,
             link: `https://www.voronoiapp.com/explore?search=${encodeURIComponent(keyword)}`,
             item: items,
-            allowEmpty: true,
         } as Data;
     },
 };

@@ -1,5 +1,5 @@
 import type { Data, Route } from '@/types';
-import { CommonRouteProperties, getPostItems } from './common';
+import { CommonDataProperties, CommonRouteProperties, getPostItems } from './common';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 
@@ -25,10 +25,10 @@ export const route: Route = {
         const uid = await getUidFromUsername(username);
         const items = await getPostItems({ order: 'DESC', author: uid });
         return {
+            ...CommonDataProperties,
             title: `Voronoi Posts by ${username}`,
             link: `https://www.voronoiapp.com/author/${username}`,
             item: items,
-            allowEmpty: true,
         } as Data;
     },
 };

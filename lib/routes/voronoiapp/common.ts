@@ -1,4 +1,4 @@
-import { ViewType, type DataItem, type Route } from '@/types';
+import { ViewType, type Data, type DataItem, type Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { ofetch } from 'ofetch';
 import type { Post } from './types';
@@ -237,4 +237,11 @@ export const CommonRouteProperties: Pick<Route, 'url' | 'categories' | 'maintain
     categories: ['picture'],
     view: ViewType.Pictures,
     maintainers: ['cesaryuan'],
+};
+
+export const CommonDataProperties: Pick<Data, 'allowEmpty' | 'image'> | { logo: string; icon: string } = {
+    logo: 'https://about.voronoiapp.com/wp-content/uploads/2023/07/voronoi-icon.png',
+    image: 'https://about.voronoiapp.com/wp-content/uploads/2023/07/voronoi-icon.png',
+    icon: 'https://about.voronoiapp.com/wp-content/uploads/2023/07/voronoi-icon.png',
+    allowEmpty: true,
 };
