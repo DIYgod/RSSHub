@@ -5259,6 +5259,19 @@
       }
     ]
   },
+  "devtrium.com": {
+    "_name": "Devtrium",
+    ".": [
+      {
+        "title": "Official Blogs",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/devtrium/"
+      }
+    ]
+  },
   "dhu.edu.cn": {
     "_name": "东华大学",
     "news": [

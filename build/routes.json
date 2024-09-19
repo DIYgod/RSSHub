@@ -17149,6 +17149,41 @@
     "name": "DevolverDigital",
     "url": "devolverdigital.com"
   },
+  "devtrium": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "programming"
+        ],
+        "example": "/devtrium",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "devtrium.com"
+            ]
+          }
+        ],
+        "name": "Official Blogs",
+        "maintainers": [
+          "Xy2002"
+        ],
+        "url": "devtrium.com",
+        "location": "posts.ts"
+      }
+    },
+    "name": "Devtrium",
+    "url": "devtrium.com"
+  },
   "dewu": {
     "routes": {
       "/declaration/:categoryId?": {
