@@ -1,6 +1,5 @@
 import { Route, Data } from '@/types';
-import { processItems } from './utils';
-import Parser from 'rss-parser';
+import { getPostsByTag, getTagBySlug } from './utils';
 
 export const route: Route = {
     path: '/tag/:keyword',
@@ -28,22 +27,15 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const { keyword } = ctx.req.param();
     const baseUrl = 'https://chikubi.jp';
-    const url = `/tag/${encodeURIComponent(keyword)}`;
+    const { keyword } = ctx.req.param();
+    const { id, name } = await getTagBySlug(keyword);
 
-    const feed = await new Parser().parseURL(`${baseUrl}${url}/feed`);
-
-    const list = feed.items.map((item) => ({
-        title: item.title,
-        link: item.link,
-    }));
-
-    const items = await processItems(list);
+    const items = await getPostsByTag(id);
 
     return {
-        title: `Tag: ${feed.title?.split('-')[0]} - chikubi.jp`,
-        link: `${baseUrl}${url}`,
+        title: `Tag: ${name} - chikubi.jp`,
+        link: `${baseUrl}/category/${keyword}`,
         item: items,
     };
 }
