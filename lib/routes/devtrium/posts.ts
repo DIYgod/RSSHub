@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/',
     categories: ['programming'],
-    example: '/devtrium/',
+    example: '/devtrium',
     parameters: {},
     features: {
         requireConfig: false,
