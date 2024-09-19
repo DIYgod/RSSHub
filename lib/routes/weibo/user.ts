@@ -190,5 +190,6 @@ async function handler(ctx) {
         description,
         image: profileImageUrl,
         item: resultItems,
+        allowEmpty: true,
     });
 }
