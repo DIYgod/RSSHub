@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2024 by frostime. All Rights Reserved.
- * @Author       : frostime
- * @Date         : 2024-09-19 21:26:26
- * @FilePath     : /lib/routes/whu/news.ts
- * @LastEditTime : 2024-09-20 01:28:07
- * @Description  :
- */
 import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
