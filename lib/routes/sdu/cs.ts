@@ -6,14 +6,26 @@ import { parseDate } from '@/utils/parse-date';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 const host = 'https://www.cs.sdu.edu.cn/';
-const typelist = ['学院公告', '学术报告', '科技简讯'];
-const urlList = ['xygg.htm', 'xsbg.htm', 'kjjx.htm'];
+const urlMap = {
+    announcement: 'xygg.htm',
+    academic: 'xsbg.htm',
+    technology: 'kjjx.htm',
+    undergraduate: 'bkjy.htm',
+    postgraduate: 'yjsjy.htm',
+};
+const titleMap = {
+    announcement: '学院公告',
+    academic: '学术报告',
+    technology: '科技简讯',
+    undergraduate: '本科教育',
+    postgraduate: '研究生教育',
+};
 
 export const route: Route = {
     path: '/cs/:type?',
     categories: ['university'],
-    example: '/sdu/cs/0',
-    parameters: { type: '默认为 `0`' },
+    example: '/sdu/cs/announcement',
+    parameters: { type: '默认为 `announcement`' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -25,14 +37,14 @@ export const route: Route = {
     name: '计算机科学与技术学院通知',
     maintainers: ['Ji4n1ng'],
     handler,
-    description: `| 学院公告 | 学术报告 | 科技简讯 |
-  | -------- | -------- | -------- |
-  | 0        | 1        | 2        |`,
+    description: `| 学院公告 | 学术报告 | 科技简讯 | 本科教育 | 研究生教育 | 
+| -------- | -------- | -------- | -------- | -------- |
+| announcement | academic | technology | undergraduate | postgraduate |`,
 };
 
 async function handler(ctx) {
-    const type = ctx.req.param('type') ? Number.parseInt(ctx.req.param('type')) : 0;
-    const link = new URL(urlList[type], host).href;
+    const type = ctx.req.param('type') ?? 'announcement';
+    const link = new URL(urlMap[type], host).href;
 
     const response = await got(link);
 
@@ -72,7 +84,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `山东大学计算机科学与技术学院${typelist[type]}通知`,
+        title: `山东大学计算机科学与技术学院${titleMap[type]}`,
         description: $('title').text(),
         link,
         item,
