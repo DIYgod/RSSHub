@@ -22,7 +22,7 @@ const titleMap = {
 };
 
 export const route: Route = {
-    path: '/cs/inedx/:type?',
+    path: '/cs/index/:type?',
     categories: ['university'],
     example: '/sdu/cs/index/announcement',
     parameters: { type: '默认为 `announcement`' },
