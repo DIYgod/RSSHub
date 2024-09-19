@@ -90,11 +90,11 @@ export async function getPostsByIdList(ids: string[]): Promise<DataItem[]> {
             throw new Error('No posts found for the given IDs');
         }
 
-        return data.map((post: any) => ({
-            title: post.title.rendered,
-            link: post.link,
-            pubDate: parseDate(post.date),
-            description: processDescription(post.content.rendered),
+        return data.map(({ title, link, date, content }) => ({
+            title: title.rendered,
+            link,
+            pubDate: parseDate(date),
+            description: processDescription(content.rendered),
         }));
     });
 
