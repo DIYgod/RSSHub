@@ -1,25 +1,16 @@
 import { Route } from '@/types';
 import buildData from '@/utils/common-config';
-import got from '@/utils/got';
-import { load } from 'cheerio';
 
-const baseUrl = 'https://www.oct0pu5.cn';
+const baseUrl = 'https://oct0pu5.cn/';
 
 export const route: Route = {
     path: '/',
-    name: 'Oct的小破站',
-    url: 'oct0pu5.cn',
-    maintainers: ['octopus058'],
-    handler,
-    example: '/oct0pu5',
-    description: '',
     categories: ['blog'],
-
+    example: '/oct0pu5',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
-        supportRadar: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -30,10 +21,13 @@ export const route: Route = {
             target: '/',
         },
     ],
+    name: 'Oct的小破站',
+    maintainers: ['octopus058', 'wiketool'],
+    handler,
 };
 
 async function handler() {
-    const link = `${baseUrl}`;
+    const link = baseUrl;
     return await buildData({
         link,
         url: link,
@@ -44,15 +38,11 @@ async function handler() {
             description: 'Oct0pu5的博客',
         },
         item: {
-            item: 'a.article-title',
-            title: `$('a.article-title').attr('title')`,
-            link: `$('a.article-title').attr('href')`,
-            description: async (itemLink) => {
-                const response = await got(itemLink);
-                const $ = load(response.body);
-                return $('#article-container').text();
-            },
-            pubDate: `$('a.article-title').attr('href').match(/\\d{4}-\\d{2}-\\d{2}/)[0]`,
+            item: '.recent-posts > .recent-post-item',
+            title: `$('.recent-post-info > a').text()`,
+            link: `$('.recent-post-info > a').attr('href')`,
+            description: `$('.recent-post-info > .content').text()`,
+            pubDate: `Date.parse($('div.recent-post-info > div.article-meta-wrap > span.post-meta-date > time').text().trim())`,
         },
     });
 }
