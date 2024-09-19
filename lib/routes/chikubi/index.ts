@@ -57,9 +57,7 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
-    const Url = 'https://chikubi.jp/wp-json/wp/v2/posts';
-
-    const response = await got.get(Url);
+    const response = await got.get('https://chikubi.jp/wp-json/wp/v2/posts');
     const searchResults = response.data;
 
     const postIds = searchResults.map((item) => item.id.toString());
