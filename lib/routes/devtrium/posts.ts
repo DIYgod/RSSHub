@@ -44,18 +44,12 @@ async function fetchPage() {
     const $ = load(response, { scriptingEnabled: false });
 
     // Extract all posts of this page
-    const $postDivs = $(String.raw`main > div.grid.max-w-5xl.grid-cols-1.px-8.py-4.mx-auto.text-left.gap-14.md\:grid-cols-2.sm\:text-justify > a`);
-    const items: DataItem[] = $postDivs.toArray().map((postDiv) => {
-        const postTitle = $(postDiv).find('h2').text();
-        const postDescription = $(postDiv).find('p').text();
-        const postLink = baseUrl + $(postDiv).attr('href');
-        const postPubDate = parseDate($(postDiv).find('footer').text());
-        return {
-            title: postTitle,
-            link: postLink,
-            description: postDescription,
-            pubDate: postPubDate,
-        };
-    });
+    const data = JSON.parse($('script#__NEXT_DATA__').text());
+    const items: DataItem[] = data.props.pageProps.posts.map((post) => ({
+        title: post.title,
+        link: `${baseUrl}/posts/${post.slug}`,
+        description: post.description,
+        pubDate: parseDate(post.date),
+    }));
     return items;
 }
