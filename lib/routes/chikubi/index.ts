@@ -1,6 +1,5 @@
 import { Route, Data } from '@/types';
-import got from '@/utils/got';
-import { getPostsByIdList } from './utils';
+import { getPosts } from './utils';
 
 export const route: Route = {
     path: '/',
@@ -57,11 +56,7 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
-    const response = await got.get('https://chikubi.jp/wp-json/wp/v2/posts');
-    const searchResults = response.data;
-
-    const postIds = searchResults.map((item) => item.id.toString());
-    const items = await getPostsByIdList(postIds);
+    const items = await getPosts();
 
     return {
         title: '最新記事 - chikubi.jp',

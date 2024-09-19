@@ -1,5 +1,5 @@
 import { Route, Data } from '@/types';
-import { getPostsByIdList } from './utils';
+import { getPosts } from './utils';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -29,7 +29,7 @@ async function handler(ctx): Promise<Data> {
     const searchResults = response.data;
 
     const postIds = searchResults.map((item) => item.id.toString());
-    const items = await getPostsByIdList(postIds);
+    const items = await getPosts(postIds);
 
     return {
         title: `Search: ${keyword} - chikubi.jp`,
