@@ -39,7 +39,7 @@ async function handler() {
 }
 
 async function fetchPage() {
-    const baseUrl = 'https://devtrium.com/';
+    const baseUrl = 'https://devtrium.com';
     const response = await ofetch(baseUrl);
     const $ = load(response, { scriptingEnabled: false });
 
