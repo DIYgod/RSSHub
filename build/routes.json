@@ -72244,6 +72244,33 @@
     "name": "Wise",
     "url": "wise.com"
   },
+  "withgoogle": {
+    "routes": {
+      "/explorables": {
+        "name": "PAIR - AI Exploreables",
+        "url": "pair.withgoogle.com/explorables",
+        "path": "/explorables",
+        "maintainers": [
+          "cesaryuan"
+        ],
+        "example": "/withgoogle/explorables",
+        "categories": [
+          "blog"
+        ],
+        "radar": [
+          {
+            "source": [
+              "pair.withgoogle.com/explorables"
+            ],
+            "target": ""
+          }
+        ],
+        "location": "explorables.ts"
+      }
+    },
+    "name": "People + AI Research (PAIR)",
+    "url": "pair.withgoogle.com"
+  },
   "wizfile": {
     "routes": {
       "/updates": {

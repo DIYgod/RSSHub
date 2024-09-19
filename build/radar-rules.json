@@ -23358,6 +23358,19 @@
       }
     ]
   },
+  "withgoogle.com": {
+    "_name": "People + AI Research (PAIR)",
+    "pair": [
+      {
+        "title": "PAIR - AI Exploreables",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/explorables"
+        ],
+        "target": "/withgoogle/explorables"
+      }
+    ]
+  },
   "antibody-software.com": {
     "_name": "WziFile",
     ".": [
