@@ -1,5 +1,5 @@
 import { Route, Data } from '@/types';
-import { processItems } from './utils';
+import { getCategoryBySlug, getPostsByCategory, processItems } from './utils';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -24,7 +24,6 @@ export const route: Route = {
 };
 
 const navigationItems = {
-    best: { url: '/category/nipple-best', title: '殿堂' },
     video: { url: '/nipple-video', title: '動畫' },
     vr: { url: '/nipple-video-category/cat-nipple-video-vr', title: 'VR' },
     comic: { url: '/comic', title: '漫畫' },
@@ -36,21 +35,32 @@ async function handler(ctx): Promise<Data> {
     const keyword = ctx.req.param('keyword') ?? '';
     const baseUrl = 'https://chikubi.jp';
 
-    const { url, title } = navigationItems[keyword];
+    if (keyword === 'best') {
+        const { id } = await getCategoryBySlug('nipple-best');
+        const items = await getPostsByCategory(id);
 
-    const feed = await parser.parseURL(`${baseUrl}${url}/feed`);
+        return {
+            title: '殿堂 - chikubi.jp',
+            link: `${baseUrl}/best-nipple-article`,
+            item: items,
+        };
+    } else {
+        const { url, title } = navigationItems[keyword];
 
-    const list = feed.items.map((item) => ({
-        title: item.title,
-        link: item.link,
-    }));
+        const feed = await parser.parseURL(`${baseUrl}${url}/feed`);
 
-    // 獲取內文
-    const items = await processItems(list);
+        const list = feed.items.map((item) => ({
+            title: item.title,
+            link: item.link,
+        }));
 
-    return {
-        title: `${title} - chikubi.jp`,
-        link: `${baseUrl}${url}`,
-        item: items,
-    };
+        // 獲取內文
+        const items = await processItems(list);
+
+        return {
+            title: `${title} - chikubi.jp`,
+            link: `${baseUrl}${url}`,
+            item: items,
+        };
+    }
 }
