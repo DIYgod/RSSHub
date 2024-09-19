@@ -1,5 +1,5 @@
 import { Route, Data } from '@/types';
-import { getCategoryBySlug, getPostsByCategory } from './utils';
+import { getBySlug, getPostsBy } from './utils';
 
 export const route: Route = {
     path: '/category/:keyword',
@@ -29,9 +29,9 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://chikubi.jp';
     const { keyword } = ctx.req.param();
-    const { id, name } = await getCategoryBySlug(keyword);
+    const { id, name } = await getBySlug('category', keyword);
 
-    const items = await getPostsByCategory(id);
+    const items = await getPostsBy('category', id);
 
     return {
         title: `Category: ${name} - chikubi.jp`,

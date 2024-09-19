@@ -1,5 +1,5 @@
 import { Route, Data } from '@/types';
-import { getCategoryBySlug, getPostsByCategory, processItems } from './utils';
+import { getBySlug, getPostsBy, processItems } from './utils';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -36,8 +36,8 @@ async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://chikubi.jp';
 
     if (keyword === 'best') {
-        const { id } = await getCategoryBySlug('nipple-best');
-        const items = await getPostsByCategory(id);
+        const { id } = await getBySlug('category', 'nipple-best');
+        const items = await getPostsBy('category', id);
 
         return {
             title: '殿堂 - chikubi.jp',

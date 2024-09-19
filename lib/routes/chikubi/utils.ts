@@ -102,7 +102,7 @@ const API_TYPES = {
     category: 'categories',
 };
 
-async function getBySlug<T extends keyof typeof API_TYPES>(type: T, slug: string): Promise<{ id: number; name: string }> {
+export async function getBySlug<T extends keyof typeof API_TYPES>(type: T, slug: string): Promise<{ id: number; name: string }> {
     const url = `${WP_REST_API_URL}/${API_TYPES[type]}?slug=${encodeURIComponent(slug)}`;
     const { body } = await got(url);
     const data = JSON.parse(body);
@@ -114,7 +114,7 @@ async function getBySlug<T extends keyof typeof API_TYPES>(type: T, slug: string
     throw new Error(`No ${type} found for slug: ${slug}`);
 }
 
-async function getPostsBy<T extends keyof typeof API_TYPES>(type: T, id: number): Promise<DataItem[]> {
+export async function getPostsBy<T extends keyof typeof API_TYPES>(type: T, id: number): Promise<DataItem[]> {
     const url = `${WP_REST_API_URL}/posts?${API_TYPES[type]}=${id}`;
     const cachedData = await cache.tryGet(url, async () => {
         const { body } = await got(url);
@@ -132,20 +132,4 @@ async function getPostsBy<T extends keyof typeof API_TYPES>(type: T, id: number)
     });
 
     return (Array.isArray(cachedData) ? cachedData : []).filter((item): item is DataItem => item !== null);
-}
-
-export async function getTagBySlug(slug: string): Promise<{ id: number; name: string }> {
-    return await getBySlug('tag', slug);
-}
-
-export async function getCategoryBySlug(slug: string): Promise<{ id: number; name: string }> {
-    return await getBySlug('category', slug);
-}
-
-export async function getPostsByTag(id: number): Promise<DataItem[]> {
-    return await getPostsBy('tag', id);
-}
-
-export async function getPostsByCategory(id: number): Promise<DataItem[]> {
-    return await getPostsBy('category', id);
 }
