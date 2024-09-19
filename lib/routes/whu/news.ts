@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2024 by frostime. All Rights Reserved.
+ * @Author       : frostime
+ * @Date         : 2024-09-19 21:26:26
+ * @FilePath     : /lib/routes/whu/news.ts
+ * @LastEditTime : 2024-09-20 01:28:07
+ * @Description  :
+ */
 import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
@@ -13,14 +21,39 @@ import { domain, processMeta, getMeta, processItems } from './util';
 
 export const route: Route = {
     path: '/news/:category{.+}?',
-    name: 'Unknown',
+    categories: ['university'],
+    example: '/whu/news',
+    parameters: { category: '新闻栏目，可选' },
+    name: '武汉大学新闻',
     maintainers: [],
     handler,
+    description: `
+    category 参数可选，范围如下:
+
+    | 新闻栏目 | 武大资讯 | 学术动态 | 珞珈影像 | 武大视频 |
+    | -------- | -------- | -------- | -------- | -------- |
+    | 参数     |  0 或 \`wdzx/wdyw\`  | 1 或 \`kydt\` | 2 或 \`stkj/ljyx\` | 3 或 \`stkj/wdsp\` |
+
+    另外 route 后可以加上 \`?limit=n\` 的查询参数，表示只获取前 n 条新闻；如果不指定默认为 10。
+    `,
+};
+
+const parseCategory = (category: string | number) => {
+    const outputs = ['wdzx/wdyw', 'kydt', 'stkj/ljyx', 'stkj/wdsp'];
+    if (['0', '1', '2', '3'].includes(category)) {
+        return outputs[category];
+    }
+    if (outputs.includes(category)) {
+        return category;
+    }
+    return 'wdzx/wdyw';
 };
 
 async function handler(ctx) {
-    const { category = 'wdzx/wdyw' } = ctx.req.param();
+    let { category } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+
+    category = parseCategory(category);
 
     const rootUrl = `https://news.${domain}`;
     const currentUrl = new URL(`${category}.htm`, rootUrl).href;

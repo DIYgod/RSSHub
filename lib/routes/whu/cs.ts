@@ -87,7 +87,8 @@ async function handler(ctx) {
                 content.find('img').each((_, e) => {
                     e = $(e);
                     if (e.attr('orisrc')) {
-                        e.attr('src', new URL(e.attr('orisrc'), response.url).href);
+                        const newUrl = new URL(e.attr('orisrc'), 'https://cs.whu.edu.cn');
+                        e.attr('src', newUrl.href);
                         e.removeAttr('orisrc');
                         e.removeAttr('vurl');
                     }
