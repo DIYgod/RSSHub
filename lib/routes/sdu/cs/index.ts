@@ -22,9 +22,9 @@ const titleMap = {
 };
 
 export const route: Route = {
-    path: '/cs/:type?',
+    path: '/cs/inedx/:type?',
     categories: ['university'],
-    example: '/sdu/cs/announcement',
+    example: '/sdu/cs/index/announcement',
     parameters: { type: '默认为 `announcement`' },
     features: {
         requireConfig: false,
@@ -35,7 +35,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '计算机科学与技术学院通知',
-    maintainers: ['Ji4n1ng'],
+    maintainers: ['Ji4n1ng', 'wiketool'],
     handler,
     description: `| 学院公告 | 学术报告 | 科技简讯 | 本科教育 | 研究生教育 | 
 | -------- | -------- | -------- | -------- | -------- |
