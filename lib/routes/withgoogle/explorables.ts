@@ -9,6 +9,7 @@ export const route: Route = {
     path: '/explorables',
     maintainers: ['cesaryuan'],
     example: '/withgoogle/explorables',
+    categories: ['blog'],
     radar: [
         {
             source: ['pair.withgoogle.com/explorables'],
