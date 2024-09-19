@@ -38,8 +38,8 @@ export const route: Route = {
     maintainers: ['Ji4n1ng'],
     handler,
     description: `| 学院公告 | 学术报告 | 科技简讯 | 本科教育 | 研究生教育 | 
-                  | -------- | -------- | -------- | -------- | -------- |
-                  | announcement | academic | technology | undergraduate | postgraduate |`,
+| -------- | -------- | -------- | -------- | -------- |
+| announcement | academic | technology | undergraduate | postgraduate |`,
 };
 
 async function handler(ctx) {
