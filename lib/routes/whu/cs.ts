@@ -71,10 +71,16 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
+    let items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
+                let response;
+                try {
+                    // 实测发现有些链接无法访问
+                    response = await got(item.link);
+                } catch {
+                    return null;
+                }
                 const $ = load(response.data);
 
                 if ($('.prompt').length) {
@@ -101,6 +107,7 @@ async function handler(ctx) {
             })
         )
     );
+    items = items.filter((item) => item !== null);
 
     return {
         title: $('title').first().text(),
