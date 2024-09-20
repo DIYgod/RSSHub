@@ -37,7 +37,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = ctx.req.param('type') ? ctx.req.param('type') : 'zytz';
+    const type = ctx.req.param('type') ?? 'zytz';
+
     const link = new URL(typeMap[type], host).href;
 
     const response = await got(link);
@@ -45,7 +46,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let item = $('.ss li')
-        .map((_, e) => {
+        .toArray()
+        .map((e) => {
             e = $(e);
             const a = e.find('a');
             return {
@@ -53,24 +55,19 @@ async function handler(ctx) {
                 link: a.attr('href').startsWith('info/') ? host + a.attr('href') : a.attr('href'),
                 pubDate: parseDate(e.find('span').text().trim(), 'YYYY-MM-DD'),
             };
-        })
-        .get();
+        });
 
     item = await Promise.all(
         item.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
+                const hostname = new URL(item.link).hostname;
+                if (hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
-                } else if (new URL(item.link).hostname !== 'csyh.sdu.edu.cn') {
-                    return item;
                 }
                 const response = await got(item.link);
                 const $ = load(response.data);
 
-                item.title = $('.title h3').text().trim();
-                // item.author = $('.title div em').eq(1).text().trim().replace('编辑：', '') || '山东大学计算机科学与技术学院';
-                $('.title').remove();
-                item.description = $('form[name=_newscontent_fromname]').html();
+                item.description = $('.v_news_content').html();
 
                 return item;
             })
@@ -78,7 +75,6 @@ async function handler(ctx) {
     );
 
     return {
-        // title: `山东大学计算机科学与技术学院研究生工作网站${typelist[type]}`,
         title: `山东大学计算机科学与技术学院研究生工作网站${titleMap[type]}`,
         description: $('title').text(),
         link,
