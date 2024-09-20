@@ -42,7 +42,7 @@ async function handler() {
             title: `$('.recent-post-info > a').text()`,
             link: `$('.recent-post-info > a').attr('href')`,
             description: `$('.recent-post-info > .content').text()`,
-            pubDate: `Date.parse($('div.recent-post-info > div.article-meta-wrap > span.post-meta-date > time').text().trim())`,
+            pubDate: `parseDate($('div.recent-post-info > div.article-meta-wrap > span.post-meta-date > time').text().trim())`,
         },
     });
 }
