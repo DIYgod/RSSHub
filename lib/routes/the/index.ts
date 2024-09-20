@@ -90,7 +90,6 @@ export const handler = async (ctx) => {
                 html: description,
                 text: $$.text(),
             },
-            updated: parseDate(item.modified_gmt),
         };
     });
 
