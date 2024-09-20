@@ -8,7 +8,7 @@ export const route: Route = {
     name: 'Anime',
     url: 'anime1.me',
     maintainers: ['cxheng315'],
-    example: '/anime1/anime1/2024年夏季/神之塔-第二季',
+    example: '/anime1/anime/2024年夏季/神之塔-第二季',
     categories: ['anime'],
     parameters: {
         category: 'Anime1 Category',
