@@ -27,7 +27,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '山东大学国际事务部',
+    name: '国际事务部',
     maintainers: ['kukeya'],
     handler,
     description: `| 通知公告 |  
@@ -36,15 +36,16 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = ctx.req.param('type') ? ctx.req.param('type') : 'tzgg';
-    const link = new URL(typeMap[type].url, host).href;
+    const type = ctx.req.param('type') ?? 'tzgg';
 
+    const link = new URL(typeMap[type].url, host).href;
     const response = await got(link);
 
     const $ = load(response.data);
 
     let item = $('.dqlb ul li')
-        .map((_, e) => {
+        .toArray()
+        .map((e) => {
             e = $(e);
             const a = e.find('a');
             return {
@@ -52,26 +53,18 @@ async function handler(ctx) {
                 link: a.attr('href').startsWith('wdhcontent') ? host + a.attr('href') : a.attr('href'),
                 pubDate: parseDate(e.find('.fr').text().trim(), 'YYYY-MM-DD'),
             };
-        })
-        .get();
+        });
 
     item = await Promise.all(
         item.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
+                const hostname = new URL(item.link).hostname;
+                if (hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
-                } else if (new URL(item.link).hostname !== 'www.ipo.sdu.edu.cn') {
-                    const response = await got(item.link);
-                    const $ = load(response.data);
-                    item.description = $('body').html();
-                    return item;
                 }
                 const response = await got(item.link);
                 const $ = load(response.data);
-
-                item.title = $('.xqnr_tit h2').text().trim();
-                $('.xqnr_tit').remove();
-                item.description = $('form[name=_newscontent_fromname]').html();
+                item.description = $('.v_news_content').text();
 
                 return item;
             })
