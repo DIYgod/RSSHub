@@ -1,10 +1,6 @@
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import iconv from 'iconv-lite';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { parseDate } from '@/utils/parse-date';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import timezone from '@/utils/timezone';
 
 function transElemText($, prop) {
     const regex = /\$\((.*)\)/g;
@@ -60,16 +56,18 @@ async function buildData(data) {
         title: getProp(data, 'title', $),
         description: getProp(data, 'description', $),
         allowEmpty: data.allowEmpty || false,
-        item: $item.toArray().map((e) => {
-            const $elem = (selector) => $(e).find(selector);
-            return {
-                title: getProp(data, ['item', 'title'], $elem),
-                description: getProp(data, ['item', 'description'], $elem),
-                pubDate: getProp(data, ['item', 'pubDate'], $elem),
-                link: getProp(data, ['item', 'link'], $elem),
-                guid: getProp(data, ['item', 'guid'], $elem),
-            };
-        }),
+        item: $item
+            .map((_, e) => {
+                const $elem = (selector) => $(e).find(selector);
+                return {
+                    title: getProp(data, ['item', 'title'], $elem),
+                    description: getProp(data, ['item', 'description'], $elem),
+                    pubDate: getProp(data, ['item', 'pubDate'], $elem),
+                    link: getProp(data, ['item', 'link'], $elem),
+                    guid: getProp(data, ['item', 'guid'], $elem),
+                };
+            })
+            .get(),
     };
 }
 
