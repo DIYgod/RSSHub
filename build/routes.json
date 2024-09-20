@@ -64440,6 +64440,35 @@
         ],
         "description": "#### 研究生通知 {#xi-nan-jiao-tong-da-xue-jiao-tong-yun-shu-yu-wu-liu-xue-yuan-yan-jiu-sheng-tong-zhi}",
         "location": "jtys/yjs.ts"
+      },
+      "/scai/bks": {
+        "path": "/scai/bks",
+        "categories": [
+          "university"
+        ],
+        "example": "/swjtu/scai/bks",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "scai.swjtu.edu.cn/"
+            ]
+          }
+        ],
+        "name": "计算机与人工智能学院",
+        "description": "本科生教育",
+        "maintainers": [
+          "AzureG03"
+        ],
+        "location": "scai/bks.ts"
       }
     },
     "name": "西南交通大学",
