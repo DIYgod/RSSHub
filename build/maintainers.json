@@ -5017,6 +5017,9 @@
   "/qianzhan/analyst/rank/:type?": [
     "moke8"
   ],
+  "/qiche365/recall/:channel": [
+    "huanfe1"
+  ],
   "/qidian/author/:id": [
     "miles170"
   ],

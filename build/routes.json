@@ -55051,6 +55051,29 @@
     "name": "前瞻网",
     "url": "qianzhan.com"
   },
+  "qiche365": {
+    "routes": {
+      "/recall/:channel": {
+        "path": "/recall/:channel",
+        "name": "汽车召回",
+        "example": "/qiche365/recall/1",
+        "parameters": {
+          "channel": "频道，见下表"
+        },
+        "description": "| 国内召回新闻 | 国内召回公告 | 国外召回新闻 | 国外召回公告 |\n  | ------------ | ------------ | ------------ | ------------ |\n  | 1            | 2            | 3            | 4            |",
+        "categories": [
+          "government"
+        ],
+        "maintainers": [
+          "huanfe1"
+        ],
+        "url": "qiche365.org.cn/index/recall/index.html",
+        "location": "recall.ts"
+      }
+    },
+    "name": "汽车召回网",
+    "url": "qiche365.org.cn"
+  },
   "qidian": {
     "routes": {
       "/author/:id": {
