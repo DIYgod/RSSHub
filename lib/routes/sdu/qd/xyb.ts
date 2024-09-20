@@ -27,7 +27,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '山东大学（青岛）学研办',
+    name: '青岛校区学科建设与研究生教育办公室',
     maintainers: ['kukeya'],
     handler,
     description: `| 工作通知 | 
@@ -36,7 +36,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = ctx.req.param('type') ? ctx.req.param('type') : 'gztz';
+    const type = ctx.req.param('type') ?? 'gztz';
+
     const link = new URL(typeMap[type].url, host).href;
 
     const response = await got(link);
@@ -44,34 +45,28 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let item = $('.list li')
-        .map((_, e) => {
+        .toArray()
+        .map((e) => {
             e = $(e);
             const a = e.find('a');
             return {
-                title: a.text().trim(),
+                title: a.text().slice(1).trim(),
                 link: a.attr('href').startsWith('info/') ? host + a.attr('href') : a.attr('href'),
                 pubDate: parseDate(e.find('b').text().trim(), 'YYYY-MM-DD'),
             };
-        })
-        .get();
+        });
 
     item = await Promise.all(
         item.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
+                const hostname = new URL(item.link).hostname;
+                if (hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
-                } else if (new URL(item.link).hostname !== 'xyb.qd.sdu.edu.cn') {
-                    const response = await got(item.link);
-                    const $ = load(response.data);
-                    item.description = $('body').html();
-                    return item;
                 }
                 const response = await got(item.link);
                 const $ = load(response.data);
 
-                item.title = $('div h1').text().trim();
-                $('div h1').remove();
-                item.description = $('form[name=_newscontent_fromname]').html();
+                item.description = $('.v_news_content').html();
 
                 return item;
             })
