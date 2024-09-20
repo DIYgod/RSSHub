@@ -22,9 +22,9 @@ const titleMap = {
 };
 
 export const route: Route = {
-    path: '/cs/:type?',
+    path: '/cs/index/:type?',
     categories: ['university'],
-    example: '/sdu/cs/announcement',
+    example: '/sdu/cs/index/announcement',
     parameters: { type: '默认为 `announcement`' },
     features: {
         requireConfig: false,
@@ -34,8 +34,30 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['www.cs.sdu.edu.cn/', 'www.cs.sdu.edu.cn/xygg.htm'],
+            target: '/cs/index/announcement',
+        },
+        {
+            source: ['www.cs.sdu.edu.cn/xsbg.htm'],
+            target: '/cs/index/academic',
+        },
+        {
+            source: ['www.cs.sdu.edu.cn/kjjx.htm'],
+            target: '/cs/index/technology',
+        },
+        {
+            source: ['www.cs.sdu.edu.cn/bkjy.htm'],
+            target: '/cs/index/undergraduate',
+        },
+        {
+            source: ['www.cs.sdu.edu.cn/yjsjy.htm'],
+            target: '/cs/index/postgraduate',
+        },
+    ],
     name: '计算机科学与技术学院通知',
-    maintainers: ['Ji4n1ng'],
+    maintainers: ['Ji4n1ng', 'wiketool'],
     handler,
     description: `| 学院公告 | 学术报告 | 科技简讯 | 本科教育 | 研究生教育 | 
 | -------- | -------- | -------- | -------- | -------- |
