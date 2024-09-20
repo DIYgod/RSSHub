@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/news/:sport',
     name: 'News',
     maintainers: ['GymRat102'],
-    example: '/news/nba',
+    example: '/espn/news/nba',
     categories: ['traditional-media'],
     parameters: { sport: 'sport category, can be nba, nfl, mlb, nhl etc.' },
     description: `Get the news feed of the sport you love on ESPN.
@@ -42,11 +42,9 @@ export const route: Route = {
                 const itemType = itemDetail.type;
 
                 return {
-                    // distinguish among normal news/stories, videos and shortstops
-                    title: itemType === 'Media' ? `[Video] ${itemDetail.headline}` : itemType === 'Shortstop' ? `[Shortstop] ${itemDetail.headline}` : itemDetail.headline,
+                    title: itemDetail.headline,
                     link: itemDetail.links.web.href,
-                    author: itemType === 'Media' ? '' : itemDetail.byline,
-                    guid: item.id,
+                    author: itemDetail.byline,
                     pubDate: item.date,
                     // for videos and shortstops, no need to extract full text below
                     description: itemType === 'Media' ? itemDetail.description : itemType === 'Shortstop' ? itemDetail.headline : '',
@@ -64,11 +62,9 @@ export const route: Route = {
                         });
 
                         item.description = article.content.story;
-
-                        return item;
-                    } else {
-                        return item;
                     }
+
+                    return item;
                 })
             )
         );
