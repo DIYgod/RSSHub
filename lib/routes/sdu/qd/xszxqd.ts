@@ -43,7 +43,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '山东大学学生在线（青岛）',
+    name: '学生在线（青岛）',
     maintainers: ['kukeya'],
     handler,
     description: `| 学团通知-研究生 | 学团通知-本科生 | 学团通知-团学 | 学团通知-心理 | 学团要闻
@@ -52,7 +52,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = ctx.req.param('type') ? ctx.req.param('type') : 'xtyw';
+    const type = ctx.req.param('type') ?? 'xtyw';
     const link = new URL(typeMap[type].url, host).href;
 
     const response = await got(link);
@@ -60,7 +60,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let item = $('.list_box li')
-        .map((_, e) => {
+        .toArray()
+        .map((e) => {
             e = $(e);
             const a = e.find('a');
             let link = '';
@@ -70,23 +71,18 @@ async function handler(ctx) {
                 link,
                 pubDate: parseDate(e.find('span').text().trim(), 'YYYY-MM-DD'),
             };
-        })
-        .get();
+        });
 
     item = await Promise.all(
         item.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
+                const hostname = new URL(item.link).hostname;
+                if (hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
-                } else if (new URL(item.link).hostname !== 'www.onlineqd.sdu.edu.cn') {
-                    return item;
                 }
                 const response = await got(item.link);
                 const $ = load(response.data);
-
-                item.title = $('.title').text().trim();
-                $('.title').remove();
-                item.description = $('form[name=_newscontent_fromname]').html();
+                item.description = $('.v_news_content').html();
 
                 return item;
             })
