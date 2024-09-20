@@ -50516,6 +50516,44 @@
     "name": "巨量算数 - 算数指数",
     "url": "trendinsight.oceanengine.com"
   },
+  "oct0pu5": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "blog"
+        ],
+        "example": "/oct0pu5",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "oct0pu5.cn"
+            ],
+            "target": "/"
+          }
+        ],
+        "name": "Oct的小破站",
+        "maintainers": [
+          "octopus058",
+          "wiketool"
+        ],
+        "location": "rss.ts"
+      }
+    },
+    "name": "Oct0pu5 blog",
+    "url": "Oct0pu5.cn",
+    "zh": {
+      "name": "Oct0pu5的小破站"
+    }
+  },
   "odaily": {
     "routes": {
       "/activity": {

@@ -17393,6 +17393,19 @@
       }
     ]
   },
+  "oct0pu5.cn": {
+    "_name": "Oct0pu5 blog",
+    ".": [
+      {
+        "title": "Oct的小破站",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/oct0pu5/"
+      }
+    ]
+  },
   "0daily.com": {
     "_name": "Odaily 星球日报",
     ".": [
