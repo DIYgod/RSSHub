@@ -64,7 +64,7 @@ async function handler(ctx) {
                 }
                 const response = await got(item.link);
                 const $ = load(response.data);
-                item.description = $('.v_news_content').text();
+                item.description = $('.v_news_content').html();
 
                 return item;
             })
