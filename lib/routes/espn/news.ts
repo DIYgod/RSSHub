@@ -1,22 +1,10 @@
 import { Route } from '@/types';
-import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import Parser from 'rss-parser';
-
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
-import 'dayjs/locale/en';
-dayjs.locale('en');
-dayjs.extend(timezone);
-dayjs.extend(utc);
-
-const parser = new Parser();
 
 export const route: Route = {
     path: '/news/:sport',
-    name: 'ESPN News Archive',
+    name: 'News',
     maintainers: ['GymRat102'],
     example: '/news/nba',
     categories: ['traditional-media'],
@@ -27,13 +15,11 @@ export const route: Route = {
 | 🏀NBA                | nba     | 🎾Tennis       | tennis  |
 | 🏀WNBA               | wnba    | ⛳️Golf         | golf    |
 | 🏈NFL                | nfl     | 🏏Cricket      | cricket |
-| ⚾️MLB                | mlb     | 🏍️Motorsports  | rpm     |
+| ⚾️MLB                | mlb     | ⚽️Soccer       | soccer  |
 | 🏒NHL                | nhl     | 🏎️F1           | f1      |
-| ⛹️College Basketball | nhl     | 🥊MMA          | mma     |
-| 🏟️️College Football   | nhl     | 🏈UFL          | uffl    |
-| 📆NCAA               | ncaa    | 🏉Rugby        | rugby   |
-| 📆NCAA Woman         | ncaaw   | 🃏Poker        | poker   |
-| ⚽️Soccer             | soccer  |                |         |`,
+| ⛹️College Basketball | ncb      | 🥊MMA          | mma     |
+| 🏟️️College Football   | ncf     | 🏈UFL          | ufl     |
+| 🏉Rugby              | rugby   | 🃏Poker        | poker   |`,
     radar: [
         {
             source: ['espn.com/:sport*'],
@@ -42,31 +28,44 @@ export const route: Route = {
     ],
     handler: async (ctx) => {
         const { sport = 'nba' } = ctx.req.param();
-        const response = await ofetch(`https://www.espn.com/espn/rss/${sport}/news`);
-        const feed = await parser.parseString(response);
+        const response = await ofetch(`https://onefeed.fan.api.espn.com/apis/v3/cached/contentEngine/oneFeed/leagues/${sport}?offset=0`, {
+            headers: {
+                accept: 'application/json',
+            },
+        });
 
-        const list = feed.items.map((item) => ({
-            title: item.title ?? '',
-            link: item.link ?? '',
-            author: item.creator,
-            guid: item.guid,
-        }));
+        const list = response.feed.map((item) => {
+            const itemDetail = item.data.now[0];
+            const itemType = itemDetail.type;
+
+            return {
+                // distinguish among normal news/stories, videos and shortstops
+                title: itemType === 'Media' ? `[Video] ${itemDetail.headline}` : itemType === 'Shortstop' ? `[Shortstop] ${itemDetail.headline}` : itemDetail.headline,
+                link: itemDetail.links.web.href,
+                author: itemType === 'Media' ? '' : itemDetail.byline,
+                guid: item.id,
+                pubDate: item.date,
+                // for videos and shortstops, no need to extract full text below
+                description: itemType === 'Media' ? itemDetail.description : itemType === 'Shortstop' ? itemDetail.headline : '',
+            };
+        });
 
         const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const response = await ofetch(item.link);
-                    const $ = load(response);
+                    if (item.description === '') {
+                        const article = await ofetch(`${item.link}?xhr=1`, {
+                            headers: {
+                                accept: 'application/json',
+                            },
+                        });
 
-                    const rawPubDate = $('.article-meta span.timestamp').text().replace(' ET', '');
-                    item.pubDate = dayjs.tz(rawPubDate, 'MMM D, YYYY, HH:mm A', 'America/New_York');
+                        item.description = article.content.story;
 
-                    item.description = $('.article-body:first p:not(aside p), .article-body:first aside.inline-photo')
-                        .map((i, el) => $(el).html())
-                        .toArray()
-                        .join('<br/><br/>');
-
-                    return item;
+                        return item;
+                    } else {
+                        return item;
+                    }
                 })
             )
         );
