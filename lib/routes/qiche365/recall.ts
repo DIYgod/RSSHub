@@ -2,7 +2,6 @@ import { Route, Data, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.qiche365.org.cn';
@@ -23,16 +22,12 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const { channel } = ctx.req.param();
-    const link = `https://www.qiche365.org.cn/index/recall/index/item/${channel}.html?loadmore=1`;
 
-    const html = await cache.tryGet(link, async () => {
-        const { html } = await ofetch(link, {
-            method: 'get',
-            headers: {
-                'Accept-Language': 'zh-CN,zh;q=0.9',
-            },
-        });
-        return html;
+    const { html } = await ofetch(`${baseUrl}/index/recall/index/item/${channel}.html?loadmore=1`, {
+        method: 'get',
+        headers: {
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+        },
     });
 
     const $ = load(<string>html);
@@ -51,7 +46,7 @@ async function handler(ctx): Promise<Data> {
         });
     return {
         title: ['国内召回公告', '国内召回新闻', '国外召回公告', '国外召回新闻'][channel - 1],
-        link: 'https://www.qiche365.org.cn/index/recall/index.html',
+        link: `${baseUrl}/index/recall/index.html`,
         item: items,
         language: 'zh-CN',
     };
