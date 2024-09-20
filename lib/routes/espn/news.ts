@@ -34,21 +34,24 @@ export const route: Route = {
             },
         });
 
-        const list = response.feed.map((item) => {
-            const itemDetail = item.data.now[0];
-            const itemType = itemDetail.type;
+        const handledTypes = new Set(['HeadlineNews', 'Story', 'Media', 'Shortstop']);
+        const list = response.feed
+            .filter((item) => handledTypes.has(item.data.now[0].type))
+            .map((item) => {
+                const itemDetail = item.data.now[0];
+                const itemType = itemDetail.type;
 
-            return {
-                // distinguish among normal news/stories, videos and shortstops
-                title: itemType === 'Media' ? `[Video] ${itemDetail.headline}` : itemType === 'Shortstop' ? `[Shortstop] ${itemDetail.headline}` : itemDetail.headline,
-                link: itemDetail.links.web.href,
-                author: itemType === 'Media' ? '' : itemDetail.byline,
-                guid: item.id,
-                pubDate: item.date,
-                // for videos and shortstops, no need to extract full text below
-                description: itemType === 'Media' ? itemDetail.description : itemType === 'Shortstop' ? itemDetail.headline : '',
-            };
-        });
+                return {
+                    // distinguish among normal news/stories, videos and shortstops
+                    title: itemType === 'Media' ? `[Video] ${itemDetail.headline}` : itemType === 'Shortstop' ? `[Shortstop] ${itemDetail.headline}` : itemDetail.headline,
+                    link: itemDetail.links.web.href,
+                    author: itemType === 'Media' ? '' : itemDetail.byline,
+                    guid: item.id,
+                    pubDate: item.date,
+                    // for videos and shortstops, no need to extract full text below
+                    description: itemType === 'Media' ? itemDetail.description : itemType === 'Shortstop' ? itemDetail.headline : '',
+                };
+            });
 
         const items = await Promise.all(
             list.map((item) =>
