@@ -46,13 +46,13 @@ async function handler(ctx): Promise<Data> {
                 pubDate: timezone(parseDate(cheerioItem.find('h2').html()!.match('</i>(.*?)<b>')![1]), +8),
                 description: cheerioItem.find('p').text().trim(),
                 author: cheerioItem.find('h3 span').text(),
-                image: `${baseUrl}${cheerioItem.find('img').attr('src')}`,
+                image: cheerioItem.find('img').attr('src') && `${baseUrl}${cheerioItem.find('img').attr('src')}`,
             };
         });
     return {
-        allowEmpty: true,
         title: ['国内召回公告', '国内召回新闻', '国外召回公告', '国外召回新闻'][channel - 1],
         link: 'https://www.qiche365.org.cn/index/recall/index.html',
         item: items,
+        language: 'zh-CN',
     };
 }
