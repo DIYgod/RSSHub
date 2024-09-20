@@ -35,7 +35,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '山东大学研工部',
+    name: '研工部',
     maintainers: ['kukeya'],
     handler,
     description: `| 重要通知 | 管理服务 | 创新实践 | 
@@ -44,15 +44,15 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = ctx.req.param('type') ? ctx.req.param('type') : 'zytz';
+    const type = ctx.req.param('type') ?? 'zytz';
     const link = new URL(typeMap[type].url, host).href;
 
     const response = await got(link);
 
     const $ = load(response.data);
-
     let item = $('.zytz-list li')
-        .map((_, e) => {
+        .toArray()
+        .map((e) => {
             e = $(e);
             const a = e.find('a');
             let link = '';
@@ -62,23 +62,19 @@ async function handler(ctx) {
                 link,
                 pubDate: parseDate(e.find('b').text().trim().slice(1, -1), 'YYYY-MM-DD'),
             };
-        })
-        .get();
+        });
 
     item = await Promise.all(
         item.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
+                const hostname = new URL(item.link).hostname;
+                if (hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
-                } else if (new URL(item.link).hostname !== 'www.ygb.sdu.edu.cn') {
-                    return item;
                 }
                 const response = await got(item.link);
                 const $ = load(response.data);
 
-                item.title = $('.article-tlt').text().trim();
-                $('.article-tlt').remove();
-                item.description = $('form[name=_newscontent_fromname]').html();
+                item.description = $('.v_news_content').html();
 
                 return item;
             })
