@@ -101,7 +101,7 @@ export const twitterGot = async (url, params) => {
         },
         dispatcher: dispatchers[token].agent,
         onResponse: async ({ response }) => {
-            if (response.status === 403 || response.status === 401 || response.status === 429) {
+            if (response.status === 403 || response.status === 401 || response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
                 const newCookie = await login({
                     username: config.twitter.username?.[index],
                     password: config.twitter.password?.[index],
