@@ -3,6 +3,7 @@ import logger from '@/utils/logger';
 import { getLocalhostAddress } from '@/utils/common-utils';
 import { config } from '@/config';
 import app from '@/app';
+import { createCookieCloudSyncJob } from '@/utils/cookie-cloud';
 
 const port = config.connect.port;
 const hostIPList = getLocalhostAddress();
@@ -15,6 +16,8 @@ if (config.listenInaddrAny) {
         logger.info(`🔗 Network: 👉 http://${ip}:${port}`);
     }
 }
+
+createCookieCloudSyncJob();
 
 const server = serve({
     fetch: app.fetch,
