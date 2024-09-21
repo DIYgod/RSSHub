@@ -107,8 +107,8 @@ export const handler = async (ctx) => {
     const image = data?.img ?? undefined;
 
     return {
-        title: `${author} - ${data.name ?? $('title').text()}`,
-        description: data.description,
+        title: `${author} - ${data?.name ?? $('title').text()}`,
+        description: data?.description ?? undefined,
         link: currentUrl,
         item: items,
         allowEmpty: true,
