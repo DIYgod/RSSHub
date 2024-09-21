@@ -1,5 +1,0 @@
-{{@ summary.replace(/\n/g, '<br>') }}
-
-{{ each images i }}
-<img src="{{ i.url }}" height="{{ i.height }}" width="{{ i.width }}">
-{{ /each }}

@@ -1,0 +1,24 @@
+{{ if i.files }}
+    {{ each i.files file }}
+		{{ if file.extension === 'jpg' || file.extension === 'png' || file.extension === 'webp' || file.extension === 'jpeg' || file.extension === 'jfif' }}
+			<img src="{{ file.path }}">
+		{{ else if file.extension === 'm4a' || file.extension === 'mp3' || file.extension === 'ogg' }}
+			<audio controls><source src="{{ file.path }}" type="audio/{{file.extention}}"></audio>
+		{{ else if file.extension === 'mp4' || file.extension === 'webm' }}
+			<video controls><source src="{{ file.path }}" type="video/{{file.extention}}"></video>
+        {{ else }}
+            <a href="{{ file.path }}">{{file.name}}</a>
+        {{ /if }}
+    {{ /each }}
+{{ /if }}
+
+{{ if i.embed }}
+    {{ if i.embed.type === 'image' }}
+        <img src="{{ i.embed.thumbnail.proxy_url }}">
+    {{ else if i.embed.type === 'link' }}
+        {{ if i.embed.thumbnail }}
+            <a href="{{ i.embed.thumbnail.url }}"><img src="{{ i.embed.thumbnail.proxy_url }}"></a>
+        {{ /if }}
+        <a href="{{ i.embed.url }}">{{ i.embed.title }}</a>{{ if i.embed.description }}<p>{{ i.embed.description }}</p>{{ /if }}
+    {{ /if }}
+{{ /if }}

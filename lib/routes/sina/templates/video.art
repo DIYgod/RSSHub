@@ -1,0 +1,5 @@
+{{ if videoUrl }}
+<video controls poster="{{ poster }}" preload="metadata">
+    <source src="{{ videoUrl }}">
+</video>
+{{ /if }}
