@@ -153,9 +153,9 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
         }
     }
 
-    const entries1 = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems; // Media
-    const entries2 = instructions.find((i) => i.type === 'TimelineAddEntries').entries;
-    return entries1 || entries2;
+    const entries1 = instructions?.find((i) => i.type === 'TimelineAddToModule')?.moduleItems; // Media
+    const entries2 = instructions?.find((i) => i.type === 'TimelineAddEntries').entries;
+    return entries1 || entries2 || [];
 };
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {
