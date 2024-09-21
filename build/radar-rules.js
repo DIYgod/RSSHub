@@ -747,7 +747,7 @@
     ".":[ { title:"BIOS",
         docs:"https://docs.rsshub.app/routes/program-update",
         source:[ "/" ],
-        target:"/asus/bios/:model" } ] },
+        target:"/asus/bios/:model/:lang?" } ] },
   "asus.com":{ _name:"ASUS",
     ".":[ { title:"GPU Tweak",
         docs:"https://docs.rsshub.app/routes/program-update",

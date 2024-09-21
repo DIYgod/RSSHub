@@ -1679,7 +1679,7 @@
         "source": [
           "/"
         ],
-        "target": "/asus/bios/:model"
+        "target": "/asus/bios/:model/:lang?"
       }
     ]
   },

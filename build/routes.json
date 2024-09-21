@@ -5383,14 +5383,28 @@
   },
   "asus": {
     "routes": {
-      "/bios/:model": {
-        "path": "/bios/:model",
+      "/bios/:model/:lang?": {
+        "path": "/bios/:model/:lang?",
         "categories": [
           "program-update"
         ],
-        "example": "/asus/bios/RT-AX88U",
+        "example": "/asus/bios/RT-AX88U/zh",
         "parameters": {
-          "model": "Model, can be found in product page"
+          "model": "Model, can be found in product page",
+          "lang": {
+            "description": "Language, provide access routes for other parts of the world",
+            "options": [
+              {
+                "label": "Chinese",
+                "value": "zh"
+              },
+              {
+                "label": "English",
+                "value": "en"
+              }
+            ],
+            "default": "zh"
+          }
         },
         "features": {
           "requireConfig": false,
