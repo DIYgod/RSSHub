@@ -59,15 +59,14 @@ const cookieDecrypt = (uuid: string, encrypted: string, password: string) => {
 };
 
 let cookieCloudSyncJob: CronJob | null = null;
-export const createCookieCloudSyncJob = async () => {
-    const { config } = await import('@/config');
-    const cookieCloudHost = config.cookieCloud.host;
-    const cookieCloudUuid = config.cookieCloud.uuid;
-    const cookieCloudPassword = config.cookieCloud.password;
+export const createCookieCloudSyncJob = (config) => {
+    const cookieCloudHost = config.host;
+    const cookieCloudUuid = config.uuid;
+    const cookieCloudPassword = config.password;
     cookieCloudSyncJob?.stop();
     if (cookieCloudHost !== undefined && cookieCloudUuid !== undefined && cookieCloudPassword !== undefined) {
         cookieCloudSyncJob = CronJob.from({
-            cronTime: config.cookieCloud.updateCron,
+            cronTime: config.updateCron,
             async onTick() {
                 await cloudCookie(cookieCloudHost, cookieCloudUuid, cookieCloudPassword);
             },

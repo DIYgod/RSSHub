@@ -1,7 +1,7 @@
 import randUserAgent from '@/utils/rand-user-agent';
 import 'dotenv/config';
 import { ofetch } from 'ofetch';
-import { CookieCloudQuery, cookieCloudQuery } from '@/utils/cookie-cloud';
+import { CookieCloudQuery, cookieCloudQuery, createCookieCloudSyncJob } from '@/utils/cookie-cloud';
 
 let envs = process.env;
 
@@ -736,6 +736,8 @@ const calculateValue = () => {
     for (const name in _value) {
         value[name] = _value[name];
     }
+
+    createCookieCloudSyncJob(_value.cookieCloud);
 };
 calculateValue();
 
