@@ -12,7 +12,7 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v8
+      - uses: actions/stale@v9
         with:
           # Don't stale issues
           days-before-issue-stale: -1
@@ -24,4 +24,4 @@ jobs:
           close-pr-message: 'This PR was closed because it has been stalled for 7 days with no activity.'
           exempt-issue-labels: 'dependencies,wait for upstream'
           exempt-pr-labels: 'dependencies,wait for upstream'
-          any-of-labels: 'more data required'
+          any-of-issue-labels: 'more data required'

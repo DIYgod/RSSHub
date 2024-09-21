@@ -18,9 +18,9 @@ jobs:
   #   timeout-minutes: 5
   #   steps:
   #     - uses: actions/checkout@v4
-  #     - uses: pnpm/action-setup@v2
+  #     - uses: pnpm/action-setup@v4
   #       with:
-  #         version: 8
+  #         version: 9
   #     - uses: actions/setup-node@v4
   #       with:
   #         node-version: lts/*
@@ -36,13 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: read
       security-events: write
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
@@ -54,7 +51,7 @@ jobs:
           --output-file eslint-results.sarif
         continue-on-error: true
       - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
@@ -65,8 +62,6 @@ jobs:
     name: Validate PR title
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions:
-      pull-requests: read
     steps:
       - uses: amannn/action-semantic-pull-request@v5
         env:
@@ -77,13 +72,12 @@ jobs:
 
   labeler:
     name: Pull Request Labeler
-    if: ${{ github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' }}
+    if: ${{ github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' && github.repository == 'DIYgod/RSSHub' }}
     permissions:
-      contents: read
       pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/labeler@v4
+      - uses: actions/labeler@v5
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}

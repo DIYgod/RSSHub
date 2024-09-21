@@ -2,7 +2,7 @@
 // https://github.com/devcontainers/images/blob/v0.3.24/src/javascript-node/.devcontainer/devcontainer.json
 {
     "name": "Node.js",
-    "image": "mcr.microsoft.com/devcontainers/javascript-node:20-bookworm",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
 
     // Configure tool-specific properties.
     "customizations": {
@@ -38,12 +38,12 @@
         }
     },
 
-    "onCreateCommand": "sudo apt-get update && export DEBIAN_FRONTEND=noninteractive && sudo apt-get -y install --no-install-recommends ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libexpat1 libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 wget xdg-utils redis-server && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo rm -rf /var/lib/apt/lists/*",
+    "onCreateCommand": "sudo apt-get update && export DEBIAN_FRONTEND=noninteractive && sudo apt-get -y install --no-install-recommends ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libexpat1 libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 wget xdg-utils redis-server default-jre-headless && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo rm -rf /var/lib/apt/lists/*",
 
-    "updateContentCommand": "pnpm i && pnpm i -C website && pnpm rb",
+    "updateContentCommand": "export JAVA_HOME=/usr/lib/jvm/default-java && pnpm config set store-dir ~/.local/share/pnpm/store && pnpm i && pnpm rb",
 
     // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "pnpm i && pnpm i -C website && pnpm rb",
+    "postCreateCommand": "pnpm i && pnpm rb",
 
     // Disable auto start dev env since codespaces sometimes fails to attach to the terminal
     // "postAttachCommand": {

@@ -7,18 +7,11 @@ on:
     paths:
       - '.github/workflows/docker-test.yml'
       - 'lib/**'
-      - '!**/maintainer.js'
-      - '!**/radar.js'
-      - '!**/radar-rules.js'
       - 'Dockerfile'
       - 'package.json'
       - 'pnpm-lock.yaml'
     types: [opened, reopened, synchronize, edited]
   # Please, always create a pull request instead of push to master.
-
-permissions:
-  contents: read
-  pull-requests: write
 
 concurrency:
   group: docker-test-${{ github.ref_name }}
@@ -27,8 +20,11 @@ concurrency:
 jobs:
   test:
     name: Docker build & tests
+    permissions:
+      pull-requests: write
+      attestations: write
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,7 +40,7 @@ jobs:
           flavor: latest=true
 
       - name: Build Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           build-args: PUPPETEER_SKIP_DOWNLOAD=0  # also test bundling Chromium
@@ -63,17 +59,17 @@ jobs:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
-          labels: 'Route Test: Failed'
+          labels: 'Auto: Route Test Failed'
 
       - name: Test Docker image
         run: bash scripts/docker/test-docker.sh
 
       - name: Export Docker image
-        run: docker save rsshub:latest | gzip -1cf > rsshub.tar.gz
+        run: docker save rsshub:latest | zstdmt -o rsshub.tar.zst
 
       - name: Upload Docker image
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docker-image
-          path: rsshub.tar.gz
+          path: rsshub.tar.zst
           retention-days: 1

@@ -1,0 +1,32 @@
+{{ if images }}
+  {{ each images image }}
+    {{ if image?.src }}
+      <figure>
+        <img
+          {{ if image.alt }}
+            alt="{{ image.alt }}"
+          {{ /if }}
+        src="{{ image.src }}">
+      </figure>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
+{{ if details }}
+  <table>
+    <tbody>
+      {{ each details detail }}
+        <tr>
+          <th>{{ detail.label }}</th>
+          <td>
+            {{ if detail.value?.href && detail.value?.text }}
+              <a href="{{ detail.value.href }}">{{ detail.value.text }}</a>
+            {{ else }}
+              {{ detail.value }}
+            {{ /if }}
+          </td>
+        </tr>
+      {{ /each }}
+    </tbody>
+  </table>
+{{ /if }}

@@ -1,0 +1,4 @@
+<h2>Summary</h2>
+<ul>
+{{ each summary s }}<li>{{ s }}</li>{{ /each }}
+</ul>

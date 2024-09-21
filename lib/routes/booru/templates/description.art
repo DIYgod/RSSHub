@@ -1,0 +1,25 @@
+<div class="item-description">
+    {{if image }}
+        <img src="{{ image }}" alt="{{ title }}">
+    {{/if}}
+
+    {{if posted }}
+        <p>posted: <span class="posted">{{ posted }}</span></p>
+    {{/if}}
+
+    {{if by }}
+        <p>by: <span class="by">{{ by }}</span></p>
+    {{/if}}
+
+    {{if source }}
+        <p>source: <span class="source">{{ source }}</span></p>
+    {{/if}}
+
+    {{if rating }}
+        <p>rating: <span class="rating">{{ rating }}</span></p>
+    {{/if}}
+
+    {{if score }}
+        <p>score: <span class="score">{{ score }}</span></p>
+    {{/if}}
+</div>

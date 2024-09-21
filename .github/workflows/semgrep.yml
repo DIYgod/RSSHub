@@ -12,38 +12,22 @@ on:
     # random HH:MM to avoid a load spike on GitHub Actions at 00:00
     - cron: 21 20 * * *
 
-permissions:
-  contents: read
-
 jobs:
   semgrep:
     name: Scan
     runs-on: ubuntu-latest
     container:
       image: returntocorp/semgrep
-    if: (github.actor != 'dependabot[bot]')
-    steps:
-      - uses: actions/checkout@v4
-      - run: semgrep ci
-        env:
-          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-
-  semgrep-github:
-    name: Scan
-    runs-on: ubuntu-latest
-    container:
-      image: returntocorp/semgrep
-    if: (github.actor != 'dependabot[bot]')
+    if: (github.triggering_actor != 'dependabot[bot]')
     permissions:
-      contents: read
       security-events: write
     steps:
       - uses: actions/checkout@v4
-      - run: semgrep ci --sarif --output=semgrep.sarif
+      - run: semgrep ci --sarif > semgrep.sarif
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
       - name: Upload SARIF file for GitHub Advanced Security Dashboard
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: semgrep.sarif
         if: always()
