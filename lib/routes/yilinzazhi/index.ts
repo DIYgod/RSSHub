@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 export const route: Route = {
     path: '/',
     categories: ['reading'],
-    example: '/yilin',
+    example: '/yilinzazhi',
     radar: [
         {
             source: ['www.yilinzazhi.com'],
@@ -22,7 +22,7 @@ export const route: Route = {
 async function handler(): Promise<Data> {
     const baseUrl = 'https://www.yilinzazhi.com/';
     const response = await got(baseUrl);
-    const $ = load(response.data, { xmlMode: true });
+    const $ = load(response.data);
     const items: DataItem[] = $('section.content')
         .find('li')
         .map((_, target) => {
@@ -43,8 +43,8 @@ async function handler(): Promise<Data> {
     await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
-                const childResponse = await got(item.link);
-                const $$ = load(childResponse.data, { xmlMode: true });
+                const childRes = await got(item.link);
+                const $$ = load(childRes.data);
                 item.description = $$('.maglistbox').html()!;
                 return item;
             })

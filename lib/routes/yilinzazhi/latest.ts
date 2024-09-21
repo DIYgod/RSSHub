@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 export const route: Route = {
     path: '/latest',
     categories: ['reading'],
-    example: '/yilin/latest',
+    example: '/yilinzazhi/latest',
     radar: [
         {
             source: ['www.yilinzazhi.com'],
@@ -35,7 +35,7 @@ type Catalog = {
 async function handler(): Promise<Data> {
     const baseUrl = 'https://www.yilinzazhi.com/';
     const response = await got(baseUrl);
-    const $ = load(response.data, { xmlMode: true });
+    const $ = load(response.data);
 
     const currentYear = dayjs().year();
     const yearSection = $('.year-section')
@@ -59,8 +59,8 @@ async function handler(): Promise<Data> {
 
     await Promise.resolve(
         cache.tryGet(stage.link, async () => {
-            const contentResponse = await got(stage.link);
-            const $$ = load(contentResponse.data, { xmlMode: true });
+            const stageRes = await got(stage.link);
+            const $$ = load(stageRes.data);
             const catalogsEl = $$('.maglistbox dl').toArray();
             const children = catalogsEl.map<Catalog>((catalog) => {
                 const title = $$(catalog).find('dt span').text();
@@ -82,17 +82,13 @@ async function handler(): Promise<Data> {
         })
     );
 
-    const contents: Data[] = [];
-    for (const catalog of stage.catalogs) {
-        const list = catalog.tables;
-        contents.push(...list);
-    }
+    const contents: Data[] = stage.catalogs.flatMap((catalog) => catalog.tables);
 
     await Promise.all(
         contents.map((stage) =>
             cache.tryGet(stage.link!, async () => {
-                const contentResponse = await got(stage.link);
-                const $$ = load(contentResponse.data, { xmlMode: true });
+                const detailRes = await got(stage.link);
+                const $$ = load(detailRes.data);
                 const detailContainer = $$('.blkContainerSblk.collectionContainer');
 
                 stage.description = detailContainer.html()!;
@@ -102,12 +98,9 @@ async function handler(): Promise<Data> {
         )
     );
 
-    const contentLink = contents[0].link!;
-    const preLinkIndex = contentLink.lastIndexOf('/');
-    const routerLink = contentLink.substring(0, preLinkIndex + 1);
     return {
         title: '意林 - 近期文章汇总',
-        link: routerLink,
+        link: stage.link,
         item: contents,
     };
 }
