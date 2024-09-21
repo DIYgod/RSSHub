@@ -1265,6 +1265,9 @@
     "5upernova-heng",
     "nczitzk"
   ],
+  "/cls/subject/:id?": [
+    "nczitzk"
+  ],
   "/cls/telegraph/:category?": [
     "nczitzk"
   ],

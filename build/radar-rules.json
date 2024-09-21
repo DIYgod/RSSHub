@@ -4149,6 +4149,16 @@
         ],
         "target": "/cls/telegraph"
       }
+    ],
+    "www": [
+      {
+        "title": "话题",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/subject/:id"
+        ],
+        "target": "/clsparams=>{const id=params.id;return`/subject${id?`/${id}`:\"\"}`}"
+      }
     ]
   },
   "cmpxchg8b.com": {
