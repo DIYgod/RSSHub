@@ -19,10 +19,11 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const cookieJar = new CookieJar();
 
-    if (config.javdb.session) {
+    const javdbSession = config.javdb.session();
+    if (javdbSession) {
         const cookie = Cookie.fromJSON({
             key: '_jdb_session',
-            value: config.javdb.session,
+            value: javdbSession,
             domain,
             path: '/',
         });
