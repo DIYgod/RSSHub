@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({
@@ -59,16 +59,16 @@ async function handler(ctx) {
 }
 
 async function allIssues(ctx, user, repo, limit, headers) {
-    const response = await got(`${apiUrl}/repos/${user}/${repo}/issues/comments`, {
+    const response = await ofetch.raw(`${apiUrl}/repos/${user}/${repo}/issues/comments`, {
         headers,
-        searchParams: {
+        query: {
             sort: 'updated',
             direction: 'desc',
             per_page: limit,
         },
     });
 
-    const timeline = response.data;
+    const timeline = response._data;
 
     const items = timeline.map((item) => {
         const actor = item.actor?.login ?? item.user?.login ?? 'ghost';
@@ -86,14 +86,13 @@ async function allIssues(ctx, user, repo, limit, headers) {
         };
     });
 
-    // response headers is broken due to #14922
-    // const rateLimit = {
-    //     limit: Number.parseInt(response.headers['x-ratelimit-limit']),
-    //     remaining: Number.parseInt(response.headers['x-ratelimit-remaining']),
-    //     reset: parseDate(Number.parseInt(response.headers['x-ratelimit-reset']) * 1000),
-    //     resoure: response.headers['x-ratelimit-resource'],
-    //     used: Number.parseInt(response.headers['x-ratelimit-used']),
-    // };
+    const rateLimit = {
+        limit: Number.parseInt(response.headers.get('x-ratelimit-limit')),
+        remaining: Number.parseInt(response.headers.get('x-ratelimit-remaining')),
+        reset: parseDate(Number.parseInt(response.headers.get('x-ratelimit-reset')) * 1000),
+        resoure: response.headers.get('x-ratelimit-resource'),
+        used: Number.parseInt(response.headers.get('x-ratelimit-used')),
+    };
 
     const ret = {
         title: `${user}/${repo}: Issue & Pull request comments`,
@@ -103,35 +102,38 @@ async function allIssues(ctx, user, repo, limit, headers) {
 
     ctx.set('json', {
         ...ret,
-        // rateLimit,
+        rateLimit,
     });
     return ret;
 }
 
 async function singleIssue(ctx, user, repo, number, limit, headers) {
-    const response = await got(`${apiUrl}/repos/${user}/${repo}/issues/${number}`, {
+    const response = await ofetch.raw(`${apiUrl}/repos/${user}/${repo}/issues/${number}`, {
         headers,
     });
-    const issue = response.data;
+    const issue = response._data;
     const type = issue.pull_request ? 'pull' : 'issue';
 
-    const timelineResponse = await got(issue.timeline_url, {
+    let timelineResponse = await ofetch.raw(issue.timeline_url, {
         headers,
-        searchParams: {
+        query: {
             per_page: limit,
         },
     });
-    const timeline = timelineResponse.data;
-
-    const items = [
-        {
+    const items = [];
+    const lastUrl = timelineResponse.headers.get('link')?.match(/<(\S+?)>; rel="last"/)?.[1];
+    if (lastUrl) {
+        timelineResponse = await ofetch.raw(lastUrl, { headers });
+    } else {
+        items.push({
             title: `${issue.user.login} created ${user}/${repo}: ${typeDict[type].title} #${issue.number}`,
             description: issue.body ? md.render(issue.body) : null,
             author: issue.user.login,
             pubDate: parseDate(issue.created_at),
             link: `${issue.html_url}#issue-${issue.id}`,
-        },
-    ];
+        });
+    }
+    const timeline = timelineResponse._data;
 
     for (const item of timeline) {
         const actor = item.actor?.login ?? item.user?.login ?? 'ghost';
@@ -194,13 +196,13 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
 
     ctx.set('json', {
         ...ret,
-        // rateLimit: {
-        //     limit: Number.parseInt(response.headers['x-ratelimit-limit']),
-        //     remaining: Number.parseInt(response.headers['x-ratelimit-remaining']),
-        //     reset: parseDate(Number.parseInt(response.headers['x-ratelimit-reset']) * 1000),
-        //     resoure: response.headers['x-ratelimit-resource'],
-        //     used: Number.parseInt(response.headers['x-ratelimit-used']),
-        // },
+        rateLimit: {
+            limit: Number.parseInt(response.headers.get('x-ratelimit-limit')),
+            remaining: Number.parseInt(response.headers.get('x-ratelimit-remaining')),
+            reset: parseDate(Number.parseInt(response.headers.get('x-ratelimit-reset')) * 1000),
+            resoure: response.headers.get('x-ratelimit-resource'),
+            used: Number.parseInt(response.headers.get('x-ratelimit-used')),
+        },
     });
     return ret;
 }
