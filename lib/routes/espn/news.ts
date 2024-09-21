@@ -1,6 +1,31 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import * as cheerio from 'cheerio';
+import path from 'path';
+import { getCurrentPath } from '@/utils/helpers';
+import { art } from '@/utils/render';
+
+const __dirname = getCurrentPath(import.meta.url);
+
+const renderMedia = (media) =>
+    art(path.join(__dirname, 'templates', 'media.art'), {
+        video: {
+            cover: media.posterImages?.full?.href || media.posterImages?.default?.href,
+            src: media.links?.source.mezzanine?.href || media.links?.source.HD?.href || media.links?.source.full?.href || media.links?.source.href,
+            title: media.title,
+            description: media.description,
+        },
+        image: {
+            src: media.url,
+            alt: media.alt,
+            caption: media.caption,
+            credit: media.credit,
+        },
+    });
+
+const junkPattern = /inline\d+|alsosee/;
+const mediaPattern = /(photo|video)(\d+)/;
 
 export const route: Route = {
     path: '/news/:sport',
@@ -47,7 +72,7 @@ export const route: Route = {
                     author: itemDetail.byline,
                     pubDate: item.date,
                     // for videos and shortstops, no need to extract full text below
-                    description: itemType === 'Media' ? itemDetail.description : itemType === 'Shortstop' ? itemDetail.headline : '',
+                    description: itemType === 'Media' ? renderMedia(itemDetail.video[0]) : itemType === 'Shortstop' ? itemDetail.headline : '',
                 };
             });
 
@@ -61,7 +86,20 @@ export const route: Route = {
                             },
                         });
 
-                        item.description = article.content.story;
+                        const $ = cheerio.load(article.content.story, null, false);
+                        $('*').each((_, ele) => {
+                            if (junkPattern.test(ele.name)) {
+                                $(ele).remove();
+                            }
+                            if (mediaPattern.test(ele.name)) {
+                                const mediaType = ele.name.match(mediaPattern)[1] === 'photo' ? 'images' : 'video';
+                                const mediaIndex = Number.parseInt(ele.name.match(mediaPattern)[2]) - 1;
+                                const media = article.content[mediaType][mediaIndex];
+                                $(ele).replaceWith(renderMedia(media));
+                            }
+                        });
+
+                        item.description = $.html();
                     }
 
                     return item;
