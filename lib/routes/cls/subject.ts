@@ -55,15 +55,13 @@ export const handler = async (ctx) => {
             cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
-                let $$ = load(detailResponse);
+                const $$ = load(detailResponse);
 
                 const data = JSON.parse($$('script#__NEXT_DATA__').text())?.props?.initialState?.detail?.articleDetail ?? undefined;
 
                 if (!data) {
                     return item;
                 }
-
-                $$ = load(data.content);
 
                 const title = data.title;
                 const description = art(path.join(__dirname, 'templates/description.art'), {
@@ -106,7 +104,7 @@ export const handler = async (ctx) => {
     const data = JSON.parse($('script#__NEXT_DATA__').text())?.props?.initialProps?.pageProps?.subjectDetail ?? undefined;
 
     const author = '财联社';
-    const image = data.img ?? undefined;
+    const image = data?.img ?? undefined;
 
     return {
         title: `${author} - ${data.name ?? $('title').text()}`,
