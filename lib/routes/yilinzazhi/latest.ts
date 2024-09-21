@@ -24,7 +24,6 @@ export const route: Route = {
 type Stage = {
     link: string;
     title: string;
-    catalogs: Catalog[];
 };
 
 type Catalog = {
@@ -53,36 +52,33 @@ async function handler(): Promise<Data> {
             const aTag = $(this);
             const link = baseUrl + aTag.attr('href');
             const title = aTag.text();
-            return { link, title, catalogs: [] };
+            return { link, title };
         })
         .toArray()[0];
 
-    await Promise.resolve(
-        cache.tryGet(stage.link, async () => {
-            const stageRes = await got(stage.link);
-            const $$ = load(stageRes.data);
-            const catalogsEl = $$('.maglistbox dl').toArray();
-            const children = catalogsEl.map<Catalog>((catalog) => {
-                const title = $$(catalog).find('dt span').text();
-                const tables = $$(catalog)
-                    .find('a')
-                    .toArray()
-                    .map<Data>((aTag) => {
-                        const href = $$(aTag).attr('href')!;
-                        const yearType = currentYear + href.substring(4, 5);
-                        return {
-                            title: $$(aTag).text(),
-                            link: `${baseUrl}${currentYear}/yl${yearType}/${href}`,
-                        };
-                    });
-                return { title, tables };
-            });
-            stage.catalogs.push(...children);
-            return stage;
-        })
-    );
+    const catalogs = (await cache.tryGet(stage.link, async () => {
+        const stageRes = await got(stage.link);
+        const $$ = load(stageRes.data);
+        const catalogsEl = $$('.maglistbox dl').toArray();
+        const children = catalogsEl.map<Catalog>((catalog) => {
+            const title = $$(catalog).find('dt span').text();
+            const tables = $$(catalog)
+                .find('a')
+                .toArray()
+                .map<Data>((aTag) => {
+                    const href = $$(aTag).attr('href')!;
+                    const yearType = currentYear + href.substring(4, 5);
+                    return {
+                        title: $$(aTag).text(),
+                        link: `${baseUrl}${currentYear}/yl${yearType}/${href}`,
+                    };
+                });
+            return { title, tables };
+        });
+        return children;
+    })) as Catalog[];
 
-    const contents: Data[] = stage.catalogs.flatMap((catalog) => catalog.tables);
+    const contents: Data[] = catalogs.flatMap((catalog) => catalog.tables);
 
     await Promise.all(
         contents.map((stage) =>
