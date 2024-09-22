@@ -6055,6 +6055,19 @@
       }
     ]
   },
+  "espn.com": {
+    "_name": "ESPN",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:sport*"
+        ],
+        "target": "/espn/news/:sport"
+      }
+    ]
+  },
   "esquirehk.com": {
     "_name": "Esquire Hong Kong",
     "www": [

@@ -1983,6 +1983,9 @@
   "/eprice/:region?": [
     "TonyRL"
   ],
+  "/espn/news/:sport": [
+    "GymRat102"
+  ],
   "/esquirehk/tag/:id?": [
     "nczitzk"
   ],

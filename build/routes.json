@@ -20808,6 +20808,36 @@
     "name": "ePrice",
     "url": "eprice.com.tw"
   },
+  "espn": {
+    "routes": {
+      "/news/:sport": {
+        "path": "/news/:sport",
+        "name": "News",
+        "maintainers": [
+          "GymRat102"
+        ],
+        "example": "/espn/news/nba",
+        "categories": [
+          "traditional-media"
+        ],
+        "parameters": {
+          "sport": "sport category, can be nba, nfl, mlb, nhl etc."
+        },
+        "description": "Get the news feed of the sport you love on ESPN.\n| Sport                |  sport  |  Sport         |  sport  |\n|----------------------|---------|----------------|---------|\n| 🏀NBA                | nba     | 🎾Tennis       | tennis  |\n| 🏀WNBA               | wnba    | ⛳️Golf         | golf    |\n| 🏈NFL                | nfl     | 🏏Cricket      | cricket |\n| ⚾️MLB                | mlb     | ⚽️Soccer       | soccer  |\n| 🏒NHL                | nhl     | 🏎️F1           | f1      |\n| ⛹️College Basketball | ncb      | 🥊MMA          | mma     |\n| 🏟️️College Football   | ncf     | 🏈UFL          | ufl     |\n| 🏉Rugby              | rugby   | 🃏Poker        | poker   |",
+        "radar": [
+          {
+            "source": [
+              "espn.com/:sport*"
+            ],
+            "target": "/news/:sport"
+          }
+        ],
+        "location": "news.ts"
+      }
+    },
+    "name": "ESPN",
+    "url": "espn.com"
+  },
   "esquirehk": {
     "routes": {
       "/tag/:id?": {
