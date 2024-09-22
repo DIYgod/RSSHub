@@ -30,21 +30,21 @@ const mediaPattern = /(photo|video)(\d+)/;
 export const route: Route = {
     path: '/news/:sport',
     name: 'News',
-    maintainers: ['GymRat102'],
+    maintainers: ['weijianduan0302'],
     example: '/espn/news/nba',
     categories: ['traditional-media'],
     parameters: { sport: 'sport category, can be nba, nfl, mlb, nhl etc.' },
     description: `Get the news feed of the sport you love on ESPN.
 | Sport                |  sport  |  Sport         |  sport  |
 |----------------------|---------|----------------|---------|
-| 🏀NBA                | nba     | 🎾Tennis       | tennis  |
-| 🏀WNBA               | wnba    | ⛳️Golf         | golf    |
-| 🏈NFL                | nfl     | 🏏Cricket      | cricket |
-| ⚾️MLB                | mlb     | ⚽️Soccer       | soccer  |
-| 🏒NHL                | nhl     | 🏎️F1           | f1      |
-| ⛹️College Basketball | ncb      | 🥊MMA          | mma     |
-| 🏟️️College Football   | ncf     | 🏈UFL          | ufl     |
-| 🏉Rugby              | rugby   | 🃏Poker        | poker   |`,
+| 🏀 NBA                | nba     | 🎾 Tennis       | tennis  |
+| 🏀 WNBA               | wnba    | ⛳️ Golf         | golf    |
+| 🏈 NFL                | nfl     | 🏏 Cricket      | cricket |
+| ⚾️ MLB                | mlb     | ⚽️ Soccer       | soccer  |
+| 🏒 NHL                | nhl     | 🏎️ F1           | f1      |
+| ⛹️ College Basketball | ncb      | 🥊 MMA          | mma     |
+| 🏟️️ College Football   | ncf     | 🏈 UFL          | ufl     |
+| 🏉 Rugby              | rugby   | 🃏 Poker        | poker   |`,
     radar: [
         {
             source: ['espn.com/:sport*'],
