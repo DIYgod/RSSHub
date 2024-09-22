@@ -5384,15 +5384,24 @@
   "/sdu/epe/:type?": [
     "Ji4n1ng"
   ],
+  "/sdu/gjsw/:type?": [
+    "kukeya"
+  ],
   "/sdu/mech/:type?": [
     "Ji4n1ng"
   ],
   "/sdu/sc/:type?": [
     "Ji4n1ng"
   ],
+  "/sdu/ygb/:type?": [
+    "kukeya"
+  ],
   "/sdu/cs/index/:type?": [
     "Ji4n1ng",
     "wiketool"
+  ],
+  "/sdu/qd/xszxqd/:type?": [
+    "kukeya"
   ],
   "/sdu/wh/jwc/:column?": [
     "kxxt"

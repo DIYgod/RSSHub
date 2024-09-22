@@ -58697,6 +58697,30 @@
         "description": "| 学院动态 | 通知公告 | 学术论坛 |\n  | -------- | -------- | -------- |\n  | 0        | 1        | 2        |",
         "location": "epe.ts"
       },
+      "/gjsw/:type?": {
+        "path": "/gjsw/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/sdu/gjsw/tzgg",
+        "parameters": {
+          "type": "默认为`tzgg`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "国际事务部",
+        "maintainers": [
+          "kukeya"
+        ],
+        "description": "| 通知公告 |  \n  | -------- | \n  | tzgg     |      ",
+        "location": "gjsw.ts"
+      },
       "/mech/:type?": {
         "path": "/mech/:type?",
         "categories": [
@@ -58744,6 +58768,30 @@
         ],
         "description": "| 通知公告 | 学术动态 | 本科教育 | 研究生教育 |\n  | -------- | -------- | -------- | ---------- |\n  | 0        | 1        | 2        | 3          |",
         "location": "sc.ts"
+      },
+      "/ygb/:type?": {
+        "path": "/ygb/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/sdu/ygb/zytz",
+        "parameters": {
+          "type": "默认为`zytz`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "研工部",
+        "maintainers": [
+          "kukeya"
+        ],
+        "description": "| 重要通知 | 管理服务 | 创新实践 | \n  | -------- | -------- |-------- |\n  | zytz     | glfw     | cxsj    | ",
+        "location": "ygb.ts"
       },
       "/cs/index/:type?": {
         "path": "/cs/index/:type?",
@@ -58802,6 +58850,30 @@
         ],
         "description": "| 学院公告 | 学术报告 | 科技简讯 | 本科教育 | 研究生教育 | \n| -------- | -------- | -------- | -------- | -------- |\n| announcement | academic | technology | undergraduate | postgraduate |",
         "location": "cs/index.ts"
+      },
+      "/qd/xszxqd/:type?": {
+        "path": "/qd/xszxqd/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/sdu/qd/xszxqd/xtyw",
+        "parameters": {
+          "type": "默认为`xtyw`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "学生在线（青岛）",
+        "maintainers": [
+          "kukeya"
+        ],
+        "description": "| 学团通知-研究生 | 学团通知-本科生 | 学团通知-团学 | 学团通知-心理 | 学团要闻\n  | -------- | -------- |-------- |-------- |-------- |\n  | xttz-yjs   | xttz-bks  |  xttz-tx  | xttz-xl  | xtyw  |",
+        "location": "qd/xszxqd.ts"
       },
       "/wh/jwc/:column?": {
         "path": "/wh/jwc/:column?",
