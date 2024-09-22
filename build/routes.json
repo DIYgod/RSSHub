@@ -4481,6 +4481,69 @@
     "name": "Android",
     "url": "developer.android.com"
   },
+  "anime1": {
+    "routes": {
+      "anime/:category/:name": {
+        "path": "anime/:category/:name",
+        "name": "Anime",
+        "url": "anime1.me",
+        "maintainers": [
+          "cxheng315"
+        ],
+        "example": "/anime1/anime/2024年夏季/神之塔-第二季",
+        "categories": [
+          "anime"
+        ],
+        "parameters": {
+          "category": "Anime1 Category",
+          "name": "Anime1 Name"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "anime1.me/category/:category/:name"
+            ],
+            "target": "/anime/:category/:name"
+          }
+        ],
+        "location": "anime.ts"
+      },
+      "search/:keyword": {
+        "path": "search/:keyword",
+        "name": "Search",
+        "url": "anime1.me",
+        "maintainers": [
+          "cxheng315"
+        ],
+        "example": "/anime1/search/神之塔",
+        "categories": [
+          "anime"
+        ],
+        "parameters": {
+          "keyword": "Anime1 Search Keyword"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "search.ts"
+      }
+    },
+    "name": "Anime1",
+    "url": "anime1.me"
+  },
   "annualreviews": {
     "routes": {
       "/:id": {

@@ -1450,6 +1450,19 @@
       }
     ]
   },
+  "anime1.me": {
+    "_name": "Anime1",
+    ".": [
+      {
+        "title": "Anime",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/category/:category/:name"
+        ],
+        "target": "/anime1/anime/:category/:name"
+      }
+    ]
+  },
   "annualreviews.org": {
     "_name": "Annual Reviews",
     ".": [
