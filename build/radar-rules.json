@@ -24011,6 +24011,7 @@
         "source": [
           "/u/:uid",
           "/profile/:uid",
+          "/u/:uid",
           "/u/:uid"
         ],
         "target": "/weibo/user/:uid"

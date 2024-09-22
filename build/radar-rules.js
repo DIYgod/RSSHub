@@ -10760,6 +10760,7 @@
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/u/:uid",
           "/profile/:uid",
+          "/u/:uid",
           "/u/:uid" ],
         target:"/weibo/user/:uid" },
       { title:"绿洲用户",

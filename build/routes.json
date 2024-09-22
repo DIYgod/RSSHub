@@ -72435,6 +72435,7 @@
             "source": [
               "m.weibo.cn/u/:uid",
               "m.weibo.cn/profile/:uid",
+              "weibo.com/u/:uid",
               "www.weibo.com/u/:uid"
             ],
             "target": "/user/:uid"
