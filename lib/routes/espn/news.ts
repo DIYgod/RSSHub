@@ -95,7 +95,11 @@ export const route: Route = {
                                 const mediaType = ele.name.match(mediaPattern)[1] === 'photo' ? 'images' : 'video';
                                 const mediaIndex = Number.parseInt(ele.name.match(mediaPattern)[2]) - 1;
                                 const media = article.content[mediaType][mediaIndex];
-                                $(ele).replaceWith(renderMedia(media));
+                                if (media) {
+                                    $(ele).replaceWith(renderMedia(media));
+                                } else {
+                                    $(ele).remove();
+                                }
                             }
                         });
 
