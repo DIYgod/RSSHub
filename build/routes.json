@@ -1896,7 +1896,8 @@
         ],
         "name": "推荐",
         "maintainers": [
-          "cnkmmk"
+          "cnkmmk",
+          "ovo-tim"
         ],
         "url": "51cto.com/",
         "location": "recommend.ts"
