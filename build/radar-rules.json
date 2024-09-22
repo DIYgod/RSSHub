@@ -1683,21 +1683,26 @@
       }
     ]
   },
-  "asus.com.cn": {
+  "asus.com": {
     "_name": "ASUS",
-    ".": [
+    "www": [
       {
         "title": "BIOS",
         "docs": "https://docs.rsshub.app/routes/program-update",
         "source": [
+          "/displays-desktops/:productLine/:series/:model",
+          "/laptops/:productLine/:series/:model",
+          "/motherboards-components/:productLine/:series/:model",
+          "/networking-iot-servers/:productLine/:series/:model",
+          "/:region/displays-desktops/:productLine/:series/:model",
+          "/:region/laptops/:productLine/:series/:model",
+          "/:region/motherboards-components/:productLine/:series/:model",
+          "/:region/networking-iot-servers/:productLine/:series/:model",
           "/"
         ],
-        "target": "/asus/bios/:model/:lang?"
+        "target": "/asus/bios/:model"
       }
-    ]
-  },
-  "asus.com": {
-    "_name": "ASUS",
+    ],
     ".": [
       {
         "title": "GPU Tweak",

@@ -5463,11 +5463,11 @@
                 "value": "zh"
               },
               {
-                "label": "English",
+                "label": "Global",
                 "value": "en"
               }
             ],
-            "default": "zh"
+            "default": "en"
           }
         },
         "features": {
@@ -5481,15 +5481,24 @@
         "radar": [
           {
             "source": [
+              "www.asus.com/displays-desktops/:productLine/:series/:model",
+              "www.asus.com/laptops/:productLine/:series/:model",
+              "www.asus.com/motherboards-components/:productLine/:series/:model",
+              "www.asus.com/networking-iot-servers/:productLine/:series/:model",
+              "www.asus.com/:region/displays-desktops/:productLine/:series/:model",
+              "www.asus.com/:region/laptops/:productLine/:series/:model",
+              "www.asus.com/:region/motherboards-components/:productLine/:series/:model",
+              "www.asus.com/:region/networking-iot-servers/:productLine/:series/:model",
               "asus.com.cn/"
-            ]
+            ],
+            "target": "/bios/:model"
           }
         ],
         "name": "BIOS",
         "maintainers": [
           "Fatpandac"
         ],
-        "url": "asus.com.cn/",
+        "url": "www.asus.com",
         "location": "bios.ts"
       },
       "/gpu-tweak": {
