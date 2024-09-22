@@ -44,10 +44,21 @@ async function handler(ctx) {
 
     const { data: response } = await got(link, { headers });
     const $ = load(response);
-    const items = $('#pornstarsVideoSection .videoBox')
-        .toArray()
-        .map((e) => parseItems($(e)));
+    
 
+    if ($('.withBio').length == 0) {
+        const withoutbio_link = `https://${language}.pornhub.com/pornstar/${username}/videos?o=${sort}`;
+        const { data: response } = await got(withoutbio_link, { headers });
+        $withoutbio = load(response);
+        const items = $withoutbio('#mostRecentVideosSection .videoBox')
+            .toArray()
+            .map((e) => parseItems($(e)));
+    } else {
+        const items = $('#pornstarsVideoSection .videoBox')
+            .toArray()
+            .map((e) => parseItems($(e)));
+    }
+    
     return {
         title: $('h1').first().text(),
         description: $('section.aboutMeSection').text().trim(),
