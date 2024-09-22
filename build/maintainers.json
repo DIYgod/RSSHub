@@ -4297,6 +4297,9 @@
   "/niaogebiji/today": [
     "KotoriK"
   ],
+  "/nicovideo/user/:id/video/:embed?": [
+    "TonyRL"
+  ],
   "/nifd/research/:categoryGuid?": [
     "Fatpandac"
   ],

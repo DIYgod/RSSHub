@@ -16739,6 +16739,20 @@
       }
     ]
   },
+  "nicovideo.jp": {
+    "_name": "Niconico",
+    "www": [
+      {
+        "title": "User Videos",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/user/:id",
+          "/user/:id/video"
+        ],
+        "target": "/nicovideo/user/:id/video"
+      }
+    ]
+  },
   "nikkei.com": {
     "_name": "The Nikkei 日本経済新聞",
     "www": [

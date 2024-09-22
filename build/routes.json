@@ -47857,6 +47857,37 @@
     "name": "鸟哥笔记",
     "url": "niaogebiji.com"
   },
+  "nicovideo": {
+    "routes": {
+      "/user/:id/video/:embed?": {
+        "name": "User Videos",
+        "path": "/user/:id/video/:embed?",
+        "parameters": {
+          "id": "User ID",
+          "embed": "Default to embed the video, set to any value to disable embedding"
+        },
+        "example": "/nicovideo/user/16690815/video",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.nicovideo.jp/user/:id",
+              "www.nicovideo.jp/user/:id/video"
+            ],
+            "target": "/user/:id/video"
+          }
+        ],
+        "location": "video.ts"
+      }
+    },
+    "name": "Niconico",
+    "url": "www.nicovideo.jp",
+    "categories": [
+      "multimedia"
+    ]
+  },
   "nifd": {
     "routes": {
       "/research/:categoryGuid?": {
