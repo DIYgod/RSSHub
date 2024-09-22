@@ -1,4 +1,4 @@
-import { Data, Route } from '@/types';
+import { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -80,23 +80,24 @@ async function handler(): Promise<Data> {
 
     const contents: Data[] = catalogs.flatMap((catalog) => catalog.tables);
 
-    await Promise.all(
-        contents.map((stage) =>
-            cache.tryGet(stage.link!, async () => {
-                const detailRes = await got(stage.link);
-                const $$ = load(detailRes.data);
-                const detailContainer = $$('.blkContainerSblk.collectionContainer');
+    const items = (await Promise.all(
+        contents.map(
+            async (target) =>
+                await cache.tryGet(target.link!, async () => {
+                    const detailRes = await got(target.link);
+                    const $$ = load(detailRes.data);
+                    const detailContainer = $$('.blkContainerSblk.collectionContainer');
 
-                stage.description = detailContainer.html()!;
+                    target.description = detailContainer.html()!;
 
-                return stage;
-            })
+                    return target;
+                })
         )
-    );
+    )) as DataItem[];
 
     return {
         title: '意林 - 近期文章汇总',
         link: stage.link,
-        item: contents,
+        item: items,
     };
 }
