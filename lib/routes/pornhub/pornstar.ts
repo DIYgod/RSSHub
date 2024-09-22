@@ -46,7 +46,7 @@ async function handler(ctx) {
     let $ = load(response);
     let items;
 
-    if ($('.withBio').length == 0) {
+    if ($('.withBio').length === 0) {
         link = `https://${language}.pornhub.com/pornstar/${username}/videos?o=${sort}`;
         const { data: response } = await got(link, { headers });
         $ = load(response);
