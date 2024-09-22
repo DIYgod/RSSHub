@@ -2,35 +2,53 @@ import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import cache from '@/utils/cache';
 
 const endPoints = {
     zh: {
         url: 'https://odinapi.asus.com.cn/',
         lang: 'cn',
-        website_code: 'cn',
+        websiteCode: 'cn',
     },
     en: {
         url: 'https://odinapi.asus.com/',
         lang: 'en',
-        website_code: 'us',
+        websiteCode: 'global',
     },
 };
 
-const getProductID = async (model, language) => {
+const getProductInfo = (model, language) => {
     const currentEndpoint = endPoints[language] ?? endPoints.zh;
-    const { url, lang, website_code } = currentEndpoint;
+    const { url, lang, websiteCode } = currentEndpoint;
 
-    const searchAPI = `${url}recent-data/apiv2/SearchSuggestion?SystemCode=asus&WebsiteCode=${website_code}&SearchKey=${model}&SearchType=ProductsAll&RowLimit=4&sitelang=${lang}`;
-    const response = await got(searchAPI);
+    const searchAPI = `${url}recent-data/apiv2/SearchSuggestion?SystemCode=asus&WebsiteCode=${websiteCode}&SearchKey=${model}&SearchType=ProductsAll&RowLimit=4&sitelang=${lang}`;
 
-    return {
-        productID: response.data.Result[0].Content[0].DataId,
-        url: response.data.Result[0].Content[0].Url,
-    };
+    return cache.tryGet(`asus:bios:${model}:${language}`, async () => {
+        const response = await ofetch(searchAPI);
+        const product = response.Result[0].Content[0];
+
+        return {
+            productID: product.DataId,
+            hashId: product.HashId,
+            url: product.Url,
+            title: product.Title,
+            image: product.ImageURL,
+            m1Id: product.M1Id,
+            productLine: product.ProductLine,
+        };
+    }) as Promise<{
+        productID: string;
+        hashId: string;
+        url: string;
+        title: string;
+        image: string;
+        m1Id: string;
+        productLine: string;
+    }>;
 };
 
 export const route: Route = {
@@ -47,11 +65,11 @@ export const route: Route = {
                     value: 'zh',
                 },
                 {
-                    label: 'English',
+                    label: 'Global',
                     value: 'en',
                 },
             ],
-            default: 'zh',
+            default: 'en',
         },
     },
     features: {
@@ -64,37 +82,53 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['asus.com.cn/'],
+            source: [
+                'www.asus.com/displays-desktops/:productLine/:series/:model',
+                'www.asus.com/laptops/:productLine/:series/:model',
+                'www.asus.com/motherboards-components/:productLine/:series/:model',
+                'www.asus.com/networking-iot-servers/:productLine/:series/:model',
+                'www.asus.com/:region/displays-desktops/:productLine/:series/:model',
+                'www.asus.com/:region/laptops/:productLine/:series/:model',
+                'www.asus.com/:region/motherboards-components/:productLine/:series/:model',
+                'www.asus.com/:region/networking-iot-servers/:productLine/:series/:model',
+                'asus.com.cn/',
+            ],
+            target: '/bios/:model',
         },
     ],
     name: 'BIOS',
     maintainers: ['Fatpandac'],
     handler,
-    url: 'asus.com.cn/',
+    url: 'www.asus.com',
 };
 
 async function handler(ctx) {
     const model = ctx.req.param('model');
-    const language = ctx.req.param('lang') ?? 'zh';
-    const { productID, url } = await getProductID(model, language);
-    const biosAPI = `https://www.asus.com.cn/support/api/product.asmx/GetPDBIOS?website=cn&model=${model}&pdid=${productID}&sitelang=cn`;
+    const language = ctx.req.param('lang') ?? 'en';
+    const productInfo = await getProductInfo(model, language);
+    const biosAPI =
+        language === 'zh'
+            ? `https://www.asus.com.cn/support/api/product.asmx/GetPDBIOS?website=cn&model=${model}&pdid=${productInfo.productID}&sitelang=cn`
+            : `https://www.asus.com/support/api/product.asmx/GetPDBIOS?website=global&model=${model}&pdid=${productInfo.productID}&sitelang=en`;
 
-    const response = await got(biosAPI);
-    const biosList = response.data.Result.Obj[0].Files;
+    const response = await ofetch(biosAPI);
+    const biosList = response.Result.Obj[0].Files;
 
     const items = biosList.map((item) => ({
         title: item.Title,
         description: art(path.join(__dirname, 'templates/bios.art'), {
             item,
+            language,
         }),
-        guid: url + item.Version,
+        guid: productInfo.url + item.Version,
         pubDate: parseDate(item.ReleaseDate, 'YYYY/MM/DD'),
-        link: url,
+        link: productInfo.url,
     }));
 
     return {
-        title: `${model} BIOS`,
-        link: url,
+        title: `${productInfo.title} BIOS`,
+        link: productInfo.url,
+        image: productInfo.image,
         item: items,
     };
 }
