@@ -58851,6 +58851,31 @@
         "description": "| 学院公告 | 学术报告 | 科技简讯 | 本科教育 | 研究生教育 | \n| -------- | -------- | -------- | -------- | -------- |\n| announcement | academic | technology | undergraduate | postgraduate |",
         "location": "cs/index.ts"
       },
+      "/cs/yjsgz/:type?": {
+        "path": "/cs/yjsgz/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/sdu/cs/yjsgz/zytz",
+        "parameters": {
+          "type": "默认为`zytz`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "计算机科学与技术学院研究生工作网站",
+        "maintainers": [
+          "kukeya",
+          "wiketool"
+        ],
+        "description": "| 重要通知 | 公示栏 |\n| -------- | -------- |\n| zytz      | gsl       |",
+        "location": "cs/yjsgz.ts"
+      },
       "/qd/xszxqd/:type?": {
         "path": "/qd/xszxqd/:type?",
         "categories": [
@@ -58874,6 +58899,30 @@
         ],
         "description": "| 学团通知-研究生 | 学团通知-本科生 | 学团通知-团学 | 学团通知-心理 | 学团要闻\n  | -------- | -------- |-------- |-------- |-------- |\n  | xttz-yjs   | xttz-bks  |  xttz-tx  | xttz-xl  | xtyw  |",
         "location": "qd/xszxqd.ts"
+      },
+      "/qd/xyb/:type?": {
+        "path": "/qd/xyb/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/sdu/qd/xyb/gztz",
+        "parameters": {
+          "type": "默认为`gztz`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "青岛校区学科建设与研究生教育办公室",
+        "maintainers": [
+          "kukeya"
+        ],
+        "description": "| 工作通知 | \n  | -------- |\n  | gztz     | ",
+        "location": "qd/xyb.ts"
       },
       "/wh/jwc/:column?": {
         "path": "/wh/jwc/:column?",
