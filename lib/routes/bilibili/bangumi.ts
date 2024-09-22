@@ -1,66 +1,68 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
+import { Data, DataItem, Route, ViewType } from '@/types';
+import cache from '@/utils/cache';
+import { EpisodeResult } from './types';
+import utils from './utils';
 
 export const route: Route = {
-    path: '/bangumi/media/:mediaid',
+    path: '/bangumi/media/:mediaid/:embed?',
     name: '番剧',
+    maintainers: ['DIYgod', 'nuomi1'],
+    handler,
+    example: '/bilibili/bangumi/media/9192',
     parameters: {
         mediaid: '番剧媒体 id, 番剧主页 URL 中获取',
+        embed: '默认为开启内嵌视频, 任意值为关闭',
     },
-    example: '/bilibili/bangumi/media/9192',
     categories: ['social-media', 'popular'],
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportRadar: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     view: ViewType.Videos,
-    maintainers: ['DIYgod'],
-    handler,
 };
 
 async function handler(ctx) {
-    let seasonid = ctx.req.param('seasonid');
     const mediaid = ctx.req.param('mediaid');
+    const embed = !ctx.req.param('embed');
 
-    let mediaData;
-    if (mediaid) {
-        const response = await got({
-            method: 'get',
-            url: `https://www.bilibili.com/bangumi/media/md${mediaid}`,
-        });
-        mediaData = JSON.parse(response.data.match(/window\.__INITIAL_STATE__=([\S\s]+);\(function\(\)/)[1]) || {};
-        seasonid = mediaData.mediaInfo.season_id;
-    }
-    const { data } = await got.get(`https://api.bilibili.com/pgc/web/season/section?season_id=${seasonid}`);
+    const mediadata = await utils.getBangumi(mediaid, cache);
+    const seasonid = String(mediadata.season_id);
+    const seasondata = await utils.getBangumiItems(seasonid, cache);
 
-    let episodes = [];
-    if (data.result.main_section && data.result.main_section.episodes) {
-        episodes = [
-            ...episodes,
-            ...data.result.main_section.episodes.map((item) => ({
-                title: `第${item.title}话 ${item.long_title}`,
-                description: `<img src="${item.cover}">`,
-                link: `https://www.bilibili.com/bangumi/play/ep${item.id}`,
-            })),
-        ];
+    const episodes: DataItem[] = [];
+
+    const getEpisode = (item: EpisodeResult, title: string) =>
+        ({
+            title,
+            description: utils.renderOGVDescription(embed, item.cover, item.long_title, seasonid, String(item.id)),
+            link: item.share_url,
+            image: item.cover.replace('http://', 'https://'),
+            language: 'zh-cn',
+        }) as DataItem;
+
+    for (const item of seasondata.main_section.episodes) {
+        const episode = getEpisode(item, `第${item.title}话 ${item.long_title}`);
+        episodes.push(episode);
     }
 
-    if (data.result.section) {
-        for (const section of data.result.section) {
-            if (section.episodes) {
-                episodes = [
-                    ...episodes,
-                    ...section.episodes.map((item) => ({
-                        title: `${item.title} ${item.long_title}`,
-                        description: `<img src="${item.cover}">`,
-                        link: `https://www.bilibili.com/bangumi/play/ep${item.id}`,
-                    })),
-                ];
-            }
+    for (const section of seasondata.section) {
+        for (const item of section.episodes) {
+            const episode = getEpisode(item, `${item.title} ${item.long_title}`);
+            episodes.push(episode);
         }
     }
 
     return {
-        title: mediaData?.mediaInfo.title,
-        link: `https://www.bilibili.com/bangumi/media/md${mediaData?.mediaInfo.media_id}/`,
-        image: mediaData?.mediaInfo.cover,
-        description: mediaData?.mediaInfo.evaluate,
+        title: mediadata.title,
+        description: mediadata.evaluate,
+        link: mediadata.share_url,
         item: episodes,
-    };
+        image: mediadata.cover,
+        language: 'zh-cn',
+    } as Data;
 }

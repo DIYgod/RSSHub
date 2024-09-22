@@ -1,6 +1,10 @@
 import { config } from '@/config';
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
 import CryptoJS from 'crypto-js';
+import path from 'node:path';
+import { MediaResult, ResultResponse, SeasonResult } from './types';
 
 function iframe(aid: any, page?: any, bvid?: any) {
     return `<iframe src="https://www.bilibili.com/blackboard/html5mobileplayer.html?${bvid ? `bvid=${bvid}` : `aid=${aid}`}${
@@ -117,6 +121,67 @@ function addDmVerifyInfo(params, dmImgList) {
 
 const bvidTime = 1_589_990_400;
 
+export const getBangumi = (id: string, cache) =>
+    cache.tryGet(
+        `bilibili:getBangumi:${id}`,
+        async () => {
+            const res = await ofetch<ResultResponse<MediaResult>>('https://api.bilibili.com/pgc/view/web/media', {
+                query: {
+                    media_id: id,
+                },
+            });
+            if (res.result.share_url === undefined) {
+                // reference: https://api.bilibili.com/pgc/review/user?media_id=${id}
+                res.result.share_url = `https://www.bilibili.com/bangumi/media/md${res.result.media_id}`;
+            }
+            return res.result;
+        },
+        config.cache.routeExpire,
+        false
+    ) as Promise<MediaResult>;
+
+export const getBangumiItems = (id: string, cache) =>
+    cache.tryGet(
+        `bilibili:getBangumiItems:${id}`,
+        async () => {
+            const res = await ofetch<ResultResponse<SeasonResult>>('https://api.bilibili.com/pgc/web/season/section', {
+                query: {
+                    season_id: id,
+                },
+            });
+            return res.result;
+        },
+        config.cache.routeExpire,
+        false
+    ) as Promise<SeasonResult>;
+
+export const renderUGCDescription = (embed: boolean, img: string, description: string, aid?: string, cid?: string, bvid?: string) => {
+    // docs: https://player.bilibili.com/
+    const rendered = art(path.join(__dirname, 'templates/description.art'), {
+        embed,
+        ugc: true,
+        aid,
+        cid,
+        bvid,
+        img: img.replace('http://', 'https://'),
+        description,
+    });
+    return rendered;
+};
+
+export const renderOGVDescription = (embed: boolean, img: string, description: string, seasonId?: string, episodeId?: string) => {
+    // docs: https://player.bilibili.com/
+    const rendered = art(path.join(__dirname, 'templates/description.art'), {
+        embed,
+        ogv: true,
+        seasonId,
+        episodeId,
+        img: img.replace('http://', 'https://'),
+        description,
+    });
+    return rendered;
+};
+
 export default {
     iframe,
     lsid,
@@ -127,4 +192,8 @@ export default {
     addDmVerifyInfo,
     bvidTime,
     addRenderData,
+    getBangumi,
+    getBangumiItems,
+    renderUGCDescription,
+    renderOGVDescription,
 };
