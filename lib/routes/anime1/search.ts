@@ -21,12 +21,6 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['anime1.me/?s=:keyword'],
-            target: '/search/:keyword',
-        },
-    ],
     handler,
 };
 
