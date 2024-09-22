@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import utils from './utils';
 
 export const route: Route = {
-    path: '/ranking/:rid?/:day?/:arc_type?/:disableEmbed?',
+    path: '/ranking/:rid?/:day?/:arc_type?/:embed?',
     name: '排行榜',
     maintainers: ['DIYgod'],
     categories: ['social-media', 'popular'],
@@ -104,9 +104,7 @@ export const route: Route = {
                 },
             ],
         },
-        disableEmbed: {
-            description: '默认为开启内嵌视频, 任意值为关闭',
-        },
+        embed: '默认为开启内嵌视频, 任意值为关闭',
     },
     handler,
 };
@@ -115,7 +113,7 @@ async function handler(ctx) {
     const rid = ctx.req.param('rid') || '0';
     const day = ctx.req.param('day') || '3';
     const arc_type = ctx.req.param('arc_type') || '1';
-    const disableEmbed = ctx.req.param('disableEmbed');
+    const embed = !ctx.req.param('embed');
     const arc_type1 = arc_type === '0' ? '全部投稿' : '近期投稿';
     const rid_1 = ['0', '1', '168', '3', '129', '4', '36', '188', '160', '119', '155', '5', '181'];
     const rid_2 = ['全站', '动画', '国创相关', '音乐', '舞蹈', '游戏', '科技', '数码', '生活', '鬼畜', '时尚', '娱乐', '影视'];
@@ -144,7 +142,7 @@ async function handler(ctx) {
         link: `https://www.bilibili.com/ranking/all/${rid}/0/${day}`,
         item: list.map((item) => ({
             title: item.title,
-            description: `${item.description || item.title}${disableEmbed ? '' : `<br><br>${utils.iframe(item.aid, null, item.bvid)}`}<br><img src="${item.pic}">`,
+            description: utils.renderUGCDescription(embed, item.pic, item.description || item.title, item.aid, undefined, item.bvid),
             pubDate: item.create && new Date(item.create).toUTCString(),
             author: item.author,
             link: !item.create || (new Date(item.create) / 1000 > utils.bvidTime && item.bvid) ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
