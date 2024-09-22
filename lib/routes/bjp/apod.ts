@@ -29,7 +29,7 @@ export const route: Route = {
     url: 'bjp.org.cn/APOD/today.shtml',
 };
 
-async function handler() {
+async function handler(ctx) {
     const baseUrl = 'https://www.bjp.org.cn';
     const listUrl = `${baseUrl}/APOD/list.shtml`;
 
@@ -46,7 +46,9 @@ async function handler() {
                 link: `${baseUrl}${e.find('a').attr('href')}`,
                 pubDate: timezone(parseDate(e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
             };
-        });
+        })
+        .sort((a, b) => b.pubDate - a.pubDate)
+        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10);
 
     const items = await Promise.all(
         list.map((e) =>

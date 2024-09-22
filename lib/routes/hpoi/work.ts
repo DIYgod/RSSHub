@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/items/work/:id/:order?',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Pictures,
     example: '/hpoi/items/work/4117491',
     parameters: { id: '作品 ID', order: '排序, 见下表，默认为 add' },
     features: {

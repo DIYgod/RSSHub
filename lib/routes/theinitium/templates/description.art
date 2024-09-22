@@ -1,0 +1,17 @@
+{{ if header }}
+    <h4> {{ header }} </h4>
+{{ /if }}
+{{ if coverImage}}
+<figure>
+    <img src={{ coverImage }}>
+    {{ if coverCaption }}
+        <figcaption>{{ coverCaption }}</figcaption>
+    {{ /if }}
+</figure>
+{{ /if }}
+{{ if article }}
+   {{@ article }}
+{{ /if }}
+{{ if copyright }}
+    <figure><small>{{@ copyright }}</small></figure>
+{{ /if }}

@@ -1,7 +1,6 @@
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { baseUrl, gqlFeatures, bearerToken, gqlMap } from './constants';
 import { config } from '@/config';
-import got from '@/utils/got';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
 import { CookieAgent, CookieClient } from 'http-cookie-agent/undici';
@@ -26,7 +25,7 @@ const token2Cookie = (token) =>
                       uri: proxy.proxyUri,
                   })
                 : new CookieAgent({ cookies: { jar } });
-            await got('https://x.com', {
+            await ofetch('https://x.com', {
                 dispatcher: agent,
             });
             return JSON.stringify(jar.serializeSync());
@@ -102,7 +101,7 @@ export const twitterGot = async (url, params) => {
         },
         dispatcher: dispatchers[token].agent,
         onResponse: async ({ response }) => {
-            if (response.status === 403 || response.status === 401 || response.status === 429) {
+            if (response.status === 403 || response.status === 401 || response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
                 const newCookie = await login({
                     username: config.twitter.username?.[index],
                     password: config.twitter.password?.[index],
@@ -154,9 +153,9 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
         }
     }
 
-    const entries1 = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems; // Media
-    const entries2 = instructions.find((i) => i.type === 'TimelineAddEntries').entries;
-    return entries1 || entries2;
+    const entries1 = instructions?.find((i) => i.type === 'TimelineAddToModule')?.moduleItems; // Media
+    const entries2 = instructions?.find((i) => i.type === 'TimelineAddEntries').entries;
+    return entries1 || entries2 || [];
 };
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {

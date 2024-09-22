@@ -21,7 +21,7 @@ const loginLimiter = cache.clients.redisClient
 const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
 async function login({ username, password, authenticationSecret }) {
-    if (!username || !password || !authenticationSecret) {
+    if (!username || !password) {
         return;
     }
     try {
@@ -40,10 +40,12 @@ async function login({ username, password, authenticationSecret }) {
         await page.waitForSelector('input[autocomplete="current-password"]');
         await page.type('input[autocomplete="current-password"]', password);
         (await page.waitForSelector('button[data-testid="LoginForm_Login_Button"]'))?.click();
-        await page.waitForSelector('input[inputmode="numeric"]');
-        const token = authenticator.generate(authenticationSecret);
-        await page.type('input[inputmode="numeric"]', token);
-        (await page.waitForSelector('button[data-testid="ocfEnterTextNextButton"]'))?.click();
+        if (authenticationSecret) {
+            await page.waitForSelector('input[inputmode="numeric"]');
+            const token = authenticator.generate(authenticationSecret);
+            await page.type('input[inputmode="numeric"]', token);
+            (await page.waitForSelector('button[data-testid="ocfEnterTextNextButton"]'))?.click();
+        }
         const waitForRequest = new Promise<string>((resolve) => {
             page.on('requestfinished', async (request) => {
                 if (request.url().includes('/HomeTimeline')) {
