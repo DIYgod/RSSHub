@@ -7020,6 +7020,12 @@
   "/yicai/vip/:id?": [
     "nczitzk"
   ],
+  "/yilinzazhi/": [
+    "g0ngjie"
+  ],
+  "/yilinzazhi/latest": [
+    "g0ngjie"
+  ],
   "/ymgal/article/:type?": [
     "SunBK201"
   ],

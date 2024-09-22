@@ -76034,6 +76034,59 @@
     "name": "第一财经",
     "url": "yicai.com"
   },
+  "yilinzazhi": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "reading"
+        ],
+        "example": "/yilinzazhi",
+        "radar": [
+          {
+            "source": [
+              "www.yilinzazhi.com"
+            ],
+            "target": "/"
+          }
+        ],
+        "name": "文章列表",
+        "maintainers": [
+          "g0ngjie"
+        ],
+        "url": "www.yilinzazhi.com",
+        "location": "index.ts"
+      },
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "reading"
+        ],
+        "example": "/yilinzazhi/latest",
+        "radar": [
+          {
+            "source": [
+              "www.yilinzazhi.com"
+            ],
+            "target": "/"
+          }
+        ],
+        "name": "近期文章汇总",
+        "maintainers": [
+          "g0ngjie"
+        ],
+        "url": "www.yilinzazhi.com",
+        "description": "最近一期的文章汇总",
+        "location": "latest.ts"
+      }
+    },
+    "name": "意林杂志",
+    "url": "www.yilinzazhi.com",
+    "categories": [
+      "reading"
+    ],
+    "description": ""
+  },
   "ymgal": {
     "routes": {
       "/article/:type?": {
