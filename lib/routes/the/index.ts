@@ -37,6 +37,8 @@ export const handler = async (ctx) => {
 
         const $$ = load(item.content?.rendered ?? item.content);
 
+        const publication = $$("a[id='publication']").text(); // Must be obtained before being removed
+
         const image = $$('img#poster').prop('data-srcset');
 
         $$('figure.graf').each((_, el) => {
@@ -83,7 +85,7 @@ export const handler = async (ctx) => {
             updated: timezone(parseDate(item.modified_gmt), 0),
             link: item.link,
             category: [...new Set(terminologies.flat().map((c) => c.name))],
-            author: item._embedded.author.map((a) => a.name).join('/'),
+            author: [...item._embedded.author, { name: publication }],
             guid,
             id: guid,
             content: {
