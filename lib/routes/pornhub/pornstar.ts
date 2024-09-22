@@ -37,16 +37,27 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language = 'www', username, sort = 'mr' } = ctx.req.param();
-    const link = `https://${language}.pornhub.com/pornstar/${username}?o=${sort}`;
+    let link = `https://${language}.pornhub.com/pornstar/${username}?o=${sort}`;
     if (!isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');
     }
 
     const { data: response } = await got(link, { headers });
-    const $ = load(response);
-    const items = $('#pornstarsVideoSection .videoBox')
-        .toArray()
-        .map((e) => parseItems($(e)));
+    let $ = load(response);
+    let items;
+
+    if ($('.withBio').length === 0) {
+        link = `https://${language}.pornhub.com/pornstar/${username}/videos?o=${sort}`;
+        const { data: response } = await got(link, { headers });
+        $ = load(response);
+        items = $('#mostRecentVideosSection .videoBox')
+            .toArray()
+            .map((e) => parseItems($(e)));
+    } else {
+        items = $('#pornstarsVideoSection .videoBox')
+            .toArray()
+            .map((e) => parseItems($(e)));
+    }
 
     return {
         title: $('h1').first().text(),
