@@ -32,7 +32,8 @@ async function getFullcontent(item, cookie = '') {
         },
     });
     const $ = load(articleResponse);
-    fullContent = item.url.startsWith('https://ost.51cto.com') ? $('.posts-content').html() : $('article').html();
+
+    fullContent = new URL(item.url).host === 'ost.51cto.com' ? $('.posts-content').html() : $('article').html();
 
     if (!fullContent && cookie === '') {
         // If fullContent is null and haven't tried to request with cookie, try to get fullContent with cookie
