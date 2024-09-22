@@ -23,7 +23,7 @@ async function handler(): Promise<Data> {
     const baseUrl = 'https://www.yilinzazhi.com/';
     const response = await got(baseUrl);
     const $ = load(response.data);
-    const items: DataItem[] = $('section.content')
+    const contents: DataItem[] = $('section.content')
         .find('li')
         .map((_, target) => {
             const li = $(target);
@@ -40,16 +40,16 @@ async function handler(): Promise<Data> {
         })
         .toArray();
 
-    await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const childRes = await got(item.link);
+    const items = (await Promise.all(
+        contents.map((content) =>
+            cache.tryGet(content.link!, async () => {
+                const childRes = await got(content.link);
                 const $$ = load(childRes.data);
-                item.description = $$('.maglistbox').html()!;
-                return item;
+                content.description = $$('.maglistbox').html()!;
+                return content;
             })
         )
-    );
+    )) as DataItem[];
     return {
         title: '意林杂志网',
         link: baseUrl,
