@@ -47,7 +47,7 @@ async function handler(ctx) {
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
                 const thisUrl = item.link;
-                const trueLink = thisUrl.includes("http") ? thisUrl : base_link + thisUrl;
+                const trueLink = thisUrl.includes("http") ? thisUrl : host + thisUrl.substring(1);
                 const response = await got.get(trueLink);
                 const $ = load(response.data);
                 item.description = $('body').html();
