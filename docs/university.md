@@ -6443,6 +6443,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 中国海洋大学
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/ouc/yz/tzgg" path="/ouc/yz/:type">
+
+| 通知公告 | 硕士招生 | 公开公示 |
+| -------- | -------- | -------- |
+| tzgg     | 31646    | gkgs     |
+
+</Route>
+
 ### 信息科学与工程学院
 
 <Route author="Geo" example="/ouc/it/0" path="/ouc/it/:type?" :paramsDesc="['默认为 `0`']">
