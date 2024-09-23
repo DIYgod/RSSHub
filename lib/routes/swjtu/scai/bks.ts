@@ -2,8 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 const rootURL = 'https://scai.swjtu.edu.cn';
 const pageURL = `${rootURL}/web/page-module.html?mid=B730BEB095B31840`;
@@ -56,12 +55,9 @@ const getItem = (item, cache) => {
 };
 
 async function handler() {
-    const res = await got({
-        method: 'get',
-        url: pageURL,
-    });
+    const res = await ofetch(pageURL);
 
-    const $ = load(res.data);
+    const $ = load(res);
     const $list = $('div.list-top-item, div.item-wrapper');
 
     const items = await Promise.all(
