@@ -32298,7 +32298,7 @@
         "example": "/hpoi/items/all",
         "parameters": {
           "order": {
-            "description": "排序, 见下表，默认为 add",
+            "description": "排序",
             "options": [
               {
                 "value": "release",
@@ -32391,7 +32391,7 @@
         "parameters": {
           "id": "角色 ID",
           "order": {
-            "description": "排序, 见下表，默认为 add",
+            "description": "排序",
             "options": [
               {
                 "value": "release",
@@ -32442,7 +32442,24 @@
         ],
         "example": "/hpoi/info/all",
         "parameters": {
-          "type": "分类, 见下表, 默认为`all`"
+          "type": {
+            "description": "分类",
+            "options": [
+              {
+                "value": "all",
+                "label": "全部"
+              },
+              {
+                "value": "hobby",
+                "label": "手办"
+              },
+              {
+                "value": "model",
+                "label": "模型"
+              }
+            ],
+            "default": "all"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -32456,7 +32473,6 @@
         "maintainers": [
           "sanmmm DIYgod"
         ],
-        "description": "分类\n\n  | 全部 | 手办  | 模型  |\n  | ---- | ----- | ----- |\n  | all  | hobby | model |",
         "location": "info.ts"
       },
       "/user/:user_id/:caty": {
@@ -32466,8 +32482,35 @@
         ],
         "example": "/hpoi/user/116297/buy",
         "parameters": {
-          "user_id": "用户ID",
-          "caty": "类别, 见下表"
+          "user_id": {
+            "description": "用户ID"
+          },
+          "caty": {
+            "description": "类别",
+            "options": [
+              {
+                "value": "want",
+                "label": "想买"
+              },
+              {
+                "value": "preorder",
+                "label": "预定"
+              },
+              {
+                "value": "buy",
+                "label": "已入"
+              },
+              {
+                "value": "care",
+                "label": "关注"
+              },
+              {
+                "value": "resell",
+                "label": "有过"
+              }
+            ],
+            "default": "buy"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -32482,7 +32525,6 @@
           "DIYgod",
           "luyuhuang"
         ],
-        "description": "| 想买 | 预定     | 已入 | 关注 | 有过   |\n  | ---- | -------- | ---- | ---- | ------ |\n  | want | preorder | buy  | care | resell |",
         "location": "user.ts"
       },
       "/items/work/:id/:order?": {
@@ -32496,7 +32538,7 @@
         "parameters": {
           "id": "作品 ID",
           "order": {
-            "description": "排序, 见下表，默认为 add",
+            "description": "排序",
             "options": [
               {
                 "value": "release",
