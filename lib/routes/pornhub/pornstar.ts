@@ -10,7 +10,36 @@ export const route: Route = {
     categories: ['multimedia', 'popular'],
     view: ViewType.Videos,
     example: '/pornhub/pornstar/june-liu',
-    parameters: { language: 'language, see below', username: 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`', sort: 'sorting method, see below' },
+    parameters: {
+        username: 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`',
+        language: 'language',
+        sort: {
+            description: 'sorting method',
+            default: 'mv',
+            options: [
+                {
+                    label: 'Most Recent',
+                    value: 'mr',
+                },
+                {
+                    label: 'Most Viewed',
+                    value: 'mv',
+                },
+                {
+                    label: 'Top Rated',
+                    value: 'tr',
+                },
+                {
+                    label: 'Longest',
+                    value: 'lg',
+                },
+                {
+                    label: 'Best',
+                    value: '',
+                },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -28,11 +57,6 @@ export const route: Route = {
     name: 'Pornstar',
     maintainers: ['I2IMk', 'queensferryme'],
     handler,
-    description: `**\`sort\`**
-
-  | Most Recent | Most Viewed | Top Rated | Longest | Best |
-  | ----------- | ----------- | --------- | ------- | ---- |
-  | mr          | mv          | tr        | lg      |      |`,
 };
 
 async function handler(ctx) {
