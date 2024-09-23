@@ -3,8 +3,10 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 
+const supportedCategories = new Set(['library', 'tools', 'code', 'embedding', 'vision']);
+
 export const route: Route = {
-    path: '/library',
+    path: '/:category',
     categories: ['programming'],
     example: '/ollama/library',
     radar: [
@@ -12,12 +14,22 @@ export const route: Route = {
             source: ['ollama.com/library'],
         },
     ],
-    name: 'All Models',
+    name: 'Ollama Models',
     maintainers: ['Nick22nd', 'gavrilov'],
     handler,
 };
-async function handler() {
-    const response = await ofetch('https://ollama.com/library?sort=newest');
+
+async function handler(ctx: any) {
+    const params = ctx.req.param();
+    const category = params.category;
+
+    if (!supportedCategories.has(category)) {
+        throw new Error(`Invalid category: ${category}`); // Handle invalid categories
+    }
+
+    const url = category === 'library' ? 'https://ollama.com/library?sort=newest' : `https://ollama.com/search?c=${category}&sort=newest`;
+
+    const response = await ofetch(url);
     const $ = load(response);
     const items = $('#repo > ul > li > a')
         .toArray()
@@ -34,9 +46,12 @@ async function handler() {
                 pubDate: parseRelativeDate(pubDate.text()),
             };
         });
+
+    const title = category === 'library' ? 'ollama library all models' : `ollama library ${category} models`;
+
     return {
-        title: 'ollama library all models',
-        link: 'https://ollama.com/library',
+        title,
+        link: url,
         item: items,
     };
 }
