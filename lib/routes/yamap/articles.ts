@@ -39,10 +39,8 @@ async function handler() {
         link: base_url + item.id.toString(),
         pubDate: parseDate(item.created_at),
         location: (mountainName) => {
-            try { 
-                mountainName = item.map.name; }
-            catch {
-                mountainName = 'Japan';}
+            try {mountainName = item.map.name;}
+            catch {mountainName = 'Japan';}
             return mountainName;
         },
     }));
