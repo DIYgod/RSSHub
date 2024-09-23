@@ -4,20 +4,20 @@ import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/library',
+    path: '/embedding',
     categories: ['programming'],
-    example: '/ollama/library',
+    example: '/ollama/embedding',
     radar: [
         {
             source: ['ollama.com/library'],
         },
     ],
-    name: 'All Models',
-    maintainers: ['Nick22nd', 'gavrilov'],
+    name: 'Embedding Models',
+    maintainers: ['gavrilov'],
     handler,
 };
 async function handler() {
-    const response = await ofetch('https://ollama.com/library?sort=newest');
+    const response = await ofetch('https://ollama.com/search?c=embedding&sort=newest');
     const $ = load(response);
     const items = $('#repo > ul > li > a')
         .toArray()
@@ -35,7 +35,7 @@ async function handler() {
             };
         });
     return {
-        title: 'ollama library all models',
+        title: 'ollama library embedding models',
         link: 'https://ollama.com/library',
         item: items,
     };
