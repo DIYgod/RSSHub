@@ -30,9 +30,8 @@ export const route: Route = {
             default: 'world',
         },
         topic: {
-            description: 'find it in the URL, or tables below',
+            description: 'find it in the URL, or tables below, leave empty for `All`',
             options: [
-                { value: '', label: 'All' },
                 // World topics
                 { value: 'africa', label: 'Africa' },
                 { value: 'americas', label: 'Americas' },

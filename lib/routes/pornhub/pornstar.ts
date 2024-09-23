@@ -33,7 +33,7 @@ export const route: Route = {
             default: 'www',
         },
         sort: {
-            description: 'sorting method',
+            description: 'sorting method, leave empty for `Best`',
             default: 'mr',
             options: [
                 {
@@ -51,10 +51,6 @@ export const route: Route = {
                 {
                     label: 'Longest',
                     value: 'lg',
-                },
-                {
-                    label: 'Best',
-                    value: '',
                 },
             ],
         },
