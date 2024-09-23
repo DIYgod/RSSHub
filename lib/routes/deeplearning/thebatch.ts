@@ -52,7 +52,20 @@ async function handler() {
             items.map((item) =>
                 cache.tryGet(item.link, async () => {
                     const resp = await ofetch(item.jsonUrl);
-                    item.description = resp.pageProps.cmsData.post.html;
+                    const $ = cheerio.load(resp.pageProps.cmsData.post.html);
+
+                    $('a').each((_, ele) => {
+                        if (ele.attribs.href?.includes('utm_campaign')) {
+                            const url = new URL(ele.attribs.href);
+                            url.searchParams.delete('utm_campaign');
+                            url.searchParams.delete('utm_source');
+                            url.searchParams.delete('utm_medium');
+                            url.searchParams.delete('_hsenc');
+                            ele.attribs.href = url.href;
+                        }
+                    });
+
+                    item.description = $.html();
                     return item;
                 })
             )
