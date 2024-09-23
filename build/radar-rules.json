@@ -5764,6 +5764,19 @@
       }
     ]
   },
+  "dykszx.com": {
+    "_name": "德阳人事考试网",
+    "www": [
+      {
+        "title": "考试新闻发布",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/"
+        ],
+        "target": "/dykszx/news/all"
+      }
+    ]
+  },
   "eagle.cool": {
     "_name": "Eagle",
     "cn": [

@@ -19813,6 +19813,49 @@
     "name": "丁香园",
     "url": "dxy.cn"
   },
+  "dykszx": {
+    "routes": {
+      "/news/:newsType?": {
+        "path": "/news/:newsType?",
+        "categories": [
+          "government"
+        ],
+        "example": "/dykszx/news",
+        "parameters": {
+          "newsType": "考试类型。默认新闻中心(all)"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.dykszx.com/"
+            ],
+            "target": "/news/all"
+          }
+        ],
+        "name": "考试新闻发布",
+        "maintainers": [
+          "zytomorrow"
+        ],
+        "url": "https://www.dykszx.com/*",
+        "description": "| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 | 其他 |\n| :------: | :------: | :------: |:------: |:------: |\n|   all   |   gwy   |  sydw | zyzc  | other |",
+        "location": "news.ts"
+      }
+    },
+    "name": "德阳人事考试网",
+    "url": "www.dykszx.com",
+    "categories": [
+      "government"
+    ],
+    "description": "德阳人事考试网"
+  },
   "e-hentai": {
     "routes": {
       "/:what?/:id?/:needTorrents?/:needImages?": {
