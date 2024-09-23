@@ -8,7 +8,7 @@ export const route: Route = {
     example: '/hpoi/items/all',
     parameters: {
         order: {
-            description: '排序, 见下表，默认为 add',
+            description: '排序',
             options: [
                 { value: 'release', label: '发售' },
                 { value: 'add', label: '入库' },

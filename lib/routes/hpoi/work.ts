@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: {
         id: '作品 ID',
         order: {
-            description: '排序, 见下表，默认为 add',
+            description: '排序',
             options: [
                 { value: 'release', label: '发售' },
                 { value: 'add', label: '入库' },
