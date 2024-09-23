@@ -55,12 +55,7 @@ async function handler(ctx) {
         title: `考试新闻发布(${newsTypeObj[newsType].name})`,
         link: HOST,
         description: `德阳人事考试网 考试新闻发布 (${newsTypeObj[newsType].name})`,
-        item: newsDetail.map((item) => ({
-            title: item.title,
-            description: item.description,
-            link: item.link,
-            pubDate: item.pubDate,
-        })),
+        item: newsDetail,
     };
 }
 
