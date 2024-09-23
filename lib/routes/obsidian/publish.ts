@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, DataItem } from '@/types';
 import { load } from 'cheerio';
 import { ofetch } from 'ofetch';
 import { getTitle } from './utils';
@@ -66,7 +66,7 @@ async function fetchPage(id: string) {
         preloadCacheResponse = {};
     }
 
-    const items: any[] = [];
+    const items: DataItem[] = [];
     for (const postKey in preloadCacheResponse) {
         const post = preloadCacheResponse[postKey];
         if (!post) {
