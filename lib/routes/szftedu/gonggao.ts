@@ -27,11 +27,10 @@ export const route: Route = {
     description: ``,
 };
 
-async function handler(ctx) {
+async function handler() {
     const link = host;
     const response = await got(link);
     const $ = load(response.data);
-    // const category_name = '公告';
 
     const lists = $('div.pagenews04 div ul li')
         .toArray()
