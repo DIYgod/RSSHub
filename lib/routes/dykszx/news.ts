@@ -7,21 +7,19 @@ import cache from '@/utils/cache';
 
 const HOST = 'https://www.dykszx.com';
 
-const getContent = (href) => {
+const getContent = async (href) => {
     const newsPage = `${HOST}${href}`;
-    return cache.tryGet(newsPage, async () => {
-        const response = await got.get(newsPage);
-        const $ = load(response.data);
-        const newsTime =
-            $('body > div:nth-child(3) > div.page.w > div.shuxing.w')
-                .text()
-                .trim()
-                .match(/时间：(.*?)点击/g)?.[0] || '';
-        // 移除二维码
-        $('.sjlook').remove();
-        const content = $('#show-body').html() || '';
-        return { newsTime, content, newsPage };
-    });
+    const response = await got.get(newsPage);
+    const $ = load(response.data);
+    const newsTime =
+        $('body > div:nth-child(3) > div.page.w > div.shuxing.w')
+            .text()
+            .trim()
+            .match(/时间：(.*?)点击/g)?.[0] || '';
+    // 移除二维码
+    $('.sjlook').remove();
+    const content = $('#show-body').html() || '';
+    return { newsTime, content, newsPage };
 };
 
 const newsTypeObj = {
@@ -40,15 +38,17 @@ async function handler(ctx) {
     const newsList = $(newsTypeObj[newsType].selector).toArray();
 
     const newsDetail = await Promise.all(
-        newsList.map(async (item) => {
+        newsList.map((item) => {
             const href = item.children[0].attribs.href;
-            const newsContent = await getContent(href);
-            return {
-                title: item.children[0].children[0].data,
-                description: newsContent.content,
-                link: newsContent.newsPage,
-                pubDate: timezone(parseDate(newsContent.newsTime, '时间：YYYY-MM-DD HH:mm:ss'), +8),
-            };
+            return cache.tryGet(href, async () => {
+                const newsContent = await getContent(href);
+                return {
+                    title: item.children[0].children[0].data,
+                    description: newsContent.content,
+                    link: newsContent.newsPage,
+                    pubDate: timezone(parseDate(newsContent.newsTime, '时间：YYYY-MM-DD HH:mm:ss'), +8),
+                };
+            });
         })
     );
     return {
