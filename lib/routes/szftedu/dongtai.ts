@@ -28,11 +28,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const link = host;
-    const base_link=`https://ylxx.szftedu.cn`;
+    const base_link = `https://ylxx.szftedu.cn`;
 
     const response = await got(link);
     const $ = load(response.data);
-    const category_name = '公告';
+    // const category_name = '公告';
 
     const lists = $('div.pagenews04 div ul li')
         .toArray()
@@ -45,16 +45,9 @@ async function handler(ctx) {
     const items = await Promise.all(
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
-                let str = item.link;
-                let turelink='';
-                if (str.includes("http")) {
-                    turelink = item.link;
-                  } 
-                  else 
-                  {
-                    turelink = base_link + item.link;
-                  }
-                const response = await got.get(turelink);
+                let thisUrl = item.link;
+                let trueLink = thisUrl.includes("http") ? thisUrl: base_link + thisUrl;
+                const response = await got.get(trueLink);
                 const $ = load(response.data);
                 item.description = $('body').html();
                 item.pubDate = timezone(parseDate($('#publish_time').first().text()), 8);
