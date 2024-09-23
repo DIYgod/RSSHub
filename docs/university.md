@@ -1793,11 +1793,11 @@ pageClass: routes
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/gxmu/yjs/zsgz" path="/gxmu/yjs/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
+<Route author="yanbot-team" example="/gxmu/yjs/zsgz-zsgg" path="/gxmu/yjs/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
 
-| 招生工作 |
-| -------- |
-| zsgz     |
+| 招生工作-招生公告 | 招生工作-硕士招生考试大纲 | 招生工作-同等学力 |
+| ----------------- | ------------------------- | ----------------- |
+| zsgz-zsgg         | zsgz-ssyjszs              | zsgz-tdxlyjszs    |
 
 </Route>
 
