@@ -10,7 +10,7 @@ const host = 'https://api.yamap.com/v3/activities?page=1&per=24';
 
 
 export const route: Route = {
-    path: '/',
+    path: '/yamap',
     categories: ['other'],
     example: '/yamap',
     parameters: {},
