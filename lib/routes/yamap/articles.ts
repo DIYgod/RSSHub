@@ -32,15 +32,15 @@ async function handler() {
     const link = host;
     const response = await got(link);
     const metadata = response.data;
-    const recordNum = metadata.activities.length - 1;
+    const recordNum = metadata.activities.length - 1 ;
 
     const lists = metadata.activities.slice(0,recordNum).map((item) => ({
         title: item.title,
         link: base_url + item.id.toString(),
         pubDate: parseDate(item.created_at),
-        location: (mountainName) =>{
-            try 
-            { mountainName = item.map.name; }
+        location: (mountainName) => {
+            try{ 
+                mountainName = item.map.name; }
             catch {
                 mountainName = 'Japan';}
             return mountainName;
@@ -48,7 +48,7 @@ async function handler() {
     }));
 
 
-    let items = await Promise.all(
+    const items = await Promise.all(
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
                 const title = item.title;
