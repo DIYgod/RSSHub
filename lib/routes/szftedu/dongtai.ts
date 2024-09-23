@@ -26,7 +26,7 @@ export const route: Route = {
     description: ``,
 };
 
-async function handler(ctx) {
+async function handler() {
     const link = host;
     const base_link = `https://ylxx.szftedu.cn`;
 
