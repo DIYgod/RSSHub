@@ -18093,7 +18093,7 @@
           "popular"
         ],
         "view": 5,
-        "example": "/dockerhub/build/diygod/rsshub",
+        "example": "/dockerhub/build/diygod/rsshub/latest",
         "parameters": {
           "owner": "Image owner, the owner of the official image fills in the library, for example: /dockerhub/build/library/mysql",
           "image": "Image name",
@@ -20852,7 +20852,7 @@
           "popular"
         ],
         "view": 5,
-        "example": "/epicgames/freegames",
+        "example": "/epicgames/freegames/en-US/US",
         "parameters": {
           "locale": {
             "description": "Locale",
@@ -32297,7 +32297,36 @@
         "view": 2,
         "example": "/hpoi/items/all",
         "parameters": {
-          "order": "排序, 见下表，默认为 add"
+          "order": {
+            "description": "排序, 见下表，默认为 add",
+            "options": [
+              {
+                "value": "release",
+                "label": "发售"
+              },
+              {
+                "value": "add",
+                "label": "入库"
+              },
+              {
+                "value": "hits",
+                "label": "总热度"
+              },
+              {
+                "value": "hits7Day",
+                "label": "一周热度"
+              },
+              {
+                "value": "hitsDay",
+                "label": "一天热度"
+              },
+              {
+                "value": "rating",
+                "label": "评价"
+              }
+            ],
+            "default": "add"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -32320,7 +32349,6 @@
           "DIYgod"
         ],
         "url": "www.hpoi.net/hobby/all",
-        "description": "| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |\n  | ------- | ---- | ------ | -------- | -------- | ------ |\n  | release | add  | hits   | hits7Day | hitsDay  | rating |",
         "location": "all.ts"
       },
       "/bannerItem": {
@@ -32362,7 +32390,36 @@
         "example": "/hpoi/items/character/1035374",
         "parameters": {
           "id": "角色 ID",
-          "order": "排序, 见下表，默认为 add"
+          "order": {
+            "description": "排序, 见下表，默认为 add",
+            "options": [
+              {
+                "value": "release",
+                "label": "发售"
+              },
+              {
+                "value": "add",
+                "label": "入库"
+              },
+              {
+                "value": "hits",
+                "label": "总热度"
+              },
+              {
+                "value": "hits7Day",
+                "label": "一周热度"
+              },
+              {
+                "value": "hitsDay",
+                "label": "一天热度"
+              },
+              {
+                "value": "rating",
+                "label": "评价"
+              }
+            ],
+            "default": "add"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -32376,7 +32433,6 @@
         "maintainers": [
           "DIYgod"
         ],
-        "description": "| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |\n  | ------- | ---- | ------ | -------- | -------- | ------ |\n  | release | add  | hits   | hits7Day | hitsDay  | rating |",
         "location": "character.ts"
       },
       "/info/:type?": {
@@ -32439,7 +32495,36 @@
         "example": "/hpoi/items/work/4117491",
         "parameters": {
           "id": "作品 ID",
-          "order": "排序, 见下表，默认为 add"
+          "order": {
+            "description": "排序, 见下表，默认为 add",
+            "options": [
+              {
+                "value": "release",
+                "label": "发售"
+              },
+              {
+                "value": "add",
+                "label": "入库"
+              },
+              {
+                "value": "hits",
+                "label": "总热度"
+              },
+              {
+                "value": "hits7Day",
+                "label": "一周热度"
+              },
+              {
+                "value": "hitsDay",
+                "label": "一天热度"
+              },
+              {
+                "value": "rating",
+                "label": "评价"
+              }
+            ],
+            "default": "add"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -32453,7 +32538,6 @@
         "maintainers": [
           "DIYgod"
         ],
-        "description": "| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |\n  | ------- | ---- | ------ | -------- | -------- | ------ |\n  | release | add  | hits   | hits7Day | hitsDay  | rating |",
         "location": "work.ts"
       }
     },
@@ -41586,7 +41670,20 @@
         "example": "/mastodon/acct/Mastodon@mastodon.social/statuses",
         "parameters": {
           "acct": "Webfinger account URI, like `user@host`",
-          "only_media": "whether only display media content, default to false, any value to true"
+          "only_media": {
+            "description": "whether only display media content, default to false, any value to true",
+            "options": [
+              {
+                "value": "true",
+                "label": "true"
+              },
+              {
+                "value": "false",
+                "label": "false"
+              }
+            ],
+            "default": "false"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -41613,7 +41710,20 @@
         "example": "/mastodon/timeline/pawoo.net/true",
         "parameters": {
           "site": "instance address, only domain, no `http://` or `https://` protocol header",
-          "only_media": "whether only display media content, default to false, any value to true"
+          "only_media": {
+            "description": "whether only display media content, default to false, any value to true",
+            "options": [
+              {
+                "value": "true",
+                "label": "true"
+              },
+              {
+                "value": "false",
+                "label": "false"
+              }
+            ],
+            "default": "false"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -41640,7 +41750,20 @@
         "example": "/mastodon/remote/pawoo.net/true",
         "parameters": {
           "site": "instance address, only domain, no `http://` or `https://` protocol header",
-          "only_media": "whether only display media content, default to false, any value to true"
+          "only_media": {
+            "description": "whether only display media content, default to false, any value to true",
+            "options": [
+              {
+                "value": "true",
+                "label": "true"
+              },
+              {
+                "value": "false",
+                "label": "false"
+              }
+            ],
+            "default": "false"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -53437,7 +53560,8 @@
                 "value": "week_r18g",
                 "label": "R-18G rank"
               }
-            ]
+            ],
+            "default": "day"
           },
           "date": "format: `2018-4-25`"
         },
@@ -54458,9 +54582,34 @@
         "view": 3,
         "example": "/pornhub/pornstar/june-liu",
         "parameters": {
-          "language": "language, see below",
           "username": "username, part of the url e.g. `pornhub.com/pornstar/june-liu`",
-          "sort": "sorting method, see below"
+          "language": "language",
+          "sort": {
+            "description": "sorting method",
+            "default": "mv",
+            "options": [
+              {
+                "label": "Most Recent",
+                "value": "mr"
+              },
+              {
+                "label": "Most Viewed",
+                "value": "mv"
+              },
+              {
+                "label": "Top Rated",
+                "value": "tr"
+              },
+              {
+                "label": "Longest",
+                "value": "lg"
+              },
+              {
+                "label": "Best",
+                "value": ""
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -54483,7 +54632,6 @@
           "I2IMk",
           "queensferryme"
         ],
-        "description": "**`sort`**\n\n  | Most Recent | Most Viewed | Top Rated | Longest | Best |\n  | ----------- | ----------- | --------- | ------- | ---- |\n  | mr          | mv          | tr        | lg      |      |",
         "location": "pornstar.ts"
       },
       "/search/:keyword": {
@@ -56961,8 +57109,170 @@
         "view": 0,
         "example": "/reuters/world/us",
         "parameters": {
-          "category": "find it in the URL, or tables below",
-          "topic": "find it in the URL, or tables below"
+          "category": {
+            "description": "find it in the URL, or tables below",
+            "options": [
+              {
+                "value": "world",
+                "label": "World"
+              },
+              {
+                "value": "business",
+                "label": "Business"
+              },
+              {
+                "value": "legal",
+                "label": "Legal"
+              },
+              {
+                "value": "markets",
+                "label": "Markets"
+              },
+              {
+                "value": "breakingviews",
+                "label": "Breakingviews"
+              },
+              {
+                "value": "technology",
+                "label": "Technology"
+              },
+              {
+                "value": "graphics",
+                "label": "Graphics"
+              },
+              {
+                "value": "authors",
+                "label": "Authors"
+              }
+            ],
+            "default": "world"
+          },
+          "topic": {
+            "description": "find it in the URL, or tables below",
+            "options": [
+              {
+                "value": "",
+                "label": "All"
+              },
+              {
+                "value": "africa",
+                "label": "Africa"
+              },
+              {
+                "value": "americas",
+                "label": "Americas"
+              },
+              {
+                "value": "asia-pacific",
+                "label": "Asia Pacific"
+              },
+              {
+                "value": "china",
+                "label": "China"
+              },
+              {
+                "value": "europe",
+                "label": "Europe"
+              },
+              {
+                "value": "india",
+                "label": "India"
+              },
+              {
+                "value": "middle-east",
+                "label": "Middle East"
+              },
+              {
+                "value": "uk",
+                "label": "United Kingdom"
+              },
+              {
+                "value": "us",
+                "label": "United States"
+              },
+              {
+                "value": "the-great-reboot",
+                "label": "The Great Reboot"
+              },
+              {
+                "value": "reuters-next",
+                "label": "Reuters Next"
+              },
+              {
+                "value": "aerospace-defense",
+                "label": "Aerospace & Defense"
+              },
+              {
+                "value": "autos-transportation",
+                "label": "Autos & Transportation"
+              },
+              {
+                "value": "energy",
+                "label": "Energy"
+              },
+              {
+                "value": "environment",
+                "label": "Environment"
+              },
+              {
+                "value": "finance",
+                "label": "Finance"
+              },
+              {
+                "value": "healthcare-pharmaceuticals",
+                "label": "Healthcare & Pharmaceuticals"
+              },
+              {
+                "value": "media-telecom",
+                "label": "Media & Telecom"
+              },
+              {
+                "value": "retail-consumer",
+                "label": "Retail & Consumer"
+              },
+              {
+                "value": "sustainable-business",
+                "label": "Sustainable Business"
+              },
+              {
+                "value": "charged",
+                "label": "Charged"
+              },
+              {
+                "value": "future-of-health",
+                "label": "Future of Health"
+              },
+              {
+                "value": "future-of-money",
+                "label": "Future of Money"
+              },
+              {
+                "value": "take-five",
+                "label": "Take Five"
+              },
+              {
+                "value": "reuters-impact",
+                "label": "Reuters Impact"
+              },
+              {
+                "value": "government",
+                "label": "Government"
+              },
+              {
+                "value": "legalindustry",
+                "label": "Legal Industry"
+              },
+              {
+                "value": "litigation",
+                "label": "Litigation"
+              },
+              {
+                "value": "transactional",
+                "label": "Transactional"
+              }
+            ],
+            "default": ""
+          }
         },
         "features": {
           "requireConfig": false,
@@ -68953,7 +69263,24 @@
         "example": "/twitch/video/riotgames/highlights",
         "parameters": {
           "login": "Twitch username",
-          "filter": "Video type, Default to all"
+          "filter": {
+            "description": "Video type, Default to all",
+            "options": [
+              {
+                "value": "archive",
+                "label": "Archive"
+              },
+              {
+                "value": "highlights",
+                "label": "Highlights"
+              },
+              {
+                "value": "all",
+                "label": "All"
+              }
+            ],
+            "default": "all"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -68975,7 +69302,6 @@
         "maintainers": [
           "hoilc"
         ],
-        "description": "| archive           | highlights                    | all        |\n| ----------------- | ----------------------------- | ---------- |\n| Recent broadcasts | Recent highlights and uploads | All videos |",
         "location": "video.ts"
       }
     },
@@ -71348,7 +71674,8 @@
                 "value": "latest",
                 "label": "最新主题"
               }
-            ]
+            ],
+            "default": "hot"
           }
         },
         "features": {
