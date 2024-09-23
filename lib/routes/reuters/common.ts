@@ -66,7 +66,7 @@ export const route: Route = {
                 { value: 'litigation', label: 'Litigation' },
                 { value: 'transactional', label: 'Transactional' },
             ],
-            default: '',
+            default: 'us',
         },
     },
     features: {

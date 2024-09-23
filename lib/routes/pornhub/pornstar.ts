@@ -9,13 +9,32 @@ export const route: Route = {
     path: '/pornstar/:username/:language?/:sort?',
     categories: ['multimedia', 'popular'],
     view: ViewType.Videos,
-    example: '/pornhub/pornstar/june-liu',
+    example: '/pornhub/pornstar/june-liu/www/mr',
     parameters: {
-        username: 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`',
-        language: 'language',
+        username: {
+            description: 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`',
+        },
+        language: {
+            description: 'language',
+            options: [
+                { value: 'www', label: 'English' },
+                { value: 'de', label: 'Deutsch' },
+                { value: 'es', label: 'Español' },
+                { value: 'fr', label: 'Français' },
+                { value: 'it', label: 'Italiano' },
+                { value: 'ja', label: '日本語' },
+                { value: 'pt', label: 'Português' },
+                { value: 'pl', label: 'Polski' },
+                { value: 'rt', label: 'Русский' },
+                { value: 'nl', label: 'Dutch' },
+                { value: 'cs', label: 'Czech' },
+                { value: 'cn', label: '中文（简体）' },
+            ],
+            default: 'www',
+        },
         sort: {
             description: 'sorting method',
-            default: 'mv',
+            default: 'mr',
             options: [
                 {
                     label: 'Most Recent',
