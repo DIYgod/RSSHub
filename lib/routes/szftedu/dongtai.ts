@@ -45,8 +45,8 @@ async function handler(ctx) {
     const items = await Promise.all(
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
-                let thisUrl = item.link;
-                let trueLink = thisUrl.includes("http") ? thisUrl: base_link + thisUrl;
+                const thisUrl = item.link;
+                const trueLink = thisUrl.includes("http") ? thisUrl : base_link + thisUrl;
                 const response = await got.get(trueLink);
                 const $ = load(response.data);
                 item.description = $('body').html();
