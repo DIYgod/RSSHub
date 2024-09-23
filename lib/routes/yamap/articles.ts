@@ -34,12 +34,12 @@ async function handler() {
     const metadata = response.data;
     const recordNum = metadata.activities.length - 1 ;
 
-    const lists = metadata.activities.slice(0 , recordNum).map((item) => ({
+    const lists = metadata.activities.slice(0, recordNum).map((item) => ({
         title: item.title,
         link: base_url + item.id.toString(),
         pubDate: parseDate(item.created_at),
         location: (mountainName) => {
-            try{ 
+            try { 
                 mountainName = item.map.name; }
             catch {
                 mountainName = 'Japan';}
