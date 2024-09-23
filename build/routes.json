@@ -54682,7 +54682,7 @@
             "default": "www"
           },
           "sort": {
-            "description": "sorting method",
+            "description": "sorting method, leave empty for `Best`",
             "default": "mr",
             "options": [
               {
@@ -54700,10 +54700,6 @@
               {
                 "label": "Longest",
                 "value": "lg"
-              },
-              {
-                "label": "Best",
-                "value": ""
               }
             ]
           }
@@ -57245,12 +57241,8 @@
             "default": "world"
           },
           "topic": {
-            "description": "find it in the URL, or tables below",
+            "description": "find it in the URL, or tables below, leave empty for `All`",
             "options": [
-              {
-                "value": "",
-                "label": "All"
-              },
               {
                 "value": "africa",
                 "label": "Africa"
