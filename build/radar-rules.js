@@ -4242,7 +4242,7 @@
           "/" ],
         target:"/gzhu/yjs" } ] },
   "ycombinator.com":{ _name:"Hacker News",
-    news:[ { title:"用户",
+    news:[ { title:"User",
         docs:"https://docs.rsshub.app/routes/programming",
         source:[ "/:section",
           "/" ],

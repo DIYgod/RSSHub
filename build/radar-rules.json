@@ -9510,7 +9510,7 @@
     "_name": "Hacker News",
     "news": [
       {
-        "title": "用户",
+        "title": "User",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/:section",
