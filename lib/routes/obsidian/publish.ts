@@ -6,7 +6,7 @@ import { getTitle } from './utils';
 export const route: Route = {
     path: '/publish/:id',
     categories: ['blog'],
-    example: '/marshallontheroad',
+    example: '/obsidian/publish/marshallontheroad',
     parameters: { id: '网站 id，由Publish持有者自定义' },
     features: {
         requireConfig: false,
