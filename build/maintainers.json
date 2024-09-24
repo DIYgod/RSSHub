@@ -1177,6 +1177,8 @@
     "TonyRL"
   ],
   "/changba/:userid": [
+    "kt286",
+    "xizeyoupan",
     "pseudoyu"
   ],
   "/chaoxing/qk/:id/:needContent?": [
@@ -2248,9 +2250,11 @@
     "TonyRL"
   ],
   "/gamer/ani/anime/:sn": [
+    "maple3142",
     "pseudoyu"
   ],
   "/gamer/ani/new_anime": [
+    "maple3142",
     "pseudoyu"
   ],
   "/gamer520/:category?/:order?": [

@@ -2791,7 +2791,7 @@
       }
     },
     "name": "Academia",
-    "url": "https://www.academia.edu/"
+    "url": "www.academia.edu"
   },
   "accessbriefing": {
     "routes": {
@@ -5013,7 +5013,7 @@
         "maintainers": [
           "Acring"
         ],
-        "url": "https://www.apple.com.cn/apple-podcasts/",
+        "url": "www.apple.com.cn/apple-podcasts/",
         "location": "podcast.ts"
       }
     },
@@ -10279,7 +10279,7 @@
         "maintainers": [
           "Yoruet"
         ],
-        "url": "https://jwc.bupt.edu.cn/",
+        "url": "jwc.bupt.edu.cn",
         "location": "jwc.ts"
       },
       "/rczp": {
@@ -12615,6 +12615,8 @@
         ],
         "name": "用户",
         "maintainers": [
+          "kt286",
+          "xizeyoupan",
           "pseudoyu"
         ],
         "location": "user.ts"
@@ -19871,7 +19873,7 @@
         "maintainers": [
           "zytomorrow"
         ],
-        "url": "https://www.dykszx.com/*",
+        "url": "www.dykszx.com",
         "description": "| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 | 其他 |\n| :------: | :------: | :------: |:------: |:------: |\n|   all   |   gwy   |  sydw | zyzc  | other |",
         "location": "news.ts"
       }
@@ -23783,6 +23785,7 @@
         ],
         "name": "動畫瘋 - 動畫",
         "maintainers": [
+          "maple3142",
           "pseudoyu"
         ],
         "location": "ani/anime.ts"
@@ -23814,6 +23817,7 @@
         ],
         "name": "動畫瘋 - 最後更新",
         "maintainers": [
+          "maple3142",
           "pseudoyu"
         ],
         "url": "ani.gamer.com.tw/",
@@ -35020,7 +35024,7 @@
         "maintainers": [
           "ZiHao256"
         ],
-        "url": "https://infos.imhcg.cn/",
+        "url": "infos.imhcg.cn",
         "location": "blog.ts"
       }
     },
@@ -39971,7 +39975,7 @@
       }
     },
     "name": "Lemmy",
-    "url": "https://join-lemmy.org/"
+    "url": "join-lemmy.org"
   },
   "lfsyd": {
     "routes": {
@@ -65520,7 +65524,7 @@
       }
     },
     "name": "Sustainability Magazine",
-    "url": "https://sustainabilitymag.com"
+    "url": "sustainabilitymag.com"
   },
   "sustech": {
     "routes": {
