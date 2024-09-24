@@ -42,7 +42,7 @@ async function handler(ctx) {
 async function fetchPage(id: string) {
     const baseUrl = `https://publish.obsidian.md/${id}`;
     const response = await ofetch(baseUrl);
-    const $ = load(response, { scriptingEnabled: false });
+    const $ = load(response);
     let preloadCacheUrl = '';
     for (const script of $('script').toArray()) {
         const scriptContent = $(script).html();
