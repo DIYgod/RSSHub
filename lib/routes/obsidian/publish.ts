@@ -2,6 +2,8 @@ import { Route, DataItem } from '@/types';
 import { load } from 'cheerio';
 import { ofetch } from 'ofetch';
 import { getTitle } from './utils';
+import { config } from '@/config';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/publish/:id',
@@ -43,21 +45,16 @@ async function fetchPage(id: string) {
     const baseUrl = `https://publish.obsidian.md/${id}`;
     const response = await ofetch(baseUrl);
     const $ = load(response);
-    let preloadCacheUrl = '';
-    for (const script of $('script').toArray()) {
-        const scriptContent = $(script).html();
-        const preloadCacheUrlMatch = scriptContent?.match(/window\.preloadCache\s*=\s*f\("([^"]+)"\);/);
-        if (preloadCacheUrlMatch) {
-            preloadCacheUrl = preloadCacheUrlMatch[1];
-            break;
-        }
-    }
+    const preloadCacheUrl =
+        $('script:contains("preloadCache")')
+            .text()
+            .match(/preloadCache\s*=\s*f\("([^"]+)"\);/)?.[1] || '';
 
-    let preloadCacheResponse;
+    let preloadCacheResponse: Record<string, { frontmatter?: Record<string, string> }>;
     try {
         preloadCacheResponse = await ofetch(preloadCacheUrl, {
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+                'User-Agent': config.trueUA,
                 Referer: 'https://publish.obsidian.md/',
                 Origin: 'https://publish.obsidian.m/',
             },
@@ -66,17 +63,21 @@ async function fetchPage(id: string) {
         preloadCacheResponse = {};
     }
 
-    const items: DataItem[] = [];
-    for (const postKey in preloadCacheResponse) {
-        const post = preloadCacheResponse[postKey];
-        if (!post) {
-            continue;
-        }
-        const item = post?.frontmatter || {};
-        if (!('title' in item)) {
-            item.title = getTitle(postKey);
-        }
-        items.push(item);
-    }
+    const items: DataItem[] = Object.entries(preloadCacheResponse)
+        .map(([postKey, post]) => {
+            if (!post) {
+                return null;
+            }
+            const item: DataItem = {
+                title: post.frontmatter?.title || getTitle(postKey),
+                link: `${baseUrl}/${postKey.replaceAll(' ', '+').split('.md')[0]}`,
+                pubDate: post.frontmatter?.['date created'] ? parseDate(post.frontmatter['date created']) : undefined,
+                ...post.frontmatter,
+            };
+
+            return item;
+        })
+        .filter(Boolean) as DataItem[];
+
     return items;
 }
