@@ -60,17 +60,6 @@ export const route: Route = {
     name: 'WORLD-JAPAN - Top Stories',
     maintainers: ['TonyRL', 'pseudoyu'],
     handler,
-    description: `| العربية | বাংলা | မြန်မာဘာသာစကား | 中文（简体） | 中文（繁體） | English | Français |
-  | ------- | -- | ------------ | ------------ | ------------ | ------- | -------- |
-  | ar      | bn | my           | zh           | zt           | en      | fr       |
-
-  | हिन्दी | Bahasa Indonesia | 코리언 | فارسی | Português | Русский | Español |
-  | -- | ---------------- | ------ | ----- | --------- | ------- | ------- |
-  | hi | id               | ko     | fa    | pt        | ru      | es      |
-
-  | Kiswahili | ภาษาไทย | Türkçe | Українська | اردو | Tiếng Việt |
-  | --------- | ------- | ------ | ---------- | ---- | ---------- |
-  | sw        | th      | tr     | uk         | ur   | vi         |`,
 };
 
 async function handler(ctx) {

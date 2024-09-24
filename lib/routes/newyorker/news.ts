@@ -23,8 +23,8 @@ export const route: Route = {
             source: ['newyorker.com/:category?'],
         },
     ],
-    name: 'The New Yorker',
-    maintainers: ['EthanWng97'],
+    name: 'Articles',
+    maintainers: ['EthanWng97', 'pseudoyu'],
     handler,
 };
 
