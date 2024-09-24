@@ -64,6 +64,7 @@ export type Config = {
     feature: {
         allow_user_hotlink_template: boolean;
         filter_regex_engine: string;
+        allow_cidr?: string;
     };
     suffix?: string;
     titleLengthLimit: number;
@@ -440,6 +441,7 @@ const calculateValue = () => {
         feature: {
             allow_user_hotlink_template: toBoolean(envs.ALLOW_USER_HOTLINK_TEMPLATE, false),
             filter_regex_engine: envs.FILTER_REGEX_ENGINE || 're2',
+            allow_cidr: envs.ALLOW_CIDR,
         },
         suffix: envs.SUFFIX,
         titleLengthLimit: toInt(envs.TITLE_LENGTH_LIMIT, 150),

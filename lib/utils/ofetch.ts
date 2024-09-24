@@ -41,9 +41,16 @@ const rofetch = createFetch().create({
             addr = address;
         }
         const parsedIp = ip.process(addr);
-        if (parsedIp.range() !== 'unicast') {
-            throw new Error('The IP of the domain is reserved!');
+        if (parsedIp.range() === 'unicast') {
+            return;
         }
+        if (config.feature.allow_cidr) {
+            const allowCIDR = ip.parseCIDR(config.feature.allow_cidr);
+            if (parsedIp.match(allowCIDR)) {
+                return;
+            }
+        }
+        throw new Error('The IP of the domain is reserved!');
     },
 });
 
