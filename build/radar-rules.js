@@ -7549,7 +7549,7 @@
           "/" ],
         target:"/newsmarket/:category?" } ] },
   "newyorker.com":{ _name:"New Yorker",
-    ".":[ { title:"The New Yorker",
+    ".":[ { title:"Articles",
         docs:"https://docs.rsshub.app/routes/traditional-media",
         source:[ "/:category" ],
         target:"/newyorker/:category" } ] },
