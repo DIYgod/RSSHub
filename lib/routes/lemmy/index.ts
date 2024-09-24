@@ -44,7 +44,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
-                description: 'Allow user to supply unsafe domain',
+                description: '',
             },
         ],
         requirePuppeteer: false,
