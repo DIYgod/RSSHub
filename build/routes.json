@@ -7013,8 +7013,10 @@
         },
         "example": "/bilibili/bangumi/media/9192",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 3,
         "maintainers": [
           "DIYgod"
         ],
@@ -7848,8 +7850,10 @@
       "/readlist/:listid": {
         "path": "/readlist/:listid",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/bilibili/readlist/25611",
         "parameters": {
           "listid": "文集 id, 可在专栏文集 URL 中找到"
@@ -30520,6 +30524,7 @@
           "programming",
           "popular"
         ],
+        "view": 0,
         "example": "/hackernews/threads/comments_list/dang",
         "parameters": {
           "section": {
@@ -37139,8 +37144,10 @@
       "/topic/:id/:showUid?": {
         "path": "/topic/:id/:showUid?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 1,
         "example": "/jike/topic/556688fae4b00c57d9dd46ee",
         "parameters": {
           "id": "圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到",
@@ -37172,8 +37179,10 @@
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 1,
         "example": "/jike/user/3EE02BC9-C5B3-4209-8750-4ED1EE0F67BB",
         "parameters": {
           "id": "用户 id, 可在即刻分享出来的单条动态页点击用户头像进入个人主页，然后在个人主页的 URL 中找到，或者在单条动态页使用 RSSHub Radar 插件"
@@ -72120,8 +72129,10 @@
       "/category/:category/:staffpicks?": {
         "path": "/category/:category/:staffpicks?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 3,
         "example": "/vimeo/category/documentary/staffpicks",
         "parameters": {
           "category": "Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ",
@@ -72176,8 +72187,10 @@
       "/user/:username/:cat?": {
         "path": "/user/:username/:cat?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 3,
         "example": "/vimeo/user/filmsupply/picks",
         "parameters": {
           "username": "In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`",
@@ -77345,8 +77358,10 @@
       "/playlist/:id/:embed?": {
         "path": "/playlist/:id/:embed?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 3,
         "example": "/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z",
         "parameters": {
           "id": "YouTube playlist id",
