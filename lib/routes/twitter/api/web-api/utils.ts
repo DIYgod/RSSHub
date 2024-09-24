@@ -11,7 +11,6 @@ import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
 import login from './login';
 
-const dispatchers = {};
 let authTokenIndex = 0;
 
 const token2Cookie = (token) =>
@@ -35,98 +34,144 @@ const token2Cookie = (token) =>
         }
     });
 
+const getAuth = async (retry: number) => {
+    if (config.twitter.authToken && retry > 0) {
+        const index = authTokenIndex++ % config.twitter.authToken.length;
+        const token = config.twitter.authToken[index];
+        const lock = await cache.get(`twitter:lock-cookie:${token}`);
+        if (lock) {
+            await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
+            return await getAuth(retry - 1);
+        } else {
+            logger.debug(`Lock twitter cookie for token ${token}`);
+            await cache.set(`twitter:lock-cookie:${token}`, '1', 1000);
+            return {
+                token,
+                username: config.twitter.username?.[index],
+                password: config.twitter.password?.[index],
+                authenticationSecret: config.twitter.authenticationSecret?.[index],
+            };
+        }
+    }
+};
+
 export const twitterGot = async (url, params) => {
-    if (!config.twitter.authToken) {
-        throw new ConfigNotFoundError('Twitter cookie is not configured');
-    }
-    const index = authTokenIndex++ % config.twitter.authToken.length;
-    const token = config.twitter.authToken[index];
+    const auth = await getAuth(10);
 
-    const requestUrl = `${url}?${queryString.stringify(params)}`;
-
-    let cookie: string | Record<string, any> | null | undefined = await token2Cookie(token);
-    if (!cookie) {
-        cookie = await login({
-            username: config.twitter.username?.[index],
-            password: config.twitter.password?.[index],
-            authenticationSecret: config.twitter.authenticationSecret?.[index],
-        });
+    if (!auth) {
+        throw new ConfigNotFoundError('No valid Twitter token found');
     }
-    if (cookie) {
-        logger.debug(`Got twitter cookie for token ${token}`);
-        if (typeof cookie === 'string') {
-            cookie = JSON.parse(cookie);
+
+    try {
+        const requestUrl = `${url}?${queryString.stringify(params)}`;
+
+        let cookie: string | Record<string, any> | null | undefined = await token2Cookie(auth.token);
+        if (!cookie) {
+            cookie = await login({
+                username: auth.username,
+                password: auth.password,
+                authenticationSecret: auth.authenticationSecret,
+            });
         }
-        const jar = CookieJar.deserializeSync(cookie as any);
-        const agent = proxy.proxyUri
-            ? new ProxyAgent({
-                  factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
-                  uri: proxy.proxyUri,
-              })
-            : new CookieAgent({ cookies: { jar } });
-        if (proxy.proxyUri) {
-            logger.debug(`Proxying request: ${requestUrl}`);
-        }
-        dispatchers[token] = {
-            jar,
-            agent,
-        };
-    } else {
-        throw new ConfigNotFoundError(`Twitter cookie for token ${token} is not valid`);
-    }
-    const jsonCookie = Object.fromEntries(
-        dispatchers[token].jar
-            .getCookieStringSync(url)
-            .split(';')
-            .map((c) => Cookie.parse(c)?.toJSON())
-            .map((c) => [c?.key, c?.value])
-    );
-
-    const response = await ofetch.raw(requestUrl, {
-        retry: 0,
-        headers: {
-            authority: 'x.com',
-            accept: '*/*',
-            'accept-language': 'en-US,en;q=0.9',
-            authorization: bearerToken,
-            'cache-control': 'no-cache',
-            'content-type': 'application/json',
-            dnt: '1',
-            pragma: 'no-cache',
-            referer: 'https://x.com/narendramodi',
-            'x-twitter-active-user': 'yes',
-            'x-twitter-auth-type': 'OAuth2Session',
-            'x-twitter-client-language': 'en',
-            'x-csrf-token': jsonCookie.ct0,
-        },
-        dispatcher: dispatchers[token].agent,
-        onResponse: async ({ response }) => {
-            if (response.status === 403 || response.status === 401 || response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
-                const newCookie = await login({
-                    username: config.twitter.username?.[index],
-                    password: config.twitter.password?.[index],
-                    authenticationSecret: config.twitter.authenticationSecret?.[index],
-                });
-                if (newCookie) {
-                    await cache.set(`twitter:cookie:${token}`, newCookie, config.cache.contentExpire);
-                    logger.debug(`Reset twitter cookie for token ${token}`);
-                } else {
-                    config.twitter.authToken?.splice(index, 1);
-                    config.twitter.username?.splice(index, 1);
-                    config.twitter.password?.splice(index, 1);
-                    await cache.set(`twitter:cookie:${token}`, '', config.cache.contentExpire);
-                    logger.debug(`Delete twitter cookie for token ${token}, remaining tokens: ${config.twitter.authToken?.length}`);
-                }
+        let dispatchers:
+            | {
+                  jar: CookieJar;
+                  agent: CookieAgent | ProxyAgent;
+              }
+            | undefined;
+        if (cookie) {
+            logger.debug(`Got twitter cookie for token ${auth.token}`);
+            if (typeof cookie === 'string') {
+                cookie = JSON.parse(cookie);
             }
-        },
-    });
+            const jar = CookieJar.deserializeSync(cookie as any);
+            const agent = proxy.proxyUri
+                ? new ProxyAgent({
+                      factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
+                      uri: proxy.proxyUri,
+                  })
+                : new CookieAgent({ cookies: { jar } });
+            if (proxy.proxyUri) {
+                logger.debug(`Proxying request: ${requestUrl}`);
+            }
+            dispatchers = {
+                jar,
+                agent,
+            };
+        } else {
+            throw new ConfigNotFoundError(`Twitter cookie for token ${auth.token} is not valid`);
+        }
+        const jsonCookie = Object.fromEntries(
+            dispatchers.jar
+                .getCookieStringSync(url)
+                .split(';')
+                .map((c) => Cookie.parse(c)?.toJSON())
+                .map((c) => [c?.key, c?.value])
+        );
 
-    if (token) {
-        logger.debug(`Update twitter cookie for token ${token}`);
-        await cache.set(`twitter:cookie:${token}`, JSON.stringify(dispatchers[token].jar.serializeSync()), config.cache.contentExpire);
+        const response = await ofetch.raw(requestUrl, {
+            retry: 0,
+            headers: {
+                authority: 'x.com',
+                accept: '*/*',
+                'accept-language': 'en-US,en;q=0.9',
+                authorization: bearerToken,
+                'cache-control': 'no-cache',
+                'content-type': 'application/json',
+                dnt: '1',
+                pragma: 'no-cache',
+                referer: 'https://x.com/narendramodi',
+                'x-twitter-active-user': 'yes',
+                'x-twitter-auth-type': 'OAuth2Session',
+                'x-twitter-client-language': 'en',
+                'x-csrf-token': jsonCookie.ct0,
+            },
+            dispatcher: dispatchers.agent,
+            onResponse: async ({ response }) => {
+                if (response.status === 403 || response.status === 401 || response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
+                    const newCookie = await login({
+                        username: auth.username,
+                        password: auth.password,
+                        authenticationSecret: auth.authenticationSecret,
+                    });
+                    if (newCookie) {
+                        await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
+                        logger.debug(`Reset twitter cookie for token ${auth.token}, ${newCookie}`);
+                    } else {
+                        const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
+                        if (tokenIndex !== undefined && tokenIndex !== -1) {
+                            config.twitter.authToken?.splice(tokenIndex, 1);
+                        }
+                        if (auth.username) {
+                            const usernameIndex = config.twitter.username?.indexOf(auth.username);
+                            if (usernameIndex !== undefined && usernameIndex !== -1) {
+                                config.twitter.username?.splice(usernameIndex, 1);
+                            }
+                        }
+                        if (auth.password) {
+                            const passwordIndex = config.twitter.password?.indexOf(auth.password);
+                            if (passwordIndex !== undefined && passwordIndex !== -1) {
+                                config.twitter.password?.splice(passwordIndex, 1);
+                            }
+                        }
+                        logger.debug(`Delete twitter cookie for token ${auth.token}, remaining tokens: ${config.twitter.authToken?.length}`);
+                    }
+                }
+            },
+        });
+
+        if (auth.token) {
+            logger.debug(`Update twitter cookie for token ${auth.token}`);
+            await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers.jar.serializeSync()), config.cache.contentExpire);
+        }
+
+        return response._data;
+    } finally {
+        if (auth.token) {
+            logger.debug(`Unlock twitter cookie for token ${auth.token}`);
+            await cache.set(`twitter:lock-cookie:${auth.token}`, '', 1);
+        }
     }
-
-    return response._data;
 };
 
 export const paginationTweets = async (endpoint: string, userId: number | undefined, variables: Record<string, any>, path?: string[]) => {
