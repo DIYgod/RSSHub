@@ -2238,14 +2238,19 @@
   ],
   "/gamer/gnn/:category?": [
     "Arracc",
-    "ladeng07"
+    "ladeng07",
+    "pseudoyu"
   ],
   "/gamer/hot/:bsn": [
     "nczitzk",
     "TonyRL"
   ],
-  "/gamer/ani/anime/:sn": [],
-  "/gamer/ani/new_anime": [],
+  "/gamer/ani/anime/:sn": [
+    "pseudoyu"
+  ],
+  "/gamer/ani/new_anime": [
+    "pseudoyu"
+  ],
   "/gamer520/:category?/:order?": [
     "xzzpig"
   ],

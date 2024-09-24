@@ -1839,8 +1839,10 @@
       "/tribe/set/:id": {
         "path": "/tribe/set/:id",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/500px/tribe/set/f5de0b8aa6d54ec486f5e79616418001",
         "parameters": {
           "id": "部落 ID"
@@ -6633,12 +6635,27 @@
       "/:user/:type?": {
         "path": "/:user/:type?",
         "categories": [
-          "design"
+          "design",
+          "popular"
         ],
+        "view": 2,
         "example": "/behance/mishapetrick",
         "parameters": {
           "user": "username",
-          "type": "type, `projects` or `appreciated`, `projects` by default"
+          "type": {
+            "description": "type",
+            "options": [
+              {
+                "value": "projects",
+                "label": "projects"
+              },
+              {
+                "value": "appreciated",
+                "label": "appreciated"
+              }
+            ],
+            "default": "projects"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -19877,12 +19894,29 @@
       "/blog/:cate?/:language?": {
         "path": "/blog/:cate?/:language?",
         "categories": [
-          "design"
+          "blog"
         ],
         "example": "/eagle/blog/en",
         "parameters": {
           "cate": "Category, get by URL, `all` by default",
-          "language": "Language, `cn`, `tw`, `en`, `en` by default"
+          "language": {
+            "description": "Language",
+            "options": [
+              {
+                "value": "cn",
+                "label": "cn"
+              },
+              {
+                "value": "tw",
+                "label": "tw"
+              },
+              {
+                "value": "en",
+                "label": "en"
+              }
+            ],
+            "default": "en"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -23579,11 +23613,93 @@
       "/gnn/:category?": {
         "path": "/gnn/:category?",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 0,
         "example": "/gamer/gnn/1",
         "parameters": {
-          "category": "版块"
+          "category": {
+            "description": "版塊",
+            "options": [
+              {
+                "value": "1",
+                "label": "PC"
+              },
+              {
+                "value": "3",
+                "label": "TV 掌機"
+              },
+              {
+                "value": "4",
+                "label": "手機遊戲"
+              },
+              {
+                "value": "5",
+                "label": "動漫畫"
+              },
+              {
+                "value": "9",
+                "label": "主題報導"
+              },
+              {
+                "value": "11",
+                "label": "活動展覽"
+              },
+              {
+                "value": "13",
+                "label": "電競"
+              },
+              {
+                "value": "ns",
+                "label": "Switch"
+              },
+              {
+                "value": "ps5",
+                "label": "PS5"
+              },
+              {
+                "value": "ps4",
+                "label": "PS4"
+              },
+              {
+                "value": "xbone",
+                "label": "XboxOne"
+              },
+              {
+                "value": "xbsx",
+                "label": "XboxSX"
+              },
+              {
+                "value": "pc",
+                "label": "PC 單機"
+              },
+              {
+                "value": "olg",
+                "label": "PC 線上"
+              },
+              {
+                "value": "ios",
+                "label": "iOS"
+              },
+              {
+                "value": "android",
+                "label": "Android"
+              },
+              {
+                "value": "web",
+                "label": "Web"
+              },
+              {
+                "value": "comic",
+                "label": "漫畫"
+              },
+              {
+                "value": "anime",
+                "label": "動畫"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -23596,19 +23712,22 @@
         "name": "GNN 新聞",
         "maintainers": [
           "Arracc",
-          "ladeng07"
+          "ladeng07",
+          "pseudoyu"
         ],
-        "description": "| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |\n  | ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |\n  | 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |\n\n  | Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |\n  | ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |\n  | ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |",
+        "description": "缺省為首頁",
         "location": "gnn-index.ts"
       },
       "/hot/:bsn": {
         "path": "/hot/:bsn",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 0,
         "example": "/gamer/hot/47157",
         "parameters": {
-          "bsn": "板块 id，在 URL 可以找到"
+          "bsn": "板塊 id，在 URL 可以找到"
         },
         "features": {
           "requireConfig": false,
@@ -23628,8 +23747,10 @@
       "/ani/anime/:sn": {
         "path": "/ani/anime/:sn",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 3,
         "example": "/gamer/ani/anime/36868",
         "parameters": {
           "sn": "動畫 sn，在 URL 可以找到"
@@ -23642,15 +23763,27 @@
           "supportPodcast": false,
           "supportScihub": false
         },
+        "radar": [
+          {
+            "source": [
+              "ani.gamer.com.tw/"
+            ],
+            "target": "/anime/:sn"
+          }
+        ],
         "name": "動畫瘋 - 動畫",
-        "maintainers": [],
+        "maintainers": [
+          "pseudoyu"
+        ],
         "location": "ani/anime.ts"
       },
       "/ani/new_anime": {
         "path": "/ani/new_anime",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 3,
         "example": "/gamer/ani/new_anime",
         "parameters": {},
         "features": {
@@ -23670,7 +23803,9 @@
           }
         ],
         "name": "動畫瘋 - 最後更新",
-        "maintainers": [],
+        "maintainers": [
+          "pseudoyu"
+        ],
         "url": "ani.gamer.com.tw/",
         "location": "ani/new-anime.ts"
       }

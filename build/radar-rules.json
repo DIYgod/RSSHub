@@ -5782,7 +5782,7 @@
     "cn": [
       {
         "title": "Blog",
-        "docs": "https://docs.rsshub.app/routes/design",
+        "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
           "/blog"
         ],
@@ -6897,6 +6897,14 @@
   "gamer.com.tw": {
     "_name": "巴哈姆特電玩資訊站",
     "ani": [
+      {
+        "title": "動畫瘋 - 動畫",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/gamer/anime/:sn"
+      },
       {
         "title": "動畫瘋 - 最後更新",
         "docs": "https://docs.rsshub.app/routes/anime",
