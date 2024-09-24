@@ -23,7 +23,7 @@ export const route: Route = {
             source: ['publish.obsidian.md/'],
         },
     ],
-    name: 'Obsidian Publish',
+    name: 'Publish',
     maintainers: ['Xy2002'],
     handler,
     url: 'publish.obsidian.md/',
