@@ -46,6 +46,7 @@ const rofetch = createFetch().create({
         }
         if (config.feature.allow_cidr) {
             const allowCIDR = ip.parseCIDR(config.feature.allow_cidr);
+            // eslint-disable-next-line unicorn/prefer-regexp-test
             if (parsedIp.match(allowCIDR)) {
                 return;
             }
