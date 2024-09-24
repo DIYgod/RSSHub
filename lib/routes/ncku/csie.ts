@@ -65,7 +65,7 @@ export const route: Route = {
                             .toArray()
                             .map((el) => ({
                                 title: $('a', el).text(),
-                                pubDate: $('small', el).text(),
+                                pubDate: new Date($('small', el).text()),
                                 link: `https://www.csie.ncku.edu.tw${$('a', el).attr('href')}`,
                                 catagory: $('span:nth-child(2)', el).text(),
                             }));
