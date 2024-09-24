@@ -4,6 +4,8 @@ import Parser from 'rss-parser';
 const parser = new Parser();
 import { config } from '@/config';
 
+process.env.ALLOW_CIDR = '127.0.0.1/32';
+
 const routes = {
     '/test/:id': '/test/1',
 };

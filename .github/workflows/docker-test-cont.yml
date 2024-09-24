@@ -68,6 +68,7 @@ jobs:
             --name rsshub \
             -e NODE_ENV=dev \
             -e LOGGER_LEVEL=debug \
+            -e ALLOW_CIDR='127.0.0.1/32'
             -e ALLOW_USER_HOTLINK_TEMPLATE=true \
             -p 1200:1200 \
             rsshub:latest

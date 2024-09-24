@@ -83,6 +83,7 @@ jobs:
         run: pnpm start &
         env:
           ALLOW_USER_HOTLINK_TEMPLATE: true
+          ALLOW_CIDR: '127.0.0.1/32'
           NODE_ENV: dev
           LOGGER_LEVEL: debug
 
