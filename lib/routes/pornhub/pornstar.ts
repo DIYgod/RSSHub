@@ -34,7 +34,6 @@ export const route: Route = {
         },
         sort: {
             description: 'sorting method, leave empty for `Best`',
-            default: 'mr',
             options: [
                 {
                     label: 'Most Recent',

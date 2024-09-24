@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import { config } from '@/config';
@@ -6,7 +6,8 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/notes/featured/:site',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/misskey/notes/featured/misskey.io',
     parameters: { site: 'instance address, domain only, without `http://` or `https://` protocol header' },
     features: {
