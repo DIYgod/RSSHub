@@ -17461,6 +17461,19 @@
       }
     ]
   },
+  "obsidian.md": {
+    "_name": "Obsidian",
+    "publish": [
+      {
+        "title": "Publish",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/obsidian/publish/:id"
+      }
+    ]
+  },
   "oct0pu5.cn": {
     "_name": "Oct0pu5 blog",
     ".": [

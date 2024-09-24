@@ -50891,6 +50891,43 @@
     "name": "The New York Times 纽约时报",
     "url": "nytimes.com"
   },
+  "obsidian": {
+    "routes": {
+      "/publish/:id": {
+        "path": "/publish/:id",
+        "categories": [
+          "blog"
+        ],
+        "example": "/obsidian/publish/marshallontheroad",
+        "parameters": {
+          "id": "网站 id，由Publish持有者自定义"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publish.obsidian.md/"
+            ]
+          }
+        ],
+        "name": "Publish",
+        "maintainers": [
+          "Xy2002"
+        ],
+        "url": "publish.obsidian.md/",
+        "location": "publish.ts"
+      }
+    },
+    "name": "Obsidian",
+    "url": "obsidian.md"
+  },
   "oceanengine": {
     "routes": {
       "/index/:keyword/:channel?": {
