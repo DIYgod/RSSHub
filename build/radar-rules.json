@@ -15909,13 +15909,21 @@
     "_name": "国家地理",
     ".": [
       {
-        "title": "每日一图",
+        "title": "Daily Photo",
         "docs": "https://docs.rsshub.app/routes/picture",
         "source": [
           "/photo-of-the-day/*",
           "/"
         ],
         "target": "/natgeo/dailyphoto"
+      },
+      {
+        "title": "Daily Selection",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/"
+        ],
+        "target": "/natgeo/dailyselection"
       }
     ],
     "www": [

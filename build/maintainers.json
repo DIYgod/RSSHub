@@ -4158,10 +4158,12 @@
   "/natgeo/dailyphoto": [
     "LogicJake",
     "OrangeEd1t",
-    "TonyRL"
+    "TonyRL",
+    "pseudoyu"
   ],
   "/natgeo/dailyselection": [
-    "OrangeEd1t"
+    "OrangeEd1t",
+    "pseudoyu"
   ],
   "/natgeo/:cat/:type?": [
     "fengkx"

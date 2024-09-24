@@ -46363,8 +46363,10 @@
       "/dailyphoto": {
         "path": "/dailyphoto",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/natgeo/dailyphoto",
         "parameters": {},
         "features": {
@@ -46383,20 +46385,41 @@
             ]
           }
         ],
-        "name": "每日一图",
+        "name": "Daily Photo",
         "maintainers": [
           "LogicJake",
           "OrangeEd1t",
-          "TonyRL"
+          "TonyRL",
+          "pseudoyu"
         ],
         "url": "nationalgeographic.com/photo-of-the-day/*",
         "location": "dailyphoto.ts"
       },
       "/dailyselection": {
         "path": "/dailyselection",
-        "name": "Unknown",
+        "name": "Daily Selection",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "example": "/natgeo/dailyselection",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false
+        },
+        "radar": [
+          {
+            "source": [
+              "nationalgeographic.com/"
+            ]
+          }
+        ],
         "maintainers": [
-          "OrangeEd1t"
+          "OrangeEd1t",
+          "pseudoyu"
         ],
         "location": "dailyselection.ts"
       },
