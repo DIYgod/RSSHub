@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 // Warning: The author still knows nothing about javascript!
 
@@ -13,7 +13,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:type?',
-    categories: ['traditional-media'],
+    categories: ['traditional-media', 'popular'],
+    view: ViewType.Articles,
     example: '/solidot/linux',
     parameters: { type: '消息类型。默认为 www. 在网站上方选择后复制子域名即可' },
     features: {
