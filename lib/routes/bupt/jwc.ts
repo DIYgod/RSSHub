@@ -38,7 +38,7 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['Yoruet'],
     handler,
-    url: 'https://jwc.bupt.edu.cn/',
+    url: 'jwc.bupt.edu.cn',
 };
 
 async function handler(ctx: Context) {

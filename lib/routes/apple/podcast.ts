@@ -24,7 +24,7 @@ export const route: Route = {
     name: '播客',
     maintainers: ['Acring'],
     handler,
-    url: 'https://www.apple.com.cn/apple-podcasts/',
+    url: 'www.apple.com.cn/apple-podcasts/',
 };
 
 async function handler(ctx) {

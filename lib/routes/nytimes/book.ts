@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
@@ -18,9 +18,19 @@ const categoryList = {
 
 export const route: Route = {
     path: '/book/:category?',
-    categories: ['traditional-media'],
+    categories: ['traditional-media', 'popular'],
+    view: ViewType.Notifications,
     example: '/nytimes/book/combined-print-and-e-book-nonfiction',
-    parameters: { category: 'N' },
+    parameters: {
+        category: {
+            description: 'Category, can be found on the [official page](https://www.nytimes.com/books/best-sellers/)',
+            options: Object.keys(categoryList).map((key) => ({
+                value: key,
+                label: categoryList[key],
+            })),
+            default: 'combined-print-and-e-book-nonfiction',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -36,22 +46,9 @@ export const route: Route = {
         },
     ],
     name: 'Best Seller Books',
-    maintainers: ['melvinto'],
+    maintainers: ['melvinto', 'pseudoyu'],
     handler,
     url: 'nytimes.com/',
-    description: `| Category                             |
-| ------------------------------------ |
-| combined-print-and-e-book-nonfiction |
-| hardcover-nonfiction                 |
-| paperback-nonfiction                 |
-| advice-how-to-and-miscellaneous      |
-| combined-print-and-e-book-fiction    |
-| hardcover-fiction                    |
-| trade-fiction-paperback              |
-| childrens-middle-grade-hardcover     |
-| picture-books                        |
-| series-books                         |
-| young-adult-hardcover                |`,
 };
 
 async function handler(ctx) {

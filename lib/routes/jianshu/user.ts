@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,8 +6,9 @@ import util from './utils';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/jianshu/user/yZq3ZV',
+    view: ViewType.Articles,
     parameters: { id: '作者 id, 可在作者主页 URL 中找到' },
     features: {
         requireConfig: false,

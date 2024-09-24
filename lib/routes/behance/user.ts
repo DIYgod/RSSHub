@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,9 +6,20 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:user/:type?',
-    categories: ['design'],
+    categories: ['design', 'popular'],
+    view: ViewType.Pictures,
     example: '/behance/mishapetrick',
-    parameters: { user: 'username', type: 'type, `projects` or `appreciated`, `projects` by default' },
+    parameters: {
+        user: 'username',
+        type: {
+            description: 'type',
+            options: [
+                { value: 'projects', label: 'projects' },
+                { value: 'appreciated', label: 'appreciated' },
+            ],
+            default: 'projects',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
