@@ -3714,7 +3714,8 @@
   "/leiphone/:do?/:keyword?": [],
   "/leiphone/newsflash": [],
   "/lemmy/:community/:sort?": [
-    "wb14123"
+    "wb14123",
+    "pseudoyu"
   ],
   "/lfsyd/home": [
     "auto-bot-ty"

@@ -39690,18 +39690,100 @@
       "/:community/:sort?": {
         "path": "/:community/:sort?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/lemmy/technology@lemmy.world/Hot",
         "parameters": {
           "community": "Lemmmy community, for example technology@lemmy.world",
-          "sort": "Sort by, defaut to Active"
+          "sort": {
+            "description": "Sort by",
+            "options": [
+              {
+                "value": "Active",
+                "label": "Active"
+              },
+              {
+                "value": "Hot",
+                "label": "Hot"
+              },
+              {
+                "value": "New",
+                "label": "New"
+              },
+              {
+                "value": "Old",
+                "label": "Old"
+              },
+              {
+                "value": "TopDay",
+                "label": "TopDay"
+              },
+              {
+                "value": "TopWeek",
+                "label": "TopWeek"
+              },
+              {
+                "value": "TopMonth",
+                "label": "TopMonth"
+              },
+              {
+                "value": "TopYear",
+                "label": "TopYear"
+              },
+              {
+                "value": "TopAll",
+                "label": "TopAll"
+              },
+              {
+                "value": "MostComments",
+                "label": "MostComments"
+              },
+              {
+                "value": "NewComments",
+                "label": "NewComments"
+              },
+              {
+                "value": "TopHour",
+                "label": "TopHour"
+              },
+              {
+                "value": "TopSixHour",
+                "label": "TopSixHour"
+              },
+              {
+                "value": "TopTwelveHour",
+                "label": "TopTwelveHour"
+              },
+              {
+                "value": "TopThreeMonths",
+                "label": "TopThreeMonths"
+              },
+              {
+                "value": "TopSixMonths",
+                "label": "TopSixMonths"
+              },
+              {
+                "value": "TopNineMonths",
+                "label": "TopNineMonths"
+              },
+              {
+                "value": "Controversial",
+                "label": "Controversial"
+              },
+              {
+                "value": "Scaled",
+                "label": "Scaled"
+              }
+            ],
+            "default": "Active"
+          }
         },
         "features": {
           "requireConfig": [
             {
               "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
-              "description": ""
+              "description": "Allow user to supply unsafe domain"
             }
           ],
           "requirePuppeteer": false,
@@ -39712,7 +39794,8 @@
         },
         "name": "Community",
         "maintainers": [
-          "wb14123"
+          "wb14123",
+          "pseudoyu"
         ],
         "location": "index.ts"
       }
