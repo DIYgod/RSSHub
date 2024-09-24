@@ -10802,8 +10802,10 @@
       "/latest": {
         "path": "/latest",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/caixin/latest",
         "parameters": {},
         "features": {
@@ -20356,8 +20358,10 @@
       "/espresso": {
         "path": "/espresso",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/economist/espresso",
         "parameters": {},
         "features": {
@@ -20386,8 +20390,10 @@
       "/:endpoint": {
         "path": "/:endpoint",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/economist/latest",
         "parameters": {
           "endpoint": "Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china"
@@ -29729,8 +29735,10 @@
       "/news": {
         "path": "/news",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/gq/news",
         "parameters": {},
         "features": {
@@ -37111,8 +37119,10 @@
       "/collection/:id": {
         "path": "/collection/:id",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/jianshu/collection/xYuZYD",
         "parameters": {
           "id": "专题 id, 可在专题页 URL 中找到"
@@ -37143,8 +37153,10 @@
       "/home": {
         "path": "/home",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/jianshu/home",
         "parameters": {},
         "features": {
@@ -37174,9 +37186,11 @@
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/jianshu/user/yZq3ZV",
+        "view": 0,
         "parameters": {
           "id": "作者 id, 可在作者主页 URL 中找到"
         },
@@ -47933,8 +47947,10 @@
       "/:category": {
         "path": "/:category",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/newyorker/latest",
         "parameters": {
           "category": "tab name. can be found at url"
@@ -48261,11 +48277,98 @@
       "/news/:lang?": {
         "path": "/news/:lang?",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/nhk/news/en",
         "parameters": {
-          "lang": "Language, see below, `en` by default"
+          "lang": {
+            "description": "Language, see below",
+            "options": [
+              {
+                "value": "ar",
+                "label": "العربية"
+              },
+              {
+                "value": "bn",
+                "label": "বাংলা"
+              },
+              {
+                "value": "my",
+                "label": "မြန်မာဘာသာစကား"
+              },
+              {
+                "value": "zh",
+                "label": "中文（简体）"
+              },
+              {
+                "value": "zt",
+                "label": "中文（繁體）"
+              },
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "fr",
+                "label": "Français"
+              },
+              {
+                "value": "hi",
+                "label": "हिन्दी"
+              },
+              {
+                "value": "id",
+                "label": "Bahasa Indonesia"
+              },
+              {
+                "value": "ko",
+                "label": "코리언"
+              },
+              {
+                "value": "fa",
+                "label": "فارسی"
+              },
+              {
+                "value": "pt",
+                "label": "Português"
+              },
+              {
+                "value": "ru",
+                "label": "Русский"
+              },
+              {
+                "value": "es",
+                "label": "Español"
+              },
+              {
+                "value": "sw",
+                "label": "Kiswahili"
+              },
+              {
+                "value": "th",
+                "label": "ภาษาไทย"
+              },
+              {
+                "value": "tr",
+                "label": "Türkçe"
+              },
+              {
+                "value": "uk",
+                "label": "Українська"
+              },
+              {
+                "value": "ur",
+                "label": "اردو"
+              },
+              {
+                "value": "vi",
+                "label": "Tiếng Việt"
+              }
+            ],
+            "default": "en"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -48286,7 +48389,8 @@
         ],
         "name": "WORLD-JAPAN - Top Stories",
         "maintainers": [
-          "TonyRL"
+          "TonyRL",
+          "pseudoyu"
         ],
         "description": "| العربية | বাংলা | မြန်မာဘာသာစကား | 中文（简体） | 中文（繁體） | English | Français |\n  | ------- | -- | ------------ | ------------ | ------------ | ------- | -------- |\n  | ar      | bn | my           | zh           | zt           | en      | fr       |\n\n  | हिन्दी | Bahasa Indonesia | 코리언 | فارسی | Português | Русский | Español |\n  | -- | ---------------- | ------ | ----- | --------- | ------- | ------- |\n  | hi | id               | ko     | fa    | pt        | ru      | es      |\n\n  | Kiswahili | ภาษาไทย | Türkçe | Українська | اردو | Tiếng Việt |\n  | --------- | ------- | ------ | ---------- | ---- | ---------- |\n  | sw        | th      | tr     | uk         | ur   | vi         |",
         "location": "news.ts"
@@ -51099,11 +51203,62 @@
       "/book/:category?": {
         "path": "/book/:category?",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
+        "view": 5,
         "example": "/nytimes/book/combined-print-and-e-book-nonfiction",
         "parameters": {
-          "category": "N"
+          "category": {
+            "description": "Category, can be found on the [official page](https://www.nytimes.com/books/best-sellers/)",
+            "options": [
+              {
+                "value": "combined-print-and-e-book-nonfiction",
+                "label": "非虚构类 - 综合"
+              },
+              {
+                "value": "hardcover-nonfiction",
+                "label": "非虚构类 - 精装本"
+              },
+              {
+                "value": "paperback-nonfiction",
+                "label": "非虚构类 - 平装本"
+              },
+              {
+                "value": "advice-how-to-and-miscellaneous",
+                "label": "工具类"
+              },
+              {
+                "value": "combined-print-and-e-book-fiction",
+                "label": "虚构类 - 综合"
+              },
+              {
+                "value": "hardcover-fiction",
+                "label": "虚构类 - 精装本"
+              },
+              {
+                "value": "trade-fiction-paperback",
+                "label": "虚构类 - 平装本"
+              },
+              {
+                "value": "childrens-middle-grade-hardcover",
+                "label": "儿童 - 中年级"
+              },
+              {
+                "value": "picture-books",
+                "label": "儿童 - 绘本"
+              },
+              {
+                "value": "series-books",
+                "label": "儿童 - 系列图书"
+              },
+              {
+                "value": "young-adult-hardcover",
+                "label": "青少年"
+              }
+            ],
+            "default": "combined-print-and-e-book-nonfiction"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -51123,10 +51278,10 @@
         ],
         "name": "Best Seller Books",
         "maintainers": [
-          "melvinto"
+          "melvinto",
+          "pseudoyu"
         ],
         "url": "nytimes.com/",
-        "description": "| Category                             |\n| ------------------------------------ |\n| combined-print-and-e-book-nonfiction |\n| hardcover-nonfiction                 |\n| paperback-nonfiction                 |\n| advice-how-to-and-miscellaneous      |\n| combined-print-and-e-book-fiction    |\n| hardcover-fiction                    |\n| trade-fiction-paperback              |\n| childrens-middle-grade-hardcover     |\n| picture-books                        |\n| series-books                         |\n| young-adult-hardcover                |",
         "location": "book.ts"
       },
       "/daily_briefing_chinese": {
@@ -51164,11 +51319,33 @@
       "/:lang?": {
         "path": "/:lang?",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/nytimes/dual",
         "parameters": {
-          "lang": "language, default to Chinese"
+          "lang": {
+            "description": "language, default to Chinese",
+            "options": [
+              {
+                "value": "dual",
+                "label": "Chinese-English"
+              },
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "traditionalchinese",
+                "label": "Traditional Chinese"
+              },
+              {
+                "value": "dual-traditionalchinese",
+                "label": "Chinese-English (Traditional Chinese)"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -51188,10 +51365,11 @@
         ],
         "name": "News",
         "maintainers": [
-          "HenryQW"
+          "HenryQW",
+          "pseudoyu"
         ],
         "url": "nytimes.com/",
-        "description": "By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.\n\n  | Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |\n  | ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |\n  | (empty)            | dual            | en      | dual-traditionalchinese               | traditionalchinese  |",
+        "description": "By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.",
         "location": "index.ts"
       }
     },
@@ -63100,8 +63278,10 @@
       "/:type?": {
         "path": "/:type?",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/solidot/linux",
         "parameters": {
           "type": "消息类型。默认为 www. 在网站上方选择后复制子域名即可"
@@ -75137,6 +75317,11 @@
       "/user/:user_id/:category": {
         "path": "/user/:user_id/:category",
         "name": "用户笔记",
+        "categories": [
+          "social-media",
+          "popular"
+        ],
+        "view": 0,
         "maintainers": [
           "lotosbin"
         ],

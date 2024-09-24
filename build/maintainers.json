@@ -4300,7 +4300,8 @@
     "Andiedie"
   ],
   "/nhk/news/:lang?": [
-    "TonyRL"
+    "TonyRL",
+    "pseudoyu"
   ],
   "/niaogebiji/cat/:cat": [
     "cKotoriKat"
@@ -4602,14 +4603,16 @@
     "xtexChooser"
   ],
   "/nytimes/book/:category?": [
-    "melvinto"
+    "melvinto",
+    "pseudoyu"
   ],
   "/nytimes/daily_briefing_chinese": [
     "yueyericardo",
     "nczitzk"
   ],
   "/nytimes/:lang?": [
-    "HenryQW"
+    "HenryQW",
+    "pseudoyu"
   ],
   "/obsidian/publish/:id": [
     "Xy2002"
