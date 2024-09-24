@@ -1,6 +1,6 @@
 import { Route, DataItem } from '@/types';
 import { load } from 'cheerio';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import { getTitle } from './utils';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
