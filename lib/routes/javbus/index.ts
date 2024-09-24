@@ -9,15 +9,11 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const toSize = (raw) => {
     const matches = raw.match(/(\d+(\.\d+)?)(\w+)/);
     return matches[3] === 'GB' ? matches[1] * 1024 : matches[1];
 };
-
-const allowDomain = new Set(['javbus.com', 'javbus.org', 'javsee.icu', 'javsee.one']);
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -48,10 +44,6 @@ async function handler(ctx) {
 
     const rootUrl = `https://www.${domain}`;
     const westernUrl = `https://www.${westernDomain}`;
-
-    if (!config.feature.allow_user_supply_unsafe_domain && (!allowDomain.has(new URL(`https://${domain}/`).hostname) || !allowDomain.has(new URL(`https://${westernDomain}/`).hostname))) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
-    }
 
     const currentUrl = `${isWestern ? westernUrl : rootUrl}${getSubPath(ctx)
         .replace(/^\/western/, '')

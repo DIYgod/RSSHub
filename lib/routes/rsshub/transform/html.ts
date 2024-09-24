@@ -1,8 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/transform/html/:url/:routeParams',
@@ -10,12 +8,6 @@ export const route: Route = {
     example: '/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a',
     parameters: { url: '`encodeURIComponent`ed URL address', routeParams: 'Transformation rules, requires URL encode' },
     features: {
-        requireConfig: [
-            {
-                name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
-                description: '',
-            },
-        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -57,9 +49,6 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
 };
 
 async function handler(ctx) {
-    if (!config.feature.allow_user_supply_unsafe_domain) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
-    }
     const url = ctx.req.param('url');
     const response = await got({
         method: 'get',

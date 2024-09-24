@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 
-import { decodeCipherText, composeMagnetUrl, getUrlType, ensureDomain } from './utils';
+import { decodeCipherText, composeMagnetUrl, getUrlType, defaultDomain } from './utils';
 
 // 兼容没有 script 标签的情况，直接解析 dom
 function getDomList($, detailUrl) {
@@ -111,7 +111,7 @@ async function handler(ctx) {
     if (/^\d+$/.test(pureId)) {
         detailType = 'detail';
     }
-    const detailUrl = `${ensureDomain(ctx, domain)}/${detailType}/${pureId}.html`;
+    const detailUrl = `https://${domain ?? defaultDomain}/${detailType}/${pureId}.html`;
 
     const res = await got(detailUrl);
     const $ = load(res.data);

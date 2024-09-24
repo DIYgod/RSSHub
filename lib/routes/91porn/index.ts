@@ -8,7 +8,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { domainValidation } from './utils';
 
 export const route: Route = {
     path: '/:lang?',
@@ -42,7 +41,6 @@ async function handler(ctx) {
     const { domain = '91porn.com' } = ctx.req.query();
     const siteUrl = `https://${domain}/index.php`;
     const { lang = 'en_US' } = ctx.req.param();
-    domainValidation(domain);
 
     const response = await got.post(siteUrl, {
         form: {

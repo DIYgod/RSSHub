@@ -1,7 +1,5 @@
 import { Route, ViewType } from '@/types';
 import utils from './utils';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
@@ -28,9 +26,6 @@ async function handler(ctx) {
     const [, pureUsername, site] = username.match(/@?(\w+)@(\w+\.\w+)/) || [];
     if (!pureUsername || !site) {
         throw new InvalidParameterError('Provide a valid Misskey username');
-    }
-    if (!config.feature.allow_user_supply_unsafe_domain && !utils.allowSiteList.includes(site)) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
     const { accountData } = await utils.getUserTimelineByUsername(pureUsername, site);

@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-import { defaultDomain, ensureDomain } from './utils';
+import { defaultDomain } from './utils';
 
 function getItemList($, type) {
     const list = $(`#${type} .list-group-item`)
@@ -45,7 +45,7 @@ async function handler(ctx) {
     const { type = 'vod' } = ctx.req.param();
     const { domain } = ctx.req.query();
 
-    const hostUrl = ensureDomain(ctx, domain);
+    const hostUrl = `https://${domain ?? defaultDomain}`;
     const latestUrl = `${hostUrl}/custom/update.html`;
 
     const res = await got.get(latestUrl);

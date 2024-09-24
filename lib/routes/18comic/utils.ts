@@ -7,20 +7,10 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const defaultDomain = 'jmcomic1.me';
-// list of address: https://jmcomic2.bet
-const allowDomain = new Set(['18comic.vip', '18comic.org', 'jmcomic.me', 'jmcomic1.me', 'jm-comic3.art', 'jm-comic.club', 'jm-comic2.ark']);
 
-const getRootUrl = (domain) => {
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(domain)) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
-    }
-
-    return `https://${domain}`;
-};
+const getRootUrl = (domain) => `https://${domain}`;
 
 const ProcessItems = async (ctx, currentUrl, rootUrl) => {
     currentUrl = currentUrl.replace(/\?$/, '');

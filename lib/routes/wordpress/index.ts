@@ -5,17 +5,12 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 import { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterParamsForUrl, parseFilterStr } from './util';
 
 async function handler(ctx) {
     const { url = 'https://wordpress.org/news', filter } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
-
-    if (!config.feature.allow_user_supply_unsafe_domain) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
-    }
 
     if (!/^(https?):\/\/[^\s#$./?].\S*$/i.test(url)) {
         throw new Error('Invalid URL');
@@ -148,19 +143,12 @@ export const route: Route = {
   You can also subscribe to multiple categories. \`/category/Podcast,Community\` to subscribe to both the Podcast and Community categories. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community).
 
   Categories and tags can be combined as well. \`/category/Releases/tag/tagging\` to subscribe to the Releases category and the tagging tag. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging).
-  
+
   You can also search for keywords. \`/search/Blog\` to search for the keyword "Blog". In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog).
   :::`,
     categories: ['blog'],
 
     features: {
-        requireConfig: [
-            {
-                name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
-                description: `This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`,
-                optional: false,
-            },
-        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportRadar: false,

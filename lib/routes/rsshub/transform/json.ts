@@ -1,8 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 function jsonGet(obj, attr) {
     if (typeof attr !== 'string') {
@@ -22,12 +20,6 @@ export const route: Route = {
     example: '/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body',
     parameters: { url: '`encodeURIComponent`ed URL address', routeParams: 'Transformation rules, requires URL encode' },
     features: {
-        requireConfig: [
-            {
-                name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
-                description: '',
-            },
-        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -70,9 +62,6 @@ JSON Path only supports format like \`a.b.c\`. if you need to access arrays, lik
 };
 
 async function handler(ctx) {
-    if (!config.feature.allow_user_supply_unsafe_domain) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
-    }
     const url = ctx.req.param('url');
     const response = await got({
         method: 'get',

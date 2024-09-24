@@ -1,8 +1,6 @@
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/timeline/:site/:only_media?',
@@ -31,15 +29,11 @@ export const route: Route = {
     name: 'Instance timeline (local)',
     maintainers: ['hoilc'],
     handler,
-    description: `If the instance address is not \`mastodon.social\` or \`pawoo.net\`, then the route requires \`ALLOW_USER_SUPPLY_UNSAFE_DOMAIN\` to be \`true\`.`,
 };
 
 async function handler(ctx) {
     const site = ctx.req.param('site');
     const only_media = ctx.req.param('only_media') ? 'true' : 'false';
-    if (!config.feature.allow_user_supply_unsafe_domain && !utils.allowSiteList.includes(site)) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
-    }
 
     const url = `http://${site}/api/v1/timelines/public?local=true&only_media=${only_media}`;
 

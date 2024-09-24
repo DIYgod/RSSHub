@@ -83,7 +83,6 @@ jobs:
         run: pnpm start &
         env:
           ALLOW_USER_HOTLINK_TEMPLATE: true
-          ALLOW_USER_SUPPLY_UNSAFE_DOMAIN: true
           NODE_ENV: dev
           LOGGER_LEVEL: debug
 

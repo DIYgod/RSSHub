@@ -134,6 +134,9 @@ importers:
       ip-regex:
         specifier: 5.0.0
         version: 5.0.0
+      ipaddr.js:
+        specifier: ^2.2.0
+        version: 2.2.0
       jsdom:
         specifier: 25.0.1
         version: 25.0.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
@@ -3656,6 +3659,10 @@ packages:
   ip-regex@5.0.0:
     resolution: {integrity: sha512-fOCG6lhoKKakwv+C6KdsOnGvgXnmgfmp0myi3bcNwj3qfwPAxRKWEuFhvEFF7ceYIz6+1jRZ+yguLFAmUNPEfw==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
+  ipaddr.js@2.2.0:
+    resolution: {integrity: sha512-Ag3wB2o37wslZS19hZqorUnrnzSkpOVy+IiiDEiTqNubEYpYuHWIf6K4psgN2ZWKExS4xhVCrRVfb/wfW8fWJA==}
+    engines: {node: '>= 10'}
 
   is-arrayish@0.2.1:
     resolution: {integrity: sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==}
@@ -9556,6 +9563,8 @@ snapshots:
   ip-regex@4.3.0: {}
 
   ip-regex@5.0.0: {}
+
+  ipaddr.js@2.2.0: {}
 
   is-arrayish@0.2.1: {}
 
