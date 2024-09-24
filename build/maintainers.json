@@ -1176,7 +1176,9 @@
   "/chaincatcher/news": [
     "TonyRL"
   ],
-  "/changba/:userid": [],
+  "/changba/:userid": [
+    "pseudoyu"
+  ],
   "/chaoxing/qk/:id/:needContent?": [
     "nczitzk"
   ],

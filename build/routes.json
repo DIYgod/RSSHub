@@ -12588,8 +12588,10 @@
       "/:userid": {
         "path": "/:userid",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 4,
         "example": "/changba/skp6hhF59n48R-UpqO3izw",
         "parameters": {
           "userid": "用户ID, 可在对应分享页面的 URL 中找到"
@@ -12610,7 +12612,9 @@
           }
         ],
         "name": "用户",
-        "maintainers": [],
+        "maintainers": [
+          "pseudoyu"
+        ],
         "location": "user.ts"
       }
     },
@@ -37286,7 +37290,15 @@
         "example": "/jike/topic/556688fae4b00c57d9dd46ee",
         "parameters": {
           "id": "圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到",
-          "showUid": "是否在内容中显示用户信息，设置为 1 则开启"
+          "showUid": {
+            "description": "是否在内容中显示用户信息，设置为 1 则开启",
+            "options": [
+              {
+                "value": "1",
+                "label": "显示"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -45426,8 +45438,10 @@
       "/notes/featured/:site": {
         "path": "/notes/featured/:site",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 1,
         "example": "/misskey/notes/featured/misskey.io",
         "parameters": {
           "site": "instance address, domain only, without `http://` or `https://` protocol header"
@@ -45449,8 +45463,10 @@
       "/users/notes/:username": {
         "path": "/users/notes/:username",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 1,
         "example": "/misskey/users/notes/support@misskey.io",
         "parameters": {
           "username": "misskey username format, like support@misskey.io"
@@ -55011,7 +55027,6 @@
           },
           "sort": {
             "description": "sorting method, leave empty for `Best`",
-            "default": "mr",
             "options": [
               {
                 "label": "Most Recent",
@@ -56027,7 +56042,7 @@
       }
     },
     "name": "起点",
-    "url": "book.qidian.com"
+    "url": "qidian.com"
   },
   "qingting": {
     "routes": {
