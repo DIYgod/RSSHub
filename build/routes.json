@@ -39792,7 +39792,7 @@
           "requireConfig": [
             {
               "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
-              "description": "Allow user to supply unsafe domain"
+              "description": ""
             }
           ],
           "requirePuppeteer": false,
@@ -39809,7 +39809,8 @@
         "location": "index.ts"
       }
     },
-    "name": "Lemmy"
+    "name": "Lemmy",
+    "url": "https://join-lemmy.org/"
   },
   "lfsyd": {
     "routes": {
