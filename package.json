@@ -83,7 +83,7 @@
         "fanfou-sdk": "5.0.0",
         "form-data": "4.0.0",
         "googleapis": "144.0.0",
-        "hono": "4.6.2",
+        "hono": "4.6.3",
         "html-to-text": "9.0.5",
         "http-cookie-agent": "6.0.6",
         "https-proxy-agent": "7.0.5",
@@ -193,7 +193,7 @@
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
-    "packageManager": "pnpm@9.10.0",
+    "packageManager": "pnpm@9.11.0",
     "engines": {
         "node": ">=22"
     }
