@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,7 +11,8 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/category/:category/:staffpicks?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.Videos,
     example: '/vimeo/category/documentary/staffpicks',
     parameters: {
         category: 'Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ',

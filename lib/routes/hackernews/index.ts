@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,6 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/:section?/:type?/:user?',
     categories: ['programming', 'popular'],
+    view: ViewType.Articles,
     example: '/hackernews/threads/comments_list/dang',
     parameters: {
         section: {
