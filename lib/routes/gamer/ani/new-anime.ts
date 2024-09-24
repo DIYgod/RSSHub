@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '動畫瘋 - 最後更新',
-    maintainers: ['pseudoyu'],
+    maintainers: ['maple3142', 'pseudoyu'],
     handler,
     url: 'ani.gamer.com.tw/',
 };

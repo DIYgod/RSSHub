@@ -29,7 +29,7 @@ export const route: Route = {
         },
     ],
     name: '用户',
-    maintainers: ['pseudoyu'],
+    maintainers: ['kt286', 'xizeyoupan', 'pseudoyu'],
     handler,
 };
 
