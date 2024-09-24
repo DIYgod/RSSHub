@@ -5,10 +5,10 @@ import { load } from 'cheerio'; // An HTML parser with an API similar to jQuery
 // import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/section/:section',
+    path: '/home',
     categories: ['traditional-media'],
-    example: '/dealstreetasia/section/private-equity',
-    parameters: { section: 'target section' },
+    example: '/dealstreetasia/home',
+    // parameters: { section: 'target section' },
     // features: {
     // requireConfig: false,
     // requirePuppeteer: false,
@@ -22,37 +22,34 @@ export const route: Route = {
             source: ['dealstreetasia.com/'],
         },
     ],
-    name: 'Deal Street Asia - Section',
+    name: 'Deal Street Asia - Home',
     maintainers: ['jack2game'],
     handler,
     url: 'dealstreetasia.com/',
 };
 
-async function handler(ctx) {
-    const section = ctx.req.param('section');
-    const items = await fetchPage(section);
+async function handler() {
+    // const section = ctx.req.param('section');
+    // const items = await fetchPage(section);
+    const items = await fetchPage();
 
     return items;
 }
 
-async function fetchPage(section: string) {
+async function fetchPage() {
     const baseUrl = 'https://dealstreetasia.com'; // Define base URL
-    const response = await ofetch(`${baseUrl}/section/${section}`);
+    const response = await ofetch(`${baseUrl}/`);
     const $ = load(response);
-
-    const headingText = $('h1.main-list-heading').text();
-
-    const origin1 = $('.main-list-row');
-    // console.log('Number of items found:', origin1.length); // Log the number of origin1 found
+    const origin1 = $('.card-lead-story .card-body-inner');
+    // console.log('Number of items found:', origin1.length);
     const list1 = origin1.toArray().map((item) => {
         item = $(item);
-        const titleElement = item.find('h3'); // Get the title element
+        const titleElement = item.find('h2.card-title'); // Get the title element
         const title = titleElement.text(); // Extract the title text
         const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
         const link = `${baseUrl}${storyLink}`; // Create absolute link
         const category = item.find('.category-link a').text(); // Get category link text
 
-        // console.log('Item:', { title, link, pubDate, category }); // Log each item to check values
         // console.log('Item:', { title, link, category }); // Log each item to check values
 
         return {
@@ -65,7 +62,7 @@ async function fetchPage(section: string) {
         };
     });
 
-    const origin2 = $('.card-deck .card-body');
+    const origin2 = $('.card-side-lead-story');
     // console.log('Number of items found:', origin2.length);
     const list2 = origin2.toArray().map((item) => {
         item = $(item);
@@ -75,7 +72,6 @@ async function fetchPage(section: string) {
         const link = `${baseUrl}${storyLink}`; // Create absolute link
         const category = item.find('.category-link a').text(); // Get category link text
 
-        // console.log('Item:', { title, link, pubDate, category }); // Log each item to check values
         // console.log('Item:', { title, link, category }); // Log each item to check values
 
         return {
@@ -88,17 +84,16 @@ async function fetchPage(section: string) {
         };
     });
 
-    const origin3 = $('.section-hero.card .card-body'); // Target card-body within the specific section-hero card context
+    const origin3 = $('.divide-section-equally .story-with-image');
     // console.log('Number of items found:', origin3.length);
     const list3 = origin3.toArray().map((item) => {
         item = $(item);
-        const titleElement = item.find('h2.card-title'); // Updated to target the correct title element
+        const titleElement = item.find('h3'); // Updated to target the correct title element
         const title = titleElement.text(); // Extract the title text
         const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
         const link = `${baseUrl}${storyLink}`; // Create absolute link
         const category = item.find('.category-link a').text(); // Get category link text
 
-        // console.log('Item:', { title, link, pubDate, category }); // Log each item to check values
         // console.log('Item:', { title, link, category }); // Log each item to check values
 
         return {
@@ -144,9 +139,9 @@ async function fetchPage(section: string) {
     );
 
     return {
-        title: 'Deal Street Asia - ' + headingText,
+        title: 'Deal Street Asia',
         language: 'en',
         item: items,
-        link: 'https://dealstreetasia.com/section/' + section + '/',
+        link: 'https://dealstreetasia.com/',
     };
 }
