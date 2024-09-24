@@ -42,10 +42,10 @@ async function handler() {
 
     const todayList = list.find((l) => l.weekday.id % 7 === day);
     const todayBgmId = new Set(todayList.items.map((t) => t.id.toString()));
-    const images = todayList.items.reduce((p, c) => {
-        p[c.id] = (c.images || {}).large;
-        return p;
-    }, {});
+    const images: { [key: string]: string } = {};
+    for (const item of todayList.items) {
+        images[item.id] = (item.images || {}).large;
+    }
     const todayBgm = data.items.filter((d) => todayBgmId.has(d.bgmId));
     for (const bgm of todayBgm) {
         bgm.image = images[bgm.bgmId];
