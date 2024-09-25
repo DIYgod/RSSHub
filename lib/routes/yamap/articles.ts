@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const base_url = 'https://yamap.com/activities/';
+const baseUrl = 'https://yamap.com/activities/';
 const host = 'https://api.yamap.com/v3/activities?page=1&per=24';
 
 
@@ -22,25 +22,24 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Yamap文章',
-    maintainers: ['Valuex'],
+    maintainers: ['valuex'],
     handler,
-    description: ``,
+    description: '',
 };
 
 async function handler() {
     const link = host;
     const response = await got(link);
     const metadata = response.data;
-    const recordNum = metadata.activities.length - 1 ;
+    // const recordNum = metadata.activities.length - 1 ;
 
-    const lists = metadata.activities.slice(0, recordNum).map((item) => ({
+    const lists = metadata.activities.map((item) => ({
         title: item.title,
-        link: base_url + item.id.toString(),
+        link: baseUrl + item.id.toString(),
         pubDate: parseDate(item.created_at),
         location: (mountainName) => {
-            try {mountainName = item.map.name;}
-            catch {mountainName = 'Japan';}
+            try { mountainName = item.map.name; }
+            catch { mountainName = 'Japan'; }
             return mountainName;
         },
     }));
@@ -49,11 +48,9 @@ async function handler() {
     const items = await Promise.all(
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
-                const title = item.title;
-                const tureLink = item.link;
-                const response = await got.get(tureLink);
+                const response = await got.get(item.link);
                 const $ = load(response.data);
-                item.title = title;
+                item.title = item.title + '-' + item.location;
                 item.description = $('div.ActivitiesId__Body main').html();
                 item.pubDate = timezone(parseDate($('span[class=ActivityDetailTabLayout__Middle__Date]').text()), 8);
                 return item;
@@ -63,7 +60,7 @@ async function handler() {
 
     return {
         title: 'Yamap',
-        link:host,
+        link: baseUrl,
         description: 'Yamap',
         item: items,
     };
