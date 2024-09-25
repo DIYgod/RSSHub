@@ -37,11 +37,7 @@ async function handler() {
         title: item.title,
         link: baseUrl + item.id.toString(),
         pubDate: parseDate(item.created_at),
-        location: (mountainName) => {
-            try { mountainName = item.map.name; }
-            catch { mountainName = 'Japan'; }
-            return mountainName;
-        },
+        location: item.map.name || 'Japan',
     }));
 
 
