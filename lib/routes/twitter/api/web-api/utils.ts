@@ -56,7 +56,7 @@ const getAuth = async (retry: number) => {
 };
 
 export const twitterGot = async (url, params) => {
-    const auth = await getAuth(10);
+    const auth = await getAuth(30);
 
     if (!auth) {
         throw new ConfigNotFoundError('No valid Twitter token found');
