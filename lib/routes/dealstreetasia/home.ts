@@ -106,7 +106,7 @@ async function fetchPage() {
         };
     });
 
-    const list = list3.concat(list2.concat(list1));
+    const list = [...list3, ...list2, ...list1];
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
@@ -119,6 +119,23 @@ async function fetchPage() {
                 // Remove <h1> from the Story_wrapper
                 storyWrapper.find('h1').remove();
                 storyWrapper.find('div[class*="Tags_wrapper"]').remove();
+                storyWrapper.find('div[class*="Story_side_bar_content"]').remove();
+                storyWrapper.find('div[class*="print_watermark_overlay"]').remove();
+                storyWrapper.find('div[class*="overlay"]').remove();
+                storyWrapper.find('div[class*="subscribe-now"]').remove();
+                storyWrapper.find('img').each((i, img) => {
+                    const src = $(img).attr('src'); // Extract the src attribute
+                    $(img).attr('src', src); // Keep only the src attribute
+                    $(img).removeAttr('alt'); // Remove alt
+                    $(img).removeAttr('class'); // Remove class
+                    $(img).removeAttr('style'); // Remove style
+                    $(img).removeAttr('width'); // Remove width or any other attributes
+                    $(img).removeAttr('decoding');
+                    $(img).removeAttr('sizes');
+                    $(img).removeAttr('srcset');
+                    $(img).removeAttr('data-nimg');
+                    $(img).removeAttr('referrerpolicy');
+                });
 
                 // Assign the remaining HTML to item.description
                 item.description = storyWrapper.html();
