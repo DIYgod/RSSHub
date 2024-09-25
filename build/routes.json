@@ -47326,7 +47326,6 @@
     "url": "yjsy.ncepu.edu.cn"
   },
   "ncku": {
-    "name": "ncku",
     "routes": {
       "/csie/:catagory?": {
         "zh-TW": {
@@ -47362,7 +47361,9 @@
         ],
         "location": "csie.ts"
       }
-    }
+    },
+    "name": "National Cheng Kung University",
+    "url": "ncku.edu.tw"
   },
   "ncpssd": {
     "routes": {

@@ -7429,7 +7429,7 @@
         docs:"https://docs.rsshub.app/routes/forecast",
         source:[ "/cn/index.htm" ],
         target:"/ncc-cma/cmdp/image/glbraina90_" } ] },
-  "ncku.edu.tw":{ _name:"ncku",
+  "ncku.edu.tw":{ _name:"National Cheng Kung University",
     "www.csie":[ { title:"CSIE News",
         docs:"https://docs.rsshub.app/routes/university",
         source:[ "/zh-hant/news/:catagory?/",
