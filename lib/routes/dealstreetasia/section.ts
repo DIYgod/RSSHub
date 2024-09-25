@@ -1,7 +1,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch'; // Unified request library used
+// import ofetch from '@/utils/ofetch'; // Unified request library used
 import { load } from 'cheerio'; // An HTML parser with an API similar to jQuery
+import puppeteer from '@/utils/puppeteer';
 // import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -37,7 +38,33 @@ async function handler(ctx) {
 
 async function fetchPage(section: string) {
     const baseUrl = 'https://dealstreetasia.com'; // Define base URL
-    const response = await ofetch(`${baseUrl}/section/${section}/`);
+
+    // require puppeteer utility class and initialise a browser instance
+    const browser = await puppeteer();
+    // open a new tab
+    const page = await browser.newPage();
+    // intercept all requests
+    await page.setRequestInterception(true);
+    // only allow certain types of requests to proceed
+    page.on('request', (request) => {
+        // in this case, we only allow document requests to proceed
+        request.resourceType() === 'document' ? request.continue() : request.abort();
+    });
+    // visit the target link
+    const link = `${baseUrl}/section/${section}/`;
+    // ofetch requests will be logged automatically
+    // but puppeteer requests are not
+    // so we need to log them manually
+
+    await page.goto(link, {
+        // specify how long to wait for the page to load
+        waitUntil: 'domcontentloaded',
+    });
+    // retrieve the HTML content of the page
+    const response = await page.content();
+    // close the tab
+    page.close();
+
     const $ = load(response);
 
     const headingText = $('h1.main-list-heading').text();
@@ -53,7 +80,6 @@ async function fetchPage(section: string) {
         const category = item.find('.category-link a').text(); // Get category link text
 
         // console.log('Item:', { title, link, pubDate, category }); // Log each item to check values
-        // console.log('Item:', { title, link, category }); // Log each item to check values
 
         return {
             title: title || 'No title', // Default title in case it's empty
@@ -76,7 +102,6 @@ async function fetchPage(section: string) {
         const category = item.find('.category-link a').text(); // Get category link text
 
         // console.log('Item:', { title, link, pubDate, category }); // Log each item to check values
-        // console.log('Item:', { title, link, category }); // Log each item to check values
 
         return {
             title: title || 'No title', // Default title in case it's empty
@@ -99,7 +124,6 @@ async function fetchPage(section: string) {
         const category = item.find('.category-link a').text(); // Get category link text
 
         // console.log('Item:', { title, link, pubDate, category }); // Log each item to check values
-        // console.log('Item:', { title, link, category }); // Log each item to check values
 
         return {
             title: title || 'No title', // Default title in case it's empty
@@ -115,9 +139,24 @@ async function fetchPage(section: string) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
+                // highlight-start
+                // reuse the browser instance and open a new tab
+                const page = await browser.newPage();
+                // set up request interception to only allow document requests
+                await page.setRequestInterception(true);
+                page.on('request', (request) => {
+                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                });
 
+                await page.goto(item.link, {
+                    waitUntil: 'domcontentloaded',
+                });
+                const response = await page.content();
+                // close the tab after retrieving the HTML content
+                page.close();
+
+                const $ = load(response);
+                // highlight-end
                 // Capture the content of any div with a class that includes "Story_wrapper"
                 const storyWrapper = $('div[class*="Story_wrapper"]');
 
@@ -159,6 +198,9 @@ async function fetchPage(section: string) {
             })
         )
     );
+
+    // close the browser instance after all requests are done
+    browser.close();
 
     return {
         title: 'Deal Street Asia - ' + headingText,

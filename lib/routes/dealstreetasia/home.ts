@@ -1,7 +1,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch'; // Unified request library used
+// import ofetch from '@/utils/ofetch'; // Unified request library used
 import { load } from 'cheerio'; // An HTML parser with an API similar to jQuery
+import puppeteer from '@/utils/puppeteer';
 // import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -38,8 +39,37 @@ async function handler() {
 
 async function fetchPage() {
     const baseUrl = 'https://dealstreetasia.com'; // Define base URL
-    const response = await ofetch(`${baseUrl}/`);
+
+    // require puppeteer utility class and initialise a browser instance
+    const browser = await puppeteer();
+    // open a new tab
+    const page = await browser.newPage();
+    // intercept all requests
+    await page.setRequestInterception(true);
+    // only allow certain types of requests to proceed
+    page.on('request', (request) => {
+        // in this case, we only allow document requests to proceed
+        request.resourceType() === 'document' ? request.continue() : request.abort();
+    });
+    // visit the target link
+    const link = `${baseUrl}/`;
+    // ofetch requests will be logged automatically
+    // but puppeteer requests are not
+    // so we need to log them manually
+
+    await page.goto(link, {
+        // specify how long to wait for the page to load
+        waitUntil: 'domcontentloaded',
+    });
+    // retrieve the HTML content of the page
+    const response = await page.content();
+    // close the tab
+    page.close();
+
     const $ = load(response);
+
+    // don't forget to close the browser instance at the end of the function
+
     const origin1 = $('.card-lead-story .card-body-inner');
     // console.log('Number of items found:', origin1.length);
     const list1 = origin1.toArray().map((item) => {
@@ -110,9 +140,24 @@ async function fetchPage() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
+                // highlight-start
+                // reuse the browser instance and open a new tab
+                const page = await browser.newPage();
+                // set up request interception to only allow document requests
+                await page.setRequestInterception(true);
+                page.on('request', (request) => {
+                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                });
 
+                await page.goto(item.link, {
+                    waitUntil: 'domcontentloaded',
+                });
+                const response = await page.content();
+                // close the tab after retrieving the HTML content
+                page.close();
+
+                const $ = load(response);
+                // highlight-end
                 // Capture the content of any div with a class that includes "Story_wrapper"
                 const storyWrapper = $('div[class*="Story_wrapper"]');
 
@@ -154,6 +199,9 @@ async function fetchPage() {
             })
         )
     );
+
+    // close the browser instance after all requests are done
+    browser.close();
 
     return {
         title: 'Deal Street Asia',
