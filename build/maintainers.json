@@ -4222,6 +4222,9 @@
   "/ncepu/master/:type": [
     "nilleo"
   ],
+  "/ncku/csie/:catagory?": [
+    "simbafs"
+  ],
   "/ncpssd/newlist": [
     "LyleLee"
   ],
