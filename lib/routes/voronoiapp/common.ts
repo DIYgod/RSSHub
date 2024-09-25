@@ -236,7 +236,7 @@ export const CommonRouteProperties: Pick<Route, 'url' | 'categories' | 'maintain
     url: 'voronoiapp.com',
     categories: ['picture'],
     view: ViewType.Pictures,
-    maintainers: ['cesaryuan'],
+    maintainers: ['Cesaryuan'],
 };
 
 export const CommonDataProperties: Pick<Data, 'allowEmpty' | 'image'> | { logo: string; icon: string } = {
