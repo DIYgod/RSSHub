@@ -55,7 +55,7 @@ export async function getPostItems(params: {
     const data = await ofetch<Post[]>(url.toString());
     const items: DataItem[] = data.map((post) => ({
         title: post.headline,
-        link: `https://www.voronoiapp.com/${post.category.toLowerCase()}/${post.link}`,
+        link: `https://www.voronoiapp.com/${post.category.split(' ').join('-').toLowerCase()}/${post.link}`,
         pubDate: parseDate(post.published_at),
         description: `<img src="https://cdn.voronoiapp.com/public/${post.webp_image}" />
         ${post.description}`,
