@@ -12,7 +12,7 @@ export const route: Route = {
             target: (_, url) => {
                 const parsedURL = new URL(url);
                 const keyword = parsedURL.searchParams.get('search');
-                return `/search/${keyword}`;
+                return `/voronoiapp/search/${keyword}`;
             },
         },
     ],
