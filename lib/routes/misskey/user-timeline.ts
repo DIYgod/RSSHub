@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import utils from './utils';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -6,7 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/users/notes/:username',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/misskey/users/notes/support@misskey.io',
     parameters: { username: 'misskey username format, like support@misskey.io' },
     features: {

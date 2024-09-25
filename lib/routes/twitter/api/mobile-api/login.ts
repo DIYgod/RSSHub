@@ -154,7 +154,7 @@ async function login({ username, password, authenticationSecret }) {
                     if (subtask.open_account) {
                         authentication = subtask.open_account;
                         break;
-                    } else if (subtask.subtask_id === 'LoginTwoFactorAuthChallenge') {
+                    } else if (authenticationSecret && subtask.subtask_id === 'LoginTwoFactorAuthChallenge') {
                         const token = authenticator.generate(authenticationSecret);
 
                         const task5 = await got.post('https://api.x.com/1.1/onboarding/task.json', {

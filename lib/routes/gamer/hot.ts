@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,9 +7,10 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/hot/:bsn',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Articles,
     example: '/gamer/hot/47157',
-    parameters: { bsn: '板块 id，在 URL 可以找到' },
+    parameters: { bsn: '板塊 id，在 URL 可以找到' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

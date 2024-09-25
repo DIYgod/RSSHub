@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { topicDataHanding, constructTopicEntry } from './utils';
@@ -9,9 +9,16 @@ const urlRegex = /(https?:\/\/[^\s"'<>]+)/g;
 
 export const route: Route = {
     path: '/topic/:id/:showUid?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/jike/topic/556688fae4b00c57d9dd46ee',
-    parameters: { id: '圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到', showUid: '是否在内容中显示用户信息，设置为 1 则开启' },
+    parameters: {
+        id: '圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到',
+        showUid: {
+            description: '是否在内容中显示用户信息，设置为 1 则开启',
+            options: [{ value: '1', label: '显示' }],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

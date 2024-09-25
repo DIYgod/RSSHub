@@ -75,7 +75,7 @@ async function handler(ctx) {
 
     return {
         title: `${items[0].author} | LOFTER`,
-        link: rootUrl,
+        link: `https://${rootUrl}`,
         item: items,
         description: response.data.response.posts[0].post.blogInfo.selfIntro,
     };

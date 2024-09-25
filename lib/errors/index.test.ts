@@ -22,7 +22,7 @@ describe('httperror', () => {
     it(`httperror`, async () => {
         const response = await request.get('/test/httperror');
         expect(response.status).toBe(503);
-        expect(response.text).toMatch('FetchError: [GET] &quot;https://httpbingo.org/status/404&quot;: 404 Not Found');
+        expect(response.text).toContain('FetchError: [GET] &quot;https://httpbingo.org/status/404&quot;: 404 Not Found');
     }, 20000);
 });
 

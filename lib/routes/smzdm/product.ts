@@ -1,8 +1,7 @@
 import { Route, DataItem } from '@/types';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 
 export const route: Route = {
     path: '/product/:id',
@@ -56,7 +55,7 @@ async function handler(ctx) {
     const out = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link);
+                const response = await ofetch(item.link);
                 const $ = load(response);
 
                 // filter outdated articles

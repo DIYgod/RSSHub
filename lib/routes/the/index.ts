@@ -9,6 +9,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 import { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterParamsForUrl, parseFilterStr } from './util';
+import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { filter } = ctx.req.param();
@@ -35,6 +36,8 @@ export const handler = async (ctx) => {
         const guid = item.guid?.rendered ?? item.guid;
 
         const $$ = load(item.content?.rendered ?? item.content);
+
+        const publication = $$("a[id='publication']").text(); // Must be obtained before being removed
 
         const image = $$('img#poster').prop('data-srcset');
 
@@ -78,17 +81,17 @@ export const handler = async (ctx) => {
         return {
             title: item.title?.rendered ?? item.title ?? title,
             description,
-            pubDate: parseDate(item.date_gmt),
+            pubDate: timezone(parseDate(item.date_gmt), 0),
+            updated: timezone(parseDate(item.modified_gmt), 0),
             link: item.link,
             category: [...new Set(terminologies.flat().map((c) => c.name))],
-            author: item._embedded.author.map((a) => a.name).join('/'),
+            author: [...item._embedded.author, { name: publication }],
             guid,
             id: guid,
             content: {
                 html: description,
                 text: $$.text(),
             },
-            updated: parseDate(item.modified_gmt),
         };
     });
 
