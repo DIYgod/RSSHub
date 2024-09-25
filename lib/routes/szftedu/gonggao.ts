@@ -45,7 +45,7 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const thisUrl = item.link;
                 const trueLink = thisUrl.includes("http") ? thisUrl : host + thisUrl.substring(1);
-                const response = await got.get(trueLink);
+                const response = await got(trueLink);
                 const $ = load(response.data);
                 item.description = $('body').html();
                 item.pubDate = timezone(parseDate($('.item').first().text().replace('发布时间：', '')), 8);
