@@ -21,7 +21,6 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '园岭小学公告',
     maintainers: ['valuex'],
     handler,
     description: ``,
