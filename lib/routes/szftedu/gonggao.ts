@@ -23,7 +23,7 @@ export const route: Route = {
     },
     maintainers: ['valuex'],
     handler,
-    description: ``,
+    description: '',
 };
 
 async function handler() {
@@ -46,7 +46,7 @@ async function handler() {
                 const trueLink = thisUrl.includes("http") ? thisUrl : host + thisUrl.substring(1);
                 const response = await got(trueLink);
                 const $ = load(response.data);
-                item.description = thisUrl.includes("http") ? $('#page-content').html():  $('div.pagenews04').html();
+                item.description = thisUrl.includes("http") ? $('#page-content').html() : $('div.pagenews04').html();
                 item.pubDate = timezone(parseDate($('.item').first().text().replace('发布时间：', '')), 8);
                 return item;
             })
@@ -55,7 +55,7 @@ async function handler() {
 
     return {
         title: '园岭小学公告',
-        link:host,
+        link: host,
         description: '园岭小学公告',
         item: items,
     };
