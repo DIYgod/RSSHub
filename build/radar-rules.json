@@ -23839,6 +23839,76 @@
       }
     ]
   },
+  "voronoiapp.com": {
+    "_name": "Voronoi",
+    "www": [
+      {
+        "title": "Author Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/author/:username"
+        ],
+        "target": "/voronoiapp/author/:username"
+      },
+      {
+        "title": "Editor's Pick Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/posts/editors-pick"
+        ],
+        "target": "/voronoiapp/editors-pick"
+      },
+      {
+        "title": "Home Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/",
+          "/posts/voronoi"
+        ],
+        "target": "/voronoiapp/home"
+      },
+      {
+        "title": "Latest Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/posts/latest"
+        ],
+        "target": "/voronoiapp/latest"
+      },
+      {
+        "title": "Most Liked Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/posts/most-popular"
+        ],
+        "target": "/voronoiapp/popular/most-popular"
+      },
+      {
+        "title": "Most Discussed Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/posts/most-discussed"
+        ],
+        "target": "/voronoiapp/popular/most-discussed"
+      },
+      {
+        "title": "Most Viewed Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/posts/most-viewed"
+        ],
+        "target": "/voronoiapp/popular/most-viewed"
+      },
+      {
+        "title": "Search Keyword Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/explore"
+        ],
+        "target": "/voronoiapp(_,url)=>{const parsedURL=new URL(url);const keyword=parsedURL.searchParams.get(\"search\");return`/voronoiapp/search/${keyword}`}"
+      }
+    ]
+  },
   "wallhaven.cc": {
     "_name": "wallhaven",
     ".": [

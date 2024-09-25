@@ -72744,6 +72744,654 @@
     "name": "Voice of Mongolia 蒙古之声",
     "url": "vom.mn"
   },
+  "voronoiapp": {
+    "routes": {
+      "/author/:username": {
+        "url": "voronoiapp.com",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "maintainers": [
+          "Cesaryuan"
+        ],
+        "name": "Author Posts",
+        "path": "/author/:username",
+        "radar": [
+          {
+            "source": [
+              "www.voronoiapp.com/author/:username"
+            ],
+            "target": "/author/:username"
+          }
+        ],
+        "example": "/voronoiapp/author/visualcapitalist",
+        "parameters": {
+          "username": "The username of the author"
+        },
+        "location": "author.ts"
+      },
+      "/editors-pick/:category?": {
+        "url": "voronoiapp.com",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "maintainers": [
+          "Cesaryuan"
+        ],
+        "name": "Editor's Pick Posts",
+        "path": "/editors-pick/:category?",
+        "radar": [
+          {
+            "source": [
+              "www.voronoiapp.com/posts/editors-pick"
+            ],
+            "target": "/editors-pick"
+          }
+        ],
+        "example": "/voronoiapp/editors-pick",
+        "parameters": {
+          "category": {
+            "description": "The category of the post",
+            "default": "",
+            "options": [
+              {
+                "value": "",
+                "label": "All categories"
+              },
+              {
+                "value": "Automotive",
+                "label": "Automotive Data Insights - Explore a range of automotive data visualizations showcasing trends, innovations, and market dynamics in the automotive industry."
+              },
+              {
+                "value": "Business",
+                "label": "Business Visualization Trends - Discover business visualizations covering market analysis, corporate strategies, and economic impacts across global industries."
+              },
+              {
+                "value": "Climate",
+                "label": "Climate Data Visualized - Delve into climate change data visualizations that detail weather patterns, environmental impacts, and sustainability efforts worldwide."
+              },
+              {
+                "value": "Demographics",
+                "label": "Demographic Visual Insights - Explore visual demographics data showcasing population trends, societal changes, and demographic analytics across regions."
+              },
+              {
+                "value": "Economy",
+                "label": "Economic Visualization Insights - View economic visualizations illustrating financial markets, economic policies, and global economic health."
+              },
+              {
+                "value": "Energy",
+                "label": "Energy Industry Visual Data - Discover the dynamics of global energy consumption, renewable sources, and energy market trends through vivid visualizations."
+              },
+              {
+                "value": "Entertainment",
+                "label": "Entertainment Industry Data - Explore data visualizations in the entertainment industry, covering everything from box office trends to streaming service analytics."
+              },
+              {
+                "value": "Geopolitics",
+                "label": "Geopolitical Data Visualized - Understand global geopolitical shifts and international relations through comprehensive geopolitical data visualizations."
+              },
+              {
+                "value": "Healthcare",
+                "label": "Healthcare Insights Visualized - Analyze healthcare data visualizations spanning disease trends, healthcare services, and public health policies."
+              },
+              {
+                "value": "Innovation",
+                "label": "Innovation in Data - Dive into innovation data visualizations highlighting technology advancements, R&D investments, and patent trends."
+              },
+              {
+                "value": "Maps",
+                "label": "Cartographic Visual Insights - Discover cartographic visualizations that map everything from socio-economic data to geographical phenomena."
+              },
+              {
+                "value": "Markets",
+                "label": "Market Trends Visualized - Visualize market trends, financial data, and economic forecasts through comprehensive market visualizations."
+              },
+              {
+                "value": "Money",
+                "label": "Financial Data Visualized - Dive into financial visualizations depicting currency trends, investment flows, and banking statistics."
+              },
+              {
+                "value": "Natural Resources",
+                "label": "Natural Resources Data - Explore visualizations of natural resources, detailing extraction, consumption, and conservation data."
+              },
+              {
+                "value": "Politics",
+                "label": "Political Visual Insights - Analyze political trends, election results, and legislative impacts through detailed political visualizations."
+              },
+              {
+                "value": "Public Opinion",
+                "label": "Public Opinion Trends - Discover visualizations of public opinion polls, social trends, and cultural shifts across different regions."
+              },
+              {
+                "value": "Real Estate",
+                "label": "Real Estate Market Insights - Explore real estate market trends, property values, and urban development through targeted data visualizations."
+              },
+              {
+                "value": "Sports",
+                "label": "Sports Data Insights - Analyze sports data visualizations that showcase performance statistics, team rankings, and sports economics."
+              },
+              {
+                "value": "Technology",
+                "label": "Technology Trends Visualized - Dive into technology visualizations highlighting industry trends, tech adoption rates, and innovation impacts."
+              },
+              {
+                "value": "Wealth",
+                "label": "Wealth Distribution Insights - Explore wealth distribution, financial health, and economic disparities through detailed visualizations."
+              },
+              {
+                "value": "Travel",
+                "label": "Travel Trends Visualized - Discover travel trends, tourism statistics, and destination analytics through engaging visualizations."
+              },
+              {
+                "value": "Nature",
+                "label": "Nature and Conservation Data - Delve into visualizations of ecological data, wildlife statistics, and conservation efforts around the globe."
+              },
+              {
+                "value": "Space",
+                "label": "Space Exploration Data - Explore the universe with space data visualizations covering planetary science, space missions, and astronomical discoveries."
+              },
+              {
+                "value": "Diagram",
+                "label": "Diagrammatic Data Insights - Understand complex data through diagrams that simplify information across various topics and industries."
+              },
+              {
+                "value": "Other",
+                "label": "Diverse Data Visualizations - Explore a variety of data visualizations that don't neatly fit into any single category but offer unique insights."
+              }
+            ]
+          }
+        },
+        "location": "editors-pick.ts"
+      },
+      "/home/:category?": {
+        "url": "voronoiapp.com",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "maintainers": [
+          "Cesaryuan"
+        ],
+        "name": "Home Posts",
+        "path": "/home/:category?",
+        "description": "This is the home page of Voronoi App",
+        "radar": [
+          {
+            "source": [
+              "www.voronoiapp.com",
+              "www.voronoiapp.com/posts/voronoi"
+            ],
+            "target": "/home"
+          }
+        ],
+        "example": "/voronoiapp/home",
+        "parameters": {
+          "category": {
+            "description": "The category of the post",
+            "default": "",
+            "options": [
+              {
+                "value": "",
+                "label": "All categories"
+              },
+              {
+                "value": "Automotive",
+                "label": "Automotive Data Insights - Explore a range of automotive data visualizations showcasing trends, innovations, and market dynamics in the automotive industry."
+              },
+              {
+                "value": "Business",
+                "label": "Business Visualization Trends - Discover business visualizations covering market analysis, corporate strategies, and economic impacts across global industries."
+              },
+              {
+                "value": "Climate",
+                "label": "Climate Data Visualized - Delve into climate change data visualizations that detail weather patterns, environmental impacts, and sustainability efforts worldwide."
+              },
+              {
+                "value": "Demographics",
+                "label": "Demographic Visual Insights - Explore visual demographics data showcasing population trends, societal changes, and demographic analytics across regions."
+              },
+              {
+                "value": "Economy",
+                "label": "Economic Visualization Insights - View economic visualizations illustrating financial markets, economic policies, and global economic health."
+              },
+              {
+                "value": "Energy",
+                "label": "Energy Industry Visual Data - Discover the dynamics of global energy consumption, renewable sources, and energy market trends through vivid visualizations."
+              },
+              {
+                "value": "Entertainment",
+                "label": "Entertainment Industry Data - Explore data visualizations in the entertainment industry, covering everything from box office trends to streaming service analytics."
+              },
+              {
+                "value": "Geopolitics",
+                "label": "Geopolitical Data Visualized - Understand global geopolitical shifts and international relations through comprehensive geopolitical data visualizations."
+              },
+              {
+                "value": "Healthcare",
+                "label": "Healthcare Insights Visualized - Analyze healthcare data visualizations spanning disease trends, healthcare services, and public health policies."
+              },
+              {
+                "value": "Innovation",
+                "label": "Innovation in Data - Dive into innovation data visualizations highlighting technology advancements, R&D investments, and patent trends."
+              },
+              {
+                "value": "Maps",
+                "label": "Cartographic Visual Insights - Discover cartographic visualizations that map everything from socio-economic data to geographical phenomena."
+              },
+              {
+                "value": "Markets",
+                "label": "Market Trends Visualized - Visualize market trends, financial data, and economic forecasts through comprehensive market visualizations."
+              },
+              {
+                "value": "Money",
+                "label": "Financial Data Visualized - Dive into financial visualizations depicting currency trends, investment flows, and banking statistics."
+              },
+              {
+                "value": "Natural Resources",
+                "label": "Natural Resources Data - Explore visualizations of natural resources, detailing extraction, consumption, and conservation data."
+              },
+              {
+                "value": "Politics",
+                "label": "Political Visual Insights - Analyze political trends, election results, and legislative impacts through detailed political visualizations."
+              },
+              {
+                "value": "Public Opinion",
+                "label": "Public Opinion Trends - Discover visualizations of public opinion polls, social trends, and cultural shifts across different regions."
+              },
+              {
+                "value": "Real Estate",
+                "label": "Real Estate Market Insights - Explore real estate market trends, property values, and urban development through targeted data visualizations."
+              },
+              {
+                "value": "Sports",
+                "label": "Sports Data Insights - Analyze sports data visualizations that showcase performance statistics, team rankings, and sports economics."
+              },
+              {
+                "value": "Technology",
+                "label": "Technology Trends Visualized - Dive into technology visualizations highlighting industry trends, tech adoption rates, and innovation impacts."
+              },
+              {
+                "value": "Wealth",
+                "label": "Wealth Distribution Insights - Explore wealth distribution, financial health, and economic disparities through detailed visualizations."
+              },
+              {
+                "value": "Travel",
+                "label": "Travel Trends Visualized - Discover travel trends, tourism statistics, and destination analytics through engaging visualizations."
+              },
+              {
+                "value": "Nature",
+                "label": "Nature and Conservation Data - Delve into visualizations of ecological data, wildlife statistics, and conservation efforts around the globe."
+              },
+              {
+                "value": "Space",
+                "label": "Space Exploration Data - Explore the universe with space data visualizations covering planetary science, space missions, and astronomical discoveries."
+              },
+              {
+                "value": "Diagram",
+                "label": "Diagrammatic Data Insights - Understand complex data through diagrams that simplify information across various topics and industries."
+              },
+              {
+                "value": "Other",
+                "label": "Diverse Data Visualizations - Explore a variety of data visualizations that don't neatly fit into any single category but offer unique insights."
+              }
+            ]
+          }
+        },
+        "location": "home.ts"
+      },
+      "/latest/:category?": {
+        "url": "voronoiapp.com",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "maintainers": [
+          "Cesaryuan"
+        ],
+        "name": "Latest Posts",
+        "path": "/latest/:category?",
+        "radar": [
+          {
+            "source": [
+              "www.voronoiapp.com/posts/latest"
+            ],
+            "target": "/latest"
+          }
+        ],
+        "example": "/voronoiapp/latest",
+        "parameters": {
+          "category": {
+            "description": "The category of the post",
+            "default": "",
+            "options": [
+              {
+                "value": "",
+                "label": "All categories"
+              },
+              {
+                "value": "Automotive",
+                "label": "Automotive Data Insights - Explore a range of automotive data visualizations showcasing trends, innovations, and market dynamics in the automotive industry."
+              },
+              {
+                "value": "Business",
+                "label": "Business Visualization Trends - Discover business visualizations covering market analysis, corporate strategies, and economic impacts across global industries."
+              },
+              {
+                "value": "Climate",
+                "label": "Climate Data Visualized - Delve into climate change data visualizations that detail weather patterns, environmental impacts, and sustainability efforts worldwide."
+              },
+              {
+                "value": "Demographics",
+                "label": "Demographic Visual Insights - Explore visual demographics data showcasing population trends, societal changes, and demographic analytics across regions."
+              },
+              {
+                "value": "Economy",
+                "label": "Economic Visualization Insights - View economic visualizations illustrating financial markets, economic policies, and global economic health."
+              },
+              {
+                "value": "Energy",
+                "label": "Energy Industry Visual Data - Discover the dynamics of global energy consumption, renewable sources, and energy market trends through vivid visualizations."
+              },
+              {
+                "value": "Entertainment",
+                "label": "Entertainment Industry Data - Explore data visualizations in the entertainment industry, covering everything from box office trends to streaming service analytics."
+              },
+              {
+                "value": "Geopolitics",
+                "label": "Geopolitical Data Visualized - Understand global geopolitical shifts and international relations through comprehensive geopolitical data visualizations."
+              },
+              {
+                "value": "Healthcare",
+                "label": "Healthcare Insights Visualized - Analyze healthcare data visualizations spanning disease trends, healthcare services, and public health policies."
+              },
+              {
+                "value": "Innovation",
+                "label": "Innovation in Data - Dive into innovation data visualizations highlighting technology advancements, R&D investments, and patent trends."
+              },
+              {
+                "value": "Maps",
+                "label": "Cartographic Visual Insights - Discover cartographic visualizations that map everything from socio-economic data to geographical phenomena."
+              },
+              {
+                "value": "Markets",
+                "label": "Market Trends Visualized - Visualize market trends, financial data, and economic forecasts through comprehensive market visualizations."
+              },
+              {
+                "value": "Money",
+                "label": "Financial Data Visualized - Dive into financial visualizations depicting currency trends, investment flows, and banking statistics."
+              },
+              {
+                "value": "Natural Resources",
+                "label": "Natural Resources Data - Explore visualizations of natural resources, detailing extraction, consumption, and conservation data."
+              },
+              {
+                "value": "Politics",
+                "label": "Political Visual Insights - Analyze political trends, election results, and legislative impacts through detailed political visualizations."
+              },
+              {
+                "value": "Public Opinion",
+                "label": "Public Opinion Trends - Discover visualizations of public opinion polls, social trends, and cultural shifts across different regions."
+              },
+              {
+                "value": "Real Estate",
+                "label": "Real Estate Market Insights - Explore real estate market trends, property values, and urban development through targeted data visualizations."
+              },
+              {
+                "value": "Sports",
+                "label": "Sports Data Insights - Analyze sports data visualizations that showcase performance statistics, team rankings, and sports economics."
+              },
+              {
+                "value": "Technology",
+                "label": "Technology Trends Visualized - Dive into technology visualizations highlighting industry trends, tech adoption rates, and innovation impacts."
+              },
+              {
+                "value": "Wealth",
+                "label": "Wealth Distribution Insights - Explore wealth distribution, financial health, and economic disparities through detailed visualizations."
+              },
+              {
+                "value": "Travel",
+                "label": "Travel Trends Visualized - Discover travel trends, tourism statistics, and destination analytics through engaging visualizations."
+              },
+              {
+                "value": "Nature",
+                "label": "Nature and Conservation Data - Delve into visualizations of ecological data, wildlife statistics, and conservation efforts around the globe."
+              },
+              {
+                "value": "Space",
+                "label": "Space Exploration Data - Explore the universe with space data visualizations covering planetary science, space missions, and astronomical discoveries."
+              },
+              {
+                "value": "Diagram",
+                "label": "Diagrammatic Data Insights - Understand complex data through diagrams that simplify information across various topics and industries."
+              },
+              {
+                "value": "Other",
+                "label": "Diverse Data Visualizations - Explore a variety of data visualizations that don't neatly fit into any single category but offer unique insights."
+              }
+            ]
+          }
+        },
+        "location": "latest.ts"
+      },
+      "/popular/:tab?/:time_range?/:category?": {
+        "url": "voronoiapp.com",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "maintainers": [
+          "Cesaryuan"
+        ],
+        "name": "Popular Posts",
+        "path": "/popular/:tab?/:time_range?/:category?",
+        "radar": [
+          {
+            "title": "Most Liked Posts",
+            "source": [
+              "www.voronoiapp.com/posts/most-popular"
+            ],
+            "target": "/popular/most-popular"
+          },
+          {
+            "title": "Most Discussed Posts",
+            "source": [
+              "www.voronoiapp.com/posts/most-discussed"
+            ],
+            "target": "/popular/most-discussed"
+          },
+          {
+            "title": "Most Viewed Posts",
+            "source": [
+              "www.voronoiapp.com/posts/most-viewed"
+            ],
+            "target": "/popular/most-viewed"
+          }
+        ],
+        "parameters": {
+          "tab": {
+            "description": "The tab to get the popular posts from.",
+            "default": "most-popular",
+            "options": [
+              {
+                "value": "most-popular",
+                "label": "Most Liked"
+              },
+              {
+                "value": "most-discussed",
+                "label": "Most Discussed"
+              },
+              {
+                "value": "most-viewed",
+                "label": "Most Viewed"
+              }
+            ]
+          },
+          "time_range": {
+            "description": "Time range between which the posts are popular.",
+            "default": "MONTH",
+            "options": [
+              {
+                "value": "WEEK",
+                "label": "Last 7 days"
+              },
+              {
+                "value": "MONTH",
+                "label": "Last 30 days"
+              },
+              {
+                "value": "YEAR",
+                "label": "Last 12 months"
+              },
+              {
+                "value": "ALL",
+                "label": "All time"
+              }
+            ]
+          },
+          "category": {
+            "description": "The category of the post",
+            "default": "",
+            "options": [
+              {
+                "value": "",
+                "label": "All categories"
+              },
+              {
+                "value": "Automotive",
+                "label": "Automotive Data Insights - Explore a range of automotive data visualizations showcasing trends, innovations, and market dynamics in the automotive industry."
+              },
+              {
+                "value": "Business",
+                "label": "Business Visualization Trends - Discover business visualizations covering market analysis, corporate strategies, and economic impacts across global industries."
+              },
+              {
+                "value": "Climate",
+                "label": "Climate Data Visualized - Delve into climate change data visualizations that detail weather patterns, environmental impacts, and sustainability efforts worldwide."
+              },
+              {
+                "value": "Demographics",
+                "label": "Demographic Visual Insights - Explore visual demographics data showcasing population trends, societal changes, and demographic analytics across regions."
+              },
+              {
+                "value": "Economy",
+                "label": "Economic Visualization Insights - View economic visualizations illustrating financial markets, economic policies, and global economic health."
+              },
+              {
+                "value": "Energy",
+                "label": "Energy Industry Visual Data - Discover the dynamics of global energy consumption, renewable sources, and energy market trends through vivid visualizations."
+              },
+              {
+                "value": "Entertainment",
+                "label": "Entertainment Industry Data - Explore data visualizations in the entertainment industry, covering everything from box office trends to streaming service analytics."
+              },
+              {
+                "value": "Geopolitics",
+                "label": "Geopolitical Data Visualized - Understand global geopolitical shifts and international relations through comprehensive geopolitical data visualizations."
+              },
+              {
+                "value": "Healthcare",
+                "label": "Healthcare Insights Visualized - Analyze healthcare data visualizations spanning disease trends, healthcare services, and public health policies."
+              },
+              {
+                "value": "Innovation",
+                "label": "Innovation in Data - Dive into innovation data visualizations highlighting technology advancements, R&D investments, and patent trends."
+              },
+              {
+                "value": "Maps",
+                "label": "Cartographic Visual Insights - Discover cartographic visualizations that map everything from socio-economic data to geographical phenomena."
+              },
+              {
+                "value": "Markets",
+                "label": "Market Trends Visualized - Visualize market trends, financial data, and economic forecasts through comprehensive market visualizations."
+              },
+              {
+                "value": "Money",
+                "label": "Financial Data Visualized - Dive into financial visualizations depicting currency trends, investment flows, and banking statistics."
+              },
+              {
+                "value": "Natural Resources",
+                "label": "Natural Resources Data - Explore visualizations of natural resources, detailing extraction, consumption, and conservation data."
+              },
+              {
+                "value": "Politics",
+                "label": "Political Visual Insights - Analyze political trends, election results, and legislative impacts through detailed political visualizations."
+              },
+              {
+                "value": "Public Opinion",
+                "label": "Public Opinion Trends - Discover visualizations of public opinion polls, social trends, and cultural shifts across different regions."
+              },
+              {
+                "value": "Real Estate",
+                "label": "Real Estate Market Insights - Explore real estate market trends, property values, and urban development through targeted data visualizations."
+              },
+              {
+                "value": "Sports",
+                "label": "Sports Data Insights - Analyze sports data visualizations that showcase performance statistics, team rankings, and sports economics."
+              },
+              {
+                "value": "Technology",
+                "label": "Technology Trends Visualized - Dive into technology visualizations highlighting industry trends, tech adoption rates, and innovation impacts."
+              },
+              {
+                "value": "Wealth",
+                "label": "Wealth Distribution Insights - Explore wealth distribution, financial health, and economic disparities through detailed visualizations."
+              },
+              {
+                "value": "Travel",
+                "label": "Travel Trends Visualized - Discover travel trends, tourism statistics, and destination analytics through engaging visualizations."
+              },
+              {
+                "value": "Nature",
+                "label": "Nature and Conservation Data - Delve into visualizations of ecological data, wildlife statistics, and conservation efforts around the globe."
+              },
+              {
+                "value": "Space",
+                "label": "Space Exploration Data - Explore the universe with space data visualizations covering planetary science, space missions, and astronomical discoveries."
+              },
+              {
+                "value": "Diagram",
+                "label": "Diagrammatic Data Insights - Understand complex data through diagrams that simplify information across various topics and industries."
+              },
+              {
+                "value": "Other",
+                "label": "Diverse Data Visualizations - Explore a variety of data visualizations that don't neatly fit into any single category but offer unique insights."
+              }
+            ]
+          }
+        },
+        "example": "/voronoiapp/popular/most-popular/MONTH",
+        "location": "popular.ts"
+      },
+      "/search/:keyword": {
+        "url": "voronoiapp.com",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "maintainers": [
+          "Cesaryuan"
+        ],
+        "name": "Search Keyword Posts",
+        "path": "/search/:keyword",
+        "radar": [
+          {
+            "source": [
+              "www.voronoiapp.com/explore"
+            ]
+          }
+        ],
+        "example": "/voronoiapp/search/china",
+        "parameters": {
+          "keyword": "The keyword to search for"
+        },
+        "location": "search.ts"
+      }
+    },
+    "name": "Voronoi",
+    "url": "voronoiapp.com"
+  },
   "wallhaven": {
     "routes": {
       "/search/:filter?/:needDetails?": {
