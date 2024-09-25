@@ -1196,8 +1196,26 @@
   "/chiculture/topic/:category?": [
     "nczitzk"
   ],
-  "/chikubi/:category?": [
-    "snowagar25"
+  "/chikubi/category/:keyword": [
+    "SnowAgar25"
+  ],
+  "/chikubi/": [
+    "SnowAgar25"
+  ],
+  "/chikubi/:keyword": [
+    "SnowAgar25"
+  ],
+  "/chikubi/nipple-video-category/:keyword": [
+    "SnowAgar25"
+  ],
+  "/chikubi/nipple-video-maker/:keyword": [
+    "SnowAgar25"
+  ],
+  "/chikubi/search/:keyword": [
+    "SnowAgar25"
+  ],
+  "/chikubi/tag/:keyword": [
+    "SnowAgar25"
   ],
   "/china/finance/:category?": [
     "KingJem"

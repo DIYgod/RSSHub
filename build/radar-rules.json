@@ -3966,10 +3966,89 @@
         "title": "Category",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
-          "/:category",
+          "/category/:keyword"
+        ],
+        "target": "/chikubi/category/:keyword"
+      },
+      {
+        "title": "最新記事",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
           "/"
         ],
-        "target": "/chikubi/:category"
+        "target": "/chikubi/"
+      },
+      {
+        "title": "殿堂",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/best-nipple-article"
+        ],
+        "target": "/chikubi/best"
+      },
+      {
+        "title": "動畫",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/nipple-video"
+        ],
+        "target": "/chikubi/video"
+      },
+      {
+        "title": "VR",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/nipple-video-category/cat-nipple-video-vr"
+        ],
+        "target": "/chikubi/vr"
+      },
+      {
+        "title": "漫畫",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/comic"
+        ],
+        "target": "/chikubi/comic"
+      },
+      {
+        "title": "音聲",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/voice"
+        ],
+        "target": "/chikubi/voice"
+      },
+      {
+        "title": "CG・イラスト",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/cg"
+        ],
+        "target": "/chikubi/cg"
+      },
+      {
+        "title": "動画カテゴリー",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/nipple-video-category/:keyword"
+        ],
+        "target": "/chikubi/nipple-video-category/:keyword"
+      },
+      {
+        "title": "AVメーカー",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/nipple-video-maker/:keyword"
+        ],
+        "target": "/chikubi/nipple-video-maker/:keyword"
+      },
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/tag/:keyword"
+        ],
+        "target": "/chikubi/tag/:keyword"
       }
     ]
   },
