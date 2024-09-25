@@ -28,7 +28,7 @@ export const route: Route = {
 
 async function handler() {
     const link = host;
-    const base_link = `https://ylxx.szftedu.cn`;
+    const base_link = 'https://ylxx.szftedu.cn';
 
     const response = await got(link);
     const $ = load(response.data);
