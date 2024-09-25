@@ -22,7 +22,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '园岭小学公告',
-    maintainers: ['Valuex'],
+    maintainers: ['valuex'],
     handler,
     description: ``,
 };
