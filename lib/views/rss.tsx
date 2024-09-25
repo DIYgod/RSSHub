@@ -4,6 +4,7 @@ import { Data } from '@/types';
 const RSS: FC<{ data: Data }> = ({ data }) => {
     const hasItunes = data.itunes_author || data.itunes_category || (data.item && data.item.some((i) => i.itunes_item_image || i.itunes_duration));
     const hasMedia = data.item?.some((i) => i.media);
+    const isTelegramLink = data.link?.startsWith('https://t.me/s/');
 
     return (
         <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes={hasItunes ? 'http://www.itunes.com/dtds/podcast-1.0.dtd' : undefined} xmlns:media={hasMedia ? 'http://search.yahoo.com/mrss/' : undefined} version="2.0">
@@ -23,6 +24,12 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                         <url>{data.image}</url>
                         <title>{data.title || 'RSSHub'}</title>
                         <link>{data.link}</link>
+                        {isTelegramLink && (
+                            <>
+                                <height>31</height>
+                                <width>88</width>
+                            </>
+                        )}
                     </image>
                 )}
                 <lastBuildDate>{data.lastBuildDate}</lastBuildDate>

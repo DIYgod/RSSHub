@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { isValidHost } from '@/utils/valid-host';
@@ -7,7 +7,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/model/:username/:language?/:sort?',
-    categories: ['multimedia'],
+    categories: ['multimedia', 'popular'],
+    view: ViewType.Videos,
     example: '/pornhub/model/stacy-starando',
     parameters: { language: 'language, see below', username: 'username, part of the url e.g. `pornhub.com/model/stacy-starando`', sort: 'sorting method, see below' },
     features: {
@@ -24,7 +25,7 @@ export const route: Route = {
             target: '/model/:username',
         },
     ],
-    name: 'Verified amateur / Model',
+    name: 'Model',
     maintainers: ['I2IMk', 'queensferryme'],
     handler,
 };

@@ -44,14 +44,19 @@ async function handler(ctx) {
             title: e.contents[0]?.headline,
             link: e.contents[0]?.localLinkUrl,
             pubDate: timezone(parseDate(e.publishedDate), 0),
+            category: e.tagObjs.map((tag) => tag.name),
+            updated: timezone(parseDate(e.contents[0]?.updated), 0),
+            description: e.contents[0]?.storyHTML,
+            author: e.contents[0]?.reporters.map((author) => ({ name: author.displayName })),
         }))
         .sort((a, b) => b.pubDate - a.pubDate)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
 
-    const items = await Promise.all(list.map((item) => fetchArticle(item)));
+    const items = ctx.req.query('mode') === 'fulltext' ? await Promise.all(list.map((item) => fetchArticle(item))) : list;
 
     return {
         title: `${res.tagObjs[0].name} - AP News`,
         item: items,
+        link: 'https://apnews.com',
     };
 }

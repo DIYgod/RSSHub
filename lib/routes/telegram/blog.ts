@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import * as cheerio from 'cheerio';
 import got from '@/utils/got';
@@ -6,7 +6,8 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/blog',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.Articles,
     example: '/telegram/blog',
     parameters: {},
     features: {

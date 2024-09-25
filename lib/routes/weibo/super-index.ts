@@ -37,11 +37,15 @@ export const route: Route = {
 | feed       | 最新评论         |`,
 };
 
+interface Card {
+    card_group?: Card[];
+}
+
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'feed';
 
-    const containerData = await cache.tryGet(
+    const containerData = (await cache.tryGet(
         `weibo:super_index:container:${id}:${type}`,
         async () => {
             const _r = await got('https://m.weibo.cn/api/container/getIndex', {
@@ -61,27 +65,35 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    );
+    )) as {
+        cards?: Card[];
+        pageInfo?: {
+            page_title: string;
+        };
+    };
 
     const resultItems = [];
 
-    for (const card of containerData.cards) {
+    function handleCard(ctx, card, resultItems) {
+        if (card.card_type === '9' && 'mblog' in card) {
+            const formatExtended = weiboUtils.formatExtended(ctx, card.mblog, undefined);
+            resultItems.push(formatExtended);
+        }
+    }
+    for (const card of containerData?.cards ?? []) {
+        handleCard(ctx, card, resultItems);
         if (!('card_group' in card)) {
             continue;
         }
-        for (const mblogCard of card.card_group) {
-            if (mblogCard.card_type === '9' && 'mblog' in mblogCard) {
-                const mblog = mblogCard.mblog;
-                const formatExtended = weiboUtils.formatExtended(ctx, mblog);
-                resultItems.push(formatExtended);
-            }
+        for (const mblogCard of card.card_group!) {
+            handleCard(ctx, mblogCard, resultItems);
         }
     }
 
     return weiboUtils.sinaimgTvax({
-        title: `微博超话 - ${containerData.pageInfo.page_title}`,
+        title: `微博超话 - ${containerData?.pageInfo?.page_title}`,
         link: `https://weibo.com/p/${id}/super_index`,
-        description: `#${containerData.pageInfo.page_title}# 的超话`,
+        description: `#${containerData?.pageInfo?.page_title}# 的超话`,
         item: resultItems,
     });
 }

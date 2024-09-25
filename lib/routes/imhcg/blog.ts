@@ -16,7 +16,7 @@ export const route: Route = {
     name: 'Engineering blogs',
     maintainers: ['ZiHao256'],
     handler,
-    url: 'https://infos.imhcg.cn/',
+    url: 'infos.imhcg.cn',
 };
 
 async function handler() {
