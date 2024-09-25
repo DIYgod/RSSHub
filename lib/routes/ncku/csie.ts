@@ -1,5 +1,6 @@
-import type { Route, DataItem } from '@/types';
-import { load } from 'cheerio';
+import type { Route } from '@/types';
+import { CheerioAPI, load } from 'cheerio';
+import { ofetch } from 'ofetch';
 
 const currentURL = (catagory: string, page: number) => (catagory === '_all' ? `https://www.csie.ncku.edu.tw/zh-hant/news?page=${page}` : `https://www.csie.ncku.edu.tw/zh-hant/news/${catagory}?page=${page}`);
 
@@ -46,40 +47,28 @@ export const route: Route = {
         }
 
         const base = 1; // get from query
-        const limit = 10; // get from query
+        const limit = 3; // get from query
 
-        // console.log({ catagory }, currentURL(catagory, 1));
+        const item = (
+            await Promise.allSettled(
+                Array.from({ length: limit }).map(async (_, i) => {
+                    const $ = await ofetch<CheerioAPI>(currentURL(catagory, base + i), {
+                        parseResponse: load,
+                    });
 
-        const item = await Promise.allSettled(
-            Array.from({ length: limit }).map((_, i) =>
-                fetch(currentURL(catagory, base + i))
-                    .then((res) => {
-                        if (!res.ok) {
-                            throw new Error(`Failed to fetch ${res.url}`);
-                        }
-                        return res.text();
-                    })
-                    .then(load)
-                    .then(($) => {
-                        const r = $('.list-title > li')
-                            .toArray()
-                            .map((el) => ({
-                                title: $('a', el).text(),
-                                pubDate: new Date($('small', el).text()),
-                                link: `https://www.csie.ncku.edu.tw${$('a', el).attr('href')}`,
-                                catagory: $('span:nth-child(2)', el).text(),
-                            }));
-
-                        return r;
-                    })
+                    return $('.list-title > li')
+                        .toArray()
+                        .map((e) => ({
+                            title: $('a', e).text(),
+                            pubDate: new Date($('small', e).text()),
+                            link: `https://www.csie.ncku.edu.tw${$('a', e).attr('href')}`,
+                            catagory: $('span:nth-child(2)', e).text(),
+                        }));
+                })
             )
         )
-            .then((result) => result.filter((item) => item.status === 'fulfilled'))
-            .then((result) => result.reduce((acc: DataItem[], cur) => [...acc, ...cur.value], []));
-        // .then((d) => {
-        //     console.log(d);
-        //     return d;
-        // });
+            .filter((item) => item.status === 'fulfilled')
+            .flatMap((item) => item.value);
 
         return {
             title: `成大資訊系公告 - ${catagories[catagory]}`,
