@@ -19,7 +19,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
-    },    
+    },
     maintainers: ['valuex'],
     handler,
     description: '',
@@ -30,8 +30,7 @@ async function handler() {
     const base_link = 'https://ylxx.szftedu.cn';
 
     const response = await got(link);
-    const $ = load(response.data);    
-
+    const $ = load(response.data);
     const lists = $('div.pagenews04 div ul li')
         .toArray()
         .map((el) => ({
