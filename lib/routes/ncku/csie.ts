@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import { CheerioAPI, load } from 'cheerio';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 const currentURL = (catagory: string, page: number) => (catagory === '_all' ? `https://www.csie.ncku.edu.tw/zh-hant/news?page=${page}` : `https://www.csie.ncku.edu.tw/zh-hant/news/${catagory}?page=${page}`);
 
@@ -20,11 +20,11 @@ export const route: Route = {
         name: '國立成功大學資訊系公告',
         description: '可用分類：_all, normal, bachelorAdmission, masterAdmission, speeches, awards, scholarship, jobs',
     },
-    name: 'NCKU CSIE News',
+    name: 'CSIE News',
     description: 'Availible catagories：_all, normal, bachelorAdmission, masterAdmission, speeches, awards, scholarship, jobs',
     path: '/csie/:catagory?',
     categories: ['university'],
-    example: '/csie/normal',
+    example: '/ncku/csie/normal',
     features: {
         requireConfig: false,
         requirePuppeteer: false,

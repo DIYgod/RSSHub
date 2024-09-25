@@ -1,6 +1,6 @@
 import type { Namespace } from '@/types';
 
 export const namepsace: Namespace = {
-    name: 'ncku',
+    name: 'National Cheng Kung University',
     url: 'ncku.edu.tw',
 };
