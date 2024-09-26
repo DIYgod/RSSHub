@@ -110,7 +110,9 @@ async function handler(ctx) {
         data.map(async (item) => {
             const parsed = JSONbig.parse(item.card);
             const data = parsed.apiSeasonInfo || (getTitle(parsed.item) ? parsed.item : parsed);
-            const origin = parsed.origin ? JSONbig.parse(parsed.origin) : null;
+            // parsed.origin is already parsed, and it may be json or string.
+            // Don't parse it again, or it will cause an error.
+            const origin = parsed.origin || null;
 
             // img
             let imgHTML = '';
