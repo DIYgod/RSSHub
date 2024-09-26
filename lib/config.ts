@@ -673,8 +673,8 @@ const calculateValue = () => {
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
         },
         uestc: {
-            bbs_cookie: envs.UESTC_BBS_COOKIE,
-            bbs_auth_str: envs.UESTC_BBS_AUTH_STR,
+            bbsCookie: envs.UESTC_BBS_COOKIE,
+            bbsAuthStr: envs.UESTC_BBS_AUTH_STR,
         },
         weibo: {
             app_key: envs.WEIBO_APP_KEY,

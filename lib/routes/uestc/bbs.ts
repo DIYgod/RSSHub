@@ -5,6 +5,7 @@ import timezone from '@/utils/timezone';
 import { config } from '@/config';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/bbs/:types?',
@@ -46,27 +47,27 @@ export const route: Route = {
         },
     ],
     handler: async (ctx) => {
-        const { bbs_cookie, bbs_auth_str } = config.uestc;
-        if (!bbs_cookie || !bbs_auth_str) {
-            throw new Error('未配置 Cookie 或 Authorization。请检查配置。');
+        const { bbsCookie, bbsAuthStr } = config.uestc;
+        if (!bbsCookie || !bbsAuthStr) {
+            throw new ConfigNotFoundError('未配置 Cookie 或 Authorization。请检查配置。');
         }
         const { types = 'newreply,newthread,digest,life,hotlist' } = ctx.req.param();
         const data = await ofetch(`https://bbs.uestc.edu.cn/star/api/v1/index?top_list=${types}`, {
             headers: {
-                Cookie: bbs_cookie,
+                Cookie: bbsCookie,
                 Referer: 'https://bbs.uestc.edu.cn/new',
-                authorization: bbs_auth_str,
+                authorization: bbsAuthStr,
             },
         });
-        const items_raw = Object.entries(data.data.top_list).flatMap(([label, items]) => items.map((item) => ({ ...item, label })));
+        const itemsRaw = Object.entries(data.data.top_list).flatMap(([label, items]) => items.map((item) => ({ ...item, label })));
         const items = await Promise.all(
-            items_raw.map((item) =>
+            itemsRaw.map((item) =>
                 cache.tryGet(`https://bbs.uestc.edu.cn/forum.php?mod=viewthread&tid=${item.thread_id}`, async () => {
                     const response = await ofetch(`https://bbs.uestc.edu.cn/forum.php?mod=viewthread&tid=${item.thread_id}`, {
                         headers: {
-                            Cookie: bbs_cookie,
+                            Cookie: bbsCookie,
                             Referer: 'https://bbs.uestc.edu.cn',
-                            authorization: bbs_auth_str,
+                            authorization: bbsAuthStr,
                         },
                     });
                     const $ = load(response);
