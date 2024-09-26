@@ -23437,6 +23437,16 @@
         "target": "/uestc/auto"
       }
     ],
+    "bbs": [
+      {
+        "title": "清水河畔",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/*"
+        ],
+        "target": "/uestc/bbs/newthread"
+      }
+    ],
     "cqe": [
       {
         "title": "文化素质教育中心",
