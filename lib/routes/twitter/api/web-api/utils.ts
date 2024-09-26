@@ -130,7 +130,7 @@ export const twitterGot = async (url, params) => {
             onResponse: async ({ response }) => {
                 if (response.status === 429) {
                     logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token}`);
-                    await cache.set(`twitter:lock-token:${auth.token}`, '1', 960);
+                    await cache.set(`twitter:lock-token:${auth.token}`, '1', 1000);
                 } else if (response.status === 403 || response.status === 401 || JSON.stringify(response._data?.data) === '{"user":{}}') {
                     const newCookie = await login({
                         username: auth.username,
@@ -159,19 +159,26 @@ export const twitterGot = async (url, params) => {
                         }
                         logger.debug(`twitter debug: delete twitter cookie for token ${auth.token}, remaining tokens: ${config.twitter.authToken?.length}`);
                     }
+                    logger.debug(`twitter debug: unlock twitter cookie with error1 for token ${auth.token}`);
+                    await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
+                } else {
+                    logger.debug(`twitter debug: unlock twitter cookie with success1 for token ${auth.token}`);
+                    await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
                 }
             },
         });
 
         if (auth.token) {
             logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
+            logger.debug(`twitter debug: unlock twitter cookie with success2 for token ${auth.token}`);
+            await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
             await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers.jar.serializeSync()), config.cache.contentExpire);
         }
 
         return response._data;
-    } finally {
+    } catch {
         if (auth.token) {
-            logger.debug(`twitter debug: unlock twitter cookie for token ${auth.token}`);
+            logger.debug(`twitter debug: unlock twitter cookie with error2 for token ${auth.token}`);
             await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
         }
     }
