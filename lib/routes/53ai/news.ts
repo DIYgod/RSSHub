@@ -11,17 +11,13 @@ export const route: Route = {
     example: '/53ai/news',
     handler: async () => {
         const baseUrl = 'https://www.53ai.com';
-        const items: { title: string; link: string; description: string; pubDate: Date }[] = [];
-        let page = 1;
         const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
 
-        while (true) {
+        const fetchPage = async (page: number) => {
             const url = page === 1 ? `${baseUrl}/news.html` : `${baseUrl}/news.html?page=${page}`;
-            // eslint-disable-next-line no-await-in-loop
             const response = await ofetch(url);
             const $ = load(response);
-
-            const pageItems = $('.news .news-box .new-left ul.list li')
+            return $('.news .news-box .new-left ul.list li')
                 .toArray()
                 .map((element) => {
                     const item = $(element);
@@ -41,16 +37,19 @@ export const route: Route = {
                         pubDate,
                     };
                 });
+        };
 
-            items.push(...pageItems);
-            // 检查是否已经获取到足够的数据
+        const fetchAllPages = async (page: number, accumulatedItems: any[] = []): Promise<any[]> => {
+            const pageItems = await fetchPage(page);
+            const newItems = [...accumulatedItems, ...pageItems];
             const lastItem = pageItems.at(-1);
-            if (pageItems.length === 0 || (lastItem && lastItem.pubDate < threeDaysAgo)) {
-                break;
-            }
 
-            page++;
-        }
+            return pageItems.length === 0 || (lastItem && lastItem.pubDate < threeDaysAgo)
+                ? newItems
+                : fetchAllPages(page + 1, newItems);
+        };
+
+        const items = await fetchAllPages(1);
 
         // 过滤掉超过3天的项目
         const filteredItems = items.filter((item) => item.pubDate >= threeDaysAgo);
