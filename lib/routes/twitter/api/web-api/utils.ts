@@ -38,13 +38,13 @@ const getAuth = async (retry: number) => {
     if (config.twitter.authToken && retry > 0) {
         const index = authTokenIndex++ % config.twitter.authToken.length;
         const token = config.twitter.authToken[index];
-        const lock = await cache.get(`twitter:lock-cookie:${token}`);
+        const lock = await cache.get(`twitter:lock-token:${token}`);
         if (lock) {
             await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
             return await getAuth(retry - 1);
         } else {
-            logger.debug(`Lock twitter cookie for token ${token}`);
-            await cache.set(`twitter:lock-cookie:${token}`, '1', 1000);
+            logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
+            await cache.set(`twitter:lock-token:${token}`, '1', 20);
             return {
                 token,
                 username: config.twitter.username?.[index],
@@ -80,7 +80,7 @@ export const twitterGot = async (url, params) => {
               }
             | undefined;
         if (cookie) {
-            logger.debug(`Got twitter cookie for token ${auth.token}`);
+            logger.debug(`twitter debug: got twitter cookie for token ${auth.token}`);
             if (typeof cookie === 'string') {
                 cookie = JSON.parse(cookie);
             }
@@ -92,7 +92,7 @@ export const twitterGot = async (url, params) => {
                   })
                 : new CookieAgent({ cookies: { jar } });
             if (proxy.proxyUri) {
-                logger.debug(`Proxying request: ${requestUrl}`);
+                logger.debug(`twitter debug: Proxying request: ${requestUrl}`);
             }
             dispatchers = {
                 jar,
@@ -128,7 +128,10 @@ export const twitterGot = async (url, params) => {
             },
             dispatcher: dispatchers.agent,
             onResponse: async ({ response }) => {
-                if (response.status === 403 || response.status === 401 || response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
+                if (response.status === 429) {
+                    logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token}`);
+                    await cache.set(`twitter:lock-token:${auth.token}`, '1', 960);
+                } else if (response.status === 403 || response.status === 401 || JSON.stringify(response._data?.data) === '{"user":{}}') {
                     const newCookie = await login({
                         username: auth.username,
                         password: auth.password,
@@ -136,7 +139,7 @@ export const twitterGot = async (url, params) => {
                     });
                     if (newCookie) {
                         await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
-                        logger.debug(`Reset twitter cookie for token ${auth.token}, ${newCookie}`);
+                        logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
                     } else {
                         const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
                         if (tokenIndex !== undefined && tokenIndex !== -1) {
@@ -154,22 +157,22 @@ export const twitterGot = async (url, params) => {
                                 config.twitter.password?.splice(passwordIndex, 1);
                             }
                         }
-                        logger.debug(`Delete twitter cookie for token ${auth.token}, remaining tokens: ${config.twitter.authToken?.length}`);
+                        logger.debug(`twitter debug: delete twitter cookie for token ${auth.token}, remaining tokens: ${config.twitter.authToken?.length}`);
                     }
                 }
             },
         });
 
         if (auth.token) {
-            logger.debug(`Update twitter cookie for token ${auth.token}`);
+            logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
             await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers.jar.serializeSync()), config.cache.contentExpire);
         }
 
         return response._data;
     } finally {
         if (auth.token) {
-            logger.debug(`Unlock twitter cookie for token ${auth.token}`);
-            await cache.set(`twitter:lock-cookie:${auth.token}`, '', 1);
+            logger.debug(`twitter debug: unlock twitter cookie for token ${auth.token}`);
+            await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
         }
     }
 };
@@ -194,7 +197,7 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
             instructions = data.user.result.timeline_v2.timeline.instructions;
         } else {
             // throw new Error('Because Twitter Premium has features that hide your likes, this RSS link is not available for Twitter Premium accounts.');
-            logger.debug(`Instructions not found in data: ${JSON.stringify(data)}`);
+            logger.debug(`twitter debug: instructions not found in data: ${JSON.stringify(data)}`);
         }
     }
 
