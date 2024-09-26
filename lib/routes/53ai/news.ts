@@ -9,14 +9,15 @@ export const route: Route = {
     description: 'RSS feed for 53AI news articles from the last 3 days.',
     maintainers: ['houzl'],
     example: '/53ai/news',
-    handler: async (ctx) => {
+    handler: async () => {
         const baseUrl = 'https://www.53ai.com';
-        const items = [];
+        const items: { title: string; link: string; description: string; pubDate: Date }[] = [];
         let page = 1;
         const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
 
         while (true) {
             const url = page === 1 ? `${baseUrl}/news.html` : `${baseUrl}/news.html?page=${page}`;
+            // eslint-disable-next-line no-await-in-loop
             const response = await ofetch(url);
             const $ = load(response);
 
@@ -43,7 +44,8 @@ export const route: Route = {
 
             items.push(...pageItems);
             // 检查是否已经获取到足够的数据
-            if (pageItems.length === 0 || pageItems[pageItems.length - 1].pubDate < threeDaysAgo) {
+            const lastItem = pageItems.at(-1);
+            if (pageItems.length === 0 || (lastItem && lastItem.pubDate < threeDaysAgo)) {
                 break;
             }
 
@@ -51,7 +53,7 @@ export const route: Route = {
         }
 
         // 过滤掉超过3天的项目
-        const filteredItems = items.filter(item => item.pubDate >= threeDaysAgo);
+        const filteredItems = items.filter((item) => item.pubDate >= threeDaysAgo);
 
         return {
             title: '53AI - AI News Feed (Last 3 Days)',
