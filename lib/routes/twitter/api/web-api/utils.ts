@@ -62,126 +62,117 @@ export const twitterGot = async (url, params) => {
         throw new ConfigNotFoundError('No valid Twitter token found');
     }
 
-    try {
-        const requestUrl = `${url}?${queryString.stringify(params)}`;
+    const requestUrl = `${url}?${queryString.stringify(params)}`;
 
-        let cookie: string | Record<string, any> | null | undefined = await token2Cookie(auth.token);
-        if (!cookie) {
-            cookie = await login({
-                username: auth.username,
-                password: auth.password,
-                authenticationSecret: auth.authenticationSecret,
-            });
+    let cookie: string | Record<string, any> | null | undefined = await token2Cookie(auth.token);
+    if (!cookie) {
+        cookie = await login({
+            username: auth.username,
+            password: auth.password,
+            authenticationSecret: auth.authenticationSecret,
+        });
+    }
+    let dispatchers:
+        | {
+              jar: CookieJar;
+              agent: CookieAgent | ProxyAgent;
+          }
+        | undefined;
+    if (cookie) {
+        logger.debug(`twitter debug: got twitter cookie for token ${auth.token}`);
+        if (typeof cookie === 'string') {
+            cookie = JSON.parse(cookie);
         }
-        let dispatchers:
-            | {
-                  jar: CookieJar;
-                  agent: CookieAgent | ProxyAgent;
-              }
-            | undefined;
-        if (cookie) {
-            logger.debug(`twitter debug: got twitter cookie for token ${auth.token}`);
-            if (typeof cookie === 'string') {
-                cookie = JSON.parse(cookie);
-            }
-            const jar = CookieJar.deserializeSync(cookie as any);
-            const agent = proxy.proxyUri
-                ? new ProxyAgent({
-                      factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
-                      uri: proxy.proxyUri,
-                  })
-                : new CookieAgent({ cookies: { jar } });
-            if (proxy.proxyUri) {
-                logger.debug(`twitter debug: Proxying request: ${requestUrl}`);
-            }
-            dispatchers = {
-                jar,
-                agent,
-            };
-        } else {
-            throw new ConfigNotFoundError(`Twitter cookie for token ${auth.token} is not valid`);
+        const jar = CookieJar.deserializeSync(cookie as any);
+        const agent = proxy.proxyUri
+            ? new ProxyAgent({
+                  factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
+                  uri: proxy.proxyUri,
+              })
+            : new CookieAgent({ cookies: { jar } });
+        if (proxy.proxyUri) {
+            logger.debug(`twitter debug: Proxying request: ${requestUrl}`);
         }
-        const jsonCookie = Object.fromEntries(
-            dispatchers.jar
-                .getCookieStringSync(url)
-                .split(';')
-                .map((c) => Cookie.parse(c)?.toJSON())
-                .map((c) => [c?.key, c?.value])
-        );
+        dispatchers = {
+            jar,
+            agent,
+        };
+    } else {
+        throw new ConfigNotFoundError(`Twitter cookie for token ${auth.token} is not valid`);
+    }
+    const jsonCookie = Object.fromEntries(
+        dispatchers.jar
+            .getCookieStringSync(url)
+            .split(';')
+            .map((c) => Cookie.parse(c)?.toJSON())
+            .map((c) => [c?.key, c?.value])
+    );
 
-        const response = await ofetch.raw(requestUrl, {
-            retry: 0,
-            headers: {
-                authority: 'x.com',
-                accept: '*/*',
-                'accept-language': 'en-US,en;q=0.9',
-                authorization: bearerToken,
-                'cache-control': 'no-cache',
-                'content-type': 'application/json',
-                dnt: '1',
-                pragma: 'no-cache',
-                referer: 'https://x.com/narendramodi',
-                'x-twitter-active-user': 'yes',
-                'x-twitter-auth-type': 'OAuth2Session',
-                'x-twitter-client-language': 'en',
-                'x-csrf-token': jsonCookie.ct0,
-            },
-            dispatcher: dispatchers.agent,
-            onResponse: async ({ response }) => {
-                if (response.status === 429) {
-                    logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token}`);
-                    await cache.set(`twitter:lock-token:${auth.token}`, '1', 1000);
-                } else if (response.status === 403 || response.status === 401 || JSON.stringify(response._data?.data) === '{"user":{}}') {
-                    const newCookie = await login({
-                        username: auth.username,
-                        password: auth.password,
-                        authenticationSecret: auth.authenticationSecret,
-                    });
-                    if (newCookie) {
-                        await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
-                        logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
-                    } else {
-                        const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
-                        if (tokenIndex !== undefined && tokenIndex !== -1) {
-                            config.twitter.authToken?.splice(tokenIndex, 1);
-                        }
-                        if (auth.username) {
-                            const usernameIndex = config.twitter.username?.indexOf(auth.username);
-                            if (usernameIndex !== undefined && usernameIndex !== -1) {
-                                config.twitter.username?.splice(usernameIndex, 1);
-                            }
-                        }
-                        if (auth.password) {
-                            const passwordIndex = config.twitter.password?.indexOf(auth.password);
-                            if (passwordIndex !== undefined && passwordIndex !== -1) {
-                                config.twitter.password?.splice(passwordIndex, 1);
-                            }
-                        }
-                        logger.debug(`twitter debug: delete twitter cookie for token ${auth.token}, remaining tokens: ${config.twitter.authToken?.length}`);
-                    }
+    const response = await ofetch.raw(requestUrl, {
+        retry: 0,
+        headers: {
+            authority: 'x.com',
+            accept: '*/*',
+            'accept-language': 'en-US,en;q=0.9',
+            authorization: bearerToken,
+            'cache-control': 'no-cache',
+            'content-type': 'application/json',
+            dnt: '1',
+            pragma: 'no-cache',
+            referer: 'https://x.com/narendramodi',
+            'x-twitter-active-user': 'yes',
+            'x-twitter-auth-type': 'OAuth2Session',
+            'x-twitter-client-language': 'en',
+            'x-csrf-token': jsonCookie.ct0,
+        },
+        dispatcher: dispatchers.agent,
+        onResponse: async ({ response }) => {
+            if (response.status === 429) {
+                logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token}`);
+                await cache.set(`twitter:lock-token:${auth.token}`, '1', 1000);
+            } else if (response.status === 403 || response.status === 401 || JSON.stringify(response._data?.data) === '{"user":{}}') {
+                const newCookie = await login({
+                    username: auth.username,
+                    password: auth.password,
+                    authenticationSecret: auth.authenticationSecret,
+                });
+                if (newCookie) {
+                    logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
+                    await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
                     logger.debug(`twitter debug: unlock twitter cookie with error1 for token ${auth.token}`);
                     await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
                 } else {
-                    logger.debug(`twitter debug: unlock twitter cookie with success1 for token ${auth.token}`);
-                    await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
+                    const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
+                    if (tokenIndex !== undefined && tokenIndex !== -1) {
+                        config.twitter.authToken?.splice(tokenIndex, 1);
+                    }
+                    if (auth.username) {
+                        const usernameIndex = config.twitter.username?.indexOf(auth.username);
+                        if (usernameIndex !== undefined && usernameIndex !== -1) {
+                            config.twitter.username?.splice(usernameIndex, 1);
+                        }
+                    }
+                    if (auth.password) {
+                        const passwordIndex = config.twitter.password?.indexOf(auth.password);
+                        if (passwordIndex !== undefined && passwordIndex !== -1) {
+                            config.twitter.password?.splice(passwordIndex, 1);
+                        }
+                    }
+                    logger.debug(`twitter debug: delete twitter cookie for token ${auth.token}, remaining tokens: ${config.twitter.authToken?.length}`);
+                    await cache.set(`twitter:lock-token:${auth.token}`, '1', 86400);
                 }
-            },
-        });
+            }
+        },
+    });
 
-        if (auth.token) {
-            logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
-            logger.debug(`twitter debug: unlock twitter cookie with success2 for token ${auth.token}`);
-            await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
-            await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers.jar.serializeSync()), config.cache.contentExpire);
-        }
-
-        return response._data;
-    } catch {
-        if (auth.token) {
-            logger.debug(`twitter debug: unlock twitter cookie with error2 for token ${auth.token}`);
-            await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
-        }
+    if (auth.token) {
+        logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
+        await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers.jar.serializeSync()), config.cache.contentExpire);
+        logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
+        await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
     }
+
+    return response._data;
 };
 
 export const paginationTweets = async (endpoint: string, userId: number | undefined, variables: Record<string, any>, path?: string[]) => {
