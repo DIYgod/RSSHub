@@ -77801,6 +77801,34 @@
     "name": "Yahoo",
     "url": "hk.news.yahoo.com"
   },
+  "yamap": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "travel"
+        ],
+        "example": "/yamap",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "文章",
+        "maintainers": [
+          "valuex"
+        ],
+        "description": "",
+        "location": "articles.ts"
+      }
+    },
+    "name": "YAMAP",
+    "url": "yamap.com"
+  },
   "yamibo": {
     "routes": {
       "/bbs/forum/:fid/:type?": {
