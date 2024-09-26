@@ -9,6 +9,8 @@ jobs:
   testRoute:
     name: Route test
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if unsuccessful
     steps:
       - uses: actions/checkout@v4
@@ -54,9 +56,11 @@ jobs:
           workflow: ${{ github.event.workflow_run.workflow_id }}
           run_id: ${{ github.event.workflow_run.id }}
           name: docker-image
+          path: ../artifacts-${{ github.run_id }}
 
       - name: Import Docker image and set up Docker container
         if: (env.TEST_CONTINUE)
+        working-directory: ../artifacts-${{ github.run_id }}
         run: |
           set -ex
           zstd -d --stdout rsshub.tar.zst | docker load

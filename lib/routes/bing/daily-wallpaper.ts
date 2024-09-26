@@ -57,7 +57,7 @@ async function handler(ctx) {
     const items = resp.MediaContents.map((item) => {
         const ssd = item.Ssd;
         const link = `${apiUrl}${item.ImageContent.Image.Url.match(/\/th\?id=[^_]+_[^_]+/)[0].replace(/(_\d+x\d+\.webp)$/i, '')}_${type}.jpg`;
-        let description = `<img src="${link}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
+        let description = `<img width="1920" height="1080" src="${link}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
         if (story) {
             description += `<b>${item.ImageContent.Headline}</b>`;
             description += `<i>${item.ImageContent.QuickFact.MainText}</i><br>`;

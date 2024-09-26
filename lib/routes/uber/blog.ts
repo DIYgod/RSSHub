@@ -21,7 +21,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.uber.com/blog/pittsburgh/engineering'],
+            source: ['www.uber.com/:language/blog/engineering', 'www.uber.com/:language/blog'],
             target: '/blog',
         },
     ],

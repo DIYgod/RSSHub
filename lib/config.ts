@@ -47,6 +47,10 @@ export type Config = {
     debugInfo: string;
     loggerLevel: string;
     noLogfiles?: boolean;
+    otel: {
+        seconds_bucket?: string;
+        milliseconds_bucket?: string;
+    };
     showLoggerTimestamp?: boolean;
     sentry: {
         dsn?: string;
@@ -70,7 +74,9 @@ export type Config = {
         temperature?: number;
         maxTokens?: number;
         endpoint: string;
-        prompt?: string;
+        inputOption: string;
+        promptTitle: string;
+        promptDescription: string;
     };
     bilibili: {
         cookies: Record<string, string | undefined>;
@@ -176,6 +182,11 @@ export type Config = {
     };
     lightnovel: {
         cookie?: string;
+    };
+    malaysiakini: {
+        email?: string;
+        password?: string;
+        refreshToken?: string;
     };
     manhuagui: {
         cookie?: string;
@@ -412,6 +423,10 @@ const calculateValue = () => {
         debugInfo: envs.DEBUG_INFO || 'true',
         loggerLevel: envs.LOGGER_LEVEL || 'info',
         noLogfiles: toBoolean(envs.NO_LOGFILES, false),
+        otel: {
+            seconds_bucket: envs.OTEL_SECONDS_BUCKET || '0.01,0.1,1,2,5,15,30,60',
+            milliseconds_bucket: envs.OTEL_MILLISECONDS_BUCKET || '10,20,50,100,250,500,1000,5000,15000',
+        },
         showLoggerTimestamp: toBoolean(envs.SHOW_LOGGER_TIMESTAMP, false),
         sentry: {
             dsn: envs.SENTRY,
@@ -436,7 +451,9 @@ const calculateValue = () => {
             temperature: toInt(envs.OPENAI_TEMPERATURE, 0.2),
             maxTokens: toInt(envs.OPENAI_MAX_TOKENS, 0) || undefined,
             endpoint: envs.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
-            prompt: envs.OPENAI_PROMPT || 'Please summarize the following article and reply with markdown format.',
+            inputOption: envs.OPENAI_INPUT_OPTION || 'description',
+            promptDescription: envs.OPENAI_PROMPT || 'Please summarize the following article and reply with markdown format.',
+            promptTitle: envs.OPENAI_PROMPT_TITLE || 'Please translate the following title into Simplified Chinese and reply only translated text.',
         },
 
         // Route-specific Configurations
@@ -545,6 +562,11 @@ const calculateValue = () => {
         },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
+        },
+        malaysiakini: {
+            email: envs.MALAYSIAKINI_EMAIL,
+            password: envs.MALAYSIAKINI_PASSWORD,
+            refreshToken: envs.MALAYSIAKINI_REFRESHTOKEN,
         },
         manhuagui: {
             cookie: envs.MHGUI_COOKIE,
@@ -718,26 +740,6 @@ calculateValue();
         } catch (error) {
             logger.error('Remote config load failed.', error);
         }
-    }
-
-    if (!envs.DISABLE_UMAMI && envs.NODE_ENV === 'production') {
-        ofetch('https://umami.rss3.io/api/send', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'user-agent': TRUE_UA,
-            },
-            body: JSON.stringify({
-                payload: {
-                    hostname: 'rsshub.app',
-                    language: 'en-US',
-                    referrer: 'rsshub.app',
-                    url: 'rsshub.app',
-                    website: '239067cd-231f-4a3f-a478-cced11a84876',
-                },
-                type: 'event',
-            }),
-        });
     }
 })();
 

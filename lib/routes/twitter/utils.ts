@@ -104,7 +104,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             if (!readable) {
                 content += '<br>';
             }
-            content += `<video src='${video.url}' ${gifAutoPlayAttr} controls='controls' poster='${getOriginalImg(media.media_url_https)}' ${extraAttrs}></video>`;
+            content += `<video width="${media.sizes.large.w}" height="${media.sizes.large.h}" src='${video.url}' ${gifAutoPlayAttr} controls='controls' poster='${getOriginalImg(media.media_url_https)}' ${extraAttrs}></video>`;
         }
 
         return content;
@@ -141,6 +141,9 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                         if (heightOfPics > 0) {
                             content += `height="${heightOfPics}" `;
                             style += `height: ${heightOfPics}px;`;
+                        }
+                        if (widthOfPics <= 0 && heightOfPics <= 0) {
+                            content += `width="${media.sizes.large.w}" height="${media.sizes.large.h}" `;
                         }
                         content += ` style="${style}" ` + `${readable ? 'hspace="4" vspace="8"' : ''} src="${originalImg}">`;
                         if (addLinkForPics) {

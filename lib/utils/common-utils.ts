@@ -39,6 +39,7 @@ const getLocalhostAddress = () => {
         .filter((iface) => iface?.family === 'IPv4' && !iface.internal)
         .map((iface) => iface?.address)
         .filter(Boolean);
+    address.push('[::]');
     return address;
 };
 

@@ -1,12 +1,27 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/dailyselection',
-    name: 'Unknown',
-    maintainers: ['OrangeEd1t'],
+    name: 'Daily Selection',
+    categories: ['picture'],
+    view: ViewType.Pictures,
+    example: '/natgeo/dailyselection',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+    },
+    radar: [
+        {
+            source: ['nationalgeographic.com/'],
+        },
+    ],
+    maintainers: ['OrangeEd1t', 'pseudoyu'],
     handler,
 };
 
