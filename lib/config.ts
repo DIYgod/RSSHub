@@ -285,8 +285,8 @@ export type Config = {
         authToken?: string[];
     };
     uestc: {
-        bbs_cookie?: string;
-        bbs_auth_str?: string;
+        bbsCookie?: string;
+        bbsAuthStr?: string;
     };
     weibo: {
         app_key?: string;
