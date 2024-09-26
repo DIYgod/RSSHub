@@ -44,7 +44,7 @@ async function handler() {
     const items = await Promise.all(
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got.get(item.link);
+                const response = await got(item.link);
                 const $ = load(response.data);
                 item.title = item.title + '-' + item.location;
                 item.description = $('div.ActivitiesId__Body main').html();
