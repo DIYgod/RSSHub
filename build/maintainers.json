@@ -1619,6 +1619,9 @@
   "/deepin/homepage/:user_id": [
     "tensor-tech"
   ],
+  "/deepin/threads/:type?": [
+    "myml"
+  ],
   "/deeplearning/thebatch": [
     "nczitzk",
     "juvenn"

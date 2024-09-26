@@ -5280,6 +5280,14 @@
           "/user/:user_id"
         ],
         "target": "/deepin/homepage/:user_id"
+      },
+      {
+        "title": "首页主题列表",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/"
+        ],
+        "target": "/deepin/threads/latest"
       }
     ]
   },
