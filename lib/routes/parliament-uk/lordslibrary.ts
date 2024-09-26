@@ -4,10 +4,10 @@ import puppeteer from '@/utils/puppeteer';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/lordslibrary/type/:tag?',
+    path: '/lordslibrary/type/:topic?',
     categories: ['government'],
     example: '/parliament-uk/lordslibrary/type/research-briefing',
-    parameters: { tag: 'term tag, string, example: [research-briefing|buisness|economy]' },
+    parameters: { topic: 'research by topic, string, example: [research-briefing|buisness|economy]' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,9 +22,9 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { tag } = ctx.req.param();
+    const { topic } = ctx.req.param();
     const baseUrl = 'https://lordslibrary.parliament.uk/type';
-    const url = `${baseUrl}/${tag}/`;
+    const url = `${baseUrl}/${topic}/`;
     const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -47,7 +47,7 @@ async function handler(ctx) {
         }))
         .toArray();
     return {
-        title: `parliament - lordslibrary - ${tag}`,
+        title: `parliament - lordslibrary - ${topic}`,
         link: baseUrl,
         item: items,
     };
