@@ -12155,6 +12155,19 @@
       }
     ]
   },
+  "konachan.com": {
+    "_name": "Konachan.com Anime Wallpapers",
+    ".": [
+      {
+        "title": "Popular Recent Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/post"
+        ],
+        "target": "/konachan/post/popular_recent/:period?"
+      }
+    ]
+  },
   "konghq.com": {
     "_name": "Kong API 网关平台",
     ".": [

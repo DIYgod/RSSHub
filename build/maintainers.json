@@ -3679,6 +3679,10 @@
   "/kimlaw/thesis": [
     "TonyRL"
   ],
+  "/konachan/post/popular_recent/:period?": [
+    "magic-akari",
+    "NekoAria"
+  ],
   "/konghq/blog-posts": [
     "piglei"
   ],
@@ -7076,7 +7080,8 @@
     "KarasuShin"
   ],
   "/yande/post/popular_recent/:period?": [
-    "fashioncj"
+    "fashioncj",
+    "NekoAria"
   ],
   "/yangtzeu/dongke/*": [],
   "/ycwb/:node": [
