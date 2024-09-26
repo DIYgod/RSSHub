@@ -7,6 +7,8 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
+import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/parse-date';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/description.art'), desc);
 
 export const route: Route = {
@@ -72,7 +74,7 @@ async function handler(ctx) {
 
             return {
                 link: item.find('a.c-card__head').attr('href'),
-                pubDate: item.find('span.c-card__date').text(),
+                pubDate: timezone(parseDate(item.find('span.c-card__date').text()), +9),
                 title: item.find('div.c-card__title').text(),
                 // description: `${item.find('div.c-card__title').text()}<br><img src="${item.find('a.c-card__head > div > figure > img').attr('src')}">`
                 description: renderDescription({
