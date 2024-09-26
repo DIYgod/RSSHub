@@ -8,10 +8,9 @@ import timezone from '@/utils/timezone';
 const baseUrl = 'https://yamap.com/activities/';
 const host = 'https://api.yamap.com/v3/activities?page=1&per=24';
 
-
 export const route: Route = {
     path: '/',
-    categories: ['other'],
+    categories: ['travel'],
     example: '/yamap',
     parameters: {},
     features: {
@@ -22,6 +21,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    name: '文章',
     maintainers: ['valuex'],
     handler,
     description: '',
@@ -39,7 +39,6 @@ async function handler() {
         pubDate: parseDate(item.created_at),
         location: item.map.name || 'Japan',
     }));
-
 
     const items = await Promise.all(
         lists.map((item) =>
