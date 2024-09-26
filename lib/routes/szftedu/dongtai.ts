@@ -46,7 +46,7 @@ async function handler() {
                 const trueLink = thisUrl.includes("http") ? thisUrl : base_link + thisUrl;
                 const response = await got(trueLink);
                 const $ = load(response.data);
-                item.description = thisUrl.includes("http") ? $('#page-content').html() : $('div.pagenews04').html();
+                item.description = thisUrl.includes("http") ? $('#page-content').html() : $('div.TRS_Editor').html();
                 item.pubDate = timezone(parseDate($('#publish_time').first().text()), 8);
                 return item;
             })
