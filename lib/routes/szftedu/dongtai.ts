@@ -6,6 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const host = 'https://ylxx.szftedu.cn/xx_5828/xydt_5829/bxfbx_6371/';
+const baseLink = 'https://ylxx.szftedu.cn';
 
 export const route: Route = {
     path: '/dongtai',
@@ -26,8 +27,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = host;
-    const base_link = 'https://ylxx.szftedu.cn';
+    const link = host;    
 
     const response = await got(link);
     const $ = load(response.data);
@@ -43,7 +43,7 @@ async function handler() {
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
                 const thisUrl = item.link;
-                const trueLink = thisUrl.includes("http") ? thisUrl : base_link + thisUrl;
+                const trueLink = thisUrl.includes("http") ? thisUrl : baseLink + thisUrl;
                 const response = await got(trueLink);
                 const $ = load(response.data);
                 item.description = thisUrl.includes("http") ? $('#page-content').html() : $('div.TRS_Editor').html();
