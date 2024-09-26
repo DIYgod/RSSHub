@@ -42,7 +42,7 @@ export const route: Route = {
     radar: [
         {
             source: ['bbs.uestc.edu.cn/*'],
-            target: '/uestc/bbs/newthread',
+            target: '/bbs/newthread',
         },
     ],
     handler: async (ctx) => {
