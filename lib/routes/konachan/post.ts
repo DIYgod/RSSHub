@@ -4,20 +4,20 @@ import queryString from 'query-string';
 
 export const route: Route = {
     path: '/post/popular_recent/:period?',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/konachan/post/popular_recent/1d',
     parameters: {
         period: '展示时间',
     },
     radar: [
         {
-            source: ['konachan.com/post/'],
+            source: ['konachan.com/post'],
         },
     ],
-    name: 'posts',
-    maintainers: ['NekoAria'],
-    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     | 
-  | ------- | -------- | ------- | -------- | 
+    name: 'Popular Recent Posts',
+    maintainers: ['magic-akari', 'NekoAria'],
+    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     |
+  | ------- | -------- | ------- | -------- |
   | 1d | 1w | 1m | 1y |`,
     handler,
 };
