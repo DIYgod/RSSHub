@@ -28,17 +28,17 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.lovelive-anime.jp/', 'www.lovelive-anime.jp/news'],
-            target: '/news',
+            source: ['www.lovelive-anime.jp/news/?series=:abbr&subcategory=:category', 'www.lovelive-anime.jp/news/?series=:abbr', 'www.lovelive-anime.jp/news/', 'www.lovelive-anime.jp/'],
+            target: '/news/:abbr?/:category?',
         },
     ],
-    name: 'Love Live! Official Website Latest NEWS',
+    name: 'Love Live! Series NEWS',
     maintainers: ['axojhf', 'zhaoweizhong'],
     handler,
     url: 'www.lovelive-anime.jp/',
-    description: `| Sub-project Name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 蓮ノ空女学院 | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
-  | -------------------------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | ---------------------------------------- |
-  | \`abbr\`parameter                  | lovelive | sunshine           | nijigasaki                                 | superstar              | hasunosora | yohane       | musical                                  |
+    description: `| Sub-project Name | All Projects | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 蓮ノ空女学院 | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
+  | -------------------------------- | -------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | ------------ | ---------------------------------------- |
+  | \`abbr\`parameter                  | <u>*No parameter*</u> | lovelive |     sunshine        | nijigasaki                                 | superstar              | hasunosora | yohane       | musical                                  |
 
   | Category Name       | 全てのニュース        | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | キャンペーン | その他 |
   | ------------------- | --------------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
