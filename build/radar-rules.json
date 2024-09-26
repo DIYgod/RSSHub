@@ -16477,10 +16477,17 @@
         "title": "CSIE News",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
-          "/zh-hant/news/:catagory?/",
-          "/en/news/:catagory?/"
+          "/zh-hant/news/"
         ],
-        "target": "/ncku/zh-hant/:catagory"
+        "target": "/ncku/csie/_all"
+      },
+      {
+        "title": "CSIE News",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/zh-hant/news/:catagory"
+        ],
+        "target": "/ncku/csie/:catagory"
       }
     ]
   },

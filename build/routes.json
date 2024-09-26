@@ -47630,10 +47630,15 @@
         "radar": [
           {
             "source": [
-              "www.csie.ncku.edu.tw/zh-hant/news/:catagory?/",
-              "www.csie.ncku.edu.tw/en/news/:catagory?/"
+              "www.csie.ncku.edu.tw/zh-hant/news/"
             ],
-            "target": "/zh-hant/:catagory"
+            "target": "/csie/_all"
+          },
+          {
+            "source": [
+              "www.csie.ncku.edu.tw/zh-hant/news/:catagory"
+            ],
+            "target": "/csie/:catagory"
           }
         ],
         "maintainers": [
