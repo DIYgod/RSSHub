@@ -47,8 +47,8 @@ async function fetchPage(section: string) {
     await page.setRequestInterception(true);
     // only allow certain types of requests to proceed
     page.on('request', (request) => {
-        const allowedResourceTypes = ['document', 'script', 'xhr'];
-        allowedResourceTypes.includes(request.resourceType()) ? request.continue() : request.abort();
+        // in this case, we only allow document requests to proceed
+        request.resourceType() === 'document' ? request.continue() : request.abort();
     });
     // visit the target link
     const link = `${baseUrl}/section/${section}/`;
@@ -58,7 +58,7 @@ async function fetchPage(section: string) {
 
     await page.goto(link, {
         // specify how long to wait for the page to load
-        waitUntil: 'networkidle2',
+        waitUntil: 'domcontentloaded',
     });
     // retrieve the HTML content of the page
     const response = await page.content();
@@ -145,11 +145,11 @@ async function fetchPage(section: string) {
                 // set up request interception to only allow document requests
                 await page.setRequestInterception(true);
                 page.on('request', (request) => {
-                    const allowedResourceTypes = ['document', 'script', 'xhr'];
-                    allowedResourceTypes.includes(request.resourceType()) ? request.continue() : request.abort();
+                    request.resourceType() === 'document' ? request.continue() : request.abort();
                 });
+
                 await page.goto(item.link, {
-                    waitUntil: 'networkidle2',
+                    waitUntil: 'domcontentloaded',
                 });
                 const response = await page.content();
                 // close the tab after retrieving the HTML content
