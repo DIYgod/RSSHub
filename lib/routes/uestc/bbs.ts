@@ -11,7 +11,8 @@ export const route: Route = {
     path: '/bbs/:types?',
     name: '清水河畔',
     maintainers: ['huyyi'],
-    categories: ['bbs'],
+    categories: ['university'],
+    url: 'bbs.uestc.edu.cn',
     example: '/uestc/bbs/newthread',
     parameters: { types: '选择内容类型(多选`,`分割），可选值：[newreply,newthread,digest,life,hotlist]。默认为所有。' },
     features: {
