@@ -34,7 +34,7 @@ export const route: Route = {
             target: '/news/:abbr?/:category?',
         },
     ],
-    name: 'Love Live! Series NEWS',
+    name: 'News',
     maintainers: ['axojhf', 'zhaoweizhong'],
     handler,
     url: 'www.lovelive-anime.jp/',
