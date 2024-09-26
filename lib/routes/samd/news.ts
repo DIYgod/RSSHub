@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 const dict = { '434': '行业资讯', '436': '协会动态', '438': '重要通知', '440': '政策法规' };
 
 export const route: Route = {
-    path: 'news/:typeId',
+    path: '/news/:typeId',
     categories: ['government'],
     example: '/samd/news/440',
     parameters: { type: '文章类型ID，见下表' },

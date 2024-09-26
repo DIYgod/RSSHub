@@ -66,6 +66,10 @@ function hexsign(e) {
     return o;
 }
 
+function addRenderData(params, renderData) {
+    return `${params}&w_webid=${encodeURIComponent(renderData)}`;
+}
+
 function addWbiVerifyInfo(params, wbiVerifyString) {
     const searchParams = new URLSearchParams(params);
     searchParams.sort();
@@ -122,4 +126,5 @@ export default {
     getDmImgList,
     addDmVerifyInfo,
     bvidTime,
+    addRenderData,
 };

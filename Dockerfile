@@ -115,8 +115,8 @@ FROM node:22-bookworm-slim AS app
 
 LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 
-ENV NODE_ENV production
-ENV TZ Asia/Shanghai
+ENV NODE_ENV=production
+ENV TZ=Asia/Shanghai
 
 WORKDIR /app
 
@@ -132,7 +132,7 @@ RUN \
     set -ex && \
     apt-get update && \
     apt-get install -yq --no-install-recommends \
-        dumb-init git \
+        dumb-init git curl \
     ; \
     if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ]; then \
         if [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \

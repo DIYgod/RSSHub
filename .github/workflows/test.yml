@@ -12,7 +12,6 @@ on:
   pull_request: {}
 
 permissions:
-  contents: read
   checks: write
 
 jobs:
@@ -136,6 +135,8 @@ jobs:
   all:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      attestations: write
     strategy:
       fail-fast: false
       matrix:

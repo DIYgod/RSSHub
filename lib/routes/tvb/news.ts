@@ -96,6 +96,7 @@ async function handler(ctx) {
             lang: language,
             page: 1,
             limit: ctx.req.query('limit') ?? 50,
+            country: 'HK',
         },
     });
 

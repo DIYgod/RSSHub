@@ -35,6 +35,7 @@ async function handler(ctx) {
     const cookie = await cache.getCookie();
     const wbiVerifyString = await cache.getWbiVerifyString();
     const dmImgList = utils.getDmImgList();
+    const renderData = await cache.getRenderData(uid);
     const [name, face] = await cache.getUsernameAndFaceFromUID(uid);
 
     // await got(`https://space.bilibili.com/${uid}/video?tid=0&page=1&keyword=&order=pubdate`, {
@@ -43,7 +44,7 @@ async function handler(ctx) {
     //         Cookie: cookie,
     //     },
     // });
-    const params = utils.addWbiVerifyInfo(utils.addDmVerifyInfo(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, dmImgList), wbiVerifyString);
+    const params = utils.addWbiVerifyInfo(utils.addRenderData(utils.addDmVerifyInfo(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, dmImgList), renderData), wbiVerifyString);
     const response = await got(`https://api.bilibili.com/x/space/wbi/arc/search?${params}`, {
         headers: {
             Referer: `https://space.bilibili.com/${uid}/video?tid=0&page=1&keyword=&order=pubdate`,

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import { config } from '@/config';
@@ -6,9 +6,20 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/remote/:site/:only_media?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/mastodon/remote/pawoo.net/true',
-    parameters: { site: 'instance address, only domain, no `http://` or `https://` protocol header', only_media: 'whether only display media content, default to false, any value to true' },
+    parameters: {
+        site: 'instance address, only domain, no `http://` or `https://` protocol header',
+        only_media: {
+            description: 'whether only display media content, default to false, any value to true',
+            options: [
+                { value: 'true', label: 'true' },
+                { value: 'false', label: 'false' },
+            ],
+            default: 'false',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 import { parseToken } from '@/routes/xueqiu/cookies';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/favorite/:id',
@@ -43,15 +44,28 @@ async function handler(ctx) {
     });
     const data = res2.data.list;
 
+    const {
+        user: { screen_name },
+    } = await ofetch('https://xueqiu.com/statuses/original/show.json', {
+        query: {
+            user_id: id,
+        },
+        headers: {
+            Cookie: token,
+            Referer: `https://xueqiu.com/u/${id}`,
+        },
+    });
+
     return {
-        title: `ID: ${id} 的雪球收藏动态`,
+        title: `${screen_name} 的雪球收藏动态`,
         link: `https://xueqiu.com/u/${id}`,
-        description: `ID: ${id} 的雪球收藏动态`,
+        description: `${screen_name} 的雪球收藏动态`,
         item: data.map((item) => ({
             title: item.title,
             description: item.description,
             pubDate: parseDate(item.created_at),
             link: `https://xueqiu.com${item.target}`,
         })),
+        allowEmpty: true,
     };
 }

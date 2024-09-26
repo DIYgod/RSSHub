@@ -5,6 +5,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
+import { JSDOM } from 'jsdom';
 
 let disableConfigCookie = false;
 const getCookie = () => {
@@ -13,7 +14,9 @@ const getCookie = () => {
     }
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
-        const browser = await puppeteer();
+        const browser = await puppeteer({
+            stealth: true,
+        });
         const page = await browser.newPage();
         const waitForRequest = new Promise<string>((resolve) => {
             page.on('requestfinished', async (request) => {
@@ -35,6 +38,26 @@ const getCookie = () => {
 const clearCookie = () => {
     cache.set('bili-cookie');
     disableConfigCookie = true;
+};
+
+const getRenderData = (uid) => {
+    const key = 'bili-web-render-data';
+    return cache.tryGet(key, async () => {
+        const cookie = await getCookie();
+        const { data: response } = await got(`https://space.bilibili.com/${uid}`, {
+            headers: {
+                Referer: 'https://www.bilibili.com/',
+                Cookie: cookie,
+            },
+        });
+        const dom = new JSDOM(response);
+        const document = dom.window.document;
+        const scriptElement = document.querySelector('#__RENDER_DATA__');
+        const innerText = scriptElement ? scriptElement.textContent || '{}' : '{}';
+        const renderData = JSON.parse(decodeURIComponent(innerText));
+        const accessId = renderData.access_id;
+        return accessId;
+    });
 };
 
 const getWbiVerifyString = () => {
@@ -260,4 +283,5 @@ export default {
     getCidFromId,
     getAidFromBvid,
     getArticleDataFromCvid,
+    getRenderData,
 };

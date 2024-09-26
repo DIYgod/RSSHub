@@ -7,7 +7,17 @@ export const route: Route = {
     path: '/info/:type?',
     categories: ['anime'],
     example: '/hpoi/info/all',
-    parameters: { type: '分类, 见下表, 默认为`all`' },
+    parameters: {
+        type: {
+            description: '分类',
+            options: [
+                { value: 'all', label: '全部' },
+                { value: 'hobby', label: '手办' },
+                { value: 'model', label: '模型' },
+            ],
+            default: 'all',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -19,11 +29,6 @@ export const route: Route = {
     name: '情报',
     maintainers: ['sanmmm DIYgod'],
     handler,
-    description: `分类
-
-  | 全部 | 手办  | 模型  |
-  | ---- | ----- | ----- |
-  | all  | hobby | model |`,
 };
 
 async function handler(ctx) {
