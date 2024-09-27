@@ -24987,13 +24987,13 @@
     ]
   },
   "yande.re": {
-    "_name": "yande",
+    "_name": "yande.re",
     ".": [
       {
-        "title": "posts",
-        "docs": "https://docs.rsshub.app/routes/anime",
+        "title": "Popular Recent Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
         "source": [
-          "/post/"
+          "/post"
         ],
         "target": "/yande/post/popular_recent/:period?"
       }

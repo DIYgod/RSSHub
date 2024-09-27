@@ -77995,7 +77995,7 @@
       "/post/popular_recent/:period?": {
         "path": "/post/popular_recent/:period?",
         "categories": [
-          "anime"
+          "picture"
         ],
         "example": "/yande/post/popular_recent/1d",
         "parameters": {
@@ -78004,20 +78004,22 @@
         "radar": [
           {
             "source": [
-              "yande.re/post/"
+              "yande.re/post"
             ]
           }
         ],
-        "name": "posts",
+        "name": "Popular Recent Posts",
         "maintainers": [
+          "magic-akari",
+          "SettingDust",
           "fashioncj",
           "NekoAria"
         ],
-        "description": "| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     | \n  | ------- | -------- | ------- | -------- | \n  | 1d | 1w | 1m | 1y |",
+        "description": "| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     |\n  | ------- | -------- | ------- | -------- |\n  | 1d | 1w | 1m | 1y |",
         "location": "post.ts"
       }
     },
-    "name": "yande",
+    "name": "yande.re",
     "url": "yande.re",
     "description": "yande post"
   },
