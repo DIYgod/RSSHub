@@ -82,7 +82,6 @@ async function handler(ctx) {
         title: item.title,
         link: item.url,
         description: renderDescription({
-            title: item.title,
             imglink: 'https://www.lovelive-anime.jp' + item.thumbnail,
         }),
         pubDate: timezone(parseDate(item.dspdate), +9),
