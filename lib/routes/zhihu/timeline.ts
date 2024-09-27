@@ -115,7 +115,7 @@ async function handler(ctx) {
     };
 
     const out = feeds
-        .filter((e) => e.verb && e.verb !== 'MEMBER_VOTEUP_ARTICLE' && e.verb !== 'MEMBER_VOTEUP_ANSWER')
+        .filter((e) => e.verb)
         .map((e) => {
             if (e && e.type && e.type === 'feed_group') {
                 // A feed group contains a list of feeds whose structure is the same as a single feed
@@ -134,6 +134,7 @@ async function handler(ctx) {
                     description,
                     pubDate,
                     guid,
+                    category: [e.verb],
                 };
             }
             return buildItem(e);
