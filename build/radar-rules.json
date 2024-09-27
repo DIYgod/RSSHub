@@ -12718,14 +12718,14 @@
     ]
   },
   "lovelive-anime.jp": {
-    "_name": "lovelive-anime",
+    "_name": "Love Live! Official Website",
     "www": [
       {
-        "title": "Love Live! Official Website Latest NEWS",
+        "title": "News",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/",
-          "/news"
+          "/news/"
         ],
         "target": "/lovelive-anime/news"
       }

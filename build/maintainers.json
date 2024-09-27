@@ -3865,10 +3865,13 @@
     "ladeng07",
     "3401797899"
   ],
-  "/lovelive-anime/news/:option?": [
+  "/lovelive-anime/news/:abbr?/:category?/:option?": [
+    "axojhf",
+    "zhaoweizhong"
+  ],
+  "/lovelive-anime/schedules/:serie?/:category?": [
     "axojhf"
   ],
-  "/lovelive-anime/schedules/:serie?/:category?": [],
   "/lovelive-anime/topics/:abbr/:category?/:option?": [
     "axojhf"
   ],
