@@ -52,12 +52,14 @@ async function login({ username, password, authenticationSecret }) {
                     const data = await response.json();
                     const message = data?.data?.home?.home_timeline_urt?.instructions?.[0]?.entries?.[0]?.entryId;
                     if (message === 'messageprompt-suspended-prompt') {
+                        logger.error(`twitter debug: twitter username ${username} login failed: messageprompt-suspended-prompt`);
                         resolve('');
                     }
                     const cookies = await page.cookies();
                     for (const cookie of cookies) {
                         cookieJar.setCookieSync(`${cookie.name}=${cookie.value}`, 'https://x.com');
                     }
+                    logger.debug(`twitter debug: twitter username ${username} login success`);
                     resolve(JSON.stringify(cookieJar.serializeSync()));
                 }
             });
@@ -66,7 +68,7 @@ async function login({ username, password, authenticationSecret }) {
         await browser.close();
         return cookieString;
     } catch (error) {
-        logger.error(`Twitter username ${username} login failed:`, error);
+        logger.error(`twitter debug: twitter username ${username} login failed:`, error);
     }
 }
 

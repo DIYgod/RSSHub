@@ -35,8 +35,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.csie.ncku.edu.tw/zh-hant/news/:catagory?/', 'www.csie.ncku.edu.tw/en/news/:catagory?/'],
-            target: '/zh-hant/:catagory',
+            source: ['www.csie.ncku.edu.tw/zh-hant/news/'],
+            target: '/csie/_all',
+        },
+        {
+            source: ['www.csie.ncku.edu.tw/zh-hant/news/:catagory'],
+            target: '/csie/:catagory',
         },
     ],
     maintainers: ['simbafs'],
@@ -72,7 +76,7 @@ export const route: Route = {
 
         return {
             title: `成大資訊系公告 - ${catagories[catagory]}`,
-            link: `https://www.csie.ncku.edu.tw/zh-hant/${catagory}/`,
+            link: currentURL(catagory, base),
             item,
         };
     },

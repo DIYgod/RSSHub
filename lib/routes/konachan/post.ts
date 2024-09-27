@@ -4,20 +4,20 @@ import queryString from 'query-string';
 
 export const route: Route = {
     path: '/post/popular_recent/:period?',
-    categories: ['anime'],
-    example: '/yande/post/popular_recent/1d',
+    categories: ['picture'],
+    example: '/konachan/post/popular_recent/1d',
     parameters: {
         period: '展示时间',
     },
     radar: [
         {
-            source: ['yande.re/post/'],
+            source: ['konachan.com/post'],
         },
     ],
-    name: 'posts',
-    maintainers: ['fashioncj', 'NekoAria'],
-    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     | 
-  | ------- | -------- | ------- | -------- | 
+    name: 'Popular Recent Posts',
+    maintainers: ['magic-akari', 'NekoAria'],
+    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     |
+  | ------- | -------- | ------- | -------- |
   | 1d | 1w | 1m | 1y |`,
     handler,
 };
@@ -26,7 +26,7 @@ async function handler(ctx) {
     const { period = '1d' } = ctx.req.param();
 
     const response = await got({
-        url: 'https://yande.re/post/popular_recent.json',
+        url: 'https://konachan.com/post/popular_recent.json',
         searchParams: queryString.stringify({
             period,
         }),
@@ -49,13 +49,13 @@ async function handler(ctx) {
     const title = titles[period];
 
     return {
-        title: `${title} - yande.re`,
-        link: `https://yande.re/post/popular_recent?period=${period}`,
+        title: `${title} - konachan.com`,
+        link: `https://konachan.com/post/popular_recent?period=${period}`,
         item: posts.map((post) => ({
             title: post.tags,
             id: `${ctx.path}#${post.id}`,
             guid: `${ctx.path}#${post.id}`,
-            link: `https://yande.re/post/show/${post.id}`,
+            link: `https://konachan.com/post/show/${post.id}`,
             author: post.author,
             pubDate: new Date(post.created_at * 1e3).toUTCString(),
             description: (() => {
@@ -65,7 +65,7 @@ async function handler(ctx) {
                     result.push(`<a href="${post.source}">Source</a>`);
                 }
                 if (post.parent_id) {
-                    result.push(`<a href="https://yande.re/post/show/${post.parent_id}">Parent</a>`);
+                    result.push(`<a href="https://konachan.com/post/show/${post.parent_id}">Parent</a>`);
                 }
                 return result.join('');
             })(),
