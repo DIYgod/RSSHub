@@ -7,6 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
+import ofetch from '@/utils/ofetch';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/description.art'), desc);
@@ -30,8 +31,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.lovelive-anime.jp/news/?series=:abbr&subcategory=:category', 'www.lovelive-anime.jp/news/?series=:abbr', 'www.lovelive-anime.jp/news/', 'www.lovelive-anime.jp/'],
-            target: '/news/:abbr?/:category?',
+            source: ['www.lovelive-anime.jp/', 'www.lovelive-anime.jp/news/'],
+            target: '/news',
         },
     ],
     name: 'News',
@@ -48,48 +49,51 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let url = 'https://www.lovelive-anime.jp/news/';
     const abbr = ctx.req.param('abbr');
     const category = ctx.req.param('category');
     const option = ctx.req.param('option');
 
     const isDetail = abbr === 'detail' || category === 'detail' || option === 'detail';
+    let series = '';
+    let subcategory = '';
 
-    const params = new URLSearchParams();
     if (abbr && abbr !== 'detail') {
-        params.append('series', abbr);
+        series = abbr;
         if (category && category !== 'detail') {
-            params.append('subcategory', category);
+            subcategory = category;
         }
     }
-    url += `?${params.toString()}`;
 
-    const response = await got(url);
+    const limit = 20;
 
-    const $ = load(response.data);
+    let url = `https://www.lovelive-anime.jp/common/api/article_list.php?site=jp&ip=lovelive&limit=${limit}&data=`;
+    const params: { category: string[]; series?: string[]; subcategory?: string[] } = { category: ['NEWS'] };
+    if (series) {
+        params.series = [series];
+    }
+    if (subcategory) {
+        params.subcategory = [subcategory];
+    }
+    url += encodeURIComponent(JSON.stringify(params));
 
-    const pageFace = $('div.c-card.p-colum__box')
-        .map((_, item) => {
-            item = $(item);
+    const data = await ofetch(url);
 
-            return {
-                link: item.find('a.c-card__head').attr('href'),
-                pubDate: timezone(parseDate(item.find('span.c-card__date').text()), +9),
-                title: item.find('div.c-card__title').text(),
-                // description: `${item.find('div.c-card__title').text()}<br><img src="${item.find('a.c-card__head > div > figure > img').attr('src')}">`
-                description: renderDescription({
-                    title: item.find('div.c-card__title').text(),
-                    imglink: item.find('a.c-card__head > div > figure > img').attr('src'),
-                }),
-            };
-        })
-        .get();
+    const articles = data.data.article_list.map((item) => ({
+        title: item.title,
+        link: item.url,
+        description: renderDescription({
+            title: item.title,
+            imglink: 'https://www.lovelive-anime.jp' + item.thumbnail,
+        }),
+        pubDate: timezone(parseDate(item.dspdate), +9),
+        category: item.categories.subcategory.map((category) => category.name),
+    }));
 
-    let items = pageFace;
+    let items = articles;
 
     if (isDetail) {
         items = await Promise.all(
-            pageFace.map((item) =>
+            articles.map((item) =>
                 cache.tryGet(item.link, async () => {
                     const detailResp = await got(item.link);
                     const $ = load(detailResp.data);
