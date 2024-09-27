@@ -38,15 +38,12 @@ export const route: Route = {
                     };
                 });
         };
+        const fetchAllPages = async (page: number, accumulatedItems: NewsItem[] = []): Promise<NewsItem[]> => {
+            const pageItems: NewsItem[] = await fetchPage(page);
+            const newItems: NewsItem[] = [...accumulatedItems, ...pageItems];
+            const lastItem: NewsItem | undefined = pageItems.at(-1);
 
-        const fetchAllPages = async (page: number, accumulatedItems: any[] = []): Promise<any[]> => {
-            const pageItems = await fetchPage(page);
-            const newItems = [...accumulatedItems, ...pageItems];
-            const lastItem = pageItems.at(-1);
-
-            return pageItems.length === 0 || (lastItem && lastItem.pubDate < threeDaysAgo)
-                ? newItems
-                : fetchAllPages(page + 1, newItems);
+            return pageItems.length === 0 || (lastItem && lastItem.pubDate < threeDaysAgo) ? newItems : fetchAllPages(page + 1, newItems);
         };
 
         const items = await fetchAllPages(1);
@@ -61,3 +58,9 @@ export const route: Route = {
         };
     },
 };
+
+interface NewsItem {
+    pubDate: Date;
+    title?: string;
+    content?: string;
+}
