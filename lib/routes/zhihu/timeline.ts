@@ -60,10 +60,13 @@ async function handler(ctx) {
                 const questionId = e.target.question.id;
                 return `${urlBase}/question/${questionId}/answer/${id}`;
             }
+            case 'pin':
             case 'article':
                 return e.target.url;
             case 'question':
                 return `${urlBase}/question/${id}`;
+            default:
+                return;
         }
         return '';
     };
@@ -111,6 +114,7 @@ async function handler(ctx) {
             link,
             author: e.target.author ? e.target.author.name : '',
             guid: link,
+            category: [e.verb],
         };
     };
 
