@@ -47645,10 +47645,51 @@
           "simbafs"
         ],
         "location": "csie.ts"
+      },
+      "/phys/:catagory?": {
+        "zh-TW": {
+          "name": "國立成功大學物理系公告"
+        },
+        "name": "Phys News",
+        "description": "| 分類 | catagory |\n| 物理系 | 24 |\n| 獎助學金 | scholarship |\n| 招生與錄取報到 | admission |\n| 助教公告 | course-announcement |\n| 大學部 | bachelor-announcement |\n| 研究所 | master-announcement |\n| 畢業離校 | graduation |\n| 學生手冊與新生入學 | student-guide |\n| 榮譽榜 | honor |\n| 求才公告 | career |\n| 其他 | others |\n| 所有訊息 | _all |\n",
+        "path": "/phys/:catagory?",
+        "parameters": {
+          "catagory": "catagory, default is _all"
+        },
+        "categories": [
+          "university"
+        ],
+        "example": "/ncku/phys/_all",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "phys.ncku.edu.tw/news/"
+            ],
+            "target": "/phys/_all"
+          },
+          {
+            "source": [
+              "phys.ncku.edu.tw/news/:catagory/"
+            ],
+            "target": "/phys/:catagory"
+          }
+        ],
+        "maintainers": [
+          "simbafs"
+        ],
+        "location": "phys.ts"
       }
     },
     "name": "National Cheng Kung University",
-    "url": "ncku.edu.tw"
+    "url": "www.ncku.edu.tw"
   },
   "ncpssd": {
     "routes": {

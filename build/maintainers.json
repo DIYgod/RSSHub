@@ -4250,6 +4250,9 @@
   "/ncku/csie/:catagory?": [
     "simbafs"
   ],
+  "/ncku/phys/:catagory?": [
+    "simbafs"
+  ],
   "/ncpssd/newlist": [
     "LyleLee"
   ],

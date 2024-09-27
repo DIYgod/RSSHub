@@ -16489,6 +16489,24 @@
         ],
         "target": "/ncku/csie/:catagory"
       }
+    ],
+    "phys": [
+      {
+        "title": "Phys News",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/news/"
+        ],
+        "target": "/ncku/phys/_all"
+      },
+      {
+        "title": "Phys News",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/news/:catagory/"
+        ],
+        "target": "/ncku/phys/:catagory"
+      }
     ]
   },
   "ncpssd.cn": {
