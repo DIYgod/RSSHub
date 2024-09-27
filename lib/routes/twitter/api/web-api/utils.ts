@@ -34,17 +34,19 @@ const token2Cookie = (token) =>
         }
     });
 
+const lockPrefix = 'twitter:lock-token1:';
+
 const getAuth = async (retry: number) => {
     if (config.twitter.authToken && retry > 0) {
         const index = authTokenIndex++ % config.twitter.authToken.length;
         const token = config.twitter.authToken[index];
-        const lock = await cache.get(`twitter:lock-token:${token}`);
+        const lock = await cache.get(`${lockPrefix}${token}`);
         if (lock) {
             await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
             return await getAuth(retry - 1);
         } else {
             logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
-            await cache.set(`twitter:lock-token:${token}`, '1', 20);
+            await cache.set(`${lockPrefix}${token}`, '1', 20);
             return {
                 token,
                 username: config.twitter.username?.[index],
@@ -129,7 +131,7 @@ export const twitterGot = async (url, params) => {
         onResponse: async ({ response }) => {
             if (response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
                 logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
-                await cache.set(`twitter:lock-token:${auth.token}`, '1', 2000);
+                await cache.set(`${lockPrefix}${auth.token}`, '1', 2000);
             } else if (response.status === 403 || response.status === 401) {
                 const newCookie = await login({
                     username: auth.username,
@@ -140,7 +142,7 @@ export const twitterGot = async (url, params) => {
                     logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
                     await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
                     logger.debug(`twitter debug: unlock twitter cookie for token ${auth.token} with error1`);
-                    await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
+                    await cache.set(`${lockPrefix}${auth.token}`, '', 1);
                 } else {
                     const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
                     if (tokenIndex !== undefined && tokenIndex !== -1) {
@@ -159,7 +161,7 @@ export const twitterGot = async (url, params) => {
                         }
                     }
                     logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
-                    await cache.set(`twitter:lock-token:${auth.token}`, '1', 86400);
+                    await cache.set(`${lockPrefix}${auth.token}`, '1', 86400);
                 }
             }
         },
@@ -169,7 +171,7 @@ export const twitterGot = async (url, params) => {
         logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
         await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers.jar.serializeSync()), config.cache.contentExpire);
         logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
-        await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
+        await cache.set(`${lockPrefix}${auth.token}`, '', 1);
     }
 
     return response._data;
