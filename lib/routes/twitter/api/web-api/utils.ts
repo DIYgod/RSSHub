@@ -127,10 +127,10 @@ export const twitterGot = async (url, params) => {
         },
         dispatcher: dispatchers.agent,
         onResponse: async ({ response }) => {
-            if (response.status === 429) {
-                logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token}`);
-                await cache.set(`twitter:lock-token:${auth.token}`, '1', 1000);
-            } else if (response.status === 403 || response.status === 401 || JSON.stringify(response._data?.data) === '{"user":{}}') {
+            if (response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
+                logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
+                await cache.set(`twitter:lock-token:${auth.token}`, '1', 2000);
+            } else if (response.status === 403 || response.status === 401) {
                 const newCookie = await login({
                     username: auth.username,
                     password: auth.password,
@@ -139,7 +139,7 @@ export const twitterGot = async (url, params) => {
                 if (newCookie) {
                     logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
                     await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
-                    logger.debug(`twitter debug: unlock twitter cookie with error1 for token ${auth.token}`);
+                    logger.debug(`twitter debug: unlock twitter cookie for token ${auth.token} with error1`);
                     await cache.set(`twitter:lock-token:${auth.token}`, '', 1);
                 } else {
                     const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
@@ -158,7 +158,7 @@ export const twitterGot = async (url, params) => {
                             config.twitter.password?.splice(passwordIndex, 1);
                         }
                     }
-                    logger.debug(`twitter debug: delete twitter cookie for token ${auth.token}, remaining tokens: ${config.twitter.authToken?.length}`);
+                    logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
                     await cache.set(`twitter:lock-token:${auth.token}`, '1', 86400);
                 }
             }
