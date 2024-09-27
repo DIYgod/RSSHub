@@ -284,6 +284,10 @@ export type Config = {
         authenticationSecret?: string[];
         authToken?: string[];
     };
+    uestc: {
+        bbsCookie?: string;
+        bbsAuthStr?: string;
+    };
     weibo: {
         app_key?: string;
         app_secret?: string;
@@ -667,6 +671,10 @@ const calculateValue = () => {
             password: envs.TWITTER_PASSWORD?.split(','),
             authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
+        },
+        uestc: {
+            bbsCookie: envs.UESTC_BBS_COOKIE,
+            bbsAuthStr: envs.UESTC_BBS_AUTH_STR,
         },
         weibo: {
             app_key: envs.WEIBO_APP_KEY,
