@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 
 import { fetchArticle } from './utils';
+import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
     path: '/cat/:cat',
@@ -34,10 +35,17 @@ async function handler(ctx) {
             category: $(a).parent().find('.source').text().trim(),
         }));
 
-    const out = await Promise.all(list.map((item) => fetchArticle(item)));
+    const out = await asyncPoolAll(ctx.req.query('pool') ? Number.parseInt(ctx.req.query('pool')) : 1, list, (item) => fetchArticle(item));
     return {
         title: `新京报 - 分类 - ${$('.cur').text().trim()}`,
         link: url,
         item: out,
     };
+}
+async function asyncPoolAll<IN, OUT>(poolLimit: number, array: readonly IN[], iteratorFn: (generator: IN) => Promise<OUT>) {
+    const results: Awaited<OUT[]> = [];
+    for await (const result of asyncPool(poolLimit, array, iteratorFn)) {
+        results.push(result);
+    }
+    return results;
 }
