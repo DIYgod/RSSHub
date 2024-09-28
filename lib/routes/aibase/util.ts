@@ -1,4 +1,4 @@
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import { CheerioAPI } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
@@ -12,16 +12,18 @@ const rootUrl = 'https://top.aibase.com';
 const apiRootUrl = 'https://app.chinaz.com';
 
 /**
- * Convert a string to an array by parsing it as JSON. If parsing fails, return the string in an array.
- * @param str - The string to be converted to an array.
- * @returns An array containing the parsed JSON or the original string.
+ * Converts a string to an array.
+ * If the string starts with '[', it is assumed to be a JSON array and is parsed accordingly.
+ * Otherwise, the string is wrapped in an array.
+ *
+ * @param str - The input string to convert to an array.
+ * @returns An array created from the input string.
  */
 const strToArray = (str: string) => {
-    try {
-        return str ? JSON.parse(str) : [];
-    } catch {
-        return [str];
+    if (str.startsWith('[')) {
+        return JSON.parse(str);
     }
+    return [str];
 };
 
 art.defaults.imports.strToArray = strToArray;
