@@ -36,12 +36,13 @@ async function fetchPage(section: string) {
 
     const jsonData = JSON.parse($('#__NEXT_DATA__').html());
     const headingText = jsonData.props.pageProps.sectionData.name;
+
     const items = jsonData.props.pageProps.sectionData.stories.nodes;
 
     const feedItems = items.map((item) => ({
-        title: item.title,
-        link: `https://www.dealstreetasia.com${item.uri}`,
-        description: item.excerpt.replaceAll(/<[^>]*>/g, ''), // Strip HTML tags from the excerpt
+        title: item.title || 'No Title',
+        link: item.uri ? `https://www.dealstreetasia.com${item.uri}` : '',
+        description: item.excerpt.replaceAll(/<[^>]*>/g, '') || '', // Strip HTML tags from the excerpt
         pubDate: item.post_date ? new Date(item.post_date).toUTCString() : '',
         category: item.sections.nodes.map((section) => section.name),
         image: item.featuredImage?.node?.mediaItemUrl.replace(/\?.*$/, ''), // Use .replace to sanitize the image URL

@@ -39,9 +39,10 @@ async function fetchPage() {
 
     const categoryKeys = ['topStories', 'privateEquity', 'ventureCapital', 'unicorns', 'interviews', 'deals', 'analysis', 'ipos', 'opinion', 'policyAndRegulations', 'people', 'earningsAndResults', 'theLpView', 'dvNewsletters'];
 
-    // Create a single combined list for all items
-    const combinedList = categoryKeys.reduce((acc, key) => {
-        // Check if the key exists in pageProps and is an array
+    // Create a single combined list for all items using `for...of` instead of `reduce()`
+    const combinedList = [];
+
+    for (const key of categoryKeys) {
         const items = jsonData.props.pageProps[key];
         if (Array.isArray(items)) {
             const list = items.map((item) => ({
@@ -52,10 +53,9 @@ async function fetchPage() {
                 category: item.category_link ? item.category_link.replaceAll(/(<([^>]+)>)/gi, '') : '', // Clean HTML if category_link exists
                 image: item.image_url ? item.image_url.replace(/\?.*$/, '') : '', // Remove query parameters if image_url exists
             }));
-            return acc.concat(list); // Add the list to the accumulator
+            combinedList.push(...list); // Use the spread operator instead of `concat`
         }
-        return acc; // Return unchanged accumulator if key is not present or not an array
-    }, []);
+    }
 
     const items1 = jsonData.props.pageProps.reports;
     const list1 = items1.map((item) => ({
