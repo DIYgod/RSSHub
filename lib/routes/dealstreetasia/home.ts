@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
+// import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // Unified request library used
 import { load } from 'cheerio'; // An HTML parser with an API similar to jQuery
 // import puppeteer from '@/utils/puppeteer';
@@ -85,9 +85,9 @@ async function fetchPage() {
         return {
             title: title || 'No title', // Default title in case it's empty
             link,
-            // description: title, // Adding description for each item (can improve if needed)
+            description: title, // Adding description for each item (can improve if needed)
             // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            // author: author || 'Unknown',
+            author: author || 'Unknown',
             category: category ? [category] : [],
         };
     });
@@ -107,9 +107,9 @@ async function fetchPage() {
         return {
             title: title || 'No title', // Default title in case it's empty
             link,
-            // description: title, // Adding description for each item (can improve if needed)
+            description: title, // Adding description for each item (can improve if needed)
             // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            // author: author || 'Unknown',
+            author: author || 'Unknown',
             category: category ? [category] : [],
         };
     });
@@ -129,77 +129,78 @@ async function fetchPage() {
         return {
             title: title || 'No title', // Default title in case it's empty
             link,
-            // description: title, // Adding description for each item (can improve if needed)
+            description: title, // Adding description for each item (can improve if needed)
             // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            // author: author || 'Unknown',
+            author: author || 'Unknown',
             category: category ? [category] : [],
         };
     });
 
     const list = [...list3, ...list2, ...list1];
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                // // highlight-start
-                // // reuse the browser instance and open a new tab
-                // const page = await browser.newPage();
-                // // set up request interception to only allow document requests
-                // await page.setRequestInterception(true);
-                // page.on('request', (request) => {
-                // request.resourceType() === 'document' ? request.continue() : request.abort();
-                // });
+    const items = list;
+    // const items = await Promise.all(
+    // list.map((item) =>
+    // cache.tryGet(item.link, async () => {
+    // // // highlight-start
+    // // // reuse the browser instance and open a new tab
+    // // const page = await browser.newPage();
+    // // // set up request interception to only allow document requests
+    // // await page.setRequestInterception(true);
+    // // page.on('request', (request) => {
+    // // request.resourceType() === 'document' ? request.continue() : request.abort();
+    // // });
 
-                // await page.goto(item.link, {
-                // waitUntil: 'domcontentloaded',
-                // });
-                // const response = await page.content();
-                // // close the tab after retrieving the HTML content
-                // page.close();
+    // // await page.goto(item.link, {
+    // // waitUntil: 'domcontentloaded',
+    // // });
+    // // const response = await page.content();
+    // // // close the tab after retrieving the HTML content
+    // // page.close();
 
-                const response = await ofetch(item.link);
-                const $ = load(response);
-                // highlight-end
-                // Capture the content of any div with a class that includes "Story_wrapper"
-                const storyWrapper = $('div[class*="Story_wrapper"]');
+    // const response = await ofetch(item.link);
+    // const $ = load(response);
+    // // highlight-end
+    // // Capture the content of any div with a class that includes "Story_wrapper"
+    // const storyWrapper = $('div[class*="Story_wrapper"]');
 
-                // Remove <h1> from the Story_wrapper
-                storyWrapper.find('h1').remove();
-                storyWrapper.find('div[class*="Tags_wrapper"]').remove();
-                storyWrapper.find('div[class*="Story_side_bar_content"]').remove();
-                storyWrapper.find('div[class*="print_watermark_overlay"]').remove();
-                storyWrapper.find('div[class*="overlay"]').remove();
-                storyWrapper.find('div[class*="subscribe-now"]').remove();
-                storyWrapper.find('img').each((i, img) => {
-                    const src = $(img).attr('src'); // Extract the src attribute
-                    $(img).attr('src', src); // Keep only the src attribute
-                    $(img).removeAttr('alt'); // Remove alt
-                    $(img).removeAttr('class'); // Remove class
-                    $(img).removeAttr('style'); // Remove style
-                    $(img).removeAttr('width'); // Remove width or any other attributes
-                    $(img).removeAttr('decoding');
-                    $(img).removeAttr('sizes');
-                    $(img).removeAttr('srcset');
-                    $(img).removeAttr('data-nimg');
-                    $(img).removeAttr('referrerpolicy');
-                });
+    // // Remove <h1> from the Story_wrapper
+    // storyWrapper.find('h1').remove();
+    // storyWrapper.find('div[class*="Tags_wrapper"]').remove();
+    // storyWrapper.find('div[class*="Story_side_bar_content"]').remove();
+    // storyWrapper.find('div[class*="print_watermark_overlay"]').remove();
+    // storyWrapper.find('div[class*="overlay"]').remove();
+    // storyWrapper.find('div[class*="subscribe-now"]').remove();
+    // storyWrapper.find('img').each((i, img) => {
+    // const src = $(img).attr('src'); // Extract the src attribute
+    // $(img).attr('src', src); // Keep only the src attribute
+    // $(img).removeAttr('alt'); // Remove alt
+    // $(img).removeAttr('class'); // Remove class
+    // $(img).removeAttr('style'); // Remove style
+    // $(img).removeAttr('width'); // Remove width or any other attributes
+    // $(img).removeAttr('decoding');
+    // $(img).removeAttr('sizes');
+    // $(img).removeAttr('srcset');
+    // $(img).removeAttr('data-nimg');
+    // $(img).removeAttr('referrerpolicy');
+    // });
 
-                // Assign the remaining HTML to item.description
-                item.description = storyWrapper.html();
-                // item.description = paragraphs;
+    // // Assign the remaining HTML to item.description
+    // item.description = storyWrapper.html();
+    // // item.description = paragraphs;
 
-                const authorLink = $('a[class*="Story_author"]');
-                const authorName = authorLink.text(); // Get the text content
-                // const authorUrl = authorLink.attr('href'); // Get the href attribute
-                item.author = authorName;
+    // const authorLink = $('a[class*="Story_author"]');
+    // const authorName = authorLink.text(); // Get the text content
+    // // const authorUrl = authorLink.attr('href'); // Get the href attribute
+    // item.author = authorName;
 
-                item.pubDate = $('a[class*="Story_date"]').text();
+    // item.pubDate = $('a[class*="Story_date"]').text();
 
-                // Every property of a list item defined above is reused here
-                // and we add a new property 'description'
-                return item;
-            })
-        )
-    );
+    // // Every property of a list item defined above is reused here
+    // // and we add a new property 'description'
+    // return item;
+    // })
+    // )
+    // );
 
     // // close the browser instance after all requests are done
     // browser.close();
