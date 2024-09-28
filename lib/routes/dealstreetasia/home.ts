@@ -87,7 +87,7 @@ async function fetchPage() {
             link,
             description: title, // Adding description for each item (can improve if needed)
             // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            author: author || 'Unknown',
+            author: 'Unknown',
             category: category ? [category] : [],
         };
     });
@@ -109,7 +109,7 @@ async function fetchPage() {
             link,
             description: title, // Adding description for each item (can improve if needed)
             // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            author: author || 'Unknown',
+            author: 'Unknown',
             category: category ? [category] : [],
         };
     });
@@ -131,7 +131,7 @@ async function fetchPage() {
             link,
             description: title, // Adding description for each item (can improve if needed)
             // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            author: author || 'Unknown',
+            author: 'Unknown',
             category: category ? [category] : [],
         };
     });
