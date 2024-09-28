@@ -83,10 +83,10 @@ async function handler(ctx) {
         link: `https://xueqiu.com/S/${id}`,
         description: `${stock_name} - ${source}`,
         item: data.map((item) => ({
-                title: item.title || sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} }),
-                description: item.description,
-                pubDate: parseDate(item.created_at),
-                link: `https://xueqiu.com${item.target}`,
-            })),
+            title: item.title || sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} }),
+            description: item.description,
+            pubDate: parseDate(item.created_at),
+            link: `https://xueqiu.com${item.target}`,
+        })),
     };
 }
