@@ -27,8 +27,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = host;    
-
+    const link = host;
     const response = await got(link);
     const $ = load(response.data);
     const lists = $('div.pagenews04 div ul li')
