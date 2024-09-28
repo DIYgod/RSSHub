@@ -6,12 +6,6 @@ import CryptoJS from 'crypto-js';
 import path from 'node:path';
 import { MediaResult, ResultResponse, SeasonResult } from './types';
 
-function iframe(aid: any, page?: any, bvid?: any) {
-    return `<iframe src="https://www.bilibili.com/blackboard/html5mobileplayer.html?${bvid ? `bvid=${bvid}` : `aid=${aid}`}${
-        page ? `&page=${page}` : ''
-    }&high_quality=1&autoplay=0" width="650" height="477" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>`;
-}
-
 // a
 function randomHexStr(length) {
     let string = '';
@@ -183,7 +177,6 @@ export const renderOGVDescription = (embed: boolean, img: string, description: s
 };
 
 export default {
-    iframe,
     lsid,
     _uuid,
     hexsign,
