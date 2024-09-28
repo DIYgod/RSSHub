@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
@@ -8,9 +8,20 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/:lang?',
-    categories: ['traditional-media'],
+    categories: ['traditional-media', 'popular'],
+    view: ViewType.Articles,
     example: '/nytimes/dual',
-    parameters: { lang: 'language, default to Chinese' },
+    parameters: {
+        lang: {
+            description: 'language, default to Chinese',
+            options: [
+                { value: 'dual', label: 'Chinese-English' },
+                { value: 'en', label: 'English' },
+                { value: 'traditionalchinese', label: 'Traditional Chinese' },
+                { value: 'dual-traditionalchinese', label: 'Chinese-English (Traditional Chinese)' },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -26,14 +37,10 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    maintainers: ['HenryQW'],
+    maintainers: ['HenryQW', 'pseudoyu'],
     handler,
     url: 'nytimes.com/',
-    description: `By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.
-
-  | Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |
-  | ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
-  | (empty)            | dual            | en      | dual-traditionalchinese               | traditionalchinese  |`,
+    description: `By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.`,
 };
 
 async function handler(ctx) {

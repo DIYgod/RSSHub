@@ -51,7 +51,7 @@
     },
     "dependencies": {
         "@hono/node-server": "1.13.1",
-        "@hono/zod-openapi": "0.16.0",
+        "@hono/zod-openapi": "0.16.2",
         "@notionhq/client": "2.2.15",
         "@opentelemetry/api": "1.9.0",
         "@opentelemetry/exporter-prometheus": "0.53.0",
@@ -61,8 +61,8 @@
         "@opentelemetry/sdk-trace-base": "1.26.0",
         "@opentelemetry/semantic-conventions": "1.27.0",
         "@postlight/parser": "2.2.3",
-        "@rss3/sdk": "0.0.17",
-        "@scalar/hono-api-reference": "0.5.147",
+        "@rss3/sdk": "0.0.19",
+        "@scalar/hono-api-reference": "0.5.149",
         "@sentry/node": "7.116.0",
         "@tonyrl/rand-user-agent": "2.0.79",
         "aes-js": "3.1.2",
@@ -83,7 +83,7 @@
         "fanfou-sdk": "5.0.0",
         "form-data": "4.0.0",
         "googleapis": "144.0.0",
-        "hono": "4.6.2",
+        "hono": "4.6.3",
         "html-to-text": "9.0.5",
         "http-cookie-agent": "6.0.6",
         "https-proxy-agent": "7.0.5",
@@ -113,7 +113,7 @@
         "puppeteer-extra-plugin-user-preferences": "2.4.1",
         "query-string": "9.1.0",
         "rate-limiter-flexible": "5.0.3",
-        "re2js": "0.4.1",
+        "re2js": "0.4.2",
         "rfc4648": "1.5.3",
         "rss-parser": "3.13.0",
         "sanitize-html": "2.13.0",
@@ -157,7 +157,7 @@
         "@types/mailparser": "3.4.4",
         "@types/markdown-it": "14.1.2",
         "@types/module-alias": "2.0.4",
-        "@types/node": "22.6.1",
+        "@types/node": "22.7.3",
         "@types/sanitize-html": "2.13.0",
         "@types/supertest": "6.0.2",
         "@types/tiny-async-pool": "2.0.3",
@@ -193,7 +193,7 @@
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
-    "packageManager": "pnpm@9.10.0",
+    "packageManager": "pnpm@9.11.0",
     "engines": {
         "node": ">=22"
     }

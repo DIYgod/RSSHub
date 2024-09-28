@@ -47,12 +47,19 @@ async function login({ username, password, authenticationSecret }) {
             (await page.waitForSelector('button[data-testid="ocfEnterTextNextButton"]'))?.click();
         }
         const waitForRequest = new Promise<string>((resolve) => {
-            page.on('requestfinished', async (request) => {
-                if (request.url().includes('/HomeTimeline')) {
+            page.on('response', async (response) => {
+                if (response.url().includes('/HomeTimeline')) {
+                    const data = await response.json();
+                    const message = data?.data?.home?.home_timeline_urt?.instructions?.[0]?.entries?.[0]?.entryId;
+                    if (message === 'messageprompt-suspended-prompt') {
+                        logger.error(`twitter debug: twitter username ${username} login failed: messageprompt-suspended-prompt`);
+                        resolve('');
+                    }
                     const cookies = await page.cookies();
                     for (const cookie of cookies) {
                         cookieJar.setCookieSync(`${cookie.name}=${cookie.value}`, 'https://x.com');
                     }
+                    logger.debug(`twitter debug: twitter username ${username} login success`);
                     resolve(JSON.stringify(cookieJar.serializeSync()));
                 }
             });
@@ -61,7 +68,7 @@ async function login({ username, password, authenticationSecret }) {
         await browser.close();
         return cookieString;
     } catch (error) {
-        logger.error(`Twitter username ${username} login failed:`, error);
+        logger.error(`twitter debug: twitter username ${username} login failed:`, error);
     }
 }
 

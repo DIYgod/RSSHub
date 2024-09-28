@@ -64,7 +64,7 @@ async function handler(ctx) {
     const vimeojs = response.data.data;
 
     const feedlink = `https://vimeo.com/categories/${category}/videos/sort:latest`;
-    const feedlinkstaffpicks = '?staffpicked=ture';
+    const feedlinkstaffpicks = '?staffpicked=true';
     const feedDescription = await cache.tryGet(feedlink + (staffpicks ? feedlinkstaffpicks : ''), async () => {
         const response = await got({
             url: feedlink + (staffpicks ? feedlinkstaffpicks : ''),
