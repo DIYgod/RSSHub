@@ -27,7 +27,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Love Live Official Website Categories Topics',
+    name: 'Categories Topics',
     maintainers: ['axojhf'],
     handler,
     description: `| Sub-project Name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
