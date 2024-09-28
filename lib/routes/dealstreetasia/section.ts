@@ -10,14 +10,6 @@ export const route: Route = {
     categories: ['traditional-media'],
     example: '/dealstreetasia/section/private-equity',
     parameters: { section: 'target section' },
-    // features: {
-    // requireConfig: false,
-    // requirePuppeteer: false,
-    // antiCrawler: false,
-    // supportBT: false,
-    // supportPodcast: false,
-    // supportScihub: false,
-    // },
     radar: [
         {
             source: ['dealstreetasia.com/'],
@@ -39,176 +31,26 @@ async function handler(ctx) {
 async function fetchPage(section: string) {
     const baseUrl = 'https://dealstreetasia.com'; // Define base URL
 
-    // // require puppeteer utility class and initialise a browser instance
-    // const browser = await puppeteer();
-    // // open a new tab
-    // const page = await browser.newPage();
-    // // intercept all requests
-    // await page.setRequestInterception(true);
-    // // only allow certain types of requests to proceed
-    // page.on('request', (request) => {
-    // // in this case, we only allow document requests to proceed
-    // request.resourceType() === 'document' ? request.continue() : request.abort();
-    // });
-    // // visit the target link
-    // const link = `${baseUrl}/section/${section}/`;
-    // // ofetch requests will be logged automatically
-    // // but puppeteer requests are not
-    // // so we need to log them manually
-
-    // await page.goto(link, {
-    // // specify how long to wait for the page to load
-    // waitUntil: 'domcontentloaded',
-    // });
-    // // retrieve the HTML content of the page
-    // const response = await page.content();
-    // // close the tab
-    // page.close();
-
     const response = await ofetch(`${baseUrl}/section/${section}/`);
     const $ = load(response);
 
-    const headingText = $('h1.main-list-heading').text();
+    const jsonData = JSON.parse($('#__NEXT_DATA__').html());
+    const headingText = jsonData.props.pageProps.sectionData.name;
+    const items = jsonData.props.pageProps.sectionData.stories.nodes;
 
-    const origin1 = $('.main-list-row');
-    // console.log('Number of items found:', origin1.length); // Log the number of origin1 found
-    const list1 = origin1.toArray().map((item) => {
-        item = $(item);
-        const titleElement = item.find('h3'); // Get the title element
-        const title = titleElement.text(); // Extract the title text
-        const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
-        const link = `${baseUrl}${storyLink}`; // Create absolute link
-        const category = item.find('.category-link a').text(); // Get category link text
-
-        // console.log('Item:', { title, link, pubDate, category }); // Log each item to check values
-
-        return {
-            title: title || 'No title', // Default title in case it's empty
-            link,
-            description: title, // Adding description for each item (can improve if needed)
-            // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            author: 'Unknown',
-            category: category ? [category] : [],
-        };
-    });
-
-    const origin2 = $('.card-deck .card-body');
-    // console.log('Number of items found:', origin2.length);
-    const list2 = origin2.toArray().map((item) => {
-        item = $(item);
-        const titleElement = item.find('h3.card-title'); // Get the title element
-        const title = titleElement.text(); // Extract the title text
-        const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
-        const link = `${baseUrl}${storyLink}`; // Create absolute link
-        const category = item.find('.category-link a').text(); // Get category link text
-
-        // console.log('Item:', { title, link, pubDate, category }); // Log each item to check values
-
-        return {
-            title: title || 'No title', // Default title in case it's empty
-            link,
-            description: title, // Adding description for each item (can improve if needed)
-            // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            author: 'Unknown',
-            category: category ? [category] : [],
-        };
-    });
-
-    const origin3 = $('.section-hero.card .card-body'); // Target card-body within the specific section-hero card context
-    // console.log('Number of items found:', origin3.length);
-    const list3 = origin3.toArray().map((item) => {
-        item = $(item);
-        const titleElement = item.find('h2.card-title'); // Updated to target the correct title element
-        const title = titleElement.text(); // Extract the title text
-        const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
-        const link = `${baseUrl}${storyLink}`; // Create absolute link
-        const category = item.find('.category-link a').text(); // Get category link text
-
-        // console.log('Item:', { title, link, pubDate, category }); // Log each item to check values
-
-        return {
-            title: title || 'No title', // Default title in case it's empty
-            link,
-            description: title, // Adding description for each item (can improve if needed)
-            // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            author: 'Unknown',
-            category: category ? [category] : [],
-        };
-    });
-
-    const list = [...list3, ...list2, ...list1];
-    const items = list;
-    // const items = await Promise.all(
-    // list.map((item) =>
-    // cache.tryGet(item.link, async () => {
-    // // // highlight-start
-    // // // reuse the browser instance and open a new tab
-    // // const page = await browser.newPage();
-    // // // set up request interception to only allow document requests
-    // // await page.setRequestInterception(true);
-    // // page.on('request', (request) => {
-    // // request.resourceType() === 'document' ? request.continue() : request.abort();
-    // // });
-
-    // // await page.goto(item.link, {
-    // // waitUntil: 'domcontentloaded',
-    // // });
-    // // const response = await page.content();
-    // // // close the tab after retrieving the HTML content
-    // // page.close();
-
-    // const response = await ofetch(item.link);
-    // const $ = load(response);
-    // // highlight-end
-    // // Capture the content of any div with a class that includes "Story_wrapper"
-    // const storyWrapper = $('div[class*="Story_wrapper"]');
-
-    // // Remove <h1> from the Story_wrapper
-    // storyWrapper.find('h1').remove();
-    // storyWrapper.find('div[class*="Tags_wrapper"]').remove();
-    // storyWrapper.find('div[class*="Story_side_bar_content"]').remove();
-    // storyWrapper.find('div[class*="print_watermark_overlay"]').remove();
-    // storyWrapper.find('div[class*="overlay"]').remove();
-    // storyWrapper.find('div[class*="subscribe-now"]').remove();
-    // storyWrapper.find('img').each((i, img) => {
-    // const src = $(img).attr('src'); // Extract the src attribute
-    // $(img).attr('src', src); // Keep only the src attribute
-    // $(img).removeAttr('alt'); // Remove alt
-    // $(img).removeAttr('class'); // Remove class
-    // $(img).removeAttr('style'); // Remove style
-    // $(img).removeAttr('width'); // Remove width or any other attributes
-    // $(img).removeAttr('decoding');
-    // $(img).removeAttr('sizes');
-    // $(img).removeAttr('srcset');
-    // $(img).removeAttr('data-nimg');
-    // $(img).removeAttr('referrerpolicy');
-    // });
-
-    // // Assign the remaining HTML to item.description
-    // item.description = storyWrapper.html();
-    // // item.description = paragraphs;
-
-    // const authorLink = $('a[class*="Story_author"]');
-    // const authorName = authorLink.text(); // Get the text content
-    // // const authorUrl = authorLink.attr('href'); // Get the href attribute
-    // item.author = authorName;
-
-    // item.pubDate = $('a[class*="Story_date"]').text();
-
-    // // Every property of a list item defined above is reused here
-    // // and we add a new property 'description'
-    // return item;
-    // })
-    // )
-    // );
-
-    // // close the browser instance after all requests are done
-    // browser.close();
+    const feedItems = items.map((item) => ({
+        title: item.title,
+        link: `https://www.dealstreetasia.com${item.uri}`,
+        description: item.excerpt.replaceAll(/<[^>]*>/g, ''), // Strip HTML tags from the excerpt
+        pubDate: item.post_date ? new Date(item.post_date).toUTCString() : '',
+        category: item.sections.nodes.map((section) => section.name),
+        image: item.featuredImage?.node?.mediaItemUrl.replace(/\?.*$/, ''), // Use .replace to sanitize the image URL
+    }));
 
     return {
         title: 'Deal Street Asia - ' + headingText,
         language: 'en',
-        item: items,
+        item: feedItems,
         link: 'https://dealstreetasia.com/section/' + section + '/',
     };
 }
