@@ -68,76 +68,86 @@ async function fetchPage() {
     const response = await ofetch(`${baseUrl}/`);
     const $ = load(response);
 
-    // don't forget to close the browser instance at the end of the function
+    const jsonData = JSON.parse($('#__NEXT_DATA__').html());
+    const items = jsonData.props.pageProps.topStories;
 
-    const origin1 = $('.card-lead-story .card-body-inner');
-    // console.log('Number of items found:', origin1.length);
-    const list1 = origin1.toArray().map((item) => {
-        item = $(item);
-        const titleElement = item.find('h2.card-title'); // Get the title element
-        const title = titleElement.text(); // Extract the title text
-        const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
-        const link = `${baseUrl}${storyLink}`; // Create absolute link
-        const category = item.find('.category-link a').text(); // Get category link text
+    const feedItems = items.map((item) => ({
+        title: item.post_title,
+        link: item.post_url,
+        description: item.post_excerpt,
+        pubDate: new Date(item.post_date).toUTCString(),
+        category: item.category_link.replaceAll(/(<([^>]+)>)/gi, ''), // Clean the HTML tags
+        image: item.image_url.replace(/\?.*$/, ''), // Remove query parameters using .replace
+    }));
 
-        // console.log('Item:', { title, link, category }); // Log each item to check values
+    // const origin1 = $('.card-lead-story .card-body-inner');
+    // // console.log('Number of items found:', origin1.length);
+    // const list1 = origin1.toArray().map((item) => {
+    // item = $(item);
+    // const titleElement = item.find('h2.card-title'); // Get the title element
+    // const title = titleElement.text(); // Extract the title text
+    // const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
+    // const link = `${baseUrl}${storyLink}`; // Create absolute link
+    // const category = item.find('.category-link a').text(); // Get category link text
 
-        return {
-            title: title || 'No title', // Default title in case it's empty
-            link,
-            description: title, // Adding description for each item (can improve if needed)
-            // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            author: 'Unknown',
-            category: category ? [category] : [],
-        };
-    });
+    // // console.log('Item:', { title, link, category }); // Log each item to check values
 
-    const origin2 = $('.card-side-lead-story');
-    // console.log('Number of items found:', origin2.length);
-    const list2 = origin2.toArray().map((item) => {
-        item = $(item);
-        const titleElement = item.find('h3.card-title'); // Get the title element
-        const title = titleElement.text(); // Extract the title text
-        const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
-        const link = `${baseUrl}${storyLink}`; // Create absolute link
-        const category = item.find('.category-link a').text(); // Get category link text
+    // return {
+    // title: title || 'No title', // Default title in case it's empty
+    // link,
+    // description: title, // Adding description for each item (can improve if needed)
+    // // pubDate: pubDate || '', // Uncomment and add date parsing if needed
+    // author: 'Unknown',
+    // category: category ? [category] : [],
+    // };
+    // });
 
-        // console.log('Item:', { title, link, category }); // Log each item to check values
+    // const origin2 = $('.card-side-lead-story');
+    // // console.log('Number of items found:', origin2.length);
+    // const list2 = origin2.toArray().map((item) => {
+    // item = $(item);
+    // const titleElement = item.find('h3.card-title'); // Get the title element
+    // const title = titleElement.text(); // Extract the title text
+    // const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
+    // const link = `${baseUrl}${storyLink}`; // Create absolute link
+    // const category = item.find('.category-link a').text(); // Get category link text
 
-        return {
-            title: title || 'No title', // Default title in case it's empty
-            link,
-            description: title, // Adding description for each item (can improve if needed)
-            // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            author: 'Unknown',
-            category: category ? [category] : [],
-        };
-    });
+    // // console.log('Item:', { title, link, category }); // Log each item to check values
 
-    const origin3 = $('.divide-section-equally .story-with-image');
-    // console.log('Number of items found:', origin3.length);
-    const list3 = origin3.toArray().map((item) => {
-        item = $(item);
-        const titleElement = item.find('h3'); // Updated to target the correct title element
-        const title = titleElement.text(); // Extract the title text
-        const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
-        const link = `${baseUrl}${storyLink}`; // Create absolute link
-        const category = item.find('.category-link a').text(); // Get category link text
+    // return {
+    // title: title || 'No title', // Default title in case it's empty
+    // link,
+    // description: title, // Adding description for each item (can improve if needed)
+    // // pubDate: pubDate || '', // Uncomment and add date parsing if needed
+    // author: 'Unknown',
+    // category: category ? [category] : [],
+    // };
+    // });
 
-        // console.log('Item:', { title, link, category }); // Log each item to check values
+    // const origin3 = $('.divide-section-equally .story-with-image');
+    // // console.log('Number of items found:', origin3.length);
+    // const list3 = origin3.toArray().map((item) => {
+    // item = $(item);
+    // const titleElement = item.find('h3'); // Updated to target the correct title element
+    // const title = titleElement.text(); // Extract the title text
+    // const storyLink = titleElement.closest('a').attr('href'); // Find the link to the story
+    // const link = `${baseUrl}${storyLink}`; // Create absolute link
+    // const category = item.find('.category-link a').text(); // Get category link text
 
-        return {
-            title: title || 'No title', // Default title in case it's empty
-            link,
-            description: title, // Adding description for each item (can improve if needed)
-            // pubDate: pubDate || '', // Uncomment and add date parsing if needed
-            author: 'Unknown',
-            category: category ? [category] : [],
-        };
-    });
+    // // console.log('Item:', { title, link, category }); // Log each item to check values
 
-    const list = [...list3, ...list2, ...list1];
-    const items = list;
+    // return {
+    // title: title || 'No title', // Default title in case it's empty
+    // link,
+    // description: title, // Adding description for each item (can improve if needed)
+    // // pubDate: pubDate || '', // Uncomment and add date parsing if needed
+    // author: 'Unknown',
+    // category: category ? [category] : [],
+    // };
+    // });
+
+    // const list = [...list3, ...list2, ...list1];
+    // const items = list;
     // const items = await Promise.all(
     // list.map((item) =>
     // cache.tryGet(item.link, async () => {
@@ -208,7 +218,7 @@ async function fetchPage() {
     return {
         title: 'Deal Street Asia',
         language: 'en',
-        item: items,
+        item: feedItems,
         link: 'https://dealstreetasia.com/',
     };
 }
