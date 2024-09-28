@@ -66526,6 +66526,56 @@
     "name": "中山大学",
     "url": "cse.sysu.edu.cn"
   },
+  "szftedu": {
+    "routes": {
+      "/dongtai": {
+        "path": "/dongtai",
+        "categories": [
+          "university"
+        ],
+        "example": "/szftedu/dongtai",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "动态",
+        "maintainers": [
+          "valuex"
+        ],
+        "description": "",
+        "location": "dongtai.ts"
+      },
+      "/gonggao": {
+        "path": "/gonggao",
+        "categories": [
+          "university"
+        ],
+        "example": "/szftedu/gonggao",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "公告",
+        "maintainers": [
+          "valuex"
+        ],
+        "description": "",
+        "location": "gonggao.ts"
+      }
+    },
+    "name": "园岭小学",
+    "url": "ylxx.szftedu.cn"
+  },
   "szse": {
     "routes": {
       "/inquire/:category?/:select?/:keyword?": {
