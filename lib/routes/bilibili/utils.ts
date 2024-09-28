@@ -118,7 +118,14 @@ function addDmVerifyInfo(params, dmImgList) {
 
 const bvidTime = 1_589_990_400;
 
-export const getBangumi = (id: string, cache) =>
+/**
+ * 获取番剧信息并缓存
+ *
+ * @param {string} id - 番剧 ID。
+ * @param cache - 缓存 module。
+ * @returns {Promise<MediaResult>} 番剧信息。
+ */
+export const getBangumi = (id: string, cache): Promise<MediaResult> =>
     cache.tryGet(
         `bilibili:getBangumi:${id}`,
         async () => {
@@ -137,7 +144,14 @@ export const getBangumi = (id: string, cache) =>
         false
     ) as Promise<MediaResult>;
 
-export const getBangumiItems = (id: string, cache) =>
+/**
+ * 获取番剧分集信息并缓存
+ *
+ * @param {string} id - 番剧 ID。
+ * @param cache - 缓存 module。
+ * @returns {Promise<SeasonResult>} 番剧分集信息。
+ */
+export const getBangumiItems = (id: string, cache): Promise<SeasonResult> =>
     cache.tryGet(
         `bilibili:getBangumiItems:${id}`,
         async () => {
@@ -152,7 +166,20 @@ export const getBangumiItems = (id: string, cache) =>
         false
     ) as Promise<SeasonResult>;
 
-export const renderUGCDescription = (embed: boolean, img: string, description: string, aid?: string, cid?: string, bvid?: string) => {
+/**
+ * 使用模板渲染 UGC（用户生成内容）描述。
+ *
+ * @param {boolean} embed - 是否嵌入视频。
+ * @param {string} img - 要包含在描述中的图片 URL。
+ * @param {string} description - UGC 的文本描述。
+ * @param {string} [aid] - 可选。UGC 的 aid。
+ * @param {string} [cid] - 可选。UGC 的 cid。
+ * @param {string} [bvid] - 可选。UGC 的 bvid。
+ * @returns {string} 渲染的 UGC 描述。
+ *
+ * @see https://player.bilibili.com/ 获取更多信息。
+ */
+export const renderUGCDescription = (embed: boolean, img: string, description: string, aid?: string, cid?: string, bvid?: string): string => {
     // docs: https://player.bilibili.com/
     const rendered = art(path.join(__dirname, 'templates/description.art'), {
         embed,
@@ -166,7 +193,19 @@ export const renderUGCDescription = (embed: boolean, img: string, description: s
     return rendered;
 };
 
-export const renderOGVDescription = (embed: boolean, img: string, description: string, seasonId?: string, episodeId?: string) => {
+/**
+ * 使用模板渲染 OGV（原创视频）描述。
+ *
+ * @param {boolean} embed - 是否嵌入视频。
+ * @param {string} img - 要包含在描述中的图片 URL。
+ * @param {string} description - OGV 的文本描述。
+ * @param {string} [seasonId] - 可选。OGV 的季 ID。
+ * @param {string} [episodeId] - 可选。OGV 的集 ID。
+ * @returns {string} 渲染的 OGV 描述。
+ *
+ * @see https://player.bilibili.com/ 获取更多信息。
+ */
+export const renderOGVDescription = (embed: boolean, img: string, description: string, seasonId?: string, episodeId?: string): string => {
     // docs: https://player.bilibili.com/
     const rendered = art(path.join(__dirname, 'templates/description.art'), {
         embed,
