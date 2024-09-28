@@ -62,7 +62,7 @@ async function handler(ctx) {
         description: mediadata.evaluate,
         link: mediadata.share_url,
         item: episodes,
-        image: mediadata.cover,
+        image: mediadata.cover.replace('http://', 'https://'),
         language: 'zh-cn',
     } as Data;
 }
