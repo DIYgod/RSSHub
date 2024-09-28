@@ -7,10 +7,9 @@ import timezone from '@/utils/timezone';
 
 const host = 'https://ylxx.szftedu.cn/xx_5828/xygg_5832/';
 
-
 export const route: Route = {
     path: '/gonggao',
-    categories: ['other'],
+    categories: ['university'],
     example: '/szftedu/gonggao',
     parameters: {},
     features: {
@@ -21,6 +20,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    name: '公告',
     maintainers: ['valuex'],
     handler,
     description: '',
@@ -43,10 +43,10 @@ async function handler() {
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
                 const thisUrl = item.link;
-                const trueLink = thisUrl.includes("http") ? thisUrl : host + thisUrl.substring(1);
+                const trueLink = thisUrl.includes('http') ? thisUrl : host + thisUrl.substring(1);
                 const response = await got(trueLink);
                 const $ = load(response.data);
-                item.description = thisUrl.includes("http") ? $('#page-content').html() : $('div.TRS_Editor').html();
+                item.description = thisUrl.includes('http') ? $('#page-content').html() : $('div.TRS_Editor').html();
                 item.pubDate = timezone(parseDate($('.item').first().text().replace('发布时间：', '')), 8);
                 return item;
             })
