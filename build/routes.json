@@ -27791,18 +27791,18 @@
         "maintainers": [],
         "location": "mmht/mmht.ts"
       },
-      "/moa/:suburl{.+}": {
-        "path": "/moa/:suburl{.+}",
+      "/moa/suburl/:suburl{.+}": {
+        "path": "/moa/suburl/:suburl{.+}",
         "categories": [
           "government"
         ],
-        "example": "/gov/moa/gk/zcjd/",
+        "example": "/gov/moa/suburl/gk/zcjd/",
         "radar": [
           {
             "source": [
               "moa.gov.cn/"
             ],
-            "target": "/moa/:suburl"
+            "target": "/moa/suburl/:suburl"
           }
         ],
         "parameters": {
@@ -27817,22 +27817,104 @@
         "description": "更多例子：\n  -   `农业农村部动态`的网页链接是`http://www.moa.gov.cn/xw/zwdt/`, 对应的`suburl`是`xw/zwdt`\n  -   `财务公开`的网页链接是`http://www.moa.gov.cn/gk/cwgk_1/`, 对应的`suburl`是`gk/cwgk_1`\n  -   像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面(`http://www.moa.gov.cn/gk/zcfg/`), 它**不是**一个合法的分类目录，它是`法律`, `行政法规`, `部门规章`等一堆栏目的集合，这时候请点开对应栏目的`更多 >>`进入栏目的最下级目录，再根据上面的规则提取`suburl`\n  -   特别地，`图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`, `数据>最新发布`对应的`suburl`为`sj/zxfb`",
         "location": "moa/moa.ts"
       },
-      "/moa/sjzxfb/:category{.+}?": {
-        "path": [
-          "/moa/sjzxfb/:category{.+}?",
-          "/moa/zdscxx/:category{.+}?"
+      "/moa/szcpxx": {
+        "path": "/moa/szcpxx",
+        "name": "中华人民共和国农业农村部生猪专题重要政策",
+        "url": "www.moa.gov.cn",
+        "maintainers": [
+          "nczitzk"
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "location": "moa/zdscxx.ts"
+        "example": "/gov/moa/szcpxx",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.moa.gov.cn/ztzl/szcpxx/zyzc/index.htm"
+            ],
+            "target": "/moa/szcpxx"
+          }
+        ],
+        "location": "moa/szcpxx.ts"
       },
       "/moa/zdscxx/:category{.+}?": {
-        "path": [
-          "/moa/sjzxfb/:category{.+}?",
-          "/moa/zdscxx/:category{.+}?"
+        "path": "/moa/zdscxx/:category{.+}?",
+        "name": "中华人民共和国农业农村部数据",
+        "url": "www.moa.gov.cn",
+        "maintainers": [
+          "nczitzk"
         ],
-        "name": "Unknown",
-        "maintainers": [],
+        "example": "/gov/moa/zdscxx",
+        "parameters": {
+          "category": "分类，默认为全部，见下表"
+        },
+        "description": ":::tip\n  若订阅 [中华人民共和国农业农村部数据](http://zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp) 的 `价格指数` 报告主题。此时路由为 [`/gov/moa/zdscxx/价格指数`](https://rsshub.app/gov/moa/zdscxx/价格指数)。\n  \n  若订阅 `央视网` 报告来源 的 `蔬菜生产` 报告主题。此时路由为 [`/gov/moa/zdscxx/央视网/蔬菜生产`](https://rsshub.app/gov/moa/zdscxx/央视网/蔬菜生产)。\n  :::\n\n  | 价格指数 | 供需形势 | 分析报告周报 | 分析报告日报 | 日历信息 | 蔬菜生产 |\n  | -------- | -------- | ------------ | ------------ | -------- | -------- |\n    ",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "价格指数",
+            "source": [
+              "zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp"
+            ],
+            "target": "/gov/moa/zdscxx/价格指数"
+          },
+          {
+            "title": "供需形势",
+            "source": [
+              "zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp"
+            ],
+            "target": "/gov/moa/zdscxx/供需形势"
+          },
+          {
+            "title": "分析报告周报",
+            "source": [
+              "zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp"
+            ],
+            "target": "/gov/moa/zdscxx/分析报告周报"
+          },
+          {
+            "title": "分析报告日报",
+            "source": [
+              "zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp"
+            ],
+            "target": "/gov/moa/zdscxx/分析报告日报"
+          },
+          {
+            "title": "日历信息",
+            "source": [
+              "zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp"
+            ],
+            "target": "/gov/moa/zdscxx/日历信息"
+          },
+          {
+            "title": "蔬菜生产",
+            "source": [
+              "zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp"
+            ],
+            "target": "/gov/moa/zdscxx/蔬菜生产"
+          }
+        ],
         "location": "moa/zdscxx.ts"
       },
       "/moe/:type": {

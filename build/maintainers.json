@@ -2612,12 +2612,16 @@
     "Yoge-Code"
   ],
   "/gov/mmht/*": [],
-  "/gov/moa/:suburl{.+}": [
+  "/gov/moa/suburl/:suburl{.+}": [
     "Origami404",
     "lyqluis"
   ],
-  "/gov/moa/sjzxfb/:category{.+}?": [],
-  "/gov/moa/zdscxx/:category{.+}?": [],
+  "/gov/moa/szcpxx": [
+    "nczitzk"
+  ],
+  "/gov/moa/zdscxx/:category{.+}?": [
+    "nczitzk"
+  ],
   "/gov/moe/:type": [
     "Crawler995"
   ],
