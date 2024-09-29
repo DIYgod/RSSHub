@@ -10,7 +10,7 @@ const baseLink = 'https://ylxx.szftedu.cn';
 
 export const route: Route = {
     path: '/dongtai',
-    categories: ['other'],
+    categories: ['university'],
     example: '/szftedu/dongtai',
     parameters: {},
     features: {
@@ -21,6 +21,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    name: '动态',
     maintainers: ['valuex'],
     handler,
     description: '',
@@ -42,10 +43,10 @@ async function handler() {
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
                 const thisUrl = item.link;
-                const trueLink = thisUrl.includes("http") ? thisUrl : baseLink + thisUrl;
+                const trueLink = thisUrl.includes('http') ? thisUrl : baseLink + thisUrl;
                 const response = await got(trueLink);
                 const $ = load(response.data);
-                item.description = thisUrl.includes("http") ? $('#page-content').html() : $('div.TRS_Editor').html();
+                item.description = thisUrl.includes('http') ? $('#page-content').html() : $('div.TRS_Editor').html();
                 item.pubDate = timezone(parseDate($('#publish_time').first().text()), 8);
                 return item;
             })
