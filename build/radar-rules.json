@@ -20998,6 +20998,20 @@
       }
     ]
   },
+  "spankbang.com": {
+    "_name": "SpankBang",
+    ".": [
+      {
+        "title": "New Porn Videos",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/new_videos/",
+          "/"
+        ],
+        "target": "/spankbang/new_videos"
+      }
+    ]
+  },
   "spotify.com": {
     "_name": "Spotify",
     "open": [

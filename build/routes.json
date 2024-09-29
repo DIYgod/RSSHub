@@ -63956,6 +63956,35 @@
     "name": "南方网",
     "url": "nfapp.southcn.com"
   },
+  "spankbang": {
+    "routes": {
+      "/new_videos": {
+        "path": "/new_videos",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/spankbang/new_videos",
+        "name": "New Porn Videos",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "features": {
+          "antiCrawler": true
+        },
+        "radar": [
+          {
+            "source": [
+              "spankbang.com/new_videos/",
+              "spankbang.com/"
+            ]
+          }
+        ],
+        "location": "new-videos.ts"
+      }
+    },
+    "name": "SpankBang",
+    "url": "spankbang.com"
+  },
   "spotify": {
     "routes": {
       "/artist/:id": {
