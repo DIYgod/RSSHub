@@ -34,7 +34,7 @@ async function fetchPage(section: string) {
     const response = await ofetch(`${baseUrl}/section/${section}/`);
     const $ = load(response);
 
-    const jsonData = JSON.parse($('#__NEXT_DATA__').html());
+    const jsonData = JSON.parse($('#__NEXT_DATA__').text());
     const headingText = jsonData.props.pageProps.sectionData.name;
 
     const items = jsonData.props.pageProps.sectionData.stories.nodes;

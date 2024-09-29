@@ -34,28 +34,33 @@ async function fetchPage() {
     const response = await ofetch(`${baseUrl}/`);
     const $ = load(response);
 
-    const jsonData = JSON.parse($('#__NEXT_DATA__').html());
+    const jsonData = JSON.parse($('#__NEXT_DATA__').text());
     // const headingText = jsonData.props.pageProps.sectionData.name;
 
-    const categoryKeys = ['topStories', 'privateEquity', 'ventureCapital', 'unicorns', 'interviews', 'deals', 'analysis', 'ipos', 'opinion', 'policyAndRegulations', 'people', 'earningsAndResults', 'theLpView', 'dvNewsletters'];
-
-    // Create a single combined list for all items using `for...of` instead of `reduce()`
-    const combinedList = [];
-
-    for (const key of categoryKeys) {
-        const items = jsonData.props.pageProps[key];
-        if (Array.isArray(items)) {
-            const list = items.map((item) => ({
-                title: item.post_title || 'No Title',
-                link: item.post_url || '',
-                description: item.post_excerpt || '',
-                pubDate: item.post_date ? new Date(item.post_date).toUTCString() : '',
-                category: item.category_link ? item.category_link.replaceAll(/(<([^>]+)>)/gi, '') : '', // Clean HTML if category_link exists
-                image: item.image_url ? item.image_url.replace(/\?.*$/, '') : '', // Remove query parameters if image_url exists
-            }));
-            combinedList.push(...list); // Use the spread operator instead of `concat`
-        }
-    }
+    const pageProps = jsonData.props.pageProps;
+    const combinedList = [
+        ...pageProps.topStories,
+        ...pageProps.privateEquity,
+        ...pageProps.ventureCapital,
+        ...pageProps.unicorns,
+        ...pageProps.interviews,
+        ...pageProps.deals,
+        ...pageProps.analysis,
+        ...pageProps.ipos,
+        ...pageProps.opinion,
+        ...pageProps.policyAndRegulations,
+        ...pageProps.people,
+        ...pageProps.earningsAndResults,
+        ...pageProps.theLpView,
+        ...pageProps.dvNewsletters,
+    ].map((item) => ({
+        title: item.post_title || 'No Title',
+        link: item.post_url || '',
+        description: item.post_excerpt || '',
+        pubDate: item.post_date ? new Date(item.post_date).toUTCString() : '',
+        category: item.category_link ? item.category_link.replaceAll(/(<([^>]+)>)/gi, '') : '', // Clean HTML if category_link exists
+        image: item.image_url ? item.image_url.replace(/\?.*$/, '') : '', // Remove query parameters if image_url exists
+    }));
 
     const items1 = jsonData.props.pageProps.reports;
     const list1 = items1.map((item) => ({
