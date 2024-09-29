@@ -52,6 +52,9 @@ export const route: Route = {
     example: '/spankbang/new_videos',
     name: 'New Porn Videos',
     maintainers: ['TonyRL'],
+    features: {
+        antiCrawler: true,
+    },
     radar: [
         {
             source: ['spankbang.com/new_videos/', 'spankbang.com/'],
