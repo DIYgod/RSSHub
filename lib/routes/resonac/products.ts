@@ -49,7 +49,7 @@ async function handler() {
                     .map((el) => ({
                         title: $('a b', el).text().trim() || 'Empty',
                         link: $('a', el).attr('href') || 'undefined',
-                        group: item.groupName,
+                        group: productGroup.groupName,
                     }));
                 return item;
             })
