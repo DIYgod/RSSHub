@@ -38,7 +38,7 @@ async function handler() {
             groupURL: baseUrl + $('a', el).attr('href'),
         }));
 
-    let lists = await Promise.all(
+    const lists = await Promise.all(
         groupLists.map((productGroup) =>
             cache.tryGet(productGroup.groupURL, async () => {
                 const strUrl = productGroup.groupURL;
@@ -55,13 +55,13 @@ async function handler() {
             })
         )
     );
-    // console.log(lists.length);
 
-    lists = lists.filter((item) => item.link !== 'undefined');
-    lists = lists.filter((item) => item.title !== 'Empty');
+    let fullList = lists.flat(1); // flatten array
+    fullList = fullList.filter((item) => item.link !== 'undefined');
+    fullList = fullList.filter((item) => item.title !== 'Empty');
 
     const items = await Promise.all(
-        lists.map((item) =>
+        fullList.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
                     if (!item.link.includes('undefined')) {
