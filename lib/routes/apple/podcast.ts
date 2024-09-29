@@ -36,16 +36,16 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const page_data = JSON.parse($('#serialized-server-data').text());
+    const serializedServerData = JSON.parse($('#serialized-server-data').text());
 
-    const seo_episodes = page_data[0].data.seoData.schemaContent.workExample;
-    const origin_episodes = page_data[0].data.shelves.find((item) => item.contentType === 'episode').items;
-    const header = page_data[0].data.shelves.find((item) => item.contentType === 'showHeaderRegular').items[0];
+    const seoEpisodes = serializedServerData[0].data.seoData.schemaContent.workExample;
+    const originEpisodes = serializedServerData[0].data.shelves.find((item) => item.contentType === 'episode').items;
+    const header = serializedServerData[0].data.shelves.find((item) => item.contentType === 'showHeaderRegular').items[0];
 
-    const episodes = origin_episodes.map((item) => {
+    const episodes = originEpisodes.map((item) => {
         // Try to keep line breaks in the description
-        const matched_seo_episode = seo_episodes.find((seo_episode) => seo_episode.name === item.title) || null;
-        const episode_description = (matched_seo_episode ? matched_seo_episode.description : item.summary).replaceAll('\n', '<br>');
+        const matchedSeoEpisode = seoEpisodes.find((seoEpisode) => seoEpisode.name === item.title) || null;
+        const episodeDescription = (matchedSeoEpisode ? matchedSeoEpisode.description : item.summary).replaceAll('\n', '<br>');
 
         return {
             title: item.title,
@@ -54,7 +54,7 @@ async function handler(ctx) {
             itunes_duration: item.duration,
             link: item.playAction.episodeOffer.storeUrl,
             pubDate: parseDate(item.releaseDate),
-            description: episode_description,
+            description: episodeDescription,
         };
     });
 
@@ -63,6 +63,6 @@ async function handler(ctx) {
         link: header.contextAction.podcastOffer.storeUrl,
         itunes_author: header.contextAction.podcastOffer.author,
         item: episodes,
-        description: header.description.replaceAll('\n', '<br>'),
+        description: header.description.replaceAll('\n', ' '),
     };
 }
