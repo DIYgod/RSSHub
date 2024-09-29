@@ -48,7 +48,7 @@ async function handler() {
                     .toArray()
                     .map((el) => ({
                         title: $('a b', el).text().trim() || 'Empty',
-                        link: baseUrl + $('a', el).attr('href') || 'undefined',
+                        link: $('a', el).attr('href') || 'undefined',
                         group: item.groupName,
                     }));
                 return item;
@@ -65,7 +65,8 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 try {
                     if (!item.link.includes('undefined')) {
-                        const response = await got(item.link);
+                        const productPageUrl = baseUrl + item.link;
+                        const response = await got(productPageUrl);
                         const $ = load(response.data);
                         const thisTitle = item.title + '|' + item.group;
                         item.title = thisTitle;
