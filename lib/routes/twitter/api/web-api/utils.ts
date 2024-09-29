@@ -40,7 +40,7 @@ const getAuth = async (retry: number) => {
     if (config.twitter.authToken && retry > 0) {
         const index = authTokenIndex++ % config.twitter.authToken.length;
         const token = config.twitter.authToken[index];
-        const lock = await cache.get(`${lockPrefix}${token}`);
+        const lock = await cache.get(`${lockPrefix}${token}`, false);
         if (lock) {
             await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
             return await getAuth(retry - 1);
