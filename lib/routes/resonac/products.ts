@@ -58,22 +58,20 @@ async function handler() {
 
     let fullList = lists.flat(1); // flatten array
     fullList = fullList.filter((item) => item.link !== 'undefined');
-    fullList = fullList.filter((item) => item.title !== 'Empty');
+    // fullList = fullList.filter((item) => item.title !== 'Empty');
 
     const items = await Promise.all(
         fullList.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
-                    if (!item.link.includes('undefined')) {
-                        const productPageUrl = baseUrl + item.link;
-                        const response = await got(productPageUrl);
-                        const $ = load(response.data);
-                        const thisTitle = item.title + '|' + item.group;
-                        item.title = thisTitle;
-                        item.description = $('main  div.str-section').html();
-                        item.pubDate = '2024-09-29'; // item.pubDate;
-                        return item;
-                    }
+                    const productPageUrl = baseUrl + item.link;
+                    const response = await got(productPageUrl);
+                    const $ = load(response.data);
+                    const thisTitle = item.title + ' | ' + item.group;
+                    item.title = thisTitle;
+                    item.description = $('main  div.str-section').html();
+                    item.pubDate = '2024-09-29'; // item.pubDate;
+                    return item;
                 } catch (error) {
                     return (error as Error).message;
                 }
