@@ -8,20 +8,20 @@ export const route: Route = {
     name: 'Channel',
     maintainers: ['huanfe1'],
     example: '/javtiful/channel/madonna',
-    parameters: { id: 'Actress name' },
+    parameters: { id: 'Channel name' },
     handler,
     categories: ['multimedia'],
+    radar: [
+        {
+            source: ['javtiful.com/channel/:id', 'javtiful.com/channel/:id/*'],
+            target: '/channel/:id',
+        },
+    ],
 };
 
 async function handler(ctx): Promise<Data> {
     const { id } = ctx.req.param();
-    const html = await ofetch(`https://javtiful.com/channel/${id}`, {
-        method: 'get',
-        headers: {
-            'Accept-Language': 'zh-CN,zh;q=0.9',
-        },
-    });
-
+    const html = await ofetch(`https://javtiful.com/channel/${id}`);
     const $ = load(<string>html);
     const items: DataItem[] = $('section .card:not(:has(.bg-danger))')
         .toArray()

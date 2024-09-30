@@ -11,17 +11,17 @@ export const route: Route = {
     parameters: { id: 'Actress name' },
     handler,
     categories: ['multimedia'],
+    radar: [
+        {
+            source: ['javtiful.com/actress/:id', 'javtiful.com/actress/:id/*'],
+            target: '/actress/:id',
+        },
+    ],
 };
 
 async function handler(ctx): Promise<Data> {
     const { id } = ctx.req.param();
-    const html = await ofetch(`https://javtiful.com/actress/${id}`, {
-        method: 'get',
-        headers: {
-            'Accept-Language': 'zh-CN,zh;q=0.9',
-        },
-    });
-
+    const html = await ofetch(`https://javtiful.com/actress/${id}`);
     const $ = load(<string>html);
     const items: DataItem[] = $('section .card:not(:has(.bg-danger))')
         .toArray()
