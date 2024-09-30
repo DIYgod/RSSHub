@@ -15,7 +15,7 @@ export const route: Route = {
             source: ['dealstreetasia.com/'],
         },
     ],
-    name: 'Deal Street Asia - Home',
+    name: 'Home',
     maintainers: ['jack2game'],
     handler,
     url: 'dealstreetasia.com/',
