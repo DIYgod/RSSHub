@@ -125,7 +125,7 @@
         "title": "3.5.3",
         "tldts": "6.1.48",
         "tosource": "2.0.0-alpha.3",
-        "tough-cookie": "4.1.4",
+        "tough-cookie": "5.0.0",
         "tsx": "4.19.1",
         "twitter-api-v2": "1.17.2",
         "undici": "6.19.8",

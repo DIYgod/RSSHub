@@ -115,7 +115,7 @@ importers:
         version: 9.0.5
       http-cookie-agent:
         specifier: 6.0.6
-        version: 6.0.6(tough-cookie@4.1.4)(undici@6.19.8)
+        version: 6.0.6(tough-cookie@5.0.0)(undici@6.19.8)
       https-proxy-agent:
         specifier: 7.0.5
         version: 7.0.5
@@ -234,8 +234,8 @@ importers:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
       tough-cookie:
-        specifier: 4.1.4
-        version: 4.1.4
+        specifier: 5.0.0
+        version: 5.0.0
       tsx:
         specifier: 4.19.1
         version: 4.19.1
@@ -2757,8 +2757,8 @@ packages:
   dezalgo@1.0.4:
     resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   directory-import@3.3.1:
@@ -7185,7 +7185,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.6
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8389,7 +8389,7 @@ snapshots:
       asap: 2.0.6
       wrappy: 1.0.2
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -9377,10 +9377,10 @@ snapshots:
 
   http-cache-semantics@4.1.1: {}
 
-  http-cookie-agent@6.0.6(tough-cookie@4.1.4)(undici@6.19.8):
+  http-cookie-agent@6.0.6(tough-cookie@5.0.0)(undici@6.19.8):
     dependencies:
       agent-base: 7.1.1
-      tough-cookie: 4.1.4
+      tough-cookie: 5.0.0
     optionalDependencies:
       undici: 6.19.8
     transitivePeerDependencies:
