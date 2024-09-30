@@ -5242,6 +5242,27 @@
       }
     ]
   },
+  "dealstreetasia.com": {
+    "_name": "DealStreetAsia",
+    ".": [
+      {
+        "title": "Home",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/dealstreetasia/home"
+      },
+      {
+        "title": "Section",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/dealstreetasia/section/:section"
+      }
+    ]
+  },
   "dedao.cn": {
     "_name": "得到",
     ".": [

@@ -17175,6 +17175,55 @@
     "name": "Deadline",
     "url": "deadline.com"
   },
+  "dealstreetasia": {
+    "routes": {
+      "/home": {
+        "path": "/home",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/dealstreetasia/home",
+        "radar": [
+          {
+            "source": [
+              "dealstreetasia.com/"
+            ]
+          }
+        ],
+        "name": "Home",
+        "maintainers": [
+          "jack2game"
+        ],
+        "url": "dealstreetasia.com/",
+        "location": "home.ts"
+      },
+      "/section/:section": {
+        "path": "/section/:section",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/dealstreetasia/section/private-equity",
+        "parameters": {
+          "section": "target section"
+        },
+        "radar": [
+          {
+            "source": [
+              "dealstreetasia.com/"
+            ]
+          }
+        ],
+        "name": "Section",
+        "maintainers": [
+          "jack2game"
+        ],
+        "url": "dealstreetasia.com/",
+        "location": "section.ts"
+      }
+    },
+    "name": "DealStreetAsia",
+    "url": "dealstreetasia.com"
+  },
   "dedao": {
     "routes": {
       "/:category?": {
