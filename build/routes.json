@@ -37441,6 +37441,60 @@
     "name": "JAVLibrary",
     "url": "javlibrary.com"
   },
+  "javtiful": {
+    "routes": {
+      "/actress/:id": {
+        "path": "/actress/:id",
+        "name": "Actress",
+        "maintainers": [
+          "huanfe1"
+        ],
+        "example": "/javtiful/actress/akari-tsumugi",
+        "parameters": {
+          "id": "Actress name"
+        },
+        "categories": [
+          "multimedia"
+        ],
+        "radar": [
+          {
+            "source": [
+              "javtiful.com/actress/:id",
+              "javtiful.com/actress/:id/*"
+            ],
+            "target": "/actress/:id"
+          }
+        ],
+        "location": "actress.ts"
+      },
+      "/channel/:id": {
+        "path": "/channel/:id",
+        "name": "Channel",
+        "maintainers": [
+          "huanfe1"
+        ],
+        "example": "/javtiful/channel/madonna",
+        "parameters": {
+          "id": "Channel name"
+        },
+        "categories": [
+          "multimedia"
+        ],
+        "radar": [
+          {
+            "source": [
+              "javtiful.com/channel/:id",
+              "javtiful.com/channel/:id/*"
+            ],
+            "target": "/channel/:id"
+          }
+        ],
+        "location": "channel.ts"
+      }
+    },
+    "name": "Javtiful",
+    "url": "javtiful.com"
+  },
   "jd": {
     "routes": {
       "/price/:id": {

@@ -3486,6 +3486,12 @@
   "/javlibrary/update/:language?": [],
   "/javlibrary/users/:id/:type/:language?": [],
   "/javlibrary/:type/:id/:language?": [],
+  "/javtiful/actress/:id": [
+    "huanfe1"
+  ],
+  "/javtiful/channel/:id": [
+    "huanfe1"
+  ],
   "/jd/price/:id": [
     "nczitzk"
   ],

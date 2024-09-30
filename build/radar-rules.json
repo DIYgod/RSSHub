@@ -11666,6 +11666,29 @@
       }
     ]
   },
+  "javtiful.com": {
+    "_name": "Javtiful",
+    ".": [
+      {
+        "title": "Actress",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/actress/:id",
+          "/actress/:id/*"
+        ],
+        "target": "/javtiful/actress/:id"
+      },
+      {
+        "title": "Channel",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/channel/:id",
+          "/channel/:id/*"
+        ],
+        "target": "/javtiful/channel/:id"
+      }
+    ]
+  },
   "jianshu.com": {
     "_name": "简书",
     "www": [
