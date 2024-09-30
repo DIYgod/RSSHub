@@ -115,7 +115,7 @@ importers:
         version: 9.0.5
       http-cookie-agent:
         specifier: 6.0.6
-        version: 6.0.6(tough-cookie@4.1.4)(undici@6.19.8)
+        version: 6.0.6(tough-cookie@5.0.0)(undici@6.19.8)
       https-proxy-agent:
         specifier: 7.0.5
         version: 7.0.5
@@ -234,8 +234,8 @@ importers:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
       tough-cookie:
-        specifier: 4.1.4
-        version: 4.1.4
+        specifier: 5.0.0
+        version: 5.0.0
       tsx:
         specifier: 4.19.1
         version: 4.19.1
@@ -9377,10 +9377,10 @@ snapshots:
 
   http-cache-semantics@4.1.1: {}
 
-  http-cookie-agent@6.0.6(tough-cookie@4.1.4)(undici@6.19.8):
+  http-cookie-agent@6.0.6(tough-cookie@5.0.0)(undici@6.19.8):
     dependencies:
       agent-base: 7.1.1
-      tough-cookie: 4.1.4
+      tough-cookie: 5.0.0
     optionalDependencies:
       undici: 6.19.8
     transitivePeerDependencies:
