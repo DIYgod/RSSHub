@@ -38,7 +38,7 @@ async function fetchPage() {
     // const headingText = jsonData.props.pageProps.sectionData.name;
 
     const pageProps = jsonData.props.pageProps;
-    const combinedList = [
+    const list = [
         ...pageProps.topStories,
         ...pageProps.privateEquity,
         ...pageProps.ventureCapital,
@@ -53,26 +53,15 @@ async function fetchPage() {
         ...pageProps.earningsAndResults,
         ...pageProps.theLpView,
         ...pageProps.dvNewsletters,
+        ...pageProps.reports,
     ].map((item) => ({
-        title: item.post_title || 'No Title',
-        link: item.post_url || '',
-        description: item.post_excerpt || '',
-        pubDate: item.post_date ? new Date(item.post_date).toUTCString() : '',
+        title: item.post_title || item.title || 'No Title',
+        link: item.post_url || item.link || '',
+        description: item.post_excerpt || item.excerpt || '',
+        pubDate: item.post_date ? new Date(item.post_date).toUTCString() : item.date ? new Date(item.date).toUTCString() : '',
         category: item.category_link ? item.category_link.replaceAll(/(<([^>]+)>)/gi, '') : '', // Clean HTML if category_link exists
         image: item.image_url ? item.image_url.replace(/\?.*$/, '') : '', // Remove query parameters if image_url exists
     }));
-
-    const items1 = jsonData.props.pageProps.reports;
-    const list1 = items1.map((item) => ({
-        title: item.title || 'No Title',
-        link: item.link || '',
-        description: item.excerpt || '',
-        pubDate: item.date ? new Date(item.date).toUTCString() : '',
-        category: item.category_link ? item.category_link.replaceAll(/(<([^>]+)>)/gi, '') : '', // Clean HTML if category_link exists
-        image: item.image_url ? item.image_url.replace(/\?.*$/, '') : '', // Remove query parameters if image_url exists
-    }));
-
-    const list = [...combinedList, ...list1];
 
     return {
         title: 'Deal Street Asia',
