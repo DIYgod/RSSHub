@@ -64051,7 +64051,8 @@
           "TonyRL"
         ],
         "features": {
-          "antiCrawler": true
+          "antiCrawler": true,
+          "requirePuppeteer": true
         },
         "radar": [
           {
