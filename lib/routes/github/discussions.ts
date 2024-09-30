@@ -10,7 +10,7 @@ const md = MarkdownIt({
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/discussion/:user/:repo/:answered?',
+    path: '/discussion/:user/:repo/:answered?/:closed?/:locked?',
     categories: ['programming'],
     example: '/github/discussion/DIYgod/RSSHub',
     parameters: {
