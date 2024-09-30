@@ -1,0 +1,3 @@
+{{ each images img }}
+<img src="{{ img.url }}" alt="{{ img.alt }}"><br>
+{{ /each }}

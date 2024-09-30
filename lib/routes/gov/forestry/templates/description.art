@@ -1,0 +1,15 @@
+{{ if image }}
+  <figure>
+    <img src="{{ image.src }}" alt="{{ image.alt }}">
+  </figure>
+{{ /if }}
+
+{{ if video }}
+  <video controls>
+    <source
+      src="{{ video.src }}">
+    <object data="{{ video.src }}">
+      <embed src="{{ video.src }}">
+    </object>
+  </video>
+{{ /if }}

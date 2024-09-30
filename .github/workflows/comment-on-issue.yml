@@ -9,21 +9,22 @@ jobs:
     name: Call maintainers
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      issues: write
+    if: github.event.sender.login != 'issuehunt-oss[bot]'
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v3 # just need its cache
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: 'pnpm'
-      - name: Install dependencies (pnpm) # needed since we need to parse markdown, so we also use got instead
+      - name: Install dependencies (pnpm) # import remark-parse and unified
         run: pnpm i
       - name: Generate feedback
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-issue/call-maintainer.js`)
-            return script({ github, context, core })
+            const { default: callMaintainer } = await import('${{ github.workspace }}/scripts/workflow/test-issue/call-maintainer.mjs')
+            await callMaintainer({ github, context, core })

@@ -1,12 +1,9 @@
-name: format
+name: Format
 
 on:
   push:
     branches:
       - master
-
-permissions:
-  contents: read
 
 jobs:
   format:
@@ -18,16 +15,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: 'pnpm'
       - run: pnpm i
-      - run: pnpm i
-        working-directory: website
       - run: npm run format
       - name: Commit files
         run: |

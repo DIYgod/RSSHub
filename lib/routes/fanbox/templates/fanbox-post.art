@@ -1,0 +1,7 @@
+<a href={{postUrl}}>
+    <h1>{{title}}</h1>
+    <span style="margin-right:1.6em">{{user.name}}</span>
+    <br />
+    <br />
+    <span>{{excerpt}}</span>
+</a>
