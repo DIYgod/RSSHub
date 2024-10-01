@@ -6384,6 +6384,88 @@
         ],
         "location": "tv/user/blog.ts"
       },
+      "/tv/user/collections/:id/:subjectType/:type": {
+        "path": "/tv/user/collections/:id/:subjectType/:type",
+        "categories": [
+          "anime"
+        ],
+        "example": "/bangumi/tv/user/collections/sai/1/1",
+        "parameters": {
+          "id": "用户 id, 在用户页面地址栏查看",
+          "subjectType": {
+            "description": "全部类别: `空`、book: `1`、anime: `2`、music: `3`、game: `4`、real: `6`",
+            "options": [
+              {
+                "value": "ALL",
+                "label": "all"
+              },
+              {
+                "value": "book",
+                "label": "1"
+              },
+              {
+                "value": "anime",
+                "label": "2"
+              },
+              {
+                "value": "music",
+                "label": "3"
+              },
+              {
+                "value": "game",
+                "label": "4"
+              },
+              {
+                "value": "real",
+                "label": "6"
+              }
+            ]
+          },
+          "type": {
+            "description": "全部类别: `空`、想看: `1`、看过: `2`、在看: `3`、搁置: `4`、抛弃: `5`",
+            "options": [
+              {
+                "value": "ALL",
+                "label": "all"
+              },
+              {
+                "value": "想看",
+                "label": "1"
+              },
+              {
+                "value": "看过",
+                "label": "2"
+              },
+              {
+                "value": "在看",
+                "label": "3"
+              },
+              {
+                "value": "搁置",
+                "label": "4"
+              },
+              {
+                "value": "抛弃",
+                "label": "5"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [],
+        "name": "Bangumi 用户收藏列表",
+        "maintainers": [
+          "youyou-sudo"
+        ],
+        "location": "tv/user/collections.ts"
+      },
       "/tv/user/wish/:id": {
         "path": "/tv/user/wish/:id",
         "categories": [

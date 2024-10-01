@@ -600,6 +600,9 @@
   "/bangumi/tv/user/blog/:id": [
     "nczitzk"
   ],
+  "/bangumi/tv/user/collections/:id/:subjectType/:type": [
+    "youyou-sudo"
+  ],
   "/bangumi/tv/user/wish/:id": [
     "honue"
   ],
