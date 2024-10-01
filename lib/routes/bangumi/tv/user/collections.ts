@@ -3,6 +3,11 @@ import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
+import { art } from '@/utils/render';
+import path from 'node:path';
+
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
 
 // 合并不同 subjectType 的 type 映射
 const getTypeNames = (subjectType) => {
@@ -142,13 +147,22 @@ async function handler(ctx) {
         const subjectId = item.subject_id;
 
         return {
-            title: titles,
+            title: `${type === 'all' ? `${getTypeNames(item.subject_type)[item.type]}：` : ''}${titles}`,
+            description: art(path.resolve(__dirname, '../../templates/tv/subject.art'), {
+                routeSubjectType: subjectType,
+                subjectTypeName: subjectTypeNames[item.subject_type],
+                subjectType: item.subject_type,
+                subjectEps: item.subject.eps,
+                epStatus: item.ep_status,
+                score: item.subject.score,
+                date: item.subject.date,
+                picUrl: item.subject.images.large,
+            }),
             link: `https://bgm.tv/subject/${subjectId}`,
             pubDate: timezone(parseDate(updateTime), 0),
             urls: `https://bgm.tv/subject/${subjectId}`,
         };
     });
-
     return {
         title: `${userNickname}${descriptionFields}`,
         link: `https://bgm.tv/user/${userId}/collections`,
