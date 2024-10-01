@@ -91,7 +91,7 @@ export const route: Route = {
     },
     radar: [],
     name: 'Bangumi 用户收藏列表',
-    maintainers: ['honue'],
+    maintainers: ['youyou-sudo'],
     handler,
 };
 
