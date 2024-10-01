@@ -3849,6 +3849,19 @@
       }
     ]
   },
+  "ceph.io": {
+    "_name": "Ceph",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/ceph/blog/:topic?"
+      }
+    ]
+  },
   "cfachina.org": {
     "_name": "中国期货业协会",
     ".": [

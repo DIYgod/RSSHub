@@ -12455,6 +12455,44 @@
     "name": "中国光大银行",
     "url": "cebbank.com"
   },
+  "ceph": {
+    "routes": {
+      "/blog/:topic?": {
+        "path": "/blog/:topic?",
+        "categories": [
+          "blog"
+        ],
+        "example": "/ceph/blog/a11y",
+        "parameters": {
+          "category": "filter blog post by category, return all posts if not specified"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "ceph.io/"
+            ]
+          }
+        ],
+        "name": "Blog",
+        "maintainers": [
+          "pandada8"
+        ],
+        "url": "ceph.io",
+        "location": "blog.ts"
+      }
+    },
+    "name": "Ceph",
+    "url": "ceph.io",
+    "description": "Ceph is an open source distributed storage system designed to evolve with data."
+  },
   "cfachina": {
     "routes": {
       "/servicesupport/analygarden/:program?": {
