@@ -25237,6 +25237,41 @@
         ],
         "location": "contributors.ts"
       },
+      "/discussion/:user/:repo/:state?": {
+        "path": "/discussion/:user/:repo/:state?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/github/discussion/DIYgod/RSSHub",
+        "parameters": {
+          "user": "User name",
+          "repo": "Repo name",
+          "state": "The state of discussions. Can be either `open`, `closed`, `answered`, `unanswered`, `locked`, `unlocked` or `all`. Default: `all`."
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "GITHUB_ACCESS_TOKEN",
+              "description": "GitHub Access Token"
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/:user/:repo/discussions",
+              "github.com/:user/:repo/discussions/:id",
+              "github.com/:user/:repo"
+            ],
+            "target": "/discussion/:user/:repo"
+          }
+        ],
+        "name": "Repo Discussions",
+        "maintainers": [
+          "waynzh"
+        ],
+        "location": "discussions.ts"
+      },
       "/file/:user/:repo/:branch/:filepath{.+}": {
         "path": "/file/:user/:repo/:branch/:filepath{.+}",
         "example": "/github/file/DIYgod/RSSHub/master/README.md",

@@ -2379,6 +2379,9 @@
   "/github/contributors/:user/:repo/:order?/:anon?": [
     "zoenglinghou"
   ],
+  "/github/discussion/:user/:repo/:state?": [
+    "waynzh"
+  ],
   "/github/file/:user/:repo/:branch/:filepath{.+}": [
     "zengxs"
   ],

@@ -7391,6 +7391,16 @@
         "target": "/github/contributors/:user/:repo"
       },
       {
+        "title": "Repo Discussions",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:user/:repo/discussions",
+          "/:user/:repo/discussions/:id",
+          "/:user/:repo"
+        ],
+        "target": "/github/discussion/:user/:repo"
+      },
+      {
         "title": "File Commits",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
