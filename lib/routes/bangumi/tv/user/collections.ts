@@ -4,8 +4,51 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
+// 合并不同 subjectType 的 type 映射
+const getTypeNames = (subjectType) => {
+    const commonTypeNames = {
+        1: '想看',
+        2: '看过',
+        3: '在看',
+        4: '搁置',
+        5: '抛弃',
+    };
+
+    switch (subjectType) {
+        case '1': // 书籍
+            return {
+                1: '想读',
+                2: '读过',
+                3: '在读',
+                4: '搁置',
+                5: '抛弃',
+            };
+        case '2': // 动画
+        case '6': // 三次元
+            return commonTypeNames;
+        case '3': // 音乐
+            return {
+                1: '想听',
+                2: '听过',
+                3: '在听',
+                4: '搁置',
+                5: '抛弃',
+            };
+        case '4': // 游戏
+            return {
+                1: '想玩',
+                2: '玩过',
+                3: '在玩',
+                4: '搁置',
+                5: '抛弃',
+            };
+        default:
+            return commonTypeNames; // 默认使用通用的类型
+    }
+};
+
 export const route: Route = {
-    path: '/tv/user/collections/:id/:subjectType?/:type?',
+    path: '/tv/user/collections/:id/:subjectType/:type',
     categories: ['anime'],
     example: '/bangumi/tv/user/collections/sai/1/1',
     parameters: {
@@ -13,7 +56,7 @@ export const route: Route = {
         subjectType: {
             description: '全部类别: `空`、book: `1`、anime: `2`、music: `3`、game: `4`、real: `6`',
             options: [
-                { value: '--', label: '--' },
+                { value: 'ALL', label: 'all' },
                 { value: 'book', label: '1' },
                 { value: 'anime', label: '2' },
                 { value: 'music', label: '3' },
@@ -24,7 +67,7 @@ export const route: Route = {
         type: {
             description: '全部类别: `空`、想看: `1`、看过: `2`、在看: `3`、搁置: `4`、抛弃: `5`',
             options: [
-                { value: '--', label: '--' },
+                { value: 'ALL', label: 'all' },
                 { value: '想看', label: '1' },
                 { value: '看过', label: '2' },
                 { value: '在看', label: '3' },
@@ -60,14 +103,7 @@ async function handler(ctx) {
         6: '三次元',
     };
 
-    const typeNames = {
-        1: '想看',
-        2: '看过',
-        3: '在看',
-        4: '搁置',
-        5: '抛弃',
-    };
-
+    const typeNames = getTypeNames(subjectType);
     const typeName = typeNames[type] || '';
     const subjectTypeName = subjectTypeNames[subjectType] || '';
 
@@ -83,16 +119,16 @@ async function handler(ctx) {
         descriptionFields = '的Bangumi收藏列表';
     }
 
-    const userDataurl = `https://api.bgm.tv/v0/users/${userId}`;
-    const userData = await got(userDataurl, {
+    const userDataUrl = `https://api.bgm.tv/v0/users/${userId}`;
+    const userData = await got(userDataUrl, {
         method: 'get',
         headers: {
             'User-Agent': config.trueUA,
         },
     });
 
-    const collectionDataurl = `https://api.bgm.tv/v0/users/${userId}/collections?subject_type=${subjectType}&type=${type}`;
-    const collectionData = await got(collectionDataurl, {
+    const collectionDataUrl = `https://api.bgm.tv/v0/users/${userId}/collections?${subjectType && subjectType !== 'all' ? `subject_type=${subjectType}` : ''}${type && type !== 'all' ? `&type=${type}` : ''}`;
+    const collectionData = await got(collectionDataUrl, {
         method: 'get',
         headers: {
             'User-Agent': config.trueUA,
@@ -103,13 +139,13 @@ async function handler(ctx) {
     const items = collectionData.data.data.map((item) => {
         const titles = item.subject.name_cn || item.subject.name;
         const updateTime = item.updated_at;
-        const subjectid = item.subject_id;
+        const subjectId = item.subject_id;
 
         return {
             title: titles,
-            link: `https://bgm.tv/subject/${subjectid}`,
+            link: `https://bgm.tv/subject/${subjectId}`,
             pubDate: timezone(parseDate(updateTime), 0),
-            urls: `https://bgm.tv/subject/${subjectid}`,
+            urls: `https://bgm.tv/subject/${subjectId}`,
         };
     });
 
@@ -120,4 +156,3 @@ async function handler(ctx) {
         description: `${userNickname}${descriptionFields}`,
     };
 }
-
