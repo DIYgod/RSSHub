@@ -10,13 +10,47 @@ const md = MarkdownIt({
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/discussion/:user/:repo/:state?',
+    path: '/discussion/:user/:repo/:state?/:category?',
     categories: ['programming'],
     example: '/github/discussion/DIYgod/RSSHub',
     parameters: {
         user: 'User name',
         repo: 'Repo name',
-        state: 'The state of discussions. Can be either `open`, `closed`, `answered`, `unanswered`, `locked`, `unlocked` or `all`. Default: `all`.',
+        state: {
+            description: 'The state of discussions',
+            default: 'open',
+            options: [
+                {
+                    label: 'Open',
+                    value: 'open',
+                },
+                {
+                    label: 'Closed',
+                    value: 'closed',
+                },
+                {
+                    label: 'Answered',
+                    value: 'answered',
+                },
+                {
+                    label: 'Unanswered',
+                    value: 'unanswered',
+                },
+                {
+                    label: 'Locked',
+                    value: 'locked',
+                },
+                {
+                    label: 'Unlocked',
+                    value: 'unlocked',
+                },
+                {
+                    label: 'All',
+                    value: 'all',
+                },
+            ],
+        },
+        category: 'Category Name (case-sensitive). Default: `null`.',
     },
     features: {
         requireConfig: [
@@ -41,7 +75,7 @@ async function handler(ctx) {
     if (!config.github || !config.github.access_token) {
         throw new ConfigNotFoundError('GitHub Discussions RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
-    const { user, repo, limit, state = 'all' } = ctx.req.param();
+    const { user, repo, limit, state = 'open', category = null } = ctx.req.param();
     const { answered, closed, locked } = mapStateToBooleans(state);
     const perPage = Math.min(Number.parseInt(limit) || 100, 100);
 
@@ -51,6 +85,31 @@ async function handler(ctx) {
     let filters = `first: ${perPage}`;
     if (answered !== null) {
         filters += `, answered: ${answered}`;
+    }
+    if (category !== null) {
+        const response = await got({
+            method: 'post',
+            url,
+            headers: {
+                Authorization: `bearer ${config.github.access_token}`,
+            },
+            json: {
+                query: `
+                {
+                    repository(owner: "${user}", name: "${repo}") {
+                        discussionCategories(first: 25) {
+                            nodes {
+                                id,
+                                name,
+                            }
+                        },
+                    }
+                  }
+                `,
+            },
+        });
+        const categoryItem = response.data.data.repository.discussionCategories.nodes.find((item) => item.name === category);
+        filters += categoryItem?.id ? `, categoryId: "${categoryItem.id}"` : '';
     }
 
     const response = await got({
@@ -63,19 +122,19 @@ async function handler(ctx) {
             query: `
             {
                 repository(owner: "${user}", name: "${repo}") {
-                  discussions(${filters}) {
-                  nodes {
-                      title,
-                      author {
-                        login
-                      },
-                      createdAt,
-                      closed,
-                      isAnswered,
-                      locked,
-                      body,
-                      url
-                    }
+                    discussions(${filters}) {
+                        nodes {
+                            title,
+                            author {
+                                login
+                            },
+                            createdAt,
+                            closed,
+                            isAnswered,
+                            locked,
+                            body,
+                            url
+                        }
                   },
                 }
               }
