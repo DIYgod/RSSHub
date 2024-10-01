@@ -10,15 +10,13 @@ const md = MarkdownIt({
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/discussion/:user/:repo/:answered?/:closed?/:locked?',
+    path: '/discussion/:user/:repo/:state?',
     categories: ['programming'],
     example: '/github/discussion/DIYgod/RSSHub',
     parameters: {
         user: 'User name',
         repo: 'Repo name',
-        answered: 'Filter by answered status (true/false), defaults showing all answered status discussions',
-        closed: 'Filter by closed status (true/false), defaults showing all closed status discussions',
-        locked: 'Filter by locked status (true/false), defaults showing all locked status discussions',
+        state: 'The state of discussions. Can be either `open`, `closed`, `answered`, `unanswered`, `locked`, `unlocked` or `all`. Default: `all`.',
     },
     features: {
         requireConfig: [
@@ -43,7 +41,8 @@ async function handler(ctx) {
     if (!config.github || !config.github.access_token) {
         throw new ConfigNotFoundError('GitHub Discussions RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
-    const { user, repo, limit, answered = null, closed = null, locked = null } = ctx.req.param();
+    const { user, repo, limit, state = 'all' } = ctx.req.param();
+    const { answered, closed, locked } = mapStateToBooleans(state);
     const perPage = Math.min(Number.parseInt(limit) || 100, 100);
 
     const host = `https://github.com/${user}/${repo}/discussions`;
@@ -92,10 +91,45 @@ async function handler(ctx) {
         link: host,
         item: data.map((item) => ({
             title: item.title,
-            author: item.author?.login,
+            author: item.author?.login ?? 'ghost',
             description: item.body ? md.render(item.body) : 'No description',
             pubDate: parseDate(item.createdAt),
             link: item.url,
         })),
     };
+}
+
+function mapStateToBooleans(state: string) {
+    // 初始化布尔值
+    let answered: boolean | null = null;
+    let closed: boolean | null = null;
+    let locked: boolean | null = null;
+
+    // 设置布尔值，根据 state 的值
+    switch (state) {
+        case 'answered':
+            answered = true;
+            break;
+        case 'unanswered':
+            answered = false;
+            break;
+        case 'closed':
+            closed = true;
+            break;
+        case 'open':
+            closed = false;
+            break;
+        case 'locked':
+            locked = true;
+            break;
+        case 'unlocked':
+            locked = false;
+            break;
+        case 'all':
+        default:
+            // 保持 answered, closed, locked 为 null
+            break;
+    }
+
+    return { answered, closed, locked };
 }
