@@ -25,7 +25,7 @@ export const route: Route = {
             source: ['ceph.io/'],
         },
     ],
-    name: 'Ceph Blog',
+    name: 'Blog',
     maintainers: ['pandada8'],
     handler,
     url: 'ceph.io',
@@ -33,7 +33,7 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { category } = ctx.req.param();
-    const url = category ? `https://ceph.io/en/news/blog/category/${category}/` : `https://ceph.io/en/news/blog/`;
+    const url = category ? `https://ceph.io/en/news/blog/category/${category}/` : 'https://ceph.io/en/news/blog/';
     const response = await got.get(url);
     const data = response.data;
     const $ = load(data);
@@ -43,7 +43,7 @@ async function handler(ctx: Context): Promise<Data> {
             const element = $(e);
             const title = element.find('a').text().trim();
             const link = element.find('a').attr('href');
-            const pubDate = parseDate(element.find('time').text());
+            const pubDate = parseDate(element.find('time').attr('datetime'));
 
             return {
                 title,
@@ -60,7 +60,7 @@ async function handler(ctx: Context): Promise<Data> {
                 const item$ = load(data);
 
                 item.author = item$('#main section > div:nth-child(1) span').text().trim();
-                item.description = item$('#main section > div:nth-child(2)').html();
+                item.description = item$('#main section > div:nth-child(2) > div').html();
                 return item;
             })
         )
