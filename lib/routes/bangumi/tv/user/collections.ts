@@ -148,7 +148,7 @@ async function handler(ctx) {
 
         return {
             title: `${type === 'all' ? `${getTypeNames(item.subject_type)[item.type]}：` : ''}${titles}`,
-            description: art(path.resolve(__dirname, '../../templates/tv/subject.art'), {
+            description: art(path.join(__dirname, '../../templates/tv/subject.art'), {
                 routeSubjectType: subjectType,
                 subjectTypeName: subjectTypeNames[item.subject_type],
                 subjectType: item.subject_type,
