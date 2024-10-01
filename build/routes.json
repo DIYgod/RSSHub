@@ -25357,8 +25357,8 @@
         ],
         "location": "contributors.ts"
       },
-      "/discussion/:user/:repo/:state?": {
-        "path": "/discussion/:user/:repo/:state?",
+      "/discussion/:user/:repo/:state?/:category?": {
+        "path": "/discussion/:user/:repo/:state?/:category?",
         "categories": [
           "programming"
         ],
@@ -25366,7 +25366,41 @@
         "parameters": {
           "user": "User name",
           "repo": "Repo name",
-          "state": "The state of discussions. Can be either `open`, `closed`, `answered`, `unanswered`, `locked`, `unlocked` or `all`. Default: `all`."
+          "state": {
+            "description": "The state of discussions",
+            "default": "open",
+            "options": [
+              {
+                "label": "Open",
+                "value": "open"
+              },
+              {
+                "label": "Closed",
+                "value": "closed"
+              },
+              {
+                "label": "Answered",
+                "value": "answered"
+              },
+              {
+                "label": "Unanswered",
+                "value": "unanswered"
+              },
+              {
+                "label": "Locked",
+                "value": "locked"
+              },
+              {
+                "label": "Unlocked",
+                "value": "unlocked"
+              },
+              {
+                "label": "All",
+                "value": "all"
+              }
+            ]
+          },
+          "category": "Category Name (case-sensitive). Default: `null`."
         },
         "features": {
           "requireConfig": [
