@@ -46,7 +46,7 @@ export const handler = async (ctx) => {
             title,
             description,
             pubDate: parseDate(item.publishedTime),
-            link: new URL(`csrc/${item.channelCodeName}/c${item.manuscriptId}/content.shtml`, rootUrl).href,
+            link: item.url,
             category: [item.channelName],
             content: {
                 html: description,
