@@ -339,9 +339,6 @@ importers:
       '@types/title':
         specifier: 3.4.3
         version: 3.4.3
-      '@types/tough-cookie':
-        specifier: 4.0.5
-        version: 4.0.5
       '@types/uuid':
         specifier: 10.0.0
         version: 10.0.0
@@ -385,8 +382,8 @@ importers:
         specifier: 11.2.0
         version: 11.2.0
       globals:
-        specifier: 15.9.0
-        version: 15.9.0
+        specifier: 15.10.0
+        version: 15.10.0
       got:
         specifier: 14.4.2
         version: 14.4.2
@@ -3381,8 +3378,8 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@15.9.0:
-    resolution: {integrity: sha512-SmSKyLLKFbSr6rptvP8izbyxJL4ILwqO9Jg23UA0sDlGlu58V59D1//I3vlc0KJphVdUR7vMjHIplYnzBxorQA==}
+  globals@15.10.0:
+    resolution: {integrity: sha512-tqFIbz83w4Y5TCbtgjZjApohbuh7K9BxGYFm7ifwDR240tvdb7P9x+/9VvUKlmkPoiknoJtanI8UOrqxS3a7lQ==}
     engines: {node: '>=18'}
 
   globrex@0.1.2:
@@ -8673,7 +8670,7 @@ snapshots:
       eslint: 9.11.1
       eslint-plugin-es-x: 7.8.0(eslint@9.11.1)
       get-tsconfig: 4.8.1
-      globals: 15.9.0
+      globals: 15.10.0
       ignore: 5.3.2
       minimatch: 9.0.5
       semver: 7.6.3
@@ -8697,7 +8694,7 @@ snapshots:
       core-js-compat: 3.38.1
       eslint: 9.11.1
       esquery: 1.6.0
-      globals: 15.9.0
+      globals: 15.10.0
       indent-string: 4.0.0
       is-builtin-module: 3.2.1
       jsesc: 3.0.2
@@ -9192,7 +9189,7 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@15.9.0: {}
+  globals@15.10.0: {}
 
   globrex@0.1.2: {}
 
