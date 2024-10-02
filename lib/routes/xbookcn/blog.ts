@@ -47,8 +47,8 @@ export const route: Route = {
 
                     // 获取分类信息
                     const categories = $('.post-labels a')
-                        .map((i, el) => $(el).text().trim())
-                        .get();
+                        .toArray()
+                        .map((el) => $(el).text().trim());
                     item.category = categories; // 添加多个分类信息
 
                     return item; // 返回带有描述和分类的文章对象
