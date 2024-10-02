@@ -162,7 +162,6 @@
         "@types/supertest": "6.0.2",
         "@types/tiny-async-pool": "2.0.3",
         "@types/title": "3.4.3",
-        "@types/tough-cookie": "4.0.5",
         "@types/uuid": "10.0.0",
         "@typescript-eslint/eslint-plugin": "8.8.0",
         "@typescript-eslint/parser": "8.8.0",

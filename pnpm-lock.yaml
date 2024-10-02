@@ -339,9 +339,6 @@ importers:
       '@types/title':
         specifier: 3.4.3
         version: 3.4.3
-      '@types/tough-cookie':
-        specifier: 4.0.5
-        version: 4.0.5
       '@types/uuid':
         specifier: 10.0.0
         version: 10.0.0
