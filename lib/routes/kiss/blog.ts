@@ -61,7 +61,7 @@ async function handler(ctx) {
                 $(this).unwrap();
             });
             body.find('div.blog_data').remove();
-            i.description = body.html();
+            i.description = `<div lang="ja-JP">${body.html()}</div>`;
             return i;
         });
 
@@ -69,5 +69,6 @@ async function handler(ctx) {
         title: 'KISS ブログ',
         link: url,
         item: items,
+        language: 'ja',
     };
 }
