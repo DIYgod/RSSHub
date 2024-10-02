@@ -2549,9 +2549,6 @@
   "/gov/csrc/auditstatus/:apply_id": [
     "hillerliao"
   ],
-  "/gov/csrc/zfxxgk_zdgk/:id?": [
-    "nczitzk"
-  ],
   "/gov/csrc/news/:suffix{.+}?": [],
   "/gov/customs/list/:gchannel?": [
     "Jeason0228",
