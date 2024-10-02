@@ -385,8 +385,8 @@ importers:
         specifier: 11.2.0
         version: 11.2.0
       globals:
-        specifier: 15.9.0
-        version: 15.9.0
+        specifier: 15.10.0
+        version: 15.10.0
       got:
         specifier: 14.4.2
         version: 14.4.2
@@ -2757,8 +2757,8 @@ packages:
   dezalgo@1.0.4:
     resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   directory-import@3.3.1:
@@ -3381,8 +3381,8 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@15.9.0:
-    resolution: {integrity: sha512-SmSKyLLKFbSr6rptvP8izbyxJL4ILwqO9Jg23UA0sDlGlu58V59D1//I3vlc0KJphVdUR7vMjHIplYnzBxorQA==}
+  globals@15.10.0:
+    resolution: {integrity: sha512-tqFIbz83w4Y5TCbtgjZjApohbuh7K9BxGYFm7ifwDR240tvdb7P9x+/9VvUKlmkPoiknoJtanI8UOrqxS3a7lQ==}
     engines: {node: '>=18'}
 
   globrex@0.1.2:
@@ -7185,7 +7185,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.6
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8389,7 +8389,7 @@ snapshots:
       asap: 2.0.6
       wrappy: 1.0.2
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -8673,7 +8673,7 @@ snapshots:
       eslint: 9.11.1
       eslint-plugin-es-x: 7.8.0(eslint@9.11.1)
       get-tsconfig: 4.8.1
-      globals: 15.9.0
+      globals: 15.10.0
       ignore: 5.3.2
       minimatch: 9.0.5
       semver: 7.6.3
@@ -8697,7 +8697,7 @@ snapshots:
       core-js-compat: 3.38.1
       eslint: 9.11.1
       esquery: 1.6.0
-      globals: 15.9.0
+      globals: 15.10.0
       indent-string: 4.0.0
       is-builtin-module: 3.2.1
       jsesc: 3.0.2
@@ -9192,7 +9192,7 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@15.9.0: {}
+  globals@15.10.0: {}
 
   globrex@0.1.2: {}
 
