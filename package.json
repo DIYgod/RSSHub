@@ -135,7 +135,7 @@
         "zod": "3.23.8"
     },
     "devDependencies": {
-        "@babel/preset-env": "7.25.4",
+        "@babel/preset-env": "7.25.7",
         "@babel/preset-typescript": "7.24.7",
         "@eslint/eslintrc": "3.1.0",
         "@eslint/js": "9.11.1",
