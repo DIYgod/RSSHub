@@ -64,7 +64,7 @@ async function handler(ctx) {
             link: rootUrl + $(item).attr('href'),
         }))
         .get()
-        .slice(0, ctx.req.query('limit') ? (Number.parseInt(ctx.req.query('limit')) > 20 ? 20 : Number.parseInt(ctx.req.query('limit'))) : 20);
+        .slice(0, ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 20) : 20);
 
     const items = await Promise.all(
         list.map((item) =>
