@@ -179,6 +179,7 @@ export default [{
         }],
 
         'unicorn/prefer-code-point': 'warn',
+        'unicorn/prefer-global-this': 'off',
         'unicorn/prefer-logical-operator-over-ternary': 'warn',
         'unicorn/prefer-module': 'off',
         'unicorn/prefer-node-protocol': 'off',

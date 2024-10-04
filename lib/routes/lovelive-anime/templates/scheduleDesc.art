@@ -1,3 +1,2 @@
-<h1>{{title}}</h1><br>
 <b>{{startTime}}</b>&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;<b>{{endTime}}</b><br><br>
 {{desc}}
