@@ -46031,8 +46031,27 @@
         "example": "/mi/crowdfunding",
         "name": "小米众筹",
         "maintainers": [
-          "DIYgod"
+          "DIYgod",
+          "nuomi1"
         ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "m.mi.com/crowdfunding/home"
+            ],
+            "target": "/crowdfunding"
+          }
+        ],
+        "view": 5,
         "location": "crowdfunding.ts"
       },
       "/golden": {
