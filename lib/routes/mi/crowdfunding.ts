@@ -28,12 +28,7 @@ export const route: Route = {
 };
 
 const getDetails = async (list: CrowdfundingList[]) => {
-    const result: Promise<CrowdfundingDetailInfo>[] = [];
-    for (const section of list) {
-        for (const item of section.items) {
-            result.push(utils.getCrowdfundingItem(item));
-        }
-    }
+    const result: Promise<CrowdfundingDetailInfo>[] = list.flatMap((section) => section.items.map((item) => utils.getCrowdfundingItem(item)));
     return await Promise.all(result);
 };
 
