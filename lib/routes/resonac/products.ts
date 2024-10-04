@@ -21,7 +21,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Resonac_Products',
+    name: 'Products',
     maintainers: ['valuex'],
     handler,
     description: '',
