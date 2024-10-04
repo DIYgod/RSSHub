@@ -173,7 +173,7 @@
         "eslint-nibble": "8.1.0",
         "eslint-plugin-n": "17.10.3",
         "eslint-plugin-prettier": "5.2.1",
-        "eslint-plugin-unicorn": "55.0.0",
+        "eslint-plugin-unicorn": "56.0.0",
         "eslint-plugin-yml": "1.14.0",
         "fs-extra": "11.2.0",
         "globals": "15.10.0",
