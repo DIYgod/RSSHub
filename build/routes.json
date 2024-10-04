@@ -77308,6 +77308,35 @@
     "name": "西安理工大学",
     "url": "index.xaut.edu.cn"
   },
+  "xbookcn": {
+    "routes": {
+      "/:label?": {
+        "path": "/:label?",
+        "categories": [
+          "reading"
+        ],
+        "example": "/xbookcn/精选作品",
+        "parameters": {
+          "label": "按名称分类，详见https://blog.xbookcn.net/p/all.html"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "短篇",
+        "maintainers": [
+          "Lyunvy"
+        ],
+        "location": "blog.ts"
+      }
+    },
+    "name": "中文成人文學網",
+    "url": "www.xbookcn.net"
+  },
   "xboxfan": {
     "routes": {
       "/news": {
