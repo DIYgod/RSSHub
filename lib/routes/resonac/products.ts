@@ -70,7 +70,6 @@ async function handler() {
                     const thisTitle = item.title + ' | ' + item.group;
                     item.title = thisTitle;
                     item.description = $('main  div.str-section').html();
-                    item.pubDate = '2024-09-29'; // item.pubDate;
                     return item;
                 } catch (error) {
                     return (error as Error).message;
