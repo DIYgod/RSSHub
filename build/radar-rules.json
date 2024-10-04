@@ -12870,6 +12870,19 @@
       }
     ]
   },
+  "kisskiss.tv": {
+    "_name": "KISS",
+    "www": [
+      {
+        "title": "ブログ",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/kiss/diary.php"
+        ],
+        "target": "/kisskiss/blog"
+      }
+    ]
+  },
   "konachan.com": {
     "_name": "Konachan.com Anime Wallpapers",
     ".": [

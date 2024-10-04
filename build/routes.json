@@ -40275,6 +40275,43 @@
     "name": "The Korea Institute of Marine Law",
     "url": "kimlaw.or.kr"
   },
+  "kisskiss": {
+    "routes": {
+      "/blog/:category?": {
+        "path": "/blog/:category?",
+        "categories": [
+          "game"
+        ],
+        "example": "/blog/DLC",
+        "parameters": {
+          "category": "category"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.kisskiss.tv/kiss/diary.php"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "name": "ブログ",
+        "maintainers": [
+          "keocheung"
+        ],
+        "location": "blog.ts"
+      }
+    },
+    "name": "KISS",
+    "url": "www.kisskiss.tv"
+  },
   "konachan": {
     "routes": {
       "/post/popular_recent/:period?": {

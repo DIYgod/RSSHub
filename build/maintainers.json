@@ -3708,6 +3708,9 @@
   "/kimlaw/thesis": [
     "TonyRL"
   ],
+  "/kisskiss/blog/:category?": [
+    "keocheung"
+  ],
   "/konachan/post/popular_recent/:period?": [
     "magic-akari",
     "NekoAria"
