@@ -44,11 +44,11 @@ async function handler() {
                 const strUrl = productGroup.groupURL;
                 const response = await got(strUrl);
                 const $ = load(response.data);
-                const item = $('dt.m-toggle__title div span')
+                const item = $('dt.m-toggle__title div span a')
                     .toArray()
                     .map((el) => ({
-                        title: $('a b', el).text().trim() || 'Empty',
-                        link: $('a', el).attr('href') || 'undefined',
+                        title: $('b', el).text().trim(),
+                        link: baseUrl + $(el).attr('href'),
                         group: productGroup.groupName,
                     }));
                 return item;
@@ -56,16 +56,14 @@ async function handler() {
         )
     );
 
-    let fullList = lists.flat(1); // flatten array
-    fullList = fullList.filter((item) => item.link !== 'undefined');
+    const fullList = lists.flat(1); // flatten array
     // fullList = fullList.filter((item) => item.title !== 'Empty');
 
     const items = await Promise.all(
         fullList.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
-                    const productPageUrl = baseUrl + item.link;
-                    const response = await got(productPageUrl);
+                    const response = await got(item.link);
                     const $ = load(response.data);
                     const thisTitle = item.title + ' | ' + item.group;
                     item.title = thisTitle;
