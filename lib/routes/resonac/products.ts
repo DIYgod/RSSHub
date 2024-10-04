@@ -31,7 +31,7 @@ async function handler() {
     const response = await got(host);
     const pageHtml = response.data;
     const $ = load(pageHtml);
-    const groupLists = $('div.m-panel-card-link  ul  li')
+    const groupLists = $('div.m-panel-card-link ul li')
         .toArray()
         .map((el) => ({
             groupName: $('a', el).text().trim(),
@@ -44,7 +44,7 @@ async function handler() {
                 const strUrl = productGroup.groupURL;
                 const response = await got(strUrl);
                 const $ = load(response.data);
-                const item = $('dt.m-toggle__title  div  span')
+                const item = $('dt.m-toggle__title div span')
                     .toArray()
                     .map((el) => ({
                         title: $('a b', el).text().trim() || 'Empty',
@@ -69,7 +69,7 @@ async function handler() {
                     const $ = load(response.data);
                     const thisTitle = item.title + ' | ' + item.group;
                     item.title = thisTitle;
-                    item.description = $('main  div.str-section').html();
+                    item.description = $('main div.str-section').html();
                     return item;
                 } catch (error) {
                     return (error as Error).message;
