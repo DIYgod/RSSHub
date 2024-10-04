@@ -4,11 +4,11 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/crowdfunding',
+    categories: ['shopping'],
+    example: '/mi/crowdfunding',
     name: '小米众筹',
     maintainers: ['DIYgod', 'nuomi1'],
     handler,
-    example: '/mi/crowdfunding',
-    categories: ['shopping'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
