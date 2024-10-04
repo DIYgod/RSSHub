@@ -5302,6 +5302,9 @@
     "amakerlife"
   ],
   "/researchgate/publications/:id": [],
+  "/resonac/products": [
+    "valuex"
+  ],
   "/reuters/:category/:topic?": [
     "LyleLee",
     "HenryQW",

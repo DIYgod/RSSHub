@@ -59081,6 +59081,34 @@
     "name": "ResearchGate",
     "url": "researchgate.net"
   },
+  "resonac": {
+    "routes": {
+      "/products": {
+        "path": "/products",
+        "categories": [
+          "other"
+        ],
+        "example": "/resonac/products",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Products",
+        "maintainers": [
+          "valuex"
+        ],
+        "description": "",
+        "location": "products.ts"
+      }
+    },
+    "name": "Resonac",
+    "url": "www.resonac.com"
+  },
   "reuters": {
     "routes": {
       "/:category/:topic?": {
