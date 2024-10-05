@@ -2,6 +2,9 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+import cache from '@/utils/cache';
+
 export const route: Route = {
     path: '/advisor/data/:type?/:category?',
     categories: ['programming'],
@@ -22,7 +25,13 @@ export const route: Route = {
     name: 'Github Advisory Database RSS',
     maintainers: ['sd0ric4'],
     handler,
-    description: `| Category | Description | Explanation |
+    description: `
+| Type | Description | Explanation |
+| --- | --- | --- |
+| reviewed | Reviewed | 已审核 |
+| unreviewed | Unreviewed | 未审核 |
+
+| Category | Description | Explanation |
 | --- | --- | --- |
 | composer | Composer | PHP 依赖管理工具 |
 | go | Go | Go 语言包管理工具 |
@@ -49,13 +58,13 @@ async function handler(ctx) {
         method: 'get',
         url: apiUrl,
     });
-    const $ = load(response);
+    const $ = load(response.data);
 
-    const items = $('div.Box-row')
+    const list = $('div.Box-row')
         .toArray()
         .map((item) => {
             item = $(item);
-            const a = item.find('a.Link--primary').text();
+            const a = item.find('a.Link--primary');
             const b = item.find('relative-time').attr('datetime');
             const title = a.text() || 'No title';
             const link = a.attr('href') || '#';
@@ -65,11 +74,23 @@ async function handler(ctx) {
                 title,
                 link: `https://github.com${link}`,
                 pubDate,
+                description: '',
             };
         });
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link);
+                const $ = load(response);
 
+                item.description = $('.comment-body').first().html() || '';
+
+                return item;
+            })
+        )
+    );
     return {
-        title: `GitHub Advisory Database RSS - ${category}`,
+        title: `GitHub Advisory Database RSS - ${category} - ${type}`,
         link: currentUrl,
         item: items,
     };
