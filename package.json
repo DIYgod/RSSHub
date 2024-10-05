@@ -51,7 +51,7 @@
     },
     "dependencies": {
         "@hono/node-server": "1.13.1",
-        "@hono/zod-openapi": "0.16.2",
+        "@hono/zod-openapi": "0.16.3",
         "@notionhq/client": "2.2.15",
         "@opentelemetry/api": "1.9.0",
         "@opentelemetry/exporter-prometheus": "0.53.0",
@@ -63,7 +63,7 @@
         "@postlight/parser": "2.2.3",
         "@rss3/sdk": "0.0.19",
         "@scalar/hono-api-reference": "0.5.150",
-        "@sentry/node": "7.116.0",
+        "@sentry/node": "7.119.1",
         "@tonyrl/rand-user-agent": "2.0.80",
         "aes-js": "3.1.2",
         "art-template": "4.13.2",
@@ -116,14 +116,14 @@
         "re2js": "0.4.2",
         "rfc4648": "1.5.3",
         "rss-parser": "3.13.0",
-        "sanitize-html": "2.13.0",
+        "sanitize-html": "2.13.1",
         "simplecc-wasm": "1.0.0",
         "socks-proxy-agent": "8.0.4",
         "source-map": "0.7.4",
         "telegram": "2.25.11",
         "tiny-async-pool": "2.1.0",
         "title": "3.5.3",
-        "tldts": "6.1.49",
+        "tldts": "6.1.50",
         "tosource": "2.0.0-alpha.3",
         "tough-cookie": "5.0.0",
         "tsx": "4.19.1",
@@ -173,7 +173,7 @@
         "eslint-nibble": "8.1.0",
         "eslint-plugin-n": "17.10.3",
         "eslint-plugin-prettier": "5.2.1",
-        "eslint-plugin-unicorn": "55.0.0",
+        "eslint-plugin-unicorn": "56.0.0",
         "eslint-plugin-yml": "1.14.0",
         "fs-extra": "11.2.0",
         "globals": "15.10.0",
@@ -192,7 +192,7 @@
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
-    "packageManager": "pnpm@9.11.0",
+    "packageManager": "pnpm@9.12.0",
     "engines": {
         "node": ">=22"
     }
