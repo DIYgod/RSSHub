@@ -11,7 +11,7 @@ const limiter = new RateLimiterMemory({
 });
 
 const limiterQueue = new RateLimiterQueue(limiter, {
-    maxQueueSize: 500,
+    maxQueueSize: 5000,
 });
 
 const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit) => {

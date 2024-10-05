@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,9 +6,20 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:section?/:type?/:user?',
-    categories: ['programming'],
+    categories: ['programming', 'popular'],
+    view: ViewType.Articles,
     example: '/hackernews/threads/comments_list/dang',
-    parameters: { section: '内容分区，见上表，默认为 `index`', type: '链接类型，见上表，默认为 `sources`', user: '设定用户，只在 `threads` 和 `submitted` 分区有效' },
+    parameters: {
+        section: {
+            description: 'Content section, default to `index`',
+        },
+        type: {
+            description: 'Link type, default to `sources`',
+        },
+        user: {
+            description: 'Set user, only valid in `threads` and `submitted` sections',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,10 +33,10 @@ export const route: Route = {
             source: ['news.ycombinator.com/:section', 'news.ycombinator.com/'],
         },
     ],
-    name: '用户',
+    name: 'User',
     maintainers: ['nczitzk', 'xie-dongping'],
     handler,
-    description: `订阅特定用户的内容`,
+    description: `Subscribe to the content of a specific user`,
 };
 
 async function handler(ctx) {

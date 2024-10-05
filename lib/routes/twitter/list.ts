@@ -41,11 +41,14 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const { count } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const { count, include_rts } = utils.parseRouteParams(ctx.req.param('routeParams'));
     const params = count ? { count } : {};
 
     await api.init();
-    const data = await api.getList(id, params);
+    let data = await api.getList(id, params);
+    if (!include_rts) {
+        data = utils.excludeRetweet(data);
+    }
 
     return {
         title: `Twitter List - ${id}`,

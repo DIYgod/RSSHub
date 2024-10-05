@@ -5,7 +5,18 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import parser from '@/utils/rss-parser';
+import { config } from '@/config';
+import Parser from 'rss-parser';
+
+const parser = new Parser({
+    customFields: {
+        item: ['magnet'],
+    },
+    headers: {
+        'User-Agent': config.ua,
+    },
+    defaultRSS: 0.9,
+});
 
 export const route: Route = {
     path: '/cn/*',

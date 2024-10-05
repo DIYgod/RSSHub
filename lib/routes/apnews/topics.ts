@@ -42,14 +42,14 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         $(':is(.PagePromo-content, .PageListStandardE-leadPromo-info) bsp-custom-headline')
-            .get()
+            .toArray()
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : Infinity)
             .map((e) => ({
                 title: $(e).find('span.PagePromoContentIcons-text').text(),
                 link: $(e).find('a').attr('href'),
             }))
             .filter((e) => typeof e.link === 'string')
-            .map((item) => fetchArticle(item))
+            .map((item) => (ctx.req.query('mode') === 'fulltext' ? fetchArticle(item) : item))
     );
 
     return {

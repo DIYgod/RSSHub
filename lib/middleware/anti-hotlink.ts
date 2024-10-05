@@ -17,7 +17,7 @@ const matchPath = (path: string, paths: string[]) => {
     return false;
 };
 
-// return ture if the path needs to be processed
+// return true if the path needs to be processed
 const filterPath = (path: string) => {
     const include = config.hotlink.includePaths;
     const exclude = config.hotlink.excludePaths;

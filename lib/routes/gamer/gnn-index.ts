@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,9 +7,35 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/gnn/:category?',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Articles,
     example: '/gamer/gnn/1',
-    parameters: { category: '版块' },
+    parameters: {
+        category: {
+            description: '版塊',
+            options: [
+                { value: '1', label: 'PC' },
+                { value: '3', label: 'TV 掌機' },
+                { value: '4', label: '手機遊戲' },
+                { value: '5', label: '動漫畫' },
+                { value: '9', label: '主題報導' },
+                { value: '11', label: '活動展覽' },
+                { value: '13', label: '電競' },
+                { value: 'ns', label: 'Switch' },
+                { value: 'ps5', label: 'PS5' },
+                { value: 'ps4', label: 'PS4' },
+                { value: 'xbone', label: 'XboxOne' },
+                { value: 'xbsx', label: 'XboxSX' },
+                { value: 'pc', label: 'PC 單機' },
+                { value: 'olg', label: 'PC 線上' },
+                { value: 'ios', label: 'iOS' },
+                { value: 'android', label: 'Android' },
+                { value: 'web', label: 'Web' },
+                { value: 'comic', label: '漫畫' },
+                { value: 'anime', label: '動畫' },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -19,15 +45,9 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'GNN 新聞',
-    maintainers: ['Arracc', 'ladeng07'],
+    maintainers: ['Arracc', 'ladeng07', 'pseudoyu'],
     handler,
-    description: `| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
-  | ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
-  | 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
-
-  | Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
-  | ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
-  | ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |`,
+    description: '缺省為首頁',
 };
 
 async function handler(ctx) {

@@ -82,8 +82,8 @@ async function handler(ctx) {
             }),
             author: i.newsBylineProps?.authors?.map((a) => a.name).join('/') ?? undefined,
             guid: `abc-${i.id}`,
-            pubDate: parseDate(i.timestamp.dates.firstPublished),
-            updated: i.timestamp.dates.lastUpdated ? parseDate(i.timestamp.dates.lastUpdated) : undefined,
+            pubDate: parseDate(i.dates.firstPublished),
+            updated: i.dates.lastUpdated ? parseDate(i.dates.lastUpdated) : undefined,
         };
 
         if (i.mediaIndicator) {
