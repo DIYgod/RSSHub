@@ -1,10 +1,11 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
+import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
-    path: '/advisor/data/:category?',
+    path: '/advisor/data/:type?/:category?',
     categories: ['programming'],
-    example: '/github/advisor/data/go',
+    example: '/github/advisor/data/reviewed/composer',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,7 +22,7 @@ export const route: Route = {
     name: 'Github Advisory Database RSS',
     maintainers: ['sd0ric4'],
     handler,
-    description: `| Type | Description | Explanation |
+    description: `| Category | Description | Explanation |
 | --- | --- | --- |
 | composer | Composer | PHP 依赖管理工具 |
 | go | Go | Go 语言包管理工具 |
@@ -38,24 +39,34 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.param('category') ?? 'composer';
+    const { category, type } = ctx.req.param();
 
-    const apiRootUrl = 'https://azu.github.io/github-advisory-database-rss';
-    const apiUrl = `${apiRootUrl}/${category}.json`;
+    const apiRootUrl = 'https://github.com/advisories';
+    const apiUrl = `${apiRootUrl}?query=type%3A${type}+ecosystem%3A${category}`;
     const currentUrl = `https://github.com/advisories`;
 
     const response = await got({
         method: 'get',
         url: apiUrl,
     });
+    const $ = load(response);
 
-    const items = response.data.items.map((item) => ({
-        author: item.author.name,
-        title: item.title,
-        link: item.url,
-        description: item.content_html,
-        pubDate: parseDate(item.date_publishede),
-    }));
+    const items = $('div.Box-row')
+        .toArray()
+        .map((item) => {
+            item = $(item);
+            const a = item.find('a.Link--primary').text();
+            const b = item.find('relative-time').attr('datetime');
+            const title = a.text() || 'No title';
+            const link = a.attr('href') || '#';
+            const pubDate = parseDate(b || '');
+
+            return {
+                title,
+                link: `https://github.com${link}`,
+                pubDate,
+            };
+        });
 
     return {
         title: `GitHub Advisory Database RSS - ${category}`,
