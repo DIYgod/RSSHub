@@ -58,9 +58,14 @@ async function handler(ctx) {
 
     await api.init();
     const userInfo = await api.getUser(id);
-    let data = await (exclude_replies ? api.getUserTweets(id, params) : api.getUserTweetsAndReplies(id, params));
-    if (!include_rts) {
-        data = utils.excludeRetweet(data);
+    let data;
+    try {
+        data = await (exclude_replies ? api.getUserTweets(id, params) : api.getUserTweetsAndReplies(id, params));
+        if (!include_rts) {
+            data = utils.excludeRetweet(data);
+        }
+    } catch (error) {
+        logger.debug(error);
     }
 
     const profileImageUrl = userInfo?.profile_image_url || userInfo?.profile_image_url_https;
@@ -70,8 +75,11 @@ async function handler(ctx) {
         link: `https://x.com/${userInfo?.screen_name}`,
         image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
         description: userInfo?.description,
-        item: utils.ProcessFeed(ctx, {
-            data,
-        }),
+        item:
+            data &&
+            utils.ProcessFeed(ctx, {
+                data,
+            }),
+        allowEmpty: true,
     };
 }
