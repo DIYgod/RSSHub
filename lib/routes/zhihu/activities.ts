@@ -75,7 +75,7 @@ async function handler(ctx) {
                     url = `https://zhuanlan.zhihu.com/p/${detail.id}`;
                     break;
                 case 'pin':
-                    title = detail.excerpt_title;
+                    title = detail.excerpt_title.replaceAll(/<a .*?href="([^ ]*?)" .*?>(.*?)<\/a>/g, (match, p1, p2) => `[${p2}](${p1})`);
                     author = detail.author.name;
                     for (const contentItem of detail.content) {
                         switch (contentItem.type) {
