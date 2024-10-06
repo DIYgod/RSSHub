@@ -129,8 +129,15 @@ export const twitterGot = async (url, params) => {
         },
         dispatcher: dispatchers.agent,
         onResponse: async ({ response }) => {
-            if (response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
-                logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status} and data ${JSON.stringify(response._data)}`);
+            const remaining = response.headers.get('x-rate-limit-remaining');
+            const reset = response.headers.get('x-rate-limit-reset');
+            logger.debug(`twitter debug: twitter rate limit remaining for token ${auth.token} is ${remaining} and reset at ${reset}`);
+            if (remaining === '0' && reset) {
+                const resetTime = new Date(Number.parseInt(reset) * 1000);
+                logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}, will unlock at ${resetTime}`);
+                await cache.set(`${lockPrefix}${auth.token}`, '1', (resetTime.getTime() - Date.now()) / 1000);
+            } else if (response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
+                logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
                 await cache.set(`${lockPrefix}${auth.token}`, '1', 2000);
             } else if (response.status === 403 || response.status === 401) {
                 const newCookie = await login({
