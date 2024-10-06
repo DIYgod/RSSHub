@@ -24,9 +24,19 @@ const token2Cookie = (token) =>
                       uri: proxy.proxyUri,
                   })
                 : new CookieAgent({ cookies: { jar } });
-            await ofetch('https://x.com', {
-                dispatcher: agent,
-            });
+            if (token) {
+                await ofetch('https://x.com', {
+                    dispatcher: agent,
+                });
+            } else {
+                const data = await ofetch('https://x.com/narendramodi?mx=2', {
+                    dispatcher: agent,
+                });
+                const gt = data.match(/document\.cookie="gt=(\d+)/)?.[1];
+                if (gt) {
+                    jar.setCookieSync(`gt=${gt}`, 'https://x.com');
+                }
+            }
             return JSON.stringify(jar.serializeSync());
         } catch {
             // ignore
@@ -72,7 +82,7 @@ export const twitterGot = async (
 
     const requestUrl = `${url}?${queryString.stringify(params)}`;
 
-    let cookie: string | Record<string, any> | null | undefined = auth?.token ? await token2Cookie(auth.token) : null;
+    let cookie: string | Record<string, any> | null | undefined = await token2Cookie(auth?.token);
     if (!cookie && auth) {
         cookie = await login({
             username: auth.username,
@@ -129,11 +139,17 @@ export const twitterGot = async (
             'content-type': 'application/json',
             dnt: '1',
             pragma: 'no-cache',
-            referer: 'https://x.com/narendramodi',
+            referer: 'https://x.com/',
             'x-twitter-active-user': 'yes',
-            'x-twitter-auth-type': 'OAuth2Session',
             'x-twitter-client-language': 'en',
             'x-csrf-token': jsonCookie.ct0,
+            ...(auth?.token
+                ? {
+                      'x-twitter-auth-type': 'OAuth2Session',
+                  }
+                : {
+                      'x-guest-token': jsonCookie.gt,
+                  }),
         },
         dispatcher: dispatchers?.agent,
         onResponse: async ({ response }) => {
