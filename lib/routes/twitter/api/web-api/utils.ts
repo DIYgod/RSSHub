@@ -130,7 +130,7 @@ export const twitterGot = async (url, params) => {
         dispatcher: dispatchers.agent,
         onResponse: async ({ response }) => {
             if (response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
-                logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
+                logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status} and data ${JSON.stringify(response._data)}`);
                 await cache.set(`${lockPrefix}${auth.token}`, '1', 2000);
             } else if (response.status === 403 || response.status === 401) {
                 const newCookie = await login({
