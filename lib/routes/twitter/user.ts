@@ -1,6 +1,7 @@
 import { Route, ViewType } from '@/types';
 import utils from './utils';
 import api from './api';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/user/:id/:routeParams?',
