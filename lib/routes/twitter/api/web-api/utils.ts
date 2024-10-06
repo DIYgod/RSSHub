@@ -159,8 +159,9 @@ export const twitterGot = async (
             if (auth) {
                 if (remaining === '0' && reset) {
                     const resetTime = new Date(Number.parseInt(reset) * 1000);
-                    logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}, will unlock at ${resetTime}`);
-                    await cache.set(`${lockPrefix}${auth.token}`, '1', (resetTime.getTime() - Date.now()) / 1000);
+                    const delay = (resetTime.getTime() - Date.now()) / 1000;
+                    logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}, will unlock after ${delay}s`);
+                    await cache.set(`${lockPrefix}${auth.token}`, '1', delay);
                 } else if (response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
                     logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
                     await cache.set(`${lockPrefix}${auth.token}`, '1', 2000);
