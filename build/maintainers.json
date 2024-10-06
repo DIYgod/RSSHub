@@ -2376,6 +2376,9 @@
   "/github/activity/:user": [
     "hyoban"
   ],
+  "/github/advisor/data/:type?/:category?": [
+    "sd0ric4"
+  ],
   "/github/branches/:user/:repo": [
     "max-arnold"
   ],

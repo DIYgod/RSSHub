@@ -7448,6 +7448,15 @@
         "target": "/github/activity/:user"
       },
       {
+        "title": "Github Advisory Database RSS",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/advisories",
+          "/"
+        ],
+        "target": "/github/advisor/data/:type?/:category?"
+      },
+      {
         "title": "Repo Branches",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [

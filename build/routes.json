@@ -25343,6 +25343,35 @@
         ],
         "location": "activity.ts"
       },
+      "/advisor/data/:type?/:category?": {
+        "path": "/advisor/data/:type?/:category?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/github/advisor/data/reviewed/composer",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/advisories",
+              "github.com"
+            ]
+          }
+        ],
+        "name": "Github Advisory Database RSS",
+        "maintainers": [
+          "sd0ric4"
+        ],
+        "description": "\n| Type | Description | Explanation |\n| --- | --- | --- |\n| reviewed | Reviewed | 已审核 |\n| unreviewed | Unreviewed | 未审核 |\n\n| Category | Description | Explanation |\n| --- | --- | --- |\n| composer | Composer | PHP 依赖管理工具 |\n| go | Go | Go 语言包管理工具 |\n| maven | Maven | Java 项目管理工具 |\n| npm | NPM | Node.js 包管理工具 |\n| nuget | NuGet | .NET 包管理工具 |\n| pip | Pip | Python 包管理工具 |\n| pub | Pub | Dart 包管理工具 |\n| rubygems | RubyGems | Ruby 包管理工具 |\n| rust | Rust | Rust 包管理工具 |\n| erlang | Erlang | Erlang 包管理工具 |\n| actions | Actions | GitHub Actions |\n| swift | Swift | Swift 包管理工具 |",
+        "location": "advisor.ts"
+      },
       "/branches/:user/:repo": {
         "path": "/branches/:user/:repo",
         "categories": [
