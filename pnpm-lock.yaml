@@ -42,8 +42,8 @@ importers:
         specifier: 2.2.3
         version: 2.2.3
       '@rss3/sdk':
-        specifier: 0.0.19
-        version: 0.0.19
+        specifier: 0.0.20
+        version: 0.0.20
       '@scalar/hono-api-reference':
         specifier: 0.5.150
         version: 0.5.150(hono@4.6.3)
@@ -1751,14 +1751,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rss3/api-core@0.0.19':
-    resolution: {integrity: sha512-1wfBJOxN1i+KK6u6zE8IejefHNnmR4ZxxfrKJDQC8KMiudQ4zM2ZSsgDiXhYGCkKMCJg32PtNE8Klxb+Jgo4Mw==}
+  '@rss3/api-core@0.0.20':
+    resolution: {integrity: sha512-9lQ9pe6DzOd8fAN+q3xVrXLt96m/68v7GmXvgOG1Our9ZLlrvB9UENHK0ZFDdaiQLGWeQsbjm90cvL+kQhDD/g==}
 
-  '@rss3/api-utils@0.0.19':
-    resolution: {integrity: sha512-PcO4Q8fHlZaSNEujCnraO3tMxj9a1uFXh415bdW0AusAgP7aZ5f3bIr+UcX3BV3kxjBGWyJbpJsjaDkBVyVInQ==}
+  '@rss3/api-utils@0.0.20':
+    resolution: {integrity: sha512-m5gq9m2iAl4Jt7WdARwCC2IhsrWXs6nCSXcCbSVyqcwmD+jyMjlG0lI4nPesZMpMFTY0KgRNSItB2WYOy0xyAA==}
 
-  '@rss3/sdk@0.0.19':
-    resolution: {integrity: sha512-4e4kEvUlxPIDw8NrMv+TYeIBZacphDEN8nrdY3+5hlGd+ZLYsAh76dKkYSoLjTNbp1k9UCxQxvaAr22m+hYiug==}
+  '@rss3/sdk@0.0.20':
+    resolution: {integrity: sha512-284YxJFZmxPJ5hvj+AzQM2nxo6UrbqG7ZgMbJckWYWbtXQMalZXwCVvW9LDXX7OrBtOeIhe9QzN7n3neb9gNYA==}
 
   '@scalar/hono-api-reference@0.5.150':
     resolution: {integrity: sha512-KGXaE8iEuYL2EhCDc9vBPw3a6+cj552b85EbflEUijOgLhKhcoDb2A/QIgyuk/89Us3mrWJubEZ8NiH8dMLd8Q==}
@@ -2751,8 +2751,8 @@ packages:
   dezalgo@1.0.4:
     resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   directory-import@3.3.1:
@@ -3032,6 +3032,7 @@ packages:
   eslint@8.57.1:
     resolution: {integrity: sha512-ypowyDxpVSYpkXr9WPv2PAZCtNip1Mv5KTW0SCurXv/9iOpcrH9PaqUElksqEB6pChqHGDRCFTyrZlGhnLNGiA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   eslint@9.11.1:
@@ -7175,7 +7176,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.7
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -7295,20 +7296,20 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.24.0':
     optional: true
 
-  '@rss3/api-core@0.0.19':
+  '@rss3/api-core@0.0.20':
     dependencies:
       openapi-fetch: 0.11.3
       ts-case-convert: 2.1.0
       type-fest: 4.26.1
 
-  '@rss3/api-utils@0.0.19':
+  '@rss3/api-utils@0.0.20':
     dependencies:
-      '@rss3/api-core': 0.0.19
+      '@rss3/api-core': 0.0.20
 
-  '@rss3/sdk@0.0.19':
+  '@rss3/sdk@0.0.20':
     dependencies:
-      '@rss3/api-core': 0.0.19
-      '@rss3/api-utils': 0.0.19
+      '@rss3/api-core': 0.0.20
+      '@rss3/api-utils': 0.0.20
 
   '@scalar/hono-api-reference@0.5.150(hono@4.6.3)':
     dependencies:
@@ -8379,7 +8380,7 @@ snapshots:
       asap: 2.0.6
       wrappy: 1.0.2
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
