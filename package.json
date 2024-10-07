@@ -51,7 +51,7 @@
     },
     "dependencies": {
         "@hono/node-server": "1.13.1",
-        "@hono/zod-openapi": "0.16.3",
+        "@hono/zod-openapi": "0.16.4",
         "@notionhq/client": "2.2.15",
         "@opentelemetry/api": "1.9.0",
         "@opentelemetry/exporter-prometheus": "0.53.0",
