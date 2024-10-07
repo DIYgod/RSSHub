@@ -127,7 +127,7 @@
         "tosource": "2.0.0-alpha.3",
         "tough-cookie": "5.0.0",
         "tsx": "4.19.1",
-        "twitter-api-v2": "1.17.2",
+        "twitter-api-v2": "1.18.0",
         "undici": "6.19.8",
         "uuid": "10.0.0",
         "winston": "3.14.2",
