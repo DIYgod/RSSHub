@@ -4557,6 +4557,19 @@
       }
     ]
   },
+  "cohere.com": {
+    "_name": "Cohere",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/cohere/blog"
+      }
+    ]
+  },
   "coindesk.com": {
     "_name": "CoinDesk Consensus Magazine",
     ".": [
