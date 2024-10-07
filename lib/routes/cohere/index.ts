@@ -8,7 +8,7 @@ export const route: Route = {
     url: 'cohere.com/blog',
     maintainers: ['Loongphy'],
     handler,
-    example: '/blog',
+    example: '/cohere/blog',
     description: 'Cohere is a platform for building AI applications.',
     categories: ['blog'],
     features: {
