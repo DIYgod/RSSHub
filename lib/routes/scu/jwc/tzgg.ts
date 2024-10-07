@@ -1,4 +1,5 @@
 import { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
@@ -42,21 +43,23 @@ async function handler() {
         });
 
     const items = await Promise.all(
-        links.map(async (link) => {
-            const { data: info } = await got.get(link);
-            const $ = load(info);
+        links.map((link) =>
+            cache.tryGet(link, async () => {
+                const { data: info } = await got.get(link);
+                const $ = load(info);
 
-            // 获取head里的meta标签
-            const title = $('head meta[name="ArticleTitle"]').attr('content');
-            const pubDate = parseDate($('head meta[name="PubDate"]').attr('content'));
-            const description = $('.v_news_content').html();
-            return {
-                title,
-                link,
-                pubDate,
-                description,
-            };
-        })
+                // 获取head里的meta标签
+                const title = $('head meta[name="ArticleTitle"]').attr('content') ?? '';
+                const pubDate = parseDate($('head meta[name="PubDate"]').attr('content') ?? '');
+                const description = $('.v_news_content').html();
+                return {
+                    title,
+                    link,
+                    pubDate,
+                    description,
+                };
+            })
+        )
     );
 
     return {
