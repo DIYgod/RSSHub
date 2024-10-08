@@ -52637,7 +52637,8 @@
       "/book/:category?": {
         "path": "/book/:category?",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
         "view": 5,
         "example": "/nytimes/book/combined-print-and-e-book-nonfiction",
@@ -52720,7 +52721,8 @@
       "/daily_briefing_chinese": {
         "path": "/daily_briefing_chinese",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
         "example": "/nytimes/daily_briefing_chinese",
         "parameters": {},
