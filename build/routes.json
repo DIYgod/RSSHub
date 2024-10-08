@@ -52637,8 +52637,7 @@
       "/book/:category?": {
         "path": "/book/:category?",
         "categories": [
-          "traditional-media",
-          "popular"
+          "traditional-media"
         ],
         "view": 5,
         "example": "/nytimes/book/combined-print-and-e-book-nonfiction",
@@ -52648,47 +52647,47 @@
             "options": [
               {
                 "value": "combined-print-and-e-book-nonfiction",
-                "label": "非虚构类 - 综合"
+                "label": "Combined Print & E-Book Nonfiction"
               },
               {
                 "value": "hardcover-nonfiction",
-                "label": "非虚构类 - 精装本"
+                "label": "Hardcover Nonfiction"
               },
               {
                 "value": "paperback-nonfiction",
-                "label": "非虚构类 - 平装本"
+                "label": "Paperback Nonfiction"
               },
               {
                 "value": "advice-how-to-and-miscellaneous",
-                "label": "工具类"
+                "label": "Advice, How-To & Miscellaneous"
               },
               {
                 "value": "combined-print-and-e-book-fiction",
-                "label": "虚构类 - 综合"
+                "label": "Combined Print & E-Book Fiction"
               },
               {
                 "value": "hardcover-fiction",
-                "label": "虚构类 - 精装本"
+                "label": "Hardcover Fiction"
               },
               {
                 "value": "trade-fiction-paperback",
-                "label": "虚构类 - 平装本"
+                "label": "Paperback Trade Fiction"
               },
               {
                 "value": "childrens-middle-grade-hardcover",
-                "label": "儿童 - 中年级"
+                "label": "Children's Middle Grade Hardcover"
               },
               {
                 "value": "picture-books",
-                "label": "儿童 - 绘本"
+                "label": "Picture Books"
               },
               {
                 "value": "series-books",
-                "label": "儿童 - 系列图书"
+                "label": "Series Books"
               },
               {
                 "value": "young-adult-hardcover",
-                "label": "青少年"
+                "label": "Young Adult Hardcover"
               }
             ],
             "default": "combined-print-and-e-book-nonfiction"
@@ -52741,13 +52740,13 @@
             "target": ""
           }
         ],
-        "name": "新闻简报",
+        "name": "Daily Briefing",
         "maintainers": [
           "yueyericardo",
           "nczitzk"
         ],
         "url": "nytimes.com/",
-        "description": "网站地址：[https://www.nytimes.com/zh-hans/series/daily-briefing-chinese](https://www.nytimes.com/zh-hans/series/daily-briefing-chinese)",
+        "description": "URL: [https://www.nytimes.com/zh-hans/series/daily-briefing-chinese](https://www.nytimes.com/zh-hans/series/daily-briefing-chinese)",
         "location": "daily-briefing-chinese.ts"
       },
       "/:lang?": {
@@ -52807,7 +52806,7 @@
         "location": "index.ts"
       }
     },
-    "name": "纽约时报中文网",
+    "name": "The New York Times",
     "url": "nytimes.com"
   },
   "obsidian": {

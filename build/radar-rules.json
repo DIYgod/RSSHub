@@ -18351,7 +18351,7 @@
     ]
   },
   "nytimes.com": {
-    "_name": "纽约时报中文网",
+    "_name": "The New York Times",
     ".": [
       {
         "title": "Best Seller Books",
@@ -18362,7 +18362,7 @@
         "target": "/nytimes/book/:category?"
       },
       {
-        "title": "新闻简报",
+        "title": "Daily Briefing",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/"
