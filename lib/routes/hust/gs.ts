@@ -57,11 +57,12 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.logo img').prop('content'), rootUrl).href;
+    const title = $('meta[name="keywords"]').prop('content')?.replace(/,/g, ' - ') ?? $('title').text();
+    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
 
     return {
-        title: $('title').text(),
-        description: $('META[Name="keywords"]').prop('Content'),
+        title,
+        description: title.split(/-/).pop()?.trim(),
         link: currentUrl,
         item: items,
         allowEmpty: true,
