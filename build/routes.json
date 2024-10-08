@@ -29601,27 +29601,38 @@
         "description": "| 新闻发布 | 通知通告 | 委领导动态 | 司局动态 | 地方动态 |\n| -------- | -------- | ---------- | -------- | -------- |\n| xwfb     | tzgg     | wlddt      | sjdt     | dfdt     |",
         "location": "ndrc/xwdt.ts"
       },
-      "/ndrc/zfxxgk/iteminfo": {
-        "path": "/ndrc/zfxxgk/iteminfo",
+      "/ndrc/zfxxgk": {
+        "path": [
+          "/ndrc/zfxxgk"
+        ],
+        "name": "中华人民共和国国家发展和改革委员会政府信息公开",
+        "url": "zfxxgk.ndrc.gov.cn",
+        "maintainers": [
+          "howfool",
+          "nczitzk"
+        ],
+        "example": "/gov/ndrc/zfxxgk",
         "categories": [
           "government"
         ],
-        "example": "/gov/ndrc/zfxxgk/iteminfo",
-        "parameters": {},
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "国家发展改革委 - 政府信息公开",
-        "maintainers": [
-          "howfool"
+        "radar": [
+          {
+            "source": [
+              "zfxxgk.ndrc.gov.cn/web/dirlist.jsp"
+            ],
+            "target": "/ndrc/zfxxgk"
+          }
         ],
-        "url": "zfxxgk.ndrc.gov.cn/web/dirlist.jsp",
-        "location": "ndrc/zfxxgk/articles.ts"
+        "location": "ndrc/zfxxgk.ts"
       },
       "/nea/sjzz/ghs": {
         "path": "/nea/sjzz/ghs",

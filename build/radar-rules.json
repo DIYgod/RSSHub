@@ -9675,6 +9675,16 @@
         ],
         "target": "/govparams=>{const category=params.category;return`/gov/ndrc/xwdt/${category?`/${category.endsWith(\"/\")?category:`${category}/`}`:\"/\"}`}"
       }
+    ],
+    "zfxxgk": [
+      {
+        "title": "中华人民共和国国家发展和改革委员会政府信息公开",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/web/dirlist.jsp"
+        ],
+        "target": "/gov/ndrc/zfxxgk"
+      }
     ]
   },
   "nea.gov.cn": {

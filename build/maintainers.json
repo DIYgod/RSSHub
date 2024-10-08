@@ -2672,8 +2672,9 @@
   "/gov/ndrc/xwdt/:category{.+}?": [
     "nczitzk"
   ],
-  "/gov/ndrc/zfxxgk/iteminfo": [
-    "howfool"
+  "/gov/ndrc/zfxxgk": [
+    "howfool",
+    "nczitzk"
   ],
   "/gov/nea/sjzz/ghs": [
     "nczitzk"
