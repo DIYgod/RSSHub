@@ -58,7 +58,7 @@ async function handler(ctx): Promise<Data> {
             },
         });
 
-        return data.following_creators.map(processCreatorItem).filter(Boolean);
+        return data.following_creators.map((item) => processCreatorItem(item)).filter(Boolean);
     });
 
     return {

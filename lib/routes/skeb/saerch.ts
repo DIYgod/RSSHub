@@ -66,7 +66,7 @@ async function handler(ctx): Promise<Data> {
             throw new TypeError('Invalid hits data received from API');
         }
 
-        return works.map(processWorkItem).filter(Boolean);
+        return works.map((item) => processWorkItem(item)).filter(Boolean);
     });
 
     return {

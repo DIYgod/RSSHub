@@ -125,7 +125,7 @@ async function handler(ctx): Promise<Data> {
         const items: DataItem[] = [];
         if (category in data && Array.isArray(data[category])) {
             const processItem = workCategories.has(category) ? processWorkItem : processCreatorItem;
-            items.push(...(data[category].map(processItem).filter(Boolean) as DataItem[]));
+            items.push(...(data[category].map((item) => processItem(item)).filter(Boolean) as DataItem[]));
         }
 
         return items;

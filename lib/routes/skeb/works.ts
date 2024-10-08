@@ -72,7 +72,7 @@ async function handler(ctx): Promise<Data> {
             throw new Error('Invalid data received from API');
         }
 
-        return data.map(processWorkItem).filter(Boolean);
+        return data.map((item) => processWorkItem(item)).filter(Boolean);
     });
 
     return {

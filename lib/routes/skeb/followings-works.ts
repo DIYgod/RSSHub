@@ -58,7 +58,7 @@ async function handler(ctx): Promise<Data> {
             },
         });
 
-        return data.following_works.map(processWorkItem).filter(Boolean);
+        return data.following_works.map((item) => processWorkItem(item)).filter(Boolean);
     });
 
     return {
