@@ -316,8 +316,8 @@ importers:
         specifier: 13.3.0
         version: 13.3.0
       '@types/mailparser':
-        specifier: 3.4.4
-        version: 3.4.4
+        specifier: 3.4.5
+        version: 3.4.5
       '@types/markdown-it':
         specifier: 14.1.2
         version: 14.1.2
@@ -1909,8 +1909,8 @@ packages:
   '@types/lint-staged@13.3.0':
     resolution: {integrity: sha512-WxGjVP+rA4OJlEdbZdT9MS9PFKQ7kVPhLn26gC+2tnBWBEFEj/KW+IbFfz6sxdxY5U6V7BvyF+3BzCGsAMHhNg==}
 
-  '@types/mailparser@3.4.4':
-    resolution: {integrity: sha512-C6Znp2QVS25JqtuPyxj38Qh+QoFcLycdxsvcc6IZCGekhaMBzbdTXzwGzhGoYb3TfKu8IRCNV0sV1o3Od97cEQ==}
+  '@types/mailparser@3.4.5':
+    resolution: {integrity: sha512-EPERBp7fLeFZh7tS2X36MF7jawUx3Y6/0rXciZah3CTYgwLi3e0kpGUJ6FOmUabgzis/U1g+3/JzrVWbWIOGjg==}
 
   '@types/markdown-it@14.1.2':
     resolution: {integrity: sha512-promo4eFwuiW+TfGxhi+0x3czqTYJkG8qB17ZUJiVF10Xm7NLVRSLUsfRTU/6h1e24VvRnXCx+hG7li58lkzog==}
@@ -7491,7 +7491,7 @@ snapshots:
 
   '@types/lint-staged@13.3.0': {}
 
-  '@types/mailparser@3.4.4':
+  '@types/mailparser@3.4.5':
     dependencies:
       '@types/node': 22.7.4
       iconv-lite: 0.6.3
