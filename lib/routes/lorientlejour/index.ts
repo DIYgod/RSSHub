@@ -47,7 +47,8 @@ export const route: Route = {
     maintainers: ['quiniapiezoelectricity'],
     handler,
     description: `  :::tip
-  For example, the path for the sites https://today.lorientlejour.com/section/977-lebanon and https://www.lorientlejour.com/rubrique/1-liban would be /lorientlejour/977-lebanon and /lorientlejour/1-liban respectively.
+For example, the path for the sites https://today.lorientlejour.com/section/977-lebanon and https://www.lorientlejour.com/rubrique/1-liban would be /lorientlejour/977-lebanon and /lorientlejour/1-liban respectively. 
+Multiple categories seperated by '|' is also supported, e.g. /lorientlejour/977-lebanon|1-liban.
   :::`,
     radar: [
         {
@@ -70,10 +71,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.param('category') ?? '977-Lebanon';
-    const limit = ctx.req.param('limit') ?? 25;
-
-    const categoryId = category.match(/^(\d+)/i)[0] ?? category;
+    const categoryId = (ctx.req.param('category') ?? '977-Lebanon').split('|').map((item) => item.match(/^(\d+)/i)[0] ?? item);
+    const limit = ctx.req.query('limit') ?? 25;
 
     const key = '3d5_f6A(S$G_FD=2S(Dr6%7BW_h37@rE';
 
@@ -102,34 +101,38 @@ async function handler(ctx) {
         }
     }
 
-    let categoryUrl = `https://www.lorientlejour.com/cmsapi/categories.php?key=${key}&action=view&categoryId=${categoryId}`;
-    if (token) {
-        categoryUrl = categoryUrl + `&token=${token}`;
-    }
-    const categoryResponse = await cache.tryGet(
-        categoryUrl,
-        async () =>
-            await got({
-                method: 'get',
-                url: categoryUrl,
-            }),
-        config.cache.routeExpire,
-        false
-    );
-    const categoryInfo = categoryResponse.data.data[0];
+    let title = `L'Orient Le Jour/L'Orient Today`;
+    let description = '';
+    let link = 'https://www.lorientlejour.com';
     let language = '';
-    if (categoryInfo.typeId.locale) {
-        language = categoryInfo.typeId.locale;
-    }
-    if (language === '') {
-        language = categoryInfo.typeId.name === 'English' ? 'en-US' : 'fr-FR';
-    }
-    let title = `L'Orient Le Jour`;
-    if (language === 'en-US') {
-        title = `L'Orient Today`;
+
+    if (categoryId.length === 1) {
+        let categoryUrl = `https://www.lorientlejour.com/cmsapi/categories.php?key=${key}&action=view&categoryId=${categoryId[0]}`;
+        if (token) {
+            categoryUrl = categoryUrl + `&token=${token}`;
+        }
+        const categoryResponse = await cache.tryGet(
+            categoryUrl,
+            async () =>
+                await got({
+                    method: 'get',
+                    url: categoryUrl,
+                }),
+            config.cache.routeExpire,
+            false
+        );
+        const categoryInfo = categoryResponse.data.data[0];
+        if (categoryInfo.typeId.locale) {
+            language = categoryInfo.typeId.locale;
+        } else {
+            language = categoryInfo.typeId.name === 'English' ? 'en-US' : 'fr-FR';
+        }
+        title = language === 'en-US' ? `L'Orient Today - ${categoryInfo.name}` : `L'Orient Le Jour - ${categoryInfo.name}`;
+        description = categoryInfo.description;
+        link = categoryInfo.url;
     }
 
-    let url = `https://www.lorientlejour.com/cmsapi/content.php?text=clean&key=${key}&action=search&category=${categoryId}&limit=${limit}&text=false&page=1&includeSubcategories=1`;
+    let url = `https://www.lorientlejour.com/cmsapi/content.php?text=clean&key=${key}&action=search&category=${encodeURIComponent(JSON.stringify(categoryId))}&limit=${limit}&text=false&page=1&includeSubcategories=1`;
     if (token) {
         url = url + `&token=${token}`;
     }
@@ -164,10 +167,10 @@ async function handler(ctx) {
     });
 
     return {
-        title: `${title} - ${categoryInfo.name}`,
-        description: categoryInfo.description,
+        title,
+        description,
         language,
-        link: categoryInfo.url,
+        link,
         item: items,
     };
 }
