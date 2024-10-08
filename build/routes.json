@@ -42758,6 +42758,79 @@
     "name": "LA UOSC社区",
     "url": "loongarch.org"
   },
+  "lorientlejour": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/lorientlejour/977-lebanon",
+        "parameters": {
+          "category": "Category from the last segment of the URL of the corresponding site, see below for more information, /977-Lebanon by default"
+        },
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "requireConfig": [
+            {
+              "name": "LORIENTLEJOUR_USERNAME",
+              "optional": true,
+              "description": "L'Orient-Le Jour/L'Orient Today Email or Username"
+            },
+            {
+              "name": "LORIENTLEJOUR_PASSWORD",
+              "optional": true,
+              "description": "L'Orient-Le Jour/L'Orient Today Password"
+            },
+            {
+              "name": "LORIENTLEJOUR_TOKEN",
+              "optional": true,
+              "description": "To obtain a token, log into L'Orient-Le Jour/L'Orient Today App and inspect the connection request to find the token parameter from the request URL"
+            }
+          ]
+        },
+        "name": "Category",
+        "maintainers": [
+          "quiniapiezoelectricity"
+        ],
+        "description": "  :::tip\n  For example, the path for the sites https://today.lorientlejour.com/section/977-lebanon and https://www.lorientlejour.com/rubrique/1-liban would be /lorientlejour/977-lebanon and /lorientlejour/1-liban respectively.\n  :::",
+        "radar": [
+          {
+            "source": [
+              "www.lorientlejour.com/*/:category"
+            ],
+            "target": "/:category"
+          },
+          {
+            "source": [
+              "www.lorientlejour.com"
+            ],
+            "target": "/1-Liban"
+          },
+          {
+            "source": [
+              "today.lorientlejour.com/*/:category"
+            ],
+            "target": "/:category"
+          },
+          {
+            "source": [
+              "today.lorientlejour.com"
+            ],
+            "target": "/977-Lebanon"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "L'Orient-Le Jour/L'Orient Today",
+    "url": "lorientlejour.com",
+    "description": "RSS feed for the Lebanon-based French-language newspaper L'Orient-Le Jour and its English edition L'Orient Today"
+  },
   "lovelive-anime": {
     "routes": {
       "/news/:abbr?/:category?/:option?": {
