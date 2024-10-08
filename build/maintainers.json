@@ -2969,7 +2969,7 @@
   "/hellobtc/news": [
     "Fatpandac"
   ],
-  "/hellogithub/article/:sort?/:id?": [
+  "/hellogithub/home/:sort?/:id?": [
     "moke8",
     "nczitzk"
   ],

@@ -32488,16 +32488,16 @@
   },
   "hellogithub": {
     "routes": {
-      "/article/:sort?/:id?": {
+      "/home/:sort?/:id?": {
         "path": [
-          "/article/:sort?/:id?"
+          "/home/:sort?/:id?"
         ],
         "categories": [
           "programming"
         ],
-        "example": "/hellogithub/article",
+        "example": "/hellogithub/home",
         "parameters": {
-          "sort": "排序方式，见下表，默认为 `hot`，即热门",
+          "sort": "排序方式，见下表，默认为 `featured`，即精选",
           "id": "标签 id，可在对应标签页 URL 中找到，默认为全部标签"
         },
         "features": {
@@ -32508,12 +32508,12 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "文章",
+        "name": "开源项目",
         "maintainers": [
           "moke8",
           "nczitzk"
         ],
-        "description": "| 热门 | 最近 |\n  | ---- | ---- |\n  | hot  | last |",
+        "description": "| 精选 | 全部 |\n  | ---- | ---- |\n  | featured  | all |",
         "location": "index.ts"
       },
       "/ranking/:type?": {
