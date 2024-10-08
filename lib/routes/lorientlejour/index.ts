@@ -10,6 +10,8 @@ import path from 'node:path';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
+const __dirname = getCurrentPath(import.meta.url);
+
 export const route: Route = {
     path: '/:category?',
     categories: ['traditional-media'],
@@ -71,10 +73,7 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? '977-Lebanon';
     const limit = ctx.req.param('limit') ?? 25;
 
-    const __dirname = getCurrentPath(import.meta.url);
-
-    const regex = /^(\d+)/i;
-    const categoryId = category.match(regex)[0] ?? category;
+    const categoryId = category.match(/^(\d+)/i)[0] ?? category;
 
     const key = '3d5_f6A(S$G_FD=2S(Dr6%7BW_h37@rE';
 
