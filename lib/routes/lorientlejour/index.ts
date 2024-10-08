@@ -81,15 +81,13 @@ async function handler(ctx) {
     const cacheIn = await cache.get('lorientlejour:token');
     if (cacheIn) {
         token = cacheIn;
-    }
-    if (token === undefined && config.lorientlejour.username && config.lorientlejour.password) {
+    } else if (config.lorientlejour.token) {
+        token = config.lorientlejour.token;
+        cache.set('lorientlejour:token', token);
+    } else if (config.lorientlejour.username && config.lorientlejour.password) {
         const loginUrl = `https://www.lorientlejour.com/cmsapi/visitors.php?key=${key}&action=login&loginName=${config.lorientlejour.username}&password=${config.lorientlejour.password}`;
         const loginResponse = await got(loginUrl);
         token = loginResponse.data.data.token;
-        cache.set('lorientlejour:token', token);
-    }
-    if (token === undefined && config.lorientlejour.token) {
-        token = config.lorientlejour.token;
         cache.set('lorientlejour:token', token);
     }
 
