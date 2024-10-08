@@ -3181,6 +3181,9 @@
   "/hust/gs/:category{.+}?": [
     "nczitzk"
   ],
+  "/hust/mse/:category{.+}?": [
+    "nczitzk"
+  ],
   "/hust/yjs": [
     "shengmaosu"
   ],
