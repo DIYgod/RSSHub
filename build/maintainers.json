@@ -4240,8 +4240,7 @@
     "pseudoyu"
   ],
   "/natgeo/dailyselection": [
-    "OrangeEd1t",
-    "pseudoyu"
+    "OrangeEd1t"
   ],
   "/natgeo/:cat/:type?": [
     "fengkx"

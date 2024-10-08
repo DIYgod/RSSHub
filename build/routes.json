@@ -47879,8 +47879,7 @@
       "/dailyphoto": {
         "path": "/dailyphoto",
         "categories": [
-          "picture",
-          "popular"
+          "picture"
         ],
         "view": 2,
         "example": "/natgeo/dailyphoto",
@@ -47934,8 +47933,7 @@
           }
         ],
         "maintainers": [
-          "OrangeEd1t",
-          "pseudoyu"
+          "OrangeEd1t"
         ],
         "location": "dailyselection.ts"
       },
