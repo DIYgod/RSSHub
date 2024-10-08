@@ -52721,8 +52721,7 @@
       "/daily_briefing_chinese": {
         "path": "/daily_briefing_chinese",
         "categories": [
-          "traditional-media",
-          "popular"
+          "traditional-media"
         ],
         "example": "/nytimes/daily_briefing_chinese",
         "parameters": {},
