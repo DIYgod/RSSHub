@@ -8329,7 +8329,7 @@
         docs:"https://docs.rsshub.app/routes/journal",
         source:[ "/" ],
         target:"/nymity/censorbib" } ] },
-  "nytimes.com":{ _name:"The New York Times 纽约时报",
+  "nytimes.com":{ _name:"纽约时报中文网",
     ".":[ { title:"Best Seller Books",
         docs:"https://docs.rsshub.app/routes/traditional-media",
         source:[ "/" ],
