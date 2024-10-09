@@ -176,7 +176,7 @@
         "eslint-plugin-unicorn": "56.0.0",
         "eslint-plugin-yml": "1.14.0",
         "fs-extra": "11.2.0",
-        "globals": "15.10.0",
+        "globals": "15.11.0",
         "got": "14.4.3",
         "husky": "9.1.6",
         "js-beautify": "1.15.1",
