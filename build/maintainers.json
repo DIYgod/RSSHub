@@ -434,7 +434,8 @@
     "maple3142"
   ],
   "/apnews/api/:tags?": [
-    "dzx-dzx"
+    "dzx-dzx",
+    "pseudoyu"
   ],
   "/apnews/rss/:category?": [
     "zoenglinghou",
