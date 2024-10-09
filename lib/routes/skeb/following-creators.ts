@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { processCreatorItem, baseUrl } from './utils';
+import { processCreator, baseUrl } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
@@ -58,7 +58,7 @@ async function handler(ctx): Promise<Data> {
             },
         });
 
-        return data.following_creators.map((item) => processCreatorItem(item)).filter(Boolean);
+        return data.following_creators.map((item) => processCreator(item)).filter(Boolean);
     });
 
     return {

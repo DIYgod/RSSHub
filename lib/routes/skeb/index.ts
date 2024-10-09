@@ -1,7 +1,7 @@
 import { Route, Data, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
-import { baseUrl, processWorkItem, processCreatorItem } from './utils';
+import { baseUrl, processWork, processCreator } from './utils';
 
 const categoryMap = {
     // Works categories
@@ -124,7 +124,7 @@ async function handler(ctx): Promise<Data> {
 
         const items: DataItem[] = [];
         if (category in data && Array.isArray(data[category])) {
-            const processItem = workCategories.has(category) ? processWorkItem : processCreatorItem;
+            const processItem = workCategories.has(category) ? processWork : processCreator;
             items.push(...(data[category].map((item) => processItem(item)).filter(Boolean) as DataItem[]));
         }
 

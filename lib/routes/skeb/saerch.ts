@@ -1,7 +1,7 @@
 import { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { processWorkItem, baseUrl } from './utils';
+import { processWork, baseUrl } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
@@ -66,7 +66,7 @@ async function handler(ctx): Promise<Data> {
             throw new TypeError('Invalid hits data received from API');
         }
 
-        return works.map((item) => processWorkItem(item)).filter(Boolean);
+        return works.map((item) => processWork(item)).filter(Boolean);
     });
 
     return {

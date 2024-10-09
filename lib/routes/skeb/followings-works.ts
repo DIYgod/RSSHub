@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { processWorkItem, baseUrl } from './utils';
+import { processWork, baseUrl } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
@@ -58,7 +58,7 @@ async function handler(ctx): Promise<Data> {
             },
         });
 
-        return data.following_works.map((item) => processWorkItem(item)).filter(Boolean);
+        return data.following_works.map((item) => processWork(item)).filter(Boolean);
     });
 
     return {
