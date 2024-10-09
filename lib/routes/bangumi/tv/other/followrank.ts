@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: '成员关注榜',
-    maintainers: ['honue', 'zhoukuncheng'],
+    maintainers: ['honue', 'zhoukuncheng', 'NekoAria'],
     handler,
 };
 
