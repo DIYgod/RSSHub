@@ -590,7 +590,8 @@
   ],
   "/bangumi/:type/followrank": [
     "honue",
-    "zhoukuncheng"
+    "zhoukuncheng",
+    "NekoAria"
   ],
   "/bangumi/tv/person/:id": [
     "ylc395"

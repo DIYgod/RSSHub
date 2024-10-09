@@ -6399,7 +6399,7 @@
         ],
         "example": "/bangumi/anime/followrank",
         "parameters": {
-          "type": "类型：anime - 动画, book - 图书, music - 音乐, game - 游戏, real - 三次元"
+          "type": "类型：anime - 动画，book - 图书，music - 音乐，game - 游戏，real - 三次元"
         },
         "features": {
           "requireConfig": false,
@@ -6420,7 +6420,8 @@
         "name": "成员关注榜",
         "maintainers": [
           "honue",
-          "zhoukuncheng"
+          "zhoukuncheng",
+          "NekoAria"
         ],
         "location": "tv/other/followrank.ts"
       },
