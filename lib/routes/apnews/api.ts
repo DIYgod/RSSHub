@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/api/:tags?',
-    categories: ['traditional-media'],
+    categories: ['traditional-media', 'popular'],
     example: '/apnews/api/business',
     view: ViewType.Articles,
     parameters: {
