@@ -1,7 +1,0 @@
-# https://docs.netlify.com/routing/redirects/redirect-options
-
-# symlink logo
-/logo.png /img/logo.png 200
-
-# redirect all zh browser language request to homepage to /zh/
-/* /zh/:splat 302 Language=zh

@@ -4,9 +4,6 @@ on:
   issue_comment:
     types: [created]
 
-permissions:
-  contents: read
-
 jobs:
   rebase:
     name: Automatic Rebase
@@ -24,7 +21,7 @@ jobs:
       - name: Automatic Rebase
         uses: cirrus-actions/rebase@1.8
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_SUPER }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   self-assign:
     name: Self Assign
@@ -32,7 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: read
       issues: write
     steps:
       - uses: bdougie/take-action@v1.6.1
@@ -46,16 +42,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: read
       issues: write
+      attestations: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 8
+        uses: pnpm/action-setup@v4
 
       - name: Use Node.js Active LTS
         uses: actions/setup-node@v4
@@ -77,8 +71,12 @@ jobs:
             const body = event.comment.body
             const number = event.issue.number
             const sender = event.comment.user.login
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
-            return script({ github, context, core }, body, number, sender)
+            const { default: identify } = await import('${{ github.workspace }}/scripts/workflow/test-route/identify.mjs')
+            return identify({ github, context, core }, body, number, sender)
+
+      - name: Build RSSHub
+        if: env.TEST_CONTINUE
+        run: pnpm build
 
       - name: Start RSSHub
         if: env.TEST_CONTINUE
@@ -103,9 +101,8 @@ jobs:
             const routes = JSON.parse(process.env.TEST_ROUTES)
             const number = event.issue.number
             core.info(`${link}, ${routes}, ${number}`)
-            const got = require("got")
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
-            return script({ github, context, core, got }, link, routes, number)
+            const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
+            await test({ github, context, core }, link, routes, number)
 
       - name: Print logs
         if: (env.TEST_CONTINUE)

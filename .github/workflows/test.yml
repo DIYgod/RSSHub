@@ -5,21 +5,42 @@ on:
     branches-ignore:
       - 'dependabot/**'
     paths:
-      - 'test/**'
       - 'lib/**'
-      - '!**/maintainer.js'
-      - '!**/radar.js'
-      - '!**/radar-rules.js'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - '.github/workflows/test.yml'
   pull_request: {}
 
 permissions:
-  contents: read
+  checks: write
 
 jobs:
-  jest:
+  fix-pnpm-lock:
+    # workaround for https://github.com/dependabot/dependabot-core/issues/7258
+    # until https://github.com/pnpm/pnpm/issues/6530 is fixed
+    if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'pnpm'
+      - run: |
+          rm pnpm-lock.yaml
+          pnpm i
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: fix pnpm install'
+          commit_user_name: dependabot[bot]
+          commit_user_email: 49699333+dependabot[bot]@users.noreply.github.com
+          commit_author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+
+  vitest:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -31,13 +52,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20, 21 ]
-    name: Jest on Node ${{ matrix.node-version }}
+        node-version: [ 20, 22 ]
+    name: Vitest on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
@@ -46,8 +65,10 @@ jobs:
         run: pnpm i
       - name: Run postinstall script for dependencies
         run: pnpm rb
+      - name: Build routes
+        run: pnpm build
       - name: Test all and generate coverage
-        run: pnpm run jest:coverage
+        run: pnpm run vitest:coverage --reporter=github-actions
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
@@ -62,31 +83,34 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20, 21 ]
+        node-version: [ 20, 22 ]
         chromium:
           - name: bundled Chromium
             dependency: ''
-            environment: '{}'
+            environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "0" }'
           - name: Chromium from Ubuntu
             dependency: chromium-browser
-            environment: '{ "CHROMIUM_EXECUTABLE_PATH": "chromium-browser" }'
+            environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
           - name: Chrome from Google
             dependency: google-chrome-stable
-            environment: '{ "CHROMIUM_EXECUTABLE_PATH": "google-chrome-stable" }'
-    name: Jest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
+            environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
+    name: Vitest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - name: Install dependencies (pnpm)
         run: pnpm i
+        env: ${{ fromJSON(matrix.chromium.environment) }}
       - name: Run postinstall script for dependencies
         run: pnpm rb
+        env: ${{ fromJSON(matrix.chromium.environment) }}
+      - name: Build routes
+        run: pnpm build
+        env: ${{ fromJSON(matrix.chromium.environment) }}
       - name: Install Chromium
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
@@ -94,7 +118,7 @@ jobs:
         # That's not really a problem since the Chromium-bundled Docker image is based on Debian bookworm,
         # which provides up-to-date native packages.
         run: |
-          set -ex
+          set -eux
           curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
             sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
           echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
@@ -102,59 +126,41 @@ jobs:
           sudo apt-get update
           sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
       - name: Test puppeteer
-        run: pnpm run jest puppeteer
+        run: |
+          set -eux
+          export CHROMIUM_EXECUTABLE_PATH="$(which ${{ matrix.chromium.dependency }})"
+          pnpm run vitest puppeteer
         env: ${{ fromJSON(matrix.chromium.environment) }}
-
-  docs:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [ 18, 20, 21 ]
-    defaults:
-      run:
-        working-directory: website
-    name: Build docs on Node ${{ matrix.node-version }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: website/pnpm-lock.yaml
-      - run: pnpm i
-      - name: Build docs
-        run: pnpm run build
-        working-directory: website
 
   all:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      attestations: write
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20, 21 ]
+        node-version: [ 20, 22 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - run: pnpm i
       - name: Build radar and maintainer
-        run: npm run build:all
+        run: npm run build
+      - name: Upload assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-assets-${{ matrix.node-version }}
+          path: assets/build/
 
   automerge:
     if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
-    needs: [ jest, puppeteer, docs, all ]
+    needs: [ vitest, puppeteer, all ]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write

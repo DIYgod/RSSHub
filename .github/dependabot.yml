@@ -4,64 +4,19 @@ updates:
     directory: '/'
     schedule:
       interval: daily
-      time: '21:00'
-    open-pull-requests-limit: 10
+      time: '08:00'
+    open-pull-requests-limit: 100
     labels:
       - dependencies
     ignore:
       - dependency-name: jsrsasign
         versions: ['>=11.0.0'] # no longer includes KJUR.crypto.Cipher for RSA
-      # ESM only packages
-      - dependency-name: fanfou-sdk
-        versions: ['>=5.0.0']
-      - dependency-name: got
-        versions: ['>=12.0.0']
-      - dependency-name: ip-regex
-        versions: ['>=5.0.0']
-      - dependency-name: query-string
-        versions: ['>=8.0.0']
-      - dependency-name: rand-user-agent
-        versions: ['>=2.0.1']
-      - dependency-name: remark-parse
-        versions: ['>=10.0.0']
-      - dependency-name: remark-preset-prettier
-        versions: ['>=1.0.0']
-      - dependency-name: unified
-        versions: ['>=10.0.0']
-      # remark-custom-heading-id is not updated to
-      # the latest mdast/mdxast which is released from
-      # the second half of 2023
-      - dependency-name: remark
-        versions: ['>=15.0.0']
-      - dependency-name: remark-frontmatter
-        versions: ['>=5.0.0']
-      - dependency-name: remark-gfm
-        versions: ['>=4.0.0']
-      - dependency-name: remark-mdx
-        versions: ['>=3.0.0']
-      - dependency-name: unist-util-visit
-        versions: ['>=5.0.0']
-      - dependency-name: unist-util-visit-parents
-        versions: ['>=6.0.0']
-
-  - package-ecosystem: npm
-    directory: '/website'
-    schedule:
-      interval: daily
-      time: '21:00'
-    open-pull-requests-limit: 10
-    labels:
-      - dependencies
-    groups:
-      docusaurus:
-        patterns:
-          - '@docusaurus/*'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: daily
-      time: '21:00'
-    open-pull-requests-limit: 10
+      time: '08:00'
+    open-pull-requests-limit: 100
     labels:
       - dependencies
