@@ -11,6 +11,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
 const __dirname = getCurrentPath(import.meta.url);
+const key = '3d5_f6A(S$G_FD=2S(Dr6%7BW_h37@rE';
 
 export const route: Route = {
     path: '/:category?',
@@ -70,11 +71,24 @@ Multiple categories seperated by '|' is also supported, e.g. /lorientlejour/977-
     ],
 };
 
+async function viewCategory(category: string) {
+    const url = `https://www.lorientlejour.com/cmsapi/categories.php?key=${key}&action=view&categoryId=${category}`;
+    const response = await cache.tryGet(
+        url,
+        async () =>
+            await got({
+                method: 'get',
+                url,
+            }),
+        config.cache.routeExpire,
+        false
+    );
+    return response.data.data[0];
+}
+
 async function handler(ctx) {
     const categoryId = (ctx.req.param('category') ?? '977-Lebanon').split('|').map((item) => item.match(/^(\d+)/i)[0] ?? item);
     const limit = ctx.req.query('limit') ?? 25;
-
-    const key = '3d5_f6A(S$G_FD=2S(Dr6%7BW_h37@rE';
 
     let token;
     const cacheIn = await cache.get('lorientlejour:token');
@@ -107,21 +121,7 @@ async function handler(ctx) {
     let language = '';
 
     if (categoryId.length === 1) {
-        let categoryUrl = `https://www.lorientlejour.com/cmsapi/categories.php?key=${key}&action=view&categoryId=${categoryId[0]}`;
-        if (token) {
-            categoryUrl = categoryUrl + `&token=${token}`;
-        }
-        const categoryResponse = await cache.tryGet(
-            categoryUrl,
-            async () =>
-                await got({
-                    method: 'get',
-                    url: categoryUrl,
-                }),
-            config.cache.routeExpire,
-            false
-        );
-        const categoryInfo = categoryResponse.data.data[0];
+        const categoryInfo = await viewCategory(categoryId[0]);
         if (categoryInfo.typeId.locale) {
             language = categoryInfo.typeId.locale;
         } else {
@@ -132,7 +132,17 @@ async function handler(ctx) {
         link = categoryInfo.url;
     }
 
-    let url = `https://www.lorientlejour.com/cmsapi/content.php?text=clean&key=${key}&action=search&category=${encodeURIComponent(JSON.stringify(categoryId))}&limit=${limit}&text=false&page=1&includeSubcategories=1`;
+    const subcategories = await Promise.all(
+        categoryId.map(async (id) => {
+            // get all subcategories of the selected category
+            const contents = await viewCategory(id);
+            return contents.children.map((child) => child.id);
+        })
+    );
+    const categoriesParam = [...new Set([...categoryId, ...subcategories.flat()])];
+    // merge all subcategories with the selected categories to get all contents of the selected category and its subcategories
+
+    let url = `https://www.lorientlejour.com/cmsapi/content.php?text=clean&key=${key}&action=search&category=${encodeURIComponent(JSON.stringify(categoriesParam))}&limit=${limit}&text=false&page=1`;
     if (token) {
         url = url + `&token=${token}`;
     }
