@@ -1,4 +1,7 @@
+import { config } from '@/config';
 import { DataItem } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
 export const baseUrl = 'https://skeb.jp';
 
@@ -76,4 +79,30 @@ export function processCreator(creator: Creator): DataItem | null {
         link: `${baseUrl}/@${creator.screen_name || ''}`,
         description: creator.avatar_url ? `<img src="${creator.avatar_url}" />` : '',
     };
+}
+
+export async function getFollowingsItems(username: string, path: 'friend_works' | 'following_works' | 'following_creators'): Promise<DataItem[]> {
+    const url = `${baseUrl}/api/users/${username.replace('@', '')}/followings`;
+
+    const followings_data = await cache.tryGet(
+        `skeb:followings_data:${username}`,
+        async () => {
+            const data = await ofetch(url, {
+                headers: {
+                    Authorization: `Bearer ${config.skeb.bearer_token}`,
+                },
+            });
+            return data;
+        },
+        config.cache.routeExpire
+    );
+
+    if (!followings_data || typeof followings_data !== 'object') {
+        throw new Error('Failed to fetch followings data');
+    }
+
+    if (path === 'following_creators') {
+        return followings_data[path].map((item) => processCreator(item)).filter(Boolean) as DataItem[];
+    }
+    return followings_data[path].map((item) => processWork(item)).filter(Boolean) as DataItem[];
 }

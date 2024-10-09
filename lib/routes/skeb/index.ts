@@ -2,6 +2,7 @@ import { Route, Data, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import { baseUrl, processWork, processCreator } from './utils';
+import { config } from '@/config';
 
 const categoryMap = {
     // Works categories
@@ -115,20 +116,26 @@ async function handler(ctx): Promise<Data> {
 
     const url = `${baseUrl}/api`;
 
+    const apiData = await cache.tryGet(
+        url,
+        async () => {
+            const data = await ofetch(url);
+            return data;
+        },
+        config.cache.routeExpire
+    );
+
+    if (!apiData || typeof apiData !== 'object') {
+        throw new Error('Invalid data received from API');
+    }
+
     const items = await cache.tryGet(category, async () => {
-        const data = await ofetch(url, { parseResponse: JSON.parse });
-
-        if (!data || typeof data !== 'object') {
-            throw new Error('Invalid data received from API');
+        if (!(category in apiData) || !Array.isArray(apiData[category])) {
+            return [];
         }
 
-        const items: DataItem[] = [];
-        if (category in data && Array.isArray(data[category])) {
-            const processItem = workCategories.has(category) ? processWork : processCreator;
-            items.push(...(data[category].map((item) => processItem(item)).filter(Boolean) as DataItem[]));
-        }
-
-        return items;
+        const processItem = workCategories.has(category) ? processWork : processCreator;
+        return (await Promise.all(apiData[category].map(async (item) => await processItem(item)).filter(Boolean))) as DataItem[];
     });
 
     return {

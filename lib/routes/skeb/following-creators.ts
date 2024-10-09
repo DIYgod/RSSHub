@@ -1,9 +1,7 @@
 import { Data, DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { processCreator, baseUrl } from './utils';
+import { getFollowingsItems } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
@@ -49,17 +47,7 @@ async function handler(ctx): Promise<Data> {
         throw new ConfigNotFoundError('Skeb followings RSS is disabled due to the lack of relevant config');
     }
 
-    const url = `${baseUrl}/api/users/${username.replace('@', '')}/followings`;
-
-    const items = await cache.tryGet(`following_creators:${username}`, async () => {
-        const data = await ofetch(url, {
-            headers: {
-                Authorization: `Bearer ${config.skeb.bearer_token}`,
-            },
-        });
-
-        return data.following_creators.map((item) => processCreator(item)).filter(Boolean);
-    });
+    const items = await getFollowingsItems(username, 'following_creators');
 
     return {
         title: `Skeb - ${username} - フォロー中のクリエイター`,
