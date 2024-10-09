@@ -111,7 +111,7 @@
         "puppeteer-extra-plugin-stealth": "2.11.2",
         "puppeteer-extra-plugin-user-data-dir": "2.4.1",
         "puppeteer-extra-plugin-user-preferences": "2.4.1",
-        "query-string": "9.1.0",
+        "query-string": "9.1.1",
         "rate-limiter-flexible": "5.0.3",
         "re2js": "0.4.2",
         "rfc4648": "1.5.3",
