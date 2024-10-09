@@ -8274,7 +8274,7 @@
         docs:"https://docs.rsshub.app/routes/university",
         source:[ "/:type/list.htm" ],
         target:"/neu/news/:type" } ] },
-  "news.cn":{ _name:"小黑盒",
+  "news.cn":{ _name:"新华社",
     ".":[ { title:"新华社新闻",
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/xhsxw.htm" ],
