@@ -57,7 +57,7 @@ async function handler(ctx) {
                 description: `<img src="${imageUrl}"><br>${info}`,
             };
         })
-        .get();
+        .toArray();
 
     const RANK_TYPES = {
         tv: '动画',
