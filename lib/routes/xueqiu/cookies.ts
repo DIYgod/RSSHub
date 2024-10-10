@@ -23,7 +23,7 @@ export const parseToken = () =>
             const cookieArray = res.headers.getSetCookie();
             const xq_a_token_cookie = cookieArray.find((c) => c.startsWith('xq_a_token='));
 
-            return `${acw_sc__v2_cookie};${xq_a_token_cookie}`;
+            return `${acw_sc__v2_cookie}; ${xq_a_token_cookie}`;
         },
         config.cache.routeExpire,
         false
