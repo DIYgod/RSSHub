@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -8,7 +8,8 @@ export const route: Route = {
         mediaid: '番剧媒体 id, 番剧主页 URL 中获取',
     },
     example: '/bilibili/bangumi/media/9192',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.Videos,
     maintainers: ['DIYgod'],
     handler,
 };

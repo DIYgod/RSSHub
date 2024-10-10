@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import utils from './utils';
 import { config } from '@/config';
@@ -7,7 +7,8 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/playlist/:id/:embed?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.Videos,
     example: '/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z',
     parameters: { id: 'YouTube playlist id', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {

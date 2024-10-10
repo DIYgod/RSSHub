@@ -25,10 +25,7 @@ export interface UserInfoResponse {
 }
 
 export interface PostListResponse {
-    body: {
-        items: PostItem[];
-        nextUrl: string | null;
-    };
+    body: PostItem[];
 }
 
 export interface PostDetailResponse {
@@ -88,7 +85,6 @@ interface BasicPost {
                 userId: string;
             };
         }[];
-        nextUrl: string | null;
     };
     coverImageUrl: string | null;
     creatorId: string;

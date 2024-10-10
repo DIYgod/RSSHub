@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -7,7 +7,8 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/category/:caty',
-    categories: ['multimedia'],
+    categories: ['multimedia', 'popular'],
+    view: ViewType.Videos,
     example: '/pornhub/category/popular-with-women',
     parameters: { caty: 'category, see [categories](https://www.pornhub.com/webmasters/categories)' },
     features: {

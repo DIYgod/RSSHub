@@ -26,7 +26,7 @@ const colorStatus = (status: number) => {
 };
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
-    const { method, raw } = ctx.req;
+    const { method, raw, routePath } = ctx.req;
     const path = getPath(raw);
 
     logger.info(`${LogPrefix.Incoming} ${method} ${path}`);
@@ -38,7 +38,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const status = ctx.res.status;
 
     logger.info(`${LogPrefix.Outgoing} ${method} ${path} ${colorStatus(status)} ${time(start)}`);
-    requestMetric.success(Date.now() - start, { path, method, status });
+    requestMetric.success(Date.now() - start, { path: routePath, method, status });
 };
 
 export default middleware;

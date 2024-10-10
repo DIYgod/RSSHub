@@ -29,12 +29,19 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
+    // 知乎专栏链接存在两种格式, 一种以 'zhuanlan.' 开头, 另一种新增的以 'c_' 结尾
+    let url = `https://zhuanlan.zhihu.com/${id}`;
+    if (id.search('c_') === 0) {
+        url = `https://www.zhihu.com/column/${id}`;
+    }
 
+    const signedHeader = await getSignedHeader(url, `https://www.zhihu.com/api/v4/columns/${id}/items`);
     const listRes = await got({
         method: 'get',
         url: `https://www.zhihu.com/api/v4/columns/${id}/items`,
         headers: {
             ...header,
+            ...signedHeader,
             Referer: `https://zhuanlan.zhihu.com/${id}`,
         },
     });
@@ -44,19 +51,13 @@ async function handler(ctx) {
         url: `https://www.zhihu.com/api/v4/columns/${id}/pinned-items`,
         headers: {
             ...header,
+            ...signedHeader,
             Referer: `https://zhuanlan.zhihu.com/${id}`,
         },
     });
 
     listRes.data.data = [...listRes.data.data, ...pinnedRes.data.data];
 
-    // 知乎专栏链接存在两种格式, 一种以 'zhuanlan.' 开头, 另一种新增的以 'c_' 结尾
-    let url = `https://zhuanlan.zhihu.com/${id}`;
-    if (id.search('c_') === 0) {
-        url = `https://www.zhihu.com/column/${id}`;
-    }
-
-    const signedHeader = await getSignedHeader(url, `https://www.zhihu.com/api/v4/columns/${id}/items`);
     const infoRes = await got(url, {
         headers: {
             ...signedHeader,

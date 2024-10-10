@@ -13,14 +13,39 @@ import { domain, processMeta, getMeta, processItems } from './util';
 
 export const route: Route = {
     path: '/news/:category{.+}?',
-    name: 'Unknown',
+    categories: ['university'],
+    example: '/whu/news',
+    parameters: { category: '新闻栏目，可选' },
+    name: '新闻网',
     maintainers: [],
     handler,
+    description: `
+category 参数可选，范围如下:
+
+| 新闻栏目 | 武大资讯 | 学术动态 | 珞珈影像 | 武大视频 |
+| -------- | -------- | -------- | -------- | -------- |
+| 参数     |  0 或 \`wdzx/wdyw\`  | 1 或 \`kydt\` | 2 或 \`stkj/ljyx\` | 3 或 \`stkj/wdsp\` |
+
+此外 route 后可以加上 \`?limit=n\` 的查询参数，表示只获取前 n 条新闻；如果不指定默认为 10。
+`,
+};
+
+const parseCategory = (category: string | number) => {
+    const outputs = ['wdzx/wdyw', 'kydt', 'stkj/ljyx', 'stkj/wdsp'];
+    if (['0', '1', '2', '3'].includes(category)) {
+        return outputs[category];
+    }
+    if (outputs.includes(category)) {
+        return category;
+    }
+    return 'wdzx/wdyw';
 };
 
 async function handler(ctx) {
-    const { category = 'wdzx/wdyw' } = ctx.req.param();
+    let { category } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+
+    category = parseCategory(category);
 
     const rootUrl = `https://news.${domain}`;
     const currentUrl = new URL(`${category}.htm`, rootUrl).href;

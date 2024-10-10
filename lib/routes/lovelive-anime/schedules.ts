@@ -9,20 +9,33 @@ const renderDescription = (desc) => art(path.join(__dirname, 'templates/schedule
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const route: Route = {
     path: '/schedules/:serie?/:category?',
-    name: 'Unknown',
-    maintainers: [],
+    parameters: {
+        serie: 'Love Live! Series sub-projects abbreviation, see the following table',
+        category: 'The official website lists the categories, see the following table for details',
+    },
+    name: 'Schedule',
+    example: '/lovelive-anime/schedules',
+    categories: ['anime'],
+    maintainers: ['axojhf'],
     handler,
+    description: `| Sub-project Name (not full name) | 全シリーズ              | Lovelive!  | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | ラブライブ！スクールアイドルミュージカル |
+| -------------------------------- | ----------------------- | ---------- | -------------------- | ------------------------------------------ | --------------------- | ---------------------------------------- |
+| \`serie\` parameter                | *No parameter* or \`all\` | \`lovelive\` | \`sunshine\`           | \`nijigasaki\`                               | \`superstar\`           | \`musical\`                                |
+
+| Category Name        | 全て                    | ライブ | イベント | 生配信    |
+| -------------------- | ----------------------- | ------ | -------- | --------- |
+| \`category\` parameter | *No parameter* or \`all\` | \`live\` | \`event\`  | \`haishin\` |`,
 };
 
 async function handler(ctx) {
-    dayjs.extend(utc);
-    dayjs.extend(timezone);
     const serie = ctx.req.param('serie');
     const category = ctx.req.param('category');
-    const rootUrl = `https://www.lovelive-anime.jp/common/api/calendar_list.php`;
+    const rootUrl = 'https://www.lovelive-anime.jp/common/api/calendar_list.php';
     const nowTime = dayjs();
     const dataPara = {
         year: nowTime.year(),
@@ -49,7 +62,6 @@ async function handler(ctx) {
             title,
             category,
             description: renderDescription({
-                title,
                 desc: item.event_dspdate,
                 startTime: eventStartDate,
                 endTime: eventEndDate,

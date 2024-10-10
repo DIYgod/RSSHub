@@ -18,16 +18,22 @@ const getUserData = (id) =>
                 }),
             });
         }
-        return twitterGot(`${baseUrl}${gqlMap.UserByScreenName}`, {
-            variables: JSON.stringify({
-                screen_name: id,
-                withSafetyModeUserFields: true,
-            }),
-            features: JSON.stringify(gqlFeatures.UserByScreenName),
-            fieldToggles: JSON.stringify({
-                withAuxiliaryUserLabels: false,
-            }),
-        });
+        return twitterGot(
+            `${baseUrl}${gqlMap.UserByScreenName}`,
+            {
+                variables: JSON.stringify({
+                    screen_name: id,
+                    withSafetyModeUserFields: true,
+                }),
+                features: JSON.stringify(gqlFeatures.UserByScreenName),
+                fieldToggles: JSON.stringify({
+                    withAuxiliaryUserLabels: false,
+                }),
+            },
+            {
+                allowNoAuth: true,
+            }
+        );
     });
 
 const cacheTryGet = async (_id, params, func) => {

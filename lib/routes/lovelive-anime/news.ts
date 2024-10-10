@@ -7,13 +7,20 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
+import ofetch from '@/utils/ofetch';
+import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/parse-date';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/description.art'), desc);
 
 export const route: Route = {
-    path: '/news/:option?',
+    path: '/news/:abbr?/:category?/:option?',
     categories: ['anime'],
     example: '/lovelive-anime/news',
-    parameters: { option: 'Crawl full text when `option` is `detail`.' },
+    parameters: {
+        abbr: 'The path to the Love Live series of sub-projects on the official website is detailed in the table below, `abbr` is `detail` when crawling the full text',
+        category: 'The official website lists the Topics category, `category` is `detail` when crawling the full text, other categories see the following table for details',
+        option: 'Crawl full text when `option` is `detail`.',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -24,45 +31,68 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.lovelive-anime.jp/', 'www.lovelive-anime.jp/news'],
+            source: ['www.lovelive-anime.jp/', 'www.lovelive-anime.jp/news/'],
             target: '/news',
         },
     ],
-    name: 'Love Live! Official Website Latest NEWS',
-    maintainers: ['axojhf'],
+    name: 'News',
+    maintainers: ['axojhf', 'zhaoweizhong'],
     handler,
     url: 'www.lovelive-anime.jp/',
+    description: `| Sub-project Name | All Projects | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 蓮ノ空女学院 | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
+  | -------------------------------- | -------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | ------------ | ---------------------------------------- |
+  | \`abbr\`parameter                  | <u>*No parameter*</u> | lovelive |     sunshine        | nijigasaki                                 | superstar              | hasunosora | yohane       | musical                                  |
+
+  | Category Name       | 全てのニュース        | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | キャンペーン | その他 |
+  | ------------------- | --------------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
+  | \`category\`parameter | <u>*No parameter*</u> | music    | anime_movie   | cast_movie      | theater | onair             | radio                 | event             | books  | goods  | game   | media    | local      | campaign  | other   |`,
 };
 
 async function handler(ctx) {
-    const rootUrl = 'https://www.lovelive-anime.jp/news/';
+    const abbr = ctx.req.param('abbr');
+    const category = ctx.req.param('category');
+    const option = ctx.req.param('option');
 
-    const response = await got(rootUrl);
+    const isDetail = abbr === 'detail' || category === 'detail' || option === 'detail';
+    let series = '';
+    let subcategory = '';
 
-    const $ = load(response.data);
+    if (abbr && abbr !== 'detail') {
+        series = abbr;
+        if (category && category !== 'detail') {
+            subcategory = category;
+        }
+    }
 
-    const pageFace = $('div.c-card.p-colum__box')
-        .map((_, item) => {
-            item = $(item);
+    const limit = 20;
 
-            return {
-                link: item.find('a.c-card__head').attr('href'),
-                pubDate: item.find('span.c-card__date').text(),
-                title: item.find('div.c-card__title').text(),
-                // description: `${item.find('div.c-card__title').text()}<br><img src="${item.find('a.c-card__head > div > figure > img').attr('src')}">`
-                description: renderDescription({
-                    title: item.find('div.c-card__title').text(),
-                    imglink: item.find('a.c-card__head > div > figure > img').attr('src'),
-                }),
-            };
-        })
-        .get();
+    let url = `https://www.lovelive-anime.jp/common/api/article_list.php?site=jp&ip=lovelive&limit=${limit}&data=`;
+    const params: { category: string[]; series?: string[]; subcategory?: string[] } = { category: ['NEWS'] };
+    if (series) {
+        params.series = [series];
+    }
+    if (subcategory) {
+        params.subcategory = [subcategory];
+    }
+    url += encodeURIComponent(JSON.stringify(params));
 
-    let items = pageFace;
+    const data = await ofetch(url);
 
-    if (ctx.req.param('option') === 'detail') {
+    const articles = data.data.article_list.map((item) => ({
+        title: item.title,
+        link: item.url,
+        description: renderDescription({
+            imglink: 'https://www.lovelive-anime.jp' + item.thumbnail,
+        }),
+        pubDate: timezone(parseDate(item.dspdate), +9),
+        category: item.categories.subcategory.map((category) => category.name),
+    }));
+
+    let items = articles;
+
+    if (isDetail) {
         items = await Promise.all(
-            pageFace.map((item) =>
+            articles.map((item) =>
                 cache.tryGet(item.link, async () => {
                     const detailResp = await got(item.link);
                     const $ = load(detailResp.data);
