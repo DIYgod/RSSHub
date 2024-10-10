@@ -393,6 +393,8 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             description,
             pubDate: parseDate(item.created_at),
             link,
+            urls: item.entities?.urls ?? [],
+
             guid: link.replace('x.com', 'twitter.com'),
             category,
             _extra:
