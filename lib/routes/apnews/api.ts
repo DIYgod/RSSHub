@@ -6,12 +6,27 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/api/:tags?',
-    categories: ['traditional-media'],
-    example: '/apnews/api/business',
+    categories: ['traditional-media', 'popular'],
+    example: '/apnews/api/apf-topnews',
     view: ViewType.Articles,
     parameters: {
         tags: {
-            description: 'Getting a list of articles from a public API based on tags. See https://github.com/kovidgoyal/calibre/blob/81666219718b5f57d56b149a7ac017cc2a76b931/recipes/ap.recipe#L43-L46',
+            description: 'Getting a list of articles from a public API based on tags.',
+            options: [
+                { value: 'apf-topnews', label: 'Top News' },
+                { value: 'apf-sports', label: 'Sports' },
+                { value: 'apf-politics', label: 'Politics' },
+                { value: 'apf-entertainment', label: 'Entertainment' },
+                { value: 'apf-usnews', label: 'US News' },
+                { value: 'apf-oddities', label: 'Oddities' },
+                { value: 'apf-Travel', label: 'Travel' },
+                { value: 'apf-technology', label: 'Technology' },
+                { value: 'apf-lifestyle', label: 'Lifestyle' },
+                { value: 'apf-business', label: 'Business' },
+                { value: 'apf-Health', label: 'Health' },
+                { value: 'apf-science', label: 'Science' },
+                { value: 'apf-intlnews', label: 'International News' },
+            ],
             default: 'apf-topnews',
         },
     },

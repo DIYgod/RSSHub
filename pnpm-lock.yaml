@@ -165,8 +165,8 @@ importers:
         specifier: 2.2.6
         version: 2.2.6
       ofetch:
-        specifier: 1.4.0
-        version: 1.4.0
+        specifier: 1.4.1
+        version: 1.4.1
       otplib:
         specifier: 12.0.1
         version: 12.0.1
@@ -178,22 +178,22 @@ importers:
         version: 2.5.3
       puppeteer:
         specifier: 22.6.2
-        version: 22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
+        version: 22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)
       puppeteer-extra:
         specifier: 3.3.6
-        version: 3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+        version: 3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10))
       puppeteer-extra-plugin-stealth:
         specifier: 2.11.2
-        version: 2.11.2(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)))
+        version: 2.11.2(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)))
       puppeteer-extra-plugin-user-data-dir:
         specifier: 2.4.1
-        version: 2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)))
+        version: 2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)))
       puppeteer-extra-plugin-user-preferences:
         specifier: 2.4.1
-        version: 2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)))
+        version: 2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)))
       query-string:
-        specifier: 9.1.0
-        version: 9.1.0
+        specifier: 9.1.1
+        version: 9.1.1
       rate-limiter-flexible:
         specifier: 5.0.3
         version: 5.0.3
@@ -275,7 +275,7 @@ importers:
         version: 3.1.0
       '@stylistic/eslint-plugin':
         specifier: 2.9.0
-        version: 2.9.0(eslint@9.12.0)(typescript@5.6.2)
+        version: 2.9.0(eslint@9.12.0)(typescript@5.6.3)
       '@types/aes-js':
         specifier: 3.1.4
         version: 3.1.4
@@ -344,10 +344,10 @@ importers:
         version: 10.0.0
       '@typescript-eslint/eslint-plugin':
         specifier: 8.8.1
-        version: 8.8.1(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.2))(eslint@9.12.0)(typescript@5.6.2)
+        version: 8.8.1(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)(typescript@5.6.3)
       '@typescript-eslint/parser':
         specifier: 8.8.1
-        version: 8.8.1(eslint@9.12.0)(typescript@5.6.2)
+        version: 8.8.1(eslint@9.12.0)(typescript@5.6.3)
       '@vercel/nft':
         specifier: 0.27.4
         version: 0.27.4
@@ -382,11 +382,11 @@ importers:
         specifier: 11.2.0
         version: 11.2.0
       globals:
-        specifier: 15.10.0
-        version: 15.10.0
+        specifier: 15.11.0
+        version: 15.11.0
       got:
-        specifier: 14.4.2
-        version: 14.4.2
+        specifier: 14.4.3
+        version: 14.4.3
       husky:
         specifier: 9.1.6
         version: 9.1.6
@@ -401,7 +401,7 @@ importers:
         version: 3.0.5
       msw:
         specifier: 2.4.3
-        version: 2.4.3(typescript@5.6.2)
+        version: 2.4.3(typescript@5.6.3)
       prettier:
         specifier: 3.3.3
         version: 3.3.3
@@ -412,14 +412,14 @@ importers:
         specifier: 7.0.0
         version: 7.0.0
       typescript:
-        specifier: 5.6.2
-        version: 5.6.2
+        specifier: 5.6.3
+        version: 5.6.3
       unified:
         specifier: 11.0.5
         version: 11.0.5
       vite-tsconfig-paths:
         specifier: 5.0.1
-        version: 5.0.1(typescript@5.6.2)(vite@5.4.8(@types/node@22.7.5))
+        version: 5.0.1(typescript@5.6.3)(vite@5.4.8(@types/node@22.7.5))
       vitest:
         specifier: 2.0.5
         version: 2.0.5(@types/node@22.7.5)(jsdom@25.0.1(bufferutil@4.0.8)(utf-8-validate@5.0.10))
@@ -3381,8 +3381,8 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@15.10.0:
-    resolution: {integrity: sha512-tqFIbz83w4Y5TCbtgjZjApohbuh7K9BxGYFm7ifwDR240tvdb7P9x+/9VvUKlmkPoiknoJtanI8UOrqxS3a7lQ==}
+  globals@15.11.0:
+    resolution: {integrity: sha512-yeyNSjdbyVaWurlwCpcA6XNBrHTMIeDdj0/hnvX/OLJ9ekOXYbLsLinH/MucQyGvNnXhidTdNhTtJaffL2sMfw==}
     engines: {node: '>=18'}
 
   globrex@0.1.2:
@@ -3407,8 +3407,8 @@ packages:
     resolution: {integrity: sha512-mThBblvlAF1d4O5oqyvN+ZxLAYwIJK7bpMxgYqPD9okW0C3qm5FFn7k811QrcuEBwaogR3ngOFoCfs6mRv7teQ==}
     engines: {node: '>=14.16'}
 
-  got@14.4.2:
-    resolution: {integrity: sha512-+Te/qEZ6hr7i+f0FNgXx/6WQteSM/QqueGvxeYQQFm0GDfoxLVJ/oiwUKYMTeioColWUTdewZ06hmrBjw6F7tw==}
+  got@14.4.3:
+    resolution: {integrity: sha512-iTC0Z87yxSijWTh/IpvGpwOhIQK7+GgWkYrMRoN/hB9qeRj9RPuLGODwevs0p5idUf7nrxCVa5IlOmK3b8z+KA==}
     engines: {node: '>=20'}
 
   graceful-fs@4.2.11:
@@ -4405,8 +4405,8 @@ packages:
     resolution: {integrity: sha512-IRZSRuzJiynemAXPYtPe5BoI/RESNYR7TYm50MC5Mqbd3Jmw5y790sErYw3V6SryFJD64b74qQQs9wn5Bg/k3g==}
     engines: {node: '>= 0.4'}
 
-  ofetch@1.4.0:
-    resolution: {integrity: sha512-MuHgsEhU6zGeX+EMh+8mSMrYTnsqJQQrpM00Q6QHMKNqQ0bKy0B43tk8tL1wg+CnsSTy1kg4Ir2T5Ig6rD+dfQ==}
+  ofetch@1.4.1:
+    resolution: {integrity: sha512-QZj2DfGplQAr2oj9KzceK9Hwz6Whxazmn85yYeVuS3u9XTMOGMRx0kO95MQ+vLsj/S/NwBDMMLU5hpxvI6Tklw==}
 
   on-exit-leak-free@2.1.2:
     resolution: {integrity: sha512-0eJJY6hXLGf1udHwfNftBqH+g73EU4B504nZeKpz1sYRKafAghwxEJunB2O7rDZkL4PGfsMVnTXZ2EjibbqcsA==}
@@ -4768,8 +4768,8 @@ packages:
     resolution: {integrity: sha512-hh2WYhq4fi8+b+/2Kg9CEge4fDPvHS534aOOvOZeQ3+Vf2mCFsaFBYj0i+iXcAq6I9Vzp5fjMFBlONvayDC1qg==}
     engines: {node: '>=6'}
 
-  query-string@9.1.0:
-    resolution: {integrity: sha512-t6dqMECpCkqfyv2FfwVS1xcB6lgXW/0XZSaKdsCNGYkqMO76AFiJEg4vINzoDKcZa6MS7JX+OHIjwh06K5vczw==}
+  query-string@9.1.1:
+    resolution: {integrity: sha512-MWkCOVIcJP9QSKU52Ngow6bsAWAPlPK2MludXvcrS2bGZSl+T1qX9MZvRIkqUIkGLJquMJHWfsT6eRqUpp4aWg==}
     engines: {node: '>=18'}
 
   querystringify@2.2.0:
@@ -5481,8 +5481,8 @@ packages:
   typedarray-to-buffer@3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
 
-  typescript@5.6.2:
-    resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
+  typescript@5.6.3:
+    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -7378,9 +7378,9 @@ snapshots:
 
   '@sindresorhus/is@7.0.1': {}
 
-  '@stylistic/eslint-plugin@2.9.0(eslint@9.12.0)(typescript@5.6.2)':
+  '@stylistic/eslint-plugin@2.9.0(eslint@9.12.0)(typescript@5.6.3)':
     dependencies:
-      '@typescript-eslint/utils': 8.8.1(eslint@9.12.0)(typescript@5.6.2)
+      '@typescript-eslint/utils': 8.8.1(eslint@9.12.0)(typescript@5.6.3)
       eslint: 9.12.0
       eslint-visitor-keys: 4.1.0
       espree: 10.2.0
@@ -7550,34 +7550,34 @@ snapshots:
       '@types/node': 22.7.5
     optional: true
 
-  '@typescript-eslint/eslint-plugin@8.8.1(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.2))(eslint@9.12.0)(typescript@5.6.2)':
+  '@typescript-eslint/eslint-plugin@8.8.1(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)(typescript@5.6.3)':
     dependencies:
       '@eslint-community/regexpp': 4.11.1
-      '@typescript-eslint/parser': 8.8.1(eslint@9.12.0)(typescript@5.6.2)
+      '@typescript-eslint/parser': 8.8.1(eslint@9.12.0)(typescript@5.6.3)
       '@typescript-eslint/scope-manager': 8.8.1
-      '@typescript-eslint/type-utils': 8.8.1(eslint@9.12.0)(typescript@5.6.2)
-      '@typescript-eslint/utils': 8.8.1(eslint@9.12.0)(typescript@5.6.2)
+      '@typescript-eslint/type-utils': 8.8.1(eslint@9.12.0)(typescript@5.6.3)
+      '@typescript-eslint/utils': 8.8.1(eslint@9.12.0)(typescript@5.6.3)
       '@typescript-eslint/visitor-keys': 8.8.1
       eslint: 9.12.0
       graphemer: 1.4.0
       ignore: 5.3.2
       natural-compare: 1.4.0
-      ts-api-utils: 1.3.0(typescript@5.6.2)
+      ts-api-utils: 1.3.0(typescript@5.6.3)
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.2)':
+  '@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3)':
     dependencies:
       '@typescript-eslint/scope-manager': 8.8.1
       '@typescript-eslint/types': 8.8.1
-      '@typescript-eslint/typescript-estree': 8.8.1(typescript@5.6.2)
+      '@typescript-eslint/typescript-estree': 8.8.1(typescript@5.6.3)
       '@typescript-eslint/visitor-keys': 8.8.1
       debug: 4.3.7
       eslint: 9.12.0
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
@@ -7586,21 +7586,21 @@ snapshots:
       '@typescript-eslint/types': 8.8.1
       '@typescript-eslint/visitor-keys': 8.8.1
 
-  '@typescript-eslint/type-utils@8.8.1(eslint@9.12.0)(typescript@5.6.2)':
+  '@typescript-eslint/type-utils@8.8.1(eslint@9.12.0)(typescript@5.6.3)':
     dependencies:
-      '@typescript-eslint/typescript-estree': 8.8.1(typescript@5.6.2)
-      '@typescript-eslint/utils': 8.8.1(eslint@9.12.0)(typescript@5.6.2)
+      '@typescript-eslint/typescript-estree': 8.8.1(typescript@5.6.3)
+      '@typescript-eslint/utils': 8.8.1(eslint@9.12.0)(typescript@5.6.3)
       debug: 4.3.7
-      ts-api-utils: 1.3.0(typescript@5.6.2)
+      ts-api-utils: 1.3.0(typescript@5.6.3)
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
     transitivePeerDependencies:
       - eslint
       - supports-color
 
   '@typescript-eslint/types@8.8.1': {}
 
-  '@typescript-eslint/typescript-estree@8.8.1(typescript@5.6.2)':
+  '@typescript-eslint/typescript-estree@8.8.1(typescript@5.6.3)':
     dependencies:
       '@typescript-eslint/types': 8.8.1
       '@typescript-eslint/visitor-keys': 8.8.1
@@ -7609,18 +7609,18 @@ snapshots:
       is-glob: 4.0.3
       minimatch: 9.0.5
       semver: 7.6.3
-      ts-api-utils: 1.3.0(typescript@5.6.2)
+      ts-api-utils: 1.3.0(typescript@5.6.3)
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.8.1(eslint@9.12.0)(typescript@5.6.2)':
+  '@typescript-eslint/utils@8.8.1(eslint@9.12.0)(typescript@5.6.3)':
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@9.12.0)
       '@typescript-eslint/scope-manager': 8.8.1
       '@typescript-eslint/types': 8.8.1
-      '@typescript-eslint/typescript-estree': 8.8.1(typescript@5.6.2)
+      '@typescript-eslint/typescript-estree': 8.8.1(typescript@5.6.3)
       eslint: 9.12.0
     transitivePeerDependencies:
       - supports-color
@@ -8242,14 +8242,14 @@ snapshots:
 
   core-util-is@1.0.2: {}
 
-  cosmiconfig@9.0.0(typescript@5.6.2):
+  cosmiconfig@9.0.0(typescript@5.6.3):
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
 
   cross-env@7.0.3:
     dependencies:
@@ -8676,7 +8676,7 @@ snapshots:
       eslint: 9.12.0
       eslint-plugin-es-x: 7.8.0(eslint@9.12.0)
       get-tsconfig: 4.8.1
-      globals: 15.10.0
+      globals: 15.11.0
       ignore: 5.3.2
       minimatch: 9.0.5
       semver: 7.6.3
@@ -8700,7 +8700,7 @@ snapshots:
       core-js-compat: 3.38.1
       eslint: 9.12.0
       esquery: 1.6.0
-      globals: 15.10.0
+      globals: 15.11.0
       indent-string: 4.0.0
       is-builtin-module: 3.2.1
       jsesc: 3.0.2
@@ -9191,7 +9191,7 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@15.10.0: {}
+  globals@15.11.0: {}
 
   globrex@0.1.2: {}
 
@@ -9245,7 +9245,7 @@ snapshots:
       p-cancelable: 3.0.0
       responselike: 3.0.0
 
-  got@14.4.2:
+  got@14.4.3:
     dependencies:
       '@sindresorhus/is': 7.0.1
       '@szmarczak/http-timer': 5.0.1
@@ -10230,7 +10230,7 @@ snapshots:
 
   ms@2.1.3: {}
 
-  msw@2.4.3(typescript@5.6.2):
+  msw@2.4.3(typescript@5.6.3):
     dependencies:
       '@bundled-es-modules/cookie': 2.0.0
       '@bundled-es-modules/statuses': 1.0.1
@@ -10250,7 +10250,7 @@ snapshots:
       type-fest: 4.26.1
       yargs: 17.7.2
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
 
   mute-stream@0.0.8: {}
 
@@ -10343,7 +10343,7 @@ snapshots:
 
   object-inspect@1.13.2: {}
 
-  ofetch@1.4.0:
+  ofetch@1.4.1:
     dependencies:
       destr: 2.0.3
       node-fetch-native: 1.6.4
@@ -10676,63 +10676,63 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  puppeteer-extra-plugin-stealth@2.11.2(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))):
+  puppeteer-extra-plugin-stealth@2.11.2(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10))):
     dependencies:
       debug: 4.3.7
-      puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)))
-      puppeteer-extra-plugin-user-preferences: 2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)))
+      puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)))
+      puppeteer-extra-plugin-user-preferences: 2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)))
     optionalDependencies:
-      puppeteer-extra: 3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+      puppeteer-extra: 3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10))
     transitivePeerDependencies:
       - supports-color
 
-  puppeteer-extra-plugin-user-data-dir@2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))):
+  puppeteer-extra-plugin-user-data-dir@2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10))):
     dependencies:
       debug: 4.3.7
       fs-extra: 10.1.0
-      puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)))
+      puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)))
       rimraf: 3.0.2
     optionalDependencies:
-      puppeteer-extra: 3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+      puppeteer-extra: 3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10))
     transitivePeerDependencies:
       - supports-color
 
-  puppeteer-extra-plugin-user-preferences@2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))):
+  puppeteer-extra-plugin-user-preferences@2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10))):
     dependencies:
       debug: 4.3.7
       deepmerge: 4.3.1
-      puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)))
-      puppeteer-extra-plugin-user-data-dir: 2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)))
+      puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)))
+      puppeteer-extra-plugin-user-data-dir: 2.4.1(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)))
     optionalDependencies:
-      puppeteer-extra: 3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+      puppeteer-extra: 3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10))
     transitivePeerDependencies:
       - supports-color
 
-  puppeteer-extra-plugin@3.2.3(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))):
+  puppeteer-extra-plugin@3.2.3(puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10))):
     dependencies:
       '@types/debug': 4.1.12
       debug: 4.3.7
       merge-deep: 3.0.3
     optionalDependencies:
-      puppeteer-extra: 3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+      puppeteer-extra: 3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10))
     transitivePeerDependencies:
       - supports-color
 
-  puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)):
+  puppeteer-extra@3.3.6(puppeteer-core@22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)):
     dependencies:
       '@types/debug': 4.1.12
       debug: 4.3.7
       deepmerge: 4.3.1
     optionalDependencies:
-      puppeteer: 22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
+      puppeteer: 22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)
       puppeteer-core: 22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - supports-color
 
-  puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10):
+  puppeteer@22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10):
     dependencies:
       '@puppeteer/browsers': 2.2.0
-      cosmiconfig: 9.0.0(typescript@5.6.2)
+      cosmiconfig: 9.0.0(typescript@5.6.3)
       devtools-protocol: 0.0.1262051
       puppeteer-core: 22.6.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
@@ -10754,7 +10754,7 @@ snapshots:
       split-on-first: 1.1.0
       strict-uri-encode: 2.0.0
 
-  query-string@9.1.0:
+  query-string@9.1.1:
     dependencies:
       decode-uri-component: 0.4.1
       filter-obj: 5.1.0
@@ -11414,9 +11414,9 @@ snapshots:
 
   trough@2.2.0: {}
 
-  ts-api-utils@1.3.0(typescript@5.6.2):
+  ts-api-utils@1.3.0(typescript@5.6.3):
     dependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
 
   ts-case-convert@2.1.0: {}
 
@@ -11426,9 +11426,9 @@ snapshots:
 
   ts-xor@1.3.0: {}
 
-  tsconfck@3.1.3(typescript@5.6.2):
+  tsconfck@3.1.3(typescript@5.6.3):
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
 
   tslib@1.14.1: {}
 
@@ -11479,7 +11479,7 @@ snapshots:
     dependencies:
       is-typedarray: 1.0.0
 
-  typescript@5.6.2: {}
+  typescript@5.6.3: {}
 
   uc.micro@2.1.0: {}
 
@@ -11613,11 +11613,11 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@5.0.1(typescript@5.6.2)(vite@5.4.8(@types/node@22.7.5)):
+  vite-tsconfig-paths@5.0.1(typescript@5.6.3)(vite@5.4.8(@types/node@22.7.5)):
     dependencies:
       debug: 4.3.7
       globrex: 0.1.2
-      tsconfck: 3.1.3(typescript@5.6.2)
+      tsconfck: 3.1.3(typescript@5.6.3)
     optionalDependencies:
       vite: 5.4.8(@types/node@22.7.5)
     transitivePeerDependencies:
