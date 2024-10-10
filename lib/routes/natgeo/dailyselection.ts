@@ -21,7 +21,7 @@ export const route: Route = {
             source: ['nationalgeographic.com/'],
         },
     ],
-    maintainers: ['OrangeEd1t', 'pseudoyu'],
+    maintainers: ['OrangeEd1t'],
     handler,
 };
 

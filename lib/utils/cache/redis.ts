@@ -64,7 +64,7 @@ export default {
         }
         if (key) {
             if (maxAge !== config.cache.contentExpire) {
-                // Only set cacheTtlKey if maxAge !== contentExpire
+                // intentionally store the cache ttl if it is not the default value
                 clients.redisClient.set(getCacheTtlKey(key), maxAge, 'EX', maxAge);
             }
             return clients.redisClient.set(key, value, 'EX', maxAge); // setMode: https://redis.io/commands/set

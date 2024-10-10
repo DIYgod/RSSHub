@@ -41,12 +41,14 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate($item('.weui_media_extra_info').attr('title')), +8),
             };
         })
-        .get();
+        .toArray();
 
     return {
         title: `微信公众号 - ${$('span.name').text()}`,
         link: url,
         description: $('div.Profile-sideColumnItemValue').text(),
-        item: await Promise.all(items.map((item) => finishArticleItem(item).catch(() => item))),
+        item: await Promise.all(items.map((item) => finishArticleItem(item))).catch((error) => {
+            throw error;
+        }),
     };
 }

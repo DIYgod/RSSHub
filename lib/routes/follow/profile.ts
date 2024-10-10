@@ -1,7 +1,7 @@
 import { ViewType, type Data, type Route } from '@/types';
 import type { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
-import type { FollowResponse, ListSubscription, Profile, Subscription } from './types';
+import type { FollowResponse, InboxSubscription, ListSubscription, Profile, Subscription } from './types';
 import { parse } from 'tldts';
 
 export const route: Route = {
@@ -28,6 +28,8 @@ export const route: Route = {
 
 const isList = (subscription: Subscription): subscription is ListSubscription => 'lists' in subscription;
 
+const isInbox = (subscription: Subscription): subscription is InboxSubscription => 'inboxId' in subscription;
+
 async function handler(ctx: Context): Promise<Data> {
     const uid = ctx.req.param('uid');
     const host = 'https://api.follow.is';
@@ -37,7 +39,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title: `${profile.data.name}'s subscriptions`,
-        item: subscriptions.data.map((subscription) => {
+        item: (<Exclude<Subscription, InboxSubscription>[]>subscriptions.data.filter((i) => !isInbox(i))).map((subscription) => {
             if (isList(subscription)) {
                 return {
                     title: subscription.lists.title,
