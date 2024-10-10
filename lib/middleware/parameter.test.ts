@@ -3,6 +3,7 @@ import Parser from 'rss-parser';
 
 process.env.OPENAI_API_KEY = 'sk-1234567890';
 process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
+process.env.ALLOW_CIDR = '127.0.0.1/32';
 
 vi.mock('@/utils/request-rewriter', () => ({ default: null }));
 const { config } = await import('@/config');

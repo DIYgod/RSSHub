@@ -4,7 +4,7 @@ import Parser from 'rss-parser';
 const parser = new Parser();
 import { config } from '@/config';
 
-process.env.ALLOW_USER_SUPPLY_UNSAFE_DOMAIN = 'true';
+process.env.ALLOW_CIDR = '127.0.0.1/32';
 
 const routes = {
     '/test/:id': '/test/1',
@@ -16,10 +16,7 @@ if (process.env.FULL_ROUTES_TEST) {
             const requireConfig = namespaces[namespace].routes[route].features?.requireConfig;
             let configs;
             if (typeof requireConfig !== 'boolean') {
-                configs = requireConfig
-                    ?.filter((config) => !config.optional)
-                    .map((config) => config.name)
-                    .filter((name) => name !== 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN');
+                configs = requireConfig?.filter((config) => !config.optional).map((config) => config.name);
             }
             if (namespaces[namespace].routes[route].example && !configs?.length) {
                 routes[`/${namespace}${route}`] = namespaces[namespace].routes[route].example;
