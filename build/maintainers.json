@@ -1091,6 +1091,9 @@
   "/cbnweek/": [
     "nczitzk"
   ],
+  "/cbpanet/dzp_news/:bigId?/:smallId?": [
+    "nczitzk"
+  ],
   "/ccac/news/:type/:lang?": [
     "linbuxiao"
   ],
