@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { formatNote, formatText, getNotes } from './util';
 
 export const route: Route = {
-    path: '/user/:user_id/notes/fulltext',
+    path: '/user/:user_id/notes/:fulltext',
     radar: [
         {
             source: ['xiaohongshu.com/user/profile/:user_id'],
