@@ -86,20 +86,20 @@ async function getUser(url, cookie) {
 
 async function renderNotesFulltext(notes, url) {
     const data: any[] = [];
-    for (const note of notes) {
-        for (const { noteCard } of note) {
+    const promises = notes.flatMap((note) =>
+        note.map(async ({ noteCard }) => {
             const link = `${url}/${noteCard.noteId}`;
-            // eslint-disable-next-line no-await-in-loop
             const { title, description } = await getFullNote(link);
-            data.push({
+            return {
                 title,
                 link,
                 description,
                 author: noteCard.user.nickName,
                 guid: noteCard.noteId,
-            });
-        }
-    }
+            };
+        })
+    );
+    data.push(...(await Promise.all(promises)));
     return data;
 }
 
