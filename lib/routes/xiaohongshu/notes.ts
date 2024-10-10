@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { formatNote, formatText, getNotes } from './util';
 
 export const route: Route = {
-    path: '/user/:user_id/notes/fulltext',
+    path: '/user/:user_id/notes/:fulltext',
     radar: [
         {
             source: ['xiaohongshu.com/user/profile/:user_id'],
@@ -25,22 +25,11 @@ export const route: Route = {
                 description: '小红书 cookie 值，可在浏览器控制台通过`document.cookie`获取。',
             },
         ],
-        requireConfig: [
-            {
-                name: 'XIAOHONGSHU_COOKIE',
-                optional: true,
-                description: '小红书 cookie 值，可在浏览器控制台通过`document.cookie`获取。',
-            },
-        ],
         antiCrawler: true,
         requirePuppeteer: true,
     },
     parameters: {
         user_id: 'user id, length 24 characters',
-        fulltext: {
-            description: '是否获取全文',
-            default: '',
-        },
         fulltext: {
             description: '是否获取全文',
             default: '',
