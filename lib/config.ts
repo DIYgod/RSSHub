@@ -266,6 +266,10 @@ export type Config = {
     scihub: {
         host?: string;
     };
+    skeb: {
+        request_key?: string;
+        bearer_token?: string;
+    };
     spotify: {
         clientId?: string;
         clientSecret?: string;
@@ -654,6 +658,10 @@ const calculateValue = () => {
         },
         scihub: {
             host: envs.SCIHUB_HOST || 'https://sci-hub.se/',
+        },
+        skeb: {
+            request_key: envs.SKEB_REQUEST_KEY,
+            bearer_token: envs.SKEB_BEARER_TOKEN,
         },
         spotify: {
             clientId: envs.SPOTIFY_CLIENT_ID,
