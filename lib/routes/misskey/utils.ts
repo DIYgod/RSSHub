@@ -62,6 +62,7 @@ async function getUserTimelineByUsername(username, site) {
             withChannelNotes: true,
             limit: 10,
             offset: 0,
+            withFiles: true,
         },
     });
     const accountData = usernotesResponse.data;
