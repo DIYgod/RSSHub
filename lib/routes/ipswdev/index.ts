@@ -24,7 +24,7 @@ async function handler(ctx) {
         method: 'get',
         url: link,
         headers: {
-            Referer: host,
+            Referer: 'https://ipsw.dev/',
         },
     });
 
