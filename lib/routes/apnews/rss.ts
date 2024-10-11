@@ -5,7 +5,7 @@ const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
     path: '/rss/:category?',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     example: '/apnews/rss/business',
     view: ViewType.Articles,
     parameters: {
