@@ -1,8 +1,8 @@
 import { Data, Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-
-const host = 'https://ipsw.dev/';
+import { art } from '@/utils/render';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/index/:productID',
@@ -32,7 +32,6 @@ async function handler(ctx) {
 
     const productName = $('#IdentifierModal > div > div > div.modal-body > p:nth-child(1) > em').text();
 
-    // eslint-disable-next-line no-restricted-syntax
     const list: Data[] = $('.firmware')
         .map((index, element) => {
             const ele = $(element);
@@ -45,26 +44,12 @@ async function handler(ctx) {
                 link: `https://ipsw.dev/download/${productID}/${build}`,
                 pubDate: new Date(date).toLocaleDateString(),
                 guid: build,
-                description: `<table>
-        <tbody>
-        <tr>
-        <th>Version</th>
-        <td>${version}</td>
-        </tr>
-        <tr>
-        <th>Build</th>
-        <td>${build}</td>
-        </tr>
-        <tr>
-        <th>Released</th>
-        <td>${date}</td>
-        </tr>
-        <tr>
-        <th>Size</th>
-        <td>${size}</td>
-        </tr>
-        </tbody>
-        </table>`,
+                description: art(path.join(__dirname, 'templates/description.art'), {
+                    version,
+                    build,
+                    date,
+                    size,
+                }),
             };
         })
         .get();
