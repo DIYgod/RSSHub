@@ -42,21 +42,23 @@ async function handler() {
     const items = $('#tbody_list > tr')
         // 使用“toArray()”方法将选择的所有 DOM 元素以数组的形式返回。
         .toArray()
+        .slice(0, -1) // 去掉最后一个元素，因为它是footer
         // 使用“map()”方法遍历数组，并从每个元素中解析需要的数据。
         .map((item, index, array) => {
             item = $(item);
-            const posHtml = item.find('td.td_region a').html();
-            const degree = item.find('td.td_mag a').text();
-            const pubDate = item.find('td.td_region a span').text();
-            const position = posHtml.split('<br>')[1].replace('.', '').trim();
+            const posHtml = index === array.length - 1 ? '' : item.find('td.td_region .a_mag').html();
+            const degree = index === array.length - 1 ? '' : item.find('td.td_mag a').text();
+            const pubDate = index === array.length - 1 ? '' : item.find('td.td_region a span').text();
+            const position = index === array.length - 1 ? '' : posHtml.split('<br>')[1].replace('.', '').trim();
             return index === array.length - 1
-                ? null
+                ? undefined
                 : {
                       title: `[震級:${degree}] [地點:${position}]`,
                       pubDate: formatDate(pubDate),
                   };
         })
         .filter((item) => item !== undefined);
+
     return {
         title,
         link,
