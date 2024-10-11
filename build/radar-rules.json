@@ -26466,7 +26466,8 @@
         "title": "播客",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
-          "/podcast/:id"
+          "/podcast/:id",
+          "/episode/:id"
         ],
         "target": "/xiaoyuzhou/podcast/:id"
       }
