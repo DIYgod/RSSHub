@@ -115,7 +115,7 @@ importers:
         version: 9.0.5
       http-cookie-agent:
         specifier: 6.0.6
-        version: 6.0.6(tough-cookie@5.0.0)(undici@6.19.8)
+        version: 6.0.6(tough-cookie@5.0.0)(undici@6.20.0)
       https-proxy-agent:
         specifier: 7.0.5
         version: 7.0.5
@@ -243,8 +243,8 @@ importers:
         specifier: 1.18.0
         version: 1.18.0
       undici:
-        specifier: 6.19.8
-        version: 6.19.8
+        specifier: 6.20.0
+        version: 6.20.0
       uuid:
         specifier: 10.0.0
         version: 10.0.0
@@ -5503,8 +5503,8 @@ packages:
   undici-types@6.19.8:
     resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
 
-  undici@6.19.8:
-    resolution: {integrity: sha512-U8uCCl2x9TK3WANvmBavymRzxbfFYG+tAu+fgx3zxQy3qdagQqBLwJVrdyO1TBfUXvfKveMKJZhpvUYoOjM+4g==}
+  undici@6.20.0:
+    resolution: {integrity: sha512-AITZfPuxubm31Sx0vr8bteSalEbs9wQb/BOBi9FPlD9Qpd6HxZ4Q0+hI742jBhkPb4RT2v5MQzaW5VhRVyj+9A==}
     engines: {node: '>=18.17'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
@@ -8100,7 +8100,7 @@ snapshots:
       parse5: 7.1.2
       parse5-htmlparser2-tree-adapter: 7.0.0
       parse5-parser-stream: 7.1.2
-      undici: 6.19.8
+      undici: 6.20.0
       whatwg-mimetype: 4.0.0
 
   chownr@2.0.0: {}
@@ -9377,12 +9377,12 @@ snapshots:
 
   http-cache-semantics@4.1.1: {}
 
-  http-cookie-agent@6.0.6(tough-cookie@5.0.0)(undici@6.19.8):
+  http-cookie-agent@6.0.6(tough-cookie@5.0.0)(undici@6.20.0):
     dependencies:
       agent-base: 7.1.1
       tough-cookie: 5.0.0
     optionalDependencies:
-      undici: 6.19.8
+      undici: 6.20.0
     transitivePeerDependencies:
       - supports-color
 
@@ -11498,7 +11498,7 @@ snapshots:
 
   undici-types@6.19.8: {}
 
-  undici@6.19.8: {}
+  undici@6.20.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
