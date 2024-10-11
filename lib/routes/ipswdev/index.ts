@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import { getCurrentPath } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/index/:productID',
@@ -18,6 +19,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { productID } = ctx.req.param();
+    const __dirname = getCurrentPath(import.meta.url);
     const link = `https://ipsw.dev/product/version/${productID}`;
 
     const resp = await got({
