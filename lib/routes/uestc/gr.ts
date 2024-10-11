@@ -29,7 +29,7 @@ const typeNameMap = {
 };
 
 export const route: Route = {
-    path: '/gr',
+    path: '/gr/:type?',
     categories: ['university'],
     example: '/uestc/gr',
     parameters: { type: '默认为 `important`' },
