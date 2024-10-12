@@ -38,13 +38,11 @@ const rofetch = createFetch().create({
         if (url.hostname.endsWith('.test') || url.hostname.endsWith('.mock') || url.hostname.endsWith('.proxy')) {
             return;
         }
-        {
-            if (ip.isValid(url.hostname)) {
-                addr = url.hostname;
-            } else {
-                const { address } = await lookup(url.hostname);
-                addr = address;
-            }
+        if (ip.isValid(url.hostname)) {
+            addr = url.hostname;
+        } else {
+            const { address } = await lookup(url.hostname);
+            addr = address;
         }
         const parsedIp = ip.process(addr);
         if (parsedIp.range() === 'unicast') {

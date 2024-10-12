@@ -48,4 +48,20 @@ describe('ofetch', () => {
         });
         expect(response.test).toBe('rsshub');
     });
+
+    it('ban-ip', async () => {
+        try {
+            await ofetch('http://192.168.1.1');
+        } catch (error: any) {
+            expect(error.message).toContain('The IP of the domain is reserved!');
+        }
+    });
+
+    it('ban-ip-domain', async () => {
+        try {
+            await ofetch('http://10.0.0.1.nip.io');
+        } catch (error: any) {
+            expect(error.message).toContain('The IP of the domain is reserved!');
+        }
+    });
 });
