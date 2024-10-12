@@ -11,7 +11,7 @@ const rofetch = createFetch().create({
     retryStatusCodes: [400, 408, 409, 425, 429, 500, 502, 503, 504],
     retry: config.requestRetry,
     retryDelay: 1000,
-    // timeout: config.requestTimeout,
+    timeout: config.requestTimeout,
     onResponseError({ request, response, options }) {
         if (options.retry) {
             logger.warn(`Request ${request} with error ${response.status} remaining retry attempts: ${options.retry}`);
