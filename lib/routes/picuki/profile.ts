@@ -130,7 +130,7 @@ async function handler(ctx) {
                     }
 
                     return {
-                        title: 'Instagram Story' + (pubDate ? '' : `: ${title}`),
+                        title: title ? `Instagram Story: ${title}` : 'Instagram Story',
                         author: `@${id}`,
                         description,
                         link: href,
