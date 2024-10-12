@@ -1,0 +1,18 @@
+{{ if video.length > 0 }}
+    {{ each video }}
+        {{ if $value.sourceUrl }}
+            <video controls preload="metadata" poster="{{ $value.thumbnailUrl }}">
+                <source src="{{ $value.sourceUrl }}" type="video/mp4" />
+            </video>
+        {{ else }}
+            <figure><img src="{{ $value.thumbnailUrl }}" /></figure>
+        {{ /if }}
+    {{ /each }}  
+{{ else if image }}
+    <figure><img src="{{ image }}" /></figure>
+{{ /if }}
+{{ if article }}
+    {{ each article }}
+        <p>{{@ $value }}</p>
+    {{ /each }}
+{{ /if }} 
