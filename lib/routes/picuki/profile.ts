@@ -57,8 +57,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.picuki.com/profile/:id', 'www.picuki.com/profile-tagged/:id'],
+            source: ['www.picuki.com/profile/:id'],
             target: '/profile/:id',
+        },
+        {
+            source: ['www.picuki.com/profile-tagged/:id'],
+            target: '/profile-tagged/:id',
         },
     ],
     name: 'User Profile - Picuki',
@@ -77,10 +81,11 @@ async function handler(ctx) {
 
     const type = ctx.req.param('type');
     const id = ctx.req.param('id');
-    const displayVideo = ctx.req.param('functionalFlag') !== '0';
-    const includeStories = ctx.req.param('functionalFlag') === '10';
+    const functionalFlag = ctx.req.param('functionalFlag');
+    const displayVideo = functionalFlag !== '0';
+    const includeStories = functionalFlag === '10';
 
-    const profileUrl = type === 'profile-tagged' ? `https://www.picuki.com/profile-tagged/${id}` : `https://www.picuki.com/profile/${id}`;
+    const profileUrl = `https://www.picuki.com/${type}/${id}`;
 
     const data = await cache.tryGet(`picuki-${id}-profile-${type}-${includeStories}`, () => puppeteerGet(profileUrl, browser, includeStories), config.cache.routeExpire, false);
     const $ = load(data);
