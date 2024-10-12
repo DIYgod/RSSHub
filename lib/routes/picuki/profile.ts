@@ -82,7 +82,7 @@ async function handler(ctx) {
 
     const profileUrl = type === 'profile-tagged' ? `https://www.picuki.com/profile-tagged/${id}` : `https://www.picuki.com/profile/${id}`;
 
-    const data = await cache.tryGet(`picuki-${id}-profile-${includeStories}`, () => puppeteerGet(profileUrl, browser, includeStories), config.cache.routeExpire, false);
+    const data = await cache.tryGet(`picuki-${id}-profile-${type}-${includeStories}`, () => puppeteerGet(profileUrl, browser, includeStories), config.cache.routeExpire, false);
     const $ = load(data);
 
     const profileName = $('.profile-name-bottom').text();
