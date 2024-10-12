@@ -51,7 +51,7 @@ async function handler(ctx) {
             labels,
             sort: 'created',
             direction: 'desc',
-            per_page: ctx.req.query('limit') ? (Number.parseInt(ctx.req.query('limit')) <= 100 ? Number.parseInt(ctx.req.query('limit')) : 100) : 100,
+            per_page: ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 100) : 100,
         },
         headers,
     });

@@ -1,7 +1,7 @@
 import { ViewType, type Data, type Route } from '@/types';
 import type { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
-import type { FollowResponse, Profile, Subscription } from './types';
+import type { FollowResponse, InboxSubscription, ListSubscription, Profile, Subscription } from './types';
 import { parse } from 'tldts';
 
 export const route: Route = {
@@ -26,6 +26,10 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
+const isList = (subscription: Subscription): subscription is ListSubscription => 'lists' in subscription;
+
+const isInbox = (subscription: Subscription): subscription is InboxSubscription => 'inboxId' in subscription;
+
 async function handler(ctx: Context): Promise<Data> {
     const uid = ctx.req.param('uid');
     const host = 'https://api.follow.is';
@@ -35,13 +39,23 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title: `${profile.data.name}'s subscriptions`,
-        item: subscriptions.data.map((subscription) => ({
-            title: subscription.feeds.title,
-            description: subscription.feeds.description,
-            link: `https://app.follow.is/feed/${subscription.feedId}`,
-            image: getUrlIcon(subscription.feeds.siteUrl).src,
-            category: [subscription.category],
-        })),
+        item: (<Exclude<Subscription, InboxSubscription>[]>subscriptions.data.filter((i) => !isInbox(i))).map((subscription) => {
+            if (isList(subscription)) {
+                return {
+                    title: subscription.lists.title,
+                    description: subscription.lists.description,
+                    link: `https://app.follow.is/list/${subscription.listId}`,
+                    image: subscription.lists.image,
+                };
+            }
+            return {
+                title: subscription.feeds.title,
+                description: subscription.feeds.description,
+                link: `https://app.follow.is/feed/${subscription.feedId}`,
+                image: getUrlIcon(subscription.feeds.siteUrl).src,
+                category: subscription.category ? [subscription.category] : undefined,
+            };
+        }),
         link: `https://app.follow.is/profile/${uid}`,
         image: profile.data.image,
     };

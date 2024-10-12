@@ -1,4 +1,4 @@
-import { Route, ViewType } from '@/types';
+import { Route, ViewType, Data } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { isValidHost } from '@/utils/valid-host';
@@ -73,7 +73,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { language = 'www', username, sort = 'mr' } = ctx.req.param();
     let link = `https://${language}.pornhub.com/pornstar/${username}?o=${sort}`;
     if (!isValidHost(language)) {
@@ -101,9 +101,7 @@ async function handler(ctx) {
         title: $('h1').first().text(),
         description: $('section.aboutMeSection').text().trim(),
         link,
-        image: $('#coverPictureDefault').attr('src'),
-        logo: $('#getAvatar').attr('src'),
-        icon: $('#getAvatar').attr('src'),
+        image: $('#getAvatar').attr('src'),
         language: $('html').attr('lang'),
         item: items,
     };
