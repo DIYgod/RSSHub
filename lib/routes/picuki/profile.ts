@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -33,12 +33,12 @@ function deVideo(media) {
 }
 
 export const route: Route = {
-    path: '/:type/:id/:functionalFlag?',
+    path: '/profile/:id/:type?/:functionalFlag?',
     categories: ['social-media'],
     example: '/picuki/profile/stefaniejoosten',
     parameters: {
-        type: 'Type of profile page (profile or profile-tagged)',
         id: 'Instagram user id',
+        type: 'Type of profile page (profile or tagged)',
         functionalFlag: `functional flag, see the table below
 | functionalFlag | Video embedding                         | Fetching Instagram Stories |
 | -------------- | --------------------------------------- | -------------------------- |
@@ -62,7 +62,7 @@ export const route: Route = {
         },
         {
             source: ['www.picuki.com/profile-tagged/:id'],
-            target: '/profile-tagged/:id',
+            target: '/profile/:id/tagged',
         },
     ],
     name: 'User Profile - Picuki',
@@ -79,31 +79,25 @@ async function handler(ctx) {
     // use Puppeteer due to the obstacle by cloudflare challenge
     const browser = await puppeteer();
 
-    const type = ctx.req.param('type');
     const id = ctx.req.param('id');
+    const type = ctx.req.param('type') ?? 'profile';
     const functionalFlag = ctx.req.param('functionalFlag');
     const displayVideo = functionalFlag !== '0';
     const includeStories = functionalFlag === '10';
 
-    const profileUrl = `https://www.picuki.com/${type}/${id}`;
+    const profileUrl = `https://www.picuki.com/${type === 'tagged' ? 'profile-tagged' : 'profile'}/${id}`;
 
-    const data = await cache.tryGet(`picuki-${id}-profile-${type}-${includeStories}`, () => puppeteerGet(profileUrl, browser, includeStories), config.cache.routeExpire, false);
+    const data = await cache.tryGet(`picuki-${id}-${type}-${includeStories}`, () => puppeteerGet(profileUrl, browser, includeStories), config.cache.routeExpire, false);
     const $ = load(data);
 
     const profileName = $('.profile-name-bottom').text();
-    const profileTitle = type === 'profile-tagged' ? `${profileName} (@${id}) tagged posts - Picuki` : `${profileName} (@${id}) public posts - Picuki`;
+    const profileTitle = type === 'tagged' ? `${profileName} (@${id}) tagged posts - Picuki` : `${profileName} (@${id}) public posts - Picuki`;
     const profileImg = $('.profile-avatar > img').attr('src');
     const profileDescription = $('.profile-description').text();
 
     const list = $('ul.box-photos [data-s="media"]').toArray();
 
-    let items: {
-        title: string;
-        author: string;
-        description: string;
-        link: string | undefined;
-        pubDate: Date | null;
-    }[] = [];
+    let items: DataItem[] = [];
 
     let description: string;
 
@@ -117,7 +111,7 @@ async function handler(ctx) {
                     const $item = $(item);
                     const titleElement = $item.find('.stories_count');
                     const title = titleElement.length ? titleElement.text() : '';
-                    const pubDate = title ? chrono.parseDate(title) : new Date();
+                    const pubDate = chrono.parseDate(title) || new Date();
                     const postBox = $item.find('.launchLightbox');
                     const poster = postBox.attr('data-video-poster');
                     const href = postBox.attr('href');
@@ -193,7 +187,7 @@ async function handler(ctx) {
 
                 const postLink = post.find('.photo > a').attr('href');
                 const postTime = post.find('.time');
-                const pubDate = postTime ? chrono.parseDate(postTime.text()) : new Date();
+                const pubDate = postTime?.text() ? (chrono.parseDate(postTime.text()) ?? new Date()) : new Date();
                 const media_displayVideo = await getMedia(postLink);
                 const postText = post
                     .find('.photo-action-description')
