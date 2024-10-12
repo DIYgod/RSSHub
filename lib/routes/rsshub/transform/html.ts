@@ -118,7 +118,12 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
                         url: item.link,
                     });
                     const $ = load(response.data);
-                    item.description = sanitizeHtml($(itemContentSelector).html() ?? '', { allowedTags: [...sanitizeHtml.defaults.allowedTags, 'img'] });
+                    const content = $(itemContentSelector).html();
+                    if (!content) {
+                        return item;
+                    }
+
+                    item.description = sanitizeHtml(content, { allowedTags: [...sanitizeHtml.defaults.allowedTags, 'img'] });
 
                     return item;
                 })
