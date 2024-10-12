@@ -3,8 +3,6 @@ import { http, HttpResponse } from 'msw';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 
-process.env.ALLOW_CIDR = '127.0.0.1/32';
-
 describe('ofetch', () => {
     it('headers', async () => {
         const data = await ofetch('http://rsshub.test/headers');

@@ -6,7 +6,6 @@ import http from 'node:http';
 process.env.PROXY_URI = 'http://rsshub.proxy:2333/';
 process.env.PROXY_AUTH = 'rsshubtest';
 process.env.PROXY_URL_REGEX = 'headers';
-process.env.ALLOW_CIDR = '127.0.0.1/32';
 
 await import('@/utils/request-rewriter');
 const { config } = await import('@/config');

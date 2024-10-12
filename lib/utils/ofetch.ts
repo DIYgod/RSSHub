@@ -34,11 +34,17 @@ const rofetch = createFetch().create({
     onRequest: async ({ request }) => {
         const url = typeof request === 'string' ? new URL(request) : new URL(request.url);
         let addr;
-        if (ip.isValid(url.hostname)) {
-            addr = url.hostname;
-        } else {
-            const { address } = await lookup(url.hostname);
-            addr = address;
+        // for test
+        if (url.hostname.endsWith('.test') || url.hostname.endsWith('.mock') || url.hostname.endsWith('.proxy')) {
+            return;
+        }
+        {
+            if (ip.isValid(url.hostname)) {
+                addr = url.hostname;
+            } else {
+                const { address } = await lookup(url.hostname);
+                addr = address;
+            }
         }
         const parsedIp = ip.process(addr);
         if (parsedIp.range() === 'unicast') {

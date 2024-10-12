@@ -4,8 +4,6 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import { Cookie, CookieJar } from 'tough-cookie';
 
-process.env.ALLOW_CIDR = '127.0.0.1/32';
-
 describe('got', () => {
     it('headers', async () => {
         const { data } = await got('http://rsshub.test/headers');
