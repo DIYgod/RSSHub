@@ -55580,6 +55580,35 @@
     "name": "Thailand Parliament",
     "url": "parliament.go.th"
   },
+  "parliament.uk": {
+    "routes": {
+      "/lordslibrary/type/:topic?": {
+        "path": "/lordslibrary/type/:topic?",
+        "categories": [
+          "government"
+        ],
+        "example": "/parliament.uk/lordslibrary/type/research-briefing",
+        "parameters": {
+          "topic": "research by topic, string, example: [research-briefing|buisness|economy]"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "House of Lords Library",
+        "maintainers": [
+          "AntiKnot"
+        ],
+        "location": "lordslibrary.ts"
+      }
+    },
+    "name": "UK Parliament",
+    "url": "parliament.uk"
+  },
   "patagonia": {
     "routes": {
       "/new-arrivals/:category": {

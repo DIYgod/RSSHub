@@ -4875,6 +4875,9 @@
   "/parliament/section77/:type?": [
     "itpcc"
   ],
+  "/parliament.uk/lordslibrary/type/:topic?": [
+    "AntiKnot"
+  ],
   "/patagonia/new-arrivals/:category": [],
   "/paulgraham/articles": [
     "Maecenas",
