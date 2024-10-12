@@ -16,19 +16,28 @@ function deVideo(media) {
     let media_deVideo = '';
     $('img,video').each((_, medium) => {
         const tag = medium.name;
-        medium = $(medium);
-        const poster = medium.attr('poster');
+        const mediumElement = $(medium);
+        const poster = mediumElement.attr('poster');
         // 如果有 poster 属性，表明它是视频，将它替换为它的 poster；如果不是，就原样返回
-        media_deVideo += poster ? `<img src='${poster}' alt='video poster'>` : tag === 'img' ? medium.toString() : '';
+        media_deVideo += (() => {
+            if (poster) {
+                return `<img src='${poster}' alt='video poster'>`;
+            } else if (tag === 'img') {
+                return mediumElement.toString();
+            } else {
+                return '';
+            }
+        })();
     });
     return media_deVideo;
 }
 
 export const route: Route = {
-    path: '/profile/:id/:functionalFlag?',
+    path: '/:type/:id/:functionalFlag?',
     categories: ['social-media'],
     example: '/picuki/profile/stefaniejoosten',
     parameters: {
+        type: 'Type of profile page (profile or profile-tagged)',
         id: 'Instagram user id',
         functionalFlag: `functional flag, see the table below
 | functionalFlag | Video embedding                         | Fetching Instagram Stories |
@@ -48,12 +57,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.picuki.com/profile/:id'],
+            source: ['www.picuki.com/profile/:id', 'www.picuki.com/profile-tagged/:id'],
             target: '/profile/:id',
         },
     ],
     name: 'User Profile - Picuki',
-    maintainers: ['hoilc', 'Rongronggg9', 'devinmugen'],
+    maintainers: ['hoilc', 'Rongronggg9', 'devinmugen', 'NekoAria'],
     handler,
     description: `
   :::warning
@@ -66,41 +75,43 @@ async function handler(ctx) {
     // use Puppeteer due to the obstacle by cloudflare challenge
     const browser = await puppeteer();
 
+    const type = ctx.req.param('type');
     const id = ctx.req.param('id');
     const displayVideo = ctx.req.param('functionalFlag') !== '0';
     const includeStories = ctx.req.param('functionalFlag') === '10';
 
-    const profileUrl = `https://www.picuki.com/profile/${id}`;
+    const profileUrl = type === 'profile-tagged' ? `https://www.picuki.com/profile-tagged/${id}` : `https://www.picuki.com/profile/${id}`;
 
-    const data = await cache.tryGet(
-        `picuki-${id}-profile-${includeStories}`,
-        async () => {
-            const _r = await puppeteerGet(profileUrl, browser, includeStories);
-            return _r;
-        },
-        config.cache.routeExpire,
-        false
-    );
+    const data = await cache.tryGet(`picuki-${id}-profile-${includeStories}`, () => puppeteerGet(profileUrl, browser, includeStories), config.cache.routeExpire, false);
     const $ = load(data);
 
     const profileName = $('.profile-name-bottom').text();
+    const profileTitle = type === 'profile-tagged' ? `${profileName} (@${id}) tagged posts - Picuki` : `${profileName} (@${id}) public posts - Picuki`;
     const profileImg = $('.profile-avatar > img').attr('src');
     const profileDescription = $('.profile-description').text();
 
-    const list = $('ul.box-photos [data-s="media"]').get();
+    const list = $('ul.box-photos [data-s="media"]').toArray();
 
-    let items = [];
+    let items: {
+        title: string;
+        author: string;
+        description: string;
+        link: string | undefined;
+        pubDate: Date | null;
+    }[] = [];
+
+    let description: string;
 
     if (includeStories) {
         const stories_wrapper = $('.stories_wrapper');
         if (stories_wrapper.length) {
             const storyItems = $(stories_wrapper)
                 .find('.item')
-                .get()
+                .toArray()
                 .map((item) => {
                     const $item = $(item);
-                    let title = $item.find('.stories_count');
-                    title = title.length ? title.text() : '';
+                    const titleElement = $item.find('.stories_count');
+                    const title = titleElement.length ? titleElement.text() : '';
                     const pubDate = title ? chrono.parseDate(title) : new Date();
                     const postBox = $item.find('.launchLightbox');
                     const poster = postBox.attr('data-video-poster');
@@ -108,16 +119,15 @@ async function handler(ctx) {
                     const type = postBox.attr('data-post-type'); // video / image
                     const origin = postBox.attr('data-origin');
                     const storiesBackground = $item.find('.stories_background');
-                    const storiesBackgroundUrl = storiesBackground && storiesBackground.css('background-image').match(/url\('?(.*)'?\)/);
-                    const storiesBackgroundUrlSrc = storiesBackgroundUrl && storiesBackgroundUrl[1];
-                    let description;
+                    const storiesBackgroundUrl = storiesBackground?.css('background-image')?.match(/url\('?(.*)'?\)/);
+                    const storiesBackgroundUrlSrc = storiesBackgroundUrl?.[1];
                     if (type === 'video') {
                         description = art(path.join(__dirname, 'templates/video.art'), {
                             videoSrcs: [href, origin].filter(Boolean),
-                            videoPoster: poster || storiesBackgroundUrlSrc || '',
+                            videoPoster: poster ?? storiesBackgroundUrlSrc ?? '',
                         });
                     } else if (type === 'image') {
-                        description = `<img src="${href || poster || storiesBackgroundUrlSrc || ''}" alt="Instagram Story">`;
+                        description = `<img src="${href ?? poster ?? storiesBackgroundUrlSrc ?? ''}" alt="Instagram Story">`;
                     }
 
                     return {
@@ -149,8 +159,8 @@ async function handler(ctx) {
         $('.single-photo img').each((_, item) => {
             html += $(item).toString();
         });
-        $('.single-photo video').each((_, item) => {
-            item = $(item);
+        $('.single-photo video').each((_, element) => {
+            const item = $(element);
             let videoSrc = item.attr('src');
             if (videoSrc === undefined) {
                 videoSrc = item.children().attr('src');
@@ -158,8 +168,9 @@ async function handler(ctx) {
             const videoPoster = item.attr('poster');
             let origin = item.parent().attr('onclick');
             if (origin) {
-                origin = origin.match(/window\.open\('([^']*)'/);
-                origin = origin && origin[1];
+                const regex = /window\.open\('([^']*)'/;
+                const match = regex.exec(origin);
+                origin = match?.[1];
             }
             html += art(path.join(__dirname, 'templates/video.art'), {
                 videoSrcs: [videoSrc, origin].filter(Boolean),
@@ -172,15 +183,15 @@ async function handler(ctx) {
     items = [
         ...items,
         ...(await Promise.all(
-            list.map(async (post) => {
-                post = $(post);
+            list.map(async (item) => {
+                const post = $(item);
 
                 const postLink = post.find('.photo > a').attr('href');
                 const postTime = post.find('.time');
                 const pubDate = postTime ? chrono.parseDate(postTime.text()) : new Date();
                 const media_displayVideo = await getMedia(postLink);
                 const postText = post
-                    .find('.photo-description')
+                    .find('.photo-action-description')
                     .text()
                     .trim()
                     .replaceAll(/[^\S\n]+/g, ' ')
@@ -206,7 +217,7 @@ async function handler(ctx) {
     await browser.close();
 
     return {
-        title: `${profileName} (@${id}) - Picuki`,
+        title: profileTitle,
         link: profileUrl,
         image: profileImg,
         description: profileDescription,
