@@ -6,17 +6,17 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/lordslibrary/type/:topic?',
     categories: ['government'],
-    example: '/parliament-uk/lordslibrary/type/research-briefing',
+    example: '/parliament.uk/lordslibrary/type/research-briefing',
     parameters: { topic: 'research by topic, string, example: [research-briefing|buisness|economy]' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'UK Parliament - loadslibrary',
+    name: 'House of Lords Library',
     maintainers: ['AntiKnot'],
     handler,
 };
@@ -29,7 +29,7 @@ async function handler(ctx) {
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+        request.resourceType() === 'document' ? request.continue() : request.abort();
     });
     await page.goto(url, {
         waitUntil: 'domcontentloaded',
@@ -46,6 +46,7 @@ async function handler(ctx) {
             pubDate: timezone($(article).find('.card__date time').attr('datetime')),
         }))
         .toArray();
+    browser.close();
     return {
         title: `parliament - lordslibrary - ${topic}`,
         link: baseUrl,
