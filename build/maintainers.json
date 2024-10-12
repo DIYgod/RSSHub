@@ -4875,6 +4875,9 @@
   "/parliament/section77/:type?": [
     "itpcc"
   ],
+  "/parliament.uk/commonslibrary/type/:topic?": [
+    "AntiKnot"
+  ],
   "/parliament.uk/lordslibrary/type/:topic?": [
     "AntiKnot"
   ],
