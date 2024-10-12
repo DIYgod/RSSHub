@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import { ProcessItems } from './utils';
 
 export const route: Route = {
-    path: '*',
+    path: 'unknown/*',
     name: 'Unknown',
     maintainers: [],
     handler,

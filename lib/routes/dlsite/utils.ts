@@ -49,7 +49,9 @@ const getDetails = async (works) => {
 const ProcessItems = async (ctx) => {
     art.defaults.imports.formatDate = formatDate;
 
-    const subPath = getSubPath(ctx) === '/' ? '/home/new' : getSubPath(ctx);
+    const isOnlyUnknown = /^\/unknown\/?$/.test(getSubPath(ctx));
+
+    const subPath = isOnlyUnknown ? '/home/new' : getSubPath(ctx).replace('/unknown', '');
 
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
 
