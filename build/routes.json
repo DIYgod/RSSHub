@@ -3767,6 +3767,1028 @@
     "name": "安徽建筑大学",
     "url": "news.ahjzu.edu.cn"
   },
+  "aibase": {
+    "routes": {
+      "/discover/:id?": {
+        "path": "/discover/:id?",
+        "name": "发现",
+        "url": "top.aibase.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/aibase/discover",
+        "parameters": {
+          "id": "发现分类，默认为空，即全部产品，可在对应发现分类页 URL 中找到"
+        },
+        "description": ":::tip\n  若订阅 [图片背景移除](https://top.aibase.com/discover/37-49)，网址为 `https://top.aibase.com/discover/37-49`。截取 `https://top.aibase.com/discover/` 到末尾的部分 `37-49` 作为参数填入，此时路由为 [`/aibase/discover/37-49`](https://rsshub.app/aibase/discover/37-49)。\n  :::\n\n  <details>\n    <summary>更多分类</summary>\n\n  #### 图像处理\n\n  | 分类                                                  | ID                                                |\n  | ----------------------------------------------------- | ------------------------------------------------- |\n  | [图片背景移除](https://top.aibase.com/discover/37-49) | [37-49](https://rsshub.app/aibase/discover/37-49) |\n  | [图片无损放大](https://top.aibase.com/discover/37-50) | [37-50](https://rsshub.app/aibase/discover/37-50) |\n  | [图片AI修复](https://top.aibase.com/discover/37-51)   | [37-51](https://rsshub.app/aibase/discover/37-51) |\n  | [图像生成](https://top.aibase.com/discover/37-52)     | [37-52](https://rsshub.app/aibase/discover/37-52) |\n  | [Ai图片拓展](https://top.aibase.com/discover/37-53)   | [37-53](https://rsshub.app/aibase/discover/37-53) |\n  | [Ai漫画生成](https://top.aibase.com/discover/37-54)   | [37-54](https://rsshub.app/aibase/discover/37-54) |\n  | [Ai生成写真](https://top.aibase.com/discover/37-55)   | [37-55](https://rsshub.app/aibase/discover/37-55) |\n  | [电商图片制作](https://top.aibase.com/discover/37-83) | [37-83](https://rsshub.app/aibase/discover/37-83) |\n  | [Ai图像转视频](https://top.aibase.com/discover/37-86) | [37-86](https://rsshub.app/aibase/discover/37-86) |\n\n  #### 视频创作\n\n  | 分类                                                | ID                                                |\n  | --------------------------------------------------- | ------------------------------------------------- |\n  | [视频剪辑](https://top.aibase.com/discover/38-56)   | [38-56](https://rsshub.app/aibase/discover/38-56) |\n  | [生成视频](https://top.aibase.com/discover/38-57)   | [38-57](https://rsshub.app/aibase/discover/38-57) |\n  | [Ai动画制作](https://top.aibase.com/discover/38-58) | [38-58](https://rsshub.app/aibase/discover/38-58) |\n  | [字幕生成](https://top.aibase.com/discover/38-84)   | [38-84](https://rsshub.app/aibase/discover/38-84) |\n\n  #### 效率助手\n\n  | 分类                                                | ID                                                |\n  | --------------------------------------------------- | ------------------------------------------------- |\n  | [AI文档工具](https://top.aibase.com/discover/39-59) | [39-59](https://rsshub.app/aibase/discover/39-59) |\n  | [PPT](https://top.aibase.com/discover/39-60)        | [39-60](https://rsshub.app/aibase/discover/39-60) |\n  | [思维导图](https://top.aibase.com/discover/39-61)   | [39-61](https://rsshub.app/aibase/discover/39-61) |\n  | [表格处理](https://top.aibase.com/discover/39-62)   | [39-62](https://rsshub.app/aibase/discover/39-62) |\n  | [Ai办公助手](https://top.aibase.com/discover/39-63) | [39-63](https://rsshub.app/aibase/discover/39-63) |\n\n  #### 写作灵感\n\n  | 分类                                              | ID                                                |\n  | ------------------------------------------------- | ------------------------------------------------- |\n  | [文案写作](https://top.aibase.com/discover/40-64) | [40-64](https://rsshub.app/aibase/discover/40-64) |\n  | [论文写作](https://top.aibase.com/discover/40-88) | [40-88](https://rsshub.app/aibase/discover/40-88) |\n\n  #### 艺术灵感\n\n  | 分类                                                | ID                                                |\n  | --------------------------------------------------- | ------------------------------------------------- |\n  | [音乐创作](https://top.aibase.com/discover/41-65)   | [41-65](https://rsshub.app/aibase/discover/41-65) |\n  | [设计创作](https://top.aibase.com/discover/41-66)   | [41-66](https://rsshub.app/aibase/discover/41-66) |\n  | [Ai图标生成](https://top.aibase.com/discover/41-67) | [41-67](https://rsshub.app/aibase/discover/41-67) |\n\n  #### 趣味\n\n  | 分类                                                  | ID                                                |\n  | ----------------------------------------------------- | ------------------------------------------------- |\n  | [Ai名字生成器](https://top.aibase.com/discover/42-68) | [42-68](https://rsshub.app/aibase/discover/42-68) |\n  | [游戏娱乐](https://top.aibase.com/discover/42-71)     | [42-71](https://rsshub.app/aibase/discover/42-71) |\n  | [其他](https://top.aibase.com/discover/42-72)         | [42-72](https://rsshub.app/aibase/discover/42-72) |\n\n  #### 开发编程\n\n  | 分类                                                | ID                                                |\n  | --------------------------------------------------- | ------------------------------------------------- |\n  | [开发编程](https://top.aibase.com/discover/43-73)   | [43-73](https://rsshub.app/aibase/discover/43-73) |\n  | [Ai开放平台](https://top.aibase.com/discover/43-74) | [43-74](https://rsshub.app/aibase/discover/43-74) |\n  | [Ai算力平台](https://top.aibase.com/discover/43-75) | [43-75](https://rsshub.app/aibase/discover/43-75) |\n\n  #### 聊天机器人\n\n  | 分类                                              | ID                                                |\n  | ------------------------------------------------- | ------------------------------------------------- |\n  | [智能聊天](https://top.aibase.com/discover/44-76) | [44-76](https://rsshub.app/aibase/discover/44-76) |\n  | [智能客服](https://top.aibase.com/discover/44-77) | [44-77](https://rsshub.app/aibase/discover/44-77) |\n\n  #### 翻译\n\n  | 分类                                          | ID                                                |\n  | --------------------------------------------- | ------------------------------------------------- |\n  | [翻译](https://top.aibase.com/discover/46-79) | [46-79](https://rsshub.app/aibase/discover/46-79) |\n\n  #### 教育学习\n\n  | 分类                                              | ID                                                |\n  | ------------------------------------------------- | ------------------------------------------------- |\n  | [教育学习](https://top.aibase.com/discover/47-80) | [47-80](https://rsshub.app/aibase/discover/47-80) |\n\n  #### 智能营销\n\n  | 分类                                              | ID                                                |\n  | ------------------------------------------------- | ------------------------------------------------- |\n  | [智能营销](https://top.aibase.com/discover/48-81) | [48-81](https://rsshub.app/aibase/discover/48-81) |\n\n  #### 法律\n\n  | 分类                                            | ID                                                    |\n  | ----------------------------------------------- | ----------------------------------------------------- |\n  | [法律](https://top.aibase.com/discover/138-139) | [138-139](https://rsshub.app/aibase/discover/138-139) |\n  </details>\n    ",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "top.aibase.com/discover/:id"
+            ]
+          },
+          {
+            "title": "图像处理 - 图片背景移除",
+            "source": [
+              "top.aibase.com/discover/37-49"
+            ],
+            "target": "/discover/37-49"
+          },
+          {
+            "title": "图像处理 - 图片无损放大",
+            "source": [
+              "top.aibase.com/discover/37-50"
+            ],
+            "target": "/discover/37-50"
+          },
+          {
+            "title": "图像处理 - 图片AI修复",
+            "source": [
+              "top.aibase.com/discover/37-51"
+            ],
+            "target": "/discover/37-51"
+          },
+          {
+            "title": "图像处理 - 图像生成",
+            "source": [
+              "top.aibase.com/discover/37-52"
+            ],
+            "target": "/discover/37-52"
+          },
+          {
+            "title": "图像处理 - Ai图片拓展",
+            "source": [
+              "top.aibase.com/discover/37-53"
+            ],
+            "target": "/discover/37-53"
+          },
+          {
+            "title": "图像处理 - Ai漫画生成",
+            "source": [
+              "top.aibase.com/discover/37-54"
+            ],
+            "target": "/discover/37-54"
+          },
+          {
+            "title": "图像处理 - Ai生成写真",
+            "source": [
+              "top.aibase.com/discover/37-55"
+            ],
+            "target": "/discover/37-55"
+          },
+          {
+            "title": "图像处理 - 电商图片制作",
+            "source": [
+              "top.aibase.com/discover/37-83"
+            ],
+            "target": "/discover/37-83"
+          },
+          {
+            "title": "图像处理 - Ai图像转视频",
+            "source": [
+              "top.aibase.com/discover/37-86"
+            ],
+            "target": "/discover/37-86"
+          },
+          {
+            "title": "视频创作 - 视频剪辑",
+            "source": [
+              "top.aibase.com/discover/38-56"
+            ],
+            "target": "/discover/38-56"
+          },
+          {
+            "title": "视频创作 - 生成视频",
+            "source": [
+              "top.aibase.com/discover/38-57"
+            ],
+            "target": "/discover/38-57"
+          },
+          {
+            "title": "视频创作 - Ai动画制作",
+            "source": [
+              "top.aibase.com/discover/38-58"
+            ],
+            "target": "/discover/38-58"
+          },
+          {
+            "title": "视频创作 - 字幕生成",
+            "source": [
+              "top.aibase.com/discover/38-84"
+            ],
+            "target": "/discover/38-84"
+          },
+          {
+            "title": "效率助手 - AI文档工具",
+            "source": [
+              "top.aibase.com/discover/39-59"
+            ],
+            "target": "/discover/39-59"
+          },
+          {
+            "title": "效率助手 - PPT",
+            "source": [
+              "top.aibase.com/discover/39-60"
+            ],
+            "target": "/discover/39-60"
+          },
+          {
+            "title": "效率助手 - 思维导图",
+            "source": [
+              "top.aibase.com/discover/39-61"
+            ],
+            "target": "/discover/39-61"
+          },
+          {
+            "title": "效率助手 - 表格处理",
+            "source": [
+              "top.aibase.com/discover/39-62"
+            ],
+            "target": "/discover/39-62"
+          },
+          {
+            "title": "效率助手 - Ai办公助手",
+            "source": [
+              "top.aibase.com/discover/39-63"
+            ],
+            "target": "/discover/39-63"
+          },
+          {
+            "title": "写作灵感 - 文案写作",
+            "source": [
+              "top.aibase.com/discover/40-64"
+            ],
+            "target": "/discover/40-64"
+          },
+          {
+            "title": "写作灵感 - 论文写作",
+            "source": [
+              "top.aibase.com/discover/40-88"
+            ],
+            "target": "/discover/40-88"
+          },
+          {
+            "title": "艺术灵感 - 音乐创作",
+            "source": [
+              "top.aibase.com/discover/41-65"
+            ],
+            "target": "/discover/41-65"
+          },
+          {
+            "title": "艺术灵感 - 设计创作",
+            "source": [
+              "top.aibase.com/discover/41-66"
+            ],
+            "target": "/discover/41-66"
+          },
+          {
+            "title": "艺术灵感 - Ai图标生成",
+            "source": [
+              "top.aibase.com/discover/41-67"
+            ],
+            "target": "/discover/41-67"
+          },
+          {
+            "title": "趣味 - Ai名字生成器",
+            "source": [
+              "top.aibase.com/discover/42-68"
+            ],
+            "target": "/discover/42-68"
+          },
+          {
+            "title": "趣味 - 游戏娱乐",
+            "source": [
+              "top.aibase.com/discover/42-71"
+            ],
+            "target": "/discover/42-71"
+          },
+          {
+            "title": "趣味 - 其他",
+            "source": [
+              "top.aibase.com/discover/42-72"
+            ],
+            "target": "/discover/42-72"
+          },
+          {
+            "title": "开发编程 - 开发编程",
+            "source": [
+              "top.aibase.com/discover/43-73"
+            ],
+            "target": "/discover/43-73"
+          },
+          {
+            "title": "开发编程 - Ai开放平台",
+            "source": [
+              "top.aibase.com/discover/43-74"
+            ],
+            "target": "/discover/43-74"
+          },
+          {
+            "title": "开发编程 - Ai算力平台",
+            "source": [
+              "top.aibase.com/discover/43-75"
+            ],
+            "target": "/discover/43-75"
+          },
+          {
+            "title": "聊天机器人 - 智能聊天",
+            "source": [
+              "top.aibase.com/discover/44-76"
+            ],
+            "target": "/discover/44-76"
+          },
+          {
+            "title": "聊天机器人 - 智能客服",
+            "source": [
+              "top.aibase.com/discover/44-77"
+            ],
+            "target": "/discover/44-77"
+          },
+          {
+            "title": "翻译 - 翻译",
+            "source": [
+              "top.aibase.com/discover/46-79"
+            ],
+            "target": "/discover/46-79"
+          },
+          {
+            "title": "教育学习 - 教育学习",
+            "source": [
+              "top.aibase.com/discover/47-80"
+            ],
+            "target": "/discover/47-80"
+          },
+          {
+            "title": "智能营销 - 智能营销",
+            "source": [
+              "top.aibase.com/discover/48-81"
+            ],
+            "target": "/discover/48-81"
+          },
+          {
+            "title": "法律 - 法律",
+            "source": [
+              "top.aibase.com/discover/138-139"
+            ],
+            "target": "/discover/138-139"
+          }
+        ],
+        "location": "discover.ts"
+      },
+      "/topic/:id?/:filter?": {
+        "path": "/topic/:id?/:filter?",
+        "name": "标签",
+        "url": "top.aibase.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/aibase/topic",
+        "parameters": {
+          "id": "标签，默认为空，即全部产品，可在对应标签页 URL 中找到",
+          "filter": "过滤器，默认为 `id` 即最新，可选 `pv` 即热门"
+        },
+        "description": ":::tip\n  若订阅 [AI](https://top.aibase.com/topic/AI)，网址为 `https://top.aibase.com/topic/AI`。截取 `https://top.aibase.com/topic` 到末尾的部分 `AI` 作为参数填入，此时路由为 [`/aibase/topic/AI`](https://rsshub.app/aibase/topic/AI)。\n  :::\n\n  :::tip\n  此处查看 [全部标签](https://top.aibase.com/topic)\n  :::\n\n  <details>\n    <summary>更多标签</summary>\n\n    | [AI](https://top.aibase.com/topic/AI)                                                               | [人工智能](https://top.aibase.com/topic/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD)                       | [图像生成](https://top.aibase.com/topic/%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90)            | [自动化](https://top.aibase.com/topic/%E8%87%AA%E5%8A%A8%E5%8C%96)                       | [AI 助手](https://top.aibase.com/topic/AI%E5%8A%A9%E6%89%8B)                  |\n    | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |\n    | [聊天机器人](https://top.aibase.com/topic/%E8%81%8A%E5%A4%A9%E6%9C%BA%E5%99%A8%E4%BA%BA)            | [个性化](https://top.aibase.com/topic/%E4%B8%AA%E6%80%A7%E5%8C%96)                                  | [社交媒体](https://top.aibase.com/topic/%E7%A4%BE%E4%BA%A4%E5%AA%92%E4%BD%93)            | [图像处理](https://top.aibase.com/topic/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86)            | [数据分析](https://top.aibase.com/topic/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90) |\n    | [自然语言处理](https://top.aibase.com/topic/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86) | [聊天](https://top.aibase.com/topic/%E8%81%8A%E5%A4%A9)                                             | [机器学习](https://top.aibase.com/topic/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0)            | [教育](https://top.aibase.com/topic/%E6%95%99%E8%82%B2)                                  | [内容创作](https://top.aibase.com/topic/%E5%86%85%E5%AE%B9%E5%88%9B%E4%BD%9C) |\n    | [生产力](https://top.aibase.com/topic/%E7%94%9F%E4%BA%A7%E5%8A%9B)                                  | [设计](https://top.aibase.com/topic/%E8%AE%BE%E8%AE%A1)                                             | [ChatGPT](https://top.aibase.com/topic/ChatGPT)                                          | [创意](https://top.aibase.com/topic/%E5%88%9B%E6%84%8F)                                  | [开源](https://top.aibase.com/topic/%E5%BC%80%E6%BA%90)                       |\n    | [写作](https://top.aibase.com/topic/%E5%86%99%E4%BD%9C)                                             | [效率助手](https://top.aibase.com/topic/%E6%95%88%E7%8E%87%E5%8A%A9%E6%89%8B)                       | [学习](https://top.aibase.com/topic/%E5%AD%A6%E4%B9%A0)                                  | [插件](https://top.aibase.com/topic/%E6%8F%92%E4%BB%B6)                                  | [翻译](https://top.aibase.com/topic/%E7%BF%BB%E8%AF%91)                       |\n    | [团队协作](https://top.aibase.com/topic/%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C)                       | [SEO](https://top.aibase.com/topic/SEO)                                                             | [营销](https://top.aibase.com/topic/%E8%90%A5%E9%94%80)                                  | [内容生成](https://top.aibase.com/topic/%E5%86%85%E5%AE%B9%E7%94%9F%E6%88%90)            | [AI 技术](https://top.aibase.com/topic/AI%E6%8A%80%E6%9C%AF)                  |\n    | [AI 工具](https://top.aibase.com/topic/AI%E5%B7%A5%E5%85%B7)                                        | [智能助手](https://top.aibase.com/topic/%E6%99%BA%E8%83%BD%E5%8A%A9%E6%89%8B)                       | [深度学习](https://top.aibase.com/topic/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0)            | [多语言支持](https://top.aibase.com/topic/%E5%A4%9A%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81) | [视频](https://top.aibase.com/topic/%E8%A7%86%E9%A2%91)                       |\n    | [艺术](https://top.aibase.com/topic/%E8%89%BA%E6%9C%AF)                                             | [文本生成](https://top.aibase.com/topic/%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90)                       | [开发编程](https://top.aibase.com/topic/%E5%BC%80%E5%8F%91%E7%BC%96%E7%A8%8B)            | [协作](https://top.aibase.com/topic/%E5%8D%8F%E4%BD%9C)                                  | [语言模型](https://top.aibase.com/topic/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B) |\n    | [工具](https://top.aibase.com/topic/%E5%B7%A5%E5%85%B7)                                             | [销售](https://top.aibase.com/topic/%E9%94%80%E5%94%AE)                                             | [生产力工具](https://top.aibase.com/topic/%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%B7%A5%E5%85%B7) | [AI 写作](https://top.aibase.com/topic/AI%E5%86%99%E4%BD%9C)                             | [创作](https://top.aibase.com/topic/%E5%88%9B%E4%BD%9C)                       |\n    | [工作效率](https://top.aibase.com/topic/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87)                       | [无代码](https://top.aibase.com/topic/%E6%97%A0%E4%BB%A3%E7%A0%81)                                  | [隐私保护](https://top.aibase.com/topic/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4)            | [视频编辑](https://top.aibase.com/topic/%E8%A7%86%E9%A2%91%E7%BC%96%E8%BE%91)            | [摘要](https://top.aibase.com/topic/%E6%91%98%E8%A6%81)                       |\n    | [多语言](https://top.aibase.com/topic/%E5%A4%9A%E8%AF%AD%E8%A8%80)                                  | [求职](https://top.aibase.com/topic/%E6%B1%82%E8%81%8C)                                             | [GPT](https://top.aibase.com/topic/GPT)                                                  | [音乐](https://top.aibase.com/topic/%E9%9F%B3%E4%B9%90)                                  | [视频创作](https://top.aibase.com/topic/%E8%A7%86%E9%A2%91%E5%88%9B%E4%BD%9C) |\n    | [设计工具](https://top.aibase.com/topic/%E8%AE%BE%E8%AE%A1%E5%B7%A5%E5%85%B7)                       | [搜索](https://top.aibase.com/topic/%E6%90%9C%E7%B4%A2)                                             | [写作工具](https://top.aibase.com/topic/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7)            | [视频生成](https://top.aibase.com/topic/%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90)            | [招聘](https://top.aibase.com/topic/%E6%8B%9B%E8%81%98)                       |\n    | [代码生成](https://top.aibase.com/topic/%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90)                       | [大型语言模型](https://top.aibase.com/topic/%E5%A4%A7%E5%9E%8B%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B) | [语音识别](https://top.aibase.com/topic/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB)            | [编程](https://top.aibase.com/topic/%E7%BC%96%E7%A8%8B)                                  | [在线工具](https://top.aibase.com/topic/%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7) |\n    | [API](https://top.aibase.com/topic/API)                                                             | [趣味](https://top.aibase.com/topic/%E8%B6%A3%E5%91%B3)                                             | [客户支持](https://top.aibase.com/topic/%E5%AE%A2%E6%88%B7%E6%94%AF%E6%8C%81)            | [语音合成](https://top.aibase.com/topic/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90)            | [图像](https://top.aibase.com/topic/%E5%9B%BE%E5%83%8F)                       |\n    | [电子商务](https://top.aibase.com/topic/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1)                       | [SEO 优化](https://top.aibase.com/topic/SEO%E4%BC%98%E5%8C%96)                                      | [AI 辅助](https://top.aibase.com/topic/AI%E8%BE%85%E5%8A%A9)                             | [AI 生成](https://top.aibase.com/topic/AI%E7%94%9F%E6%88%90)                             | [创作工具](https://top.aibase.com/topic/%E5%88%9B%E4%BD%9C%E5%B7%A5%E5%85%B7) |\n    | [免费](https://top.aibase.com/topic/%E5%85%8D%E8%B4%B9)                                             | [LinkedIn](https://top.aibase.com/topic/LinkedIn)                                                   | [博客](https://top.aibase.com/topic/%E5%8D%9A%E5%AE%A2)                                  | [写作助手](https://top.aibase.com/topic/%E5%86%99%E4%BD%9C%E5%8A%A9%E6%89%8B)            | [助手](https://top.aibase.com/topic/%E5%8A%A9%E6%89%8B)                       |\n    | [智能](https://top.aibase.com/topic/%E6%99%BA%E8%83%BD)                                             | [健康](https://top.aibase.com/topic/%E5%81%A5%E5%BA%B7)                                             | [多模态](https://top.aibase.com/topic/%E5%A4%9A%E6%A8%A1%E6%80%81)                       | [任务管理](https://top.aibase.com/topic/%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86)            | [电子邮件](https://top.aibase.com/topic/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6) |\n    | [笔记](https://top.aibase.com/topic/%E7%AC%94%E8%AE%B0)                                             | [搜索引擎](https://top.aibase.com/topic/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E)                       | [计算机视觉](https://top.aibase.com/topic/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89) | [社区](https://top.aibase.com/topic/%E7%A4%BE%E5%8C%BA)                                  | [效率](https://top.aibase.com/topic/%E6%95%88%E7%8E%87)                       |\n    | [知识管理](https://top.aibase.com/topic/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86)                       | [LLM](https://top.aibase.com/topic/LLM)                                                             | [智能聊天](https://top.aibase.com/topic/%E6%99%BA%E8%83%BD%E8%81%8A%E5%A4%A9)            | [社交](https://top.aibase.com/topic/%E7%A4%BE%E4%BA%A4)                                  | [语言学习](https://top.aibase.com/topic/%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0) |\n    | [娱乐](https://top.aibase.com/topic/%E5%A8%B1%E4%B9%90)                                             | [简历](https://top.aibase.com/topic/%E7%AE%80%E5%8E%86)                                             | [OpenAI](https://top.aibase.com/topic/OpenAI)                                            | [客户服务](https://top.aibase.com/topic/%E5%AE%A2%E6%88%B7%E6%9C%8D%E5%8A%A1)            | [室内设计](https://top.aibase.com/topic/%E5%AE%A4%E5%86%85%E8%AE%BE%E8%AE%A1) |\n  </details>\n    ",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "top.aibase.com/topic/:id"
+            ]
+          },
+          {
+            "title": "AI",
+            "source": [
+              "top.aibase.com/topic/AI"
+            ],
+            "target": "/topic/AI"
+          },
+          {
+            "title": "人工智能",
+            "source": [
+              "top.aibase.com/topic/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD"
+            ],
+            "target": "/topic/人工智能"
+          },
+          {
+            "title": "图像生成",
+            "source": [
+              "top.aibase.com/topic/%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90"
+            ],
+            "target": "/topic/图像生成"
+          },
+          {
+            "title": "自动化",
+            "source": [
+              "top.aibase.com/topic/%E8%87%AA%E5%8A%A8%E5%8C%96"
+            ],
+            "target": "/topic/自动化"
+          },
+          {
+            "title": "AI助手",
+            "source": [
+              "top.aibase.com/topic/AI%E5%8A%A9%E6%89%8B"
+            ],
+            "target": "/topic/AI助手"
+          },
+          {
+            "title": "聊天机器人",
+            "source": [
+              "top.aibase.com/topic/%E8%81%8A%E5%A4%A9%E6%9C%BA%E5%99%A8%E4%BA%BA"
+            ],
+            "target": "/topic/聊天机器人"
+          },
+          {
+            "title": "个性化",
+            "source": [
+              "top.aibase.com/topic/%E4%B8%AA%E6%80%A7%E5%8C%96"
+            ],
+            "target": "/topic/个性化"
+          },
+          {
+            "title": "社交媒体",
+            "source": [
+              "top.aibase.com/topic/%E7%A4%BE%E4%BA%A4%E5%AA%92%E4%BD%93"
+            ],
+            "target": "/topic/社交媒体"
+          },
+          {
+            "title": "图像处理",
+            "source": [
+              "top.aibase.com/topic/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86"
+            ],
+            "target": "/topic/图像处理"
+          },
+          {
+            "title": "数据分析",
+            "source": [
+              "top.aibase.com/topic/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"
+            ],
+            "target": "/topic/数据分析"
+          },
+          {
+            "title": "自然语言处理",
+            "source": [
+              "top.aibase.com/topic/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86"
+            ],
+            "target": "/topic/自然语言处理"
+          },
+          {
+            "title": "聊天",
+            "source": [
+              "top.aibase.com/topic/%E8%81%8A%E5%A4%A9"
+            ],
+            "target": "/topic/聊天"
+          },
+          {
+            "title": "机器学习",
+            "source": [
+              "top.aibase.com/topic/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"
+            ],
+            "target": "/topic/机器学习"
+          },
+          {
+            "title": "教育",
+            "source": [
+              "top.aibase.com/topic/%E6%95%99%E8%82%B2"
+            ],
+            "target": "/topic/教育"
+          },
+          {
+            "title": "内容创作",
+            "source": [
+              "top.aibase.com/topic/%E5%86%85%E5%AE%B9%E5%88%9B%E4%BD%9C"
+            ],
+            "target": "/topic/内容创作"
+          },
+          {
+            "title": "生产力",
+            "source": [
+              "top.aibase.com/topic/%E7%94%9F%E4%BA%A7%E5%8A%9B"
+            ],
+            "target": "/topic/生产力"
+          },
+          {
+            "title": "设计",
+            "source": [
+              "top.aibase.com/topic/%E8%AE%BE%E8%AE%A1"
+            ],
+            "target": "/topic/设计"
+          },
+          {
+            "title": "ChatGPT",
+            "source": [
+              "top.aibase.com/topic/ChatGPT"
+            ],
+            "target": "/topic/ChatGPT"
+          },
+          {
+            "title": "创意",
+            "source": [
+              "top.aibase.com/topic/%E5%88%9B%E6%84%8F"
+            ],
+            "target": "/topic/创意"
+          },
+          {
+            "title": "开源",
+            "source": [
+              "top.aibase.com/topic/%E5%BC%80%E6%BA%90"
+            ],
+            "target": "/topic/开源"
+          },
+          {
+            "title": "写作",
+            "source": [
+              "top.aibase.com/topic/%E5%86%99%E4%BD%9C"
+            ],
+            "target": "/topic/写作"
+          },
+          {
+            "title": "效率助手",
+            "source": [
+              "top.aibase.com/topic/%E6%95%88%E7%8E%87%E5%8A%A9%E6%89%8B"
+            ],
+            "target": "/topic/效率助手"
+          },
+          {
+            "title": "学习",
+            "source": [
+              "top.aibase.com/topic/%E5%AD%A6%E4%B9%A0"
+            ],
+            "target": "/topic/学习"
+          },
+          {
+            "title": "插件",
+            "source": [
+              "top.aibase.com/topic/%E6%8F%92%E4%BB%B6"
+            ],
+            "target": "/topic/插件"
+          },
+          {
+            "title": "翻译",
+            "source": [
+              "top.aibase.com/topic/%E7%BF%BB%E8%AF%91"
+            ],
+            "target": "/topic/翻译"
+          },
+          {
+            "title": "团队协作",
+            "source": [
+              "top.aibase.com/topic/%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C"
+            ],
+            "target": "/topic/团队协作"
+          },
+          {
+            "title": "SEO",
+            "source": [
+              "top.aibase.com/topic/SEO"
+            ],
+            "target": "/topic/SEO"
+          },
+          {
+            "title": "营销",
+            "source": [
+              "top.aibase.com/topic/%E8%90%A5%E9%94%80"
+            ],
+            "target": "/topic/营销"
+          },
+          {
+            "title": "内容生成",
+            "source": [
+              "top.aibase.com/topic/%E5%86%85%E5%AE%B9%E7%94%9F%E6%88%90"
+            ],
+            "target": "/topic/内容生成"
+          },
+          {
+            "title": "AI技术",
+            "source": [
+              "top.aibase.com/topic/AI%E6%8A%80%E6%9C%AF"
+            ],
+            "target": "/topic/AI技术"
+          },
+          {
+            "title": "AI工具",
+            "source": [
+              "top.aibase.com/topic/AI%E5%B7%A5%E5%85%B7"
+            ],
+            "target": "/topic/AI工具"
+          },
+          {
+            "title": "智能助手",
+            "source": [
+              "top.aibase.com/topic/%E6%99%BA%E8%83%BD%E5%8A%A9%E6%89%8B"
+            ],
+            "target": "/topic/智能助手"
+          },
+          {
+            "title": "深度学习",
+            "source": [
+              "top.aibase.com/topic/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0"
+            ],
+            "target": "/topic/深度学习"
+          },
+          {
+            "title": "多语言支持",
+            "source": [
+              "top.aibase.com/topic/%E5%A4%9A%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81"
+            ],
+            "target": "/topic/多语言支持"
+          },
+          {
+            "title": "视频",
+            "source": [
+              "top.aibase.com/topic/%E8%A7%86%E9%A2%91"
+            ],
+            "target": "/topic/视频"
+          },
+          {
+            "title": "艺术",
+            "source": [
+              "top.aibase.com/topic/%E8%89%BA%E6%9C%AF"
+            ],
+            "target": "/topic/艺术"
+          },
+          {
+            "title": "文本生成",
+            "source": [
+              "top.aibase.com/topic/%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90"
+            ],
+            "target": "/topic/文本生成"
+          },
+          {
+            "title": "开发编程",
+            "source": [
+              "top.aibase.com/topic/%E5%BC%80%E5%8F%91%E7%BC%96%E7%A8%8B"
+            ],
+            "target": "/topic/开发编程"
+          },
+          {
+            "title": "协作",
+            "source": [
+              "top.aibase.com/topic/%E5%8D%8F%E4%BD%9C"
+            ],
+            "target": "/topic/协作"
+          },
+          {
+            "title": "语言模型",
+            "source": [
+              "top.aibase.com/topic/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"
+            ],
+            "target": "/topic/语言模型"
+          },
+          {
+            "title": "工具",
+            "source": [
+              "top.aibase.com/topic/%E5%B7%A5%E5%85%B7"
+            ],
+            "target": "/topic/工具"
+          },
+          {
+            "title": "销售",
+            "source": [
+              "top.aibase.com/topic/%E9%94%80%E5%94%AE"
+            ],
+            "target": "/topic/销售"
+          },
+          {
+            "title": "生产力工具",
+            "source": [
+              "top.aibase.com/topic/%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%B7%A5%E5%85%B7"
+            ],
+            "target": "/topic/生产力工具"
+          },
+          {
+            "title": "AI写作",
+            "source": [
+              "top.aibase.com/topic/AI%E5%86%99%E4%BD%9C"
+            ],
+            "target": "/topic/AI写作"
+          },
+          {
+            "title": "创作",
+            "source": [
+              "top.aibase.com/topic/%E5%88%9B%E4%BD%9C"
+            ],
+            "target": "/topic/创作"
+          },
+          {
+            "title": "工作效率",
+            "source": [
+              "top.aibase.com/topic/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87"
+            ],
+            "target": "/topic/工作效率"
+          },
+          {
+            "title": "无代码",
+            "source": [
+              "top.aibase.com/topic/%E6%97%A0%E4%BB%A3%E7%A0%81"
+            ],
+            "target": "/topic/无代码"
+          },
+          {
+            "title": "隐私保护",
+            "source": [
+              "top.aibase.com/topic/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4"
+            ],
+            "target": "/topic/隐私保护"
+          },
+          {
+            "title": "视频编辑",
+            "source": [
+              "top.aibase.com/topic/%E8%A7%86%E9%A2%91%E7%BC%96%E8%BE%91"
+            ],
+            "target": "/topic/视频编辑"
+          },
+          {
+            "title": "摘要",
+            "source": [
+              "top.aibase.com/topic/%E6%91%98%E8%A6%81"
+            ],
+            "target": "/topic/摘要"
+          },
+          {
+            "title": "多语言",
+            "source": [
+              "top.aibase.com/topic/%E5%A4%9A%E8%AF%AD%E8%A8%80"
+            ],
+            "target": "/topic/多语言"
+          },
+          {
+            "title": "求职",
+            "source": [
+              "top.aibase.com/topic/%E6%B1%82%E8%81%8C"
+            ],
+            "target": "/topic/求职"
+          },
+          {
+            "title": "GPT",
+            "source": [
+              "top.aibase.com/topic/GPT"
+            ],
+            "target": "/topic/GPT"
+          },
+          {
+            "title": "音乐",
+            "source": [
+              "top.aibase.com/topic/%E9%9F%B3%E4%B9%90"
+            ],
+            "target": "/topic/音乐"
+          },
+          {
+            "title": "视频创作",
+            "source": [
+              "top.aibase.com/topic/%E8%A7%86%E9%A2%91%E5%88%9B%E4%BD%9C"
+            ],
+            "target": "/topic/视频创作"
+          },
+          {
+            "title": "设计工具",
+            "source": [
+              "top.aibase.com/topic/%E8%AE%BE%E8%AE%A1%E5%B7%A5%E5%85%B7"
+            ],
+            "target": "/topic/设计工具"
+          },
+          {
+            "title": "搜索",
+            "source": [
+              "top.aibase.com/topic/%E6%90%9C%E7%B4%A2"
+            ],
+            "target": "/topic/搜索"
+          },
+          {
+            "title": "写作工具",
+            "source": [
+              "top.aibase.com/topic/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7"
+            ],
+            "target": "/topic/写作工具"
+          },
+          {
+            "title": "视频生成",
+            "source": [
+              "top.aibase.com/topic/%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"
+            ],
+            "target": "/topic/视频生成"
+          },
+          {
+            "title": "招聘",
+            "source": [
+              "top.aibase.com/topic/%E6%8B%9B%E8%81%98"
+            ],
+            "target": "/topic/招聘"
+          },
+          {
+            "title": "代码生成",
+            "source": [
+              "top.aibase.com/topic/%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"
+            ],
+            "target": "/topic/代码生成"
+          },
+          {
+            "title": "大型语言模型",
+            "source": [
+              "top.aibase.com/topic/%E5%A4%A7%E5%9E%8B%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"
+            ],
+            "target": "/topic/大型语言模型"
+          },
+          {
+            "title": "语音识别",
+            "source": [
+              "top.aibase.com/topic/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB"
+            ],
+            "target": "/topic/语音识别"
+          },
+          {
+            "title": "编程",
+            "source": [
+              "top.aibase.com/topic/%E7%BC%96%E7%A8%8B"
+            ],
+            "target": "/topic/编程"
+          },
+          {
+            "title": "在线工具",
+            "source": [
+              "top.aibase.com/topic/%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7"
+            ],
+            "target": "/topic/在线工具"
+          },
+          {
+            "title": "API",
+            "source": [
+              "top.aibase.com/topic/API"
+            ],
+            "target": "/topic/API"
+          },
+          {
+            "title": "趣味",
+            "source": [
+              "top.aibase.com/topic/%E8%B6%A3%E5%91%B3"
+            ],
+            "target": "/topic/趣味"
+          },
+          {
+            "title": "客户支持",
+            "source": [
+              "top.aibase.com/topic/%E5%AE%A2%E6%88%B7%E6%94%AF%E6%8C%81"
+            ],
+            "target": "/topic/客户支持"
+          },
+          {
+            "title": "语音合成",
+            "source": [
+              "top.aibase.com/topic/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90"
+            ],
+            "target": "/topic/语音合成"
+          },
+          {
+            "title": "图像",
+            "source": [
+              "top.aibase.com/topic/%E5%9B%BE%E5%83%8F"
+            ],
+            "target": "/topic/图像"
+          },
+          {
+            "title": "电子商务",
+            "source": [
+              "top.aibase.com/topic/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1"
+            ],
+            "target": "/topic/电子商务"
+          },
+          {
+            "title": "SEO优化",
+            "source": [
+              "top.aibase.com/topic/SEO%E4%BC%98%E5%8C%96"
+            ],
+            "target": "/topic/SEO优化"
+          },
+          {
+            "title": "AI辅助",
+            "source": [
+              "top.aibase.com/topic/AI%E8%BE%85%E5%8A%A9"
+            ],
+            "target": "/topic/AI辅助"
+          },
+          {
+            "title": "AI生成",
+            "source": [
+              "top.aibase.com/topic/AI%E7%94%9F%E6%88%90"
+            ],
+            "target": "/topic/AI生成"
+          },
+          {
+            "title": "创作工具",
+            "source": [
+              "top.aibase.com/topic/%E5%88%9B%E4%BD%9C%E5%B7%A5%E5%85%B7"
+            ],
+            "target": "/topic/创作工具"
+          },
+          {
+            "title": "免费",
+            "source": [
+              "top.aibase.com/topic/%E5%85%8D%E8%B4%B9"
+            ],
+            "target": "/topic/免费"
+          },
+          {
+            "title": "LinkedIn",
+            "source": [
+              "top.aibase.com/topic/LinkedIn"
+            ],
+            "target": "/topic/LinkedIn"
+          },
+          {
+            "title": "博客",
+            "source": [
+              "top.aibase.com/topic/%E5%8D%9A%E5%AE%A2"
+            ],
+            "target": "/topic/博客"
+          },
+          {
+            "title": "写作助手",
+            "source": [
+              "top.aibase.com/topic/%E5%86%99%E4%BD%9C%E5%8A%A9%E6%89%8B"
+            ],
+            "target": "/topic/写作助手"
+          },
+          {
+            "title": "助手",
+            "source": [
+              "top.aibase.com/topic/%E5%8A%A9%E6%89%8B"
+            ],
+            "target": "/topic/助手"
+          },
+          {
+            "title": "智能",
+            "source": [
+              "top.aibase.com/topic/%E6%99%BA%E8%83%BD"
+            ],
+            "target": "/topic/智能"
+          },
+          {
+            "title": "健康",
+            "source": [
+              "top.aibase.com/topic/%E5%81%A5%E5%BA%B7"
+            ],
+            "target": "/topic/健康"
+          },
+          {
+            "title": "多模态",
+            "source": [
+              "top.aibase.com/topic/%E5%A4%9A%E6%A8%A1%E6%80%81"
+            ],
+            "target": "/topic/多模态"
+          },
+          {
+            "title": "任务管理",
+            "source": [
+              "top.aibase.com/topic/%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86"
+            ],
+            "target": "/topic/任务管理"
+          },
+          {
+            "title": "电子邮件",
+            "source": [
+              "top.aibase.com/topic/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6"
+            ],
+            "target": "/topic/电子邮件"
+          },
+          {
+            "title": "笔记",
+            "source": [
+              "top.aibase.com/topic/%E7%AC%94%E8%AE%B0"
+            ],
+            "target": "/topic/笔记"
+          },
+          {
+            "title": "搜索引擎",
+            "source": [
+              "top.aibase.com/topic/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E"
+            ],
+            "target": "/topic/搜索引擎"
+          },
+          {
+            "title": "计算机视觉",
+            "source": [
+              "top.aibase.com/topic/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89"
+            ],
+            "target": "/topic/计算机视觉"
+          },
+          {
+            "title": "社区",
+            "source": [
+              "top.aibase.com/topic/%E7%A4%BE%E5%8C%BA"
+            ],
+            "target": "/topic/社区"
+          },
+          {
+            "title": "效率",
+            "source": [
+              "top.aibase.com/topic/%E6%95%88%E7%8E%87"
+            ],
+            "target": "/topic/效率"
+          },
+          {
+            "title": "知识管理",
+            "source": [
+              "top.aibase.com/topic/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86"
+            ],
+            "target": "/topic/知识管理"
+          },
+          {
+            "title": "LLM",
+            "source": [
+              "top.aibase.com/topic/LLM"
+            ],
+            "target": "/topic/LLM"
+          },
+          {
+            "title": "智能聊天",
+            "source": [
+              "top.aibase.com/topic/%E6%99%BA%E8%83%BD%E8%81%8A%E5%A4%A9"
+            ],
+            "target": "/topic/智能聊天"
+          },
+          {
+            "title": "社交",
+            "source": [
+              "top.aibase.com/topic/%E7%A4%BE%E4%BA%A4"
+            ],
+            "target": "/topic/社交"
+          },
+          {
+            "title": "语言学习",
+            "source": [
+              "top.aibase.com/topic/%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0"
+            ],
+            "target": "/topic/语言学习"
+          },
+          {
+            "title": "娱乐",
+            "source": [
+              "top.aibase.com/topic/%E5%A8%B1%E4%B9%90"
+            ],
+            "target": "/topic/娱乐"
+          },
+          {
+            "title": "简历",
+            "source": [
+              "top.aibase.com/topic/%E7%AE%80%E5%8E%86"
+            ],
+            "target": "/topic/简历"
+          },
+          {
+            "title": "OpenAI",
+            "source": [
+              "top.aibase.com/topic/OpenAI"
+            ],
+            "target": "/topic/OpenAI"
+          },
+          {
+            "title": "客户服务",
+            "source": [
+              "top.aibase.com/topic/%E5%AE%A2%E6%88%B7%E6%9C%8D%E5%8A%A1"
+            ],
+            "target": "/topic/客户服务"
+          },
+          {
+            "title": "室内设计",
+            "source": [
+              "top.aibase.com/topic/%E5%AE%A4%E5%86%85%E8%AE%BE%E8%AE%A1"
+            ],
+            "target": "/topic/室内设计"
+          }
+        ],
+        "location": "topic.ts"
+      }
+    },
+    "name": "AIbase",
+    "url": "aibase.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": ""
+  },
   "aicaijing": {
     "routes": {
       "/:category?/:id?": {

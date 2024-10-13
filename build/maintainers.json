@@ -327,6 +327,12 @@
   "/ahjzu/news": [
     "Yuk-0v0"
   ],
+  "/aibase/discover/:id?": [
+    "nczitzk"
+  ],
+  "/aibase/topic/:id?/:filter?": [
+    "nczitzk"
+  ],
   "/aicaijing/:category?/:id?": [],
   "/aiea/seminars/:period": [
     "zxx-457"
