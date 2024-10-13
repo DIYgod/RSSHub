@@ -27568,6 +27568,46 @@
     "name": "环球法律评论",
     "url": "globallawreview.org"
   },
+  "gmcmonline": {
+    "routes": {
+      "/chinacustoms": {
+        "path": "/chinacustoms",
+        "name": "中国海关",
+        "url": "chinacustoms.gmcmonline.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/gmcmonline/chinacustoms",
+        "categories": [
+          "reading"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "chinacustoms.gmcmonline.com"
+            ],
+            "target": "/chinacustoms"
+          }
+        ],
+        "location": "chinacustoms.ts"
+      }
+    },
+    "name": "国门传媒在线",
+    "url": "gmcmonline.com",
+    "categories": [
+      "journal"
+    ],
+    "description": ""
+  },
   "go": {
     "routes": {
       "/mhlw/pdf/:category{.+}?": {

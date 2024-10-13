@@ -9113,6 +9113,19 @@
       }
     ]
   },
+  "gmcmonline.com": {
+    "_name": "国门传媒在线",
+    "chinacustoms": [
+      {
+        "title": "中国海关",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/"
+        ],
+        "target": "/gmcmonline/chinacustoms"
+      }
+    ]
+  },
   "mhlw.go.jp": {
     "_name": "JapanGov",
     "www": [

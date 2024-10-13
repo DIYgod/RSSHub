@@ -2459,6 +2459,9 @@
   "/globallawreview/": [
     "nczitzk"
   ],
+  "/gmcmonline/chinacustoms": [
+    "nczitzk"
+  ],
   "/go/mhlw/pdf/:category{.+}?": [
     "nczitzk"
   ],
