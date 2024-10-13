@@ -7,14 +7,23 @@ import { parseDate } from '@/utils/parse-date'; // 解析日期的工具函数
 export const route: Route = {
     path: '/zwgk',
     categories: ['government'],
+    example: '/pudong/zwgk',
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['pudong.gov.cn/:zwgk'],
             target: '/zwgk',
         },
     ],
-    name: '政务公开',
-    maintainers: ['Himingway'],
+    name: '浦东新区-政务公开',
+    maintainers: ['himingway'],
     handler,
 };
 
