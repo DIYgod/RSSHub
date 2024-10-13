@@ -19874,12 +19874,6 @@
         ],
         "location": "campaign.ts"
       },
-      "*": {
-        "path": "*",
-        "name": "Unknown",
-        "maintainers": [],
-        "location": "index.ts"
-      },
       "/new/:type": {
         "path": "/new/:type",
         "categories": [
@@ -19934,6 +19928,12 @@
           "nczitzk"
         ],
         "location": "ci-en/article.ts"
+      },
+      "*": {
+        "path": "*",
+        "name": "Unknown",
+        "maintainers": [],
+        "location": "z-index/index.ts"
       }
     },
     "name": "DLsite",

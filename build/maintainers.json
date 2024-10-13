@@ -1725,13 +1725,13 @@
   "/dlsite/campaign/:type/:free?": [
     "cssxsh"
   ],
-  "/dlsite*": [],
   "/dlsite/new/:type": [
     "cssxsh"
   ],
   "/dlsite/ci-en/:id/article": [
     "nczitzk"
   ],
+  "/dlsite*": [],
   "/dmzj/news/:category?": [
     "vzz64"
   ],
