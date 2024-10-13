@@ -3400,6 +3400,9 @@
   "/ipsw/index/:ptype/:pname": [
     "Jeason0228"
   ],
+  "/ipsw.dev/index/:productID": [
+    "RieN7"
+  ],
   "/iqilu/v/:category{.+}?": [],
   "/iqiyi/album/:id": [
     "TonyRL"

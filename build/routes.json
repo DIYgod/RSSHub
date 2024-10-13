@@ -38985,6 +38985,28 @@
     "name": "IPSW.me",
     "url": "ipsw.me"
   },
+  "ipsw.dev": {
+    "routes": {
+      "/index/:productID": {
+        "path": "/index/:productID",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/ipsw.dev/index/iPhone16,1",
+        "parameters": {
+          "productID": "Product ID"
+        },
+        "name": "Apple latest beta firmware",
+        "maintainers": [
+          "RieN7"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "IPSW.dev",
+    "url": "ipsw.dev",
+    "description": "Download the latest beta firmware for iPhone, iPad, Mac, Apple Vision Pro, and Apple TV. Check the signing status of the beta firmware."
+  },
   "iqilu": {
     "routes": {
       "/v/:category{.+}?": {
