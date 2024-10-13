@@ -26348,10 +26348,10 @@
         "source": [
           "/"
         ],
-        "target": "/uestc/gr"
+        "target": "/uestc/gr/:type?"
       }
     ],
-    "jwc": [
+    "www.jwc": [
       {
         "title": "教务处",
         "docs": "https://docs.rsshub.app/routes/university",

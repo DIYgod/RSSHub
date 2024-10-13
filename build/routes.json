@@ -74681,13 +74681,15 @@
         "description": "| 活动预告 | 通知公告 |\n  | -------- | -------- |\n  | hdyg     | tzgg     |",
         "location": "cqe.ts"
       },
-      "/gr": {
-        "path": "/gr",
+      "/gr/:type?": {
+        "path": "/gr/:type?",
         "categories": [
           "university"
         ],
-        "example": "/uestc/gr",
-        "parameters": {},
+        "example": "/uestc/gr/student",
+        "parameters": {
+          "type": "默认为 `important`"
+        },
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -74709,6 +74711,7 @@
           "mobyw"
         ],
         "url": "gr.uestc.edu.cn/",
+        "description": "  | 重要公告  | 教学管理 | 学位管理 | 学生管理 | 就业实践 |\n  | --------- | -------- | -------- | -------- | -------- |\n  | important | teaching | degree   | student  | practice |",
         "location": "gr.ts"
       },
       "/jwc/:type?": {
@@ -74731,7 +74734,7 @@
         "radar": [
           {
             "source": [
-              "jwc.uestc.edu.cn/"
+              "www.jwc.uestc.edu.cn/"
             ],
             "target": "/jwc"
           }
@@ -74741,8 +74744,8 @@
           "achjqz",
           "mobyw"
         ],
-        "url": "jwc.uestc.edu.cn/",
-        "description": "| 重要公告  | 学生事务公告 | 教师事务公告 | 教学新闻 | 办公室 |\n  | --------- | ------------ | ------------ | -------- | ------ |\n  | important | student      | teacher      | teach    | office |",
+        "url": "www.jwc.uestc.edu.cn/",
+        "description": "  | 重要公告  | 学生事务公告 | 教师事务公告 | 教学新闻 | 办公室 |\n  | --------- | ------------ | ------------ | -------- | ------ |\n  | important | student      | teacher      | teaching | office |",
         "location": "jwc.ts"
       },
       "/news/:type?": {
