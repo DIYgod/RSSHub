@@ -110,7 +110,7 @@ export const route: Route = {
     example: '/gmcmonline/chinacustoms',
     parameters: undefined,
     description: undefined,
-    categories: ['journal'],
+    categories: ['reading'],
 
     features: {
         requireConfig: false,
