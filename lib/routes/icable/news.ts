@@ -209,19 +209,19 @@ async function handler(ctx) {
                 const $ = load(detailResponse.data);
                 item.article = $('article.post-detail-wrap > p')
                     .map((i, el) => $(el).html())
-                    .get();
+                    .toArray();
                 item.video = $('article.post-detail-wrap video')
                     .map((i, el) => ({
                         sourceUrl: $(el).attr('data-url'),
                         thumbnailUrl: $(el).attr('data-thumbnail') ?? item.image.sourceUrl,
                     }))
-                    .get();
+                    .toArray();
                 item.category = $('.post-categories a')
                     .map((_, item) => {
                         item = $(item);
                         return item.text();
                     })
-                    .get();
+                    .toArray();
                 return item;
             })
         )
