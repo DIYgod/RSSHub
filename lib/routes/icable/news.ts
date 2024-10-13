@@ -84,7 +84,7 @@ function getListsByCateQuery(categoryId, limit) {
     return {
         query: `
   query getListsByCate($_category: Int) {
-    posts(first: ${limit}, after: \"\", where:{categoryId: $_category}) {
+    posts(first: ${limit}, after: "", where:{categoryId: $_category}) {
       pageInfo {
         hasPreviousPage
         startCursor
