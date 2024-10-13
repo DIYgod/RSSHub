@@ -44,97 +44,97 @@ export const route: Route = {
   :::`,
 };
 
+function getMainCategoryQuery() {
+    return {
+        query: `
+  query {
+    mainCategory {
+      id
+      name
+      description
+    }
+  }
+`,
+    };
+}
+
+function getCategoryEdgesQuery(mainCategoryId) {
+    return {
+        query: `
+    query GetCategoryEdges($_id: Int) {
+        categories(where: { parent: $_id, hideEmpty: true }) {
+          edges {
+            node {
+              id
+              databaseId
+              name
+            }
+          }
+        }
+      }
+    `,
+        variables: {
+            _id: mainCategoryId,
+        },
+        operationName: 'GetCategoryEdges',
+    };
+}
+
+function getListsByCateQuery(categoryId, limit) {
+    return {
+        query: `
+  query getListsByCate($_category: Int) {
+    posts(first: ${limit}, after: \"\", where:{categoryId: $_category}) {
+      pageInfo {
+        hasPreviousPage
+        startCursor
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          databaseId
+          title
+          date
+          chineseDate
+          uri
+          link
+          featuredImage{
+            node{
+              sourceUrl
+              caption
+            }
+          }
+          mainAndSubCategory {
+            main
+            sub
+          }
+          categories {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`,
+        variables: {
+            _category: categoryId,
+        },
+        operationName: 'getListsByCate',
+    };
+}
+
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '新聞資訊';
     const limit = ctx.req.query('limit') ?? 20;
     const embed = ctx.req.query('embed') === '1';
     const graphqlUrl = 'https://www.i-cable.com/graphql';
-
-    function getMainCategoryQuery() {
-        return {
-            query: `
-      query {
-        mainCategory {
-          id
-          name
-          description
-        }
-      }
-    `,
-        };
-    }
-
-    function getCategoryEdgesQuery(mainCategoryId) {
-        return {
-            query: `
-        query GetCategoryEdges($_id: Int) {
-            categories(where: { parent: $_id, hideEmpty: true }) {
-              edges {
-                node {
-                  id
-                  databaseId
-                  name
-                }
-              }
-            }
-          }
-        `,
-            variables: {
-                _id: mainCategoryId,
-            },
-            operationName: 'GetCategoryEdges',
-        };
-    }
-
-    function getListsByCateQuery(categoryId, limit) {
-        return {
-            query: `
-      query getListsByCate($_category: Int) {
-        posts(first: ${limit}, after: \"\", where:{categoryId: $_category}) {
-          pageInfo {
-            hasPreviousPage
-            startCursor
-            hasNextPage
-            endCursor
-          }
-          edges {
-            node {
-              id
-              databaseId
-              title
-              date
-              chineseDate
-              uri
-              link
-              featuredImage{
-                node{
-                  sourceUrl
-                  caption
-                }
-              }
-              mainAndSubCategory {
-                main
-                sub
-              }
-              categories {
-                edges {
-                  node {
-                    id
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-   `,
-            variables: {
-                _category: categoryId,
-            },
-            operationName: 'getListsByCate',
-        };
-    }
 
     const getMainCategoryResponse = await cache.tryGet(
         'icables-mainCategories',
