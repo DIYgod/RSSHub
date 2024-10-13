@@ -176,11 +176,11 @@ async function handler(ctx) {
                 post = $(post);
 
                 const postLink = post.find('.photo > a').attr('href');
-                const postTime = post.find('.time');
+                const postTime = post.find('.time > span');
                 const pubDate = postTime ? chrono.parseDate(postTime.text()) : new Date();
                 const media_displayVideo = await getMedia(postLink);
-                const postText = post
-                    .find('.photo-description')
+                const postText = postpi
+                    .find('.photo-action-description')
                     .text()
                     .trim()
                     .replaceAll(/[^\S\n]+/g, ' ')
