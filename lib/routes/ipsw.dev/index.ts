@@ -8,7 +8,7 @@ import { getCurrentPath } from '@/utils/helpers';
 export const route: Route = {
     path: '/index/:productID',
     categories: ['program-update'],
-    example: '/ipswdev/index/iPhone16,1',
+    example: '/ipsw.dev/index/iPhone16,1',
     parameters: {
         productID: 'Product ID',
     },
