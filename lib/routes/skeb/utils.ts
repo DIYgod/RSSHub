@@ -2,6 +2,8 @@ import { config } from '@/config';
 import { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
+import path from 'node:path';
 
 export const baseUrl = 'https://skeb.jp';
 
@@ -18,6 +20,7 @@ interface Work {
         src: string;
         srcset: string;
     };
+    preview_url: null | string;
     duration: null | number;
     nsfw: boolean;
     hardcore: boolean;
@@ -53,31 +56,71 @@ interface Creator {
 }
 
 export function processWork(work: Work): DataItem | null {
-    if (!work || typeof work !== 'object') {
+    if (!work || typeof work !== 'object' || work.private === true) {
         return null;
     }
 
-    if (work.private === true) {
-        return null;
-    }
+    const imageUrl = work.thumbnail_image_urls?.srcset?.split(',').pop()?.trim().split(' ')[0] || '';
+    const body = work.body || '';
 
-    const imageUrl = work.thumbnail_image_urls?.srcset?.split(',').pop()?.trim().split(' ')[0];
+    const audioUrl = work.genre === 'music' || work.genre === 'voice' ? work.preview_url : null;
+
+    const renderedHtml = art(path.join(__dirname, 'templates/work.art'), {
+        imageUrl,
+        body,
+        audioUrl,
+    });
+
     return {
         title: work.path || '',
         link: `${baseUrl}${work.path || ''}`,
-        description: `${imageUrl ? `<img src="${imageUrl}" /><br>` : ''}${work.body || ''}`,
+        description: renderedHtml,
     };
 }
+
+const skillMap = {
+    art: 'Illust',
+    voice: 'Voice',
+    novel: 'Novel',
+    video: 'Video',
+    music: 'Music',
+    correction: 'Advice',
+    comic: 'Comic',
+};
 
 export function processCreator(creator: Creator): DataItem | null {
     if (!creator || typeof creator !== 'object') {
         return null;
     }
 
+    const avatarUrl = creator.avatar_url || '';
+
+    let renderedHtml;
+
+    if (creator.creator) {
+        const acceptingCommissions = creator.acceptable ? 'Yes' : 'No';
+        const nsfwAcceptable = creator.nsfw_acceptable ? 'Yes' : 'No';
+
+        let skills = '';
+        if (Array.isArray(creator.skills) && creator.skills.length > 0) {
+            skills = creator.skills
+                .map((skill) => skillMap[skill.genre] || skill.genre)
+                .filter(Boolean)
+                .join(', ');
+        }
+
+        renderedHtml = art(path.join(__dirname, 'templates/creator.art'), {
+            avatarUrl,
+            acceptingCommissions,
+            nsfwAcceptable,
+            skills,
+        });
+    }
+
     return {
         title: creator.name || '',
         link: `${baseUrl}/@${creator.screen_name || ''}`,
-        description: creator.avatar_url ? `<img src="${creator.avatar_url}" />` : '',
+        description: renderedHtml,
     };
 }
 

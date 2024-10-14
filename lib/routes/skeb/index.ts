@@ -17,8 +17,6 @@ const categoryMap = {
     // Creators categories
     popular_creators: '人気クリエイター',
     new_creators: '新着クリエイター',
-    request_masters: 'リクエストマスター',
-    first_requesters: 'ファーストリクエスター',
 };
 
 const workCategories = new Set(['new_art_works', 'new_voice_works', 'new_novel_works', 'new_video_works', 'new_music_works', 'new_correction_works', 'new_comic_works', 'popular_works']);
@@ -71,7 +69,7 @@ export const route: Route = {
             target: '/new_correction_works',
         },
         {
-            title: '新着作品 (Music)',
+            title: '新着作品 (Comic)',
             source: ['skeb.jp'],
             target: '/new_comic_works',
         },
@@ -89,16 +87,6 @@ export const route: Route = {
             title: '新着クリエイター',
             source: ['skeb.jp'],
             target: '/new_creators',
-        },
-        {
-            title: 'リクエストマスター',
-            source: ['skeb.jp'],
-            target: '/request_masters',
-        },
-        {
-            title: 'ファーストリクエスター',
-            source: ['skeb.jp'],
-            target: '/first_requesters',
         },
     ],
 };
