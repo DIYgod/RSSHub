@@ -3,7 +3,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { baseUrl, processWork } from './utils';
 import cache from '@/utils/cache';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/works/:username',
