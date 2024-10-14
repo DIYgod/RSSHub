@@ -5372,7 +5372,8 @@
     "DIYgod"
   ],
   "/rsshub/transform/html/:url/:routeParams": [
-    "ttttmr"
+    "ttttmr",
+    "hyoban"
   ],
   "/rsshub/transform/json/:url/:routeParams": [
     "ttttmr"
