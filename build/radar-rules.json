@@ -20861,6 +20861,14 @@
           "/arxiv/cs.LG"
         ],
         "target": "/papers/arxiv/cs.LG"
+      },
+      {
+        "title": "arXiv Robotics (cs.RO)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.RO"
+        ],
+        "target": "/papers/arxiv/cs.RO"
       }
     ]
   },

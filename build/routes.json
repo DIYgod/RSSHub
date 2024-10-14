@@ -56546,7 +56546,7 @@
         "parameters": {
           "category": "Category, arXiv Artificial Intelligence (cs.AI) by default"
         },
-        "description": ":::tip\n  If you subscribe to [arXiv Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI)，where the URL is `https://papers.cool/arxiv/cs.AI`, extract the part `https://papers.cool/` to the end, and use it as the parameter to fill in. Therefore, the route will be [`/papers/arxiv/cs.AI`](https://rsshub.app/papers/arxiv/cs.AI).\n  :::\n\n  | Category                                              | id          |\n  | ----------------------------------------------------- | ----------- |\n  | arXiv Artificial Intelligence (cs.AI)                 | arxiv/cs.AI |\n  | arXiv Computation and Language (cs.CL)                | arxiv/cs.CL |\n  | arXiv Computer Vision and Pattern Recognition (cs.CV) | arxiv/cs.CV |\n  | arXiv Machine Learning (cs.LG)                        | arxiv/cs.LG |\n  ",
+        "description": ":::tip\n  If you subscribe to [arXiv Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI)，where the URL is `https://papers.cool/arxiv/cs.AI`, extract the part `https://papers.cool/` to the end, and use it as the parameter to fill in. Therefore, the route will be [`/papers/arxiv/cs.AI`](https://rsshub.app/papers/arxiv/cs.AI).\n  :::\n\n  | Category                                              | id          |\n  | ----------------------------------------------------- | ----------- |\n  | arXiv Artificial Intelligence (cs.AI)                 | arxiv/cs.AI |\n  | arXiv Computation and Language (cs.CL)                | arxiv/cs.CL |\n  | arXiv Computer Vision and Pattern Recognition (cs.CV) | arxiv/cs.CV |\n  | arXiv Machine Learning (cs.LG)                        | arxiv/cs.LG |\n  | arXiv Robotics (cs.RO)                        | arxiv/cs.RO |\n  ",
         "categories": [
           "journal"
         ],
@@ -56587,6 +56587,13 @@
               "papers.cool/arxiv/cs.LG"
             ],
             "target": "/arxiv/cs.LG"
+          },
+          {
+            "title": "arXiv Robotics (cs.RO)",
+            "source": [
+              "papers.cool/arxiv/cs.RO"
+            ],
+            "target": "/arxiv/cs.RO"
           }
         ],
         "location": "index.ts"
