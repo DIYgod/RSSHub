@@ -7,7 +7,7 @@ export const route: Route = {
     name: 'hko earthquake',
     maintainers: ['after9'],
     handler,
-    example: 'https://rsshub.app/hko/earthquake',
+    example: '/hko/earthquake',
     categories: ['forecast'],
     description: `来自香港天文台的全球5级以上地震记录`,
 };
