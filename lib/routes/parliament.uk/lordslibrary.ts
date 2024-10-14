@@ -38,7 +38,7 @@ async function handler(ctx) {
     const html = await page.evaluate(() => document.documentElement.innerHTML);
     await page.close();
     const $ = load(html);
-    const items = $('article.card--horizontal')
+    const items = $('div.l-box.l-box--no-border.card__text')
         .map((_, article) => ({
             title: $(article).find('.card__text a').text().trim(),
             link: $(article).find('.card__text a').attr('href'),
