@@ -51,8 +51,8 @@ importers:
         specifier: 7.119.1
         version: 7.119.1
       '@tonyrl/rand-user-agent':
-        specifier: 2.0.82
-        version: 2.0.82
+        specifier: 2.0.81
+        version: 2.0.81
       aes-js:
         specifier: 3.1.2
         version: 3.1.2
@@ -228,8 +228,8 @@ importers:
         specifier: 3.5.3
         version: 3.5.3
       tldts:
-        specifier: 6.1.50
-        version: 6.1.50
+        specifier: 6.1.51
+        version: 6.1.51
       tosource:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
@@ -1752,8 +1752,8 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@tonyrl/rand-user-agent@2.0.82':
-    resolution: {integrity: sha512-uh0pAksx59diJaKzmLjDFaeAEl8nIjdFq97L4hUOr8AlBZoiB1UWSXjDqt+lBTqRBxsfyE/joVql4/X8mL/rqA==}
+  '@tonyrl/rand-user-agent@2.0.81':
+    resolution: {integrity: sha512-pL8is8iSle1gVPeNGSIKNpnyDaxSChWAtG7Kbbx1wq91Y8NJ+O+S/AsNvrQ7GVzKZF7rPTiRGl2eHNDVjdR2/A==}
     engines: {node: '>=14.16'}
 
   '@tootallnate/quickjs-emscripten@0.23.0':
@@ -5256,8 +5256,8 @@ packages:
   tldts-core@6.1.51:
     resolution: {integrity: sha512-bu9oCYYWC1iRjx+3UnAjqCsfrWNZV1ghNQf49b3w5xE8J/tNShHTzp5syWJfwGH+pxUgTTLUnzHnfuydW7wmbg==}
 
-  tldts@6.1.50:
-    resolution: {integrity: sha512-q9GOap6q3KCsLMdOjXhWU5jVZ8/1dIib898JBRLsN+tBhENpBDcAVQbE0epADOjw11FhQQy9AcbqKGBQPUfTQA==}
+  tldts@6.1.51:
+    resolution: {integrity: sha512-33lfQoL0JsDogIbZ8fgRyvv77GnRtwkNE/MOKocwUgPO1WrSfsq7+vQRKxRQZai5zd+zg97Iv9fpFQSzHyWdLA==}
     hasBin: true
 
   tmp@0.0.33:
@@ -7219,7 +7219,7 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tonyrl/rand-user-agent@2.0.82': {}
+  '@tonyrl/rand-user-agent@2.0.81': {}
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
@@ -11188,7 +11188,7 @@ snapshots:
 
   tldts-core@6.1.51: {}
 
-  tldts@6.1.50:
+  tldts@6.1.51:
     dependencies:
       tldts-core: 6.1.51
 
@@ -11228,7 +11228,7 @@ snapshots:
 
   tough-cookie@5.0.0:
     dependencies:
-      tldts: 6.1.50
+      tldts: 6.1.51
 
   tr46@0.0.3: {}
 
