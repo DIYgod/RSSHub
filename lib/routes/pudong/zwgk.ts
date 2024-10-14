@@ -64,7 +64,7 @@ async function handler() {
         return {
             title: item.title,
             link: item.url,
-            pubDate: parseDate(item.issue_date),
+            pubDate: parseDate(item.display_date),
             description: fullArticle,
         };
     });
