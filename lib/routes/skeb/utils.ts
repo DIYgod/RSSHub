@@ -94,7 +94,8 @@ export async function getFollowingsItems(username: string, path: 'friend_works' 
             });
             return data;
         },
-        config.cache.routeExpire
+        config.cache.routeExpire,
+        false
     );
 
     if (!followings_data || typeof followings_data !== 'object') {

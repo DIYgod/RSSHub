@@ -122,7 +122,8 @@ async function handler(ctx): Promise<Data> {
             const data = await ofetch(url);
             return data;
         },
-        config.cache.routeExpire
+        config.cache.routeExpire,
+        false
     );
 
     if (!apiData || typeof apiData !== 'object') {

@@ -2,7 +2,6 @@ import { Data, DataItem, Route } from '@/types';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { getFollowingsItems } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/following_works/:username',
@@ -23,7 +22,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Skeb Following Works',
+    name: 'Following Works',
     maintainers: ['SnowAgar25'],
     handler,
     radar: [
@@ -38,10 +37,6 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const username = ctx.req.param('username');
-
-    if (!username) {
-        throw new InvalidParameterError('Invalid username');
-    }
 
     if (!config.skeb || !config.skeb.bearer_token) {
         throw new ConfigNotFoundError('Skeb followings RSS is disabled due to the lack of relevant config');
