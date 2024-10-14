@@ -17,7 +17,7 @@ const parseList = async (ctx, type) => {
     const response = await got(link);
     const $ = load(response.data);
 
-    const resultList = await parseArticle(typeMap[type].name, $);
+    const resultList = await parseArticle($);
 
     return {
         title,
@@ -26,7 +26,7 @@ const parseList = async (ctx, type) => {
     };
 };
 
-async function parseArticle(type, $) {
+async function parseArticle($) {
     const data = $('#wp_news_w6').find('li').toArray();
 
     const items = data.map((item) => {
