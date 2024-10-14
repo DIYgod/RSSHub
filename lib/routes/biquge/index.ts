@@ -6,25 +6,6 @@ import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-const allowHost = new Set([
-    'www.xbiquwx.la',
-    'www.biqu5200.net',
-    'www.xbiquge.so',
-    'www.biqugeu.net',
-    'www.b520.cc',
-    'www.ahfgb.com',
-    'www.ibiquge.la',
-    'www.biquge.tv',
-    'www.bswtan.com',
-    'www.biquge.co',
-    'www.bqzhh.com',
-    'www.biqugse.com',
-    'www.ibiquge.info',
-    'www.ishuquge.com',
-    'www.mayiwxw.com',
-]);
 
 export const route: Route = {
     path: '*',
@@ -36,9 +17,6 @@ export const route: Route = {
 async function handler(ctx) {
     const rootUrl = getSubPath(ctx).split('/').slice(1, 4).join('/');
     const currentUrl = getSubPath(ctx).slice(1);
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.has(new URL(rootUrl).hostname)) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
-    }
 
     const response = await got({
         method: 'get',

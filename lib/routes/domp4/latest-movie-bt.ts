@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { getItemList as detailItemList } from './detail';
 
-import { defaultDomain, ensureDomain } from './utils';
+import { defaultDomain } from './utils';
 import cache from '@/utils/cache';
 
 function getItemList($) {
@@ -47,7 +47,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { domain, second } = ctx.req.query();
-    const hostUrl = ensureDomain(ctx, domain);
+    const hostUrl = `https://${domain ?? defaultDomain}`;
     const latestUrl = `${hostUrl}/custom/update.html`;
     const res = await got.get(latestUrl);
     const $ = load(res.data);

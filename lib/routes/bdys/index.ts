@@ -10,11 +10,6 @@ import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import asyncPool from 'tiny-async-pool';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-
-// Visit https://www.bdys.me for the list of domains
-const allowDomains = new Set(['52bdys.com', 'bde4.icu', 'bdys01.com']);
 
 export const route: Route = {
     path: '/:caty?/:type?/:area?/:year?/:order?',
@@ -107,9 +102,6 @@ async function handler(ctx) {
     const order = ctx.req.param('order') || '0';
 
     const site = ctx.req.query('domain') || 'bdys01.com';
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowDomains.has(new URL(`https://${site}`).hostname)) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
-    }
 
     const rootUrl = `https://www.${site}`;
     const currentUrl = `${rootUrl}/s/${caty}?${type === 'all' ? '' : '&type=' + type}${area === 'all' ? '' : '&area=' + area}${year === 'all' ? '' : '&year=' + year}&order=${order}`;

@@ -96,9 +96,6 @@ async function getAccountIdByAcct(acct) {
     if (!(site && acctDomain)) {
         throw new ConfigNotFoundError('Mastodon RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowSiteList.includes(site)) {
-        throw new ConfigNotFoundError(`RSS for this domain is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true' or 'MASTODON_API_HOST' is set.`);
-    }
 
     const search_url = `https://${site}/api/v2/search`;
     const cacheUid = `mastodon_acct_id/${site}/${acct}`;
