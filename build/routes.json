@@ -34070,7 +34070,8 @@
         "name": "Hex-Rays News",
         "maintainers": [
           "hellodword ",
-          "TonyRL"
+          "TonyRL",
+          "Mas0n"
         ],
         "url": "hex-rays.com/",
         "location": "index.ts"
