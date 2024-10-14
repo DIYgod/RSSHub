@@ -50,7 +50,7 @@
         "*.yml": "eslint --cache --fix"
     },
     "dependencies": {
-        "@hono/node-server": "1.13.1",
+        "@hono/node-server": "1.13.2",
         "@hono/zod-openapi": "0.16.4",
         "@notionhq/client": "2.2.15",
         "@opentelemetry/api": "1.9.0",
@@ -62,7 +62,7 @@
         "@opentelemetry/semantic-conventions": "1.27.0",
         "@postlight/parser": "2.2.3",
         "@rss3/sdk": "0.0.22",
-        "@scalar/hono-api-reference": "0.5.152",
+        "@scalar/hono-api-reference": "0.5.153",
         "@sentry/node": "7.119.1",
         "@tonyrl/rand-user-agent": "2.0.81",
         "aes-js": "3.1.2",
@@ -135,7 +135,7 @@
         "zod": "3.23.8"
     },
     "devDependencies": {
-        "@babel/preset-env": "7.25.7",
+        "@babel/preset-env": "7.25.8",
         "@babel/preset-typescript": "7.25.7",
         "@eslint/eslintrc": "3.1.0",
         "@eslint/js": "9.12.0",
