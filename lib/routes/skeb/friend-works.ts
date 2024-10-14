@@ -11,9 +11,9 @@ export const route: Route = {
     features: {
         requireConfig: [
             {
-                name: 'Bearer Token',
+                name: 'SKEB_BEARER_TOKEN',
                 optional: false,
-                description: 'Bearer Token，在瀏覽器開發者工具（F12）的主控台中輸入 `localStorage.getItem("token")` 獲取',
+                description: '在瀏覽器開發者工具（F12）的主控台中輸入 `localStorage.getItem("token")` 獲取',
             },
         ],
         requirePuppeteer: false,
@@ -38,7 +38,7 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const username = ctx.req.param('username');
 
-    if (!config.skeb || !config.skeb.bearer_token) {
+    if (!config.skeb || !config.skeb.bearerToken) {
         throw new ConfigNotFoundError('Skeb followings RSS is disabled due to the lack of relevant config');
     }
 

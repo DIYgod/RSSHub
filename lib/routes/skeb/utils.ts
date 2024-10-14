@@ -135,7 +135,7 @@ export async function getFollowingsItems(username: string, path: 'friend_works' 
         async () => {
             const data = await ofetch(url, {
                 headers: {
-                    Authorization: `Bearer ${config.skeb.bearer_token}`,
+                    Authorization: `Bearer ${config.skeb.bearerToken}`,
                 },
             });
             return data;
