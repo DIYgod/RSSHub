@@ -47,7 +47,7 @@ async function handler(ctx): Promise<Data> {
     const url = `${baseUrl}/api/users/${username.replace('@', '')}/works`;
 
     const items = await cache.tryGet(url, async () => {
-        const fetchData = async () => {
+        const fetchData = async (retryCount = 0, maxRetries = 3) => {
             const data = await ofetch(url, {
                 retry: 0,
                 method: 'GET',
@@ -58,10 +58,13 @@ async function handler(ctx): Promise<Data> {
                     Authorization: `Bearer ${config.skeb.bearer_token}`,
                 },
             }).catch((error) => {
+                if (retryCount >= maxRetries) {
+                    throw new Error('Max retries reached');
+                }
                 const newRequestKey = error.response?._data?.match(/request_key=(.*?);/)?.[1];
                 if (newRequestKey) {
                     cache.set('skeb:request_key', newRequestKey);
-                    return fetchData();
+                    return fetchData(retryCount + 1, maxRetries);
                 }
                 throw error;
             });
