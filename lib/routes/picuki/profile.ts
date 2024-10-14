@@ -81,13 +81,14 @@ async function handler(ctx) {
 
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'profile';
-    const functionalFlag = ctx.req.param('functionalFlag');
+    const functionalFlag = ctx.req.param('functionalFlag') ?? '1';
     const displayVideo = functionalFlag !== '0';
     const includeStories = functionalFlag === '10';
 
     const profileUrl = `https://www.picuki.com/${type === 'tagged' ? 'profile-tagged' : 'profile'}/${id}`;
 
-    const data = await cache.tryGet(`picuki-${id}-${type}-${includeStories}`, () => puppeteerGet(profileUrl, browser, includeStories), config.cache.routeExpire, false);
+    const key = `picuki-${id}-${type}-${includeStories}`;
+    const data = await cache.tryGet(key, () => puppeteerGet(profileUrl, browser, includeStories), config.cache.routeExpire, false);
     const $ = load(data);
 
     const profileName = $('.profile-name-bottom').text();
