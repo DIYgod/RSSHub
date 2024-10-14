@@ -27,7 +27,7 @@ export const route: Route = {
     path: '/:category',
     categories: ['picture'],
     example: '/new_art_works',
-    parameters: { category: '見下表' },
+    parameters: { category: 'Category, the div id of the section title on the homepage. Default is new_art_works' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -42,69 +42,65 @@ export const route: Route = {
     radar: [
         {
             title: '新着作品 (Illust)',
-            source: ['skeb.jp/#new_art_works'],
+            source: ['skeb.jp'],
             target: '/new_art_works',
         },
         {
             title: '新着作品 (Voice)',
-            source: ['skeb.jp/#new_voice_works'],
+            source: ['skeb.jp'],
             target: '/new_voice_works',
         },
         {
             title: '新着作品 (Novel)',
-            source: ['skeb.jp/#new_novel_works'],
+            source: ['skeb.jp'],
             target: '/new_novel_works',
         },
         {
             title: '新着作品 (Video)',
-            source: ['skeb.jp/#new_video_works'],
+            source: ['skeb.jp'],
             target: '/new_video_works',
         },
         {
             title: '新着作品 (Music)',
-            source: ['skeb.jp/#new_music_works'],
+            source: ['skeb.jp'],
             target: '/new_music_works',
         },
         {
             title: '新着作品 (Advice)',
-            source: ['skeb.jp/#new_correction_works'],
+            source: ['skeb.jp'],
             target: '/new_correction_works',
         },
         {
             title: '新着作品 (Music)',
-            source: ['skeb.jp/#new_comic_works'],
+            source: ['skeb.jp'],
             target: '/new_comic_works',
         },
         {
             title: '人気の作品 (Popular)',
-            source: ['skeb.jp/#popular_works'],
+            source: ['skeb.jp'],
             target: '/popular_works',
         },
         {
             title: '人気クリエイター',
-            source: ['skeb.jp/#popular_creators'],
+            source: ['skeb.jp'],
             target: '/popular_creators',
         },
         {
             title: '新着クリエイター',
-            source: ['skeb.jp/#new_creators'],
+            source: ['skeb.jp'],
             target: '/new_creators',
         },
         {
             title: 'リクエストマスター',
-            source: ['skeb.jp/#request_masters'],
+            source: ['skeb.jp'],
             target: '/request_masters',
         },
         {
             title: 'ファーストリクエスター',
-            source: ['skeb.jp/#first_requesters'],
+            source: ['skeb.jp'],
             target: '/first_requesters',
         },
     ],
-    description: `
-  | Illust | Voice | Novel | Video | Music | Advice | Comic | 人気の作品 | 人気クリエイター | 新着クリエイター | リクエストマスター | ファーストリクエスター |
-  | -------- | ------ | -------- | -------- | ---------- | ---------- | -------- | ---------- | ---------------- | ---------------- | -------------------- | ------------------------ |
-  | new_art_works | new_voice_works | new_novel_works | new_video_works | new_music_works | new_correction_works | new_comic_works | popular_works | popular_creators | new_creators | request_masters | first_requesters |`,
 };
 
 async function handler(ctx): Promise<Data> {
