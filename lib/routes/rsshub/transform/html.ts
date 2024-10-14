@@ -113,30 +113,30 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
         const itemContentSelector = routeParams.get('itemContent');
         if (itemContentSelector) {
             items = await Promise.all(
-                items.map(async (item) => {
+                items.map((item) => {
                     if (!item.link) {
                         return item;
                     }
 
-                    const response = await cache.tryGet(item.link, () =>
-                        got({
+                    return cache.tryGet(item.link, async () => {
+                        const response = await got({
                             method: 'get',
                             url: item.link,
-                        })
-                    );
-                    if (!response || typeof response === 'string') {
+                        });
+                        if (!response || typeof response === 'string') {
+                            return item;
+                        }
+
+                        const $ = load(response.data);
+                        const content = $(itemContentSelector).html();
+                        if (!content) {
+                            return item;
+                        }
+
+                        item.description = sanitizeHtml(content, { allowedTags: [...sanitizeHtml.defaults.allowedTags, 'img'] });
+
                         return item;
-                    }
-
-                    const $ = load(response.data);
-                    const content = $(itemContentSelector).html();
-                    if (!content) {
-                        return item;
-                    }
-
-                    item.description = sanitizeHtml(content, { allowedTags: [...sanitizeHtml.defaults.allowedTags, 'img'] });
-
-                    return item;
+                    });
                 })
             );
         }
