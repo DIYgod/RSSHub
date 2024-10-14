@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: 1.13.2
-        version: 1.13.2(hono@4.6.3)
+        version: 1.13.2(hono@4.6.4)
       '@hono/zod-openapi':
         specifier: 0.16.4
-        version: 0.16.4(hono@4.6.3)(zod@3.23.8)
+        version: 0.16.4(hono@4.6.4)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -46,7 +46,7 @@ importers:
         version: 0.0.22
       '@scalar/hono-api-reference':
         specifier: 0.5.153
-        version: 0.5.153(hono@4.6.3)
+        version: 0.5.153(hono@4.6.4)
       '@sentry/node':
         specifier: 7.119.1
         version: 7.119.1
@@ -108,8 +108,8 @@ importers:
         specifier: 144.0.0
         version: 144.0.0
       hono:
-        specifier: 4.6.3
-        version: 4.6.3
+        specifier: 4.6.4
+        version: 4.6.4
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -2681,8 +2681,8 @@ packages:
   dezalgo@1.0.4:
     resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   directory-import@3.3.1:
@@ -3407,8 +3407,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.6.3:
-    resolution: {integrity: sha512-0LeEuBNFeSHGqZ9sNVVgZjB1V5fmhkBSB0hZrpqStSMLOWgfLy0dHOvrjbJh0H2khsjet6rbHfWTHY0kpYThKQ==}
+  hono@4.6.4:
+    resolution: {integrity: sha512-T5WqBkTOcIQblqBKB5mpzaH/A+dSpvVe938xZJCHOmOuYfF7DSwE/9/10+BMvwSPq9N/f6LiQ38HxrZSQOsXKw==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -6732,20 +6732,20 @@ snapshots:
     dependencies:
       levn: 0.4.1
 
-  '@hono/node-server@1.13.2(hono@4.6.3)':
+  '@hono/node-server@1.13.2(hono@4.6.4)':
     dependencies:
-      hono: 4.6.3
+      hono: 4.6.4
 
-  '@hono/zod-openapi@0.16.4(hono@4.6.3)(zod@3.23.8)':
+  '@hono/zod-openapi@0.16.4(hono@4.6.4)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.2.0(zod@3.23.8)
-      '@hono/zod-validator': 0.3.0(hono@4.6.3)(zod@3.23.8)
-      hono: 4.6.3
+      '@hono/zod-validator': 0.3.0(hono@4.6.4)(zod@3.23.8)
+      hono: 4.6.4
       zod: 3.23.8
 
-  '@hono/zod-validator@0.3.0(hono@4.6.3)(zod@3.23.8)':
+  '@hono/zod-validator@0.3.0(hono@4.6.4)(zod@3.23.8)':
     dependencies:
-      hono: 4.6.3
+      hono: 4.6.4
       zod: 3.23.8
 
   '@humanfs/core@0.19.0': {}
@@ -7013,7 +7013,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.7
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -7148,10 +7148,10 @@ snapshots:
       '@rss3/api-core': 0.0.22
       '@rss3/api-utils': 0.0.22
 
-  '@scalar/hono-api-reference@0.5.153(hono@4.6.3)':
+  '@scalar/hono-api-reference@0.5.153(hono@4.6.4)':
     dependencies:
       '@scalar/types': 0.0.14
-      hono: 4.6.3
+      hono: 4.6.4
 
   '@scalar/openapi-types@0.1.2': {}
 
@@ -8217,7 +8217,7 @@ snapshots:
       asap: 2.0.6
       wrappy: 1.0.2
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -9140,7 +9140,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.6.3: {}
+  hono@4.6.4: {}
 
   hookable@5.5.3: {}
 
