@@ -23,8 +23,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { topic } = ctx.req.param();
-    const baseUrl = 'https://lordslibrary.parliament.uk/type';
-    const url = `${baseUrl}/${topic}/`;
+    const baseUrl = 'https://lordslibrary.parliament.uk';
+    const url = `${baseUrl}/type/${topic}/`;
     const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -49,7 +49,7 @@ async function handler(ctx) {
     browser.close();
     return {
         title: `parliament - lordslibrary - ${topic}`,
-        link: baseUrl,
+        link: url,
         item: items,
     };
 }
