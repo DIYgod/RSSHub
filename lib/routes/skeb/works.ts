@@ -1,10 +1,9 @@
 import { Data, DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { processWork, baseUrl } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { baseUrl, processWork } from './utils';
+import cache from '@/utils/cache';
+import { ofetch } from 'ofetch';
 
 export const route: Route = {
     path: '/works/:username',
@@ -13,11 +12,6 @@ export const route: Route = {
     parameters: { username: 'Skeb Username with @' },
     features: {
         requireConfig: [
-            {
-                name: 'Request_Key',
-                optional: false,
-                description: '從 Cookie 中獲取',
-            },
             {
                 name: 'Bearer_Token',
                 optional: false,
@@ -46,10 +40,6 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const username = ctx.req.param('username');
 
-    if (!username) {
-        throw new InvalidParameterError('Invalid username');
-    }
-
     if (!config.skeb || !config.skeb.bearer_token) {
         throw new ConfigNotFoundError('Skeb works RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
@@ -57,16 +47,28 @@ async function handler(ctx): Promise<Data> {
     const url = `${baseUrl}/api/users/${username.replace('@', '')}/works`;
 
     const items = await cache.tryGet(url, async () => {
-        const data = await ofetch(url, {
-            method: 'GET',
-            query: { role: 'creator', sort: 'date', offset: '0' },
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0',
-                Cookie: `request_key=${config.skeb.request_key}`,
-                Authorization: `Bearer ${config.skeb.bearer_token}`,
-            },
-            parseResponse: JSON.parse,
-        });
+        const fetchData = async () => {
+            const data = await ofetch(url, {
+                retry: 0,
+                method: 'GET',
+                query: { role: 'creator', sort: 'date', offset: '0' },
+                headers: {
+                    'User-Agent': config.ua,
+                    Cookie: `request_key=${cache.get('skeb:request_key')}`,
+                    Authorization: `Bearer ${config.skeb.bearer_token}`,
+                },
+            }).catch((error) => {
+                const newRequestKey = error.response?._data?.match(/request_key=(.*?);/)?.[1];
+                if (newRequestKey) {
+                    cache.set('skeb:request_key', newRequestKey);
+                    return fetchData();
+                }
+                throw error;
+            });
+            return data;
+        };
+
+        const data = await fetchData();
 
         if (!data || !Array.isArray(data)) {
             throw new Error('Invalid data received from API');
