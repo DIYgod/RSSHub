@@ -4,6 +4,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import sanitizeHtml from 'sanitize-html';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/transform/html/:url/:routeParams',
@@ -113,10 +114,20 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
         if (itemContentSelector) {
             items = await Promise.all(
                 items.map(async (item) => {
-                    const response = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
+                    if (!item.link) {
+                        return item;
+                    }
+
+                    const response = await cache.tryGet(item.link, () =>
+                        got({
+                            method: 'get',
+                            url: item.link,
+                        })
+                    );
+                    if (!response || typeof response === 'string') {
+                        return item;
+                    }
+
                     const $ = load(response.data);
                     const content = $(itemContentSelector).html();
                     if (!content) {
