@@ -89,13 +89,14 @@ async function renderNotesFulltext(notes, url) {
     const promises = notes.flatMap((note) =>
         note.map(async ({ noteCard }) => {
             const link = `${url}/${noteCard.noteId}`;
-            const { title, description } = await getFullNote(link);
+            const { title, description, pubDate } = await getFullNote(link);
             return {
                 title,
                 link,
                 description,
                 author: noteCard.user.nickName,
                 guid: noteCard.noteId,
+                pubDate,
             };
         })
     );
@@ -129,11 +130,13 @@ async function getFullNote(link) {
         desc = desc.replaceAll(/\[.*?\]/g, '');
         desc = desc.replaceAll(/#(.*?)#/g, '#$1');
         desc = desc.replaceAll('\n', '<br>');
+        const pubDate = new Date(note.time);
         const description = `${images.map((image) => `<img src="${image}">`).join('')}<br>${title}<br>${desc}`;
         return {
             title,
             description,
+            pubDate,
         };
-    })) as Promise<{ title: string; description: string }>;
+    })) as Promise<{ title: string; description: string; pubDate: Date }>;
     return data;
 }
