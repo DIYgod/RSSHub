@@ -43,7 +43,7 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
 | \`itemPubDate\`     | The HTML elements as \`pubDate\` in \`item\` using CSS selector                                               | \`string\`      | \`item\` element         |
 | \`itemPubDateAttr\` | The attributes of \`pubDate\` element as pubDate                                                              | \`string\`      | Element html             |
 | \`itemContent\`     | The HTML elements as \`description\` in \`item\` using CSS selector ( in \`itemLink\` page for full content ) | \`string\`      |                          |
-| \`encoding\`        | The encoding of the page                                                                                      | \`string\`      | utf-8                    |
+| \`encoding\`        | The encoding of the HTML content                                                                              | \`string\`      | utf-8                    |
 
   Parameters parsing in the above example:
 
