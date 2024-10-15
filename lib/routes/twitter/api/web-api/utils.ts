@@ -197,6 +197,9 @@ export const twitterGot = async (
                         logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
                         await cache.set(`${lockPrefix}${auth.token}`, '1', 86400);
                     }
+                } else {
+                    logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
+                    await cache.set(`${lockPrefix}${auth.token}`, '', 1);
                 }
             }
         },
@@ -205,8 +208,6 @@ export const twitterGot = async (
     if (auth?.token) {
         logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
         await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers?.jar.serializeSync()), config.cache.contentExpire);
-        logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
-        await cache.set(`${lockPrefix}${auth.token}`, '', 1);
     }
 
     return response._data;
