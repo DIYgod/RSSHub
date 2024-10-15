@@ -9307,7 +9307,8 @@
         ],
         "name": "UP 主投稿",
         "maintainers": [
-          "DIYgod"
+          "DIYgod",
+          "Konano"
         ],
         "location": "video.ts"
       },
@@ -78391,7 +78392,8 @@
         "maintainers": [
           "DIYgod",
           "iplusx",
-          "Rongronggg9"
+          "Rongronggg9",
+          "Konano"
         ],
         "description": ":::warning\n  部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证\n  :::",
         "location": "user.ts"
