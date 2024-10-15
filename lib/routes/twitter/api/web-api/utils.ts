@@ -154,10 +154,11 @@ export const twitterGot = async (
         dispatcher: dispatchers?.agent,
         onResponse: async ({ response }) => {
             const remaining = response.headers.get('x-rate-limit-remaining');
+            const remainingInt = Number.parseInt(remaining || '0');
             const reset = response.headers.get('x-rate-limit-reset');
             logger.debug(`twitter debug: twitter rate limit remaining for token ${auth?.token} is ${remaining} and reset at ${reset}`);
             if (auth) {
-                if (remaining === '0' && reset) {
+                if (remaining && remainingInt < 2 && reset) {
                     const resetTime = new Date(Number.parseInt(reset) * 1000);
                     const delay = (resetTime.getTime() - Date.now()) / 1000;
                     logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}, will unlock after ${delay}s`);
