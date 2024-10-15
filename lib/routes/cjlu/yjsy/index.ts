@@ -17,7 +17,7 @@ export const route: Route = {
     categories: ['university'],
     example: '/cjlu/yjstz',
     parameters: {
-        type: '订阅的类型',
+        cate: '订阅的类型，支持 yjstz（研究生通知）和 jstz（教师通知）',
     },
     features: {
         requireConfig: false,
