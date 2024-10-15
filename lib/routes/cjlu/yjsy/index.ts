@@ -79,7 +79,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (!item.link || item.link === '' || item.link === host) {
+                if (!item.link || item.link === host) {
                     return item;
                 }
 
