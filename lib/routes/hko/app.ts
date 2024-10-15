@@ -1,6 +1,8 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/earthquake',
@@ -41,7 +43,7 @@ async function handler() {
             return {
                 title: `[震級:${degree}] [地點:${city}]`,
                 description: `${citystring}, ${latAndLon}`,
-                pubDate: formatDate(hktDate + hktTime),
+                pubDate: timezone(parseDate(hktDate + hktTime, 'YYYYMMDDHHMM'), +8),
             };
         });
 
@@ -51,20 +53,4 @@ async function handler() {
         description,
         item: items,
     };
-}
-
-function formatDate(timeString) {
-    // 解析字符串获取年、月、日、小时和分钟
-    const year = Number.parseInt(timeString.slice(0, 4), 10);
-    const month = Number.parseInt(timeString.slice(4, 6), 10) - 1; // 月份从 0 开始
-    const day = Number.parseInt(timeString.slice(6, 8), 10);
-    const hours = Number.parseInt(timeString.slice(8, 10), 10);
-    const minutes = Number.parseInt(timeString.slice(10, 12), 10);
-
-    // 创建一个香港时区的日期对象
-    const hongKongDate = new Date(Date.UTC(year, month, day, hours - 8, minutes)); // 香港时区为 UTC+8
-
-    // 转换为 GMT 格式
-    const gmtString = hongKongDate.toUTCString();
-    return gmtString;
 }
