@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
 export const route: Route = {
