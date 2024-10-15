@@ -12215,6 +12215,19 @@
       }
     ]
   },
+  "weather.gov.hk": {
+    "_name": "Hong Kong Observatory",
+    "www": [
+      {
+        "title": "Current Weather Report",
+        "docs": "https://docs.rsshub.app/routes/forecast",
+        "source": [
+          "/en/wxinfo/currwx/current.htm"
+        ],
+        "target": "/hko/weather"
+      }
+    ]
+  },
   "voc.com.cn": {
     "_name": "湖南日报",
     ".": [

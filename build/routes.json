@@ -34671,6 +34671,49 @@
     "name": "HKJunkCall 資訊中心",
     "url": "hkjunkcall.com"
   },
+  "hko": {
+    "routes": {
+      "/earthquake": {
+        "path": "/earthquake",
+        "name": "全球地震資訊網",
+        "maintainers": [
+          "after9"
+        ],
+        "example": "/hko/earthquake",
+        "categories": [
+          "forecast"
+        ],
+        "description": "来自香港天文台的全球5级以上地震记录",
+        "location": "earthquake.ts"
+      },
+      "/weather": {
+        "path": "/weather",
+        "radar": [
+          {
+            "source": [
+              "www.weather.gov.hk/en/wxinfo/currwx/current.htm"
+            ]
+          }
+        ],
+        "name": "Current Weather Report",
+        "example": "/hko/weather",
+        "maintainers": [
+          "calpa"
+        ],
+        "categories": [
+          "forecast"
+        ],
+        "url": "www.weather.gov.hk/en/wxinfo/currwx/current.htm",
+        "location": "weather.ts"
+      }
+    },
+    "name": "Hong Kong Observatory",
+    "url": "www.hko.gov.hk",
+    "categories": [
+      "forecast"
+    ],
+    "description": "来自香港天文台的全球地震记录"
+  },
   "hljucm": {
     "routes": {
       "/yjsy/:category?": {
