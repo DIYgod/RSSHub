@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -23,51 +23,45 @@ export const route: Route = {
         },
     ],
     name: 'Hex-Rays News',
-    maintainers: ['hellodword ', 'TonyRL'],
+    maintainers: ['hellodword ', 'TonyRL', 'Mas0n'],
     handler,
     url: 'hex-rays.com/',
 };
 
-async function handler() {
-    const link = 'https://www.hex-rays.com/blog/';
+async function handler(/* ctx*/): Promise<Data> {
+    const link = 'https://hex-rays.com/blog/';
     const response = await got.get(link);
     const $ = load(response.data);
 
-    const list = $('.post-list-container')
-        .map((_, ele) => ({
-            title: $('h3 > a', ele).text(),
-            link: $('h3 > a', ele).attr('href'),
-            pubDate: parseDate($('.post-meta:nth-of-type(1)', ele).first().text().trim().replace('Posted on:', '')),
-            author: $('.post-meta:nth-of-type(2)', ele).first().text().replace('By:', '').trim(),
-        }))
-        .get();
+    const list: DataItem[] = $('.article  ')
+        .toArray()
+        .map(
+            (ele): DataItem => ({
+                title: $('h2 > a', ele).text(),
+                link: $('h2 > a', ele).attr('href'),
+                pubDate: parseDate($('div.by-line > time', ele).attr('datetime')!),
+                author: $('div.by-line > a', ele).text(),
+            })
+        );
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items: DataItem[] = await Promise.all(
+        list.map((item: DataItem) =>
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
-
-                item.category = (
-                    content('.category-link')
-                        .toArray()
-                        .map((e) => $(e).text()) +
-                    ',' +
-                    content('.tag-link')
-                        .toArray()
-                        .map((e) => $(e).text())
-                ).split(',');
-
-                item.description = content('.post-content').html();
-
+                item.category = content('.div.topics > a')
+                    .toArray()
+                    .map((ele) => content(ele).text());
+                item.description = content('.post-body').toString();
                 return item;
             })
-        )
+        ) as Promise<DataItem>[]
     );
 
     return {
         title: 'Hex-Rays Blog',
         link,
         item: items,
+        image: 'https://hex-rays.com/hubfs/Ico-logo.png',
     };
 }
