@@ -23,13 +23,18 @@ export const route: Route = {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
+        supportRadar: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     radar: [
         {
-            source: ['yjsy.cjlu.edu.cn/index/:cate.html', 'yjsy.cjlu.edu.cn/index/:cate/[0-9]+.html'],
+            source: ['yjsy.cjlu.edu.cn/index/:cate/:id.htm'],
+            target: '/yjsy/:cate',
+        },
+        {
+            source: ['yjsy.cjlu.edu.cn/index/:cate.htm'],
             target: '/yjsy/:cate',
         },
     ],
