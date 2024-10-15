@@ -129,13 +129,9 @@ const getUsernameAndFaceFromUID = async (uid) => {
     if (!name || !face) {
         const cookie = await getCookie();
         const wbiVerifyString = await getWbiVerifyString();
-        // await got(`https://space.bilibili.com/${uid}/`, {
-        //     headers: {
-        //         Referer: `https://www.bilibili.com/`,
-        //         Cookie: cookie,
-        //     },
-        // });
-        const params = utils.addWbiVerifyInfo(`mid=${uid}&token=&platform=web&web_location=1550101`, wbiVerifyString);
+        const dmImgList = utils.getDmImgList();
+        const renderData = await getRenderData(uid);
+        const params = utils.addWbiVerifyInfo(utils.addRenderData(utils.addDmVerifyInfo(`mid=${uid}&token=&platform=web&web_location=1550101`, dmImgList), renderData), wbiVerifyString);
         const { data: nameResponse } = await got(`https://api.bilibili.com/x/space/wbi/acc/info?${params}`, {
             headers: {
                 Referer: `https://space.bilibili.com/${uid}/`,
