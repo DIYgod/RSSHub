@@ -63,12 +63,15 @@ async function handler(ctx) {
             const item = $(element);
 
             const a = item.find('a').first();
-            const span = item.find('span').first().text().trim();
+
+            const timeStr = item.find('span').first().text().trim();
+            const href = a.attr('href') ?? '';
+            const route = href.startsWith('../') ? href.replace(/^\.\.\//, '') : href;
 
             return {
-                title: a.attr('title'),
-                pubDate: timezone(parseDate(span, 'YYYY/MM/DD'), +8),
-                link: `${host}${a.attr('href')?.replace('../', '')}`,
+                title: a.attr('title') ?? titleMap.get(cate),
+                pubDate: timezone(parseDate(timeStr, 'YYYY/MM/DD'), +8),
+                link: `${host}${route}`,
                 description: '',
             };
         });
@@ -76,13 +79,17 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
+                if (!item.link || item.link === '' || item.link === host) {
+                    return item;
+                }
+
                 const res = await ofetch(item.link, {
                     responseType: 'text',
                 });
                 const $ = load(res);
 
-                const content = $('#vsb_content').html() || '';
-                const attachments = $('form[name="_newscontent_fromname"] div ul').html() || '';
+                const content = $('#vsb_content').html() ?? '';
+                const attachments = $('form[name="_newscontent_fromname"] div ul').html() ?? '';
 
                 item.description = `${content}<br>${attachments}`;
                 return item;
