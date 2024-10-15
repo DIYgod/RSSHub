@@ -5726,6 +5726,187 @@
       }
     ]
   },
+  "cisia.org": {
+    "_name": "中国无机盐工业协会",
+    "www": [
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/:id"
+        ],
+        "target": "/cisiaparams=>{const id=params.id.replace(/\\.html/,\"\");return id?`/${id}`:\"\"}"
+      },
+      {
+        "title": "分支机构信息 - 企业动态",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/17.html"
+        ],
+        "target": "/cisia/17"
+      },
+      {
+        "title": "分支机构信息 - 产品展示",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/18.html"
+        ],
+        "target": "/cisia/18"
+      },
+      {
+        "title": "新闻中心 - 协会动态",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/9.html"
+        ],
+        "target": "/cisia/9"
+      },
+      {
+        "title": "新闻中心 - 行业新闻",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/10.html"
+        ],
+        "target": "/cisia/10"
+      },
+      {
+        "title": "新闻中心 - 通知公告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/11.html"
+        ],
+        "target": "/cisia/11"
+      },
+      {
+        "title": "新闻中心 - 市场信息",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/12.html"
+        ],
+        "target": "/cisia/12"
+      },
+      {
+        "title": "政策法规 - 宏观聚焦",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/20.html"
+        ],
+        "target": "/cisia/20"
+      },
+      {
+        "title": "政策法规 - 技术园区",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/396.html"
+        ],
+        "target": "/cisia/396"
+      },
+      {
+        "title": "合作交流 - 国际交流",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/23.html"
+        ],
+        "target": "/cisia/23"
+      },
+      {
+        "title": "合作交流 - 行业交流",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/24.html"
+        ],
+        "target": "/cisia/24"
+      },
+      {
+        "title": "合作交流 - 企业调研",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/25.html"
+        ],
+        "target": "/cisia/25"
+      },
+      {
+        "title": "合作交流 - 会展信息",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/84.html"
+        ],
+        "target": "/cisia/84"
+      },
+      {
+        "title": "合作交流 - 宣传专题",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/430.html"
+        ],
+        "target": "/cisia/430"
+      },
+      {
+        "title": "党建工作 - 党委文件",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/27.html"
+        ],
+        "target": "/cisia/27"
+      },
+      {
+        "title": "党建工作 - 学习园地",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/28.html"
+        ],
+        "target": "/cisia/28"
+      },
+      {
+        "title": "党建工作 - 两会专题",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/443.html"
+        ],
+        "target": "/cisia/443"
+      },
+      {
+        "title": "网上服务平台 - 前沿科技",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/31.html"
+        ],
+        "target": "/cisia/31"
+      },
+      {
+        "title": "网上服务平台 - 新材料新技术",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/133.html"
+        ],
+        "target": "/cisia/133"
+      },
+      {
+        "title": "网上服务平台 - 文件共享",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/30.html"
+        ],
+        "target": "/cisia/30"
+      },
+      {
+        "title": "会员社区 - 会员分布",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/35.html"
+        ],
+        "target": "/cisia/35"
+      },
+      {
+        "title": "会员社区 - 会员风采",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/term/68.html"
+        ],
+        "target": "/cisia/68"
+      }
+    ]
+  },
   "civitai.com": {
     "_name": "Civitai",
     ".": [
