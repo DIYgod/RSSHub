@@ -13,7 +13,7 @@ services:
             REDIS_URL: "redis://redis:6379/"
             PUPPETEER_WS_ENDPOINT: "ws://browserless:3000" # marked
         healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:1200/healthz"]
+            test: ["CMD-SHELL", "curl -f http://localhost:1200/healthz?key=$$ACCESS_KEY"]
             interval: 30s
             timeout: 10s
             retries: 3
