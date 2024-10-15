@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: 'UP 主投稿',
-    maintainers: ['DIYgod'],
+    maintainers: ['DIYgod', 'Konano'],
     handler,
 };
 
