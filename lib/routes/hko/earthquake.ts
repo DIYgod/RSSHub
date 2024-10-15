@@ -6,12 +6,12 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/earthquake',
-    name: 'hko earthquake',
+    name: '全球地震資訊網',
     maintainers: ['after9'],
     handler,
     example: '/hko/earthquake',
     categories: ['forecast'],
-    description: `来自香港天文台的全球5级以上地震记录`,
+    description: '来自香港天文台的全球5级以上地震记录',
 };
 
 async function handler() {
