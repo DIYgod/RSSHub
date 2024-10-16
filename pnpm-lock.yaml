@@ -174,8 +174,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
       proxy-chain:
-        specifier: 2.5.3
-        version: 2.5.3
+        specifier: 2.5.4
+        version: 2.5.4
       puppeteer:
         specifier: 22.6.2
         version: 22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)
@@ -2681,8 +2681,8 @@ packages:
   dezalgo@1.0.4:
     resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     version: 0.2.6
 
   directory-import@3.3.1:
@@ -4581,8 +4581,8 @@ packages:
     resolution: {integrity: sha512-u0piLU+nCOHMgGjRbimiXmA9kM/L9EHh3zL81xCdp7m+Y2pHIsnmbdDoEDoAz5geaonNR6q6+yOPQs6n4T6sBQ==}
     engines: {node: '>= 14'}
 
-  proxy-chain@2.5.3:
-    resolution: {integrity: sha512-FwjU/eNqadMffDpC+mmcvq4Er7hVJWmZqr/QnxKMvExqzgPWNSz7A0XIOVGVjdzwAIAkpmYlqfW9vDlKOFgldw==}
+  proxy-chain@2.5.4:
+    resolution: {integrity: sha512-Tsdqbo3fyteHO3dHtxcBE6uKlhg4sO2qtDxmiM805l3O08R6zRbGTeIDbW1ksSv/n4xPQ3B0YiK+KZ2D9YIfBA==}
     engines: {node: '>=14'}
 
   proxy-from-env@1.1.0:
@@ -7013,7 +7013,7 @@ snapshots:
       '@babel/runtime-corejs2': 7.25.7
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.30.1
@@ -8217,7 +8217,7 @@ snapshots:
       asap: 2.0.6
       wrappy: 1.0.2
 
-  difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+  difflib@git+https://git@github.com:postlight/difflib.js.git#32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
 
@@ -10467,7 +10467,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  proxy-chain@2.5.3:
+  proxy-chain@2.5.4:
     dependencies:
       socks: 2.8.3
       socks-proxy-agent: 8.0.4
