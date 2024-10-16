@@ -12172,6 +12172,29 @@
       }
     ]
   },
+  "hfut.edu.cn": {
+    "_name": "合肥工业大学",
+    "news": [
+      {
+        "title": "合肥校区通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/hfut/hf/notice/:type?"
+      }
+    ],
+    "xc": [
+      {
+        "title": "宣城校区通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/hfut/xc/notice/:type?"
+      }
+    ]
+  },
   "hicairo.com": {
     "_name": "HiFeng'Blog",
     ".": [
