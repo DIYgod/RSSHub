@@ -37,7 +37,7 @@ export const route: Route = {
     url: 'www.i-cable.com/',
     description: `
 :::tip
-分類可用分類名稱或ID，如：新聞資訊或是37
+分類只可用分類名稱，如：新聞資訊/港聞
 :::`,
 };
 
@@ -46,10 +46,8 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ?? 20;
     const root = 'https://www.i-cable.com/wp-json/wp/v2';
 
-    const categoriesRes = await cache.tryGet(`${root}/categories`, async () => await got(`${root}/categories`), config.cache.routeExpire, false);
-
-    const categories = categoriesRes.data;
-    const metadata = categories.find((item) => item.name === category || item.id === +category);
+    const response = await cache.tryGet(`${root}/categories?slug=${category}`, async () => await got(`${root}/categories`), config.cache.routeExpire, false);
+    const metadata = response.data;
 
     const list = await got(`${root}/posts?_embed=1&categories=${metadata.id}&per_page=${limit}`);
     const items = list.data.map((item) => {
