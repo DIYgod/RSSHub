@@ -99,7 +99,7 @@ async function handler(ctx) {
                     `Danmaku: ${item.video_review}    Comment: ${item.review}<br/>` +
                     `<br/>${des}<br/>` +
                     `<img src="${img}"><br/>` +
-                    `Match By: ${item.hit_columns.join(',')}` +
+                    `Match By: ${item.hit_columns?.join(',') || ''}` +
                     getIframe(item, embed),
                 pubDate: parseDate(item.pubdate, 'X'),
                 guid: item.arcurl,

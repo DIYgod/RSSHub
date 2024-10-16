@@ -53,7 +53,7 @@ async function handler(ctx) {
     const repo = ctx.req.param('repo');
     const state = ctx.req.param('state');
     const labels = ctx.req.param('labels');
-    const limit = ctx.req.query('limit') ? (Number.parseInt(ctx.req.query('limit')) > 100 ? 100 : Number.parseInt(ctx.req.query('limit'))) : 100;
+    const limit = ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 100) : 100;
 
     const host = `https://github.com/${user}/${repo}/issues`;
     const url = `https://api.github.com/repos/${user}/${repo}/issues`;

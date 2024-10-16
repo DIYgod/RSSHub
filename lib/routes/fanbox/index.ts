@@ -50,7 +50,7 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const postListResponse = (await ofetch(`https://api.fanbox.cc/post.listCreator?creatorId=${creator}&limit=20`, { headers: getHeaders() })) as PostListResponse;
-    const items = await Promise.all(postListResponse.body.items.map((i) => parseItem(i)));
+    const items = await Promise.all(postListResponse.body.map((i) => parseItem(i)));
 
     return {
         title,

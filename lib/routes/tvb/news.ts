@@ -85,6 +85,7 @@ async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'tc';
 
     const rootUrl = 'https://inews-api.tvb.com';
+    const linkRootUrl = 'https://news.tvb.com';
     const apiUrl = `${rootUrl}/news/entry/category`;
     const currentUrl = `${rootUrl}/${language}/${category}`;
 
@@ -102,7 +103,7 @@ async function handler(ctx) {
 
     const items = response.data.content.map((item) => ({
         title: item.title,
-        link: `${rootUrl}/${language}/${category}/${item.id}`,
+        link: `${linkRootUrl}/${language}/${category}/${item.id}`,
         pubDate: parseDate(item.publish_datetime),
         category: [...item.category.map((c) => c.title), ...item.tags],
         description: art(path.join(__dirname, 'templates/description.art'), {

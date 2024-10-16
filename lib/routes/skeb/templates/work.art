@@ -1,0 +1,10 @@
+{{ if imageUrl }}
+    <img src="{{ imageUrl }}" /><br>
+{{ /if }}
+{{ if audioUrl }}
+    <audio controls>
+    <source src="{{ audioUrl }}" type="audio/mp3">
+    Your browser does not support the audio element.
+    </audio><br>
+{{ /if }}
+{{ body }}

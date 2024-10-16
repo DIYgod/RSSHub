@@ -183,6 +183,11 @@ export type Config = {
     lightnovel: {
         cookie?: string;
     };
+    lorientlejour: {
+        token?: string;
+        username?: string;
+        password?: string;
+    };
     malaysiakini: {
         email?: string;
         password?: string;
@@ -260,6 +265,9 @@ export type Config = {
     };
     scihub: {
         host?: string;
+    };
+    skeb: {
+        bearerToken?: string;
     };
     spotify: {
         clientId?: string;
@@ -567,6 +575,11 @@ const calculateValue = () => {
         lightnovel: {
             cookie: envs.SECURITY_KEY,
         },
+        lorientlejour: {
+            token: envs.LORIENTLEJOUR_TOKEN,
+            username: envs.LORIENTLEJOUR_USERNAME,
+            password: envs.LORIENTLEJOUR_PASSWORD,
+        },
         malaysiakini: {
             email: envs.MALAYSIAKINI_EMAIL,
             password: envs.MALAYSIAKINI_PASSWORD,
@@ -644,6 +657,9 @@ const calculateValue = () => {
         },
         scihub: {
             host: envs.SCIHUB_HOST || 'https://sci-hub.se/',
+        },
+        skeb: {
+            bearerToken: envs.SKEB_BEARER_TOKEN,
         },
         spotify: {
             clientId: envs.SPOTIFY_CLIENT_ID,

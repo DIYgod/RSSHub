@@ -20,7 +20,7 @@ export const handler = async (ctx) => {
     const feedUrl = new URL(`${category}/feed`, rootUrl).href;
 
     const site = category.split(/\//)[0];
-    const apiKimiUrl = new URL(`${site}/kimi/`, rootUrl).href;
+    const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
 
     const feed = await parser.parseURL(feedUrl);
 
@@ -91,6 +91,7 @@ export const route: Route = {
   | arXiv Computation and Language (cs.CL)                | arxiv/cs.CL |
   | arXiv Computer Vision and Pattern Recognition (cs.CV) | arxiv/cs.CV |
   | arXiv Machine Learning (cs.LG)                        | arxiv/cs.LG |
+  | arXiv Robotics (cs.RO)                        | arxiv/cs.RO |
   `,
     categories: ['journal'],
 
@@ -123,6 +124,11 @@ export const route: Route = {
             title: 'arXiv Machine Learning (cs.LG)',
             source: ['papers.cool/arxiv/cs.LG'],
             target: '/arxiv/cs.LG',
+        },
+        {
+            title: 'arXiv Robotics (cs.RO)',
+            source: ['papers.cool/arxiv/cs.RO'],
+            target: '/arxiv/cs.RO',
         },
     ],
 };

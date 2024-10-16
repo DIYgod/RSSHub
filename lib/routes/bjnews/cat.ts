@@ -35,7 +35,7 @@ async function handler(ctx) {
             category: $(a).parent().find('.source').text().trim(),
         }));
 
-    const out = await asyncPoolAll(ctx.req.query('pool') ? Number.parseInt(ctx.req.query('pool')) : 1, list, (item) => fetchArticle(item));
+    const out = await asyncPoolAll(2, list, (item) => fetchArticle(item));
     return {
         title: `新京报 - 分类 - ${$('.cur').text().trim()}`,
         link: url,
