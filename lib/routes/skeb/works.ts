@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/works/:username',
     categories: ['picture'],
-    example: '/works/@brm2_1925',
+    example: '/skeb/works/@brm2_1925',
     parameters: { username: 'Skeb Username with @' },
     features: {
         requireConfig: [
