@@ -4957,10 +4957,11 @@
     "TonyRL",
     "micheal-death"
   ],
-  "/picuki/profile/:id/:functionalFlag?": [
+  "/picuki/profile/:id/:type?/:functionalFlag?": [
     "hoilc",
     "Rongronggg9",
-    "devinmugen"
+    "devinmugen",
+    "NekoAria"
   ],
   "/pikabu/:type/:name": [],
   "/pikabu/user/:name": [

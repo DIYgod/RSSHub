@@ -21272,6 +21272,14 @@
           "/profile/:id"
         ],
         "target": "/picuki/profile/:id"
+      },
+      {
+        "title": "User Profile - Picuki",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/profile-tagged/:id"
+        ],
+        "target": "/picuki/profile/:id/tagged"
       }
     ]
   },

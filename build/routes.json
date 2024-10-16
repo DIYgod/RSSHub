@@ -57552,14 +57552,15 @@
   },
   "picuki": {
     "routes": {
-      "/profile/:id/:functionalFlag?": {
-        "path": "/profile/:id/:functionalFlag?",
+      "/profile/:id/:type?/:functionalFlag?": {
+        "path": "/profile/:id/:type?/:functionalFlag?",
         "categories": [
           "social-media"
         ],
         "example": "/picuki/profile/stefaniejoosten",
         "parameters": {
           "id": "Instagram user id",
+          "type": "Type of profile page (profile or tagged)",
           "functionalFlag": "functional flag, see the table below\n| functionalFlag | Video embedding                         | Fetching Instagram Stories |\n| -------------- | --------------------------------------- | -------------------------- |\n| 0              | off, only show video poster as an image | off                        |\n| 1 (default)    | on                                      | off                        |\n| 10             | on                                      | on                         |\n"
         },
         "features": {
@@ -57576,13 +57577,20 @@
               "www.picuki.com/profile/:id"
             ],
             "target": "/profile/:id"
+          },
+          {
+            "source": [
+              "www.picuki.com/profile-tagged/:id"
+            ],
+            "target": "/profile/:id/tagged"
           }
         ],
         "name": "User Profile - Picuki",
         "maintainers": [
           "hoilc",
           "Rongronggg9",
-          "devinmugen"
+          "devinmugen",
+          "NekoAria"
         ],
         "description": "\n  :::warning\n  Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.\n  Though, every Story expires after 24 hours, so it may be not so serious.\n  :::",
         "location": "profile.ts"
