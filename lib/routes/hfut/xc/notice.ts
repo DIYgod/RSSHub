@@ -9,7 +9,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportRadar: true,
@@ -20,8 +20,8 @@ export const route: Route = {
             source: ['xc.hfut.edu.cn'],
         },
     ],
-    name: '合肥工业大学宣城校区',
-    maintainers: ['Flamma'],
+    name: '宣城校区通知',
+    maintainers: ['batemax'],
     handler,
     description: `| 通知公告(https://xc.hfut.edu.cn/1955/list.htm) | 院系动态-工作通知(https://xc.hfut.edu.cn/gztz/list.htm) |
   | ------------ | -------------- |

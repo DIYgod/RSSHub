@@ -33,7 +33,7 @@ async function parseArticle($) {
         item = $(item);
         const oriLink = item.find('a').attr('href');
         let linkRes = oriLink;
-        if (!oriLink.includes('http')) {
+        if (!oriLink.startsWith('http')) {
             linkRes = commLink + item.find('a').attr('href');
         }
         const pubDate = parseDate(item.find('.news_meta').text(), 'YYYY-MM-DD');
@@ -52,15 +52,7 @@ async function parseArticle($) {
                 try {
                     const response = await got(item.link);
                     const $ = load(response.data);
-                    description = $('.wp_articlecontent').html();
-
-                    if (description === null) {
-                        description = $('.v_news_content').html();
-                    }
-
-                    if (description === null) {
-                        description = item.link;
-                    }
+                    description = $('.wp_articlecontent').html() ?? $('.v_news_content').html() ?? item.link;
                 } catch {
                     description = item.link;
                 }

@@ -9,9 +9,10 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
+        supportRadar: true,
         supportScihub: false,
     },
     radar: [
@@ -19,8 +20,8 @@ export const route: Route = {
             source: ['news.hfut.edu.cn'],
         },
     ],
-    name: '合肥工业大学',
-    maintainers: ['Flamma'],
+    name: '合肥校区通知',
+    maintainers: ['batemax'],
     handler,
     description: `| 通知公告(https://news.hfut.edu.cn/tzgg2.htm) | 教学科研(https://news.hfut.edu.cn/tzgg2/jxky.htm) | 其他通知(https://news.hfut.edu.cn/tzgg2/qttz.htm) |
   | ------------ | -------------- | ------------------ |
