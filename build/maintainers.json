@@ -330,6 +330,9 @@
   "/aibase/discover/:id?": [
     "nczitzk"
   ],
+  "/aibase/news": [
+    "zreo0"
+  ],
   "/aibase/topic/:id?/:filter?": [
     "nczitzk"
   ],

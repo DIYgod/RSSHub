@@ -2448,6 +2448,16 @@
         ],
         "target": "/aibase/topic/室内设计"
       }
+    ],
+    "www": [
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zh/news"
+        ],
+        "target": "/aibase/news"
+      }
     ]
   },
   "ainvest.com": {

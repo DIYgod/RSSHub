@@ -4047,6 +4047,37 @@
         ],
         "location": "discover.ts"
       },
+      "/news": {
+        "path": "/news",
+        "name": "资讯",
+        "url": "www.aibase.com",
+        "maintainers": [
+          "zreo0"
+        ],
+        "example": "/aibase/news",
+        "description": "获取 AI 资讯列表",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.aibase.com/zh/news"
+            ],
+            "target": "/news"
+          }
+        ],
+        "location": "news.ts"
+      },
       "/topic/:id?/:filter?": {
         "path": "/topic/:id?/:filter?",
         "name": "标签",
