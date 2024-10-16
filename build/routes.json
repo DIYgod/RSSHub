@@ -66369,7 +66369,7 @@
         "categories": [
           "picture"
         ],
-        "example": "/following_creators/@brm2_1925",
+        "example": "/skeb/following_creators/@brm2_1925",
         "parameters": {
           "username": "Skeb Username with @"
         },
@@ -66408,7 +66408,7 @@
         "categories": [
           "picture"
         ],
-        "example": "/following_works/@brm2_1925",
+        "example": "/skeb/following_works/@brm2_1925",
         "parameters": {
           "username": "Skeb Username with @"
         },
@@ -66447,7 +66447,7 @@
         "categories": [
           "picture"
         ],
-        "example": "/friend_works/@brm2_1925",
+        "example": "/skeb/friend_works/@brm2_1925",
         "parameters": {
           "username": "Skeb Username with @"
         },
@@ -66486,9 +66486,9 @@
         "categories": [
           "picture"
         ],
-        "example": "/new_art_works",
+        "example": "/skeb/new_art_works",
         "parameters": {
-          "category": "Category, the div id of the section title on the homepage. Default is new_art_works"
+          "category": "Category, the div id of the section title on the homepage."
         },
         "features": {
           "requireConfig": false,
@@ -66581,7 +66581,7 @@
         "categories": [
           "picture"
         ],
-        "example": "/search/初音ミク",
+        "example": "/skeb/search/初音ミク",
         "parameters": {
           "keyword": "Search keyword"
         },
@@ -66605,7 +66605,7 @@
         "categories": [
           "picture"
         ],
-        "example": "/works/@brm2_1925",
+        "example": "/skeb/works/@brm2_1925",
         "parameters": {
           "username": "Skeb Username with @"
         },
