@@ -38,7 +38,7 @@ export const route: Route = {
             target: '/yjsy/:cate',
         },
     ],
-    name: '中量大研究生院',
+    name: '研究生院',
     maintainers: ['chrisis58'],
     handler,
     description: `| 研究生通知 | 教师通知 |
