@@ -30,12 +30,14 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['yjsy.cjlu.edu.cn/index/:cate/:id.htm'],
-            target: '/yjsy/:cate',
+            title: '研究生通知',
+            source: ['yjsy.cjlu.edu.cn/index/yjstz/:suffix', 'yjsy.cjlu.edu.cn/index/yjstz.htm'],
+            target: '/yjsy/yjstz',
         },
         {
-            source: ['yjsy.cjlu.edu.cn/index/:cate.htm'],
-            target: '/yjsy/:cate',
+            title: '教师通知',
+            source: ['yjsy.cjlu.edu.cn/index/jstz/:suffix', 'yjsy.cjlu.edu.cn/index/jstz.htm'],
+            target: '/yjsy/jstz',
         },
     ],
     name: '研究生院',
