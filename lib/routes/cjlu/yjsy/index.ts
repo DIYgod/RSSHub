@@ -15,7 +15,7 @@ const titleMap = new Map([
 export const route: Route = {
     path: '/yjsy/:cate',
     categories: ['university'],
-    example: '/cjlu/yjstz',
+    example: '/cjlu/yjsy/yjstz',
     parameters: {
         cate: '订阅的类型，支持 yjstz（研究生通知）和 jstz（教师通知）',
     },
