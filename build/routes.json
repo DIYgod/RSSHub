@@ -18537,14 +18537,15 @@
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
-          "antiCrawler": false,
+          "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
         },
         "name": "票务更新",
         "maintainers": [
-          "hoilc"
+          "hoilc",
+          "Konano"
         ],
         "description": "城市、分类名、子分类名，请参见[大麦网搜索页面](https://search.damai.cn/search.htm)",
         "location": "activity.ts"
