@@ -1302,6 +1302,9 @@
   "/ciweimao/chapter/:id": [
     "keocheung"
   ],
+  "/cjlu/yjsy/:cate": [
+    "chrisis58"
+  ],
   "/clickme/:site/:grouping/:name": [
     "hoilc"
   ],

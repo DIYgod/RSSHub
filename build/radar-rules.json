@@ -5941,6 +5941,29 @@
       }
     ]
   },
+  "cjlu.edu.cn": {
+    "_name": "China Jiliang University",
+    "yjsy": [
+      {
+        "title": "研究生通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/yjstz/:suffix",
+          "/index/yjstz.htm"
+        ],
+        "target": "/cjlu/yjsy/yjstz"
+      },
+      {
+        "title": "教师通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/jstz/:suffix",
+          "/index/jstz.htm"
+        ],
+        "target": "/cjlu/yjsy/jstz"
+      }
+    ]
+  },
   "cls.cn": {
     "_name": "财联社",
     ".": [
