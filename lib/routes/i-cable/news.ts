@@ -5,6 +5,7 @@ import { getCurrentPath } from '@/utils/helpers';
 import path from 'node:path';
 import { art } from '@/utils/render';
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -47,6 +48,9 @@ async function handler(ctx) {
     const root = 'https://www.i-cable.com/wp-json/wp/v2';
 
     const response = await cache.tryGet(`${root}/categories?slug=${category}`, async () => await got(`${root}/categories?slug=${category}`), config.cache.routeExpire, false);
+    if (response.data.length < 1) {
+        throw new InvalidParameterError(`Invalid Category: ${category}`);
+    }
     const metadata = response.data[0];
 
     const list = await got(`${root}/posts?_embed=1&categories=${metadata.id}&per_page=${limit}`);
