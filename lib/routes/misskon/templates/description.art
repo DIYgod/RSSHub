@@ -1,0 +1,10 @@
+{{ each info }}
+    {{ $value }}<br>
+{{ /each }}
+{{ each downloadLinks }}
+    <a href="{{ $value.href }}">{{ $value.text }}</a><br>
+{{ /each }}
+<br>
+{{ each images }}
+    <img src="{{ $value }}" referrerpolicy="no-referrer">
+{{ /each }}
