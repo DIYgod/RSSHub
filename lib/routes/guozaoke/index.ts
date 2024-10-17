@@ -65,9 +65,11 @@ async function getContent(link) {
     const comments = $('.reply-item')
         .map((i, el) => {
             const $el = $(el);
+            const comment = $el.find('span.content').text().trim();
+            const author = $el.find('span.username').text();
             return {
-                comment: $el.find('span.content').text().trim(), // 提取content内容并去除前后空格
-                author: $el.find('span.username').text(), // 提取username
+                comment,
+                author,
             };
         })
         .get();
@@ -77,13 +79,13 @@ async function getContent(link) {
         }
     }
 
-    return content ? content : '';
+    return content;
 }
 
 async function fetchContent(item: Item): Promise<ProcessedItem | null> {
     try {
         const content = await getContent(item.link);
-        if (content === '') {
+        if (content === undefined || content === '') {
             return null; // 如果内容为空，则返回null
         }
         return {
