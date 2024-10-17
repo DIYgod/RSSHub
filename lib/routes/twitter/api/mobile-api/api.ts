@@ -116,6 +116,16 @@ const tweetDetail = (userId, params) =>
         ['threaded_conversation_with_injections_v2']
     );
 
+const listTweets = (listId, params = {}) =>
+    paginationTweets(
+        gqlMap.ListTimeline,
+        listId,
+        {
+            ...params,
+        },
+        ['list', 'timeline_response', 'timeline']
+    );
+
 function gatherLegacyFromData(entries, filterNested, userId) {
     const tweets = [];
     const filteredEntries = [];
@@ -172,6 +182,7 @@ const getUserTweetsAndRepliesByID = async (id, params = {}) => gatherLegacyFromD
 const getUserMediaByID = async (id, params = {}) => gatherLegacyFromData(await timelineMedia(id, params));
 // const getUserLikesByID = async (id, params = {}) => gatherLegacyFromData(await timelineLikes(id, params));
 const getUserTweetByStatus = async (id, params = {}) => gatherLegacyFromData(await tweetDetail(id, params), ['homeConversation-', 'conversationthread-']);
+const getListById = async (id, params = {}) => gatherLegacyFromData(await listTweets(id, params));
 
 const excludeRetweet = function (tweets) {
     const excluded = [];
@@ -273,6 +284,8 @@ const getUserTweet = (id, params) => cacheTryGet(id, params, getUserTweetByStatu
 
 const getSearch = async (keywords, params = {}) => gatherLegacyFromData(await timelineKeywords(keywords, params));
 
+const getList = (id, params = {}) => cache.tryGet(`twitter:${id}:getListById:${JSON.stringify(params)}`, () => getListById(id, params), config.cache.routeExpire, false);
+
 export default {
     getUser,
     getUserTweets,
@@ -281,6 +294,7 @@ export default {
     // getUserLikes,
     excludeRetweet,
     getSearch,
+    getList,
     getUserTweet,
     init: () => void 0,
 };
