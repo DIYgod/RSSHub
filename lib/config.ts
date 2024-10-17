@@ -47,6 +47,10 @@ export type Config = {
     debugInfo: string;
     loggerLevel: string;
     noLogfiles?: boolean;
+    otel: {
+        seconds_bucket?: string;
+        milliseconds_bucket?: string;
+    };
     showLoggerTimestamp?: boolean;
     sentry: {
         dsn?: string;
@@ -179,6 +183,16 @@ export type Config = {
     lightnovel: {
         cookie?: string;
     };
+    lorientlejour: {
+        token?: string;
+        username?: string;
+        password?: string;
+    };
+    malaysiakini: {
+        email?: string;
+        password?: string;
+        refreshToken?: string;
+    };
     manhuagui: {
         cookie?: string;
     };
@@ -252,6 +266,9 @@ export type Config = {
     scihub: {
         host?: string;
     };
+    skeb: {
+        bearerToken?: string;
+    };
     spotify: {
         clientId?: string;
         clientSecret?: string;
@@ -274,6 +291,10 @@ export type Config = {
         password?: string[];
         authenticationSecret?: string[];
         authToken?: string[];
+    };
+    uestc: {
+        bbsCookie?: string;
+        bbsAuthStr?: string;
     };
     weibo: {
         app_key?: string;
@@ -414,6 +435,10 @@ const calculateValue = () => {
         debugInfo: envs.DEBUG_INFO || 'true',
         loggerLevel: envs.LOGGER_LEVEL || 'info',
         noLogfiles: toBoolean(envs.NO_LOGFILES, false),
+        otel: {
+            seconds_bucket: envs.OTEL_SECONDS_BUCKET || '0.01,0.1,1,2,5,15,30,60',
+            milliseconds_bucket: envs.OTEL_MILLISECONDS_BUCKET || '10,20,50,100,250,500,1000,5000,15000',
+        },
         showLoggerTimestamp: toBoolean(envs.SHOW_LOGGER_TIMESTAMP, false),
         sentry: {
             dsn: envs.SENTRY,
@@ -550,6 +575,16 @@ const calculateValue = () => {
         lightnovel: {
             cookie: envs.SECURITY_KEY,
         },
+        lorientlejour: {
+            token: envs.LORIENTLEJOUR_TOKEN,
+            username: envs.LORIENTLEJOUR_USERNAME,
+            password: envs.LORIENTLEJOUR_PASSWORD,
+        },
+        malaysiakini: {
+            email: envs.MALAYSIAKINI_EMAIL,
+            password: envs.MALAYSIAKINI_PASSWORD,
+            refreshToken: envs.MALAYSIAKINI_REFRESHTOKEN,
+        },
         manhuagui: {
             cookie: envs.MHGUI_COOKIE,
         },
@@ -623,6 +658,9 @@ const calculateValue = () => {
         scihub: {
             host: envs.SCIHUB_HOST || 'https://sci-hub.se/',
         },
+        skeb: {
+            bearerToken: envs.SKEB_BEARER_TOKEN,
+        },
         spotify: {
             clientId: envs.SPOTIFY_CLIENT_ID,
             clientSecret: envs.SPOTIFY_CLIENT_SECRET,
@@ -649,6 +687,10 @@ const calculateValue = () => {
             password: envs.TWITTER_PASSWORD?.split(','),
             authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
+        },
+        uestc: {
+            bbsCookie: envs.UESTC_BBS_COOKIE,
+            bbsAuthStr: envs.UESTC_BBS_AUTH_STR,
         },
         weibo: {
             app_key: envs.WEIBO_APP_KEY,

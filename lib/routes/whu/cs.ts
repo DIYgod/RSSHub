@@ -71,10 +71,16 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
+    let items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
+                let response;
+                try {
+                    // 实测发现有些链接无法访问
+                    response = await got(item.link);
+                } catch {
+                    return null;
+                }
                 const $ = load(response.data);
 
                 if ($('.prompt').length) {
@@ -87,7 +93,8 @@ async function handler(ctx) {
                 content.find('img').each((_, e) => {
                     e = $(e);
                     if (e.attr('orisrc')) {
-                        e.attr('src', new URL(e.attr('orisrc'), response.url).href);
+                        const newUrl = new URL(e.attr('orisrc'), 'https://cs.whu.edu.cn');
+                        e.attr('src', newUrl.href);
                         e.removeAttr('orisrc');
                         e.removeAttr('vurl');
                     }
@@ -100,6 +107,7 @@ async function handler(ctx) {
             })
         )
     );
+    items = items.filter((item) => item !== null);
 
     return {
         title: $('title').first().text(),

@@ -20,6 +20,7 @@ export const route: Route = {
                     label: '最新主题',
                 },
             ],
+            default: 'hot',
         },
     },
     features: {

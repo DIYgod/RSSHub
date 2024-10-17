@@ -82,11 +82,12 @@ async function handler(ctx) {
         .sort((a, b) => (a.pubDate && b.pubDate ? b.pubDate - a.pubDate : b.lastmod - a.lastmod))
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
 
-    const items = await asyncPoolAll(20, list, (item) => fetchArticle(item));
+    const items = ctx.req.query('mode') === 'fulltext' ? await asyncPoolAll(20, list, (item) => fetchArticle(item)) : list;
 
     return {
         title: `AP News sitemap:${route}`,
         item: items,
+        link: 'https://apnews.com',
     };
 }
 async function asyncPoolAll<IN, OUT>(poolLimit: number, array: readonly IN[], iteratorFn: (generator: IN) => Promise<OUT>) {

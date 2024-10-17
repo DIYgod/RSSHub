@@ -38,7 +38,7 @@ const parseList = async (
 }> => {
     const response = await got_ins.get(baseUrl + sectionUrl);
     const $ = load(response.data);
-    let data = /realtime/.test(sectionUrl) ? $('.on-listing-pages') : $('.article-list').find('.article-type');
+    let data = $('.card-listing .card');
     if (data.length === 0) {
         // for HK version
         data = $('.clearfix').find('.list-block');
@@ -104,48 +104,7 @@ const parseList = async (
 
                 const articleBody = articleBodyNode.html();
 
-                const imageDataArray = [];
-                if ($1('.inline-figure-img').length) {
-                    // for SG version
-                    imageDataArray.push({
-                        type: 'normalHTML',
-                        html: $1('.inline-figure-img')
-                            .html()
-                            .replace(/\/\/.*\.com\/s3fs-public/, '//static.zaobao.com/s3fs-public')
-                            .replace(/s3\/files/, 's3fs-public'),
-                    });
-                }
-                if ($1('.body-content .loadme picture img').length) {
-                    // Unused?
-                    imageDataArray.push({
-                        type: 'data',
-                        src: $1('.body-content .loadme picture source')
-                            .attr('data-srcset')
-                            .replace(/\/\/.*\.com\/s3fs-public/, '//static.zaobao.com/s3fs-public')
-                            .replace(/s3\/files/, 's3fs-public'),
-                        title: $1('.body-content .loadme picture img').attr('title'),
-                    });
-                }
-                if ($1('.inline-figure-gallery').length) {
-                    // for SG version
-                    imageDataArray.push({
-                        type: 'normalHTML',
-                        html: $1('.inline-figure-gallery')
-                            .html()
-                            .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
-                            .replaceAll('s3/files', 's3fs-public'),
-                    });
-                }
-                if ($1('#carousel-article').length) {
-                    // for HK version, HK version of multi images use same selector as single image, so g is needed for all pages
-                    imageDataArray.push({
-                        type: 'normalHTML',
-                        html: $1('#carousel-article .carousel-inner')
-                            .html()
-                            .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
-                            .replaceAll('s3/files', 's3fs-public'),
-                    });
-                }
+                const imageDataArray = processImageData($1);
 
                 return {
                     // <- for SG version  -> for HK version
@@ -180,6 +139,45 @@ const orderContent = (parent) => {
         parent.find(e).attr('s', i);
         parent.append(e);
     }
+};
+
+interface ImageData {
+    type: string;
+    html: string;
+    src?: string;
+    title?: string;
+}
+
+const processImageData = ($1) => {
+    const imageDataArray: ImageData[] = [];
+
+    const imageSelectors = [
+        '.inline-figure-img', // for SG version
+        '.body-content .loadme picture img', // Unused?
+        '.inline-figure-gallery', // for SG version
+        '#carousel-article', // for HK version, HK version of multi images use same selector as single image, so g is needed for all pages
+    ];
+
+    for (const selector of imageSelectors) {
+        if ($1(selector).length) {
+            let html = $1(selector === '#carousel-article' ? '#carousel-article .carousel-inner' : selector).html();
+
+            if (html) {
+                html = html.replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public').replaceAll('s3/files', 's3fs-public');
+
+                imageDataArray.push({
+                    type: selector === '.body-content .loadme picture img' ? 'data' : 'normalHTML',
+                    html,
+                    ...(selector === '.body-content .loadme picture img' && {
+                        src: $1('.body-content .loadme picture source').attr('data-srcset'),
+                        title: $1(selector).attr('title'),
+                    }),
+                });
+            }
+        }
+    }
+
+    return imageDataArray;
 };
 
 export { parseList, orderContent };

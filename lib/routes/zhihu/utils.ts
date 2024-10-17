@@ -75,7 +75,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
         }
         const response1 = await ofetch.raw('https://static.zhihu.com/zse-ck/v3.js');
         const script = await response1._data.text();
-        const zseCk = script.match(/__g\.ck\|\|"([\w+/=\\]*?)",_=630e8;/)?.[1];
+        const zseCk = script.match(/__g\.ck\|\|"([\w+/=\\]*?)",_=/)?.[1];
 
         const response2 = zseCk
             ? await ofetch.raw(url, {

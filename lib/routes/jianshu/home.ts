@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +6,8 @@ import util from './utils';
 
 export const route: Route = {
     path: '/home',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.Articles,
     example: '/jianshu/home',
     parameters: {},
     features: {

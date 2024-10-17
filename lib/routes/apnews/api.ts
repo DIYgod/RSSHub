@@ -6,12 +6,27 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/api/:tags?',
-    categories: ['traditional-media'],
-    example: '/apnews/api/business',
+    categories: ['traditional-media', 'popular'],
+    example: '/apnews/api/apf-topnews',
     view: ViewType.Articles,
     parameters: {
         tags: {
-            description: 'Getting a list of articles from a public API based on tags. See https://github.com/kovidgoyal/calibre/blob/81666219718b5f57d56b149a7ac017cc2a76b931/recipes/ap.recipe#L43-L46',
+            description: 'Getting a list of articles from a public API based on tags.',
+            options: [
+                { value: 'apf-topnews', label: 'Top News' },
+                { value: 'apf-sports', label: 'Sports' },
+                { value: 'apf-politics', label: 'Politics' },
+                { value: 'apf-entertainment', label: 'Entertainment' },
+                { value: 'apf-usnews', label: 'US News' },
+                { value: 'apf-oddities', label: 'Oddities' },
+                { value: 'apf-Travel', label: 'Travel' },
+                { value: 'apf-technology', label: 'Technology' },
+                { value: 'apf-lifestyle', label: 'Lifestyle' },
+                { value: 'apf-business', label: 'Business' },
+                { value: 'apf-Health', label: 'Health' },
+                { value: 'apf-science', label: 'Science' },
+                { value: 'apf-intlnews', label: 'International News' },
+            ],
             default: 'apf-topnews',
         },
     },
@@ -44,14 +59,19 @@ async function handler(ctx) {
             title: e.contents[0]?.headline,
             link: e.contents[0]?.localLinkUrl,
             pubDate: timezone(parseDate(e.publishedDate), 0),
+            category: e.tagObjs.map((tag) => tag.name),
+            updated: timezone(parseDate(e.contents[0]?.updated), 0),
+            description: e.contents[0]?.storyHTML,
+            author: e.contents[0]?.reporters.map((author) => ({ name: author.displayName })),
         }))
         .sort((a, b) => b.pubDate - a.pubDate)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
 
-    const items = await Promise.all(list.map((item) => fetchArticle(item)));
+    const items = ctx.req.query('mode') === 'fulltext' ? await Promise.all(list.map((item) => fetchArticle(item))) : list;
 
     return {
         title: `${res.tagObjs[0].name} - AP News`,
         item: items,
+        link: 'https://apnews.com',
     };
 }
