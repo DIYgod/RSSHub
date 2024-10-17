@@ -62,15 +62,17 @@ async function getContent(link) {
     const $ = cheerio.load(res.data);
     let content = $('div.ui-content').html();
     content = content ? content.trim() : '';
-    const comments = $('.reply-item').map((i, el) => {
-        const $el = $(el);
-        const comment = $el.find('span.content').text().trim();
-        const author = $el.find('span.username').text();
-        return {
-            comment,
-            author,
-        };
-    });
+    const comments = $('.reply-item')
+        .map((i, el) => {
+            const $el = $(el);
+            const comment = $el.find('span.content').text().trim();
+            const author = $el.find('span.username').text();
+            return {
+                comment,
+                author,
+            };
+        })
+        .toArray();
     if (comments && comments.length > 0) {
         for (const item of comments) {
             content += '<br>' + item.author + ': ' + item.comment;
