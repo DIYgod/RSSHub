@@ -338,6 +338,9 @@ export type Config = {
     zsxq: {
         accessToken?: string;
     };
+    guozaoke: {
+        cookies?: string;
+    };
 };
 
 const value: Config | Record<string, any> = {};
@@ -730,6 +733,9 @@ const calculateValue = () => {
         },
         zsxq: {
             accessToken: envs.ZSXQ_ACCESS_TOKEN,
+        },
+        guozaoke: {
+            cookies: envs.GUOZAOKE_COOKIES,
         },
     };
 
