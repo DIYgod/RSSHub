@@ -13,7 +13,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { filter } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 40;
 
     const rootUrl = 'https://the.bi/s';
     const filters = parseFilterStr(filter);
