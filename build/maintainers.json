@@ -3284,6 +3284,9 @@
   "/hypergryph/arknights/news/:group?": [
     "Astrian"
   ],
+  "/i-cable/news/:category?": [
+    "quiniapiezoelectricity"
+  ],
   "/ianspriggs/:category?": [
     "nczitzk"
   ],
