@@ -154,10 +154,11 @@ export const twitterGot = async (
         dispatcher: dispatchers?.agent,
         onResponse: async ({ response }) => {
             const remaining = response.headers.get('x-rate-limit-remaining');
+            const remainingInt = Number.parseInt(remaining || '0');
             const reset = response.headers.get('x-rate-limit-reset');
             logger.debug(`twitter debug: twitter rate limit remaining for token ${auth?.token} is ${remaining} and reset at ${reset}`);
             if (auth) {
-                if (remaining === '0' && reset) {
+                if (remaining && remainingInt < 2 && reset) {
                     const resetTime = new Date(Number.parseInt(reset) * 1000);
                     const delay = (resetTime.getTime() - Date.now()) / 1000;
                     logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}, will unlock after ${delay}s`);
@@ -196,6 +197,9 @@ export const twitterGot = async (
                         logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
                         await cache.set(`${lockPrefix}${auth.token}`, '1', 86400);
                     }
+                } else {
+                    logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
+                    await cache.set(`${lockPrefix}${auth.token}`, '', 1);
                 }
             }
         },
@@ -204,8 +208,6 @@ export const twitterGot = async (
     if (auth?.token) {
         logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
         await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers?.jar.serializeSync()), config.cache.contentExpire);
-        logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
-        await cache.set(`${lockPrefix}${auth.token}`, '', 1);
     }
 
     return response._data;
