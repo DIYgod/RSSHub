@@ -72,7 +72,7 @@ async function getContent(link) {
                 author,
             };
         })
-        .get();
+        .toArray();
     if (comments && comments.length > 0) {
         for (const item of comments) {
             content += '<br>' + item.author + ': ' + item.comment;
