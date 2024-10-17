@@ -98,19 +98,36 @@ async function fetchContent(item: Item): Promise<ProcessedItem | null> {
         return null; // 如果发生错误，则返回null
     }
 }
-async function processItems(itemsToFetch: Item[]): Promise<ProcessedItem[]> {
-    const out: ProcessedItem[] = [];
-    let currentIndex = 0;
 
-    // 使用索引直接访问原始数组，避免不必要的 slice 操作（可选优化）
-    const batchPromises: Promise<ProcessedItem | null>[] = [];
-    for (let i = 0; i < 10 && currentIndex < itemsToFetch.length; i++, currentIndex++) {
-        batchPromises.push(fetchContent(itemsToFetch[currentIndex]));
+// 递归处理函数，每次处理一批项
+async function processBatch(items: Item[], batchSize: number, out: ProcessedItem[], startIndex: number): Promise<ProcessedItem[]> {
+    if (startIndex >= items.length) {
+        // 所有项都已处理完毕，返回结果
+        return out;
     }
-    const results = await Promise.all(batchPromises);
-    out.push(...results.filter((result): result is ProcessedItem => result !== null));
 
-    return out;
+    // 确定这一批要处理的项数
+    const endIndex = Math.min(startIndex + batchSize, items.length);
+    const batchItems = items.slice(startIndex, endIndex);
+
+    // 创建这一批的 Promise 数组
+    const batchPromises = batchItems.map((item) => fetchContent(item));
+
+    // 等待这一批 Promise 完成，并过滤结果
+    const results = await Promise.all(batchPromises);
+    const filteredResults = results.filter((result): result is ProcessedItem => result !== null);
+
+    // 将过滤后的结果添加到输出数组中
+    out.push(...filteredResults);
+
+    // 递归处理下一批项
+    return processBatch(items, batchSize, out, endIndex);
+}
+
+function processItems(itemsToFetch: Item[]): Promise<ProcessedItem[]> {
+    const batchSize = 2; // 并发请求的数量
+    const out: ProcessedItem[] = [];
+    return processBatch(itemsToFetch, batchSize, out, 0);
 }
 
 async function handler() {
@@ -120,7 +137,7 @@ async function handler() {
 
     const list = $('div.topic-item');
     const itemsToFetch: Item[] = [];
-    const maxItems = 10; // 最多取10个数据
+    const maxItems = 20; // 最多取20个数据
 
     for (const item of list) {
         if (itemsToFetch.length >= maxItems) {
