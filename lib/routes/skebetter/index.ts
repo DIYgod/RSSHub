@@ -67,7 +67,7 @@ async function handler(ctx): Promise<Data> {
     const items = await cache.tryGet(url, async () => {
         const data = await fetchData(url);
         return processItems(data, 'index');
-    });
+    }, config.cache.routeExpire, false);
 
     return {
         title: `Skebetter - ${typeMap[type]}`,
