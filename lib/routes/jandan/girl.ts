@@ -34,14 +34,14 @@ async function crawl(ctx: Context, limit: number = 30) {
 }
 
 const __dirname = getCurrentPath(import.meta.url);
-const template_file = path.join(__dirname, 'templates/girl.art');
+const girlDescTemplate = path.join(__dirname, 'templates/girl.art');
 
-async function _crawl(start_id?: string, limit: number = 30, items: DataItem[] = []): Promise<DataItem[]> {
+async function _crawl(startId?: string, limit: number = 30, items: DataItem[] = []): Promise<DataItem[]> {
     if (items.length >= limit) {
         return items;
     }
 
-    const response = await ofetch(`https://api.jandan.net/api/v1/comment/list/108629${start_id ? `?start_id=${start_id}` : ''}`);
+    const response = await ofetch(`https://api.jandan.net/api/v1/comment/list/108629${startId ? `?start_id=${startId}` : ''}`);
     const data: {
         id: string;
         author: string;
@@ -51,17 +51,17 @@ async function _crawl(start_id?: string, limit: number = 30, items: DataItem[] =
         images: { url: string; full_url: string }[];
     }[] = response.data;
 
-    const res_data: DataItem[] =
+    const resData: DataItem[] =
         data?.map((item) => ({
             title: item.author,
-            description: art(template_file, { images: item.images }),
+            description: art(girlDescTemplate, { images: item.images }),
             pubDate: new Date(item.date),
             link: `https://jandan.net/t/${item.id}`,
             author: item.author,
         })) || [];
-    const last_id = data?.at(-1)?.id;
-    if (last_id) {
-        return _crawl(last_id, limit, [...items, ...res_data]);
+    const lastItemId = data?.at(-1)?.id;
+    if (lastItemId) {
+        return _crawl(lastItemId, limit, [...items, ...resData]);
     }
-    return [...items, ...res_data];
+    return [...items, ...resData];
 }
