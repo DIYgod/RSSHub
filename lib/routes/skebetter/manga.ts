@@ -1,6 +1,7 @@
 import { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { processItems, fetchData } from './utils';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/manga/:order',
@@ -46,10 +47,15 @@ async function handler(ctx): Promise<Data> {
 
     const url = `${baseUrl}?order=${order}`;
 
-    const items = await cache.tryGet(url, async () => {
-        const data = await fetchData(url, true);
-        return processItems(data, 'manga');
-    }, config.cache.routeExpire, false);
+    const items = await cache.tryGet(
+        url,
+        async () => {
+            const data = await fetchData(url, true);
+            return processItems(data, 'manga');
+        },
+        config.cache.routeExpire,
+        false
+    );
 
     return {
         title: `Skebetter Manga - ${orderMap[order]}`,

@@ -1,6 +1,7 @@
 import { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { processItems, fetchData } from './utils';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/illust/:type',
@@ -64,10 +65,15 @@ async function handler(ctx): Promise<Data> {
 
     const url = `${baseUrl}?type=${type}`;
 
-    const items = await cache.tryGet(url, async () => {
-        const data = await fetchData(url);
-        return processItems(data, 'illust');
-    }, config.cache.routeExpire, false);
+    const items = await cache.tryGet(
+        url,
+        async () => {
+            const data = await fetchData(url);
+            return processItems(data, 'illust');
+        },
+        config.cache.routeExpire,
+        false
+    );
 
     return {
         title: `Skebetter Illust - ${typeMap[type]}`,
