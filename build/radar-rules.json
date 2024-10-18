@@ -27545,6 +27545,24 @@
           "/"
         ],
         "target": "/weibo/user_bookmarks/:uid"
+      },
+      {
+        "title": "博主",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/u/:uid"
+        ],
+        "target": "/weibo/user/:uid"
+      }
+    ],
+    "www": [
+      {
+        "title": "博主",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/u/:uid"
+        ],
+        "target": "/weibo/user/:uid"
       }
     ],
     "s": [
@@ -27566,9 +27584,7 @@
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/u/:uid",
-          "/profile/:uid",
-          "/u/:uid",
-          "/u/:uid"
+          "/profile/:uid"
         ],
         "target": "/weibo/user/:uid"
       },

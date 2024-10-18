@@ -78822,8 +78822,18 @@
           {
             "source": [
               "m.weibo.cn/u/:uid",
-              "m.weibo.cn/profile/:uid",
-              "weibo.com/u/:uid",
+              "m.weibo.cn/profile/:uid"
+            ],
+            "target": "/user/:uid"
+          },
+          {
+            "source": [
+              "weibo.com/u/:uid"
+            ],
+            "target": "/user/:uid"
+          },
+          {
+            "source": [
               "www.weibo.com/u/:uid"
             ],
             "target": "/user/:uid"
