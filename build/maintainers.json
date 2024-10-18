@@ -3377,6 +3377,9 @@
   "/inewsweek/:channel": [
     "changren-wcr"
   ],
+  "/infoq/presentations/:conference?": [
+    "nczitzk"
+  ],
   "/infoq/recommend": [
     "brilon"
   ],

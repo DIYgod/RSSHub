@@ -14187,6 +14187,20 @@
       }
     ]
   },
+  "infoq.com": {
+    "_name": "InfoQ 中文",
+    "www": [
+      {
+        "title": "Presentations",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/presentations",
+          "/:conference/presentations"
+        ],
+        "target": "/infoqparams=>{const conference=params.conference;return`/presentations${conference?`/${conference}`:\"\"}`}"
+      }
+    ]
+  },
   "infoq.cn": {
     "_name": "InfoQ 中文",
     ".": [
