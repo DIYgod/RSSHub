@@ -101,7 +101,7 @@ export const handler = async (ctx) => {
                                 {
                                     src: videoSrc,
                                     poster,
-                                    type: videoSrc ? `video/${videoSrc.split(/\./).pop()}` : undefined,
+                                    type: `video/${videoSrc.split(/\./).pop()}`,
                                 },
                             ],
                         })
