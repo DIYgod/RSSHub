@@ -3,10 +3,10 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/artistBrandlist/:grp_no/:grp_no2?',
+    path: '/artistBrandlist/:grpNo/:grpNo2?',
     categories: ['shopping'],
     example: 'ktown4u/artistBrandlist/234590/1723449',
-    parameters: { grp_no: 'artist id (Get in url)', grp_no2: 'product category id (Get in url), empty for all categories' },
+    parameters: { grpNo: 'artist id (Get in url)', grpNo2: 'product category id (Get in url), empty for all categories' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,14 +18,14 @@ export const route: Route = {
     radar: [
         {
             source: [],
-            target: '/artistBrandlist/:grp_no/:grp_no2',
+            target: '/artistBrandlist/:grpNo/:grpNo2',
         },
     ],
     name: 'Get the products on sale',
     maintainers: ['JamesWDGu'],
     handler: async (ctx) => {
-        const { grp_no, grp_no2 = '' } = ctx.req.param();
-        const data = await ofetch(`https://cn.ktown4u.com/selectArtistBrandList?cateGrpNo=${grp_no2}&currentPage=1&goodsSearch=newgoods&grpNo=${grp_no}&searchType=ARTIST`, {
+        const { grpNo, grpNo2 = '' } = ctx.req.param();
+        const data = await ofetch(`https://cn.ktown4u.com/selectArtistBrandList?cateGrpNo=${grpNo2}&currentPage=1&goodsSearch=newgoods&grpNo=${grpNo}&searchType=ARTIST`, {
             method: 'POST',
             headers: {
                 accept: 'application/json, text/plain, */*',
@@ -42,8 +42,8 @@ export const route: Route = {
         }));
 
         return {
-            title: `${String(rssTitle(data))}`,
-            link: `https://cn.ktown4u.com/artistBrandlist?grp_no=${grp_no}&grp_no2=${grp_no2}`,
+            title: rssTitle(data),
+            link: `https://cn.ktown4u.com/artistBrandlist?grp_no=${grpNo}&grp_no2=${grpNo2}`,
             item: items,
         };
     },
