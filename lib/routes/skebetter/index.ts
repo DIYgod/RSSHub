@@ -18,6 +18,28 @@ export const route: Route = {
     name: 'Hot',
     maintainers: ['SnowAgar25'],
     handler,
+    radar: [
+        {
+            title: 'Skebetter - Hot',
+            source: ['skebetter.com'],
+            target: '/hot',
+        },
+        {
+            title: 'Skebetter - Week',
+            source: ['skebetter.com'],
+            target: '/week',
+        },
+        {
+            title: 'Skebetter - Month',
+            source: ['skebetter.com'],
+            target: '/month',
+        },
+        {
+            title: 'Skebetter - Latest',
+            source: ['skebetter.com'],
+            target: '/latest',
+        },
+    ],
     description: `
 | 急上昇 | 週間 | 月間 | 新着 |
 | ----- | ---- | ---- | ---- |

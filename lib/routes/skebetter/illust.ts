@@ -18,6 +18,28 @@ export const route: Route = {
     name: 'Illust',
     maintainers: ['SnowAgar25'],
     handler,
+    radar: [
+        {
+            title: 'Illust - Hot',
+            source: ['skebetter.com/illust'],
+            target: '/illust/hot',
+        },
+        {
+            title: 'Illust - Week',
+            source: ['skebetter.com/illust'],
+            target: '/illust/week',
+        },
+        {
+            title: 'Illust - Month',
+            source: ['skebetter.com/illust'],
+            target: '/illust/month',
+        },
+        {
+            title: 'Illust - Latest',
+            source: ['skebetter.com/illust'],
+            target: '/illust/latest',
+        },
+    ],
     description: `
 | 急上昇 | 週間 | 月間 | 新着 |
 | ----- | ---- | ---- | ---- |

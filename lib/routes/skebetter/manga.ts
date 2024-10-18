@@ -18,6 +18,18 @@ export const route: Route = {
     name: 'Manga',
     maintainers: ['SnowAgar25'],
     handler,
+    radar: [
+        {
+            title: 'Manga - Latest',
+            source: ['skebetter.com/series'],
+            target: '/manga/1',
+        },
+        {
+            title: 'Manga - Hot',
+            source: ['skebetter.com/series'],
+            target: '/manga/2',
+        },
+    ],
     description: `
 | 新着 (Latest) | 人気 (Hot) |
 | ---- | ---- |
