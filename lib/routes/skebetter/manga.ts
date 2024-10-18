@@ -49,7 +49,7 @@ async function handler(ctx): Promise<Data> {
     const items = await cache.tryGet(url, async () => {
         const data = await fetchData(url, true);
         return processItems(data, 'manga');
-    });
+    }, config.cache.routeExpire, false);
 
     return {
         title: `Skebetter Manga - ${orderMap[order]}`,
