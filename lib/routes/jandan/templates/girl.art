@@ -1,0 +1,7 @@
+{{each images}}
+<p>
+    <a href="{{$value.full_url}}">[查看原图]</a>
+    <br>
+    <img alt="原图" src="{{$value.url}}" referrerpolicy="no-referrer" />
+</p>
+{{/each}}
