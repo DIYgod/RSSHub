@@ -69650,6 +69650,52 @@
     "name": "故事 FM",
     "url": "storyfm.cn"
   },
+  "straitstimes": {
+    "routes": {
+      "/:category?/:section?": {
+        "path": "/:category?/:section?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/straitstimes/singapore",
+        "parameters": {
+          "category": "Category, see below for more information",
+          "section": "Section, see below for more information"
+        },
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "requireConfig": false
+        },
+        "name": "News",
+        "maintainers": [
+          "quiniapiezoelectricity"
+        ],
+        "description": "\n| Category               | `:category`               |\n| ---------------------- | --------------------------- |\n| Singapore              | `singapore`               |\n| Asia                   | `asia`                    |\n| World                  | `world`                   |\n| Opinion                | `opinion`                 |\n| Life                   | `life`                    |\n| Business               | `business`                |\n| Jobs                   | `jobs`                    |\n| Parenting & Education  | `parenting-and-education` |\n| Food                   | `food`                    |\n| Tech                   | `tech`                    |\n| Sport                  | `sport`                   |\n| Podcasts               | `podcasts`                |,\n\n| Section                | `:section`                |\n| ---------------------- | --------------------------- |\n| Top Stories            | `top-stories`             |\n| Latest                 | `latest`                  |",
+        "radar": [
+          {
+            "source": [
+              "www.straitstimes.com/:category"
+            ],
+            "target": "/:category"
+          },
+          {
+            "source": [
+              "www.straitstimes.com"
+            ],
+            "target": "/"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "The Strait Times",
+    "url": "straitstimes.com",
+    "description": ""
+  },
   "stratechery": {
     "routes": {
       "/": {

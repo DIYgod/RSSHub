@@ -25014,6 +25014,27 @@
       }
     ]
   },
+  "straitstimes.com": {
+    "_name": "The Strait Times",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/straitstimes/:category"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/straitstimes/"
+      }
+    ]
+  },
   "stream-capital.com": {
     "_name": "远川研究所",
     "www": [
