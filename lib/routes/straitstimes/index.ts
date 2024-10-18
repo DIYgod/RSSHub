@@ -9,7 +9,7 @@ import { art } from '@/utils/render';
 export const route: Route = {
     path: '/:category?/:section?',
     categories: ['traditional-media'],
-    example: '/singapore',
+    example: '/straitstimes/singapore',
     parameters: {
         category: 'Category, see below for more information',
         section: 'Section, see below for more information',
