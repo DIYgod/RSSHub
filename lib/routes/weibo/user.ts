@@ -30,7 +30,15 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['m.weibo.cn/u/:uid', 'm.weibo.cn/profile/:uid', 'weibo.com/u/:uid', 'www.weibo.com/u/:uid'],
+            source: ['m.weibo.cn/u/:uid', 'm.weibo.cn/profile/:uid'],
+            target: '/user/:uid',
+        },
+        {
+            source: ['weibo.com/u/:uid'],
+            target: '/user/:uid',
+        },
+        {
+            source: ['www.weibo.com/u/:uid'],
             target: '/user/:uid',
         },
     ],
