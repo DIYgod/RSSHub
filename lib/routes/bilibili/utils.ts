@@ -95,8 +95,8 @@ function getDmImgList() {
         const dmImgList = JSON.parse(config.bilibili.dmImgList);
         return JSON.stringify([dmImgList[Math.floor(Math.random() * dmImgList.length)]]);
     }
-    const x = Math.max(generateGaussianInteger(650, 5), 0);
-    const y = Math.max(generateGaussianInteger(400, 5), 0);
+    const x = Math.max(generateGaussianInteger(1245, 5), 0);
+    const y = Math.max(generateGaussianInteger(1285, 5), 0);
     const path = [
         {
             x: 3 * x + 2 * y,
@@ -109,10 +109,90 @@ function getDmImgList() {
     return JSON.stringify(path);
 }
 
-function addDmVerifyInfo(params, dmImgList) {
+function getDmImgInter() {
+    if (config.bilibili.dmImgInter !== undefined) {
+        const dmImgInter = JSON.parse(config.bilibili.dmImgInter);
+        return JSON.stringify([dmImgInter[Math.floor(Math.random() * dmImgInter.length)]]);
+    }
+    const p1 = getDmImgInterWh(274, 601);
+    const s1 = getDmImgInterOf(134, 30);
+    const p2 = getDmImgInterWh(332, 64);
+    const s2 = getDmImgInterOf(1101, 338);
+    const of = getDmImgInterOf(0, 0);
+    const wh = getDmImgInterWh(1245, 1285);
+    const ds = [
+        {
+            t: getDmImgInterT('div'),
+            c: getDmImgInterC('clearfix g-search search-container'),
+            p: [p1[0], p1[2], p1[1]],
+            s: [s1[2], s1[0], s1[1]],
+        },
+        {
+            t: getDmImgInterT('div'),
+            c: getDmImgInterC('wrapper'),
+            p: [p2[0], p2[2], p2[1]],
+            s: [s2[2], s2[0], s2[1]],
+        },
+    ];
+    return JSON.stringify({ ds, wh, of });
+}
+
+function getDmImgInterT(tag: string) {
+    return {
+        a: 4,
+        article: 29,
+        button: 7,
+        div: 2,
+        em: 27,
+        form: 17,
+        h1: 11,
+        h2: 12,
+        h3: 13,
+        h4: 14,
+        h5: 15,
+        h6: 16,
+        img: 5,
+        input: 6,
+        label: 25,
+        li: 10,
+        ol: 9,
+        option: 20,
+        p: 3,
+        section: 28,
+        select: 19,
+        span: 1,
+        strong: 26,
+        table: 21,
+        td: 23,
+        textarea: 18,
+        th: 24,
+        tr: 22,
+        ul: 8,
+    }[tag];
+}
+
+function getDmImgInterC(className: string) {
+    return Buffer.from(className).toString('base64').slice(0, -2);
+}
+
+function getDmImgInterOf(top: number, left: number) {
+    const seed = Math.floor(514 * Math.random());
+    return [3 * top + 2 * left + seed, 4 * top - 4 * left + 2 * seed, seed];
+}
+
+function getDmImgInterWh(width: number, height: number) {
+    const seed = Math.floor(114 * Math.random());
+    return [2 * width + 2 * height + 3 * seed, 4 * width - height + seed, seed];
+}
+
+function addDmVerifyInfo(params: string, dmImgList: string) {
     const dmImgStr = Buffer.from('no webgl').toString('base64').slice(0, -2);
     const dmCoverImgStr = Buffer.from('no webgl').toString('base64').slice(0, -2);
     return `${params}&dm_img_list=${dmImgList}&dm_img_str=${dmImgStr}&dm_cover_img_str=${dmCoverImgStr}`;
+}
+
+function addDmVerifyInfoWithInter(params: string, dmImgList: string, dmImgInter: string) {
+    return `${addDmVerifyInfo(params, dmImgList)}&dm_img_inter=${dmImgInter}`;
 }
 
 const bvidTime = 1_589_990_400;
@@ -124,7 +204,9 @@ export default {
     hexsign,
     addWbiVerifyInfo,
     getDmImgList,
+    getDmImgInter,
     addDmVerifyInfo,
+    addDmVerifyInfoWithInter,
     bvidTime,
     addRenderData,
 };
