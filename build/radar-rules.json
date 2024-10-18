@@ -24056,6 +24056,91 @@
       }
     ]
   },
+  "skebetter.com": {
+    "_name": "Skebetter",
+    ".": [
+      {
+        "title": "Illust - Hot",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/illust"
+        ],
+        "target": "/skebetter/illust/hot"
+      },
+      {
+        "title": "Illust - Week",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/illust"
+        ],
+        "target": "/skebetter/illust/week"
+      },
+      {
+        "title": "Illust - Month",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/illust"
+        ],
+        "target": "/skebetter/illust/month"
+      },
+      {
+        "title": "Illust - Latest",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/illust"
+        ],
+        "target": "/skebetter/illust/latest"
+      },
+      {
+        "title": "Skebetter - Hot",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/skebetter/hot"
+      },
+      {
+        "title": "Skebetter - Week",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/skebetter/week"
+      },
+      {
+        "title": "Skebetter - Month",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/skebetter/month"
+      },
+      {
+        "title": "Skebetter - Latest",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/skebetter/latest"
+      },
+      {
+        "title": "Manga - Latest",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/series"
+        ],
+        "target": "/skebetter/manga/1"
+      },
+      {
+        "title": "Manga - Hot",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/series"
+        ],
+        "target": "/skebetter/manga/2"
+      }
+    ]
+  },
   "sketis.net": {
     "_name": "Sketis | Website of Dr. Makarius Wenzel",
     "isabelle-dev": [

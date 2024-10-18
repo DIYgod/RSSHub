@@ -66850,6 +66850,160 @@
     "name": "Skeb",
     "url": "skeb.jp"
   },
+  "skebetter": {
+    "routes": {
+      "/illust/:type": {
+        "path": "/illust/:type",
+        "categories": [
+          "anime"
+        ],
+        "example": "/skebetter/illust/hot",
+        "parameters": {
+          "type": "Type, see below"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Illust",
+        "maintainers": [
+          "SnowAgar25"
+        ],
+        "radar": [
+          {
+            "title": "Illust - Hot",
+            "source": [
+              "skebetter.com/illust"
+            ],
+            "target": "/illust/hot"
+          },
+          {
+            "title": "Illust - Week",
+            "source": [
+              "skebetter.com/illust"
+            ],
+            "target": "/illust/week"
+          },
+          {
+            "title": "Illust - Month",
+            "source": [
+              "skebetter.com/illust"
+            ],
+            "target": "/illust/month"
+          },
+          {
+            "title": "Illust - Latest",
+            "source": [
+              "skebetter.com/illust"
+            ],
+            "target": "/illust/latest"
+          }
+        ],
+        "description": "\n| 急上昇 | 週間 | 月間 | 新着 |\n| ----- | ---- | ---- | ---- |\n| hot | week | month| latest |",
+        "location": "illust.ts"
+      },
+      "/:type": {
+        "path": "/:type",
+        "categories": [
+          "anime"
+        ],
+        "example": "/skebetter/hot",
+        "parameters": {
+          "type": "Type, see below"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Hot",
+        "maintainers": [
+          "SnowAgar25"
+        ],
+        "radar": [
+          {
+            "title": "Skebetter - Hot",
+            "source": [
+              "skebetter.com"
+            ],
+            "target": "/hot"
+          },
+          {
+            "title": "Skebetter - Week",
+            "source": [
+              "skebetter.com"
+            ],
+            "target": "/week"
+          },
+          {
+            "title": "Skebetter - Month",
+            "source": [
+              "skebetter.com"
+            ],
+            "target": "/month"
+          },
+          {
+            "title": "Skebetter - Latest",
+            "source": [
+              "skebetter.com"
+            ],
+            "target": "/latest"
+          }
+        ],
+        "description": "\n| 急上昇 | 週間 | 月間 | 新着 |\n| ----- | ---- | ---- | ---- |\n| hot | week | month| latest |",
+        "location": "index.ts"
+      },
+      "/manga/:order": {
+        "path": "/manga/:order",
+        "categories": [
+          "anime"
+        ],
+        "example": "/skebetter/manga/1",
+        "parameters": {
+          "order": "Order, see below."
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Manga",
+        "maintainers": [
+          "SnowAgar25"
+        ],
+        "radar": [
+          {
+            "title": "Manga - Latest",
+            "source": [
+              "skebetter.com/series"
+            ],
+            "target": "/manga/1"
+          },
+          {
+            "title": "Manga - Hot",
+            "source": [
+              "skebetter.com/series"
+            ],
+            "target": "/manga/2"
+          }
+        ],
+        "description": "\n| 新着 (Latest) | 人気 (Hot) |\n| ---- | ---- |\n| 1    | 2    |",
+        "location": "manga.ts"
+      }
+    },
+    "name": "Skebetter",
+    "url": "skebetter.com"
+  },
   "sketis": {
     "routes": {
       "/isabelle-dev/blog/:blog": {
