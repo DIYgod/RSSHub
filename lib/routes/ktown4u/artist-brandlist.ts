@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/artistBrandlist/:grpNo/:grpNo2?',
     categories: ['shopping'],
-    example: 'ktown4u/artistBrandlist/234590/1723449',
+    example: '/ktown4u/artistBrandlist/234590/1723449',
     parameters: { grpNo: 'artist id (Get in url)', grpNo2: 'product category id (Get in url), empty for all categories' },
     features: {
         requireConfig: false,
