@@ -18843,6 +18843,59 @@
       }
     ]
   },
+  "misskon.com": {
+    "_name": "MissKON",
+    ".": [
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/"
+        ],
+        "target": "/misskon/posts"
+      },
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/tag/:tag/"
+        ],
+        "target": "/misskon/tag/:tag"
+      },
+      {
+        "title": "Top 3 days",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/top3/"
+        ],
+        "target": "/misskon/top/3"
+      },
+      {
+        "title": "Top 7 days",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/top7/"
+        ],
+        "target": "/misskon/top/7"
+      },
+      {
+        "title": "Top 30 days",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/top30/"
+        ],
+        "target": "/misskon/top/30"
+      },
+      {
+        "title": "Top 60 days",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/top60/"
+        ],
+        "target": "/misskon/top/60"
+      }
+    ]
+  },
   "miui.com": {
     "_name": "MIUI",
     "web.vip": [

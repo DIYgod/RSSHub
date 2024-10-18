@@ -49408,6 +49408,127 @@
     "name": "Misskey",
     "url": "misskey.io"
   },
+  "misskon": {
+    "routes": {
+      "/posts/:routeParams?": {
+        "path": "/posts/:routeParams?",
+        "categories": [
+          "picture"
+        ],
+        "example": "/misskon/posts/search=video&tags_exclude=353,3100&per_page=5",
+        "parameters": {
+          "routeParams": "Additional parameters for filtering posts, refer to [WordPress API Reference](https://developer.wordpress.org/rest-api/reference/posts/#arguments) for details."
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "misskon.com/"
+            ],
+            "target": "/posts"
+          }
+        ],
+        "name": "Posts",
+        "maintainers": [
+          "Urabartin"
+        ],
+        "location": "posts.ts"
+      },
+      "/tag/:tag": {
+        "path": "/tag/:tag",
+        "categories": [
+          "picture"
+        ],
+        "example": "/misskon/tag/cosplay",
+        "parameters": {
+          "tag": "Any tag that exists in MissKon"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "misskon.com/tag/:tag/"
+            ],
+            "target": "/tag/:tag"
+          }
+        ],
+        "name": "Tag",
+        "maintainers": [
+          "Urabartin"
+        ],
+        "location": "tag.ts"
+      },
+      "/top/:k": {
+        "path": "/top/:k",
+        "categories": [
+          "picture"
+        ],
+        "example": "/misskon/top/60",
+        "parameters": {
+          "k": "Top k days, can be 3, 7, 30 or 60"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "Top 3 days",
+            "source": [
+              "misskon.com/top3/"
+            ],
+            "target": "/top/3"
+          },
+          {
+            "title": "Top 7 days",
+            "source": [
+              "misskon.com/top7/"
+            ],
+            "target": "/top/7"
+          },
+          {
+            "title": "Top 30 days",
+            "source": [
+              "misskon.com/top30/"
+            ],
+            "target": "/top/30"
+          },
+          {
+            "title": "Top 60 days",
+            "source": [
+              "misskon.com/top60/"
+            ],
+            "target": "/top/60"
+          }
+        ],
+        "name": "Top k days",
+        "maintainers": [
+          "Urabartin"
+        ],
+        "location": "top.ts"
+      }
+    },
+    "name": "MissKON",
+    "url": "misskon.com"
+  },
   "mittrchina": {
     "routes": {
       "/:type?": {

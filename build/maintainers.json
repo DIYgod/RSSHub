@@ -4192,6 +4192,15 @@
   "/misskey/users/notes/:username": [
     "siygle"
   ],
+  "/misskon/posts/:routeParams?": [
+    "Urabartin"
+  ],
+  "/misskon/tag/:tag": [
+    "Urabartin"
+  ],
+  "/misskon/top/:k": [
+    "Urabartin"
+  ],
   "/mittrchina/:type?": [
     "EsuRt",
     "queensferryme"
