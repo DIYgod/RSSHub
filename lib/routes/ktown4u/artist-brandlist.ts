@@ -17,7 +17,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['cn.ktown4u.com/artistBrandlist?grp_no=:grp_no&grp_no2=:grp_no2'],
+            source: [],
             target: '/artistBrandlist/:grp_no/:grp_no2',
         },
     ],
