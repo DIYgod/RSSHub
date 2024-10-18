@@ -42934,6 +42934,42 @@
       "name": "毕马威"
     }
   },
+  "ktown4u": {
+    "routes": {
+      "/artistBrandlist/:grpNo/:grpNo2?": {
+        "path": "/artistBrandlist/:grpNo/:grpNo2?",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/ktown4u/artistBrandlist/234590/1723449",
+        "parameters": {
+          "grpNo": "artist id (Get in url)",
+          "grpNo2": "product category id (Get in url), empty for all categories"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [],
+            "target": "/artistBrandlist/:grpNo/:grpNo2"
+          }
+        ],
+        "name": "Get the products on sale",
+        "maintainers": [
+          "JamesWDGu"
+        ],
+        "location": "artist-brandlist.ts"
+      }
+    },
+    "name": "Ktown4u",
+    "url": "ktown4u.com"
+  },
   "kuaidi100": {
     "routes": {
       "/track/:number/:id/:phone?": {

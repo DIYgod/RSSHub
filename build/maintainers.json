@@ -3775,6 +3775,9 @@
   "/kpmg/insights/:lang?": [
     "LogicJake"
   ],
+  "/ktown4u/artistBrandlist/:grpNo/:grpNo2?": [
+    "JamesWDGu"
+  ],
   "/kuaidi100/track/:number/:id/:phone?": [
     "NeverBehave"
   ],
