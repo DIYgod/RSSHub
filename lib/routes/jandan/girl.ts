@@ -3,6 +3,7 @@ import { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
 import path from 'node:path';
 import { art } from '@/utils/render';
+import { getCurrentPath } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/girl',
@@ -32,6 +33,7 @@ async function crawl(ctx: Context, limit: number = 30) {
     return data;
 }
 
+const __dirname = getCurrentPath(import.meta.url);
 const template_file = path.join(__dirname, 'templates/girl.art');
 
 async function _crawl(start_id?: string, limit: number = 30, items: DataItem[] = []): Promise<DataItem[]> {
@@ -49,16 +51,14 @@ async function _crawl(start_id?: string, limit: number = 30, items: DataItem[] =
         images: { url: string; full_url: string }[];
     }[] = response.data;
 
-    const res_data = data.map(
-        (item) =>
-            ({
-                title: item.author,
-                description: art(template_file, { images: item.images }),
-                pubDate: new Date(item.date),
-                link: `https://jandan.net/t/${item.id}`,
-                author: item.author,
-            }) as DataItem
-    );
+    const res_data: DataItem[] =
+        data?.map((item) => ({
+            title: item.author,
+            description: art(template_file, { images: item.images }),
+            pubDate: new Date(item.date),
+            link: `https://jandan.net/t/${item.id}`,
+            author: item.author,
+        })) || [];
     const last_id = data?.at(-1)?.id;
     if (last_id) {
         return _crawl(last_id, limit, [...items, ...res_data]);
