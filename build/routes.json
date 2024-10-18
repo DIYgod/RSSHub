@@ -74805,24 +74805,16 @@
       "/list/:id/:routeParams?": {
         "path": "/list/:id/:routeParams?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
-        "example": "/twitter/list/ladyleet/javascript",
+        "example": "/twitter/list/1502570462752219136",
         "parameters": {
-          "id": "username",
-          "name": "list name",
+          "id": "list id, get from url",
           "routeParams": "extra parameters, see the table above"
         },
         "features": {
           "requireConfig": [
-            {
-              "name": "TWITTER_USERNAME",
-              "description": "Please see above for details."
-            },
-            {
-              "name": "TWITTER_PASSWORD",
-              "description": "Please see above for details."
-            },
             {
               "name": "TWITTER_AUTH_TOKEN",
               "description": "Please see above for details."
@@ -74837,7 +74829,8 @@
         "name": "List timeline",
         "maintainers": [
           "DIYgod",
-          "xyqfer"
+          "xyqfer",
+          "pseudoyu"
         ],
         "radar": [
           {
