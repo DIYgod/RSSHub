@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['pudong.gov.cn/:zwgk'],
+            source: ['www.pudong.gov.cn/zwgk/zxxxgk/index.html'],
             target: '/pudong/zwgk',
         },
     ],
