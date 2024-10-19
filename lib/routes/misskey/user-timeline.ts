@@ -14,16 +14,16 @@ export const route: Route = {
     parameters: {
         username: 'Misskey username in the format of username@instance.domain',
         routeParams: `
-    | Key         | Description                        | Accepted Values | Default |
-    | ----------- | ---------------------------------- | --------------- | ------- |
-    | withRenotes | Include renotes in the timeline    | 0/1/true/false  | false   |
-    | mediaOnly   | Only return posts containing media | 0/1/true/false  | false   |
+| Key         | Description                        | Accepted Values | Default |
+| ----------- | ---------------------------------- | --------------- | ------- |
+| withRenotes | Include renotes in the timeline    | 0/1/true/false  | false   |
+| mediaOnly   | Only return posts containing media | 0/1/true/false  | false   |
 
-    Note: \`withRenotes\` and \`mediaOnly\` are mutually exclusive and cannot both be set to true.
+Note: \`withRenotes\` and \`mediaOnly\` are mutually exclusive and cannot both be set to true.
 
-    Examples:
-    • /misskey/users/notes/mttb2ccp@misskey.io/withRenotes=true
-    • /misskey/users/notes/mttb2ccp@misskey.io/mediaOnly=true`,
+Examples:
+- /misskey/users/notes/mttb2ccp@misskey.io/withRenotes=true
+- /misskey/users/notes/mttb2ccp@misskey.io/mediaOnly=true`,
     },
     features: {
         requireConfig: false,
