@@ -12,7 +12,7 @@ export const route: Route = {
     view: ViewType.SocialMedia,
     example: '/misskey/users/notes/support@misskey.io',
     parameters: {
-        username: 'Misskey username in the format of user@instance.domain',
+        username: 'Misskey username in the format of username@instance.domain',
         routeParams: `
     | Key         | Description                        | Accepted Values | Default |
     | ----------- | ---------------------------------- | --------------- | ------- |

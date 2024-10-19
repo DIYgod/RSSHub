@@ -11,21 +11,32 @@ import { MisskeyNote } from './types';
 
 const allowSiteList = ['misskey.io', 'madost.one', 'mk.nixnet.social'];
 
-const parseNotes = (data, site) =>
+const parseNotes = (data: MisskeyNote[], site: string) =>
     data.map((item: MisskeyNote) => {
         const isRenote = item.renote && Object.keys(item.renote).length > 0;
+        const isReply = item.reply && Object.keys(item.reply).length > 0;
         const noteToUse: MisskeyNote = isRenote ? (item.renote as MisskeyNote) : item;
 
-        const host = noteToUse.user.host === null ? site : noteToUse.user.host;
-        const author = `${noteToUse.user.name} (@${noteToUse.user.username}@${host})`;
+        const host = noteToUse.user.host ?? site;
+        const author = `${noteToUse.user.name} (${noteToUse.user.username}@${host})`;
 
         const description = art(path.join(__dirname, 'templates/note.art'), {
             text: noteToUse.text,
             files: noteToUse.files,
+            reply: item.reply,
+            site,
         });
 
-        const titlePrefix = isRenote ? 'Renote: ' : '';
-        const title = `${titlePrefix}${author}: "${description}"`;
+        let title = '';
+        if (isReply && item.reply) {
+            const replyToHost = item.reply.user.host ?? site;
+            const replyToAuthor = `${item.reply.user.name} (${item.reply.user.username}@${replyToHost})`;
+            title = `Reply to ${replyToAuthor}: "${noteToUse.text ?? ''}"`;
+        } else if (isRenote) {
+            title = `Renote: ${author}: "${noteToUse.text ?? ''}"`;
+        } else {
+            title = `${author}: "${noteToUse.text ?? ''}"`;
+        }
 
         const link = `https://${host}/notes/${noteToUse.id}`;
         const pubDate = parseDate(noteToUse.createdAt);
@@ -38,7 +49,6 @@ const parseNotes = (data, site) =>
             author,
         };
     });
-
 async function getUserTimelineByUsername(username, site, { withRenotes = false, mediaOnly = false }) {
     const searchUrl = `https://${site}/api/users/search-by-username-and-host`;
     const cacheUid = `misskey_username/${site}/${username}`;
