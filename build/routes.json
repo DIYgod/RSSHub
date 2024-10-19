@@ -16978,7 +16978,13 @@
           "dyhId": "看看号ID"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_HOTLINK_TEMPLATE",
+              "optional": true,
+              "description": "设置为`true`并添加`image_hotlink_template`参数来代理图片"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -17003,7 +17009,13 @@
           "period": "默认为`daily`"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_HOTLINK_TEMPLATE",
+              "optional": true,
+              "description": "设置为`true`并添加`image_hotlink_template`参数来代理图片"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -17027,7 +17039,13 @@
           "tag": "话题名称"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_HOTLINK_TEMPLATE",
+              "optional": true,
+              "description": "设置为`true`并添加`image_hotlink_template`参数来代理图片"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -17050,7 +17068,13 @@
           "type": "默认为history"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_HOTLINK_TEMPLATE",
+              "optional": true,
+              "description": "设置为`true`并添加`image_hotlink_template`参数来代理图片"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -17066,8 +17090,7 @@
       },
       "/tuwen/:type?": {
         "path": [
-          "/tuwen/:type?",
-          "/tuwen-xinxian"
+          "/tuwen/:type?"
         ],
         "categories": [
           "social-media"
@@ -17077,34 +17100,13 @@
           "type": "默认为hot"
         },
         "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "图文",
-        "maintainers": [
-          "xizeyoupan"
-        ],
-        "description": "| 参数名称 | 编辑精选 | 最新   |\n  | -------- | -------- | ------ |\n  | type     | hot      | latest |",
-        "location": "tuwen.ts"
-      },
-      "/tuwen-xinxian": {
-        "path": [
-          "/tuwen/:type?",
-          "/tuwen-xinxian"
-        ],
-        "categories": [
-          "social-media"
-        ],
-        "example": "/coolapk/tuwen",
-        "parameters": {
-          "type": "默认为hot"
-        },
-        "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_HOTLINK_TEMPLATE",
+              "optional": true,
+              "description": "设置为`true`并添加`image_hotlink_template`参数来代理图片"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -17128,7 +17130,13 @@
           "uid": "在个人界面右上分享-复制链接获取"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_HOTLINK_TEMPLATE",
+              "optional": true,
+              "description": "设置为`true`并添加`image_hotlink_template`参数来代理图片"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -17143,7 +17151,8 @@
       }
     },
     "name": "酷安",
-    "url": "coolapk.com"
+    "url": "coolapk.com",
+    "description": "\n:::tip\n即日起，多数路由图片防盗链。   \n需要将 `ALLOW_USER_HOTLINK_TEMPLATE` 环境变量设置为 `true` ，然后配置`image_hotlink_template` 。   \n详见 [#16715](https://github.com/DIYgod/RSSHub/issues/16715)   \n:::"
   },
   "coomer": {
     "routes": {

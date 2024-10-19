@@ -1457,9 +1457,6 @@
   "/coolapk/tuwen/:type?": [
     "xizeyoupan"
   ],
-  "/coolapk/tuwen-xinxian": [
-    "xizeyoupan"
-  ],
   "/coolapk/user/:uid/dynamic": [
     "xizeyoupan"
   ],
