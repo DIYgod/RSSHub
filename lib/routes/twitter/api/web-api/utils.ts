@@ -116,7 +116,7 @@ export const twitterGot = async (
             agent,
         };
     } else if (auth) {
-        throw new ConfigNotFoundError(`Twitter cookie for token ${auth?.token} is not valid`);
+        throw new ConfigNotFoundError(`Twitter cookie for token ${auth?.token?.replace(/(\w{8})(\w+)/, (_, v1, v2) => v1 + '*'.repeat(v2.length))} is not valid`);
     }
     const jsonCookie = dispatchers
         ? Object.fromEntries(
