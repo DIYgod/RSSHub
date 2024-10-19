@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'http://www.jwc.zjut.edu.cn/';
 const host = 'www.jwc.zjut.edu.cn';
@@ -66,10 +67,7 @@ async function handler(ctx) {
                 } else if (!link.startsWith('http')) {
                     link = rootUrl.slice(0, -1) + link;
                 }
-                const parsedDate = parseDate(cheerioItem.find('.news_meta').text()).getTime();
-
-                // 修正时区
-                const pubDate = new Date(parsedDate + 8 * 60 * 60 * 1000);
+                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), +8);
 
                 return {
                     title,
