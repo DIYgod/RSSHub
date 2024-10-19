@@ -56,7 +56,7 @@ async function handler() {
 
     return {
         // 源标题
-        title: `信息公开_政务公开-上海市浦东新区门户网站`,
+        title: '信息公开_政务公开-上海市浦东新区门户网站',
         // 源链接
         link: 'https://www.pudong.gov.cn/zwgk/zxxxgk/index.html',
         // 源文章
