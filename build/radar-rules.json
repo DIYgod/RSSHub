@@ -6192,7 +6192,8 @@
         "title": "期刊",
         "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
-          "/knavi/journals/:name/detail"
+          "/knavi/journals/:name/detail",
+          "/kns/rss.aspx?Journal=:name&Virtual=knavi"
         ],
         "target": "/cnki/journals/:name"
       }

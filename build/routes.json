@@ -16493,14 +16493,16 @@
         "radar": [
           {
             "source": [
-              "navi.cnki.net/knavi/journals/:name/detail"
+              "navi.cnki.net/knavi/journals/:name/detail",
+              "rss.cnki.net/kns/rss.aspx?Journal=:name&Virtual=knavi"
             ]
           }
         ],
         "name": "期刊",
         "maintainers": [
           "Fatpandac",
-          "Derekmini"
+          "Derekmini",
+          "pseudoyu"
         ],
         "location": "journals.ts"
       }
