@@ -1,0 +1,59 @@
+{{ if content }}
+{{ each content }}
+    {{ if $value.type == 'title' && $value.subtype != 'h1'}}
+        <{{ if $value.subtype }}{{ $value.subtype }}{{ else }}h2{{ /if }}>
+            {{ if $value.mime == 'text/html' }}{{@ $value.content }}{{ /if }}
+            {{ if $value.mime == 'text/plain' }}{{ $value.content }}{{ /if }}  
+        </h{{ if $value.subhead_level }}{{ $value.subhead_level }}{{ else }}1{{ /if }}>
+    {{  /if }}
+    {{ if $value.type == 'sanitized_html' }}
+        {{ if $value.subtype == 'paragraph' }}<p>{{ else if $value.subtype == 'subhead' }}<h{{ if $value.subhead_level }}{{ $value.subhead_level }}{{ else }}4{{ /if }}>{{ /if }}
+            {{ if $value.mime == 'text/html' }}{{@ $value.content }}{{ /if }}
+            {{ if $value.mime == 'text/plain' }}{{ $value.content }}{{ /if }}
+            {{ if $value.oembed }}{{@ $value.oembed }}{{ /if }}
+        {{ if $value.subtype == 'paragraph' }}</p>{{ else if $value.subtype == 'subhead' }}</h{{ if $value.subhead_level }}{{ $value.subhead_level }}{{ else }}4{{ /if }}>{{ /if }}
+    {{ /if }}
+    {{ if $value.type == 'deck' }}
+        <blockquote><p>
+            {{ if $value.mime == 'text/html' }}{{@ $value.content }}{{ /if }}
+            {{ if $value.mime == 'text/plain' }}{{ $value.content }}{{ /if }}
+        </p></blockquote>
+    {{ /if }}
+    {{ if $value.type == 'image' }}
+        <figure><img src="{{ $value.imageURL }}" alt="{{ $value.blurb }}"><figcaption>{{ $value.fullcaption }}</figcaption></figure>
+    {{ /if }}
+    {{ if $value.type == 'video' }}
+        {{ if $value.content && $value.content.html }}{{@ $value.content.html  }}
+        {{ else if $value.mediaURL }}
+        <figure>
+            <video controls 
+            {{ if $value.imageURL }}poster="{{ $value.imageURL }}"{{ /if }}
+            >
+            <source src="{{ $value.mediaURL }}">
+            </video>
+            {{ if $value.fullcaption }}<figcaption>{{  $value.fullcaption }}</figcaption>{{ /if }}
+        </figure>
+        {{ /if }}
+    {{ /if }}
+    {{ if $value.type == 'list' }}
+        {{ if $value.subtype == 'ordered' }}<ol>{{ else }}<ul>{{ /if }}
+            {{ if $value.mime == 'text/html' }}{{ each $value.content }}<li>{{@ $value }}</li>{{ /each }}{{ /if }}
+            {{ if $value.mime == 'text/plain' }}{{ each $value.content }}<li>{{ $value }}</li>{{ /each }}{{ /if }}
+        {{ if $value.subtype == 'ordered' }}</ol>{{ else }}</ul>{{ /if }}
+    {{ /if }}
+    {{ if $value.type == 'divider' }}<br><hr><br>{{  /if }}
+    {{ if $value.type == 'byline' }}
+        {{ if $value.subtype == 'live-update' || $value.subtype == 'live-reporter-insight' }}
+        <p><i>
+            {{ if $value.mime == 'text/html' }}{{@ $value.content }}{{ /if }}
+            {{ if $value.mime == 'text/plain' }}{{ $value.content }}{{ /if }}
+        </i></p>
+        {{ /if}}
+    {{  /if }}
+    {{ if $value.type == 'date' }}
+        {{ if $value.subtype == 'live-update'}}
+            {{ if $value.content }}{{ $imports.dayjs.tz($value.content,"America/New_York").locale('en').format('dddd, MMMM D, YYYY h:mm A z') }}{{ /if }}
+        {{ /if }}
+    {{ /if }}
+{{ /each }}
+{{ /if }}
