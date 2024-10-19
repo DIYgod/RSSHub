@@ -2119,7 +2119,8 @@
   ],
   "/fda/cdrh/:titleOnly?": [],
   "/fediverse/timeline/:account": [
-    "DIYgod"
+    "DIYgod",
+    "pseudoyu"
   ],
   "/feng/forum/:id/:type?": [
     "TonyRL"
