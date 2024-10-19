@@ -51,12 +51,10 @@ async function handler(ctx) {
 
     let metadata;
     let scope = columns.data.data;
-    for (const segment of column
-        .split('/')
-        .filter(String)) {
-            metadata = scope.find((item) => item.name === segment || item.dirname === segment);
-            scope = metadata?.children ?? [];
-        }
+    for (const segment of column.split('/').filter((item) => typeof item === 'string')) {
+        metadata = scope.find((item) => item.name === segment || item.dirname === segment);
+        scope = metadata?.children ?? [];
+    }
 
     if (metadata === undefined) {
         throw new InvalidParameterError(`Invalid Column: ${column}`);
