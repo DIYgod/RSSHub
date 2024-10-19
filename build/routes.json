@@ -80658,7 +80658,7 @@
         ],
         "example": "/xaut/index/tzgg",
         "parameters": {
-          "category": "通知类别，默认为通知公告"
+          "category": "通知类别，默认为学校新闻"
         },
         "features": {
           "requireConfig": false,
@@ -80672,7 +80672,7 @@
         "maintainers": [
           "mocusez"
         ],
-        "description": "| 通知公告 | 校园要闻 | 媒体播报 | 学术活动 |\n  | :------: | :------: | :------: | :------: |\n  |   tzgg   |   xyyw   |   mtbd   |   xshd   |",
+        "description": "| 学校新闻 | 砥志研思 | 立德树人 | 传道授业 | 校闻周知 |\n  | :------: | :------: | :------: | :------: | :------: |\n  |   xxxw   |   dzys   |   ldsr   |   cdsy   |   xwzz   |",
         "location": "index.ts"
       },
       "/jwc/:category?": {
@@ -80726,7 +80726,7 @@
       }
     },
     "name": "西安理工大学",
-    "url": "index.xaut.edu.cn"
+    "url": "www.xaut.edu.cn"
   },
   "xbookcn": {
     "routes": {
