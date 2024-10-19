@@ -11428,6 +11428,19 @@
       }
     ]
   },
+  "pudong.gov.cn": {
+    "_name": "上海市人民政府",
+    "www": [
+      {
+        "title": "政务公开-浦东新区",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zwgk/zxxxgk/index.html"
+        ],
+        "target": "/gov/pudong/zwgk"
+      }
+    ]
+  },
   "samr.gov.cn": {
     "_name": "上海市人民政府",
     "xgzlyhd": [
