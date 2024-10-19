@@ -40090,7 +40090,11 @@
           }
         ],
         "name": "用户视频投稿",
-        "maintainers": [],
+        "maintainers": [
+          "FlashWingShadow",
+          "Fatpandac",
+          "pseudoyu"
+        ],
         "location": "user-video.ts"
       }
     },
