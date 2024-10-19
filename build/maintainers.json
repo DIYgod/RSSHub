@@ -7560,8 +7560,14 @@
     "junbaor",
     "yikZero"
   ],
+  "/zjut/cs/:type": [
+    "zhullyb"
+  ],
   "/zjut/da/:type": [
     "yikZero"
+  ],
+  "/zjut/jwc/:type": [
+    "zhullyb"
   ],
   "/zjuvag/blog": [
     "KaiyoungYu"
