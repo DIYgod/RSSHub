@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://cs.zjut.edu.cn/jsp/newsclass.jsp?wcId=';
 const host = 'cs.zjut.edu.cn';
@@ -54,10 +55,7 @@ async function handler(ctx) {
                 } else if (!link.startsWith('http')) {
                     link = 'https://' + host + '/jsp/' + link;
                 }
-                const parsedDate = parseDate(cheerioItem.find('.datetime').text().slice(1, -1)).getTime();
-
-                // 修正时区
-                const pubDate = new Date(parsedDate + 8 * 60 * 60 * 1000);
+                const pubDate = timezone(parseDate(cheerioItem.find('.datetime').text().slice(1, -1)), +8);
 
                 return {
                     title,
