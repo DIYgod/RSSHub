@@ -5,9 +5,9 @@ import { parseDate } from '@/utils/parse-date'; // 解析日期的工具函数
 import cache from '@/utils/cache';
 
 export const route: Route = {
-    path: 'pudong/zwgk',
+    path: '/pudong/zwgk',
     categories: ['government'],
-    example: 'gov/pudong/zwgk',
+    example: '/gov/pudong/zwgk',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -19,7 +19,7 @@ export const route: Route = {
     radar: [
         {
             source: ['pudong.gov.cn/:zwgk'],
-            target: 'pudong/zwgk',
+            target: '/pudong/zwgk',
         },
     ],
     name: '政务公开-浦东新区',
