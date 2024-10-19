@@ -38,16 +38,7 @@ export const route: Route = {
 async function handler(ctx) {
     const column = ctx.req.param('column') ?? 'home';
 
-    const columns = await cache.tryGet(
-        'https://www.tkww.hk/columns.json',
-        async () =>
-            await got({
-                method: 'get',
-                url: 'https://www.tkww.hk/columns.json',
-            }),
-        config.cache.routeExpire,
-        false
-    );
+    const columns = await cache.tryGet('https://www.tkww.hk/columns.json', async () => await got('https://www.tkww.hk/columns.json'), config.cache.routeExpire, false);
 
     let metadata;
     let scope = columns.data.data;
