@@ -461,6 +461,11 @@
     "mjysci",
     "TonyRL"
   ],
+  "/apnews/nav/:nav{.*}?": [
+    "zoenglinghou",
+    "mjysci",
+    "TonyRL"
+  ],
   "/app-center/release/:user/:app/:distribution_group": [
     "Rongronggg9"
   ],

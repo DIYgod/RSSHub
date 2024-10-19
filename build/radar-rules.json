@@ -2693,6 +2693,14 @@
           "/hub/:topic"
         ],
         "target": "/apnews/topics/:topic"
+      },
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/hub/:topic"
+        ],
+        "target": "/apnews/topics/:topic"
       }
     ]
   },
