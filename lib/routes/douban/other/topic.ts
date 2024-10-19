@@ -4,7 +4,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/topic/:id/:sort?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/douban/topic/48823',
     parameters: { id: '话题id', sort: '排序方式，hot或new，默认为new' },
     features: {
@@ -16,7 +16,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '话题',
-    maintainers: ['LogicJake'],
+    maintainers: ['LogicJake', 'pseudoyu'],
     handler,
 };
 
@@ -36,8 +36,14 @@ async function handler(ctx) {
     });
 
     const data = response.data.items;
-    const title = data[0].topic.name;
-    const description = data[0].topic.introduction;
+
+    let title = id;
+    let description = '';
+
+    if (data[0].topic !== null) {
+        title = data[0].topic.name;
+        description = data[0].topic.introduction;
+    }
 
     const out = await Promise.all(
         data.map(async (item) => {
