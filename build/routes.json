@@ -29677,7 +29677,7 @@
           "he1q"
         ],
         "url": "www.customs.gov.cn/",
-        "description": ":::warning\n  由于区域限制，建议在国内 IP 的机器上自建\n  :::",
+        "description": ":::warning\n由于区域限制，建议在国内 IP 的机器上自建\n:::",
         "location": "customs/list.ts"
       },
       "/dianbai/*": {
