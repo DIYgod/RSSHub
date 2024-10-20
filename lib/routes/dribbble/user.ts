@@ -30,5 +30,5 @@ async function handler(ctx) {
 
     const title = `Dribbble - user ${name}`;
 
-    return await utils.getData(ctx, url, title);
+    return await utils.getData(url, title);
 }
