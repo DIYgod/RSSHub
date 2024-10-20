@@ -6,8 +6,8 @@ export default async function identify({ github, context, core }, body, number, 
     core.debug(`sender: ${sender}`);
     core.debug(`body: ${body}`);
     // Remove all HTML comments before performing the match
-    const bodyNoCmts = body.replaceAll(/<!--[\S\s]*?-->/g, '');
-    const m = bodyNoCmts.match(/```routes\s+([\S\s]*?)```/);
+    const bodyNoCmts = body?.replaceAll(/<!--[\S\s]*?-->/g, '');
+    const m = bodyNoCmts?.match(/```routes\s+([\S\s]*?)```/);
     core.debug(`match: ${m}`);
     let routes = null;
 
