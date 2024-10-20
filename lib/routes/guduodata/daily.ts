@@ -65,7 +65,7 @@ async function handler() {
             type: key,
             name: `[${yestoday}] ${types[key].name} - ${types[key].categories[category]}`,
             category: category.toUpperCase(),
-            url: `${host}/show/datalist?type=DAILY&category=${category.toUpperCase()}&date=${yestoday}`,
+            url: `${host}/m/v3/billboard/list?type=DAILY&category=${category.toUpperCase()}&date=${yestoday}`,
         }))
     );
     return {
