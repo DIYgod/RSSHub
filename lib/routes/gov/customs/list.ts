@@ -30,6 +30,9 @@ export const route: Route = {
     maintainers: ['Jeason0228', 'TonyRL', 'he1q'],
     handler,
     url: 'www.customs.gov.cn/',
+    description: `:::warning
+由于区域限制，建议在国内 IP 的机器上自建
+:::`,
 };
 
 async function handler(ctx) {
