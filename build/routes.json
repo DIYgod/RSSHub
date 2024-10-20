@@ -25820,15 +25820,15 @@
     "routes": {
       "/": {
         "path": "/",
+        "example": "/gameapps",
         "radar": [
           {
             "source": [
               "gameapps.hk/"
-            ],
-            "target": ""
+            ]
           }
         ],
-        "name": "Unknown",
+        "name": "最新消息",
         "maintainers": [
           "TonyRL"
         ],

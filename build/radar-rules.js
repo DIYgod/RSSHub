@@ -3948,7 +3948,7 @@
         source:[ "/quest/:alias" ],
         target:"/galxe/quest/:alias" } ] },
   "gameapps.hk":{ _name:"GameApps.hk 香港手机游戏网",
-    ".":[ { title:"Unknown",
+    ".":[ { title:"最新消息",
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/" ],
         target:"/gameapps/" } ] },
