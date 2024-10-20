@@ -25,5 +25,5 @@ async function handler(ctx) {
 
     const title = `Dribbble - keyword ${keyword}`;
 
-    return await utils.getData(ctx, url, title);
+    return await utils.getData(url, title);
 }
