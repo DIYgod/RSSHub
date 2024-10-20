@@ -4,6 +4,14 @@ import querystring from 'querystring';
 import got from '@/utils/got';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 import { config } from '@/config';
+export const route: Route = {
+    path: '/people/:userid/status/:routeParams?',
+    categories: ['social-media'],
+    parameters: { userid: '用户id', routeParams: '额外参数' },
+    name: '用户广播',
+    maintainers: [],
+    handler,
+};
 
 const headers = { Referer: `https://m.douban.com/` };
 
@@ -443,13 +451,6 @@ async function getFullTextItems(items) {
         })
     );
 }
-
-export const route: Route = {
-    path: '/people/:userid/status/:routeParams?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
 
 async function handler(ctx) {
     const userid = ctx.req.param('userid');
