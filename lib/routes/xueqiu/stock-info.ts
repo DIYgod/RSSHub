@@ -82,17 +82,11 @@ async function handler(ctx) {
         title: `${id} ${stock_name} - ${source}`,
         link: `https://xueqiu.com/S/${id}`,
         description: `${stock_name} - ${source}`,
-        item: data.map((item) => {
-            let link = `https://xueqiu.com${item.target}`;
-            if (item.quote_cards) {
-                link = item.quote_cards[0].target_url;
-            }
-            return {
-                title: item.title || sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} }),
-                description: item.description,
-                pubDate: parseDate(item.created_at),
-                link,
-            };
-        }),
+        item: data.map((item) => ({
+            title: item.title || sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} }),
+            description: item.description,
+            pubDate: parseDate(item.created_at),
+            link: `https://xueqiu.com${item.target}`,
+        })),
     };
 }

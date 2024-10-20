@@ -72,7 +72,13 @@ export const route: Route = {
     example: '/coolapk/hot',
     parameters: { type: '默认为`jrrm`', period: '默认为`daily`' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_HOTLINK_TEMPLATE',
+                optional: true,
+                description: '设置为`true`并添加`image_hotlink_template`参数来代理图片',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

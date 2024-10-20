@@ -11,7 +11,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/daily_briefing_chinese',
-    categories: ['traditional-media'],
+    categories: ['traditional-media', 'popular'],
     example: '/nytimes/daily_briefing_chinese',
     parameters: {},
     features: {
@@ -28,11 +28,11 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: '新闻简报',
+    name: 'Daily Briefing',
     maintainers: ['yueyericardo', 'nczitzk'],
     handler,
     url: 'nytimes.com/',
-    description: `网站地址：[https://www.nytimes.com/zh-hans/series/daily-briefing-chinese](https://www.nytimes.com/zh-hans/series/daily-briefing-chinese)`,
+    description: `URL: [https://www.nytimes.com/zh-hans/series/daily-briefing-chinese](https://www.nytimes.com/zh-hans/series/daily-briefing-chinese)`,
 };
 
 async function handler() {
@@ -91,7 +91,7 @@ async function handler() {
     );
 
     return {
-        title: '新闻简报 - The New York Times',
+        title: 'Daily Briefing - The New York Times',
         link: currentUrl,
         item: items,
     };

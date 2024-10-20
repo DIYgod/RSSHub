@@ -133,6 +133,11 @@ async function login({ username, password, authenticationSecret }) {
                     },
                 });
                 logger.debug('Twitter login 4 finished: LoginEnterPassword.');
+                for (const subtask of task3.data?.subtasks || []) {
+                    if (subtask.open_account) {
+                        return subtask.open_account;
+                    }
+                }
 
                 const task4 = await got.post('https://api.x.com/1.1/onboarding/task.json', {
                     headers,

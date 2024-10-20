@@ -39,7 +39,7 @@ async function handler(ctx) {
 
     const buildId = buildResponse.data.match(/"buildId":"(.*?)",/)[1];
 
-    const apiUrl = `${rootUrl}/_next/data/${buildId}/report/${type}.json`;
+    const apiUrl = `${rootUrl}/_next/data/${buildId}/zh/report/${type}.json`;
 
     const response = await got({
         method: 'get',
