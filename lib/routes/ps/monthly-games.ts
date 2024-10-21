@@ -48,7 +48,7 @@ async function handler() {
                     img: item.find('.media-block__img source').attr('srcset'),
                     text: item.find('h3 + p').text(),
                 }),
-                link: item.find('.button a').attr('href'),
+                link: item.find('.btn--cta').attr('href'),
             };
         });
 
