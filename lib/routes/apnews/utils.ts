@@ -2,6 +2,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+import asyncPool from 'tiny-async-pool';
 
 export function removeDuplicateByKey(items, key: string) {
     return [...new Map(items.map((x) => [x[key], x])).values()];
@@ -12,7 +13,21 @@ export function fetchArticle(item) {
         const data = await ofetch(item.link);
         const $ = load(data);
         if ($('#link-ld-json').length === 0) {
-            return item;
+            const gtmRaw = $('meta[name="gtm-dataLayer"]').attr('content');
+            if (gtmRaw) {
+                const gtmParsed = JSON.parse(gtmRaw);
+                return {
+                    title: gtmParsed.headline,
+                    pubDate: parseDate(gtmParsed.publication_date),
+                    description: $('div.RichTextStoryBody').html() || $(':is(.VideoLead, .VideoPage-pageSubHeading)').html(),
+                    category: gtmParsed.tag_array.split(','),
+                    guid: $("meta[name='brightspot.contentId']").attr('content'),
+                    author: gtmParsed.author,
+                    ...item,
+                };
+            } else {
+                return item;
+            }
         }
         const rawLdjson = JSON.parse($('#link-ld-json').text());
         let ldjson;
@@ -45,4 +60,11 @@ export function fetchArticle(item) {
             };
         }
     });
+}
+export async function asyncPoolAll<IN, OUT>(poolLimit: number, array: readonly IN[], iteratorFn: (generator: IN) => Promise<OUT>) {
+    const results: Awaited<OUT[]> = [];
+    for await (const result of asyncPool(poolLimit, array, iteratorFn)) {
+        results.push(result);
+    }
+    return results;
 }

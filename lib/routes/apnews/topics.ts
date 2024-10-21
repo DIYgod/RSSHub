@@ -57,7 +57,7 @@ async function handler(ctx) {
         title: $('title').text(),
         description: $("meta[property='og:description']").text(),
         link: url,
-        item: removeDuplicateByKey(items, 'guid'),
+        item: removeDuplicateByKey(items, 'link'),
         language: $('html').attr('lang'),
     };
 }
