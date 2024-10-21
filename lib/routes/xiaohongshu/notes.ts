@@ -67,7 +67,7 @@ async function handler(ctx) {
 }
 
 async function renderNotesFulltext(notes, urlPrex) {
-    const data: any[] = [];
+    const data = [];
     const promises = notes.flatMap((note) =>
         note.map(async ({ noteCard, id }) => {
             const link = `${urlPrex}/${id}`;
@@ -93,7 +93,7 @@ async function getFullNote(link) {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
                 Cookie: cookie,
-            } as any,
+            },
         });
         const $ = load(res.data);
         let script = $('script')
