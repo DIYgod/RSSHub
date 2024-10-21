@@ -43,7 +43,8 @@ async function handler(ctx) {
     const $ = load(response);
 
     const items = $('.featuredItems .mainItem')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const $item = $(item);
             const link = 'https://bgm.tv' + $item.find('a').first().attr('href');
             const imageUrl = $item
@@ -56,8 +57,7 @@ async function handler(ctx) {
                 link,
                 description: `<img src="${imageUrl}"><br>${info}`,
             };
-        })
-        .toArray();
+        });
 
     const RANK_TYPES = {
         tv: '动画',

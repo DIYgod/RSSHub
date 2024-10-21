@@ -42,15 +42,16 @@ async function handler(ctx) {
             const contentLeft = $('#content_left');
             const containers = contentLeft.find('.c-container');
             return containers
-                .map((i, el) => {
+                .toArray()
+                .map((el) => {
                     const element = $(el);
                     const link = element.find('h3 a').first().attr('href');
                     if (link && !visitedLinks.has(link)) {
                         visitedLinks.add(link);
                         const imgs = element
                             .find('img')
-                            .map((_j, _el) => $(_el).attr('src'))
-                            .toArray();
+                            .toArray()
+                            .map((_el) => $(_el).attr('src'));
                         const description = element.find('.c-gap-top-small [class^="content-right_"]').first().text() || element.find('.c-row').first().text() || element.find('.cos-row').first().text();
                         return {
                             title: element.find('h3').first().text(),
@@ -61,7 +62,6 @@ async function handler(ctx) {
                     }
                     return null;
                 })
-                .toArray()
                 .filter((e) => e?.link);
         },
         config.cache.routeExpire,
