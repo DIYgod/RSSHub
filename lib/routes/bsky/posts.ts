@@ -10,7 +10,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/profile/:handle',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/bsky/profile/bsky.app',
     parameters: { handle: 'User handle, can be found in URL' },
     features: {
