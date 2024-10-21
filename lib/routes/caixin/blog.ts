@@ -67,8 +67,7 @@ async function handler(ctx) {
             pubDate: parseDate(item.publishTime, 'x'),
         }));
 
-        const items = await Promise.all(posts.map((item) => parseBlogArticle(item, cache.tryGet)));
-
+        const items = await Promise.all(posts.map((item) => cache.tryGet(item.link, () => parseBlogArticle(item))));
         return {
             title: `财新博客 - ${authorName}`,
             link,
