@@ -67,7 +67,7 @@ async function handler(ctx) {
         .sort((a, b) => b.pubDate - a.pubDate)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
 
-    const items = ctx.req.query('mode') === 'fulltext' ? await Promise.all(list.map((item) => fetchArticle(item))) : list;
+    const items = ctx.req.query('fulltext') === 'true' ? await Promise.all(list.map((item) => fetchArticle(item))) : list;
 
     return {
         title: `${res.tagObjs[0].name} - AP News`,

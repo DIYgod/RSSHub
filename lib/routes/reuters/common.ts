@@ -190,7 +190,7 @@ async function handler(ctx) {
 
     const results = await Promise.allSettled(
         items.map((item) =>
-            ctx.req.query('mode') === 'fulltext'
+            ctx.req.query('fulltext') === 'true'
                 ? cache.tryGet(item.link, async () => {
                       const detailResponse = await ofetch(item.link);
                       const content = load(detailResponse.data);
