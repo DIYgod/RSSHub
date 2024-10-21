@@ -3,11 +3,11 @@ import cache from '@/utils/cache';
 import { config } from '@/config';
 import { getAcwScV2ByArg1 } from '@/routes/5eplay/utils';
 
-export const parseToken = () =>
+export const parseToken = (link: string) =>
     cache.tryGet(
         'xueqiu:token',
         async () => {
-            const r = await ofetch('https://xueqiu.com');
+            const r = await ofetch(link);
 
             let acw_sc__v2 = '';
             const matches = r.match(/var arg1='(.*?)';/);
@@ -15,7 +15,7 @@ export const parseToken = () =>
                 acw_sc__v2 = getAcwScV2ByArg1(matches[1]);
             }
             const acw_sc__v2_cookie = `acw_sc__v2=${acw_sc__v2}`;
-            const res = await ofetch.raw('https://xueqiu.com', {
+            const res = await ofetch.raw(link, {
                 headers: {
                     Cookie: acw_sc__v2_cookie,
                 },

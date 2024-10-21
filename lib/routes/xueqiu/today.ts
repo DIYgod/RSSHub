@@ -36,7 +36,7 @@ async function handler(ctx) {
     const currentUrl = `${rootUrl}/today`;
     const apiUrl = `${rootUrl}/statuses/hot/listV2.json?since_id=-1&size=${size}`;
 
-    const token = await parseToken();
+    const token = await parseToken(currentUrl);
     const response = await got({
         method: 'get',
         url: apiUrl,
