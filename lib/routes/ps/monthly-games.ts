@@ -38,10 +38,10 @@ async function handler() {
     const { data: response } = await got(baseUrl);
     const $ = load(response);
 
-    const list = $('.cmp-experiencefragment--your-latest-monthly-games .box')
+    const list = $('#monthly-games .box--light ')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((e) => {
+            const item = $(e);
             return {
                 title: item.find('h3').text(),
                 description: art(path.join(__dirname, 'templates/monthly-games.art'), {
