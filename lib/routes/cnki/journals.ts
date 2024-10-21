@@ -24,7 +24,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['navi.cnki.net/knavi/journals/:name/detail', 'rss.cnki.net/kns/rss.aspx?Journal=:name&Virtual=knavi'],
+            source: ['navi.cnki.net/knavi/journals/:name/detail'],
         },
     ],
     name: '期刊',
