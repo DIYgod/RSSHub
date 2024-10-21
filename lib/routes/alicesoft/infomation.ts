@@ -11,8 +11,8 @@ export const route: Route = {
     categories: ['game'],
     example: '/alicesoft/information/game/cat377',
     parameters: {
-        category: 'category',
-        game: 'game',
+        category: 'Category in the URL, which can be accessed under カテゴリ一覧 on the website.',
+        game: 'Game-specific subcategory in the URL, which can be accessed under カテゴリ一覧 on the website. In this case, the category value should be `game`',
     },
     features: {
         requireConfig: false,
