@@ -51,11 +51,11 @@ async function handler(ctx): Promise<Data> {
     const $ = load(response);
 
     const list = $('li.article-card-container a[data-gtm-action="ClickTitle"]')
-        .map((_, elem) => ({
+        .toArray()
+        .map((elem) => ({
             title: $(elem).text(),
             link: new URL($(elem).attr('href') ?? '', baseUrl).href,
-        }))
-        .toArray();
+        }));
 
     const items = await Promise.all(
         list.map(async (item) => {

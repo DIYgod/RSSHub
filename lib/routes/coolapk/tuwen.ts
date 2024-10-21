@@ -3,12 +3,18 @@ import got from '@/utils/got';
 import utils from './utils';
 
 export const route: Route = {
-    path: ['/tuwen/:type?', '/tuwen-xinxian'],
+    path: ['/tuwen/:type?'],
     categories: ['social-media'],
     example: '/coolapk/tuwen',
     parameters: { type: '默认为hot' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_HOTLINK_TEMPLATE',
+                optional: true,
+                description: '设置为`true`并添加`image_hotlink_template`参数来代理图片',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -25,16 +31,15 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') || 'hot';
-    const requestPath = ctx.req.path;
     let feedTitle;
     const fullUrl = new URL('/v6/page/dataList', utils.base_url);
-    if (requestPath.startsWith('/coolapk/tuwen-xinxian') || type === 'latest') {
+    if (type === 'latest') {
         // 实时
         fullUrl.searchParams.append('url', `/feed/digestList?${new URLSearchParams('cacheExpires=300&type=12&message_status=all&is_html_article=1&filterEmptyPicture=1&filterTag=二手交易,酷安自贸区,薅羊毛小分队').toString()}`);
         fullUrl.searchParams.append('title', '新鲜图文');
         fullUrl.searchParams.append('subTitle', '');
         feedTitle = '酷安 - 新鲜图文';
-    } else if (requestPath.startsWith('/coolapk/tuwen')) {
+    } else {
         // 精选
         fullUrl.searchParams.append('url', `#/feed/digestList?${new URLSearchParams('type=12&is_html_article=1&recommend=3,4').toString()}`);
         fullUrl.searchParams.append('title', '图文');
