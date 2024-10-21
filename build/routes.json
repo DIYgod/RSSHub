@@ -16537,8 +16537,7 @@
         "radar": [
           {
             "source": [
-              "navi.cnki.net/knavi/journals/:name/detail",
-              "rss.cnki.net/kns/rss.aspx?Journal=:name&Virtual=knavi"
+              "navi.cnki.net/knavi/journals/:name/detail"
             ]
           }
         ],
