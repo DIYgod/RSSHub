@@ -1,12 +1,12 @@
 import { Route } from '@/types';
-import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:feed?',
     categories: ['programming'],
     example: '/sycltech/news',
-    parameters: { feed: 'feed来源，默认为news，参考https://feeds.sycl.tech/' },
+    parameters: { feed: 'Feed source, defaults to news, references https://feeds.sycl.tech/' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,9 +18,9 @@ export const route: Route = {
     name: 'Feeds',
     maintainers: ['mocusez'],
     handler,
-    description: `|  活动  | 新闻 |    研究文章     |  视频  |
-    | :----: | :--: | :-------------: | :----: |
-    | events | news | research_papers | videos |`,
+    description: `|  Events  | News |    Research Paper     |  Videos  |
+| :----: | :--: | :-------------: | :----: |
+| events | news | research_papers | videos |`,
 };
 
 async function handler(ctx) {
