@@ -52,14 +52,15 @@ async function handler(ctx) {
             const content = $('#rso');
             return content
                 .find('> div')
-                .map((i, el) => {
+                .toArray()
+                .map((el) => {
                     const element = $(el);
                     const link = element.find('div > div > div > div > div > span > a').first().attr('href');
                     const title = element.find('div > div > div> div > div > span > a > h3').first().text();
                     const imgs = element
                         .find('img')
-                        .map((_j, _el) => $(_el).attr('src'))
-                        .toArray();
+                        .toArray()
+                        .map((_el) => $(_el).attr('src'));
                     const description = element.find('div[style="-webkit-line-clamp:2"]').first().text() || element.find('div[role="heading"]').first().text();
                     const author = element.find('div > div > div > div > div > span > a > div > div > span').first().text() || '';
                     return {
@@ -69,7 +70,6 @@ async function handler(ctx) {
                         author,
                     };
                 })
-                .toArray()
                 .filter((e) => e?.link);
         },
         config.cache.routeExpire,

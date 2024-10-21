@@ -24,7 +24,8 @@ export const route: Route = {
         const $ = load(response);
         const items = await Promise.all(
             $('div.explorable-card')
-                .map(async (_, el) => {
+                .toArray()
+                .map(async (el) => {
                     const title = $(el).find('h3').text();
                     const image = $(el).find('img').attr('src');
                     const link = baseUrl + $(el).find('a').attr('href');
@@ -43,7 +44,6 @@ export const route: Route = {
                         };
                     })) as DataItem;
                 })
-                .toArray()
         );
         return {
             title: 'PAIR - AI Exploreables',

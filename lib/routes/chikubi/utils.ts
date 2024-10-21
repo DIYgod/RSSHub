@@ -68,8 +68,8 @@ function processDescription(description: string): string {
     const $ = load(description);
     return $('body')
         .children()
-        .map((_, el) => $(el).clone().wrap('<div>').parent().html())
         .toArray()
+        .map((el) => $(el).clone().wrap('<div>').parent().html())
         .join('');
 }
 
