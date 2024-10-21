@@ -20,10 +20,13 @@ export const route: Route = {
     features: {
         antiCrawler: true,
         requirePuppeteer: true,
-        fulltext: {
-            description: '是否获取全文',
-            default: '',
-        },
+        requireConfig: [
+            {
+                name: 'XIAOHONGSHU_COOKIE',
+                optional: true,
+                description: '小红书 cookie 值，可在网络里面看到。',
+            },
+        ],
     },
     parameters: {
         user_id: 'user id, length 24 characters',
@@ -143,8 +146,8 @@ async function getUser(url: string, cookie: string) {
     for (const item of state.user.notes.flat()) {
         const path = paths[index];
         if (path && path.includes('?')) {
-                item.id = item.id + path?.substring(path.indexOf('?'));
-            }
+            item.id = item.id + path?.substring(path.indexOf('?'));
+        }
         index = index + 1;
     }
     return state.user;
