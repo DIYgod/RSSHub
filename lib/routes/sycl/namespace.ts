@@ -1,6 +1,6 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'SYCL.tech',
+    name: 'SYCL',
     url: 'sycl.tech',
 };
