@@ -1,9 +1,8 @@
-import { Route } from '@/types';
+import { Route, DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
-
 export const route: Route = {
     path: '/zj/search/:websiteid?/:word/:cateid?',
     categories: ['government'],
@@ -24,18 +23,18 @@ export const route: Route = {
     url: 'search.zj.gov.cn/jsearchfront/search.do',
     maintainers: ['HaoyuLee'],
     description: `
-        | 行政区域         | websiteid |
-        | ------------ | -- |
-        | 宁波市本级     | 330201000000000  |
+| 行政区域         | websiteid |
+| ------------ | -- |
+| 宁波市本级     | 330201000000000  |
 
-        | 搜索关键词         | word    |
+| 搜索关键词         | word    |
 
-        | 信息分类         | cateid    |
+| 信息分类         | cateid    |
 
-        | 排序类型         | sortType    |
-        | ------------ | -- |
-        | 按相关度     | 1  |
-        | 按时间     | 2  |
+| 排序类型         | sortType    |
+| ------------ | -- |
+| 按相关度     | 1  |
+| 按时间     | 2  |
     `,
     async handler(ctx) {
         const { websiteid = '330201000000000', word = '人才', cateid = 658, sortType = 2 } = ctx.req.param();
@@ -71,10 +70,16 @@ export const route: Route = {
                     description: $('.newsDescribe>a').text() || '',
                 };
             }) || [];
+        const res = {};
+        for (const current of items) {
+            if (!res[current.link]) {
+                res[current.link] = current;
+            }
+        }
         return {
             title: '浙江省人民政府-全省政府网站统一搜索',
             link: 'https://search.zj.gov.cn/jsearchfront/search.do',
-            item: items,
+            item: Object.entries(res).map(([, value]) => value) as DataItem[],
         };
     },
 };
