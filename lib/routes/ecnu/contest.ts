@@ -44,7 +44,8 @@ async function handler(ctx) {
     const $trList = $('div > div > table > tbody > tr');
     const items = $trList
         .filter((_, el) => !publicOnly || $(el).find('i').attr('class').includes('green'))
-        .map((_, el) => {
+        .toArray()
+        .map((el) => {
             const $tdList = $(el).find('td');
             const title = $tdList.eq(0).text();
             const startTime = $tdList.eq(1).text();
@@ -59,8 +60,7 @@ async function handler(ctx) {
                 }),
                 link,
             };
-        })
-        .toArray();
+        });
 
     return {
         title: `ECNU ACM ${publicOnly ? '公开' : ''}比赛`,

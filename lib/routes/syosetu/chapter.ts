@@ -43,7 +43,8 @@ async function handler(ctx) {
     const description = $('#novel_ex').html();
 
     const chapter_list = $('dl.novel_sublist2')
-        .map((_, chapter) => {
+        .toArray()
+        .map((chapter) => {
             const $_chapter = $(chapter);
             const chapter_link = $_chapter.find('a');
             return {
@@ -52,7 +53,6 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate($_chapter.find('dt').text(), 'YYYY/MM/DD HH:mm'), +9),
             };
         })
-        .toArray()
         .sort((a, b) => (a.pubDate <= b.pubDate ? 1 : -1))
         .slice(0, limit);
 

@@ -99,7 +99,10 @@ export default [{
 
         'no-restricted-syntax': ['warn', {
             selector: "CallExpression[callee.property.name='get'][arguments.length=0]",
-            message: "Please use toArray instead.",
+            message: "Please use .toArray() instead.",
+        }, {
+            selector: "CallExpression[callee.property.name='toArray'] MemberExpression[object.callee.property.name='map']",
+            message: "Please use .toArray() before .map().",
         }],
 
         'no-unneeded-ternary': 'error',

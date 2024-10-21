@@ -36,20 +36,20 @@ async function handler(ctx) {
 
     // get simple info from list
     const items: DataItem[] = $('ul#feed-main-list li')
-        .map(function () {
-            const altText = $(this).find('img').attr('alt');
-            const link = $(this).find('h5.feed-block-title a').attr('href');
-            const price = $(this).find('.z-highlight').text();
+        .toArray()
+        .map((elem) => {
+            const altText = $(elem).find('img').attr('alt');
+            const link = $(elem).find('h5.feed-block-title a').attr('href');
+            const price = $(elem).find('.z-highlight').text();
             const title = altText + ' ' + price;
-            const description = $(this).find('.feed-block-descripe').text().replaceAll(/\s+/g, '');
+            const description = $(elem).find('.feed-block-descripe').text().replaceAll(/\s+/g, '');
 
             return {
                 title,
                 link,
                 description,
             };
-        })
-        .toArray();
+        });
 
     // get detail info from each item
     const out = await Promise.all(

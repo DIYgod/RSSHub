@@ -39,7 +39,8 @@ async function handler(ctx) {
     const description = $('div.ss:nth-child(2)').text();
 
     const chapter_list = $('tr[bgcolor]')
-        .map((_, chapter) => {
+        .toArray()
+        .map((chapter) => {
             const $_chapter = $(chapter);
             const chapter_link = $_chapter.find('a');
             return {
@@ -48,7 +49,6 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), +9),
             };
         })
-        .toArray()
         .sort((a, b) => (a.pubDate <= b.pubDate ? 1 : -1))
         .slice(0, limit);
 

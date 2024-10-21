@@ -39,13 +39,13 @@ async function handler(ctx) {
     await page.close();
     const $ = load(html);
     const items = $('div.l-box.l-box--no-border.card__text')
-        .map((_, article) => ({
+        .toArray()
+        .map((article) => ({
             title: $(article).find('.card__text a').text().trim(),
             link: $(article).find('.card__text a').attr('href'),
             description: $(article).find('p').last().text().trim(),
             pubDate: timezone($(article).find('.card__date time').attr('datetime')),
-        }))
-        .toArray();
+        }));
     browser.close();
     return {
         title: `parliament - lordslibrary - ${topic}`,
