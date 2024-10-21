@@ -9,7 +9,7 @@ export const route: Route = {
     url: 'www.alicesoft.com/information',
     path: '/information/:category?/:game?',
     categories: ['game'],
-    example: '/information/game/cat377',
+    example: '/alicesoft/information/game/cat377',
     parameters: {
         category: 'category',
         game: 'game',
