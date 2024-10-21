@@ -70947,6 +70947,36 @@
     "name": "西南石油大学",
     "url": "swpu.edu.cn"
   },
+  "sycl": {
+    "routes": {
+      "/:feed?": {
+        "path": "/:feed?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/sycltech/news",
+        "parameters": {
+          "feed": "Feed source, defaults to news, references https://feeds.sycl.tech/"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Feeds",
+        "maintainers": [
+          "mocusez"
+        ],
+        "description": "|  Events  | News |    Research Paper     |  Videos  |\n| :----: | :--: | :-------------: | :----: |\n| events | news | research_papers | videos |",
+        "location": "feeds.ts"
+      }
+    },
+    "name": "SYCL",
+    "url": "sycl.tech"
+  },
   "syosetu": {
     "routes": {
       "/chapter/:id": {

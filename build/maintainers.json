@@ -6151,6 +6151,9 @@
   "/swpu/scs/:code": [
     "CYTMWIA"
   ],
+  "/sycl/:feed?": [
+    "mocusez"
+  ],
   "/syosetu/chapter/:id": [
     "huangliangshusheng"
   ],
