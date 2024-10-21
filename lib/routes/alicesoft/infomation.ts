@@ -6,6 +6,7 @@ import { load } from 'cheerio';
 const baseUrl = 'https://www.alicesoft.com';
 
 export const route: Route = {
+    url: 'www.alicesoft.com/information',
     path: '/information/:category?/:game?',
     categories: ['game'],
     example: '/information/game/cat377',
