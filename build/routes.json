@@ -11253,7 +11253,8 @@
       "/profile/:handle": {
         "path": "/profile/:handle",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/bsky/profile/bsky.app",
         "parameters": {
