@@ -32,8 +32,8 @@ export const route: Route = {
 
         const item = await Promise.all(
             $('.qustime li>a')
-                .map((_, chapter) => createItem(chapter.attribs.href))
                 .toArray()
+                .map((chapter) => createItem(chapter.attribs.href))
         );
 
         return {

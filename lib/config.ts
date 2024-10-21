@@ -81,6 +81,7 @@ export type Config = {
     bilibili: {
         cookies: Record<string, string | undefined>;
         dmImgList?: string;
+        dmImgInter?: string;
     };
     bitbucket: {
         username?: string;
@@ -472,6 +473,7 @@ const calculateValue = () => {
         bilibili: {
             cookies: bilibili_cookies,
             dmImgList: envs.BILIBILI_DM_IMG_LIST,
+            dmImgInter: envs.BILIBILI_DM_IMG_INTER,
         },
         bitbucket: {
             username: envs.BITBUCKET_USERNAME,
