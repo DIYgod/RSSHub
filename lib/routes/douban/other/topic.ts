@@ -16,7 +16,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '话题',
-    maintainers: ['LogicJake', 'pseudoyu'],
+    maintainers: ['LogicJake', 'pseudoyu', 'haowenwu'],
     handler,
 };
 
@@ -64,6 +64,19 @@ async function handler(ctx) {
                     let i;
                     for (i in images) {
                         description += `<br><img src="${images[i].normal.url}" />`;
+                    }
+                }
+            } else if (type === 'topic') {
+                link = item.target.group.sharing_url;
+                author = item.target.status.author.name;
+                title = item.target.title;
+                date = item.target.create_time;
+                description = item.target.abstract;
+                const images = item.target.photos;
+                if (images) {
+                    let i;
+                    for (i in images) {
+                        description += `<br><img src="${images[i].src}" />`;
                     }
                 }
             } else {
