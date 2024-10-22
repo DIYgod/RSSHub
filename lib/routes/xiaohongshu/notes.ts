@@ -66,6 +66,11 @@ async function handler(ctx) {
     }
 }
 
+/**
+ * 获取所有笔记
+ * @param notes 用户笔记信息
+ * @param urlPrex 笔记详情前缀
+ */
 async function renderNotesFulltext(notes, urlPrex) {
     const data = [];
     const promises = notes.flatMap((note) =>
@@ -86,6 +91,10 @@ async function renderNotesFulltext(notes, urlPrex) {
     return data;
 }
 
+/**
+ * 获取笔记全文
+ * @param link
+ */
 async function getFullNote(link) {
     const cookie = config.xiaohongshu.cookie;
     const data = (await cache.tryGet(link, async () => {
@@ -122,6 +131,12 @@ async function getFullNote(link) {
     })) as Promise<{ title: string; description: string; pubDate: Date }>;
     return data;
 }
+
+/**
+ * 获取用户信息和笔记列表信息
+ * @param url
+ * @param cookie
+ */
 async function getUser(url: string, cookie: string) {
     const res = await got(url, {
         headers: {
