@@ -66,12 +66,9 @@ async function handler(ctx) {
                 return item;
             }
             return cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+                const contentResponse = await got(item.link);
 
-                const content = load(detailResponse.data);
+                const content = load(contentResponse.data);
                 content('iframe[src^="https://www.youtube.com/"]').removeAttr('height').removeAttr('width');
                 item.description = `<div lang="ja-JP">${content('div.article-detail')
                     .html()
