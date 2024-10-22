@@ -21506,7 +21506,8 @@
         "name": "话题",
         "maintainers": [
           "LogicJake",
-          "pseudoyu"
+          "pseudoyu",
+          "haowenwu"
         ],
         "location": "other/topic.ts"
       },
