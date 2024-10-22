@@ -15,6 +15,7 @@ async function getThread(browser: Browser, item) {
         waitUntil: 'domcontentloaded',
     });
     const response = await page.content();
+    page.close();
     const $ = load(response);
 
     item.category = $('.posttags a')
