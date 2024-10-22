@@ -1,8 +1,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import { baseUrl, getThread } from './common';
+import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/author/:id?',
@@ -26,8 +26,18 @@ async function handler(ctx) {
     const { id = '13131575' } = ctx.req.param();
     const url = `${baseUrl}/forum/space.php?uid=${id}`;
 
-    const response = await got(url);
-    const $ = load(response.data);
+    const browser = await puppeteer();
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    });
+    await page.goto(url, {
+        waitUntil: 'domcontentloaded',
+    });
+    const response = await page.content();
+    page.close();
+    const $ = load(response);
 
     const username = $('div.bg div.title').text().replace('的个人空间', '');
 
@@ -42,7 +52,9 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(item))));
+    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(browser, item))));
+
+    browser.close();
 
     return {
         title: `${username}的主题`,

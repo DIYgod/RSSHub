@@ -1,8 +1,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import { baseUrl, getThread } from './common';
+import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/forum/:id?',
@@ -26,9 +26,18 @@ async function handler(ctx) {
     const { id = 76 } = ctx.req.param();
     const url = `${baseUrl}/forum/forum-${id}-1.html`;
 
-    const response = await got(url);
-
-    const $ = load(response.data);
+    const browser = await puppeteer();
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    });
+    await page.goto(url, {
+        waitUntil: 'domcontentloaded',
+    });
+    const response = await page.content();
+    page.close();
+    const $ = load(response);
 
     let items = $('form table')
         .last()
@@ -44,7 +53,9 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(item))));
+    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(browser, item))));
+
+    browser.close();
 
     return {
         title: $('head title').text(),

@@ -1,13 +1,21 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { Browser } from 'puppeteer';
 
 const baseUrl = 'https://www.sis001.com';
 
-async function getThread(item) {
-    const response = await got(item.link);
-    const $ = load(response.data);
+async function getThread(browser: Browser, item) {
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        request.resourceType() === 'document' ? request.continue() : request.abort();
+    });
+    await page.goto(item.link, {
+        waitUntil: 'domcontentloaded',
+    });
+    const response = await page.content();
+    const $ = load(response);
 
     item.category = $('.posttags a')
         .toArray()
