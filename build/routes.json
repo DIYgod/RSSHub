@@ -11256,6 +11256,7 @@
           "social-media",
           "popular"
         ],
+        "view": 1,
         "example": "/bsky/profile/bsky.app",
         "parameters": {
           "handle": "User handle, can be found in URL"
@@ -26843,8 +26844,10 @@
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 1,
         "example": "/gettr/user/jasonmillerindc",
         "parameters": {
           "id": "User id"
@@ -44227,8 +44230,10 @@
       "/jobs/:job_types/:exp_levels/:keywords?/:routeParams?": {
         "path": "/jobs/:job_types/:exp_levels/:keywords?/:routeParams?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 5,
         "example": "/linkedin/jobs/C-P/1/software engineer",
         "parameters": {
           "job_types": "See the following table for details, use '-' as delimiter",
