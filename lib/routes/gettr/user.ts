@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -15,7 +15,8 @@ const actionMap = {
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/gettr/user/jasonmillerindc',
     parameters: { id: 'User id' },
     features: {
