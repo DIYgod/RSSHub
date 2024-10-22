@@ -50,7 +50,7 @@ async function handler(ctx) {
                 link: $(e).find('a').attr('href'),
             }))
             .filter((e) => typeof e.link === 'string')
-            .map((item) => (ctx.req.query('mode') === 'fulltext' ? fetchArticle(item) : item))
+            .map((item) => (ctx.req.query('fulltext') === 'true' ? fetchArticle(item) : item))
     );
 
     return {
