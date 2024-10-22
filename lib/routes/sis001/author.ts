@@ -11,8 +11,8 @@ export const route: Route = {
     parameters: { id: '作者 ID，可以在作者的个人空间地址找到' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,

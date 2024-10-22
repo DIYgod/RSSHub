@@ -11,8 +11,8 @@ export const route: Route = {
     parameters: { id: '子版块 ID，可在子论坛 URL 找到，默认为 `Funny Jokes | 短篇笑话区`' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
