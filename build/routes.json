@@ -5164,6 +5164,47 @@
     "name": "阿基米德 FM",
     "url": "m.ajmide.com"
   },
+  "alicesoft": {
+    "routes": {
+      "/information/:category?/:game?": {
+        "url": "www.alicesoft.com/information",
+        "path": "/information/:category?/:game?",
+        "categories": [
+          "game"
+        ],
+        "example": "/alicesoft/information/game/cat377",
+        "parameters": {
+          "category": "Category in the URL, which can be accessed under カテゴリ一覧 on the website.",
+          "game": "Game-specific subcategory in the URL, which can be accessed under カテゴリ一覧 on the website. In this case, the category value should be `game`."
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.alicesoft.com/information",
+              "www.alicesoft.com/information/:category",
+              "www.alicesoft.com/information/:category/:game"
+            ],
+            "target": "/information/:category/:game"
+          }
+        ],
+        "name": "ニュース",
+        "maintainers": [
+          "keocheung"
+        ],
+        "location": "infomation.ts"
+      }
+    },
+    "name": "ALICESOFT",
+    "url": "www.alicesoft.com"
+  },
   "alipan": {
     "routes": {
       "/files/:share_id/:parent_file_id?": {

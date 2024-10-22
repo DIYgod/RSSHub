@@ -376,6 +376,9 @@
   "/ajmide/:id": [
     "Fatpandac"
   ],
+  "/alicesoft/information/:category?/:game?": [
+    "keocheung"
+  ],
   "/alipan/files/:share_id/:parent_file_id?": [
     "DIYgod"
   ],

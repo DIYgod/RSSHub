@@ -2507,6 +2507,21 @@
       }
     ]
   },
+  "alicesoft.com": {
+    "_name": "ALICESOFT",
+    "www": [
+      {
+        "title": "ニュース",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/information",
+          "/information/:category",
+          "/information/:category/:game"
+        ],
+        "target": "/alicesoft/information/:category/:game"
+      }
+    ]
+  },
   "alipan.com": {
     "_name": "阿里云盘",
     "www": [
