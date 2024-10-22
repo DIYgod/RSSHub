@@ -1,4 +1,3 @@
-import zlib from 'zlib';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -12,14 +11,11 @@ const acw_sc__v2 = (link, tryGet) =>
         'segmentfault:acw_sc__v2',
         async () => {
             const response = await got(link, {
-                decompress: false,
+                decompress: true,
             });
 
-            const unzipData = zlib.createUnzip();
-            unzipData.write(response.body);
-
             let acw_sc__v2 = '';
-            for await (const data of unzipData) {
+            for await (const data of response.body) {
                 const strData = data.toString();
                 const matches = strData.match(/var arg1='(.*?)';/);
                 if (matches) {
