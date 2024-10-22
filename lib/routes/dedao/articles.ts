@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 export const route: Route = {
     path: '/articles/:id?', // 添加 id 参数，用于控制 pid
     categories: ['new-media'],
-    example: '/articles/8', // 示例路径更新
+    example: '/articles/9', // 示例路径更新
     parameters: { id: '文章类型 ID，8 为得到头条，9 为得到精选，默认为 8' },
     features: {
         requireConfig: false,
