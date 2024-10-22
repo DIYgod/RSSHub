@@ -54,7 +54,7 @@ async function handler(ctx) {
             let link;
             let title;
             if (type === 'status') {
-                link = item.target.status.sharing_url;
+                link = item.target.status.sharing_url.split('&')[0];
                 author = item.target.status.author.name;
                 title = author + '的广播';
                 date = item.target.status.create_time;
@@ -67,7 +67,7 @@ async function handler(ctx) {
                     }
                 }
             } else if (type === 'topic') {
-                link = item.target.group.sharing_url;
+                link = item.target.sharing_url;
                 author = item.target.status.author.name;
                 title = item.target.title;
                 date = item.target.create_time;

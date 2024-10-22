@@ -95,6 +95,10 @@ function tryFixStatus(status) {
         }
     }
 
+    if (status.sharing_url) {
+        status.sharing_url = status.sharing_url.split('&')[0];
+    }
+
     if (!result.isFixSuccess) {
         status.sharing_url = 'https://www.douban.com?rsshub_failed=' + now.getTime().toString();
         if (!status.create_time) {
