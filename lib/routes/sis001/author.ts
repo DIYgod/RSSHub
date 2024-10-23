@@ -2,7 +2,8 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { baseUrl, getThread } from './common';
+import type { Context } from 'hono';
+import { defaultBaseUrl, getCookie, getThread } from './common';
 
 export const route: Route = {
     path: '/author/:id?',
@@ -22,11 +23,17 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const { id = '13131575' } = ctx.req.param();
+    let baseUrl = ctx.req.query('baseUrl');
+    if (!baseUrl) {
+        baseUrl = defaultBaseUrl;
+    }
     const url = `${baseUrl}/forum/space.php?uid=${id}`;
 
-    const response = await got(url);
+    let response = await got(url);
+    const cookie = getCookie(response.data);
+    response = await got(url, { headers: { cookie } });
     const $ = load(response.data);
 
     const username = $('div.bg div.title').text().replace('的个人空间', '');
@@ -42,7 +49,7 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(item))));
+    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(cookie, item))));
 
     return {
         title: `${username}的主题`,

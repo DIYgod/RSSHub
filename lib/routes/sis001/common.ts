@@ -2,11 +2,35 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { DataItem } from '@/types';
+import CryptoJS from 'crypto-js';
 
-const baseUrl = 'https://www.sis001.com';
+const defaultBaseUrl = 'https://www.sis001.com';
 
-async function getThread(item) {
-    const response = await got(item.link);
+function getCookie(rsp: string): string {
+    const regex = /toNumbers\("([a-fA-F0-9]+)"\)/g;
+    const matches: string[] = [];
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(rsp)) !== null) {
+        matches.push(match[1]);
+    }
+
+    if (matches.length !== 3) {
+        return '';
+    }
+
+    const key = CryptoJS.enc.Hex.parse(matches[0]);
+    const iv = CryptoJS.enc.Hex.parse(matches[1]);
+    const encrypted = CryptoJS.enc.Hex.parse(matches[2]);
+
+    const decrypted = CryptoJS.AES.decrypt({ ciphertext: encrypted }, key, { iv, padding: CryptoJS.pad.NoPadding });
+
+    return 'CeRaHigh1=' + decrypted.toString(CryptoJS.enc.Hex);
+}
+
+async function getThread(cookie: string, item: DataItem) {
+    const response = await got(item.link, { headers: { cookie } });
     const $ = load(response.data);
 
     item.category = $('.posttags a')
@@ -35,4 +59,4 @@ async function getThread(item) {
     return item;
 }
 
-export { baseUrl, getThread };
+export { defaultBaseUrl, getCookie, getThread };
