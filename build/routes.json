@@ -21558,8 +21558,10 @@
       "/people/:userid/status/:routeParams?": {
         "path": "/people/:userid/status/:routeParams?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 1,
         "example": "/douban/people/75118396/status",
         "parameters": {
           "userid": "整数型用户 id",
@@ -59309,8 +59311,10 @@
       "/top/:category?/:lang?": {
         "path": "/top/:category?/:lang?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 1,
         "example": "/plurk/top/topReplurks",
         "parameters": {
           "category": "Category, see the table below, `topReplurks` by default",
@@ -59334,8 +59338,10 @@
       "/topic/:topic": {
         "path": "/topic/:topic",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 1,
         "example": "/plurk/topic/standwithukraine",
         "parameters": {
           "topic": "Topic ID, can be found in URL"
@@ -59364,8 +59370,10 @@
       "/user/:user": {
         "path": "/user/:user",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
+        "view": 1,
         "example": "/plurk/user/plurkoffice",
         "parameters": {
           "user": "User ID, can be found in URL"
