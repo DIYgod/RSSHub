@@ -13,7 +13,7 @@ export const route: Route = {
     path: '/trending/:since/:language/:spoken_language?',
     categories: ['programming', 'popular'],
     example: '/github/trending/daily/javascript/en',
-    view: ViewType.Articles,
+    view: ViewType.Notifications,
     parameters: {
         since: {
             description: 'time range',
