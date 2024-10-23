@@ -2111,7 +2111,7 @@
       "/article/:id": {
         "path": "/article/:id",
         "name": "章节",
-        "url": "www.69shuba.pro",
+        "url": "www.69shuba.cx",
         "maintainers": [
           "eternasuno"
         ],
@@ -2133,7 +2133,7 @@
         "radar": [
           {
             "source": [
-              "www.69shuba.pro/book/:id.htm"
+              "www.69shuba.cx/book/:id.htm"
             ],
             "target": "/article/:id"
           }
@@ -2142,7 +2142,7 @@
       }
     },
     "name": "69书吧",
-    "url": "69shuba.pro"
+    "url": "69shuba.cx"
   },
   "6park": {
     "routes": {
