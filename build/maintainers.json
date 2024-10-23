@@ -78,6 +78,9 @@
   "/0x80/blog": [
     "xnum"
   ],
+  "/10jqka/realtimenews/:tag?": [
+    "nczitzk"
+  ],
   "/141jav/:type/:keyword{.*}?": [
     "cgkings",
     "nczitzk"

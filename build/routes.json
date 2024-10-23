@@ -773,6 +773,100 @@
     "url": "0x80.pl",
     "description": ""
   },
+  "10jqka": {
+    "routes": {
+      "/realtimenews/:tag?": {
+        "path": "/realtimenews/:tag?",
+        "name": "7×24小时要闻直播",
+        "url": "news.10jqka.com.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/10jqka/realtimenews",
+        "parameters": {
+          "tag": "标签，默认为全部"
+        },
+        "description": ":::tip\n  若订阅 [7×24小时要闻直播](https://news.10jqka.com.cn/realtimenews.html) 的 `公告` 标签。将 `公告` 作为标签参数填入，此时路由为 [`/10jqka/realtimenews/公告`](https://rsshub.app/10jqka/realtimenews/公告)。\n  \n  若订阅 [7×24小时要闻直播](https://news.10jqka.com.cn/realtimenews.html) 的 `公告` 和 `A股` 标签。将 `公告,A股` 作为标签参数填入，此时路由为 [`/10jqka/realtimenews/公告,A股`](https://rsshub.app/10jqka/realtimenews/公告,A股)。\n  :::\n\n  | 全部 | 重要 | A股 | 港股 | 美股 | 机会 | 异动 | 公告 |\n  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n    ",
+        "categories": [
+          "finance"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "全部",
+            "source": [
+              "news.10jqka.com.cn/realtimenews.html"
+            ],
+            "target": "/realtimenews/全部"
+          },
+          {
+            "title": "重要",
+            "source": [
+              "news.10jqka.com.cn/realtimenews.html"
+            ],
+            "target": "/realtimenews/重要"
+          },
+          {
+            "title": "A股",
+            "source": [
+              "news.10jqka.com.cn/realtimenews.html"
+            ],
+            "target": "/realtimenews/A股"
+          },
+          {
+            "title": "港股",
+            "source": [
+              "news.10jqka.com.cn/realtimenews.html"
+            ],
+            "target": "/realtimenews/港股"
+          },
+          {
+            "title": "美股",
+            "source": [
+              "news.10jqka.com.cn/realtimenews.html"
+            ],
+            "target": "/realtimenews/美股"
+          },
+          {
+            "title": "机会",
+            "source": [
+              "news.10jqka.com.cn/realtimenews.html"
+            ],
+            "target": "/realtimenews/机会"
+          },
+          {
+            "title": "异动",
+            "source": [
+              "news.10jqka.com.cn/realtimenews.html"
+            ],
+            "target": "/realtimenews/异动"
+          },
+          {
+            "title": "公告",
+            "source": [
+              "news.10jqka.com.cn/realtimenews.html"
+            ],
+            "target": "/realtimenews/公告"
+          }
+        ],
+        "location": "realtimenews.ts"
+      }
+    },
+    "name": "同花顺财经",
+    "url": "10jqka.com.cn",
+    "categories": [
+      "finance"
+    ],
+    "description": ""
+  },
   "141jav": {
     "routes": {
       "/:type/:keyword{.*}?": {
