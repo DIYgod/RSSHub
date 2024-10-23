@@ -22,7 +22,7 @@ export const route: Route = {
             source: ['nintendo.com/jp'],
         },
     ],
-    name: 'News（Hong Kong）',
+    name: 'News（JP）',
     maintainers: ['benzking'],
     handler,
     url: 'nintendo.com/jp',
