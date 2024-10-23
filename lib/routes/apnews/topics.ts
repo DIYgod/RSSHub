@@ -6,7 +6,7 @@ const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
     path: ['/topics/:topic?', '/nav/:nav{.*}?'],
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     example: '/apnews/topics/apf-topnews',
     view: ViewType.Articles,
     parameters: {
