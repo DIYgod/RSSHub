@@ -68,7 +68,7 @@ async function handler(ctx) {
                 }
             } else if (type === 'topic') {
                 link = item.target.sharing_url;
-                author = item.target.status.author.name;
+                author = item.target.author.name;
                 title = item.target.title;
                 date = item.target.create_time;
                 description = item.target.abstract;
