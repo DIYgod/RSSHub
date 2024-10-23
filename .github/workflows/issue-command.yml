@@ -42,11 +42,30 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      issues: write
       attestations: write
+      issues: write
+      pull-requests: write
     steps:
+      - name: Fetch PR data (for PR)
+        if: github.event.issue.pull_request
+        uses: octokit/request-action@v2.x
+        id: pr-data
+        with:
+          route: GET /repos/{repo}/pulls/{number}
+          repo: ${{ github.repository }}
+          number: ${{ github.event.issue.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Checkout
+        if: ${{ !github.event.issue.pull_request }}
         uses: actions/checkout@v4
+
+      - name: Checkout PR
+        if: github.event.issue.pull_request
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ fromJson(steps.pr-data.outputs.data).head.ref }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -105,7 +124,7 @@ jobs:
             await test({ github, context, core }, link, routes, number)
 
       - name: Print logs
-        if: (env.TEST_CONTINUE)
+        if: env.TEST_CONTINUE
         run: cat ${{ github.workspace }}/logs/combined.log
 
       - name: Upload Artifact
