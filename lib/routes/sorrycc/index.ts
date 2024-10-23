@@ -5,6 +5,7 @@ import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import type { Post } from './types';
 import { config } from '@/config';
+import { parseDate } from '@/utils/parse-date';
 
 const WORDPRESS_HASH = 'f05fca638390aed897fbe3c2fff03000';
 
@@ -45,8 +46,8 @@ async function handler(ctx: Context): Promise<Data> {
         data.map(async (item) => {
             const title = item.title.rendered;
             const link = item.link;
-            const published = item.date_gmt;
-            const updated = item.modified_gmt;
+            const published = parseDate(item.date_gmt);
+            const updated = parseDate(item.modified_gmt);
             if (item.categories.includes(7) && cookie) {
                 return (await cache.tryGet(link, async () => {
                     const article = await ofetch(link, {
