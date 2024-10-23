@@ -22,7 +22,7 @@ export const route: Route = {
         },
     ],
     name: '得到文章',
-    maintainers: ['qi12371'],
+    maintainers: ['Jacky-Chen-Pro'],
     handler,
     url: 'https://www.igetget.com',
 };
@@ -52,7 +52,6 @@ function extractArticleContent(data: any) {
 }
 
 async function handler(ctx) {
-    // const id = ctx.params && ctx.params.id ? ctx.params.id : '8';
     const { id = '8' } = ctx.req.param();
 
     const rootUrl = 'https://www.igetget.com';
