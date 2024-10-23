@@ -27163,7 +27163,7 @@
           "programming",
           "popular"
         ],
-        "view": 0,
+        "view": 5,
         "parameters": {
           "user": "GitHub username"
         },
@@ -27771,7 +27771,7 @@
           "popular"
         ],
         "example": "/github/trending/daily/javascript/en",
-        "view": 0,
+        "view": 5,
         "parameters": {
           "since": {
             "description": "time range",
