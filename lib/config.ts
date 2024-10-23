@@ -267,6 +267,9 @@ export type Config = {
     scihub: {
         host?: string;
     };
+    sis001: {
+        baseUrl?: string;
+    };
     skeb: {
         bearerToken?: string;
     };

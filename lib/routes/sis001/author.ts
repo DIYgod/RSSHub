@@ -28,9 +28,8 @@ async function handler(ctx: Context) {
     const { id = '13131575' } = ctx.req.param();
     const url = `${config.sis001.baseUrl}/forum/space.php?uid=${id}`;
 
-    let response = await got(url);
-    const cookie = getCookie(response.data);
-    response = await got(url, { headers: { cookie } });
+    const cookie = await getCookie(url);
+    const response = await got(url, { headers: { cookie } });
     const $ = load(response.data);
 
     const username = $('div.bg div.title').text().replace('的个人空间', '');

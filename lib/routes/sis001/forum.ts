@@ -20,7 +20,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '子版块',
-    maintainers: [],
+    maintainers: ['TonyRL'],
     handler,
 };
 
@@ -28,9 +28,8 @@ async function handler(ctx: Context) {
     const { id = 76 } = ctx.req.param();
     const url = `${config.sis001.baseUrl}/forum/forum-${id}-1.html`;
 
-    let response = await got(url);
-    const cookie = getCookie(response.data);
-    response = await got(url, { headers: { cookie } });
+    const cookie = await getCookie(url);
+    const response = await got(url, { headers: { cookie } });
     const $ = load(response.data);
 
     let items = $('form table')

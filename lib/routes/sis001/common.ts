@@ -4,27 +4,39 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { DataItem } from '@/types';
 import CryptoJS from 'crypto-js';
+import cache from '@/utils/cache';
+import { config } from '@/config';
 
-function getCookie(rsp: string): string {
-    const regex = /toNumbers\("([a-fA-F0-9]+)"\)/g;
-    const matches: string[] = [];
-    let match: RegExpExecArray | null;
+function getCookie(url: string): Promise<string> {
+    return cache.tryGet(
+        'sis001:cookie',
+        async () => {
+            const response = await got(url);
+            const rsp = response.data;
 
-    while ((match = regex.exec(rsp)) !== null) {
-        matches.push(match[1]);
-    }
+            const regex = /toNumbers\("([a-fA-F0-9]+)"\)/g;
+            const matches: string[] = [];
+            let match: RegExpExecArray | null;
 
-    if (matches.length !== 3) {
-        return '';
-    }
+            while ((match = regex.exec(rsp)) !== null) {
+                matches.push(match[1]);
+            }
 
-    const key = CryptoJS.enc.Hex.parse(matches[0]);
-    const iv = CryptoJS.enc.Hex.parse(matches[1]);
-    const encrypted = CryptoJS.enc.Hex.parse(matches[2]);
+            if (matches.length !== 3) {
+                return '';
+            }
 
-    const decrypted = CryptoJS.AES.decrypt({ ciphertext: encrypted }, key, { iv, padding: CryptoJS.pad.NoPadding });
+            const key = CryptoJS.enc.Hex.parse(matches[0]);
+            const iv = CryptoJS.enc.Hex.parse(matches[1]);
+            const encrypted = CryptoJS.enc.Hex.parse(matches[2]);
 
-    return 'CeRaHigh1=' + decrypted.toString(CryptoJS.enc.Hex);
+            const decrypted = CryptoJS.AES.decrypt({ ciphertext: encrypted }, key, { iv, padding: CryptoJS.pad.NoPadding });
+
+            return 'CeRaHigh1=' + decrypted.toString(CryptoJS.enc.Hex);
+        },
+        config.cache.routeExpire,
+        false
+    );
 }
 
 async function getThread(cookie: string, item: DataItem) {
