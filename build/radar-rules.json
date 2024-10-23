@@ -24456,6 +24456,19 @@
       }
     ]
   },
+  "sorrycc.com": {
+    "_name": "云谦的博客",
+    ".": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/sorrycc/"
+      }
+    ]
+  },
   "soundofhope.org": {
     "_name": "希望之声",
     ".": [
