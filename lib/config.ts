@@ -660,6 +660,9 @@ const calculateValue = () => {
         scihub: {
             host: envs.SCIHUB_HOST || 'https://sci-hub.se/',
         },
+        sis001: {
+            baseUrl: envs.SIS001_BASE_URL || 'https://sis001.com',
+        },
         skeb: {
             bearerToken: envs.SKEB_BEARER_TOKEN,
         },

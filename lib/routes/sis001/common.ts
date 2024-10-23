@@ -5,8 +5,6 @@ import timezone from '@/utils/timezone';
 import { DataItem } from '@/types';
 import CryptoJS from 'crypto-js';
 
-const defaultBaseUrl = 'https://www.sis001.com';
-
 function getCookie(rsp: string): string {
     const regex = /toNumbers\("([a-fA-F0-9]+)"\)/g;
     const matches: string[] = [];
@@ -59,4 +57,4 @@ async function getThread(cookie: string, item: DataItem) {
     return item;
 }
 
-export { defaultBaseUrl, getCookie, getThread };
+export { getCookie, getThread };

@@ -1,9 +1,10 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { config } from '@/config';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
-import { defaultBaseUrl, getCookie, getThread } from './common';
+import { getCookie, getThread } from './common';
 
 export const route: Route = {
     path: '/forum/:id?',
@@ -25,11 +26,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { id = 76 } = ctx.req.param();
-    let baseUrl = ctx.req.query('baseUrl');
-    if (!baseUrl) {
-        baseUrl = defaultBaseUrl;
-    }
-    const url = `${baseUrl}/forum/forum-${id}-1.html`;
+    const url = `${config.sis001.baseUrl}/forum/forum-${id}-1.html`;
 
     let response = await got(url);
     const cookie = getCookie(response.data);
@@ -45,7 +42,7 @@ async function handler(ctx: Context) {
             item = $(item);
             return {
                 title: item.find('th em').text() + ' ' + item.find('span a').eq(0).text(),
-                link: new URL(item.find('span a').eq(0).attr('href'), `${baseUrl}/forum/`).href,
+                link: new URL(item.find('span a').eq(0).attr('href'), `${config.sis001.baseUrl}/forum/`).href,
                 author: item.find('.author a').text(),
             };
         });

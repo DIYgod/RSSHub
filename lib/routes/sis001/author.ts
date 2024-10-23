@@ -1,9 +1,10 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { config } from '@/config';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
-import { defaultBaseUrl, getCookie, getThread } from './common';
+import { getCookie, getThread } from './common';
 
 export const route: Route = {
     path: '/author/:id?',
@@ -25,11 +26,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { id = '13131575' } = ctx.req.param();
-    let baseUrl = ctx.req.query('baseUrl');
-    if (!baseUrl) {
-        baseUrl = defaultBaseUrl;
-    }
-    const url = `${baseUrl}/forum/space.php?uid=${id}`;
+    const url = `${config.sis001.baseUrl}/forum/space.php?uid=${id}`;
 
     let response = await got(url);
     const cookie = getCookie(response.data);
@@ -44,7 +41,7 @@ async function handler(ctx: Context) {
             item = $(item);
             return {
                 title: item.text(),
-                link: `${baseUrl}/forum/${item.attr('href')}`,
+                link: `${config.sis001.baseUrl}/forum/${item.attr('href')}`,
                 author: username,
             };
         });
