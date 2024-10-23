@@ -46,17 +46,8 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - name: Check if comment is on a pull request
-        id: check-pr
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const isPullRequest = !!context.payload.issue.pull_request;
-            core.setOutput('is_pr', isPullRequest);
-            return isPullRequest;
-
       - name: Fetch PR data (for PR)
-        if: steps.check-pr.outputs.is_pr == 'true'
+        if: github.event.issue.pull_request
         uses: octokit/request-action@v2.x
         id: pr-data
         with:
@@ -67,9 +58,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout
+        if: ${{ !github.event.issue.pull_request }}
+        uses: actions/checkout@v4
+
+      - name: Checkout PR
+        if: github.event.issue.pull_request
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.check-pr.outputs.is_pr == 'true' && fromJson(steps.pr-data.outputs.data).head.ref || '' }}
+          ref: ${{ fromJson(steps.pr-data.outputs.data).head.ref }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
