@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 const WORDPRESS_HASH = 'f05fca638390aed897fbe3c2fff03000';
 
 export const route: Route = {
-    name: '云谦的博客',
+    name: '文章',
     categories: ['blog'],
     path: '/',
     example: '/sorrycc',
