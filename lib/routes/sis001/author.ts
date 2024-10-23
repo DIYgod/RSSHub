@@ -1,8 +1,10 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { config } from '@/config';
 import { load } from 'cheerio';
-import { baseUrl, getThread } from './common';
+import type { Context } from 'hono';
+import { getCookie, getThread } from './common';
 
 export const route: Route = {
     path: '/author/:id?',
@@ -22,11 +24,12 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const { id = '13131575' } = ctx.req.param();
-    const url = `${baseUrl}/forum/space.php?uid=${id}`;
+    const url = `${config.sis001.baseUrl}/forum/space.php?uid=${id}`;
 
-    const response = await got(url);
+    const cookie = await getCookie(url);
+    const response = await got(url, { headers: { cookie } });
     const $ = load(response.data);
 
     const username = $('div.bg div.title').text().replace('的个人空间', '');
@@ -37,12 +40,12 @@ async function handler(ctx) {
             item = $(item);
             return {
                 title: item.text(),
-                link: `${baseUrl}/forum/${item.attr('href')}`,
+                link: `${config.sis001.baseUrl}/forum/${item.attr('href')}`,
                 author: username,
             };
         });
 
-    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(item))));
+    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(cookie, item))));
 
     return {
         title: `${username}的主题`,
