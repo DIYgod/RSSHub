@@ -6044,8 +6044,7 @@
           "/nav/:nav{.*}?"
         ],
         "categories": [
-          "traditional-media",
-          "popular"
+          "traditional-media"
         ],
         "example": "/apnews/topics/apf-topnews",
         "view": 0,
@@ -6085,8 +6084,7 @@
           "/nav/:nav{.*}?"
         ],
         "categories": [
-          "traditional-media",
-          "popular"
+          "traditional-media"
         ],
         "example": "/apnews/topics/apf-topnews",
         "view": 0,
