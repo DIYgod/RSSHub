@@ -5819,7 +5819,9 @@
   "/sis001/author/:id?": [
     "keocheung"
   ],
-  "/sis001/forum/:id?": [],
+  "/sis001/forum/:id?": [
+    "TonyRL"
+  ],
   "/sjtu/gs/:type/:num?": [
     "dzx-dzx"
   ],
