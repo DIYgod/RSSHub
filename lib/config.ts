@@ -270,6 +270,9 @@ export type Config = {
     skeb: {
         bearerToken?: string;
     };
+    sorrycc: {
+        cookie?: string;
+    };
     spotify: {
         clientId?: string;
         clientSecret?: string;
@@ -662,6 +665,9 @@ const calculateValue = () => {
         },
         skeb: {
             bearerToken: envs.SKEB_BEARER_TOKEN,
+        },
+        sorrycc: {
+            cookie: envs.SORRYCC_COOKIES,
         },
         spotify: {
             clientId: envs.SPOTIFY_CLIENT_ID,
