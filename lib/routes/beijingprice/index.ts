@@ -26,19 +26,34 @@ export const handler = async (ctx) => {
 
             const a = item.find('a');
             const link = a.prop('href');
+            const msg = a.prop('msg');
+
+            const title = a.text()?.trim() ?? a.prop('title');
+
+            let enclosureUrl;
+            let enclosureType;
+
+            if (msg) {
+                const parsedMsg = JSON.parse(msg);
+                enclosureUrl = new URL(`${parsedMsg.path}${parsedMsg.fileName}`, rootUrl).href;
+                enclosureType = `application/${parsedMsg.suffix}`;
+            }
 
             return {
-                title: a.text()?.trim() ?? a.prop('title'),
+                title,
                 pubDate: parseDate(item.contents().last().text()),
-                link: link.startsWith('http') ? link : new URL(link, rootUrl).href,
+                link: enclosureUrl ?? (link.startsWith('http') ? link : new URL(link, rootUrl).href),
                 language,
+                enclosure_url: enclosureUrl,
+                enclosure_type: enclosureType,
+                enclosure_title: enclosureUrl ? title : undefined,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (!item.link.includes('www.beijingprice.cn')) {
+                if (!item.link.includes('www.beijingprice.cn') || item.link.endsWith('.pdf')) {
                     return item;
                 }
 
