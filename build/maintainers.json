@@ -5432,7 +5432,8 @@
     "nczitzk"
   ],
   "/rss3/:account/:network?/:tag?": [
-    "DIYgod"
+    "DIYgod",
+    "pseudoyu"
   ],
   "/rsshub/routes/:lang?": [
     "DIYgod"
