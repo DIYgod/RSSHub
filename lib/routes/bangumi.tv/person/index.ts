@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
@@ -30,7 +30,7 @@ async function handler(ctx) {
     // bangumi.tv未提供获取“人物信息”的API，因此仍需要通过抓取网页来获取
     const personID = ctx.req.param('id');
     const link = `https://bgm.tv/person/${personID}/works?sort=date`;
-    const { data: html } = await got(link);
+    const html = await ofetch(link);
     const $ = load(html);
     const personName = $('.nameSingle a').text();
     const works = $('.item')

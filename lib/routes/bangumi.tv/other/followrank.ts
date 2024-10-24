@@ -1,6 +1,5 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
-import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -34,11 +33,7 @@ async function handler(ctx) {
     }
     const url = `https://bgm.tv/${type}`;
 
-    const response = await ofetch(url, {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
-    });
+    const response = await ofetch(url);
 
     const $ = load(response);
 

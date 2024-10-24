@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -22,6 +22,9 @@ export const route: Route = {
         {
             source: ['bgm.tv/user/:id'],
         },
+        {
+            source: ['bangumi.tv/user/:id'],
+        },
     ],
     name: '用户日志',
     maintainers: ['nczitzk'],
@@ -30,11 +33,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const currentUrl = `https://bgm.tv/user/${ctx.req.param('id')}/blog`;
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-    const $ = load(response.data);
+    const response = await ofetch(currentUrl);
+    const $ = load(response);
     const list = $('#entry_list div.item')
         .find('h2.title')
         .toArray()
@@ -51,8 +51,8 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const res = await got({ method: 'get', url: item.link });
-                const content = load(res.data);
+                const res = await ofetch(item.link);
+                const content = load(res);
 
                 item.description = content('#entry_content').html();
                 return item;
