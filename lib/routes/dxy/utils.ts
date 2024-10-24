@@ -54,20 +54,20 @@ const getPost = (item, tryGet) =>
 
         $('img').each((_, img) => {
             img = $(img);
-            if (img.data('osrc')) {
-                img.attr('src', img.data('osrc'));
-                img.removeAttr('data-osrc');
-            }
             if (img.data('hsrc')) {
                 img.attr('src', img.data('hsrc'));
                 img.removeAttr('data-hsrc');
+            }
+            if (img.data('osrc')) {
+                img.attr('src', img.data('osrc'));
+                img.removeAttr('data-osrc');
             }
         });
 
         item.description = $.html();
         item.pubDate = parseDate(post.data.createTime, 'x');
         item.updated = post.data.lastEditTime ? parseDate(post.data.lastEditTime, 'x') : item.pubDate;
-        item.category = [...new Set([item.category, ...post.data.tagInfos.map((tag) => tag.tagName)])];
+        item.category = [...new Set([...item.category, ...post.data.tagInfos.map((tag) => tag.tagName)])];
 
         return item;
     });
