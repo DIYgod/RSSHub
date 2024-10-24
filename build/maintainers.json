@@ -7602,6 +7602,9 @@
   "/zjut/jwc/:type": [
     "zhullyb"
   ],
+  "/zjut/www/:type": [
+    "zhullyb"
+  ],
   "/zjuvag/blog": [
     "KaiyoungYu"
   ],

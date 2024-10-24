@@ -29333,6 +29333,16 @@
         ],
         "target": "/zjut/jwc/:type"
       }
+    ],
+    "www": [
+      {
+        "title": "浙江工业大学首页",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:type/list.htm"
+        ],
+        "target": "/zjut/www/:type"
+      }
     ]
   },
   "zotero.org": {

@@ -86031,6 +86031,39 @@
         ],
         "description": "| 板块 | 参数 |\n| ------- | ------- |\n| 新闻动态 | 1838 |\n| 课程思政 | 1842 |\n| 校内动态 | 2613 |\n| 学习思考 | 2614 |\n| 成果展示 | 2615 |\n| 媒体聚焦 | 2616 |\n| 制度文件 | 2617 |\n| 教学运行 | 1849 |\n| 实践竞赛 | 1850 |\n| 留学生Notice | 1851 |\n| 项目申报 | 1852 |\n| 学籍管理 | 1853 |\n| 办事指南 | 1839 |",
         "location": "jwc/index.ts"
+      },
+      "/www/:type": {
+        "path": "/www/:type",
+        "categories": [
+          "university"
+        ],
+        "example": "/zjut/www/4528",
+        "parameters": {
+          "type": "分类，见下表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "浙江工业大学首页",
+        "maintainers": [
+          "zhullyb"
+        ],
+        "url": "www.zjut.edu.cn",
+        "radar": [
+          {
+            "source": [
+              "www.zjut.edu.cn/:type/list.htm"
+            ],
+            "target": "/www/:type"
+          }
+        ],
+        "description": "| 板块 | 参数 |\n| ------- | ------- |\n| 学术动态 | xsdt_4662 |\n| 三创·人物 | 4527 |\n| 通知公告 | 4528 |\n| 美誉工大 | 5389 |\n| 智库工大 | 5390 |\n| 校区班车 | xqbc |",
+        "location": "www/index.ts"
       }
     },
     "name": "浙江工业大学",
