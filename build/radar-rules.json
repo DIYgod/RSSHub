@@ -3101,15 +3101,15 @@
     ]
   },
   "bangumi.moe": {
-    "_name": "アニメ新番組",
+    "_name": "萌番组",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Latest",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/"
         ],
-        "target": "/bangumi/moe"
+        "target": "/bangumi.moe/*"
       }
     ]
   },
@@ -3122,12 +3122,12 @@
         "source": [
           "/"
         ],
-        "target": "/bangumi/online"
+        "target": "/bangumi.online/"
       }
     ]
   },
   "bgm.tv": {
-    "_name": "アニメ新番組",
+    "_name": "Bangumi 番组计划",
     ".": [
       {
         "title": "放送列表",
@@ -3135,7 +3135,7 @@
         "source": [
           "/calendar"
         ],
-        "target": "/bangumi/tv/calendar/today"
+        "target": "/bangumi.tv/calendar/today"
       },
       {
         "title": "小组话题的新回复",
@@ -3143,7 +3143,7 @@
         "source": [
           "/group/topic/:id"
         ],
-        "target": "/bangumi/tv/topic/:id"
+        "target": "/bangumi.tv/topic/:id"
       },
       {
         "title": "小组话题",
@@ -3151,7 +3151,7 @@
         "source": [
           "/group/:id"
         ],
-        "target": "/bangumi/tv/group/:id"
+        "target": "/bangumi.tv/group/:id"
       },
       {
         "title": "成员关注榜",
@@ -3159,7 +3159,7 @@
         "source": [
           "/:type"
         ],
-        "target": "/bangumi/:type/followrank"
+        "target": "/bangumi.tv/:type/followrank"
       },
       {
         "title": "现实人物的新作品",
@@ -3167,7 +3167,7 @@
         "source": [
           "/person/:id"
         ],
-        "target": "/bangumi/tv/person/:id"
+        "target": "/bangumi.tv/person/:id"
       },
       {
         "title": "条目的通用路由格式",
@@ -3175,7 +3175,7 @@
         "source": [
           "/subject/:id"
         ],
-        "target": "/bangumi/tv/subject/:id"
+        "target": "/bangumi.tv/tv/subject/:id"
       },
       {
         "title": "用户日志",
@@ -3183,15 +3183,52 @@
         "source": [
           "/user/:id"
         ],
-        "target": "/bangumi/tv/user/blog/:id"
+        "target": "/bangumi.tv/user/blog/:id"
       },
       {
-        "title": "用户想看",
+        "title": "Bangumi 用户收藏列表",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/anime/list/:id"
+        ],
+        "target": "/bangumi.tv/bangumi.tv/user/collections/:id/all/all"
+      },
+      {
+        "title": "Bangumi 用户收藏列表",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/anime/list/:id/wish"
         ],
-        "target": "/bangumi/tv/user/wish/:id"
+        "target": "/bangumi.tv/bangumi.tv/user/collections/:id/2/1"
+      }
+    ]
+  },
+  "bangumi.tv": {
+    "_name": "Bangumi 番组计划",
+    ".": [
+      {
+        "title": "用户日志",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/user/:id"
+        ],
+        "target": "/bangumi.tv/user/blog/:id"
+      },
+      {
+        "title": "Bangumi 用户收藏列表",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/anime/list/:id"
+        ],
+        "target": "/bangumi.tv/bangumi.tv/user/collections/:id/all/all"
+      },
+      {
+        "title": "Bangumi 用户收藏列表",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/anime/list/:id/wish"
+        ],
+        "target": "/bangumi.tv/bangumi.tv/user/collections/:id/2/1"
       }
     ]
   },
