@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
@@ -89,9 +89,26 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [],
+    radar: [
+        {
+            source: ['bgm.tv/anime/list/:id'],
+            target: '/bangumi.tv/user/collections/:id/all/all',
+        },
+        {
+            source: ['bangumi.tv/anime/list/:id'],
+            target: '/bangumi.tv/user/collections/:id/all/all',
+        },
+        {
+            source: ['bgm.tv/anime/list/:id/wish'],
+            target: '/bangumi.tv/user/collections/:id/2/1',
+        },
+        {
+            source: ['bangumi.tv/anime/list/:id/wish'],
+            target: '/bangumi.tv/user/collections/:id/2/1',
+        },
+    ],
     name: 'Bangumi 用户收藏列表',
-    maintainers: ['youyou-sudo'],
+    maintainers: ['youyou-sudo', 'honue'],
     handler,
 };
 
@@ -125,23 +142,21 @@ async function handler(ctx) {
     }
 
     const userDataUrl = `https://api.bgm.tv/v0/users/${userId}`;
-    const userData = await got(userDataUrl, {
-        method: 'get',
+    const userData = await ofetch(userDataUrl, {
         headers: {
             'User-Agent': config.trueUA,
         },
     });
 
     const collectionDataUrl = `https://api.bgm.tv/v0/users/${userId}/collections?${subjectType && subjectType !== 'all' ? `subject_type=${subjectType}` : ''}${type && type !== 'all' ? `&type=${type}` : ''}`;
-    const collectionData = await got(collectionDataUrl, {
-        method: 'get',
+    const collectionData = await ofetch(collectionDataUrl, {
         headers: {
             'User-Agent': config.trueUA,
         },
     });
 
-    const userNickname = userData.data.nickname;
-    const items = collectionData.data.data.map((item) => {
+    const userNickname = userData.nickname;
+    const items = collectionData.data.map((item) => {
         const titles = item.subject.name_cn || item.subject.name;
         const updateTime = item.updated_at;
         const subjectId = item.subject_id;
@@ -160,7 +175,6 @@ async function handler(ctx) {
             }),
             link: `https://bgm.tv/subject/${subjectId}`,
             pubDate: timezone(parseDate(updateTime), 0),
-            urls: `https://bgm.tv/subject/${subjectId}`,
         };
     });
     return {
