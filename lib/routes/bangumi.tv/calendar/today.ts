@@ -65,7 +65,7 @@ async function handler() {
             const link = `https://bangumi.tv/subject/${bgm.bgmId}`;
             const id = `${link}#${new Intl.DateTimeFormat('zh-CN').format(updated)}`;
 
-            const html = art(path.join(__dirname, 'templates/today.art'), {
+            const html = art(path.join(__dirname, '../templates/today.art'), {
                 bgm,
                 siteMeta,
             });

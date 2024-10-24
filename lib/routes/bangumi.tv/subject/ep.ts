@@ -24,7 +24,7 @@ const getEps = async (subjectID, showOriginalName) => {
         description: epsInfo.summary,
         item: activeEps.map((e) => ({
             title: `ep.${e.sort} ${getLocalName(e, showOriginalName)}`,
-            description: art(path.resolve(__dirname, '../../templates/tv/ep.art'), {
+            description: art(path.join(__dirname, '../templates/ep.art'), {
                 e,
                 epsInfo,
             }),
