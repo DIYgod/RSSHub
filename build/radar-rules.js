@@ -1879,7 +1879,7 @@
     ".":[ { title:"Post",
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/profile/:handle" ],
-        target:"/bsky/profile/:handle" } ] },
+        target:"/bsky/profile/:handle/:routeParams?" } ] },
   "2bt0.com":{ _name:"不太灵影视",
     ".":[ { title:"影视资源下载列表",
         docs:"https://docs.rsshub.app/routes/multimedia",

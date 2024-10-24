@@ -4095,7 +4095,7 @@
         "source": [
           "/profile/:handle"
         ],
-        "target": "/bsky/profile/:handle"
+        "target": "/bsky/profile/:handle/:routeParams?"
       }
     ]
   },

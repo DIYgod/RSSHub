@@ -953,7 +953,7 @@
   "/bsky/keyword/:keyword": [
     "untitaker"
   ],
-  "/bsky/profile/:handle": [
+  "/bsky/profile/:handle/:routeParams?": [
     "TonyRL"
   ],
   "/bt0/mv/:number/:domain?": [
