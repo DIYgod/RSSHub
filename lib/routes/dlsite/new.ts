@@ -81,9 +81,8 @@ async function handler(ctx) {
 
     const link = info.url.slice(1);
 
-    const response = await got(link, {
+    const response = await got(new URL(link, host), {
         method: 'GET',
-        prefixUrl: host,
     });
     const data = response.data;
     const $ = load(data);

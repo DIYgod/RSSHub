@@ -149,9 +149,8 @@ async function handler(ctx) {
     }
     const link = setUrl(info);
 
-    const response = await got(link, {
+    const response = await got(new URL(link, host), {
         method: 'GET',
-        prefixUrl: host,
     });
     const data = response.data;
     const $ = load(data);

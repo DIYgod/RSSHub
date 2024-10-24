@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +10,8 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/profile/:handle',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/bsky/profile/bsky.app',
     parameters: { handle: 'User handle, can be found in URL' },
     features: {

@@ -25,7 +25,8 @@ async function handler(): Promise<Data> {
     const $ = load(response.data);
     const contents: DataItem[] = $('section.content')
         .find('li')
-        .map((_, target) => {
+        .toArray()
+        .map((target) => {
             const li = $(target);
 
             const aTag = li.find('a');
@@ -37,8 +38,7 @@ async function handler(): Promise<Data> {
                 link,
                 description: '',
             };
-        })
-        .toArray();
+        });
 
     const items = (await Promise.all(
         contents.map((content) =>

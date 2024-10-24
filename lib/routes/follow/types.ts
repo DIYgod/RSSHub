@@ -3,7 +3,7 @@ export interface FollowResponse<T> {
     data: T;
 }
 
-export type Subscription = FeedSubscription | ListSubscription;
+export type Subscription = FeedSubscription | ListSubscription | InboxSubscription;
 
 export interface Profile {
     id: string;
@@ -65,4 +65,14 @@ export interface ListSubscription extends BaseSubscription {
         type: 'list';
         view: number;
     };
+}
+
+export interface InboxSubscription extends BaseSubscription {
+    inboxes: {
+        type: 'inbox';
+        id: string;
+        secret: string;
+        title: string;
+    };
+    inboxId: string;
 }
