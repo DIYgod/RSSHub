@@ -182,7 +182,7 @@
         "js-beautify": "1.15.1",
         "lint-staged": "15.2.10",
         "mockdate": "3.0.5",
-        "msw": "2.4.3",
+        "msw": "2.5.1",
         "prettier": "3.3.3",
         "remark-parse": "11.0.0",
         "supertest": "7.0.0",
