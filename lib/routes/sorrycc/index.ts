@@ -46,7 +46,7 @@ async function handler(ctx: Context): Promise<Data> {
         data.map(async (item) => {
             const title = item.title.rendered;
             const link = item.link;
-            const published = parseDate(item.date_gmt);
+            const pubDate = parseDate(item.date_gmt);
             const updated = parseDate(item.modified_gmt);
             if (item.categories.includes(7) && cookie) {
                 return (await cache.tryGet(link, async () => {
@@ -61,7 +61,7 @@ async function handler(ctx: Context): Promise<Data> {
                         title,
                         description,
                         link,
-                        published,
+                        pubDate,
                         updated,
                     };
                 })) as unknown as DataItem;
@@ -70,7 +70,7 @@ async function handler(ctx: Context): Promise<Data> {
                 title,
                 description: item.content.rendered,
                 link,
-                published,
+                pubDate,
                 updated,
             } as DataItem;
         })
