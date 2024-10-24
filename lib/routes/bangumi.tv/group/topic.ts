@@ -6,9 +6,9 @@ import { parseDate } from '@/utils/parse-date';
 const base_url = 'https://bgm.tv';
 
 export const route: Route = {
-    path: '/tv/group/:id',
+    path: '/group/:id',
     categories: ['anime'],
-    example: '/bangumi/tv/group/boring',
+    example: '/bangumi.tv/group/boring',
     parameters: { id: '小组 id, 在小组页面地址栏查看' },
     features: {
         requireConfig: false,

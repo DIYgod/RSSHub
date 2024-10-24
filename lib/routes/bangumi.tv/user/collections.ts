@@ -53,9 +53,9 @@ const getTypeNames = (subjectType) => {
 };
 
 export const route: Route = {
-    path: '/tv/user/collections/:id/:subjectType/:type',
+    path: '/user/collections/:id/:subjectType/:type',
     categories: ['anime'],
-    example: '/bangumi/tv/user/collections/sai/1/1',
+    example: '/bangumi.tv/user/collections/sai/1/1',
     parameters: {
         id: '用户 id, 在用户页面地址栏查看',
         subjectType: {

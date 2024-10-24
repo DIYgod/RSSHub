@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/:type/followrank',
     categories: ['anime'],
-    example: '/bangumi/anime/followrank',
+    example: '/bangumi.tv/anime/followrank',
     parameters: { type: '类型：anime - 动画，book - 图书，music - 音乐，game - 游戏，real - 三次元' },
     features: {
         requireConfig: false,

@@ -6,9 +6,9 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/tv/user/blog/:id',
+    path: '/user/blog/:id',
     categories: ['anime'],
-    example: '/bangumi/tv/user/blog/sai',
+    example: '/bangumi.tv/user/blog/sai',
     parameters: { id: '用户 id, 在用户页面地址栏查看' },
     features: {
         requireConfig: false,
