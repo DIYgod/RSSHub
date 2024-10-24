@@ -19,11 +19,15 @@ const PuppeterGetter = async (ctx, browser, link) => {
         const page = await browser.newPage();
         await page.setRequestInterception(true);
         page.on('request', (request) => {
-            request.resourceType() === 'document' ? request.continue() : request.abort();
+            if (request.url().includes('https://www.nytimes.com/svc/onsite-messaging/query') || request.url().includes('https://meter-svc.nytimes.com/meter.js')) {
+                request.abort();
+                return;
+            }
+            request.continue();
+            // request.resourceType() === 'document' ? request.continue() : request.abort();
         });
-        await page.goto(link, {
-            waitUntil: 'domcontentloaded',
-        });
+        await page.goto(link);
+        await page.waitForSelector('[data-testid=optimistic-truncator-message]', { hidden: true, timeout: 0 });
         const response = await page.evaluate(() => document.querySelector('body').innerHTML);
         return response;
     });
