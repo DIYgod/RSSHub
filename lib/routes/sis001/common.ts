@@ -43,6 +43,7 @@ async function getThread(cookie: string, item: DataItem) {
     const response = await got(item.link, { headers: { cookie } });
     const $ = load(response.data);
 
+    item.guid = item.link?.replace(/^https?:\/\/.+?\//, 'https://www.sis001.com/');
     item.category = $('.posttags a')
         .toArray()
         .map((a) => $(a).text());
