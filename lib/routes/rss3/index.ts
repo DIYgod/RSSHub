@@ -123,9 +123,9 @@ export const route: Route = {
 async function handler(ctx) {
     const { account, network, tag } = ctx.req.param();
 
-    // Check if account contains "://"
-    if (account.includes('://')) {
-        throw new Error('Account should not contain "://"');
+    // Check if account contains "://" or "/"
+    if (account.includes('://') || account.includes('/')) {
+        throw new Error('Account should not contain "://" or path components');
     }
 
     const { data } = await ofetch(
