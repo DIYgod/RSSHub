@@ -5,21 +5,22 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/moe/*',
+    path: '/*',
+    categories: ['anime'],
     radar: [
         {
             source: ['bangumi.moe/'],
-            target: '/moe',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Latest',
+    example: '/bangumi.moe',
+    maintainers: ['nczitzk'],
     handler,
     url: 'bangumi.moe/',
 };
 
 async function handler(ctx) {
-    const isLatest = getSubPath(ctx) === '/moe';
+    const isLatest = getSubPath(ctx) === '/';
     const rootUrl = 'https://bangumi.moe';
 
     let response;

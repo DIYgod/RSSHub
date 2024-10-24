@@ -8,9 +8,9 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/tv/calendar/today',
+    path: '/calendar/today',
     categories: ['anime'],
-    example: '/bangumi/tv/calendar/today',
+    example: '/bangumi.tv/calendar/today',
     parameters: {},
     features: {
         requireConfig: false,
@@ -42,10 +42,10 @@ async function handler() {
 
     const todayList = list.find((l) => l.weekday.id % 7 === day);
     const todayBgmId = new Set(todayList.items.map((t) => t.id.toString()));
-    const images = todayList.items.reduce((p, c) => {
-        p[c.id] = (c.images || {}).large;
-        return p;
-    }, {});
+    const images: { [key: string]: string } = {};
+    for (const item of todayList.items) {
+        images[item.id] = (item.images || {}).large;
+    }
     const todayBgm = data.items.filter((d) => todayBgmId.has(d.bgmId));
     for (const bgm of todayBgm) {
         bgm.image = images[bgm.bgmId];
@@ -65,7 +65,7 @@ async function handler() {
             const link = `https://bangumi.tv/subject/${bgm.bgmId}`;
             const id = `${link}#${new Intl.DateTimeFormat('zh-CN').format(updated)}`;
 
-            const html = art(path.resolve(__dirname, '../../templates/tv/today.art'), {
+            const html = art(path.join(__dirname, '../templates/today.art'), {
                 bgm,
                 siteMeta,
             });
