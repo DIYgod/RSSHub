@@ -8,9 +8,9 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/tv/calendar/today',
+    path: '/calendar/today',
     categories: ['anime'],
-    example: '/bangumi/tv/calendar/today',
+    example: '/bangumi.tv/calendar/today',
     parameters: {},
     features: {
         requireConfig: false,
@@ -65,7 +65,7 @@ async function handler() {
             const link = `https://bangumi.tv/subject/${bgm.bgmId}`;
             const id = `${link}#${new Intl.DateTimeFormat('zh-CN').format(updated)}`;
 
-            const html = art(path.resolve(__dirname, '../../templates/tv/today.art'), {
+            const html = art(path.join(__dirname, '../templates/today.art'), {
                 bgm,
                 siteMeta,
             });
