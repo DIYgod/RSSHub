@@ -103,7 +103,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('li#classname').text() + ' - 浙江工业大学',
+        title: $('head > title').text() + ' - 浙江工业大学',
         link: rootUrl + type,
         item: items,
     } as Data;
