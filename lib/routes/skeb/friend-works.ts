@@ -6,7 +6,7 @@ import { getFollowingsItems } from './utils';
 export const route: Route = {
     path: '/friend_works/:username',
     categories: ['picture'],
-    example: '/friend_works/@brm2_1925',
+    example: '/skeb/friend_works/@brm2_1925',
     parameters: { username: 'Skeb Username with @' },
     features: {
         requireConfig: [

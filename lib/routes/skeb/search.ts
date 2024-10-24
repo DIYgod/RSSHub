@@ -7,7 +7,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 export const route: Route = {
     path: '/search/:keyword',
     categories: ['picture'],
-    example: '/search/初音ミク',
+    example: '/skeb/search/初音ミク',
     parameters: { keyword: 'Search keyword' },
     features: {
         requireConfig: false,

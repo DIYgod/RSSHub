@@ -8,7 +8,13 @@ export const route: Route = {
     example: '/coolapk/toutiao',
     parameters: { type: '默认为history' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_HOTLINK_TEMPLATE',
+                optional: true,
+                description: '设置为`true`并添加`image_hotlink_template`参数来代理图片',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
