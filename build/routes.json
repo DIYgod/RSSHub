@@ -22234,6 +22234,35 @@
   },
   "dxy": {
     "routes": {
+      "/bbs/board/:boardId": {
+        "path": "/bbs/board/:boardId",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/dxy/bbs/board/46",
+        "parameters": {
+          "specialId": "板块 ID，可在对应板块页 URL 中找到"
+        },
+        "name": "板块",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.dxy.cn/bbs/newweb/pc/category/:boardIdId"
+            ],
+            "target": "/bbs/board/:boardIdId"
+          },
+          {
+            "source": [
+              "3g.dxy.cn/bbs/board/:boardIdId"
+            ],
+            "target": "/bbs/board/:boardIdId"
+          }
+        ],
+        "location": "board.ts"
+      },
       "/bbs/special/:specialId": {
         "path": "/bbs/special/:specialId",
         "categories": [

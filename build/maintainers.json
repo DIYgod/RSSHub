@@ -1954,6 +1954,9 @@
   "/dx2025/:type?/:category?": [
     "nczitzk"
   ],
+  "/dxy/bbs/board/:boardId": [
+    "TonyRL"
+  ],
   "/dxy/bbs/special/:specialId": [
     "TonyRL"
   ],

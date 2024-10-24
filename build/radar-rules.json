@@ -7750,6 +7750,26 @@
   },
   "dxy.cn": {
     "_name": "丁香园",
+    "www": [
+      {
+        "title": "板块",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/bbs/newweb/pc/category/:boardIdId"
+        ],
+        "target": "/dxy/bbs/board/:boardIdId"
+      }
+    ],
+    "3g": [
+      {
+        "title": "板块",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/bbs/board/:boardIdId"
+        ],
+        "target": "/dxy/bbs/board/:boardIdId"
+      }
+    ],
     ".": [
       {
         "title": "个人帖子",
