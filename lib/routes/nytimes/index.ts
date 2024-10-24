@@ -81,7 +81,7 @@ async function handler(ctx) {
     const browser = await puppeteer();
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
-        feed.items.splice(0, 10).map(async (item) => {
+        feed.items.splice(0, 3).map(async (item) => {
             let link = item.link;
 
             let response,
@@ -118,8 +118,9 @@ async function handler(ctx) {
                     if ($('.dual-btn').length > 0) {
                         hasEnVersion = true;
                         link = $('.dual-btn a').last().attr().href;
-
-                        response = await utils.PuppeterGetter(ctx, browser, link);
+                        if (link !== '') {
+                            response = await utils.PuppeterGetter(ctx, browser, link);
+                        }
                     }
                 }
             }
