@@ -11262,11 +11262,37 @@
       "/:category": {
         "path": "/:category",
         "categories": [
-          "reading"
+          "reading",
+          "popular"
         ],
+        "view": 0,
         "example": "/bookfere/skills",
         "parameters": {
-          "category": "分类名"
+          "category": {
+            "description": "分类名",
+            "options": [
+              {
+                "value": "weekly",
+                "label": "每周一书"
+              },
+              {
+                "value": "skills",
+                "label": "使用技巧"
+              },
+              {
+                "value": "books",
+                "label": "图书推荐"
+              },
+              {
+                "value": "news",
+                "label": "新闻速递"
+              },
+              {
+                "value": "essay",
+                "label": "精选短文"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -39787,15 +39813,25 @@
     "routes": {
       "/html_clip/:user/:tag": {
         "path": "/html_clip/:user/:tag",
-        "name": "Unknown",
-        "maintainers": [],
+        "example": "/inoreader/html_clip/1005137674/user-favorites",
+        "categories": [
+          "reading",
+          "popular"
+        ],
+        "view": 0,
+        "name": "HTML Clip",
+        "maintainers": [
+          "EthanWng97"
+        ],
         "location": "index.ts"
       },
       "/rss/:user/:tag": {
         "path": "/rss/:user/:tag",
         "categories": [
-          "reading"
+          "reading",
+          "popular"
         ],
+        "view": 0,
         "example": "/inoreader/rss/1005137674/user-favorites",
         "parameters": {
           "user": "user id, the interger after user/ in the example URL",
@@ -59377,8 +59413,10 @@
       "/:lang/:category?": {
         "path": "/:lang/:category?",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 0,
         "example": "/pixivision/zh-tw",
         "parameters": {
           "lang": "Language",
@@ -83927,8 +83965,10 @@
       "/": {
         "path": "/",
         "categories": [
-          "reading"
+          "reading",
+          "popular"
         ],
+        "view": 0,
         "example": "/yilinzazhi",
         "radar": [
           {
@@ -83948,8 +83988,10 @@
       "/latest": {
         "path": "/latest",
         "categories": [
-          "reading"
+          "reading",
+          "popular"
         ],
+        "view": 0,
         "example": "/yilinzazhi/latest",
         "radar": [
           {
