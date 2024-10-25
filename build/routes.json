@@ -3086,13 +3086,85 @@
       "/article/:categoryId/:sortType?/:timeRange?": {
         "path": "/article/:categoryId/:sortType?/:timeRange?",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 0,
         "example": "/acfun/article/110",
         "parameters": {
-          "categoryId": "分区 ID，见下表",
-          "sortType": "排序，见下表，默认为 `createTime`",
-          "timeRange": "时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`"
+          "categoryId": {
+            "description": "分区 ID",
+            "options": [
+              {
+                "value": "73",
+                "label": "生活情感"
+              },
+              {
+                "value": "74",
+                "label": "动漫文化"
+              },
+              {
+                "value": "75",
+                "label": "漫画文学"
+              },
+              {
+                "value": "110",
+                "label": "综合"
+              },
+              {
+                "value": "164",
+                "label": "游戏"
+              },
+              {
+                "value": "184",
+                "label": "二次元画师"
+              }
+            ]
+          },
+          "sortType": {
+            "description": "排序",
+            "options": [
+              {
+                "value": "createTime",
+                "label": "最新发表"
+              },
+              {
+                "value": "lastCommentTime",
+                "label": "最新动态"
+              },
+              {
+                "value": "hotScore",
+                "label": "最热文章"
+              }
+            ],
+            "default": "createTime"
+          },
+          "timeRange": {
+            "description": "时间范围，仅在排序是 `hotScore` 有效",
+            "options": [
+              {
+                "value": "all",
+                "label": "时间不限"
+              },
+              {
+                "value": "oneDay",
+                "label": "24 小时"
+              },
+              {
+                "value": "threeDay",
+                "label": "三天"
+              },
+              {
+                "value": "oneWeek",
+                "label": "一周"
+              },
+              {
+                "value": "oneMonth",
+                "label": "一个月"
+              }
+            ],
+            "default": "all"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -3112,8 +3184,10 @@
       "/bangumi/:id": {
         "path": "/bangumi/:id",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 3,
         "example": "/acfun/bangumi/5022158",
         "parameters": {
           "id": "番剧 id"
@@ -3148,8 +3222,11 @@
           "uid": "用户 UID"
         },
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "example": "/acfun/user/video/6102",
+        "view": 3,
         "maintainers": [
           "wdssmq"
         ],
@@ -16576,8 +16653,10 @@
       "/weekly": {
         "path": "/weekly",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 0,
         "example": "/cngal/weekly",
         "parameters": {},
         "features": {
@@ -20342,12 +20421,57 @@
       "/campaign/:type/:free?": {
         "path": "/campaign/:type/:free?",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
         "example": "/dlsite/campaign/home",
         "parameters": {
-          "type": "Type, see table above",
-          "free": "Free only, empty means false, other value means true"
+          "type": {
+            "description": "类型",
+            "options": [
+              {
+                "value": "home",
+                "label": "「DLsite 同人」"
+              },
+              {
+                "value": "comic",
+                "label": "「DLsite コミック」"
+              },
+              {
+                "value": "soft",
+                "label": "「DLsite PCソフト」"
+              },
+              {
+                "value": "maniax",
+                "label": "「DLsite 同人 - R18」"
+              },
+              {
+                "value": "books",
+                "label": "「DLsite 成年コミック - R18」"
+              },
+              {
+                "value": "pro",
+                "label": "「DLsite 美少女ゲーム」"
+              },
+              {
+                "value": "girls",
+                "label": "「DLsite 乙女」"
+              },
+              {
+                "value": "bl",
+                "label": "「DLsite BL」"
+              }
+            ]
+          },
+          "free": {
+            "description": "免费",
+            "options": [
+              {
+                "value": "1",
+                "label": "是"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -20366,11 +20490,49 @@
       "/new/:type": {
         "path": "/new/:type",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 0,
         "example": "/dlsite/new/home",
         "parameters": {
-          "type": "Type, see table below"
+          "type": {
+            "description": "类型",
+            "options": [
+              {
+                "value": "home",
+                "label": "「DLsite 同人」"
+              },
+              {
+                "value": "comic",
+                "label": "「DLsite コミック」"
+              },
+              {
+                "value": "soft",
+                "label": "「DLsite PCソフト」"
+              },
+              {
+                "value": "maniax",
+                "label": "「DLsite 同人 - R18」"
+              },
+              {
+                "value": "books",
+                "label": "「DLsite 成年コミック - R18」"
+              },
+              {
+                "value": "pro",
+                "label": "「DLsite 美少女ゲーム」"
+              },
+              {
+                "value": "girls",
+                "label": "「DLsite 乙女」"
+              },
+              {
+                "value": "bl",
+                "label": "「DLsite BL」"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -20390,8 +20552,10 @@
       "/ci-en/:id/article": {
         "path": "/ci-en/:id/article",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 0,
         "example": "/dlsite/ci-en/7400/article",
         "parameters": {
           "id": "Creator id, can be found in URL"
@@ -20931,8 +21095,10 @@
       "/article/:topic/:topicId?": {
         "path": "/article/:topic/:topicId?",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 0,
         "example": "/dora-world/article/contents",
         "parameters": {
           "topic": "Topic name, can be found in URL. For example: the topic name of [https://www.dora-world.com/movie](https://www.dora-world.com/movie) is `movie`",
@@ -23558,8 +23724,10 @@
       "/actors/:name/:id": {
         "path": "/actors/:name/:id",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 3,
         "example": "/eventernote/actors/三森すずこ/2634",
         "parameters": {
           "name": "声优姓名",
@@ -38598,8 +38766,10 @@
       "/news": {
         "path": "/news",
         "categories": [
-          "anime"
+          "anime",
+          "popular"
         ],
+        "view": 0,
         "example": "/idolypride/news",
         "parameters": {},
         "features": {
