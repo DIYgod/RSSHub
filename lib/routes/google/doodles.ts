@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
     path: '/doodles/:language?',
-    categories: ['picture'],
+    categories: ['picture', 'popular'],
+    view: ViewType.Pictures,
     example: '/google/doodles/zh-CN',
     parameters: { language: 'Language, default to `zh-CN`, for other language values, you can get it from [Google Doodles official website](https://www.google.com/doodles)' },
     features: {
