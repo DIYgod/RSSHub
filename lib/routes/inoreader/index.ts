@@ -1,12 +1,15 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/html_clip/:user/:tag',
-    name: 'Unknown',
-    maintainers: [],
+    example: '/inoreader/html_clip/1005137674/user-favorites',
+    categories: ['reading', 'popular'],
+    view: ViewType.Articles,
+    name: 'HTML Clip',
+    maintainers: ['EthanWng97'],
     handler,
 };
 
