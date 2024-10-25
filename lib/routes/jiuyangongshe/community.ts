@@ -1,4 +1,4 @@
-import type { Data, Route } from '@/types';
+import { Data, Route, ViewType } from '@/types';
 import type { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -97,6 +97,8 @@ const render = (data) => art(path.join(__dirname, 'templates', 'community-descri
 
 export const route: Route = {
     path: '/community',
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/jiuyangongshe/community',
     maintainers: ['TonyRL'],
     name: '社群',

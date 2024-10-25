@@ -1,4 +1,4 @@
-import { DataItem, Route } from '@/types';
+import { DataItem, Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -132,7 +132,8 @@ const handler: Route['handler'] = async (ctx) => {
 
 export const route: Route = {
     path: '/announcement/:type',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/binance/announcement/new-cryptocurrency-listing',
     parameters: {
         type: {
@@ -154,14 +155,14 @@ export const route: Route = {
     description: `
 Type category
 
- - new-cryptocurrency-listing => New Cryptocurrency Listing 
- - latest-binance-news        => Latest Binance News        
- - latest-activities          => Latest Activities          
- - new-fiat-listings          => New Fiat Listings          
- - api-updates                => API Updates                
- - crypto-airdrop             => Crypto Airdrop             
- - wallet-maintenance-updates => Wallet Maintenance Updates 
- - delisting                  => Delisting                  
+ - new-cryptocurrency-listing => New Cryptocurrency Listing
+ - latest-binance-news        => Latest Binance News
+ - latest-activities          => Latest Activities
+ - new-fiat-listings          => New Fiat Listings
+ - api-updates                => API Updates
+ - crypto-airdrop             => Crypto Airdrop
+ - wallet-maintenance-updates => Wallet Maintenance Updates
+ - delisting                  => Delisting
 `,
     maintainers: ['enpitsulin'],
     handler,

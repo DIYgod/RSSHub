@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,9 +11,31 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/timeline/:category?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/jinse/timeline',
-    parameters: { category: '分类，见下表，默认为头条' },
+    parameters: {
+        category: {
+            description: '分类',
+            options: [
+                { value: '头条', label: '头条' },
+                { value: '独家', label: '独家' },
+                { value: '铭文', label: '铭文' },
+                { value: '产业', label: '产业' },
+                { value: '项目', label: '项目' },
+                { value: '政策', label: '政策' },
+                { value: 'AI', label: 'AI' },
+                { value: 'Web 3.0', label: 'Web 3.0' },
+                { value: '以太坊 2.0', label: '以太坊 2.0' },
+                { value: 'DeFi', label: 'DeFi' },
+                { value: 'Layer2', label: 'Layer2' },
+                { value: 'NFT', label: 'NFT' },
+                { value: 'DAO', label: 'DAO' },
+                { value: '百科', label: '百科' },
+            ],
+            default: '头条',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

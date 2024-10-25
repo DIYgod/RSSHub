@@ -1,13 +1,14 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getHeaders, randomString, decryptAES } from './utils';
 
 export const route: Route = {
     path: '/news',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
     example: '/ainvest/news',
     parameters: {},
+    view: ViewType.Articles,
     features: {
         requireConfig: false,
         requirePuppeteer: false,

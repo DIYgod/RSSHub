@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -13,7 +13,8 @@ const STATUS_MAP = {
 
 export const route: Route = {
     path: '/gushitong/index',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Notifications,
     example: '/baidu/gushitong/index',
     parameters: {},
     features: {

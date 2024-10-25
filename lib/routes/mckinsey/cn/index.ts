@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { categories } from './category-map';
@@ -8,9 +8,16 @@ const endpoint = `${baseUrl}/wp-json`;
 
 export const route: Route = {
     path: '/cn/:category?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/mckinsey/cn',
-    parameters: { category: '分类，见下表，默认为全部' },
+    parameters: {
+        category: {
+            description: '分类',
+            options: Object.entries(categories).map(([value, label]) => ({ value, label: label.name })),
+            default: '25',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

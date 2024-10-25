@@ -1,13 +1,25 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { baseUrl, favicon, getBuildId, parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/news/:lang?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/followin/news',
-    parameters: { lang: 'Language, see table above, `en` by default' },
+    parameters: {
+        lang: {
+            description: 'Language',
+            options: [
+                { value: 'en', label: 'English' },
+                { value: 'zh-Hans', label: '简体中文' },
+                { value: 'zh-Hant', label: '繁體中文' },
+                { value: 'vi', label: 'Tiếng Việt' },
+            ],
+            default: 'en',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

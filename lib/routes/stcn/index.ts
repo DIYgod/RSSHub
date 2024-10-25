@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,9 +7,49 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/stcn/yw',
-    parameters: { id: '栏目 id，见下表，默认为要闻' },
+    parameters: {
+        id: {
+            description: '栏目 id',
+            options: [
+                { value: 'kx', label: '快讯' },
+                { value: 'yw', label: '要闻' },
+                { value: 'gs', label: '股市' },
+                { value: 'company', label: '公司' },
+                { value: 'data', label: '数据' },
+                { value: 'fund', label: '基金' },
+                { value: 'finance', label: '金融' },
+                { value: 'comment', label: '评论' },
+                { value: 'cj', label: '产经' },
+                { value: 'ct', label: '创投' },
+                { value: 'kcb', label: '科创板' },
+                { value: 'xsb', label: '新三板' },
+                { value: 'tj', label: '投教' },
+                { value: 'zk', label: 'ESG' },
+                { value: 'gd', label: '滚动' },
+                { value: 'gsyl', label: '股市一览' },
+                { value: 'djjd', label: '独家解读' },
+                { value: 'gsxw', label: '公司新闻' },
+                { value: 'gsdt', label: '公司动态' },
+                { value: 'djsj', label: '独家数据' },
+                { value: 'kd', label: '看点数据' },
+                { value: 'zj', label: '资金流向' },
+                { value: 'sj_kcb', label: '科创板' },
+                { value: 'hq', label: '行情总貌' },
+                { value: 'zl', label: '专栏' },
+                { value: 'author', label: '作者' },
+                { value: 'cjhy', label: '行业' },
+                { value: 'cjqc', label: '汽车' },
+                { value: 'tjkt', label: '投教课堂' },
+                { value: 'zczs', label: '政策知识' },
+                { value: 'tjdt', label: '投教动态' },
+                { value: 'zthd', label: '专题活动' },
+            ],
+            default: 'yw',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

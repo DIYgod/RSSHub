@@ -1,4 +1,4 @@
-import { DataItem, Route } from '@/types';
+import { DataItem, Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
@@ -139,7 +139,8 @@ const findTypeLabel = (type: string) => {
 
 export const route: Route = {
     path: '/announcement/:type/:lang?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/bitget/announcement/all/zh-CN',
     parameters: {
         type: {

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
@@ -12,6 +12,8 @@ export const route: Route = {
         },
     ],
     name: '首页',
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     maintainers: ['nczitzk'],
     handler,
     url: 'techflowpost.com/',
