@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,9 +10,20 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/search/:q/:order?',
-    categories: ['picture'],
+    categories: ['picture', 'popular'],
+    view: ViewType.Pictures,
     example: '/pixabay/search/cat',
-    parameters: { q: 'Search term', order: 'Order, `popular` or `latest`, `latest` by default' },
+    parameters: {
+        q: 'Search term',
+        order: {
+            description: 'Order',
+            options: [
+                { value: 'popular', label: 'popular' },
+                { value: 'latest', label: 'latest' },
+            ],
+            default: 'latest',
+        },
+    },
     features: {
         requireConfig: [
             {

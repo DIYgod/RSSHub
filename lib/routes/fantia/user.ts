@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -6,7 +6,8 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['picture'],
+    categories: ['picture', 'popular'],
+    view: ViewType.Pictures,
     example: '/fantia/user/3498',
     parameters: { id: 'User id, can be found in user profile URL' },
     features: {

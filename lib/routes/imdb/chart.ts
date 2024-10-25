@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 import type { Context } from 'hono';
@@ -12,8 +12,20 @@ const render = (data) => art(path.join(__dirname, 'templates', 'chart.art'), dat
 
 export const route: Route = {
     path: '/chart/:chart?',
-    categories: ['multimedia'],
-    parameters: { chart: 'The chart to display, `top` by default' },
+    categories: ['multimedia', 'popular'],
+    view: ViewType.Notifications,
+    parameters: {
+        chart: {
+            description: 'The chart to display, `top` by default',
+            options: [
+                { value: 'top', label: 'Top 250 Movies' },
+                { value: 'moviemeter', label: 'Most Popular Movies' },
+                { value: 'toptv', label: 'Top 250 TV Shows' },
+                { value: 'tvmeter', label: 'Most Popular TV Shows' },
+            ],
+            default: 'top',
+        },
+    },
     example: '/imdb/chart',
     radar: [
         {
