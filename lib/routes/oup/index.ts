@@ -3,7 +3,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
@@ -29,46 +29,47 @@ export const route: Route = {
             source: ['academic.oup.com/', 'academic.oup.com/:name/issue'],
         },
     ],
-    name: 'Oxford Academic',
-    maintainers: [],
+    name: 'Oxford Academic - Journal',
+    maintainers: ['Fatpandac'],
     handler,
     url: 'academic.oup.com/',
-    description: `#### Journal {#oxford-university-press-oxford-academic-journal}`,
 };
 
 async function handler(ctx) {
     const name = ctx.req.param('name');
     const url = `${rootUrl}/${name}/issue`;
 
-    const response = await got(url);
-    const cookies = response.headers['set-cookie'].map((item) => item.split(';')[0]).join(';');
-    const $ = load(response.data);
+    const response = await ofetch.raw(url);
+    const cookies = response.headers
+        .getSetCookie()
+        .map((item) => item.split(';')[0])
+        .join(';');
+    const $ = load(response._data);
     const list = $('div.al-article-items')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('a.at-articleLink').text(),
             link: new URL($(item).find('a.at-articleLink').attr('href'), rootUrl).href,
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got(item.link, {
+                const detailResponse = await ofetch(item.link, {
                     headers: {
                         Cookie: cookies,
                     },
                 });
-                const content = load(detailResponse.data);
+                const $ = load(detailResponse);
 
-                item.author = content('a.linked-name.js-linked-name-trigger').text();
+                item.author = $('.al-authors-list button').text();
                 item.description = art(path.join(__dirname, 'templates/article.art'), {
-                    abstractContent: content('section.abstract > p.chapter-para').text(),
-                    keywords: content('div.kwd-group > a')
-                        .map((_, item) => $(item).text())
-                        .get()
-                        .join(','),
+                    abstractContent: $('section.abstract > p.chapter-para').text(),
                 });
-                item.pubDate = parseDate(content('div.citation-date').text());
+                item.pubDate = parseDate($('div.citation-date').text());
+                item.category = $('div.kwd-group > a')
+                    .toArray()
+                    .map((item) => $(item).text());
 
                 return item;
             })
