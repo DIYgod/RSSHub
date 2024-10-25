@@ -86,6 +86,7 @@ async function handler() {
             title,
             description,
             author,
+            link: link.split('#')[0],
             pubDate: time,
         };
     })) {
