@@ -84,7 +84,6 @@ async function handler() {
         const description = await getContent(link);
         return {
             title,
-            link,
             description,
             author,
             pubDate: time,
