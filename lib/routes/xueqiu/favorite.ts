@@ -30,7 +30,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const token = await parseToken();
+
+    const link = `https://xueqiu.com/u/${id}`;
+    const token = await parseToken(link);
     const res2 = await got({
         method: 'get',
         url: 'https://xueqiu.com/favorites.json',
@@ -39,7 +41,7 @@ async function handler(ctx) {
         }),
         headers: {
             Cookie: token,
-            Referer: `https://xueqiu.com/u/${id}`,
+            Referer: link,
         },
     });
     const data = res2.data.list;
@@ -52,13 +54,13 @@ async function handler(ctx) {
         },
         headers: {
             Cookie: token,
-            Referer: `https://xueqiu.com/u/${id}`,
+            Referer: link,
         },
     });
 
     return {
         title: `${screen_name} 的雪球收藏动态`,
-        link: `https://xueqiu.com/u/${id}`,
+        link,
         description: `${screen_name} 的雪球收藏动态`,
         item: data.map((item) => ({
             title: item.title,
