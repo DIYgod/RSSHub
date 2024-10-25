@@ -25,6 +25,7 @@ export const route: Route = {
     },
     name: 'Phys News',
     description: `| 分類 | catagory |
+| ---- | ---- |
 | 物理系 | 24 |
 | 獎助學金 | scholarship |
 | 招生與錄取報到 | admission |

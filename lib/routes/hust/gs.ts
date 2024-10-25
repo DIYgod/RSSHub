@@ -91,7 +91,7 @@ export const route: Route = {
   | --------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------- | --------------------------------------------- |
   | [tzgg/kcjksap](https://rsshub.app/hust/gs/tzgg/kcjksap)   | [tzgg/gjjl](https://rsshub.app/hust/gs/tzgg/gjjl) | [tzgg/xwgz](https://rsshub.app/hust/gs/tzgg/xwgz) | [tzgg/tjyxy](https://rsshub.app/hust/gs/tzgg/tjyxy) | [tzgg/qt](https://rsshub.app/hust/gs/tzgg/qt) |
 
-    #### [学籍管理](https://gs.hust.edu.cn/pygz/zbjs1/xjyd.htm)
+  #### [学籍管理](https://gs.hust.edu.cn/pygz/zbjs1/xjyd.htm)
 
   | [学籍异动](https://gs.hust.edu.cn/pygz/zbjs1/xjyd.htm)        | [毕业管理](https://gs.hust.edu.cn/pygz/zbjs1/bygl.htm)        |
   | ------------------------------------------------------------- | ------------------------------------------------------------- |
