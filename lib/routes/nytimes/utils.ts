@@ -1,6 +1,7 @@
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import { Browser } from 'puppeteer';
 
 const ProcessImage = ($, e) => {
     const photo = $(e).find('figure').find('picture').find('img');
@@ -14,7 +15,7 @@ const ProcessImage = ($, e) => {
     return cover;
 };
 
-const PuppeterGetter = async (ctx, browser, link) => {
+const PuppeterGetter = async (ctx, browser: Browser, link) => {
     const result = await cache.tryGet(`nyt: ${link}`, async () => {
         const page = await browser.newPage();
         await page.setRequestInterception(true);
@@ -28,7 +29,8 @@ const PuppeterGetter = async (ctx, browser, link) => {
         });
         await page.goto(link);
         await page.waitForSelector('[data-testid=optimistic-truncator-message]', { hidden: true, timeout: 0 });
-        const response = await page.evaluate(() => document.querySelector('body').innerHTML);
+        const response = await page.evaluate(() => document.querySelector('body')?.innerHTML);
+        await page.close();
         return response;
     });
     return result;

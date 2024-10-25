@@ -152,7 +152,7 @@ async function handler(ctx) {
         })
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title,
