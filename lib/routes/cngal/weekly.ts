@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +9,8 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/weekly',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Articles,
     example: '/cngal/weekly',
     parameters: {},
     features: {

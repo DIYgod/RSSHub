@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/bangumi/:id',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Videos,
     example: '/acfun/bangumi/5022158',
     parameters: { id: '番剧 id' },
     features: {

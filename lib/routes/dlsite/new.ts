@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -53,9 +53,15 @@ const infos = {
 
 export const route: Route = {
     path: '/new/:type',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Articles,
     example: '/dlsite/new/home',
-    parameters: { type: 'Type, see table below' },
+    parameters: {
+        type: {
+            description: '类型',
+            options: Object.values(infos).map((info) => ({ value: info.type, label: info.name })),
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

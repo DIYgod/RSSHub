@@ -1,4 +1,4 @@
-import { Route, Data, DataItem } from '@/types';
+import { Route, Data, DataItem, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
@@ -9,7 +9,8 @@ const baseUrl = 'https://www.dora-world.com';
 
 export const route: Route = {
     path: '/article/:topic/:topicId?',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Articles,
     example: '/dora-world/article/contents',
     parameters: {
         topic: 'Topic name, can be found in URL. For example: the topic name of [https://www.dora-world.com/movie](https://www.dora-world.com/movie) is `movie`',
