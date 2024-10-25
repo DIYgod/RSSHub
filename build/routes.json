@@ -5234,8 +5234,10 @@
       "/:id": {
         "path": "/:id",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
+        "view": 4,
         "example": "/ajmide/10603594",
         "parameters": {
           "id": "播客 id，可以从播客页面 URL 中找到"
@@ -10399,8 +10401,10 @@
       "/apod": {
         "path": "/apod",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/bjp/apod",
         "parameters": {},
         "features": {
@@ -23781,15 +23785,194 @@
       "/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?": {
         "path": "/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/fantia/search/posts/all/daily",
         "parameters": {
-          "type": "Type, see the table below, `posts` by default",
-          "caty": "Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default",
-          "period": "Ranking period, see the table below, empty by default",
-          "order": "Sorting, see the table below, `更新の新しい順` by default",
-          "rating": "Rating, see the table below, `すべて` by default",
+          "type": {
+            "description": "Type, see the table below, `posts` by default",
+            "options": [
+              {
+                "value": "fanclubs",
+                "label": "クリエイター"
+              },
+              {
+                "value": "posts",
+                "label": "投稿"
+              },
+              {
+                "value": "products",
+                "label": "商品"
+              },
+              {
+                "value": "commissions",
+                "label": "コミッション"
+              }
+            ],
+            "default": "posts"
+          },
+          "caty": {
+            "description": "Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default",
+            "options": [
+              {
+                "value": "all",
+                "label": "すべてのクリエイター"
+              },
+              {
+                "value": "illust",
+                "label": "イラスト"
+              },
+              {
+                "value": "comic",
+                "label": "漫画"
+              },
+              {
+                "value": "cosplay",
+                "label": "コスプレ"
+              },
+              {
+                "value": "youtuber",
+                "label": "YouTuber・配信者"
+              },
+              {
+                "value": "vtuber",
+                "label": "Vtuber"
+              },
+              {
+                "value": "voice",
+                "label": "音声作品・ASMR"
+              },
+              {
+                "value": "voiceactor",
+                "label": "声優・歌い手"
+              },
+              {
+                "value": "idol",
+                "label": "アイドル"
+              },
+              {
+                "value": "anime",
+                "label": "アニメ・映像・写真"
+              },
+              {
+                "value": "3d",
+                "label": "3D"
+              },
+              {
+                "value": "game",
+                "label": "ゲーム制作"
+              },
+              {
+                "value": "music",
+                "label": "音楽"
+              },
+              {
+                "value": "novel",
+                "label": "小説"
+              },
+              {
+                "value": "doll",
+                "label": "ドール"
+              },
+              {
+                "value": "art",
+                "label": "アート・デザイン"
+              },
+              {
+                "value": "program",
+                "label": "プログラム"
+              },
+              {
+                "value": "handmade",
+                "label": "創作・ハンドメイド"
+              },
+              {
+                "value": "history",
+                "label": "歴史・評論・情報"
+              },
+              {
+                "value": "railroad",
+                "label": "鉄道・旅行・ミリタリー"
+              },
+              {
+                "value": "shop",
+                "label": "ショップ"
+              },
+              {
+                "value": "other",
+                "label": "その他"
+              }
+            ],
+            "default": "all"
+          },
+          "period": {
+            "description": "Ranking period, see the table below, empty by default",
+            "options": [
+              {
+                "value": "daily",
+                "label": "デイリー"
+              },
+              {
+                "value": "weekly",
+                "label": "ウィークリー"
+              },
+              {
+                "value": "monthly",
+                "label": "マンスリー"
+              },
+              {
+                "value": "all",
+                "label": "全期間"
+              }
+            ],
+            "default": ""
+          },
+          "order": {
+            "description": "Sorting, see the table below, `更新の新しい順` by default",
+            "options": [
+              {
+                "value": "updater",
+                "label": "更新の新しい順"
+              },
+              {
+                "value": "update_old",
+                "label": "更新の古い順"
+              },
+              {
+                "value": "newer",
+                "label": "投稿の新しい順"
+              },
+              {
+                "value": "create_old",
+                "label": "投稿の古い順"
+              },
+              {
+                "value": "popular",
+                "label": "お気に入り数順"
+              }
+            ],
+            "default": "updater"
+          },
+          "rating": {
+            "description": "Rating, see the table below, `すべて` by default",
+            "options": [
+              {
+                "value": "all",
+                "label": "すべて"
+              },
+              {
+                "value": "general",
+                "label": "一般のみ"
+              },
+              {
+                "value": "adult",
+                "label": "R18 のみ"
+              }
+            ],
+            "default": "all"
+          },
           "keyword": "Keyword, empty by default"
         },
         "features": {
@@ -23801,15 +23984,19 @@
           "supportScihub": false
         },
         "name": "Search",
-        "maintainers": [],
+        "maintainers": [
+          "nczitzk"
+        ],
         "description": "Type\n\n  | クリエイター | 投稿  | 商品     | コミッション |\n  | ------------ | ----- | -------- | ------------ |\n  | fanclubs     | posts | products | commissions  |\n\n  Category\n\n  | 分类                   | 分类名     |\n  | ---------------------- | ---------- |\n  | イラスト               | illust     |\n  | 漫画                   | comic      |\n  | コスプレ               | cosplay    |\n  | YouTuber・配信者       | youtuber   |\n  | Vtuber                 | vtuber     |\n  | 音声作品・ASMR         | voice      |\n  | 声優・歌い手           | voiceactor |\n  | アイドル               | idol       |\n  | アニメ・映像・写真     | anime      |\n  | 3D                     | 3d         |\n  | ゲーム制作             | game       |\n  | 音楽                   | music      |\n  | 小説                   | novel      |\n  | ドール                 | doll       |\n  | アート・デザイン       | art        |\n  | プログラム             | program    |\n  | 創作・ハンドメイド     | handmade   |\n  | 歴史・評論・情報       | history    |\n  | 鉄道・旅行・ミリタリー | railroad   |\n  | ショップ               | shop       |\n  | その他                 | other      |\n\n  Ranking period\n\n  | デイリー | ウィークリー | マンスリー | 全期間 |\n  | -------- | ------------ | ---------- | ------ |\n  | daily    | weekly       | monthly    | all    |\n\n  Sorting\n\n  | 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |\n  | -------------- | ------------ | -------------- | ------------ | -------------- |\n  | updater        | update_old  | newer          | create_old  | popular        |\n\n  Rating\n\n  | すべて | 一般のみ | R18 のみ |\n  | ------ | -------- | -------- |\n  | all    | general  | adult    |",
         "location": "search.ts"
       },
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/fantia/user/3498",
         "parameters": {
           "id": "User id, can be found in user profile URL"
@@ -28450,8 +28637,10 @@
       "/doodles/:language?": {
         "path": "/doodles/:language?",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/google/doodles/zh-CN",
         "parameters": {
           "language": "Language, default to `zh-CN`, for other language values, you can get it from [Google Doodles official website](https://www.google.com/doodles)"
@@ -38887,10 +39076,33 @@
       "/chart/:chart?": {
         "path": "/chart/:chart?",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
+        "view": 5,
         "parameters": {
-          "chart": "The chart to display, `top` by default"
+          "chart": {
+            "description": "The chart to display, `top` by default",
+            "options": [
+              {
+                "value": "top",
+                "label": "Top 250 Movies"
+              },
+              {
+                "value": "moviemeter",
+                "label": "Most Popular Movies"
+              },
+              {
+                "value": "toptv",
+                "label": "Top 250 TV Shows"
+              },
+              {
+                "value": "tvmeter",
+                "label": "Most Popular TV Shows"
+              }
+            ],
+            "default": "top"
+          }
         },
         "example": "/imdb/chart",
         "radar": [
@@ -43163,11 +43375,34 @@
       "/post/popular_recent/:period?": {
         "path": "/post/popular_recent/:period?",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/konachan/post/popular_recent/1d",
         "parameters": {
-          "period": "展示时间"
+          "period": {
+            "description": "展示时间",
+            "options": [
+              {
+                "value": "1d",
+                "label": "最近 24 小时"
+              },
+              {
+                "value": "1w",
+                "label": "最近一周"
+              },
+              {
+                "value": "1m",
+                "label": "最近一月"
+              },
+              {
+                "value": "1y",
+                "label": "最近一年"
+              }
+            ],
+            "default": "1d"
+          }
         },
         "radar": [
           {
@@ -45902,8 +46137,10 @@
       "/magazine": {
         "path": "/magazine",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/magnumphotos/magazine",
         "parameters": {},
         "features": {
@@ -58578,12 +58815,27 @@
       "/search/:q/:order?": {
         "path": "/search/:q/:order?",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/pixabay/search/cat",
         "parameters": {
           "q": "Search term",
-          "order": "Order, `popular` or `latest`, `latest` by default"
+          "order": {
+            "description": "Order",
+            "options": [
+              {
+                "value": "popular",
+                "label": "popular"
+              },
+              {
+                "value": "latest",
+                "label": "latest"
+              }
+            ],
+            "default": "latest"
+          }
         },
         "features": {
           "requireConfig": [
@@ -59666,8 +59918,10 @@
       "/explore": {
         "path": "/explore",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
+        "view": 4,
         "example": "/podwise/explore",
         "radar": [
           {
@@ -73425,8 +73679,10 @@
       "/tv/:id/seasons/:lang?": {
         "path": "/tv/:id/seasons/:lang?",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
+        "view": 5,
         "example": "/themoviedb/tv/70593/seasons/en-US",
         "parameters": {
           "id": "TV show ID",
@@ -74272,8 +74528,10 @@
       "/program/:programId": {
         "path": "/program/:programId",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
+        "view": 4,
         "example": "/tingtingfm/program/M7VJv6Jj4R",
         "parameters": {
           "programId": "节目 ID，可以在 URL 中找到"
@@ -78147,7 +78405,8 @@
       "/author/:username": {
         "url": "voronoiapp.com",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
         "view": 2,
         "maintainers": [
@@ -78172,7 +78431,8 @@
       "/editors-pick/:category?": {
         "url": "voronoiapp.com",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
         "view": 2,
         "maintainers": [
@@ -78306,7 +78566,8 @@
       "/home/:category?": {
         "url": "voronoiapp.com",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
         "view": 2,
         "maintainers": [
@@ -78442,7 +78703,8 @@
       "/latest/:category?": {
         "url": "voronoiapp.com",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
         "view": 2,
         "maintainers": [
@@ -78576,7 +78838,8 @@
       "/popular/:tab?/:time_range?/:category?": {
         "url": "voronoiapp.com",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
         "view": 2,
         "maintainers": [
@@ -78765,7 +79028,8 @@
       "/search/:keyword": {
         "url": "voronoiapp.com",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
         "view": 2,
         "maintainers": [
@@ -84250,11 +84514,46 @@
       "/article/:type?": {
         "path": "/article/:type?",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
+        "view": 0,
         "example": "/yyets/article",
         "parameters": {
-          "type": "["
+          "type": {
+            "description": "类型",
+            "options": [
+              {
+                "value": "all",
+                "label": "全部"
+              },
+              {
+                "value": "news",
+                "label": "影视资讯"
+              },
+              {
+                "value": "report",
+                "label": "收视快报"
+              },
+              {
+                "value": "m_review",
+                "label": "人人影评"
+              },
+              {
+                "value": "t_review",
+                "label": "人人剧评"
+              },
+              {
+                "value": "new_review",
+                "label": "新剧评测"
+              },
+              {
+                "value": "recom",
+                "label": "片单推荐"
+              }
+            ],
+            "default": "all"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -84274,8 +84573,10 @@
       "/today": {
         "path": "/today",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
+        "view": 5,
         "example": "/yyets/today",
         "parameters": {},
         "features": {
