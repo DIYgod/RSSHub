@@ -27,7 +27,7 @@ const PuppeterGetter = async (ctx, browser: Browser, link) => {
             request.continue();
             // request.resourceType() === 'document' ? request.continue() : request.abort();
         });
-        await page.goto(link);
+        await page.goto(link, { waitUntil: 'load', timeout: 0 });
         await page.waitForSelector('[data-testid=optimistic-truncator-message]', { hidden: true, timeout: 0 });
         const response = await page.evaluate(() => document.querySelector('body')?.innerHTML);
         await page.close();

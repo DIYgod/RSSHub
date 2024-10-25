@@ -117,8 +117,9 @@ async function handler(ctx) {
                     const $ = load(response);
                     if ($('.dual-btn').length > 0) {
                         hasEnVersion = true;
-                        link = $('.dual-btn a').last().attr().href;
-                        if (link !== '') {
+                        const enLink = $('.dual-btn a').last().attr().href;
+                        if (enLink !== '') {
+                            link = enLink;
                             response = await utils.PuppeterGetter(ctx, browser, link);
                         }
                     }
