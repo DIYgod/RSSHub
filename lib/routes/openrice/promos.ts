@@ -25,35 +25,26 @@ export const route: Route = {
 async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'zh';
 
-    let title;
-    let description;
     let urlPath;
     switch (lang) {
-        case 'zh':
-            title = '開飯喇 - 餐厅滋讯';
-            description = 'OpenRice香港餐廳滋訊';
-            urlPath = '/zh/hongkong/promos';
-            break;
         case 'zh-cn':
-            title = '开饭喇 - 餐厅资讯';
-            description = 'OpenRice香港餐厅资讯';
             urlPath = '/zh-cn/hongkong/promos';
             break;
         case 'en':
-            title = "Openrice - What's Hot";
-            description = 'Hot Restaurant in Hong Kong from Openrice';
             urlPath = '/en/hongkong/promos';
             break;
+        case 'zh':
         default:
-            title = '開飯喇 - 餐厅滋讯';
-            description = 'OpenRice香港餐廳滋訊';
             urlPath = '/zh/hongkong/promos';
             break;
     }
     const response = await ofetch(baseUrl + urlPath, {});
     const $ = load(response);
-    const data = $('.article-listing-content-cell-wrapper');
 
+    const title = $('title').text() ?? "Openrice - What's Hot";
+    const description = $('meta[name="description"]').attr('content') ?? "What's Hot from Openrice";
+
+    const data = $('.article-listing-content-cell-wrapper');
     const resultList = data.toArray().map((item) => {
         const $item = $(item);
         const title = $item.find('.title-name').text() ?? '';
@@ -62,7 +53,7 @@ async function handler(ctx) {
             $item
                 .find('.cover-photo')
                 .attr('style')
-                .match(/url\(['"]?(.*?)['"]?\)/)[1] ?? null;
+                ?.match(/url\(['"]?(.*?)['"]?\)/)?.[1] ?? null;
         const description = art(path.join(__dirname, 'templates/description.art'), {
             description: $item.find('.article-details .desc').text() ?? '',
             image: coverImg,

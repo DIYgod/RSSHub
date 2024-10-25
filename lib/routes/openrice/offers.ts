@@ -11,7 +11,7 @@ export const route: Route = {
     maintainers: ['after9'],
     handler,
     categories: ['shopping'],
-    example: '/openrice/zh/hongkong/promos',
+    example: '/openrice/zh/hongkong/offers',
     parameters: { lang: '语言，缺省为 zh' },
     name: '香港餐廳精選優惠券',
     description: `
@@ -24,28 +24,21 @@ export const route: Route = {
 async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'zh';
 
-    let title;
-    let description;
-    const urlPath = '/api/offers';
+    const apiPath = '/api/offers';
+    let urlPath = '/zh/hongkong/offers';
     switch (lang) {
-        case 'zh':
-            title = '開飯喇 - 精選優惠券';
-            description = 'OpenRice香港精選優惠券';
-            break;
         case 'zh-cn':
-            title = '开饭喇 - 精选优惠券';
-            description = 'OpenRice香港精选优惠券';
+            urlPath = '/zh-cn/hongkong/offers';
             break;
         case 'en':
-            title = 'Openrice - Hong Kong Coupon Search';
-            description = 'Hong Kong Coupon Search from Openrice';
+            urlPath = '/en/hongkong/offers';
             break;
+        case 'zh':
         default:
-            title = '開飯喇 - 精選優惠券';
-            description = 'OpenRice香港精選優惠券';
+            urlPath = '/zh/hongkong/offers';
             break;
     }
-    const response = await ofetch(baseUrl + urlPath, {
+    const response = await ofetch(baseUrl + apiPath, {
         headers: {
             accept: 'application/json',
         },
@@ -57,6 +50,7 @@ async function handler(ctx) {
             couponTypeId: 1,
         },
     });
+    const pageInfo = response.pageInfo;
     const highlightedOffers = response.highlightedOffers;
     const normalOffers = response.searchResult.paginationResult.results;
     const data = [...highlightedOffers, ...normalOffers];
@@ -64,7 +58,7 @@ async function handler(ctx) {
     const resultList = data.map((item) => {
         const title = item.title ?? '';
         const link = baseUrl + item.urlUI;
-        const coverImg = item.doorPhotoUI.url ?? '';
+        const coverImg = item.doorPhotoUI.urls.full ?? '';
         const descriptionText = item.couponType === 0 ? item.poiNameUI : `${item.desc} (${item.startTimeUI} - ${item.expireTimeUI}) [${item.multiplePoiDistrictName}]`;
         const description = art(path.join(__dirname, 'templates/description.art'), {
             description: descriptionText,
@@ -78,9 +72,9 @@ async function handler(ctx) {
     });
 
     return {
-        title,
+        title: pageInfo.seoInfo.title ?? 'OpenRice Hong Kong Offers',
         link: baseUrl + urlPath,
-        description,
+        description: pageInfo.seoInfo.metadataDictionary.name.find((item: { key: string; value: string }) => item.key === 'description')?.value ?? 'OpenRice Hong Kong Offers',
         item: resultList,
     };
 }
