@@ -8,9 +8,9 @@ import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/online',
+    path: '/',
     categories: ['anime'],
-    example: '/bangumi/online',
+    example: '/bangumi.online',
     parameters: {},
     features: {
         requireConfig: false,
@@ -40,7 +40,7 @@ async function handler() {
 
     const items = list.map((item) => ({
         title: `${item.title.zh ?? item.title.ja} - 第 ${item.volume} 集`,
-        description: art(path.join(__dirname, '../templates/online/image.art'), {
+        description: art(path.join(__dirname, 'templates/image.art'), {
             src: `https:${item.cover}`,
             alt: `${item.title_zh} - 第 ${item.volume} 集`,
         }),

@@ -1,11 +1,11 @@
 import { Resource } from '@opentelemetry/resources';
 import { BasicTracerProvider, BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
-import { SEMRESATTRS_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
+import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 
 const provider = new BasicTracerProvider({
     resource: new Resource({
-        [SEMRESATTRS_SERVICE_NAME]: 'rsshub',
+        [ATTR_SERVICE_NAME]: 'rsshub',
     }),
 });
 

@@ -1,4 +1,4 @@
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getLocalName } from './utils';
 
@@ -17,7 +17,7 @@ const getFromAPI = (type) => {
     return async (subjectID, showOriginalName) => {
         // 官方提供的条目API文档见 https://github.com/bangumi/api/blob/3f3fa6390c468816f9883d24be488e41f8946159/docs-raw/Subject-API.md
         const url = `https://api.bgm.tv/subject/${subjectID}?responseGroup=large`;
-        const { data: subjectInfo } = await got(url);
+        const subjectInfo = await ofetch(url);
         return {
             title: `${getLocalName(subjectInfo, showOriginalName)}的 Bangumi ${mapping[type].cn}`,
             link: `https://bgm.tv/subject/${subjectInfo.id}/${mapping[type].en}`,

@@ -1,13 +1,13 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/tv/topic/:id',
+    path: '/topic/:id',
     categories: ['anime'],
-    example: '/bangumi/tv/topic/367032',
+    example: '/bangumi.tv/topic/367032',
     parameters: { id: '话题 id, 在话题页面地址栏查看' },
     features: {
         requireConfig: false,
@@ -31,7 +31,7 @@ async function handler(ctx) {
     // bangumi.tv未提供获取小组话题的API，因此仍需要通过抓取网页来获取
     const topicID = ctx.req.param('id');
     const link = `https://bgm.tv/group/topic/${topicID}`;
-    const { data: html } = await got(link);
+    const html = await ofetch(link);
     const $ = load(html);
     const title = $('#pageHeader h1').text();
     const latestReplies = $('.row_reply')
