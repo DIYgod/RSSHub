@@ -25,7 +25,7 @@ async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'zh';
 
     const apiPath = '/api/offers';
-    let urlPath = '/zh/hongkong/offers';
+    let urlPath: string;
     switch (lang) {
         case 'zh-cn':
             urlPath = '/zh-cn/hongkong/offers';
