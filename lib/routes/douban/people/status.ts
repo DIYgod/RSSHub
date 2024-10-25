@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import got from '@/utils/got';
@@ -6,7 +6,8 @@ import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-socia
 import { config } from '@/config';
 export const route: Route = {
     path: '/people/:userid/status/:routeParams?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/douban/people/75118396/status',
     parameters: { userid: '整数型用户 id', routeParams: '额外参数；见下' },
     name: '用户广播',
@@ -93,6 +94,10 @@ function tryFixStatus(status) {
         if (!status.entities) {
             status.entities = [];
         }
+    }
+
+    if (status.sharing_url) {
+        status.sharing_url = status.sharing_url.split('&')[0];
     }
 
     if (!result.isFixSuccess) {
