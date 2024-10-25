@@ -1,12 +1,11 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
-import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:type/followrank',
     categories: ['anime'],
-    example: '/bangumi/anime/followrank',
+    example: '/bangumi.tv/anime/followrank',
     parameters: { type: '类型：anime - 动画，book - 图书，music - 音乐，game - 游戏，real - 三次元' },
     features: {
         requireConfig: false,
@@ -28,17 +27,10 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let type = ctx.req.param('type');
-    if (!type || type === 'tv') {
-        type = 'anime';
-    }
+    const type = ctx.req.param('type');
     const url = `https://bgm.tv/${type}`;
 
-    const response = await ofetch(url, {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
-    });
+    const response = await ofetch(url);
 
     const $ = load(response);
 

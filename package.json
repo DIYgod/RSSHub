@@ -54,11 +54,11 @@
         "@hono/zod-openapi": "0.16.4",
         "@notionhq/client": "2.2.15",
         "@opentelemetry/api": "1.9.0",
-        "@opentelemetry/exporter-prometheus": "0.53.0",
-        "@opentelemetry/exporter-trace-otlp-http": "0.53.0",
-        "@opentelemetry/resources": "1.26.0",
-        "@opentelemetry/sdk-metrics": "1.26.0",
-        "@opentelemetry/sdk-trace-base": "1.26.0",
+        "@opentelemetry/exporter-prometheus": "0.54.0",
+        "@opentelemetry/exporter-trace-otlp-http": "0.54.0",
+        "@opentelemetry/resources": "1.27.0",
+        "@opentelemetry/sdk-metrics": "1.27.0",
+        "@opentelemetry/sdk-trace-base": "1.27.0",
         "@opentelemetry/semantic-conventions": "1.27.0",
         "@postlight/parser": "2.2.3",
         "@rss3/sdk": "0.0.23",
@@ -193,7 +193,7 @@
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
-    "packageManager": "pnpm@9.12.0",
+    "packageManager": "pnpm@9.12.2",
     "engines": {
         "node": ">=22"
     }

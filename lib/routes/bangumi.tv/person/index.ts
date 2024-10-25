@@ -1,12 +1,12 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/tv/person/:id',
+    path: '/person/:id',
     categories: ['anime'],
-    example: '/bangumi/tv/person/32943',
+    example: '/bangumi.tv/person/32943',
     parameters: { id: '人物 id, 在人物页面的地址栏查看' },
     features: {
         requireConfig: false,
@@ -30,7 +30,7 @@ async function handler(ctx) {
     // bangumi.tv未提供获取“人物信息”的API，因此仍需要通过抓取网页来获取
     const personID = ctx.req.param('id');
     const link = `https://bgm.tv/person/${personID}/works?sort=date`;
-    const { data: html } = await got(link);
+    const html = await ofetch(link);
     const $ = load(html);
     const personName = $('.nameSingle a').text();
     const works = $('.item')

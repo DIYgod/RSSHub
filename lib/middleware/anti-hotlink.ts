@@ -117,6 +117,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     // Force config hotlink template on conflict
     if (config.hotlink.template) {
         imageHotlinkTemplate = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
+        multimediaHotlinkTemplate = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
     }
 
     if (!imageHotlinkTemplate && !multimediaHotlinkTemplate) {
