@@ -23,7 +23,7 @@
     "scripts": {
         "build": "tsx scripts/workflow/build-routes.ts",
         "build:docs": "tsx scripts/workflow/build-docs.ts",
-        "dev": "cross-env NODE_ENV=dev tsx watch --clear-screen=false lib/index.ts",
+        "dev": "cross-env NODE_ENV=dev tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production tsx watch --clear-screen=false lib/index.ts",
         "format": "prettier \"**/*.{ts,tsx,js,json}\" --write && eslint --cache --fix \"**/*.{ts,tsx,js,yml}\"",
         "format:check": "prettier \"**/*.{ts,tsx,js,json}\" --check && eslint --cache \"**/*.{ts,tsx,js,yml}\"",

@@ -26,6 +26,11 @@ const rofetch = createFetch().create({
     headers: {
         'user-agent': config.ua,
     },
+    onResponse({ request, response }) {
+        if (response.redirected) {
+            logger.http(`Redirecting to ${response.url} for ${request}`);
+        }
+    },
 });
 
 export default rofetch;
