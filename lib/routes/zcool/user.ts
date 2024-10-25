@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -9,7 +9,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/user/:uid',
-    categories: ['design'],
+    categories: ['design', 'popular'],
+    view: ViewType.Pictures,
     example: '/zcool/user/baiyong',
     parameters: { uid: '个性域名前缀或者用户ID' },
     features: {

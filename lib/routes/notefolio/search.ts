@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -70,12 +70,49 @@ const categoryMap = [
  */
 export const route: Route = {
     path: '/search/:category?/:order?/:time?/:query?',
-    categories: ['design'],
+    categories: ['design', 'popular'],
+    view: ViewType.Pictures,
     example: '/notefolio/search/1/pick/all/life',
     parameters: {
-        category: 'Category, see below, `all` by default',
-        order: 'Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default',
-        time: 'Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default',
+        category: {
+            description: 'Category, see below',
+            options: [
+                { value: 'all', label: 'All (전체)' },
+                { value: '1', label: 'Video / Motion Graphics (영상/모션그래픽)' },
+                { value: '2', label: 'Graphic Design (그래픽 디자인)' },
+                { value: '3', label: 'Branding / Editing (브랜딩/편집)' },
+                { value: '4', label: 'UI/UX (UI/UX)' },
+                { value: '5', label: 'Illustration (일러스트레이션)' },
+                { value: '6', label: 'Digital Art (디지털 아트)' },
+                { value: '7', label: 'Character Design (캐릭터 디자인)' },
+                { value: '8', label: 'Product Package Design (제품/패키지 디자인)' },
+                { value: '9', label: 'Photography (포토그래피)' },
+                { value: '10', label: 'Typography (타이포그래피)' },
+                { value: '11', label: 'Crafts (공예)' },
+                { value: '12', label: 'Fine Art (파인아트)' },
+            ],
+            default: 'all',
+        },
+        order: {
+            description: 'Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default',
+            options: [
+                { value: 'pick', label: 'Notefolio Pick' },
+                { value: 'published', label: 'Newest' },
+                { value: 'like', label: 'Like' },
+            ],
+            default: 'pick',
+        },
+        time: {
+            description: 'Time',
+            options: [
+                { value: 'all', label: 'All the time' },
+                { value: 'one-day', label: 'Latest 24 hours' },
+                { value: 'week', label: 'Latest week' },
+                { value: 'month', label: 'Latest month' },
+                { value: 'three-month', label: 'Latest 3 months' },
+            ],
+            default: 'all',
+        },
         query: 'Keyword, empty by default',
     },
     features: {
