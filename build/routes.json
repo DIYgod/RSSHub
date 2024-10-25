@@ -73812,12 +73812,13 @@
         },
         "radar": [
           {
+            "title": "当前作者文章",
             "source": [
-              "new.qq.com/omn/author/:mid"
+              "news.qq.com/omn/author/:mid"
             ]
           }
         ],
-        "name": "更新",
+        "name": "作者",
         "maintainers": [
           "LogicJake",
           "miles170"

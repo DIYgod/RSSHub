@@ -22402,15 +22402,17 @@
         "target": "/qq/fact"
       }
     ],
-    "new": [
+    "news": [
       {
-        "title": "更新",
+        "title": "当前作者文章",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/omn/author/:mid"
         ],
         "target": "/tencent/news/author/:mid"
-      },
+      }
+    ],
+    "new": [
       {
         "title": "Unknown",
         "docs": "https://docs.rsshub.app/routes/programming",
