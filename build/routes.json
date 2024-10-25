@@ -56846,6 +56846,48 @@
     "name": "OpenAI",
     "url": "openai.com"
   },
+  "openrice": {
+    "routes": {
+      "/:lang/hongkong/offers": {
+        "path": "/:lang/hongkong/offers",
+        "maintainers": [
+          "after9"
+        ],
+        "categories": [
+          "shopping"
+        ],
+        "example": "/openrice/zh/hongkong/offers",
+        "parameters": {
+          "lang": "语言，缺省为 zh"
+        },
+        "name": "香港餐廳精選優惠券",
+        "description": "\n  | 简体 | 繁體 | EN |\n  | ----- | ------ | ----- |\n  | zh-cn | zh | en |\n  ",
+        "location": "offers.ts"
+      },
+      "/:lang/hongkong/promos": {
+        "path": "/:lang/hongkong/promos",
+        "maintainers": [
+          "after9"
+        ],
+        "categories": [
+          "shopping"
+        ],
+        "example": "/openrice/zh/hongkong/promos",
+        "parameters": {
+          "lang": "语言，缺省为 zh"
+        },
+        "name": "香港餐厅滋讯",
+        "description": "\n  | 简体 | 繁體 | EN |\n  | ----- | ------ | ----- |\n  | zh-cn | zh | en |\n  ",
+        "location": "promos.ts"
+      }
+    },
+    "name": "Openrice開飯喇",
+    "url": "www.openrice.com",
+    "categories": [
+      "shopping"
+    ],
+    "description": "美食網站Openrice相关資訊"
+  },
   "openwrt": {
     "routes": {
       "/releases/:brand/:model": {

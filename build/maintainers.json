@@ -4857,6 +4857,12 @@
   "/openai/research": [
     "yuguorui"
   ],
+  "/openrice/:lang/hongkong/offers": [
+    "after9"
+  ],
+  "/openrice/:lang/hongkong/promos": [
+    "after9"
+  ],
   "/openwrt/releases/:brand/:model": [],
   "/orcid/:id": [
     "OrangeEd1t"
