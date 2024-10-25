@@ -5096,10 +5096,12 @@
       "/news": {
         "path": "/news",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
         "example": "/ainvest/news",
         "parameters": {},
+        "view": 0,
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -7269,8 +7271,10 @@
       "/gushitong/index": {
         "path": "/gushitong/index",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 5,
         "example": "/baidu/gushitong/index",
         "parameters": {},
         "features": {
@@ -8456,8 +8460,10 @@
       "/collections": {
         "path": "/collections",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/bigquant/collections",
         "parameters": {},
         "features": {
@@ -9714,8 +9720,10 @@
       "/announcement/:type": {
         "path": "/announcement/:type",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/binance/announcement/new-cryptocurrency-listing",
         "parameters": {
           "type": {
@@ -9758,7 +9766,7 @@
           }
         },
         "name": "Announcement",
-        "description": "\nType category\n\n - new-cryptocurrency-listing => New Cryptocurrency Listing \n - latest-binance-news        => Latest Binance News        \n - latest-activities          => Latest Activities          \n - new-fiat-listings          => New Fiat Listings          \n - api-updates                => API Updates                \n - crypto-airdrop             => Crypto Airdrop             \n - wallet-maintenance-updates => Wallet Maintenance Updates \n - delisting                  => Delisting                  \n",
+        "description": "\nType category\n\n - new-cryptocurrency-listing => New Cryptocurrency Listing\n - latest-binance-news        => Latest Binance News\n - latest-activities          => Latest Activities\n - new-fiat-listings          => New Fiat Listings\n - api-updates                => API Updates\n - crypto-airdrop             => Crypto Airdrop\n - wallet-maintenance-updates => Wallet Maintenance Updates\n - delisting                  => Delisting\n",
         "maintainers": [
           "enpitsulin"
         ],
@@ -10142,8 +10150,10 @@
       "/announcement/:type/:lang?": {
         "path": "/announcement/:type/:lang?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/bitget/announcement/all/zh-CN",
         "parameters": {
           "type": {
@@ -10791,8 +10801,10 @@
       "/authors/:id/:slug/:source?": {
         "path": "/authors/:id/:slug/:source?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine",
         "parameters": {
           "id": "Author ID, can be found in URL",
@@ -10825,11 +10837,65 @@
       "/:site?": {
         "path": "/:site?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/bloomberg/bbiz",
         "parameters": {
-          "site": "Site ID, can be found below"
+          "site": {
+            "description": "Site ID, can be found below",
+            "options": [
+              {
+                "value": "/",
+                "label": "News"
+              },
+              {
+                "value": "bpol",
+                "label": "Politics"
+              },
+              {
+                "value": "bbiz",
+                "label": "Business"
+              },
+              {
+                "value": "markets",
+                "label": "Markets"
+              },
+              {
+                "value": "technology",
+                "label": "Technology"
+              },
+              {
+                "value": "green",
+                "label": "Green"
+              },
+              {
+                "value": "wealth",
+                "label": "Wealth"
+              },
+              {
+                "value": "pursuits",
+                "label": "Pursuits"
+              },
+              {
+                "value": "bview",
+                "label": "Opinion"
+              },
+              {
+                "value": "equality",
+                "label": "Equality"
+              },
+              {
+                "value": "businessweek",
+                "label": "Businessweek"
+              },
+              {
+                "value": "citylab",
+                "label": "CityLab"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -22830,11 +22896,37 @@
       "/report/:category": {
         "path": "/report/:category",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/eastmoney/report/strategyreport",
         "parameters": {
-          "category": "研报类型"
+          "category": {
+            "description": "研报类型",
+            "options": [
+              {
+                "value": "strategyreport",
+                "label": "策略报告"
+              },
+              {
+                "value": "macresearch",
+                "label": "宏观研究"
+              },
+              {
+                "value": "brokerreport",
+                "label": "券商晨报"
+              },
+              {
+                "value": "industry",
+                "label": "行业研报"
+              },
+              {
+                "value": "stock",
+                "label": "个股研报"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -22861,8 +22953,10 @@
       "/search/:keyword": {
         "path": "/search/:keyword",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/eastmoney/search/web3",
         "parameters": {
           "keyword": "关键词，可以设置为自己需要检索的关键词"
@@ -22884,8 +22978,10 @@
       "/ttjj/user/:uid": {
         "path": "/ttjj/user/:uid",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 1,
         "example": "/eastmoney/ttjj/user/6551094298949188",
         "parameters": {
           "uid": "用户id, 可以通过天天基金App分享用户主页到浏览器，在相应的URL中找到"
@@ -24508,8 +24604,10 @@
       "/express-news": {
         "path": "/express-news",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/fastbull/express-news",
         "parameters": {},
         "features": {
@@ -24541,8 +24639,10 @@
           "/"
         ],
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/fastbull/news",
         "parameters": {},
         "features": {
@@ -24574,8 +24674,10 @@
           "/"
         ],
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/fastbull/news",
         "parameters": {},
         "features": {
@@ -24976,11 +25078,25 @@
       "/:category?": {
         "path": "/:category?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/finviz",
         "parameters": {
-          "category": "Category, see below, News by default"
+          "category": {
+            "description": "Category, see below, News by default",
+            "options": [
+              {
+                "value": "news",
+                "label": "news"
+              },
+              {
+                "value": "blogs",
+                "label": "blogs"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -25402,12 +25518,76 @@
       "/:categoryId?/:lang?": {
         "path": "/:categoryId?/:lang?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/followin",
         "parameters": {
-          "categoryId": "Category ID, see table below, `1` by default",
-          "lang": "Language, see table below, `en` by default"
+          "categoryId": {
+            "description": "Category ID",
+            "options": [
+              {
+                "value": "1",
+                "label": "For You"
+              },
+              {
+                "value": "9",
+                "label": "Market"
+              },
+              {
+                "value": "13",
+                "label": "Meme"
+              },
+              {
+                "value": "14",
+                "label": "BRC20"
+              },
+              {
+                "value": "3",
+                "label": "NFT"
+              },
+              {
+                "value": "5",
+                "label": "Thread"
+              },
+              {
+                "value": "6",
+                "label": "In-depth"
+              },
+              {
+                "value": "8",
+                "label": "Tutorials"
+              },
+              {
+                "value": "11",
+                "label": "Videos"
+              }
+            ],
+            "default": "1"
+          },
+          "lang": {
+            "description": "Language",
+            "options": [
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "zh-Hans",
+                "label": "简体中文"
+              },
+              {
+                "value": "zh-Hant",
+                "label": "繁體中文"
+              },
+              {
+                "value": "vi",
+                "label": "Tiếng Việt"
+              }
+            ],
+            "default": "en"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -25459,11 +25639,34 @@
       "/news/:lang?": {
         "path": "/news/:lang?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/followin/news",
         "parameters": {
-          "lang": "Language, see table above, `en` by default"
+          "lang": {
+            "description": "Language",
+            "options": [
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "zh-Hans",
+                "label": "简体中文"
+              },
+              {
+                "value": "zh-Hant",
+                "label": "繁體中文"
+              },
+              {
+                "value": "vi",
+                "label": "Tiếng Việt"
+              }
+            ],
+            "default": "en"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -26268,8 +26471,10 @@
       "/kx": {
         "path": "/kx",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 5,
         "example": "/fx678/kx",
         "parameters": {},
         "features": {
@@ -27168,11 +27373,37 @@
       "/home/:tag?": {
         "path": "/home/:tag?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/gelonghui/home",
         "parameters": {
-          "tag": "分类标签，见下表，默认为 `web_home_page`"
+          "tag": {
+            "description": "分类标签，见下表，默认为 `web_home_page`",
+            "options": [
+              {
+                "value": "web_home_page",
+                "label": "推荐"
+              },
+              {
+                "value": "stock",
+                "label": "股票"
+              },
+              {
+                "value": "fund",
+                "label": "基金"
+              },
+              {
+                "value": "new_stock",
+                "label": "新股"
+              },
+              {
+                "value": "research",
+                "label": "研报"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -27192,11 +27423,25 @@
       "/hot-article/:type?": {
         "path": "/hot-article/:type?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/gelonghui/hot-article",
         "parameters": {
-          "type": "`day` 为日排行，`week` 为周排行，默认为 `day`"
+          "type": {
+            "description": "`day` 为日排行，`week` 为周排行，默认为 `day`",
+            "options": [
+              {
+                "value": "day",
+                "label": "日排行"
+              },
+              {
+                "value": "week",
+                "label": "周排行"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -27215,15 +27460,19 @@
           }
         ],
         "name": "最热文章",
-        "maintainers": [],
+        "maintainers": [
+          "nczitzk"
+        ],
         "url": "gelonghui.com/",
         "location": "hot-article.ts"
       },
       "/keyword/:keyword": {
         "path": "/keyword/:keyword",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/gelonghui/keyword/早报",
         "parameters": {
           "keyword": "搜索关键字"
@@ -27245,8 +27494,10 @@
       "/live": {
         "path": "/live",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/gelonghui/live",
         "parameters": {},
         "features": {
@@ -27273,8 +27524,10 @@
       "/subject/:id": {
         "path": "/subject/:id",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/gelonghui/subject/4",
         "parameters": {
           "id": "主题编号，可在主题页 URL 中找到"
@@ -27303,8 +27556,10 @@
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/gelonghui/user/5273",
         "parameters": {
           "id": "用户编号，可在用户页 URL 中找到"
@@ -41825,8 +42080,10 @@
       "/:important?": {
         "path": "/:important?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 5,
         "example": "/jin10",
         "parameters": {
           "important": "只看重要，任意值开启，留空关闭"
@@ -41857,8 +42114,10 @@
       "/topic/:id": {
         "path": "/topic/:id",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/jin10/topic/396",
         "parameters": {
           "id": "N"
@@ -41974,11 +42233,42 @@
       "/lives/:category?": {
         "path": "/lives/:category?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 5,
         "example": "/jinse/lives",
         "parameters": {
-          "category": "分类，见下表，默认为全部"
+          "category": {
+            "description": "分类",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "1",
+                "label": "精选"
+              },
+              {
+                "value": "2",
+                "label": "政策"
+              },
+              {
+                "value": "3",
+                "label": "数据"
+              },
+              {
+                "value": "4",
+                "label": "NFT"
+              },
+              {
+                "value": "5",
+                "label": "项目"
+              }
+            ],
+            "default": "0"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -41998,11 +42288,74 @@
       "/timeline/:category?": {
         "path": "/timeline/:category?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/jinse/timeline",
         "parameters": {
-          "category": "分类，见下表，默认为头条"
+          "category": {
+            "description": "分类",
+            "options": [
+              {
+                "value": "头条",
+                "label": "头条"
+              },
+              {
+                "value": "独家",
+                "label": "独家"
+              },
+              {
+                "value": "铭文",
+                "label": "铭文"
+              },
+              {
+                "value": "产业",
+                "label": "产业"
+              },
+              {
+                "value": "项目",
+                "label": "项目"
+              },
+              {
+                "value": "政策",
+                "label": "政策"
+              },
+              {
+                "value": "AI",
+                "label": "AI"
+              },
+              {
+                "value": "Web 3.0",
+                "label": "Web 3.0"
+              },
+              {
+                "value": "以太坊 2.0",
+                "label": "以太坊 2.0"
+              },
+              {
+                "value": "DeFi",
+                "label": "DeFi"
+              },
+              {
+                "value": "Layer2",
+                "label": "Layer2"
+              },
+              {
+                "value": "NFT",
+                "label": "NFT"
+              },
+              {
+                "value": "DAO",
+                "label": "DAO"
+              },
+              {
+                "value": "百科",
+                "label": "百科"
+              }
+            ],
+            "default": "头条"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -42069,6 +42422,11 @@
     "routes": {
       "/community": {
         "path": "/community",
+        "categories": [
+          "finance",
+          "popular"
+        ],
+        "view": 0,
         "example": "/jiuyangongshe/community",
         "maintainers": [
           "TonyRL"
@@ -44134,8 +44492,10 @@
       "/personal/:id": {
         "path": "/personal/:id",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/laohu8/personal/3527667596890271",
         "parameters": {
           "id": "用户 ID，见网址链接"
@@ -46860,11 +47220,90 @@
       "/cn/:category?": {
         "path": "/cn/:category?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/mckinsey/cn",
         "parameters": {
-          "category": "分类，见下表，默认为全部"
+          "category": {
+            "description": "分类",
+            "options": [
+              {
+                "value": "2",
+                "label": "汽车"
+              },
+              {
+                "value": "3",
+                "label": "金融服务"
+              },
+              {
+                "value": "4",
+                "label": "消费者"
+              },
+              {
+                "value": "5",
+                "label": "医药"
+              },
+              {
+                "value": "7",
+                "label": "数字化"
+              },
+              {
+                "value": "8",
+                "label": "制造业"
+              },
+              {
+                "value": "9",
+                "label": "私募"
+              },
+              {
+                "value": "10",
+                "label": "技术，媒体与通信"
+              },
+              {
+                "value": "12",
+                "label": "城市化与可持续发展"
+              },
+              {
+                "value": "13",
+                "label": "创新"
+              },
+              {
+                "value": "16",
+                "label": "人才与领导力"
+              },
+              {
+                "value": "18",
+                "label": "宏观经济"
+              },
+              {
+                "value": "19",
+                "label": "麦肯锡全球研究院"
+              },
+              {
+                "value": "25",
+                "label": "洞见"
+              },
+              {
+                "value": "37",
+                "label": "麦肯锡季刊"
+              },
+              {
+                "value": "41",
+                "label": "资本项目和基础设施"
+              },
+              {
+                "value": "42",
+                "label": "旅游、运输和物流"
+              },
+              {
+                "value": "45",
+                "label": "全球基础材料"
+              }
+            ],
+            "default": "25"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -70676,11 +71115,146 @@
       "/:id?": {
         "path": "/:id?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/stcn/yw",
         "parameters": {
-          "id": "栏目 id，见下表，默认为要闻"
+          "id": {
+            "description": "栏目 id",
+            "options": [
+              {
+                "value": "kx",
+                "label": "快讯"
+              },
+              {
+                "value": "yw",
+                "label": "要闻"
+              },
+              {
+                "value": "gs",
+                "label": "股市"
+              },
+              {
+                "value": "company",
+                "label": "公司"
+              },
+              {
+                "value": "data",
+                "label": "数据"
+              },
+              {
+                "value": "fund",
+                "label": "基金"
+              },
+              {
+                "value": "finance",
+                "label": "金融"
+              },
+              {
+                "value": "comment",
+                "label": "评论"
+              },
+              {
+                "value": "cj",
+                "label": "产经"
+              },
+              {
+                "value": "ct",
+                "label": "创投"
+              },
+              {
+                "value": "kcb",
+                "label": "科创板"
+              },
+              {
+                "value": "xsb",
+                "label": "新三板"
+              },
+              {
+                "value": "tj",
+                "label": "投教"
+              },
+              {
+                "value": "zk",
+                "label": "ESG"
+              },
+              {
+                "value": "gd",
+                "label": "滚动"
+              },
+              {
+                "value": "gsyl",
+                "label": "股市一览"
+              },
+              {
+                "value": "djjd",
+                "label": "独家解读"
+              },
+              {
+                "value": "gsxw",
+                "label": "公司新闻"
+              },
+              {
+                "value": "gsdt",
+                "label": "公司动态"
+              },
+              {
+                "value": "djsj",
+                "label": "独家数据"
+              },
+              {
+                "value": "kd",
+                "label": "看点数据"
+              },
+              {
+                "value": "zj",
+                "label": "资金流向"
+              },
+              {
+                "value": "sj_kcb",
+                "label": "科创板"
+              },
+              {
+                "value": "hq",
+                "label": "行情总貌"
+              },
+              {
+                "value": "zl",
+                "label": "专栏"
+              },
+              {
+                "value": "author",
+                "label": "作者"
+              },
+              {
+                "value": "cjhy",
+                "label": "行业"
+              },
+              {
+                "value": "cjqc",
+                "label": "汽车"
+              },
+              {
+                "value": "tjkt",
+                "label": "投教课堂"
+              },
+              {
+                "value": "zczs",
+                "label": "政策知识"
+              },
+              {
+                "value": "tjdt",
+                "label": "投教动态"
+              },
+              {
+                "value": "zthd",
+                "label": "专题活动"
+              }
+            ],
+            "default": "yw"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -70859,8 +71433,10 @@
       "/daily-updates/news": {
         "path": "/daily-updates/news",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 5,
         "example": "/stockedge/daily-updates/news",
         "parameters": {},
         "features": {
@@ -72934,8 +73510,10 @@
       "/express": {
         "path": "/express",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/techflowpost/express",
         "radar": [
           {
@@ -72962,6 +73540,11 @@
           }
         ],
         "name": "首页",
+        "categories": [
+          "finance",
+          "popular"
+        ],
+        "view": 0,
         "maintainers": [
           "nczitzk"
         ],
@@ -73618,12 +74201,48 @@
       "/:channel?/:original?": {
         "path": "/:channel?/:original?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/theblockbeats/newsflash",
         "parameters": {
-          "channel": "类型，见下表，默认为快讯",
-          "original": "文章类型，仅 `channel` 为 `article` 时有效，见下表，留空为全部"
+          "channel": {
+            "description": "类型",
+            "options": [
+              {
+                "value": "newsflash",
+                "label": "快讯"
+              },
+              {
+                "value": "article",
+                "label": "文章"
+              }
+            ],
+            "default": "newsflash"
+          },
+          "original": {
+            "description": "文章类型，仅 `channel` 为 `article` 时有效",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "1",
+                "label": "深度"
+              },
+              {
+                "value": "2",
+                "label": "精选"
+              },
+              {
+                "value": "3",
+                "label": "热点追踪"
+              }
+            ],
+            "default": "0"
+          }
         },
         "name": "新闻快讯",
         "maintainers": [
@@ -84551,11 +85170,46 @@
       "/materials/:id?": {
         "path": "/materials/:id?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/youzhiyouxing/materials",
         "parameters": {
-          "id": "分类，见下表，默认为全部"
+          "id": {
+            "description": "分类",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "4",
+                "label": "知行小酒馆"
+              },
+              {
+                "value": "2",
+                "label": "知行黑板报"
+              },
+              {
+                "value": "10",
+                "label": "无人知晓"
+              },
+              {
+                "value": "1",
+                "label": "孟岩专栏"
+              },
+              {
+                "value": "3",
+                "label": "知行读书会"
+              },
+              {
+                "value": "11",
+                "label": "你好，同路人"
+              }
+            ],
+            "default": "0"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -86095,8 +86749,10 @@
       "/:id?/:category?": {
         "path": "/:id?/:category?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
+        "view": 0,
         "example": "/zhitongcaijing",
         "parameters": {
           "id": "栏目 id，可在对应栏目页 URL 中找到，默认为 recommend，即推荐",

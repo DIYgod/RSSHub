@@ -2375,7 +2375,9 @@
   "/gelonghui/home/:tag?": [
     "TonyRL"
   ],
-  "/gelonghui/hot-article/:type?": [],
+  "/gelonghui/hot-article/:type?": [
+    "nczitzk"
+  ],
   "/gelonghui/keyword/:keyword": [
     "nczitzk"
   ],
