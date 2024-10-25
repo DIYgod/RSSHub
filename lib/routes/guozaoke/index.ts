@@ -1,9 +1,10 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
-import * as cheerio from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+import { load } from 'cheerio';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import logger from '@/utils/logger';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '',
@@ -28,38 +29,29 @@ interface Item {
     title: string;
     link: string;
     author: string;
-    time: Date;
+    time: string;
 }
 
 interface ProcessedItem {
     title: string;
     link: string;
-    pubDate: Date;
+    pubDate: string;
     description: string;
     author: string;
 }
 
-function convertToDate(relativeTime: string) {
-    const minutesAgoMatch = relativeTime.match(/\d+/);
-    const minutesAgo = minutesAgoMatch ? Number.parseInt(minutesAgoMatch[0], 10) : 0;
-    const now: number = Date.now();
-    const pastDate = new Date(now - minutesAgo * 60 * 1000); // Subtract minutes in milliseconds
-    return pastDate;
-}
-
 async function getContent(link) {
     const url = `https://www.guozaoke.com${link}`;
-    const cookie = config.guozaoke.cookies;
     const res = await got({
         method: 'get',
         url,
         headers: {
-            Cookie: cookie,
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36',
+            Cookie: config.guozaoke.cookies,
+            'User-Agent': config.ua,
         },
     });
 
-    const $ = cheerio.load(res.data);
+    const $ = load(res.data);
     let content = $('div.ui-content').html();
     content = content ? content.trim() : '';
     const comments = $('.reply-item').map((i, el) => {
@@ -81,22 +73,24 @@ async function getContent(link) {
 }
 
 async function fetchContent(item: Item): Promise<ProcessedItem | null> {
-    try {
-        const content = await getContent(item.link);
-        if (content === undefined || content === '') {
-            return null; // 如果内容为空，则返回null
+    return await cache.tryGet(item.link, async () => {
+        try {
+            const content = await getContent(item.link);
+            if (content === undefined || content === '') {
+                return null; // 如果内容为空，则返回null
+            }
+            return {
+                title: item.title,
+                link: item.link,
+                pubDate: parseDate(item.time),
+                description: content,
+                author: item.author,
+            };
+        } catch (error) {
+            logger.error(error);
+            return null; // 如果发生错误，则返回null
         }
-        return {
-            title: item.title,
-            link: item.link,
-            pubDate: parseDate(item.time),
-            description: content,
-            author: item.author,
-        };
-    } catch (error) {
-        logger.error(error);
-        return null; // 如果发生错误，则返回null
-    }
+    });
 }
 
 // 递归处理函数，每次处理一批项
@@ -132,32 +126,36 @@ function processItems(itemsToFetch: Item[]): Promise<ProcessedItem[]> {
 
 async function handler() {
     const url = `https://www.guozaoke.com/`;
-    const res = await got.get(url);
-    const $ = cheerio.load(res.body);
+    const res = await got({
+        method: 'get',
+        url,
+        headers: {
+            Cookie: config.guozaoke.cookies,
+            'User-Agent': config.ua,
+        },
+    });
+    const $ = load(res.data);
 
-    const list = $('div.topic-item');
-    const itemsToFetch: Item[] = [];
+    const list = $('div.topic-item').toArray();
     const maxItems = 20; // 最多取20个数据
 
-    for (const item of list) {
-        if (itemsToFetch.length >= maxItems) {
-            break;
-        }
-        const $item = $(item);
-        const title = $item.find('h3.title a').text();
-        const link = $item.find('h3.title a').attr('href');
-        const author = $item.find('span.username a').text();
-        const lastTouched = $item.find('span.last-touched').text();
-        const time = convertToDate(lastTouched);
-        if (link) {
-            itemsToFetch.push({ title, link, author, time });
-        }
-    }
+    const itemsToFetch: Item[] = list
+        .slice(0, maxItems)
+        .map((item) => {
+            const $item = $(item);
+            const title = $item.find('h3.title a').text();
+            const link = $item.find('h3.title a').attr('href');
+            const author = $item.find('span.username a').text();
+            const lastTouched = $item.find('span.last-touched').text();
+            const time = parseRelativeDate(lastTouched);
+            return link ? { title, link, author, time } : undefined;
+        })
+        .filter((item) => item !== undefined);
 
     const out = await processItems(itemsToFetch);
 
     return {
-        title: `过早客`,
+        title: '过早客',
         link: url,
         item: out,
     };

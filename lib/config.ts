@@ -151,6 +151,9 @@ export type Config = {
     google: {
         fontsApiKey?: string;
     };
+    guozaoke: {
+        cookies?: string;
+    };
     hefeng: {
         key?: string;
     };
@@ -347,9 +350,6 @@ export type Config = {
     };
     zsxq: {
         accessToken?: string;
-    };
-    guozaoke: {
-        cookies?: string;
     };
 };
 
@@ -552,6 +552,9 @@ const calculateValue = () => {
         google: {
             fontsApiKey: envs.GOOGLE_FONTS_API_KEY,
         },
+        guozaoke: {
+            cookies: envs.GUOZAOKE_COOKIES,
+        },
         hefeng: {
             // weather
             key: envs.HEFENG_KEY,
@@ -753,9 +756,6 @@ const calculateValue = () => {
         },
         zsxq: {
             accessToken: envs.ZSXQ_ACCESS_TOKEN,
-        },
-        guozaoke: {
-            cookies: envs.GUOZAOKE_COOKIES,
         },
     };
 
