@@ -60,7 +60,7 @@ async function handler(ctx) {
                 } else if (!link.startsWith('http')) {
                     link = rootUrl.slice(0, -1) + link;
                 }
-                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text().slice(1, -1)), +8);
+                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), +8);
 
                 return {
                     title,
