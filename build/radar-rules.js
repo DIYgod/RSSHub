@@ -9753,7 +9753,7 @@
         source:[ "/5926/list.htm" ],
         target:"/ouc/yjs" } ] },
   "oup.com":{ _name:"Oxford University Press",
-    academic:[ { title:"Oxford Academic",
+    academic:[ { title:"Oxford Academic - Journal",
         docs:"https://docs.rsshub.app/routes/journal",
         source:[ "/",
           "/:name/issue" ],

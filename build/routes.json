@@ -58286,10 +58286,11 @@
             ]
           }
         ],
-        "name": "Oxford Academic",
-        "maintainers": [],
+        "name": "Oxford Academic - Journal",
+        "maintainers": [
+          "Fatpandac"
+        ],
         "url": "academic.oup.com/",
-        "description": "#### Journal {#oxford-university-press-oxford-academic-journal}",
         "location": "index.ts"
       }
     },
