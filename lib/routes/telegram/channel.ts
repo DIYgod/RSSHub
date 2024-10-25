@@ -2,7 +2,7 @@ import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 import cache from '@/utils/cache';
 import { config } from '@/config';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -106,7 +106,7 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
         },
     ],
     name: 'Channel',
-    maintainers: ['DIYgod', 'Rongronggg9'],
+    maintainers: ['DIYgod', 'Rongronggg9', 'pseudoyu'],
     handler,
     description: `
   :::tip
@@ -154,19 +154,20 @@ async function handler(ctx) {
         searchQuery = fallback(undefined, routeParams.searchQuery, null);
     }
 
+    // TODO: some channels are not available in t.me/s/, need extra handling logics
     const resourceUrl = searchQuery ? `https://t.me/s/${username}?q=${encodeURIComponent(searchQuery)}` : `https://t.me/s/${username}`;
 
     const data = await cache.tryGet(
         resourceUrl,
         async () => {
-            const _r = await got(resourceUrl);
-            return _r.data;
+            const _r = await ofetch(resourceUrl);
+            return _r;
         },
         config.cache.routeExpire,
         false
     );
 
-    const $ = load(data);
+    const $ = load(data as string);
 
     /*
      * Since 2024/4/20, t.me/s/ mistakenly have every '&' in **hyperlinks** replaced by '&amp;'.
