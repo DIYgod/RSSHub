@@ -123,7 +123,7 @@ async function handler(ctx) {
                     title,
                     category,
                     description: renderDescription({
-                        imglink: imglink,
+                        imglink,
                     }),
                 };
             });
