@@ -33,7 +33,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const { count, include_rts, only_medias } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const { count, include_rts, only_media } = utils.parseRouteParams(ctx.req.param('routeParams'));
     const params = count ? { count } : {};
 
     await api.init();
@@ -41,7 +41,7 @@ async function handler(ctx) {
     if (!include_rts) {
         data = utils.excludeRetweet(data);
     }
-    if (only_medias) {
+    if (only_media) {
         data = utils.keepOnlyMedia(data);
     }
 
