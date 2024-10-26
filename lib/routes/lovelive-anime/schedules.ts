@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import path from 'node:path';
 import { art } from '@/utils/render';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/scheduleDesc.art'), desc);
@@ -33,8 +33,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const serie = ctx.req.param('serie');
-    const category = ctx.req.param('category');
+    const { serie = 'all', category = 'all' } = ctx.req.param();
     const rootUrl = 'https://www.lovelive-anime.jp/common/api/calendar_list.php';
     const nowTime = dayjs();
     const dataPara = {
@@ -47,9 +46,9 @@ async function handler(ctx) {
     if (category && 'all' !== category) {
         dataPara.category = [category];
     }
-    const response = await got(`${rootUrl}?site=jp&ip=lovelive&data=${JSON.stringify(dataPara)}`);
+    const response = await ofetch(`${rootUrl}?site=jp&ip=lovelive&data=${encodeURIComponent(JSON.stringify(dataPara))}`);
 
-    const items = response.data.data.schedule_list.map((item) => {
+    const items = response.data.schedule_list.map((item) => {
         const link = item.url.select_url;
         const title = item.title;
         const category = item.categories.name;
