@@ -497,13 +497,7 @@ export const excludeRetweet = function (tweets) {
 };
 
 export const keepOnlyMedia = function (tweets) {
-    const excluded = [];
-    for (const t of tweets) {
-        if (!t.extended_entities || !t.extended_entities.media) {
-            continue;
-        }
-        excluded.push(t);
-    }
+    const excluded = tweets.filter((t) => t.extended_entities && t.extended_entities.media);
     return excluded;
 };
 
