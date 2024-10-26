@@ -59,7 +59,7 @@ async function handler(ctx) {
         hasunosora: 'news/',
         musical: 'topics.php',
     };
-    const baseUrl = `${rootUrl}/${topics_table[abbr]}`;
+    const baseUrl = `${rootUrl}/${topicsTable[abbr]}`;
     const abbrDetail = {
         otonokizaka: 'ラブライブ！',
         uranohoshi: 'サンシャイン!!',
