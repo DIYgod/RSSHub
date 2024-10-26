@@ -76,67 +76,61 @@ async function handler(ctx) {
     const categoryName = 'uranohoshi' === abbr ? $('div.llbox > p').text() : $('div.category_title > h2').text();
 
     const newsList = 'hasunosora' === abbr ? $('.list__content > ul > li').toArray() : $('ul.listbox > li').toArray();
-    let items: any[];
-    // hasunosora News Handler
-    const hasunosoraNewsHandler = (item: any) => {
-        item = $(item);
-        const link = `${rootUrl}/news/${item.find('a').attr('href')}`;
-        const pubDate = timezone(parseDate(item.find('.list--date').text(), 'YYYY.MM.DD'), +9);
-        const title = item.find('.list--text').text();
-        const category = item.find('.list--category').text();
-        const imglink = ''
-
-        return {
-            link,
-            pubDate,
-            title,
-            category,
-            description: renderDescription({
-                title,
-                imglink,
-            }),
-        };
-    };
-
-    // default News Handler
-    const defaultNewsHandler = (item: any) => {
-        item = $(item);
-        let link: string;
-        switch (abbr) {
-            case 'yuigaoka':
-                link = `${baseUrl}${item.find('div > a').attr('href')}`;
-                break;
-            default:
-                link = `${rootUrl}/${item.find('div > a').attr('href')}`;
-                break;
-        }
-        const pubDate = timezone(parseDate(item.find('a > p.date').text(), 'YYYY/MM/DD'), +9);
-        const title = item.find('a > p.title').text();
-        const category = item.find('a > p.category').text();
-        const imglink = `${rootUrl}/${item
-            .find('a > img')
-            .attr('style')
-            .match(/background-image:url\((.*)\)/)[1]
-            }`;
-
-        return {
-            link,
-            pubDate,
-            title,
-            category,
-            description: renderDescription({
-                title,
-                imglink,
-            }),
-        };
-    };
+    let items;
 
     switch (abbr) {
         case 'hasunosora':
-            items = newsList.map(hasunosoraNewsHandler);
+            items = newsList.map((item) => {
+                item = $(item);
+                const link = `${rootUrl}/news/${item.find('a').attr('href')}`;
+                const pubDate = timezone(parseDate(item.find('.list--date').text(), 'YYYY.MM.DD'), +9);
+                const title = item.find('.list--text').text();
+                const category = item.find('.list--category').text();
+
+                return {
+                    link,
+                    pubDate,
+                    title,
+                    category,
+                    description: renderDescription({
+                        title,
+                        '',
+                    }),
+                };
+            });
             break;
         default:
-            items = newsList.map(defaultNewsHandler);
+            items = newsList.map((item) => {
+                item = $(item);
+                let link: string;
+                switch (abbr) {
+                    case 'yuigaoka':
+                        link = `${baseUrl}${item.find('div > a').attr('href')}`;
+                        break;
+                    default:
+                        link = `${rootUrl}/${item.find('div > a').attr('href')}`;
+                        break;
+                }
+                const pubDate = timezone(parseDate(item.find('a > p.date').text(), 'YYYY/MM/DD'), +9);
+                const title = item.find('a > p.title').text();
+                const category = item.find('a > p.category').text();
+                const imglink = `${rootUrl}/${item
+                    .find('a > img')
+                    .attr('style')
+                    .match(/background-image:url\((.*)\)/)[1]
+                    }`;
+
+                return {
+                    link,
+                    pubDate,
+                    title,
+                    category,
+                    description: renderDescription({
+                        title,
+                        imglink,
+                    }),
+                };
+            });
             break;
     }
 
