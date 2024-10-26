@@ -76,6 +76,7 @@ async function handler(ctx) {
     }));
 
     return {
+        allowEmpty: true,
         title: `Fur Affinity | ${folderName} of ${username}`,
         link: `https://www.furaffinity.net/${folder}/${username}`,
         description: `Fur Affinity ${folderName} of ${username}`,
