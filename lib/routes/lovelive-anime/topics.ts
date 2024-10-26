@@ -51,7 +51,7 @@ async function handler(ctx) {
             rootUrl = `https://www.lovelive-anime.jp/${abbr}`;
             break;
     }
-    const topics_table = {
+    const topicsTable = {
         otonokizaka: 'topics.php',
         uranohoshi: 'topics.php',
         nijigasaki: 'topics.php',
