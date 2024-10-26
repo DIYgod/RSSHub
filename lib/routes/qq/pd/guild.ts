@@ -3,6 +3,7 @@ import ofetch from '@/utils/ofetch';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Context } from 'hono';
 
+import { Feed } from './types';
 import { parseFeed } from './utils';
 import cache from '@/utils/cache';
 
@@ -81,7 +82,7 @@ async function handler(ctx: Context): Promise<Data> {
     const data = await ofetch(url, { method: 'POST', body, headers });
     const feeds = data.data?.vecFeed || [];
 
-    const items = feeds.map(async (feed) => {
+    const items = feeds.map(async (feed: Feed) => {
         let subId = sub;
         if (sub === 'hot') {
             // get real subId for hot feeds
@@ -111,7 +112,7 @@ async function handler(ctx: Context): Promise<Data> {
                 'x-qq-client-appid': '537246381',
             };
             const feedResponse = await ofetch(getFeedDetailUrl, { method: 'POST', body, headers });
-            const feedContent = feedResponse.data?.feed || {};
+            const feedContent: Feed = feedResponse.data?.feed || {};
             return {
                 title: feed.title?.contents[0]?.text_content?.text || feed.channelInfo?.guild_name || '',
                 link: feedLink,

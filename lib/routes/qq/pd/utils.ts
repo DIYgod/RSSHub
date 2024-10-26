@@ -1,23 +1,6 @@
 // Description: QQ PD utils
 
-// feed: feed info
-// - feed_type: 1-post, 2-article
-
-// feed.contents.contents: list of text content
-// - text_content.text: text content
-
-// feed.images: list of image info
-// - picId: image id
-// - picUrl: image url
-// - width: image width
-// - height: image height
-
-// feed.patternInfo: list of JSON string of pattern
-// - props.textAlignment: 0-left, 1-center, 2-right
-// - data.type: 1-text, 2-emoji, 5-link, 6-image, 9-newline
-// - data.props.fontWeight: 400-normal, 700-bold
-// - data.props.italic: false-normal, true-italic
-// - data.props.underline: false-normal, true-underline
+import { Feed, FeedImage, FeedPattern, FeedFontProps, FeedPatternData } from './types';
 
 const patternTypeMap = {
     1: 'text',
@@ -33,7 +16,10 @@ const textAlignmentMap = {
     2: 'right',
 };
 
-function parseText(text: string, props): string {
+function parseText(text: string, props: FeedFontProps | undefined): string {
+    if (props === undefined) {
+        return text;
+    }
     let style = '';
     if (props.fontWeight === 700) {
         style += 'font-weight: bold;';
@@ -50,7 +36,7 @@ function parseText(text: string, props): string {
     return `<span style="${style}">${text}</span>`;
 }
 
-function parseDataItem(item, texts: string[], images): string {
+function parseDataItem(item: FeedPatternData, texts: string[], images: { [id: string]: FeedImage }): string {
     let imageId = '';
     switch (patternTypeMap[item.type] || undefined) {
         case 'text':
@@ -61,19 +47,19 @@ function parseDataItem(item, texts: string[], images): string {
         case 'link':
             return `<a href="${item.href ?? '#'}" target="_blank">${item.desc ?? ''}</a>`;
         case 'image':
-            imageId = item.fileId || item.taskId;
+            imageId = item.fileId || item.taskId || '';
             return `<img src="${images[imageId].picUrl}" style="max-width: 100%; width: ${images[imageId].width}px;"><br />`;
         default:
             return '';
     }
 }
 
-function parseArticle(feed, texts: string[], images): string {
+function parseArticle(feed: Feed, texts: string[], images: { [id: string]: FeedImage }): string {
     let result = '';
     if (feed.patternInfo === undefined || feed.patternInfo === null || feed.patternInfo === '') {
         feed.patternInfo = '[]';
     }
-    const patterns = JSON.parse(feed.patternInfo);
+    const patterns: FeedPattern[] = JSON.parse(feed.patternInfo);
     for (const pattern of patterns) {
         if (pattern.props === undefined) {
             continue;
@@ -88,7 +74,7 @@ function parseArticle(feed, texts: string[], images): string {
     return result;
 }
 
-function parsePost(feed, texts: string[], images): string {
+function parsePost(feed: Feed, texts: string[], images: { [id: string]: FeedImage }): string {
     for (const content of feed.contents.contents) {
         if (content.text_content) {
             texts.push(content.text_content.text);
@@ -100,15 +86,15 @@ function parsePost(feed, texts: string[], images): string {
     }
     for (const image of Object.values(images)) {
         result += '<p style="text-align: center">';
-        result += `<img src="${(image as any).picUrl}" style="max-width: 100%; width: ${(image as any).width}px;">`;
+        result += `<img src="${image.picUrl}" style="max-width: 100%; width: ${image.width}px;">`;
         result += '</p>';
     }
     return result;
 }
 
-export function parseFeed(feed) {
+export function parseFeed(feed: Feed): string {
     const texts: string[] = [];
-    const images = {};
+    const images: { [id: string]: FeedImage } = {};
     for (const content of feed.contents.contents) {
         if (content.text_content) {
             texts.push(content.text_content.text);
@@ -116,6 +102,7 @@ export function parseFeed(feed) {
     }
     for (const image of feed.images) {
         images[image.picId] = {
+            picId: image.picId,
             picUrl: image.picUrl,
             width: image.width,
             height: image.height,
