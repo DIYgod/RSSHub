@@ -1,0 +1,84 @@
+import { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+export const route: Route = {
+    path: '/art/:folder/:username/:mode?',
+    name: '画廊',
+    url: 'furaffinity.net',
+    categories: ['other'],
+    example: '/furaffinity/art/fender/nsfw',
+    maintainers: ['SkyNetX007'],
+    parameters: {
+        username: '用户名',
+        folder: '图像文件夹, 选项为 gallery, scraps, favorites',
+        mode: '是否启用R18内容, 默认为 sfw, 选项为 sfw, nsfw',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['furaffinity.net/gallery/:username'],
+            target: '/gallery/:username',
+        },
+        {
+            source: ['furaffinity.net/scraps/:username'],
+            target: '/scraps/:username',
+        },
+        {
+            source: ['furaffinity.net/favorites/:username'],
+            target: '/favorites/:username',
+        },
+    ],
+    handler,
+};
+
+async function handler(ctx) {
+    const { username, folder = 'gallery', mode = 'sfw' } = ctx.req.param();
+    let url = `https://faexport.spangle.org.uk/user/${username}/${folder}.json?sfw=1&full=1`;
+    if (mode === 'nsfw') {
+        url = `https://faexport.spangle.org.uk/user/${username}/${folder}.json?full=1`;
+    }
+    const data = await ofetch(url, {
+        method: 'GET',
+        headers: {
+            Referer: 'https://faexport.spangle.org.uk/',
+        },
+    });
+
+    let folderName = 'Gallery';
+
+    switch (folder) {
+        case 'gallery':
+            folderName = 'Gallery';
+            break;
+        case 'scraps':
+            folderName = 'Scraps';
+            break;
+        case 'favorites':
+            folderName = 'Favorites';
+            break;
+        default:
+            folderName = 'Gallery';
+    }
+    const items = data.map((item) => ({
+        title: item.title,
+        link: item.link,
+        guid: item.id,
+        description: `<img src="${item.thumbnail}">`,
+        // 由于源API未提供日期，故无pubDate
+        author: item.name,
+    }));
+
+    return {
+        title: `Fur Affinity | ${folderName} of ${username}`,
+        link: `https://www.furaffinity.net/${folder}/${username}`,
+        description: `Fur Affinity ${folderName} of ${username}`,
+        item: items,
+    };
+}
