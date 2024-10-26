@@ -49,7 +49,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = 'rec', category = '所有' } = ctx.req.param();
-    const baseUrl = 'https://afdian.net';
+    const baseUrl = 'https://afdian.com';
     const link = `${baseUrl}/api/creator/list`;
     const res = await got(link, {
         searchParams: {
