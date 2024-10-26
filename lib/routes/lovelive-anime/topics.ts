@@ -92,10 +92,7 @@ async function handler(ctx) {
                     pubDate,
                     title,
                     category,
-                    description: renderDescription({
-                        title,
-                        ''
-                    }),
+                    description: title,
                 };
             });
             break;
@@ -126,8 +123,7 @@ async function handler(ctx) {
                     title,
                     category,
                     description: renderDescription({
-                        title,
-                        imglink,
+                        imglink: imglink,
                     }),
                 };
             });
