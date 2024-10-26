@@ -62413,6 +62413,41 @@
           "zhangxiang012"
         ],
         "location": "kg/user.ts"
+      },
+      "/pd/guild/:id/:sub?/:sort?": {
+        "path": [
+          "/pd/guild/:id/:sub?/:sort?"
+        ],
+        "categories": [
+          "bbs"
+        ],
+        "example": "/qq/pd/guild/qrp4pkq01d/650967831/created",
+        "parameters": {
+          "id": "频道号",
+          "sub": "子频道 ID，网页端 URL `subc` 参数的值，默认为 `hot`（全部）",
+          "sort": "排序方式，`hot`（热门），`created`（最新发布），`replied`（最新回复），默认为 `created`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "pd.qq.com/"
+            ]
+          }
+        ],
+        "name": "腾讯频道",
+        "maintainers": [
+          "mobyw"
+        ],
+        "url": "pd.qq.com/",
+        "location": "pd/guild.ts"
       }
     },
     "name": "腾讯网",

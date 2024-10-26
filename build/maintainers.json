@@ -5321,6 +5321,9 @@
   "/qq/kg/:userId": [
     "zhangxiang012"
   ],
+  "/qq/pd/guild/:id/:sub?/:sort?": [
+    "mobyw"
+  ],
   "/qq88/:category?": [
     "nczitzk"
   ],

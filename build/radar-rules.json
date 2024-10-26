@@ -22402,6 +22402,16 @@
         "target": "/qq/fact"
       }
     ],
+    "pd": [
+      {
+        "title": "腾讯频道",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/"
+        ],
+        "target": "/qq/pd/guild/:id/:sub?/:sort?"
+      }
+    ],
     "news": [
       {
         "title": "当前作者文章",
