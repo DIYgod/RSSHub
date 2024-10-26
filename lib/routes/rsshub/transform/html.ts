@@ -95,7 +95,7 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
                     // 补全绝对链接或相对链接
                     link = link.trim();
                     if (link && !link.startsWith('http')) {
-                        link = (new URL(link, url)).href;
+                        link = new URL(link, url).href;
                     }
 
                     const descEle = routeParams.get('itemDesc') ? item.find(routeParams.get('itemDesc')) : item;
