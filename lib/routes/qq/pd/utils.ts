@@ -33,7 +33,7 @@ const textAlignmentMap = {
     2: 'right',
 };
 
-function parseText(text: string, props: any): string {
+function parseText(text: string, props): string {
     let style = '';
     if (props.fontWeight === 700) {
         style += 'font-weight: bold;';
@@ -50,7 +50,7 @@ function parseText(text: string, props: any): string {
     return `<span style="${style}">${text}</span>`;
 }
 
-function parseDataItem(item: any, texts: string[], images: any): string {
+function parseDataItem(item, texts: string[], images): string {
     let imageId = '';
     switch (patternTypeMap[item.type] || undefined) {
         case 'text':
@@ -68,7 +68,7 @@ function parseDataItem(item: any, texts: string[], images: any): string {
     }
 }
 
-function parseArticle(feed: any, texts: string[], images: any): string {
+function parseArticle(feed, texts: string[], images): string {
     let result = '';
     if (feed.patternInfo === undefined || feed.patternInfo === null || feed.patternInfo === '') {
         feed.patternInfo = '[]';
@@ -88,7 +88,7 @@ function parseArticle(feed: any, texts: string[], images: any): string {
     return result;
 }
 
-function parsePost(feed: any, texts: string[], images: any): string {
+function parsePost(feed, texts: string[], images): string {
     for (const content of feed.contents.contents) {
         if (content.text_content) {
             texts.push(content.text_content.text);
@@ -106,7 +106,7 @@ function parsePost(feed: any, texts: string[], images: any): string {
     return result;
 }
 
-export function parseFeed(feed: any): any {
+export function parseFeed(feed) {
     const texts: string[] = [];
     const images = {};
     for (const content of feed.contents.contents) {
