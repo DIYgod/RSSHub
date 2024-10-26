@@ -18,7 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: returntocorp/semgrep
-    if: (github.triggering_actor != 'dependabot[bot]')
+    if: |
+      github.repository == 'DIYgod/RSSHub' &&
+      github.triggering_actor != 'dependabot[bot]
     permissions:
       security-events: write
     steps:
