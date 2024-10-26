@@ -22,7 +22,7 @@ const sortMap = {
 export const route: Route = {
     path: ['/pd/guild/:id/:sub?/:sort?'],
     categories: ['bbs'],
-    example: '/qq/pd/guild/42199801625142260/hot',
+    example: '/qq/pd/guild/qrp4pkq01d/650967831/created',
     parameters: {
         id: '频道号',
         sub: '子频道 ID，网页端 URL `subc` 参数的值，默认为 `hot`（全部）',
