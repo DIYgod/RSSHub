@@ -51,7 +51,7 @@ async function handler(ctx) {
         },
     });
 
-    let folderName = 'Gallery';
+    let folderName;
 
     switch (folder) {
         case 'gallery':
