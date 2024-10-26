@@ -40,9 +40,9 @@ type: '作品类型, 默认为全部, 选项为 art, flash, photo, music, story,
 
 async function handler(ctx) {
     const { query, mode = 'sfw', routeParams = 'order_by=relevancy' } = ctx.req.param();
-    let url = `https://faexport.spangle.org.uk/browse.json?sfw=1&full=1&q=${query}&${routeParams}`;
+    let url = `https://faexport.spangle.org.uk/search.json?sfw=1&full=1&q=${query}&${routeParams}`;
     if (mode === 'nsfw') {
-        url = `https://faexport.spangle.org.uk/browse.json?full=1&q=${query}&${routeParams}`;
+        url = `https://faexport.spangle.org.uk/search.json?full=1&q=${query}&${routeParams}`;
     }
 
     const data = await ofetch(url, {
