@@ -23,7 +23,7 @@
     "scripts": {
         "build": "tsx scripts/workflow/build-routes.ts",
         "build:docs": "tsx scripts/workflow/build-docs.ts",
-        "dev": "cross-env NODE_ENV=dev tsx watch --clear-screen=false lib/index.ts",
+        "dev": "cross-env NODE_ENV=dev tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production tsx watch --clear-screen=false lib/index.ts",
         "format": "prettier \"**/*.{ts,tsx,js,json}\" --write && eslint --cache --fix \"**/*.{ts,tsx,js,yml}\"",
         "format:check": "prettier \"**/*.{ts,tsx,js,json}\" --check && eslint --cache \"**/*.{ts,tsx,js,yml}\"",
@@ -54,11 +54,11 @@
         "@hono/zod-openapi": "0.16.4",
         "@notionhq/client": "2.2.15",
         "@opentelemetry/api": "1.9.0",
-        "@opentelemetry/exporter-prometheus": "0.53.0",
-        "@opentelemetry/exporter-trace-otlp-http": "0.53.0",
-        "@opentelemetry/resources": "1.26.0",
-        "@opentelemetry/sdk-metrics": "1.26.0",
-        "@opentelemetry/sdk-trace-base": "1.26.0",
+        "@opentelemetry/exporter-prometheus": "0.54.0",
+        "@opentelemetry/exporter-trace-otlp-http": "0.54.0",
+        "@opentelemetry/resources": "1.27.0",
+        "@opentelemetry/sdk-metrics": "1.27.0",
+        "@opentelemetry/sdk-trace-base": "1.27.0",
         "@opentelemetry/semantic-conventions": "1.27.0",
         "@postlight/parser": "2.2.3",
         "@rss3/sdk": "0.0.23",
@@ -123,11 +123,11 @@
         "telegram": "2.26.2",
         "tiny-async-pool": "2.1.0",
         "title": "3.5.3",
-        "tldts": "6.1.54",
+        "tldts": "6.1.55",
         "tosource": "2.0.0-alpha.3",
         "tough-cookie": "5.0.0",
         "tsx": "4.19.1",
-        "twitter-api-v2": "1.18.0",
+        "twitter-api-v2": "1.18.1",
         "undici": "6.20.1",
         "uuid": "10.0.0",
         "winston": "3.15.0",
@@ -192,7 +192,7 @@
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
-    "packageManager": "pnpm@9.12.0",
+    "packageManager": "pnpm@9.12.2",
     "engines": {
         "node": ">=22"
     }
