@@ -40,13 +40,16 @@ export const route: Route = {
 
 async function handler(ctx) {
     // For compatibility
-    const { count, include_rts } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const { count, include_rts, only_media } = utils.parseRouteParams(ctx.req.param('routeParams'));
     const params = count ? { count } : {};
 
     await api.init();
     let data = await api.getHomeTimeline('', params);
     if (!include_rts) {
         data = utils.excludeRetweet(data);
+    }
+    if (only_media) {
+        data = utils.keepOnlyMedia(data);
     }
 
     return {
