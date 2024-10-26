@@ -6,7 +6,7 @@ export const route: Route = {
     name: '画廊',
     url: 'furaffinity.net',
     categories: ['other'],
-    example: '/furaffinity/art/fender/nsfw',
+    example: '/furaffinity/art/gallery/fender/nsfw',
     maintainers: ['SkyNetX007'],
     parameters: {
         username: '用户名',
