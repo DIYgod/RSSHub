@@ -33,7 +33,7 @@ async function handler(ctx) {
         url = 'https://faexport.spangle.org.uk/browse.json';
     }
 
-    const data = await ofetch( url, {
+    const data = await ofetch(url, {
         method: 'GET',
         headers: {
             Referer: 'https://faexport.spangle.org.uk/',

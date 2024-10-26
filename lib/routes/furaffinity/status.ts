@@ -26,25 +26,26 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
-    let url = 'https://faexport.spangle.org.uk/status.json';
+async function handler() {
+    const url = 'https://faexport.spangle.org.uk/status.json';
 
-    const data = await ofetch( url, {
+    const data = await ofetch(url, {
         method: 'GET',
         headers: {
             Referer: 'https://faexport.spangle.org.uk/',
         },
     });
 
-    let description = Object.keys(data)[0] === 'online'
-        ? `Status: FA Server Online <br> Guests: ${data.online.guests} <br> Registered: ${data.online.registered} <br> Other: ${data.online.other} <br> Total: ${data.online.total} <br> FA Server Time: ${data.fa_server_time} <br> FA Server Time at: ${data.fa_server_time_at}`
-        : 'FA Server Offline';
+    const description =
+        Object.keys(data)[0] === 'online'
+            ? `Status: FA Server Online <br> Guests: ${data.online.guests} <br> Registered: ${data.online.registered} <br> Other: ${data.online.other} <br> Total: ${data.online.total} <br> FA Server Time: ${data.fa_server_time} <br> FA Server Time at: ${data.fa_server_time_at}`
+            : 'FA Server Offline';
 
-    const items = [] as any
+    const items: { title: string; link: string; description: string }[] = [];
     items.push({
         title: `Status: ${Object.keys(data)[0]}`,
         link: 'https://www.furaffinity.net/',
-        description: description,
+        description,
     });
 
     return {
