@@ -94,7 +94,7 @@ async function handler(ctx) {
                     category,
                     description: renderDescription({
                         title,
-                        '',
+                        ''
                     }),
                 };
             });
