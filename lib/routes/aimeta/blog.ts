@@ -19,13 +19,13 @@ async function handler() {
     const response = await ofetch(`${baseUrl}/blog`);
     const $ = load(response);
 
-    const items = $('div._amsu')
+    const items = $('div._ams_')
         .toArray().map((item) => ({
-            category: $(item).children('p._amt0').first().text(),
-            link: $(item).children('a._amt1').first().attr('href'),
-            title: $(item).children('p._amt2').first().text(),
-            description: $(item).children('p._amt3').first().text(),
-            pubDate: parseDate($(item).children('div._amt4').first().text())
+            category: $(item).children('p._amt0').text(),
+            link: $(item).children('a._amt1').attr('href'),
+            title: $(item).children('a._amt1').children('p._amt2').text(),
+            description: $(item).children('p._amt3').children('p._amt3').text(),
+            pubDate: parseDate($(item).children('p._amt4').text())
         }));
 
     return {
