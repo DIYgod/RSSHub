@@ -27,30 +27,30 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const mediaid = ctx.req.param('mediaid');
+    const mediaId = ctx.req.param('mediaid');
     const embed = !ctx.req.param('embed');
 
-    const mediadata = await utils.getBangumi(mediaid, cache);
-    const seasonid = String(mediadata.season_id);
-    const seasondata = await utils.getBangumiItems(seasonid, cache);
+    const mediaData = await utils.getBangumi(mediaId, cache);
+    const seasonId = String(mediaData.season_id);
+    const seasonData = await utils.getBangumiItems(seasonId, cache);
 
     const episodes: DataItem[] = [];
 
     const getEpisode = (item: EpisodeResult, title: string) =>
         ({
             title,
-            description: utils.renderOGVDescription(embed, item.cover, item.long_title, seasonid, String(item.id)),
+            description: utils.renderOGVDescription(embed, item.cover, item.long_title, seasonId, String(item.id)),
             link: item.share_url,
             image: item.cover.replace('http://', 'https://'),
             language: 'zh-cn',
         }) as DataItem;
 
-    for (const item of seasondata.main_section.episodes) {
+    for (const item of seasonData.main_section.episodes) {
         const episode = getEpisode(item, `第${item.title}话 ${item.long_title}`);
         episodes.push(episode);
     }
 
-    for (const section of seasondata.section) {
+    for (const section of seasonData.section) {
         for (const item of section.episodes) {
             const episode = getEpisode(item, `${item.title} ${item.long_title}`);
             episodes.push(episode);
@@ -58,11 +58,11 @@ async function handler(ctx) {
     }
 
     return {
-        title: mediadata.title,
-        description: mediadata.evaluate,
-        link: mediadata.share_url,
+        title: mediaData.title,
+        description: mediaData.evaluate,
+        link: mediaData.share_url,
         item: episodes,
-        image: mediadata.cover.replace('http://', 'https://'),
+        image: mediaData.cover.replace('http://', 'https://'),
         language: 'zh-cn',
     } as Data;
 }
