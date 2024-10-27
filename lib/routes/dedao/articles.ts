@@ -28,7 +28,7 @@ export const route: Route = {
 };
 
 // 提取文章内容的函数
-function extractArticleContent(data: any) {
+function extractArticleContent(data) {
     const paragraphs = [];
 
     for (const block of data) {
