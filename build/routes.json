@@ -80404,7 +80404,7 @@
           "axojhf"
         ],
         "url": "warthunder.com/en/news",
-        "description": "News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)\n  The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!",
+        "description": "News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)\n  The `pubDate` provided under UTC time zone, so please ignore the specific time!!!",
         "location": "news.ts"
       }
     },
