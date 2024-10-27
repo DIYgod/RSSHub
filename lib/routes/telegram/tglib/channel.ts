@@ -117,6 +117,10 @@ export default async function handler(ctx) {
     const chat = await client.getInputEntity(ctx.req.param('username'));
     const channelInfo = await client.getEntity(chat);
 
+    if (channelInfo.className !== 'Channel') {
+        throw new Error(`${ctx.req.param('username')} is not a channel`);
+    }
+
     let attachments = [];
     const messages = await client.getMessages(chat, { limit: 50 });
 
