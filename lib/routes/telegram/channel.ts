@@ -92,7 +92,13 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
 `,
     },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'TELEGRAM_SESSION',
+                optional: true,
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -110,13 +116,12 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
     handler,
     description: `
   :::tip
-  Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`.
+  Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`, it's recommended to deploy your own instance with configs (create your telegram via \`https://core.telegram.org/api/obtaining_api_id\`, run this command \`node ./lib/routes/telegram/scripts/get-telegram-session.mjs\` to get \`TELEGRAM_SESSION\` and set it as Environment Variable).
   :::`,
 };
 
 async function handler(ctx) {
-    const useWeb = ctx.req.param('routeParams') || !config.telegram.session;
-    if (!useWeb) {
+    if (ctx.req.param('routeParams') && config.telegram.session) {
         return tglibchannel(ctx);
     }
 
@@ -191,6 +196,10 @@ async function handler(ctx) {
         : $('.tgme_widget_message_wrap:not(.tgme_widget_message_wrap:has(.service_message,.tme_no_messages_found))'); // also exclude service messages
 
     if (list.length === 0 && $('.tgme_channel_history').length === 0) {
+        if (config.telegram.session) {
+            return tglibchannel(ctx);
+        }
+
         throw new Error(`Unable to fetch message feed from this channel. Please check this URL to see if you can view the message preview: ${resourceUrl}`);
     }
 
