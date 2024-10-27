@@ -6,14 +6,15 @@ import utils from './utils';
 export const route: Route = {
     path: '/bangumi/media/:mediaid/:embed?',
     name: '番剧',
-    maintainers: ['DIYgod', 'nuomi1'],
-    handler,
-    example: '/bilibili/bangumi/media/9192',
     parameters: {
         mediaid: '番剧媒体 id, 番剧主页 URL 中获取',
         embed: '默认为开启内嵌视频, 任意值为关闭',
     },
+    example: '/bilibili/bangumi/media/9192',
     categories: ['social-media', 'popular'],
+    view: ViewType.Videos,
+    maintainers: ['DIYgod', 'nuomi1'],
+    handler,
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -23,7 +24,6 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    view: ViewType.Videos,
 };
 
 async function handler(ctx) {
