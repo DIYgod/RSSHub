@@ -24,7 +24,7 @@ async function handler() {
             category: $(item).children('p._amt0').text(),
             link: $(item).children('a._amt1').attr('href'),
             title: $(item).children('a._amt1').children('p._amt2').text(),
-            description: $(item).children('p._amt3').children('p._amt3').text(),
+            description: $(item).children('p._4ik4._4ik5').children('p._amt3').text(),
             pubDate: parseDate($(item).children('p._amt4').text())
         }));
 
