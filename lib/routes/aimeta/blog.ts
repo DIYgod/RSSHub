@@ -21,8 +21,9 @@ async function handler() {
 
     const items = $('div._amsu')
         .toArray().map((item) => ({
-            title: $(item).children('p._amt2').first().text(),
+            category: $(item).children('p._amt0').first().text(),
             link: $(item).children('a._amt1').first().attr('href'),
+            title: $(item).children('p._amt2').first().text(),
             description: $(item).children('p._amt3').first().text(),
             pubDate: parseDate($(item).children('div._amt4').first().text())
         }))
