@@ -89,7 +89,7 @@ async function handler(ctx) {
     const articles = data.article_list;
 
     const items = await Promise.all(
-        articles.map(async (article: any) => {
+        articles.map(async (article) => {
             const postTitle = article.title;
             const postUrl = `https://m.igetget.com/share/course/article/article_id/${article.id}`;
             const postTime = new Date(article.publish_time * 1000).toUTCString();
