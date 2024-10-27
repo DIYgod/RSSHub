@@ -22,7 +22,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: String(name),
+    name,
     maintainers: ['iQNRen'],
     url: 'www.qztc.edu.cn',
     handler,
