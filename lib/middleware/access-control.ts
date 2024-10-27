@@ -8,7 +8,7 @@ const reject = () => {
 };
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
-    const requestPath = ctx.req.path;
+    const requestPath = new URL(ctx.req.url).pathname;
     const accessKey = ctx.req.query('key');
     const accessCode = ctx.req.query('code');
 
