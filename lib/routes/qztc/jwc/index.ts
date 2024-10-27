@@ -12,7 +12,7 @@ const name = '泉州师范学院-教务处';
 export const route: Route = {
     path: '/jwc/:type',
     categories: ['university'],
-    example: '/qztc/jwc/1939',
+    example: '/qztc/jwc/jwdt',
     parameters: { type: '分类，见下表' },
     features: {
         requireConfig: false,
@@ -28,7 +28,7 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['www.qztc.edu.cn/:type/list.htm'],
+            source: ['www.qztc.edu.cn/jwc/:type/list.htm'],
             target: '/jwc/:type',
         },
     ],

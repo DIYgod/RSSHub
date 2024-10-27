@@ -28,7 +28,7 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['www.qztc.edu.cn/:type/list.htm'],
+            source: ['www.qztc.edu.cn/sjxy/:type/list.htm'],
             target: '/sjxy/:type',
         },
     ],
