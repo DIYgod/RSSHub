@@ -6,10 +6,10 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/blog',
     categories: ['blog', 'programming'],
-    example: '/meta/blog',
+    example: '/aimeta/blog',
     radar: [{ source: ['ai.meta.com/blog'] }],
     name: 'Blog',
-    maintainers: ['gavrilov'],
+    maintainers: ['canonnizq'],
     handler
 }
 
@@ -27,6 +27,7 @@ async function handler() {
             description: $(item).children('p._amt3').first().text(),
             pubDate: parseDate($(item).children('div._amt4').first().text())
         }))
+
     return {
         title: 'AI at Meta Blog',
         link: 'https://ai.meta.com/blog',
