@@ -7,9 +7,9 @@ import cache from '@/utils/cache';
 import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
-    path: '/guozaoke',
+    path: '/default',
     categories: ['bbs'],
-    example: '/guozaoke',
+    example: '/guozaoke/default',
     parameters: {},
     features: {
         requireConfig: false,
