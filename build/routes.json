@@ -80417,6 +80417,43 @@
     "name": "War Thunder",
     "url": "warthunder.com"
   },
+  "washingtonpost": {
+    "routes": {
+      "/app/:category{.+}?": {
+        "path": "/app/:category{.+}?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/washingtonpost/app/national",
+        "parameters": {
+          "category": "Category from the path of the URL of the corresponding site, see below"
+        },
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "App",
+        "maintainers": [
+          "quiniapiezoelectricity"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.washingtonpost.com/:category"
+            ],
+            "target": "/app/:category"
+          }
+        ],
+        "description": ":::tip\nFor example, the category for https://www.washingtonpost.com/national/investigations would be /national/investigations.\n:::",
+        "location": "app.ts"
+      }
+    },
+    "name": "The Washington Post",
+    "url": "www.washingtonpost.com"
+  },
   "watasuke": {
     "routes": {
       "/blog": {

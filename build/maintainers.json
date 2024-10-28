@@ -6896,6 +6896,9 @@
   "/warthunder/news": [
     "axojhf"
   ],
+  "/washingtonpost/app/:category{.+}?": [
+    "quiniapiezoelectricity"
+  ],
   "/watasuke/blog": [
     "honahuku"
   ],
