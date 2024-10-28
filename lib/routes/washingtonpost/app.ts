@@ -11,9 +11,9 @@ import timezone from 'dayjs/plugin/timezone';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 
 export const route: Route = {
-    path: '/:category{.+}?',
+    path: '/app/:category{.+}?',
     categories: ['traditional-media'],
-    example: '/washingtonpost/national',
+    example: '/washingtonpost/app/national',
     parameters: {
         category: 'Category from the path of the URL of the corresponding site, see below',
     },
@@ -29,7 +29,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.washingtonpost.com/:category'],
-            target: '/:category',
+            target: '/app/:category',
         },
     ],
     handler,
