@@ -144,8 +144,8 @@ export default async function handler(ctx) {
                 title,
                 description,
                 pubDate: new Date(message.date * 1000).toUTCString(),
-                link: `https://t.me/s/${channelInfo.username}/${message.id}`,
-                author: `${channelInfo.title} (@${channelInfo.username})`,
+                link: `https://t.me/s/${ctx.req.param('username')}/${message.id}`,
+                author: `${channelInfo.title} (@${ctx.req.param('username')})`,
             });
         }
     }
@@ -153,10 +153,10 @@ export default async function handler(ctx) {
     return {
         title: channelInfo.title,
         language: null,
-        link: `https://t.me/${channelInfo.username}`,
+        link: `https://t.me/${ctx.req.param('username')}`,
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',
-        description: `@${channelInfo.username} on Telegram`,
+        description: `@${ctx.req.param('username')} on Telegram`,
     };
 }
 
