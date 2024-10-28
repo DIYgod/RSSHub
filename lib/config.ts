@@ -289,6 +289,7 @@ export type Config = {
     };
     telegram: {
         token?: string;
+        session?: string;
     };
     tophub: {
         cookie?: string;
