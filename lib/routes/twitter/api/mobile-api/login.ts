@@ -14,8 +14,6 @@ const ENDPOINT = 'https://api.x.com/1.1/onboarding/task.json';
 
 const NAMESPACE = 'd41d092b-b007-48f7-9129-e9538d2d8fe9';
 
-let authentication = null;
-
 const headers = {
     'User-Agent': 'TwitterAndroid/10.21.0-release.0 (310210000-r-0) ONEPLUS+A3010/9 (OnePlus;ONEPLUS+A3010;OnePlus;OnePlus3;0;;1;2016)',
     'X-Twitter-API-Version': '5',
@@ -43,7 +41,7 @@ const loginLimiter = cache.clients.redisClient
 
 const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
-const postTask = async (flowToken: string, subtaskId: string, subtaskInput: any) => {
+const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Record<string, any>) => {
     const task = await got.post(ENDPOINT, {
         headers,
         json: {
@@ -125,7 +123,7 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
 
                 headers['x-guest-token'] = guestToken.data.guest_token;
 
-                let task: any = await ofetch.raw(
+                let task: Record<string, any> = await ofetch.raw(
                     ENDPOINT +
                         '?' +
                         new URLSearchParams({
@@ -158,13 +156,13 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
                 );
                 logger.debug('Twitter login flow start.');
 
-                // @ts-ignore
+                // @ts-expect-error
                 headers.att = task.headers.get('att');
 
                 const runTask = async (subtaskId: string, flowToken: string) => {
                     if (!(subtaskId in flowTasks)) {
                         logger.error(`Twitter login flow failed: unknown subtask: ${subtaskId}`);
-                        return null;
+                        return;
                     }
                     task = await flowTasks[subtaskId](flowToken);
                     const subtask = task.data.subtasks.shift();
@@ -179,18 +177,19 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
 
                 const subtaskId = task._data.subtasks.shift().subtask_id;
                 const flowToken = task._data.flow_token;
-                authentication = await runTask(subtaskId, flowToken);
+
+                const authentication = await runTask(subtaskId, flowToken);
 
                 if (authentication) {
                     logger.debug('Twitter login success.', authentication);
                 } else {
                     logger.error(`Twitter login failed. ${JSON.stringify(task.data?.subtasks, null, 2)}`);
                 }
+
+                return authentication;
             } catch (error) {
                 logger.error(`Twitter username ${username} login failed:`, error);
             }
-
-            return authentication as unknown as string | Record<string, any>;
         },
         60 * 60 * 24 * 30, // 30 days
         false
