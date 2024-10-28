@@ -7,9 +7,9 @@ import cache from '@/utils/cache';
 import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
-    path: '/default',
+    path: '/guozaoke',
     categories: ['bbs'],
-    example: '/guozaoke/default',
+    example: '/guozaoke',
     parameters: {},
     features: {
         requireConfig: false,
@@ -19,7 +19,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'guozaoke',
+    name: '过早客',
     maintainers: ['xiaoshame'],
     handler,
     url: 'guozaoke.com/',
