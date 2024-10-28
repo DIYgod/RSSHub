@@ -41,7 +41,7 @@ const loginLimiter = cache.clients.redisClient
 
 const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
-const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Record<string, any>) => {
+const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Record<string, unknown>) => {
     const task = await got.post(ENDPOINT, {
         headers,
         json: {
@@ -123,40 +123,44 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
 
                 headers['x-guest-token'] = guestToken.data.guest_token;
 
-                let task: Record<string, any> = await ofetch.raw(
-                    ENDPOINT +
-                        '?' +
-                        new URLSearchParams({
-                            flow_name: 'login',
-                            api_version: '1',
-                            known_device_token: '',
-                            sim_country_code: 'us',
-                        }).toString(),
-                    {
-                        method: 'POST',
-                        headers,
-                        body: {
-                            flow_token: null,
-                            input_flow_data: {
-                                country_code: null,
-                                flow_context: {
-                                    referrer_context: {
-                                        referral_details: 'utm_source=google-play&utm_medium=organic',
-                                        referrer_url: '',
+                let task = await ofetch
+                    .raw(
+                        ENDPOINT +
+                            '?' +
+                            new URLSearchParams({
+                                flow_name: 'login',
+                                api_version: '1',
+                                known_device_token: '',
+                                sim_country_code: 'us',
+                            }).toString(),
+                        {
+                            method: 'POST',
+                            headers,
+                            body: {
+                                flow_token: null,
+                                input_flow_data: {
+                                    country_code: null,
+                                    flow_context: {
+                                        referrer_context: {
+                                            referral_details: 'utm_source=google-play&utm_medium=organic',
+                                            referrer_url: '',
+                                        },
+                                        start_location: {
+                                            location: 'deeplink',
+                                        },
                                     },
-                                    start_location: {
-                                        location: 'deeplink',
-                                    },
+                                    requested_variant: null,
+                                    target_user_id: 0,
                                 },
-                                requested_variant: null,
-                                target_user_id: 0,
                             },
-                        },
-                    }
-                );
+                        }
+                    )
+                    .then(({ headers, _data }) => ({
+                        headers,
+                        data: _data,
+                    }));
                 logger.debug('Twitter login flow start.');
 
-                // @ts-expect-error
                 headers.att = task.headers.get('att');
 
                 const runTask = async (subtaskId: string, flowToken: string) => {
@@ -175,8 +179,8 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
                     return await runTask(subtaskId, flowToken);
                 };
 
-                const subtaskId = task._data.subtasks.shift().subtask_id;
-                const flowToken = task._data.flow_token;
+                const subtaskId = task.data.subtasks.shift().subtask_id;
+                const flowToken = task.data.flow_token;
 
                 const authentication = await runTask(subtaskId, flowToken);
 
