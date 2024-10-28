@@ -59,7 +59,7 @@ async function handler(ctx) {
     dayjs.extend(advancedFormat);
     art.defaults.imports.dayjs = dayjs;
 
-    const url = `https://jsonapp1.washingtonpost.com/fusion_prod/v2//${category}`;
+    const url = `https://jsonapp1.washingtonpost.com/fusion_prod/v2/${category}`;
     const response = await got.get(url, { headers });
     const title = response.data.tracking.page_title.includes('Washington Post') ? response.data.tracking.page_title : `The Washington Post - ${response.data.tracking.page_title}`;
     const link = 'https://washingtonpost.com' + response.data.tracking.page_path;
