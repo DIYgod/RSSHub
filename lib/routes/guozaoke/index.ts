@@ -88,6 +88,7 @@ async function handler() {
 
             item.link = item.link.split('#')[0];
             item.description = content;
+            return item;
         })
     )) {
         out.push(result);
@@ -96,6 +97,6 @@ async function handler() {
     return {
         title: '过早客',
         link: url,
-        item: items,
+        item: out,
     };
 }
