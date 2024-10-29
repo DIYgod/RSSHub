@@ -1,12 +1,13 @@
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 import { config } from '@/config';
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
 import CryptoJS from 'crypto-js';
-
-function iframe(aid: any, page?: any, bvid?: any) {
-    return `<iframe src="https://www.bilibili.com/blackboard/html5mobileplayer.html?${bvid ? `bvid=${bvid}` : `aid=${aid}`}${
-        page ? `&page=${page}` : ''
-    }&high_quality=1&autoplay=0" width="650" height="477" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>`;
-}
+import path from 'node:path';
+import { MediaResult, ResultResponse, SeasonResult } from './types';
 
 // a
 function randomHexStr(length) {
@@ -197,8 +198,107 @@ function addDmVerifyInfoWithInter(params: string, dmImgList: string, dmImgInter:
 
 const bvidTime = 1_589_990_400;
 
+/**
+ * 获取番剧信息并缓存
+ *
+ * @param {string} id - 番剧 ID。
+ * @param cache - 缓存 module。
+ * @returns {Promise<MediaResult>} 番剧信息。
+ */
+export const getBangumi = (id: string, cache): Promise<MediaResult> =>
+    cache.tryGet(
+        `bilibili:getBangumi:${id}`,
+        async () => {
+            const res = await ofetch<ResultResponse<MediaResult>>('https://api.bilibili.com/pgc/view/web/media', {
+                query: {
+                    media_id: id,
+                },
+            });
+            if (res.result.share_url === undefined) {
+                // reference: https://api.bilibili.com/pgc/review/user?media_id=${id}
+                res.result.share_url = `https://www.bilibili.com/bangumi/media/md${res.result.media_id}`;
+            }
+            return res.result;
+        },
+        config.cache.routeExpire,
+        false
+    ) as Promise<MediaResult>;
+
+/**
+ * 获取番剧分集信息并缓存
+ *
+ * @param {string} id - 番剧 ID。
+ * @param cache - 缓存 module。
+ * @returns {Promise<SeasonResult>} 番剧分集信息。
+ */
+export const getBangumiItems = (id: string, cache): Promise<SeasonResult> =>
+    cache.tryGet(
+        `bilibili:getBangumiItems:${id}`,
+        async () => {
+            const res = await ofetch<ResultResponse<SeasonResult>>('https://api.bilibili.com/pgc/web/season/section', {
+                query: {
+                    season_id: id,
+                },
+            });
+            return res.result;
+        },
+        config.cache.routeExpire,
+        false
+    ) as Promise<SeasonResult>;
+
+/**
+ * 使用模板渲染 UGC（用户生成内容）描述。
+ *
+ * @param {boolean} embed - 是否嵌入视频。
+ * @param {string} img - 要包含在描述中的图片 URL。
+ * @param {string} description - UGC 的文本描述。
+ * @param {string} [aid] - 可选。UGC 的 aid。
+ * @param {string} [cid] - 可选。UGC 的 cid。
+ * @param {string} [bvid] - 可选。UGC 的 bvid。
+ * @returns {string} 渲染的 UGC 描述。
+ *
+ * @see https://player.bilibili.com/ 获取更多信息。
+ */
+export const renderUGCDescription = (embed: boolean, img: string, description: string, aid?: string, cid?: string, bvid?: string): string => {
+    // docs: https://player.bilibili.com/
+    const rendered = art(path.join(__dirname, 'templates/description.art'), {
+        embed,
+        ugc: true,
+        aid,
+        cid,
+        bvid,
+        img: img.replace('http://', 'https://'),
+        description,
+    });
+    return rendered;
+};
+
+/**
+ * 使用模板渲染 OGV（原创视频）描述。
+ *
+ * @param {boolean} embed - 是否嵌入视频。
+ * @param {string} img - 要包含在描述中的图片 URL。
+ * @param {string} description - OGV 的文本描述。
+ * @param {string} [seasonId] - 可选。OGV 的季 ID。
+ * @param {string} [episodeId] - 可选。OGV 的集 ID。
+ * @returns {string} 渲染的 OGV 描述。
+ *
+ * @see https://player.bilibili.com/ 获取更多信息。
+ */
+export const renderOGVDescription = (embed: boolean, img: string, description: string, seasonId?: string, episodeId?: string): string => {
+    // docs: https://player.bilibili.com/
+    const rendered = art(path.join(__dirname, 'templates/description.art'), {
+        embed,
+        ogv: true,
+        seasonId,
+        episodeId,
+        img: img.replace('http://', 'https://'),
+        description,
+    });
+    return rendered;
+};
+
 export default {
-    iframe,
     lsid,
     _uuid,
     hexsign,
@@ -209,4 +309,8 @@ export default {
     addDmVerifyInfoWithInter,
     bvidTime,
     addRenderData,
+    getBangumi,
+    getBangumiItems,
+    renderUGCDescription,
+    renderOGVDescription,
 };

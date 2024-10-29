@@ -3,10 +3,10 @@ import got from '@/utils/got';
 import utils from './utils';
 
 export const route: Route = {
-    path: '/video/page/:bvid/:disableEmbed?',
+    path: '/video/page/:bvid/:embed?',
     categories: ['social-media'],
     example: '/bilibili/video/page/BV1i7411M7N9',
-    parameters: { bvid: '可在视频页 URL 中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
+    parameters: { bvid: '可在视频页 URL 中找到', embed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -27,7 +27,7 @@ async function handler(ctx) {
         aid = bvid;
         bvid = null;
     }
-    const disableEmbed = ctx.req.param('disableEmbed');
+    const embed = !ctx.req.param('embed');
     const link = `https://www.bilibili.com/video/${bvid || `av${aid}`}`;
     const response = await got({
         method: 'get',
@@ -37,6 +37,7 @@ async function handler(ctx) {
         },
     });
 
+    const respdata = response.data.data;
     const { title: name, pages: data } = response.data.data;
 
     return {
@@ -48,7 +49,7 @@ async function handler(ctx) {
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
             .map((item) => ({
                 title: item.part,
-                description: `${item.part} - ${name}${disableEmbed ? '' : `<br><br>${utils.iframe(aid, item.page, bvid)}`}`,
+                description: utils.renderUGCDescription(embed, respdata.pic, `${item.part} - ${name}`, respdata.aid, item.cid, respdata.bvid),
                 link: `${link}?p=${item.page}`,
             })),
     };
