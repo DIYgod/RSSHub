@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: '得到文章',
-    maintainers: ['qi12371'],
+    maintainers: ['Jacky-Chen-Pro'],
     handler,
     url: 'www.igetget.com',
 };
