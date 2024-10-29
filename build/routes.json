@@ -52287,7 +52287,8 @@
         },
         "name": "Journal List",
         "maintainers": [
-          "TonyRL"
+          "TonyRL",
+          "pseudoyu"
         ],
         "location": "siteindex.ts"
       }
