@@ -56,7 +56,16 @@ const getUserId = (user: string, lsd: string): Promise<string> =>
             headers: makeHeader(user, lsd),
         });
 
-        return response.data.user.id;
+        if (!response?.data?.user) {
+            throw new NotFoundError('Instagram getUser API response is invalid');
+        }
+
+        const userId = response.data.user.id;
+        if (!userId) {
+            throw new NotFoundError('User ID not found in Instagram getUser API response');
+        }
+
+        return userId;
     });
 
 const hasMedia = (post) => post.image_versions2 || post.carousel_media || post.video_versions;
