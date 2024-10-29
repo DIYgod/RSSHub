@@ -31,7 +31,7 @@ export const route: Route = {
 function handleParagraph(data) {
     let html = '<p>';
     if (data.contents && Array.isArray(data.contents)) {
-        html += data.contents.map(extractArticleContent).join('');
+        html += data.contents.map((data) => extractArticleContent(data)).join('');
     }
     html += '</p>';
     return html;
