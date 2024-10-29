@@ -41,7 +41,7 @@ export const route: Route = {
         },
     ],
     name: 'Cover Story',
-    maintainers: ['y9c'],
+    maintainers: ['y9c', 'pseudoyu'],
     handler,
     url: 'nature.com/',
     description: `Subscribe to the cover images of the Nature journals, and get the latest publication updates in time.`,
@@ -65,13 +65,15 @@ async function handler() {
                 const { id, name, link } = journal;
 
                 const response = await got(link, { cookieJar });
+                const $ = load(response.data);
 
+                const ogUrl = $('meta[property="og:url"]').attr('content');
                 const capturingRegex = /volumes\/(?<volume>\d+)\/issues\/(?<issue>\d+)/;
-                const { volume, issue } = response.url.match(capturingRegex).groups;
+                const { volume, issue } = ogUrl?.match(capturingRegex)?.groups ?? {};
+
                 const imageUrl = `https://media.springernature.com/full/springer-static/cover-hires/journal/${id}/${volume}/${issue}?as=webp`;
                 const contents = `<div align="center"><img src="${imageUrl}" alt="Volume ${volume} Issue ${issue}"></div>`;
 
-                const $ = load(response.data);
                 const date = $('title').text().split(',')[1].trim();
                 const issueDescription = $('div[data-test=issue-description]').html() ?? '';
 
