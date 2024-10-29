@@ -59,6 +59,7 @@ async function handler(ctx) {
         title: `${name} 的 bilibili 空间`,
         link: `https://space.bilibili.com/${uid}`,
         description: `${name} 的 bilibili 空间`,
+        image: face,
         logo: face,
         icon: face,
         item:
