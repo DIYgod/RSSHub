@@ -679,13 +679,14 @@
   "/bilibili/audio/:id": [
     "LogicJake"
   ],
-  "/bilibili/bangumi/media/:mediaid": [
-    "DIYgod"
+  "/bilibili/bangumi/media/:mediaid/:embed?": [
+    "DIYgod",
+    "nuomi1"
   ],
-  "/bilibili/precious/:disableEmbed?": [
+  "/bilibili/precious/:embed?": [
     "liuyuhe666"
   ],
-  "/bilibili/user/coin/:uid/:disableEmbed?": [
+  "/bilibili/user/coin/:uid/:embed?": [
     "DIYgod"
   ],
   "/bilibili/video/danmaku/:bvid/:pid?": [
@@ -697,7 +698,7 @@
     "CaoMeiYouRen",
     "JimenezLi"
   ],
-  "/bilibili/fav/:uid/:fid/:disableEmbed?": [
+  "/bilibili/fav/:uid/:fid/:embed?": [
     "Qixingchen"
   ],
   "/bilibili/user/followers/:uid/:loginUid": [
@@ -710,7 +711,7 @@
     "TigerCubDen",
     "JimenezLi"
   ],
-  "/bilibili/followings/video/:uid/:disableEmbed?": [
+  "/bilibili/followings/video/:uid/:embed?": [
     "LogicJake"
   ],
   "/bilibili/user/followings/:uid/:loginUid": [
@@ -719,7 +720,7 @@
   "/bilibili/hot-search": [
     "CaoMeiYouRen"
   ],
-  "/bilibili/user/like/:uid/:disableEmbed?": [
+  "/bilibili/user/like/:uid/:embed?": [
     "ygguorun"
   ],
   "/bilibili/link/news/:product": [
@@ -746,22 +747,22 @@
   "/bilibili/manga/update/:comicid": [
     "hoilc"
   ],
-  "/bilibili/video/page/:bvid/:disableEmbed?": [
+  "/bilibili/video/page/:bvid/:embed?": [
     "sxzz"
   ],
-  "/bilibili/partion/ranking/:tid/:days?/:disableEmbed?": [
+  "/bilibili/partion/ranking/:tid/:days?/:embed?": [
     "lengthmin"
   ],
-  "/bilibili/partion/:tid/:disableEmbed?": [
+  "/bilibili/partion/:tid/:embed?": [
     "DIYgod"
   ],
   "/bilibili/platform/:area?/:p_type?/:uid?": [
     "nightmare-mio"
   ],
-  "/bilibili/popular/all": [
+  "/bilibili/popular/all/:embed?": [
     "ziminliu"
   ],
-  "/bilibili/ranking/:rid?/:day?/:arc_type?/:disableEmbed?": [
+  "/bilibili/ranking/:rid?/:day?/:arc_type?/:embed?": [
     "DIYgod"
   ],
   "/bilibili/readlist/:listid": [
@@ -773,29 +774,29 @@
   "/bilibili/user/bangumi/:uid/:type?": [
     "wdssmq"
   ],
-  "/bilibili/user/channel/:uid/:sid/:disableEmbed?": [
+  "/bilibili/user/channel/:uid/:sid/:embed?": [
     "weirongxu"
   ],
-  "/bilibili/user/collection/:uid/:sid/:disableEmbed?/:sortReverse?/:page?": [
+  "/bilibili/user/collection/:uid/:sid/:embed?/:sortReverse?/:page?": [
     "shininome"
   ],
-  "/bilibili/user/fav/:uid/:disableEmbed?": [
+  "/bilibili/user/fav/:uid/:embed?": [
     "DIYgod"
   ],
-  "/bilibili/user/video-all/:uid/:disableEmbed?": [],
-  "/bilibili/user/video/:uid/:disableEmbed?": [
+  "/bilibili/user/video-all/:uid/:embed?": [],
+  "/bilibili/user/video/:uid/:embed?": [
     "DIYgod",
     "Konano",
     "pseudoyu"
   ],
-  "/bilibili/vsearch/:kw/:order?/:disableEmbed?/:tid?": [
+  "/bilibili/vsearch/:kw/:order?/:embed?/:tid?": [
     "pcrtool",
     "DIYgod"
   ],
-  "/bilibili/watchlater/:uid/:disableEmbed?": [
+  "/bilibili/watchlater/:uid/:embed?": [
     "JimenezLi"
   ],
-  "/bilibili/weekly/:disableEmbed?": [
+  "/bilibili/weekly/:embed?": [
     "ttttmr"
   ],
   "/binance/announcement/:type": [

@@ -8572,11 +8572,12 @@
         ],
         "location": "audio.ts"
       },
-      "/bangumi/media/:mediaid": {
-        "path": "/bangumi/media/:mediaid",
+      "/bangumi/media/:mediaid/:embed?": {
+        "path": "/bangumi/media/:mediaid/:embed?",
         "name": "番剧",
         "parameters": {
-          "mediaid": "番剧媒体 id, 番剧主页 URL 中获取"
+          "mediaid": "番剧媒体 id, 番剧主页 URL 中获取",
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "example": "/bilibili/bangumi/media/9192",
         "categories": [
@@ -8585,18 +8586,28 @@
         ],
         "view": 3,
         "maintainers": [
-          "DIYgod"
+          "DIYgod",
+          "nuomi1"
         ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportRadar": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
         "location": "bangumi.ts"
       },
-      "/precious/:disableEmbed?": {
-        "path": "/precious/:disableEmbed?",
+      "/precious/:embed?": {
+        "path": "/precious/:embed?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/precious",
         "parameters": {
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
@@ -8612,15 +8623,15 @@
         ],
         "location": "bilibili-recommend.ts"
       },
-      "/user/coin/:uid/:disableEmbed?": {
-        "path": "/user/coin/:uid/:disableEmbed?",
+      "/user/coin/:uid/:embed?": {
+        "path": "/user/coin/:uid/:embed?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/user/coin/208259",
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
@@ -8678,7 +8689,7 @@
         "example": "/bilibili/user/dynamic/2267573",
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
-          "routeParams": "\n| 键           | 含义                              | 接受的值       | 默认值 |\n| ------------ | --------------------------------- | -------------- | ------ |\n| showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |\n| disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |\n| useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |\n| directLink   | 使用内容直链                      | 0/1/true/false | false  |\n| hideGoods    | 隐藏带货动态                      | 0/1/true/false | false  |\n\n用例：`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1`"
+          "routeParams": "\n| 键         | 含义                              | 接受的值       | 默认值 |\n| ---------- | --------------------------------- | -------------- | ------ |\n| showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |\n| embed      | 默认开启内嵌视频                  | 任意值         |        |\n| useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |\n| directLink | 使用内容直链                      | 0/1/true/false | false  |\n| hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |\n\n用例：`/bilibili/user/dynamic/2267573/showEmoji=1&embed=0&useAvid=1`"
         },
         "features": {
           "requireConfig": [
@@ -8711,8 +8722,8 @@
         ],
         "location": "dynamic.ts"
       },
-      "/fav/:uid/:fid/:disableEmbed?": {
-        "path": "/fav/:uid/:fid/:disableEmbed?",
+      "/fav/:uid/:fid/:embed?": {
+        "path": "/fav/:uid/:fid/:embed?",
         "categories": [
           "social-media"
         ],
@@ -8720,7 +8731,7 @@
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
           "fid": "收藏夹 ID, 可在收藏夹的 URL 中找到, 默认收藏夹建议使用 UP 主默认收藏夹功能",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
@@ -8810,8 +8821,8 @@
         ],
         "example": "/bilibili/followings/dynamic/109937383",
         "parameters": {
-          "uid": "用户 id",
-          "routeParams": "额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格"
+          "uid": "用户 id, 可在 UP 主主页中找到",
+          "routeParams": "\n| 键         | 含义                              | 接受的值       | 默认值 |\n| ---------- | --------------------------------- | -------------- | ------ |\n| showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |\n| embed      | 默认开启内嵌视频                  | 任意值         |        |\n| useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |\n| directLink | 使用内容直链                      | 0/1/true/false | false  |\n| hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |\n\n用例：`/bilibili/followings/dynamic/2267573/showEmoji=1&embed=0&useAvid=1`"
         },
         "features": {
           "requireConfig": [
@@ -8834,15 +8845,15 @@
         "description": ":::warning\n  用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::",
         "location": "followings-dynamic.ts"
       },
-      "/followings/video/:uid/:disableEmbed?": {
-        "path": "/followings/video/:uid/:disableEmbed?",
+      "/followings/video/:uid/:embed?": {
+        "path": "/followings/video/:uid/:embed?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/followings/video/2267573",
         "parameters": {
           "uid": "用户 id",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": [
@@ -8931,15 +8942,15 @@
         "url": "www.bilibili.com/",
         "location": "hot-search.ts"
       },
-      "/user/like/:uid/:disableEmbed?": {
-        "path": "/user/like/:uid/:disableEmbed?",
+      "/user/like/:uid/:embed?": {
+        "path": "/user/like/:uid/:embed?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/user/like/208259",
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
@@ -9172,15 +9183,15 @@
         ],
         "location": "manga-update.ts"
       },
-      "/video/page/:bvid/:disableEmbed?": {
-        "path": "/video/page/:bvid/:disableEmbed?",
+      "/video/page/:bvid/:embed?": {
+        "path": "/video/page/:bvid/:embed?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/video/page/BV1i7411M7N9",
         "parameters": {
           "bvid": "可在视频页 URL 中找到",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
@@ -9196,8 +9207,8 @@
         ],
         "location": "page.ts"
       },
-      "/partion/ranking/:tid/:days?/:disableEmbed?": {
-        "path": "/partion/ranking/:tid/:days?/:disableEmbed?",
+      "/partion/ranking/:tid/:days?/:embed?": {
+        "path": "/partion/ranking/:tid/:days?/:embed?",
         "categories": [
           "social-media"
         ],
@@ -9205,7 +9216,7 @@
         "parameters": {
           "tid": "分区 id, 见上方表格",
           "days": "缺省为 7, 指最近多少天内的热度排序",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
@@ -9221,15 +9232,15 @@
         ],
         "location": "partion-ranking.ts"
       },
-      "/partion/:tid/:disableEmbed?": {
-        "path": "/partion/:tid/:disableEmbed?",
+      "/partion/:tid/:embed?": {
+        "path": "/partion/:tid/:embed?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/partion/33",
         "parameters": {
           "tid": "分区 id",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
@@ -9280,13 +9291,15 @@
         "description": "| 类型     |\n| -------- |\n| 演出     |\n| 展览     |\n| 本地生活 |",
         "location": "platform.ts"
       },
-      "/popular/all": {
-        "path": "/popular/all",
+      "/popular/all/:embed?": {
+        "path": "/popular/all/:embed?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/popular/all",
-        "parameters": {},
+        "parameters": {
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
+        },
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -9301,8 +9314,8 @@
         ],
         "location": "popular.ts"
       },
-      "/ranking/:rid?/:day?/:arc_type?/:disableEmbed?": {
-        "path": "/ranking/:rid?/:day?/:arc_type?/:disableEmbed?",
+      "/ranking/:rid?/:day?/:arc_type?/:embed?": {
+        "path": "/ranking/:rid?/:day?/:arc_type?/:embed?",
         "name": "排行榜",
         "maintainers": [
           "DIYgod"
@@ -9408,9 +9421,7 @@
               }
             ]
           },
-          "disableEmbed": {
-            "description": "默认为开启内嵌视频, 任意值为关闭"
-          }
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "location": "ranking.ts"
       },
@@ -9494,8 +9505,8 @@
         ],
         "location": "user-bangumi.ts"
       },
-      "/user/channel/:uid/:sid/:disableEmbed?": {
-        "path": "/user/channel/:uid/:sid/:disableEmbed?",
+      "/user/channel/:uid/:sid/:embed?": {
+        "path": "/user/channel/:uid/:sid/:embed?",
         "categories": [
           "social-media"
         ],
@@ -9503,7 +9514,7 @@
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
           "sid": "频道 id, 可在频道的 URL 中找到",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
@@ -9519,8 +9530,8 @@
         ],
         "location": "user-channel.ts"
       },
-      "/user/collection/:uid/:sid/:disableEmbed?/:sortReverse?/:page?": {
-        "path": "/user/collection/:uid/:sid/:disableEmbed?/:sortReverse?/:page?",
+      "/user/collection/:uid/:sid/:embed?/:sortReverse?/:page?": {
+        "path": "/user/collection/:uid/:sid/:embed?/:sortReverse?/:page?",
         "categories": [
           "social-media"
         ],
@@ -9528,7 +9539,7 @@
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
           "sid": "合集 id, 可在合集页面的 URL 中找到",
-          "disableEmbed": "空,0与false为开启内嵌视频, 其他任意值为关闭",
+          "embed": "默认为开启内嵌视频, 任意值为关闭",
           "sortReverse": "默认:默认排序 1:升序排序",
           "page": "页码, 默认1"
         },
@@ -9546,15 +9557,15 @@
         ],
         "location": "user-collection.ts"
       },
-      "/user/fav/:uid/:disableEmbed?": {
-        "path": "/user/fav/:uid/:disableEmbed?",
+      "/user/fav/:uid/:embed?": {
+        "path": "/user/fav/:uid/:embed?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/user/fav/2267573",
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
@@ -9579,17 +9590,22 @@
         ],
         "location": "user-fav.ts"
       },
-      "/user/video-all/:uid/:disableEmbed?": {
-        "path": "/user/video-all/:uid/:disableEmbed?",
+      "/user/video-all/:uid/:embed?": {
+        "path": "/user/video-all/:uid/:embed?",
         "name": "用户所有视频",
         "maintainers": [],
+        "example": "/bilibili/user/video-all/2267573",
+        "parameters": {
+          "uid": "用户 id, 可在 UP 主主页中找到",
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
+        },
         "categories": [
           "social-media"
         ],
         "location": "video-all.ts"
       },
-      "/user/video/:uid/:disableEmbed?": {
-        "path": "/user/video/:uid/:disableEmbed?",
+      "/user/video/:uid/:embed?": {
+        "path": "/user/video/:uid/:embed?",
         "categories": [
           "social-media",
           "popular"
@@ -9598,7 +9614,7 @@
         "example": "/bilibili/user/video/2267573",
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
@@ -9624,8 +9640,8 @@
         ],
         "location": "video.ts"
       },
-      "/vsearch/:kw/:order?/:disableEmbed?/:tid?": {
-        "path": "/vsearch/:kw/:order?/:disableEmbed?/:tid?",
+      "/vsearch/:kw/:order?/:embed?/:tid?": {
+        "path": "/vsearch/:kw/:order?/:embed?/:tid?",
         "categories": [
           "social-media"
         ],
@@ -9633,7 +9649,7 @@
         "parameters": {
           "kw": "检索关键字",
           "order": "排序方式, 综合:totalrank 最多点击:click 最新发布:pubdate(缺省) 最多弹幕:dm 最多收藏:stow",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭",
+          "embed": "默认为开启内嵌视频, 任意值为关闭",
           "tid": "分区 id"
         },
         "features": {
@@ -9658,15 +9674,15 @@
         "description": "分区 id 的取值请参考下表：\n\n  | 全部分区 | 动画 | 番剧 | 国创 | 音乐 | 舞蹈 | 游戏 | 知识 | 科技 | 运动 | 汽车 | 生活 | 美食 | 动物圈 | 鬼畜 | 时尚 | 资讯 | 娱乐 | 影视 | 纪录片 | 电影 | 电视剧 |\n  | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ------ |\n  | 0        | 1    | 13   | 167  | 3    | 129  | 4    | 36   | 188  | 234  | 223  | 160  | 211  | 217    | 119  | 155  | 202  | 5    | 181  | 177    | 23   | 11     |",
         "location": "vsearch.ts"
       },
-      "/watchlater/:uid/:disableEmbed?": {
-        "path": "/watchlater/:uid/:disableEmbed?",
+      "/watchlater/:uid/:embed?": {
+        "path": "/watchlater/:uid/:embed?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/watchlater/2267573",
         "parameters": {
           "uid": "用户 id",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": [
@@ -9688,14 +9704,14 @@
         "description": ":::warning\n  用户稍后再看需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n  :::",
         "location": "watchlater.ts"
       },
-      "/weekly/:disableEmbed?": {
-        "path": "/weekly/:disableEmbed?",
+      "/weekly/:embed?": {
+        "path": "/weekly/:embed?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/weekly",
         "parameters": {
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭"
         },
         "features": {
           "requireConfig": false,
