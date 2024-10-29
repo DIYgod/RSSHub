@@ -2,6 +2,7 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import cache from '@/utils/cache';
+import { destr } from 'destr';
 import NotFoundError from '@/errors/types/not-found';
 
 const profileUrl = (user: string) => `https://www.threads.net/@${user}`;
@@ -14,7 +15,7 @@ const THREADS_QUERY = 6_232_751_443_445_612;
 const REPLIES_QUERY = 6_307_072_669_391_286;
 const USER_AGENT = 'Barcelona 289.0.0.77.109 Android';
 const appId = '238260118697367';
-// const asbdId = '129477';
+const asbdId = '129477';
 
 const extractTokens = async (user): Promise<{ lsd: string }> => {
     const response = await ofetch(profileUrl(user), {
@@ -52,17 +53,39 @@ const makeHeader = (user: string, lsd: string) => ({
 // the formal way always reachs the rate limit, so use instagram api to get user id instead
 const getUserId = (user: string, lsd: string): Promise<string> =>
     cache.tryGet(`threads:userId:${user}`, async () => {
-        const response = await ofetch(instagramUrl(user), {
-            headers: makeHeader(user, lsd),
+        const pathName = `/@${user}`;
+        const payload: any = {
+            'route_urls[0]': pathName,
+            __a: '1',
+            __comet_req: '29',
+            lsd,
+        };
+        const response = await ofetch('https://www.threads.net/ajax/bulk-route-definitions/', {
+            method: 'POST',
+            headers: {
+                ...makeHeader(user, lsd),
+                'content-type': 'application/x-www-form-urlencoded',
+                'X-ASBD-ID': asbdId,
+            },
+            body: new URLSearchParams(payload).toString(),
+            parseResponse: (txt) => destr(txt.slice(9)), // remove "for (;;);"
         });
 
-        if (!response?.data?.user) {
-            throw new NotFoundError('Instagram getUser API response is invalid');
-        }
+        let userId = response.payload.payloads[pathName].result.exports.rootView.props.user_id;
 
-        const userId = response.data.user.id;
         if (!userId) {
-            throw new NotFoundError('User ID not found in Instagram getUser API response');
+            const fallbackResponse = await ofetch(instagramUrl(user), {
+                headers: makeHeader(user, lsd),
+            });
+
+            if (!fallbackResponse?.data?.user) {
+                throw new NotFoundError('Instagram getUser API response is invalid');
+            }
+
+            userId = fallbackResponse.data.user.id;
+            if (!userId) {
+                throw new NotFoundError('User ID not found in Instagram getUser API response');
+            }
         }
 
         return userId;
