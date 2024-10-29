@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { CookieJar } from 'tough-cookie';
@@ -52,13 +52,11 @@ const getArticleList = (html) =>
 
 const getArticle = (item) =>
     cache.tryGet(item.link, async () => {
-        const response = await got(item.link, {
-            cookieJar,
-        });
-        const $ = load(response.data);
-        const responseUrl = new URL(response.url);
+        const response = await ofetch(item.link);
 
-        if (responseUrl.pathname.startsWith('/immersive/')) {
+        const $ = load(response);
+
+        if (new URL(item.link).pathname.startsWith('/immersive/')) {
             const meta = getDataLayer($);
             item.doi = meta.content.article?.doi;
             item.author = meta.content.contentInfo.authors.join(', ');
