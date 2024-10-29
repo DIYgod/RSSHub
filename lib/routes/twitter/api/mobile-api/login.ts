@@ -155,8 +155,8 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
                             },
                         }
                     )
-                    .then(({ headers, _data }) => {
-                        headers.att = headers.get('att');
+                    .then(({ headers: _headers, _data }) => {
+                        headers.att = _headers.get('att');
                         return { data: _data };
                     });
 
