@@ -75192,7 +75192,8 @@
         },
         "name": "User timeline",
         "maintainers": [
-          "ninboy"
+          "ninboy",
+          "pseudoyu"
         ],
         "location": "index.ts"
       }
