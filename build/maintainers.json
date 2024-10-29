@@ -2076,6 +2076,9 @@
   "/eprice/:region?": [
     "TonyRL"
   ],
+  "/eshukan/academic/:id?": [
+    "nczitzk"
+  ],
   "/espn/news/:sport": [
     "weijianduan0302"
   ],

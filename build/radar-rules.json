@@ -8253,6 +8253,19 @@
       }
     ]
   },
+  "eshukan.com": {
+    "_name": "万维书刊网",
+    "www": [
+      {
+        "title": "学术资讯",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/academic/index.aspx"
+        ],
+        "target": "/eshukan(_,url)=>{url=new URL(url);const id=url.searchParams.get(\"id\");return`/academic${id?`/${id}`:\"\"}`}"
+      }
+    ]
+  },
   "espn.com": {
     "_name": "ESPN",
     ".": [

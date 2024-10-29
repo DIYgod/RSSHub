@@ -23925,6 +23925,49 @@
     "name": "ePrice",
     "url": "eprice.com.tw"
   },
+  "eshukan": {
+    "routes": {
+      "/academic/:id?": {
+        "path": "/academic/:id?",
+        "name": "学术资讯",
+        "url": "www.eshukan.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/eshukan/academic/1",
+        "parameters": {
+          "category": "栏目 id，默认为 `1`，即期刊动态，可在对应栏目页 URL 中找到"
+        },
+        "description": ":::tip\n  若订阅 [期刊动态](https://www.eshukan.com/academic/index.aspx?cid=1)，网址为 `https://www.eshukan.com/academic/index.aspx?cid=1`。截取 `https://www.eshukan.com/academic/index.aspx?cid=` 到末尾的部分 `1` 作为参数填入，此时路由为 [`/eshukan/academic/1`](https://rsshub.app/eshukan/academic/1)。\n  :::\n    ",
+        "categories": [
+          "study"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.eshukan.com/academic/index.aspx"
+            ]
+          }
+        ],
+        "location": "academic.ts"
+      }
+    },
+    "name": "万维书刊网",
+    "url": "eshukan.com",
+    "categories": [
+      "study"
+    ],
+    "description": ""
+  },
   "espn": {
     "routes": {
       "/news/:sport": {
