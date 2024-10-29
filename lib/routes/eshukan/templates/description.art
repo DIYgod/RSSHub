@@ -1,5 +1,5 @@
 {{ if intro }}
-  <blockquote>{{ intro }}</blockquote>
+  <blockquote>{{@ intro }}</blockquote>
 {{ /if }}
 
 {{ if description }}

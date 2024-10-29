@@ -109,7 +109,7 @@ export const route: Route = {
   若订阅 [期刊动态](https://www.eshukan.com/academic/index.aspx?cid=1)，网址为 \`https://www.eshukan.com/academic/index.aspx?cid=1\`。截取 \`https://www.eshukan.com/academic/index.aspx?cid=\` 到末尾的部分 \`1\` 作为参数填入，此时路由为 [\`/eshukan/academic/1\`](https://rsshub.app/eshukan/academic/1)。
   :::
     `,
-    categories: ['new-media'],
+    categories: ['study'],
 
     features: {
         requireConfig: false,
