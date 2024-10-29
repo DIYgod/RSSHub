@@ -7302,6 +7302,27 @@
       }
     ]
   },
+  "igetget.com": {
+    "_name": "得到",
+    ".": [
+      {
+        "title": "得到文章",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/dedao/articles/:id"
+      },
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/dedao/list/:category?"
+      }
+    ]
+  },
   "dedao.cn": {
     "_name": "得到",
     ".": [
@@ -7314,19 +7335,6 @@
           "/"
         ],
         "target": "/dedao/knowledge/:topic?/:type?"
-      }
-    ]
-  },
-  "igetget.com": {
-    "_name": "得到",
-    ".": [
-      {
-        "title": "首页",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/dedao/list/:category?"
       }
     ]
   },

@@ -19717,6 +19717,38 @@
   },
   "dedao": {
     "routes": {
+      "/articles/:id?": {
+        "path": "/articles/:id?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/articles/9",
+        "parameters": {
+          "id": "文章类型 ID，8 为得到头条，9 为得到精选，默认为 8"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "igetget.com"
+            ],
+            "target": "/articles/:id"
+          }
+        ],
+        "name": "得到文章",
+        "maintainers": [
+          "Jacky-Chen-Pro"
+        ],
+        "url": "www.igetget.com",
+        "location": "articles.ts"
+      },
       "/:category?": {
         "path": "/:category?",
         "name": "Unknown",

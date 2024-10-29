@@ -1657,6 +1657,9 @@
   "/dealstreetasia/section/:section": [
     "jack2game"
   ],
+  "/dedao/articles/:id?": [
+    "Jacky-Chen-Pro"
+  ],
   "/dedao/:category?": [],
   "/dedao/knowledge/:topic?/:type?": [
     "nczitzk"
