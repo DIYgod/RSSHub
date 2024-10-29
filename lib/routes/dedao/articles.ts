@@ -28,50 +28,48 @@ export const route: Route = {
     url: 'www.igetget.com',
 };
 
-// 提取文章内容的函数（递归）
+function handleParagraph(data) {
+    let html = '<p>';
+    if (data.contents && Array.isArray(data.contents)) {
+        html += data.contents.map(extractArticleContent).join('');
+    }
+    html += '</p>';
+    return html;
+}
+
+function handleText(data) {
+    let content = data.text?.content || '';
+    if (data.text?.bold || data.text?.highlight) {
+        content = `<strong>${content}</strong>`;
+    }
+    return content;
+}
+
+function handleImage(data) {
+    return data.image?.src ? `<img src="${data.image.src}" alt="${data.image.alt || ''}" />` : '';
+}
+
+function handleHr() {
+    return '<hr />';
+}
+
 function extractArticleContent(data) {
     if (!data || typeof data !== 'object') {
         return '';
     }
 
-    let html = '';
-
     switch (data.type) {
         case 'paragraph':
-            html += '<p>';
-            if (data.contents && Array.isArray(data.contents)) {
-                for (const item of data.contents) {
-                    html += extractArticleContent(item);
-                }
-            }
-            html += '</p>';
-            break;
-
+            return handleParagraph(data);
         case 'text':
-            if (data.text) {
-                let content = data.text.content || '';
-                if (data.text.bold || data.text.highlight) {
-                    content = `<strong>${content}</strong>`;
-                }
-                html += content;
-            }
-            break;
-
+            return handleText(data);
         case 'image':
-            if (data.image && data.image.src) {
-                html += `<img src="${data.image.src}" alt="${data.image.alt || ''}" />`;
-            }
-            break;
-
+            return handleImage(data);
         case 'hr':
-            html += '<hr />';
-            break;
-
+            return handleHr();
         default:
-            break;
+            return '';
     }
-
-    return html;
 }
 
 async function handler(ctx) {
