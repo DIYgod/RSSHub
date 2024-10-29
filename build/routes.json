@@ -86285,7 +86285,8 @@
         ],
         "name": "知乎日报",
         "maintainers": [
-          "DHPO"
+          "DHPO",
+          "pseudoyu"
         ],
         "url": "daily.zhihu.com/*",
         "location": "daily.ts"
