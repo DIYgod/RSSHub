@@ -112,6 +112,12 @@ async function handler(ctx) {
                 });
 
                 const $ = cheerio.load(response);
+                const topVideo = $('#topvideo').length
+                    ? $('#topvideo iframe')
+                          .toArray()
+                          .map((e) => $(e).attr('href', $(e).attr('src')))
+                          .map((e) => fixFancybox(e, $))
+                    : [];
                 const fancyboxImg = $('a.fancybox').length ? $('a.fancybox') : $('a.fancybox-buttons');
 
                 // remove unwanted elements
@@ -125,7 +131,7 @@ async function handler(ctx) {
                 item.category = item.categories;
 
                 // fix fancybox image
-                let fancybox = fancyboxImg.toArray().map((e) => fixFancybox(e, $));
+                let fancybox = [...topVideo, ...fancyboxImg.toArray().map((e) => fixFancybox(e, $))];
                 const script = $('script')
                     .toArray()
                     .find((e) => $(e).text()?.includes("$('#lower').prepend('"));
