@@ -26,7 +26,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = `https://www.guozaoke.com/`;
+    const url = 'https://www.guozaoke.com/';
     const res = await got({
         method: 'get',
         url,
@@ -39,21 +39,20 @@ async function handler() {
 
     const list = $('div.topic-item').toArray();
     const maxItems = 20; // 最多取20个数据
-    const items = [];
-    for (const item of list) {
-        if (items.length >= maxItems) {
-            break;
-        }
-        const $item = $(item);
-        const title = $item.find('h3.title a').text();
-        const link = $item.find('h3.title a').attr('href');
-        const author = $item.find('span.username a').text();
-        const lastTouched = $item.find('span.last-touched').text();
-        const time = parseRelativeDate(lastTouched);
-        if (link) {
-            items.push({ title, link, author, time });
-        }
-    }
+
+    const items = list
+        .slice(0, maxItems)
+        .map((item) => {
+            const $item = $(item);
+            const title = $item.find('h3.title a').text();
+            const url = $item.find('h3.title a').attr('href');
+            const author = $item.find('span.username a').text();
+            const lastTouched = $item.find('span.last-touched').text();
+            const time = parseRelativeDate(lastTouched);
+            const link = url ? url.split('#')[0] : undefined;
+            return link ? { title, link, author, time } : undefined;
+        })
+        .filter((item) => item !== undefined);
 
     const out = [];
     for await (const result of asyncPool(2, items, (item) =>
@@ -85,8 +84,6 @@ async function handler() {
                     content += '<br>' + item.author + ': ' + item.comment;
                 }
             }
-
-            item.link = item.link.split('#')[0];
             item.description = content;
             return item;
         })
