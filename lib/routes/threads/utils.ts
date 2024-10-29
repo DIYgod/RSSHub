@@ -2,11 +2,11 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import cache from '@/utils/cache';
-import { destr } from 'destr';
 import NotFoundError from '@/errors/types/not-found';
 
 const profileUrl = (user: string) => `https://www.threads.net/@${user}`;
 const threadUrl = (code: string) => `https://www.threads.net/t/${code}`;
+const instagramUrl = (user: string) => `https://i.instagram.com/api/v1/users/web_profile_info/?username=${user}`;
 
 const apiUrl = 'https://www.threads.net/api/graphql';
 // const PROFILE_QUERY = 23_996_318_473_300_828; // no longer works
@@ -14,7 +14,7 @@ const THREADS_QUERY = 6_232_751_443_445_612;
 const REPLIES_QUERY = 6_307_072_669_391_286;
 const USER_AGENT = 'Barcelona 289.0.0.77.109 Android';
 const appId = '238260118697367';
-const asbdId = '129477';
+// const asbdId = '129477';
 
 const extractTokens = async (user): Promise<{ lsd: string }> => {
     const response = await ofetch(profileUrl(user), {
@@ -49,28 +49,14 @@ const makeHeader = (user: string, lsd: string) => ({
     'Sec-Fetch-Site': 'same-origin',
 });
 
+// the formal way always reachs the rate limit, so use instagram api to get user id instead
 const getUserId = (user: string, lsd: string): Promise<string> =>
     cache.tryGet(`threads:userId:${user}`, async () => {
-        const pathName = `/@${user}`;
-        const payload: any = {
-            'route_urls[0]': pathName,
-            __a: '1',
-            __comet_req: '29',
-            lsd,
-        };
-        const response = await ofetch('https://www.threads.net/ajax/bulk-route-definitions/', {
-            method: 'POST',
-            headers: {
-                ...makeHeader(user, lsd),
-                'content-type': 'application/x-www-form-urlencoded',
-                'X-ASBD-ID': asbdId,
-            },
-            body: new URLSearchParams(payload).toString(),
-            parseResponse: (txt) => destr(txt.slice(9)), // remove "for (;;);"
+        const response = await ofetch(instagramUrl(user), {
+            headers: makeHeader(user, lsd),
         });
 
-        const userId = response.payload.payloads[pathName].result.exports.rootView.props.user_id;
-        return userId;
+        return response.data.user.id;
     });
 
 const hasMedia = (post) => post.image_versions2 || post.carousel_media || post.video_versions;
