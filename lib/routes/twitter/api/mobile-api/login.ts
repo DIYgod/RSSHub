@@ -8,7 +8,7 @@ import { v5 as uuidv5 } from 'uuid';
 import { authenticator } from 'otplib';
 import logger from '@/utils/logger';
 import cache from '@/utils/cache';
-import { RateLimiterMemory, RateLimiterRedis, RateLimiterQueue } from 'rate-limiter-flexible';
+import { RateLimiterMemory, RateLimiterQueue, RateLimiterRedis } from 'rate-limiter-flexible';
 
 const ENDPOINT = 'https://api.x.com/1.1/onboarding/task.json';
 
@@ -41,16 +41,62 @@ const loginLimiter = cache.clients.redisClient
 
 const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
-const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Record<string, unknown>) => {
-    const task = await got.post(ENDPOINT, {
+const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Record<string, unknown>) =>
+    await got.post(ENDPOINT, {
         headers,
         json: {
             flow_token: flowToken,
             subtask_inputs: [Object.assign({ subtask_id: subtaskId }, subtaskInput)],
         },
     });
-    logger.debug(`Twitter login flow task finished: ${subtaskId}.`);
-    return task;
+
+// In the Twitter login flow, each task successfully requested will respond with a 'subtask_id' to determine what the next task is, and the execution sequence of the tasks is non-fixed.
+// So abstract these tasks out into a map so that they can be dynamically executed during the login flow.
+// If there are missing tasks in the future, simply add the implementation of that task to it.
+const flowTasks = {
+    async LoginEnterUserIdentifier({ flowToken, username }) {
+        return await postTask(flowToken, 'LoginEnterUserIdentifier', {
+            enter_text: {
+                suggestion_id: null,
+                text: username,
+                link: 'next_link',
+            },
+        });
+    },
+    async LoginEnterPassword({ flowToken, password }) {
+        return await postTask(flowToken, 'LoginEnterPassword', {
+            enter_password: {
+                password,
+                link: 'next_link',
+            },
+        });
+    },
+    async LoginEnterAlternateIdentifierSubtask({ flowToken, phoneOrEmail }) {
+        return await postTask(flowToken, 'LoginEnterAlternateIdentifierSubtask', {
+            enter_text: {
+                suggestion_id: null,
+                text: phoneOrEmail,
+                link: 'next_link',
+            },
+        });
+    },
+    async AccountDuplicationCheck({ flowToken }) {
+        return await postTask(flowToken, 'AccountDuplicationCheck', {
+            check_logged_in_account: {
+                link: 'AccountDuplicationCheck_false',
+            },
+        });
+    },
+    async LoginTwoFactorAuthChallenge({ flowToken, authenticationSecret }) {
+        const token = authenticator.generate(authenticationSecret);
+        return await postTask(flowToken, 'LoginTwoFactorAuthChallenge', {
+            enter_text: {
+                suggestion_id: null,
+                text: token,
+                link: 'next_link',
+            },
+        });
+    },
 };
 
 async function login({ username, password, authenticationSecret, phoneOrEmail }) {
@@ -60,55 +106,9 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
             try {
                 await loginLimiterQueue.removeTokens(1);
 
-                const flowTasks = {
-                    async LoginEnterUserIdentifier(flowToken: string) {
-                        return await postTask(flowToken, 'LoginEnterUserIdentifier', {
-                            enter_text: {
-                                suggestion_id: null,
-                                text: username,
-                                link: 'next_link',
-                            },
-                        });
-                    },
-                    async LoginEnterPassword(flowToken: string) {
-                        return await postTask(flowToken, 'LoginEnterPassword', {
-                            enter_password: {
-                                password,
-                                link: 'next_link',
-                            },
-                        });
-                    },
-                    async LoginEnterAlternateIdentifierSubtask(flowToken: string) {
-                        return await postTask(flowToken, 'LoginEnterAlternateIdentifierSubtask', {
-                            enter_text: {
-                                suggestion_id: null,
-                                text: phoneOrEmail,
-                                link: 'next_link',
-                            },
-                        });
-                    },
-                    async AccountDuplicationCheck(flowToken: string) {
-                        return await postTask(flowToken, 'AccountDuplicationCheck', {
-                            check_logged_in_account: {
-                                link: 'AccountDuplicationCheck_false',
-                            },
-                        });
-                    },
-                    async LoginTwoFactorAuthChallenge(flowToken: string) {
-                        const token = authenticator.generate(authenticationSecret);
-                        return await postTask(flowToken, 'LoginTwoFactorAuthChallenge', {
-                            enter_text: {
-                                suggestion_id: null,
-                                text: token,
-                                link: 'next_link',
-                            },
-                        });
-                    },
-                };
-
                 logger.debug('Twitter login start.');
-                const android_id = uuidv5(username, NAMESPACE);
-                headers['X-Twitter-Client-DeviceID'] = android_id;
+
+                headers['X-Twitter-Client-DeviceID'] = uuidv5(username, NAMESPACE);
 
                 const ct0 = crypto.randomUUID().replaceAll('-', '');
                 const guestToken = await got(guestActivateUrl, {
@@ -119,7 +119,7 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
                     },
                     method: 'POST',
                 });
-                logger.debug('Twitter login guest token.');
+                logger.debug('Twitter login: guest token');
 
                 headers['x-guest-token'] = guestToken.data.guest_token;
 
@@ -155,34 +155,39 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
                             },
                         }
                     )
-                    .then(({ headers, _data }) => ({
-                        headers,
-                        data: _data,
-                    }));
+                    .then(({ headers, _data }) => {
+                        headers.att = headers.get('att');
+                        return { data: _data };
+                    });
+
                 logger.debug('Twitter login flow start.');
+                const runTask = async ({ data }) => {
+                    const { subtask_id, open_account } = data.subtasks.shift();
 
-                headers.att = task.headers.get('att');
+                    // If `open_account` exists (and 'subtask_id' is `LoginSuccessSubtask`), it means the login was successful.
+                    if (open_account) {
+                        return open_account;
+                    }
 
-                const runTask = async (subtaskId: string, flowToken: string) => {
-                    if (!(subtaskId in flowTasks)) {
-                        logger.error(`Twitter login flow failed: unknown subtask: ${subtaskId}`);
+                    // If task does not exist in `flowTasks`, we need to implement it.
+                    if (!(subtask_id in flowTasks)) {
+                        logger.error(`Twitter login flow task failed: unknown subtask: ${subtask_id}`);
                         return;
                     }
-                    task = await flowTasks[subtaskId](flowToken);
-                    const subtask = task.data.subtasks.shift();
-                    if (subtask.open_account) {
-                        logger.debug('Twitter login success.');
-                        return subtask.open_account;
-                    }
-                    subtaskId = subtask.subtask_id;
-                    flowToken = task.data.flow_token;
-                    return await runTask(subtaskId, flowToken);
+
+                    task = await flowTasks[subtask_id]({
+                        flowToken: data.flow_token,
+                        username,
+                        password,
+                        authenticationSecret,
+                        phoneOrEmail,
+                    });
+                    logger.debug(`Twitter login flow task finished: subtask: ${subtask_id}.`);
+
+                    return await runTask(task);
                 };
-
-                const subtaskId = task.data.subtasks.shift().subtask_id;
-                const flowToken = task.data.flow_token;
-
-                const authentication = await runTask(subtaskId, flowToken);
+                const authentication = await runTask(task);
+                logger.debug('Twitter login flow finished.');
 
                 if (authentication) {
                     logger.debug('Twitter login success.', authentication);
