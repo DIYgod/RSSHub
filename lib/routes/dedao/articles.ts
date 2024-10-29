@@ -1,9 +1,10 @@
 import { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/articles/:id?', // 添加 id 参数，用于控制 pid
+    path: '/articles/:id?',
     categories: ['new-media'],
     example: '/articles/9', // 示例路径更新
     parameters: { id: '文章类型 ID，8 为得到头条，9 为得到精选，默认为 8' },
@@ -22,47 +23,66 @@ export const route: Route = {
         },
     ],
     name: '得到文章',
-    maintainers: ['Jacky-Chen-Pro'],
+    maintainers: ['qi12371'],
     handler,
-    url: 'https://www.igetget.com',
+    url: 'www.igetget.com',
 };
 
-// 提取文章内容的函数
+// 提取文章内容的函数（递归）
 function extractArticleContent(data) {
-    const paragraphs = [];
+    if (!data || typeof data !== 'object') {
+        return '';
+    }
 
-    for (const block of data) {
-        if (block.type === 'paragraph') {
-            let paragraph = '';
-            for (const item of block.contents) {
-                if (item.type === 'text' && item.text?.content) {
-                    let content = item.text.content;
-                    if (item.text?.highlight) {
-                        content = `<strong>${content}</strong>`;
-                    }
-                    paragraph += content;
+    let html = '';
+
+    switch (data.type) {
+        case 'paragraph':
+            html += '<p>';
+            if (data.contents && Array.isArray(data.contents)) {
+                for (const item of data.contents) {
+                    html += extractArticleContent(item);
                 }
             }
-            if (paragraph) {
-                paragraphs.push(`<p>${paragraph}</p>`);
+            html += '</p>';
+            break;
+
+        case 'text':
+            if (data.text) {
+                let content = data.text.content || '';
+                if (data.text.bold || data.text.highlight) {
+                    content = `<strong>${content}</strong>`;
+                }
+                html += content;
             }
-        }
+            break;
+
+        case 'image':
+            if (data.image && data.image.src) {
+                html += `<img src="${data.image.src}" alt="${data.image.alt || ''}" />`;
+            }
+            break;
+
+        case 'hr':
+            html += '<hr />';
+            break;
+
+        default:
+            break;
     }
-    return paragraphs.join('');
+
+    return html;
 }
 
 async function handler(ctx) {
     const { id = '8' } = ctx.req.param();
-
     const rootUrl = 'https://www.igetget.com';
-
     const headers = {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json;charset=UTF-8',
         Referer: `https://m.igetget.com/share/course/free/detail?id=nb9L2q1e3OxKBPNsdoJrgN8P0Rwo6B`,
         Origin: 'https://m.igetget.com',
     };
-
     const max_id = 0;
 
     const response = await got.post('https://m.igetget.com/share/api/course/free/pageTurning', {
@@ -81,7 +101,6 @@ async function handler(ctx) {
     });
 
     const data = JSON.parse(response.body);
-
     if (!data || !data.article_list) {
         throw new Error('文章列表不存在或为空');
     }
@@ -89,34 +108,38 @@ async function handler(ctx) {
     const articles = data.article_list;
 
     const items = await Promise.all(
-        articles.map(async (article) => {
-            const postTitle = article.title;
+        articles.map((article) => {
             const postUrl = `https://m.igetget.com/share/course/article/article_id/${article.id}`;
+            const postTitle = article.title;
             const postTime = new Date(article.publish_time * 1000).toUTCString();
 
-            const detailResponse = await got.get(postUrl, { headers });
-            const $ = load(detailResponse.body);
+            return cache.tryGet(postUrl, async () => {
+                const detailResponse = await got.get(postUrl, { headers });
+                const $ = load(detailResponse.body);
 
-            const scriptTag = $('script')
-                .filter((_, el) => $(el).html()?.includes('window.__INITIAL_STATE__'))
-                .html();
+                const scriptTag = $('script')
+                    .filter((_, el) => $(el).text()?.includes('window.__INITIAL_STATE__'))
+                    .text();
 
-            if (scriptTag) {
-                const jsonStr = scriptTag.match(/window\.__INITIAL_STATE__\s*=\s*(\{.*\});/)?.[1];
-                if (jsonStr) {
-                    const articleData = JSON.parse(jsonStr);
+                if (scriptTag) {
+                    const jsonStr = scriptTag.match(/window\.__INITIAL_STATE__\s*=\s*(\{.*\});/)?.[1];
+                    if (jsonStr) {
+                        const articleData = JSON.parse(jsonStr);
 
-                    const description = extractArticleContent(JSON.parse(articleData.articleContent.content));
+                        const description = JSON.parse(articleData.articleContent.content)
+                            .map((data) => extractArticleContent(data))
+                            .join('');
 
-                    return {
-                        title: postTitle,
-                        link: postUrl,
-                        description,
-                        pubDate: postTime,
-                    };
+                        return {
+                            title: postTitle,
+                            link: postUrl,
+                            description,
+                            pubDate: postTime,
+                        };
+                    }
                 }
-            }
-            return null;
+                return null;
+            });
         })
     );
 
