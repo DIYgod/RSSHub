@@ -63627,8 +63627,10 @@
       "/investigates": {
         "path": "/investigates",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
+        "view": 0,
         "example": "/reuters/investigates",
         "parameters": {},
         "features": {
