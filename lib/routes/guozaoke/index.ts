@@ -48,9 +48,9 @@ async function handler() {
             const url = $item.find('h3.title a').attr('href');
             const author = $item.find('span.username a').text();
             const lastTouched = $item.find('span.last-touched').text();
-            const time = parseRelativeDate(lastTouched);
+            const pubDate = parseRelativeDate(lastTouched);
             const link = url ? url.split('#')[0] : undefined;
-            return link ? { title, link, author, time } : undefined;
+            return link ? { title, link, author, pubDate } : undefined;
         })
         .filter((item) => item !== undefined);
 
