@@ -16,15 +16,15 @@ export const route: Route = {
     parameters: {
         uid: '用户 id, 可在 UP 主主页中找到',
         routeParams: `
-| 键           | 含义                              | 接受的值       | 默认值 |
-| ------------ | --------------------------------- | -------------- | ------ |
-| showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |
-| disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |
-| useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
-| directLink   | 使用内容直链                      | 0/1/true/false | false  |
-| hideGoods    | 隐藏带货动态                      | 0/1/true/false | false  |
+| 键         | 含义                              | 接受的值       | 默认值 |
+| ---------- | --------------------------------- | -------------- | ------ |
+| showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |
+| embed      | 默认开启内嵌视频                  | 任意值         |        |
+| useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
+| directLink | 使用内容直链                      | 0/1/true/false | false  |
+| hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |
 
-用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1\``,
+用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&embed=0&useAvid=1\``,
     },
     features: {
         requireConfig: [
@@ -108,16 +108,16 @@ const getDes = (data: Modules): string => {
 const getOriginTitle = (data?: Modules) => data && getTitle(data);
 const getOriginDes = (data?: Modules) => data && getDes(data);
 const getOriginName = (data?: Modules) => data?.module_author?.name;
-const getIframe = (data?: Modules, disableEmbed: boolean = false) => {
-    if (disableEmbed) {
+const getIframe = (data?: Modules, embed: boolean = true) => {
+    if (!embed) {
         return '';
     }
     const aid = data?.module_dynamic?.major?.archive?.aid;
     const bvid = data?.module_dynamic?.major?.archive?.bvid;
-    if (!aid) {
+    if (aid === undefined && bvid === undefined) {
         return '';
     }
-    return utils.iframe(aid, null, bvid);
+    return utils.renderUGCDescription(embed, '', '', aid, undefined, bvid);
 };
 
 const getImgs = (data?: Modules) => {
@@ -226,7 +226,7 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
-    const disableEmbed = fallback(undefined, queryToBoolean(routeParams.disableEmbed), false);
+    const embed = !ctx.req.param('embed');
     const displayArticle = ctx.req.query('mode') === 'fulltext';
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
     const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
@@ -356,7 +356,7 @@ async function handler(ctx) {
                 description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
                 originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
 
-                const descriptions = [description, originDescription, urlText, originUrlText, getIframe(data, disableEmbed), getIframe(origin, disableEmbed), getImgs(data), getImgs(origin)]
+                const descriptions = [description, originDescription, urlText, originUrlText, getIframe(data, embed), getIframe(origin, embed), getImgs(data), getImgs(origin)]
                     .filter(Boolean)
                     .map((e) => e?.trim())
                     .join('<br>');
