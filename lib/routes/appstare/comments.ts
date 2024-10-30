@@ -8,14 +8,12 @@ export const handler = async (ctx) => {
     const data = await ofetch(url);
 
     const items = data.map((item) => ({
-        title: String(item.title),
+        title: item.title,
         description: `
             <div style="font-size: 1.2em; color: #FFD700;">${'⭐️'.repeat(Math.floor(item.rating))}</div>
             <p>${item.review}</p>
-            <p><small>${item.date}</small></p>
-        `, // 使用 HTML 格式化内容
+        `,
         pubDate: new Date(item.date).toUTCString(),
-        link: `https://appstare.net/data/app/comment/${appid}/${country}`,
     }));
 
     const link = `https://appstare.net/data/app/comment/${appid}/${country}`;
