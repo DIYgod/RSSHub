@@ -7,7 +7,6 @@ import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.qztc.edu.cn/sjxy/';
 const host = 'www.qztc.edu.cn';
-const name = '泉州师范学院-数学与计算机科学学院 软件学院';
 
 export const route: Route = {
     path: '/sjxy/:type',
@@ -22,7 +21,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name,
+    name: '泉州师范学院-数学与计算机科学学院 软件学院',
     maintainers: ['iQNRen'],
     url: 'www.qztc.edu.cn',
     handler,
@@ -114,7 +113,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('head > title').text() + ` - ${name}`,
+        title: $('head > title').text() + ` - 泉州师范学院-数学与计算机科学学院 软件学院`,
         link: rootUrl + type + '/list.htm',
         item: items,
     } as Data;

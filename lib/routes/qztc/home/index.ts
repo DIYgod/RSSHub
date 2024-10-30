@@ -6,8 +6,6 @@ import ofetch from '@/utils/ofetch';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.qztc.edu.cn/';
-const host = 'www.qztc.edu.cn';
-const name = '泉州师范学院-首页';
 
 export const route: Route = {
     path: '/home/:type',
@@ -22,7 +20,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name,
+    name: '泉州师范学院-首页',
     maintainers: ['iQNRen'],
     url: 'www.qztc.edu.cn',
     handler,
@@ -86,26 +84,16 @@ async function handler(ctx) {
                     ...item,
                     description: '',
                 };
-                if (host === new URL(item.link).hostname) {
-                    if (new URL(item.link).pathname.startsWith('/_upload')) {
-                        // 链接为一个文件，直接返回链接
-                        newItem.description = item.link;
-                    } else {
-                        const response = await ofetch(item.link);
-                        const $ = load(response);
-                        newItem.description = $('.wp_articlecontent').html() || '';
-                    }
-                } else {
-                    // 涉及到其他站点，不方便做统一的 html 解析，直接返回链接
-                    newItem.description = item.link;
-                }
+                const response = await ofetch(item.link);
+                const $ = load(response);
+                newItem.description = $('.wp_articlecontent').html() || '';
                 return newItem;
             })
         )
     );
 
     return {
-        title: $('head > title').text() + ` - ${name}`,
+        title: $('head > title').text() + ` - 泉州师范学院-首页`,
         link: rootUrl + type + '/list.htm',
         item: items,
     } as Data;
