@@ -35,7 +35,7 @@ https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuote
         },
     },
     name: 'User timeline',
-    maintainers: ['ninboy'],
+    maintainers: ['ninboy', 'pseudoyu'],
     handler,
 };
 

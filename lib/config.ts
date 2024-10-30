@@ -151,6 +151,9 @@ export type Config = {
     google: {
         fontsApiKey?: string;
     };
+    guozaoke: {
+        cookies?: string;
+    };
     hefeng: {
         key?: string;
     };
@@ -298,6 +301,7 @@ export type Config = {
         username?: string[];
         password?: string[];
         authenticationSecret?: string[];
+        phoneOrEmail?: string[];
         authToken?: string[];
     };
     uestc: {
@@ -550,6 +554,9 @@ const calculateValue = () => {
         google: {
             fontsApiKey: envs.GOOGLE_FONTS_API_KEY,
         },
+        guozaoke: {
+            cookies: envs.GUOZAOKE_COOKIES,
+        },
         hefeng: {
             // weather
             key: envs.HEFENG_KEY,
@@ -701,6 +708,7 @@ const calculateValue = () => {
             username: envs.TWITTER_USERNAME?.split(','),
             password: envs.TWITTER_PASSWORD?.split(','),
             authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
+            phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
         },
         uestc: {
