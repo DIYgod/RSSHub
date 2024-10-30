@@ -2,11 +2,11 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import logger from '@/utils/logger';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
-    path: '/',
-    categories: ['blog'],
+    path: '/cookbook',
+    categories: ['programming'],
     description:
         'OpenAI Cookbook 提供了大量使用 OpenAI API 的实用指南和示例代码,涵盖了从基础到高级的各种主题,包括 GPT 模型、嵌入、函数调用、微调等。这里汇集了最新的 API 功能介绍和流行的应用案例,是开发者学习和应用 OpenAI 技术的宝贵资源。',
     maintainers: ['liyaozhong'],
@@ -17,7 +17,8 @@ export const route: Route = {
     ],
     url: 'cookbook.openai.com/',
     handler,
-    example: '/cookbook',
+    example: '/openai/cookbook',
+    name: 'Cookbook',
 };
 
 async function handler() {
@@ -46,29 +47,15 @@ async function handler() {
                 };
             });
 
-        items.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
-        items = items.filter((item, index, self) => index === self.findIndex((t) => t.link === item.link));
-        logger.info(`成功提取并排序 ${items.length} 个项目`);
-
         items = (
             await Promise.all(
                 items.map((item) =>
                     cache.tryGet(item.link, async () => {
                         try {
-                            logger.http(`Requesting ${item.link}`);
                             const detailResponse = await ofetch(item.link);
                             const $ = load(detailResponse);
-                            let content = '';
 
-                            $(String.raw`article.prose.prose-sm.sm\:prose-base.max-w-none.dark\:prose-invert`).each((_, element) => {
-                                const $element = $(element);
-                                $element.children().each((_, child) => {
-                                    content += $(child).text().trim();
-                                    content += '\n';
-                                });
-                            });
-
-                            item.description = content;
+                            item.description = $(String.raw`article.prose.prose-sm.sm\:prose-base.max-w-none.dark\:prose-invert`).html();
                             return item;
                         } catch {
                             return { ...item, description: '' };
