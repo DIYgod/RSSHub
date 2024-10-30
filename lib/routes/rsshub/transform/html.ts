@@ -124,7 +124,7 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
                         return item;
                     }
 
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(`transform:${item.link}:${itemContentSelector}`, async () => {
                         const response = await got({
                             method: 'get',
                             url: item.link,
