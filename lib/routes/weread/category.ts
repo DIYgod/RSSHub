@@ -64,7 +64,7 @@ async function handler(ctx) {
     const LIMIT = category === 'all' ? 180 : 40;
     const SIZE = 20;
     const results: BookItem[] = [];
-    const promises: Promise<any>[] = []; // 存储每个请求的 Promise
+    const promises: Promise<FetchResponse>[] = [];
 
     for (let index = 0; index <= LIMIT; index += SIZE) {
         const url = `https://weread.qq.com/web/bookListInCategory/${category}?maxIndex=${index}&rank=${rankValue}`;
@@ -136,4 +136,19 @@ interface BookItem {
     description: string;
     author: string;
     cover: string;
+}
+
+interface FetchResponse {
+    books: Array<{
+        bookInfo: {
+            title: string;
+            newRating: number;
+            newRatingDetail: {
+                title: string;
+            };
+            intro: string;
+            author: string;
+            cover: string;
+        };
+    }>;
 }
