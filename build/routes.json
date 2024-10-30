@@ -57748,7 +57748,7 @@
       "/blog/:tag?": {
         "path": "/blog/:tag?",
         "categories": [
-          "new-media"
+          "programming"
         ],
         "example": "/openai/blog",
         "parameters": {
@@ -57773,7 +57773,7 @@
       "/chatgpt/release-notes": {
         "path": "/chatgpt/release-notes",
         "categories": [
-          "new-media"
+          "program-update"
         ],
         "example": "/openai/chatgpt/release-notes",
         "parameters": {},
@@ -57789,10 +57789,31 @@
         "maintainers": [],
         "location": "chatgpt.ts"
       },
+      "/cookbook": {
+        "path": "/cookbook",
+        "categories": [
+          "programming"
+        ],
+        "description": "OpenAI Cookbook 提供了大量使用 OpenAI API 的实用指南和示例代码,涵盖了从基础到高级的各种主题,包括 GPT 模型、嵌入、函数调用、微调等。这里汇集了最新的 API 功能介绍和流行的应用案例,是开发者学习和应用 OpenAI 技术的宝贵资源。",
+        "maintainers": [
+          "liyaozhong"
+        ],
+        "radar": [
+          {
+            "source": [
+              "cookbook.openai.com/"
+            ]
+          }
+        ],
+        "url": "cookbook.openai.com/",
+        "example": "/openai/cookbook",
+        "name": "Cookbook",
+        "location": "cookbook.ts"
+      },
       "/research": {
         "path": "/research",
         "categories": [
-          "new-media"
+          "programming"
         ],
         "example": "/openai/research",
         "parameters": {},

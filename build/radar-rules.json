@@ -21320,6 +21320,19 @@
       }
     ]
   },
+  "openai.com": {
+    "_name": "OpenAI",
+    "cookbook": [
+      {
+        "title": "Cookbook",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/openai/cookbook"
+      }
+    ]
+  },
   "openwrt.org": {
     "_name": "Unknown",
     ".": [
