@@ -34662,6 +34662,34 @@
     "name": "果壳网",
     "url": "guokr.com"
   },
+  "guozaoke": {
+    "routes": {
+      "/default": {
+        "path": "/default",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/guozaoke/default",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "过早客",
+        "maintainers": [
+          "xiaoshame"
+        ],
+        "url": "guozaoke.com/",
+        "location": "index.ts"
+      }
+    },
+    "name": "guozaoke",
+    "url": "guozaoke.com"
+  },
   "gxmzu": {
     "routes": {
       "/aitzgg": {
