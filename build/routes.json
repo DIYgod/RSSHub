@@ -8892,7 +8892,7 @@
         "example": "/bilibili/followings/video/2267573",
         "parameters": {
           "uid": "用户 id",
-          "embed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频，任意值为关闭"
         },
         "features": {
           "requireConfig": [
