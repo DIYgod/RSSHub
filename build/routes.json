@@ -6504,6 +6504,45 @@
     "name": "AppleInsider",
     "url": "appleinsider.com"
   },
+  "appstare": {
+    "routes": {
+      "/comments/:country/:appid": {
+        "path": "/comments/:country/:appid",
+        "name": "Comments",
+        "url": "appstare.net/",
+        "example": "/appstare/comments/cn/989673964",
+        "maintainers": [
+          "zhixideyu"
+        ],
+        "parameters": {
+          "country": "App Store country code, e.g., US, CN",
+          "appid": "Unique App Store application identifier (app id)"
+        },
+        "categories": [
+          "program-update"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "appstare.net/"
+            ]
+          }
+        ],
+        "description": "Retrieve only the comments of the app from the past 7 days.",
+        "location": "comments.ts"
+      }
+    },
+    "name": "AppStare",
+    "url": "appstare.net"
+  },
   "appstore": {
     "routes": {
       "/iap/:country/:id": {

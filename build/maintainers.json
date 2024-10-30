@@ -490,6 +490,9 @@
   "/appleinsider/:category?": [
     "nczitzk"
   ],
+  "/appstare/comments/:country/:appid": [
+    "zhixideyu"
+  ],
   "/appstore/iap/:country/:id": [
     "HenryQW"
   ],
