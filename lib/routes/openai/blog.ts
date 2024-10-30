@@ -5,7 +5,7 @@ import { getApiUrl, parseArticle } from './common';
 
 export const route: Route = {
     path: '/blog/:tag?',
-    categories: ['new-media'],
+    categories: ['programming'],
     example: '/openai/blog',
     parameters: { tag: 'Tag, see below, All by default' },
     features: {
