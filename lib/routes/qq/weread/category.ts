@@ -1,11 +1,10 @@
-import { Route, ViewType } from '@/types';
+import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
-    path: '/:category',
-    categories: ['reading'],
-    view: ViewType.Articles,
-    example: '/weread/newbook',
+    path: '/weread/:category',
+    categories: ['new-media'],
+    example: '/qq/weread/newbook',
     parameters: {
         category: '榜单名，见下表',
     },
@@ -17,7 +16,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '榜单',
+    name: '微信读书榜单',
     maintainers: ['gogo-100'],
     handler,
     description: `| 榜单                  | 榜单名     |
@@ -59,37 +58,27 @@ async function handler(ctx) {
     const category = ctx.req.param('category');
 
     // 检查 category 是否是榜单，若否则全部为阿拉伯数字
-    const rankValue = /^\d+$/.test(category) ? 0 : 1;
+    const isRank = /^\d+$/.test(category) ? 0 : 1;
 
     const LIMIT = category === 'all' ? 180 : 40;
     const SIZE = 20;
-    const results: BookItem[] = [];
-    const promises: Promise<FetchResponse>[] = [];
 
-    for (let index = 0; index <= LIMIT; index += SIZE) {
-        const url = `https://weread.qq.com/web/bookListInCategory/${category}?maxIndex=${index}&rank=${rankValue}`;
-        promises.push(ofetch(url));
-    }
+    const urls = Array.from({ length: Math.ceil((LIMIT + 1) / SIZE) }, (_, index) => `https://weread.qq.com/web/bookListInCategory/${category}?maxIndex=${index * SIZE}&rank=${isRank}`);
 
-    const responses = await Promise.all(promises);
+    const responses = await Promise.all(urls.map((url) => ofetch(url)));
 
-    // console.log(`Fetching data from URL: ${url}`);
-    // console.log(`API response:`, response.data);
-
-    for (const response of responses) {
-        const data = response;
-        const items = data.books.map((book) => {
+    const results = responses.flatMap((response) =>
+        response.books.map((book) => {
             const bookInfo = book.bookInfo;
             return {
                 title: bookInfo.title,
-                link: `https://weread.qq.com/web/category/${category}`,
-                description: `推荐值 ${bookInfo.newRating / 10}%  ${bookInfo.newRatingDetail.title}|| \n\n` + bookInfo.intro,
+                description: `推荐值 ${bookInfo.newRating / 10}% ${bookInfo.newRatingDetail.title}|| ` + bookInfo.intro,
                 author: bookInfo.author,
-                cover: bookInfo.cover,
+                guid: bookInfo.bookId,
+                itunes_item_image: bookInfo.cover,
             };
-        });
-        results.push(...items);
-    }
+        })
+    );
 
     const title = categoryTitles[category] || '书籍列表';
     return {
@@ -129,26 +118,3 @@ const categoryTitles = {
     '2000000': '女生小说',
     '2100000': '医学健康',
 };
-
-interface BookItem {
-    title: string;
-    link: string;
-    description: string;
-    author: string;
-    cover: string;
-}
-
-interface FetchResponse {
-    books: Array<{
-        bookInfo: {
-            title: string;
-            newRating: number;
-            newRatingDetail: {
-                title: string;
-            };
-            intro: string;
-            author: string;
-            cover: string;
-        };
-    }>;
-}
