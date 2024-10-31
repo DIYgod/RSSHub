@@ -10,7 +10,7 @@ export const route: Route = {
     path: '/followings/video/:uid/:embed?',
     categories: ['social-media'],
     example: '/bilibili/followings/video/2267573',
-    parameters: { uid: '用户 id', embed: '默认为开启内嵌视频, 任意值为关闭' },
+    parameters: { uid: '用户 id', embed: '默认为开启内嵌视频，任意值为关闭' },
     features: {
         requireConfig: [
             {
@@ -69,9 +69,9 @@ async function handler(ctx) {
 
         return {
             title: card_data.title,
-            description: utils.renderUGCDescription(embed, card_data.pic, card_data.desc, card_data.aid, undefined, card_data.bvid),
+            description: utils.renderUGCDescription(embed, card_data.pic, card_data.desc, card_data.aid, undefined, card.desc.bvid),
             pubDate: new Date(card_data.pubdate * 1000).toUTCString(),
-            link: card_data.pubdate > utils.bvidTime && card_data.bvid ? `https://www.bilibili.com/video/${card_data.bvid}` : `https://www.bilibili.com/video/av${card_data.aid}`,
+            link: card_data.pubdate > utils.bvidTime && card.desc.bvid ? `https://www.bilibili.com/video/${card.desc.bvid}` : `https://www.bilibili.com/video/av${card_data.aid}`,
             author: card.desc.user_profile.info.uname,
         };
     });
