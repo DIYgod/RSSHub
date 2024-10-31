@@ -7499,7 +7499,7 @@
     ".": [
       {
         "title": "User",
-        "docs": "https://docs.rsshub.app/routes/social-media",
+        "docs": "https://docs.rsshub.app/routes/shopping",
         "source": [
           "/member/:id"
         ],

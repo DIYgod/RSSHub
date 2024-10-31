@@ -20407,7 +20407,7 @@
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "social-media"
+          "shopping"
         ],
         "example": "/dianping/user/808259118",
         "parameters": {

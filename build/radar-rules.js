@@ -3423,7 +3423,7 @@
         target:"/diandong/news/:cate" } ] },
   "dianping.com":{ _name:"大众点评",
     ".":[ { title:"User",
-        docs:"https://docs.rsshub.app/routes/social-media",
+        docs:"https://docs.rsshub.app/routes/shopping",
         source:[ "/member/:id" ],
         target:"/dianping/dianping/user/:id" } ] },
   "diershoubing.com":{ _name:"二柄 APP",
