@@ -3422,7 +3422,7 @@
         source:[ "/news" ],
         target:"/diandong/news/:cate" } ] },
   "dianping.com":{ _name:"大众点评",
-    ".":[ { title:"User",
+    ".":[ { title:"用户动态",
         docs:"https://docs.rsshub.app/routes/shopping",
         source:[ "/member/:id",
           "/userprofile/:id" ],

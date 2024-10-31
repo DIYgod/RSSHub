@@ -20436,11 +20436,11 @@
             "target": "/dianping/user/:id"
           }
         ],
-        "name": "User",
+        "name": "用户动态",
         "maintainers": [
           "pseudoyu"
         ],
-        "description": "Get user reviews, check-ins, guides.",
+        "description": "获取用户点评、签到、攻略等动态。",
         "location": "user.ts"
       }
     },
