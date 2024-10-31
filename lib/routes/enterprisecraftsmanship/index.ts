@@ -53,9 +53,7 @@ async function handler() {
                     const $detail = load(detailResponse.data);
 
                     // 获取 .post 内容，但排除 .post-info
-                    const $post = $detail('.post');
-                    $post.find('.post-info').remove();
-                    item.description = $post.html();
+                    item.description = ($detail('.post > .paragraph').html() ?? '') + ($detail('.post >.sect1').html() ?? '');
 
                     return item;
                 } catch (error) {
