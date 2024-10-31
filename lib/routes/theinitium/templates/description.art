@@ -1,5 +1,5 @@
-{{ if header }}
-    <h4> {{ header }} </h4>
+{{ if standfirst }}
+    <blockquote><p><em>{{ standfirst }}</em></p></blockquote>
 {{ /if }}
 {{ if coverImage}}
 <figure>
