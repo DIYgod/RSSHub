@@ -174,7 +174,7 @@
         "eslint-plugin-n": "17.11.1",
         "eslint-plugin-prettier": "5.2.1",
         "eslint-plugin-unicorn": "56.0.0",
-        "eslint-plugin-yml": "1.14.0",
+        "eslint-plugin-yml": "1.15.0",
         "fs-extra": "11.2.0",
         "globals": "15.11.0",
         "got": "14.4.3",
