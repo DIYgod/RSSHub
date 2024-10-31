@@ -21,7 +21,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '泉州师范学院-教务处',
+    name: '教务处',
     maintainers: ['iQNRen'],
     url: 'www.qztc.edu.cn',
     handler,
@@ -113,7 +113,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('head > title').text() + ` - 泉州师范学院-教务处`,
+        title: $('head > title').text() + ' - 泉州师范学院-教务处',
         link: rootUrl + type + '/list.htm',
         item: items,
     } as Data;
