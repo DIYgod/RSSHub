@@ -7,7 +7,7 @@ import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 import { JSDOM } from 'jsdom';
 
-let disableConfigCookie = false;
+const disableConfigCookie = false;
 
 const getCookie = () => {
     if (!disableConfigCookie && Object.keys(config.bilibili.cookies).length > 0) {
@@ -45,11 +45,6 @@ const getCookie = () => {
         await browser.close();
         return cookieString;
     });
-};
-
-const clearCookie = () => {
-    cache.set('bili-cookie');
-    disableConfigCookie = true;
 };
 
 const getRenderData = (uid) => {
@@ -281,7 +276,6 @@ const getArticleDataFromCvid = async (cvid, uid) => {
 
 export default {
     getCookie,
-    clearCookie,
     getWbiVerifyString,
     getUsernameFromUID,
     getUsernameAndFaceFromUID,
