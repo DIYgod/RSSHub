@@ -7496,12 +7496,12 @@
   },
   "dianping.com": {
     "_name": "大众点评",
-    "m": [
+    ".": [
       {
         "title": "User",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
-          "/userprofile/:id"
+          "/member/:id"
         ],
         "target": "/dianping/dianping/user/:id"
       }

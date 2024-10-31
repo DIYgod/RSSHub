@@ -20430,7 +20430,7 @@
         "radar": [
           {
             "source": [
-              "m.dianping.com/userprofile/:id"
+              "dianping.com/member/:id"
             ],
             "target": "/dianping/user/:id"
           }
