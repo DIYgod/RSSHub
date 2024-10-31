@@ -63233,6 +63233,111 @@
     "name": "和风天气",
     "url": "qweather.com"
   },
+  "qztc": {
+    "routes": {
+      "/home/:type": {
+        "path": "/home/:type",
+        "categories": [
+          "university"
+        ],
+        "example": "/qztc/home/2093",
+        "parameters": {
+          "type": "分类，见下表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "首页",
+        "maintainers": [
+          "iQNRen"
+        ],
+        "url": "www.qztc.edu.cn",
+        "radar": [
+          {
+            "source": [
+              "www.qztc.edu.cn/:type/list.htm"
+            ],
+            "target": "/home/:type"
+          }
+        ],
+        "description": "| 板块 | 参数 |\n| ------- | ------- |\n| 泉师新闻 | 2093 |\n| 通知公告 | 2094 |\n| 采购公告 | 2095 |\n| 学术资讯 | xszx |\n| 招聘信息 | 2226 |\n",
+        "location": "home/index.ts"
+      },
+      "/jwc/:type": {
+        "path": "/jwc/:type",
+        "categories": [
+          "university"
+        ],
+        "example": "/qztc/jwc/jwdt",
+        "parameters": {
+          "type": "分类，见下表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "教务处",
+        "maintainers": [
+          "iQNRen"
+        ],
+        "url": "www.qztc.edu.cn",
+        "radar": [
+          {
+            "source": [
+              "www.qztc.edu.cn/jwc/:type/list.htm"
+            ],
+            "target": "/jwc/:type"
+          }
+        ],
+        "description": "| 板块 | 参数 |\n| ------- | ------- |\n| 教务动态 | jwdt |\n| 首 页 | 1020 |\n| 岗位介绍 | 1021 |\n| 管理文件 | 1022 |\n| 教学教改 | 1023 |\n| 办事指南 | 1024 |\n| 通知公告 | 1025 |\n| 下载中心 | 1026 |\n| 对外交流 | 1027 |\n| 政策文件 | 1028 |\n| 会议纪要 | 1029 |\n",
+        "location": "jwc/index.ts"
+      },
+      "/sjxy/:type": {
+        "path": "/sjxy/:type",
+        "categories": [
+          "university"
+        ],
+        "example": "/qztc/sjxy/1939",
+        "parameters": {
+          "type": "分类，见下表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "数学与计算机科学学院 软件学院",
+        "maintainers": [
+          "iQNRen"
+        ],
+        "url": "www.qztc.edu.cn",
+        "radar": [
+          {
+            "source": [
+              "www.qztc.edu.cn/sjxy/:type/list.htm"
+            ],
+            "target": "/sjxy/:type"
+          }
+        ],
+        "description": "| 板块 | 参数 |\n| ------- | ------- |\n| 学院概况 | 1938 |\n| 学院动态 | 1939 |\n| 学科建设 | 1940 |\n| 教学教务 | 1941 |\n| 人才培养 | 1942 |\n| 科研工作 | 1943 |\n| 党群工作 | 1944 |\n| 团学工作 | 1945 |\n| 资料下载 | 1947 |\n| 采购信息 | 1948 |\n| 信息公开 | xxgk |\n",
+        "location": "sjxy/index.ts"
+      }
+    },
+    "name": "泉州师范学院",
+    "url": "www.qztc.edu.cn"
+  },
   "radio": {
     "routes": {
       "/album/:id": {
