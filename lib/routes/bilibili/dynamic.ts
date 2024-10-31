@@ -243,8 +243,7 @@ async function handler(ctx) {
     });
     const body = JSONbig.parse(response.body);
     if (body?.code === -352) {
-        cacheIn.clearCookie();
-        throw new Error('The cookie has expired, please try again.');
+        throw new Error('Request failed, please try again.');
     }
     const items = (body as BilibiliWebDynamicResponse)?.data?.items;
 

@@ -47,10 +47,6 @@ const getCookie = () => {
     });
 };
 
-const clearCookie = () => {
-    cache.set('bili-cookie');
-};
-
 const getRenderData = (uid) => {
     const key = 'bili-web-render-data';
     return cache.tryGet(key, async () => {
@@ -280,7 +276,6 @@ const getArticleDataFromCvid = async (cvid, uid) => {
 
 export default {
     getCookie,
-    clearCookie,
     getWbiVerifyString,
     getUsernameFromUID,
     getUsernameAndFaceFromUID,
