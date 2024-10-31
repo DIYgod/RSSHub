@@ -35,13 +35,13 @@ async function handler(ctx) {
     //  console.log(data);
     const list = data.map((item) => ({
         // 文章标题
-        title: item.title, 
+        title: item.title,
         // 文章链接
-        link: item.topic_url, 
+        link: item.topic_url,
         // 文章发布日期
         pubDate: parseDate(item.release_date, 'YYYY/M/D HH:mm:ss'),  // "release_date": "2024/10/18 17:00:00"
-        itunes_item_image:item.thumbnail.large.medium, 
-        category:item.categorylarge.name, 
+        itunes_item_image:item.thumbnail.large.medium,
+        category:item.categorylarge.name,
     }));
     //  console.log(list);
     // 获取新闻正文
@@ -60,9 +60,9 @@ async function handler(ctx) {
     );
     //  console.log(items);
     return {
-        title: 'Nintendo（日本）主页资讯', 
-        link: 'https://www.nintendo.com/jp/topics', 
-        description: 'Nintendo JP', 
-        item:items, 
+        title: 'Nintendo（日本）主页资讯',
+        link: 'https://www.nintendo.com/jp/topics',
+        description: 'Nintendo JP',
+        item:items,
     };
 }
