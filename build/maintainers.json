@@ -1721,6 +1721,9 @@
   "/diandong/news/:cate?": [
     "Fatpandac"
   ],
+  "/dianping/user/:id": [
+    "pseudoyu"
+  ],
   "/diershoubing/news": [
     "wushijishan"
   ],

@@ -20402,6 +20402,42 @@
     "name": "电动邦",
     "url": "diandong.com"
   },
+  "dianping": {
+    "routes": {
+      "/user/:id": {
+        "path": "/user/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/dianping/user/808259118",
+        "parameters": {
+          "id": "User id"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "DIANPING_COOKIE",
+              "optional": false,
+              "description": "Cookie for Dianping"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "User",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "description": "Get user reviews, check-ins, guides.",
+        "location": "user.ts"
+      }
+    },
+    "name": "大众点评",
+    "url": "dianping.com"
+  },
   "diershoubing": {
     "routes": {
       "/news": {
