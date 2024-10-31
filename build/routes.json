@@ -23960,6 +23960,33 @@
     "url": "ca.china-embassy.org",
     "description": "支持国家列表\n\n加拿大 `CA`\n\n-   大使馆: `/embassy/ca`\n\n-   领事馆城市列表:\n\n| 城市     | 路由                   |\n| -------- | ---------------------- |\n| 蒙特利尔 | `/embassy/ca/montreal` |\n\n* * *\n\n德国 `DE`\n\n-   大使馆: `/embassy/de`\n\n-   领事馆城市列表:\n\n| 城市   | 路由                 |\n| ------ | -------------------- |\n| 慕尼黑 | `/embassy/de/munich` |\n\n* * *\n\n法国 `FR`\n\n-   大使馆: `/embassy/fr`\n\n-   领事馆城市列表:\n\n| 城市       | 路由                     |\n| ---------- | ------------------------ |\n| 马赛       | `/embassy/fr/marseille`  |\n| 斯特拉斯堡 | `/embassy/fr/strasbourg` |\n| 里昂       | `/embassy/fr/lyon`       |\n\n* * *\n\n日本 `JP`\n\n-   大使馆: `/embassy/jp`\n\n-   领事馆城市列表:\n\n| 城市   | 路由                   |\n| ------ | ---------------------- |\n| 长崎   | `/embassy/jp/nagasaki` |\n| 大阪   | `/embassy/jp/osaka`    |\n| 福冈   | `/embassy/jp/fukuoka`  |\n| 名古屋 | `/embassy/jp/nagoya`   |\n| 札幌   | `/embassy/jp/sapporo`  |\n| 新潟   | `/embassy/jp/niigata`  |\n\n* * *\n\n韩国 `KR`\n\n-   大使馆: `/embassy/kr`\n\n-   领事馆城市列表:\n\n| 城市 | 路由                  |\n| ---- | --------------------- |\n| 釜山 | `/embassy/kr/busan`   |\n| 济州 | `/embassy/kr/jeju`    |\n| 光州 | `/embassy/kr/gwangju` |\n\n* * *\n\n马来西亚 `MY`\n\n-   大使馆: `/embassy/my`\n\n* * *\n\n新加坡 `SG`\n\n-   大使馆: `/embassy/sg`\n\n* * *\n\n美国 `US`\n\n-   大使馆: `/embassy/us`\n\n-   领事馆城市列表:\n\n| 城市   | 路由                       |\n| ------ | -------------------------- |\n| 纽约   | `/embassy/us/newyork`      |\n| 芝加哥 | `/embassy/us/chicago`      |\n| 旧金山 | `/embassy/us/sanfrancisco` |\n\n* * *\n\n英国 `UK`\n\n-   大使馆: `/embassy/uk`\n\n-   领事馆城市列表:\n\n| 城市       | 路由                     |\n| ---------- | ------------------------ |\n| 爱丁堡     | `/embassy/uk/edinburgh`  |\n| 贝尔法斯特 | `/embassy/uk/belfast`    |\n| 曼彻斯特   | `/embassy/uk/manchester` |"
   },
+  "enterprisecraftsmanship": {
+    "routes": {
+      "/archives": {
+        "path": "/archives",
+        "categories": [
+          "blog"
+        ],
+        "example": "/enterprisecraftsmanship/archives",
+        "radar": [
+          {
+            "source": [
+              "enterprisecraftsmanship.com/archives/"
+            ]
+          }
+        ],
+        "url": "enterprisecraftsmanship.com/",
+        "name": "Archives",
+        "maintainers": [
+          "liyaozhong"
+        ],
+        "description": "Enterprise Craftsmanship blog archives",
+        "location": "index.ts"
+      }
+    },
+    "name": "Enterprise Craftsmanship",
+    "url": "enterprisecraftsmanship.com"
+  },
   "epicgames": {
     "routes": {
       "/freegames/:locale?/:country?": {
