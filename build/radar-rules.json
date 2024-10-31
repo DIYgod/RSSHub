@@ -7494,6 +7494,19 @@
       }
     ]
   },
+  "dianping.com": {
+    "_name": "大众点评",
+    "m": [
+      {
+        "title": "User",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/userprofile/:id"
+        ],
+        "target": "/dianping/dianping/user/:id"
+      }
+    ]
+  },
   "diershoubing.com": {
     "_name": "二柄 APP",
     ".": [

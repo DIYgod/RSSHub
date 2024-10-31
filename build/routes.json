@@ -20427,6 +20427,14 @@
           "supportPodcast": false,
           "supportScihub": false
         },
+        "radar": [
+          {
+            "source": [
+              "m.dianping.com/userprofile/:id"
+            ],
+            "target": "/dianping/user/:id"
+          }
+        ],
         "name": "User",
         "maintainers": [
           "pseudoyu"
