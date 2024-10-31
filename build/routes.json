@@ -20411,14 +20411,14 @@
         ],
         "example": "/dianping/user/808259118",
         "parameters": {
-          "id": "User id"
+          "id": "User id，打开网页端从 URL 中获取，在 `/member/:id` 中"
         },
         "features": {
           "requireConfig": [
             {
               "name": "DIANPING_COOKIE",
               "optional": false,
-              "description": "Cookie for Dianping"
+              "description": "大众点评的 Cookie"
             }
           ],
           "requirePuppeteer": false,
@@ -20430,7 +20430,8 @@
         "radar": [
           {
             "source": [
-              "dianping.com/member/:id"
+              "dianping.com/member/:id",
+              "m.dianping.com/userprofile/:id"
             ],
             "target": "/dianping/user/:id"
           }
