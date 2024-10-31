@@ -5349,6 +5349,9 @@
   "/qq/pd/guild/:id/:sub?/:sort?": [
     "mobyw"
   ],
+  "/qq/weread/:category": [
+    "gogo-100"
+  ],
   "/qq88/:category?": [
     "nczitzk"
   ],
