@@ -97,6 +97,9 @@ export type Config = {
     civitai: {
         cookie?: string;
     };
+    dianping: {
+        cookie?: string;
+    };
     dida365: {
         username?: string;
         password?: string;
@@ -499,6 +502,9 @@ const calculateValue = () => {
         },
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
+        },
+        dianping: {
+            cookie: envs.DIANPING_COOKIE,
         },
         dida365: {
             username: envs.DIDA365_USERNAME,
