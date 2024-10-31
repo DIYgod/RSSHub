@@ -205,10 +205,10 @@ export const twitterGot = async (
         },
     });
 
-    if (auth?.token) {
-        logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
-        await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers?.jar.serializeSync()), config.cache.contentExpire);
-    }
+    // if (auth?.token) {
+    //     logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
+    //     await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers?.jar.serializeSync()), config.cache.contentExpire);
+    // }
 
     return response._data;
 };

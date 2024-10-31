@@ -2,24 +2,17 @@ import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 
-function addPictureAndVideo(item: any) {
-    let content = '';
-    content += item.pictureList ? item.pictureList.map((ele: any) => `<img src="${ele.picUrl}" />`).join('<br>') : '';
-    content += item.videoUrl ? `<img src="${item.videoUrl}" />` : '';
-    return content;
-}
-
 export const route: Route = {
     path: '/user/:id',
     categories: ['shopping'],
     example: '/dianping/user/808259118',
-    parameters: { id: 'User id' },
+    parameters: { id: 'User id，打开网页端从 URL 中获取，在 `/member/:id` 中' },
     features: {
         requireConfig: [
             {
                 name: 'DIANPING_COOKIE',
                 optional: false,
-                description: 'Cookie for Dianping',
+                description: '大众点评的 Cookie',
             },
         ],
         requirePuppeteer: false,
@@ -30,15 +23,22 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['dianping.com/member/:id'],
+            source: ['dianping.com/member/:id', 'm.dianping.com/userprofile/:id'],
             target: '/dianping/user/:id',
         },
     ],
-    name: 'User',
+    name: '用户动态',
     maintainers: ['pseudoyu'],
     handler,
-    description: 'Get user reviews, check-ins, guides.',
+    description: '获取用户点评、签到、攻略等动态。',
 };
+
+function addPictureAndVideo(item: any) {
+    let content = '';
+    content += item.pictureList ? item.pictureList.map((ele: any) => `<img src="${ele.picUrl}" />`).join('<br>') : '';
+    content += item.videoUrl ? `<img src="${item.videoUrl}" />` : '';
+    return content;
+}
 
 const starMap: Record<number, string> = {
     0: '无',
