@@ -1487,6 +1487,9 @@
     "marvolo666",
     "yan12125"
   ],
+  "/counter-strike/news/:category?/:language?": [
+    "nczitzk"
+  ],
   "/cpcaauto/news/:type?/:id?": [
     "nczitzk"
   ],

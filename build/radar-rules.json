@@ -6627,6 +6627,19 @@
       }
     ]
   },
+  "counter-strike.net": {
+    "_name": "Counter Strike",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/:category"
+        ],
+        "target": "/counter-strike(params,url)=>{url=new URL(url);const category=params.category;const language=url.searchParams.get(\"l\");return`/news${category?`/${category}${language?`/${language}`:\"\"}`:\"\"}`}"
+      }
+    ]
+  },
   "cpcaauto.com": {
     "_name": "cpcaauto.com",
     ".": [
