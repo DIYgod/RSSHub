@@ -32,7 +32,11 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'PIXIV_REFRESHTOKEN',
-                description: '',
+                optional: true,
+                description: `
+Pixiv 登錄後的 refresh_token，用於獲取 R18 小說
+refresh_token after Pixiv login, required for accessing R18 novels
+[https://docs.rsshub.app/deploy/config#pixiv](https://docs.rsshub.app/deploy/config#pixiv)`,
             },
         ],
         requirePuppeteer: false,
@@ -108,6 +112,9 @@ async function getNovelFullContent(novelId: string): Promise<{ content: string; 
         }
     }
 
+    // 如果有 [pixivimage:(\d+)] 的引用，因爲沒有 PIXIV_REFRESHTOKEN，將無法獲取作品 Detail，也無法正常顯示
+    // For references of [pixivimage:(\d+)], without PIXIV_REFRESHTOKEN, artwork details cannot be retrieved and images cannot be displayed normally
+
     return {
         content: data.body.content,
         images,
@@ -159,9 +166,12 @@ async function getNonR18Novels(id: string, limit: number = 100, fullContent: boo
                 let fullContent = content;
 
                 // Replace image placeholders with actual images
-                for (const [id, url] of Object.entries(images)) {
-                    fullContent = fullContent.replace(`[upload=${id}]`, `<img src="${url}" />`);
-                }
+                fullContent = fullContent.replaceAll(/\[uploadedimage:(\d+)\]/g, (match, imageId) => {
+                    if (images[imageId]) {
+                        return `<img src="${images[imageId]}" alt="novel illustration ${imageId}">`;
+                    }
+                    return match;
+                });
 
                 return {
                     ...baseItem,
