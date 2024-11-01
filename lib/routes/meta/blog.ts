@@ -7,7 +7,7 @@ export const route: Route = {
     path: '/blog',
     categories: ['blog', 'programming'],
     example: '/aimeta/blog',
-    radar: [{ source: ['ai.meta.com/blog'] }],
+    radar: [{ source: ['ai.meta.com/blog/'] }],
     name: 'Blog',
     maintainers: ['canonnizq'],
     handler
@@ -17,7 +17,7 @@ async function handler() {
     const baseUrl = 'https://ai.meta.com';
 
     const response = await ofetch(`${baseUrl}/blog/`);
-    const $ = load(response);
+    const $ = load(response);   
 
     const items = $('div._ams_')
         .toArray().map((item) => ({
@@ -30,7 +30,7 @@ async function handler() {
 
     return {
         title: 'AI at Meta Blog',
-        link: 'https://ai.meta.com/blog',
+        link: 'https://ai.meta.com/blog/',
         item: items
     };
 }
