@@ -3,7 +3,9 @@ import cache from '@/utils/cache';
 import { rootUrl, apiRootUrl, types, ProcessThreads } from './utils';
 
 export const route: Route = {
-    path: ['/post/:type?/:order?', '/thread/:type?/:order?'],
+    path: '/thread/:type?/:order?',
+    example: '/1point3acres/thread/hot',
+    parameters: { type: '帖子分类, 见下表，默认为 hot，即热门帖子', order: '排序方式，见下表，默认为空，即最新回复' },
     name: '帖子',
     categories: ['bbs'],
     maintainers: ['EthanWng97', 'DIYgod', 'nczitzk'],

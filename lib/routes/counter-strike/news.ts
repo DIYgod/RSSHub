@@ -1,9 +1,55 @@
 import { Route } from '@/types';
+import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import bbcode from 'bbcodejs';
+import bbobHTML from '@bbob/html';
+import presetHTML5 from '@bbob/preset-html5';
 import { parseDate } from '@/utils/parse-date';
+
+const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
+    tree.walk((node) => {
+        if (typeof node === 'string' && node === '\n') {
+            return {
+                tag: 'br',
+                content: null,
+            };
+        }
+        return node;
+    });
+
+const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
+    ...tags,
+    url: (node) => ({
+        tag: 'a',
+        attrs: {
+            href: Object.keys(node.attrs as Record<string, string>)[0],
+            rel: 'noopener',
+            target: '_blank',
+        },
+        content: node.content,
+    }),
+    video: (node, { render }) => ({
+        tag: 'video',
+        attrs: {
+            controls: '',
+            preload: 'metadata',
+            poster: node.attrs?.poster,
+        },
+        content: render(
+            Object.entries({
+                webm: 'video/webm',
+                mp4: 'video/mp4',
+            }).map(([key, type]) => ({
+                tag: 'source',
+                attrs: {
+                    src: node.attrs?.[key],
+                    type,
+                },
+            }))
+        ),
+    }),
+}));
 
 export const handler = async (ctx) => {
     const { category = 'all', language = 'english' } = ctx.req.param();
@@ -25,14 +71,12 @@ export const handler = async (ctx) => {
         },
     });
 
-    const bbcodeParser = new bbcode.Parser();
-
     const items = response.events
-        .filter((item) => (category === 'updates' ? item.event_type === 12 : item.event_type !== 12))
+        .filter((item) => (category === 'updates' ? item.event_type === 12 : item.event_type))
         .slice(0, limit)
         .map((item) => {
             const title = item.event_name;
-            const description = bbcodeParser.toHTML(item.announcement_body.body);
+            const description = bbobHTML(item.announcement_body.body, [customPreset(), swapLinebreak]);
             const guid = `counter-strike-news-${item.gid}`;
 
             return {

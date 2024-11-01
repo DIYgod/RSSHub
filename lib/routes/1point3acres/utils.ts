@@ -5,7 +5,9 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import bbcode from 'bbcodejs';
+import type { BBobCoreTagNodeTree } from '@bbob/types';
+import bbobHTML from '@bbob/html';
+import presetHTML5 from '@bbob/preset-html5';
 
 const rootUrl = 'https://instant.1point3acres.com';
 const apiRootUrl = 'https://api.1point3acres.com';
@@ -15,6 +17,17 @@ const types = {
     hot: '热门帖子',
 };
 
+const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
+    tree.walk((node) => {
+        if (typeof node === 'string' && node === '\n') {
+            return {
+                tag: 'br',
+                content: null,
+            };
+        }
+        return node;
+    });
+
 const ProcessThreads = async (tryGet, apiUrl, order) => {
     const response = await got({
         method: 'get',
@@ -23,8 +36,6 @@ const ProcessThreads = async (tryGet, apiUrl, order) => {
             referer: rootUrl,
         },
     });
-
-    const bbcodeParser = new bbcode.Parser();
 
     const items = await Promise.all(
         response.data.threads.map((item) => {
@@ -48,20 +59,73 @@ const ProcessThreads = async (tryGet, apiUrl, order) => {
                         },
                     });
 
-                    const data = detailResponse.data;
+                    const thread = detailResponse.data.thread;
 
-                    result.description = bbcodeParser.toHTML(data.thread.message_bbcode);
+                    const customPreset = presetHTML5.extend((tags) => ({
+                        ...tags,
+                        attach: (node, { render }) => {
+                            const id = render(node.content);
+                            const attachment = thread.attachment_list.find((a) => a.aid === Number.parseInt(id));
 
-                    for (const a of data.thread.attachment_list) {
-                        if (a.isimage === 1) {
-                            result.description = result.description.replaceAll(
-                                new RegExp(`\\[attach\\]${a.aid}\\[\\/attach\\]`, 'g'),
-                                art(path.join(__dirname, 'templates/image.art'), {
-                                    url: a.url,
-                                    height: a.height,
-                                    width: a.width,
-                                })
-                            );
+                            if (attachment.isimage) {
+                                return {
+                                    tag: 'img',
+                                    attrs: {
+                                        src: attachment.url,
+                                    },
+                                };
+                            }
+
+                            return {
+                                tag: 'a',
+                                attrs: {
+                                    href: `https://www.1point3acres.com/bbs/plugin.php?id=attachcenter:page&aid=${id}`,
+                                    rel: 'noopener',
+                                    target: '_blank',
+                                },
+                                content: `https://www.1point3acres.com/bbs/plugin.php?id=attachcenter:page&aid=${id}`,
+                            };
+                        },
+                        url: (node) => {
+                            const link = Object.keys(node.attrs as Record<string, string>)[0];
+                            if (link.startsWith('https://link.1p3a.com/?url=')) {
+                                const url = decodeURIComponent(link.replace('https://link.1p3a.com/?url=', ''));
+                                return {
+                                    tag: 'a',
+                                    attrs: {
+                                        href: url,
+                                        rel: 'noopener',
+                                        target: '_blank',
+                                    },
+                                    content: node.content,
+                                };
+                            }
+
+                            return {
+                                tag: 'a',
+                                attrs: {
+                                    href: link,
+                                    rel: 'noopener',
+                                    target: '_blank',
+                                },
+                                content: node.content,
+                            };
+                        },
+                    }));
+
+                    result.description = bbobHTML(thread.message_bbcode, [customPreset(), swapLinebreak]);
+
+                    if (!thread.message_bbcode.includes('[attach]') && thread.attachment_list.length > 0) {
+                        for (const a of thread.attachment_list) {
+                            result.description +=
+                                a.isimage === 1
+                                    ? '<br>' +
+                                      art(path.join(__dirname, 'templates/image.art'), {
+                                          url: a.url,
+                                          height: a.height,
+                                          width: a.width,
+                                      })
+                                    : '';
                         }
                     }
                 } catch {

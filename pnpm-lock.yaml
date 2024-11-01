@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@bbob/html':
+        specifier: 4.1.1
+        version: 4.1.1
+      '@bbob/preset-html5':
+        specifier: 4.1.1
+        version: 4.1.1
       '@hono/node-server':
         specifier: 1.13.3
         version: 1.13.3(hono@4.6.8)
@@ -59,9 +65,6 @@ importers:
       art-template:
         specifier: 4.13.2
         version: 4.13.2
-      bbcodejs:
-        specifier: 0.0.4
-        version: 0.0.4
       cheerio:
         specifier: 1.0.0
         version: 1.0.0
@@ -264,6 +267,9 @@ importers:
       '@babel/preset-typescript':
         specifier: 7.26.0
         version: 7.26.0(@babel/core@7.26.0)
+      '@bbob/types':
+        specifier: 4.1.1
+        version: 4.1.1
       '@eslint/eslintrc':
         specifier: 3.1.0
         version: 3.1.0
@@ -965,6 +971,27 @@ packages:
   '@babel/types@7.26.0':
     resolution: {integrity: sha512-Z/yiTPj+lDVnF7lWeKCIJzaIkI0vYO87dMpZ4bg4TDrFe4XXLFWL1TbXU27gBP3QccxV9mZICCrnjnYlJjXHOA==}
     engines: {node: '>=6.9.0'}
+
+  '@bbob/core@4.1.1':
+    resolution: {integrity: sha512-cH2Fi+K1R0lKlEcUk+vQbOWP3Lny+A/jyYvrN1pRL71TEdamvbvlb5vTT8dwtOs5hWKFxMsDOcIVchjVaZmiFg==}
+
+  '@bbob/html@4.1.1':
+    resolution: {integrity: sha512-u1PsKlsM9os+TI9zqB2jh3CdGuZrNcGCAII/ZocgoW/asu49OXWQrcGHheJqBbeZLRagXMHYTWJ+W/DvDEgZ3g==}
+
+  '@bbob/parser@4.1.1':
+    resolution: {integrity: sha512-pNSx4WWp9qBpUf8pgfINEAxtN0E829IPNdDioP8JNf2N3enFFrDWdkVq3TnEy2QWyTBhEA+n5ARMM+lSId1w5A==}
+
+  '@bbob/plugin-helper@4.1.1':
+    resolution: {integrity: sha512-Ew7V2Yym+Os6wtiR4Se1irudFY5wLSTZGRNy8CSPq3QqBMk1LDi7phQvj8SFfqFCElG/UDciQb07lE7KQpiqbA==}
+
+  '@bbob/preset-html5@4.1.1':
+    resolution: {integrity: sha512-9dgO0Jui2qYshObGezso9AU30dtFYGg0AfvxDONATkL+1lBpIvwUrL3Xj+gDUotAdRw6QHCaU0x+rplxa0CLnA==}
+
+  '@bbob/preset@4.1.1':
+    resolution: {integrity: sha512-Qas/hd1jOoZiux9LyPDStxxbSM/qVyts3ZJmFFHa3uzT0d7mKrnHjnI7qahHdo7Ry8CyrvGDDD8qL2A4bIfMqA==}
+
+  '@bbob/types@4.1.1':
+    resolution: {integrity: sha512-QnA0S8YpnEUFBV8KbU5DnqydDJaIFyxp656sWGLtvHqkxNGOOSRWc1m1YqFqfrHM7tmphr4AQybFeHqE1a2/2w==}
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
@@ -2211,9 +2238,6 @@ packages:
   basic-ftp@5.0.5:
     resolution: {integrity: sha512-4Bcg1P8xhUuqcii/S0Z9wiHIrQVPMermM1any+MX5GeGD7faD3/msQUDGLol9wOcz4/jbg/WJnGqoJF6LiBdtg==}
     engines: {node: '>=10.0.0'}
-
-  bbcodejs@0.0.4:
-    resolution: {integrity: sha512-y7dPUdqXMMUeR0bBv/9hcLTMwkBRuVCK+9aJgYGYvdkIdXBfrEiEiVw5Cg8iluRCG7YzLFWoX6VEmNe1HeP0wA==}
 
   bcrypt-pbkdf@1.0.2:
     resolution: {integrity: sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==}
@@ -6525,6 +6549,40 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
+  '@bbob/core@4.1.1':
+    dependencies:
+      '@bbob/parser': 4.1.1
+      '@bbob/plugin-helper': 4.1.1
+      '@bbob/types': 4.1.1
+
+  '@bbob/html@4.1.1':
+    dependencies:
+      '@bbob/core': 4.1.1
+      '@bbob/plugin-helper': 4.1.1
+      '@bbob/types': 4.1.1
+
+  '@bbob/parser@4.1.1':
+    dependencies:
+      '@bbob/plugin-helper': 4.1.1
+      '@bbob/types': 4.1.1
+
+  '@bbob/plugin-helper@4.1.1':
+    dependencies:
+      '@bbob/types': 4.1.1
+
+  '@bbob/preset-html5@4.1.1':
+    dependencies:
+      '@bbob/plugin-helper': 4.1.1
+      '@bbob/preset': 4.1.1
+      '@bbob/types': 4.1.1
+
+  '@bbob/preset@4.1.1':
+    dependencies:
+      '@bbob/plugin-helper': 4.1.1
+      '@bbob/types': 4.1.1
+
+  '@bbob/types@4.1.1': {}
+
   '@bcoe/v8-coverage@0.2.3': {}
 
   '@bundled-es-modules/cookie@2.0.0':
@@ -7742,8 +7800,6 @@ snapshots:
   base64-js@1.5.1: {}
 
   basic-ftp@5.0.5: {}
-
-  bbcodejs@0.0.4: {}
 
   bcrypt-pbkdf@1.0.2:
     dependencies:
