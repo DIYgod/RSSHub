@@ -50,6 +50,8 @@
         "*.yml": "eslint --cache --fix"
     },
     "dependencies": {
+        "@bbob/html": "4.1.1",
+        "@bbob/preset-html5": "4.1.1",
         "@hono/node-server": "1.13.3",
         "@hono/zod-openapi": "0.16.4",
         "@notionhq/client": "2.2.15",
@@ -137,6 +139,7 @@
     "devDependencies": {
         "@babel/preset-env": "7.26.0",
         "@babel/preset-typescript": "7.26.0",
+        "@bbob/types": "4.1.1",
         "@eslint/eslintrc": "3.1.0",
         "@eslint/js": "9.13.0",
         "@microsoft/eslint-formatter-sarif": "3.1.0",
@@ -192,7 +195,7 @@
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
-    "packageManager": "pnpm@9.12.2",
+    "packageManager": "pnpm@9.12.3",
     "engines": {
         "node": ">=22"
     }
