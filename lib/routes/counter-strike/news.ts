@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import type { BBobCoreTagNodeTree } from '@bbob/types';
+import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -18,7 +18,7 @@ const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
         return node;
     });
 
-const customPreset = presetHTML5.extend((tags) => ({
+const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     ...tags,
     url: (node) => ({
         tag: 'a',
@@ -34,7 +34,7 @@ const customPreset = presetHTML5.extend((tags) => ({
         attrs: {
             controls: '',
             preload: 'metadata',
-            poster: node.attrs.poster,
+            poster: node.attrs?.poster,
         },
         content: render(
             Object.entries({
@@ -43,7 +43,7 @@ const customPreset = presetHTML5.extend((tags) => ({
             }).map(([key, type]) => ({
                 tag: 'source',
                 attrs: {
-                    src: node.attrs[key],
+                    src: node.attrs?.[key],
                     type,
                 },
             }))
