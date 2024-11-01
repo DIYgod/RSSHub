@@ -38,6 +38,7 @@ export const route: Route = {
 | 通知公告 | 4528 |
 | 美誉工大 | 5389 |
 | 智库工大 | 5390 |
+| 工大校历 | 4520 |
 | 校区班车 | xqbc |`,
 };
 
@@ -60,7 +61,16 @@ async function handler(ctx) {
                 } else if (!link.startsWith('http')) {
                     link = rootUrl.slice(0, -1) + link;
                 }
-                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), +8);
+                const date_text = cheerioItem.find('.news_meta').text();
+                if (!date_text) {
+                    // This should not be included, return an empty item to filter out
+                    return {
+                        title: '',
+                        link: '',
+                        pubDate: Date.now(),
+                    };
+                }
+                const pubDate = timezone(parseDate(date_text), +8);
 
                 return {
                     title,
