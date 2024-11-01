@@ -12,4 +12,5 @@ GitHub provides some official RSS feeds:
 -   Private feed: \`https://github.com/:user.private.atom?token=:secret\` (You can find **Subscribe to your news feed** in [dashboard](https://github.com) page after login)
 -   Wiki history: \`https://github.com/:owner/:repo/wiki.atom\`
 :::`,
+    lang: 'en',
 };

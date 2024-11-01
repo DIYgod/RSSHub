@@ -111,4 +111,5 @@ export const namespace: Namespace = {
 | 爱丁堡     | \`/embassy/uk/edinburgh\`  |
 | 贝尔法斯特 | \`/embassy/uk/belfast\`    |
 | 曼彻斯特   | \`/embassy/uk/manchester\` |`,
+    lang: 'zh-CN',
 };

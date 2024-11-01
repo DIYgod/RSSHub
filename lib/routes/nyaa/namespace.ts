@@ -13,4 +13,5 @@ The 'Nyaa' includes several routes to access different parts of the site:
 5. \`/nyaa/sukebei/user/:username?\` - Access an adult content user's profile, e.g., \`/nyaa/sukebei/user/milannews\`.
 6. \`/nyaa/sukebei/user/:username/search/:query?\` - Search within a specific user's adult content submissions, e.g., \`/nyaa/sukebei/user/milannews/search/hentai\`.
 :::`,
+    lang: 'en',
 };

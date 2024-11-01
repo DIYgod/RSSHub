@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'accessbriefing.com',
     categories: ['new-media'],
     description: '',
+    lang: 'en',
 };

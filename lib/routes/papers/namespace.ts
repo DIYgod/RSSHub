@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'papers.cool',
     categories: ['journal'],
     description: '',
+    lang: 'en',
 };

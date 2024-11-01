@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'the.bi',
     categories: ['new-media'],
     description: '',
+    lang: 'en',
 };

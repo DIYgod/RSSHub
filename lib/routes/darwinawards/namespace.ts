@@ -4,4 +4,5 @@ export const namespace: Namespace = {
     name: 'Darwin Awards',
     url: 'darwinawards.com',
     categories: ['other'],
+    lang: 'en',
 };

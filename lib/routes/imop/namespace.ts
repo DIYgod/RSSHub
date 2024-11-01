@@ -7,4 +7,5 @@ export const namespace: Namespace = {
     zh: {
         name: '千橡游戏',
     },
+    lang: 'zh-CN',
 };

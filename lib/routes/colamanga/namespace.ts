@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     zh: {
         name: '可乐漫画',
     },
+    lang: 'zh-CN',
 };

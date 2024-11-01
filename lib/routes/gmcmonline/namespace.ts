@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'gmcmonline.com',
     categories: ['journal'],
     description: '',
+    lang: 'zh-CN',
 };

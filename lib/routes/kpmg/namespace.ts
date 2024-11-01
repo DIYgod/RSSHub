@@ -7,4 +7,5 @@ export const namespace: Namespace = {
     zh: {
         name: '毕马威',
     },
+    lang: 'en',
 };

@@ -39,4 +39,5 @@ export const namespace: Namespace = {
 的效果为
 
 <img loading="lazy" src="/img/readable-weibo.png" alt="微博小秘书的可读微博 RSS" />`,
+    lang: 'zh-CN',
 };

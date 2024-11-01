@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     description: `:::tip
 It's highly recommended to deploy with Redis cache enabled.
 :::`,
+    lang: 'en',
 };

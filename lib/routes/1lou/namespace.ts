@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: '1lou.me',
     categories: ['multimedia'],
     description: '',
+    lang: 'zh-CN',
 };

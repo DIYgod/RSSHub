@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'luolei.org',
     categories: ['blog'],
     description: '',
+    lang: 'zh-CN',
 };

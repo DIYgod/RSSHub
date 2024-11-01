@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     description: `:::tip
 TokenInsight also provides official RSS, you can take a look at [https://api.tokeninsight.com/reference/rss](https://api.tokeninsight.com/reference/rss).
 :::`,
+    lang: 'en',
 };

@@ -8,4 +8,5 @@ export const namespace: Namespace = {
 :::warning
 付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
 :::`,
+    lang: 'zh-HK',
 };

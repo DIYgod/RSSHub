@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     description: `:::tip
 官方提供了混合的主页资讯 RSS: [https://api.anquanke.com/data/v1/rss](https://api.anquanke.com/data/v1/rss)
 :::`,
+    lang: 'zh-CN',
 };

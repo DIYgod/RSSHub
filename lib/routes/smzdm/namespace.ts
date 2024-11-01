@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     description: `:::tip
 网站也提供了部分 RSS: [https://www.smzdm.com/dingyue](https://www.smzdm.com/dingyue)
 :::`,
+    lang: 'zh-CN',
 };

@@ -45,4 +45,5 @@ Currently supports two authentication methods:
 
 - Using \`TWITTER_USERNAME\` \`TWITTER_PASSWORD\` and \`TWITTER_AUTHENTICATION_SECRET\`: Configure a comma-separated list of Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.
 `,
+    lang: 'en',
 };

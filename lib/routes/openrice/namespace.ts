@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'www.openrice.com',
     categories: ['shopping'],
     description: '美食網站Openrice相关資訊',
+    lang: 'zh-HK',
 };

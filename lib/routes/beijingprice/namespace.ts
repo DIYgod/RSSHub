@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'beijingprice.cn',
     categories: ['government'],
     description: '',
+    lang: 'zh-CN',
 };

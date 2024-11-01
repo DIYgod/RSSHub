@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     description: `:::tip
 You can use some RSS parsing libraries (like \`feedpraser\` in \`Python\`) to receive the video update messages and download them automatically
 :::`,
+    lang: 'ja',
 };

@@ -9,4 +9,5 @@ export const namespace: Namespace = {
     ja: {
         name: '日本郵便',
     },
+    lang: 'ja',
 };

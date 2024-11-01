@@ -14,4 +14,5 @@ For more information about LMU and their job offerings, visit their official web
     zh: {
         name: '慕尼黑大学',
     },
+    lang: 'de',
 };

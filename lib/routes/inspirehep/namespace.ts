@@ -4,4 +4,5 @@ export const namespace: Namespace = {
     name: 'INSPIRE',
     url: 'inspirehep.net',
     categories: ['journal'],
+    lang: 'en',
 };

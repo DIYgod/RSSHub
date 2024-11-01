@@ -15,4 +15,5 @@ informed AI RSS feeds:
     zh: {
         name: '知闻AI',
     },
+    lang: 'en',
 };

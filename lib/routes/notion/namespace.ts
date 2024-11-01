@@ -10,4 +10,5 @@ Need to set up Notion integration, please refer to [Route-specific Configuration
 :::tip Recommendation
 It is recommended to use with clipping tools such as Notion Web Clipper.
 :::`,
+    lang: 'en',
 };
