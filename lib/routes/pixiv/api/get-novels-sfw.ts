@@ -139,7 +139,15 @@ export async function getNonR18Novels(id: string, limit: number = 100, fullConte
         Object.values(data.body.works).map(async (item) => {
             const baseItem = {
                 title: item.title,
-                description: `<img src=${pixivUtils.getProxiedImageUrl(item.url)}>${item.description}`,
+                description: `
+                    <img src=${pixivUtils.getProxiedImageUrl(item.url)} />
+                    <p>${item.description}</p>
+                    <p>
+                    字數：${item.textCount}<br>
+                    閱讀時間：${item.readingTime} 分鐘<br>
+                    收藏數：${item.bookmarkCount}<br>
+                    </p>
+                `,
                 link: `${baseUrl}/novel/show.php?id=${item.id}`,
                 author: item.userName,
                 pubDate: parseDate(item.createDate),
