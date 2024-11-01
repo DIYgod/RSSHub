@@ -80,6 +80,8 @@ const ProcessThreads = async (tryGet, apiUrl, order) => {
                                 tag: 'a',
                                 attrs: {
                                     href: `https://www.1point3acres.com/bbs/plugin.php?id=attachcenter:page&aid=${id}`,
+                                    rel: 'noopener',
+                                    target: '_blank',
                                 },
                                 content: `https://www.1point3acres.com/bbs/plugin.php?id=attachcenter:page&aid=${id}`,
                             };
