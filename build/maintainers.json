@@ -118,11 +118,6 @@
   "/1point3acres/section/:id?/:type?/:order?": [
     "nczitzk"
   ],
-  "/1point3acres/post/:type?/:order?": [
-    "EthanWng97",
-    "DIYgod",
-    "nczitzk"
-  ],
   "/1point3acres/thread/:type?/:order?": [
     "EthanWng97",
     "DIYgod",

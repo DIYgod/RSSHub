@@ -1266,29 +1266,13 @@
         "description": "分区\n\n  | 分区     | id  |\n  | -------- | --- |\n  | 留学申请 | 257 |\n  | 世界公民 | 379 |\n  | 投资理财 | 400 |\n  | 生活干货 | 31  |\n  | 职场达人 | 345 |\n  | 人际关系 | 391 |\n  | 海外求职 | 38  |\n  | 签证移民 | 265 |\n\n  分类\n\n  | 热门帖子 | 最新帖子 |\n  | -------- | -------- |\n  | hot      | new      |\n\n  排序方式\n\n  | 最新回复 | 最新发布 |\n  | -------- | -------- |\n  |          | post     |",
         "location": "section.ts"
       },
-      "/post/:type?/:order?": {
-        "path": [
-          "/post/:type?/:order?",
-          "/thread/:type?/:order?"
-        ],
-        "name": "帖子",
-        "categories": [
-          "bbs"
-        ],
-        "maintainers": [
-          "EthanWng97",
-          "DIYgod",
-          "nczitzk"
-        ],
-        "url": "instant.1point3acres.com/",
-        "description": "分类\n\n  | 热门帖子 | 最新帖子 |\n  | -------- | -------- |\n  | hot      | new      |\n\n  排序方式\n\n  | 最新回复 | 最新发布 |\n  | -------- | -------- |\n  |          | post     |",
-        "location": "thread.ts"
-      },
       "/thread/:type?/:order?": {
-        "path": [
-          "/post/:type?/:order?",
-          "/thread/:type?/:order?"
-        ],
+        "path": "/thread/:type?/:order?",
+        "example": "/1point3acres/thread/hot",
+        "parameters": {
+          "type": "帖子分类, 见下表，默认为 hot，即热门帖子",
+          "order": "排序方式，见下表，默认为空，即最新回复"
+        },
         "name": "帖子",
         "categories": [
           "bbs"
