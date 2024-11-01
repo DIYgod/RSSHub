@@ -96,7 +96,7 @@
         "jsdom": "25.0.1",
         "json-bigint": "1.0.0",
         "jsrsasign": "10.9.0",
-        "lru-cache": "11.0.1",
+        "lru-cache": "11.0.2",
         "lz-string": "1.5.0",
         "mailparser": "3.7.1",
         "markdown-it": "14.1.0",
@@ -194,7 +194,7 @@
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
-    "packageManager": "pnpm@9.12.2",
+    "packageManager": "pnpm@9.12.3",
     "engines": {
         "node": ">=22"
     }
