@@ -65,9 +65,6 @@ importers:
       art-template:
         specifier: 4.13.2
         version: 4.13.2
-      bbcodejs:
-        specifier: 0.0.4
-        version: 0.0.4
       cheerio:
         specifier: 1.0.0
         version: 1.0.0
@@ -2241,9 +2238,6 @@ packages:
   basic-ftp@5.0.5:
     resolution: {integrity: sha512-4Bcg1P8xhUuqcii/S0Z9wiHIrQVPMermM1any+MX5GeGD7faD3/msQUDGLol9wOcz4/jbg/WJnGqoJF6LiBdtg==}
     engines: {node: '>=10.0.0'}
-
-  bbcodejs@0.0.4:
-    resolution: {integrity: sha512-y7dPUdqXMMUeR0bBv/9hcLTMwkBRuVCK+9aJgYGYvdkIdXBfrEiEiVw5Cg8iluRCG7YzLFWoX6VEmNe1HeP0wA==}
 
   bcrypt-pbkdf@1.0.2:
     resolution: {integrity: sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==}
@@ -7806,8 +7800,6 @@ snapshots:
   base64-js@1.5.1: {}
 
   basic-ftp@5.0.5: {}
-
-  bbcodejs@0.0.4: {}
 
   bcrypt-pbkdf@1.0.2:
     dependencies:
