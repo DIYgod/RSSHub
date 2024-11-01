@@ -1071,7 +1071,7 @@
     ]
   },
   "acs.org": {
-    "_name": "Unknown",
+    "_name": "ACS Publications",
     "pubs": [
       {
         "title": "Unknown",
@@ -5960,7 +5960,7 @@
     ]
   },
   "chlinlearn.top": {
-    "_name": "chlinlearn的技术博客",
+    "_name": "chlinlearn 的技术博客",
     "daily-blog": [
       {
         "title": "值得一读技术博客",
@@ -8652,7 +8652,7 @@
     ]
   },
   "sdo.com": {
-    "_name": "FINAL FANTASY XIV 最终幻想 14",
+    "_name": "FINAL FANTASY XIV",
     "ff.web": [
       {
         "title": "最终幻想 14 国服",
@@ -14636,7 +14636,7 @@
     ]
   },
   "infzm.com": {
-    "_name": "infzm",
+    "_name": "南方周末",
     ".": [
       {
         "title": "热门文章",
@@ -16033,7 +16033,7 @@
     ]
   },
   "linkedin.com": {
-    "_name": "LinkedIn 领英",
+    "_name": "LinkedIn",
     "www": [
       {
         "title": "Jobs",
@@ -16486,7 +16486,7 @@
     ]
   },
   "malaysiakini.com": {
-    "_name": "Malaysiakini 当今大马",
+    "_name": "Malaysiakini",
     ".": [
       {
         "title": "News",
@@ -19616,7 +19616,7 @@
     ]
   },
   "nationalgeographic.com": {
-    "_name": "国家地理",
+    "_name": "National Geographic",
     ".": [
       {
         "title": "Daily Photo",
@@ -19648,7 +19648,7 @@
     ]
   },
   "natgeomedia.com": {
-    "_name": "国家地理",
+    "_name": "National Geographic",
     ".": [
       {
         "title": "分类",
@@ -21374,7 +21374,7 @@
     ]
   },
   "openwrt.org": {
-    "_name": "Unknown",
+    "_name": "OpenWrt",
     ".": [
       {
         "title": "Unknown",
@@ -26242,7 +26242,7 @@
     ]
   },
   "taiwannews.com.tw": {
-    "_name": "Taiwan News 台灣英文新聞",
+    "_name": "Taiwan News",
     ".": [
       {
         "title": "Hot News",
@@ -27336,7 +27336,7 @@
     ]
   },
   "uber.com": {
-    "_name": "Uber 优步",
+    "_name": "Uber",
     "www": [
       {
         "title": "Engineering",
@@ -27923,7 +27923,7 @@
     ]
   },
   "vom.mn": {
-    "_name": "Voice of Mongolia 蒙古之声",
+    "_name": "Voice of Mongolia",
     ".": [
       {
         "title": "News",
