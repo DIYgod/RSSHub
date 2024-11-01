@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/blog',
     categories: ['blog', 'programming'],
-    example: '/aimeta/blog',
+    example: '/meta/blog',
     radar: [{ source: ['ai.meta.com/blog/'] }],
     name: 'Blog',
     maintainers: ['canonnizq'],
