@@ -1,7 +1,8 @@
 import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import { load } from 'cheerio';
+import logger from '@/utils/logger';
+import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/blog',
@@ -16,7 +17,23 @@ export const route: Route = {
 async function handler() {
     const baseUrl = 'https://ai.meta.com';
 
-    const response = await ofetch(`${baseUrl}/blog/`);
+    const browser = await puppeteer();
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    
+    page.on('request', (request) => {
+        request.resourceType() === 'document' ? request.continue() : request.abort();
+    });
+
+    const link = `${baseUrl}/blog/`;
+    logger.http(`Requesting ${link}`);
+    await page.goto(link, {
+        waitUntil: 'domcontentloaded',
+    });
+
+    const response = await page.content();
+    page.close();
+
     const $ = load(response);
 
     const items = $('div._ams_')
@@ -27,6 +44,8 @@ async function handler() {
             description: $(item).find('div._4ik4._4ik5 p._amt3').text(),
             pubDate: parseDate($(item).find('p._amt4').text())
     }));
+
+    browser.close();
 
     return {
         title: 'AI at Meta Blog',
