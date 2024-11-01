@@ -22,6 +22,16 @@ for (const namespace in namespaces) {
     }
 }
 
+const ParamsSchema = z.object({
+    category: z.string().openapi({
+        param: {
+            name: 'category',
+            in: 'path',
+        },
+        example: 'popular',
+    }),
+});
+
 const QuerySchema = z.object({
     categories: z
         .string()
@@ -36,20 +46,11 @@ const route = createRoute({
     tags: ['Category'],
     request: {
         query: QuerySchema,
-        params: z.object({
-            category: z.string(),
-        }),
+        params: ParamsSchema,
     },
     responses: {
         200: {
-            description: 'Namespace list by categories',
-            content: {
-                'application/json': {
-                    schema: z.object({
-                        data: z.record(z.string(), z.any()),
-                    }),
-                },
-            },
+            description: 'Namespace list by categories and language',
         },
     },
 });
