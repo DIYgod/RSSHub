@@ -82,7 +82,7 @@ async function handler(ctx) {
         title: `${profile.displayName} (@${profile.handle}) — Bluesky`,
         description: profile.description?.replaceAll('\n', ' '),
         link: `https://bsky.app/profile/${profile.handle}`,
-        image: profile.banner,
+        image: profile.avatar,
         icon: profile.avatar,
         logo: profile.avatar,
         item: items,

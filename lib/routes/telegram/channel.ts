@@ -121,10 +121,6 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
 };
 
 async function handler(ctx) {
-    if (ctx.req.param('routeParams') && config.telegram.session) {
-        return tglibchannel(ctx);
-    }
-
     const username = ctx.req.param('username');
     let routeParams = ctx.req.param('routeParams');
     let showLinkPreview = true;
