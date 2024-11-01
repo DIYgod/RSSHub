@@ -39,8 +39,14 @@ refresh_token after Pixiv login, required for accessing R18 novels
     },
     radar: [
         {
+            title: 'Novel 簡介 Basic info',
             source: ['www.pixiv.net/users/:id/novels'],
             target: '/user/novels/:id',
+        },
+        {
+            title: 'Novel 全文 Full text',
+            source: ['www.pixiv.net/users/:id/novels'],
+            target: '/user/novels/:id/true',
         },
     ],
     name: 'User Novels',
