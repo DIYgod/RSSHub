@@ -61,8 +61,8 @@ async function handler(ctx) {
                 } else if (!link.startsWith('http')) {
                     link = rootUrl.slice(0, -1) + link;
                 }
-                const date_text = cheerioItem.find('.news_meta').text();
-                if (!date_text) {
+                const dateText = cheerioItem.find('.news_meta').text();
+                if (!dateText) {
                     // This should not be included, return an empty item to filter out
                     return {
                         title: '',
@@ -70,7 +70,7 @@ async function handler(ctx) {
                         pubDate: Date.now(),
                     };
                 }
-                const pubDate = timezone(parseDate(date_text), +8);
+                const pubDate = timezone(parseDate(dateText), +8);
 
                 return {
                     title,
