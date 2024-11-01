@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -9,9 +9,24 @@ const baseURL = 'https://yysub.net';
 
 export const route: Route = {
     path: '/article/:type?',
-    categories: ['multimedia'],
+    categories: ['multimedia', 'popular'],
+    view: ViewType.Articles,
     example: '/yyets/article',
-    parameters: { type: '[' },
+    parameters: {
+        type: {
+            description: '类型',
+            options: [
+                { value: 'all', label: '全部' },
+                { value: 'news', label: '影视资讯' },
+                { value: 'report', label: '收视快报' },
+                { value: 'm_review', label: '人人影评' },
+                { value: 't_review', label: '人人剧评' },
+                { value: 'new_review', label: '新剧评测' },
+                { value: 'recom', label: '片单推荐' },
+            ],
+            default: 'all',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
