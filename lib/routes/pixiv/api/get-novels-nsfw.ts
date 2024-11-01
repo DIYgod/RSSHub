@@ -3,8 +3,9 @@ import { maskHeader } from '../constants';
 import queryString from 'query-string';
 import { config } from '@/config';
 import { load } from 'cheerio';
-import getIllustDetail from './get-illust-detail';
+import { JSDOM, VirtualConsole } from 'jsdom';
 
+import getIllustDetail from './get-illust-detail';
 import pixivUtils from '../utils';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
@@ -143,22 +144,16 @@ export async function getNovelDetail(novel_id: string, token: string): Promise<n
             }),
         });
 
-        const $ = load(response.data);
-        let novelDetail: nsfwNovelDetail | undefined;
+        const virtualConsole = new VirtualConsole().on('error', () => void 0);
 
-        $('script').each((_, script) => {
-            const content = $(script).html() || '';
-            if (content.includes("Object.defineProperty(window, 'pixiv'")) {
-                const match = content.match(/novel:\s*({[\s\S]*?}),\s*isOwnWork/);
-                if (match) {
-                    try {
-                        novelDetail = JSON.parse(match[1]) as nsfwNovelDetail;
-                    } catch (error) {
-                        throw new Error(`Failed to parse novel data: ${error instanceof Error ? error.message : String(error)}`);
-                    }
-                }
-            }
+        const { window } = new JSDOM(response.data, {
+            runScripts: 'dangerously',
+            virtualConsole,
         });
+
+        const novelDetail = window.pixiv?.novel as nsfwNovelDetail;
+
+        window.close();
 
         if (!novelDetail) {
             throw new Error('No novel data found');
