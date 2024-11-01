@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'joins.com',
     categories: ['traditional-media'],
     description: '',
+    lang: 'ko',
 };

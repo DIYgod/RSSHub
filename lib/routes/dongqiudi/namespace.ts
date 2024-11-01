@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     description: `:::tip
 -   可以通过头条新闻 + 参数过滤的形式获得早报、专题等内容。
 :::`,
+    lang: 'zh-CN',
 };
