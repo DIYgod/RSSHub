@@ -77,15 +77,15 @@ async function handler(ctx): Promise<Data> {
 
     // Use R18 API first if auth exists
     if (hasPixivAuth()) {
-        return await getR18Novels(id, fullContent);
+        return await getR18Novels(id, fullContent, limit);
     }
 
     // Attempt non-R18 API when Pixiv auth is missing
-    const nonR18Result = await getNonR18Novels(id, limit, fullContent).catch(() => null);
+    const nonR18Result = await getNonR18Novels(id, fullContent, limit).catch(() => null);
     if (nonR18Result) {
         return nonR18Result;
     }
 
     // Fallback to R18 API as last resort
-    return await getR18Novels(id, fullContent);
+    return await getR18Novels(id, fullContent, limit);
 }

@@ -267,16 +267,9 @@ export async function parseNovelContent(novelDetail: nsfwNovelDetail, token: str
 
 function convertPixivProtocolExtended(caption: string): string {
     const protocolMap = new Map([
-        // 小說鏈接 Novel links
         [/pixiv:\/\/novels\/(\d+)/g, 'https://www.pixiv.net/novel/show.php?id=$1'],
-
-        // 插畫鏈接 Illustration links
         [/pixiv:\/\/illusts\/(\d+)/g, 'https://www.pixiv.net/artworks/$1'],
-
-        // 用戶鏈接 User links
         [/pixiv:\/\/users\/(\d+)/g, 'https://www.pixiv.net/users/$1'],
-
-        // 小說系列鏈接 Novel series links
         [/pixiv:\/\/novel\/series\/(\d+)/g, 'https://www.pixiv.net/novel/series/$1'],
     ]);
 
@@ -289,7 +282,7 @@ function convertPixivProtocolExtended(caption: string): string {
     return convertedText;
 }
 
-export async function getR18Novels(id: string, fullContent: boolean) {
+export async function getR18Novels(id: string, fullContent: boolean, limit: number = 100) {
     if (!config.pixiv || !config.pixiv.refreshToken) {
         throw new ConfigNotFoundError(
             '該用戶爲 R18 創作者，需要 PIXIV_REFRESHTOKEN。This user is an R18 creator, PIXIV_REFRESHTOKEN is required - pixiv RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>'
@@ -302,7 +295,7 @@ export async function getR18Novels(id: string, fullContent: boolean) {
     }
 
     const response = await getNovels(id, token);
-    const novels = response.data.novels;
+    const novels = limit ? response.data.novels.slice(0, limit) : response.data.novels;
     const username = novels[0].user.name;
 
     const items = await Promise.all(

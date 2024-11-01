@@ -111,7 +111,7 @@ async function getNovelFullContent(novelId: string): Promise<{ content: string; 
         images,
     };
 }
-export async function getNonR18Novels(id: string, limit: number = 100, fullContent: boolean) {
+export async function getNonR18Novels(id: string, fullContent: boolean, limit: number = 100) {
     const url = `${baseUrl}/users/${id}/novels`;
     const { data: allData } = await got(`${baseUrl}/ajax/user/${id}/profile/all`, {
         headers: {
