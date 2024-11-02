@@ -30151,7 +30151,8 @@
         },
         "name": "News",
         "maintainers": [
-          "zoenglinghou"
+          "zoenglinghou",
+          "pseudoyu"
         ],
         "location": "news.ts"
       },
