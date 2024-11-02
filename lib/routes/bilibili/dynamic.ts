@@ -117,6 +117,7 @@ const getIframe = (data?: Modules, embed: boolean = true) => {
     if (aid === undefined && bvid === undefined) {
         return '';
     }
+    // 不通过 utils.renderUGCDescription 渲染 img/description 以兼容其他格式的动态
     return utils.renderUGCDescription(embed, '', '', aid, undefined, bvid);
 };
 
@@ -146,7 +147,10 @@ const getImgs = (data?: Modules) => {
     if (major[type]?.cover) {
         imgUrls.push(major[type].cover);
     }
-    return imgUrls.map((url) => `<img src="${url}">`).join('');
+    return imgUrls
+        .filter(Boolean)
+        .map((url) => `<img src="${url}">`)
+        .join('');
 };
 
 const getUrl = (item?: Item2, useAvid = false) => {
@@ -354,10 +358,9 @@ async function handler(ctx) {
                 // 换行处理
                 description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
                 originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
-
-                const descriptions = [description, originDescription, urlText, originUrlText, getIframe(data, embed), getIframe(origin, embed), getImgs(data), getImgs(origin)]
-                    .filter(Boolean)
+                const descriptions = [description, getIframe(data, embed), getImgs(data), urlText, originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
                     .map((e) => e?.trim())
+                    .filter(Boolean)
                     .join('<br>');
 
                 return {
