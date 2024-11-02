@@ -4515,6 +4515,9 @@
   "/nicovideo/user/:id/video/:embed?": [
     "TonyRL"
   ],
+  "/nielsberglund/blog": [
+    "liyaozhong"
+  ],
   "/nifd/research/:categoryGuid?": [
     "Fatpandac"
   ],

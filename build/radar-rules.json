@@ -20629,6 +20629,19 @@
       }
     ]
   },
+  "nielsberglund.com": {
+    "_name": "Niels Berglund Blog",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/nielsberglund/blog"
+      }
+    ]
+  },
   "nikkei.com": {
     "_name": "The Nikkei 日本経済新聞",
     "www": [

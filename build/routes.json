@@ -55181,6 +55181,34 @@
     ],
     "lang": "ja"
   },
+  "nielsberglund": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/nielsberglund/blog",
+        "radar": [
+          {
+            "source": [
+              "nielsberglund.com/"
+            ]
+          }
+        ],
+        "url": "nielsberglund.com/",
+        "name": "Blog",
+        "maintainers": [
+          "liyaozhong"
+        ],
+        "description": "Niels Berglund Blog Posts",
+        "location": "index.ts"
+      }
+    },
+    "name": "Niels Berglund Blog",
+    "url": "nielsberglund.com",
+    "lang": "en"
+  },
   "nifd": {
     "routes": {
       "/research/:categoryGuid?": {
