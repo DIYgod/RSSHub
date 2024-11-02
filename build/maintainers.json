@@ -1401,6 +1401,9 @@
   "/cngal/weekly": [
     "chengyuhui"
   ],
+  "/cngold/:category?": [
+    "nczitzk"
+  ],
   "/cnjxol/:category?/:id?": [],
   "/cnki/author/:code": [
     "harveyqiu",
