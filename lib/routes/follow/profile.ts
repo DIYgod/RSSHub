@@ -19,7 +19,7 @@ export const route: Route = {
         },
     ],
     handler,
-    maintainers: ['KarasuShin', 'DIYgod'],
+    maintainers: ['KarasuShin', 'DIYgod', 'DFobain'],
     features: {
         supportRadar: true,
     },
@@ -64,7 +64,7 @@ async function handler(ctx: Context): Promise<Data> {
                 category: subscription.category ? [subscription.category] : undefined,
             };
         }),
-        link: `https://app.follow.is/share/user/${handleOrId}`,
+        link: `https://app.follow.is/share/users/${handleOrId}`,
         image: profile.data.image,
     };
 }
