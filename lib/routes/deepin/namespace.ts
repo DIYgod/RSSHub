@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     zh: {
         name: '深度Linux',
     },
+    lang: 'zh-CN',
 };

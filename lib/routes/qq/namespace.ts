@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'qq.com',
     categories: ['new-media'],
     description: '',
+    lang: 'zh-CN',
 };
