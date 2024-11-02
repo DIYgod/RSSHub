@@ -10,9 +10,17 @@ export const route: Route = {
             source: ['phy.jlu.edu.cn/xzgz/tzgg'],
         },
     ],
-    name: '吉林大学物理学院 - 通知公告',
-    maintainers: ['tongyz'],
+    name: '物理学院 - 行政工作',
+    maintainers: ['tsurumi-yizhou'],
     url: 'phy.jlu.edu.cn',
+    description: `
+:::tip
+Provided In 行政工作：
+- 通知公告: [/jlu/phy/xzgz/tzgg](https://phy.jlu.edu.cn/xzgz/tzgg.htm)
+- 学院新闻: [/jlu/phy/xzgz/xyxw](https://phy.jlu.edu.cn/xzgz/xyxw.htm)
+- 学院文件: [/jlu/phy/xzgz/xywj](https://phy.jlu.edu.cn/xzgz/xywj.htm)
+:::
+    `,
     handler: handler((ctx) => {
         const { category } = ctx.req.param();
         return `https://phy.jlu.edu.cn/xzgz/${category}.htm`;
