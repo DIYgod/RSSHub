@@ -3,6 +3,7 @@ import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/blog',
@@ -20,7 +21,7 @@ async function handler() {
     const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
-    
+
     page.on('request', (request) => {
         request.resourceType() === 'document' ? request.continue() : request.abort();
     });
@@ -28,14 +29,13 @@ async function handler() {
     const link = `${baseUrl}/blog/`;
     logger.http(`Requesting ${link}`);
     await page.goto(link, {
-        waitUntil: 'domcontentloaded',
+        waitUntil: 'load',
     });
 
     const response = await page.content();
     page.close();
 
     const $ = load(response);
-
     const items = $('div._ams_')
         .toArray().map((item) => ({
             category: $(item).find('p._amt0').text(),
