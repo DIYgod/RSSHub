@@ -62,8 +62,8 @@ async function handler(ctx) {
         description: art(path.join(__dirname, 'templates/post.art'), {
             text: post.record.text.replaceAll('\n', '<br>'),
             embed: post.embed,
-            // embed.$type "app.bsky.embed.record#view" and "app.bsky.embed.recordWithMedia#view"
-            // are not handled
+            // embed.$type "app.bsky.embed.record#view" and "app.bsky.embed.recordWithMedia#view" are not handled
+            // "app.bsky.embed.video#view" is rendered as image
         }),
         author: post.author.displayName,
         pubDate: parseDate(post.record.createdAt),
@@ -82,7 +82,7 @@ async function handler(ctx) {
         title: `${profile.displayName} (@${profile.handle}) — Bluesky`,
         description: profile.description?.replaceAll('\n', ' '),
         link: `https://bsky.app/profile/${profile.handle}`,
-        image: profile.banner,
+        image: profile.avatar,
         icon: profile.avatar,
         logo: profile.avatar,
         item: items,
