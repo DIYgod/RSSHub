@@ -80,7 +80,9 @@ async function handler(ctx) {
                   .map((author) => author.trim())
                   .filter((author) => {
                       // Filter out empty strings and common suffixes
-                      if (!author) {return false;}
+                      if (!author) {
+                          return false;
+                      }
                       const suffixes = ['et al', 'et al.'];
                       return !suffixes.some((suffix) => author.toLowerCase().endsWith(suffix));
                   })
