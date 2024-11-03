@@ -15871,6 +15871,19 @@
       }
     ]
   },
+  "langchain.dev": {
+    "_name": "LangChain Blog",
+    "blog": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/langchain/blog"
+      }
+    ]
+  },
   "lanqiao.cn": {
     "_name": "蓝桥云课",
     ".": [

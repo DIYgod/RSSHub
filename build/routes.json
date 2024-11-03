@@ -45568,6 +45568,34 @@
     "url": "lang.live",
     "lang": "zh-CN"
   },
+  "langchain": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/langchain/blog",
+        "radar": [
+          {
+            "source": [
+              "blog.langchain.dev/"
+            ]
+          }
+        ],
+        "url": "blog.langchain.dev/",
+        "name": "Blog",
+        "maintainers": [
+          "liyaozhong"
+        ],
+        "description": "LangChain Blog Posts",
+        "location": "index.ts"
+      }
+    },
+    "name": "LangChain Blog",
+    "url": "blog.langchain.dev",
+    "lang": "en"
+  },
   "lanqiao": {
     "routes": {
       "/author/:uid": {
