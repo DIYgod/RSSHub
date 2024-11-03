@@ -160,7 +160,9 @@ export const twitterGot = async (
             const remaining = response.headers.get('x-rate-limit-remaining');
             const remainingInt = Number.parseInt(remaining || '0');
             const reset = response.headers.get('x-rate-limit-reset');
-            logger.debug(`twitter debug: twitter rate limit remaining for token ${auth?.token} is ${remaining} and reset at ${reset}`);
+            logger.debug(
+                `twitter debug: twitter rate limit remaining for token ${auth?.token} is ${remaining} and reset at ${reset}, auth: ${JSON.stringify(auth)}, status: ${response.status}, data: ${JSON.stringify(response._data?.data)}`
+            );
             if (auth) {
                 if (remaining && remainingInt < 2 && reset) {
                     const resetTime = new Date(Number.parseInt(reset) * 1000);
