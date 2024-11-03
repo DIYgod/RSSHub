@@ -12,7 +12,7 @@ export const route: Route = {
     maintainers: ['hyoban'],
     example: '/github/activity/DIYgod',
     categories: ['programming', 'popular'],
-    view: ViewType.Articles,
+    view: ViewType.Notifications,
     parameters: {
         user: 'GitHub username',
     },

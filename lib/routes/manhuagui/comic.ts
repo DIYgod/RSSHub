@@ -126,7 +126,7 @@ async function handler(ctx) {
         const items = chapters.map((element) => genResult(element));
         let itemsLen = items.length;
         if (chapterCnt > 0) {
-            itemsLen = chapterCnt < $.newChapterCnt ? $.newChapterCnt : chapterCnt;
+            itemsLen = Math.max(chapterCnt, $.newChapterCnt);
         }
 
         return {

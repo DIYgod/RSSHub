@@ -46,7 +46,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const host = 'https://gs.whu.edu.cn/';
-    const type = (ctx.params && Number.parseInt(ctx.req.param('type'))) || 0;
+    const paremType = ctx.req.param('type');
+    const type = paremType ? Number.parseInt(paremType) : 0;
     const response = await got(host + gsIndexMap.get(type));
 
     const $ = load(response.data);

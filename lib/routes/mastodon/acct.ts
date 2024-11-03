@@ -6,7 +6,17 @@ export const route: Route = {
     categories: ['social-media', 'popular'],
     view: ViewType.SocialMedia,
     example: '/mastodon/acct/Mastodon@mastodon.social/statuses',
-    parameters: { acct: 'Webfinger account URI, like `user@host`', only_media: 'whether only display media content, default to false, any value to true' },
+    parameters: {
+        acct: 'Webfinger account URI, like `user@host`',
+        only_media: {
+            description: 'whether only display media content, default to false, any value to true',
+            options: [
+                { value: 'true', label: 'true' },
+                { value: 'false', label: 'false' },
+            ],
+            default: 'false',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

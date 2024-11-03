@@ -44,7 +44,7 @@ async function handler() {
     const listItems = $('#list-content .list-item')
         .map(function () {
             return {
-                url: new URL($(this).find('> a.link').attr('href'), 'https://bbs.pku.edu.cn/v2').href,
+                url: new URL($(this).find('> a.link').attr('href'), 'https://bbs.pku.edu.cn/v2/').href,
                 title: $(this).find('.title').text(),
             };
         })

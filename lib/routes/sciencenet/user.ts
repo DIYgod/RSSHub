@@ -31,6 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://blog.sciencenet.cn';
     const currentUrl = `${rootUrl}/u/${id}`;
@@ -51,8 +52,9 @@ async function handler(ctx) {
     $ = load(response.data);
 
     let items = $('item')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
+        .slice(-limit)
         .toArray()
+        .reverse()
         .map((item) => {
             item = $(item);
 

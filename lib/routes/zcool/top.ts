@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,9 +8,18 @@ const baseUrl = 'https://www.zcool.com.cn';
 
 export const route: Route = {
     path: '/top/:type',
-    categories: ['design'],
+    categories: ['design', 'popular'],
+    view: ViewType.Pictures,
     example: '/zcool/top/design',
-    parameters: { type: '推荐类型,详见下面的表格' },
+    parameters: {
+        type: {
+            description: '推荐类型',
+            options: [
+                { value: 'design', label: '作品榜单' },
+                { value: 'article', label: '文章榜单' },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,11 +31,6 @@ export const route: Route = {
     name: '作品总榜单',
     maintainers: ['yuuow'],
     handler,
-    description: `榜单类型
-
-  | design   | article  |
-  | -------- | -------- |
-  | 作品榜单 | 文章榜单 |`,
 };
 
 async function handler(ctx) {

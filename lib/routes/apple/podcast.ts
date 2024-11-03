@@ -24,7 +24,7 @@ export const route: Route = {
     name: '播客',
     maintainers: ['Acring'],
     handler,
-    url: 'https://www.apple.com.cn/apple-podcasts/',
+    url: 'www.apple.com.cn/apple-podcasts/',
 };
 
 async function handler(ctx) {
@@ -36,29 +36,33 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const page_data = JSON.parse($('#shoebox-media-api-cache-amp-podcasts').text());
+    const serializedServerData = JSON.parse($('#serialized-server-data').text());
 
-    const data = JSON.parse(page_data[Object.keys(page_data)[0]]).d[0];
-    const attributes = data.attributes;
+    const seoEpisodes = serializedServerData[0].data.seoData.schemaContent.workExample;
+    const originEpisodes = serializedServerData[0].data.shelves.find((item) => item.contentType === 'episode').items;
+    const header = serializedServerData[0].data.shelves.find((item) => item.contentType === 'showHeaderRegular').items[0];
 
-    const episodes = data.relationships.episodes.data.map((item) => {
-        const attr = item.attributes;
+    const episodes = originEpisodes.map((item) => {
+        // Try to keep line breaks in the description
+        const matchedSeoEpisode = seoEpisodes.find((seoEpisode) => seoEpisode.name === item.title) || null;
+        const episodeDescription = (matchedSeoEpisode ? matchedSeoEpisode.description : item.summary).replaceAll('\n', '<br>');
+
         return {
-            title: attr.name,
-            enclosure_url: attr.assetUrl,
-            itunes_duration: attr.durationInMilliseconds / 1000,
+            title: item.title,
+            enclosure_url: item.playAction.episodeOffer.streamUrl,
             enclosure_type: 'audio/mp4',
-            link: attr.url,
-            pubDate: parseDate(attr.releaseDateTime),
-            description: attr.description.standard.replaceAll('\n', '<br>'),
+            itunes_duration: item.duration,
+            link: item.playAction.episodeOffer.storeUrl,
+            pubDate: parseDate(item.releaseDate),
+            description: episodeDescription,
         };
     });
 
     return {
-        title: attributes.name,
-        link: attributes.url,
-        itunes_author: attributes.artistName,
+        title: header.title,
+        link: header.contextAction.podcastOffer.storeUrl,
+        itunes_author: header.contextAction.podcastOffer.author,
         item: episodes,
-        description: attributes.description.standard,
+        description: header.description.replaceAll('\n', ' '),
     };
 }

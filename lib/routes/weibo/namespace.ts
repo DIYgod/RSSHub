@@ -30,6 +30,7 @@ export const namespace: Namespace = {
 | showEmojiInDescription     | 是否展示正文中的微博表情，关闭则替换为 \`[表情名]\`                  | 0/1/true/false | true                                |
 | showLinkIconInDescription  | 是否展示正文中的链接图标                                           | 0/1/true/false | true                                |
 | preferMobileLink           | 是否使用移动版链接（默认使用 PC 版）                               | 0/1/true/false | false                               |
+| showRetweeted              | 是否显示转发的微博                                                 | 0/1/true/false | true                               |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
@@ -38,4 +39,5 @@ export const namespace: Namespace = {
 的效果为
 
 <img loading="lazy" src="/img/readable-weibo.png" alt="微博小秘书的可读微博 RSS" />`,
+    lang: 'zh-CN',
 };

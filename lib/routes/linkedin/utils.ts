@@ -85,7 +85,8 @@ function parseJobSearch(data) {
 
     // Parse data
     const jobs = $('li')
-        .map((i, elem) => {
+        .toArray()
+        .map((elem) => {
             const elemHtml = $(elem);
             const link = elemHtml.find('a.base-card__full-link, a.base-card--link')?.attr('href')?.split('?')[0];
             const title = elemHtml.find('h3.base-search-card__title')?.text()?.trim();
@@ -94,8 +95,7 @@ function parseJobSearch(data) {
             const pubDate = elemHtml.find('time')?.attr('datetime');
 
             return new Job(title, link, company, location, pubDate);
-        })
-        .toArray();
+        });
     return jobs;
 }
 

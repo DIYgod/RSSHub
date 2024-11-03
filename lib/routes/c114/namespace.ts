@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'c114.com.cn',
     categories: ['new-media'],
     description: '',
+    lang: 'zh-CN',
 };

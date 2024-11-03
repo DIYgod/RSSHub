@@ -4,21 +4,21 @@ import queryString from 'query-string';
 
 export const route: Route = {
     path: '/post/popular_recent/:period?',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/yande/post/popular_recent/1d',
     parameters: {
         period: '展示时间',
     },
     radar: [
         {
-            source: ['yande.re/post/'],
+            source: ['yande.re/post'],
         },
     ],
-    name: 'posts',
-    maintainers: ['fashioncj'],
-    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     | 
-  | ------- | -------- | ------- | -------- | 
-  | 1d | 1w | 1m ｜1y｜`,
+    name: 'Popular Recent Posts',
+    maintainers: ['magic-akari', 'SettingDust', 'fashioncj', 'NekoAria'],
+    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     |
+  | ------- | -------- | ------- | -------- |
+  | 1d | 1w | 1m | 1y |`,
     handler,
 };
 
