@@ -161,7 +161,7 @@ export const twitterGot = async (
             const remainingInt = Number.parseInt(remaining || '0');
             const reset = response.headers.get('x-rate-limit-reset');
             logger.debug(
-                `twitter debug: twitter rate limit remaining for token ${auth?.token} is ${remaining} and reset at ${reset}, auth: ${JSON.stringify(auth)}, status: ${response.status}, data: ${JSON.stringify(response._data?.data)}`
+                `twitter debug: twitter rate limit remaining for token ${auth?.token} is ${remaining} and reset at ${reset}, auth: ${JSON.stringify(auth)}, status: ${response.status}, data: ${JSON.stringify(response._data?.data)}, cookie: ${JSON.stringify(dispatchers?.jar.serializeSync())}`
             );
             if (auth) {
                 if (remaining && remainingInt < 2 && reset) {
@@ -211,10 +211,10 @@ export const twitterGot = async (
         },
     });
 
-    // if (auth?.token) {
-    //     logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
-    //     await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers?.jar.serializeSync()), config.cache.contentExpire);
-    // }
+    if (auth?.token) {
+        logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
+        await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers?.jar.serializeSync()), config.cache.contentExpire);
+    }
 
     return response._data;
 };
