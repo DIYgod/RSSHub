@@ -55,7 +55,7 @@ function parseTableToJSON(tableHTML: string) {
             package: $(row).find('.package a').text().trim(),
             packageUrl: $(row).find('.package a').attr('href')?.trim(),
             description: $(row).find('.package a').attr('aria-label')?.trim(),
-            version: $(row).find('.version a').text().trim(),
+            version: $(row).find('.version').text().trim(),
             project: $(row).find('.url a').attr('href')?.trim(),
             license: $(row).find('.license').text().trim(),
             branch: $(row).find('.branch').text().trim(),
@@ -73,7 +73,7 @@ async function handler(ctx: Context): Promise<Data> {
     const query = new URLSearchParams(routeParams);
     query.append('name', name);
     const link = `https://pkgs.alpinelinux.org/packages?${query.toString()}`;
-    const key = `alpinelinux:${query.toString()}`;
+    const key = `alpinelinux:packages:${query.toString()}`;
     const rowData = (await cache.tryGet(
         key,
         async () => {
