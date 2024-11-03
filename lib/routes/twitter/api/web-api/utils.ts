@@ -13,36 +13,40 @@ import login from './login';
 
 let authTokenIndex = 0;
 
-const token2Cookie = (token) =>
-    cache.tryGet(`twitter:cookie:${token}`, async () => {
-        const jar = new CookieJar();
-        jar.setCookieSync(`auth_token=${token}`, 'https://x.com');
-        try {
-            const agent = proxy.proxyUri
-                ? new ProxyAgent({
-                      factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
-                      uri: proxy.proxyUri,
-                  })
-                : new CookieAgent({ cookies: { jar } });
-            if (token) {
-                await ofetch('https://x.com', {
-                    dispatcher: agent,
-                });
-            } else {
-                const data = await ofetch('https://x.com/narendramodi?mx=2', {
-                    dispatcher: agent,
-                });
-                const gt = data.match(/document\.cookie="gt=(\d+)/)?.[1];
-                if (gt) {
-                    jar.setCookieSync(`gt=${gt}`, 'https://x.com');
-                }
+const token2Cookie = async (token) => {
+    if (cache.get(`twitter:cookie:${token}`)) {
+        return cache.get(`twitter:cookie:${token}`);
+    }
+    const jar = new CookieJar();
+    jar.setCookieSync(`auth_token=${token}`, 'https://x.com');
+    try {
+        const agent = proxy.proxyUri
+            ? new ProxyAgent({
+                  factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
+                  uri: proxy.proxyUri,
+              })
+            : new CookieAgent({ cookies: { jar } });
+        if (token) {
+            await ofetch('https://x.com', {
+                dispatcher: agent,
+            });
+        } else {
+            const data = await ofetch('https://x.com/narendramodi?mx=2', {
+                dispatcher: agent,
+            });
+            const gt = data.match(/document\.cookie="gt=(\d+)/)?.[1];
+            if (gt) {
+                jar.setCookieSync(`gt=${gt}`, 'https://x.com');
             }
-            return JSON.stringify(jar.serializeSync());
-        } catch {
-            // ignore
-            return '';
         }
-    });
+        const cookie = JSON.stringify(jar.serializeSync());
+        cache.set(`twitter:cookie:${token}`, cookie);
+        return cookie;
+    } catch {
+        // ignore
+        return '';
+    }
+};
 
 const lockPrefix = 'twitter:lock-token1:';
 
