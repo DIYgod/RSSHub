@@ -14,8 +14,9 @@ import login from './login';
 let authTokenIndex = 0;
 
 const token2Cookie = async (token) => {
-    if (cache.get(`twitter:cookie:${token}`)) {
-        return cache.get(`twitter:cookie:${token}`);
+    const c = await cache.get(`twitter:cookie:${token}`);
+    if (c) {
+        return c;
     }
     const jar = new CookieJar();
     jar.setCookieSync(`auth_token=${token}`, 'https://x.com');
