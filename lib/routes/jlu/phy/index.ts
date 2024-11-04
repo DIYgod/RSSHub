@@ -41,9 +41,9 @@ export const route: Route = {
             item: list.toArray().map((item) => {
                 const element = $(item).find('a');
                 const title = element.find('.tl-top').find('h3').text().trim();
-                const link = element.attr('href')!.replace('../', 'https://phy.jlu.edu.cn/');
+                const link = element.attr('href')!.replaceAll('../', 'https://phy.jlu.edu.cn/');
                 const date = element.find('.tl-top').find('.tl-date');
-                const pubDate = date.find('span').text().replace('/', '').trim() + '-' + date.find('b').text();
+                const pubDate = date.find('span').text().replaceAll('/', '').trim() + '-' + date.find('b').text();
                 return {
                     title,
                     link,
