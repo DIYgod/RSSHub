@@ -8952,6 +8952,19 @@
       }
     ]
   },
+  "flyert.com.cn": {
+    "_name": "飞客茶馆",
+    "www": [
+      {
+        "title": "会员说",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/forum.php"
+        ],
+        "target": "/flyert(_,url)=>{const params=[...url.searchParams.entries()].map(([key,value])=>key+\"=\"+value).join(\"&\");return`/forum${params?`/${encodeURIComponent(params)}`:\"\"}`}"
+      }
+    ]
+  },
   "follow.is": {
     "_name": "Follow",
     "app": [
