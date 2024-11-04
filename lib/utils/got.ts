@@ -1,6 +1,10 @@
 import { destr } from 'destr';
 import ofetch from '@/utils/ofetch';
 
+function isObject(o) {
+    return o !== null && typeof o === 'object' && Array.isArray(o) === false;
+}
+
 const getFakeGot = (defaultOptions?: any) => {
     const fakeGot = (request, options?: any) => {
         if (!(typeof request === 'string' || request instanceof Request) && request.url) {
@@ -35,7 +39,7 @@ const getFakeGot = (defaultOptions?: any) => {
             delete options.form;
         }
         if (options?.searchParams) {
-            request += '?' + new URLSearchParams(Object.entries(options.searchParams).filter(([, value]) => value !== undefined) as [string, string][]).toString();
+            request += '?' + new URLSearchParams(isObject(options.searchParams) ? (Object.entries(options.searchParams).filter(([, value]) => value !== undefined) as [string, string][]) : options.searchParams).toString();
             delete options.searchParams;
         }
 
