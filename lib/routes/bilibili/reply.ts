@@ -33,11 +33,13 @@ async function handler(ctx) {
     }
 
     const link = `https://www.bilibili.com/video/${bvid || `av${aid}`}`;
+    const cookie = await cache.getCookie();
     const response = await got({
         method: 'get',
         url: `https://api.bilibili.com/x/v2/reply?type=1&oid=${aid}&sort=0`,
         headers: {
             Referer: link,
+            Cookie: cookie,
         },
     });
 
