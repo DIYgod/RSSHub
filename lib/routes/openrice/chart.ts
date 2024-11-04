@@ -31,7 +31,7 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'most-bookmarked';
 
     const urlPath: string = `/${lang}/hongkong/explore/chart/${category}`;
-    const response = await ofetch(baseUrl + urlPath, {});
+    const response = await ofetch(baseUrl + urlPath);
     const $ = load(response);
 
     const title = $('title').text() ?? 'Hong Kong Restaurant Chart';
