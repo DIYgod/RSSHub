@@ -19,6 +19,7 @@ export default {
     getProxiedImageUrl(originalUrl: string): string {
         return originalUrl.replace('https://i.pximg.net', config.pixiv.imgProxy || '');
     },
+    // docs: https://www.pixiv.help/hc/ja/articles/235584168-小説作品の本文内に使える特殊タグとは
     async parseNovelContent(content: string, images: Record<string, string>, token?: string): Promise<string> {
         try {
             // 如果有 token，處理 pixiv 圖片引用
