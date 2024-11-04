@@ -3245,6 +3245,19 @@
       }
     ]
   },
+  "baoyu.io": {
+    "_name": "宝玉",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/baoyu/blog"
+      }
+    ]
+  },
   "baozimh.com": {
     "_name": "包子漫画",
     "www": [

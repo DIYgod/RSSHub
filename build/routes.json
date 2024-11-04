@@ -8105,6 +8105,35 @@
     "url": "bangumi.tv",
     "lang": "zh-CN"
   },
+  "baoyu": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/baoyu/blog",
+        "radar": [
+          {
+            "source": [
+              "baoyu.io/"
+            ]
+          }
+        ],
+        "url": "baoyu.io/",
+        "name": "Blog",
+        "maintainers": [
+          "liyaozhong"
+        ],
+        "description": "宝玉 - 博客文章",
+        "location": "index.ts"
+      }
+    },
+    "name": "宝玉",
+    "url": "baoyu.io",
+    "description": "宝玉的博客",
+    "lang": "zh-CN"
+  },
   "baozimh": {
     "routes": {
       "/comic/:name": {
