@@ -123,6 +123,13 @@ export async function getNonR18Novels(id: string, fullContent: boolean, limit: n
         .sort((a, b) => Number(b) - Number(a))
         .slice(0, Number.parseInt(String(limit), 10));
 
+    if (novels.length === 0) {
+        throw new Error('No novels found, fallback to R18 api');
+        // Throw error early to avoid unnecessary API requests
+        // This will eventually lead to ConfigNotFoundError since we already checked hasPixivAuth() at the beginning
+        // and the R18 API requires authentication
+    }
+
     const searchParams = new URLSearchParams();
     for (const novel of novels) {
         searchParams.append('ids[]', novel);
