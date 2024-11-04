@@ -72,7 +72,7 @@ interface sfwNovelsResponse {
     };
 }
 
-export interface sfwNovelDetail {
+interface sfwNovelDetail {
     body: {
         content: string;
         textEmbeddedImages: Record<
@@ -160,7 +160,7 @@ export async function getNonR18Novels(id: string, fullContent: boolean, limit: n
             }
 
             try {
-                const { content: initialContent, images } = await getNovelFullContent(String(item.id));
+                const { content: initialContent, images } = await getNovelFullContent(item.id);
                 let content = initialContent;
 
                 // 如果有 [pixivimage:(\d+)] 的引用，因爲沒有 PIXIV_REFRESHTOKEN，將無法獲取作品 Detail，也無法正常顯示

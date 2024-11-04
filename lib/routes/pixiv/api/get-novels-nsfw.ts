@@ -12,7 +12,7 @@ import cache from '@/utils/cache';
 import { parseDate } from 'tough-cookie';
 import { getToken } from '../token';
 
-export interface nsfwNovelWork {
+interface nsfwNovelWork {
     id: string;
     title: string;
     caption: string;
@@ -51,7 +51,7 @@ export interface nsfwNovelWork {
     total_comments: number;
 }
 
-export interface nsfwNovelsResponse {
+interface nsfwNovelsResponse {
     data: {
         user: {
             id: number;
@@ -116,7 +116,7 @@ interface nsfwNovelDetail {
     isOriginal: boolean;
 }
 
-export default function getNovels(user_id: string, token: string): Promise<nsfwNovelsResponse> {
+function getNovels(user_id: string, token: string): Promise<nsfwNovelsResponse> {
     return got('https://app-api.pixiv.net/v1/user/novels', {
         headers: {
             ...maskHeader,
@@ -129,7 +129,7 @@ export default function getNovels(user_id: string, token: string): Promise<nsfwN
     });
 }
 
-export async function getNovelDetail(novel_id: string, token: string): Promise<nsfwNovelDetail> {
+async function getNovelDetail(novel_id: string, token: string): Promise<nsfwNovelDetail> {
     try {
         // https://github.com/mikf/gallery-dl/blob/main/gallery_dl/extractor/pixiv.py
         // https://github.com/mikf/gallery-dl/commit/db507e30c7431d4ed7e23c153a044ce1751c2847
@@ -165,7 +165,7 @@ export async function getNovelDetail(novel_id: string, token: string): Promise<n
     }
 }
 
-export async function parseNovelContent(novelDetail: nsfwNovelDetail, token: string): Promise<string> {
+async function parseNovelContent(novelDetail: nsfwNovelDetail, token: string): Promise<string> {
     try {
         if (!novelDetail?.text) {
             return '';
