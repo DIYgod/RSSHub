@@ -1,7 +1,6 @@
 import got from '@/utils/got';
 import pixivUtils from '../utils';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 const baseUrl = 'https://www.pixiv.net';
 interface sfwNovelWork {
@@ -168,41 +167,8 @@ export async function getNonR18Novels(id: string, fullContent: boolean, limit: n
 
             try {
                 const { content: initialContent, images } = await getNovelFullContent(item.id);
-                let content = initialContent;
 
-                // 如果有 [pixivimage:(\d+)] 的引用，因爲沒有 PIXIV_REFRESHTOKEN，將無法獲取作品 Detail，也無法正常顯示
-                // For references of [pixivimage:(\d+)], without PIXIV_REFRESHTOKEN, artwork details cannot be retrieved and images cannot be displayed normally
-
-                content = content
-                    .replaceAll(/\[uploadedimage:(\d+)\]/g, (match, imageId) => {
-                        if (images[imageId]) {
-                            return `<img src="${images[imageId]}" alt="novel illustration ${imageId}">`;
-                        }
-                        return match;
-                    })
-                    .replaceAll('\n', '<br>')
-                    .replaceAll(/(<br>){2,}/g, '</p><p>')
-                    .replaceAll(/\[\[rb:(.*?)>(.*?)\]\]/g, '<ruby>$1<rt>$2</rt></ruby>')
-                    .replaceAll(/\[\[jumpuri:(.*?)>(.*?)\]\]/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-                    .replaceAll(/\[jump:(\d+)\]/g, 'Jump to page $1')
-                    .replaceAll(/\[chapter:(.*?)\]/g, '<h2>$1</h2>')
-                    .replaceAll('[newpage]', '<hr>');
-
-                const $content = load(`<article><p>${content}</p></article>`);
-
-                $content('p p').each((_, elem) => {
-                    const $elem = $content(elem);
-                    $elem.replaceWith($elem.html() || '');
-                });
-
-                $content('p h2').each((_, elem) => {
-                    const $elem = $content(elem);
-                    const $parent = $elem.parent('p');
-                    const html = $elem.prop('outerHTML');
-                    if ($parent.length && html) {
-                        $parent.replaceWith(`</p>${html}<p>`);
-                    }
-                });
+                const content = await pixivUtils.parseNovelContent(initialContent, images);
 
                 return {
                     ...baseItem,
