@@ -19,7 +19,6 @@ export const route: Route = {
   | 简体 | 繁體 | EN |
   | ----- | ------ | ----- |
   | zh-cn | zh | en |
-  <br/>
   | 最多收藏 | 每周最高评分 | 最高浏览 | 最佳甜品餐厅 |
   | ----- | ------ | ----- | ----- |
   | most-bookmarked | best-rating | most-popular | best-dessert |
