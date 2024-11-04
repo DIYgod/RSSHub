@@ -1,0 +1,9 @@
+<h3>Rank: {{ rankNumber }} / {{ title }}</h3>
+<p>
+{{ each description }}
+{{ $value }}
+{{ /each }}
+</p>
+{{ if image }}
+<img src="{{ image }}">
+{{ /if }}
