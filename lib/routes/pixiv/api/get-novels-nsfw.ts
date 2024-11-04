@@ -127,35 +127,39 @@ function getNovels(user_id: string, token: string): Promise<nsfwNovelsResponse> 
     });
 }
 
-async function getNovelDetail(novel_id: string, token: string): Promise<nsfwNovelDetail> {
+async function getNovelFullContent(novel_id: string, token: string): Promise<nsfwNovelDetail> {
     try {
-        // https://github.com/mikf/gallery-dl/blob/main/gallery_dl/extractor/pixiv.py
-        // https://github.com/mikf/gallery-dl/commit/db507e30c7431d4ed7e23c153a044ce1751c2847
-        const response = await got('https://app-api.pixiv.net/webview/v2/novel', {
-            headers: {
-                ...maskHeader,
-                Authorization: 'Bearer ' + token,
-            },
-            searchParams: queryString.stringify({
-                id: novel_id,
-                viewer_version: '20221031_ai',
-            }),
-        });
+        const novelDetail = (await cache.tryGet(`https://app-api.pixiv.net/webview/v2/novel:${novel_id}`, async () => {
+            // https://github.com/mikf/gallery-dl/blob/main/gallery_dl/extractor/pixiv.py
+            // https://github.com/mikf/gallery-dl/commit/db507e30c7431d4ed7e23c153a044ce1751c2847
+            const response = await got('https://app-api.pixiv.net/webview/v2/novel', {
+                headers: {
+                    ...maskHeader,
+                    Authorization: 'Bearer ' + token,
+                },
+                searchParams: queryString.stringify({
+                    id: novel_id,
+                    viewer_version: '20221031_ai',
+                }),
+            });
 
-        const virtualConsole = new VirtualConsole().on('error', () => void 0);
+            const virtualConsole = new VirtualConsole().on('error', () => void 0);
 
-        const { window } = new JSDOM(response.data, {
-            runScripts: 'dangerously',
-            virtualConsole,
-        });
+            const { window } = new JSDOM(response.data, {
+                runScripts: 'dangerously',
+                virtualConsole,
+            });
 
-        const novelDetail = window.pixiv?.novel as nsfwNovelDetail;
+            const novelDetail = window.pixiv?.novel as nsfwNovelDetail;
 
-        window.close();
+            window.close();
 
-        if (!novelDetail) {
-            throw new Error('No novel data found');
-        }
+            if (!novelDetail) {
+                throw new Error('No novel data found');
+            }
+
+            return novelDetail;
+        })) as nsfwNovelDetail;
 
         return novelDetail;
     } catch (error) {
@@ -220,7 +224,7 @@ export async function getR18Novels(id: string, fullContent: boolean, limit: numb
             }
 
             try {
-                const novelDetail = await getNovelDetail(novel.id, token);
+                const novelDetail = await getNovelFullContent(novel.id, token);
                 const images = Object.fromEntries(
                     Object.entries(novelDetail.images)
                         .filter(([, image]) => image?.urls?.original)

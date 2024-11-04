@@ -1,4 +1,5 @@
 import got from '@/utils/got';
+import cache from '@/utils/cache';
 import pixivUtils from '../utils';
 import { parseDate } from '@/utils/parse-date';
 
@@ -92,15 +93,19 @@ interface sfwNovelDetail {
 }
 
 async function getNovelFullContent(novelId: string): Promise<{ content: string; images: Record<string, string> }> {
-    const { data } = await got(`${baseUrl}/ajax/novel/${novelId}`, {
-        headers: {
-            referer: `${baseUrl}/novel/show.php?id=${novelId}`,
-        },
-    });
+    const url = `${baseUrl}/ajax/novel/${novelId}`;
+    const data = (await cache.tryGet(url, async () => {
+        const { data } = await got(url, {
+            headers: {
+                referer: `${baseUrl}/novel/show.php?id=${novelId}`,
+            },
+        });
+        return data;
+    })) as sfwNovelDetail;
 
     const images: Record<string, string> = {};
     if (data.body.textEmbeddedImages) {
-        for (const [id, image] of Object.entries(data.body.textEmbeddedImages as sfwNovelDetail)) {
+        for (const [id, image] of Object.entries(data.body.textEmbeddedImages)) {
             images[id] = pixivUtils.getProxiedImageUrl(image.urls.original);
         }
     }
@@ -110,6 +115,7 @@ async function getNovelFullContent(novelId: string): Promise<{ content: string; 
         images,
     };
 }
+
 export async function getNonR18Novels(id: string, fullContent: boolean, limit: number = 100) {
     const url = `${baseUrl}/users/${id}/novels`;
     const { data: allData } = await got(`${baseUrl}/ajax/user/${id}/profile/all`, {
@@ -183,7 +189,7 @@ export async function getNonR18Novels(id: string, fullContent: boolean, limit: n
     return {
         title: data.body.extraData.meta.title,
         description: data.body.extraData.meta.ogp.description,
-        image: Object.values(data.body.works as Record<string, sfwNovelWork>)[0].profileImageUrl,
+        image: pixivUtils.getProxiedImageUrl(Object.values(data.body.works as Record<string, sfwNovelWork>)[0].profileImageUrl),
         link: url,
         item: items,
     };
