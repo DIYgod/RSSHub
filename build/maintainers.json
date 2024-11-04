@@ -3700,6 +3700,9 @@
   "/jlu/ccst/xwzx/:category": [
     "mayouxi"
   ],
+  "/jlu/phy/:category/:column/:subcolumn?": [
+    "tsurumi-yizhou"
+  ],
   "/joins/chinese/:category?": [
     "nczitzk"
   ],

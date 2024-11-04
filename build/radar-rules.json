@@ -15335,6 +15335,17 @@
         ],
         "target": "/jlu/ccst/xwzx/:category"
       }
+    ],
+    "phy": [
+      {
+        "title": "物理学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:category/:column",
+          "/:category/:column/:subcolumn"
+        ],
+        "target": "/jlu/phy/:category/:column/:subcolumn?"
+      }
     ]
   },
   "joins.com": {
