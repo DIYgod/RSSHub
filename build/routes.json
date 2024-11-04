@@ -58995,6 +58995,23 @@
   },
   "openrice": {
     "routes": {
+      "/:lang/hongkong/explore/chart/:category": {
+        "path": "/:lang/hongkong/explore/chart/:category",
+        "maintainers": [
+          "after9"
+        ],
+        "categories": [
+          "shopping"
+        ],
+        "example": "/openrice/zh/hongkong/explore/chart/most-bookmarked",
+        "parameters": {
+          "lang": "语言，缺省为 zh",
+          "category": "类别，缺省为 most-bookmarked"
+        },
+        "name": "香港餐廳排行榜",
+        "description": "\n  | 简体 | 繁體 | EN |\n  | ----- | ------ | ----- |\n  | zh-cn | zh | en |\n\n  | 最多收藏 | 每周最高评分 | 最高浏览 | 最佳甜品餐厅 |\n  | ----- | ------ | ----- | ----- |\n  | most-bookmarked | best-rating | most-popular | best-dessert |\n  ",
+        "location": "chart.ts"
+      },
       "/:lang/hongkong/offers": {
         "path": "/:lang/hongkong/offers",
         "maintainers": [

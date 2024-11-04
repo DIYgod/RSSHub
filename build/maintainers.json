@@ -4905,6 +4905,9 @@
   "/openai/research": [
     "yuguorui"
   ],
+  "/openrice/:lang/hongkong/explore/chart/:category": [
+    "after9"
+  ],
   "/openrice/:lang/hongkong/offers": [
     "after9"
   ],
