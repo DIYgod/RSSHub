@@ -1,4 +1,4 @@
-import { Data, DataItem, Route } from '@/types';
+import { Data, DataItem, Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +6,8 @@ import dayjs from 'dayjs';
 
 export const route: Route = {
     path: '/latest',
-    categories: ['reading'],
+    categories: ['reading', 'popular'],
+    view: ViewType.Articles,
     example: '/yilinzazhi/latest',
     radar: [
         {
@@ -48,13 +49,13 @@ async function handler(): Promise<Data> {
 
     const stage = $(yearSection!)
         .find('a')
-        .map<typeof yearSection, Stage>(function () {
-            const aTag = $(this);
+        .toArray()
+        .map<Stage>((elem) => {
+            const aTag = $(elem);
             const link = baseUrl + aTag.attr('href');
             const title = aTag.text();
             return { link, title };
-        })
-        .toArray()[0];
+        })[0];
 
     const catalogs = (await cache.tryGet(stage.link, async () => {
         const stageRes = await got(stage.link);

@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'wordpress.org',
     categories: ['blog'],
     description: '',
+    lang: 'en',
 };

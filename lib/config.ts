@@ -81,6 +81,7 @@ export type Config = {
     bilibili: {
         cookies: Record<string, string | undefined>;
         dmImgList?: string;
+        dmImgInter?: string;
     };
     bitbucket: {
         username?: string;
@@ -93,7 +94,13 @@ export type Config = {
     bupt: {
         portal_cookie?: string;
     };
+    caixin: {
+        cookie?: string;
+    };
     civitai: {
+        cookie?: string;
+    };
+    dianping: {
         cookie?: string;
     };
     dida365: {
@@ -150,6 +157,9 @@ export type Config = {
     google: {
         fontsApiKey?: string;
     };
+    guozaoke: {
+        cookies?: string;
+    };
     hefeng: {
         key?: string;
     };
@@ -182,6 +192,11 @@ export type Config = {
     };
     lightnovel: {
         cookie?: string;
+    };
+    lorientlejour: {
+        token?: string;
+        username?: string;
+        password?: string;
     };
     malaysiakini: {
         email?: string;
@@ -261,6 +276,15 @@ export type Config = {
     scihub: {
         host?: string;
     };
+    sis001: {
+        baseUrl?: string;
+    };
+    skeb: {
+        bearerToken?: string;
+    };
+    sorrycc: {
+        cookie?: string;
+    };
     spotify: {
         clientId?: string;
         clientSecret?: string;
@@ -271,6 +295,7 @@ export type Config = {
     };
     telegram: {
         token?: string;
+        session?: string;
     };
     tophub: {
         cookie?: string;
@@ -282,6 +307,7 @@ export type Config = {
         username?: string[];
         password?: string[];
         authenticationSecret?: string[];
+        phoneOrEmail?: string[];
         authToken?: string[];
     };
     uestc: {
@@ -464,6 +490,7 @@ const calculateValue = () => {
         bilibili: {
             cookies: bilibili_cookies,
             dmImgList: envs.BILIBILI_DM_IMG_LIST,
+            dmImgInter: envs.BILIBILI_DM_IMG_INTER,
         },
         bitbucket: {
             username: envs.BITBUCKET_USERNAME,
@@ -476,8 +503,14 @@ const calculateValue = () => {
         bupt: {
             portal_cookie: envs.BUPT_PORTAL_COOKIE,
         },
+        caixin: {
+            cookie: envs.CAIXIN_COOKIE,
+        },
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
+        },
+        dianping: {
+            cookie: envs.DIANPING_COOKIE,
         },
         dida365: {
             username: envs.DIDA365_USERNAME,
@@ -533,6 +566,9 @@ const calculateValue = () => {
         google: {
             fontsApiKey: envs.GOOGLE_FONTS_API_KEY,
         },
+        guozaoke: {
+            cookies: envs.GUOZAOKE_COOKIES,
+        },
         hefeng: {
             // weather
             key: envs.HEFENG_KEY,
@@ -566,6 +602,11 @@ const calculateValue = () => {
         },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
+        },
+        lorientlejour: {
+            token: envs.LORIENTLEJOUR_TOKEN,
+            username: envs.LORIENTLEJOUR_USERNAME,
+            password: envs.LORIENTLEJOUR_PASSWORD,
         },
         malaysiakini: {
             email: envs.MALAYSIAKINI_EMAIL,
@@ -645,6 +686,15 @@ const calculateValue = () => {
         scihub: {
             host: envs.SCIHUB_HOST || 'https://sci-hub.se/',
         },
+        sis001: {
+            baseUrl: envs.SIS001_BASE_URL || 'https://sis001.com',
+        },
+        skeb: {
+            bearerToken: envs.SKEB_BEARER_TOKEN,
+        },
+        sorrycc: {
+            cookie: envs.SORRYCC_COOKIES,
+        },
         spotify: {
             clientId: envs.SPOTIFY_CLIENT_ID,
             clientSecret: envs.SPOTIFY_CLIENT_SECRET,
@@ -670,6 +720,7 @@ const calculateValue = () => {
             username: envs.TWITTER_USERNAME?.split(','),
             password: envs.TWITTER_PASSWORD?.split(','),
             authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
+            phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
         },
         uestc: {

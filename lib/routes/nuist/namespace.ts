@@ -16,4 +16,5 @@ export const namespace: Namespace = {
 
 [https://rsshub.app/**nuist**/\`bulletin\`](https://rsshub.app/nuist/bulletin) 或 [https://rsshub.app/**nuist**/\`bulletin\`/\`791\`](https://rsshub.app/nuist/bulletin)
 :::`,
+    lang: 'zh-CN',
 };
