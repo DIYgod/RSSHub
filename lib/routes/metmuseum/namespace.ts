@@ -1,6 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Unknown',
+    name: 'The Metropolitan Museum of Art',
     url: 'www.metmuseum.org',
+    lang: 'en',
 };

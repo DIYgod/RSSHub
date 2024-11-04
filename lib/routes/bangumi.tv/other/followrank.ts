@@ -27,10 +27,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let type = ctx.req.param('type');
-    if (!type || type === 'tv') {
-        type = 'anime';
-    }
+    const type = ctx.req.param('type');
     const url = `https://bgm.tv/${type}`;
 
     const response = await ofetch(url);

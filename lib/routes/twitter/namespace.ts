@@ -27,6 +27,7 @@ export const namespace: Namespace = {
 | \`includeRts\`                   | Include retweets, only available in \`/twitter/user\`                                                                                  | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`                                    |
 | \`forceWebApi\`                  | Force using Web API even if Developer API is configured, only available in \`/twitter/user\` and \`/twitter/keyword\`                    | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                                   |
 | \`count\`                        | \`count\` parameter passed to Twitter API, only available in \`/twitter/user\`                                                           | Unspecified/Integer    | Unspecified                               |
+| \`onlyMedia\`                    | Only get tweets with a media                                                                                                             | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                 |
 
 Specify different option values than default values to improve readability. The URL
 
@@ -44,4 +45,5 @@ Currently supports two authentication methods:
 
 - Using \`TWITTER_USERNAME\` \`TWITTER_PASSWORD\` and \`TWITTER_AUTHENTICATION_SECRET\`: Configure a comma-separated list of Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.
 `,
+    lang: 'en',
 };

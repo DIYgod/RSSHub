@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -19,9 +19,16 @@ const categories = {
 
 export const route: Route = {
     path: '/lives/:category?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Notifications,
     example: '/jinse/lives',
-    parameters: { category: '分类，见下表，默认为全部' },
+    parameters: {
+        category: {
+            description: '分类',
+            options: Object.entries(categories).map(([value, label]) => ({ value, label })),
+            default: '0',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

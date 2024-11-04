@@ -59,6 +59,6 @@ export const route: Route = {
     handler,
     url: 'www.12371.cn',
     description: `| 最新发布 |
-    | :------: |
-    |   zxfb   |`,
+  | :------: |
+  |   zxfb   |`,
 };

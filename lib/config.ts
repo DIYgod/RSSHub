@@ -94,7 +94,13 @@ export type Config = {
     bupt: {
         portal_cookie?: string;
     };
+    caixin: {
+        cookie?: string;
+    };
     civitai: {
+        cookie?: string;
+    };
+    dianping: {
         cookie?: string;
     };
     dida365: {
@@ -150,6 +156,9 @@ export type Config = {
     };
     google: {
         fontsApiKey?: string;
+    };
+    guozaoke: {
+        cookies?: string;
     };
     hefeng: {
         key?: string;
@@ -286,6 +295,7 @@ export type Config = {
     };
     telegram: {
         token?: string;
+        session?: string;
     };
     tophub: {
         cookie?: string;
@@ -297,6 +307,7 @@ export type Config = {
         username?: string[];
         password?: string[];
         authenticationSecret?: string[];
+        phoneOrEmail?: string[];
         authToken?: string[];
     };
     uestc: {
@@ -492,8 +503,14 @@ const calculateValue = () => {
         bupt: {
             portal_cookie: envs.BUPT_PORTAL_COOKIE,
         },
+        caixin: {
+            cookie: envs.CAIXIN_COOKIE,
+        },
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
+        },
+        dianping: {
+            cookie: envs.DIANPING_COOKIE,
         },
         dida365: {
             username: envs.DIDA365_USERNAME,
@@ -548,6 +565,9 @@ const calculateValue = () => {
         },
         google: {
             fontsApiKey: envs.GOOGLE_FONTS_API_KEY,
+        },
+        guozaoke: {
+            cookies: envs.GUOZAOKE_COOKIES,
         },
         hefeng: {
             // weather
@@ -700,6 +720,7 @@ const calculateValue = () => {
             username: envs.TWITTER_USERNAME?.split(','),
             password: envs.TWITTER_PASSWORD?.split(','),
             authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
+            phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
         },
         uestc: {

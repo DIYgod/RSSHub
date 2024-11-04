@@ -9,4 +9,5 @@ export const namespace: Namespace = {
     zh: {
         name: '黎明杀机',
     },
+    lang: 'en',
 };
