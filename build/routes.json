@@ -86162,11 +86162,34 @@
       "/post/popular_recent/:period?": {
         "path": "/post/popular_recent/:period?",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
+        "view": 2,
         "example": "/yande/post/popular_recent/1d",
         "parameters": {
-          "period": "展示时间"
+          "period": {
+            "description": "展示时间",
+            "options": [
+              {
+                "value": "1d",
+                "label": "最近 24 小时"
+              },
+              {
+                "value": "1w",
+                "label": "最近一周"
+              },
+              {
+                "value": "1m",
+                "label": "最近一月"
+              },
+              {
+                "value": "1y",
+                "label": "最近一年"
+              }
+            ],
+            "default": "1d"
+          }
         },
         "radar": [
           {
