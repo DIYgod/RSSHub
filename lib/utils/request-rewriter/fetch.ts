@@ -15,6 +15,16 @@ const limiterQueue = new RateLimiterQueue(limiter, {
     maxQueueSize: 5000,
 });
 
+export const useCustomHeader = (headers: Headers) => {
+    process.env.NODE_ENV === 'dev' &&
+        useRegisterRequest((req) => {
+            for (const [key, value] of headers.entries()) {
+                req.requestHeaders[key] = value;
+            }
+            return req;
+        });
+};
+
 const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
@@ -47,13 +57,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         request.headers.delete('x-prefer-proxy');
     }
 
-    process.env.NODE_ENV === 'dev' &&
-        useRegisterRequest((req) => {
-            for (const [key, value] of request.headers.entries()) {
-                req.requestHeaders[key] = value;
-            }
-            return req;
-        });
+    useCustomHeader(request.headers);
 
     // proxy
     if (!init?.dispatcher && proxy.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {
