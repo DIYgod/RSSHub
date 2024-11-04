@@ -35,7 +35,7 @@ const getFakeGot = (defaultOptions?: any) => {
             delete options.form;
         }
         if (options?.searchParams) {
-            request += '?' + new URLSearchParams(options.searchParams).toString();
+            request += '?' + new URLSearchParams(Object.entries(options.searchParams).filter(([, value]) => value !== undefined) as [string, string][]).toString();
             delete options.searchParams;
         }
 
