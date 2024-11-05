@@ -23,14 +23,18 @@ export async function getClient(authParams?: UserAuthParams, session?: string) {
         autoReconnect: true,
         retryDelay: 3000,
         maxConcurrentDownloads: Number(config.telegram.maxConcurrentDownloads ?? 10),
+        proxy:
+            config.telegram.proxy?.host && config.telegram.proxy.port && config.telegram.proxy.secret
+                ? {
+                      ip: config.telegram.proxy.host,
+                      port: Number(config.telegram.proxy.port),
+                      MTProxy: true,
+                      secret: config.telegram.proxy.secret,
+                  }
+                : undefined,
     });
-    await client.start(
-        Object.assign(authParams ?? {}, {
-            onError: (err) => {
-                throw new Error('Cannot start TG: ' + err);
-            },
-        }) as any
-    );
+
+    await client.connect();
     return client;
 }
 
