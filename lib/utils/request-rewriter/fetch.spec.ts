@@ -14,11 +14,17 @@ const getInitRequest = () =>
         responseInfo: {},
     }) satisfies NonNullable<ReturnType<typeof getCurrentCell>>['request'];
 
+enum Env {
+    dev = 'dev',
+    production = 'production',
+    test = 'test',
+}
+
 describe('useCustomHeader', () => {
     let originalEnv: string;
 
     beforeEach(() => {
-        originalEnv = process.env.NODE_ENV || 'test';
+        originalEnv = process.env.NODE_ENV || Env.test;
     });
 
     afterEach(() => {
@@ -26,10 +32,12 @@ describe('useCustomHeader', () => {
     });
 
     test('should register request with custom headers in dev environment', () => {
-        process.env.NODE_ENV = 'dev';
+        process.env.NODE_ENV = Env.dev;
 
         const headers = new Headers();
-        headers.set('Authorization', 'Bearer token');
+        const headerText = 'authorization';
+        const headerValue = 'Bearer token';
+        headers.set(headerText, headerValue);
 
         const req = getInitRequest();
         setCurrentCell({
@@ -50,14 +58,17 @@ describe('useCustomHeader', () => {
             }
         }
 
-        expect(request.requestHeaders.authorization).toEqual('Bearer token');
+        expect(request.requestHeaders[headerText]).toEqual(headerValue);
     });
 
     test('should not register request in non-dev environment', () => {
-        process.env.NODE_ENV = 'production';
+        process.env.NODE_ENV = Env.production;
 
         const headers = new Headers();
-        headers.set('Content-Type', 'application/json');
+        const headerText = 'content-type';
+        const headerValue = 'application/json';
+
+        headers.set(headerText, headerValue);
         const req = getInitRequest();
 
         setCurrentCell({
@@ -77,6 +88,6 @@ describe('useCustomHeader', () => {
             }
         }
 
-        expect(req.requestHeaders['content-Type']).toBeUndefined();
+        expect(req.requestHeaders[headerText]).toBeUndefined();
     });
 });
