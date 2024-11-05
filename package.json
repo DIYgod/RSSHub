@@ -198,5 +198,10 @@
     "packageManager": "pnpm@9.12.3",
     "engines": {
         "node": ">=22"
+    },
+    "pnpm": {
+        "overrides": {
+            "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed"
+        }
     }
 }
