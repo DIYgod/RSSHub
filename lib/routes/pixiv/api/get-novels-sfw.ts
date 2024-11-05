@@ -129,10 +129,9 @@ export async function getNonR18Novels(id: string, fullContent: boolean, limit: n
         .slice(0, Number.parseInt(String(limit), 10));
 
     if (novels.length === 0) {
-        throw new Error('No novels found, fallback to R18 api');
+        throw new Error('No novels found, fallback to R18 API');
         // Throw error early to avoid unnecessary API requests
-        // This will eventually lead to ConfigNotFoundError since we already checked hasPixivAuth() at the beginning
-        // and the R18 API requires authentication
+        // Since hasPixivAuth() check failed earlier and R18 API requires authentication, this will result in ConfigNotFoundError
     }
 
     const searchParams = new URLSearchParams();
@@ -189,7 +188,7 @@ export async function getNonR18Novels(id: string, fullContent: boolean, limit: n
     return {
         title: data.body.extraData.meta.title,
         description: data.body.extraData.meta.ogp.description,
-        image: pixivUtils.getProxiedImageUrl(Object.values(data.body.works as Record<string, sfwNovelWork>)[0].profileImageUrl),
+        image: pixivUtils.getProxiedImageUrl(Object.values(data.body.works)[0].profileImageUrl),
         link: url,
         item: items,
     };
