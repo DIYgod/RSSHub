@@ -19,7 +19,7 @@ export const route: Route = {
 | 键         | 含义                              | 接受的值       | 默认值 |
 | ---------- | --------------------------------- | -------------- | ------ |
 | showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |
-| embed      | 默认开启内嵌视频                  | 任意值         |        |
+| embed      | 默认开启内嵌视频                  | 0/1/true/false |  true  |
 | useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
 | directLink | 使用内容直链                      | 0/1/true/false | false  |
 | hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |
@@ -230,7 +230,7 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
-    const embed = !ctx.req.param('embed');
+    const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = ctx.req.query('mode') === 'fulltext';
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
     const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
@@ -259,7 +259,12 @@ async function handler(ctx) {
 
     const rssItems = await Promise.all(
         items
-            .filter((item) => !hideGoods || item.modules.module_dynamic?.additional?.type !== 'ADDITIONAL_TYPE_GOODS')
+            .filter((item) => {
+                if (hideGoods) {
+                    return item.modules.module_dynamic?.additional?.type !== 'ADDITIONAL_TYPE_GOODS';
+                }
+                return true;
+            })
             .map(async (item) => {
                 // const parsed = JSONbig.parse(item.card);
 
