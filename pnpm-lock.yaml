@@ -246,7 +246,7 @@ importers:
         specifier: 1.18.1
         version: 1.18.1
       ufo:
-        specifier: ^1.5.4
+        specifier: 1.5.4
         version: 1.5.4
       undici:
         specifier: 6.20.1
