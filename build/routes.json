@@ -18128,8 +18128,8 @@
         "radar": [
           {
             "source": [
-              "coomer.party/onlyfans/user/:id",
-              "coomer.party/"
+              "coomer.su/onlyfans/user/:id",
+              "coomer.su/"
             ]
           }
         ],
@@ -18157,8 +18157,8 @@
         "radar": [
           {
             "source": [
-              "coomer.party/posts",
-              "coomer.party/"
+              "coomer.su/posts",
+              "coomer.su/"
             ]
           }
         ],
@@ -18166,12 +18166,12 @@
         "maintainers": [
           "nczitzk"
         ],
-        "url": "coomer.party/posts",
+        "url": "coomer.su/posts",
         "location": "posts.ts"
       }
     },
     "name": "Coomer",
-    "url": "coomer.party",
+    "url": "coomer.su",
     "lang": "en"
   },
   "copernicium": {

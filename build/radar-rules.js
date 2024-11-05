@@ -3071,7 +3071,7 @@
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/" ],
         target:"/cool18/:id?/:type?/:keyword?" } ] },
-  "coomer.party":{ _name:"Coomer",
+  "coomer.su":{ _name:"Coomer",
     ".":[ { title:"Artist",
         docs:"https://docs.rsshub.app/routes/multimedia",
         source:[ "/onlyfans/user/:id",
