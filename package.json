@@ -197,6 +197,6 @@
     },
     "packageManager": "pnpm@9.12.3",
     "engines": {
-        "node": ">=22"
+        "node": "20.x"
     }
 }
