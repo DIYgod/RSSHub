@@ -76138,6 +76138,34 @@
     "url": "thecover.cn",
     "lang": "zh-CN"
   },
+  "thegradient": {
+    "routes": {
+      "/posts": {
+        "path": "/posts",
+        "categories": [
+          "blog"
+        ],
+        "example": "/thegradient/posts",
+        "radar": [
+          {
+            "source": [
+              "thegradient.pub/"
+            ]
+          }
+        ],
+        "url": "thegradient.pub/",
+        "name": "Posts",
+        "maintainers": [
+          "liyaozhong"
+        ],
+        "description": "The Gradient Blog Posts",
+        "location": "index.ts"
+      }
+    },
+    "name": "The Gradient",
+    "url": "thegradient.pub",
+    "lang": "en"
+  },
   "thehindu": {
     "routes": {
       "/topic/:topic": {

@@ -26771,6 +26771,19 @@
       }
     ]
   },
+  "thegradient.pub": {
+    "_name": "The Gradient",
+    ".": [
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/thegradient/posts"
+      }
+    ]
+  },
   "thehindu.com": {
     "_name": "The Hindu",
     ".": [
