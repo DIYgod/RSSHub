@@ -9,7 +9,6 @@ on:
       - 'lib/**'
 
 permissions:
-  contents: read
   id-token: write
 
 jobs:

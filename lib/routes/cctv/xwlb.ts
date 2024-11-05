@@ -9,10 +9,22 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
 export const route: Route = {
-    path: '/xwlb',
+    path: '/:site/:category/:name',
     categories: ['traditional-media'],
-    example: '/cctv/xwlb',
-    parameters: {},
+    example: '/cctv/tv/lm/xwlb',
+    parameters: {
+        site: "站点, 可选值如'tv', 既'央视节目'",
+        category: "分类名, 官网对应分类, 当前可选值'lm', 既'栏目大全'",
+        name: {
+            description: "栏目名称, 可在对应栏目页面 URL 中找到, 可选值如'xwlb',既'新闻联播'",
+            options: [
+                {
+                    value: 'xwlb',
+                    label: '新闻联播',
+                },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -33,12 +45,21 @@ export const route: Route = {
     description: `新闻联播内容摘要。`,
 };
 
-async function handler() {
+async function handler(ctx) {
+    const { site, category, name } = ctx.req.param();
+    let responseData;
+    if (site === 'tv' && category === 'lm' && name === 'xwlb') {
+        responseData = await getXWLB();
+    }
+    return responseData;
+}
+
+const getXWLB = async () => {
     const res = await got({ method: 'get', url: 'https://tv.cctv.com/lm/xwlb/' });
     const $ = load(res.data);
     // 解析最新一期新闻联播的日期
     const latestDate = dayjs($('.rilititle p').text(), 'YYYY-MM-DD');
-    const count = [];
+    const count: number[] = [];
     for (let i = 0; i < 20; i++) {
         count.push(i);
     }
@@ -49,13 +70,13 @@ async function handler() {
             const item = {
                 title: `新闻联播 ${newsDate.format('YYYY/MM/DD')}`,
                 link: url,
-                pubDate: timezone(parseDate(newsDate), +8),
+                pubDate: timezone(parseDate(newsDate.format()), +8),
                 description: await cache.tryGet(url, async () => {
                     const res = await got(url);
                     const content = load(res.data);
-                    const list = [];
-                    content('body li').map((i, e) => {
-                        e = content(e);
+                    const list: string[] = [];
+                    content('body li').map((i, elem) => {
+                        const e = content(elem);
                         const href = e.find('a').attr('href');
                         const title = e.find('a').attr('title');
                         const dur = e.find('span').text();
@@ -74,4 +95,5 @@ async function handler() {
         link: 'http://tv.cctv.com/lm/xwlb/',
         item: resultItems,
     };
-}
+};
+export default getXWLB;

@@ -154,7 +154,7 @@ const processItems = async (i, downLinkType, itemSelector, categorySelector, dow
                 author: i.author,
                 category: [...i.category, ...categories].filter(Boolean),
                 pubDate: i.pubDate,
-                enclosure_url: downLinks.filter((l) => l.title === downLinkType).pop()?.link ?? downLinks[0].link,
+                enclosure_url: downLinks.findLast((l) => l.title === downLinkType)?.link ?? downLinks[0].link,
                 enclosure_type: 'application/x-bittorrent',
             };
         });

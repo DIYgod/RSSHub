@@ -169,7 +169,7 @@ const parseAttr = (description) => {
         q.push(render(e));
     }
     if (p < m.length) {
-        q.push(m.slice(p, m.length));
+        q.push(m.slice(p));
     }
     return q.join('');
 };

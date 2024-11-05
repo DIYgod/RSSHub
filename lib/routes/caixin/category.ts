@@ -83,7 +83,7 @@ async function handler(ctx) {
         audio_image_url: item.pict.imgs[0].url,
     }));
 
-    const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseArticle(item))));
 
     return {
         title,

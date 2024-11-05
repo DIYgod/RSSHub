@@ -239,7 +239,7 @@ const getFilterByKeyAndKeyword = async (key: string, keyword: string, rootUrl: s
 const getFilterKeyForSearchParams = (key: string, isApi: boolean = false): string | undefined => {
     const keys = isApi ? filterApiKeys : filterKeys;
 
-    return Object.hasOwn(keys, key) ? keys[key] ?? key : undefined;
+    return Object.hasOwn(keys, key) ? (keys[key] ?? key) : undefined;
 };
 
 /**

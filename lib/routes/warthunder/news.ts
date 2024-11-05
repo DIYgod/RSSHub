@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
@@ -33,20 +33,21 @@ export const route: Route = {
     handler,
     url: 'warthunder.com/en/news',
     description: `News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)
-  The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!`,
+  The \`pubDate\` provided under UTC time zone, so please ignore the specific time!!!`,
 };
 
 async function handler() {
     const rootUrl = 'https://warthunder.com/en/news/';
 
-    const response = await got(rootUrl);
+    const response = await ofetch(rootUrl);
 
-    const $ = load(response.data);
+    const $ = load(response);
 
     const pageFace = $('div.showcase__item.widget')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
-            let pubDate = parseDate(item.find('div.widget__content > ul > li.widget-meta__item.widget-meta__item--right').text(), 'D MMMM YYYY');
+            let pubDate = parseDate(item.find('div.widget__content > ul > li.widget-meta__item.widget-meta__item--right').text(), 'D MMMM YYYY', 'en');
             pubDate = timezone(pubDate, 0);
             const category = [];
             if (item.find('div.widget__pin').length !== 0) {
@@ -68,8 +69,7 @@ async function handler() {
                 }),
                 category,
             };
-        })
-        .get();
+        });
 
     return {
         title: 'War Thunder News',

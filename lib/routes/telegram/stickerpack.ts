@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
+import { Route, ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/stickerpack/:name',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.Pictures,
     example: '/telegram/stickerpack/DIYgod',
     parameters: { name: 'Sticker Pack name, available in the sharing URL' },
     features: {
@@ -27,9 +28,8 @@ async function handler(ctx) {
     }
     const name = ctx.req.param('name');
 
-    const response = await got({
+    const response = await ofetch(`https://api.telegram.org/bot${config.telegram.token}/getStickerSet?name=${name}`, {
         method: 'get',
-        url: `https://api.telegram.org/bot${config.telegram.token}/getStickerSet?name=${name}`,
     });
 
     const data = response.data.result;

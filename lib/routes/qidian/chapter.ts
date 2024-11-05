@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/chapter/:id',
-    categories: ['reading'],
+    categories: ['reading', 'popular'],
+    view: ViewType.Notifications,
     example: '/qidian/chapter/1010400217',
     parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
     features: {
@@ -21,7 +22,7 @@ export const route: Route = {
             source: ['book.qidian.com/info/:id'],
         },
     ],
-    name: '章节',
+    name: '作品章节',
     maintainers: ['fuzy112'],
     handler,
 };

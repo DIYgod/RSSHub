@@ -29,10 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: check-env
     if: needs.check-env.outputs.check-docker == 'true'
-    timeout-minutes: 120
+    timeout-minutes: 60
     permissions:
       packages: write
-      contents: read
       id-token: write
     steps:
       - name: Checkout
@@ -76,7 +75,7 @@ jobs:
 
       - name: Build and push Docker image (ordinary version)
         id: build-and-push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
@@ -107,7 +106,7 @@ jobs:
 
       - name: Build and push Docker image (Chromium-bundled version)
         id: build-and-push-chromium
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           build-args: PUPPETEER_SKIP_DOWNLOAD=0

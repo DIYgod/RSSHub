@@ -66,7 +66,9 @@ async function handler(ctx) {
                     linkURL.hostname = 'www.bbc.co.uk';
                 }
 
-                const response = await ofetch(linkURL.href);
+                const response = await ofetch(linkURL.href, {
+                    retryStatusCodes: [403],
+                });
 
                 const $ = load(response);
 

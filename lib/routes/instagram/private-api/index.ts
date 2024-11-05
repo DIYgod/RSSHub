@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { ig, login } from './utils';
 import logger from '@/utils/logger';
@@ -58,15 +58,40 @@ async function loadContent(category, nameOrId, tryGet) {
 
 export const route: Route = {
     path: '/:category/:key',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
+    view: ViewType.SocialMedia,
     example: '/instagram/user/stefaniejoosten',
-    parameters: { category: 'Feed category, see table above', key: 'Username / Hashtag name' },
+    parameters: {
+        category: {
+            description: 'Feed category',
+            default: 'user',
+            options: [
+                {
+                    label: 'User',
+                    value: 'user',
+                },
+                {
+                    label: 'Tags',
+                    value: 'tags',
+                },
+            ],
+        },
+        key: 'Username / Hashtag name',
+    },
     features: {
         requireConfig: [
             {
                 name: 'IG_PROXY',
                 optional: true,
                 description: '',
+            },
+            {
+                name: 'IG_USERNAME',
+                description: 'Instagram username',
+            },
+            {
+                name: 'IG_PASSWORD',
+                description: 'Instagram password, due to [Instagram Private API](https://github.com/dilame/instagram-private-api) restrictions, you have to setup your credentials on the server. 2FA is not supported.',
             },
         ],
         requirePuppeteer: false,
@@ -78,9 +103,6 @@ export const route: Route = {
     name: 'User Profile / Hashtag - Private API',
     maintainers: ['oppilate', 'DIYgod'],
     handler,
-    description: `:::warning
-Due to [Instagram Private API](https://github.com/dilame/instagram-private-api) restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/deploy/) for more.
-:::`,
 };
 
 async function handler(ctx) {

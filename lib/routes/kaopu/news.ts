@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/news/:language?',
     categories: ['new-media'],
-    example: '/news/zh-hans',
+    example: '/kaopu/news/zh-hans',
     parameters: {
         language: '语言',
     },
@@ -16,8 +16,8 @@ export const route: Route = {
     ],
     name: '全部',
     maintainers: ['fashioncj'],
-    description: `| 简体中文    | 繁体中文     | 
-  | ------- | -------- | 
+    description: `| 简体中文    | 繁体中文     |
+  | ------- | -------- |
   | zh-hans | zh-hant | `,
     handler,
 };

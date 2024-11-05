@@ -104,7 +104,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             if (!readable) {
                 content += '<br>';
             }
-            content += `<video src='${video.url}' ${gifAutoPlayAttr} controls='controls' poster='${getOriginalImg(media.media_url_https)}' ${extraAttrs}></video>`;
+            content += `<video width="${media.sizes.large.w}" height="${media.sizes.large.h}" src='${video.url}' ${gifAutoPlayAttr} controls='controls' poster='${getOriginalImg(media.media_url_https)}' ${extraAttrs}></video>`;
         }
 
         return content;
@@ -141,6 +141,9 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                         if (heightOfPics > 0) {
                             content += `height="${heightOfPics}" `;
                             style += `height: ${heightOfPics}px;`;
+                        }
+                        if (widthOfPics <= 0 && heightOfPics <= 0) {
+                            content += `width="${media.sizes.large.w}" height="${media.sizes.large.h}" `;
                         }
                         content += ` style="${style}" ` + `${readable ? 'hspace="4" vspace="8"' : ''} src="${originalImg}">`;
                         if (addLinkForPics) {
@@ -448,7 +451,7 @@ if (config.twitter.consumer_key && config.twitter.consumer_secret) {
 }
 
 const parseRouteParams = (routeParams) => {
-    let count, exclude_replies, include_rts;
+    let count, exclude_replies, include_rts, only_media;
     let force_web_api = false;
     switch (routeParams) {
         case 'exclude_rts_replies':
@@ -476,9 +479,10 @@ const parseRouteParams = (routeParams) => {
             exclude_replies = fallback(undefined, queryToBoolean(parsed.get('excludeReplies')), false);
             include_rts = fallback(undefined, queryToBoolean(parsed.get('includeRts')), true);
             force_web_api = fallback(undefined, queryToBoolean(parsed.get('forceWebApi')), false);
+            only_media = fallback(undefined, queryToBoolean(parsed.get('onlyMedia')), false);
         }
     }
-    return { count, exclude_replies, include_rts, force_web_api };
+    return { count, exclude_replies, include_rts, force_web_api, only_media };
 };
 
 export const excludeRetweet = function (tweets) {
@@ -492,4 +496,9 @@ export const excludeRetweet = function (tweets) {
     return excluded;
 };
 
-export default { ProcessFeed, getAppClient, parseRouteParams, excludeRetweet };
+export const keepOnlyMedia = function (tweets) {
+    const excluded = tweets.filter((t) => t.extended_entities && t.extended_entities.media);
+    return excluded;
+};
+
+export default { ProcessFeed, getAppClient, parseRouteParams, excludeRetweet, keepOnlyMedia };

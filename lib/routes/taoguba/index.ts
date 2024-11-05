@@ -51,7 +51,7 @@ async function handler(ctx) {
                     method: 'get',
                     url: item.link,
                 });
-                if (detailResponse.url.startsWith('https://www.taoguba.com.cn/topic/transfer')) {
+                if (detailResponse.url?.startsWith('https://www.taoguba.com.cn/topic/transfer')) {
                     item.description = '登录后查看完整文章';
                     return item;
                 }

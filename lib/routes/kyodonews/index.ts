@@ -35,7 +35,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'china';
-    const keyword = ctx.req.param('keyword') === 'RSS' ? 'rss' : ctx.req.param('keyword') ?? '';
+    const keyword = ctx.req.param('keyword') === 'RSS' ? 'rss' : (ctx.req.param('keyword') ?? '');
 
     // raise error for invalid languages
     if (!['china', 'tchina'].includes(language)) {

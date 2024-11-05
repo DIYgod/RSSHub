@@ -7,7 +7,9 @@ const getUser = (url, cache) =>
     cache.tryGet(
         url,
         async () => {
-            const browser = await puppeteer();
+            const browser = await puppeteer({
+                stealth: true,
+            });
             try {
                 const page = await browser.newPage();
                 await page.setRequestInterception(true);

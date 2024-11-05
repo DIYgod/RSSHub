@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getConfig } from './utils';
 import ofetch from '@/utils/ofetch';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/:configId/notifications/:fulltext?',
@@ -38,7 +39,7 @@ async function handler(ctx) {
         link: `${link}/${Object.hasOwn(e.data, 'badge_id') ? `badges/${e.data.badge_id}/${e.data.badge_slug}?username=${e.data.username}` : `t/topic/${e.topic_id}/${e.post_number}`}`,
         pubDate: new Date(e.created_at),
         author: e.data.display_username ?? e.data.username,
-        category: `notification_type:${e.notification_type}`,
+        category: [`notification_type:${e.notification_type}`, `read:${e.read}`, `high_priority:${e.high_priority}`],
         original_post_id: e.data.original_post_id,
     }));
 
@@ -58,10 +59,11 @@ async function handler(ctx) {
         );
     }
 
-    const { about } = await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key } });
+    const { about } = await cache.tryGet(link, async () => await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key } }), config.cache.routeExpire, false);
     return {
         title: `${about.title} - Notifications`,
         description: about.description,
         item: items,
+        allowEmpty: true,
     };
 }

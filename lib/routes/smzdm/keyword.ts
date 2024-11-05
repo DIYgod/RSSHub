@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -6,7 +6,8 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/keyword/:keyword',
-    categories: ['shopping'],
+    categories: ['shopping', 'popular'],
+    view: ViewType.Notifications,
     example: '/smzdm/keyword/女装',
     parameters: { keyword: '你想订阅的关键词' },
     features: {

@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import getMzzlbg from './utils/mzzlbg';
 import xinwen1j1 from './utils/xinwen1j1';
 import getNews from './utils/news';
+import getXWLB from './xwlb';
 
 export const route: Route = {
     path: '/:category',
@@ -31,18 +32,21 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
-    let responseData;
 
-    if (category === 'mzzlbg') {
-        // 每周质量报告
-        responseData = await getMzzlbg();
-    } else if (category === 'xinwen1j1') {
-        // 新闻1+1
-        responseData = await xinwen1j1();
-    } else {
-        // 央视新闻
-        responseData = await getNews(category);
+    switch (category) {
+        case 'mzzlbg':
+            // 每周质量报告
+            return await getMzzlbg();
+
+        case 'xinwen1j1':
+            // 新闻1+1
+            return await xinwen1j1();
+
+        case 'xwlb':
+            return await getXWLB();
+
+        default:
+            // 央视新闻
+            return await getNews(category);
     }
-
-    return responseData;
 }

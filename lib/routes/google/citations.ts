@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/citations/:id',
-    categories: ['journal'],
+    categories: ['journal', 'popular'],
     example: '/google/citations/mlmE4JMAAAAJ',
     parameters: { id: 'N' },
     features: {
@@ -15,7 +15,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Author Citations',
+    name: 'Scholar Author Citations',
     maintainers: ['KellyHwong', 'const7'],
     handler,
     description: `The parameter id in the route is the id in the URL of the user's Google Scholar reference page, for example \`https://scholar.google.com/citations?user=mlmE4JMAAAAJ\` to \`mlmE4JMAAAAJ\`.

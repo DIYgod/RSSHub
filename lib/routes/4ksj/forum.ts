@@ -3,13 +3,13 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import iconv from 'iconv-lite';
+import md5 from '@/utils/md5';
 
 export const route: Route = {
     path: '/:id?',
@@ -27,6 +27,16 @@ export const route: Route = {
     categories: ['multimedia'],
 };
 
+function stringtoHex(acSTR) {
+    let val = '';
+    for (let i = 0; i <= acSTR.length - 1; i++) {
+        const str = acSTR.charAt(i);
+        const code = str.codePointAt();
+        val += code;
+    }
+    return val;
+}
+
 async function handler(ctx) {
     const { id = '4k-uhd-1' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
@@ -34,11 +44,13 @@ async function handler(ctx) {
     const rootUrl = 'https://www.4ksj.com';
     const currentUrl = new URL(`${id}.html`, rootUrl).href;
 
-    const { data: response } = await got(currentUrl, {
-        responseType: 'buffer',
+    const response = await ofetch(currentUrl, {
+        responseType: 'arrayBuffer',
     });
 
-    const $ = load(iconv.decode(response, 'gbk'));
+    const decoder = new TextDecoder('gbk');
+
+    const $ = load(decoder.decode(response));
 
     const language = 'zh';
     const image = $('div.nexlogo img').prop('src');
@@ -54,14 +66,42 @@ async function handler(ctx) {
             };
         });
 
+    const getCookie = () =>
+        cache.tryGet('4ksj:cookie', async () => {
+            const response = await ofetch(items[0].link);
+            const $ = load(response);
+            const scriptPath = $('script').attr('src')!;
+            const scriptUrl = new URL(scriptPath, rootUrl).href;
+
+            const scriptResponse = await ofetch(scriptUrl);
+            const key = scriptResponse.match(/{var key="(.*?)"/)?.[1];
+            const value = scriptResponse.match(/",value="(.*?)"/)?.[1];
+            const getPath = scriptResponse.match(/\.get\("(.*?&key=)"/)?.[1];
+
+            if (!key || !value || !getPath) {
+                throw new Error('Failed to get cookie');
+            }
+
+            const cookieResponse = await ofetch.raw(`${rootUrl}${getPath}${key}&value=${md5(stringtoHex(value))}`);
+            return cookieResponse.headers
+                .getSetCookie()
+                .map((c) => c.split(';')[0])
+                .join('; ');
+        });
+
+    const cookie = await getCookie();
+
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link, {
-                    responseType: 'buffer',
+                const detailResponse = await ofetch(item.link, {
+                    responseType: 'arrayBuffer',
+                    headers: {
+                        Cookie: cookie as string,
+                    },
                 });
 
-                const $$ = load(iconv.decode(detailResponse, 'gbk'));
+                const $$ = load(decoder.decode(detailResponse));
 
                 $$('div.nex_drama_intros em').first().remove();
                 $$('strong font').each((_, el) => {
@@ -86,14 +126,8 @@ async function handler(ctx) {
                         const value = li.find('span').length === 0 ? li.contents().last().text().trim() : li.find('span').text().trim();
 
                         return { [key]: value };
-                    })
-                    .reduce(
-                        (obj, item) => ({
-                            ...obj,
-                            ...item,
-                        }),
-                        {}
-                    );
+                    });
+                const mergedDetails = Object.assign({}, ...details);
 
                 const links =
                     $$('td.t_f ignore_js_op').length === 0
@@ -154,17 +188,17 @@ async function handler(ctx) {
                           ]
                         : undefined,
                     title,
-                    keys: Object.keys(details),
-                    details,
+                    keys: Object.keys(mergedDetails),
+                    details: mergedDetails,
                     description,
                     info: $$('div.nex_drama_sums').html(),
                     links,
                 });
                 item.pubDate = timezone(parseDate(pubDate, 'YYYY-M-D HH:mm:ss'), +8);
-                item.category = Object.values(details)
+                item.category = Object.values(mergedDetails)
                     .flatMap((c) => c.split(/\s/))
                     .filter(Boolean);
-                item.author = details['导演'];
+                item.author = mergedDetails['导演'];
                 item.content = {
                     html: description,
                     text: $$('div.nex_drama_intros').text(),

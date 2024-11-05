@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,8 +6,29 @@ import { load } from 'cheerio';
 export const route: Route = {
     path: '/group/:groupid/:type?',
     categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/douban/group/648102',
-    parameters: { groupid: '豆瓣小组的 id', type: '缺省 最新，essence 最热，elite 精华' },
+    parameters: {
+        groupid: '豆瓣小组的 id',
+        type: {
+            description: '类型',
+            default: 'latest',
+            options: [
+                {
+                    label: '最新',
+                    value: 'latest',
+                },
+                {
+                    label: '最热',
+                    value: 'essence',
+                },
+                {
+                    label: '精华',
+                    value: 'elite',
+                },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -31,7 +52,7 @@ async function handler(ctx) {
     const groupid = ctx.req.param('groupid');
     const type = ctx.req.param('type');
 
-    const url = `https://www.douban.com/group/${groupid}/${type ? `?type=${type}` : ''}`;
+    const url = `https://www.douban.com/group/${groupid}/${type && type !== 'latest' ? `?type=${type}` : ''}`;
     const response = await got({
         method: 'get',
         url,

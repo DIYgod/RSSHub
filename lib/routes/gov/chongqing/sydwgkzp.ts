@@ -30,12 +30,12 @@ async function handler(ctx: Context): Promise<Data> {
     // 替换 url
     const sydwgkzpUrl = `https://rlsbj.cq.gov.cn/zwxx_182/sydw/sydwgkzp${year}/`;
 
-    const { data: response }: { data: any } = await got(sydwgkzpUrl);
+    const { data: response } = await got(sydwgkzpUrl);
 
     const $ = load(response);
 
     // 获取所有的标题
-    const list = $('div[class="p-rt rt"] .tab-item > li')
+    const list = $('ul[class="rsj-list1"] > li')
         .toArray()
         .map((item) => {
             item = $(item);
@@ -54,10 +54,10 @@ async function handler(ctx: Context): Promise<Data> {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response }: { data: any } = await got(item.link);
+                const { data: response } = await got(item.link);
                 const $ = load(response);
                 // 主题正文
-                item.description = $('div[class="trs_editor_view TRS_UEDITOR trs_paper_default trs_web"]').first().html();
+                item.description = $('.trs_editor_view').first().html();
                 return item;
             })
         )

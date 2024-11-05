@@ -31,7 +31,7 @@ const server = setupServer(
             choices: [
                 {
                     message: {
-                        content: 'Summary of the article.',
+                        content: 'AI processed content.',
                     },
                 },
             ],

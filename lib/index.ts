@@ -18,7 +18,7 @@ if (config.listenInaddrAny) {
 
 const server = serve({
     fetch: app.fetch,
-    hostname: config.listenInaddrAny ? undefined : '127.0.0.1',
+    hostname: config.listenInaddrAny ? '::' : '127.0.0.1',
     port,
 });
 

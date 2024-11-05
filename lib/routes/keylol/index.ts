@@ -1,13 +1,17 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
+import { config } from '@/config';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 import queryString from 'query-string';
 
 const threadIdRegex = /(\d+)-\d+-\d+/;
+const header = {
+    Cookie: config.keylol.cookie ?? undefined,
+};
 
 export const route: Route = {
     path: '/:path',
@@ -15,6 +19,20 @@ export const route: Route = {
     parameters: { path: '路径，默认为热点聚焦' },
     categories: ['game'],
     example: '/keylol/f161-1',
+    features: {
+        requireConfig: [
+            {
+                name: 'KEYLOL_COOKIE',
+                optional: true,
+                description: `配置后可抓取具有阅读权限的帖子內容`,
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['keylol.com/:path'],
@@ -58,19 +76,25 @@ async function handler(ctx) {
     const rootUrl = 'https://keylol.com';
     const currentUrl = queryString.stringifyUrl({ url: `${rootUrl}/forum.php`, query: queryParams });
 
-    const { data: response } = await got(currentUrl);
+    const { data: response } = await got({
+        method: 'get',
+        url: currentUrl,
+        headers: header,
+    });
 
     const $ = load(response);
 
-    let items = $('tbody[id^="normalthread_"] a.xst')
+    let items = $('tbody[id^="normalthread_"]')
         .slice(0, limit)
         .toArray()
         .map((item) => {
             item = $(item);
 
             return {
-                title: item.text(),
-                link: new URL(item.prop('href').split('&extra=')[0], rootUrl).href,
+                title: item.find('a.xst').text(),
+                link: new URL(item.find(' a.xst').prop('href').split('&extra=')[0], rootUrl).href,
+                author: item.find('td.by-author cite').text(),
+                pubDate: parseRelativeDate(item.find('td.by-author em').text().replaceAll(' 发表', '')),
             };
         });
 
@@ -78,11 +102,15 @@ async function handler(ctx) {
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 const threadId = threadIdRegex.test(item.link) ? item.link.match(threadIdRegex)[1] : queryString.parseUrl(item.link).query.tid;
-                const { data: detailResponse } = await got(item.link);
+                const { data: detailResponse } = await got({
+                    method: 'get',
+                    url: item.link,
+                    headers: header,
+                });
 
                 const content = load(detailResponse);
 
-                let descriptionList: any[] = [];
+                let descriptionList: string[] = [];
                 const indexDiv = content('div#threadindex');
                 if (indexDiv.length > 0) {
                     // post with page
@@ -110,8 +138,10 @@ async function handler(ctx) {
                 }
 
                 item.description = descriptionList.join('<br/>');
-                const authorName = authorNameMap.find((a) => a.threadId === threadId);
-                item.author = authorName && authorName.length > 0 ? authorName[0].author : content('a.xw1').first().text();
+                const realAuthorName = authorNameMap.find((a) => a.threadId === threadId);
+                if (realAuthorName) {
+                    item.author = realAuthorName.author;
+                }
                 item.category = content('#keyloL_thread_tags a')
                     .toArray()
                     .map((c) => content(c).text());
@@ -156,11 +186,26 @@ async function handler(ctx) {
 function getDescription($) {
     const descriptionEl = $('td.t_f');
     descriptionEl.find('div.rnd_ai_pr').remove(); // remove ad image
-    return descriptionEl.html();
+
+    // handle lazyload image
+    descriptionEl.find('img').each((_, img) => {
+        img = $(img);
+        if (img.attr('src')?.endsWith('none.gif') && img.attr('file')) {
+            img.attr('src', img.attr('file'));
+            img.removeAttr('file');
+            img.removeAttr('zoomfile');
+        }
+    });
+
+    return descriptionEl.length > 0 ? descriptionEl.html() : $('div.alert_info').html();
 }
 
 async function getPage(url, pageTitle) {
-    const { data: detailResponse } = await got(url);
+    const { data: detailResponse } = await got({
+        method: 'get',
+        url,
+        headers: header,
+    });
 
     const $ = load(detailResponse, { xmlMode: true });
     const content = $('root').text();

@@ -18,22 +18,29 @@ const getUserData = (id) =>
                 }),
             });
         }
-        return twitterGot(`${baseUrl}${gqlMap.UserByScreenName}`, {
-            variables: JSON.stringify({
-                screen_name: id,
-                withSafetyModeUserFields: true,
-            }),
-            features: JSON.stringify(gqlFeatures.UserByScreenName),
-            fieldToggles: JSON.stringify({
-                withAuxiliaryUserLabels: false,
-            }),
-        });
+        return twitterGot(
+            `${baseUrl}${gqlMap.UserByScreenName}`,
+            {
+                variables: JSON.stringify({
+                    screen_name: id,
+                    withSafetyModeUserFields: true,
+                }),
+                features: JSON.stringify(gqlFeatures.UserByScreenName),
+                fieldToggles: JSON.stringify({
+                    withAuxiliaryUserLabels: false,
+                }),
+            },
+            {
+                allowNoAuth: true,
+            }
+        );
     });
 
 const cacheTryGet = async (_id, params, func) => {
     const userData: any = await getUserData(_id);
     const id = (userData.data?.user || userData.data?.user_result)?.result?.rest_id;
     if (id === undefined) {
+        cache.set(`twitter-userdata-${_id}`, '', config.cache.contentExpire);
         throw new InvalidParameterError('User not found');
     }
     const funcName = func.name;
@@ -183,6 +190,23 @@ const getHomeTimeline = async (id: string, params?: Record<string, any>) =>
         )
     );
 
+const getHomeLatestTimeline = async (id: string, params?: Record<string, any>) =>
+    gatherLegacyFromData(
+        await paginationTweets(
+            'HomeLatestTimeline',
+            undefined,
+            {
+                ...params,
+                count: 20,
+                includePromotedContent: true,
+                latestControlAvailable: true,
+                requestContext: 'launch',
+                withCommunity: true,
+            },
+            ['home', 'home_timeline_urt']
+        )
+    );
+
 export default {
     getUser,
     getUserTweets,
@@ -193,5 +217,6 @@ export default {
     getSearch,
     getList,
     getHomeTimeline,
+    getHomeLatestTimeline,
     init: () => {},
 };

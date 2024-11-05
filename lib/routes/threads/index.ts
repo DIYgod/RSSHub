@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { REPLIES_QUERY, THREADS_QUERY, apiUrl, threadUrl, profileUrl, extractTokens, makeHeader, getUserId, buildContent } from './utils';
@@ -8,29 +8,35 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/:user/:routeParams?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/threads/zuck',
-    parameters: { user: 'Username', routeParams: 'Extra parameters, see the table below' },
+    parameters: {
+        user: 'Username',
+        routeParams: {
+            description: `Extra parameters, see the table below
+Specify options (in the format of query string) in parameter \`routeParams\` to control some extra features for threads
+
+| Key                            | Description                                                                                                                  | Accepts                | Defaults to |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
+| \`showAuthorInTitle\`            | Show author name in title                                                                                                    | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
+| \`showAuthorInDesc\`             | Show author name in description (RSS body)                                                                                   | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
+| \`showQuotedAuthorAvatarInDesc\` | Show avatar of quoted author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`     |
+| \`showAuthorAvatarInDesc\`       | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)        | \`0\`/\`1\`/\`true\`/\`false\` | \`falseP\`    |
+| \`showEmojiForQuotesAndReply\`   | Use "🔁" instead of "QT", "↩️" instead of "Re"                                                                               | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
+| \`showQuotedInTitle\`            | Show quoted tweet in title                                                                                                   | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
+| \`replies\`                      | Show replies                                                                                                                 | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
+
+Specify different option values than default values to improve readability. The URL
+
+\`\`\`
+https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForQuotesAndReply=1&showQuotedInTitle=1
+\`\`\``,
+        },
+    },
     name: 'User timeline',
-    maintainers: ['ninboy'],
+    maintainers: ['ninboy', 'pseudoyu'],
     handler,
-    description: `Specify options (in the format of query string) in parameter \`routeParams\` to control some extra features for threads
-
-  | Key                            | Description                                                                                                                  | Accepts                | Defaults to |
-  | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
-  | \`showAuthorInTitle\`            | Show author name in title                                                                                                    | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
-  | \`showAuthorInDesc\`             | Show author name in description (RSS body)                                                                                   | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
-  | \`showQuotedAuthorAvatarInDesc\` | Show avatar of quoted author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`     |
-  | \`showAuthorAvatarInDesc\`       | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)        | \`0\`/\`1\`/\`true\`/\`false\` | \`falseP\`    |
-  | \`showEmojiForQuotesAndReply\`   | Use "🔁" instead of "QT", "↩️" instead of "Re"                                                                               | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
-  | \`showQuotedInTitle\`            | Show quoted tweet in title                                                                                                   | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
-  | \`replies\`                      | Show replies                                                                                                                 | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
-
-  Specify different option values than default values to improve readability. The URL
-
-  \`\`\`
-  https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForQuotesAndReply=1&showQuotedInTitle=1
-  \`\`\``,
 };
 
 async function handler(ctx) {

@@ -29,4 +29,12 @@ describe('registry', () => {
         const response = await app.request('/favicon.ico');
         expect(response.status).toBe(200);
     });
+
+    // healthz
+    it('/healthz', async () => {
+        const response = await app.request('/healthz');
+        expect(response.status).toBe(200);
+        expect(response.headers.get('cache-control')).toBe('no-cache');
+        expect(await response.text()).toBe('ok');
+    });
 });

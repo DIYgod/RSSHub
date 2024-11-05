@@ -1,6 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'NASA Astronomy Picture of the Day',
+    name: 'NASA',
     url: 'apod.nasa.gov',
+    lang: 'en',
 };

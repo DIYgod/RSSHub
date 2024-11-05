@@ -52,7 +52,7 @@ async function handler(ctx) {
             }
             const a = item.find('.text a');
             return {
-                title: a.text(),
+                title: a.first().text(),
                 link: a.attr('href'),
                 description: item.find('.miaoshu').text(),
                 pubDate: timezone(parseDate(item.find('.time').text().trim()), 8),

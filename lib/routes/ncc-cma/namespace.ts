@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'cmdp.ncc-cma.net',
     categories: ['forecast'],
     description: '',
+    lang: 'zh-CN',
 };

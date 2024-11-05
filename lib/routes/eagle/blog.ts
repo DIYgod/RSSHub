@@ -9,9 +9,20 @@ const cateList = new Set(['all', 'design-resources', 'learn-design', 'inside-eag
 
 export const route: Route = {
     path: '/blog/:cate?/:language?',
-    categories: ['design'],
+    categories: ['blog'],
     example: '/eagle/blog/en',
-    parameters: { cate: 'Category, get by URL, `all` by default', language: 'Language, `cn`, `tw`, `en`, `en` by default' },
+    parameters: {
+        cate: 'Category, get by URL, `all` by default',
+        language: {
+            description: 'Language',
+            options: [
+                { value: 'cn', label: 'cn' },
+                { value: 'tw', label: 'tw' },
+                { value: 'en', label: 'en' },
+            ],
+            default: 'en',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

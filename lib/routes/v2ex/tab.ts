@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/tab/:tabid',
-    categories: ['bbs'],
+    categories: ['bbs', 'popular'],
+    view: ViewType.Articles,
     example: '/v2ex/tab/hot',
     parameters: { tabid: 'tab标签ID,在 URL 可以找到' },
     features: {

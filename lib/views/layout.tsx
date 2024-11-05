@@ -45,6 +45,6 @@ export const Layout: FC = (props) => (
                 `}
             </style>
         </head>
-        <body className="antialiased text-zinc-700">{props.children}</body>
+        <body className="antialiased min-h-screen text-zinc-700 flex flex-col">{props.children}</body>
     </html>
 );

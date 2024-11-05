@@ -58,7 +58,7 @@ async function handler() {
                 cache.tryGet(item.link, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);
-                    const mods = findNatgeo($).page.content.article.frms.find((f) => f.cmsType === 'ArticleBodyFrame').mods;
+                    const mods = findNatgeo($).page.content.prismarticle.frms.find((f) => f.cmsType === 'ArticleBodyFrame').mods;
                     const bodyTile = mods.find((m) => m.edgs[0].cmsType === 'ArticleBodyTile').edgs[0];
 
                     item.author = bodyTile.cntrbGrp

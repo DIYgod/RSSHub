@@ -13,7 +13,7 @@
     {{ if b.type === 'p' }}
         <p>{{@ b.cntnt.mrkup }}</p>
     {{ else if b.type === 'inline' }}
-        {{ if b.cntnt.cmsType === 'image' }}
+        {{ if b.cntnt.cmsType === 'image' && b.cntnt.image?.src }}
             <figure>
                 <img src="{{ b.cntnt.image.src }}" alt="{{ b.cntnt.image.altText }}">
                 <figcaption>{{@ b.cntnt.caption }}</figcaption>

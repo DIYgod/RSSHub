@@ -21,7 +21,7 @@ export const route: Route = {
             target: '/user/:uid',
         },
     ],
-    name: '用户',
+    name: '绿洲用户',
     maintainers: ['kt286'],
     handler,
 };

@@ -1,11 +1,13 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import utils from './utils';
 import api from './api';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/user/:id/:routeParams?',
     categories: ['social-media', 'popular'],
-    example: '/twitter/user/DIYgod',
+    view: ViewType.SocialMedia,
+    example: '/twitter/user/_RSSHub',
     parameters: {
         id: 'username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`',
         routeParams:
@@ -27,7 +29,7 @@ export const route: Route = {
                 optional: true,
             },
             {
-                name: 'TWITTER_COOKIE',
+                name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
             },
         ],
@@ -38,7 +40,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'User timeline',
-    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9'],
+    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9', 'CaoMeiYouRen'],
     handler,
     radar: [
         {
@@ -57,9 +59,14 @@ async function handler(ctx) {
 
     await api.init();
     const userInfo = await api.getUser(id);
-    let data = await (exclude_replies ? api.getUserTweets(id, params) : api.getUserTweetsAndReplies(id, params));
-    if (!include_rts) {
-        data = utils.excludeRetweet(data);
+    let data;
+    try {
+        data = await (exclude_replies ? api.getUserTweets(id, params) : api.getUserTweetsAndReplies(id, params));
+        if (!include_rts) {
+            data = utils.excludeRetweet(data);
+        }
+    } catch (error) {
+        logger.error(error);
     }
 
     const profileImageUrl = userInfo?.profile_image_url || userInfo?.profile_image_url_https;
@@ -69,8 +76,11 @@ async function handler(ctx) {
         link: `https://x.com/${userInfo?.screen_name}`,
         image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
         description: userInfo?.description,
-        item: utils.ProcessFeed(ctx, {
-            data,
-        }),
+        item:
+            data &&
+            utils.ProcessFeed(ctx, {
+                data,
+            }),
+        allowEmpty: true,
     };
 }

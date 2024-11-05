@@ -85,6 +85,8 @@ async function handler(ctx) {
     });
     const $ = load(res.data);
 
+    $('.ad-wrap').remove();
+
     const list = $('.items .news-item')
         .toArray()
         .map((item) => {

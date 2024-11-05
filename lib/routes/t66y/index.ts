@@ -6,10 +6,10 @@ import { parseDate } from '@/utils/parse-date';
 import { baseUrl, parseContent } from './utils';
 
 export const route: Route = {
-    path: '/:id/:type?',
+    path: '/:id/:type?/:search?',
     categories: ['multimedia'],
     example: '/t66y/20/2',
-    parameters: { id: '分区 id, 可在分区页 URL 中找到', type: '类型 id, 可在分区类型过滤后的 URL 中找到' },
+    parameters: { id: '分区 id, 可在分区页 URL 中找到', type: '类型 id, 可在分区类型过滤后的 URL 中找到', search: '主题类型筛选，可在分区主题类型筛选后的 URL 中找到，默认为 `today`' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -33,14 +33,35 @@ export const route: Route = {
 
   | 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 | 成人文学交流 |
   | ---------- | ------------ | ------------ | ------------ |
-  | 7          | 8            | 16           | 20           |`,
+  | 7          | 8            | 16           | 20           |
+
+  **主题过滤**
+
+  > 因为该类型无法搭配子类型使用，所以使用时 \`type\` 子类型需使用 \`-999\` 占位
+
+  | 今日主题 | 热门主题 | 精华主题 | 原创主题 | 今日新作  |
+  | ------- | ------- | ------- | ------- | ------ |
+  | today   | hot     | digest  | 1       | 2      |`,
 };
 
-async function handler(ctx) {
-    const { id, type } = ctx.req.param();
+const SEARCH_NAMES = {
+    today: '今日主题',
+    hot: '热门主题',
+    digest: '精华主题',
+    1: '原创主题',
+    2: '今日新作',
+};
 
-    const url = new URL(`thread0806.php?fid=${id}&search=today`, baseUrl);
-    type && url.searchParams.set('type', type);
+const DEFAULT_SEARCH_TYPE = 'today';
+
+async function handler(ctx) {
+    const id = ctx.req.param('id');
+    const type = (Number.parseInt(ctx.req.param('type')) || -999).toString();
+    const isValidType = type !== '-999';
+    const search = isValidType ? DEFAULT_SEARCH_TYPE : (ctx.req.param('search') ?? DEFAULT_SEARCH_TYPE);
+
+    const url = new URL(`thread0806.php?fid=${id}&search=${search}`, baseUrl);
+    isValidType && url.searchParams.set('type', type);
 
     const { data: res } = await got(url);
     const $ = cheerio.load(res);
@@ -80,8 +101,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: (type ? `[${$('.t .fn b').text()}]` : '') + $('head title').text(),
+        title: (isValidType ? `[${$('.t .fn b').text()}] ` : '') + (search ? `[${SEARCH_NAMES[search]}] ` : '') + $('head title').text(),
         link: url.href,
         item: out,
+        allowEmpty: true,
     };
 }

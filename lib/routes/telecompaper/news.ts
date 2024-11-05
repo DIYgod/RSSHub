@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import tough from 'tough-cookie';
-// eslint-disable-next-line n/no-extraneous-require
+
 import FormData from 'form-data';
 
 export const route: Route = {

@@ -1,5 +1,6 @@
 import { destr } from 'destr';
 import ofetch from '@/utils/ofetch';
+import { getSearchParamsString } from './helpers';
 
 const getFakeGot = (defaultOptions?: any) => {
     const fakeGot = (request, options?: any) => {
@@ -35,7 +36,7 @@ const getFakeGot = (defaultOptions?: any) => {
             delete options.form;
         }
         if (options?.searchParams) {
-            request += '?' + new URLSearchParams(options.searchParams).toString();
+            request += '?' + getSearchParamsString(options.searchParams);
             delete options.searchParams;
         }
 

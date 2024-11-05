@@ -55,7 +55,7 @@ async function handler(ctx) {
     const author_nickname = data[0].author.nickname;
     const items = await Promise.all(
         data.map((item) => {
-            const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second`;
+            const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`;
             let description = '';
 
             const key = `sspai: ${item.id}`;

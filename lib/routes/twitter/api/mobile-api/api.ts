@@ -1,18 +1,18 @@
 import { baseUrl, gqlMap, gqlFeatures, consumerKey, consumerSecret } from './constants';
 import { config } from '@/config';
 import logger from '@/utils/logger';
-import got from '@/utils/got';
 import OAuth from 'oauth-1.0a';
 import CryptoJS from 'crypto-js';
 import queryString from 'query-string';
-import { initToken, getToken } from './token';
+import { getToken } from './token';
 import cache from '@/utils/cache';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import ofetch from '@/utils/ofetch';
 
 const twitterGot = async (url, params) => {
     const token = await getToken();
 
-    const oauth = OAuth({
+    const oauth = new OAuth({
         consumer: {
             key: consumerKey,
             secret: consumerSecret,
@@ -36,11 +36,14 @@ const twitterGot = async (url, params) => {
         },
     };
 
-    const response = await got(requestData.url, {
+    const response = await ofetch.raw(requestData.url, {
         headers: oauth.toHeader(oauth.authorize(requestData, token)),
     });
+    if (response.status === 401) {
+        cache.globalCache.set(token.cacheKey, '');
+    }
 
-    return response.data;
+    return response._data;
 };
 
 const paginationTweets = async (endpoint, userId, variables, path) => {
@@ -113,6 +116,16 @@ const tweetDetail = (userId, params) =>
         ['threaded_conversation_with_injections_v2']
     );
 
+const listTweets = (listId, params = {}) =>
+    paginationTweets(
+        gqlMap.ListTimeline,
+        listId,
+        {
+            ...params,
+        },
+        ['list', 'timeline_response', 'timeline']
+    );
+
 function gatherLegacyFromData(entries, filterNested, userId) {
     const tweets = [];
     const filteredEntries = [];
@@ -169,6 +182,7 @@ const getUserTweetsAndRepliesByID = async (id, params = {}) => gatherLegacyFromD
 const getUserMediaByID = async (id, params = {}) => gatherLegacyFromData(await timelineMedia(id, params));
 // const getUserLikesByID = async (id, params = {}) => gatherLegacyFromData(await timelineLikes(id, params));
 const getUserTweetByStatus = async (id, params = {}) => gatherLegacyFromData(await tweetDetail(id, params), ['homeConversation-', 'conversationthread-']);
+const getListById = async (id, params = {}) => gatherLegacyFromData(await listTweets(id, params));
 
 const excludeRetweet = function (tweets) {
     const excluded = [];
@@ -270,6 +284,8 @@ const getUserTweet = (id, params) => cacheTryGet(id, params, getUserTweetByStatu
 
 const getSearch = async (keywords, params = {}) => gatherLegacyFromData(await timelineKeywords(keywords, params));
 
+const getList = (id, params = {}) => cache.tryGet(`twitter:${id}:getListById:${JSON.stringify(params)}`, () => getListById(id, params), config.cache.routeExpire, false);
+
 export default {
     getUser,
     getUserTweets,
@@ -278,6 +294,7 @@ export default {
     // getUserLikes,
     excludeRetweet,
     getSearch,
+    getList,
     getUserTweet,
-    init: initToken,
+    init: () => void 0,
 };

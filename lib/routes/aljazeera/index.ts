@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 const languages = {
     arabic: {
@@ -27,7 +27,7 @@ const languages = {
 export const route: Route = {
     path: '*',
     name: 'Unknown',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
 };
 

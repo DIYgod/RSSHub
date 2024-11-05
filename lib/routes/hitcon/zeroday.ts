@@ -101,7 +101,7 @@ async function handler(ctx: Context): Promise<Data> {
         });
 
     return {
-        title: status ? titleMap[status] ?? 'ZeroDay' : '活動中',
+        title: status ? (titleMap[status] ?? 'ZeroDay') : '活動中',
         link: url,
         item: items,
         image: 'https://zeroday.hitcon.org/images/favicon/favicon.png',

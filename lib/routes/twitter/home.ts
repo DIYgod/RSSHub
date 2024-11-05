@@ -17,7 +17,7 @@ export const route: Route = {
                 description: 'Please see above for details.',
             },
             {
-                name: 'TWITTER_COOKIE',
+                name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
             },
         ],
@@ -28,7 +28,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Home timeline',
-    maintainers: ['DIYgod'],
+    maintainers: ['DIYgod', 'CaoMeiYouRen'],
     handler,
     radar: [
         {
@@ -40,13 +40,16 @@ export const route: Route = {
 
 async function handler(ctx) {
     // For compatibility
-    const { count, include_rts } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const { count, include_rts, only_media } = utils.parseRouteParams(ctx.req.param('routeParams'));
     const params = count ? { count } : {};
 
     await api.init();
     let data = await api.getHomeTimeline('', params);
     if (!include_rts) {
         data = utils.excludeRetweet(data);
+    }
+    if (only_media) {
+        data = utils.keepOnlyMedia(data);
     }
 
     return {

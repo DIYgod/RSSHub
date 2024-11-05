@@ -219,7 +219,8 @@ async function handler(ctx) {
                 queries.subCate = '809824';
                 queries.recommendLevel = '2';
                 break;
-            case 'editor' || 'edit':
+            case 'editor':
+            case 'edit':
                 queries.recommendLevel = '2';
                 break;
             default:

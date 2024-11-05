@@ -2,6 +2,9 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
 function loadContent(link) {
     return cache.tryGet(link, async () => {
         // 开始加载页面
@@ -20,16 +23,9 @@ function loadContent(link) {
     });
 }
 
-export const route: Route = {
-    path: '/:type?',
-    name: 'Unknown',
-    maintainers: ['SunShinenny'],
-    handler,
-};
-
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const host = `http://${type}.neea.edu.cn${typeDic[type].url}`;
+    const host = `https://${type}.neea.edu.cn${typeDic[type].url}`;
     const response = await got({
         method: 'get',
         url: host,
@@ -43,14 +39,13 @@ async function handler(ctx) {
         list.map(async (item) => {
             const ReportIDname = $(item).find('#ReportIDname > a');
             const ReportIDIssueTime = $(item).find('#ReportIDIssueTime');
-            const itemUrl = `http://${type}.neea.edu.cn` + $(ReportIDname).attr('href');
-            let time = new Date(ReportIDIssueTime.text()).getTime();
-            time += new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000; // beijing timezone
+            const itemUrl = `https://${type}.neea.edu.cn` + $(ReportIDname).attr('href');
+            const time = ReportIDIssueTime.text();
             const single = {
                 title: $(ReportIDname).text(),
                 link: itemUrl,
                 guid: itemUrl,
-                pubDate: new Date(time).toUTCString(),
+                pubDate: timezone(parseDate(time), +8),
             };
             const other = await loadContent(String(itemUrl));
             return Object.assign({}, single, other);
@@ -86,10 +81,14 @@ const typeDic = {
         url: '/html1/category/1507/1148-1.htm',
         title: '中小学教师资格考试',
     },
+    tdxl: {
+        url: '/html1/category/2210/313-1.htm',
+        title: '同等学力申请硕士学位考试',
+    },
     // 社会证书考试
     cet: {
         url: '/html1/category/16093/1124-1.htm',
-        title: '全国四六级（CET）',
+        title: '全国四六级考试（CET）',
     },
     ncre: {
         url: '/html1/category/1507/872-1.htm',
@@ -102,18 +101,47 @@ const typeDic = {
 
     pets: {
         url: '/html1/category/1507/1570-1.htm',
-        title: '全国英语等级考试 (PETS)',
+        title: '全国英语等级考试（PETS）',
     },
     wsk: {
         url: '/html1/category/1507/1646-1.htm',
-        title: '全国外语水平考试 (WSK)',
+        title: '全国外语水平考试（WSK）',
     },
     ccpt: {
         url: '/html1/category/1507/2035-1.htm',
-        title: '书画等级考试 (CCPT)',
+        title: '书画等级考试（CCPT）',
     },
-    mets: {
-        url: '/html1/category/1507/2065-1.htm',
-        title: '医护英语水平考试 (METS)',
+};
+
+export const route: Route = {
+    path: '/local/:type',
+    name: '国内考试动态',
+    url: 'www.neea.edu.cn',
+    maintainers: ['SunShinenny'],
+    example: '/neea/local/cet',
+    parameters: { type: '考试项目，见下表' },
+    categories: ['study'],
+    features: {
+        supportRadar: true,
     },
+    radar: Object.entries(typeDic).map(([type, value]) => ({
+        title: `${value.title}动态`,
+        source: [`${type}.neea.edu.cn`, `${type}.neea.cn`],
+        target: `/local/${type}`,
+    })),
+    handler,
+    description: `|              | 考试项目                      | type     |
+| ------------ | ----------------------------- | -------- |
+| 国家教育考试 | 普通高考                      | gaokao   |
+|              | 成人高考                      | chengkao |
+|              | 研究生考试                    | yankao   |
+|              | 自学考试                      | zikao    |
+|              | 中小学教师资格考试            | ntce     |
+|              | 同等学力申请硕士学位考试      | tdxl     |
+| 社会证书考试 | 全国四六级考试（CET）         | cet      |
+|              | 全国计算机等级考试（NCRE）    | ncre     |
+|              | 全国计算机应用水平考试（NIT） | nit      |
+|              | 全国英语等级考试（PETS）      | pets     |
+|              | 全国外语水平考试（WSK）       | wsk      |
+|              | 书画等级考试（CCPT）          | ccpt     |`,
 };

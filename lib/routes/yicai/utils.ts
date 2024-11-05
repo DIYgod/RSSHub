@@ -35,25 +35,31 @@ const ProcessItems = async (apiUrl, tryGet) => {
         }),
     }));
 
-    return Promise.all(
-        items.map((item) =>
-            tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                content('h1').remove();
-                content('.u-btn6, .m-smallshare, .topic-hot').remove();
-
-                item.description += content('.multiText, #multi-text, .txt').html() ?? '';
-
-                return item;
-            })
-        )
-    );
+    return Promise.all(fetchFullArticles(items, tryGet));
 };
+function fetchFullArticles(items, tryGet) {
+    return items.map((item) =>
+        tryGet(item.link, async () => {
+            const detailResponse = await got({
+                method: 'get',
+                url: item.link,
+            });
 
-export { rootUrl, ProcessItems };
+            const content = load(detailResponse.data);
+
+            if (!item.pubDate) {
+                const dataScript = content("script[src='/js/alert.min.js']").next().text() || content('title').next().text();
+                const pb = new Map(JSON.parse(dataScript.match(/_pb = (\[.*?]);/)[1].replaceAll("'", '"')));
+                item.pubDate = parseDate(`${pb.get('actime')}:00`);
+            }
+
+            content('h1').remove();
+            content('.u-btn6, .m-smallshare, .topic-hot').remove();
+
+            item.description = (item.description ?? '') + (content('.multiText, #multi-text, .txt').html() ?? '');
+
+            return item;
+        })
+    );
+}
+export { rootUrl, ProcessItems, fetchFullArticles };
