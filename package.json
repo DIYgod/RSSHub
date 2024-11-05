@@ -180,7 +180,7 @@
         "eslint-plugin-yml": "1.15.0",
         "fs-extra": "11.2.0",
         "globals": "15.11.0",
-        "got": "14.4.3",
+        "got": "14.4.4",
         "husky": "9.1.6",
         "js-beautify": "1.15.1",
         "lint-staged": "15.2.10",
