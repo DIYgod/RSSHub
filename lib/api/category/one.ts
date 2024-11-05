@@ -22,6 +22,16 @@ for (const namespace in namespaces) {
     }
 }
 
+const ParamsSchema = z.object({
+    category: z.string().openapi({
+        param: {
+            name: 'category',
+            in: 'path',
+        },
+        example: 'popular',
+    }),
+});
+
 const QuerySchema = z.object({
     categories: z
         .string()
@@ -36,20 +46,11 @@ const route = createRoute({
     tags: ['Category'],
     request: {
         query: QuerySchema,
-        params: z.object({
-            category: z.string(),
-        }),
+        params: ParamsSchema,
     },
     responses: {
         200: {
-            description: 'Namespace list by categories',
-            content: {
-                'application/json': {
-                    schema: z.object({
-                        data: z.record(z.string(), z.any()),
-                    }),
-                },
-            },
+            description: 'Namespace list by categories and language',
         },
     },
 });
@@ -66,23 +67,15 @@ const handler: RouteHandler<typeof route> = (ctx) => {
     // Get namespaces that exist in all requested categories
     const commonNamespaces = Object.keys(categoryList[category] || {}).filter((namespace) => allCategories.every((cat) => categoryList[cat]?.[namespace]));
 
-    // Create result using the path category as key
-    let result = {
-        [category]: Object.fromEntries(commonNamespaces.map((namespace) => [namespace, categoryList[category][namespace]])),
-    };
+    // Create result directly from common namespaces
+    let result = Object.fromEntries(commonNamespaces.map((namespace) => [namespace, categoryList[category][namespace]]));
 
     // Filter by language if provided
     if (lang) {
-        result = Object.fromEntries(
-            Object.entries(result)
-                .map(([cat, namespaces]) => [cat, Object.fromEntries(Object.entries(namespaces).filter(([, value]) => value.lang === lang))])
-                .filter(([, namespaces]) => Object.keys(namespaces).length > 0)
-        );
+        result = Object.fromEntries(Object.entries(result).filter(([, value]) => value.lang === lang));
     }
 
-    return ctx.json({
-        data: result,
-    });
+    return ctx.json(result);
 };
 
 export { route, handler };

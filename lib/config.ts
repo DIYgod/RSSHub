@@ -94,6 +94,9 @@ export type Config = {
     bupt: {
         portal_cookie?: string;
     };
+    caixin: {
+        cookie?: string;
+    };
     civitai: {
         cookie?: string;
     };
@@ -293,6 +296,14 @@ export type Config = {
     telegram: {
         token?: string;
         session?: string;
+        apiId?: number;
+        apiHash?: string;
+        maxConcurrentDownloads?: number;
+        proxy?: {
+            host?: string;
+            port?: number;
+            secret?: string;
+        };
     };
     tophub: {
         cookie?: string;
@@ -500,6 +511,9 @@ const calculateValue = () => {
         bupt: {
             portal_cookie: envs.BUPT_PORTAL_COOKIE,
         },
+        caixin: {
+            cookie: envs.CAIXIN_COOKIE,
+        },
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
         },
@@ -703,6 +717,11 @@ const calculateValue = () => {
             apiId: envs.TELEGRAM_API_ID,
             apiHash: envs.TELEGRAM_API_HASH,
             maxConcurrentDownloads: envs.TELEGRAM_MAX_CONCURRENT_DOWNLOADS,
+            proxy: {
+                host: envs.TELEGRAM_PROXY_HOST,
+                port: envs.TELEGRAM_PROXY_PORT,
+                secret: envs.TELEGRAM_PROXY_SECRET,
+            },
         },
         tophub: {
             cookie: envs.TOPHUB_COOKIE,
