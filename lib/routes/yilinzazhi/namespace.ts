@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'www.yilinzazhi.com',
     categories: ['reading'],
     description: '',
+    lang: 'zh-CN',
 };

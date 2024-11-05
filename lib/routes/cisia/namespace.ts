@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'www.cisia.org',
     categories: ['government'],
     description: '',
+    lang: 'zh-CN',
 };

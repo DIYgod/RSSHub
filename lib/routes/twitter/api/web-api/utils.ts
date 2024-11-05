@@ -13,36 +13,41 @@ import login from './login';
 
 let authTokenIndex = 0;
 
-const token2Cookie = (token) =>
-    cache.tryGet(`twitter:cookie:${token}`, async () => {
-        const jar = new CookieJar();
-        jar.setCookieSync(`auth_token=${token}`, 'https://x.com');
-        try {
-            const agent = proxy.proxyUri
-                ? new ProxyAgent({
-                      factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
-                      uri: proxy.proxyUri,
-                  })
-                : new CookieAgent({ cookies: { jar } });
-            if (token) {
-                await ofetch('https://x.com', {
-                    dispatcher: agent,
-                });
-            } else {
-                const data = await ofetch('https://x.com/narendramodi?mx=2', {
-                    dispatcher: agent,
-                });
-                const gt = data.match(/document\.cookie="gt=(\d+)/)?.[1];
-                if (gt) {
-                    jar.setCookieSync(`gt=${gt}`, 'https://x.com');
-                }
+const token2Cookie = async (token) => {
+    const c = await cache.get(`twitter:cookie:${token}`);
+    if (c) {
+        return c;
+    }
+    const jar = new CookieJar();
+    jar.setCookieSync(`auth_token=${token}`, 'https://x.com');
+    try {
+        const agent = proxy.proxyUri
+            ? new ProxyAgent({
+                  factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
+                  uri: proxy.proxyUri,
+              })
+            : new CookieAgent({ cookies: { jar } });
+        if (token) {
+            await ofetch('https://x.com', {
+                dispatcher: agent,
+            });
+        } else {
+            const data = await ofetch('https://x.com/narendramodi?mx=2', {
+                dispatcher: agent,
+            });
+            const gt = data.match(/document\.cookie="gt=(\d+)/)?.[1];
+            if (gt) {
+                jar.setCookieSync(`gt=${gt}`, 'https://x.com');
             }
-            return JSON.stringify(jar.serializeSync());
-        } catch {
-            // ignore
-            return '';
         }
-    });
+        const cookie = JSON.stringify(jar.serializeSync());
+        cache.set(`twitter:cookie:${token}`, cookie);
+        return cookie;
+    } catch {
+        // ignore
+        return '';
+    }
+};
 
 const lockPrefix = 'twitter:lock-token1:';
 
@@ -156,13 +161,15 @@ export const twitterGot = async (
             const remaining = response.headers.get('x-rate-limit-remaining');
             const remainingInt = Number.parseInt(remaining || '0');
             const reset = response.headers.get('x-rate-limit-reset');
-            logger.debug(`twitter debug: twitter rate limit remaining for token ${auth?.token} is ${remaining} and reset at ${reset}`);
+            logger.debug(
+                `twitter debug: twitter rate limit remaining for token ${auth?.token} is ${remaining} and reset at ${reset}, auth: ${JSON.stringify(auth)}, status: ${response.status}, data: ${JSON.stringify(response._data?.data)}, cookie: ${JSON.stringify(dispatchers?.jar.serializeSync())}`
+            );
             if (auth) {
                 if (remaining && remainingInt < 2 && reset) {
                     const resetTime = new Date(Number.parseInt(reset) * 1000);
                     const delay = (resetTime.getTime() - Date.now()) / 1000;
                     logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}, will unlock after ${delay}s`);
-                    await cache.set(`${lockPrefix}${auth.token}`, '1', Math.ceil(delay));
+                    await cache.set(`${lockPrefix}${auth.token}`, '1', Math.ceil(delay) * 2);
                 } else if (response.status === 429 || JSON.stringify(response._data?.data) === '{"user":{}}') {
                     logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
                     await cache.set(`${lockPrefix}${auth.token}`, '1', 2000);
