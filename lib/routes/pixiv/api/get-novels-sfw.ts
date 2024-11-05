@@ -92,28 +92,34 @@ interface sfwNovelDetail {
     };
 }
 
-async function getNovelFullContent(novelId: string): Promise<{ content: string; images: Record<string, string> }> {
-    const url = `${baseUrl}/ajax/novel/${novelId}`;
-    const data = (await cache.tryGet(url, async () => {
-        const { data } = await got(url, {
+async function getNovelFullContent(novel_id: string): Promise<{ content: string; images: Record<string, string> }> {
+    const url = `${baseUrl}/ajax/novel/${novel_id}`;
+    return (await cache.tryGet(url, async () => {
+        const response = await got(url, {
             headers: {
-                referer: `${baseUrl}/novel/show.php?id=${novelId}`,
+                referer: `${baseUrl}/novel/show.php?id=${novel_id}`,
             },
         });
-        return data;
-    })) as sfwNovelDetail;
 
-    const images: Record<string, string> = {};
-    if (data.body.textEmbeddedImages) {
-        for (const [id, image] of Object.entries(data.body.textEmbeddedImages)) {
-            images[id] = pixivUtils.getProxiedImageUrl(image.urls.original);
+        const novelDetail = response.data as sfwNovelDetail;
+
+        if (!novelDetail) {
+            throw new Error('No novel data found');
         }
-    }
 
-    return {
-        content: data.body.content,
-        images,
-    };
+        const images: Record<string, string> = {};
+
+        if (novelDetail.body.textEmbeddedImages) {
+            for (const [id, image] of Object.entries(novelDetail.body.textEmbeddedImages)) {
+                images[id] = pixivUtils.getProxiedImageUrl(image.urls.original);
+            }
+        }
+
+        return {
+            content: novelDetail.body.content,
+            images,
+        };
+    })) as { content: string; images: Record<string, string> };
 }
 
 export async function getNonR18Novels(id: string, fullContent: boolean, limit: number = 100) {
