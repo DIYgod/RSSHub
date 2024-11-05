@@ -29,7 +29,7 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    maintainers: ['HenryQW', 'pseudoyu'],
+    maintainers: ['HenryQW', 'pseudoyu', 'dzx-dzx'],
     handler,
     url: 'nytimes.com/',
     description: `Enhance the official EN RSS feed`,
