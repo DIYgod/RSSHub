@@ -11,7 +11,7 @@ export const route: Route = {
     example: '/nytimes/rss/HomePage',
     parameters: {
         cat: {
-            description: '',
+            description: "Category name, corresponding to the last segment of [official feed's](https://www.nytimes.com/rss) url.",
         },
     },
     features: {
@@ -32,7 +32,7 @@ export const route: Route = {
     maintainers: ['HenryQW', 'pseudoyu'],
     handler,
     url: 'nytimes.com/',
-    description: `By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.`,
+    description: `Enhance the official EN RSS feed`,
 };
 
 async function handler(ctx) {
