@@ -4,7 +4,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import md5 from '@/utils/md5';
-import path from 'path';
+import path from 'node:path';
 import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
 

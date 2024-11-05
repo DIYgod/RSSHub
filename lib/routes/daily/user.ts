@@ -1,13 +1,8 @@
 import { Route } from '@/types';
-import { baseUrl, getBuildId, getData } from './utils';
+import { baseUrl, getBuildId, getData, getList } from './utils';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import { config } from '@/config';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'path';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 const userPostQuery = `
   query AuthorFeed(
@@ -155,20 +150,18 @@ const userPostQuery = `
     downvoted
   }`;
 
-const render = (data) => art(path.join(__dirname, 'templates/posts.art'), data);
-
 export const route: Route = {
     path: '/user/:userId',
     example: '/daily/user/kramer',
     radar: [
         {
-            source: ['daily.dev/:userId/posts', 'daily.dev/:userId'],
+            source: ['app.daily.dev/:userId/posts', 'app.daily.dev/:userId'],
         },
     ],
     name: 'User Posts',
     maintainers: ['TonyRL'],
     handler,
-    url: 'daily.dev',
+    url: 'app.daily.dev',
 };
 
 async function handler(ctx) {
@@ -178,12 +171,12 @@ async function handler(ctx) {
     const buildId = await getBuildId();
 
     const userData = await cache.tryGet(`daily:user:${userId}`, async () => {
-        const resposne = await ofetch(`${baseUrl}/_next/data/${buildId}/en/${userId}.json`, {
+        const response = await ofetch(`${baseUrl}/_next/data/${buildId}/en/${userId}.json`, {
             query: {
                 userId,
             },
         });
-        return resposne.pageProps;
+        return response.pageProps;
     });
     const user = (userData as any).user;
 
@@ -198,17 +191,7 @@ async function handler(ctx) {
                     loggedIn: false,
                 },
             });
-            return edges.map(({ node }) => ({
-                title: node.title,
-                description: render({
-                    image: node.image,
-                    content: node.contentHtml?.replaceAll('\n', '<br>') ?? node.summary,
-                }),
-                link: node.permalink,
-                author: node.author?.name,
-                category: node.tags,
-                pubDate: parseDate(node.createdAt),
-            }));
+            return getList(edges);
         },
         config.cache.routeExpire,
         false

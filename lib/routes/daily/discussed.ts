@@ -1,9 +1,5 @@
 import { Route } from '@/types';
-import { getData, getList, getRedirectedLink } from './utils.js';
-
-const variables = {
-    first: 15,
-};
+import { baseUrl, getData, getList } from './utils.js';
 
 const query = `
   query MostDiscussedFeed(
@@ -19,6 +15,7 @@ const query = `
     edges {
       node {
         ...FeedPost
+        contentHtml
       }
     }
   }
@@ -33,6 +30,7 @@ const query = `
     image
     readTime
     permalink
+    commentsPermalink
     summary
     createdAt
     numUpvotes
@@ -52,37 +50,40 @@ const query = `
     bio
   }
 `;
-const graphqlQuery = {
-    query,
-    variables,
-};
 
 export const route: Route = {
     path: '/discussed',
     example: '/daily/discussed',
     radar: [
         {
-            source: ['daily.dev/popular'],
+            source: ['app.daily.dev/discussed'],
         },
     ],
     name: 'Most Discussed',
     maintainers: ['Rjnishant530'],
     handler,
-    url: 'daily.dev/popular',
+    url: 'app.daily.dev/discussed',
 };
 
-async function handler() {
-    const baseUrl = 'https://app.daily.dev/discussed';
-    const data = await getData(graphqlQuery);
-    const list = getList(data);
-    const items = await getRedirectedLink(list);
+async function handler(ctx) {
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const link = `${baseUrl}/discussed`;
+
+    const data = await getData({
+        query,
+        variables: {
+            first: limit,
+        },
+    });
+    const items = getList(data);
+
     return {
-        title: 'Most Discussed',
-        link: baseUrl,
+        title: 'Real-time discussions in the developer community | daily.dev',
+        link,
         item: items,
-        description: 'Most Discussed Posts on Daily.dev',
-        logo: 'https://app.daily.dev/favicon-32x32.png',
-        icon: 'https://app.daily.dev/favicon-32x32.png',
+        description: 'Stay on top of real-time developer discussions on daily.dev. Join conversations happening now and engage with the most active community members.',
+        logo: `${baseUrl}/favicon-32x32.png`,
+        icon: `${baseUrl}/favicon-32x32.png`,
         language: 'en-us',
     };
 }

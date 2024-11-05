@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { baseUrl, getCitys, getDistricts } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { art } from '@/utils/render';
-import path from 'path';
+import path from 'node:path';
 import { getCurrentPath } from '@/utils/helpers';
 
 const __dirname = getCurrentPath(import.meta.url);

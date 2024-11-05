@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import path from 'path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 import { getCurrentPath } from '@/utils/helpers';
 
