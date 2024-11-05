@@ -2,6 +2,18 @@ import { getCurrentCell, setCurrentCell } from 'node-network-devtools';
 import { useCustomHeader } from './fetch';
 import { describe, beforeEach, afterEach, test, expect } from 'vitest';
 
+const getInitRequest = () =>
+    ({
+        requestHeaders: {} as Record<string, string>,
+        id: '',
+        loadCallFrames: () => {},
+        cookies: '',
+        requestData: '',
+        responseData: '',
+        responseHeaders: {},
+        responseInfo: {},
+    }) satisfies NonNullable<ReturnType<typeof getCurrentCell>>['request'];
+
 describe('useCustomHeader', () => {
     let originalEnv: string;
 
@@ -19,7 +31,7 @@ describe('useCustomHeader', () => {
         const headers = new Headers();
         headers.set('Authorization', 'Bearer token');
 
-        const req: any = { requestHeaders: {} };
+        const req = getInitRequest();
         setCurrentCell({
             request: req,
             pipes: [],
@@ -46,7 +58,7 @@ describe('useCustomHeader', () => {
 
         const headers = new Headers();
         headers.set('Content-Type', 'application/json');
-        const req: any = { requestHeaders: {} };
+        const req = getInitRequest();
 
         setCurrentCell({
             request: req,
