@@ -12602,6 +12602,19 @@
       }
     ]
   },
+  "hamel.dev": {
+    "_name": "Hamel's Blog",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/hamel/blog"
+      }
+    ]
+  },
   "syosetu.org": {
     "_name": "hameln",
     ".": [

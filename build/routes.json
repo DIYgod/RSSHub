@@ -35884,6 +35884,34 @@
     "url": "hakkatv.org.tw",
     "lang": "zh-TW"
   },
+  "hamel": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/hamel/blog",
+        "radar": [
+          {
+            "source": [
+              "hamel.dev/"
+            ]
+          }
+        ],
+        "url": "hamel.dev/",
+        "name": "Blog",
+        "maintainers": [
+          "liyaozhong"
+        ],
+        "description": "Hamel's Blog Posts",
+        "location": "index.ts"
+      }
+    },
+    "name": "Hamel's Blog",
+    "url": "hamel.dev",
+    "lang": "en"
+  },
   "hameln": {
     "routes": {
       "/chapter/:id": {
