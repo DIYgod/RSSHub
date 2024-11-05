@@ -160,14 +160,14 @@
         "@types/mailparser": "3.4.5",
         "@types/markdown-it": "14.1.2",
         "@types/module-alias": "2.0.4",
-        "@types/node": "22.8.7",
+        "@types/node": "22.9.0",
         "@types/sanitize-html": "2.13.0",
         "@types/supertest": "6.0.2",
         "@types/tiny-async-pool": "2.0.3",
         "@types/title": "3.4.3",
         "@types/uuid": "10.0.0",
-        "@typescript-eslint/eslint-plugin": "8.12.2",
-        "@typescript-eslint/parser": "8.12.2",
+        "@typescript-eslint/eslint-plugin": "8.13.0",
+        "@typescript-eslint/parser": "8.13.0",
         "@vercel/nft": "0.27.5",
         "@vitest/coverage-v8": "2.0.5",
         "discord-api-types": "0.37.103",
@@ -179,8 +179,8 @@
         "eslint-plugin-unicorn": "56.0.0",
         "eslint-plugin-yml": "1.15.0",
         "fs-extra": "11.2.0",
-        "globals": "15.11.0",
-        "got": "14.4.3",
+        "globals": "15.12.0",
+        "got": "14.4.4",
         "husky": "9.1.6",
         "js-beautify": "1.15.1",
         "lint-staged": "15.2.10",
@@ -191,12 +191,17 @@
         "supertest": "7.0.0",
         "typescript": "5.6.3",
         "unified": "11.0.5",
-        "vite-tsconfig-paths": "5.0.1",
+        "vite-tsconfig-paths": "5.1.0",
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
     "packageManager": "pnpm@9.12.3",
     "engines": {
         "node": ">=22"
+    },
+    "pnpm": {
+        "overrides": {
+            "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed"
+        }
     }
 }
