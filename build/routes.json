@@ -58373,6 +58373,45 @@
         "url": "nytimes.com/",
         "description": "By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.",
         "location": "index.ts"
+      },
+      "/rss/:cat?": {
+        "path": "/rss/:cat?",
+        "categories": [
+          "traditional-media",
+          "popular"
+        ],
+        "view": 0,
+        "example": "/nytimes/rss/HomePage",
+        "parameters": {
+          "cat": {
+            "description": "Category name, corresponding to the last segment of [official feed's](https://www.nytimes.com/rss) url."
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "nytimes.com/"
+            ],
+            "target": ""
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "HenryQW",
+          "pseudoyu",
+          "dzx-dzx"
+        ],
+        "url": "nytimes.com/",
+        "description": "Enhance the official EN RSS feed",
+        "location": "rss.ts"
       }
     },
     "name": "The New York Times",

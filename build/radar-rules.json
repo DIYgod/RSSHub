@@ -21404,6 +21404,14 @@
           "/"
         ],
         "target": "/nytimes/:lang?"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/nytimes/rss/:cat?"
       }
     ]
   },

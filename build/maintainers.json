@@ -4835,6 +4835,11 @@
     "HenryQW",
     "pseudoyu"
   ],
+  "/nytimes/rss/:cat?": [
+    "HenryQW",
+    "pseudoyu",
+    "dzx-dzx"
+  ],
   "/obsidian/publish/:id": [
     "Xy2002"
   ],
