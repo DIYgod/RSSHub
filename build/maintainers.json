@@ -1601,6 +1601,9 @@
   "/daily/": [
     "Rjnishant530"
   ],
+  "/daily/source/:sourceId": [
+    "TonyRL"
+  ],
   "/daily/upvoted": [
     "Rjnishant530"
   ],

@@ -7249,12 +7249,12 @@
   },
   "daily.dev": {
     "_name": "Daily.dev",
-    ".": [
+    "app": [
       {
         "title": "Most Discussed",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
-          "/popular"
+          "/discussed"
         ],
         "target": "/daily/discussed"
       },
@@ -7267,10 +7267,18 @@
         "target": "/daily/"
       },
       {
+        "title": "Source Posts",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/sources/:sourceId"
+        ],
+        "target": "/daily/source/:sourceId"
+      },
+      {
         "title": "Most upvoted",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
-          "/popular"
+          "/upvoted"
         ],
         "target": "/daily/upvoted"
       },

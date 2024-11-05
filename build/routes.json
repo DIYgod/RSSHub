@@ -19610,7 +19610,7 @@
         "radar": [
           {
             "source": [
-              "daily.dev/popular"
+              "app.daily.dev/discussed"
             ]
           }
         ],
@@ -19618,7 +19618,7 @@
         "maintainers": [
           "Rjnishant530"
         ],
-        "url": "daily.dev/popular",
+        "url": "app.daily.dev/discussed",
         "location": "discussed.ts"
       },
       "/": {
@@ -19627,7 +19627,7 @@
         "radar": [
           {
             "source": [
-              "daily.dev/popular"
+              "app.daily.dev/popular"
             ]
           }
         ],
@@ -19635,8 +19635,28 @@
         "maintainers": [
           "Rjnishant530"
         ],
-        "url": "daily.dev/popular",
+        "url": "app.daily.dev/popular",
         "location": "index.ts"
+      },
+      "/source/:sourceId": {
+        "path": "/source/:sourceId",
+        "example": "/daily/source/hn",
+        "parameters": {
+          "sourceId": "The source id"
+        },
+        "radar": [
+          {
+            "source": [
+              "app.daily.dev/sources/:sourceId"
+            ]
+          }
+        ],
+        "name": "Source Posts",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "app.daily.dev",
+        "location": "source.ts"
       },
       "/upvoted": {
         "path": "/upvoted",
@@ -19644,7 +19664,7 @@
         "radar": [
           {
             "source": [
-              "daily.dev/popular"
+              "app.daily.dev/upvoted"
             ]
           }
         ],
@@ -19652,7 +19672,7 @@
         "maintainers": [
           "Rjnishant530"
         ],
-        "url": "daily.dev/popular",
+        "url": "app.daily.dev/upvoted",
         "location": "upvoted.ts"
       },
       "/user/:userId": {
@@ -19661,8 +19681,8 @@
         "radar": [
           {
             "source": [
-              "daily.dev/:userId/posts",
-              "daily.dev/:userId"
+              "app.daily.dev/:userId/posts",
+              "app.daily.dev/:userId"
             ]
           }
         ],
@@ -19670,12 +19690,12 @@
         "maintainers": [
           "TonyRL"
         ],
-        "url": "daily.dev",
+        "url": "app.daily.dev",
         "location": "user.ts"
       }
     },
     "name": "Daily.dev",
-    "url": "daily.dev",
+    "url": "app.daily.dev",
     "categories": [
       "social-media"
     ],
