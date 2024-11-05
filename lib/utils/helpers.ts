@@ -30,3 +30,16 @@ export const getCurrentPath = (metaUrl: string) => {
     const __filename = path.join(fileURLToPath(metaUrl));
     return path.dirname(__filename);
 };
+
+function isPureObject(o: any) {
+    return Object.prototype.toString.call(o) === '[object Object]';
+}
+
+export function getSearchParamsString(searchParams: any) {
+    const searchParamsInitArray = isPureObject(searchParams)
+        ? Object.entries(searchParams)
+              .filter(([, value]) => value !== undefined)
+              .map(([key, value]) => [key, String(value)])
+        : null;
+    return new URLSearchParams(searchParamsInitArray ?? searchParams).toString();
+}
