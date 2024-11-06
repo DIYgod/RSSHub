@@ -8,7 +8,7 @@ export const route: Route = {
     handler,
     categories: ['shopping'],
     example: '/openrice/zh/hongkong/voting/top/chinese',
-    parameters: { lang: '语言，缺省为 zh' },
+    parameters: { lang: '语言，缺省为 zh', categoryKey: '类别，缺省为 chinese' },
     name: 'OpenRice 開飯熱店 - 年度餐廳投票',
     description: `
   lang: 语言，见下方列表
