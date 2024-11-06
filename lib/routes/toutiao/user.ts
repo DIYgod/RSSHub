@@ -7,6 +7,11 @@ import { generate_a_bogus } from './a-bogus';
 import { Feed } from './types';
 import RejectError from '@/errors/types/reject';
 import { config } from '@/config';
+import path from 'node:path';
+import { getCurrentPath } from '@/utils/helpers';
+import { art } from '@/utils/render';
+
+const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/user/token/:token',
@@ -52,23 +57,71 @@ async function handler(ctx) {
     }
 
     const items = feed.map((item) => {
-        const enclosure = item.large_image_list?.pop();
-        return {
-            title: item.title,
-            description: item.rich_content ?? item.abstract ?? item.content,
-            link: `https://www.toutiao.com/${item.cell_type === 60 ? 'article' : /* 32 */ 'w'}/${item.id}/`,
-            pubDate: parseDate(item.publish_time, 'X'),
-            author: item.user_info?.name ?? item.user?.name ?? item.source,
-            enclosure_url: enclosure?.url,
-            enclosure_type: enclosure?.url ? `image/${new URL(enclosure.url).pathname.split('.').pop()}` : undefined,
-        };
+        switch (item.cell_type) {
+            case 0:
+            case 49: {
+                const video = item.video.play_addr_list.sort((a, b) => b.bitrate - a.bitrate)[0];
+                return {
+                    title: item.title,
+                    description: art(path.join(__dirname, 'templates', 'video.art'), {
+                        poster: item.video.origin_cover.url_list[0],
+                        url: item.video.play_addr_list.sort((a, b) => b.bitrate - a.bitrate)[0].play_url_list[0],
+                    }),
+                    link: `https://www.toutiao.com/video/${item.id}/`,
+                    pubDate: parseDate(item.publish_time, 'X'),
+                    author: item.user?.info.name ?? item.source,
+                    enclosure_url: video?.play_url_list[0],
+                    enclosure_type: video?.play_url_list[0] ? 'video/mp4' : undefined,
+                    user: {
+                        name: item.user?.info.name,
+                        avatar: item.user?.info.avatar_url,
+                        description: item.user?.info.desc,
+                    },
+                };
+            }
+
+            // text w/o title
+            case 32: {
+                const enclosure = item.large_image_list?.pop();
+                return {
+                    title: item.content?.split('\n')[0],
+                    description: item.rich_content,
+                    link: `https://www.toutiao.com/w/${item.id}/`,
+                    pubDate: parseDate(item.publish_time, 'X'),
+                    author: item.user?.name,
+                    enclosure_url: enclosure?.url,
+                    enclosure_type: enclosure?.url ? `image/${new URL(enclosure.url).pathname.split('.').pop()}` : undefined,
+                    user: {
+                        name: item.user?.name,
+                        avatar: item.user?.avatar_url,
+                        description: item.user?.desc,
+                    },
+                };
+            }
+
+            // text w/ title
+            case 60:
+            default:
+                return {
+                    title: item.title,
+                    description: item.abstract,
+                    link: `https://www.toutiao.com/article/${item.id}/`,
+                    pubDate: parseDate(item.publish_time, 'X'),
+                    author: item.user_info?.name,
+                    user: {
+                        name: item.user_info?.name,
+                        avatar: item.user_info?.avatar_url,
+                        description: item.user_info?.description,
+                    },
+                };
+        }
     });
 
     return {
-        title: `${feed[0].user_info?.name ?? feed[0].user?.name ?? feed[0].source}的头条主页 - 今日头条(www.toutiao.com)`,
-        description: feed[0].user_info?.description ?? feed[0].user?.desc,
+        title: `${items[0].user.name}的头条主页 - 今日头条(www.toutiao.com)`,
+        description: items[0].user.description,
         link: `https://www.toutiao.com/c/user/token/${token}/`,
-        image: feed[0].user_info?.avatar_url ?? feed[0].user?.avatar_url,
+        image: items[0].user.avatar,
         item: items,
     };
 }
