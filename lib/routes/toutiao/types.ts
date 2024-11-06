@@ -12,13 +12,19 @@ export interface Feed {
     cell_ctrls: CellCtrls;
     cell_flag: number;
     cell_layout_style: number;
+    /**
+     * 0: video
+     * 32: text (w)
+     * 49: video
+     * 60: article
+     */
     cell_type: number;
     comment_count: number;
     common_raw_data: string;
     /**
      * Appears only if cell_type is 32
      */
-    content?: string;
+    content: string;
     content_decoration: string;
     control_meta: ControlMeta;
     cursor: number;
@@ -55,7 +61,7 @@ export interface Feed {
     /**
      * Appears only if cell_type is 32
      */
-    rich_content?: string;
+    rich_content: string;
     read_count: number;
     reback_flag: number;
     repin_count: number;
@@ -70,15 +76,22 @@ export interface Feed {
     title: string;
     url: string;
     /**
-     * Appears only if cell_type is 32
+     * Appears only if cell_type is 32, 49(0)
      */
-    user?: UserInfo;
+    user: UserInfoCell32 | UserInfoCell49;
     user_bury: number;
     user_digg: number;
-    user_info?: UserInfo;
+    /**
+     * Appears only if cell_type is 0, 60
+     */
+    user_info: UserInfoCell60;
     user_like: number;
     user_repin: number;
     user_repin_time: number;
+    /**
+     * Appears only if cell_type is 0, 49
+     */
+    video: Video;
     video_duration: number;
     video_style: number;
     image_list: ImageListItem[];
@@ -251,6 +264,62 @@ interface UserInteraction {
 
 type VideoInfo = unknown;
 
+interface Video {
+    bitrate: number;
+    codec_type: string;
+    definition: string;
+    download_addr: DownloadAddr;
+    duration: number;
+    encode_user_tag: string;
+    file_hash: string;
+    height: number;
+    origin_cover: OriginCover;
+    play_addr: PlayAddr;
+    play_addr_list: PlayAddrListItem[];
+    ratio: string;
+    size: number;
+    url_expire: number;
+    video_id: string;
+    volume: Volume;
+    vtype: string;
+    width: number;
+}
+
+interface DownloadAddr {
+    uri: string;
+    url_list: string[];
+}
+
+interface OriginCover {
+    uri: string;
+    url_list: string[];
+}
+
+interface PlayAddr {
+    uri: string;
+    url_list: string[];
+}
+
+interface PlayAddrListItem {
+    bitrate: number;
+    codec_type: string;
+    definition: string;
+    encode_user_tag: string;
+    file_hash: string;
+    play_url_list: string[];
+    quality: string;
+    size: number;
+    url_expire: number;
+    video_quality: number;
+    volume: Volume;
+    vtype: string;
+}
+
+interface Volume {
+    Loudness: number;
+    Peak: number;
+}
+
 interface LogPb {
     cell_layout_style: string;
     group_id_str: string;
@@ -267,10 +336,60 @@ interface ShowMore {
     url: string;
 }
 
-interface UserInfo {
+interface UserInfoCell32 {
+    avatar_url: string;
+    desc: string;
+    id: number;
+    is_blocked: number;
+    is_blocking: number;
+    is_followed: number;
+    is_following: number;
+    is_friend: number;
+    live_info_type: number;
+    medals: unknown;
+    name: string;
+    remark_name: string;
+    schema: string;
+    screen_name: string;
+    theme_day: string;
+    user_auth_info: string;
+    user_decoration: string;
+    user_id: string;
+    user_verified: number;
+    verified_content: string;
+}
+
+interface UserInfoCell49 {
+    info: {
+        avatar_uri: string;
+        avatar_url: string;
+        ban_status: boolean;
+        desc: string;
+        media_id: string;
+        name: string;
+        origin_profile_url: boolean;
+        origin_user_id: string;
+        schema: string;
+        user_auth_info: string;
+        user_id: string;
+        user_verified: number;
+        verified_content: string;
+    };
+    relation: {
+        is_followed: number;
+        is_following: number;
+        is_friend: number;
+    };
+    relation_count: {
+        followers_count: number;
+        following_count: number;
+    };
+    user_id: string;
+}
+
+interface UserInfoCell60 {
     avatar_url: string;
     description: string;
-    desc: string;
     follow: boolean;
     name: string;
     user_auth_info: string;
