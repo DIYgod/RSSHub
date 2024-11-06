@@ -30,19 +30,22 @@ async function handler(ctx) {
     const { token } = ctx.req.param();
     const ua = randUserAgent({ browser: 'chrome', os: 'windows', device: 'desktop' });
 
-    const feed = (await cache.tryGet(`toutiao:user:${token}`, async () => {
-        const query = `category=profile_all&token=${token}&max_behot_time=0&entrance_gid&aid=24&app_name=toutiao_web`;
+    const feed = (await cache.tryGet(
+        `toutiao:user:${token}`,
+        async () => {
+            const query = `category=profile_all&token=${token}&max_behot_time=0&entrance_gid&aid=24&app_name=toutiao_web`;
 
-        const data = await ofetch(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, ua)}`, {
-            headers: {
-                'User-Agent': ua,
-            },
-        });
+            const data = await ofetch(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, ua)}`, {
+                headers: {
+                    'User-Agent': ua,
+                },
+            });
 
-        return data.data;
-    },config.cache.routeExpire,
+            return data.data;
+        },
+        config.cache.routeExpire,
         false
-)) as Feed[];
+    )) as Feed[];
 
     if (!feed) {
         throw new RejectError('无法获取用户信息');
