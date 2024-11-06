@@ -4928,6 +4928,9 @@
   "/openrice/:lang/hongkong/promos": [
     "after9"
   ],
+  "/openrice/:lang/hongkong/voting/top/:categoryKey": [
+    "after9"
+  ],
   "/openwrt/releases/:brand/:model": [],
   "/orcid/:id": [
     "OrangeEd1t"
