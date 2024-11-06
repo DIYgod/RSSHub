@@ -3,8 +3,8 @@ import { config } from '@/config';
 import md5 from '@/utils/md5';
 import RejectError from '@/errors/types/reject';
 
-const reject = () => {
-    throw new RejectError('Authentication failed. Access denied.');
+const reject = (requestPath) => {
+    throw new RejectError(`Authentication failed. Access denied.\n${requestPath}`);
 };
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
@@ -16,7 +16,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         await next();
     } else {
         if (config.accessKey && !(config.accessKey === accessKey || accessCode === md5(requestPath + config.accessKey))) {
-            return reject();
+            return reject(requestPath);
         }
         await next();
     }
