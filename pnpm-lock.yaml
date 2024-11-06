@@ -361,8 +361,8 @@ importers:
         specifier: 8.13.0
         version: 8.13.0(eslint@9.14.0)(typescript@5.6.3)
       '@vercel/nft':
-        specifier: 0.27.5
-        version: 0.27.5
+        specifier: 0.27.6
+        version: 0.27.6
       '@vitest/coverage-v8':
         specifier: 2.0.5
         version: 2.0.5(vitest@2.0.5(@types/node@22.9.0)(jsdom@25.0.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
@@ -2052,8 +2052,8 @@ packages:
   '@unhead/schema@1.11.11':
     resolution: {integrity: sha512-xSGsWHPBYcMV/ckQeImbrVu6ddeRnrdDCgXUKv3xIjGBY+ob/96V80lGX8FKWh8GwdFSwhblISObKlDAt5K9ZQ==}
 
-  '@vercel/nft@0.27.5':
-    resolution: {integrity: sha512-b2A7M+4yMHdWKY7xCC+kBEcnMrpaSE84CnuauTjhKKoCEeej0byJMAB8h/RBVnw/HdZOAFVcxR0Izr3LL24FwA==}
+  '@vercel/nft@0.27.6':
+    resolution: {integrity: sha512-mwuyUxskdcV8dd7N7JnxBgvFEz1D9UOePI/WyLLzktv6HSCwgPNQGit/UJ2IykAWGlypKw4pBQjOKWvIbXITSg==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -7648,7 +7648,7 @@ snapshots:
       hookable: 5.5.3
       zhead: 2.2.4
 
-  '@vercel/nft@0.27.5':
+  '@vercel/nft@0.27.6':
     dependencies:
       '@mapbox/node-pre-gyp': 1.0.11
       '@rollup/pluginutils': 4.2.1
