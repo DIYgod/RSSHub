@@ -46,7 +46,7 @@ async function handler(ctx) {
     }
 
     const items = feed.map((item) => {
-        const enclosure = item.large_image_list.pop();
+        const enclosure = item.large_image_list?.pop();
         return {
             title: item.title,
             description: item.rich_content ?? item.abstract ?? item.content,

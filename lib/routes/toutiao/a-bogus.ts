@@ -1,5 +1,3 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable @stylistic/space-in-parens */
 /* eslint-disable unicorn/prefer-spread */
 /* eslint-disable unicorn/prefer-math-trunc */
 // @ts-nocheck
@@ -9,10 +7,13 @@
 // https://github.com/110Art/a-bogus/blob/main/a_bogus.js
 // https://github.com/ShilongLee/Crawler/blob/main/lib/js/douyin.js
 
+// Reference:
+// https://github.com/Endy-c/gm-crypt/blob/87bfc13f4b234c538d56798ed2457da16bc006ac/src/sm3.js
+
 import logger from '@/utils/logger';
 
 function rc4_encrypt(plaintext, key) {
-    const s = [];
+    const s: number[] = [];
     for (let i = 0; i < 256; i++) {
         s[i] = i;
     }
@@ -36,23 +37,43 @@ function rc4_encrypt(plaintext, key) {
     return cipher.join('');
 }
 
-function le(e, r) {
+function rotateLeft32(e, r) {
     return ((e << (r %= 32)) | (e >>> (32 - r))) >>> 0;
 }
 
-function de(e) {
-    return 0 <= e && e < 16 ? 0x79_cc_45_19 : 16 <= e && e < 64 ? 0x7a_87_9d_8a : void logger.error('invalid j for constant Tj');
+function T(j) {
+    if (0 <= j && j < 16) {
+        return 0x79_cc_45_19;
+    } else if (16 <= j && j < 64) {
+        return 0x7a_87_9d_8a;
+    } else {
+        logger.error('invalid j for constant Tj');
+    }
 }
 
-function pe(e, r, t, n) {
-    return 0 <= e && e < 16 ? (r ^ t ^ n) >>> 0 : 16 <= e && e < 64 ? ((r & t) | (r & n) | (t & n)) >>> 0 : (logger.error('invalid j for bool function FF'), 0);
+function FF(j, x, y, z) {
+    if (0 <= j && j < 16) {
+        return (x ^ y ^ z) >>> 0;
+    } else if (16 <= j && j < 64) {
+        return ((x & y) | (x & z) | (y & z)) >>> 0;
+    } else {
+        logger.error('invalid j for bool function FF');
+        return 0;
+    }
 }
 
-function he(e, r, t, n) {
-    return 0 <= e && e < 16 ? (r ^ t ^ n) >>> 0 : 16 <= e && e < 64 ? ((r & t) | (~r & n)) >>> 0 : (logger.error('invalid j for bool function GG'), 0);
+function GG(j, x, y, z) {
+    if (0 <= j && j < 16) {
+        return (x ^ y ^ z) >>> 0;
+    } else if (16 <= j && j < 64) {
+        return ((x & y) | (~x & z)) >>> 0;
+    } else {
+        logger.error('invalid j for bool function GG');
+        return 0;
+    }
 }
 
-function reset() {
+function reset(this: any) {
     this.reg[0] = 0x73_80_16_6f;
     this.reg[1] = 0x49_14_b2_b9;
     this.reg[2] = 0x17_24_42_d7;
@@ -65,102 +86,111 @@ function reset() {
     this.size = 0;
 }
 
-function write(e) {
-    const a =
-        typeof e === 'string'
-            ? (function (e) {
-                  const n = encodeURIComponent(e).replaceAll(/%([0-9A-F]{2})/g, (e, r) => String.fromCodePoint('0x' + r));
-                  const a = Array.from({ length: n.length });
-                  Array.prototype.forEach.call(n, (e, r) => {
-                      a[r] = e.codePointAt(0);
-                  });
-                  return a;
-              })(e)
-            : e;
+function strToBytes(str) {
+    const n = encodeURIComponent(str).replaceAll(/%([0-9A-F]{2})/g, (e, r) => String.fromCodePoint('0x' + r));
+    const a = Array.from({ length: n.length });
+    Array.prototype.forEach.call(n, (e, r) => {
+        a[r] = e.codePointAt(0);
+    });
+    return a;
+}
+
+function write(this: any, message) {
+    const a = typeof message === 'string' ? strToBytes(message) : message;
     this.size += a.length;
     let f = 64 - this.chunk.length;
     if (a.length < f) {
         this.chunk = this.chunk.concat(a);
     } else {
-        for (this.chunk = this.chunk.concat(a.slice(0, f)); this.chunk.length >= 64; ) {
+        this.chunk = this.chunk.concat(a.slice(0, f));
+        while (this.chunk.length >= 64) {
             this._compress(this.chunk);
-            f < a.length ? (this.chunk = a.slice(f, Math.min(f + 64, a.length))) : (this.chunk = []);
+            this.chunk = f < a.length ? a.slice(f, Math.min(f + 64, a.length)) : [];
             f += 64;
         }
     }
 }
 
-function sum(e, t) {
-    if (e) {
+function sum(this: any, message, encoding) {
+    if (message) {
         this.reset();
-        this.write(e);
-        this._fill();
+        this.write(message);
     }
+    this._fill();
     for (let f = 0; f < this.chunk.length; f += 64) {
         this._compress(this.chunk.slice(f, f + 64));
     }
-    let i;
-    if (t == 'hex') {
-        i = '';
+    let digest;
+    if (encoding === 'hex') {
+        digest = '';
         for (let f = 0; f < 8; f++) {
-            i += se(this.reg[f].toString(16), 8, '0');
+            digest += se(this.reg[f].toString(16), 8, '0');
         }
     } else {
-        i = Array.from({ length: 32 });
+        digest = Array.from({ length: 32 });
         for (let f = 0; f < 8; f++) {
             let c = this.reg[f];
-            i[4 * f + 3] = (255 & c) >>> 0;
+            digest[4 * f + 3] = (255 & c) >>> 0;
             c >>>= 8;
-            i[4 * f + 2] = (255 & c) >>> 0;
+            digest[4 * f + 2] = (255 & c) >>> 0;
             c >>>= 8;
-            i[4 * f + 1] = (255 & c) >>> 0;
+            digest[4 * f + 1] = (255 & c) >>> 0;
             c >>>= 8;
-            i[4 * f] = (255 & c) >>> 0;
+            digest[4 * f] = (255 & c) >>> 0;
         }
     }
-    return this.reset(), i;
+    this.reset();
+    return digest;
 }
 
-function _compress(t) {
+function expand(e) {
+    const r: number[] = Array.from({ length: 132 });
+    for (let t = 0; t < 16; t++) {
+        r[t] = e[4 * t] << 24;
+        r[t] |= e[4 * t + 1] << 16;
+        r[t] |= e[4 * t + 2] << 8;
+        r[t] |= e[4 * t + 3];
+        r[t] >>>= 0;
+    }
+    for (let n = 16; n < 68; n++) {
+        let a = r[n - 16] ^ r[n - 9] ^ rotateLeft32(r[n - 3], 15);
+        a = a ^ rotateLeft32(a, 15) ^ rotateLeft32(a, 23);
+        r[n] = (a ^ rotateLeft32(r[n - 13], 7) ^ r[n - 6]) >>> 0;
+    }
+    for (let n = 0; n < 64; n++) {
+        r[n + 68] = (r[n] ^ r[n + 4]) >>> 0;
+    }
+    return r;
+}
+
+function _compress(this: any, t) {
     if (t < 64) {
         logger.error('compress error: not enough data');
+        return;
     } else {
-        function fun(e) {
-            const r = Array.from({ length: 132 });
-            for (let t = 0; t < 16; t++) {
-                r[t] = e[4 * t] << 24;
-                r[t] |= e[4 * t + 1] << 16;
-                r[t] |= e[4 * t + 2] << 8;
-                r[t] |= e[4 * t + 3];
-                r[t] >>>= 0;
-            }
-            for (let n = 16; n < 68; n++) {
-                let a = r[n - 16] ^ r[n - 9] ^ le(r[n - 3], 15);
-                a = a ^ le(a, 15) ^ le(a, 23);
-                r[n] = (a ^ le(r[n - 13], 7) ^ r[n - 6]) >>> 0;
-            }
-            for (let n = 0; n < 64; n++) {
-                r[n + 68] = (r[n] ^ r[n + 4]) >>> 0;
-            }
-            return r;
-        }
-        const f = fun(t);
+        const f = expand(t);
         const i = this.reg.slice(0);
         for (let c = 0; c < 64; c++) {
-            let o = le(i[0], 12) + i[4] + le(de(c), c);
-            const s = ((o = le((o = (0xff_ff_ff_ff & o) >>> 0), 7)) ^ le(i[0], 12)) >>> 0;
-            let u = pe(c, i[0], i[1], i[2]);
-            u = (0xff_ff_ff_ff & (u = u + i[3] + s + f[c + 68])) >>> 0;
-            let b = he(c, i[4], i[5], i[6]);
-            b = (0xff_ff_ff_ff & (b = b + i[7] + o + f[c])) >>> 0;
+            let o = rotateLeft32(i[0], 12) + i[4] + rotateLeft32(T(c), c);
+            o = (0xff_ff_ff_ff & o) >>> 0;
+            o = rotateLeft32(o, 7);
+
+            const s = (o ^ rotateLeft32(i[0], 12)) >>> 0;
+            let u = FF(c, i[0], i[1], i[2]);
+            u = u + i[3] + s + f[c + 68];
+            u = (0xff_ff_ff_ff & u) >>> 0;
+
+            let b = GG(c, i[4], i[5], i[6]);
+            b = b + i[7] + o + f[c];
+            b = (0xff_ff_ff_ff & b) >>> 0;
             i[3] = i[2];
-            i[2] = le(i[1], 9);
+            i[2] = rotateLeft32(i[1], 9);
             i[1] = i[0];
             i[0] = u;
             i[7] = i[6];
-            i[6] = le(i[5], 19);
+            i[6] = rotateLeft32(i[5], 19);
             i[5] = i[4];
-            i[4] = (b ^ le(b, 9) ^ le(b, 17)) >>> 0;
+            i[4] = (b ^ rotateLeft32(b, 9) ^ rotateLeft32(b, 17)) >>> 0;
         }
         for (let l = 0; l < 8; l++) {
             this.reg[l] = (this.reg[l] ^ i[l]) >>> 0;
@@ -168,7 +198,7 @@ function _compress(t) {
     }
 }
 
-function _fill() {
+function _fill(this: any) {
     const a = 8 * this.size;
     let f = this.chunk.push(128) % 64;
     for (64 - f < 8 && (f -= 64); f < 56; f++) {
@@ -176,14 +206,14 @@ function _fill() {
     }
     for (let i = 0; i < 4; i++) {
         const c = Math.floor(a / 0x1_00_00_00_00);
-        this.chunk.push((c >>> (8 * (3 - i))) & 255);
+        this.chunk.push((c >>> (8 * (3 - i))) & 0xff);
     }
     for (let i = 0; i < 4; i++) {
-        this.chunk.push((a >>> (8 * (3 - i))) & 255);
+        this.chunk.push((a >>> (8 * (3 - i))) & 0xff);
     }
 }
 
-function SM3() {
+function SM3(this: any) {
     this.reg = [];
     this.chunk = [];
     this.size = 0;
@@ -195,7 +225,7 @@ SM3.prototype.sum = sum;
 SM3.prototype._compress = _compress;
 SM3.prototype._fill = _fill;
 
-function result_encrypt(long_str, num = null) {
+function result_encrypt(long_str: string, num: 's0' | 's1' | 's2' | 's3' | 's4') {
     const s_obj = {
         s0: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
         s1: 'Dkdpgh4ZKsQB80/Mfvw36XI1R25+WUAlEi7NLboqYTOPuzmFjJnryx9HVGcaStCe=',
@@ -219,7 +249,7 @@ function result_encrypt(long_str, num = null) {
             long_int = get_long_int(lound, long_str);
         }
         const key = i % 4;
-        let temp_int;
+        let temp_int: number;
         switch (key) {
             case 0:
                 temp_int = (long_int & constant['0']) >> 18;
