@@ -6,6 +6,7 @@ import randUserAgent from '@/utils/rand-user-agent';
 import { generate_a_bogus } from './a-bogus';
 import { Feed } from './types';
 import RejectError from '@/errors/types/reject';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/token/:token',
@@ -39,7 +40,9 @@ async function handler(ctx) {
         });
 
         return data.data;
-    })) as Feed[];
+    },config.cache.routeExpire,
+        false
+)) as Feed[];
 
     if (!feed) {
         throw new RejectError('无法获取用户信息');
