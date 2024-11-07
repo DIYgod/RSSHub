@@ -22,7 +22,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
     const rootUrl = 'https://www.metacritic.com';
-    const rootApiUrl = 'https://internal-prod.apigee.fandom.net';
+    const rootApiUrl = 'https://backend.metacritic.com';
     const apiUrl = new URL('v1/xapi/finder/metacritic/web', rootApiUrl).href;
 
     const currentUrlObject = new URL(`/browse/${type}/all/all/all-time/${sort}/${filter ? `?${filter}` : ''}`, rootUrl);
