@@ -25,6 +25,7 @@ describe('useCustomHeader', () => {
 
     beforeEach(() => {
         originalEnv = process.env.NODE_ENV || Env.test;
+        process.env.ENABLE_REMOTE_DEBUGGING = 'true';
     });
 
     afterEach(() => {
