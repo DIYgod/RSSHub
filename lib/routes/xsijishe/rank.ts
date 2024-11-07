@@ -80,7 +80,7 @@ async function handler(ctx) {
 
     const $ = load(resp.data);
     // 根据 index 选择对应的 li，然后获取其中的 dd 元素
-    let items = $(`.nex_recon_lists ul li`).eq(index)
+    let items = $('.nex_recon_lists ul li').eq(index)
         .find('.nex_recons_demens dl dd')
         .toArray()
         .map((item) => {
