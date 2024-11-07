@@ -68,6 +68,16 @@ async function handler(ctx) {
         headers,
     });
 
+    const redirectMatch = resp.data.match(/window\.location\.href\s*=\s*"([^"]+)"/);
+    if (redirectMatch) {
+        const redirectUrl = `${baseUrl}${redirectMatch[1]}`;
+        // 使用提取到的地址重新请求
+        const realResp = await got(redirectUrl, {
+            headers,
+        });
+        resp.data = realResp.data;
+    }
+
     const $ = load(resp.data);
     // 根据 index 选择对应的 li，然后获取其中的 dd 元素
     let items = $(`.nex_recon_lists ul li`).eq(index)
