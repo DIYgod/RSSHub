@@ -12,7 +12,7 @@ const limiter = new RateLimiterMemory({
 });
 
 const limiterQueue = new RateLimiterQueue(limiter, {
-    maxQueueSize: 5000,
+    maxQueueSize: 4800,
 });
 
 export const useCustomHeader = (headers: Headers) => {
@@ -57,7 +57,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         request.headers.delete('x-prefer-proxy');
     }
 
-    useCustomHeader(request.headers);
+    config.enableRemoteDebugging && useCustomHeader(request.headers);
 
     // proxy
     if (!init?.dispatcher && proxy.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {
