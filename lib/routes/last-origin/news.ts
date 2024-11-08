@@ -10,7 +10,7 @@ export const route: Route = {
     name: 'News',
     url: 'www.last-origin.com',
     maintainers: ['gudezhi'],
-    example: '/news.html',
+    example: '/last-origin/news',
     parameters: {},
     categories: ['game'],
     features: {
