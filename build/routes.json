@@ -85744,11 +85744,24 @@
       "/rank/:type": {
         "path": "/rank/:type",
         "categories": [
-          "bbs"
+          "bbs",
+          "popular"
         ],
         "example": "/xsijishe/rank/weekly",
         "parameters": {
-          "type": "排行榜类型: weekly | monthly"
+          "type": {
+            "description": "排行榜类型",
+            "options": [
+              {
+                "value": "weekly",
+                "label": "周榜"
+              },
+              {
+                "value": "monthly",
+                "label": "月榜"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": [
@@ -85769,7 +85782,8 @@
         },
         "name": "排行榜",
         "maintainers": [
-          "akynazh"
+          "akynazh",
+          "AiraNadih"
         ],
         "location": "rank.ts"
       }
