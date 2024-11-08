@@ -18937,7 +18937,9 @@
           }
         ],
         "name": "User Feed",
-        "maintainers": [],
+        "maintainers": [
+          "Jkker"
+        ],
         "location": "blog.ts"
       }
     },

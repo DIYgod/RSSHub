@@ -1534,7 +1534,9 @@
   ],
   "/cs/news/zzkx": [],
   "/cs/zzkx": [],
-  "/csdn/blog/:user": [],
+  "/csdn/blog/:user": [
+    "Jkker"
+  ],
   "/cssn/iolaw/:section?": [
     "HankChow"
   ],
