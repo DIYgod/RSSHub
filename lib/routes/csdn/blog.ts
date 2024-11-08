@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: 'User Feed',
-    maintainers: [],
+    maintainers: ['Jkker'],
     handler,
 };
 
