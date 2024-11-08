@@ -39,19 +39,23 @@ async function handler(ctx) {
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+                try {
+                    const response = await got({
+                        method: 'get',
+                        url: item.link,
+                    });
 
-                const $ = load(response.data);
+                    const $ = load(response.data);
 
-                const description = $('#content_views').html();
+                    const description = $('#content_views').html();
 
-                return {
-                    ...item,
-                    description,
-                };
+                    return {
+                        ...item,
+                        description,
+                    };
+                } catch {
+                    return item;
+                }
             })
         )
     );
