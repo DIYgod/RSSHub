@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'www.deeplearning.ai',
     categories: ['programming'],
     description: '',
+    lang: 'en',
 };

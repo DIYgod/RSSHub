@@ -81,7 +81,7 @@ export const route: Route = {
     name: '考试新闻发布',
     maintainers: ['zytomorrow'],
     handler,
-    url: 'https://www.dykszx.com/*',
+    url: 'www.dykszx.com',
     description: `| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 | 其他 |
 | :------: | :------: | :------: |:------: |:------: |
 |   all   |   gwy   |  sydw | zyzc  | other |`,

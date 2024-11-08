@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     description: `:::tip
 官方提供的订阅源不支持 BT 下载订阅，地址为 [https://141ppv.com/feeds/](https://141ppv.com/feeds/)
 :::`,
+    lang: 'en',
 };

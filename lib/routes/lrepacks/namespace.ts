@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'lrepacks.net',
     categories: ['program-update'],
     description: '',
+    lang: 'ru',
 };

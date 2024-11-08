@@ -1,2 +1,2 @@
 <img src="{{ imageUrl }}">
-{{ content }}
+{{@ content }}

@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'go.jp',
     categories: ['government'],
     description: 'The Government of Japan',
+    lang: 'ja',
 };

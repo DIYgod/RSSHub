@@ -1,6 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Unknown',
+    name: 'OpenWrt',
     url: 'openwrt.org',
+    lang: 'en',
 };

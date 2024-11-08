@@ -1,20 +1,31 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
+import { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-
-const dateRegex = /(20\d{2})\/(\d{2})\/(\d{2})/;
+import type { Context } from 'hono';
 
 const baseUrl = 'https://www.jwc.uestc.edu.cn/';
 const detailUrl = 'https://www.jwc.uestc.edu.cn/info/';
 
-const map = {
+const dateTimeRegex = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/;
+
+const typeUrlMap = {
     important: 'hard/?page=1',
     student: 'list/256/?page=1',
     teacher: 'list/255/?page=1',
-    teach: 'list/40/?page=1',
+    teaching: 'list/40/?page=1',
     office: 'list/ff80808160bcf79c0160c010a8d20020/?page=1',
+};
+
+const typeNameMap = {
+    important: '重要公告',
+    student: '学生事务公告',
+    teacher: '教师事务公告',
+    teaching: '教学新闻',
+    office: '办公室',
 };
 
 export const route: Route = {
@@ -32,51 +43,61 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['jwc.uestc.edu.cn/'],
+            source: ['www.jwc.uestc.edu.cn/'],
             target: '/jwc',
         },
     ],
     name: '教务处',
     maintainers: ['achjqz', 'mobyw'],
     handler,
-    url: 'jwc.uestc.edu.cn/',
-    description: `| 重要公告  | 学生事务公告 | 教师事务公告 | 教学新闻 | 办公室 |
+    url: 'www.jwc.uestc.edu.cn/',
+    description: `\
+  | 重要公告  | 学生事务公告 | 教师事务公告 | 教学新闻 | 办公室 |
   | --------- | ------------ | ------------ | -------- | ------ |
-  | important | student      | teacher      | teach    | office |`,
+  | important | student      | teacher      | teaching | office |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context): Promise<Data> {
     const type = ctx.req.param('type') || 'important';
-    const pageUrl = map[type];
-    if (!pageUrl) {
+    if (type in typeUrlMap === false) {
         throw new InvalidParameterError('type not supported');
     }
+    const typeName = typeNameMap[type];
 
-    const response = await got.get(baseUrl + pageUrl);
+    const indexContent = await ofetch(baseUrl + typeUrlMap[type]);
 
-    const $ = load(response.data);
+    const $ = load(indexContent);
+    const entries = $('div.textAreo.clearfix').toArray();
 
-    const items = $('div.textAreo.clearfix');
+    const items = entries.map(async (entry) => {
+        const element = $(entry);
+        const newsTitle = element.find('a').attr('title') ?? '';
+        const newsLink = detailUrl + element.find('a').attr('newsid');
 
-    const out = $(items)
-        .map((_, item) => {
-            item = $(item);
-            const newsTitle = item.find('a').attr('title');
-            const newsLink = detailUrl + item.find('a').attr('newsid');
-            const newsDate = parseDate(item.find('i').text().replace(dateRegex, '$1-$2-$3'));
+        const newsDetail = await cache.tryGet(newsLink, async () => {
+            const newsContent = await ofetch(newsLink);
+            const content = load(newsContent);
+
+            const basicInfo = content('div.detail_header').find('div.item').text();
+            const match = dateTimeRegex.exec(basicInfo);
 
             return {
                 title: newsTitle,
                 link: newsLink,
-                pubDate: newsDate,
+                pubDate: match ? timezone(parseDate(match[1]), +8) : null,
+                description: content('div.NewText').html(),
             };
-        })
-        .get();
+        });
+
+        return newsDetail;
+    });
+
+    const out = await Promise.all(items);
 
     return {
-        title: '教务处通知',
+        title: `教务处通知（${typeName}）`,
         link: baseUrl,
-        description: '电子科技大学教务处通知',
-        item: out,
+        description: `电子科技大学教务处通知（${typeName}）`,
+        item: out as DataItem[],
     };
 }

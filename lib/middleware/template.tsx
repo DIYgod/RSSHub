@@ -74,8 +74,16 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
 
                 if (outputType !== 'rss') {
-                    item.pubDate && (item.pubDate = convertDateToISO8601(item.pubDate) || '');
-                    item.updated && (item.updated = convertDateToISO8601(item.updated) || '');
+                    try {
+                        item.pubDate && (item.pubDate = convertDateToISO8601(item.pubDate) || '');
+                    } catch {
+                        item.pubDate = '';
+                    }
+                    try {
+                        item.updated && (item.updated = convertDateToISO8601(item.updated) || '');
+                    } catch {
+                        item.updated = '';
+                    }
                 }
             }
         }
