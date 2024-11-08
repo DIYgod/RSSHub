@@ -1,0 +1,10 @@
+{{ if hlsVideoSrc }}
+<video 
+{{ if posterImageUrl }} poster="{{ posterImageUrl }}" {{ /if }}
+controls>
+    <source
+    src="{{ hlsVideoSrc }}"
+    type="application/x-mpegURL"
+    >
+</video>
+{{ /if }}
