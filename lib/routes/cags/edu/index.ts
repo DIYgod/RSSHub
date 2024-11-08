@@ -1,5 +1,5 @@
 import ofetch from '@/utils/ofetch';
-import { Route } from '@/categorys';
+import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -28,11 +28,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '中国地质科学院研究生院',
+    name: '研究生院',
     maintainers: ['Chikit-L'],
     radar: [
         {
-            source: ['https://edu.cags.ac.cn/'],
+            source: ['edu.cags.ac.cn/'],
         },
     ],
     handler,
@@ -69,7 +69,7 @@ async function handler(ctx) {
 
         return {
             title,
-            description: `\n${item.introduction}\n`,
+            description: item.introduction,
             link,
             guid: link,
             pubDate,
