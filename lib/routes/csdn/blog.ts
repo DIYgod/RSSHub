@@ -30,9 +30,9 @@ export const route: Route = {
 async function handler(ctx) {
     const user = ctx.req.param('user');
 
-    const rootUrl = 'https://blog.csdn.net';
+    const rootUrl = 'https://rss.csdn.net';
     const blogUrl = `${rootUrl}/${user}`;
-    const rssUrl = blogUrl + '/rss/list';
+    const rssUrl = blogUrl + '/rss/map';
 
     const feed = await rssParser.parseURL(rssUrl);
 
