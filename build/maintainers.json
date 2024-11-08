@@ -1022,6 +1022,9 @@
   "/caareviews/exhibition": [
     "Fatpandac"
   ],
+  "/cags/edu/:category": [
+    "Chikit-L"
+  ],
   "/cahkms/:category?": [
     "nczitzk"
   ],

@@ -4302,6 +4302,19 @@
       }
     ]
   },
+  "cags.ac.cn": {
+    "_name": "Chinese Academy of Geological Sciences",
+    "edu": [
+      {
+        "title": "研究生院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/cags/edu/:category"
+      }
+    ]
+  },
   "cahkms.org": {
     "_name": "全国港澳研究会",
     ".": [
