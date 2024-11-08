@@ -15976,6 +15976,20 @@
       }
     ]
   },
+  "last-origin.com": {
+    "_name": "LastOrigin",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news.html",
+          "/"
+        ],
+        "target": "/last-origin/news"
+      }
+    ]
+  },
   "layoffs.fyi": {
     "_name": "Layoffs.fyi",
     ".": [

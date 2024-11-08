@@ -45880,6 +45880,40 @@
     "url": "laohu8.com",
     "lang": "zh-CN"
   },
+  "last-origin": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "name": "News",
+        "url": "www.last-origin.com",
+        "maintainers": [
+          "gudezhi"
+        ],
+        "example": "/last-origin/news",
+        "parameters": {},
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.last-origin.com/news.html",
+              "www.last-origin.com"
+            ],
+            "target": "/news"
+          }
+        ],
+        "description": "",
+        "location": "news.ts"
+      }
+    },
+    "name": "LastOrigin",
+    "url": "www.last-origin.com",
+    "lang": "ja"
+  },
   "latepost": {
     "routes": {
       "/:proma?": {
