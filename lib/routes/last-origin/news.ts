@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.last-origin.com'],
+            source: ['www.last-origin.com/news.html', 'www.last-origin.com'],
             target: '/news',
         },
     ],
