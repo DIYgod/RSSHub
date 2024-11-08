@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/news.html',
+    path: '/news',
     name: 'News',
     url: 'www.last-origin.com',
     maintainers: ['gudezhi'],
