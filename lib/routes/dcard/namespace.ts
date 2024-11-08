@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     description: `:::warning
 僅能透過台灣 IP 抓取。
 :::`,
+    lang: 'zh-TW',
 };

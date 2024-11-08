@@ -92,10 +92,10 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
                     } else {
                         link = linkEle.is('a') ? linkEle.attr('href') : linkEle.find('a').attr('href');
                     }
-                    // 补全绝对链接
+                    // 补全绝对链接或相对链接
                     link = link.trim();
                     if (link && !link.startsWith('http')) {
-                        link = `${new URL(url).origin}${link}`;
+                        link = new URL(link, url).href;
                     }
 
                     const descEle = routeParams.get('itemDesc') ? item.find(routeParams.get('itemDesc')) : item;
@@ -124,7 +124,7 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
                         return item;
                     }
 
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(`transform:${item.link}:${itemContentSelector}`, async () => {
                         const response = await got({
                             method: 'get',
                             url: item.link,

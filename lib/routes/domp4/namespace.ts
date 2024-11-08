@@ -12,4 +12,5 @@ export const namespace: Namespace = {
 ['domp4.cc', 'mp4kan.com', 'mp4us.com', 'wemp4.com', 'dbmp4.com']
 \`\`\`
 :::`,
+    lang: 'zh-CN',
 };
