@@ -63,10 +63,10 @@ async function handler(ctx) {
                 title,
                 pubDate,
                 link,
-                description: '', 
+                description:'',
             };
         })
-        .get();
+        .toArray();
 
     const item = await Promise.all(
         items.map((item) =>
