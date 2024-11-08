@@ -3,12 +3,12 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/user/:username',
-    name: '用户',
+    name: 'Userpage',
     url: 'furaffinity.net',
-    categories: ['other'],
+    categories: ['social-media'],
     example: '/furaffinity/user/fender/nsfw',
-    maintainers: ['SkyNetX007'],
-    parameters: { username: '用户名' },
+    maintainers: ['TigerCubDen', 'SkyNetX007'],
+    parameters: { username: 'Username, can find in userpage' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -103,12 +103,13 @@ async function handler(ctx) {
     Favorite Animal: ${favorites_animal} <br> Favorite Website: ${favorites_website} <br> Favorite Food: ${favorites_food} <br> <br> Contact Information: <br> ${contact_result}
     Watchers Count: ${watchers_count} <br> Watching Count: ${watching_count} `;
 
-    const items: { title: string; link: string; description: string }[] = [];
-    items.push({
-        title: `${data.name}'s User Profile`,
-        link: `https://www.furaffinity.net/user/${username}`,
-        description,
-    });
+    const items: { title: string; link: string; description: string }[] = [
+        {
+            title: `${data.name}'s User Profile`,
+            link: `https://www.furaffinity.net/user/${username}`,
+            description,
+        },
+    ];
 
     return {
         title: `Fur Affinity | Userpage of ${data.name}`,

@@ -3,15 +3,15 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/search/:query/:mode?/:routeParams?',
-    name: '搜索',
+    name: 'Search',
     url: 'furaffinity.net',
-    categories: ['other'],
+    categories: ['social-media'],
     example: '/furaffinity/search/protogen/nsfw',
-    maintainers: ['SkyNetX007'],
+    maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: {
-        query: '搜索内容',
-        mode: '是否启用R18内容, 默认为 sfw, 选项为 sfw, nsfw',
-        routeParams: '额外搜索参数',
+        query: 'Query value',
+        mode: 'R18 content toggle, default value is sfw, options are sfw, nsfw',
+        routeParams: 'Additional search parameters',
     },
     features: {
         requireConfig: false,
@@ -28,13 +28,14 @@ export const route: Route = {
         },
     ],
     handler,
-    description: `
-额外搜索参数
-order_by: '排序依据, 默认为 relevancy, 选项为 relevancy, date, popularity',
-order_direction: '排序顺序, 默认为 desc, 选项为 desc, asc',
-range: '时限, 默认为 all, 选项为 all, 1day, 3days, 7days, 30days, 90days, 1year, 3years, 5years',
-pattern: '匹配模式, 默认为 extended, 选项为 all, any, extended',
-type: '作品类型, 默认为全部, 选项为 art, flash, photo, music, story, poetry'
+    description: `Additional search parameters
+| Parameter       | Description          | Default   | Options                                                        |
+|-----------------|----------------------|-----------|----------------------------------------------------------------|
+| order_by        | Sort by              | relevancy | relevancy, date, popularity                                    |
+| order_direction | Sort order           | desc      | desc, asc                                                      |
+| range           | Date range           | all       | all, 1day, 3days, 7days, 30days, 90days, 1year, 3years, 5years |
+| pattern         | Query match pattern  | extended  | all, any, extended                                             |
+| type            | Category of artworks | all       | art, flash, photo, music, story, poetry                        |
 `,
 };
 

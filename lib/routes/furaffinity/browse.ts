@@ -3,12 +3,12 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/browse/:mode?',
-    name: '浏览',
+    name: 'Browse',
     url: 'furaffinity.net',
-    categories: ['other'],
+    categories: ['social-media'],
     example: '/furaffinity/browse/nsfw',
-    maintainers: ['SkyNetX007'],
-    parameters: { mode: '是否启用R18内容, 默认为 sfw, 选项为 sfw, nsfw' },
+    maintainers: ['TigerCubDen', 'SkyNetX007'],
+    parameters: { mode: 'R18 content toggle, default value is sfw, options are sfw, nsfw' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

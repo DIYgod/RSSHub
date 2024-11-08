@@ -3,11 +3,11 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/status',
-    name: '状态',
+    name: 'Status',
     url: 'furaffinity.net',
-    categories: ['other'],
+    categories: ['social-media'],
     example: '/furaffinity/status',
-    maintainers: ['SkyNetX007'],
+    maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: {},
     features: {
         requireConfig: false,
@@ -41,12 +41,13 @@ async function handler() {
             ? `Status: FA Server Online <br> Guests: ${data.online.guests} <br> Registered: ${data.online.registered} <br> Other: ${data.online.other} <br> Total: ${data.online.total} <br> FA Server Time: ${data.fa_server_time} <br> FA Server Time at: ${data.fa_server_time_at}`
             : 'FA Server Offline';
 
-    const items: { title: string; link: string; description: string }[] = [];
-    items.push({
-        title: `Status: ${Object.keys(data)[0]}`,
-        link: 'https://www.furaffinity.net/',
-        description,
-    });
+    const items: { title: string; link: string; description: string }[] = [
+        {
+            title: `Status: ${Object.keys(data)[0]}`,
+            link: 'https://www.furaffinity.net/',
+            description,
+        },
+    ];
 
     return {
         title: 'Fur Affinity | Status',

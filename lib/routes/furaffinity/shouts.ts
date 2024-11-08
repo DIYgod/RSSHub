@@ -3,12 +3,12 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/shouts/:username',
-    name: '留言',
+    name: 'Shouts',
     url: 'furaffinity.net',
-    categories: ['other'],
+    categories: ['social-media'],
     example: '/furaffinity/shouts/fender',
-    maintainers: ['SkyNetX007'],
-    parameters: { username: '用户名' },
+    maintainers: ['TigerCubDen', 'SkyNetX007'],
+    parameters: { username: 'Username, can find in userpage' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

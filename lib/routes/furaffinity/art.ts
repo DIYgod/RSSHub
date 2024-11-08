@@ -3,15 +3,15 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/art/:folder/:username/:mode?',
-    name: '画廊',
+    name: 'Gallery',
     url: 'furaffinity.net',
-    categories: ['other'],
+    categories: ['social-media'],
     example: '/furaffinity/art/gallery/fender/nsfw',
-    maintainers: ['SkyNetX007'],
+    maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: {
-        username: '用户名',
-        folder: '图像文件夹, 选项为 gallery, scraps, favorites',
-        mode: '是否启用R18内容, 默认为 sfw, 选项为 sfw, nsfw',
+        username: 'Username, can find in userpage',
+        folder: 'Image folders, options are gallery, scraps, favorites',
+        mode: 'R18 content toggle, default value is sfw, options are sfw, nsfw',
     },
     features: {
         requireConfig: false,

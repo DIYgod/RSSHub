@@ -3,12 +3,12 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/watchers/:username',
-    name: '被关注（前200名）',
+    name: `User's Watcher List`,
     url: 'furaffinity.net',
-    categories: ['other'],
+    categories: ['social-media'],
     example: '/furaffinity/watchers/fender',
-    maintainers: ['SkyNetX007'],
-    parameters: { username: '用户名' },
+    maintainers: ['TigerCubDen', 'SkyNetX007'],
+    parameters: { username: 'Username, can find in userpage' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

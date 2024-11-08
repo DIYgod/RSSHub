@@ -3,14 +3,14 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/home/:category/:mode?',
-    name: '主页',
+    name: 'Home',
     url: 'furaffinity.net',
-    categories: ['other'],
+    categories: ['social-media'],
     example: '/furaffinity/home/nsfw',
-    maintainers: ['SkyNetX007'],
+    maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: {
-        category: '作品类别, 默认为 artwork, 选项为 artwork, writing, music, crafts',
-        mode: '是否启用R18内容, 默认为 sfw, 选项为 sfw, nsfw',
+        category: 'Category, default value is artwork, options are artwork, writing, music, crafts',
+        mode: 'R18 content toggle, default value is sfw, options are sfw, nsfw',
     },
     features: {
         requireConfig: false,
