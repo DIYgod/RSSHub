@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news.html',
-    name: '公告',
+    name: 'News',
     url: 'www.last-origin.com',
     maintainers: ['gudezhi'],
     example: '/news.html',
