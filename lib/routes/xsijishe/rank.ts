@@ -44,14 +44,14 @@ export const route: Route = {
 async function handler(ctx) {
     const rankType = ctx.req.param('type');
     let title;
-    let index;  // 用于选择第几个 li
+    let index; // 用于选择第几个 li
 
     if (rankType === 'weekly') {
         title = '司机社综合周排行榜';
-        index = 0;  // 第一个 li 是周榜
+        index = 0; // 第一个 li 是周榜
     } else if (rankType === 'monthly') {
         title = '司机社综合月排行榜';
-        index = 1;  // 第二个 li 是月榜
+        index = 1; // 第二个 li 是月榜
     } else {
         throw new InvalidParameterError('Invalid rank type');
     }
@@ -80,7 +80,8 @@ async function handler(ctx) {
 
     const $ = load(resp.data);
     // 根据 index 选择对应的 li，然后获取其中的 dd 元素
-    let items = $('.nex_recon_lists ul li').eq(index)
+    let items = $('.nex_recon_lists ul li')
+        .eq(index)
         .find('.nex_recons_demens dl dd')
         .toArray()
         .map((item) => {
