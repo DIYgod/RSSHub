@@ -55,6 +55,7 @@ async function handler(ctx) {
     const title = $('title').text().split('-')[0].trim();
 
     const items = $('.news_list li')
+        .toArray()
         .map((_, item) => {
             const link = new URL($(item).find('a').attr('href'), host).href;
             const title = $(item).find('a').text().trim();
@@ -65,8 +66,7 @@ async function handler(ctx) {
                 link,
                 description:'',
             };
-        })
-        .toArray();
+        });
 
     const item = await Promise.all(
         items.map((item) =>
