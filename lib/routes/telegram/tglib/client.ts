@@ -81,7 +81,7 @@ function ExpandInlineBytes(bytes) {
     return real;
 }
 
-function getMediaLink(ctx, channel, channelName, message) {
+function getMediaLink(ctx, channel: Api.InputPeerChannel, channelName: string, message: Api.Message) {
     const base = `${ctx.protocol}://${ctx.host}/telegram/channel/${channelName}`;
     const src = base + `${channel.channelId}_${message.id}`;
 
@@ -102,7 +102,7 @@ function getMediaLink(ctx, channel, channelName, message) {
         linkText += ` (${humanFileSize(x.document.size)})`;
         return `<a href="${src}" target="_blank"><img src="${src}?thumb" alt=""/><br/>${linkText}</a>`;
     }
-    return;
+    return '';
 }
 function getFilename(x) {
     if (x instanceof Api.MessageMediaDocument) {
