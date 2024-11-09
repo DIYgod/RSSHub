@@ -24,17 +24,12 @@ export const route: Route = {
 import { getNotifByPage } from './_utils';
 
 async function handler() {
-    const promises = [];
-    for (let i = 1; i <= 20; i++) {
-        promises.push(getNotifByPage(i));
-    }
-
-    const results = await Promise.all(promises);
+    const results = await getNotifByPage(1);
 
     // feed the data to rss
     return {
         title: '同济大学经济与管理学院',
         link: 'https://bksy.tongji.edu.cn/30359/list.htm',
-        item: results.flat(),
+        item: results,
     };
 }
