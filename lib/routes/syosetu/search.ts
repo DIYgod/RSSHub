@@ -136,15 +136,12 @@ interface NarouSearchParams {
     nocgenre?: number;
 }
 
-// const render = (novel) =>
-//     art(path.join(getCurrentPath(import.meta.url), 'templates', 'result.art'), novel);
-
 export const route: Route = {
-    path: '/search/:domain/:query',
+    path: '/search/:sub/:query',
     categories: ['reading'],
     example: '/syosetu/search/noc/word=ハーレム&notword=&type=r&mintime=&maxtime=&minlen=30000&maxlen=&min_globalpoint=&max_globalpoint=&minlastup=&maxlastup=&minfirstup=&maxfirstup=&isgl=1&notbl=1&order=new',
     parameters: {
-        domain: 'The target Syosetu site domain (yomou/noc/mnlt/mid).',
+        sub: 'The target Syosetu subsite (yomou/noc/mnlt/mid).',
         query: 'Search parameters in Syosetu format.',
     },
     features: {
@@ -217,55 +214,55 @@ function mapToSearchParams(query: string): SearchParams {
     return searchParams;
 }
 
-enum SyosetuDomain {
+enum SyosetuSub {
     NORMAL = 'yomou',
     NOCTURNE = 'noc',
     MOONLIGHT = 'mnlt',
     MIDNIGHT = 'mid',
 }
 
-const isGeneral = (domain: string): boolean => domain === SyosetuDomain.NORMAL;
+const isGeneral = (sub: string): boolean => sub === SyosetuSub.NORMAL;
 
-function createNovelSearchBuilder(domain: string, searchParams: SearchParams) {
-    if (isGeneral(domain)) {
+function createNovelSearchBuilder(sub: string, searchParams: SearchParams) {
+    if (isGeneral(sub)) {
         return new SearchBuilder(searchParams, new NarouNovelFetch());
     }
 
     const r18Params = { ...searchParams };
 
-    switch (domain) {
-        case SyosetuDomain.NOCTURNE:
-            r18Params.nocgenre = '1';
+    switch (sub) {
+        case SyosetuSub.NOCTURNE:
+            r18Params.nocgenre = R18Site.Nocturne;
             break;
-        case SyosetuDomain.MOONLIGHT:
+        case SyosetuSub.MOONLIGHT:
             // If either 女性向け/BL is chosen, nocgenre will be in query string
             // If no specific genre selected, include both
             if (!r18Params.nocgenre) {
-                r18Params.nocgenre = '2-3';
+                r18Params.nocgenre = [R18Site.MoonLight, R18Site.MoonLightBL].join('-') as Join<R18Site>;
             }
             break;
-        case SyosetuDomain.MIDNIGHT:
-            r18Params.nocgenre = '4';
+        case SyosetuSub.MIDNIGHT:
+            r18Params.nocgenre = R18Site.Midnight;
             break;
         default:
-            throw new InvalidParameterError('Invalid Syosetu subdomain.\nValid subdomains are: yomou, noc, mnlt, mid');
+            throw new InvalidParameterError('Invalid Syosetu subsite.\nValid subsites are: yomou, noc, mnlt, mid');
     }
 
     return new SearchBuilderR18(r18Params, new NarouNovelFetch());
 }
 
 async function handler(ctx: Context): Promise<Data> {
-    const { domain, query } = ctx.req.param();
-    const searchUrl = `https://${domain}.syosetu.com/search/search/search.php?${query}`;
+    const { sub, query } = ctx.req.param();
+    const searchUrl = `https://${sub}.syosetu.com/search/search/search.php?${query}`;
 
     return (await cache.tryGet(searchUrl, async () => {
         const searchParams = mapToSearchParams(query);
-        const builder = createNovelSearchBuilder(domain, searchParams);
+        const builder = createNovelSearchBuilder(sub, searchParams);
         const result = await builder.execute();
 
         const items = result.values.map((novel) => ({
             title: novel.title,
-            link: `https://${isGeneral(domain) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
+            link: `https://${isGeneral(sub) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
             description: art(path.join(__dirname, 'templates', 'description.art'), {
                 novel,
                 genreText: GenreNotation[novel.genre],
@@ -273,11 +270,20 @@ async function handler(ctx: Context): Promise<Data> {
             // Skip pubDate - search results prioritize search sequence over timestamps
             // pubDate: novel.general_lastup,
             author: novel.writer,
-            category: novel.keyword.split(' '),
+            // Split by slash, full-width slash, half-width space, full-width space
+            category: novel.keyword.split(/[\u002F\uFF0F\u0020\u3000]/).filter(Boolean),
         }));
 
+        const searchTerms: string[] = [];
+        if (searchParams.word) {
+            searchTerms.push(searchParams.word);
+        }
+        if (searchParams.notword) {
+            searchTerms.push(`-${searchParams.notword}`);
+        }
+
         return {
-            title: `Syosetu Search`,
+            title: searchTerms.length > 0 ? `Syosetu Search: ${searchTerms.join(' ')}` : 'Syosetu Search',
             link: searchUrl,
             item: items,
         };
