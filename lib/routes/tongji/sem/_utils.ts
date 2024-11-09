@@ -2,13 +2,15 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
+import { config } from '@/config';
+
 export async function getNotifByPage(pageNumber: number) {
     const pageUrl: string = `https://sem.tongji.edu.cn/semch/category/frontpage/notice/page/${pageNumber}`;
 
     try {
         const response = await got.get(pageUrl, {
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.101.76 Safari/537.36',
+                'User-Agent': config.ua,
             },
         });
 
@@ -41,7 +43,7 @@ export async function getLastPageNumber() {
     try {
         const response = await got.get('https://sem.tongji.edu.cn/semch/category/frontpage/notice', {
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.101.76 Safari/537.36',
+                'User-Agent': config.ua,
             },
         });
         const html = response.body;
