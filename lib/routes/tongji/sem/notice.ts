@@ -29,7 +29,7 @@ async function handler() {
     // feed the data to rss
     return {
         title: '同济大学经济与管理学院',
-        link: 'https://bksy.tongji.edu.cn/30359/list.htm',
+        link: 'https://sem.tongji.edu.cn/semch/category/frontpage/notice',
         item: results,
     };
 }
