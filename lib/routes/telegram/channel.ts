@@ -142,7 +142,7 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
         },
     ],
     name: 'Channel',
-    maintainers: ['DIYgod', 'Rongronggg9', 'pseudoyu'],
+    maintainers: ['DIYgod', 'Rongronggg9', 'synchrone', 'pseudoyu'],
     handler,
     description: `
   :::tip
