@@ -20510,17 +20510,28 @@
   },
   "deeplearning": {
     "routes": {
-      "/thebatch": {
-        "path": "/thebatch",
+      "/the-batch/:tag{.+}?": {
+        "path": "/the-batch/:tag{.+}?",
+        "name": "The Batch",
+        "url": "www.deeplearning.ai",
+        "maintainers": [
+          "nczitzk",
+          "juvenn",
+          "TonyRL"
+        ],
+        "example": "/deeplearning/the-batch",
+        "parameters": {
+          "tag": "Tag, Weekly Issues by default"
+        },
+        "description": ":::tip\n  If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)，where the URL is `https://www.deeplearning.ai/the-batch/tag/data-points/`, extract the part `https://www.deeplearning.ai/the-batch/tag` to the end, which is `data-points`, and use it as the parameter to fill in. Therefore, the route will be [`/deeplearning/the-batch/data-points`](https://rsshub.app/deeplearning/the-batch/data-points).\n\n  :::\n\n  | Tag                                                                    | ID                                                                   |\n  | ---------------------------------------------------------------------- | -------------------------------------------------------------------- |\n  | [Weekly Issues](https://www.deeplearning.ai/the-batch/)                | [<null>](https://rsshub.app/deeplearning/the-batch)                  |\n  | [Andrew's Letters](https://www.deeplearning.ai/the-batch/tag/letters/) | [letters](https://rsshub.app/deeplearning/the-batch/letters)         |\n  | [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)  | [data-points](https://rsshub.app/deeplearning/the-batch/data-points) |\n  | [ML Research](https://www.deeplearning.ai/the-batch/tag/research/)     | [research](https://rsshub.app/deeplearning/the-batch/research)       |\n  | [Business](https://www.deeplearning.ai/the-batch/tag/business/)        | [business](https://rsshub.app/deeplearning/the-batch/business)       |\n  | [Science](https://www.deeplearning.ai/the-batch/tag/science/)          | [science](https://rsshub.app/deeplearning/the-batch/science)         |\n  | [AI & Society](https://www.deeplearning.ai/the-batch/tag/ai-society/)  | [ai-society](https://rsshub.app/deeplearning/the-batch/ai-society)   |\n  | [Culture](https://www.deeplearning.ai/the-batch/tag/culture/)          | [culture](https://rsshub.app/deeplearning/the-batch/culture)         |\n  | [Hardware](https://www.deeplearning.ai/the-batch/tag/hardware/)        | [hardware](https://rsshub.app/deeplearning/the-batch/hardware)       |\n  | [AI Careers](https://www.deeplearning.ai/the-batch/tag/ai-careers/)    | [ai-careers](https://rsshub.app/deeplearning/the-batch/ai-careers)   |\n\n  #### [Letters from Andrew Ng](https://www.deeplearning.ai/the-batch/tag/letters/)\n\n  | Tag                                                                                     | ID                                                                                     |\n  | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |\n  | [All](https://www.deeplearning.ai/the-batch/tag/letters/)                               | [letters](https://rsshub.app/deeplearning/the-batch/letters)                           |\n  | [Personal Insights](https://www.deeplearning.ai/the-batch/tag/personal-insights/)       | [personal-insights](https://rsshub.app/deeplearning/the-batch/personal-insights)       |\n  | [Technical Insights](https://www.deeplearning.ai/the-batch/tag/technical-insights/)     | [technical-insights](https://rsshub.app/deeplearning/the-batch/technical-insights)     |\n  | [Business Insights](https://www.deeplearning.ai/the-batch/tag/business-insights/)       | [business-insights](https://rsshub.app/deeplearning/the-batch/business-insights)       |\n  | [Tech & Society](https://www.deeplearning.ai/the-batch/tag/tech-society/)               | [tech-society](https://rsshub.app/deeplearning/the-batch/tech-society)                 |\n  | [DeepLearning.AI News](https://www.deeplearning.ai/the-batch/tag/deeplearning-ai-news/) | [deeplearning-ai-news](https://rsshub.app/deeplearning/the-batch/deeplearning-ai-news) |\n  | [AI Careers](https://www.deeplearning.ai/the-batch/tag/ai-careers/)                     | [ai-careers](https://rsshub.app/deeplearning/the-batch/ai-careers)                     |\n  | [Just For Fun](https://www.deeplearning.ai/the-batch/tag/just-for-fun/)                 | [just-for-fun](https://rsshub.app/deeplearning/the-batch/just-for-fun)                 |\n  | [Learning & Education](https://www.deeplearning.ai/the-batch/tag/learning-education/)   | [learning-education](https://rsshub.app/deeplearning/the-batch/learning-education)     |\n    ",
         "categories": [
           "programming"
         ],
-        "example": "/deeplearning/thebatch",
-        "parameters": {},
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -20528,22 +20539,153 @@
         "radar": [
           {
             "source": [
-              "www.deeplearning.ai/thebatch",
-              "www.deeplearning.ai/"
+              "www.deeplearning.ai/the-batch",
+              "www.deeplearning.ai/the-batch/tag/:tag/"
             ]
+          },
+          {
+            "title": "Weekly Issues",
+            "source": [
+              "www.deeplearning.ai/the-batch/"
+            ],
+            "target": "/the-batch"
+          },
+          {
+            "title": "Andrew's Letters",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/letters/"
+            ],
+            "target": "/the-batch/letters"
+          },
+          {
+            "title": "Data Points",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/data-points/"
+            ],
+            "target": "/the-batch/data-points"
+          },
+          {
+            "title": "ML Research",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/research/"
+            ],
+            "target": "/the-batch/research"
+          },
+          {
+            "title": "Business",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/business/"
+            ],
+            "target": "/the-batch/business"
+          },
+          {
+            "title": "Science",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/science/"
+            ],
+            "target": "/the-batch/science"
+          },
+          {
+            "title": "AI & Society",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/ai-society/"
+            ],
+            "target": "/the-batch/ai-society"
+          },
+          {
+            "title": "Culture",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/culture/"
+            ],
+            "target": "/the-batch/culture"
+          },
+          {
+            "title": "Hardware",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/hardware/"
+            ],
+            "target": "/the-batch/hardware"
+          },
+          {
+            "title": "AI Careers",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/ai-careers/"
+            ],
+            "target": "/the-batch/ai-careers"
+          },
+          {
+            "title": "Letters from Andrew Ng - All",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/letters/"
+            ],
+            "target": "/the-batch/letters"
+          },
+          {
+            "title": "Letters from Andrew Ng - Personal Insights",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/personal-insights/"
+            ],
+            "target": "/the-batch/personal-insights"
+          },
+          {
+            "title": "Letters from Andrew Ng - Technical Insights",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/technical-insights/"
+            ],
+            "target": "/the-batch/technical-insights"
+          },
+          {
+            "title": "Letters from Andrew Ng - Business Insights",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/business-insights/"
+            ],
+            "target": "/the-batch/business-insights"
+          },
+          {
+            "title": "Letters from Andrew Ng - Tech & Society",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/tech-society/"
+            ],
+            "target": "/the-batch/tech-society"
+          },
+          {
+            "title": "Letters from Andrew Ng - DeepLearning.AI News",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/deeplearning-ai-news/"
+            ],
+            "target": "/the-batch/deeplearning-ai-news"
+          },
+          {
+            "title": "Letters from Andrew Ng - AI Careers",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/ai-careers/"
+            ],
+            "target": "/the-batch/ai-careers"
+          },
+          {
+            "title": "Letters from Andrew Ng - Just For Fun",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/just-for-fun/"
+            ],
+            "target": "/the-batch/just-for-fun"
+          },
+          {
+            "title": "Letters from Andrew Ng - Learning & Education",
+            "source": [
+              "www.deeplearning.ai/the-batch/tag/learning-education/"
+            ],
+            "target": "/the-batch/learning-education"
           }
         ],
-        "name": "TheBatch 周报",
-        "maintainers": [
-          "nczitzk",
-          "juvenn"
-        ],
-        "url": "www.deeplearning.ai/thebatch",
-        "location": "thebatch.ts"
+        "location": "the-batch.ts"
       }
     },
-    "name": "deeplearning.ai",
+    "name": "DeepLearning.AI",
     "url": "www.deeplearning.ai",
+    "categories": [
+      "programming"
+    ],
+    "description": "",
     "lang": "en"
   },
   "deepmind": {

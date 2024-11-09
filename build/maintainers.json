@@ -1692,9 +1692,10 @@
   "/deepin/threads/:type?": [
     "myml"
   ],
-  "/deeplearning/thebatch": [
+  "/deeplearning/the-batch/:tag{.+}?": [
     "nczitzk",
-    "juvenn"
+    "juvenn",
+    "TonyRL"
   ],
   "/deepmind/blog": [
     "nczitzk",
