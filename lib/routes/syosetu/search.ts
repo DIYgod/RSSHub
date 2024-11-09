@@ -154,7 +154,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Search',
-    maintainers: [''],
+    maintainers: ['SnowAgar25'],
     handler,
 };
 
@@ -271,7 +271,7 @@ async function handler(ctx: Context): Promise<Data> {
     }));
 
     return {
-        title: `syosetu search`,
+        title: `Syosetu Search`,
         link: searchUrl,
         item: items,
     };

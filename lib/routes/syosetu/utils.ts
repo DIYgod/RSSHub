@@ -7,26 +7,8 @@ import { config } from '@/config';
 import { NarouNovelFetch, NarouSearchResult, SearchBuilder, SearchBuilderR18 } from 'narou';
 
 export async function fetchNovelInfo(ncode: string): Promise<{ baseUrl: string; novel: NarouSearchResult }> {
-    const [generalRes, r18Res] = await Promise.all([
-        new SearchBuilder(
-            {
-                gzip: 5,
-                of: 't-s-k-ga-nt',
-            },
-            new NarouNovelFetch()
-        )
-            .ncode(ncode)
-            .execute(),
-        new SearchBuilderR18(
-            {
-                gzip: 5,
-                of: 't-s-k-ga-nt',
-            },
-            new NarouNovelFetch()
-        )
-            .ncode(ncode)
-            .execute(),
-    ]);
+    const api = new NarouNovelFetch();
+    const [generalRes, r18Res] = await Promise.all([new SearchBuilder({ gzip: 5, of: 't-s-k-ga-nt' }, api).ncode(ncode).execute(), new SearchBuilderR18({ gzip: 5, of: 't-s-k-ga-nt' }, api).ncode(ncode).execute()]);
 
     const isGeneral = generalRes.allcount !== 0;
     const novelData = isGeneral ? generalRes : r18Res;

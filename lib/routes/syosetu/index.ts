@@ -1,6 +1,7 @@
 import { Route, Data, DataItem } from '@/types';
 import { fetchNovelInfo, fetchChapterContent } from './utils';
 import { Context } from 'hono';
+import { NovelType } from 'narou';
 
 export const route: Route = {
     path: '/:ncode',
@@ -27,11 +28,6 @@ export const route: Route = {
     ],
 };
 
-enum NovelType {
-    Series = 1,
-    Short = 2,
-}
-
 async function handler(ctx: Context): Promise<Data> {
     const { ncode } = ctx.req.param();
     const limit = Number.parseInt(ctx.req.query('limit') ?? '5');
@@ -39,7 +35,8 @@ async function handler(ctx: Context): Promise<Data> {
     const { baseUrl, novel } = await fetchNovelInfo(ncode);
     novel.story = novel.story.replaceAll('\n', '<br>') || '';
 
-    if (novel.novel_type === NovelType.Short) {
+    // Tanpen = Short
+    if (novel.noveltype === NovelType.Tanpen) {
         const chapterUrl = `${baseUrl}/${ncode}`;
         const item = await fetchChapterContent(chapterUrl);
 
@@ -52,7 +49,8 @@ async function handler(ctx: Context): Promise<Data> {
         };
     }
 
-    // if (novel.noveltype === NovelType.Series)
+    // Rensai = Series
+    // if (novel.noveltype === NovelType.Rensai)
     const totalChapters = novel.general_all_no ?? 1;
     const startChapter = Math.max(totalChapters - limit + 1, 1);
 
