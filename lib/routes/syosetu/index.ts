@@ -5,7 +5,7 @@ import { Context } from 'hono';
 export const route: Route = {
     path: '/:ncode',
     categories: ['reading'],
-    example: '/syosetu/n1976ey',
+    example: '/syosetu/n9292ii',
     parameters: { ncode: 'Novel code, can be found in URL' },
     features: {
         requireConfig: false,
@@ -39,8 +39,8 @@ async function handler(ctx: Context): Promise<Data> {
     const { baseUrl, novel } = await fetchNovelInfo(ncode);
     novel.story = novel.story.replaceAll('\n', '<br>') || '';
 
-    if (novel.noveltype === NovelType.Short) {
-        const chapterUrl = `${baseUrl}/${ncode}/`;
+    if (novel.novel_type === NovelType.Short) {
+        const chapterUrl = `${baseUrl}/${ncode}`;
         const item = await fetchChapterContent(chapterUrl);
 
         return {
@@ -59,7 +59,7 @@ async function handler(ctx: Context): Promise<Data> {
     const items = await Promise.all(
         Array.from({ length: Math.min(limit, totalChapters) }, async (_, index) => {
             const chapterNumber = startChapter + index;
-            const chapterUrl = `${baseUrl}/${ncode}/${chapterNumber}/`;
+            const chapterUrl = `${baseUrl}/${ncode}/${chapterNumber}`;
 
             const item = await fetchChapterContent(chapterUrl);
             return item;
@@ -69,7 +69,7 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title: novel.title,
         description: novel.story,
-        link: `${baseUrl}/${ncode}/`,
+        link: `${baseUrl}/${ncode}`,
         item: items as DataItem[],
         language: 'ja',
     };

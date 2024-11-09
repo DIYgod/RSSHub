@@ -1,0 +1,52 @@
+<h1>{{ title }}</h1>
+<hr/>
+<p><b>Status:</b> {{ status }}</p>
+<h2>Description</h2>
+<p>{{ description }}</p>
+<h2>Keywords</h2>
+<p>{{ keywords }}</p>
+<h2>Statistics</h2>
+<table>
+    <tr>
+        <td><b>Last Update:</b></td>
+        <td>{{ stats.lastUpdate }}</td>
+    </tr>
+    <tr>
+        <td><b>Novel Code:</b></td>
+        <td>{{ stats.ncode }}</td>
+    </tr>
+    <tr>
+        <td><b>Reading Time:</b></td>
+        <td>{{ stats.readTime }}</td>
+    </tr>
+    <tr>
+        <td><b>Weekly Users:</b></td>
+        <td>{{ stats.weeklyUsers }}</td>
+    </tr>
+    <tr>
+        <td><b>Total Points:</b></td>
+        <td>{{ stats.totalPoints }}</td>
+    </tr>
+    <tr>
+        <td><b>Evaluations:</b></td>
+        <td>{{ stats.evaluations }}</td>
+    </tr>
+    <tr>
+        <td><b>Evaluation Points:</b></td>
+        <td>{{ stats.evalPoints }}</td>
+    </tr>
+    <tr>
+        <td><b>Bookmarks:</b></td>
+        <td>{{ stats.bookmarks }}</td>
+    </tr>
+    <tr>
+        <td><b>Has Illustrations:</b></td>
+        <td>{{ stats.hasIllustrations ? "Yes" : "No" }}</td>
+    </tr>
+</table>
+
+<p>
+    <a href="{{ link }}" target="_blank" style="background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+        Read on Syosetu
+    </a>
+</p>

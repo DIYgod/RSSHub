@@ -4,36 +4,41 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { config } from '@/config';
+import { NarouNovelFetch, NarouSearchResult, SearchBuilder, SearchBuilderR18 } from 'narou';
 
-/**
- * @see https://dev.syosetu.com/man/man/
- */
+export async function fetchNovelInfo(ncode: string): Promise<{ baseUrl: string; novel: NarouSearchResult }> {
+    const [generalRes, r18Res] = await Promise.all([
+        new SearchBuilder(
+            {
+                gzip: 5,
+                of: 't-s-k-ga-nt',
+            },
+            new NarouNovelFetch()
+        )
+            .ncode(ncode)
+            .execute(),
+        new SearchBuilderR18(
+            {
+                gzip: 5,
+                of: 't-s-k-ga-nt',
+            },
+            new NarouNovelFetch()
+        )
+            .ncode(ncode)
+            .execute(),
+    ]);
 
-interface NovelResponse {
-    0: { allcount: number };
-    1: {
-        title: string;
-        story: string;
-        keyword: string;
-        general_lastup: string;
-        general_all_no: number;
-        noveltype: number;
-    };
-}
-export async function fetchNovelInfo(ncode: string) {
-    const [generalRes, r18Res] = await Promise.all([ofetch(`https://api.syosetu.com/novelapi/api?ncode=${ncode}&out=json&of=t-s-k-ga-nt`), ofetch(`https://api.syosetu.com/novel18api/api?ncode=${ncode}&out=json&of=t-s-k-ga-nt`)]);
+    const isGeneral = generalRes.allcount !== 0;
+    const novelData = isGeneral ? generalRes : r18Res;
+    const baseUrl = isGeneral ? 'https://ncode.syosetu.com' : 'https://novel18.syosetu.com';
 
-    const isR18 = !generalRes[0].allcount;
-    const novelData: NovelResponse = isR18 ? r18Res : generalRes;
-    const baseUrl = isR18 ? 'https://novel18.syosetu.com' : 'https://ncode.syosetu.com';
-
-    if (!novelData[0].allcount) {
+    if (novelData.allcount === 0) {
         throw new InvalidParameterError('Novel not found in both APIs');
     }
 
     return {
         baseUrl,
-        novel: novelData[1],
+        novel: novelData.values[0] as NarouSearchResult,
     };
 }
 
