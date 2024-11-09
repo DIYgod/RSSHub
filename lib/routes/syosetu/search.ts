@@ -8,6 +8,9 @@ import queryString from 'query-string';
 import { Join } from 'narou/util/type';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 interface NarouSearchParams {
     /**
      * 作品種別の絞り込み Work Type Filter
