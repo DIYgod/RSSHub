@@ -16,7 +16,7 @@ export const route: Route = {
     },
     name: '经济与管理学院通知',
     maintainers: ['sitdownkevin'],
-    url: 'https://sem.tongji.edu.cn/semch/category/frontpage/notice',
+    url: 'sem.tongji.edu.cn/semch/category/frontpage/notice',
     handler,
     description: ``,
 };
