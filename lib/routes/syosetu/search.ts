@@ -1,10 +1,9 @@
 import { Route, Data } from '@/types';
-// import cache from '@/utils/cache';
-// import { getCurrentPath } from '@/utils/helpers';
-// import { art } from '@/utils/render';
-// import path from 'node:path';
+import cache from '@/utils/cache';
+import { art } from '@/utils/render';
+import path from 'node:path';
 import { Context } from 'hono';
-import { Genre, NarouNovelFetch, NovelTypeParam, Order, R18Site, SearchBuilder, SearchBuilderR18, SearchParams } from 'narou';
+import { Genre, GenreNotation, NarouNovelFetch, NovelTypeParam, Order, R18Site, SearchBuilder, SearchBuilderR18, SearchParams } from 'narou';
 import queryString from 'query-string';
 import { Join } from 'narou/util/type';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -256,23 +255,28 @@ async function handler(ctx: Context): Promise<Data> {
     const { domain, query } = ctx.req.param();
     const searchUrl = `https://${domain}.syosetu.com/search/search/search.php?${query}`;
 
-    const searchParams = mapToSearchParams(query);
-    const builder = createNovelSearchBuilder(domain, searchParams);
-    const result = await builder.execute();
+    return (await cache.tryGet(searchUrl, async () => {
+        const searchParams = mapToSearchParams(query);
+        const builder = createNovelSearchBuilder(domain, searchParams);
+        const result = await builder.execute();
 
-    // TODO: richer feed, cache
-    const items = result.values.map((novel) => ({
-        title: novel.title,
-        link: `https://${isGeneral(domain) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
-        description: novel.story,
-        // Skip pubDate - search results prioritize search sequence over timestamps
-        // pubDate: novel.general_lastup,
-        author: novel.writer,
-    }));
+        const items = result.values.map((novel) => ({
+            title: novel.title,
+            link: `https://${isGeneral(domain) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
+            description: art(path.join(__dirname, 'templates', 'description.art'), {
+                novel,
+                genreText: GenreNotation[novel.genre],
+            }),
+            // Skip pubDate - search results prioritize search sequence over timestamps
+            // pubDate: novel.general_lastup,
+            author: novel.writer,
+            category: novel.keyword.split(' '),
+        }));
 
-    return {
-        title: `Syosetu Search`,
-        link: searchUrl,
-        item: items,
-    };
+        return {
+            title: `Syosetu Search`,
+            link: searchUrl,
+            item: items,
+        };
+    })) as Data;
 }
