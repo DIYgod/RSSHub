@@ -31,7 +31,7 @@ async function handler() {
 
     const results = await Promise.all(promises);
 
-    // feed the data
+    // feed the data to rss
     return {
         title: '同济大学经济与管理学院',
         link: 'https://bksy.tongji.edu.cn/30359/list.htm',
