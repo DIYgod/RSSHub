@@ -1,7 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-
 import { config } from '@/config';
 
 export async function getNotifByPage() {

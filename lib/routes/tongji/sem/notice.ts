@@ -1,5 +1,6 @@
 // Warning: The author still knows nothing about javascript!
 import { Route } from '@/types';
+import { getNotifByPage } from './_utils';
 
 export const route: Route = {
     path: '/sem',
@@ -20,8 +21,6 @@ export const route: Route = {
     handler,
     description: ``,
 };
-
-import { getNotifByPage } from './_utils';
 
 async function handler() {
     const results = await getNotifByPage();
