@@ -78027,6 +78027,29 @@
         "url": "yz.tongji.edu.cn/zsxw/ggtz.htm",
         "location": "yjs.ts"
       },
+      "/sem": {
+        "path": "/sem",
+        "categories": [
+          "university"
+        ],
+        "example": "/tongji/sem",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "经济与管理学院通知",
+        "maintainers": [
+          "sitdownkevin"
+        ],
+        "url": "sem.tongji.edu.cn/semch/category/frontpage/notice",
+        "description": "",
+        "location": "sem/notice.ts"
+      },
       "/sse/:type?": {
         "path": "/sse/:type?",
         "categories": [
