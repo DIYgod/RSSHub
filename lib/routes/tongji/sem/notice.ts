@@ -24,7 +24,7 @@ export const route: Route = {
 import { getNotifByPage } from './_utils';
 
 async function handler() {
-    const results = await getNotifByPage(1);
+    const results = await getNotifByPage();
 
     // feed the data to rss
     return {
