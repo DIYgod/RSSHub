@@ -59,7 +59,7 @@ async function handler(ctx) {
                 link,
             };
         })
-        .get();
+        .toArray();
 
     const items = await Promise.all(
         list.map((item) =>
