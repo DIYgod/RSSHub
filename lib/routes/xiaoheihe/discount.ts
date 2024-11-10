@@ -62,7 +62,8 @@ function getHeyboxPriceDesc(heyboxPriceInfo) {
     if (heyboxPriceInfo.coupon_info) {
         let discountPrice = heyboxPriceInfo.cost_coin / 1000;
         discountPrice = discountPrice - heyboxPriceInfo.coupon_info.max_reduce;
-        return `| 券后价: ${discountPrice.toFixed(2)} [${heyboxPriceInfo.coupon_info.coupon_desc}]`;
+        const formatPrice = Number.isInteger(discountPrice) ? discountPrice.toFixed(0) : discountPrice.toFixed(2);
+        return `| 券后价: ${formatPrice} [${heyboxPriceInfo.coupon_info.coupon_desc}]`;
     } else {
         return '';
     }
