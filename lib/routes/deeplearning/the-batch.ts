@@ -145,14 +145,14 @@ export const route: Route = {
     handler,
     example: '/deeplearning/the-batch',
     parameters: { tag: 'Tag, Weekly Issues by default' },
-    description: `:::tip
+    description: `::: tip
   If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)，where the URL is \`https://www.deeplearning.ai/the-batch/tag/data-points/\`, extract the part \`https://www.deeplearning.ai/the-batch/tag\` to the end, which is \`data-points\`, and use it as the parameter to fill in. Therefore, the route will be [\`/deeplearning/the-batch/data-points\`](https://rsshub.app/deeplearning/the-batch/data-points).
 
   :::
 
   | Tag                                                                    | ID                                                                   |
   | ---------------------------------------------------------------------- | -------------------------------------------------------------------- |
-  | [Weekly Issues](https://www.deeplearning.ai/the-batch/)                | [<null>](https://rsshub.app/deeplearning/the-batch)                  |
+  | [Weekly Issues](https://www.deeplearning.ai/the-batch/)                | [*null*](https://rsshub.app/deeplearning/the-batch)                  |
   | [Andrew's Letters](https://www.deeplearning.ai/the-batch/tag/letters/) | [letters](https://rsshub.app/deeplearning/the-batch/letters)         |
   | [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)  | [data-points](https://rsshub.app/deeplearning/the-batch/data-points) |
   | [ML Research](https://www.deeplearning.ai/the-batch/tag/research/)     | [research](https://rsshub.app/deeplearning/the-batch/research)       |
