@@ -43,19 +43,20 @@ const parseSearchParams = (routeParams?: string): SearchGuildMessagesParams => {
 
     const parsed = new URLSearchParams(routeParams);
     const hasTypes = parsed.get('has')?.split(',').filter(Boolean);
-
     const validHasTypes = hasTypes?.filter((type) => VALID_HAS_TYPES.has(type as HasType)) as HasType[];
 
-    return {
-        content: parsed.get('content') || undefined,
-        author_id: parsed.get('author_id') || undefined,
-        mentions: parsed.get('mentions') || undefined,
+    const params = {
+        content: parsed.get('content') ?? undefined,
+        author_id: parsed.get('author_id') ?? undefined,
+        mentions: parsed.get('mentions') ?? undefined,
         has: validHasTypes?.length ? validHasTypes : undefined,
-        min_id: parsed.get('min_id') || undefined,
-        max_id: parsed.get('max_id') || undefined,
-        channel_id: parsed.get('channel_id') || undefined,
+        min_id: parsed.get('min_id') ?? undefined,
+        max_id: parsed.get('max_id') ?? undefined,
+        channel_id: parsed.get('channel_id') ?? undefined,
         pinned: parsed.has('pinned') ? queryToBoolean(parsed.get('pinned')) : undefined,
     };
+
+    return Object.fromEntries(Object.entries(params).filter(([, value]) => value !== undefined));
 };
 
 async function handler(ctx) {
@@ -66,8 +67,9 @@ async function handler(ctx) {
 
     const { guildId } = ctx.req.param();
     const searchParams = parseSearchParams(ctx.req.param('routeParams'));
-    if (!searchParams) {
-        throw new InvalidParameterError('Search parameters are required');
+
+    if (!Object.keys(searchParams).length) {
+        throw new InvalidParameterError('At least one valid search parameter is required');
     }
 
     const [guildInfo, searchResult] = await Promise.all([getGuild(guildId, authorization), searchGuildMessages(guildId, authorization, searchParams)]);
