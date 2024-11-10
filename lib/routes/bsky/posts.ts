@@ -63,7 +63,6 @@ async function handler(ctx) {
             text: post.record.text.replaceAll('\n', '<br>'),
             embed: post.embed,
             // embed.$type "app.bsky.embed.record#view" and "app.bsky.embed.recordWithMedia#view" are not handled
-            // "app.bsky.embed.video#view" is rendered as image
         }),
         author: post.author.displayName,
         pubDate: parseDate(post.record.createdAt),
