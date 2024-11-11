@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
-export async function getNotifByPage(): Promise<{ title: string; link: string; pubDate: Date }[]> {
-    const pageUrl: string = `https://sem.tongji.edu.cn/semch/category/frontpage/notice`;
+export async function getNotifByPage(url): Promise<{ title: string; link: string; pubDate: Date }[]> {
+    const pageUrl: string = url;
 
     try {
         const response = await got.get(pageUrl, {
