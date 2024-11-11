@@ -4,9 +4,9 @@ import { getNSFWSeriesNovels } from './novel-api/series/nsfw';
 import { getSFWSeriesNovels } from './novel-api/series/sfw';
 
 export const route: Route = {
-    path: '/series/:id',
+    path: '/novel/series/:id',
     categories: ['social-media'],
-    example: '/pixiv/series/11586857',
+    example: '/pixiv/novel/series/11586857',
     parameters: {
         id: 'Series id, can be found in URL',
     },
@@ -27,13 +27,13 @@ Pixiv 登錄後的 refresh_token，用於獲取 R18 小說
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Series Novels',
+    name: 'Novel Series',
     maintainers: ['SnowAgar25'],
     handler,
     radar: [
         {
             source: ['www.pixiv.net/novel/series/:id'],
-            target: '/series/:id',
+            target: '/novel/series/:id',
         },
     ],
 };
