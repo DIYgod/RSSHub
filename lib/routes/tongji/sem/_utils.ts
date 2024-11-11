@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
+
 export async function getNotifByPage(url): Promise<{ title: string; link: string; pubDate: Date }[]> {
     const pageUrl: string = url;
 
@@ -37,6 +38,7 @@ export async function getNotifByPage(url): Promise<{ title: string; link: string
     }
     return [];
 }
+
 
 export async function getArticle(item) {
     const articleUrl: string = item.link;
