@@ -7,7 +7,6 @@ import { SeriesContentResponse, SeriesFeed } from './types';
 const baseUrl = 'https://www.pixiv.net';
 
 export async function getSFWSeriesNovels(seriesId: string, limit: number = 10): Promise<SeriesFeed> {
-    // Get series detail using cheerio
     const seriesPage = await got(`${baseUrl}/novel/series/${seriesId}`);
     const $ = load(seriesPage.data);
 
@@ -15,7 +14,6 @@ export async function getSFWSeriesNovels(seriesId: string, limit: number = 10): 
     const description = $('meta[property="og:description"]').attr('content') || '';
     const image = $('meta[property="og:image"]').attr('content') || '';
 
-    // Get chapters
     const response = await got(`${baseUrl}/ajax/novel/series/${seriesId}/content_titles`, {
         headers: {
             referer: `${baseUrl}/novel/series/${seriesId}`,

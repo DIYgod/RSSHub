@@ -50,14 +50,14 @@ export async function getNSFWNovelContent(novelId: string, token: string): Promi
             content: parsedContent,
 
             userId: novelDetail.userId,
-            userName: null, // NSFW API 不提供此資訊
+            userName: null, // Not provided in NSFW API
 
             bookmarkCount: novelDetail.rating.bookmark,
             viewCount: novelDetail.rating.view,
             likeCount: novelDetail.rating.like,
 
             createDate: parseDate(novelDetail.cdate),
-            updateDate: null, // NSFW API 不提供此資訊
+            updateDate: null, // Not provided in NSFW API
 
             isOriginal: novelDetail.isOriginal,
             aiType: novelDetail.aiType,
