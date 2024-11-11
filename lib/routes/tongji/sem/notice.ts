@@ -26,7 +26,6 @@ export const route: Route = {
 `,
 };
 
-
 async function handler(ctx) {
     const type = ctx.req.param('type') || 'notice';
     const subType = new Set(['enrollment', 'academic-paper', 'news', 'events', 'focus', 'collegerecruitment']);
@@ -50,7 +49,6 @@ async function handler(ctx) {
     return {
         title: '同济大学经济与管理学院',
         description: String(subType.has(type) ? subTypeName[type] : '学院通知'),
-        language: 'zh-cn',
         image: 'https://tongji.edu.cn/images/badge.png',
         link: 'https://sem.tongji.edu.cn/semch',
         item: resultsWithContent,
