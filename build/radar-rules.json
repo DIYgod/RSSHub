@@ -10071,6 +10071,19 @@
       }
     ]
   },
+  "googleblog.com": {
+    "_name": "Google",
+    "developers": [
+      {
+        "title": "Developers Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/google/developers/:locale?"
+      }
+    ]
+  },
   "google.com": {
     "_name": "Google",
     "chromewebstore": [

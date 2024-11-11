@@ -1747,6 +1747,9 @@
   "/discord/channel/:channelId": [
     "TonyRL"
   ],
+  "/discord/search/:guildId/:routeParams": [
+    "NekoAria"
+  ],
   "/discourse/:configId/notifications/:fulltext?": [],
   "/discourse/:configId/official/:path{.+}": [
     "Raikyou",
@@ -2569,6 +2572,9 @@
   "/google/citations/:id": [
     "KellyHwong",
     "const7"
+  ],
+  "/google/developers/:locale?": [
+    "Loongphy"
   ],
   "/google/doodles/:language?": [
     "xyqfer"
