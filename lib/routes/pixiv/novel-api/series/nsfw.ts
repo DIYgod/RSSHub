@@ -12,7 +12,7 @@ const baseUrl = 'https://www.pixiv.net';
 
 export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10): Promise<SeriesFeed> {
     if (!config.pixiv || !config.pixiv.refreshToken) {
-        throw new ConfigNotFoundError('\n該用戶爲 R18 創作者，需要 PIXIV_REFRESHTOKEN。\nThis user is an R18 creator, PIXIV_REFRESHTOKEN is required.\npixiv RSS is disabled due to the lack of relevant config.');
+        throw new ConfigNotFoundError('This user is an R18 creator, PIXIV_REFRESHTOKEN is required.\npixiv RSS is disabled due to the lack of relevant config.\n該用戶爲 R18 創作者，需要 PIXIV_REFRESHTOKEN。');
     }
 
     const token = await getToken(cache.tryGet);
