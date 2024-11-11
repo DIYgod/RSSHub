@@ -27519,6 +27519,458 @@
     "url": "fuliba2023.net",
     "lang": "zh-CN"
   },
+  "furaffinity": {
+    "routes": {
+      "/art/:folder/:username/:mode?": {
+        "path": "/art/:folder/:username/:mode?",
+        "name": "Gallery",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/art/gallery/fender/nsfw",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "username": "Username, can find in userpage",
+          "folder": "Image folders, options are gallery, scraps, favorites",
+          "mode": "R18 content toggle, default value is sfw, options are sfw, nsfw"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net/gallery/:username"
+            ],
+            "target": "/gallery/:username"
+          },
+          {
+            "source": [
+              "furaffinity.net/scraps/:username"
+            ],
+            "target": "/scraps/:username"
+          },
+          {
+            "source": [
+              "furaffinity.net/favorites/:username"
+            ],
+            "target": "/favorites/:username"
+          }
+        ],
+        "location": "art.ts"
+      },
+      "/browse/:mode?": {
+        "path": "/browse/:mode?",
+        "name": "Browse",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/browse/nsfw",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "mode": "R18 content toggle, default value is sfw, options are sfw, nsfw"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net"
+            ],
+            "target": "/browse"
+          }
+        ],
+        "location": "browse.ts"
+      },
+      "/commissions/:username": {
+        "path": "/commissions/:username",
+        "name": "Commissions",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/commissions/fender",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "username": "Username, can find in userpage"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net/commissions/:username"
+            ],
+            "target": "/commissions/:username"
+          }
+        ],
+        "location": "commissions.ts"
+      },
+      "/home/:category/:mode?": {
+        "path": "/home/:category/:mode?",
+        "name": "Home",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/home/nsfw",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "category": "Category, default value is artwork, options are artwork, writing, music, crafts",
+          "mode": "R18 content toggle, default value is sfw, options are sfw, nsfw"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net"
+            ],
+            "target": "/"
+          }
+        ],
+        "location": "home.ts"
+      },
+      "/journal-comments/:id": {
+        "path": "/journal-comments/:id",
+        "name": "Journal Comments",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/journal-comments/10925112",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "id": "Journal ID"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net/journal/:id"
+            ],
+            "target": "/journal-comments/:id"
+          }
+        ],
+        "location": "journal-comments.ts"
+      },
+      "/journals/:username": {
+        "path": "/journals/:username",
+        "name": "Journals",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/journals/fender",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "username": "Username, can find in userpage"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net/journals/:username"
+            ],
+            "target": "/journals/:username"
+          }
+        ],
+        "location": "journals.ts"
+      },
+      "/search/:query/:mode?/:routeParams?": {
+        "path": "/search/:query/:mode?/:routeParams?",
+        "name": "Search",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/search/protogen/nsfw",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "query": "Query value",
+          "mode": "R18 content toggle, default value is sfw, options are sfw, nsfw",
+          "routeParams": "Additional search parameters"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net"
+            ],
+            "target": "/search"
+          }
+        ],
+        "description": "Additional search parameters\n| Parameter       | Description          | Default   | Options                                                        |\n|-----------------|----------------------|-----------|----------------------------------------------------------------|\n| order_by        | Sort by              | relevancy | relevancy, date, popularity                                    |\n| order_direction | Sort order           | desc      | desc, asc                                                      |\n| range           | Date range           | all       | all, 1day, 3days, 7days, 30days, 90days, 1year, 3years, 5years |\n| pattern         | Query match pattern  | extended  | all, any, extended                                             |\n| type            | Category of artworks | all       | art, flash, photo, music, story, poetry                        |\n",
+        "location": "search.ts"
+      },
+      "/shouts/:username": {
+        "path": "/shouts/:username",
+        "name": "Shouts",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/shouts/fender",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "username": "Username, can find in userpage"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net/user/:username"
+            ],
+            "target": "/shouts/:username"
+          }
+        ],
+        "location": "shouts.ts"
+      },
+      "/status": {
+        "path": "/status",
+        "name": "Status",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/status",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net"
+            ],
+            "target": "/"
+          }
+        ],
+        "location": "status.ts"
+      },
+      "/submission-comments/:id": {
+        "path": "/submission-comments/:id",
+        "name": "Submission Comments",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/submission-comments/24259751",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "id": "Submission ID"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net/view/:id"
+            ],
+            "target": "/submission-comments/:id"
+          }
+        ],
+        "location": "submission-comments.ts"
+      },
+      "/user/:username": {
+        "path": "/user/:username",
+        "name": "Userpage",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/user/fender/nsfw",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "username": "Username, can find in userpage"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net/user/:username"
+            ],
+            "target": "/user/:username"
+          }
+        ],
+        "location": "user.ts"
+      },
+      "/watchers/:username": {
+        "path": "/watchers/:username",
+        "name": "User's Watcher List",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/watchers/fender",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "username": "Username, can find in userpage"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net/watchlist/to/:username"
+            ],
+            "target": "/watchers/:username"
+          }
+        ],
+        "location": "watchers.ts"
+      },
+      "/watching/:username": {
+        "path": "/watching/:username",
+        "name": "User's Watching List",
+        "url": "furaffinity.net",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/furaffinity/watching/fender",
+        "maintainers": [
+          "TigerCubDen",
+          "SkyNetX007"
+        ],
+        "parameters": {
+          "username": "Username, can find in userpage"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "furaffinity.net/watchlist/by/:username"
+            ],
+            "target": "/watching/:username"
+          }
+        ],
+        "location": "watching.ts"
+      }
+    },
+    "name": "Furaffinity",
+    "url": "furaffinity.net",
+    "lang": "en"
+  },
   "furstar": {
     "routes": {
       "/archive/:lang?": {
