@@ -16,8 +16,8 @@ export const route: Route = {
                 name: 'PIXIV_REFRESHTOKEN',
                 optional: true,
                 description: `
-Pixiv 登錄後的 refresh_token，用於獲取 R18 小說
 refresh_token after Pixiv login, required for accessing R18 novels
+Pixiv 登錄後的 refresh_token，用於獲取 R18 小說
 [https://docs.rsshub.app/deploy/config#pixiv](https://docs.rsshub.app/deploy/config#pixiv)`,
             },
         ],
