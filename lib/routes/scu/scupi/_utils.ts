@@ -20,7 +20,7 @@ export async function getNotifList() {
             .map((articleElement) => {
                 const titleElement = $(articleElement).find('li > div > div.news-text > h4 > a');
                 const timeElement = $(articleElement).find('li > div > div.news-text > span');
-                // const imageElement = $(articleElement).find('li > div > div.news-img > a > img');
+                const imageElement = $(articleElement).find('li > div > div.news-img > a > img');
 
                 const link = titleElement.attr('href');
                 const title = titleElement.attr('title');
@@ -29,6 +29,7 @@ export async function getNotifList() {
                 return {
                     title,
                     link,
+                    itunes_item_image: imageElement.attr('src'),
                     pubDate: parseDate(pubDate, 'YYYY-MM-DD'),
                 };
             });
