@@ -39,7 +39,7 @@ export async function getNSFWUserNovels(id: string, fullContent: boolean = false
     const novels = limit ? response.data.novels.slice(0, limit) : response.data.novels;
 
     if (novels.length === 0) {
-        throw new InvalidParameterError(`\nid ${id} 不是有效的用戶 ID，或者該用戶沒有小說作品。\n id ${id} is not a valid user ID, or the user has no novels.`);
+        throw new InvalidParameterError(`${id} is not a valid user ID, or the user has no novels.\n${id} 不是有效的用戶 ID，或者該用戶沒有小說作品。`);
     }
 
     const username = novels[0].user.name;
