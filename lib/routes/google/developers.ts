@@ -8,7 +8,7 @@ const baseUrl = 'https://developers.googleblog.com';
 
 export const route: Route = {
     path: '/developers/:locale?',
-    name: 'Google Developers Blog',
+    name: 'Developers Blog',
     url: 'developers.googleblog.com',
     maintainers: ['Loongphy'],
     handler,
@@ -29,7 +29,7 @@ export const route: Route = {
         },
     },
     description: 'Google Developers Blog',
-    categories: ['blog', 'programming'],
+    categories: ['blog'],
     radar: [
         {
             source: ['developers.googleblog.com'],
