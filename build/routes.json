@@ -9496,110 +9496,99 @@
         ],
         "location": "popular.ts"
       },
-      "/ranking/:rid?/:day?/:arc_type?/:embed?": {
-        "path": "/ranking/:rid?/:day?/:arc_type?/:embed?",
+      "/ranking/:rid_index?/:embed?": {
+        "path": "/ranking/:rid_index?/:embed?",
         "name": "排行榜",
         "maintainers": [
-          "DIYgod"
+          "DIYgod",
+          "hyoban"
         ],
         "categories": [
           "social-media",
           "popular"
         ],
         "view": 3,
-        "example": "/bilibili/ranking/0/3/1",
+        "example": "/bilibili/ranking/0",
         "parameters": {
-          "rid": {
-            "description": "排行榜分区 id",
+          "rid_index": {
+            "description": "排行榜分区 id 序号",
             "default": "0",
             "options": [
               {
-                "label": "全站",
-                "value": "0"
-              },
-              {
-                "label": "动画",
-                "value": "1"
-              },
-              {
-                "label": "国创相关",
-                "value": "168"
-              },
-              {
-                "label": "音乐",
-                "value": "3"
-              },
-              {
-                "label": "舞蹈",
-                "value": "129"
-              },
-              {
-                "label": "游戏",
-                "value": "4"
-              },
-              {
-                "label": "科技",
-                "value": "36"
-              },
-              {
-                "label": "数码",
-                "value": "188"
-              },
-              {
-                "label": "生活",
-                "value": "160"
-              },
-              {
-                "label": "鬼畜",
-                "value": "119"
-              },
-              {
-                "label": "时尚",
-                "value": "155"
-              },
-              {
-                "label": "娱乐",
-                "value": "5"
-              },
-              {
-                "label": "影视",
-                "value": "181"
-              }
-            ]
-          },
-          "day": {
-            "description": "时间跨度",
-            "default": "3",
-            "options": [
-              {
-                "value": "1",
-                "label": "1日"
+                "value": "0",
+                "label": "全站"
               },
               {
                 "value": "3",
-                "label": "3日"
+                "label": "国创相关"
+              },
+              {
+                "value": "5",
+                "label": "动画"
+              },
+              {
+                "value": "6",
+                "label": "音乐"
               },
               {
                 "value": "7",
-                "label": "7日"
+                "label": "舞蹈"
               },
               {
-                "value": "30",
-                "label": "30日"
-              }
-            ]
-          },
-          "arc_type": {
-            "description": "投稿时间",
-            "default": "1",
-            "options": [
-              {
-                "value": "0",
-                "label": "全部投稿"
+                "value": "8",
+                "label": "游戏"
               },
               {
-                "value": "1",
-                "label": "近期投稿"
+                "value": "9",
+                "label": "知识"
+              },
+              {
+                "value": "10",
+                "label": "科技"
+              },
+              {
+                "value": "11",
+                "label": "运动"
+              },
+              {
+                "value": "12",
+                "label": "汽车"
+              },
+              {
+                "value": "13",
+                "label": "生活"
+              },
+              {
+                "value": "14",
+                "label": "美食"
+              },
+              {
+                "value": "15",
+                "label": "动物圈"
+              },
+              {
+                "value": "16",
+                "label": "鬼畜"
+              },
+              {
+                "value": "17",
+                "label": "时尚"
+              },
+              {
+                "value": "18",
+                "label": "娱乐"
+              },
+              {
+                "value": "19",
+                "label": "影视"
+              },
+              {
+                "value": "23",
+                "label": "原创"
+              },
+              {
+                "value": "24",
+                "label": "新人"
               }
             ]
           },
