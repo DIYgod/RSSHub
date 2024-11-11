@@ -48,7 +48,7 @@ async function handler(ctx) {
     return {
         allowEmpty: true,
         title: `Fur Affinity | ${username}'s Commissions`,
-        link: `https://www.furaffinity.net/user/${username}`,
+        link: `https://www.furaffinity.net/commissions/${username}`,
         description: `Fur Affinity ${username}'s Commissions`,
         item: items,
     };
