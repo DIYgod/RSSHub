@@ -67214,6 +67214,36 @@
     "url": "sctv.com",
     "lang": "zh-CN"
   },
+  "scu": {
+    "routes": {
+      "/scupi": {
+        "path": "/scupi",
+        "categories": [
+          "university"
+        ],
+        "example": "/scu/scupi",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "匹兹堡学院通知",
+        "maintainers": [
+          "sitdownkevin"
+        ],
+        "url": "scupi.scu.edu.cn/activities/notice",
+        "description": "",
+        "location": "scupi/notice.ts"
+      }
+    },
+    "name": "四川大学",
+    "url": "www.scu.edu.cn",
+    "lang": "zh-CN"
+  },
   "scut": {
     "routes": {
       "/yjs": {
