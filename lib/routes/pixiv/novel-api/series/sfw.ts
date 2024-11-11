@@ -35,7 +35,7 @@ export async function getSFWSeriesNovels(seriesId: string, limit: number = 10): 
                 if (!chapter.available) {
                     return {
                         title: `#${chapterStartNum + index} ${chapter.title}`,
-                        description: `需要 PIXIV_REFRESHTOKEN 才能查看完整內文。<br>PIXIV_REFRESHTOKEN is required to view the full content.`,
+                        description: `PIXIV_REFRESHTOKEN is required to view the full content.<br>需要 PIXIV_REFRESHTOKEN 才能查看完整內文。`,
                         link: `${baseUrl}/novel/show.php?id=${chapter.id}`,
                     };
                 }
