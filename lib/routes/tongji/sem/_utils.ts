@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
-export async function getNotifByPage() {
+export async function getNotifByPage(): Promise<{ title: string; link: string; pubDate: Date }[]> {
     const pageUrl: string = `https://sem.tongji.edu.cn/semch/category/frontpage/notice`;
 
     try {
@@ -36,4 +36,30 @@ export async function getNotifByPage() {
         // console.error(error);
     }
     return [];
+}
+
+export async function getArticle(item) {
+    const articleUrl: string = item.link;
+
+    if (articleUrl.includes('sem.tongji.edu.cn/semch')) {
+        // console.log(articleUrl);
+
+        try {
+            const response = await got.get(articleUrl, {
+                headers: {
+                    'User-Agent': config.ua,
+                },
+            });
+
+            const html = response.body;
+            const $ = load(html);
+
+            const articleContentElement = $('#page-wrap > div.maim_pages > div > div.leftmain_page > div');
+            item.description = articleContentElement ? articleContentElement.html() : '';
+        } catch {
+            // console.error(error);
+        }
+    }
+
+    return item;
 }
