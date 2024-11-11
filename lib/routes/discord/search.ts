@@ -37,10 +37,6 @@ export const route: Route = {
 };
 
 const parseSearchParams = (routeParams?: string): SearchGuildMessagesParams => {
-    if (!routeParams) {
-        return {};
-    }
-
     const parsed = new URLSearchParams(routeParams);
     const hasTypes = parsed.get('has')?.split(',').filter(Boolean);
     const validHasTypes = hasTypes?.filter((type) => VALID_HAS_TYPES.has(type as HasType)) as HasType[];
