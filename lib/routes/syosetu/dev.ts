@@ -29,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
-    const url = 'https://dev.syosetu.com/';
+    const url = 'https://dev.syosetu.com';
 
     return (await cache.tryGet(url, async () => {
         const data = await ofetch(url);
@@ -39,13 +39,13 @@ async function handler(): Promise<Data> {
 
         const dates = logContainer
             .find('dt')
-            .map((_, element) => $(element).text().trim())
-            .toArray();
+            .toArray()
+            .map((element) => $(element).text().trim());
 
         const contents = logContainer
             .find('dd')
-            .map((_, element) => $(element).text().trim())
-            .toArray();
+            .toArray()
+            .map((element) => $(element).text().trim());
 
         const updates = dates
             .map((date, index) => ({
@@ -62,6 +62,7 @@ async function handler(): Promise<Data> {
                 title: update.date,
                 description: update.content,
                 pubDate: parseDate(update.date.replace('/', '-')),
+                guid: `syosetu:dev:${update.date}`,
             })),
         };
 
