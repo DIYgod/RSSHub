@@ -185,7 +185,7 @@
         "js-beautify": "1.15.1",
         "lint-staged": "15.2.10",
         "mockdate": "3.0.5",
-        "msw": "2.4.3",
+        "msw": "2.6.4",
         "node-network-devtools": "1.0.22",
         "prettier": "3.3.3",
         "remark-parse": "11.0.0",
