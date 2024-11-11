@@ -78132,13 +78132,15 @@
         "url": "yz.tongji.edu.cn/zsxw/ggtz.htm",
         "location": "yjs.ts"
       },
-      "/sem": {
-        "path": "/sem",
+      "/sem/:type?": {
+        "path": "/sem/:type?",
         "categories": [
           "university"
         ],
-        "example": "/tongji/sem",
-        "parameters": {},
+        "example": "/tongji/sem/notice",
+        "parameters": {
+          "type": "通知类型，默认为 `notice`"
+        },
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -78151,8 +78153,8 @@
         "maintainers": [
           "sitdownkevin"
         ],
-        "url": "sem.tongji.edu.cn/semch/category/frontpage/notice",
-        "description": "",
+        "url": "sem.tongji.edu.cn/semch",
+        "description": "| 学院通知 | 招生通知 | 学术观点 | 新闻 | 活动 | 视点 | 教师与行政人员招聘 |\n| -------- | -------------- | ------------------ | ---- | ---------- | --------- | ------------------ |\n| notice   | enrollment     | academic-paper     | news | events     | focus     | collegerecruitment |\n",
         "location": "sem/notice.ts"
       },
       "/sse/:type?": {
