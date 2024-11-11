@@ -30323,6 +30323,63 @@
         "description": "The parameter id in the route is the id in the URL of the user's Google Scholar reference page, for example `https://scholar.google.com/citations?user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`.\n\n  Query parameters are also supported here, for example `https://scholar.google.com/citations?user=mlmE4JMAAAAJ&sortby=pubdate` to `mlmE4JMAAAAJ&sortby=pubdate`. Please make sure that the user id (`mlmE4JMAAAAJ` in this case) should be the first parameter in the query string.",
         "location": "citations.ts"
       },
+      "/developers/:locale?": {
+        "path": "/developers/:locale?",
+        "name": "Developers Blog",
+        "url": "developers.googleblog.com",
+        "maintainers": [
+          "Loongphy"
+        ],
+        "example": "/google/developers/en",
+        "parameters": {
+          "locale": {
+            "description": "language",
+            "default": "en",
+            "options": [
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "es",
+                "label": "Español (Latam)"
+              },
+              {
+                "value": "id",
+                "label": "Bahasa Indonesia"
+              },
+              {
+                "value": "ja",
+                "label": "日本語"
+              },
+              {
+                "value": "ko",
+                "label": "한국어"
+              },
+              {
+                "value": "pt-br",
+                "label": "Português (Brasil)"
+              },
+              {
+                "value": "zh-hans",
+                "label": "简体中文"
+              }
+            ]
+          }
+        },
+        "description": "Google Developers Blog",
+        "categories": [
+          "blog"
+        ],
+        "radar": [
+          {
+            "source": [
+              "developers.googleblog.com"
+            ]
+          }
+        ],
+        "location": "developers.ts"
+      },
       "/doodles/:language?": {
         "path": "/doodles/:language?",
         "categories": [
