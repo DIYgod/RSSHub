@@ -1,19 +1,41 @@
-const got = require('@/utils/got');
+import { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
-module.exports = async (ctx) => {
-    // 传入参数
-    const username = String(ctx.params.username);
+export const route: Route = {
+    path: '/user/:username',
+    name: 'Userpage',
+    url: 'furaffinity.net',
+    categories: ['social-media'],
+    example: '/furaffinity/user/fender/nsfw',
+    maintainers: ['TigerCubDen', 'SkyNetX007'],
+    parameters: { username: 'Username, can find in userpage' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['furaffinity.net/user/:username'],
+            target: '/user/:username',
+        },
+    ],
+    handler,
+};
 
-    // 添加参数username 和 发起 HTTP GET 请求
-    const response = await got({
-        method: 'get',
-        url: `https://faexport.spangle.org.uk/user/${username}.json`,
+async function handler(ctx) {
+    const { username } = ctx.req.param();
+    const url = `https://faexport.spangle.org.uk/user/${username}.json`;
+
+    const data = await ofetch(url, {
+        method: 'GET',
         headers: {
-            Referer: `https://faexport.spangle.org.uk/`,
+            Referer: 'https://faexport.spangle.org.uk/',
         },
     });
-
-    const data = response.data;
 
     // 收集传入的数据
     const name = data.name;
@@ -49,37 +71,30 @@ module.exports = async (ctx) => {
 
     const contact_information = data.contact_information;
     let contact_result = 'none <br> <br> ';
-
     // 对一个或多个用户联系方式进行遍历
     if (contact_information) {
         contact_result = '';
         for (const element of contact_information) {
-            for (const j in element) {
-                switch (j) {
+            for (const x in element) {
+                switch (x) {
                     case 'title':
-                        contact_result += `Title: ${element[j]} <br> `;
-
+                        contact_result += `Title: ${element[x]} <br> `;
                         break;
-
                     case 'name':
-                        contact_result += `Name: ${element[j]} <br> `;
-
+                        contact_result += `Name: ${element[x]} <br> `;
                         break;
-
                     case 'link':
-                        contact_result += `Link: ${element[j]} <br> `;
-
+                        contact_result += `Link: ${element[x]} <br> `;
                         break;
-
                     default:
-                        throw new Error(`Unknown type: ${j}`);
+                        throw new Error(`Unknown type: ${x}`);
                 }
             }
             contact_result += `<br> `;
         }
     }
 
-    const description = `Name: ${name} <br> Profile: ${profile} <br> Account Type: ${account_type}  <br>
+    const description = `Name: ${name} <br> Profile: ${profile} <br> Account Type: ${account_type} <br>
     Avatar: ${avatar} <br> Full Name: ${full_name} <br> Artist Type: ${artist_type} <br> User Title: ${user_title} <br>
     Registered Since: ${registered_since} <br> Current Mood: ${current_mood} <br> <br> Artist Profile: <br> ${artist_profile} <br> <br>
     Pageviews: ${pageviews} <br> Submissions: ${submissions} <br> Comments_Received: ${comments_received} <br> Comments Given: ${comments_given} <br>
@@ -88,21 +103,18 @@ module.exports = async (ctx) => {
     Favorite Animal: ${favorites_animal} <br> Favorite Website: ${favorites_website} <br> Favorite Food: ${favorites_food} <br> <br> Contact Information: <br> ${contact_result}
     Watchers Count: ${watchers_count} <br> Watching Count: ${watching_count} `;
 
-    const item = [];
-    item.push({
-        title: `${data.name}'s Current Profile`,
-        description,
-        link: `https://www.furaffinity.net/user/${username}/`,
-    });
+    const items: { title: string; link: string; description: string }[] = [
+        {
+            title: `${data.name}'s User Profile`,
+            link: `https://www.furaffinity.net/user/${username}`,
+            description,
+        },
+    ];
 
-    ctx.state.data = {
-        // 源标题
-        title: `Userpage of ${data.name}`,
-        // 源链接
-        link: `https://www.furaffinity.net/`,
-        // 源说明
-        description: `Fur Affinity Userpage Profile of ${data.name}`,
-
-        item,
+    return {
+        title: `Fur Affinity | Userpage of ${data.name}`,
+        link: `https://www.furaffinity.net/user/${username}`,
+        description: `Fur Affinity User Profile of ${data.name}`,
+        item: items,
     };
-};
+}
