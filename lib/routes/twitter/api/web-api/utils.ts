@@ -19,7 +19,7 @@ const token2Cookie = async (token) => {
         return c;
     }
     const jar = new CookieJar();
-    jar.setCookieSync(`auth_token=${token}`, 'https://x.com');
+    await jar.setCookie(`auth_token=${token}`, 'https://x.com');
     try {
         const agent = proxy.proxyUri
             ? new ProxyAgent({
