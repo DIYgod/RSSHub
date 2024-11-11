@@ -8,7 +8,7 @@ const rootUrl = 'http://sec.hrbeu.edu.cn';
 export const route: Route = {
     path: '/sec/:id',
     categories: ['university'],
-    example: '/hrbeu/sec/xyyw',
+    example: '/hrbeu/sec/xshd',
     parameters: { id: '栏目编号，由 `URL` 中获取。' },
     features: {
         requireConfig: false,
