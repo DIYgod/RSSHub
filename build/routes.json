@@ -82122,6 +82122,34 @@
     "url": "verfgh.baden-wuerttemberg.de",
     "lang": "de"
   },
+  "vertikal": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/vertikal/latest",
+        "radar": [
+          {
+            "source": [
+              "vertikal.net/en/news",
+              "vertikal.net"
+            ]
+          }
+        ],
+        "name": "News Archive",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "vertikal.net/en/news",
+        "location": "latest.ts"
+      }
+    },
+    "name": "Vertikal.net",
+    "url": "vertikal.net",
+    "lang": "en"
+  },
   "vice": {
     "routes": {
       "/topic/:topic/:language?": {

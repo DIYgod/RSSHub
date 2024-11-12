@@ -28465,6 +28465,20 @@
       }
     ]
   },
+  "vertikal.net": {
+    "_name": "Vertikal.net",
+    ".": [
+      {
+        "title": "News Archive",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/en/news",
+          "/"
+        ],
+        "target": "/vertikal/latest"
+      }
+    ]
+  },
   "vice.com": {
     "_name": "VICE",
     "www": [
