@@ -26,7 +26,7 @@ export const route: Route = {
     name: '船舶工程学院',
     maintainers: ['Chi-hong22'],
     handler,
-    description: `  | 学院要闻 | 学术活动 | 通知公告 | 学科方向 |
+    description: `| 学院要闻 | 学术活动 | 通知公告 | 学科方向 |
 | :------: | :------: |:------: | :------: |
 |   xyyw   |   xshd   |  229   |   xkfx   |`,
 };
