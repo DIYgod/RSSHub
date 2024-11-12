@@ -38778,6 +38778,37 @@
         "description": "| 通知公告 | 热点新闻 |\n    | :------: | :------: |\n    |   tzgg   |   rdxw   |",
         "location": "job/list.ts"
       },
+      "/sec/:id": {
+        "path": "/sec/:id",
+        "categories": [
+          "university"
+        ],
+        "example": "/hrbeu/sec/xshd",
+        "parameters": {
+          "id": "栏目编号，由 `URL` 中获取。"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "sec.hrbeu.edu.cn/:id/list.htm"
+            ]
+          }
+        ],
+        "name": "船舶工程学院",
+        "maintainers": [
+          "Chi-hong22"
+        ],
+        "description": "| 学院要闻 | 学术活动 | 通知公告 | 学科方向 |\n| :------: | :------: |:------: | :------: |\n|   xyyw   |   xshd   |  229   |   xkfx   |",
+        "location": "sec/list.ts"
+      },
       "/uae/:id": {
         "path": "/uae/:id",
         "categories": [

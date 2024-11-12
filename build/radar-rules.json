@@ -13502,6 +13502,16 @@
         "target": "/hrbeu/job/calendar"
       }
     ],
+    "sec": [
+      {
+        "title": "船舶工程学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:id/list.htm"
+        ],
+        "target": "/hrbeu/sec/:id"
+      }
+    ],
     "uae": [
       {
         "title": "水声工程学院",
