@@ -52,7 +52,7 @@ async function handler(ctx) {
     const { type = 'index' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
-    const link = `https://apii.mittrchina.com${typeMap[type].apiPath}`;
+    const link = `https://apii.web.mittrchina.com${typeMap[type].apiPath}`;
     const { data: response } =
         type === 'breaking'
             ? await got.post(link, {
@@ -95,7 +95,7 @@ async function handler(ctx) {
                 cache.tryGet(item.link, async () => {
                     const {
                         data: { data: details },
-                    } = await got(`https://apii.mittrchina.com/information/details?id=${item.id}`);
+                    } = await got(`https://apii.web.mittrchina.com/information/details?id=${item.id}`);
 
                     item.description = details.content;
 
