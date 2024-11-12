@@ -30,6 +30,7 @@ async function loadContent(link) {
             .toArray()
             .map((i) => $(i).text()),
         link,
+        image: $('link[rel="image_src"]').attr('href'),
     };
 }
 
