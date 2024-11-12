@@ -114,7 +114,7 @@ const ridTypeList = [
 ];
 
 export const route: Route = {
-    path: '/ranking/:rid_index?/:embed?',
+    path: '/ranking/:rid_index?/:embed?/:redirect1?/:redirect2?',
     name: '排行榜',
     maintainers: ['DIYgod', 'hyoban'],
     categories: ['social-media', 'popular'],
@@ -130,9 +130,19 @@ export const route: Route = {
             })).filter((_, i) => !ridTypeList[i].startsWith('pgc/')),
         },
         embed: '默认为开启内嵌视频, 任意值为关闭',
+        redirect1: '留空，用于兼容之前的路由',
+        redirect2: '留空，用于兼容之前的路由',
     },
     handler,
 };
+
+function getRidIndexByRid(rid: string): number {
+    const index = ridNumberList.indexOf(rid);
+    if (index === -1) {
+        throw new Error('Invalid rid');
+    }
+    return index;
+}
 
 function getAPI(ridIndex: number) {
     if (ridIndex < 0 || ridIndex >= ridNumberList.length) {
@@ -172,6 +182,14 @@ function getAPI(ridIndex: number) {
 }
 
 async function handler(ctx) {
+    const args = ctx.req.param();
+    if (args.redirect1 || args.redirect2) {
+        // redirect old routes like /bilibili/ranking/0/3/1 or /bilibili/ranking/0/3/1/xxx
+        const embedArg = args.redirect2 ? '/' + args.redirect2 : '';
+        ctx.set('redirect', `/bilibili/ranking/${getRidIndexByRid(args.rid_index)}${embedArg}`);
+        return;
+    }
+
     const ridIndex = ctx.req.param('rid_index') || '0';
     const embed = !ctx.req.param('embed');
 
