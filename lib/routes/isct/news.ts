@@ -14,7 +14,7 @@ interface NewsItem {
 export const route: Route = {
     path: '/news/:lang',
     categories: ['university'],
-    example: '/news/ja',
+    example: '/isct/news/ja',
     parameters: { lang: 'language, could be ja or en' },
     features: {
         requireConfig: false,
