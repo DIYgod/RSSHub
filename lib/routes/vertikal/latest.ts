@@ -65,7 +65,7 @@ async function handler() {
     );
 
     return {
-        title: `News Archive | Vertikal.net`,
+        title: 'News Archive | Vertikal.net',
         link: `${baseUrl}/en/news`,
         image: `${baseUrl}/apple-touch-icon-152x152.png`,
         item: items,
