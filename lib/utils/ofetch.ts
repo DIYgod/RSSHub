@@ -1,6 +1,9 @@
 import { createFetch } from 'ofetch';
 import { config } from '@/config';
 import logger from '@/utils/logger';
+import { register } from 'node-network-devtools';
+
+config.enableRemoteDebugging && process.env.NODE_ENV === 'dev' && register();
 
 const rofetch = createFetch().create({
     retryStatusCodes: [400, 408, 409, 425, 429, 500, 502, 503, 504],
