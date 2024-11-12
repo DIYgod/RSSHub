@@ -9,5 +9,5 @@ export const route: Route = {
 function handler(ctx) {
     const { channel } = ctx.req.param();
     const redirectTo = `/liulinblog/${channel}`;
-    ctx.redirect(redirectTo);
+    ctx.set('redirect', redirectTo);
 }

@@ -10,5 +10,5 @@ function handler(ctx) {
     const id = ctx.req.param('id');
 
     const redirectTo = `/jiemian${id ? `/lists/${id}` : ''}`;
-    ctx.redirect(redirectTo);
+    ctx.set('redirect', redirectTo);
 }
