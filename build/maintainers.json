@@ -299,6 +299,12 @@
   "/afdian/explore/:type/:category?": [
     "sanmmm"
   ],
+  "/afr/latest": [
+    "TonyRL"
+  ],
+  "/afr/navigation/:path{.+}": [
+    "TonyRL"
+  ],
   "/agefans/detail/:id": [
     "s2marine"
   ],

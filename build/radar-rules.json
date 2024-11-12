@@ -1119,6 +1119,28 @@
       }
     ]
   },
+  "afr.com": {
+    "_name": "The Australian Financial Review",
+    "www": [
+      {
+        "title": "Latest",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/latest",
+          "/"
+        ],
+        "target": "/afr/latest"
+      },
+      {
+        "title": "Navigation",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/path*"
+        ],
+        "target": "/afr/navigation/:path{.+}"
+      }
+    ]
+  },
   "agemys.org": {
     "_name": "AGE 动漫",
     ".": [

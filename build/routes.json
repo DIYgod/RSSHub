@@ -3510,6 +3510,73 @@
     "url": "afdian.net",
     "lang": "zh-CN"
   },
+  "afr": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/afr/latest",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.afr.com/latest",
+              "www.afr.com/"
+            ]
+          }
+        ],
+        "name": "Latest",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.afr.com/latest",
+        "location": "latest.ts"
+      },
+      "/navigation/:path{.+}": {
+        "path": "/navigation/:path{.+}",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/afr/navigation/markets",
+        "parameters": {
+          "path": "Navigation path, can be found in the URL of the page"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.afr.com/path*"
+            ]
+          }
+        ],
+        "name": "Navigation",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.afr.com",
+        "location": "navigation.ts"
+      }
+    },
+    "name": "The Australian Financial Review",
+    "url": "afr.com",
+    "lang": "en"
+  },
   "agefans": {
     "routes": {
       "/detail/:id": {
