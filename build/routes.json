@@ -54184,9 +54184,10 @@
           {
             "source": [
               "natgeomedia.com/:cat/:type",
+              "natgeomedia.com/:cat/",
               "natgeomedia.com/"
             ],
-            "target": "/:cat/:type"
+            "target": "/:cat/:type?"
           }
         ],
         "name": "分类",

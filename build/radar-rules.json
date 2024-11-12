@@ -20175,9 +20175,10 @@
         "docs": "https://docs.rsshub.app/routes/travel",
         "source": [
           "/:cat/:type",
+          "/:cat/",
           "/"
         ],
-        "target": "/natgeo/:cat/:type"
+        "target": "/natgeo/:cat/:type?"
       }
     ]
   },
