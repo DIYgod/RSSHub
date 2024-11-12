@@ -770,7 +770,7 @@
   "/bilibili/popular/all/:embed?": [
     "ziminliu"
   ],
-  "/bilibili/ranking/:rid_index?/:embed?": [
+  "/bilibili/ranking/:rid_index?/:embed?/:redirect1?/:redirect2?": [
     "DIYgod",
     "hyoban"
   ],

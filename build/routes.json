@@ -9563,8 +9563,8 @@
         ],
         "location": "popular.ts"
       },
-      "/ranking/:rid_index?/:embed?": {
-        "path": "/ranking/:rid_index?/:embed?",
+      "/ranking/:rid_index?/:embed?/:redirect1?/:redirect2?": {
+        "path": "/ranking/:rid_index?/:embed?/:redirect1?/:redirect2?",
         "name": "排行榜",
         "maintainers": [
           "DIYgod",
@@ -9659,7 +9659,9 @@
               }
             ]
           },
-          "embed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭",
+          "redirect1": "留空，用于兼容之前的路由",
+          "redirect2": "留空，用于兼容之前的路由"
         },
         "location": "ranking.ts"
       },
