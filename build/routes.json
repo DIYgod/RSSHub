@@ -62058,6 +62058,43 @@
         "description": ":::warning\n  Only for self-hosted\n  :::",
         "location": "illustfollow.ts"
       },
+      "/novel/series/:id": {
+        "path": "/novel/series/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/pixiv/novel/series/11586857",
+        "parameters": {
+          "id": "Series id, can be found in URL"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "PIXIV_REFRESHTOKEN",
+              "optional": true,
+              "description": "\nrefresh_token after Pixiv login, required for accessing R18 novels\nPixiv 登錄後的 refresh_token，用於獲取 R18 小說\n[https://docs.rsshub.app/deploy/config#pixiv](https://docs.rsshub.app/deploy/config#pixiv)"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Novel Series",
+        "maintainers": [
+          "SnowAgar25"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.pixiv.net/novel/series/:id"
+            ],
+            "target": "/novel/series/:id"
+          }
+        ],
+        "location": "novel-series.ts"
+      },
       "/user/novels/:id/:full_content?": {
         "path": "/user/novels/:id/:full_content?",
         "categories": [
@@ -62100,14 +62137,16 @@
           {
             "title": "User Novels (簡介 Basic info)",
             "source": [
-              "www.pixiv.net/users/:id/novels"
+              "www.pixiv.net/users/:id/novels",
+              "www.pixiv.net/users/:id"
             ],
             "target": "/user/novels/:id"
           },
           {
             "title": "User Novels (全文 Full text)",
             "source": [
-              "www.pixiv.net/users/:id/novels"
+              "www.pixiv.net/users/:id/novels",
+              "www.pixiv.net/users/:id"
             ],
             "target": "/user/novels/:id/true"
           }

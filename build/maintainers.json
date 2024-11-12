@@ -5190,6 +5190,9 @@
   "/pixiv/user/illustfollows": [
     "ClarkeCheng"
   ],
+  "/pixiv/novel/series/:id": [
+    "SnowAgar25"
+  ],
   "/pixiv/user/novels/:id/:full_content?": [
     "TonyRL",
     "SnowAgar25"
