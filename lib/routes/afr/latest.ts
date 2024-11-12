@@ -54,6 +54,7 @@ async function handler(ctx: Context) {
         updated: parseDate(node.dates.modified),
         author: node.asset.byline,
         category: [node.tags.primary.displayName, ...node.tags.secondary.map((tag) => tag.displayName)],
+        image: node.featuredImages && `https://static.ffx.io/images/${node.featuredImages.landscape16x9.data.id}`,
     }));
 
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item))));

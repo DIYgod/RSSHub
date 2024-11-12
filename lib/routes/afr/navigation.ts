@@ -60,6 +60,7 @@ async function handler(ctx: Context) {
             .map((byline) => byline.author.name)
             .join(', '),
         category: [node.tags.primary.displayName, ...node.tags.secondary.map((tag) => tag.displayName)],
+        image: node.images && `https://static.ffx.io/images/${node.images.landscape16x9.mediaId}`,
     }));
 
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item))));
