@@ -7,15 +7,15 @@
     <tr>
         <td>状態</td>
         <td>
-            {{if novel.end === 0}}
-                完結済
+            {{if novel.novel_type === 2}}
+                短編
             {{else}}
-                連載中
-            {{/if}}
-            {{if novel.novel_type === 1}}
+                {{if novel.end === 0}}
+                    完結済
+                {{else}}
+                    連載中
+                {{/if}}
                 （全{{ novel.general_all_no }}エピソード）
-            {{else if novel.novel_type === 2}}
-                （短編）
             {{/if}}
         </td>
     </tr>
@@ -69,6 +69,5 @@
 </table>
 
 {{ if novel.sasie_cnt > 0 }}
-<h2>イラスト</h2>
 <p>挿絵数：{{ novel.sasie_cnt }}枚</p>
 {{ /if }}

@@ -2,12 +2,16 @@ import { Route, Data, DataItem } from '@/types';
 import { fetchNovelInfo, fetchChapterContent } from './utils';
 import { Context } from 'hono';
 import { NovelType } from 'narou';
+import querystring from 'querystring';
 
 export const route: Route = {
-    path: '/:ncode',
+    path: '/:ncode/:routeParams?',
     categories: ['reading'],
     example: '/syosetu/n9292ii',
-    parameters: { ncode: 'Novel code, can be found in URL' },
+    parameters: {
+        ncode: 'Novel code, can be found in URL',
+        routeParams: 'Optional: limit=N (max: 20, default: 5)',
+    }, // TOWRITE: Limit to 20, deault is 5
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -30,7 +34,8 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { ncode } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '5');
+    const routeParams = querystring.parse(ctx.req.param('routeParams'));
+    const limit = Math.min(Number(routeParams.limit || 5), 20);
 
     const { baseUrl, novel } = await fetchNovelInfo(ncode);
     novel.story = novel.story.replaceAll('\n', '<br>') || '';
