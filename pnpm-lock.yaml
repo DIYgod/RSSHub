@@ -18,8 +18,8 @@ importers:
         specifier: 4.1.1
         version: 4.1.1
       '@hono/node-server':
-        specifier: 1.13.6
-        version: 1.13.6(hono@4.6.10)
+        specifier: 1.13.7
+        version: 1.13.7(hono@4.6.10)
       '@hono/zod-openapi':
         specifier: 0.17.0
         version: 0.17.0(hono@4.6.10)(zod@3.23.8)
@@ -1348,8 +1348,8 @@ packages:
     resolution: {integrity: sha512-CXtq5nR4Su+2I47WPOlWud98Y5Lv8Kyxp2ukhgFx/eW6Blm18VXJO5WuQylPugRo8nbluoi6GvvxBLqHcvqUUw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@hono/node-server@1.13.6':
-    resolution: {integrity: sha512-Y2ivw4UmLIBKfzvkFgcsrhc0GLn272diGjlnKOF9T1OiY6ud4RaVO8FKEnifNkuU7meOeCU371/8fmhgeYf7Lw==}
+  '@hono/node-server@1.13.7':
+    resolution: {integrity: sha512-kTfUMsoloVKtRA2fLiGSd9qBddmru9KadNyhJCwgKBxTiNkaAJEwkVN9KV/rS4HtmmNRtUh6P+YpmjRMl0d9vQ==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
@@ -6851,7 +6851,7 @@ snapshots:
     dependencies:
       levn: 0.4.1
 
-  '@hono/node-server@1.13.6(hono@4.6.10)':
+  '@hono/node-server@1.13.7(hono@4.6.10)':
     dependencies:
       hono: 4.6.10
 
