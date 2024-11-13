@@ -46,6 +46,6 @@ export async function getFulltext(url: string) {
         },
     });
 
-    const { content } = JSON.parse(res.data.match(/resetContentInfo\((.*)\)/)[1]);
-    return content;
+    const { content = '', pictureList } = JSON.parse(res.data.match(/resetContentInfo\((.*)\)/)[1]);
+    return content + (pictureList ? pictureList.map((e) => `<img src="${e.url}" id="picture_${e.id}" alt="${e.desc}"><dl><dt>${e.desc}</dt></dl>`).join('') : '');
 }
