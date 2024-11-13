@@ -3593,6 +3593,9 @@
   "/iresearch/weekly/:category?": [
     "nczitzk"
   ],
+  "/isct/news/:lang": [
+    "catyyy"
+  ],
   "/issuehunt/funded/:username/:repo": [
     "running-grass"
   ],

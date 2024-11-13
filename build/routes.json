@@ -42690,6 +42690,47 @@
     "url": "www.iresearch.com.cn",
     "lang": "zh-CN"
   },
+  "isct": {
+    "routes": {
+      "/news/:lang": {
+        "path": "/news/:lang",
+        "categories": [
+          "university"
+        ],
+        "example": "/isct/news/ja",
+        "parameters": {
+          "lang": "language, could be ja or en"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.isct.ac.jp/:lang/news"
+            ],
+            "target": "/news/:lang"
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "catyyy"
+        ],
+        "location": "news.ts"
+      }
+    },
+    "name": "Institute of Science Tokyo",
+    "url": "isct.ac.jp",
+    "lang": "ja",
+    "ja": {
+      "name": "東京科学大学"
+    }
+  },
   "issuehunt": {
     "routes": {
       "/funded/:username/:repo": {
