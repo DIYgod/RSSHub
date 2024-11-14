@@ -1,7 +1,3 @@
-{{ if header }}
-  {{@ header }}
-{{ /if }}
-
 {{ if description }}
   {{@ description }}
 {{ /if }}
