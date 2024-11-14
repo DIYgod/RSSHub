@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { Context } from 'hono';
-import { Genre, Order, SearchBuilder, SearchParams, NarouNovelFetch, BigGenre } from 'narou';
+import { Genre, Order, SearchBuilder, SearchParams, NarouNovelFetch, BigGenre, GenreNotation } from 'narou';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { getCurrentPath } from '@/utils/helpers';
 import querystring from 'querystring';
@@ -28,13 +28,13 @@ enum NovelType {
 }
 
 enum IsekaiCategory {
-    ROMANCE = '1',
+    RENAI = '1',
     FANTASY = '2',
     OTHER = 'o',
 }
 
 enum RankingType {
-    NORMAL = 'list',
+    LIST = 'list',
     GENRE = 'genre',
     ISEKAI = 'isekai',
 }
@@ -65,7 +65,7 @@ const novelTypeToJapanese: Record<NovelType, string> = {
 };
 
 const isekaiCategoryToJapanese: Record<IsekaiCategory, string> = {
-    [IsekaiCategory.ROMANCE]: '〔恋愛〕',
+    [IsekaiCategory.RENAI]: '〔恋愛〕',
     [IsekaiCategory.FANTASY]: '〔ファンタジー〕',
     [IsekaiCategory.OTHER]: '〔文芸・SF・その他〕',
 };
@@ -73,7 +73,7 @@ const isekaiCategoryToJapanese: Record<IsekaiCategory, string> = {
 const getParameters = () => {
     // Generate ranking type options
     const rankingTypeOptions = [
-        { value: RankingType.NORMAL, label: '総合ランキング (General Ranking)' },
+        { value: RankingType.LIST, label: '総合ランキング (General Ranking)' },
         { value: RankingType.GENRE, label: 'ジャンル別ランキング (Genre Ranking)' },
         { value: RankingType.ISEKAI, label: '異世界転生/転移ランキング (Isekai Ranking)' },
     ];
@@ -105,35 +105,35 @@ const getParameters = () => {
     }));
 
     return {
-        type: {
+        listType: {
             description: 'Ranking type',
             options: rankingTypeOptions,
         },
-        subtype: {
-            description: 'Format depends on ranking type:\n' + '- list: period_noveltype (e.g. daily_total)\n' + '- genre: period_genreId_noveltype (e.g. daily_101_r)\n' + '- isekai: period_category_noveltype (e.g. daily_1_r)',
+        type: {
+            description: 'Detailed ranking type, can be found in Syosetu ranking URLs',
             options: [
                 // General ranking options
                 ...periodOptions.flatMap((period) =>
-                    novelTypeOptions.map((type) => ({
-                        value: `${period.value}_${type.value}`,
-                        label: `General: ${period.label} ${type.label}`,
+                    novelTypeOptions.map((novelType) => ({
+                        value: `${period.value}_${novelType.value}`,
+                        label: `[${periodToJapanese[period.value]}] 総合ランキング - ${novelTypeToJapanese[novelType.value]}`,
                     }))
                 ),
                 // Genre ranking options
                 ...periodOptions.flatMap((period) =>
                     genreOptions.flatMap((genre) =>
-                        novelTypeOptions.map((type) => ({
-                            value: `${period.value}_${genre.value}_${type.value}`,
-                            label: `Genre: ${period.label} ${genre.label} ${type.label}`,
+                        novelTypeOptions.map((novelType) => ({
+                            value: `${period.value}_${genre.value}_${novelType.value}`,
+                            label: `[${periodToJapanese[period.value]}] ${GenreNotation[genre.value]}ランキング - ${novelTypeToJapanese[novelType.value]}`,
                         }))
                     )
                 ),
                 // Isekai ranking options
                 ...periodOptions.flatMap((period) =>
                     isekaiOptions.flatMap((category) =>
-                        novelTypeOptions.map((type) => ({
-                            value: `${period.value}_${category.value}_${type.value}`,
-                            label: `Isekai: ${period.label} ${category.label} ${type.label}`,
+                        novelTypeOptions.map((novelType) => ({
+                            value: `${period.value}_${category.value}_${novelType.value}`,
+                            label: `[${periodToJapanese[period.value]}] 異世界転生/転移${isekaiCategoryToJapanese[category.value]}ランキング - ${novelTypeToJapanese[novelType.value]}`,
                         }))
                     )
                 ),
@@ -146,8 +146,35 @@ const getParameters = () => {
     };
 };
 
+const getBest5RadarItems = () => {
+    // List
+    const periodRankings = Object.values(RankingPeriod).map((period) => ({
+        title: `${periodToJapanese[period]}ランキング BEST5`,
+        source: ['yomou.syosetu.com/rank/top/'],
+        target: `/ranking/list/${period}_total/limit=5`,
+    }));
+
+    // Genre
+    const genreRankings = Object.entries(Genre)
+        .filter(([, value]) => typeof value === 'number' && value !== 9904 && value !== 9801)
+        .map(([, value]) => ({
+            title: `[${periodToJapanese.daily}]${GenreNotation[value]}ランキング BEST5`,
+            source: ['yomou.syosetu.com/rank/top/'],
+            target: `/ranking/genre/daily_${value}_total/limit=5`,
+        }));
+
+    // Isekai
+    const isekaiRankings = Object.values(IsekaiCategory).map((category) => ({
+        title: `[${periodToJapanese.daily}] 異世界転生/転移${isekaiCategoryToJapanese[category]}ランキング BEST5`,
+        source: ['yomou.syosetu.com/rank/top/'],
+        target: `/ranking/isekai/daily_${category}_total/limit=5`,
+    }));
+
+    return [...periodRankings, ...genreRankings, ...isekaiRankings];
+};
+
 export const route: Route = {
-    path: '/ranking/:type/:subtype/:routeParams?',
+    path: '/ranking/:listType/:type/:routeParams?',
     categories: ['reading'],
     example: '/syosetu/ranking/list/daily_total/limit=50',
     parameters: getParameters(),
@@ -206,6 +233,7 @@ When multiple works have the same points, their order may differ from syosetu's 
             source: ['yomou.syosetu.com/rank/isekailist/type/:type'],
             target: '/ranking/isekai/:type',
         },
+        ...getBest5RadarItems(),
     ],
 };
 
@@ -251,15 +279,15 @@ function parseIsekaiRankingType(type: string): { period: RankingPeriod; category
 }
 
 async function handler(ctx: Context): Promise<Data> {
-    const { type, subtype } = ctx.req.param();
-    const rankingType = type as RankingType;
+    const { listType, type } = ctx.req.param();
+    const rankingType = listType as RankingType;
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
     const limit = Number(routeParams.limit || 300);
 
     const api = new NarouNovelFetch();
     const searchParams: SearchParams = {
         gzip: 5,
-        lim: 150,
+        lim: 300,
     };
 
     let rankingUrl: string;
@@ -267,10 +295,10 @@ async function handler(ctx: Context): Promise<Data> {
 
     // Build search parameters and titles based on ranking type
     switch (rankingType) {
-        case RankingType.NORMAL: {
-            const { period, novelType } = parseGeneralRankingType(subtype);
-            rankingUrl = `https://yomou.syosetu.com/rank/list/type/${subtype}`;
-            rankingTitle = `${periodToJapanese[period]}${novelTypeToJapanese[novelType]}ランキング`;
+        case RankingType.LIST: {
+            const { period, novelType } = parseGeneralRankingType(type);
+            rankingUrl = `https://yomou.syosetu.com/rank/list/type/${type}`;
+            rankingTitle = `[${periodToJapanese[period]}] 総合ランキング - ${novelTypeToJapanese[novelType]}`;
 
             searchParams.order = periodToOrder[period];
             if (novelType !== NovelType.TOTAL) {
@@ -280,9 +308,9 @@ async function handler(ctx: Context): Promise<Data> {
         }
 
         case RankingType.GENRE: {
-            const { period, genre, novelType } = parseGenreRankingType(subtype);
-            rankingUrl = `https://yomou.syosetu.com/rank/genrelist/type/${subtype}`;
-            rankingTitle = `${periodToJapanese[period]}${novelTypeToJapanese[novelType]}ランキング (${Genre[genre]})`;
+            const { period, genre, novelType } = parseGenreRankingType(type);
+            rankingUrl = `https://yomou.syosetu.com/rank/genrelist/type/${type}`;
+            rankingTitle = `[${periodToJapanese[period]}] ${GenreNotation[genre]}ランキング - ${novelTypeToJapanese[novelType]}`;
 
             searchParams.order = periodToOrder[period];
             searchParams.genre = genre as Genre;
@@ -293,19 +321,18 @@ async function handler(ctx: Context): Promise<Data> {
         }
 
         case RankingType.ISEKAI: {
-            const { period, category, novelType } = parseIsekaiRankingType(subtype);
-            rankingUrl = `https://yomou.syosetu.com/rank/isekailist/type/${subtype}`;
-            rankingTitle = `[${periodToJapanese[period]}] 異世界転生/転移${isekaiCategoryToJapanese[category]}ランキング（${novelTypeToJapanese[novelType]}）`;
+            const { period, category, novelType } = parseIsekaiRankingType(type);
+            rankingUrl = `https://yomou.syosetu.com/rank/isekailist/type/${type}`;
+            rankingTitle = `[${periodToJapanese[period]}] 異世界転生/転移${isekaiCategoryToJapanese[category]}ランキング - ${novelTypeToJapanese[novelType]}`;
 
             searchParams.order = periodToOrder[period];
-            searchParams.lim = 300;
 
             if (novelType !== NovelType.TOTAL) {
                 searchParams.type = novelType;
             }
 
             switch (category) {
-                case IsekaiCategory.ROMANCE:
+                case IsekaiCategory.RENAI:
                     searchParams.biggenre = BigGenre.Renai;
                     break;
                 case IsekaiCategory.FANTASY:
@@ -313,9 +340,13 @@ async function handler(ctx: Context): Promise<Data> {
                     break;
                 case IsekaiCategory.OTHER:
                     searchParams.biggenre = `${BigGenre.Bungei}-${BigGenre.Sf}-${BigGenre.Sonota}` as Join<BigGenre>;
+                    break;
+                default:
+                    throw new InvalidParameterError(`Invalid Isekai category: ${category}`);
             }
 
             const items = await cache.tryGet(rankingUrl, async () => {
+                searchParams.lim = 150;
                 const [tenseiResult, tenniResult] = await Promise.all([new SearchBuilder({ ...searchParams, istensei: 1 }, api).execute(), new SearchBuilder({ ...searchParams, istenni: 1 }, api).execute()]);
 
                 // Combine and sort by points
@@ -340,7 +371,7 @@ async function handler(ctx: Context): Promise<Data> {
                         case RankingPeriod.TOTAL:
                             return 'global_point';
                         default:
-                            return 'global_point';
+                            throw new InvalidParameterError(`Invalid period: ${period}`);
                     }
                 })();
 
@@ -353,7 +384,7 @@ async function handler(ctx: Context): Promise<Data> {
                             novel,
                         }),
                         author: novel.writer,
-                        category: novel.keyword.split(/[/\uFF0F\s]/).filter(Boolean),
+                        category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
                     }));
             });
 
@@ -381,7 +412,7 @@ async function handler(ctx: Context): Promise<Data> {
                 novel,
             }),
             author: novel.writer,
-            category: novel.keyword.split(/[/\uFF0F\s]/).filter(Boolean),
+            category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
         }));
     })) as DataItem[];
 

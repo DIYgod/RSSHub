@@ -92,7 +92,7 @@ const getParameters = () => {
             options: subOptions,
         },
         type: {
-            description: 'Ranking type (format: period_noveltype)',
+            description: 'Detailed ranking type (format: period_noveltype)',
             options: periodOptions.flatMap((period) =>
                 novelTypeOptions.map((type) => ({
                     value: `${period.value}_${type.value}`,
@@ -105,6 +105,28 @@ const getParameters = () => {
             default: 'limit=300',
         },
     };
+};
+
+const getBest5RadarItems = () => {
+    const sites = [
+        { domain: 'noc', title: 'ノクターン' },
+        { domain: 'mid', title: 'ミッドナイト' },
+        { domain: 'mnlt', title: 'ムーンライト' },
+        { domain: 'mnlt-bl', title: 'ムーンライト BL' },
+    ];
+
+    const periods = Object.values(RankingPeriod).map((period) => ({
+        type: period,
+        title: periodToJapanese[period],
+    }));
+
+    return sites.flatMap((site) =>
+        periods.map((period) => ({
+            title: `${site.title} ${period.title}ランキング BEST5`,
+            source: [`${site.domain === 'mnlt-bl' ? 'mnlt' : site.domain}.syosetu.com/rank/${site.domain === 'mnlt-bl' ? 'bltop' : 'top'}`],
+            target: `/rankingr18/${site.domain}/${period.type}_total/limit=5`,
+        }))
+    );
 };
 
 export const route: Route = {
@@ -142,21 +164,22 @@ export const route: Route = {
 Note: Combine Period and Novel Type with \`_\`. For example: \`daily_total\`, \`weekly_r\`, \`monthly_er\``,
     radar: [
         {
-            source: ['noc.syosetu.com/rank/top/', 'noc.syosetu.com/rank/list/type/:type'],
+            source: ['noc.syosetu.com/rank/list/type/:type'],
             target: '/rankingr18/noc/:type',
         },
         {
-            source: ['mid.syosetu.com/rank/top/', 'mid.syosetu.com/rank/list/type/:type'],
+            source: ['mid.syosetu.com/rank/list/type/:type'],
             target: '/rankingr18/mid/:type',
         },
         {
-            source: ['mnlt.syosetu.com/rank/top/', 'mnlt.syosetu.com/rank/list/type/:type'],
+            source: ['mnlt.syosetu.com/rank/list/type/:type'],
             target: '/rankingr18/mnlt/:type',
         },
         {
-            source: ['mnlt.syosetu.com/rank/bltop/', 'mnlt.syosetu.com/rank/bllist/type/:type'],
+            source: ['mnlt.syosetu.com/rank/bllist/type/:type'],
             target: '/rankingr18/mnlt-bl/:type',
         },
+        ...getBest5RadarItems(),
     ],
 };
 
@@ -230,7 +253,7 @@ async function handler(ctx: Context): Promise<Data> {
                 novel,
             }),
             author: novel.writer,
-            category: novel.keyword.split(/[/\uFF0F\s]/).filter(Boolean),
+            category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
         }));
     })) as DataItem[];
 

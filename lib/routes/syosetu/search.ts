@@ -268,7 +268,7 @@ async function handler(ctx: Context): Promise<Data> {
             // pubDate: novel.general_lastup,
             author: novel.writer,
             // Split by slash(/), full-width slash(／) and whitespace characters(\s)
-            category: novel.keyword.split(/[/\uFF0F\s]/).filter(Boolean),
+            category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
         }));
 
         const searchTerms: string[] = [];
