@@ -18,5 +18,5 @@ export const route: Route = {
 };
 
 function handler(ctx) {
-    ctx.redirect('/dongqiudi/special/48');
+    ctx.set('redirect', '/dongqiudi/special/48');
 }
