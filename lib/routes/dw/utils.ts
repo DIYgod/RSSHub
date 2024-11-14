@@ -137,7 +137,7 @@ const processContent = (item, content) => {
     item.description = art(path.join(__dirname, 'templates/description.art'), {
         teaser: content.teaser,
         video,
-        mainImage: $text(`[data-id="${content?.mainContentImageLink?.targetId}"]`).length === 0 ? content.mainContentImageLink : undefined,
+        mainImage: $text(`[data-id="${content.mainContentImageLink?.targetId}"]`).length === 0 ? content.mainContentImageLink : undefined,
         // occasionally the text html already includes the main image, testing to see if an image with the same id exists
         text: $text.html(),
         liveblog,
