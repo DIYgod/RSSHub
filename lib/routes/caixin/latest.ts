@@ -49,7 +49,12 @@ async function handler(ctx) {
                 // desc
                 const desc = await parseArticle(item);
 
-                item.description = ctx.req.query('fulltext') === 'true' ? ((await getFulltext(item.link)) ?? desc.description) : desc.description;
+                if (ctx.req.query('fulltext') === 'true') {
+                    const authorizedFullText = await getFulltext(item.link);
+                    item.description = authorizedFullText === '' ? desc.description : authorizedFullText;
+                } else {
+                    item.description = desc.description;
+                }
                 // prevent cache coliision with /caixin/article and /caixin/:column/:category
                 // since those have podcasts
                 item.guid = `caixin:latest:${item.link}`;

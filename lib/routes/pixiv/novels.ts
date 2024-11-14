@@ -1,8 +1,9 @@
 import { Data, Route, ViewType } from '@/types';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import { getR18Novels } from './api/get-novels-nsfw';
-import { getNonR18Novels } from './api/get-novels-sfw';
 import { config } from '@/config';
+import { getNSFWUserNovels } from './novel-api/user-novels/nsfw';
+import { getSFWUserNovels } from './novel-api/user-novels/sfw';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/user/novels/:id/:full_content?',
@@ -40,12 +41,12 @@ refresh_token after Pixiv login, required for accessing R18 novels
     radar: [
         {
             title: 'User Novels (簡介 Basic info)',
-            source: ['www.pixiv.net/users/:id/novels'],
+            source: ['www.pixiv.net/users/:id/novels', 'www.pixiv.net/users/:id'],
             target: '/user/novels/:id',
         },
         {
             title: 'User Novels (全文 Full text)',
-            source: ['www.pixiv.net/users/:id/novels'],
+            source: ['www.pixiv.net/users/:id/novels', 'www.pixiv.net/users/:id'],
             target: '/user/novels/:id/true',
         },
     ],
@@ -72,20 +73,24 @@ const hasPixivAuth = () => Boolean(config.pixiv && config.pixiv.refreshToken);
 async function handler(ctx): Promise<Data> {
     const id = ctx.req.param('id');
     const fullContent = fallback(undefined, queryToBoolean(ctx.req.param('full_content')), false);
-
     const { limit } = ctx.req.query();
 
-    // Use R18 API first if auth exists
     if (hasPixivAuth()) {
-        return await getR18Novels(id, fullContent, limit);
+        return await getNSFWUserNovels(id, fullContent, limit);
     }
 
-    // Attempt non-R18 API when Pixiv auth is missing
-    const nonR18Result = await getNonR18Novels(id, fullContent, limit).catch(() => null);
+    const nonR18Result = await getSFWUserNovels(id, fullContent, limit).catch((error) => {
+        if (error.name === 'Error') {
+            return null;
+        }
+        throw error;
+    });
+
     if (nonR18Result) {
         return nonR18Result;
     }
 
-    // Fallback to R18 API as last resort
-    return await getR18Novels(id, fullContent, limit);
+    throw new ConfigNotFoundError(
+        'This user may not have any novel works, or is an R18 creator, PIXIV_REFRESHTOKEN is required.\npixiv RSS is disabled due to the lack of relevant config.\n該用戶可能沒有小說作品，或者該用戶爲 R18 創作者，需要 PIXIV_REFRESHTOKEN。'
+    );
 }

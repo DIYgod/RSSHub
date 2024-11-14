@@ -38,7 +38,25 @@ const parseNotes = (data: MisskeyNote[], site: string) =>
             title = `${author}: "${noteToUse.text ?? ''}"`;
         }
 
-        const link = `https://${host}/notes/${noteToUse.id}`;
+        /**
+         * For renotes from non-Misskey instances (e.g. Mastodon, Pleroma),
+         * we can't use noteToUse.id to link to the original note since:
+         * 1. The URL format differs from Misskey's /notes/{id} pattern
+         * 2. Direct access to the original note may not be possible
+         * Therefore, we link to the renote itself in such cases
+         */
+        let noteId = noteToUse.id;
+
+        if (isRenote) {
+            const renoteHost = item.user.host ?? site;
+            const noteHost = noteToUse.user.host ?? site;
+
+            // Use renote's ID if the note is from a different host or not in allowSiteList
+            if (renoteHost !== noteHost || !allowSiteList.includes(noteHost)) {
+                noteId = item.id;
+            }
+        }
+        const link = `https://${host}/notes/${noteId}`;
         const pubDate = parseDate(noteToUse.createdAt);
 
         return {
