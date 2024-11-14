@@ -158,7 +158,7 @@ const getBest5RadarItems = () => {
     const genreRankings = Object.entries(Genre)
         .filter(([, value]) => typeof value === 'number' && value !== 9904 && value !== 9801)
         .map(([, value]) => ({
-            title: `[${periodToJapanese.daily}]${GenreNotation[value]}ランキング BEST5`,
+            title: `[${periodToJapanese.daily}] ${GenreNotation[value]}ランキング BEST5`,
             source: ['yomou.syosetu.com/rank/top/'],
             target: `/ranking/genre/daily_${value}_total/limit=5`,
         }));
