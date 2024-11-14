@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 const rootUrl = 'https://www.chaincatcher.com';
 
 export const route: Route = {
-    path: '/special/93',
+    path: '/special/:id',
 
     categories: ['new-media'],
     example: '/chaincatcher/special/93',
@@ -26,63 +26,51 @@ export const route: Route = {
         },
     ],
     name: '快讯',
-    maintainers: ['TonyRL'],
+    maintainers: ['Devin'],
     handler,
     // url: 'chaincatcher.com/news',
 };
 
-async function handler() {
-    const { data: response } = await got(`${rootUrl}/special/93`);
+async function handler(ctx) {
+    const id = ctx.req.param('id');
+    const link = `${rootUrl}/special/${id}`;
+
+    const { data: response } = await got(`${rootUrl}/special/${id}`);
 
     // const { data } = await got(`${rootUrl}/special/93`, {
     //     // form: {
     //     //     page: 1,
     //     //     categoryid: 3,
     //     // },
-
     //     "featureId":"93","pageNumber":2,"pageSize":10
-
     // });
     const $ = load(response);
+    const title = $('.head_title').text();
+    const description = $('.abstract').text();
+    const image = $('.head_bg img').attr('src');
 
     const items = $('.article_left', '.list_content .items')
-        .toArray((item) => ({
+        // 用 map 过不了 linter，用推荐的 toArray 会报错
+        // .toArray()
+        .map((_, item) => ({
             link: rootUrl + $(item).find('a').attr('href'),
             title: $(item).find('.article_title').text(),
+            description: $(item).find('.article_content').text(),
+
             //             author,
             //             guid,
-            //             id: guid,
-            //             image,
-            //             banner: image,
+            id,
+            image: $(item).find('.article_img').attr('src'),
+            banner: $(item).find('.article_img').attr('src'),
         }))
         .get();
     // .slice(0, ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 125) : 50);
 
-    // let items =
-    // JSON.parse(response.match(/__NEXT_DATA__" type="application\/json">(.*?)<\/script>/)?.[1] ?? '{}')
-    //     ?.props.pageProps.all.slice(0, limit)
-    //     .map((item) => {
-    //         const title = item.title;
-    //         const guid = `reactiflux-${item.path.replace(/\/transcripts\//, '')}`;
-
-    //         return {
-    //             title,
-    //             link: new URL(item.path, rootUrl).href,
-    //             author,
-    //             guid,
-    //             id: guid,
-    //             image,
-    //             banner: image,
-    //             language,
-    //         };
-    //     }) ?? [];
-
-    // console.log(`items: ${JSON.stringify(items)}`);
     return {
-        title: '最新资讯-ChainCatcher',
-        description: '链捕手ChainCatcher为区块链技术爱好者与项目决策者提供NFT、Web3社交、DID、Layer2等专业的资讯与研究内容，Chain Catcher输出对Scroll、Sui、Aptos、ENS等项目的思考，拓宽读者对区块链与数字经济认知的边界。',
-        image: `${rootUrl}/logo.png`,
-        link: `${rootUrl}/news`,
+        title,
+        description,
+        image,
+        link,
         item: items,
     };
 }
