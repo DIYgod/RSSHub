@@ -11,7 +11,7 @@ export const route: Route = {
     parameters: {
         ncode: 'Novel code, can be found in URL',
         routeParams: 'Optional: limit=N (max: 20, default: 5)',
-    }, // TOWRITE: Limit to 20, deault is 5
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
