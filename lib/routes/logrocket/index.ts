@@ -10,7 +10,7 @@ import cache from '@/utils/cache';
 export const route: Route = {
     path: '/:type',
     categories: ['blog'],
-    example: '/dev',
+    example: 'logrocket/dev',
     parameters: { type: 'dev | product-management | ux-design' },
     radar: [
         {
@@ -65,7 +65,7 @@ async function handler(ctx) {
     return {
         title: `logrocket-${title}`,
         link,
-        description: `logrocket-${title}`,
+        description: `logrocket-${title} feedId:80088309178667008+userId:66323928197854208`,
         item: items,
     };
 }
