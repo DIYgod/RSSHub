@@ -1,13 +1,13 @@
 {{ if hlsVideoSrc }}
-<video 
+<video
 {{ if posterImageUrl }} poster="{{ posterImageUrl }}" {{ /if }}
-controls>
+controls preload="metadata">
     <source
     src="{{ hlsVideoSrc }}"
     type="application/x-mpegURL"
     >
     <source
-    src="{{ mp4VideoSrc }}" 
+    src="{{ mp4VideoSrc }}"
     type="video/mp4"
     >
 </video>
