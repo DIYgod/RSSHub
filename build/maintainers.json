@@ -5493,6 +5493,12 @@
   "/qqorw/:category?": [
     "nczitzk"
   ],
+  "/qstheory/:category?": [
+    "nczitzk"
+  ],
+  "/qstheory/magazine/:magazine": [
+    "TonyRL"
+  ],
   "/questmobile/report/:industry?/:label?": [
     "nczitzk"
   ],

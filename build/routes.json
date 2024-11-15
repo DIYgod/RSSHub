@@ -65339,6 +65339,60 @@
     "url": "qqorw.cn",
     "lang": "zh-CN"
   },
+  "qstheory": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/qstheory",
+        "parameters": {
+          "industry": "分类，见下表"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.qstheory.cn/v9zhuanqu/:category/index.htm",
+              "www.qstheory.cn/qszq/:category/index.htm",
+              "www.qstheory.cn/:category/index.htm"
+            ]
+          }
+        ],
+        "name": "分类",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "description": "\n| 头条    | 网评 | 视频 | 原创   | 经济    | 政治     | 文化    | 社会    | 党建 | 科教    | 生态    | 国防    | 国际          | 图书  | 学习笔记 | 理论文选 |\n| ------- | ---- | ---- | ------ | ------- | -------- | ------- | ------- | ---- | ------- | ------- | ------- | ------------- | ----- | -------- | -------- |\n| toutiao | qswp | qssp | qslgxd | economy | politics | culture | society | cpc  | science | zoology | defense | international | books | xxbj     | llwx     |",
+        "location": "index.ts"
+      },
+      "/magazine/:magazine": {
+        "path": "/magazine/:magazine",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/qstheory/magazine/qs",
+        "parameters": {
+          "magazine": "刊物，`qs` 为求是，`hqwglist` 为红旗文稿"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.qstheory.cn/:magazine/mulu.htm"
+            ]
+          }
+        ],
+        "name": "在线读刊",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "magazine.ts"
+      }
+    },
+    "name": "求是网",
+    "url": "www.qstheory.cn",
+    "lang": "zh-CN"
+  },
   "questmobile": {
     "routes": {
       "/report/:industry?/:label?": {
