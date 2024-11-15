@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/hot/:period?',
-    categories: ['traditional-media'],
+    categories: ['finance'],
     example: '/wallstreetcn/hot',
     parameters: { period: '时期，可选 `day` 即 当日 或 `week` 即 当周，默认为当日' },
     features: {
@@ -77,6 +77,6 @@ async function handler(ctx) {
         link: rootUrl,
         item: items,
         itunes_author: '华尔街见闻',
-        image: 'https://static-alpha-wscn.awtmt.com/wscn-static/qrcode.jpg',
+        image: 'https://static.wscn.net/wscn/_static/favicon.png',
     };
 }
