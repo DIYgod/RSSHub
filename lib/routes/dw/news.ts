@@ -68,15 +68,7 @@ async function handler(ctx) {
     cache.set('dw:navigation', feed.topStoriesNavigations, config.cache.routeExpire);
 
     const list = feed.contentComposition.informationSpaces
-        .flatMap((section) => {
-            let components: any[] = [];
-            for (const component in section) {
-                if (section[component][0]?.contents) {
-                    components = [...components, ...section[component][0].contents];
-                }
-            }
-            return components;
-        })
+        .flatMap((section) => Object.values(section).flatMap((component) => component[0]?.contents || []))
         .filter((item) => typenames.has(item.__typename) && item.id);
     const items = await processItems(
         list.map((item) => {

@@ -18,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
         requireConfig: false,
     },
-    name: 'News',
+    name: 'RSS',
     maintainers: ['quiniapiezoelectricity'],
     handler,
     description: `
