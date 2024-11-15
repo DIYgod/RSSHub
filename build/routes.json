@@ -83340,10 +83340,41 @@
   },
   "wallstreetcn": {
     "routes": {
+      "/calendar/:section?": {
+        "path": "/calendar/:section?",
+        "categories": [
+          "finance"
+        ],
+        "example": "/wallstreetcn/calendar",
+        "parameters": {
+          "section": "`macrodatas` 或 `report`，默认为 `macrodatas`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "wallstreetcn.com/calendar"
+            ]
+          }
+        ],
+        "name": "财经日历",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "wallstreetcn.com/calendar",
+        "location": "calendar.ts"
+      },
       "/hot/:period?": {
         "path": "/hot/:period?",
         "categories": [
-          "traditional-media"
+          "finance"
         ],
         "example": "/wallstreetcn/hot",
         "parameters": {
@@ -83374,7 +83405,7 @@
       "/live/:category?/:score?": {
         "path": "/live/:category?/:score?",
         "categories": [
-          "traditional-media"
+          "finance"
         ],
         "example": "/wallstreetcn/live",
         "parameters": {
@@ -83406,10 +83437,11 @@
         "location": "live.ts"
       },
       "/news/:category?": {
-        "path": [
-          "/news/:category?",
-          "/:category?"
+        "path": "/news/:category?",
+        "categories": [
+          "finance"
         ],
+        "example": "/wallstreetcn/news",
         "radar": [
           {
             "source": [
@@ -83418,27 +83450,7 @@
             ]
           }
         ],
-        "name": "Unknown",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "description": "| id           | 分类 |\n  | ------------ | ---- |\n  | global       | 最新 |\n  | shares       | 股市 |\n  | bonds        | 债市 |\n  | commodities  | 商品 |\n  | forex        | 外汇 |\n  | enterprise   | 公司 |\n  | asset-manage | 资管 |\n  | tmt          | 科技 |\n  | estate       | 地产 |\n  | car          | 汽车 |\n  | medicine     | 医药 |",
-        "location": "news.ts"
-      },
-      "/:category?": {
-        "path": [
-          "/news/:category?",
-          "/:category?"
-        ],
-        "radar": [
-          {
-            "source": [
-              "wallstreetcn.com/news/:category",
-              "wallstreetcn.com/"
-            ]
-          }
-        ],
-        "name": "Unknown",
+        "name": "资讯",
         "maintainers": [
           "nczitzk"
         ],

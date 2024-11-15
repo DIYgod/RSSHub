@@ -7071,6 +7071,9 @@
   "/wallpaperhub/": [
     "nczitzk"
   ],
+  "/wallstreetcn/calendar/:section?": [
+    "TonyRL"
+  ],
   "/wallstreetcn/hot/:period?": [
     "nczitzk"
   ],
@@ -7078,9 +7081,6 @@
     "nczitzk"
   ],
   "/wallstreetcn/news/:category?": [
-    "nczitzk"
-  ],
-  "/wallstreetcn/:category?": [
     "nczitzk"
   ],
   "/wanqu/news": [

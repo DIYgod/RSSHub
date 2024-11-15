@@ -28723,8 +28723,16 @@
     "_name": "华尔街见闻",
     ".": [
       {
+        "title": "财经日历",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/calendar"
+        ],
+        "target": "/wallstreetcn/calendar/:section?"
+      },
+      {
         "title": "最热文章",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
           "/"
         ],
@@ -28732,7 +28740,7 @@
       },
       {
         "title": "实时快讯",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
           "/live/:category",
           "/"
@@ -28740,22 +28748,13 @@
         "target": "/wallstreetcn/live/:category?"
       },
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
           "/news/:category",
           "/"
         ],
         "target": "/wallstreetcn/news/:category?"
-      },
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/news/:category",
-          "/"
-        ],
-        "target": "/wallstreetcn/:category?"
       }
     ]
   },
