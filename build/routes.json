@@ -8791,10 +8791,11 @@
             ]
           }
         ],
-        "name": "UP 主专栏",
+        "name": "UP 主图文",
         "maintainers": [
           "lengthmin",
-          "Qixingchen"
+          "Qixingchen",
+          "hyoban"
         ],
         "location": "article.ts"
       },

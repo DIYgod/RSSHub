@@ -1599,7 +1599,7 @@
         source:[ "/" ],
         target:"/bigquant/collections" } ] },
   "bilibili.com":{ _name:"哔哩哔哩 bilibili",
-    space:[ { title:"UP 主专栏",
+    space:[ { title:"UP 主图文",
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/:uid" ],
         target:"/bilibili/user/article/:uid" },
