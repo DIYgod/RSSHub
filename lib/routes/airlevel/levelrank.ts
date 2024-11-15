@@ -23,7 +23,6 @@ export const route: Route = {
 
 async function handler(ctx) {
     const status = ctx.req.param('status');
-    // console.log("status="+status);
     const currentUrl = `https://m.air-level.com/rank`;
     const response = await ofetch(currentUrl);
     const $ = load(response);
@@ -35,7 +34,7 @@ async function handler(ctx) {
     const titleworst = $('body > div.container > div.row.page > div:nth-child(1) > div:nth-child(3) > h3').text().replaceAll('[]', '');
     const tableworst = $('body > div.container > div.row.page > div:nth-child(1) > div:nth-child(3) > table').html()?.toString();
 
-    if (status && status !== '') {
+    if (status) {
         if (status === 'best') {
             title = titlebest;
             table = `<br/><table border="1 solid black">${tablebest}</table>`;
@@ -48,35 +47,16 @@ async function handler(ctx) {
     } else {
         title = $('body > div.container > div.row.page > div:nth-child(1) > h2').text().replaceAll('[]', '');
         table = `<br/>${titlebest}<br/><table border="1 solid black">${tablebest}</table><br/><table border="1 solid black">${titleworst}<br/>${tableworst}</table>`;
-        // console.log(table);
     }
 
     const pubtime = $('body > div.container > div.row.page > div:nth-child(1) > h4').text();
-    // console.log("els ="+table.html());
-    // const limit = els.length;
-    // console.log("limit ="+limit);
-    // const trarray = els
-    //     .slice(0, limit)
-    //     .toArray();
-    // console.log("trarray ="+trarray);
-    // const items=    trarray.map((item) => {
-    //         return {
-    //             title: $(item).find('td:nth-child(1)').text().replaceAll('[]', ''),
-    //             link:  currentUrl,
-    //             pubDate: new Date().toUTCString(),
-    //             description: $(item).html()?.toString()
-    //         };
-    //     });
+
     const items = [
         {
             title,
             link: currentUrl,
             pubDate: new Date().toUTCString(),
             description: `${String(table)}`,
-            // content: {
-            //         html:`<table border="1 solid black">${table.html()?.toString()}</table>`,
-            //         text:''
-            //     },
             guid: pubtime,
         },
     ];
