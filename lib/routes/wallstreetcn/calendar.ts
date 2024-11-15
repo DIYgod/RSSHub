@@ -64,7 +64,7 @@ async function handler(ctx) {
             ? response.data.items.map((item) => ({
                   title: `${item.country}${item.title}`,
                   description: `${item.country}${item.title} 重要性: ${'★'.repeat(item.importance)} 今值: ${item.actual || '-'}${item.actual && item.unit} 预期: ${item.forecast || '-'}${item.forecast && item.unit} 前值: ${item.revised || item.previous || '-'}${(item.revised || item.previous) && item.unit}`,
-                  link: item.uri && MacrodataSuffix[item.countryId] && getMacrodataUrl(item.country_id, item.wscn_ticker),
+                  link: item.uri && MacrodataSuffix[item.country_id] && getMacrodataUrl(item.country_id, item.wscn_ticker),
                   guid: item.id,
                   pubDate: parseDate(item.public_date, 'X'),
                   category: item.country,
