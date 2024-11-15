@@ -23,8 +23,8 @@ const __dirname = getCurrentPath(import.meta.url);
 enum SyosetuSub {
     NOCTURNE = 'noc',
     MOONLIGHT = 'mnlt',
-    MOONLIGHT_BL = 'mnlt-bl',
     MIDNIGHT = 'mid',
+    MOONLIGHT_BL = 'mnlt-bl',
 }
 
 enum RankingPeriod {
@@ -50,6 +50,13 @@ const periodToOrder: Record<RankingPeriod, Order> = {
     [RankingPeriod.YEARLY]: 'yearlypoint',
 };
 
+const syosetuSubToJapanese: Record<SyosetuSub, string> = {
+    [SyosetuSub.NOCTURNE]: 'ノクターン',
+    [SyosetuSub.MIDNIGHT]: 'ミッドナイト',
+    [SyosetuSub.MOONLIGHT]: 'ムーンライト',
+    [SyosetuSub.MOONLIGHT_BL]: 'ムーンライト BL',
+};
+
 const periodToJapanese: Record<RankingPeriod, string> = {
     [RankingPeriod.DAILY]: '日間',
     [RankingPeriod.WEEKLY]: '週間',
@@ -67,12 +74,10 @@ const novelTypeToJapanese: Record<NovelType, string> = {
 
 const getParameters = () => {
     // Generate options for sub parameter
-    const subOptions = [
-        { value: 'noc', label: 'Nocturne' },
-        { value: 'mid', label: 'Midnight' },
-        { value: 'mnlt', label: 'Moonlight' },
-        { value: 'mnlt-bl', label: 'Moonlight BL' },
-    ];
+    const subOptions = Object.entries(SyosetuSub).map(([, value]) => ({
+        value,
+        label: syosetuSubToJapanese[value],
+    }));
 
     // Generate period options
     const periodOptions = Object.entries(RankingPeriod).map(([key, value]) => ({
@@ -107,27 +112,14 @@ const getParameters = () => {
     };
 };
 
-const getBest5RadarItems = () => {
-    const sites = [
-        { domain: 'noc', title: 'ノクターン' },
-        { domain: 'mid', title: 'ミッドナイト' },
-        { domain: 'mnlt', title: 'ムーンライト' },
-        { domain: 'mnlt-bl', title: 'ムーンライト BL' },
-    ];
-
-    const periods = Object.values(RankingPeriod).map((period) => ({
-        type: period,
-        title: periodToJapanese[period],
-    }));
-
-    return sites.flatMap((site) =>
-        periods.map((period) => ({
-            title: `${site.title} ${period.title}ランキング BEST5`,
-            source: [`${site.domain === 'mnlt-bl' ? 'mnlt' : site.domain}.syosetu.com/rank/${site.domain === 'mnlt-bl' ? 'bltop' : 'top'}`],
-            target: `/rankingr18/${site.domain}/${period.type}_total/limit=5`,
-        }))
-    );
-};
+const getBest5RadarItems = () => Object.entries(SyosetuSub)
+        .flatMap(([, domain]) =>
+            Object.values(RankingPeriod).map((period) => ({
+                title: `${syosetuSubToJapanese[domain]} ${periodToJapanese[period]}ランキング BEST5`,
+                source: [`${domain === SyosetuSub.MOONLIGHT_BL ? SyosetuSub.MOONLIGHT : domain}.syosetu.com/rank/${domain === SyosetuSub.MOONLIGHT_BL ? 'bltop' : 'top'}`],
+                target: `/rankingr18/${domain}/${period}_${NovelType.TOTAL}/limit=5`,
+            }))
+        );
 
 export const route: Route = {
     path: '/rankingr18/:sub/:type/:routeParams?',

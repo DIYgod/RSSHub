@@ -116,7 +116,7 @@ const getParameters = () => {
                 ...periodOptions.flatMap((period) =>
                     novelTypeOptions.map((novelType) => ({
                         value: `${period.value}_${novelType.value}`,
-                        label: `[${periodToJapanese[period.value]}] 総合ランキング - ${novelTypeToJapanese[novelType.value]}`,
+                        label: `${RankingType.LIST}: [${periodToJapanese[period.value]}] 総合ランキング - ${novelTypeToJapanese[novelType.value]}`,
                     }))
                 ),
                 // Genre ranking options
@@ -124,7 +124,7 @@ const getParameters = () => {
                     genreOptions.flatMap((genre) =>
                         novelTypeOptions.map((novelType) => ({
                             value: `${period.value}_${genre.value}_${novelType.value}`,
-                            label: `[${periodToJapanese[period.value]}] ${GenreNotation[genre.value]}ランキング - ${novelTypeToJapanese[novelType.value]}`,
+                            label: `${RankingType.GENRE}: [${periodToJapanese[period.value]}] ${GenreNotation[genre.value]}ランキング - ${novelTypeToJapanese[novelType.value]}`,
                         }))
                     )
                 ),
@@ -133,7 +133,7 @@ const getParameters = () => {
                     isekaiOptions.flatMap((category) =>
                         novelTypeOptions.map((novelType) => ({
                             value: `${period.value}_${category.value}_${novelType.value}`,
-                            label: `[${periodToJapanese[period.value]}] 異世界転生/転移${isekaiCategoryToJapanese[category.value]}ランキング - ${novelTypeToJapanese[novelType.value]}`,
+                            label: `${RankingType.ISEKAI}: [${periodToJapanese[period.value]}] 異世界転生/転移${isekaiCategoryToJapanese[category.value]}ランキング - ${novelTypeToJapanese[novelType.value]}`,
                         }))
                     )
                 ),
