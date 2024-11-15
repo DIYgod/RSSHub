@@ -3,7 +3,6 @@ import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { load } from 'cheerio'; // 类似 jQuery 的 API HTML 解析器
 
 export const route: Route = {
-    // ...
     path: ['/rank/:status', '/rank'],
     radar: [
         {
@@ -50,7 +49,6 @@ async function handler(ctx) {
     }
 
     const pubtime = $('body > div.container > div.row.page > div:nth-child(1) > h4').text();
-
     const items = [
         {
             title,
@@ -60,7 +58,6 @@ async function handler(ctx) {
             guid: pubtime,
         },
     ];
-    // console.log(items);
     return {
         title,
         item: items,
