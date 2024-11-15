@@ -15543,6 +15543,35 @@
       }
     ]
   },
+  "javtrailers.com": {
+    "_name": "JavTrailers",
+    ".": [
+      {
+        "title": "Casts",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/casts/:category"
+        ],
+        "target": "/javtrailers/casts/:cast"
+      },
+      {
+        "title": "Categories",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/categories/:category"
+        ],
+        "target": "/javtrailers/categories/:category"
+      },
+      {
+        "title": "Studios",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/studios/:category"
+        ],
+        "target": "/javtrailers/studios/:studio"
+      }
+    ]
+  },
   "jianshu.com": {
     "_name": "简书",
     "www": [

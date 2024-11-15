@@ -3707,6 +3707,15 @@
   "/javtiful/channel/:id": [
     "huanfe1"
   ],
+  "/javtrailers/casts/:cast": [
+    "TonyRL"
+  ],
+  "/javtrailers/categories/:category": [
+    "TonyRL"
+  ],
+  "/javtrailers/studios/:studio": [
+    "TonyRL"
+  ],
   "/jd/price/:id": [
     "nczitzk"
   ],

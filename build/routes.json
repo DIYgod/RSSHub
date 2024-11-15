@@ -43848,6 +43848,81 @@
     "url": "javtiful.com",
     "lang": "en"
   },
+  "javtrailers": {
+    "routes": {
+      "/casts/:cast": {
+        "path": "/casts/:cast",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/javtrailers/casts/hibiki-otsuki",
+        "parameters": {
+          "cast": "Cast name, can be found in the URL of the cast page"
+        },
+        "radar": [
+          {
+            "source": [
+              "javtrailers.com/casts/:category"
+            ]
+          }
+        ],
+        "name": "Casts",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "javtrailers.com/casts",
+        "location": "casts.ts"
+      },
+      "/categories/:category": {
+        "path": "/categories/:category",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/javtrailers/categories/50001755",
+        "parameters": {
+          "category": "Category name, can be found in the URL of the category page"
+        },
+        "radar": [
+          {
+            "source": [
+              "javtrailers.com/categories/:category"
+            ]
+          }
+        ],
+        "name": "Categories",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "javtrailers.com/categories",
+        "location": "categories.ts"
+      },
+      "/studios/:studio": {
+        "path": "/studios/:studio",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/javtrailers/studios/s1-no-1-style",
+        "parameters": {
+          "studio": "Studio name, can be found in the URL of the studio page"
+        },
+        "radar": [
+          {
+            "source": [
+              "javtrailers.com/studios/:category"
+            ]
+          }
+        ],
+        "name": "Studios",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "studios.ts"
+      }
+    },
+    "name": "JavTrailers",
+    "url": "javtrailers.com",
+    "lang": "ja"
+  },
   "jd": {
     "routes": {
       "/price/:id": {
