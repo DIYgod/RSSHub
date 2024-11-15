@@ -1,29 +1,36 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-// https://www.natgeomedia.com//article/
+// https://www.natgeomedia.com/article/
 
 async function loadContent(link) {
-    const { data } = await got(link);
+    const data = await ofetch(link);
     const $ = load(data);
     const dtStr = $('.content-title-area')
         .find('h6')
         .first()
-        .html()
+        .text()
         .replaceAll(/&nbsp;/gi, ' ')
         .trim();
 
-    let description = $('article').first().html() + $('article').eq(1).html();
-    if (/photo/.test(link)) {
+    $('.splide__arrows, .slide-control').remove();
+
+    let description = ($('article').eq(0).html() ?? '') + ($('article').eq(1).html() ?? '');
+    if (/photo|gallery/.test(link)) {
         description = $('#content-album').html() + description;
     }
     return {
         title: $('title').text(),
-        pubDate: parseDate(dtStr, 'MMM. DD YYYY'),
+        pubDate: parseDate(dtStr),
         description,
+        category: $('.content-tag a')
+            .toArray()
+            .map((i) => $(i).text()),
+        link,
+        image: $('link[rel="image_src"]').attr('href'),
     };
 }
 
@@ -42,8 +49,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['natgeomedia.com/:cat/:type', 'natgeomedia.com/'],
-            target: '/:cat/:type',
+            source: ['natgeomedia.com/:cat/:type', 'natgeomedia.com/:cat/', 'natgeomedia.com/'],
+            target: '/:cat/:type?',
         },
     ],
     name: '分类',
@@ -54,29 +61,23 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? '';
     const url = `https://www.natgeomedia.com/${ctx.req.param('cat')}/${type}`;
-    const res = await got(url);
-    const $ = load(res.data);
+    const res = await ofetch(url);
+    const $ = load(res);
 
-    const urlList = $('.article-link-w100')
-        .find('.read-btn')
+    const urlList = $('.article-link-content h4')
         .toArray()
         .map((i) => ({
             link: $(i).find('a[href]').first().attr('href'),
-        }));
+        }))
+        .filter((i) => i.link);
 
-    const out = await Promise.all(
-        urlList.map(async (i) => {
-            const link = i.link;
-            const single = {
-                link,
-            };
-            const other = await cache.tryGet(link, () => loadContent(link));
-            return { ...single, ...other };
-        })
-    );
+    const out = await Promise.all(urlList.map((i) => cache.tryGet(i.link!, () => loadContent(i.link))));
+
     return {
         title: $('title').text(),
+        description: $('meta[name="description"]').attr('content'),
         link: url,
+        image: 'https://www.natgeomedia.com/img/app_icon.png',
         item: out,
     };
 }

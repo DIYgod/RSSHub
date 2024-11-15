@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'url';
 import path from 'node:path';
+import { stringifyQuery } from 'ufo';
 
 export const getRouteNameFromPath = (path: string) => {
     const p = path.split('/').filter(Boolean);
@@ -30,3 +31,12 @@ export const getCurrentPath = (metaUrl: string) => {
     const __filename = path.join(fileURLToPath(metaUrl));
     return path.dirname(__filename);
 };
+
+function isPureObject(o: any) {
+    return Object.prototype.toString.call(o) === '[object Object]';
+}
+
+export function getSearchParamsString(searchParams: any) {
+    const searchParamsString = isPureObject(searchParams) ? stringifyQuery(searchParams) : null;
+    return searchParamsString ?? new URLSearchParams(searchParams).toString();
+}

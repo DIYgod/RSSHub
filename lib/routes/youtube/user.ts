@@ -3,8 +3,8 @@ import cache from '@/utils/cache';
 import utils from './utils';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
-import { load } from 'cheerio';
+import ofetch from '@/utils/ofetch';
+import * as cheerio from 'cheerio';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
@@ -44,34 +44,42 @@ async function handler(ctx) {
     const username = ctx.req.param('username');
     const embed = !ctx.req.param('embed');
 
-    let playlistId;
-    let channelName;
-    let image;
-    let description;
+    let userHandleData;
     if (username.startsWith('@')) {
-        const link = `https://www.youtube.com/${username}`;
-        const response = await got(link);
-        const $ = load(response.data);
-        const ytInitialData = JSON.parse(
-            $('script')
-                .text()
-                .match(/ytInitialData = ({.*?});/)?.[1] || '{}'
-        );
-        const channelId = ytInitialData.metadata.channelMetadataRenderer.externalId;
-        channelName = ytInitialData.metadata.channelMetadataRenderer.title;
-        image = ytInitialData.metadata.channelMetadataRenderer.avatar?.thumbnails?.[0]?.url;
-        description = ytInitialData.metadata.channelMetadataRenderer.description;
-        playlistId = (await utils.getChannelWithId(channelId, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+        userHandleData = await cache.tryGet(`youtube:handle:${username}`, async () => {
+            const link = `https://www.youtube.com/${username}`;
+            const response = await ofetch(link);
+            const $ = cheerio.load(response);
+            const ytInitialData = JSON.parse(
+                $('script')
+                    .text()
+                    .match(/ytInitialData = ({.*?});/)?.[1] || '{}'
+            );
+            const metadataRenderer = ytInitialData.metadata.channelMetadataRenderer;
+
+            const channelId = metadataRenderer.externalId;
+            const channelName = metadataRenderer.title;
+            const image = metadataRenderer.avatar?.thumbnails?.[0]?.url;
+            const description = metadataRenderer.description;
+            const playlistId = (await utils.getChannelWithId(channelId, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+
+            return {
+                channelName,
+                image,
+                description,
+                playlistId,
+            };
+        });
     }
-    playlistId = playlistId || (await utils.getChannelWithUsername(username, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+    const playlistId = userHandleData?.playlistId || (await utils.getChannelWithUsername(username, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
 
     const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
 
     return {
-        title: `${channelName || username} - YouTube`,
+        title: `${userHandleData?.channelName || username} - YouTube`,
         link: username.startsWith('@') ? `https://www.youtube.com/${username}` : `https://www.youtube.com/user/${username}`,
-        description: description || `YouTube user ${username}`,
-        image,
+        description: userHandleData?.description || `YouTube user ${username}`,
+        image: userHandleData?.image,
         item: data
             .filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video')
             .map((item) => {

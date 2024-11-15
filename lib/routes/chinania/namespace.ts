@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'chinania.org.cn',
     categories: ['new-media'],
     description: '',
+    lang: 'zh-CN',
 };

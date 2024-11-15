@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'agri.cn',
     categories: ['new-media'],
     description: '',
+    lang: 'zh-CN',
 };

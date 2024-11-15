@@ -51,10 +51,14 @@ export function fetchArticle(item) {
             // Live
             ldjson = rawLdjson;
 
+            const url = new URL(item.link);
+            const description = url.hash ? $(url.hash).parent().find('.LiveBlogPost-body').html() : ldjson.description;
+            const pubDate = url.hash ? parseDate(Number.parseInt($(url.hash).parent().attr('data-posted-date-timestamp'), 10)) : parseDate(ldjson.coverageStartTime);
+
             return {
                 category: ldjson.keywords,
-                pubDate: parseDate(ldjson.coverageStartTime),
-                description: ldjson.description,
+                pubDate,
+                description,
                 guid: $("meta[name='brightspot.contentId']").attr('content'),
                 ...item,
             };

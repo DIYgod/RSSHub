@@ -98,6 +98,36 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
                 optional: true,
                 description: 'Telegram API Authentication',
             },
+            {
+                name: 'TELEGRAM_API_ID',
+                optional: true,
+                description: 'Telegram API ID',
+            },
+            {
+                name: 'TELEGRAM_API_HASH',
+                optional: true,
+                description: 'Telegram API Hash',
+            },
+            {
+                name: 'TELEGRAM_MAX_CONCURRENT_DOWNLOADS',
+                optional: true,
+                description: 'Telegram Max Concurrent Downloads',
+            },
+            {
+                name: 'TELEGRAM_PROXY_HOST',
+                optional: true,
+                description: 'Telegram Proxy Host',
+            },
+            {
+                name: 'TELEGRAM_PROXY_PORT',
+                optional: true,
+                description: 'Telegram Proxy Port',
+            },
+            {
+                name: 'TELEGRAM_PROXY_SECRET',
+                optional: true,
+                description: 'Telegram Proxy Secret',
+            },
         ],
         requirePuppeteer: false,
         antiCrawler: false,
@@ -112,7 +142,7 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
         },
     ],
     name: 'Channel',
-    maintainers: ['DIYgod', 'Rongronggg9', 'pseudoyu'],
+    maintainers: ['DIYgod', 'Rongronggg9', 'synchrone', 'pseudoyu'],
     handler,
     description: `
   :::tip
