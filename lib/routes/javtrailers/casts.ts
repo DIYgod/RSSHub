@@ -33,7 +33,7 @@ async function handler(ctx) {
 
     return {
         title: `Watch ${response.cast.name} Jav Online | Japanese Adult Video - JavTrailers.com`,
-        description: `Watch ${response.cast.name} Jav video’s free, we have the largest Jav collections with high definition`,
+        description: response.cast.castWiki?.description.replaceAll('\n', ' ') ?? `Watch ${response.cast.name} Jav video’s free, we have the largest Jav collections with high definition`,
         image: response.cast.avatar,
         link: `${baseUrl}/casts/${cast}`,
         item: items,
