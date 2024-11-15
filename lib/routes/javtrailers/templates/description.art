@@ -1,0 +1,31 @@
+{{ if videoInfo.image }}
+    <img src="{{ videoInfo.image }}"><br>
+{{ /if }}
+
+{{ if videoInfo.dvdId }}<b>DVD ID:</b> {{ videoInfo.dvdId }}<br>{{ /if }}
+{{ if videoInfo.contentId }}<b>Content ID:</b> {{ videoInfo.contentId }}<br>{{ /if }}
+{{ if videoInfo.releaseDate }}<b>Release Date:</b> {{ videoInfo.releaseDate }}<br>{{ /if }}
+{{ if videoInfo.duration }}<b>Duration:</b> {{ videoInfo.duration }} mins<br>{{ /if }}
+{{ if videoInfo.director }}<b>Director:</b> {{ videoInfo.director }} {{ videoInfo.jpDirector }}<br>{{ /if }}
+{{ if videoInfo.studio }}<b>Studio:</b> {{ videoInfo.studio.name }}<br>{{ /if }}
+{{ if videoInfo.categories }}
+    <b>Categories:</b>
+    {{ each videoInfo.categories c }}
+        {{ c.name }},
+    {{ /each }}
+    <br>
+{{ /if }}
+{{ if videoInfo.casts }}
+    <b>Cast(s):</b>
+    {{ each videoInfo.casts c }}
+        {{ c.name }} {{ c.jpName }}
+    {{ /each }}
+    <br>
+{{ /if }}
+
+
+{{ if videoInfo.gallery }}
+    {{ each videoInfo.gallery g }}
+        <img src="{{ g }}" ><br>
+    {{ /each }}
+{{ /if }}
