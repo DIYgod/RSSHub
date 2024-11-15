@@ -82,6 +82,8 @@ const i18n = (word: string, lang: string) => {
     }
 };
 
+const m3u8tomp4 = (src: string) => src.replace('https://hlsvod.dw.com/i/', 'https://tvdownloaddw-a.akamaihd.net/').replace(',AVC_480x270,AVC_512x288,AVC_640x360,AVC_960x540,AVC_1280x720,AVC_1920x1080,.mp4.csmil/master.m3u8', 'AVC_1920x1080.mp4');
+
 const processHtml = ($: CheerioAPI, contentLinks) => {
     $('img').each((_, elem) => {
         try {
@@ -132,6 +134,7 @@ const processContent = (item, content) => {
         item.type === 'video' && content.hlsVideoSrc
             ? art(path.join(__dirname, 'templates/video.art'), {
                   hlsVideoSrc: content.hlsVideoSrc,
+                  mp4VideoSrc: m3u8tomp4(content.hlsVideoSrc),
                   posterImageUrl: content.posterImageUrl,
               })
             : undefined;

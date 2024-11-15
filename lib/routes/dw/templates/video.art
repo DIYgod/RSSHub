@@ -6,5 +6,9 @@ controls>
     src="{{ hlsVideoSrc }}"
     type="application/x-mpegURL"
     >
+    <source
+    src="{{ mp4VideoSrc }}" 
+    type="video/mp4"
+    >
 </video>
 {{ /if }}
