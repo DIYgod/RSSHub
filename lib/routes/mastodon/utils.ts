@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
-const allowSiteList = ['mastodon.social', 'pawoo.net', config.mastodon.apiHost].filter(Boolean);
+const allowSiteList = ['mastodon.social', 'pawoo.net', 'fosstodon.org', config.mastodon.apiHost].filter(Boolean);
 
 const apiHeaders = (site) => {
     const { accessToken, apiHost } = config.mastodon;
