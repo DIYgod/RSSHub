@@ -8,7 +8,6 @@
         <img 
             src="https://static.dw.com/image/{{ mainImage.targetId }}_{{ formatId }}.jpg" 
             alt="{{ mainImage.additionalInformation }}" 
-            title="{{ mainImage.additionalInformation }}"
         >
         <figcaption>
             {{ mainImage.description }}

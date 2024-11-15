@@ -8,7 +8,7 @@ export const route: Route = {
     categories: ['traditional-media'],
     example: '/dw/rss/rss-en-all',
     parameters: {
-        category: 'RSS Feed Channel, see below, rss-en-all by default',
+        category: 'RSS Feed Channel, see below, `rss-en-all` by default',
     },
     features: {
         requirePuppeteer: false,
@@ -23,7 +23,7 @@ export const route: Route = {
     handler,
     description: `
 For a full list of RSS Feed Channels in English, please refer to [DW RSS Feeds](https://corporate.dw.com/en/rss-feeds/a-68693346).
-Rss Feed Channels in other languages are also available, for example: rss-chi-all renders the RSS feed in Chinese and rss-de-all for the RSS Feed in German 
+RSS Feed Channels in other languages are also available, for example: \`rss-chi-all\` renders the RSS feed in Chinese and \`rss-de-all\` for the RSS Feed in German 
 `,
 };
 
