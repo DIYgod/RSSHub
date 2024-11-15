@@ -10,9 +10,36 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/:community/:sort?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/lemmy/technology@lemmy.world/Hot',
-    parameters: { community: 'Lemmmy community, for example technology@lemmy.world', sort: 'Sort by, defaut to Active' },
+    parameters: {
+        community: 'Lemmmy community, for example technology@lemmy.world',
+        sort: {
+            description: 'Sort by',
+            options: [
+                { value: 'Active', label: 'Active' },
+                { value: 'Hot', label: 'Hot' },
+                { value: 'New', label: 'New' },
+                { value: 'Old', label: 'Old' },
+                { value: 'TopDay', label: 'TopDay' },
+                { value: 'TopWeek', label: 'TopWeek' },
+                { value: 'TopMonth', label: 'TopMonth' },
+                { value: 'TopYear', label: 'TopYear' },
+                { value: 'TopAll', label: 'TopAll' },
+                { value: 'MostComments', label: 'MostComments' },
+                { value: 'NewComments', label: 'NewComments' },
+                { value: 'TopHour', label: 'TopHour' },
+                { value: 'TopSixHour', label: 'TopSixHour' },
+                { value: 'TopTwelveHour', label: 'TopTwelveHour' },
+                { value: 'TopThreeMonths', label: 'TopThreeMonths' },
+                { value: 'TopSixMonths', label: 'TopSixMonths' },
+                { value: 'TopNineMonths', label: 'TopNineMonths' },
+                { value: 'Controversial', label: 'Controversial' },
+                { value: 'Scaled', label: 'Scaled' },
+            ],
+            default: 'Active',
+        },
+    },
     features: {
         requireConfig: [
             {
@@ -27,7 +54,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Community',
-    maintainers: ['wb14123'],
+    maintainers: ['wb14123', 'pseudoyu'],
     handler,
 };
 

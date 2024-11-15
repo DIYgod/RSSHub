@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,7 +11,8 @@ const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Ma
 
 export const route: Route = {
     path: '/:userid',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.Audios,
     example: '/changba/skp6hhF59n48R-UpqO3izw',
     parameters: { userid: '用户ID, 可在对应分享页面的 URL 中找到' },
     features: {
@@ -28,7 +29,7 @@ export const route: Route = {
         },
     ],
     name: '用户',
-    maintainers: [],
+    maintainers: ['kt286', 'xizeyoupan', 'pseudoyu'],
     handler,
 };
 
@@ -101,9 +102,9 @@ async function handler(ctx) {
     items = items.filter(Boolean);
 
     return {
-        title: $('title').text(),
+        title: author + ' - 唱吧',
         link: url,
-        description: $('meta[name="description"]').attr('content') || $('title').text(),
+        description: $('meta[name="description"]').attr('content') || author + ' - 唱吧',
         item: items,
         image: authorimg,
         itunes_author: author,

@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: '78dm.net',
     categories: ['new-media'],
     description: '',
+    lang: 'zh-CN',
 };

@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/today',
-    categories: ['multimedia'],
+    categories: ['multimedia', 'popular'],
+    view: ViewType.Notifications,
     example: '/yyets/today',
     parameters: {},
     features: {

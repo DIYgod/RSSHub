@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getUser } from './util';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -6,6 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 export const route: Route = {
     path: '/user/:user_id/:category',
     name: '用户笔记',
+    categories: ['social-media', 'popular'],
+    view: ViewType.Articles,
     maintainers: ['lotosbin'],
     handler,
     example: '/xiaohongshu/user/593032945e87e77791e03696/notes',

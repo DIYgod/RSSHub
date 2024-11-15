@@ -6,7 +6,21 @@ export const route: Route = {
     categories: ['anime', 'popular'],
     view: ViewType.Pictures,
     example: '/hpoi/items/work/4117491',
-    parameters: { id: '作品 ID', order: '排序, 见下表，默认为 add' },
+    parameters: {
+        id: '作品 ID',
+        order: {
+            description: '排序',
+            options: [
+                { value: 'release', label: '发售' },
+                { value: 'add', label: '入库' },
+                { value: 'hits', label: '总热度' },
+                { value: 'hits7Day', label: '一周热度' },
+                { value: 'hitsDay', label: '一天热度' },
+                { value: 'rating', label: '评价' },
+            ],
+            default: 'add',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,9 +32,6 @@ export const route: Route = {
     name: '作品周边',
     maintainers: ['DIYgod'],
     handler,
-    description: `| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
-  | ------- | ---- | ------ | -------- | -------- | ------ |
-  | release | add  | hits   | hits7Day | hitsDay  | rating |`,
 };
 
 async function handler(ctx) {

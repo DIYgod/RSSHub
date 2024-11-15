@@ -1,8 +1,7 @@
 import { Route, DataItem } from '@/types';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 
 export const route: Route = {
     path: '/product/:id',
@@ -37,26 +36,26 @@ async function handler(ctx) {
 
     // get simple info from list
     const items: DataItem[] = $('ul#feed-main-list li')
-        .map(function () {
-            const altText = $(this).find('img').attr('alt');
-            const link = $(this).find('h5.feed-block-title a').attr('href');
-            const price = $(this).find('.z-highlight').text();
+        .toArray()
+        .map((elem) => {
+            const altText = $(elem).find('img').attr('alt');
+            const link = $(elem).find('h5.feed-block-title a').attr('href');
+            const price = $(elem).find('.z-highlight').text();
             const title = altText + ' ' + price;
-            const description = $(this).find('.feed-block-descripe').text().replaceAll(/\s+/g, '');
+            const description = $(elem).find('.feed-block-descripe').text().replaceAll(/\s+/g, '');
 
             return {
                 title,
                 link,
                 description,
             };
-        })
-        .toArray();
+        });
 
     // get detail info from each item
     const out = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link);
+                const response = await ofetch(item.link);
                 const $ = load(response);
 
                 // filter outdated articles

@@ -4,8 +4,11 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import { config } from '@/config';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import { templates, resolveUrl, proxyVideo, getOriginAvatar, universalGet } from './utils';
+import { templates, resolveUrl, proxyVideo, getOriginAvatar } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import puppeteer from '@/utils/puppeteer';
+import logger from '@/utils/logger';
+import { PostData } from './types';
 
 export const route: Route = {
     path: '/user/:uid/:routeParams?',
@@ -43,29 +46,56 @@ async function handler(ctx) {
 
     const pageUrl = `https://www.douyin.com/user/${uid}`;
 
-    const pageData = await cache.tryGet(
+    const pageData = (await cache.tryGet(
         `douyin:user:${uid}`,
         async () => {
-            const renderData = await universalGet(pageUrl, 'user');
-            const dataKey = Object.keys(renderData).find((key) => renderData[key].user && renderData[key].post);
-            return renderData[dataKey];
+            let postData;
+            const browser = await puppeteer();
+            const page = await browser.newPage();
+            await page.setRequestInterception(true);
+
+            page.on('request', (request) => {
+                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+            });
+            page.on('response', async (response) => {
+                const request = response.request();
+                if (request.url().includes('/web/aweme/post') && !postData) {
+                    postData = await response.json();
+                }
+            });
+
+            logger.http(`Requesting ${pageUrl}`);
+            await page.goto(pageUrl, {
+                waitUntil: 'networkidle2',
+            });
+
+            browser.close();
+
+            if (!postData) {
+                throw new Error('Empty post data. The request may be filtered by WAF.');
+            }
+
+            return postData;
         },
         config.cache.routeExpire,
         false
-    );
-    const userInfo = pageData.user.user;
-    const userNickName = userInfo.nickname;
-    const userDescription = userInfo.desc;
-    const userAvatar = getOriginAvatar(userInfo.avatar300Url || userInfo.avatarUrl);
+    )) as PostData;
 
-    const posts = pageData.post.data;
-    const items = posts.map((post) => {
+    if (!pageData.aweme_list?.length) {
+        throw new Error('Empty post data. The request may be filtered by WAF.');
+    }
+    const userInfo = pageData.aweme_list[0].author;
+    const userNickName = userInfo.nickname;
+    // const userDescription = userInfo.desc;
+    const userAvatar = getOriginAvatar(userInfo.avatar_thumb.url_list.at(-1));
+
+    const items = pageData.aweme_list.map((post) => {
         // parse video
-        let videoList = post.video && post.video.bitRateList && post.video.bitRateList.map((item) => resolveUrl(item.playApi));
+        let videoList = post.video?.bit_rate?.map((item) => resolveUrl(item.play_addr.url_list.at(-1)));
         if (relay) {
             videoList = videoList.map((item) => proxyVideo(item, relay));
         }
-        let duration = post.video && post.video.duration;
+        let duration = post.video?.duration;
         duration = duration && duration / 1000;
         let img;
         // if (!embed) {
@@ -73,30 +103,28 @@ async function handler(ctx) {
         // }
         img =
             img ||
-            (post.video &&
-                ((post.video.coverUrlList && post.video.coverUrlList.at(-1)) || // HD
-                    post.video.originCover || // LD
-                    post.video.cover)); // even more LD
+            post.video?.cover?.url_list.at(-1) || // HD
+            post.video?.origin_cover?.url_list.at(-1); // LD
         img = img && resolveUrl(img);
 
         // render description
-        const desc = post.desc && post.desc.replaceAll('\n', '<br>');
+        const desc = post.desc?.replaceAll('\n', '<br>');
         let media = art(embed && videoList ? templates.embed : templates.cover, { img, videoList, duration });
         media = embed && videoList && iframe ? art(templates.iframe, { content: media }) : media; // warp in iframe
         const description = art(templates.desc, { desc, media });
 
         return {
-            title: post.desc,
+            title: post.desc.split('\n')[0],
             description,
-            link: `https://www.douyin.com/video/${post.awemeId}`,
-            pubDate: parseDate(post.createTime * 1000),
-            category: post.textExtra.map((extra) => extra.hashtagName),
+            link: `https://www.douyin.com/video/${post.aweme_id}`,
+            pubDate: parseDate(post.create_time * 1000),
+            category: post.video_tag.map((t) => t.tag_name),
         };
     });
 
     return {
         title: userNickName,
-        description: userDescription,
+        // description: userDescription,
         image: userAvatar,
         link: pageUrl,
         item: items,

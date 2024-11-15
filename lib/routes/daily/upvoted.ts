@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import { getData, getList, getRedirectedLink } from './utils.js';
+import { baseUrl, getData, getList } from './utils.js';
 
 const variables = {
     period: 7,
@@ -21,6 +21,7 @@ const query = `
     edges {
       node {
         ...FeedPost
+        contentHtml
       }
     }
   }
@@ -35,6 +36,7 @@ const query = `
     image
     readTime
     permalink
+    commentsPermalink
     summary
     createdAt
     numUpvotes
@@ -56,37 +58,35 @@ const query = `
 
 `;
 
-const graphqlQuery = {
-    query,
-    variables,
-};
-
 export const route: Route = {
     path: '/upvoted',
     example: '/daily/upvoted',
     radar: [
         {
-            source: ['daily.dev/popular'],
+            source: ['app.daily.dev/upvoted'],
         },
     ],
     name: 'Most upvoted',
     maintainers: ['Rjnishant530'],
     handler,
-    url: 'daily.dev/popular',
+    url: 'app.daily.dev/upvoted',
 };
 
 async function handler() {
-    const baseUrl = 'https://app.daily.dev/upvoted';
-    const data = await getData(graphqlQuery);
-    const list = getList(data);
-    const items = await getRedirectedLink(list);
+    const link = `${baseUrl}/upvoted`;
+    const data = await getData({
+        query,
+        variables,
+    });
+    const items = getList(data);
+
     return {
-        title: 'Most Upvoted',
-        link: baseUrl,
+        title: 'Most upvoted posts for developers | daily.dev',
+        link,
         item: items,
-        description: 'Most Upvoted Posts on Daily.dev',
-        logo: 'https://app.daily.dev/favicon-32x32.png',
-        icon: 'https://app.daily.dev/favicon-32x32.png',
+        description: 'Find the most upvoted developer posts on daily.dev. Explore top-rated content in coding, tutorials, and tech news from the largest developer network in the world.',
+        logo: `${baseUrl}/favicon-32x32.png`,
+        icon: `${baseUrl}/favicon-32x32.png`,
         language: 'en-us',
     };
 }

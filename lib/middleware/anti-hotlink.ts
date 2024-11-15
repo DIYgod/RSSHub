@@ -17,7 +17,7 @@ const matchPath = (path: string, paths: string[]) => {
     return false;
 };
 
-// return ture if the path needs to be processed
+// return true if the path needs to be processed
 const filterPath = (path: string) => {
     const include = config.hotlink.includePaths;
     const exclude = config.hotlink.excludePaths;
@@ -117,6 +117,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     // Force config hotlink template on conflict
     if (config.hotlink.template) {
         imageHotlinkTemplate = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
+        multimediaHotlinkTemplate = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
     }
 
     if (!imageHotlinkTemplate && !multimediaHotlinkTemplate) {

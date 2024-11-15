@@ -34,7 +34,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let items = $('div.news-list li')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.query.limit) : 30)
+        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
         .map((item) => {
             item = $(item);

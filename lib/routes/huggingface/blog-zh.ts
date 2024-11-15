@@ -47,7 +47,7 @@ async function handler() {
         title: item.blog.title,
         link: `https://huggingface.co${item.link}`,
         category: item.blog.tags,
-        pubDate: parseDate(item.blog.date),
+        pubDate: parseDate(item.blog.publishedAt),
         author: item.blog.author,
     }));
 

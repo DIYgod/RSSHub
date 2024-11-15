@@ -67,7 +67,8 @@ async function handler(ctx) {
                     date: new Date(thisSong.album.publishTime).toLocaleDateString(),
                     picUrl: thisSong.album.picUrl,
                 }),
-                link: `https://music.163.com/#/song?id=${item.id}`,
+                link: `https://music.163.com/song?id=${item.id}`,
+                guid: `https://music.163.com/#/song?id=${item.id}`,
                 pubDate: new Date(item.at),
                 author: singer,
             };
