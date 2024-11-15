@@ -92,6 +92,7 @@ const processHtml = ($: CheerioAPI, contentLinks) => {
                 alt: contentLink?.description,
                 src: `https://static.dw.com/image/${id}_${formatId}.jpg`,
             });
+            $(elem).removeAttr('style');
         } catch {
             // no-empty
         }
