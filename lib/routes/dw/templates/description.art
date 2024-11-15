@@ -1,0 +1,23 @@
+{{ if teaser }}
+    <blockquote><p><em>{{ teaser }}</em></p></blockquote>
+{{ /if }}
+{{ if video }}
+    {{@ video }}
+{{ else if mainImage }}
+    <figure>
+        <img 
+            src="https://static.dw.com/image/{{ mainImage.targetId }}_{{ formatId }}.jpg" 
+            alt="{{ mainImage.additionalInformation }}" 
+        >
+        <figcaption>
+            {{ mainImage.description }}
+            <small>{{ imageI18n }}: {{ mainImage.target.licenserSupplement }}</small>
+        </figcaption>
+    </figure>
+{{ /if }}
+{{ if text }}
+   {{@ text }}
+{{ /if }}
+{{ if liveblog }}
+    {{@ liveblog }}
+{{ /if }}
