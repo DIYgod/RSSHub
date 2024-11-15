@@ -23584,6 +23584,69 @@
     "url": "dutdice.dlut.edu.cn",
     "lang": "zh-CN"
   },
+  "dw": {
+    "routes": {
+      "/news/:lang?/:id?": {
+        "path": "/news/:lang?/:id?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/dw/news",
+        "parameters": {
+          "lang": "Language, see below, default to en",
+          "id": "Category ID, see below, default to the id of the Top Stories Page of the language chosen"
+        },
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "requireConfig": false
+        },
+        "name": "News",
+        "maintainers": [
+          "quiniapiezoelectricity"
+        ],
+        "description": "\n:::tip\nParameters can be obtained from the official website, for instance:\nFor the site https://www.dw.com/de/deutschland/s-12321 the language code would be `de` and the category ID would be `s-1432`.\n:::\n",
+        "radar": [
+          {
+            "source": [
+              "www.dw.com/:lang/:name/:id"
+            ],
+            "target": "/news/:lang/:id"
+          }
+        ],
+        "location": "news.ts"
+      },
+      "/rss/:channel?": {
+        "path": "/rss/:channel?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/dw/rss/rss-en-all",
+        "parameters": {
+          "category": "RSS Feed Channel, see below, `rss-en-all` by default"
+        },
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "requireConfig": false
+        },
+        "name": "RSS",
+        "maintainers": [
+          "quiniapiezoelectricity"
+        ],
+        "description": "\nFor a full list of RSS Feed Channels in English, please refer to [DW RSS Feeds](https://corporate.dw.com/en/rss-feeds/a-68693346).\nRSS Feed Channels in other languages are also available, for example: `rss-chi-all` renders the RSS feed in Chinese and `rss-de-all` for the RSS Feed in German \n",
+        "location": "rss.ts"
+      }
+    },
+    "name": "DW Deutsche Welle",
+    "url": "dw.com"
+  },
   "dx2025": {
     "routes": {
       "/:type?/:category?": {

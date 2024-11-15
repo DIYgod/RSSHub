@@ -8253,6 +8253,19 @@
       }
     ]
   },
+  "dw.com": {
+    "_name": "DW Deutsche Welle",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:lang/:name/:id"
+        ],
+        "target": "/dw/news/:lang/:id"
+      }
+    ]
+  },
   "dxy.cn": {
     "_name": "丁香园",
     "www": [
