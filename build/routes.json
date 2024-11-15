@@ -48059,6 +48059,36 @@
     "url": "logonews.cn",
     "lang": "zh-CN"
   },
+  "logrocket": {
+    "routes": {
+      "/:type": {
+        "path": "/:type",
+        "categories": [
+          "blog"
+        ],
+        "example": "/dev",
+        "parameters": {
+          "type": "dev | product-management | ux-design"
+        },
+        "radar": [
+          {
+            "source": [
+              "blog.logrocket.com"
+            ]
+          }
+        ],
+        "name": "blog.logrocket",
+        "maintainers": [
+          "findwei"
+        ],
+        "url": "blog.logrocket.com/",
+        "location": "index.ts"
+      }
+    },
+    "name": "logrocket blog",
+    "url": "blog.logrocket.com",
+    "lang": "en"
+  },
   "loltw": {
     "routes": {
       "/news/:category?": {

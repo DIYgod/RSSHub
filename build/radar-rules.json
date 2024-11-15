@@ -16713,6 +16713,19 @@
       }
     ]
   },
+  "logrocket.com": {
+    "_name": "logrocket blog",
+    "blog": [
+      {
+        "title": "blog.logrocket",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/logrocket/:type"
+      }
+    ]
+  },
   "loongarch.org": {
     "_name": "LA UOSC社区",
     "bbs": [

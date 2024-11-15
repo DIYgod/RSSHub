@@ -4104,6 +4104,9 @@
   "/logonews*": [
     "nczitzk"
   ],
+  "/logrocket/:type": [
+    "findwei"
+  ],
   "/loltw/news/:category?": [
     "hoilc"
   ],
