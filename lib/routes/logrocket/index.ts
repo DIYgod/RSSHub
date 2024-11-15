@@ -10,7 +10,7 @@ import cache from '@/utils/cache';
 export const route: Route = {
     path: '/:type',
     categories: ['blog'],
-    example: '/dev',
+    example: '/logrocket/dev',
     parameters: { type: 'dev | product-management | ux-design' },
     radar: [
         {
