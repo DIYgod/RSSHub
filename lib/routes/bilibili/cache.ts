@@ -7,9 +7,19 @@ import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 import { JSDOM } from 'jsdom';
 
-let disableConfigCookie = false;
+const disableConfigCookie = false;
+
 const getCookie = () => {
     if (!disableConfigCookie && Object.keys(config.bilibili.cookies).length > 0) {
+        // Update b_lsid in cookies
+        for (const key of Object.keys(config.bilibili.cookies)) {
+            const cookie = config.bilibili.cookies[key];
+            if (cookie) {
+                const updatedCookie = cookie.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
+                config.bilibili.cookies[key] = updatedCookie;
+            }
+        }
+
         return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]];
     }
     const key = 'bili-cookie';
@@ -22,7 +32,9 @@ const getCookie = () => {
             page.on('requestfinished', async (request) => {
                 if (request.url() === 'https://api.bilibili.com/x/internal/gaia-gateway/ExClimbWuzhi') {
                     const cookies = await page.cookies();
-                    const cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+                    let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+
+                    cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
                     resolve(cookieString);
                 }
             });
@@ -33,11 +45,6 @@ const getCookie = () => {
         await browser.close();
         return cookieString;
     });
-};
-
-const clearCookie = () => {
-    cache.set('bili-cookie');
-    disableConfigCookie = true;
 };
 
 const getRenderData = (uid) => {
@@ -129,13 +136,9 @@ const getUsernameAndFaceFromUID = async (uid) => {
     if (!name || !face) {
         const cookie = await getCookie();
         const wbiVerifyString = await getWbiVerifyString();
-        // await got(`https://space.bilibili.com/${uid}/`, {
-        //     headers: {
-        //         Referer: `https://www.bilibili.com/`,
-        //         Cookie: cookie,
-        //     },
-        // });
-        const params = utils.addWbiVerifyInfo(`mid=${uid}&token=&platform=web&web_location=1550101`, wbiVerifyString);
+        const dmImgList = utils.getDmImgList();
+        const renderData = await getRenderData(uid);
+        const params = utils.addWbiVerifyInfo(utils.addRenderData(utils.addDmVerifyInfo(`mid=${uid}&token=&platform=web&web_location=1550101`, dmImgList), renderData), wbiVerifyString);
         const { data: nameResponse } = await got(`https://api.bilibili.com/x/space/wbi/acc/info?${params}`, {
             headers: {
                 Referer: `https://space.bilibili.com/${uid}/`,
@@ -273,7 +276,6 @@ const getArticleDataFromCvid = async (cvid, uid) => {
 
 export default {
     getCookie,
-    clearCookie,
     getWbiVerifyString,
     getUsernameFromUID,
     getUsernameAndFaceFromUID,

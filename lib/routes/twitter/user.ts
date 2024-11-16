@@ -66,7 +66,7 @@ async function handler(ctx) {
             data = utils.excludeRetweet(data);
         }
     } catch (error) {
-        logger.debug(error);
+        logger.error(error);
     }
 
     const profileImageUrl = userInfo?.profile_image_url || userInfo?.profile_image_url_https;

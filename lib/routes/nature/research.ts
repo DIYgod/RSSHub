@@ -38,7 +38,7 @@ export const route: Route = {
         },
     ],
     name: 'Latest Research',
-    maintainers: ['y9c', 'TonyRL'],
+    maintainers: ['y9c', 'TonyRL', 'pseudoyu'],
     handler,
     description: `|   \`:journal\`  |   Full Name of the Journal  | Route                                                                              |
   | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |

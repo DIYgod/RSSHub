@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: '423down.com',
     categories: ['program-update'],
     description: '',
+    lang: 'zh-CN',
 };

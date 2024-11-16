@@ -89,7 +89,7 @@ async function handler(ctx) {
             description: postInfo.simpleBody,
             pubDate: parseDate(createdTime, 'x'),
             author: postInfo.postUser.nickname,
-            category: postInfo.boardInfo.title,
+            category: [postInfo.boardInfo.title],
             link: `${webBaseUrl}/bbs/newweb/pc/post/${entityId}`,
             postId: entityId,
         };

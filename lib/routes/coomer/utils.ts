@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const fetchItems = async (ctx, currentUrl) => {
-    const rootUrl = 'https://coomer.party';
+    const rootUrl = 'https://coomer.su';
     currentUrl = `${rootUrl}/${currentUrl}`;
 
     const response = await got({

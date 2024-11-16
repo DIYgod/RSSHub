@@ -9,7 +9,7 @@ import 'dayjs/locale/zh-cn';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import path from 'path';
+import path from 'node:path';
 import { CrowdfundingData, CrowdfundingDetailData, CrowdfundingDetailInfo, CrowdfundingItem, CrowdfundingList, DataResponse } from './types';
 
 dayjs.extend(localizedFormat);

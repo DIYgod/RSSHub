@@ -52,7 +52,7 @@ async function handler(ctx) {
     try {
         data = await api.getUserMedia(id, params);
     } catch (error) {
-        logger.debug(error);
+        logger.error(error);
     }
     const profileImageUrl = userInfo?.profile_image_url || userInfo?.profile_image_url_https;
 

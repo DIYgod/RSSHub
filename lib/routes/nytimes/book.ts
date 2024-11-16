@@ -3,17 +3,17 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 
 const categoryList = {
-    'combined-print-and-e-book-nonfiction': '非虚构类 - 综合',
-    'hardcover-nonfiction': '非虚构类 - 精装本',
-    'paperback-nonfiction': '非虚构类 - 平装本',
-    'advice-how-to-and-miscellaneous': '工具类',
-    'combined-print-and-e-book-fiction': '虚构类 - 综合',
-    'hardcover-fiction': '虚构类 - 精装本',
-    'trade-fiction-paperback': '虚构类 - 平装本',
-    'childrens-middle-grade-hardcover': '儿童 - 中年级',
-    'picture-books': '儿童 - 绘本',
-    'series-books': '儿童 - 系列图书',
-    'young-adult-hardcover': '青少年',
+    'combined-print-and-e-book-nonfiction': 'Combined Print & E-Book Nonfiction',
+    'hardcover-nonfiction': 'Hardcover Nonfiction',
+    'paperback-nonfiction': 'Paperback Nonfiction',
+    'advice-how-to-and-miscellaneous': 'Advice, How-To & Miscellaneous',
+    'combined-print-and-e-book-fiction': 'Combined Print & E-Book Fiction',
+    'hardcover-fiction': 'Hardcover Fiction',
+    'trade-fiction-paperback': 'Paperback Trade Fiction',
+    'childrens-middle-grade-hardcover': "Children's Middle Grade Hardcover",
+    'picture-books': 'Picture Books',
+    'series-books': 'Series Books',
+    'young-adult-hardcover': 'Young Adult Hardcover',
 };
 
 export const route: Route = {
