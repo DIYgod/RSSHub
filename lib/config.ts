@@ -5,12 +5,14 @@ import { ofetch } from 'ofetch';
 let envs = process.env;
 
 export type Config = {
+    // app config
     disallowRobot: boolean;
     enableCluster?: string;
     isPackage: boolean;
     nodeName?: string;
     puppeteerWSEndpoint?: string;
     chromiumExecutablePath?: string;
+    // network
     connect: {
         port: number;
     };
@@ -20,6 +22,7 @@ export type Config = {
     ua: string;
     trueUA: string;
     allowOrigin?: string;
+    // cache
     cache: {
         type: string;
         requestTimeout: number;
@@ -32,6 +35,7 @@ export type Config = {
     redis: {
         url: string;
     };
+    // proxy
     proxyUri?: string;
     proxy: {
         protocol?: string;
@@ -43,7 +47,9 @@ export type Config = {
     };
     pacUri?: string;
     pacScript?: string;
+    // access control
     accessKey?: string;
+    // logging
     debugInfo: string;
     loggerLevel: string;
     noLogfiles?: boolean;
@@ -56,6 +62,8 @@ export type Config = {
         dsn?: string;
         routeTimeout: number;
     };
+    enableRemoteDebugging?: boolean;
+    // feed config
     hotlink: {
         template?: string;
         includePaths?: string[];
@@ -78,6 +86,8 @@ export type Config = {
         promptTitle: string;
         promptDescription: string;
     };
+
+    // Route-specific Configurations
     bilibili: {
         cookies: Record<string, string | undefined>;
         dmImgList?: string;
@@ -296,6 +306,14 @@ export type Config = {
     telegram: {
         token?: string;
         session?: string;
+        apiId?: number;
+        apiHash?: string;
+        maxConcurrentDownloads?: number;
+        proxy?: {
+            host?: string;
+            port?: number;
+            secret?: string;
+        };
     };
     tophub: {
         cookie?: string;
@@ -418,7 +436,6 @@ const calculateValue = () => {
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
         ua: envs.UA ?? (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : randUserAgent({ browser: 'chrome', os: 'mac os', device: 'desktop' })),
         trueUA: TRUE_UA,
-        // cors request
         allowOrigin: envs.ALLOW_ORIGIN,
         // cache
         cache: {
@@ -462,6 +479,7 @@ const calculateValue = () => {
             dsn: envs.SENTRY,
             routeTimeout: toInt(envs.SENTRY_ROUTE_TIMEOUT, 30000),
         },
+        enableRemoteDebugging: toBoolean(envs.ENABLE_REMOTE_DEBUGGING, false),
         // feed config
         hotlink: {
             template: envs.HOTLINK_TEMPLATE,
@@ -709,6 +727,11 @@ const calculateValue = () => {
             apiId: envs.TELEGRAM_API_ID,
             apiHash: envs.TELEGRAM_API_HASH,
             maxConcurrentDownloads: envs.TELEGRAM_MAX_CONCURRENT_DOWNLOADS,
+            proxy: {
+                host: envs.TELEGRAM_PROXY_HOST,
+                port: envs.TELEGRAM_PROXY_PORT,
+                secret: envs.TELEGRAM_PROXY_SECRET,
+            },
         },
         tophub: {
             cookie: envs.TOPHUB_COOKIE,

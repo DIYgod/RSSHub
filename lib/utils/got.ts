@@ -1,9 +1,6 @@
 import { destr } from 'destr';
 import ofetch from '@/utils/ofetch';
-
-function isObject(o) {
-    return o !== null && typeof o === 'object' && Array.isArray(o) === false;
-}
+import { getSearchParamsString } from './helpers';
 
 const getFakeGot = (defaultOptions?: any) => {
     const fakeGot = (request, options?: any) => {
@@ -39,15 +36,7 @@ const getFakeGot = (defaultOptions?: any) => {
             delete options.form;
         }
         if (options?.searchParams) {
-            request +=
-                '?' +
-                new URLSearchParams(
-                    isObject(options.searchParams)
-                        ? Object.entries(options.searchParams)
-                              .filter(([, value]) => value !== undefined)
-                              .map(([key, value]) => [key, String(value)])
-                        : options.searchParams
-                ).toString();
+            request += '?' + getSearchParamsString(options.searchParams);
             delete options.searchParams;
         }
 

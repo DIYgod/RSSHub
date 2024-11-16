@@ -35,7 +35,7 @@ const formatText = (item) => {
     const urls = item.entities.urls || [];
     for (const url of urls) {
         // trim link pointing to the tweet itself (usually appears when the tweet is truncated)
-        text = text.replaceAll(url.url, url.expanded_url.endsWith(id_str) ? '' : url.expanded_url);
+        text = text.replaceAll(url.url, url.expanded_url?.endsWith(id_str) ? '' : url.expanded_url);
     }
     const media = item.extended_entities?.media || [];
     for (const m of media) {

@@ -19,7 +19,7 @@ const token2Cookie = async (token) => {
         return c;
     }
     const jar = new CookieJar();
-    jar.setCookieSync(`auth_token=${token}`, 'https://x.com');
+    await jar.setCookie(`auth_token=${token}`, 'https://x.com');
     try {
         const agent = proxy.proxyUri
             ? new ProxyAgent({
@@ -57,6 +57,7 @@ const getAuth = async (retry: number) => {
         const token = config.twitter.authToken[index];
         const lock = await cache.get(`${lockPrefix}${token}`, false);
         if (lock) {
+            logger.debug(`twitter debug: twitter cookie for token ${token} is locked, retry: ${retry}`);
             await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
             return await getAuth(retry - 1);
         } else {
@@ -284,6 +285,14 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                     if (quote) {
                         t.legacy.quoted_status = quote.legacy;
                         t.legacy.quoted_status.user = quote.core.user_result?.result?.legacy || quote.core.user_results?.result?.legacy;
+                    }
+                    if (t.note_tweet) {
+                        const tmp = t.note_tweet.note_tweet_results.result;
+                        t.legacy.entities.hashtags = tmp.entity_set.hashtags;
+                        t.legacy.entities.symbols = tmp.entity_set.symbols;
+                        t.legacy.entities.urls = tmp.entity_set.urls;
+                        t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
+                        t.legacy.full_text = tmp.text;
                     }
                 }
                 const legacy = tweet.legacy;

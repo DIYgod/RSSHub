@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/:feed?',
     categories: ['programming'],
-    example: '/sycltech/news',
+    example: '/sycl/news',
     parameters: { feed: 'Feed source, defaults to news, references https://feeds.sycl.tech/' },
     features: {
         requireConfig: false,
