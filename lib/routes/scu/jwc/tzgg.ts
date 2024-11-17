@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: '教务处通知公告',
-    maintainers: ['Kyle'],
+    maintainers: ['Kyle-You'],
     handler,
 };
 
