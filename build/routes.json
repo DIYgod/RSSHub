@@ -68072,6 +68072,34 @@
   },
   "scu": {
     "routes": {
+      "/jwc": {
+        "path": "/jwc",
+        "categories": [
+          "university"
+        ],
+        "example": "/scu/jwc",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "jwc.scu.edu.cn"
+            ],
+            "target": "/jwc"
+          }
+        ],
+        "name": "教务处通知公告",
+        "maintainers": [
+          "Kyle-You"
+        ],
+        "location": "jwc/tzgg.ts"
+      },
       "/scupi": {
         "path": "/scupi",
         "categories": [

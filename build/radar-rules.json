@@ -23920,6 +23920,19 @@
       }
     ]
   },
+  "scu.edu.cn": {
+    "_name": "四川大学",
+    "jwc": [
+      {
+        "title": "教务处通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/scu/jwc"
+      }
+    ]
+  },
   "scut.edu.cn": {
     "_name": "华南理工大学",
     "www2": [
