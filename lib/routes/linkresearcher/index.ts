@@ -8,7 +8,7 @@ const baseURL = 'https://www.linkresearcher.com';
 export const route: Route = {
     path: '/:params',
     name: 'Unknown',
-    maintainers: ['yech1990'],
+    maintainers: ['y9c'],
     handler,
 };
 
