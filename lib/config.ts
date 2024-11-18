@@ -252,6 +252,9 @@ export type Config = {
     notion: {
         key?: string;
     };
+    patreon: {
+        sessionId?: string;
+    };
     pianyuan: {
         cookie?: string;
     };
@@ -669,6 +672,9 @@ const calculateValue = () => {
         },
         notion: {
             key: envs.NOTION_TOKEN,
+        },
+        patreon: {
+            sessionId: envs.PATREON_SESSION_ID,
         },
         pianyuan: {
             cookie: envs.PIANYUAN_COOKIE,
