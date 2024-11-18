@@ -215,7 +215,9 @@
   "/6v123/latestTVSeries": [
     "tc9011"
   ],
-  "/78dm*": [],
+  "/78dm/:category{.+}?": [
+    "nczitzk"
+  ],
   "/7mmtv/:language?/:category?/:type?": [
     "nczitzk"
   ],
