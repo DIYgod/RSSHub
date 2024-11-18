@@ -22278,6 +22278,19 @@
       }
     ]
   },
+  "patreon.com": {
+    "_name": "Patreon",
+    ".": [
+      {
+        "title": "Home",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:creator"
+        ],
+        "target": "/patreon/:creator"
+      }
+    ]
+  },
   "paulgraham.com": {
     "_name": "Paul Graham",
     ".": [

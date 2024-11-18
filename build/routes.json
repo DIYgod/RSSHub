@@ -61479,6 +61479,44 @@
     "url": "patagonia.com",
     "lang": "en"
   },
+  "patreon": {
+    "routes": {
+      "/:creator": {
+        "path": "/:creator",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/patreon/straightupsisters",
+        "parameters": {
+          "creator": "Patreon creator id, can be found in the url"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "PATREON_SESSION_ID",
+              "optional": true,
+              "description": "The value of the session_id cookie after logging in to Patreon, required to access paid posts"
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "patreon.com/:creator"
+            ]
+          }
+        ],
+        "name": "Home",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "feed.ts"
+      }
+    },
+    "name": "Patreon",
+    "url": "www.patreon.com",
+    "lang": "en"
+  },
   "paulgraham": {
     "routes": {
       "/articles": {
