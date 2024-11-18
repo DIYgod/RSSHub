@@ -14,9 +14,8 @@ export const route: Route = {
         area: '地区',
     },
     name: '空气质量',
-    categories: ['anime', 'popular'],
-    maintainers: ['lt'],
-    example: 'air/xian',
+    maintainers: ['lifetraveler'],
+    example: '/air/xian',
     handler,
 };
 
@@ -37,18 +36,14 @@ async function handler(ctx) {
         {
             title: title + ' ' + qt + ' ' + pubtime,
             link: currentUrl,
-            pubDate: new Date().toUTCString(),
-            description: `<br/><br/><table border="1 solid black">${table.html()?.toString()}</table>`,
-
+            description: `<br/><br/><table border="1 solid black">${table.html()}</table>`,
             guid: pubtime,
         },
     ];
     return {
         title,
         item: items,
-        description: `
-            * 订阅每个城市的天气质量
-        `,
+        description: '订阅每个城市的天气质量',
         link: currentUrl,
     };
 }
