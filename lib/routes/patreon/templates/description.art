@@ -25,6 +25,7 @@
 
 {{ else }}
 Post type: "{{ attributes.post_type }}" is not supported. <br>
+
 {{ /if }}
 
 {{ if attributes.content || attributes.teaser_text }}

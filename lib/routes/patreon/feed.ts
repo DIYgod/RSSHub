@@ -25,11 +25,6 @@ export const route: Route = {
                 description: 'The value of the session_id cookie after logging in to Patreon, required to access paid posts',
             },
         ],
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
     },
     radar: [
         {
@@ -108,7 +103,6 @@ async function handler(ctx) {
 
         return {
             title: attributes.title,
-            // description: attributes.teaser_text,
             description: art(path.join(__dirname, 'templates/description.art'), {
                 attributes,
                 relationships,
