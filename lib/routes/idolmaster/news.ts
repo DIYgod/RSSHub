@@ -7,8 +7,6 @@ import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 
-const apiUrl = 'https://cmsapi-frontend.idolmaster-official.jp';
-
 export const route: Route = {
     url: 'idolmaster-official.jp/news',
     path: '/news/:routeParams?',
@@ -46,6 +44,8 @@ export const route: Route = {
     handler,
 };
 
+const apiUrl = 'https://cmsapi-frontend.idolmaster-official.jp';
+
 async function handler(ctx: Context): Promise<Data> {
     const tokenUrl = `${apiUrl}/sitern/api/cmsbase/Token/get`;
     const tokenRsp = await got(tokenUrl);
@@ -75,12 +75,14 @@ async function handler(ctx: Context): Promise<Data> {
     const listnRsp = await got(listUrl);
     const articleList = listnRsp.data.data.article_list;
 
-    let items = articleList.map((article): DataItem => ({
+    let items = articleList.map(
+        (article): DataItem => ({
             title: article.title,
             link: article.url,
             pubDate: timezone(parseDate(article.dspdate), +9),
             category: article.categories.subcategory.map((cat) => cat.name),
-        }));
+        })
+    );
 
     items = await Promise.all(
         items.map((item: DataItem) =>
@@ -103,7 +105,7 @@ async function handler(ctx: Context): Promise<Data> {
 
 function toUpperCase(input: string | string[] | undefined): string | string[] | undefined {
     if (!input) {
-        return undefined;
+        return input;
     }
     return typeof input === 'string' ? input.toUpperCase() : input.map((item) => item.toUpperCase());
 }
