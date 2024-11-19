@@ -15,7 +15,8 @@ const getUser = (url, cache) =>
                 await page.setRequestInterception(true);
                 let collect = '';
                 page.on('request', (request) => {
-                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? request.continue() : request.abort();
+                    const type = request.resourceType();
+                    ['document', 'script', 'xhr', 'other', 'preflight'].includes(type) ? request.continue() : request.abort();
                 });
                 logger.http(`Requesting ${url}`);
                 await page.goto(url, {
