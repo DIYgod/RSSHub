@@ -12,7 +12,13 @@ const getUser = (url, cache) =>
             });
             try {
                 const page = await browser.newPage();
+                await page.setRequestInterception(true);
                 let collect = '';
+                page.on('request', (request) => {
+                    const type = request.resourceType();
+                    logger.debug(`Request type: ${type}, url: ${request.url()}`);
+                    ['document', 'script', 'xhr', 'other', 'preflight'].includes(type) ? request.continue() : request.abort();
+                });
                 logger.http(`Requesting ${url}`);
                 await page.goto(url, {
                     waitUntil: 'domcontentloaded',
