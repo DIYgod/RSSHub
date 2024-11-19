@@ -40,7 +40,19 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['china.hket.com/:category/*', 'inews.hket.com/:category/*', 'topick.hket.com/:category/*', 'wealth.hket.com/:category/*'],
+            source: ['china.hket.com/:category/*'],
+            target: '/:category',
+        },
+        {
+            source: ['inews.hket.com/:category/*'],
+            target: '/:category',
+        },
+        {
+            source: ['topick.hket.com/:category/*'],
+            target: '/:category',
+        },
+        {
+            source: ['wealth.hket.com/:category/*'],
             target: '/:category',
         },
         {
