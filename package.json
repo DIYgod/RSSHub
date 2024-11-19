@@ -181,7 +181,7 @@
         "fs-extra": "11.2.0",
         "globals": "15.12.0",
         "got": "14.4.4",
-        "husky": "9.1.6",
+        "husky": "9.1.7",
         "js-beautify": "1.15.1",
         "lint-staged": "15.2.10",
         "mockdate": "3.0.5",
