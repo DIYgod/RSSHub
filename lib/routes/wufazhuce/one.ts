@@ -71,7 +71,7 @@ async function handler(): Promise<Data> {
             cache.tryGet(item.link, async () => {
                 const rsp = await got(item.link);
                 const content = load(rsp.body);
-                item.description = content('#main-container').html() || '';
+                item.description = content('.tab-content').html() || '';
                 return item;
             })
         )
