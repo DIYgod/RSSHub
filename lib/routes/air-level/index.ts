@@ -15,7 +15,7 @@ export const route: Route = {
     },
     name: '空气质量',
     maintainers: ['lifetraveler'],
-    example: '/air/xian',
+    example: '/air-level/air/xian',
     handler,
 };
 
@@ -36,7 +36,7 @@ async function handler(ctx) {
         {
             title: title + ' ' + qt + ' ' + pubtime,
             link: currentUrl,
-            description: `<br/><br/><table border="1 solid black">${table.html()}</table>`,
+            description: `<table border="1 solid black">${table.html()}</table>`,
             guid: pubtime,
         },
     ];

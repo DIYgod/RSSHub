@@ -15,7 +15,7 @@ export const route: Route = {
     },
     name: '空气质量排行',
     maintainers: ['lifetraveler'],
-    example: '/rank/best,/rank',
+    example: '/air-level/rank/best,/air-level/rank',
     handler,
 };
 
@@ -35,16 +35,16 @@ async function handler(ctx) {
     if (status) {
         if (status === 'best') {
             title = titleBest;
-            table = `<br/><table border="1 solid black">${tableBest}</table>`;
+            table = `<table border="1 solid black">${tableBest}</table>`;
         }
 
         if (status === 'worsest') {
             title = titleWorst;
-            table = `<br/><table border="1 solid black">${tableWorst}</table>`;
+            table = `<table border="1 solid black">${tableWorst}</table>`;
         }
     } else {
         title = $('body > div.container > div.row.page > div:nth-child(1) > h2').text().replaceAll('[]', '');
-        table = `<br/>${titleBest}<br/><table border="1 solid black">${tableBest}</table><br/><table border="1 solid black">${titleWorst}<br/>${tableWorst}</table>`;
+        table = `${titleBest}<br/><table border="1 solid black">${tableBest}</table><br/><table border="1 solid black">${titleWorst}<br/>${tableWorst}</table>`;
     }
 
     const pubtime = $('body > div.container > div.row.page > div:nth-child(1) > h4').text();
@@ -52,7 +52,7 @@ async function handler(ctx) {
         {
             title,
             link: currentUrl,
-            description: `${String(table)}`,
+            description: table,
             guid: pubtime,
         },
     ];
