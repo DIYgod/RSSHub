@@ -89,7 +89,8 @@ async function handler(ctx: Context): Promise<Data> {
             cache.tryGet(item.link, async () => {
                 const rsp = await got(item.link);
                 const content = load(rsp.data);
-                item.description = `<div lang="ja">${content('div[class^="style_inner_content"]').html()?.replaceAll('<img src="', `<img src="${apiUrl}/sitern/api/idolmaster/Image/get?path=`)}</div>`;
+                const nextData = JSON.parse(content('script#__NEXT_DATA__').text());
+                item.description = `<div lang="ja">${nextData.props.pageProps.data.content?.replaceAll('<img src="', `<img src="${apiUrl}/sitern/api/idolmaster/Image/get?path=`)}</div>`;
                 return item;
             })
         )
