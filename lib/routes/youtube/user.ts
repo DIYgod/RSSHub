@@ -6,6 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import NotFoundError from '@/errors/types/not-found';
 
 export const route: Route = {
     path: '/user/:username/:embed?',
@@ -73,14 +74,17 @@ async function handler(ctx) {
     }
     const playlistId = userHandleData?.playlistId || (await utils.getChannelWithUsername(username, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
 
-    const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
+    const playlistItems = await utils.getPlaylistItems(playlistId, 'snippet', cache);
+    if (!playlistItems) {
+        throw new NotFoundError("This channel doesn't have any content.");
+    }
 
     return {
         title: `${userHandleData?.channelName || username} - YouTube`,
         link: username.startsWith('@') ? `https://www.youtube.com/${username}` : `https://www.youtube.com/user/${username}`,
         description: userHandleData?.description || `YouTube user ${username}`,
         image: userHandleData?.image,
-        item: data
+        item: playlistItems.data.items
             .filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video')
             .map((item) => {
                 const snippet = item.snippet;
