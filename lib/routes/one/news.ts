@@ -32,8 +32,7 @@ export const route: Route = {
 async function handler(): Promise<Data> {
     const resp = await got(apiUrl);
     const $ = load(resp.body);
-    let items: DataItem[] = [];
-    items = items.concat(
+    let items: DataItem[] = [
         ...$('#carousel-one div.item')
             .toArray()
             .map((item) => {
@@ -43,9 +42,7 @@ async function handler(): Promise<Data> {
                     link: String(a.attr('href')),
                     description: '',
                 };
-            })
-    );
-    items = items.concat(
+            }),
         ...$('.fp-one-articulo a')
             .toArray()
             .map((item) => {
@@ -55,9 +52,7 @@ async function handler(): Promise<Data> {
                     link: String(a.attr('href')),
                     description: '',
                 };
-            })
-    );
-    items = items.concat(
+            }),
         ...$('.fp-one-cuestion a')
             .toArray()
             .map((item) => {
@@ -67,8 +62,9 @@ async function handler(): Promise<Data> {
                     link: String(a.attr('href')),
                     description: '',
                 };
-            })
-    );
+            }),
+    ];
+
     // 添加全文
     items = await Promise.all(
         items.map((item: DataItem) =>
