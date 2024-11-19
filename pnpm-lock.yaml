@@ -21,8 +21,8 @@ importers:
         specifier: 1.13.7
         version: 1.13.7(hono@4.6.10)
       '@hono/zod-openapi':
-        specifier: 0.17.0
-        version: 0.17.0(hono@4.6.10)(zod@3.23.8)
+        specifier: 0.17.1
+        version: 0.17.1(hono@4.6.10)(zod@3.23.8)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -180,8 +180,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
       proxy-chain:
-        specifier: 2.5.4
-        version: 2.5.4
+        specifier: 2.5.5
+        version: 2.5.5
       puppeteer:
         specifier: 22.6.2
         version: 22.6.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)
@@ -277,11 +277,11 @@ importers:
         specifier: 4.1.1
         version: 4.1.1
       '@eslint/eslintrc':
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.2.0
+        version: 3.2.0
       '@eslint/js':
-        specifier: 9.14.0
-        version: 9.14.0
+        specifier: 9.15.0
+        version: 9.15.0
       '@microsoft/eslint-formatter-sarif':
         specifier: 3.1.0
         version: 3.1.0
@@ -1328,8 +1328,8 @@ packages:
     resolution: {integrity: sha512-269Z39MS6wVJtsoUl10L60WdkhJVdPG24Q4eZTH3nnF6lpvSShEK3wQjDX9JRWAUPvPh7COouPpU9IrqaZFvtQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@eslint/eslintrc@3.1.0':
-    resolution: {integrity: sha512-4Bfj15dVJdoy3RfZmmo86RK1Fwzn6SstsvK9JS+BaVKqC6QQQQyXekNaC+g+LKNgkQ+2VhGAzm6hO40AhMR3zQ==}
+  '@eslint/eslintrc@3.2.0':
+    resolution: {integrity: sha512-grOjVNN8P3hjJn/eIETF1wwd12DdnwFDoyceUJLYYdkpbwq3nLi+4fqrTAONx7XDALqlL220wC/RHSC/QTI/0w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/js@8.57.1':
@@ -1338,6 +1338,10 @@ packages:
 
   '@eslint/js@9.14.0':
     resolution: {integrity: sha512-pFoEtFWCPyDOl+C6Ift+wC7Ro89otjigCf5vcuWqWgqNSQbRrpjSvdeE6ofLz4dHmyxD5f7gIdGT4+p36L6Twg==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@eslint/js@9.15.0':
+    resolution: {integrity: sha512-tMTqrY+EzbXmKJR5ToI8lxu7jaN5EdmrBFJpQk5JmSlyLsx6o4t27r883K5xsLuCYCpfKBCGswMSWXsM+jB7lg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/object-schema@2.1.4':
@@ -1354,8 +1358,8 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@hono/zod-openapi@0.17.0':
-    resolution: {integrity: sha512-Ed6U/6cbCOBQYl0N3E94Q9UKAT5eg+x1RtShGU9OERH9ZM/SYMSLk2Biu8Eba2myu7MuzDsne9rVLrUpno1GnA==}
+  '@hono/zod-openapi@0.17.1':
+    resolution: {integrity: sha512-5atEdv7bf92mhxuBVR8LHM4WfaB1jchW+p/f4P/asgWDDmeHcwM8rsBhbbk622MXbUTuAwpsyrJ7u3qnXbjCsQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=4.3.6'
@@ -4667,8 +4671,8 @@ packages:
     resolution: {integrity: sha512-u0piLU+nCOHMgGjRbimiXmA9kM/L9EHh3zL81xCdp7m+Y2pHIsnmbdDoEDoAz5geaonNR6q6+yOPQs6n4T6sBQ==}
     engines: {node: '>= 14'}
 
-  proxy-chain@2.5.4:
-    resolution: {integrity: sha512-Tsdqbo3fyteHO3dHtxcBE6uKlhg4sO2qtDxmiM805l3O08R6zRbGTeIDbW1ksSv/n4xPQ3B0YiK+KZ2D9YIfBA==}
+  proxy-chain@2.5.5:
+    resolution: {integrity: sha512-CPZEmY9FKU3veQQbsrimaXUu5d/FXLfkQj0tCJ8DSJpzQYeDlISbTaf70bjcBQWlXR1FDBOtpFOuB66js+Ik7g==}
     engines: {node: '>=14'}
 
   proxy-from-env@1.1.0:
@@ -6827,7 +6831,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@eslint/eslintrc@3.1.0':
+  '@eslint/eslintrc@3.2.0':
     dependencies:
       ajv: 6.12.6
       debug: 4.3.7
@@ -6845,6 +6849,8 @@ snapshots:
 
   '@eslint/js@9.14.0': {}
 
+  '@eslint/js@9.15.0': {}
+
   '@eslint/object-schema@2.1.4': {}
 
   '@eslint/plugin-kit@0.2.3':
@@ -6855,7 +6861,7 @@ snapshots:
     dependencies:
       hono: 4.6.10
 
-  '@hono/zod-openapi@0.17.0(hono@4.6.10)(zod@3.23.8)':
+  '@hono/zod-openapi@0.17.1(hono@4.6.10)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.2.0(zod@3.23.8)
       '@hono/zod-validator': 0.3.0(hono@4.6.10)(zod@3.23.8)
@@ -8775,7 +8781,7 @@ snapshots:
       '@eslint-community/regexpp': 4.12.1
       '@eslint/config-array': 0.18.0
       '@eslint/core': 0.7.0
-      '@eslint/eslintrc': 3.1.0
+      '@eslint/eslintrc': 3.2.0
       '@eslint/js': 9.14.0
       '@eslint/plugin-kit': 0.2.3
       '@humanfs/node': 0.16.6
@@ -10642,7 +10648,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  proxy-chain@2.5.4:
+  proxy-chain@2.5.5:
     dependencies:
       socks: 2.8.3
       socks-proxy-agent: 8.0.4
