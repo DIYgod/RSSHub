@@ -5648,6 +5648,60 @@
     "url": "pubs.aip.org",
     "lang": "en"
   },
+  "air-level": {
+    "routes": {
+      "/air/:area": {
+        "path": "/air/:area",
+        "radar": [
+          {
+            "source": [
+              "m.air-level.com/air/:area/"
+            ],
+            "target": "/air/:area"
+          }
+        ],
+        "parameters": {
+          "area": "地区"
+        },
+        "name": "空气质量",
+        "maintainers": [
+          "lifetraveler"
+        ],
+        "example": "/air-level/air/xian",
+        "location": "index.ts"
+      },
+      "/rank/:status?": {
+        "path": [
+          "/rank/:status?"
+        ],
+        "radar": [
+          {
+            "source": [
+              "m.air-level.com/rank/:status",
+              "m.air-level.com/rank"
+            ],
+            "target": "/rank/:status"
+          }
+        ],
+        "parameters": {
+          "status": "地区"
+        },
+        "name": "空气质量排行",
+        "maintainers": [
+          "lifetraveler"
+        ],
+        "example": "/air-level/rank/best,/air-level/rank",
+        "location": "levelrank.ts"
+      }
+    },
+    "name": "Air-Level",
+    "url": "air-level.com",
+    "description": "\n  - 可以订阅每个城市的空气质量，按照拼音订阅\n  - 支持订阅每天的实时排名\n    ",
+    "categories": [
+      "forecast"
+    ],
+    "lang": "zh-CN"
+  },
   "airchina": {
     "routes": {
       "/announcement": {
