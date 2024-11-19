@@ -16,7 +16,7 @@ const getUser = (url, cache) =>
                 let collect = '';
                 page.on('request', (request) => {
                     const type = request.resourceType();
-                    ['webp'].includes(type) ? request.abort() : request.continue();
+                    ['image'].includes(type) ? request.abort() : request.continue();
                 });
                 logger.http(`Requesting ${url}`);
                 await page.goto(url, {
