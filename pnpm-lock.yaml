@@ -30,8 +30,8 @@ importers:
         specifier: 1.9.0
         version: 1.9.0
       '@opentelemetry/exporter-prometheus':
-        specifier: 0.54.2
-        version: 0.54.2(@opentelemetry/api@1.9.0)
+        specifier: 0.55.0
+        version: 0.55.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/exporter-trace-otlp-http':
         specifier: 0.55.0
         version: 0.55.0(@opentelemetry/api@1.9.0)
@@ -1519,8 +1519,8 @@ packages:
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.10.0'
 
-  '@opentelemetry/exporter-prometheus@0.54.2':
-    resolution: {integrity: sha512-U/XoupMPmrdEc3tzSxvMft+r/qK2O6SigZWewpC0183UF0cnGlQr1sPx/VxXo7RXJ6zMxDFHhO2Z1AWApXD1Pw==}
+  '@opentelemetry/exporter-prometheus@0.55.0':
+    resolution: {integrity: sha512-huHo4Fw9W2jlMu67EKXTY1DMSzQepmEDTTElPBTJ/2qcdlrFFhuz+neJW9cQ7M7Db8qd7I5bpNdxObCn4ZEjnA==}
     engines: {node: '>=14'}
     peerDependencies:
       '@opentelemetry/api': ^1.3.0
@@ -7067,12 +7067,12 @@ snapshots:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/semantic-conventions': 1.27.0
 
-  '@opentelemetry/exporter-prometheus@0.54.2(@opentelemetry/api@1.9.0)':
+  '@opentelemetry/exporter-prometheus@0.55.0(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/core': 1.27.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/resources': 1.27.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-metrics': 1.27.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/core': 1.28.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/resources': 1.28.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-metrics': 1.28.0(@opentelemetry/api@1.9.0)
 
   '@opentelemetry/exporter-trace-otlp-http@0.55.0(@opentelemetry/api@1.9.0)':
     dependencies:
