@@ -29764,6 +29764,19 @@
       }
     ]
   },
+  "wufazhuce.com": {
+    "_name": "「ONE · 一个」",
+    ".": [
+      {
+        "title": "「ONE · 一个」",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/wufazhuce/one"
+      }
+    ]
+  },
   "wyzxwk.com": {
     "_name": "乌有之乡",
     ".": [

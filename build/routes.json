@@ -86113,6 +86113,41 @@
     "url": "wtu.91wllm.com",
     "lang": "zh-CN"
   },
+  "wufazhuce": {
+    "routes": {
+      "/one": {
+        "path": "/one",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wufazhuce/one",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "wufazhuce.com"
+            ],
+            "target": "/one"
+          }
+        ],
+        "name": "「ONE · 一个」",
+        "maintainers": [
+          "sicheng1806"
+        ],
+        "location": "one.ts"
+      }
+    },
+    "name": "「ONE · 一个」",
+    "url": "wufazhuce.com",
+    "lang": "zh-CN"
+  },
   "wyzxwk": {
     "routes": {
       "/article/:id?": {
