@@ -22,7 +22,10 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['jsjxy.stbu.edu.cn/news', 'jsjxy.stbu.edu.cn', 'stbu.edu.cn'],
+            source: ['jsjxy.stbu.edu.cn/news', 'jsjxy.stbu.edu.cn'],
+        },
+        {
+            source: ['stbu.edu.cn'],
         },
     ],
     name: '计算机学院 - 通知公告',

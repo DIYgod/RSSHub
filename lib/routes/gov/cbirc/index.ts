@@ -110,7 +110,7 @@ export const route: Route = {
     description: `:::tip
   若订阅 [监管动态](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemId=915&itemUrl=ItemListRightList.html)，网址为 \`https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemId=915&itemUrl=ItemListRightList.html\`。截取 \`itemId\` 的值 \`915\` 作为参数填入，此时路由为 [\`/gov/cbirc/915\`](https://rsshub.app/gov/cbirc/915)。
   :::
-  
+
   #### [首页](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=899&itemId=971&itemUrl=ItemListRightMore.html)
 
   | [弹出公告](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=971&itemId=972&itemUrl=sss) | [法律声明](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=971&itemId=4128&itemUrl=ItemListRightArticle.html) |
@@ -194,67 +194,67 @@ export const route: Route = {
         },
         {
             title: '首页 - 弹出公告',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=971&itemId=972&itemUrl=sss'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/972',
         },
         {
             title: '首页 - 法律声明',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=971&itemId=4128&itemUrl=ItemListRightArticle.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/4128',
         },
         {
             title: '机构概况 - 主要职责',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=900&itemId=901&itemUrl=ItemListRightArticle.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/901',
         },
         {
             title: '机构概况 - 总局领导',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=900&itemId=902&itemUrl=jigougaikuang/huilingdao.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/902',
         },
         {
             title: '机构概况 - 内设机构',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=900&itemId=911&itemUrl=jigougaikuang/neishejigou.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/911',
         },
         {
             title: '机构概况 - 直属行政机构',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=900&itemId=4243&itemUrl=jigougaikuang/zhishuxingzhengjigou.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/4243',
         },
         {
             title: '机构概况 - 派出机构',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=900&itemId=912&itemUrl=jigougaikuang/paichujigou.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/912',
         },
         {
             title: '机构概况 - 联系方式',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=900&itemId=913&itemUrl=jigougaikuang/lianxifangshi.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/913',
         },
         {
             title: '新闻资讯 - 监管动态',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=914&itemId=915&itemUrl=ItemListRightList.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/915',
         },
         {
             title: '新闻资讯 - 政策解读',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=914&itemId=916&itemUrl=ItemListRightMore.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/916',
         },
         {
             title: '新闻资讯 - 领导活动及讲话',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=914&itemId=919&itemUrl=ItemListRightList.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/919',
         },
         {
             title: '新闻资讯 - 新闻发布会及访谈',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=914&itemId=920&itemUrl=xinwenzixun/xinwenfabu.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/920',
         },
         {
             title: '新闻资讯 - 新闻发言人',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=914&itemId=921&itemUrl=xinwenzixun/xinwenfayan.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/921',
         },
         {
@@ -264,107 +264,107 @@ export const route: Route = {
         },
         {
             title: '政务信息 - 公告通知',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=923&itemId=925&itemUrl=ItemListRightList.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/925',
         },
         {
             title: '政务信息 - 政策法规',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=923&itemId=926&itemUrl=ItemListRightMore.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/926',
         },
         {
             title: '政务信息 - 行政许可',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=923&itemId=930&itemUrl=zhengwuxinxi/xingzhengxuke.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/930',
         },
         {
             title: '政务信息 - 行政处罚',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=923&itemId=931&itemUrl=zhengwuxinxi/xingzhengchufa.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/931',
         },
         {
             title: '政务信息 - 行政监管措施',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=923&itemId=932&itemUrl=ItemListRightList.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/932',
         },
         {
             title: '政务信息 - 人事信息',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=923&itemId=933&itemUrl=ItemListRightList.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/933',
         },
         {
             title: '在线服务 - 行政许可办事服务指南',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=937&itemId=938&itemUrl=zaixianfuwu/banshifuwu.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/938',
         },
         {
             title: '在线服务 - 查询服务',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=937&itemId=939&itemUrl=zaixianfuwu/chaxunfuwu.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/939',
         },
         {
             title: '互动交流 - 政务咨询',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=945&itemId=946&itemUrl=tosubmenu:hudongjiaoliu/woyaozixun.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/946',
         },
         {
             title: '互动交流 - 征集调查',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=945&itemId=950&itemUrl=ItemListRightMore.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/950',
         },
         {
             title: '互动交流 - 国务院办公厅开通“国家政务服务投诉与建议”小程序',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=945&itemId=952&itemUrl=http://www.gov.cn/xinwen/2018-09/20/content_5323786.htm'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/952',
         },
         {
             title: '统计数据 - 统计信息',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=953&itemId=954&itemUrl=ItemListRightList.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/954',
         },
         {
             title: '统计数据 - 数据图表',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=953&itemId=955&itemUrl=tosubmenu:tongjishuju/zongzichan.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/955',
         },
         {
             title: '专题专栏 - 推进普惠金融高质量发展',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=960&itemId=4234&itemUrl=ItemListRightMore.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/4234',
         },
         {
             title: '专题专栏 - 防范和处置非法集资',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=960&itemId=963&itemUrl=ItemListRightMore.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/963',
         },
         {
             title: '专题专栏 - 消费者保护',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=960&itemId=4097&itemUrl=ItemListRightMore.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/4097',
         },
         {
             title: '专题专栏 - 法治宣传',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=960&itemId=4106&itemUrl=ItemListRightMore.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/4106',
         },
         {
             title: '专题专栏 - 政府网站年度报表',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=960&itemId=970&itemUrl=ItemListRightList.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/970',
         },
         {
             title: '专题专栏 - 服务民营企业',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=960&itemId=4171&itemUrl=ItemListRightList.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/4171',
         },
         {
             title: '专题专栏 - 服务制造业发展',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=960&itemId=4217&itemUrl=ItemListRightList.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/4217',
         },
         {
             title: '专题专栏 - 学习贯彻习近平新时代中国特色社会主义思想主题教育',
-            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=960&itemId=4229&itemUrl=ItemListRightMore.html'],
+            source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/4229',
         },
     ],
