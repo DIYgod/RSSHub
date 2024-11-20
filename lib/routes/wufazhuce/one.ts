@@ -38,9 +38,10 @@ async function handler(): Promise<Data> {
             .map((item) => {
                 const a = $(item).find('.fp-one-cita a').first();
                 return {
-                    title: `[摄影]${a.text()}`,
+                    title: a.text(),
                     link: a.attr('href'),
                     description: '',
+                    category: '摄影',
                 };
             }),
         ...$('.fp-one-articulo a')
@@ -48,9 +49,10 @@ async function handler(): Promise<Data> {
             .map((item) => {
                 const a = $(item);
                 return {
-                    title: `[ONE 文章]${a.text()}`,
+                    title: a.text(),
                     link: a.attr('href'),
                     description: '',
+                    category: '文章',
                 };
             }),
         ...$('.fp-one-cuestion a')
@@ -58,9 +60,10 @@ async function handler(): Promise<Data> {
             .map((item) => {
                 const a = $(item);
                 return {
-                    title: `[ONE 问题]${a.text()}`,
+                    title: a.text(),
                     link: a.attr('href'),
                     description: '',
+                    category: '问题',
                 };
             }),
     ];
