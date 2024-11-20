@@ -2,6 +2,7 @@ import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getUser } from './util';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/:user_id/:category',
@@ -57,6 +58,7 @@ async function handler(ctx) {
                 description: `<img src ="${noteCard.cover.infoList.pop().url}"><br>${noteCard.displayTitle}`,
                 author: noteCard.user.nickname,
                 upvotes: noteCard.interactInfo.likedCount,
+                pubDate: parseDate(new Date().toISOString()),
             }))
         );
     const renderCollect = (collect) => {
@@ -75,6 +77,7 @@ async function handler(ctx) {
             description: `<img src ="${item.cover.info_list.pop().url}"><br>${item.display_title}`,
             author: item.user.nickname,
             upvotes: item.interact_info.likedCount,
+            pubDate: parseDate(new Date().toISOString()),
         }));
     };
 
