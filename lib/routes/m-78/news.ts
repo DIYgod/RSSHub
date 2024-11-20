@@ -108,6 +108,7 @@ async function handler(ctx: Context): Promise<Data> {
                 link: post.link,
                 description: $.html(),
                 pubDate: parseDate(post.date_gmt),
+                updated: parseDate(post.modified_gmt),
             };
         }),
     };
