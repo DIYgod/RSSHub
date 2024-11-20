@@ -61,9 +61,9 @@ async function handler(ctx: Context): Promise<Data> {
 
     const routeParams = ctx.req.param('routeParams');
     if (routeParams) {
-        const routeParams = querystring.parse(ctx.req.param('routeParams'));
-        options.subcategory = toUpperCase(routeParams.category);
-        options.brand = toUpperCase(routeParams.brand);
+        const queries = querystring.parse(routeParams);
+        options.subcategory = toUpperCase(queries.category);
+        options.brand = toUpperCase(queries.brand);
     }
 
     const limitParam = ctx.req.query('limit');
