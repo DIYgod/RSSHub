@@ -3417,8 +3417,7 @@
           "/:region/displays-desktops/:productLine/:series/:model",
           "/:region/laptops/:productLine/:series/:model",
           "/:region/motherboards-components/:productLine/:series/:model",
-          "/:region/networking-iot-servers/:productLine/:series/:model",
-          "/"
+          "/:region/networking-iot-servers/:productLine/:series/:model"
         ],
         "target": "/asus/bios/:model"
       }
@@ -4008,13 +4007,20 @@
         "title": "每日壁纸",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
-          "/",
           "/"
         ],
         "target": "/bing/:routeParams?"
       }
     ],
     "cn": [
+      {
+        "title": "每日壁纸",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/bing/:routeParams?"
+      },
       {
         "title": "搜索",
         "docs": "https://docs.rsshub.app/routes/other",
@@ -5029,7 +5035,7 @@
         "title": "首页 - 弹出公告",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=971&itemId=972&itemUrl=sss"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/972"
       },
@@ -5037,7 +5043,7 @@
         "title": "首页 - 法律声明",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=971&itemId=4128&itemUrl=ItemListRightArticle.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/4128"
       },
@@ -5045,7 +5051,7 @@
         "title": "机构概况 - 主要职责",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=900&itemId=901&itemUrl=ItemListRightArticle.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/901"
       },
@@ -5053,7 +5059,7 @@
         "title": "机构概况 - 总局领导",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=900&itemId=902&itemUrl=jigougaikuang/huilingdao.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/902"
       },
@@ -5061,7 +5067,7 @@
         "title": "机构概况 - 内设机构",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=900&itemId=911&itemUrl=jigougaikuang/neishejigou.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/911"
       },
@@ -5069,7 +5075,7 @@
         "title": "机构概况 - 直属行政机构",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=900&itemId=4243&itemUrl=jigougaikuang/zhishuxingzhengjigou.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/4243"
       },
@@ -5077,7 +5083,7 @@
         "title": "机构概况 - 派出机构",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=900&itemId=912&itemUrl=jigougaikuang/paichujigou.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/912"
       },
@@ -5085,7 +5091,7 @@
         "title": "机构概况 - 联系方式",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=900&itemId=913&itemUrl=jigougaikuang/lianxifangshi.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/913"
       },
@@ -5093,7 +5099,7 @@
         "title": "新闻资讯 - 监管动态",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=914&itemId=915&itemUrl=ItemListRightList.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/915"
       },
@@ -5101,7 +5107,7 @@
         "title": "新闻资讯 - 政策解读",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=914&itemId=916&itemUrl=ItemListRightMore.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/916"
       },
@@ -5109,7 +5115,7 @@
         "title": "新闻资讯 - 领导活动及讲话",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=914&itemId=919&itemUrl=ItemListRightList.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/919"
       },
@@ -5117,7 +5123,7 @@
         "title": "新闻资讯 - 新闻发布会及访谈",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=914&itemId=920&itemUrl=xinwenzixun/xinwenfabu.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/920"
       },
@@ -5125,7 +5131,7 @@
         "title": "新闻资讯 - 新闻发言人",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=914&itemId=921&itemUrl=xinwenzixun/xinwenfayan.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/921"
       },
@@ -5141,7 +5147,7 @@
         "title": "政务信息 - 公告通知",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=923&itemId=925&itemUrl=ItemListRightList.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/925"
       },
@@ -5149,7 +5155,7 @@
         "title": "政务信息 - 政策法规",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=923&itemId=926&itemUrl=ItemListRightMore.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/926"
       },
@@ -5157,7 +5163,7 @@
         "title": "政务信息 - 行政许可",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=923&itemId=930&itemUrl=zhengwuxinxi/xingzhengxuke.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/930"
       },
@@ -5165,7 +5171,7 @@
         "title": "政务信息 - 行政处罚",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=923&itemId=931&itemUrl=zhengwuxinxi/xingzhengchufa.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/931"
       },
@@ -5173,7 +5179,7 @@
         "title": "政务信息 - 行政监管措施",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=923&itemId=932&itemUrl=ItemListRightList.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/932"
       },
@@ -5181,7 +5187,7 @@
         "title": "政务信息 - 人事信息",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=923&itemId=933&itemUrl=ItemListRightList.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/933"
       },
@@ -5189,7 +5195,7 @@
         "title": "在线服务 - 行政许可办事服务指南",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=937&itemId=938&itemUrl=zaixianfuwu/banshifuwu.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/938"
       },
@@ -5197,7 +5203,7 @@
         "title": "在线服务 - 查询服务",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=937&itemId=939&itemUrl=zaixianfuwu/chaxunfuwu.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/939"
       },
@@ -5205,7 +5211,7 @@
         "title": "互动交流 - 政务咨询",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=945&itemId=946&itemUrl=tosubmenu:hudongjiaoliu/woyaozixun.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/946"
       },
@@ -5213,7 +5219,7 @@
         "title": "互动交流 - 征集调查",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=945&itemId=950&itemUrl=ItemListRightMore.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/950"
       },
@@ -5221,7 +5227,7 @@
         "title": "互动交流 - 国务院办公厅开通“国家政务服务投诉与建议”小程序",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=945&itemId=952&itemUrl=http://www.gov.cn/xinwen/2018-09/20/content_5323786.htm"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/952"
       },
@@ -5229,7 +5235,7 @@
         "title": "统计数据 - 统计信息",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=953&itemId=954&itemUrl=ItemListRightList.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/954"
       },
@@ -5237,7 +5243,7 @@
         "title": "统计数据 - 数据图表",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=953&itemId=955&itemUrl=tosubmenu:tongjishuju/zongzichan.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/955"
       },
@@ -5245,7 +5251,7 @@
         "title": "专题专栏 - 推进普惠金融高质量发展",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=960&itemId=4234&itemUrl=ItemListRightMore.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/4234"
       },
@@ -5253,7 +5259,7 @@
         "title": "专题专栏 - 防范和处置非法集资",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=960&itemId=963&itemUrl=ItemListRightMore.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/963"
       },
@@ -5261,7 +5267,7 @@
         "title": "专题专栏 - 消费者保护",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=960&itemId=4097&itemUrl=ItemListRightMore.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/4097"
       },
@@ -5269,7 +5275,7 @@
         "title": "专题专栏 - 法治宣传",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=960&itemId=4106&itemUrl=ItemListRightMore.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/4106"
       },
@@ -5277,7 +5283,7 @@
         "title": "专题专栏 - 政府网站年度报表",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=960&itemId=970&itemUrl=ItemListRightList.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/970"
       },
@@ -5285,7 +5291,7 @@
         "title": "专题专栏 - 服务民营企业",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=960&itemId=4171&itemUrl=ItemListRightList.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/4171"
       },
@@ -5293,7 +5299,7 @@
         "title": "专题专栏 - 服务制造业发展",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=960&itemId=4217&itemUrl=ItemListRightList.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/4217"
       },
@@ -5301,7 +5307,7 @@
         "title": "专题专栏 - 学习贯彻习近平新时代中国特色社会主义思想主题教育",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/cn/view/pages/ItemList.html?itemPId=960&itemId=4229&itemUrl=ItemListRightMore.html"
+          "/cn/view/pages/ItemList.html"
         ],
         "target": "/gov/cbirc/4229"
       }
@@ -5726,7 +5732,7 @@
         "title": "协会动态",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/xiehui_list.jsp?type=1"
+          "/portal/cn/xiehui_list.jsp"
         ],
         "target": "/ccfa/1"
       },
@@ -5734,7 +5740,7 @@
         "title": "行业动态",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/xiehui_list.jsp?type=2"
+          "/portal/cn/xiehui_list.jsp"
         ],
         "target": "/ccfa/2"
       },
@@ -5742,7 +5748,7 @@
         "title": "政策/报告/标准",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/hybz_list.jsp?type=33"
+          "/portal/cn/hybz_list.jsp"
         ],
         "target": "/ccfa/33"
       },
@@ -5750,7 +5756,7 @@
         "title": "行业统计",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/lsbq.jsp?type=10003"
+          "/portal/cn/lsbq.jsp"
         ],
         "target": "/ccfa/10003"
       },
@@ -5758,7 +5764,7 @@
         "title": "创新案例",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/hybzs_list.jsp?type=10004"
+          "/portal/cn/hybzs_list.jsp"
         ],
         "target": "/ccfa/10004"
       },
@@ -5766,7 +5772,7 @@
         "title": "党建工作",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/xiehui_list.jsp?type=7"
+          "/portal/cn/xiehui_list.jsp"
         ],
         "target": "/ccfa/7"
       },
@@ -5774,7 +5780,7 @@
         "title": "新消费论坛",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/xiehui_list.jsp?type=10005"
+          "/portal/cn/xiehui_list.jsp"
         ],
         "target": "/ccfa/10005"
       },
@@ -5782,7 +5788,7 @@
         "title": "政策/报告/标准 - 行业报告",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/hybz_list.jsp?type=33"
+          "/portal/cn/hybz_list.jsp"
         ],
         "target": "/ccfa/33"
       },
@@ -5790,7 +5796,7 @@
         "title": "政策/报告/标准 - 行业标准",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/hybz_list.jsp?type=34"
+          "/portal/cn/hybz_list.jsp"
         ],
         "target": "/ccfa/34"
       },
@@ -5798,7 +5804,7 @@
         "title": "政策/报告/标准 - 行业政策",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/fangyizhuanqu_list.jsp?type=39"
+          "/portal/cn/fangyizhuanqu_list.jsp"
         ],
         "target": "/ccfa/39"
       },
@@ -5806,7 +5812,7 @@
         "title": "政策/报告/标准 - 政策权威解读",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/portal/cn/fangyizhuanqu_list.jsp?type=40"
+          "/portal/cn/fangyizhuanqu_list.jsp"
         ],
         "target": "/ccfa/40"
       }
@@ -7214,7 +7220,7 @@
         "title": "行业新闻 - 国内乘用车",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=news&anid=10"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/news/10"
       },
@@ -7222,7 +7228,7 @@
         "title": "行业新闻 - 进口及国外乘用车",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=news&anid=64"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/news/64"
       },
@@ -7230,7 +7236,7 @@
         "title": "行业新闻 - 后市场",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=news&anid=44"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/news/44"
       },
@@ -7238,7 +7244,7 @@
         "title": "行业新闻 - 商用车",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=news&anid=62"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/news/62"
       },
@@ -7246,7 +7252,7 @@
         "title": "车市解读 - 周度",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=csjd&anid=128"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/csjd/128"
       },
@@ -7254,7 +7260,7 @@
         "title": "车市解读 - 月度",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=csjd&anid=129"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/csjd/129"
       },
@@ -7262,7 +7268,7 @@
         "title": "车市解读 - 指数",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=csjd&anid=130"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/csjd/130"
       },
@@ -7270,7 +7276,7 @@
         "title": "车市解读 - 预测",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=csjd&anid=131"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/csjd/131"
       },
@@ -7278,7 +7284,7 @@
         "title": "发布会报告 - 上海市场上牌数",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=bgzl&anid=119"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/bgzl/119"
       },
@@ -7286,7 +7292,7 @@
         "title": "发布会报告 - 京城车市",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=bgzl&anid=122"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/bgzl/122"
       },
@@ -7294,7 +7300,7 @@
         "title": "发布会报告 - 进口车市场分析",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=bgzl&anid=120"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/bgzl/120"
       },
@@ -7302,7 +7308,7 @@
         "title": "发布会报告 - 二手车市场分析",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=bgzl&anid=121"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/bgzl/121"
       },
@@ -7310,7 +7316,7 @@
         "title": "发布会报告 - 价格指数",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=bgzl&anid=124"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/bgzl/124"
       },
@@ -7318,7 +7324,7 @@
         "title": "发布会报告 - 热点评述",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=bgzl&anid=125"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/bgzl/125"
       },
@@ -7326,7 +7332,7 @@
         "title": "发布会报告 - 新能源月报",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=bgzl&anid=126"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/bgzl/126"
       },
@@ -7334,7 +7340,7 @@
         "title": "发布会报告 - 商用车月报",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=bgzl&anid=127"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/bgzl/127"
       },
@@ -7342,7 +7348,7 @@
         "title": "发布会报告 - 政策分析",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=bgzl&anid=123"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/bgzl/123"
       },
@@ -7350,7 +7356,7 @@
         "title": "经济与政策 - 一周经济",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=meeting&anid=46"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/meeting/46"
       },
@@ -7358,7 +7364,7 @@
         "title": "经济与政策 - 一周政策",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=meeting&anid=47"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/meeting/47"
       },
@@ -7366,7 +7372,7 @@
         "title": "乘联会论坛 - 论坛文章",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=yjsy&anid=49"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/yjsy/49"
       },
@@ -7374,7 +7380,7 @@
         "title": "乘联会论坛 - 两会",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=yjsy&anid=111"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/yjsy/111"
       },
@@ -7382,7 +7388,7 @@
         "title": "乘联会论坛 - 车展看点",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news.php?types=yjsy&anid=113"
+          "/news.php"
         ],
         "target": "/cpcaauto/news/yjsy/113"
       }
@@ -8837,7 +8843,16 @@
         "title": "教务处通知",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
-          "/",
+          "/"
+        ],
+        "target": "/ecnu/tzgg"
+      }
+    ],
+    "www": [
+      {
+        "title": "教务处通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
           "/"
         ],
         "target": "/ecnu/tzgg"
@@ -13714,9 +13729,36 @@
         "title": "新闻",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/:category/*",
-          "/:category/*",
-          "/:category/*",
+          "/:category/*"
+        ],
+        "target": "/hket/:category"
+      }
+    ],
+    "inews": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category/*"
+        ],
+        "target": "/hket/:category"
+      }
+    ],
+    "topick": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category/*"
+        ],
+        "target": "/hket/:category"
+      }
+    ],
+    "wealth": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
           "/:category/*"
         ],
         "target": "/hket/:category"
@@ -14191,7 +14233,7 @@
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/",
-          "/",
+          "/tzgg_8472",
           "/:category"
         ],
         "target": "/hunau/:category"
@@ -14201,7 +14243,7 @@
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/",
-          "/",
+          "/tzgg_8472",
           "/:category"
         ],
         "target": "/hunau/:category"
@@ -14211,7 +14253,7 @@
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/",
-          "/",
+          "/tzgg_8472",
           "/:category"
         ],
         "target": "/hunau/:category"
@@ -14221,7 +14263,7 @@
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/",
-          "/",
+          "/tzgg_8472",
           "/:category"
         ],
         "target": "/hunau/:category"
@@ -16185,7 +16227,7 @@
         "title": "财经",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N1"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N1"
       },
@@ -16193,7 +16235,7 @@
         "title": "国际",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N2"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N2"
       },
@@ -16201,7 +16243,7 @@
         "title": "北韩",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N3"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N3"
       },
@@ -16209,7 +16251,7 @@
         "title": "政治·社会",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N4"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N4"
       },
@@ -16217,7 +16259,7 @@
         "title": "中国观察",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N5"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N5"
       },
@@ -16225,7 +16267,7 @@
         "title": "社论",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N26"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N26"
       },
@@ -16233,7 +16275,7 @@
         "title": "专栏·观点",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N11"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N11"
       },
@@ -16241,7 +16283,7 @@
         "title": "军事·科技",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N6"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N6"
       },
@@ -16249,7 +16291,7 @@
         "title": "娱乐体育",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N7"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N7"
       },
@@ -16257,7 +16299,7 @@
         "title": "教育",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N8"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N8"
       },
@@ -16265,7 +16307,7 @@
         "title": "旅游美食",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N9"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N9"
       },
@@ -16273,7 +16315,7 @@
         "title": "时尚",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N10"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N10"
       },
@@ -16281,7 +16323,7 @@
         "title": "图集",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/news/articleList.html?sc_section_code=S1N12"
+          "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N12"
       }
@@ -26636,13 +26678,20 @@
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/news",
-          "/",
           "/"
         ],
         "target": "/stbu/jsjxy"
       }
     ],
     ".": [
+      {
+        "title": "计算机学院 - 通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/stbu/jsjxy"
+      },
       {
         "title": "学院新闻",
         "docs": "https://docs.rsshub.app/routes/university",
@@ -30066,7 +30115,6 @@
         "title": "合作媒體",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/",
           "/"
         ],
         "target": "/yahoo/news/list/:region/:listId"
@@ -30075,7 +30123,6 @@
         "title": "新聞來源列表",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/",
           "/"
         ],
         "target": "/yahoo/news/providers/:region/list"
@@ -30084,7 +30131,32 @@
         "title": "新聞來源",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/",
+          "/"
+        ],
+        "target": "/yahoo/news/provider/:region/:providerId"
+      }
+    ],
+    "tw.news": [
+      {
+        "title": "合作媒體",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/yahoo/news/list/:region/:listId"
+      },
+      {
+        "title": "新聞來源列表",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/yahoo/news/providers/:region/list"
+      },
+      {
+        "title": "新聞來源",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
           "/"
         ],
         "target": "/yahoo/news/provider/:region/:providerId"
@@ -30793,7 +30865,7 @@
         "title": "浙江工业大学计算机科学与技术学院、软件学院",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
-          "/jsp/newsclass.jsp?wcId=:type"
+          "/jsp/newsclass.jsp"
         ],
         "target": "/zjut/cs/:type"
       }
