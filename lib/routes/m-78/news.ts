@@ -1,10 +1,10 @@
 import { type Data, type Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import type { Context } from 'hono';
-import { ParameterError } from 'tough-cookie';
 import type { Post } from './types';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     name: 'ニュース',
@@ -86,7 +86,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const categories = await ofetch(`${cateAPIUrl}?slug=${category}`);
     if (categories.length === 0) {
-        throw new ParameterError('Category not found');
+        throw new InvalidParameterError('Category not found');
     }
 
     const { id: categoryId, link: categoryLink, name: categoryName } = categories[0];
