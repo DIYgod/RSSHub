@@ -8,7 +8,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     name: 'ニュース',
-    categories: ['new-media'],
+    categories: ['anime'],
     path: '/news/:category?',
     example: '/m-78/news',
     radar: [
