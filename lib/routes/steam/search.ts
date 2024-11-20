@@ -34,7 +34,7 @@ async function handler(ctx) {
                 const isBundle = !!$el.attr('data-ds-bundle-data');
                 const isDiscounted = $el.find('.discount_original_price').length > 0;
                 const hasReview = $el.find('.search_review_summary').length > 0;
-                const appID : string | undefined = $el.attr('data-ds-appid');
+                const appID: string | undefined = $el.attr('data-ds-appid');
 
                 let desc = '';
                 if (isBundle) {
