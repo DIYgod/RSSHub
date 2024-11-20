@@ -17499,6 +17499,27 @@
       }
     ]
   },
+  "m-78.jp": {
+    "_name": "円谷ステーション",
+    ".": [
+      {
+        "title": "ニュース",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/news"
+        ],
+        "target": "/m-78/news"
+      },
+      {
+        "title": "ニュース",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/news/category/:category"
+        ],
+        "target": "/m-78/news/:category"
+      }
+    ]
+  },
   "macfilos.com": {
     "_name": "Macfilos",
     ".": [

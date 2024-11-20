@@ -4193,6 +4193,9 @@
   "/lxixsxa/info": [
     "Kiotlin"
   ],
+  "/m-78/news/:category?": [
+    "KarasuShin"
+  ],
   "/m4/:id?/:category{.+}?": [],
   "/maccms/:domain/:type?/:size?": [
     "hualiong"
