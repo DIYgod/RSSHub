@@ -36,7 +36,6 @@ async function handler(ctx) {
     let { year, issue } = ctx.req.param();
 
     if (!year) {
-        // 获取最新一期的 year 和 issue
         const response = await got('https://shxyj.ajcass.com/');
         const $ = load(response.body);
         const latestIssueText = $('p.hod.pop').first().text();
@@ -55,7 +54,8 @@ async function handler(ctx) {
     const $ = load(response.body);
 
     const items = $('#tab tr')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const $item = $(item);
             const articleTitle = $item.find('a').first().text().trim();
             const articleLink = $item.find('a').first().attr('href');
@@ -72,12 +72,9 @@ async function handler(ctx) {
                     pubDate,
                 };
             }
-            return null; // 确保在所有情况下都有返回值
+            return null;
         })
-        .toArray();
-
-    // eslint-disable-next-line no-console
-    console.log('items:', JSON.stringify(items, null, 2));
+        .filter((item) => item !== null);
 
     return {
         title: `社会学研究 ${year}年第${issue}期`,
