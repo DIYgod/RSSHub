@@ -86729,8 +86729,8 @@
         ],
         "location": "board.ts"
       },
-      "/user/:user_id/notes/fulltext": {
-        "path": "/user/:user_id/notes/fulltext",
+      "/user/:user_id/notes/:fulltext": {
+        "path": "/user/:user_id/notes/:fulltext",
         "radar": [
           {
             "source": [
@@ -86746,10 +86746,21 @@
         "example": "/xiaohongshu/user/52d8c541b4c4d60e6c867480/notes/fulltext",
         "features": {
           "antiCrawler": true,
-          "requirePuppeteer": true
+          "requirePuppeteer": true,
+          "requireConfig": [
+            {
+              "name": "XIAOHONGSHU_COOKIE",
+              "optional": true,
+              "description": "小红书 cookie 值，可在网络里面看到。"
+            }
+          ]
         },
         "parameters": {
-          "user_id": "user id, length 24 characters"
+          "user_id": "user id, length 24 characters",
+          "fulltext": {
+            "description": "是否获取全文",
+            "default": ""
+          }
         },
         "location": "notes.ts"
       },
