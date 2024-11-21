@@ -8,7 +8,7 @@ import { Data } from '@/types';
 
 const bypassList = new Set(['/', '/robots.txt', '/logo.png', '/favicon.ico']);
 // only give cache string, as the `!` condition tricky
-// md5 is used to shrink key size
+// XXH64 is used to shrink key size
 // plz, write these tips in comments!
 const middleware: MiddlewareHandler = async (ctx, next) => {
     if (!cacheModule.status.available || bypassList.has(ctx.req.path)) {
@@ -16,9 +16,11 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         return;
     }
 
+    const requestPath = ctx.req.path;
+    const limit = ctx.req.query('limit') ? `:${ctx.req.query('limit')}` : '';
     const { h64ToString } = await xxhash();
-    const key = 'rsshub:koa-redis-cache:' + h64ToString(ctx.req.path);
-    const controlKey = 'rsshub:path-requested:' + h64ToString(ctx.req.path);
+    const key = 'rsshub:koa-redis-cache:' + h64ToString(requestPath + limit);
+    const controlKey = 'rsshub:path-requested:' + h64ToString(requestPath + limit);
 
     const isRequesting = await cacheModule.globalCache.get(controlKey);
 
