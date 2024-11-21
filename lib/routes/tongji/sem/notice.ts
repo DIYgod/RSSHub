@@ -49,7 +49,9 @@ async function handler(ctx) {
     return {
         title: '同济大学经济与管理学院',
         description: String(subType.has(type) ? subTypeName[type] : '学院通知'),
-        image: 'https://tongji.edu.cn/images/badge.png',
+        image: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
+        icon: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
+        logo: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
         link: 'https://sem.tongji.edu.cn/semch',
         item: resultsWithContent,
     };
