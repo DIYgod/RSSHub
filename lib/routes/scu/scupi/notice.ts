@@ -33,7 +33,8 @@ async function handler() {
         title: '四川大学匹兹堡学院',
         description: '四川大学匹兹堡学院官网通知',
         language: 'zh-cn',
-        image: 'https://scupi.scu.edu.cn/wp-content/themes/scupi/img/logo.png',
+        image: 'https://upload.wikimedia.org/wikipedia/zh/4/45/Sichuan_University_logo.svg',
+        logo: 'https://upload.wikimedia.org/wikipedia/zh/4/45/Sichuan_University_logo.svg',
         link: 'https://scupi.scu.edu.cn/',
         item: itemsWithContent,
     };
