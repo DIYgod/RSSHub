@@ -37,6 +37,12 @@ export const route: Route = {
     description: `| 名师风采 | 热点新闻 | 教务公告 | 教学新闻 |
   | -------- | -------- | -------- | -------- |
   | 351      | 353      | 354      | 355      |`,
+    radar: [
+        {
+            source: ['jwzx.hrbust.edu.cn/homepage/index.do'],
+            target: '/jwzx',
+        },
+    ],
 };
 
 async function handler(ctx) {
