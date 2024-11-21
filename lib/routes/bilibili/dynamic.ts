@@ -16,15 +16,15 @@ export const route: Route = {
     parameters: {
         uid: '用户 id, 可在 UP 主主页中找到',
         routeParams: `
-| 键           | 含义                              | 接受的值       | 默认值 |
-| ------------ | --------------------------------- | -------------- | ------ |
-| showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |
-| disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |
-| useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
-| directLink   | 使用内容直链                      | 0/1/true/false | false  |
-| hideGoods    | 隐藏带货动态                      | 0/1/true/false | false  |
+| 键         | 含义                              | 接受的值       | 默认值 |
+| ---------- | --------------------------------- | -------------- | ------ |
+| showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |
+| embed      | 默认开启内嵌视频                  | 0/1/true/false |  true  |
+| useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
+| directLink | 使用内容直链                      | 0/1/true/false | false  |
+| hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |
 
-用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1\``,
+用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&embed=0&useAvid=1\``,
     },
     features: {
         requireConfig: [
@@ -108,16 +108,17 @@ const getDes = (data: Modules): string => {
 const getOriginTitle = (data?: Modules) => data && getTitle(data);
 const getOriginDes = (data?: Modules) => data && getDes(data);
 const getOriginName = (data?: Modules) => data?.module_author?.name;
-const getIframe = (data?: Modules, disableEmbed: boolean = false) => {
-    if (disableEmbed) {
+const getIframe = (data?: Modules, embed: boolean = true) => {
+    if (!embed) {
         return '';
     }
     const aid = data?.module_dynamic?.major?.archive?.aid;
     const bvid = data?.module_dynamic?.major?.archive?.bvid;
-    if (!aid) {
+    if (aid === undefined && bvid === undefined) {
         return '';
     }
-    return utils.iframe(aid, null, bvid);
+    // 不通过 utils.renderUGCDescription 渲染 img/description 以兼容其他格式的动态
+    return utils.renderUGCDescription(embed, '', '', aid, undefined, bvid);
 };
 
 const getImgs = (data?: Modules) => {
@@ -146,7 +147,10 @@ const getImgs = (data?: Modules) => {
     if (major[type]?.cover) {
         imgUrls.push(major[type].cover);
     }
-    return imgUrls.map((url) => `<img src="${url}">`).join('');
+    return imgUrls
+        .filter(Boolean)
+        .map((url) => `<img src="${url}">`)
+        .join('');
 };
 
 const getUrl = (item?: Item2, useAvid = false) => {
@@ -226,7 +230,7 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
-    const disableEmbed = fallback(undefined, queryToBoolean(routeParams.disableEmbed), false);
+    const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = ctx.req.query('mode') === 'fulltext';
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
     const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
@@ -243,8 +247,7 @@ async function handler(ctx) {
     });
     const body = JSONbig.parse(response.body);
     if (body?.code === -352) {
-        cacheIn.clearCookie();
-        throw new Error('The cookie has expired, please try again.');
+        throw new Error('Request failed, please try again.');
     }
     const items = (body as BilibiliWebDynamicResponse)?.data?.items;
 
@@ -256,7 +259,12 @@ async function handler(ctx) {
 
     const rssItems = await Promise.all(
         items
-            .filter((item) => !hideGoods || item.modules.module_dynamic?.additional?.type !== 'ADDITIONAL_TYPE_GOODS')
+            .filter((item) => {
+                if (hideGoods) {
+                    return item.modules.module_dynamic?.additional?.type !== 'ADDITIONAL_TYPE_GOODS';
+                }
+                return true;
+            })
             .map(async (item) => {
                 // const parsed = JSONbig.parse(item.card);
 
@@ -355,10 +363,9 @@ async function handler(ctx) {
                 // 换行处理
                 description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
                 originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
-
-                const descriptions = [description, originDescription, urlText, originUrlText, getIframe(data, disableEmbed), getIframe(origin, disableEmbed), getImgs(data), getImgs(origin)]
-                    .filter(Boolean)
+                const descriptions = [description, getIframe(data, embed), getImgs(data), urlText, originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
                     .map((e) => e?.trim())
+                    .filter(Boolean)
                     .join('<br>');
 
                 return {

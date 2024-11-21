@@ -19,7 +19,7 @@ export const route: Route = {
         },
     ],
     handler,
-    maintainers: ['KarasuShin', 'DIYgod'],
+    maintainers: ['KarasuShin', 'DIYgod', 'DFobain'],
     features: {
         supportRadar: true,
     },
@@ -31,10 +31,18 @@ const isList = (subscription: Subscription): subscription is ListSubscription =>
 const isInbox = (subscription: Subscription): subscription is InboxSubscription => 'inboxId' in subscription;
 
 async function handler(ctx: Context): Promise<Data> {
-    const uid = ctx.req.param('uid');
+    const handleOrId = ctx.req.param('uid');
     const host = 'https://api.follow.is';
 
-    const profile = await ofetch<FollowResponse<Profile>>(`${host}/profiles?id=${uid}`);
+    const handle = isBizId(handleOrId || '') ? handleOrId : handleOrId.startsWith('@') ? handleOrId.slice(1) : handleOrId;
+
+    const searchParams = new URLSearchParams({ handle });
+
+    if (isBizId(handle || '')) {
+        searchParams.append('id', handle);
+    }
+
+    const profile = await ofetch<FollowResponse<Profile>>(`${host}/profiles?${searchParams.toString()}`);
     const subscriptions = await ofetch<FollowResponse<Subscription[]>>(`${host}/subscriptions?userId=${profile.data.id}`);
 
     return {
@@ -56,7 +64,7 @@ async function handler(ctx: Context): Promise<Data> {
                 category: subscription.category ? [subscription.category] : undefined,
             };
         }),
-        link: `https://app.follow.is/profile/${uid}`,
+        link: `https://app.follow.is/share/users/${handleOrId}`,
         image: profile.data.image,
     };
 }
@@ -80,4 +88,30 @@ const getUrlIcon = (url: string, fallback?: boolean | undefined) => {
     };
 
     return ret;
+};
+
+// referenced from https://github.com/RSSNext/Follow/blob/dev/packages/utils/src/utils.ts
+const EPOCH = 1_712_546_615_000n; // follow repo created
+const MAX_TIMESTAMP_BITS = 41n; // Maximum number of bits typically used for timestamp
+export const isBizId = (id: string): boolean => {
+    if (!id || !/^\d{13,19}$/.test(id)) {
+        return false;
+    }
+
+    const snowflake = BigInt(id);
+
+    // Extract the timestamp assuming it's in the most significant bits after the sign bit
+    const timestamp = (snowflake >> (63n - MAX_TIMESTAMP_BITS)) + EPOCH;
+    const date = new Date(Number(timestamp));
+
+    // Check if the date is reasonable (between 2024 and 2050)
+    if (date.getFullYear() >= 2024 && date.getFullYear() <= 2050) {
+        // Additional validation: check if the ID is not larger than the maximum possible value
+        const maxPossibleId = (1n << 63n) - 1n; // Maximum possible 63-bit value
+        if (snowflake <= maxPossibleId) {
+            return true;
+        }
+    }
+
+    return false;
 };

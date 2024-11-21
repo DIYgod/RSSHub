@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 import ofetch from '@/utils/ofetch';
@@ -6,7 +6,8 @@ import { load } from 'cheerio';
 const host = 'https://www.magnumphotos.com';
 export const route: Route = {
     path: '/magazine',
-    categories: ['picture'],
+    categories: ['picture', 'popular'],
+    view: ViewType.Pictures,
     example: '/magnumphotos/magazine',
     parameters: {},
     features: {

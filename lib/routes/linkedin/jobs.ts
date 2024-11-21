@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { EXP_LEVELS, EXP_LEVELS_QUERY_KEY, JOB_TYPES, JOB_TYPES_QUERY_KEY, KEYWORDS_QUERY_KEY, parseJobSearch, parseParamsToSearchParams, parseParamsToString, parseRouteParam } from './utils';
@@ -8,7 +8,8 @@ const JOB_SEARCH_PATH = '/jobs-guest/jobs/api/seeMoreJobPostings/search';
 
 export const route: Route = {
     path: '/jobs/:job_types/:exp_levels/:keywords?/:routeParams?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.Notifications,
     example: '/linkedin/jobs/C-P/1/software engineer',
     parameters: {
         job_types: "See the following table for details, use '-' as delimiter",

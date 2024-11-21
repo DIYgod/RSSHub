@@ -1,9 +1,9 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import path from 'path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 import { getCurrentPath } from '@/utils/helpers';
 
@@ -41,9 +41,29 @@ const channelMap = {
 
 export const route: Route = {
     path: '/:channel?/:original?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/theblockbeats/newsflash',
-    parameters: { channel: '类型，见下表，默认为快讯', original: '文章类型，仅 `channel` 为 `article` 时有效，见下表，留空为全部' },
+    parameters: {
+        channel: {
+            description: '类型',
+            options: [
+                { value: 'newsflash', label: '快讯' },
+                { value: 'article', label: '文章' },
+            ],
+            default: 'newsflash',
+        },
+        original: {
+            description: '文章类型，仅 `channel` 为 `article` 时有效',
+            options: [
+                { value: '0', label: '全部' },
+                { value: '1', label: '深度' },
+                { value: '2', label: '精选' },
+                { value: '3', label: '热点追踪' },
+            ],
+            default: '0',
+        },
+    },
     name: '新闻快讯',
     maintainers: ['Fatpandac', 'jameshih'],
     handler,

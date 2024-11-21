@@ -24,4 +24,5 @@ export const namespace: Namespace = {
 | [https://www.ibiquge.info](https://www.ibiquge.info) | 爱笔楼     |
 | [https://www.ishuquge.com](https://www.ishuquge.com) | 书趣阁     |
 | [https://www.mayiwxw.com](https://www.mayiwxw.com)   | 蚂蚁文学   |`,
+    lang: 'zh-CN',
 };

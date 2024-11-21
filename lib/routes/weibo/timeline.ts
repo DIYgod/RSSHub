@@ -95,7 +95,8 @@ async function handler(ctx) {
             ctx.set({
                 'Cache-Control': 'no-cache',
             });
-            ctx.redirect(`https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${routeParams}` : ''}`);
+            ctx.set('redirect', `https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${routeParams}` : ''}`);
+            return;
         }
         const resultItem = await Promise.all(
             response.statuses.map(async (item) => {
@@ -183,6 +184,6 @@ async function handler(ctx) {
         ctx.set({
             'Cache-Control': 'no-cache',
         });
-        ctx.redirect(`https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${feature}/${routeParams.replaceAll('&', '%26')}` : ''}`);
+        ctx.set('redirect', `https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${feature}/${routeParams.replaceAll('&', '%26')}` : ''}`);
     }
 }
