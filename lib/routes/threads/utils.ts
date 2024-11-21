@@ -7,6 +7,7 @@ import NotFoundError from '@/errors/types/not-found';
 
 const profileUrl = (user: string) => `https://www.threads.net/@${user}`;
 const threadUrl = (code: string) => `https://www.threads.net/t/${code}`;
+const instagramUrl = (user: string) => `https://i.instagram.com/api/v1/users/web_profile_info/?username=${user}`;
 
 const apiUrl = 'https://www.threads.net/api/graphql';
 // const PROFILE_QUERY = 23_996_318_473_300_828; // no longer works
@@ -49,6 +50,7 @@ const makeHeader = (user: string, lsd: string) => ({
     'Sec-Fetch-Site': 'same-origin',
 });
 
+// the formal way always reachs the rate limit, so use instagram api to get user id instead
 const getUserId = (user: string, lsd: string): Promise<string> =>
     cache.tryGet(`threads:userId:${user}`, async () => {
         const pathName = `/@${user}`;
@@ -69,7 +71,23 @@ const getUserId = (user: string, lsd: string): Promise<string> =>
             parseResponse: (txt) => destr(txt.slice(9)), // remove "for (;;);"
         });
 
-        const userId = response.payload.payloads[pathName].result.exports.rootView.props.user_id;
+        let userId = response.payload.payloads[pathName].result.exports.rootView.props.user_id;
+
+        if (!userId) {
+            const fallbackResponse = await ofetch(instagramUrl(user), {
+                headers: makeHeader(user, lsd),
+            });
+
+            if (!fallbackResponse?.data?.user) {
+                throw new NotFoundError('Instagram getUser API response is invalid');
+            }
+
+            userId = fallbackResponse.data.user.id;
+            if (!userId) {
+                throw new NotFoundError('User ID not found in Instagram getUser API response');
+            }
+        }
+
         return userId;
     });
 
