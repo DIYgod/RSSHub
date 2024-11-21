@@ -27,7 +27,7 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['cs.zjut.edu.cn/jsp/newsclass.jsp?wcId=:type'],
+            source: ['cs.zjut.edu.cn/jsp/newsclass.jsp'],
             target: '/cs/:type',
         },
     ],

@@ -10,7 +10,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.bing.com/', 'cn.bing.com/'],
+            source: ['www.bing.com/'],
+            target: '',
+        },
+        {
+            source: ['cn.bing.com/'],
             target: '',
         },
     ],
