@@ -86729,8 +86729,21 @@
         ],
         "location": "board.ts"
       },
-      "/user/:user_id/notes/:fulltext": {
-        "path": "/user/:user_id/notes/:fulltext",
+      "/user/:user_id/:category": {
+        "path": "/user/:user_id/:category",
+        "name": "用户笔记/收藏",
+        "categories": [
+          "social-media",
+          "popular"
+        ],
+        "view": 0,
+        "maintainers": [
+          "lotosbin",
+          "howerhe",
+          "rien7",
+          "dddaniel1",
+          "pseudoyu"
+        ],
         "radar": [
           {
             "source": [
@@ -86739,11 +86752,7 @@
             "target": "/user/:user_id/notes"
           }
         ],
-        "name": "用户笔记 全文",
-        "maintainers": [
-          "howerhe"
-        ],
-        "example": "/xiaohongshu/user/52d8c541b4c4d60e6c867480/notes/fulltext",
+        "example": "/xiaohongshu/user/593032945e87e77791e03696/notes",
         "features": {
           "antiCrawler": true,
           "requirePuppeteer": true,
@@ -86754,31 +86763,6 @@
               "description": "小红书 cookie 值，可在网络里面看到。"
             }
           ]
-        },
-        "parameters": {
-          "user_id": "user id, length 24 characters",
-          "fulltext": {
-            "description": "是否获取全文",
-            "default": ""
-          }
-        },
-        "location": "notes.ts"
-      },
-      "/user/:user_id/:category": {
-        "path": "/user/:user_id/:category",
-        "name": "用户笔记",
-        "categories": [
-          "social-media",
-          "popular"
-        ],
-        "view": 0,
-        "maintainers": [
-          "lotosbin"
-        ],
-        "example": "/xiaohongshu/user/593032945e87e77791e03696/notes",
-        "features": {
-          "antiCrawler": true,
-          "requirePuppeteer": true
         },
         "parameters": {
           "user_id": "user id, length 24 characters",
