@@ -78499,7 +78499,7 @@
       "/channel/:id": {
         "path": "/channel/:id",
         "categories": [
-          "traditional-media"
+          "new-media"
         ],
         "example": "/thepaper/channel/25950",
         "parameters": {
@@ -78525,7 +78525,7 @@
       "/factpaper/:status?": {
         "path": "/factpaper/:status?",
         "categories": [
-          "traditional-media"
+          "new-media"
         ],
         "example": "/thepaper/factpaper",
         "parameters": {
@@ -78557,7 +78557,7 @@
       "/featured": {
         "path": "/featured",
         "categories": [
-          "traditional-media"
+          "new-media"
         ],
         "example": "/thepaper/featured",
         "parameters": {},
@@ -78588,7 +78588,7 @@
       "/list/:id": {
         "path": "/list/:id",
         "categories": [
-          "traditional-media"
+          "new-media"
         ],
         "example": "/thepaper/list/25457",
         "parameters": {
@@ -78626,6 +78626,21 @@
         ],
         "url": "thepaper.cn/",
         "location": "sidebar.ts"
+      },
+      "/user/:pphId": {
+        "path": "/user/:pphId",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/thepaper/user/4221423",
+        "parameters": {
+          "pphId": "澎湃号 id，可在澎湃号页 URL 中找到"
+        },
+        "name": "澎湃号",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "user.ts"
       },
       "/839studio/:id": {
         "path": "/839studio/:id",

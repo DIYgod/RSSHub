@@ -27870,7 +27870,7 @@
     ".": [
       {
         "title": "明查",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -27883,7 +27883,7 @@
     ".": [
       {
         "title": "首页头条",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -27891,7 +27891,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -27899,7 +27899,7 @@
       },
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],

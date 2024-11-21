@@ -6622,6 +6622,9 @@
   "/thepaper/sidebar/:sec?": [
     "bigfei"
   ],
+  "/thepaper/user/:pphId": [
+    "TonyRL"
+  ],
   "/thepaper/839studio/:id": [
     "umm233"
   ],
