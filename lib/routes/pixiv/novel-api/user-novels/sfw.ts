@@ -44,8 +44,6 @@ export async function getSFWUserNovels(id: string, fullContent: boolean = false,
                     <img src=${pixivUtils.getProxiedImageUrl(item.url)} />
                     <div lang="${language}">
                     <p>${item.description}</p>
-                    <p>
-                    </p>
                     </div>
                 `,
                 link: `${baseUrl}/novel/show.php?id=${item.id}`,

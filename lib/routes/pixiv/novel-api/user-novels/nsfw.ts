@@ -54,8 +54,6 @@ export async function getNSFWUserNovels(id: string, fullContent: boolean = false
                     <img src="${pixivUtils.getProxiedImageUrl(novel.image_urls.large)}" />
                     <div lang="${language}">
                     <p>${convertPixivProtocolExtended(novel.caption)}</p>
-                    <p>
-                    </p>
                     </div>`,
                 author: novel.user.name,
                 pubDate: parseDate(novel.create_date),
