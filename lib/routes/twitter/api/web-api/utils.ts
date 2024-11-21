@@ -286,6 +286,14 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                         t.legacy.quoted_status = quote.legacy;
                         t.legacy.quoted_status.user = quote.core.user_result?.result?.legacy || quote.core.user_results?.result?.legacy;
                     }
+                    if (t.note_tweet) {
+                        const tmp = t.note_tweet.note_tweet_results.result;
+                        t.legacy.entities.hashtags = tmp.entity_set.hashtags;
+                        t.legacy.entities.symbols = tmp.entity_set.symbols;
+                        t.legacy.entities.urls = tmp.entity_set.urls;
+                        t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
+                        t.legacy.full_text = tmp.text;
+                    }
                 }
                 const legacy = tweet.legacy;
                 if (legacy) {
