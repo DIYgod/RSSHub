@@ -231,8 +231,8 @@ importers:
         specifier: 2.1.0
         version: 2.1.0
       title:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.0.1
+        version: 4.0.1
       tldts:
         specifier: 6.1.62
         version: 6.1.62
@@ -5290,8 +5290,8 @@ packages:
     resolution: {integrity: sha512-n1cw8k1k0x4pgA2+9XrOkFydTerNcJ1zWCO5Nn9scWHTD+5tp8dghT2x1uduQePZTZgd3Tupf+x9BxJjeJi77Q==}
     engines: {node: '>=14.0.0'}
 
-  title@4.0.0:
-    resolution: {integrity: sha512-HtJL7yozZem9ufiWnwcftBpbNAO+phHMfao8CS4QLON7HzjyDRlf7qE9SXna6/749ZzpEsBZHy+MmY/GOS4i6g==}
+  title@4.0.1:
+    resolution: {integrity: sha512-xRnPkJx9nvE5MF6LkB5e8QJjE2FW8269wTu/LQdf7zZqBgPly0QJPf/CWAo7srj5so4yXfoLEdCFgurlpi47zg==}
     hasBin: true
 
   tlds@1.252.0:
@@ -11266,7 +11266,7 @@ snapshots:
 
   tinyspy@3.0.2: {}
 
-  title@4.0.0:
+  title@4.0.1:
     dependencies:
       arg: 5.0.2
       chalk: 5.3.0
