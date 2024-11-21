@@ -21,6 +21,8 @@ export interface NovelContent {
 
     seriesId: string | null;
     seriesTitle: string | null;
+
+    language: string | null;
 }
 
 export interface SFWNovelDetail {
