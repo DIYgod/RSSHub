@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -7,7 +7,8 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/topic/:id',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/jin10/topic/396',
     parameters: { id: 'N' },
     features: {

@@ -28,14 +28,14 @@ const getProfile = (did, tryGet) =>
     });
 
 // https://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/feed/getAuthorFeed.json
-const getAuthorFeed = (did, tryGet) =>
+const getAuthorFeed = (did, filter, tryGet) =>
     tryGet(
-        `bsky:authorFeed:${did}`,
+        `bsky:authorFeed:${did}:${filter}`,
         async () => {
             const { data } = await got('https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed', {
                 searchParams: {
                     actor: did,
-                    filter: 'posts_and_author_threads',
+                    filter,
                     limit: 30,
                 },
             });

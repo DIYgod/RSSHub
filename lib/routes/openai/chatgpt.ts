@@ -10,7 +10,7 @@ dayjs.extend(isSameOrBefore);
 
 export const route: Route = {
     path: '/chatgpt/release-notes',
-    categories: ['new-media'],
+    categories: ['program-update'],
     example: '/openai/chatgpt/release-notes',
     parameters: {},
     features: {

@@ -1,6 +1,6 @@
 import { ViewType, type Data, type DataItem, type Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import type { Post } from './types';
 
 export async function getPostItems(params: {
@@ -234,7 +234,7 @@ export const TabParam = {
 
 export const CommonRouteProperties: Pick<Route, 'url' | 'categories' | 'maintainers' | 'view'> = {
     url: 'voronoiapp.com',
-    categories: ['picture'],
+    categories: ['picture', 'popular'],
     view: ViewType.Pictures,
     maintainers: ['Cesaryuan'],
 };
