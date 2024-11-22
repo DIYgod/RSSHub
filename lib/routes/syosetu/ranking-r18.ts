@@ -147,7 +147,7 @@ async function handler(ctx: Context): Promise<Data> {
     const rankingUrl = `${baseUrl}/rank/list/type/${type}`;
     const api = new NarouNovelFetch();
 
-    const limit = Number(ctx.req.query('limit') ?? 300);
+    const limit = Math.min(Number(ctx.req.query('limit') ?? 300), 300);
     const { period, novelType } = parseRankingType(type);
 
     const searchParams: SearchParams = {

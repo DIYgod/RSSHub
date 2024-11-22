@@ -207,7 +207,7 @@ function parseGenreRankingType(type: string): { period: RankingPeriod; genre: nu
 async function handler(ctx: Context): Promise<Data> {
     const { listType, type } = ctx.req.param();
     const rankingType = listType as RankingType;
-    const limit = Number(ctx.req.query('limit') ?? 300);
+    const limit = Math.min(Number(ctx.req.query('limit') ?? 300), 300);
 
     const api = new NarouNovelFetch();
     const searchParams: SearchParams = {
