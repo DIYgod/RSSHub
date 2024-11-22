@@ -164,6 +164,9 @@ importers:
       module-alias:
         specifier: 2.2.3
         version: 2.2.3
+      narou:
+        specifier: 1.0.0
+        version: 1.0.0
       notion-to-md:
         specifier: 3.1.1
         version: 3.1.1
@@ -2648,6 +2651,9 @@ packages:
     resolution: {integrity: sha512-ZYP5VBHshaDAiVZxjbRVcFJpc+4xGgT0bK3vzy1HLN8jTO975HEbuYzZJcHoQEY5K1a0z8YayJkyVETa08eNTg==}
     engines: {node: '>=18'}
 
+  date-fns@3.6.0:
+    resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
+
   dayjs@1.11.8:
     resolution: {integrity: sha512-LcgxzFoWMEPO7ggRv1Y2N31hUf2R0Vj7fuy/m+Bg1K8rr+KAs1AEy4y9jd5DXe8pbHgX+srkHNS7TH6Q6ZhYeQ==}
 
@@ -4309,6 +4315,10 @@ packages:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  narou@1.0.0:
+    resolution: {integrity: sha512-+rlk2kT6+Tdse8E2Z57xR7uLuEDjJ7EgZFRL7F7hMEPRCgU+KV/V2twg+3dcUy0OYHq79RLxuUzKv2kDKTsNRQ==}
+    engines: {node: '>=16.0.0', pnpm: '>=8'}
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
@@ -8253,6 +8263,8 @@ snapshots:
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.0.0
 
+  date-fns@3.6.0: {}
+
   dayjs@1.11.8: {}
 
   debug@2.6.9:
@@ -10197,6 +10209,10 @@ snapshots:
   mute-stream@1.0.0: {}
 
   nanoid@3.3.7: {}
+
+  narou@1.0.0:
+    dependencies:
+      date-fns: 3.6.0
 
   natural-compare@1.4.0: {}
 
