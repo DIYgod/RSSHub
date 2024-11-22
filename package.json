@@ -101,6 +101,7 @@
         "mailparser": "3.7.1",
         "markdown-it": "14.1.0",
         "module-alias": "2.2.3",
+        "narou": "1.0.0",
         "notion-to-md": "3.1.1",
         "oauth-1.0a": "2.2.6",
         "ofetch": "1.4.1",
