@@ -100,12 +100,14 @@ async function handler(ctx: Context): Promise<Data> {
                 const response = await ofetch<DetailResponse>(`${apiURL}/${category === 'theses' ? 'theses' : 'information'}/${item.id}`, {
                     responseType: 'json',
                 });
+
                 const dataItem: DataItem = {
                     title: response.title,
                     pubDate: parseDate(response.onlineTime),
                     link,
                     image: response.cover,
                 };
+
                 dataItem.description =
                     'zhTextList' in response && 'enTextList' in response
                         ? art(templatePath, {
@@ -113,6 +115,13 @@ async function handler(ctx: Context): Promise<Data> {
                               en: response.enTextList,
                           })
                         : response.content;
+
+                if ('paperList' in response) {
+                    const { doi, authors } = response.paperList[0];
+                    dataItem.doi = doi;
+                    dataItem.author = authors.map((author) => ({ name: author }));
+                }
+
                 return dataItem;
             }) as unknown as DataItem;
         })
