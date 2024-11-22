@@ -78,6 +78,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'R18 Rankings',
+    url: 'syosetu.com/site/group',
     maintainers: ['SnowAgar25'],
     handler,
     description: `
@@ -90,13 +91,16 @@ export const route: Route = {
 | yearly | Yearly Ranking | 年間ランキング |
 
 | Novel Type | Description | 説明 |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | total | All Works | 総合 |
 | t | Short Stories | 短編 |
 | r | Ongoing Series | 連載中 |
 | er | Completed Series | 完結済 |
 
-Note: Combine Period and Novel Type with \`_\`. For example: \`daily_total\`, \`weekly_r\`, \`monthly_er\``,
+:::tip
+Combine Period and Novel Type with \`_\`.
+For example: \`daily_total\`, \`weekly_r\`, \`monthly_er\`
+:::`,
     radar: [
         {
             source: ['noc.syosetu.com/rank/list/type/:type'],

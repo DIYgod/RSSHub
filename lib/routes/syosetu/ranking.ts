@@ -56,7 +56,7 @@ const getParameters = () => {
                 ...periodOptions.flatMap((period) =>
                     novelTypeOptions.map((novelType) => ({
                         value: `${period.value}_${novelType.value}`,
-                        label: `${RankingType.LIST}: [${periodToJapanese[period.value]}] 総合ランキング - ${novelTypeToJapanese[novelType.value]}`,
+                        label: `${RankingType.LIST} - [${periodToJapanese[period.value]}] 総合ランキング - ${novelTypeToJapanese[novelType.value]}`,
                     }))
                 ),
                 // Genre ranking options
@@ -64,7 +64,7 @@ const getParameters = () => {
                     genreOptions.flatMap((genre) =>
                         novelTypeOptions.map((novelType) => ({
                             value: `${period.value}_${genre.value}_${novelType.value}`,
-                            label: `${RankingType.GENRE}: [${periodToJapanese[period.value]}] ${GenreNotation[genre.value]}ランキング - ${novelTypeToJapanese[novelType.value]}`,
+                            label: `${RankingType.GENRE} - [${periodToJapanese[period.value]}] ${GenreNotation[genre.value]}ランキング - ${novelTypeToJapanese[novelType.value]}`,
                         }))
                     )
                 ),
@@ -73,7 +73,7 @@ const getParameters = () => {
                     isekaiOptions.flatMap((category) =>
                         novelTypeOptions.map((novelType) => ({
                             value: `${period.value}_${category.value}_${novelType.value}`,
-                            label: `${RankingType.ISEKAI}: [${periodToJapanese[period.value]}] 異世界転生/転移${isekaiCategoryToJapanese[category.value]}ランキング - ${novelTypeToJapanese[novelType.value]}`,
+                            label: `${RankingType.ISEKAI} - [${periodToJapanese[period.value]}] 異世界転生/転移${isekaiCategoryToJapanese[category.value]}ランキング - ${novelTypeToJapanese[novelType.value]}`,
                         }))
                     )
                 ),
@@ -123,18 +123,16 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Rankings',
+    url: 'yomou.syosetu.com/rank/top',
     maintainers: ['SnowAgar25'],
     handler,
     description: `
-Support various ranking types:
-1. 総合ランキング \`list\`
-2. ジャンル別ランキング \`genre\`
-3. 異世界転生/転移ランキング \`isekai\`
+| Keyword | Description | 説明 |
+| --- | --- | --- |
+| list | Overall Ranking | 総合ランキング |
+| genre | Genre Ranking | ジャンル別ランキング |
+| isekai | Isekai/Reincarnation/Transfer Ranking | 異世界転生/転移ランキング |
 
-Note: The "注目度ランキング" (Attention Ranking) is not supported as syosetu does not provide a public API for this feature and the results cannot be replicated through the search API.
-注意事項：「注目度ランキング」については、API が非公開で検索 API でも同様の結果を得ることができないため、本 Route ではサポートしておりません。
-
-Period options:
 | Period | Description |
 | --- | --- |
 | daily | Daily Ranking |
@@ -143,7 +141,7 @@ Period options:
 | quarter | Quarterly Ranking |
 | yearly | Yearly Ranking |
 
-Novel type options (not all available for every ranking):
+
 | Type | Description |
 | --- | --- |
 | total | All Works |
@@ -151,10 +149,23 @@ Novel type options (not all available for every ranking):
 | r | Ongoing Series |
 | er | Completed Series |
 
-For \`isekai\` ranking type:
+:::warning
+Please note that novel type options may vary depending on the ranking category.
+
+ランキングの種類によって、小説タイプが異なる場合がございますのでご注意ください。
+:::
+
+:::danger 注意事項
+The "注目度ランキング" (Attention Ranking) is not supported as syosetu does not provide a public API for this feature and the results cannot be replicated through the search API.
+
+「注目度ランキング」については、API が非公開で検索 API でも同様の結果を得ることができないため、本 Route ではサポートしておりません。
+:::
+
+:::tip 異世界転生/転移ランキングについて (Isekai)
 When multiple works have the same points, their order may differ from syosetu's ranking as syosetu randomizes the order for works with identical points.
-異世界転生/転移ランキングについて：
+
 集計の結果、同じポイントの作品が複数存在する場合、Syosetu ではランダムで順位が決定されるため、本 Route の順位と異なる場合があります。
+:::
 `,
     radar: [
         {
