@@ -17,7 +17,7 @@ export const route: Route = {
     maintainers: ['y9c', 'KarasuShin'],
     handler,
     view: ViewType.Articles,
-    categories: ['journal', 'new-media'],
+    categories: ['journal'],
     parameters: {
         params: {
             description: 'search parameters, support `category`, `subject`, `columns`, `query`',
