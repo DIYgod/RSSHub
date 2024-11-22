@@ -32,18 +32,6 @@ async function handler(ctx) {
     const host = 'https://kns.cnki.net';
     const link = `${host}/kns8s/AdvSearch?classid=WD0FTY92`;
 
-    // The method of author code is outdated.
-    // const link = `${host}/kcms/detail/knetsearch.aspx?sfield=au&code=${code}`;
-    // const { name, company } = await ofetch(link).then((res) => {
-    //     const $ = load(res);
-    //     const name = $('#showname').text();
-    //     const company = $('body > div.wrapper > div.main > div.container.full-screen > div > div:nth-child(3) > h3:nth-child(2) > span > a').text();
-    //     return {
-    //         name,
-    //         company,
-    //     };
-    // });
-
     const response = await ofetch(`${host}/kns8s/brief/grid`, {
         method: 'POST',
         headers: {
