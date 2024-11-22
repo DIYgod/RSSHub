@@ -29,7 +29,8 @@ function getIsekaiSearchParams(period, category, novelType, limit): SearchParams
     const searchParams: SearchParams = {
         order: periodToOrder[period],
         gzip: 5,
-        lim: Math.ceil(limit / 2),
+        // Request 20% more items to compensate for potential duplicates between tensei/tenni
+        lim: Math.ceil((limit / 2) * 1.2),
     };
 
     if (novelType !== NovelType.TOTAL) {
@@ -86,7 +87,7 @@ export async function handleIsekaiRanking(type: string, limit: number): Promise<
     return {
         title: `小説家になろう - ${rankingTitle}`,
         link: rankingUrl,
-        item: items as DataItem[],
+        item: items.slice(0, limit) as DataItem[],
         language: 'ja',
     };
 }
