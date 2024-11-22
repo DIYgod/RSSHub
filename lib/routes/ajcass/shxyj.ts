@@ -5,20 +5,9 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/shxyj/:year?/:issue?',
-    categories: ['academic'],
+    categories: ['Scientific Journal'],
     example: '/ajcass/shxyj/2024/1',
-    parameters: {
-        year: {
-            type: 'string',
-            description: 'Year of the issue',
-            optional: true,
-        },
-        issue: {
-            type: 'string',
-            description: 'Issue number',
-            optional: true,
-        },
-    },
+    parameters: { year: 'Year of the issue, `null` for the lastest', issue: 'Issue number, `null` for the lastest' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
