@@ -1,5 +1,4 @@
 import { Route, Data } from '@/types';
-import cache from '@/utils/cache';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { Context } from 'hono';
@@ -212,13 +211,13 @@ function mapToSearchParams(query: string): SearchParams {
 }
 
 enum SyosetuSub {
-    NORMAL = 'yomou',
+    YOMOU = 'yomou',
     NOCTURNE = 'noc',
     MOONLIGHT = 'mnlt',
     MIDNIGHT = 'mid',
 }
 
-const isGeneral = (sub: string): boolean => sub === SyosetuSub.NORMAL;
+const isGeneral = (sub: string): boolean => sub === SyosetuSub.YOMOU;
 
 function createNovelSearchBuilder(sub: string, searchParams: SearchParams) {
     if (isGeneral(sub)) {
@@ -252,37 +251,35 @@ async function handler(ctx: Context): Promise<Data> {
     const { sub, query } = ctx.req.param();
     const searchUrl = `https://${sub}.syosetu.com/search/search/search.php?${query}`;
 
-    return (await cache.tryGet(searchUrl, async () => {
-        const searchParams = mapToSearchParams(query);
-        const builder = createNovelSearchBuilder(sub, searchParams);
-        const result = await builder.execute();
+    const searchParams = mapToSearchParams(query);
+    const builder = createNovelSearchBuilder(sub, searchParams);
+    const result = await builder.execute();
 
-        const items = result.values.map((novel) => ({
-            title: novel.title,
-            link: `https://${isGeneral(sub) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
-            description: art(path.join(__dirname, 'templates', 'description.art'), {
-                novel,
-                genreText: GenreNotation[novel.genre],
-            }),
-            // Skip pubDate - search results prioritize search sequence over timestamps
-            // pubDate: novel.general_lastup,
-            author: novel.writer,
-            // Split by slash(/), full-width slash(／) and whitespace characters(\s)
-            category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
-        }));
+    const items = result.values.map((novel) => ({
+        title: novel.title,
+        link: `https://${isGeneral(sub) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
+        description: art(path.join(__dirname, 'templates', 'description.art'), {
+            novel,
+            genreText: GenreNotation[novel.genre],
+        }),
+        // Skip pubDate - search results prioritize search sequence over timestamps
+        // pubDate: novel.general_lastup,
+        author: novel.writer,
+        // Split by whitespace characters(\s), slash(/), full-width slash(／)
+        category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
+    }));
 
-        const searchTerms: string[] = [];
-        if (searchParams.word) {
-            searchTerms.push(searchParams.word);
-        }
-        if (searchParams.notword) {
-            searchTerms.push(`-${searchParams.notword}`);
-        }
+    const searchTerms: string[] = [];
+    if (searchParams.word) {
+        searchTerms.push(searchParams.word);
+    }
+    if (searchParams.notword) {
+        searchTerms.push(`-${searchParams.notword}`);
+    }
 
-        return {
-            title: searchTerms.length > 0 ? `Syosetu Search: ${searchTerms.join(' ')}` : 'Syosetu Search',
-            link: searchUrl,
-            item: items,
-        };
-    })) as Data;
+    return {
+        title: searchTerms.length > 0 ? `Syosetu Search: ${searchTerms.join(' ')}` : 'Syosetu Search',
+        link: searchUrl,
+        item: items,
+    };
 }

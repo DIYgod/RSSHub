@@ -1,5 +1,4 @@
 import { Data, Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
@@ -31,41 +30,37 @@ export const route: Route = {
 async function handler(): Promise<Data> {
     const url = 'https://dev.syosetu.com';
 
-    return (await cache.tryGet(url, async () => {
-        const data = await ofetch(url);
-        const $ = load(data);
+    const data = await ofetch(url);
+    const $ = load(data);
 
-        const logContainer = $('.c-log');
+    const logContainer = $('.c-log');
 
-        const dates = logContainer
-            .find('dt')
-            .toArray()
-            .map((element) => $(element).text().trim());
+    const dates = logContainer
+        .find('dt')
+        .toArray()
+        .map((element) => $(element).text().trim());
 
-        const contents = logContainer
-            .find('dd')
-            .toArray()
-            .map((element) => $(element).text().trim());
+    const contents = logContainer
+        .find('dd')
+        .toArray()
+        .map((element) => $(element).text().trim());
 
-        const updates = dates
-            .map((date, index) => ({
-                date,
-                content: contents[index]?.replace(/\n/g, '<br>') ?? '',
-            }))
-            .filter((update) => update.content);
+    const updates = dates
+        .map((date, index) => ({
+            date,
+            content: contents[index]?.replace(/\n/g, '<br>') ?? '',
+        }))
+        .filter((update) => update.content);
 
-        const response = {
-            title: 'なろうデベロッパー - なろう小説 API の更新履歴',
-            link: url,
-            language: 'ja',
-            item: updates.map((update) => ({
-                title: update.date,
-                description: update.content,
-                pubDate: parseDate(update.date.replace('/', '-')),
-                guid: `syosetu:dev:${update.date}`,
-            })),
-        };
-
-        return response;
-    })) as Data;
+    return {
+        title: 'なろうデベロッパー - なろう小説 API の更新履歴',
+        link: url,
+        language: 'ja',
+        item: updates.map((update) => ({
+            title: update.date,
+            description: update.content,
+            pubDate: parseDate(update.date.replace('/', '-')),
+            guid: `syosetu:dev:${update.date}`,
+        })),
+    };
 }

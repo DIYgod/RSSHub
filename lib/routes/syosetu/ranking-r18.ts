@@ -1,12 +1,11 @@
-import { Route, Data, DataItem } from '@/types';
-import cache from '@/utils/cache';
+import { Route, Data } from '@/types';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { Context } from 'hono';
-import { Order, R18Site, SearchBuilderR18, SearchParams, NarouNovelFetch } from 'narou';
+import { SearchBuilderR18, SearchParams, NarouNovelFetch } from 'narou';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { getCurrentPath } from '@/utils/helpers';
-import querystring from 'querystring';
+import { RankingPeriod, periodToJapanese, novelTypeToJapanese, periodToOrder, NovelType, SyosetuSub, syosetuSubToJapanese, syosetuSubToNocgenre } from './types/ranking-r18';
 
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -19,58 +18,6 @@ const __dirname = getCurrentPath(import.meta.url);
  * This implementation utilizes the 'order' parameter (e.g., dailypoint, weeklypoint)
  * of the search API to replicate ranking functionality across all Syosetu subsidiary sites.
  */
-
-enum SyosetuSub {
-    NOCTURNE = 'noc',
-    MOONLIGHT = 'mnlt',
-    MIDNIGHT = 'mid',
-    MOONLIGHT_BL = 'mnlt-bl',
-}
-
-enum RankingPeriod {
-    DAILY = 'daily',
-    WEEKLY = 'weekly',
-    MONTHLY = 'monthly',
-    QUARTER = 'quarter',
-    YEARLY = 'yearly',
-}
-
-enum NovelType {
-    TOTAL = 'total',
-    SHORT = 't',
-    ONGOING = 'r',
-    COMPLETE = 'er',
-}
-
-const periodToOrder: Record<RankingPeriod, Order> = {
-    [RankingPeriod.DAILY]: 'dailypoint',
-    [RankingPeriod.WEEKLY]: 'weeklypoint',
-    [RankingPeriod.MONTHLY]: 'monthlypoint',
-    [RankingPeriod.QUARTER]: 'quarterpoint',
-    [RankingPeriod.YEARLY]: 'yearlypoint',
-};
-
-const syosetuSubToJapanese: Record<SyosetuSub, string> = {
-    [SyosetuSub.NOCTURNE]: 'ノクターン',
-    [SyosetuSub.MIDNIGHT]: 'ミッドナイト',
-    [SyosetuSub.MOONLIGHT]: 'ムーンライト',
-    [SyosetuSub.MOONLIGHT_BL]: 'ムーンライト BL',
-};
-
-const periodToJapanese: Record<RankingPeriod, string> = {
-    [RankingPeriod.DAILY]: '日間',
-    [RankingPeriod.WEEKLY]: '週間',
-    [RankingPeriod.MONTHLY]: '月間',
-    [RankingPeriod.QUARTER]: '四半期',
-    [RankingPeriod.YEARLY]: '年間',
-};
-
-const novelTypeToJapanese: Record<NovelType, string> = {
-    [NovelType.TOTAL]: '総合',
-    [NovelType.SHORT]: '短編',
-    [NovelType.ONGOING]: '連載中',
-    [NovelType.COMPLETE]: '完結済',
-};
 
 const getParameters = () => {
     // Generate options for sub parameter
@@ -105,26 +52,22 @@ const getParameters = () => {
                 }))
             ),
         },
-        routeParams: {
-            description: 'Optional parameters',
-            default: 'limit=300',
-        },
     };
 };
 
-const getBest5RadarItems = () => Object.entries(SyosetuSub)
-        .flatMap(([, domain]) =>
-            Object.values(RankingPeriod).map((period) => ({
-                title: `${syosetuSubToJapanese[domain]} ${periodToJapanese[period]}ランキング BEST5`,
-                source: [`${domain === SyosetuSub.MOONLIGHT_BL ? SyosetuSub.MOONLIGHT : domain}.syosetu.com/rank/${domain === SyosetuSub.MOONLIGHT_BL ? 'bltop' : 'top'}`],
-                target: `/rankingr18/${domain}/${period}_${NovelType.TOTAL}/limit=5`,
-            }))
-        );
+const getBest5RadarItems = () =>
+    Object.entries(SyosetuSub).flatMap(([, domain]) =>
+        Object.values(RankingPeriod).map((period) => ({
+            title: `${syosetuSubToJapanese[domain]} ${periodToJapanese[period]}ランキング BEST5`,
+            source: [`${domain === SyosetuSub.MOONLIGHT_BL ? SyosetuSub.MOONLIGHT : domain}.syosetu.com/rank/${domain === SyosetuSub.MOONLIGHT_BL ? 'bltop' : 'top'}`],
+            target: `/rankingr18/${domain}/${period}_${NovelType.TOTAL}?limit=5`,
+        }))
+    );
 
 export const route: Route = {
-    path: '/rankingr18/:sub/:type/:routeParams?',
+    path: '/rankingr18/:sub/:type',
     categories: ['reading'],
-    example: '/syosetu/rankingr18/noc/daily_total/limit=50',
+    example: '/syosetu/rankingr18/noc/daily_total?limit=50',
     parameters: getParameters(),
     features: {
         requireConfig: false,
@@ -181,7 +124,9 @@ function parseRankingType(type: string): { period: RankingPeriod; novelType: Nov
     const period = periodStr as RankingPeriod;
     const novelType = novelTypeStr as NovelType;
 
-    if (!Object.values(RankingPeriod).includes(period) || !Object.values(NovelType).includes(novelType)) {
+    const isValid = [Object.values(RankingPeriod).includes(period), Object.values(NovelType).includes(novelType)].every(Boolean);
+
+    if (!isValid) {
         throw new InvalidParameterError(`Invalid ranking type: ${type}`);
     }
 
@@ -198,13 +143,11 @@ function getRankingTitle(type: string): string {
 
 async function handler(ctx: Context): Promise<Data> {
     const { sub, type } = ctx.req.param();
-    const baseUrl = `https://${sub === 'mnlt-bl' ? 'mnlt' : sub}.syosetu.com`;
+    const baseUrl = `https://${sub === SyosetuSub.MOONLIGHT_BL ? SyosetuSub.MOONLIGHT : sub}.syosetu.com`;
     const rankingUrl = `${baseUrl}/rank/list/type/${type}`;
     const api = new NarouNovelFetch();
 
-    const routeParams = querystring.parse(ctx.req.param('routeParams'));
-    const limit = Number(routeParams.limit || 300);
-
+    const limit = Number(ctx.req.query('limit') ?? 300);
     const { period, novelType } = parseRankingType(type);
 
     const searchParams: SearchParams = {
@@ -218,36 +161,23 @@ async function handler(ctx: Context): Promise<Data> {
         searchParams.type = novelType;
     }
 
-    const nocgenre = (() => {
-        switch (sub) {
-            case SyosetuSub.NOCTURNE:
-                return R18Site.Nocturne;
-            case SyosetuSub.MOONLIGHT:
-                return R18Site.MoonLight;
-            case SyosetuSub.MOONLIGHT_BL:
-                return R18Site.MoonLightBL;
-            case SyosetuSub.MIDNIGHT:
-                return R18Site.Midnight;
-            default:
-                throw new InvalidParameterError(`Invalid subsite: ${sub}`);
-        }
-    })();
+    if (!(sub in syosetuSubToNocgenre)) {
+        throw new InvalidParameterError(`Invalid subsite: ${sub}`);
+    }
+    const nocgenre = syosetuSubToNocgenre[sub];
 
     const builder = new SearchBuilderR18(searchParams, api).r18Site(nocgenre);
+    const result = await builder.execute();
 
-    const items = (await cache.tryGet(rankingUrl, async () => {
-        const result = await builder.execute();
-
-        return result.values.map((novel, index) => ({
-            title: `#${index + 1} ${novel.title}`,
-            link: `https://novel18.syosetu.com/${String(novel.ncode).toLowerCase()}`,
-            description: art(path.join(__dirname, 'templates', 'description.art'), {
-                novel,
-            }),
-            author: novel.writer,
-            category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
-        }));
-    })) as DataItem[];
+    const items = result.values.map((novel, index) => ({
+        title: `#${index + 1} ${novel.title}`,
+        link: `https://novel18.syosetu.com/${String(novel.ncode).toLowerCase()}`,
+        description: art(path.join(__dirname, 'templates', 'description.art'), {
+            novel,
+        }),
+        author: novel.writer,
+        category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
+    }));
 
     return {
         title: `小説家になろう (${sub}) - ${getRankingTitle(type)}`,

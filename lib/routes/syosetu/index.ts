@@ -2,15 +2,13 @@ import { Route, Data, DataItem } from '@/types';
 import { fetchNovelInfo, fetchChapterContent } from './utils';
 import { Context } from 'hono';
 import { NovelType } from 'narou';
-import querystring from 'querystring';
 
 export const route: Route = {
-    path: '/:ncode/:routeParams?',
+    path: '/:ncode',
     categories: ['reading'],
     example: '/syosetu/n9292ii',
     parameters: {
         ncode: 'Novel code, can be found in URL',
-        routeParams: 'Optional: limit=N (max: 20, default: 5)',
     },
     features: {
         requireConfig: false,
@@ -25,7 +23,7 @@ export const route: Route = {
     handler,
     radar: [
         {
-            title: 'Novel',
+            title: 'Novel Updates',
             source: ['novel18.syosetu.com/:ncode', 'ncode.syosetu.com/:ncode'],
             target: '/:ncode',
         },
@@ -34,8 +32,7 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { ncode } = ctx.req.param();
-    const routeParams = querystring.parse(ctx.req.param('routeParams'));
-    const limit = Math.min(Number(routeParams.limit || 5), 20);
+    const limit = Math.min(Number(ctx.req.query('limit') ?? 5), 20);
 
     const { baseUrl, novel } = await fetchNovelInfo(ncode);
     novel.story = novel.story.replaceAll('\n', '<br>') || '';

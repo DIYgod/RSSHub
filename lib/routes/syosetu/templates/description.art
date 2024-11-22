@@ -7,16 +7,16 @@
     <tr>
         <td>状態</td>
         <td>
-            {{if novel.novel_type === 2}}
+            {{ if novel.novel_type === 2 }}
                 短編
-            {{else}}
-                {{if novel.end === 0}}
+            {{ else }}
+                {{ if novel.end === 0 }}
                     完結済
-                {{else}}
+                {{ else }}
                     連載中
-                {{/if}}
+                {{ /if }}
                 （全{{ novel.general_all_no }}エピソード）
-            {{/if}}
+            {{ /if }}
         </td>
     </tr>
     {{ if genreText }}
@@ -24,7 +24,7 @@
         <td>ジャンル</td>
         <td>{{ genreText }}</td>
     </tr>
-    {{/if}}
+    {{ /if }}
     <tr>
         <td>キーワード</td>
         <td>{{ novel.keyword }}</td>
@@ -39,7 +39,7 @@
     </tr>
     <tr>
         <td>読了時間</td>
-        <td>約{{ novel.time }}分（{{ novel.length.toLocaleString() }}文字）</td>
+        <td>約{{ novel.time }}分（{{ novel.length }}文字）</td>
     </tr>
 </table>
 <br>
