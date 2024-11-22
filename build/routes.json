@@ -48306,17 +48306,40 @@
   "linkresearcher": {
     "routes": {
       "/:params": {
+        "name": "Articles",
         "path": "/:params",
-        "name": "Unknown",
+        "example": "/linkresearcher/category=theses&columns=Nature%20导读&subject=生物",
         "maintainers": [
-          "y9c"
+          "y9c",
+          "KarasuShin"
         ],
+        "view": 0,
+        "categories": [
+          "journal"
+        ],
+        "parameters": {
+          "params": {
+            "description": "search parameters, support `category`, `subject`, `columns`, `query`"
+          }
+        },
+        "zh": {
+          "name": "文章"
+        },
+        "zh-TW": {
+          "name": "文章"
+        },
         "location": "index.ts"
       }
     },
     "name": "Link Research",
-    "url": "linkresearcher",
-    "lang": "en"
+    "url": "www.linkresearcher.com",
+    "lang": "zh-CN",
+    "zh": {
+      "name": "领研"
+    },
+    "zh-TW": {
+      "name": "領研"
+    }
   },
   "linovelib": {
     "routes": {
