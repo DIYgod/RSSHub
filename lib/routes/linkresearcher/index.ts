@@ -2,7 +2,7 @@ import { ViewType, type Data, type DataItem, type Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { v4 as uuid } from 'uuid';
+import crypto from 'crypto';
 import type { Context } from 'hono';
 import type { DetailResponse, SearchResultItem } from './types';
 import cache from '@/utils/cache';
