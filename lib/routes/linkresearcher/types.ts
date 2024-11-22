@@ -74,6 +74,7 @@ export interface ThesesDetailResponse {
     template: boolean;
     title: string;
     userType: number;
+    zhTextList?: string[];
 }
 
 export interface InformationDetailResponse {

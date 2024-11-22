@@ -6,6 +6,12 @@ import crypto from 'crypto';
 import type { Context } from 'hono';
 import type { DetailResponse, SearchResultItem } from './types';
 import cache from '@/utils/cache';
+import { getCurrentPath } from '@/utils/helpers';
+import { art } from '@/utils/render';
+import path from 'node:path';
+
+const __dirname = getCurrentPath(import.meta.url);
+const templatePath = path.join(__dirname, 'templates/bilingual.art');
 
 const baseURL = 'https://www.linkresearcher.com';
 const apiURL = `${baseURL}/api`;
@@ -96,11 +102,17 @@ async function handler(ctx: Context): Promise<Data> {
                 });
                 const dataItem: DataItem = {
                     title: response.title,
-                    description: response.content,
                     pubDate: parseDate(response.onlineTime),
                     link,
                     image: response.cover,
                 };
+                dataItem.description =
+                    'zhTextList' in response && 'enTextList' in response
+                        ? art(templatePath, {
+                              zh: response.zhTextList,
+                              en: response.enTextList,
+                          })
+                        : response.content;
                 return dataItem;
             }) as unknown as DataItem;
         })
