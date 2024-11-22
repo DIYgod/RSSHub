@@ -6402,8 +6402,21 @@
   "/sycl/:feed?": [
     "mocusez"
   ],
-  "/syosetu/chapter/:id": [
-    "huangliangshusheng"
+  "/syosetu/dev": [
+    "SnowAgar25"
+  ],
+  "/syosetu/:ncode": [
+    "eternasuno",
+    "SnowAgar25"
+  ],
+  "/syosetu/rankingr18/:sub/:type": [
+    "SnowAgar25"
+  ],
+  "/syosetu/ranking/:listType/:type": [
+    "SnowAgar25"
+  ],
+  "/syosetu/search/:sub/:query": [
+    "SnowAgar25"
   ],
   "/sysu/cse": [],
   "/sysu/ygafz/:type?": [
