@@ -5845,6 +5845,41 @@
     "url": "aisixiang.com",
     "lang": "zh-CN"
   },
+  "ajcass": {
+    "routes": {
+      "/shxyj/:year?/:issue?": {
+        "path": "/shxyj/:year?/:issue?",
+        "categories": [
+          "journal"
+        ],
+        "example": "/ajcass/shxyj/2024/1",
+        "parameters": {
+          "year": "Year of the issue, `null` for the lastest",
+          "issue": "Issue number, `null` for the lastest"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "社会学研究",
+        "maintainers": [
+          "CNYoki"
+        ],
+        "location": "shxyj.ts"
+      }
+    },
+    "name": "社科期刊网",
+    "url": "ajcass.com",
+    "description": "中国社会科学院学术期刊方阵",
+    "lang": "zh-CN",
+    "zh": {
+      "name": "社科期刊网"
+    }
+  },
   "ajmide": {
     "routes": {
       "/:id": {
