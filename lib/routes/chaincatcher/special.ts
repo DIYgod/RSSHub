@@ -22,11 +22,11 @@ export const route: Route = {
     // },
     radar: [
         {
-            source: ['chaincatcher.com/column', 'chaincatcher.com/'],
+            source: ['chaincatcher.com/special', 'chaincatcher.com/'],
         },
     ],
     name: '快讯',
-    maintainers: ['Devin'],
+    maintainers: ['ishowman'],
     handler,
     // url: 'chaincatcher.com/news',
 };
@@ -35,34 +35,29 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const link = `${rootUrl}/special/${id}`;
 
-    const { data: response } = await got(`${rootUrl}/special/${id}`);
+    const { data } = await got(`${rootUrl}/special/${id}`);
 
-    // const { data } = await got(`${rootUrl}/special/93`, {
-    //     // form: {
-    //     //     page: 1,
-    //     //     categoryid: 3,
-    //     // },
-    //     "featureId":"93","pageNumber":2,"pageSize":10
-    // });
-    const $ = load(response);
+    const $ = load(data);
     const title = $('.head_title').text();
     const description = $('.abstract').text();
     const image = $('.head_bg img').attr('src');
 
-    const items = $('.article_left', '.list_content .items')
+    const items = $('.article_area', '.list_content .items')
         // 用 map 过不了 linter，用推荐的 toArray 会报错
         // .toArray()
         .map((_, item) => ({
-            link: rootUrl + $(item).find('a').attr('href'),
-            title: $(item).find('.article_title').text(),
-            description: $(item).find('.article_content').text(),
+                link: rootUrl + $(item).find('a').attr('href'),
+                title: $(item).find('.article_title').text(),
+                description: $(item).find('.article_content').text(),
 
-            //             author,
-            //             guid,
-            id,
-            image: $(item).find('.article_img').attr('src'),
-            banner: $(item).find('.article_img').attr('src'),
-        }))
+                //             author,
+                //             guid,
+                id,
+                enclosure_url: $(item).find('.article_img>img').attr('src'),
+                enclosure_type: 'image/webp',
+
+                pubDate: $(item).find('.times').text(),
+            }))
         .get();
     // .slice(0, ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 125) : 50);
 
