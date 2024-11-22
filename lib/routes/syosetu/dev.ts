@@ -16,6 +16,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'なろう小説 API の更新履歴',
+    url: 'dev.syosetu.com',
     maintainers: ['SnowAgar25'],
     handler,
     radar: [
