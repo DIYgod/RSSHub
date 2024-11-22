@@ -46,7 +46,7 @@ async function handler(ctx: Context): Promise<Data> {
     }
     let title = categoryMap[category] as string;
 
-    const token = uuid();
+    const token = crypto.randomUUID();
 
     const data: {
         filters: {
