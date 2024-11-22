@@ -76337,6 +76337,7 @@
           "supportScihub": false
         },
         "name": "なろう小説 API の更新履歴",
+        "url": "dev.syosetu.com",
         "maintainers": [
           "SnowAgar25"
         ],
@@ -76516,10 +76517,11 @@
           "supportScihub": false
         },
         "name": "R18 Rankings",
+        "url": "syosetu.com/site/group",
         "maintainers": [
           "SnowAgar25"
         ],
-        "description": "\n| Period | Description | 説明 |\n| --- | --- | --- |\n| daily | Daily Ranking | 日間ランキング |\n| weekly | Weekly Ranking | 週間ランキング |\n| monthly | Monthly Ranking | 月間ランキング |\n| quarter | Quarterly Ranking | 四半期ランキング |\n| yearly | Yearly Ranking | 年間ランキング |\n\n| Novel Type | Description | 説明 |\n| --- | --- | --- | --- |\n| total | All Works | 総合 |\n| t | Short Stories | 短編 |\n| r | Ongoing Series | 連載中 |\n| er | Completed Series | 完結済 |\n\nNote: Combine Period and Novel Type with `_`. For example: `daily_total`, `weekly_r`, `monthly_er`",
+        "description": "\n| Period | Description | 説明 |\n| --- | --- | --- |\n| daily | Daily Ranking | 日間ランキング |\n| weekly | Weekly Ranking | 週間ランキング |\n| monthly | Monthly Ranking | 月間ランキング |\n| quarter | Quarterly Ranking | 四半期ランキング |\n| yearly | Yearly Ranking | 年間ランキング |\n\n| Novel Type | Description | 説明 |\n| --- | --- | --- |\n| total | All Works | 総合 |\n| t | Short Stories | 短編 |\n| r | Ongoing Series | 連載中 |\n| er | Completed Series | 完結済 |\n\n:::tip\nCombine Period and Novel Type with `_`.\nFor example: `daily_total`, `weekly_r`, `monthly_er`\n:::",
         "radar": [
           {
             "source": [
@@ -76717,2403 +76719,2403 @@
             "options": [
               {
                 "value": "daily_total",
-                "label": "list: [日間] 総合ランキング - すべて"
+                "label": "list - [日間] 総合ランキング - すべて"
               },
               {
                 "value": "daily_t",
-                "label": "list: [日間] 総合ランキング - 短編"
+                "label": "list - [日間] 総合ランキング - 短編"
               },
               {
                 "value": "daily_r",
-                "label": "list: [日間] 総合ランキング - 連載中"
+                "label": "list - [日間] 総合ランキング - 連載中"
               },
               {
                 "value": "daily_er",
-                "label": "list: [日間] 総合ランキング - 完結済"
+                "label": "list - [日間] 総合ランキング - 完結済"
               },
               {
                 "value": "weekly_total",
-                "label": "list: [週間] 総合ランキング - すべて"
+                "label": "list - [週間] 総合ランキング - すべて"
               },
               {
                 "value": "weekly_t",
-                "label": "list: [週間] 総合ランキング - 短編"
+                "label": "list - [週間] 総合ランキング - 短編"
               },
               {
                 "value": "weekly_r",
-                "label": "list: [週間] 総合ランキング - 連載中"
+                "label": "list - [週間] 総合ランキング - 連載中"
               },
               {
                 "value": "weekly_er",
-                "label": "list: [週間] 総合ランキング - 完結済"
+                "label": "list - [週間] 総合ランキング - 完結済"
               },
               {
                 "value": "monthly_total",
-                "label": "list: [月間] 総合ランキング - すべて"
+                "label": "list - [月間] 総合ランキング - すべて"
               },
               {
                 "value": "monthly_t",
-                "label": "list: [月間] 総合ランキング - 短編"
+                "label": "list - [月間] 総合ランキング - 短編"
               },
               {
                 "value": "monthly_r",
-                "label": "list: [月間] 総合ランキング - 連載中"
+                "label": "list - [月間] 総合ランキング - 連載中"
               },
               {
                 "value": "monthly_er",
-                "label": "list: [月間] 総合ランキング - 完結済"
+                "label": "list - [月間] 総合ランキング - 完結済"
               },
               {
                 "value": "quarter_total",
-                "label": "list: [四半期] 総合ランキング - すべて"
+                "label": "list - [四半期] 総合ランキング - すべて"
               },
               {
                 "value": "quarter_t",
-                "label": "list: [四半期] 総合ランキング - 短編"
+                "label": "list - [四半期] 総合ランキング - 短編"
               },
               {
                 "value": "quarter_r",
-                "label": "list: [四半期] 総合ランキング - 連載中"
+                "label": "list - [四半期] 総合ランキング - 連載中"
               },
               {
                 "value": "quarter_er",
-                "label": "list: [四半期] 総合ランキング - 完結済"
+                "label": "list - [四半期] 総合ランキング - 完結済"
               },
               {
                 "value": "yearly_total",
-                "label": "list: [年間] 総合ランキング - すべて"
+                "label": "list - [年間] 総合ランキング - すべて"
               },
               {
                 "value": "yearly_t",
-                "label": "list: [年間] 総合ランキング - 短編"
+                "label": "list - [年間] 総合ランキング - 短編"
               },
               {
                 "value": "yearly_r",
-                "label": "list: [年間] 総合ランキング - 連載中"
+                "label": "list - [年間] 総合ランキング - 連載中"
               },
               {
                 "value": "yearly_er",
-                "label": "list: [年間] 総合ランキング - 完結済"
+                "label": "list - [年間] 総合ランキング - 完結済"
               },
               {
                 "value": "total_total",
-                "label": "list: [累計] 総合ランキング - すべて"
+                "label": "list - [累計] 総合ランキング - すべて"
               },
               {
                 "value": "total_t",
-                "label": "list: [累計] 総合ランキング - 短編"
+                "label": "list - [累計] 総合ランキング - 短編"
               },
               {
                 "value": "total_r",
-                "label": "list: [累計] 総合ランキング - 連載中"
+                "label": "list - [累計] 総合ランキング - 連載中"
               },
               {
                 "value": "total_er",
-                "label": "list: [累計] 総合ランキング - 完結済"
+                "label": "list - [累計] 総合ランキング - 完結済"
               },
               {
                 "value": "daily_101_total",
-                "label": "genre: [日間] 異世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [日間] 異世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "daily_101_t",
-                "label": "genre: [日間] 異世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [日間] 異世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "daily_101_r",
-                "label": "genre: [日間] 異世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [日間] 異世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "daily_101_er",
-                "label": "genre: [日間] 異世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [日間] 異世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "daily_102_total",
-                "label": "genre: [日間] 現実世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [日間] 現実世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "daily_102_t",
-                "label": "genre: [日間] 現実世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [日間] 現実世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "daily_102_r",
-                "label": "genre: [日間] 現実世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [日間] 現実世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "daily_102_er",
-                "label": "genre: [日間] 現実世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [日間] 現実世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "daily_201_total",
-                "label": "genre: [日間] ハイファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [日間] ハイファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "daily_201_t",
-                "label": "genre: [日間] ハイファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [日間] ハイファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "daily_201_r",
-                "label": "genre: [日間] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [日間] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "daily_201_er",
-                "label": "genre: [日間] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [日間] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "daily_202_total",
-                "label": "genre: [日間] ローファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [日間] ローファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "daily_202_t",
-                "label": "genre: [日間] ローファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [日間] ローファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "daily_202_r",
-                "label": "genre: [日間] ローファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [日間] ローファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "daily_202_er",
-                "label": "genre: [日間] ローファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [日間] ローファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "daily_301_total",
-                "label": "genre: [日間] 純文学〔文芸〕ランキング - すべて"
+                "label": "genre - [日間] 純文学〔文芸〕ランキング - すべて"
               },
               {
                 "value": "daily_301_t",
-                "label": "genre: [日間] 純文学〔文芸〕ランキング - 短編"
+                "label": "genre - [日間] 純文学〔文芸〕ランキング - 短編"
               },
               {
                 "value": "daily_301_r",
-                "label": "genre: [日間] 純文学〔文芸〕ランキング - 連載中"
+                "label": "genre - [日間] 純文学〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "daily_301_er",
-                "label": "genre: [日間] 純文学〔文芸〕ランキング - 完結済"
+                "label": "genre - [日間] 純文学〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "daily_302_total",
-                "label": "genre: [日間] ヒューマンドラマ〔文芸〕ランキング - すべて"
+                "label": "genre - [日間] ヒューマンドラマ〔文芸〕ランキング - すべて"
               },
               {
                 "value": "daily_302_t",
-                "label": "genre: [日間] ヒューマンドラマ〔文芸〕ランキング - 短編"
+                "label": "genre - [日間] ヒューマンドラマ〔文芸〕ランキング - 短編"
               },
               {
                 "value": "daily_302_r",
-                "label": "genre: [日間] ヒューマンドラマ〔文芸〕ランキング - 連載中"
+                "label": "genre - [日間] ヒューマンドラマ〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "daily_302_er",
-                "label": "genre: [日間] ヒューマンドラマ〔文芸〕ランキング - 完結済"
+                "label": "genre - [日間] ヒューマンドラマ〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "daily_303_total",
-                "label": "genre: [日間] 歴史〔文芸〕ランキング - すべて"
+                "label": "genre - [日間] 歴史〔文芸〕ランキング - すべて"
               },
               {
                 "value": "daily_303_t",
-                "label": "genre: [日間] 歴史〔文芸〕ランキング - 短編"
+                "label": "genre - [日間] 歴史〔文芸〕ランキング - 短編"
               },
               {
                 "value": "daily_303_r",
-                "label": "genre: [日間] 歴史〔文芸〕ランキング - 連載中"
+                "label": "genre - [日間] 歴史〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "daily_303_er",
-                "label": "genre: [日間] 歴史〔文芸〕ランキング - 完結済"
+                "label": "genre - [日間] 歴史〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "daily_304_total",
-                "label": "genre: [日間] 推理〔文芸〕ランキング - すべて"
+                "label": "genre - [日間] 推理〔文芸〕ランキング - すべて"
               },
               {
                 "value": "daily_304_t",
-                "label": "genre: [日間] 推理〔文芸〕ランキング - 短編"
+                "label": "genre - [日間] 推理〔文芸〕ランキング - 短編"
               },
               {
                 "value": "daily_304_r",
-                "label": "genre: [日間] 推理〔文芸〕ランキング - 連載中"
+                "label": "genre - [日間] 推理〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "daily_304_er",
-                "label": "genre: [日間] 推理〔文芸〕ランキング - 完結済"
+                "label": "genre - [日間] 推理〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "daily_305_total",
-                "label": "genre: [日間] ホラー〔文芸〕ランキング - すべて"
+                "label": "genre - [日間] ホラー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "daily_305_t",
-                "label": "genre: [日間] ホラー〔文芸〕ランキング - 短編"
+                "label": "genre - [日間] ホラー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "daily_305_r",
-                "label": "genre: [日間] ホラー〔文芸〕ランキング - 連載中"
+                "label": "genre - [日間] ホラー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "daily_305_er",
-                "label": "genre: [日間] ホラー〔文芸〕ランキング - 完結済"
+                "label": "genre - [日間] ホラー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "daily_306_total",
-                "label": "genre: [日間] アクション〔文芸〕ランキング - すべて"
+                "label": "genre - [日間] アクション〔文芸〕ランキング - すべて"
               },
               {
                 "value": "daily_306_t",
-                "label": "genre: [日間] アクション〔文芸〕ランキング - 短編"
+                "label": "genre - [日間] アクション〔文芸〕ランキング - 短編"
               },
               {
                 "value": "daily_306_r",
-                "label": "genre: [日間] アクション〔文芸〕ランキング - 連載中"
+                "label": "genre - [日間] アクション〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "daily_306_er",
-                "label": "genre: [日間] アクション〔文芸〕ランキング - 完結済"
+                "label": "genre - [日間] アクション〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "daily_307_total",
-                "label": "genre: [日間] コメディー〔文芸〕ランキング - すべて"
+                "label": "genre - [日間] コメディー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "daily_307_t",
-                "label": "genre: [日間] コメディー〔文芸〕ランキング - 短編"
+                "label": "genre - [日間] コメディー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "daily_307_r",
-                "label": "genre: [日間] コメディー〔文芸〕ランキング - 連載中"
+                "label": "genre - [日間] コメディー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "daily_307_er",
-                "label": "genre: [日間] コメディー〔文芸〕ランキング - 完結済"
+                "label": "genre - [日間] コメディー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "daily_401_total",
-                "label": "genre: [日間] VRゲーム〔SF〕ランキング - すべて"
+                "label": "genre - [日間] VRゲーム〔SF〕ランキング - すべて"
               },
               {
                 "value": "daily_401_t",
-                "label": "genre: [日間] VRゲーム〔SF〕ランキング - 短編"
+                "label": "genre - [日間] VRゲーム〔SF〕ランキング - 短編"
               },
               {
                 "value": "daily_401_r",
-                "label": "genre: [日間] VRゲーム〔SF〕ランキング - 連載中"
+                "label": "genre - [日間] VRゲーム〔SF〕ランキング - 連載中"
               },
               {
                 "value": "daily_401_er",
-                "label": "genre: [日間] VRゲーム〔SF〕ランキング - 完結済"
+                "label": "genre - [日間] VRゲーム〔SF〕ランキング - 完結済"
               },
               {
                 "value": "daily_402_total",
-                "label": "genre: [日間] 宇宙〔SF〕ランキング - すべて"
+                "label": "genre - [日間] 宇宙〔SF〕ランキング - すべて"
               },
               {
                 "value": "daily_402_t",
-                "label": "genre: [日間] 宇宙〔SF〕ランキング - 短編"
+                "label": "genre - [日間] 宇宙〔SF〕ランキング - 短編"
               },
               {
                 "value": "daily_402_r",
-                "label": "genre: [日間] 宇宙〔SF〕ランキング - 連載中"
+                "label": "genre - [日間] 宇宙〔SF〕ランキング - 連載中"
               },
               {
                 "value": "daily_402_er",
-                "label": "genre: [日間] 宇宙〔SF〕ランキング - 完結済"
+                "label": "genre - [日間] 宇宙〔SF〕ランキング - 完結済"
               },
               {
                 "value": "daily_403_total",
-                "label": "genre: [日間] 空想科学〔SF〕ランキング - すべて"
+                "label": "genre - [日間] 空想科学〔SF〕ランキング - すべて"
               },
               {
                 "value": "daily_403_t",
-                "label": "genre: [日間] 空想科学〔SF〕ランキング - 短編"
+                "label": "genre - [日間] 空想科学〔SF〕ランキング - 短編"
               },
               {
                 "value": "daily_403_r",
-                "label": "genre: [日間] 空想科学〔SF〕ランキング - 連載中"
+                "label": "genre - [日間] 空想科学〔SF〕ランキング - 連載中"
               },
               {
                 "value": "daily_403_er",
-                "label": "genre: [日間] 空想科学〔SF〕ランキング - 完結済"
+                "label": "genre - [日間] 空想科学〔SF〕ランキング - 完結済"
               },
               {
                 "value": "daily_404_total",
-                "label": "genre: [日間] パニック〔SF〕ランキング - すべて"
+                "label": "genre - [日間] パニック〔SF〕ランキング - すべて"
               },
               {
                 "value": "daily_404_t",
-                "label": "genre: [日間] パニック〔SF〕ランキング - 短編"
+                "label": "genre - [日間] パニック〔SF〕ランキング - 短編"
               },
               {
                 "value": "daily_404_r",
-                "label": "genre: [日間] パニック〔SF〕ランキング - 連載中"
+                "label": "genre - [日間] パニック〔SF〕ランキング - 連載中"
               },
               {
                 "value": "daily_404_er",
-                "label": "genre: [日間] パニック〔SF〕ランキング - 完結済"
+                "label": "genre - [日間] パニック〔SF〕ランキング - 完結済"
               },
               {
                 "value": "daily_9901_total",
-                "label": "genre: [日間] 童話〔その他〕ランキング - すべて"
+                "label": "genre - [日間] 童話〔その他〕ランキング - すべて"
               },
               {
                 "value": "daily_9901_t",
-                "label": "genre: [日間] 童話〔その他〕ランキング - 短編"
+                "label": "genre - [日間] 童話〔その他〕ランキング - 短編"
               },
               {
                 "value": "daily_9901_r",
-                "label": "genre: [日間] 童話〔その他〕ランキング - 連載中"
+                "label": "genre - [日間] 童話〔その他〕ランキング - 連載中"
               },
               {
                 "value": "daily_9901_er",
-                "label": "genre: [日間] 童話〔その他〕ランキング - 完結済"
+                "label": "genre - [日間] 童話〔その他〕ランキング - 完結済"
               },
               {
                 "value": "daily_9902_total",
-                "label": "genre: [日間] 詩〔その他〕ランキング - すべて"
+                "label": "genre - [日間] 詩〔その他〕ランキング - すべて"
               },
               {
                 "value": "daily_9902_t",
-                "label": "genre: [日間] 詩〔その他〕ランキング - 短編"
+                "label": "genre - [日間] 詩〔その他〕ランキング - 短編"
               },
               {
                 "value": "daily_9902_r",
-                "label": "genre: [日間] 詩〔その他〕ランキング - 連載中"
+                "label": "genre - [日間] 詩〔その他〕ランキング - 連載中"
               },
               {
                 "value": "daily_9902_er",
-                "label": "genre: [日間] 詩〔その他〕ランキング - 完結済"
+                "label": "genre - [日間] 詩〔その他〕ランキング - 完結済"
               },
               {
                 "value": "daily_9903_total",
-                "label": "genre: [日間] エッセイ〔その他〕ランキング - すべて"
+                "label": "genre - [日間] エッセイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "daily_9903_t",
-                "label": "genre: [日間] エッセイ〔その他〕ランキング - 短編"
+                "label": "genre - [日間] エッセイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "daily_9903_r",
-                "label": "genre: [日間] エッセイ〔その他〕ランキング - 連載中"
+                "label": "genre - [日間] エッセイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "daily_9903_er",
-                "label": "genre: [日間] エッセイ〔その他〕ランキング - 完結済"
+                "label": "genre - [日間] エッセイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "daily_9904_total",
-                "label": "genre: [日間] リプレイ〔その他〕ランキング - すべて"
+                "label": "genre - [日間] リプレイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "daily_9904_t",
-                "label": "genre: [日間] リプレイ〔その他〕ランキング - 短編"
+                "label": "genre - [日間] リプレイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "daily_9904_r",
-                "label": "genre: [日間] リプレイ〔その他〕ランキング - 連載中"
+                "label": "genre - [日間] リプレイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "daily_9904_er",
-                "label": "genre: [日間] リプレイ〔その他〕ランキング - 完結済"
+                "label": "genre - [日間] リプレイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "daily_9999_total",
-                "label": "genre: [日間] その他〔その他〕ランキング - すべて"
+                "label": "genre - [日間] その他〔その他〕ランキング - すべて"
               },
               {
                 "value": "daily_9999_t",
-                "label": "genre: [日間] その他〔その他〕ランキング - 短編"
+                "label": "genre - [日間] その他〔その他〕ランキング - 短編"
               },
               {
                 "value": "daily_9999_r",
-                "label": "genre: [日間] その他〔その他〕ランキング - 連載中"
+                "label": "genre - [日間] その他〔その他〕ランキング - 連載中"
               },
               {
                 "value": "daily_9999_er",
-                "label": "genre: [日間] その他〔その他〕ランキング - 完結済"
+                "label": "genre - [日間] その他〔その他〕ランキング - 完結済"
               },
               {
                 "value": "daily_9801_total",
-                "label": "genre: [日間] ノンジャンル〔ノンジャンル〕ランキング - すべて"
+                "label": "genre - [日間] ノンジャンル〔ノンジャンル〕ランキング - すべて"
               },
               {
                 "value": "daily_9801_t",
-                "label": "genre: [日間] ノンジャンル〔ノンジャンル〕ランキング - 短編"
+                "label": "genre - [日間] ノンジャンル〔ノンジャンル〕ランキング - 短編"
               },
               {
                 "value": "daily_9801_r",
-                "label": "genre: [日間] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
+                "label": "genre - [日間] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
               },
               {
                 "value": "daily_9801_er",
-                "label": "genre: [日間] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
+                "label": "genre - [日間] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
               },
               {
                 "value": "weekly_101_total",
-                "label": "genre: [週間] 異世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [週間] 異世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "weekly_101_t",
-                "label": "genre: [週間] 異世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [週間] 異世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "weekly_101_r",
-                "label": "genre: [週間] 異世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [週間] 異世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "weekly_101_er",
-                "label": "genre: [週間] 異世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [週間] 異世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "weekly_102_total",
-                "label": "genre: [週間] 現実世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [週間] 現実世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "weekly_102_t",
-                "label": "genre: [週間] 現実世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [週間] 現実世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "weekly_102_r",
-                "label": "genre: [週間] 現実世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [週間] 現実世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "weekly_102_er",
-                "label": "genre: [週間] 現実世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [週間] 現実世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "weekly_201_total",
-                "label": "genre: [週間] ハイファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [週間] ハイファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "weekly_201_t",
-                "label": "genre: [週間] ハイファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [週間] ハイファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "weekly_201_r",
-                "label": "genre: [週間] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [週間] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "weekly_201_er",
-                "label": "genre: [週間] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [週間] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "weekly_202_total",
-                "label": "genre: [週間] ローファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [週間] ローファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "weekly_202_t",
-                "label": "genre: [週間] ローファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [週間] ローファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "weekly_202_r",
-                "label": "genre: [週間] ローファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [週間] ローファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "weekly_202_er",
-                "label": "genre: [週間] ローファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [週間] ローファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "weekly_301_total",
-                "label": "genre: [週間] 純文学〔文芸〕ランキング - すべて"
+                "label": "genre - [週間] 純文学〔文芸〕ランキング - すべて"
               },
               {
                 "value": "weekly_301_t",
-                "label": "genre: [週間] 純文学〔文芸〕ランキング - 短編"
+                "label": "genre - [週間] 純文学〔文芸〕ランキング - 短編"
               },
               {
                 "value": "weekly_301_r",
-                "label": "genre: [週間] 純文学〔文芸〕ランキング - 連載中"
+                "label": "genre - [週間] 純文学〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "weekly_301_er",
-                "label": "genre: [週間] 純文学〔文芸〕ランキング - 完結済"
+                "label": "genre - [週間] 純文学〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "weekly_302_total",
-                "label": "genre: [週間] ヒューマンドラマ〔文芸〕ランキング - すべて"
+                "label": "genre - [週間] ヒューマンドラマ〔文芸〕ランキング - すべて"
               },
               {
                 "value": "weekly_302_t",
-                "label": "genre: [週間] ヒューマンドラマ〔文芸〕ランキング - 短編"
+                "label": "genre - [週間] ヒューマンドラマ〔文芸〕ランキング - 短編"
               },
               {
                 "value": "weekly_302_r",
-                "label": "genre: [週間] ヒューマンドラマ〔文芸〕ランキング - 連載中"
+                "label": "genre - [週間] ヒューマンドラマ〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "weekly_302_er",
-                "label": "genre: [週間] ヒューマンドラマ〔文芸〕ランキング - 完結済"
+                "label": "genre - [週間] ヒューマンドラマ〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "weekly_303_total",
-                "label": "genre: [週間] 歴史〔文芸〕ランキング - すべて"
+                "label": "genre - [週間] 歴史〔文芸〕ランキング - すべて"
               },
               {
                 "value": "weekly_303_t",
-                "label": "genre: [週間] 歴史〔文芸〕ランキング - 短編"
+                "label": "genre - [週間] 歴史〔文芸〕ランキング - 短編"
               },
               {
                 "value": "weekly_303_r",
-                "label": "genre: [週間] 歴史〔文芸〕ランキング - 連載中"
+                "label": "genre - [週間] 歴史〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "weekly_303_er",
-                "label": "genre: [週間] 歴史〔文芸〕ランキング - 完結済"
+                "label": "genre - [週間] 歴史〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "weekly_304_total",
-                "label": "genre: [週間] 推理〔文芸〕ランキング - すべて"
+                "label": "genre - [週間] 推理〔文芸〕ランキング - すべて"
               },
               {
                 "value": "weekly_304_t",
-                "label": "genre: [週間] 推理〔文芸〕ランキング - 短編"
+                "label": "genre - [週間] 推理〔文芸〕ランキング - 短編"
               },
               {
                 "value": "weekly_304_r",
-                "label": "genre: [週間] 推理〔文芸〕ランキング - 連載中"
+                "label": "genre - [週間] 推理〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "weekly_304_er",
-                "label": "genre: [週間] 推理〔文芸〕ランキング - 完結済"
+                "label": "genre - [週間] 推理〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "weekly_305_total",
-                "label": "genre: [週間] ホラー〔文芸〕ランキング - すべて"
+                "label": "genre - [週間] ホラー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "weekly_305_t",
-                "label": "genre: [週間] ホラー〔文芸〕ランキング - 短編"
+                "label": "genre - [週間] ホラー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "weekly_305_r",
-                "label": "genre: [週間] ホラー〔文芸〕ランキング - 連載中"
+                "label": "genre - [週間] ホラー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "weekly_305_er",
-                "label": "genre: [週間] ホラー〔文芸〕ランキング - 完結済"
+                "label": "genre - [週間] ホラー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "weekly_306_total",
-                "label": "genre: [週間] アクション〔文芸〕ランキング - すべて"
+                "label": "genre - [週間] アクション〔文芸〕ランキング - すべて"
               },
               {
                 "value": "weekly_306_t",
-                "label": "genre: [週間] アクション〔文芸〕ランキング - 短編"
+                "label": "genre - [週間] アクション〔文芸〕ランキング - 短編"
               },
               {
                 "value": "weekly_306_r",
-                "label": "genre: [週間] アクション〔文芸〕ランキング - 連載中"
+                "label": "genre - [週間] アクション〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "weekly_306_er",
-                "label": "genre: [週間] アクション〔文芸〕ランキング - 完結済"
+                "label": "genre - [週間] アクション〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "weekly_307_total",
-                "label": "genre: [週間] コメディー〔文芸〕ランキング - すべて"
+                "label": "genre - [週間] コメディー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "weekly_307_t",
-                "label": "genre: [週間] コメディー〔文芸〕ランキング - 短編"
+                "label": "genre - [週間] コメディー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "weekly_307_r",
-                "label": "genre: [週間] コメディー〔文芸〕ランキング - 連載中"
+                "label": "genre - [週間] コメディー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "weekly_307_er",
-                "label": "genre: [週間] コメディー〔文芸〕ランキング - 完結済"
+                "label": "genre - [週間] コメディー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "weekly_401_total",
-                "label": "genre: [週間] VRゲーム〔SF〕ランキング - すべて"
+                "label": "genre - [週間] VRゲーム〔SF〕ランキング - すべて"
               },
               {
                 "value": "weekly_401_t",
-                "label": "genre: [週間] VRゲーム〔SF〕ランキング - 短編"
+                "label": "genre - [週間] VRゲーム〔SF〕ランキング - 短編"
               },
               {
                 "value": "weekly_401_r",
-                "label": "genre: [週間] VRゲーム〔SF〕ランキング - 連載中"
+                "label": "genre - [週間] VRゲーム〔SF〕ランキング - 連載中"
               },
               {
                 "value": "weekly_401_er",
-                "label": "genre: [週間] VRゲーム〔SF〕ランキング - 完結済"
+                "label": "genre - [週間] VRゲーム〔SF〕ランキング - 完結済"
               },
               {
                 "value": "weekly_402_total",
-                "label": "genre: [週間] 宇宙〔SF〕ランキング - すべて"
+                "label": "genre - [週間] 宇宙〔SF〕ランキング - すべて"
               },
               {
                 "value": "weekly_402_t",
-                "label": "genre: [週間] 宇宙〔SF〕ランキング - 短編"
+                "label": "genre - [週間] 宇宙〔SF〕ランキング - 短編"
               },
               {
                 "value": "weekly_402_r",
-                "label": "genre: [週間] 宇宙〔SF〕ランキング - 連載中"
+                "label": "genre - [週間] 宇宙〔SF〕ランキング - 連載中"
               },
               {
                 "value": "weekly_402_er",
-                "label": "genre: [週間] 宇宙〔SF〕ランキング - 完結済"
+                "label": "genre - [週間] 宇宙〔SF〕ランキング - 完結済"
               },
               {
                 "value": "weekly_403_total",
-                "label": "genre: [週間] 空想科学〔SF〕ランキング - すべて"
+                "label": "genre - [週間] 空想科学〔SF〕ランキング - すべて"
               },
               {
                 "value": "weekly_403_t",
-                "label": "genre: [週間] 空想科学〔SF〕ランキング - 短編"
+                "label": "genre - [週間] 空想科学〔SF〕ランキング - 短編"
               },
               {
                 "value": "weekly_403_r",
-                "label": "genre: [週間] 空想科学〔SF〕ランキング - 連載中"
+                "label": "genre - [週間] 空想科学〔SF〕ランキング - 連載中"
               },
               {
                 "value": "weekly_403_er",
-                "label": "genre: [週間] 空想科学〔SF〕ランキング - 完結済"
+                "label": "genre - [週間] 空想科学〔SF〕ランキング - 完結済"
               },
               {
                 "value": "weekly_404_total",
-                "label": "genre: [週間] パニック〔SF〕ランキング - すべて"
+                "label": "genre - [週間] パニック〔SF〕ランキング - すべて"
               },
               {
                 "value": "weekly_404_t",
-                "label": "genre: [週間] パニック〔SF〕ランキング - 短編"
+                "label": "genre - [週間] パニック〔SF〕ランキング - 短編"
               },
               {
                 "value": "weekly_404_r",
-                "label": "genre: [週間] パニック〔SF〕ランキング - 連載中"
+                "label": "genre - [週間] パニック〔SF〕ランキング - 連載中"
               },
               {
                 "value": "weekly_404_er",
-                "label": "genre: [週間] パニック〔SF〕ランキング - 完結済"
+                "label": "genre - [週間] パニック〔SF〕ランキング - 完結済"
               },
               {
                 "value": "weekly_9901_total",
-                "label": "genre: [週間] 童話〔その他〕ランキング - すべて"
+                "label": "genre - [週間] 童話〔その他〕ランキング - すべて"
               },
               {
                 "value": "weekly_9901_t",
-                "label": "genre: [週間] 童話〔その他〕ランキング - 短編"
+                "label": "genre - [週間] 童話〔その他〕ランキング - 短編"
               },
               {
                 "value": "weekly_9901_r",
-                "label": "genre: [週間] 童話〔その他〕ランキング - 連載中"
+                "label": "genre - [週間] 童話〔その他〕ランキング - 連載中"
               },
               {
                 "value": "weekly_9901_er",
-                "label": "genre: [週間] 童話〔その他〕ランキング - 完結済"
+                "label": "genre - [週間] 童話〔その他〕ランキング - 完結済"
               },
               {
                 "value": "weekly_9902_total",
-                "label": "genre: [週間] 詩〔その他〕ランキング - すべて"
+                "label": "genre - [週間] 詩〔その他〕ランキング - すべて"
               },
               {
                 "value": "weekly_9902_t",
-                "label": "genre: [週間] 詩〔その他〕ランキング - 短編"
+                "label": "genre - [週間] 詩〔その他〕ランキング - 短編"
               },
               {
                 "value": "weekly_9902_r",
-                "label": "genre: [週間] 詩〔その他〕ランキング - 連載中"
+                "label": "genre - [週間] 詩〔その他〕ランキング - 連載中"
               },
               {
                 "value": "weekly_9902_er",
-                "label": "genre: [週間] 詩〔その他〕ランキング - 完結済"
+                "label": "genre - [週間] 詩〔その他〕ランキング - 完結済"
               },
               {
                 "value": "weekly_9903_total",
-                "label": "genre: [週間] エッセイ〔その他〕ランキング - すべて"
+                "label": "genre - [週間] エッセイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "weekly_9903_t",
-                "label": "genre: [週間] エッセイ〔その他〕ランキング - 短編"
+                "label": "genre - [週間] エッセイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "weekly_9903_r",
-                "label": "genre: [週間] エッセイ〔その他〕ランキング - 連載中"
+                "label": "genre - [週間] エッセイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "weekly_9903_er",
-                "label": "genre: [週間] エッセイ〔その他〕ランキング - 完結済"
+                "label": "genre - [週間] エッセイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "weekly_9904_total",
-                "label": "genre: [週間] リプレイ〔その他〕ランキング - すべて"
+                "label": "genre - [週間] リプレイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "weekly_9904_t",
-                "label": "genre: [週間] リプレイ〔その他〕ランキング - 短編"
+                "label": "genre - [週間] リプレイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "weekly_9904_r",
-                "label": "genre: [週間] リプレイ〔その他〕ランキング - 連載中"
+                "label": "genre - [週間] リプレイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "weekly_9904_er",
-                "label": "genre: [週間] リプレイ〔その他〕ランキング - 完結済"
+                "label": "genre - [週間] リプレイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "weekly_9999_total",
-                "label": "genre: [週間] その他〔その他〕ランキング - すべて"
+                "label": "genre - [週間] その他〔その他〕ランキング - すべて"
               },
               {
                 "value": "weekly_9999_t",
-                "label": "genre: [週間] その他〔その他〕ランキング - 短編"
+                "label": "genre - [週間] その他〔その他〕ランキング - 短編"
               },
               {
                 "value": "weekly_9999_r",
-                "label": "genre: [週間] その他〔その他〕ランキング - 連載中"
+                "label": "genre - [週間] その他〔その他〕ランキング - 連載中"
               },
               {
                 "value": "weekly_9999_er",
-                "label": "genre: [週間] その他〔その他〕ランキング - 完結済"
+                "label": "genre - [週間] その他〔その他〕ランキング - 完結済"
               },
               {
                 "value": "weekly_9801_total",
-                "label": "genre: [週間] ノンジャンル〔ノンジャンル〕ランキング - すべて"
+                "label": "genre - [週間] ノンジャンル〔ノンジャンル〕ランキング - すべて"
               },
               {
                 "value": "weekly_9801_t",
-                "label": "genre: [週間] ノンジャンル〔ノンジャンル〕ランキング - 短編"
+                "label": "genre - [週間] ノンジャンル〔ノンジャンル〕ランキング - 短編"
               },
               {
                 "value": "weekly_9801_r",
-                "label": "genre: [週間] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
+                "label": "genre - [週間] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
               },
               {
                 "value": "weekly_9801_er",
-                "label": "genre: [週間] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
+                "label": "genre - [週間] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
               },
               {
                 "value": "monthly_101_total",
-                "label": "genre: [月間] 異世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [月間] 異世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "monthly_101_t",
-                "label": "genre: [月間] 異世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [月間] 異世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "monthly_101_r",
-                "label": "genre: [月間] 異世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [月間] 異世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "monthly_101_er",
-                "label": "genre: [月間] 異世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [月間] 異世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "monthly_102_total",
-                "label": "genre: [月間] 現実世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [月間] 現実世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "monthly_102_t",
-                "label": "genre: [月間] 現実世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [月間] 現実世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "monthly_102_r",
-                "label": "genre: [月間] 現実世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [月間] 現実世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "monthly_102_er",
-                "label": "genre: [月間] 現実世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [月間] 現実世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "monthly_201_total",
-                "label": "genre: [月間] ハイファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [月間] ハイファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "monthly_201_t",
-                "label": "genre: [月間] ハイファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [月間] ハイファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "monthly_201_r",
-                "label": "genre: [月間] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [月間] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "monthly_201_er",
-                "label": "genre: [月間] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [月間] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "monthly_202_total",
-                "label": "genre: [月間] ローファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [月間] ローファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "monthly_202_t",
-                "label": "genre: [月間] ローファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [月間] ローファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "monthly_202_r",
-                "label": "genre: [月間] ローファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [月間] ローファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "monthly_202_er",
-                "label": "genre: [月間] ローファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [月間] ローファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "monthly_301_total",
-                "label": "genre: [月間] 純文学〔文芸〕ランキング - すべて"
+                "label": "genre - [月間] 純文学〔文芸〕ランキング - すべて"
               },
               {
                 "value": "monthly_301_t",
-                "label": "genre: [月間] 純文学〔文芸〕ランキング - 短編"
+                "label": "genre - [月間] 純文学〔文芸〕ランキング - 短編"
               },
               {
                 "value": "monthly_301_r",
-                "label": "genre: [月間] 純文学〔文芸〕ランキング - 連載中"
+                "label": "genre - [月間] 純文学〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "monthly_301_er",
-                "label": "genre: [月間] 純文学〔文芸〕ランキング - 完結済"
+                "label": "genre - [月間] 純文学〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "monthly_302_total",
-                "label": "genre: [月間] ヒューマンドラマ〔文芸〕ランキング - すべて"
+                "label": "genre - [月間] ヒューマンドラマ〔文芸〕ランキング - すべて"
               },
               {
                 "value": "monthly_302_t",
-                "label": "genre: [月間] ヒューマンドラマ〔文芸〕ランキング - 短編"
+                "label": "genre - [月間] ヒューマンドラマ〔文芸〕ランキング - 短編"
               },
               {
                 "value": "monthly_302_r",
-                "label": "genre: [月間] ヒューマンドラマ〔文芸〕ランキング - 連載中"
+                "label": "genre - [月間] ヒューマンドラマ〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "monthly_302_er",
-                "label": "genre: [月間] ヒューマンドラマ〔文芸〕ランキング - 完結済"
+                "label": "genre - [月間] ヒューマンドラマ〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "monthly_303_total",
-                "label": "genre: [月間] 歴史〔文芸〕ランキング - すべて"
+                "label": "genre - [月間] 歴史〔文芸〕ランキング - すべて"
               },
               {
                 "value": "monthly_303_t",
-                "label": "genre: [月間] 歴史〔文芸〕ランキング - 短編"
+                "label": "genre - [月間] 歴史〔文芸〕ランキング - 短編"
               },
               {
                 "value": "monthly_303_r",
-                "label": "genre: [月間] 歴史〔文芸〕ランキング - 連載中"
+                "label": "genre - [月間] 歴史〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "monthly_303_er",
-                "label": "genre: [月間] 歴史〔文芸〕ランキング - 完結済"
+                "label": "genre - [月間] 歴史〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "monthly_304_total",
-                "label": "genre: [月間] 推理〔文芸〕ランキング - すべて"
+                "label": "genre - [月間] 推理〔文芸〕ランキング - すべて"
               },
               {
                 "value": "monthly_304_t",
-                "label": "genre: [月間] 推理〔文芸〕ランキング - 短編"
+                "label": "genre - [月間] 推理〔文芸〕ランキング - 短編"
               },
               {
                 "value": "monthly_304_r",
-                "label": "genre: [月間] 推理〔文芸〕ランキング - 連載中"
+                "label": "genre - [月間] 推理〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "monthly_304_er",
-                "label": "genre: [月間] 推理〔文芸〕ランキング - 完結済"
+                "label": "genre - [月間] 推理〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "monthly_305_total",
-                "label": "genre: [月間] ホラー〔文芸〕ランキング - すべて"
+                "label": "genre - [月間] ホラー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "monthly_305_t",
-                "label": "genre: [月間] ホラー〔文芸〕ランキング - 短編"
+                "label": "genre - [月間] ホラー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "monthly_305_r",
-                "label": "genre: [月間] ホラー〔文芸〕ランキング - 連載中"
+                "label": "genre - [月間] ホラー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "monthly_305_er",
-                "label": "genre: [月間] ホラー〔文芸〕ランキング - 完結済"
+                "label": "genre - [月間] ホラー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "monthly_306_total",
-                "label": "genre: [月間] アクション〔文芸〕ランキング - すべて"
+                "label": "genre - [月間] アクション〔文芸〕ランキング - すべて"
               },
               {
                 "value": "monthly_306_t",
-                "label": "genre: [月間] アクション〔文芸〕ランキング - 短編"
+                "label": "genre - [月間] アクション〔文芸〕ランキング - 短編"
               },
               {
                 "value": "monthly_306_r",
-                "label": "genre: [月間] アクション〔文芸〕ランキング - 連載中"
+                "label": "genre - [月間] アクション〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "monthly_306_er",
-                "label": "genre: [月間] アクション〔文芸〕ランキング - 完結済"
+                "label": "genre - [月間] アクション〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "monthly_307_total",
-                "label": "genre: [月間] コメディー〔文芸〕ランキング - すべて"
+                "label": "genre - [月間] コメディー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "monthly_307_t",
-                "label": "genre: [月間] コメディー〔文芸〕ランキング - 短編"
+                "label": "genre - [月間] コメディー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "monthly_307_r",
-                "label": "genre: [月間] コメディー〔文芸〕ランキング - 連載中"
+                "label": "genre - [月間] コメディー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "monthly_307_er",
-                "label": "genre: [月間] コメディー〔文芸〕ランキング - 完結済"
+                "label": "genre - [月間] コメディー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "monthly_401_total",
-                "label": "genre: [月間] VRゲーム〔SF〕ランキング - すべて"
+                "label": "genre - [月間] VRゲーム〔SF〕ランキング - すべて"
               },
               {
                 "value": "monthly_401_t",
-                "label": "genre: [月間] VRゲーム〔SF〕ランキング - 短編"
+                "label": "genre - [月間] VRゲーム〔SF〕ランキング - 短編"
               },
               {
                 "value": "monthly_401_r",
-                "label": "genre: [月間] VRゲーム〔SF〕ランキング - 連載中"
+                "label": "genre - [月間] VRゲーム〔SF〕ランキング - 連載中"
               },
               {
                 "value": "monthly_401_er",
-                "label": "genre: [月間] VRゲーム〔SF〕ランキング - 完結済"
+                "label": "genre - [月間] VRゲーム〔SF〕ランキング - 完結済"
               },
               {
                 "value": "monthly_402_total",
-                "label": "genre: [月間] 宇宙〔SF〕ランキング - すべて"
+                "label": "genre - [月間] 宇宙〔SF〕ランキング - すべて"
               },
               {
                 "value": "monthly_402_t",
-                "label": "genre: [月間] 宇宙〔SF〕ランキング - 短編"
+                "label": "genre - [月間] 宇宙〔SF〕ランキング - 短編"
               },
               {
                 "value": "monthly_402_r",
-                "label": "genre: [月間] 宇宙〔SF〕ランキング - 連載中"
+                "label": "genre - [月間] 宇宙〔SF〕ランキング - 連載中"
               },
               {
                 "value": "monthly_402_er",
-                "label": "genre: [月間] 宇宙〔SF〕ランキング - 完結済"
+                "label": "genre - [月間] 宇宙〔SF〕ランキング - 完結済"
               },
               {
                 "value": "monthly_403_total",
-                "label": "genre: [月間] 空想科学〔SF〕ランキング - すべて"
+                "label": "genre - [月間] 空想科学〔SF〕ランキング - すべて"
               },
               {
                 "value": "monthly_403_t",
-                "label": "genre: [月間] 空想科学〔SF〕ランキング - 短編"
+                "label": "genre - [月間] 空想科学〔SF〕ランキング - 短編"
               },
               {
                 "value": "monthly_403_r",
-                "label": "genre: [月間] 空想科学〔SF〕ランキング - 連載中"
+                "label": "genre - [月間] 空想科学〔SF〕ランキング - 連載中"
               },
               {
                 "value": "monthly_403_er",
-                "label": "genre: [月間] 空想科学〔SF〕ランキング - 完結済"
+                "label": "genre - [月間] 空想科学〔SF〕ランキング - 完結済"
               },
               {
                 "value": "monthly_404_total",
-                "label": "genre: [月間] パニック〔SF〕ランキング - すべて"
+                "label": "genre - [月間] パニック〔SF〕ランキング - すべて"
               },
               {
                 "value": "monthly_404_t",
-                "label": "genre: [月間] パニック〔SF〕ランキング - 短編"
+                "label": "genre - [月間] パニック〔SF〕ランキング - 短編"
               },
               {
                 "value": "monthly_404_r",
-                "label": "genre: [月間] パニック〔SF〕ランキング - 連載中"
+                "label": "genre - [月間] パニック〔SF〕ランキング - 連載中"
               },
               {
                 "value": "monthly_404_er",
-                "label": "genre: [月間] パニック〔SF〕ランキング - 完結済"
+                "label": "genre - [月間] パニック〔SF〕ランキング - 完結済"
               },
               {
                 "value": "monthly_9901_total",
-                "label": "genre: [月間] 童話〔その他〕ランキング - すべて"
+                "label": "genre - [月間] 童話〔その他〕ランキング - すべて"
               },
               {
                 "value": "monthly_9901_t",
-                "label": "genre: [月間] 童話〔その他〕ランキング - 短編"
+                "label": "genre - [月間] 童話〔その他〕ランキング - 短編"
               },
               {
                 "value": "monthly_9901_r",
-                "label": "genre: [月間] 童話〔その他〕ランキング - 連載中"
+                "label": "genre - [月間] 童話〔その他〕ランキング - 連載中"
               },
               {
                 "value": "monthly_9901_er",
-                "label": "genre: [月間] 童話〔その他〕ランキング - 完結済"
+                "label": "genre - [月間] 童話〔その他〕ランキング - 完結済"
               },
               {
                 "value": "monthly_9902_total",
-                "label": "genre: [月間] 詩〔その他〕ランキング - すべて"
+                "label": "genre - [月間] 詩〔その他〕ランキング - すべて"
               },
               {
                 "value": "monthly_9902_t",
-                "label": "genre: [月間] 詩〔その他〕ランキング - 短編"
+                "label": "genre - [月間] 詩〔その他〕ランキング - 短編"
               },
               {
                 "value": "monthly_9902_r",
-                "label": "genre: [月間] 詩〔その他〕ランキング - 連載中"
+                "label": "genre - [月間] 詩〔その他〕ランキング - 連載中"
               },
               {
                 "value": "monthly_9902_er",
-                "label": "genre: [月間] 詩〔その他〕ランキング - 完結済"
+                "label": "genre - [月間] 詩〔その他〕ランキング - 完結済"
               },
               {
                 "value": "monthly_9903_total",
-                "label": "genre: [月間] エッセイ〔その他〕ランキング - すべて"
+                "label": "genre - [月間] エッセイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "monthly_9903_t",
-                "label": "genre: [月間] エッセイ〔その他〕ランキング - 短編"
+                "label": "genre - [月間] エッセイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "monthly_9903_r",
-                "label": "genre: [月間] エッセイ〔その他〕ランキング - 連載中"
+                "label": "genre - [月間] エッセイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "monthly_9903_er",
-                "label": "genre: [月間] エッセイ〔その他〕ランキング - 完結済"
+                "label": "genre - [月間] エッセイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "monthly_9904_total",
-                "label": "genre: [月間] リプレイ〔その他〕ランキング - すべて"
+                "label": "genre - [月間] リプレイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "monthly_9904_t",
-                "label": "genre: [月間] リプレイ〔その他〕ランキング - 短編"
+                "label": "genre - [月間] リプレイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "monthly_9904_r",
-                "label": "genre: [月間] リプレイ〔その他〕ランキング - 連載中"
+                "label": "genre - [月間] リプレイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "monthly_9904_er",
-                "label": "genre: [月間] リプレイ〔その他〕ランキング - 完結済"
+                "label": "genre - [月間] リプレイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "monthly_9999_total",
-                "label": "genre: [月間] その他〔その他〕ランキング - すべて"
+                "label": "genre - [月間] その他〔その他〕ランキング - すべて"
               },
               {
                 "value": "monthly_9999_t",
-                "label": "genre: [月間] その他〔その他〕ランキング - 短編"
+                "label": "genre - [月間] その他〔その他〕ランキング - 短編"
               },
               {
                 "value": "monthly_9999_r",
-                "label": "genre: [月間] その他〔その他〕ランキング - 連載中"
+                "label": "genre - [月間] その他〔その他〕ランキング - 連載中"
               },
               {
                 "value": "monthly_9999_er",
-                "label": "genre: [月間] その他〔その他〕ランキング - 完結済"
+                "label": "genre - [月間] その他〔その他〕ランキング - 完結済"
               },
               {
                 "value": "monthly_9801_total",
-                "label": "genre: [月間] ノンジャンル〔ノンジャンル〕ランキング - すべて"
+                "label": "genre - [月間] ノンジャンル〔ノンジャンル〕ランキング - すべて"
               },
               {
                 "value": "monthly_9801_t",
-                "label": "genre: [月間] ノンジャンル〔ノンジャンル〕ランキング - 短編"
+                "label": "genre - [月間] ノンジャンル〔ノンジャンル〕ランキング - 短編"
               },
               {
                 "value": "monthly_9801_r",
-                "label": "genre: [月間] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
+                "label": "genre - [月間] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
               },
               {
                 "value": "monthly_9801_er",
-                "label": "genre: [月間] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
+                "label": "genre - [月間] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
               },
               {
                 "value": "quarter_101_total",
-                "label": "genre: [四半期] 異世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [四半期] 異世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "quarter_101_t",
-                "label": "genre: [四半期] 異世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [四半期] 異世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "quarter_101_r",
-                "label": "genre: [四半期] 異世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [四半期] 異世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "quarter_101_er",
-                "label": "genre: [四半期] 異世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [四半期] 異世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "quarter_102_total",
-                "label": "genre: [四半期] 現実世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [四半期] 現実世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "quarter_102_t",
-                "label": "genre: [四半期] 現実世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [四半期] 現実世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "quarter_102_r",
-                "label": "genre: [四半期] 現実世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [四半期] 現実世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "quarter_102_er",
-                "label": "genre: [四半期] 現実世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [四半期] 現実世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "quarter_201_total",
-                "label": "genre: [四半期] ハイファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [四半期] ハイファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "quarter_201_t",
-                "label": "genre: [四半期] ハイファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [四半期] ハイファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "quarter_201_r",
-                "label": "genre: [四半期] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [四半期] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "quarter_201_er",
-                "label": "genre: [四半期] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [四半期] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "quarter_202_total",
-                "label": "genre: [四半期] ローファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [四半期] ローファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "quarter_202_t",
-                "label": "genre: [四半期] ローファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [四半期] ローファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "quarter_202_r",
-                "label": "genre: [四半期] ローファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [四半期] ローファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "quarter_202_er",
-                "label": "genre: [四半期] ローファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [四半期] ローファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "quarter_301_total",
-                "label": "genre: [四半期] 純文学〔文芸〕ランキング - すべて"
+                "label": "genre - [四半期] 純文学〔文芸〕ランキング - すべて"
               },
               {
                 "value": "quarter_301_t",
-                "label": "genre: [四半期] 純文学〔文芸〕ランキング - 短編"
+                "label": "genre - [四半期] 純文学〔文芸〕ランキング - 短編"
               },
               {
                 "value": "quarter_301_r",
-                "label": "genre: [四半期] 純文学〔文芸〕ランキング - 連載中"
+                "label": "genre - [四半期] 純文学〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "quarter_301_er",
-                "label": "genre: [四半期] 純文学〔文芸〕ランキング - 完結済"
+                "label": "genre - [四半期] 純文学〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "quarter_302_total",
-                "label": "genre: [四半期] ヒューマンドラマ〔文芸〕ランキング - すべて"
+                "label": "genre - [四半期] ヒューマンドラマ〔文芸〕ランキング - すべて"
               },
               {
                 "value": "quarter_302_t",
-                "label": "genre: [四半期] ヒューマンドラマ〔文芸〕ランキング - 短編"
+                "label": "genre - [四半期] ヒューマンドラマ〔文芸〕ランキング - 短編"
               },
               {
                 "value": "quarter_302_r",
-                "label": "genre: [四半期] ヒューマンドラマ〔文芸〕ランキング - 連載中"
+                "label": "genre - [四半期] ヒューマンドラマ〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "quarter_302_er",
-                "label": "genre: [四半期] ヒューマンドラマ〔文芸〕ランキング - 完結済"
+                "label": "genre - [四半期] ヒューマンドラマ〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "quarter_303_total",
-                "label": "genre: [四半期] 歴史〔文芸〕ランキング - すべて"
+                "label": "genre - [四半期] 歴史〔文芸〕ランキング - すべて"
               },
               {
                 "value": "quarter_303_t",
-                "label": "genre: [四半期] 歴史〔文芸〕ランキング - 短編"
+                "label": "genre - [四半期] 歴史〔文芸〕ランキング - 短編"
               },
               {
                 "value": "quarter_303_r",
-                "label": "genre: [四半期] 歴史〔文芸〕ランキング - 連載中"
+                "label": "genre - [四半期] 歴史〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "quarter_303_er",
-                "label": "genre: [四半期] 歴史〔文芸〕ランキング - 完結済"
+                "label": "genre - [四半期] 歴史〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "quarter_304_total",
-                "label": "genre: [四半期] 推理〔文芸〕ランキング - すべて"
+                "label": "genre - [四半期] 推理〔文芸〕ランキング - すべて"
               },
               {
                 "value": "quarter_304_t",
-                "label": "genre: [四半期] 推理〔文芸〕ランキング - 短編"
+                "label": "genre - [四半期] 推理〔文芸〕ランキング - 短編"
               },
               {
                 "value": "quarter_304_r",
-                "label": "genre: [四半期] 推理〔文芸〕ランキング - 連載中"
+                "label": "genre - [四半期] 推理〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "quarter_304_er",
-                "label": "genre: [四半期] 推理〔文芸〕ランキング - 完結済"
+                "label": "genre - [四半期] 推理〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "quarter_305_total",
-                "label": "genre: [四半期] ホラー〔文芸〕ランキング - すべて"
+                "label": "genre - [四半期] ホラー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "quarter_305_t",
-                "label": "genre: [四半期] ホラー〔文芸〕ランキング - 短編"
+                "label": "genre - [四半期] ホラー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "quarter_305_r",
-                "label": "genre: [四半期] ホラー〔文芸〕ランキング - 連載中"
+                "label": "genre - [四半期] ホラー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "quarter_305_er",
-                "label": "genre: [四半期] ホラー〔文芸〕ランキング - 完結済"
+                "label": "genre - [四半期] ホラー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "quarter_306_total",
-                "label": "genre: [四半期] アクション〔文芸〕ランキング - すべて"
+                "label": "genre - [四半期] アクション〔文芸〕ランキング - すべて"
               },
               {
                 "value": "quarter_306_t",
-                "label": "genre: [四半期] アクション〔文芸〕ランキング - 短編"
+                "label": "genre - [四半期] アクション〔文芸〕ランキング - 短編"
               },
               {
                 "value": "quarter_306_r",
-                "label": "genre: [四半期] アクション〔文芸〕ランキング - 連載中"
+                "label": "genre - [四半期] アクション〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "quarter_306_er",
-                "label": "genre: [四半期] アクション〔文芸〕ランキング - 完結済"
+                "label": "genre - [四半期] アクション〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "quarter_307_total",
-                "label": "genre: [四半期] コメディー〔文芸〕ランキング - すべて"
+                "label": "genre - [四半期] コメディー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "quarter_307_t",
-                "label": "genre: [四半期] コメディー〔文芸〕ランキング - 短編"
+                "label": "genre - [四半期] コメディー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "quarter_307_r",
-                "label": "genre: [四半期] コメディー〔文芸〕ランキング - 連載中"
+                "label": "genre - [四半期] コメディー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "quarter_307_er",
-                "label": "genre: [四半期] コメディー〔文芸〕ランキング - 完結済"
+                "label": "genre - [四半期] コメディー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "quarter_401_total",
-                "label": "genre: [四半期] VRゲーム〔SF〕ランキング - すべて"
+                "label": "genre - [四半期] VRゲーム〔SF〕ランキング - すべて"
               },
               {
                 "value": "quarter_401_t",
-                "label": "genre: [四半期] VRゲーム〔SF〕ランキング - 短編"
+                "label": "genre - [四半期] VRゲーム〔SF〕ランキング - 短編"
               },
               {
                 "value": "quarter_401_r",
-                "label": "genre: [四半期] VRゲーム〔SF〕ランキング - 連載中"
+                "label": "genre - [四半期] VRゲーム〔SF〕ランキング - 連載中"
               },
               {
                 "value": "quarter_401_er",
-                "label": "genre: [四半期] VRゲーム〔SF〕ランキング - 完結済"
+                "label": "genre - [四半期] VRゲーム〔SF〕ランキング - 完結済"
               },
               {
                 "value": "quarter_402_total",
-                "label": "genre: [四半期] 宇宙〔SF〕ランキング - すべて"
+                "label": "genre - [四半期] 宇宙〔SF〕ランキング - すべて"
               },
               {
                 "value": "quarter_402_t",
-                "label": "genre: [四半期] 宇宙〔SF〕ランキング - 短編"
+                "label": "genre - [四半期] 宇宙〔SF〕ランキング - 短編"
               },
               {
                 "value": "quarter_402_r",
-                "label": "genre: [四半期] 宇宙〔SF〕ランキング - 連載中"
+                "label": "genre - [四半期] 宇宙〔SF〕ランキング - 連載中"
               },
               {
                 "value": "quarter_402_er",
-                "label": "genre: [四半期] 宇宙〔SF〕ランキング - 完結済"
+                "label": "genre - [四半期] 宇宙〔SF〕ランキング - 完結済"
               },
               {
                 "value": "quarter_403_total",
-                "label": "genre: [四半期] 空想科学〔SF〕ランキング - すべて"
+                "label": "genre - [四半期] 空想科学〔SF〕ランキング - すべて"
               },
               {
                 "value": "quarter_403_t",
-                "label": "genre: [四半期] 空想科学〔SF〕ランキング - 短編"
+                "label": "genre - [四半期] 空想科学〔SF〕ランキング - 短編"
               },
               {
                 "value": "quarter_403_r",
-                "label": "genre: [四半期] 空想科学〔SF〕ランキング - 連載中"
+                "label": "genre - [四半期] 空想科学〔SF〕ランキング - 連載中"
               },
               {
                 "value": "quarter_403_er",
-                "label": "genre: [四半期] 空想科学〔SF〕ランキング - 完結済"
+                "label": "genre - [四半期] 空想科学〔SF〕ランキング - 完結済"
               },
               {
                 "value": "quarter_404_total",
-                "label": "genre: [四半期] パニック〔SF〕ランキング - すべて"
+                "label": "genre - [四半期] パニック〔SF〕ランキング - すべて"
               },
               {
                 "value": "quarter_404_t",
-                "label": "genre: [四半期] パニック〔SF〕ランキング - 短編"
+                "label": "genre - [四半期] パニック〔SF〕ランキング - 短編"
               },
               {
                 "value": "quarter_404_r",
-                "label": "genre: [四半期] パニック〔SF〕ランキング - 連載中"
+                "label": "genre - [四半期] パニック〔SF〕ランキング - 連載中"
               },
               {
                 "value": "quarter_404_er",
-                "label": "genre: [四半期] パニック〔SF〕ランキング - 完結済"
+                "label": "genre - [四半期] パニック〔SF〕ランキング - 完結済"
               },
               {
                 "value": "quarter_9901_total",
-                "label": "genre: [四半期] 童話〔その他〕ランキング - すべて"
+                "label": "genre - [四半期] 童話〔その他〕ランキング - すべて"
               },
               {
                 "value": "quarter_9901_t",
-                "label": "genre: [四半期] 童話〔その他〕ランキング - 短編"
+                "label": "genre - [四半期] 童話〔その他〕ランキング - 短編"
               },
               {
                 "value": "quarter_9901_r",
-                "label": "genre: [四半期] 童話〔その他〕ランキング - 連載中"
+                "label": "genre - [四半期] 童話〔その他〕ランキング - 連載中"
               },
               {
                 "value": "quarter_9901_er",
-                "label": "genre: [四半期] 童話〔その他〕ランキング - 完結済"
+                "label": "genre - [四半期] 童話〔その他〕ランキング - 完結済"
               },
               {
                 "value": "quarter_9902_total",
-                "label": "genre: [四半期] 詩〔その他〕ランキング - すべて"
+                "label": "genre - [四半期] 詩〔その他〕ランキング - すべて"
               },
               {
                 "value": "quarter_9902_t",
-                "label": "genre: [四半期] 詩〔その他〕ランキング - 短編"
+                "label": "genre - [四半期] 詩〔その他〕ランキング - 短編"
               },
               {
                 "value": "quarter_9902_r",
-                "label": "genre: [四半期] 詩〔その他〕ランキング - 連載中"
+                "label": "genre - [四半期] 詩〔その他〕ランキング - 連載中"
               },
               {
                 "value": "quarter_9902_er",
-                "label": "genre: [四半期] 詩〔その他〕ランキング - 完結済"
+                "label": "genre - [四半期] 詩〔その他〕ランキング - 完結済"
               },
               {
                 "value": "quarter_9903_total",
-                "label": "genre: [四半期] エッセイ〔その他〕ランキング - すべて"
+                "label": "genre - [四半期] エッセイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "quarter_9903_t",
-                "label": "genre: [四半期] エッセイ〔その他〕ランキング - 短編"
+                "label": "genre - [四半期] エッセイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "quarter_9903_r",
-                "label": "genre: [四半期] エッセイ〔その他〕ランキング - 連載中"
+                "label": "genre - [四半期] エッセイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "quarter_9903_er",
-                "label": "genre: [四半期] エッセイ〔その他〕ランキング - 完結済"
+                "label": "genre - [四半期] エッセイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "quarter_9904_total",
-                "label": "genre: [四半期] リプレイ〔その他〕ランキング - すべて"
+                "label": "genre - [四半期] リプレイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "quarter_9904_t",
-                "label": "genre: [四半期] リプレイ〔その他〕ランキング - 短編"
+                "label": "genre - [四半期] リプレイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "quarter_9904_r",
-                "label": "genre: [四半期] リプレイ〔その他〕ランキング - 連載中"
+                "label": "genre - [四半期] リプレイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "quarter_9904_er",
-                "label": "genre: [四半期] リプレイ〔その他〕ランキング - 完結済"
+                "label": "genre - [四半期] リプレイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "quarter_9999_total",
-                "label": "genre: [四半期] その他〔その他〕ランキング - すべて"
+                "label": "genre - [四半期] その他〔その他〕ランキング - すべて"
               },
               {
                 "value": "quarter_9999_t",
-                "label": "genre: [四半期] その他〔その他〕ランキング - 短編"
+                "label": "genre - [四半期] その他〔その他〕ランキング - 短編"
               },
               {
                 "value": "quarter_9999_r",
-                "label": "genre: [四半期] その他〔その他〕ランキング - 連載中"
+                "label": "genre - [四半期] その他〔その他〕ランキング - 連載中"
               },
               {
                 "value": "quarter_9999_er",
-                "label": "genre: [四半期] その他〔その他〕ランキング - 完結済"
+                "label": "genre - [四半期] その他〔その他〕ランキング - 完結済"
               },
               {
                 "value": "quarter_9801_total",
-                "label": "genre: [四半期] ノンジャンル〔ノンジャンル〕ランキング - すべて"
+                "label": "genre - [四半期] ノンジャンル〔ノンジャンル〕ランキング - すべて"
               },
               {
                 "value": "quarter_9801_t",
-                "label": "genre: [四半期] ノンジャンル〔ノンジャンル〕ランキング - 短編"
+                "label": "genre - [四半期] ノンジャンル〔ノンジャンル〕ランキング - 短編"
               },
               {
                 "value": "quarter_9801_r",
-                "label": "genre: [四半期] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
+                "label": "genre - [四半期] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
               },
               {
                 "value": "quarter_9801_er",
-                "label": "genre: [四半期] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
+                "label": "genre - [四半期] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
               },
               {
                 "value": "yearly_101_total",
-                "label": "genre: [年間] 異世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [年間] 異世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "yearly_101_t",
-                "label": "genre: [年間] 異世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [年間] 異世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "yearly_101_r",
-                "label": "genre: [年間] 異世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [年間] 異世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "yearly_101_er",
-                "label": "genre: [年間] 異世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [年間] 異世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "yearly_102_total",
-                "label": "genre: [年間] 現実世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [年間] 現実世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "yearly_102_t",
-                "label": "genre: [年間] 現実世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [年間] 現実世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "yearly_102_r",
-                "label": "genre: [年間] 現実世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [年間] 現実世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "yearly_102_er",
-                "label": "genre: [年間] 現実世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [年間] 現実世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "yearly_201_total",
-                "label": "genre: [年間] ハイファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [年間] ハイファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "yearly_201_t",
-                "label": "genre: [年間] ハイファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [年間] ハイファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "yearly_201_r",
-                "label": "genre: [年間] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [年間] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "yearly_201_er",
-                "label": "genre: [年間] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [年間] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "yearly_202_total",
-                "label": "genre: [年間] ローファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [年間] ローファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "yearly_202_t",
-                "label": "genre: [年間] ローファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [年間] ローファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "yearly_202_r",
-                "label": "genre: [年間] ローファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [年間] ローファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "yearly_202_er",
-                "label": "genre: [年間] ローファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [年間] ローファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "yearly_301_total",
-                "label": "genre: [年間] 純文学〔文芸〕ランキング - すべて"
+                "label": "genre - [年間] 純文学〔文芸〕ランキング - すべて"
               },
               {
                 "value": "yearly_301_t",
-                "label": "genre: [年間] 純文学〔文芸〕ランキング - 短編"
+                "label": "genre - [年間] 純文学〔文芸〕ランキング - 短編"
               },
               {
                 "value": "yearly_301_r",
-                "label": "genre: [年間] 純文学〔文芸〕ランキング - 連載中"
+                "label": "genre - [年間] 純文学〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "yearly_301_er",
-                "label": "genre: [年間] 純文学〔文芸〕ランキング - 完結済"
+                "label": "genre - [年間] 純文学〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "yearly_302_total",
-                "label": "genre: [年間] ヒューマンドラマ〔文芸〕ランキング - すべて"
+                "label": "genre - [年間] ヒューマンドラマ〔文芸〕ランキング - すべて"
               },
               {
                 "value": "yearly_302_t",
-                "label": "genre: [年間] ヒューマンドラマ〔文芸〕ランキング - 短編"
+                "label": "genre - [年間] ヒューマンドラマ〔文芸〕ランキング - 短編"
               },
               {
                 "value": "yearly_302_r",
-                "label": "genre: [年間] ヒューマンドラマ〔文芸〕ランキング - 連載中"
+                "label": "genre - [年間] ヒューマンドラマ〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "yearly_302_er",
-                "label": "genre: [年間] ヒューマンドラマ〔文芸〕ランキング - 完結済"
+                "label": "genre - [年間] ヒューマンドラマ〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "yearly_303_total",
-                "label": "genre: [年間] 歴史〔文芸〕ランキング - すべて"
+                "label": "genre - [年間] 歴史〔文芸〕ランキング - すべて"
               },
               {
                 "value": "yearly_303_t",
-                "label": "genre: [年間] 歴史〔文芸〕ランキング - 短編"
+                "label": "genre - [年間] 歴史〔文芸〕ランキング - 短編"
               },
               {
                 "value": "yearly_303_r",
-                "label": "genre: [年間] 歴史〔文芸〕ランキング - 連載中"
+                "label": "genre - [年間] 歴史〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "yearly_303_er",
-                "label": "genre: [年間] 歴史〔文芸〕ランキング - 完結済"
+                "label": "genre - [年間] 歴史〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "yearly_304_total",
-                "label": "genre: [年間] 推理〔文芸〕ランキング - すべて"
+                "label": "genre - [年間] 推理〔文芸〕ランキング - すべて"
               },
               {
                 "value": "yearly_304_t",
-                "label": "genre: [年間] 推理〔文芸〕ランキング - 短編"
+                "label": "genre - [年間] 推理〔文芸〕ランキング - 短編"
               },
               {
                 "value": "yearly_304_r",
-                "label": "genre: [年間] 推理〔文芸〕ランキング - 連載中"
+                "label": "genre - [年間] 推理〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "yearly_304_er",
-                "label": "genre: [年間] 推理〔文芸〕ランキング - 完結済"
+                "label": "genre - [年間] 推理〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "yearly_305_total",
-                "label": "genre: [年間] ホラー〔文芸〕ランキング - すべて"
+                "label": "genre - [年間] ホラー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "yearly_305_t",
-                "label": "genre: [年間] ホラー〔文芸〕ランキング - 短編"
+                "label": "genre - [年間] ホラー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "yearly_305_r",
-                "label": "genre: [年間] ホラー〔文芸〕ランキング - 連載中"
+                "label": "genre - [年間] ホラー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "yearly_305_er",
-                "label": "genre: [年間] ホラー〔文芸〕ランキング - 完結済"
+                "label": "genre - [年間] ホラー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "yearly_306_total",
-                "label": "genre: [年間] アクション〔文芸〕ランキング - すべて"
+                "label": "genre - [年間] アクション〔文芸〕ランキング - すべて"
               },
               {
                 "value": "yearly_306_t",
-                "label": "genre: [年間] アクション〔文芸〕ランキング - 短編"
+                "label": "genre - [年間] アクション〔文芸〕ランキング - 短編"
               },
               {
                 "value": "yearly_306_r",
-                "label": "genre: [年間] アクション〔文芸〕ランキング - 連載中"
+                "label": "genre - [年間] アクション〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "yearly_306_er",
-                "label": "genre: [年間] アクション〔文芸〕ランキング - 完結済"
+                "label": "genre - [年間] アクション〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "yearly_307_total",
-                "label": "genre: [年間] コメディー〔文芸〕ランキング - すべて"
+                "label": "genre - [年間] コメディー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "yearly_307_t",
-                "label": "genre: [年間] コメディー〔文芸〕ランキング - 短編"
+                "label": "genre - [年間] コメディー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "yearly_307_r",
-                "label": "genre: [年間] コメディー〔文芸〕ランキング - 連載中"
+                "label": "genre - [年間] コメディー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "yearly_307_er",
-                "label": "genre: [年間] コメディー〔文芸〕ランキング - 完結済"
+                "label": "genre - [年間] コメディー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "yearly_401_total",
-                "label": "genre: [年間] VRゲーム〔SF〕ランキング - すべて"
+                "label": "genre - [年間] VRゲーム〔SF〕ランキング - すべて"
               },
               {
                 "value": "yearly_401_t",
-                "label": "genre: [年間] VRゲーム〔SF〕ランキング - 短編"
+                "label": "genre - [年間] VRゲーム〔SF〕ランキング - 短編"
               },
               {
                 "value": "yearly_401_r",
-                "label": "genre: [年間] VRゲーム〔SF〕ランキング - 連載中"
+                "label": "genre - [年間] VRゲーム〔SF〕ランキング - 連載中"
               },
               {
                 "value": "yearly_401_er",
-                "label": "genre: [年間] VRゲーム〔SF〕ランキング - 完結済"
+                "label": "genre - [年間] VRゲーム〔SF〕ランキング - 完結済"
               },
               {
                 "value": "yearly_402_total",
-                "label": "genre: [年間] 宇宙〔SF〕ランキング - すべて"
+                "label": "genre - [年間] 宇宙〔SF〕ランキング - すべて"
               },
               {
                 "value": "yearly_402_t",
-                "label": "genre: [年間] 宇宙〔SF〕ランキング - 短編"
+                "label": "genre - [年間] 宇宙〔SF〕ランキング - 短編"
               },
               {
                 "value": "yearly_402_r",
-                "label": "genre: [年間] 宇宙〔SF〕ランキング - 連載中"
+                "label": "genre - [年間] 宇宙〔SF〕ランキング - 連載中"
               },
               {
                 "value": "yearly_402_er",
-                "label": "genre: [年間] 宇宙〔SF〕ランキング - 完結済"
+                "label": "genre - [年間] 宇宙〔SF〕ランキング - 完結済"
               },
               {
                 "value": "yearly_403_total",
-                "label": "genre: [年間] 空想科学〔SF〕ランキング - すべて"
+                "label": "genre - [年間] 空想科学〔SF〕ランキング - すべて"
               },
               {
                 "value": "yearly_403_t",
-                "label": "genre: [年間] 空想科学〔SF〕ランキング - 短編"
+                "label": "genre - [年間] 空想科学〔SF〕ランキング - 短編"
               },
               {
                 "value": "yearly_403_r",
-                "label": "genre: [年間] 空想科学〔SF〕ランキング - 連載中"
+                "label": "genre - [年間] 空想科学〔SF〕ランキング - 連載中"
               },
               {
                 "value": "yearly_403_er",
-                "label": "genre: [年間] 空想科学〔SF〕ランキング - 完結済"
+                "label": "genre - [年間] 空想科学〔SF〕ランキング - 完結済"
               },
               {
                 "value": "yearly_404_total",
-                "label": "genre: [年間] パニック〔SF〕ランキング - すべて"
+                "label": "genre - [年間] パニック〔SF〕ランキング - すべて"
               },
               {
                 "value": "yearly_404_t",
-                "label": "genre: [年間] パニック〔SF〕ランキング - 短編"
+                "label": "genre - [年間] パニック〔SF〕ランキング - 短編"
               },
               {
                 "value": "yearly_404_r",
-                "label": "genre: [年間] パニック〔SF〕ランキング - 連載中"
+                "label": "genre - [年間] パニック〔SF〕ランキング - 連載中"
               },
               {
                 "value": "yearly_404_er",
-                "label": "genre: [年間] パニック〔SF〕ランキング - 完結済"
+                "label": "genre - [年間] パニック〔SF〕ランキング - 完結済"
               },
               {
                 "value": "yearly_9901_total",
-                "label": "genre: [年間] 童話〔その他〕ランキング - すべて"
+                "label": "genre - [年間] 童話〔その他〕ランキング - すべて"
               },
               {
                 "value": "yearly_9901_t",
-                "label": "genre: [年間] 童話〔その他〕ランキング - 短編"
+                "label": "genre - [年間] 童話〔その他〕ランキング - 短編"
               },
               {
                 "value": "yearly_9901_r",
-                "label": "genre: [年間] 童話〔その他〕ランキング - 連載中"
+                "label": "genre - [年間] 童話〔その他〕ランキング - 連載中"
               },
               {
                 "value": "yearly_9901_er",
-                "label": "genre: [年間] 童話〔その他〕ランキング - 完結済"
+                "label": "genre - [年間] 童話〔その他〕ランキング - 完結済"
               },
               {
                 "value": "yearly_9902_total",
-                "label": "genre: [年間] 詩〔その他〕ランキング - すべて"
+                "label": "genre - [年間] 詩〔その他〕ランキング - すべて"
               },
               {
                 "value": "yearly_9902_t",
-                "label": "genre: [年間] 詩〔その他〕ランキング - 短編"
+                "label": "genre - [年間] 詩〔その他〕ランキング - 短編"
               },
               {
                 "value": "yearly_9902_r",
-                "label": "genre: [年間] 詩〔その他〕ランキング - 連載中"
+                "label": "genre - [年間] 詩〔その他〕ランキング - 連載中"
               },
               {
                 "value": "yearly_9902_er",
-                "label": "genre: [年間] 詩〔その他〕ランキング - 完結済"
+                "label": "genre - [年間] 詩〔その他〕ランキング - 完結済"
               },
               {
                 "value": "yearly_9903_total",
-                "label": "genre: [年間] エッセイ〔その他〕ランキング - すべて"
+                "label": "genre - [年間] エッセイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "yearly_9903_t",
-                "label": "genre: [年間] エッセイ〔その他〕ランキング - 短編"
+                "label": "genre - [年間] エッセイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "yearly_9903_r",
-                "label": "genre: [年間] エッセイ〔その他〕ランキング - 連載中"
+                "label": "genre - [年間] エッセイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "yearly_9903_er",
-                "label": "genre: [年間] エッセイ〔その他〕ランキング - 完結済"
+                "label": "genre - [年間] エッセイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "yearly_9904_total",
-                "label": "genre: [年間] リプレイ〔その他〕ランキング - すべて"
+                "label": "genre - [年間] リプレイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "yearly_9904_t",
-                "label": "genre: [年間] リプレイ〔その他〕ランキング - 短編"
+                "label": "genre - [年間] リプレイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "yearly_9904_r",
-                "label": "genre: [年間] リプレイ〔その他〕ランキング - 連載中"
+                "label": "genre - [年間] リプレイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "yearly_9904_er",
-                "label": "genre: [年間] リプレイ〔その他〕ランキング - 完結済"
+                "label": "genre - [年間] リプレイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "yearly_9999_total",
-                "label": "genre: [年間] その他〔その他〕ランキング - すべて"
+                "label": "genre - [年間] その他〔その他〕ランキング - すべて"
               },
               {
                 "value": "yearly_9999_t",
-                "label": "genre: [年間] その他〔その他〕ランキング - 短編"
+                "label": "genre - [年間] その他〔その他〕ランキング - 短編"
               },
               {
                 "value": "yearly_9999_r",
-                "label": "genre: [年間] その他〔その他〕ランキング - 連載中"
+                "label": "genre - [年間] その他〔その他〕ランキング - 連載中"
               },
               {
                 "value": "yearly_9999_er",
-                "label": "genre: [年間] その他〔その他〕ランキング - 完結済"
+                "label": "genre - [年間] その他〔その他〕ランキング - 完結済"
               },
               {
                 "value": "yearly_9801_total",
-                "label": "genre: [年間] ノンジャンル〔ノンジャンル〕ランキング - すべて"
+                "label": "genre - [年間] ノンジャンル〔ノンジャンル〕ランキング - すべて"
               },
               {
                 "value": "yearly_9801_t",
-                "label": "genre: [年間] ノンジャンル〔ノンジャンル〕ランキング - 短編"
+                "label": "genre - [年間] ノンジャンル〔ノンジャンル〕ランキング - 短編"
               },
               {
                 "value": "yearly_9801_r",
-                "label": "genre: [年間] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
+                "label": "genre - [年間] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
               },
               {
                 "value": "yearly_9801_er",
-                "label": "genre: [年間] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
+                "label": "genre - [年間] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
               },
               {
                 "value": "total_101_total",
-                "label": "genre: [累計] 異世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [累計] 異世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "total_101_t",
-                "label": "genre: [累計] 異世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [累計] 異世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "total_101_r",
-                "label": "genre: [累計] 異世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [累計] 異世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "total_101_er",
-                "label": "genre: [累計] 異世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [累計] 異世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "total_102_total",
-                "label": "genre: [累計] 現実世界〔恋愛〕ランキング - すべて"
+                "label": "genre - [累計] 現実世界〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "total_102_t",
-                "label": "genre: [累計] 現実世界〔恋愛〕ランキング - 短編"
+                "label": "genre - [累計] 現実世界〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "total_102_r",
-                "label": "genre: [累計] 現実世界〔恋愛〕ランキング - 連載中"
+                "label": "genre - [累計] 現実世界〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "total_102_er",
-                "label": "genre: [累計] 現実世界〔恋愛〕ランキング - 完結済"
+                "label": "genre - [累計] 現実世界〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "total_201_total",
-                "label": "genre: [累計] ハイファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [累計] ハイファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "total_201_t",
-                "label": "genre: [累計] ハイファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [累計] ハイファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "total_201_r",
-                "label": "genre: [累計] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [累計] ハイファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "total_201_er",
-                "label": "genre: [累計] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [累計] ハイファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "total_202_total",
-                "label": "genre: [累計] ローファンタジー〔ファンタジー〕ランキング - すべて"
+                "label": "genre - [累計] ローファンタジー〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "total_202_t",
-                "label": "genre: [累計] ローファンタジー〔ファンタジー〕ランキング - 短編"
+                "label": "genre - [累計] ローファンタジー〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "total_202_r",
-                "label": "genre: [累計] ローファンタジー〔ファンタジー〕ランキング - 連載中"
+                "label": "genre - [累計] ローファンタジー〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "total_202_er",
-                "label": "genre: [累計] ローファンタジー〔ファンタジー〕ランキング - 完結済"
+                "label": "genre - [累計] ローファンタジー〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "total_301_total",
-                "label": "genre: [累計] 純文学〔文芸〕ランキング - すべて"
+                "label": "genre - [累計] 純文学〔文芸〕ランキング - すべて"
               },
               {
                 "value": "total_301_t",
-                "label": "genre: [累計] 純文学〔文芸〕ランキング - 短編"
+                "label": "genre - [累計] 純文学〔文芸〕ランキング - 短編"
               },
               {
                 "value": "total_301_r",
-                "label": "genre: [累計] 純文学〔文芸〕ランキング - 連載中"
+                "label": "genre - [累計] 純文学〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "total_301_er",
-                "label": "genre: [累計] 純文学〔文芸〕ランキング - 完結済"
+                "label": "genre - [累計] 純文学〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "total_302_total",
-                "label": "genre: [累計] ヒューマンドラマ〔文芸〕ランキング - すべて"
+                "label": "genre - [累計] ヒューマンドラマ〔文芸〕ランキング - すべて"
               },
               {
                 "value": "total_302_t",
-                "label": "genre: [累計] ヒューマンドラマ〔文芸〕ランキング - 短編"
+                "label": "genre - [累計] ヒューマンドラマ〔文芸〕ランキング - 短編"
               },
               {
                 "value": "total_302_r",
-                "label": "genre: [累計] ヒューマンドラマ〔文芸〕ランキング - 連載中"
+                "label": "genre - [累計] ヒューマンドラマ〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "total_302_er",
-                "label": "genre: [累計] ヒューマンドラマ〔文芸〕ランキング - 完結済"
+                "label": "genre - [累計] ヒューマンドラマ〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "total_303_total",
-                "label": "genre: [累計] 歴史〔文芸〕ランキング - すべて"
+                "label": "genre - [累計] 歴史〔文芸〕ランキング - すべて"
               },
               {
                 "value": "total_303_t",
-                "label": "genre: [累計] 歴史〔文芸〕ランキング - 短編"
+                "label": "genre - [累計] 歴史〔文芸〕ランキング - 短編"
               },
               {
                 "value": "total_303_r",
-                "label": "genre: [累計] 歴史〔文芸〕ランキング - 連載中"
+                "label": "genre - [累計] 歴史〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "total_303_er",
-                "label": "genre: [累計] 歴史〔文芸〕ランキング - 完結済"
+                "label": "genre - [累計] 歴史〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "total_304_total",
-                "label": "genre: [累計] 推理〔文芸〕ランキング - すべて"
+                "label": "genre - [累計] 推理〔文芸〕ランキング - すべて"
               },
               {
                 "value": "total_304_t",
-                "label": "genre: [累計] 推理〔文芸〕ランキング - 短編"
+                "label": "genre - [累計] 推理〔文芸〕ランキング - 短編"
               },
               {
                 "value": "total_304_r",
-                "label": "genre: [累計] 推理〔文芸〕ランキング - 連載中"
+                "label": "genre - [累計] 推理〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "total_304_er",
-                "label": "genre: [累計] 推理〔文芸〕ランキング - 完結済"
+                "label": "genre - [累計] 推理〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "total_305_total",
-                "label": "genre: [累計] ホラー〔文芸〕ランキング - すべて"
+                "label": "genre - [累計] ホラー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "total_305_t",
-                "label": "genre: [累計] ホラー〔文芸〕ランキング - 短編"
+                "label": "genre - [累計] ホラー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "total_305_r",
-                "label": "genre: [累計] ホラー〔文芸〕ランキング - 連載中"
+                "label": "genre - [累計] ホラー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "total_305_er",
-                "label": "genre: [累計] ホラー〔文芸〕ランキング - 完結済"
+                "label": "genre - [累計] ホラー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "total_306_total",
-                "label": "genre: [累計] アクション〔文芸〕ランキング - すべて"
+                "label": "genre - [累計] アクション〔文芸〕ランキング - すべて"
               },
               {
                 "value": "total_306_t",
-                "label": "genre: [累計] アクション〔文芸〕ランキング - 短編"
+                "label": "genre - [累計] アクション〔文芸〕ランキング - 短編"
               },
               {
                 "value": "total_306_r",
-                "label": "genre: [累計] アクション〔文芸〕ランキング - 連載中"
+                "label": "genre - [累計] アクション〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "total_306_er",
-                "label": "genre: [累計] アクション〔文芸〕ランキング - 完結済"
+                "label": "genre - [累計] アクション〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "total_307_total",
-                "label": "genre: [累計] コメディー〔文芸〕ランキング - すべて"
+                "label": "genre - [累計] コメディー〔文芸〕ランキング - すべて"
               },
               {
                 "value": "total_307_t",
-                "label": "genre: [累計] コメディー〔文芸〕ランキング - 短編"
+                "label": "genre - [累計] コメディー〔文芸〕ランキング - 短編"
               },
               {
                 "value": "total_307_r",
-                "label": "genre: [累計] コメディー〔文芸〕ランキング - 連載中"
+                "label": "genre - [累計] コメディー〔文芸〕ランキング - 連載中"
               },
               {
                 "value": "total_307_er",
-                "label": "genre: [累計] コメディー〔文芸〕ランキング - 完結済"
+                "label": "genre - [累計] コメディー〔文芸〕ランキング - 完結済"
               },
               {
                 "value": "total_401_total",
-                "label": "genre: [累計] VRゲーム〔SF〕ランキング - すべて"
+                "label": "genre - [累計] VRゲーム〔SF〕ランキング - すべて"
               },
               {
                 "value": "total_401_t",
-                "label": "genre: [累計] VRゲーム〔SF〕ランキング - 短編"
+                "label": "genre - [累計] VRゲーム〔SF〕ランキング - 短編"
               },
               {
                 "value": "total_401_r",
-                "label": "genre: [累計] VRゲーム〔SF〕ランキング - 連載中"
+                "label": "genre - [累計] VRゲーム〔SF〕ランキング - 連載中"
               },
               {
                 "value": "total_401_er",
-                "label": "genre: [累計] VRゲーム〔SF〕ランキング - 完結済"
+                "label": "genre - [累計] VRゲーム〔SF〕ランキング - 完結済"
               },
               {
                 "value": "total_402_total",
-                "label": "genre: [累計] 宇宙〔SF〕ランキング - すべて"
+                "label": "genre - [累計] 宇宙〔SF〕ランキング - すべて"
               },
               {
                 "value": "total_402_t",
-                "label": "genre: [累計] 宇宙〔SF〕ランキング - 短編"
+                "label": "genre - [累計] 宇宙〔SF〕ランキング - 短編"
               },
               {
                 "value": "total_402_r",
-                "label": "genre: [累計] 宇宙〔SF〕ランキング - 連載中"
+                "label": "genre - [累計] 宇宙〔SF〕ランキング - 連載中"
               },
               {
                 "value": "total_402_er",
-                "label": "genre: [累計] 宇宙〔SF〕ランキング - 完結済"
+                "label": "genre - [累計] 宇宙〔SF〕ランキング - 完結済"
               },
               {
                 "value": "total_403_total",
-                "label": "genre: [累計] 空想科学〔SF〕ランキング - すべて"
+                "label": "genre - [累計] 空想科学〔SF〕ランキング - すべて"
               },
               {
                 "value": "total_403_t",
-                "label": "genre: [累計] 空想科学〔SF〕ランキング - 短編"
+                "label": "genre - [累計] 空想科学〔SF〕ランキング - 短編"
               },
               {
                 "value": "total_403_r",
-                "label": "genre: [累計] 空想科学〔SF〕ランキング - 連載中"
+                "label": "genre - [累計] 空想科学〔SF〕ランキング - 連載中"
               },
               {
                 "value": "total_403_er",
-                "label": "genre: [累計] 空想科学〔SF〕ランキング - 完結済"
+                "label": "genre - [累計] 空想科学〔SF〕ランキング - 完結済"
               },
               {
                 "value": "total_404_total",
-                "label": "genre: [累計] パニック〔SF〕ランキング - すべて"
+                "label": "genre - [累計] パニック〔SF〕ランキング - すべて"
               },
               {
                 "value": "total_404_t",
-                "label": "genre: [累計] パニック〔SF〕ランキング - 短編"
+                "label": "genre - [累計] パニック〔SF〕ランキング - 短編"
               },
               {
                 "value": "total_404_r",
-                "label": "genre: [累計] パニック〔SF〕ランキング - 連載中"
+                "label": "genre - [累計] パニック〔SF〕ランキング - 連載中"
               },
               {
                 "value": "total_404_er",
-                "label": "genre: [累計] パニック〔SF〕ランキング - 完結済"
+                "label": "genre - [累計] パニック〔SF〕ランキング - 完結済"
               },
               {
                 "value": "total_9901_total",
-                "label": "genre: [累計] 童話〔その他〕ランキング - すべて"
+                "label": "genre - [累計] 童話〔その他〕ランキング - すべて"
               },
               {
                 "value": "total_9901_t",
-                "label": "genre: [累計] 童話〔その他〕ランキング - 短編"
+                "label": "genre - [累計] 童話〔その他〕ランキング - 短編"
               },
               {
                 "value": "total_9901_r",
-                "label": "genre: [累計] 童話〔その他〕ランキング - 連載中"
+                "label": "genre - [累計] 童話〔その他〕ランキング - 連載中"
               },
               {
                 "value": "total_9901_er",
-                "label": "genre: [累計] 童話〔その他〕ランキング - 完結済"
+                "label": "genre - [累計] 童話〔その他〕ランキング - 完結済"
               },
               {
                 "value": "total_9902_total",
-                "label": "genre: [累計] 詩〔その他〕ランキング - すべて"
+                "label": "genre - [累計] 詩〔その他〕ランキング - すべて"
               },
               {
                 "value": "total_9902_t",
-                "label": "genre: [累計] 詩〔その他〕ランキング - 短編"
+                "label": "genre - [累計] 詩〔その他〕ランキング - 短編"
               },
               {
                 "value": "total_9902_r",
-                "label": "genre: [累計] 詩〔その他〕ランキング - 連載中"
+                "label": "genre - [累計] 詩〔その他〕ランキング - 連載中"
               },
               {
                 "value": "total_9902_er",
-                "label": "genre: [累計] 詩〔その他〕ランキング - 完結済"
+                "label": "genre - [累計] 詩〔その他〕ランキング - 完結済"
               },
               {
                 "value": "total_9903_total",
-                "label": "genre: [累計] エッセイ〔その他〕ランキング - すべて"
+                "label": "genre - [累計] エッセイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "total_9903_t",
-                "label": "genre: [累計] エッセイ〔その他〕ランキング - 短編"
+                "label": "genre - [累計] エッセイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "total_9903_r",
-                "label": "genre: [累計] エッセイ〔その他〕ランキング - 連載中"
+                "label": "genre - [累計] エッセイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "total_9903_er",
-                "label": "genre: [累計] エッセイ〔その他〕ランキング - 完結済"
+                "label": "genre - [累計] エッセイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "total_9904_total",
-                "label": "genre: [累計] リプレイ〔その他〕ランキング - すべて"
+                "label": "genre - [累計] リプレイ〔その他〕ランキング - すべて"
               },
               {
                 "value": "total_9904_t",
-                "label": "genre: [累計] リプレイ〔その他〕ランキング - 短編"
+                "label": "genre - [累計] リプレイ〔その他〕ランキング - 短編"
               },
               {
                 "value": "total_9904_r",
-                "label": "genre: [累計] リプレイ〔その他〕ランキング - 連載中"
+                "label": "genre - [累計] リプレイ〔その他〕ランキング - 連載中"
               },
               {
                 "value": "total_9904_er",
-                "label": "genre: [累計] リプレイ〔その他〕ランキング - 完結済"
+                "label": "genre - [累計] リプレイ〔その他〕ランキング - 完結済"
               },
               {
                 "value": "total_9999_total",
-                "label": "genre: [累計] その他〔その他〕ランキング - すべて"
+                "label": "genre - [累計] その他〔その他〕ランキング - すべて"
               },
               {
                 "value": "total_9999_t",
-                "label": "genre: [累計] その他〔その他〕ランキング - 短編"
+                "label": "genre - [累計] その他〔その他〕ランキング - 短編"
               },
               {
                 "value": "total_9999_r",
-                "label": "genre: [累計] その他〔その他〕ランキング - 連載中"
+                "label": "genre - [累計] その他〔その他〕ランキング - 連載中"
               },
               {
                 "value": "total_9999_er",
-                "label": "genre: [累計] その他〔その他〕ランキング - 完結済"
+                "label": "genre - [累計] その他〔その他〕ランキング - 完結済"
               },
               {
                 "value": "total_9801_total",
-                "label": "genre: [累計] ノンジャンル〔ノンジャンル〕ランキング - すべて"
+                "label": "genre - [累計] ノンジャンル〔ノンジャンル〕ランキング - すべて"
               },
               {
                 "value": "total_9801_t",
-                "label": "genre: [累計] ノンジャンル〔ノンジャンル〕ランキング - 短編"
+                "label": "genre - [累計] ノンジャンル〔ノンジャンル〕ランキング - 短編"
               },
               {
                 "value": "total_9801_r",
-                "label": "genre: [累計] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
+                "label": "genre - [累計] ノンジャンル〔ノンジャンル〕ランキング - 連載中"
               },
               {
                 "value": "total_9801_er",
-                "label": "genre: [累計] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
+                "label": "genre - [累計] ノンジャンル〔ノンジャンル〕ランキング - 完結済"
               },
               {
                 "value": "daily_1_total",
-                "label": "isekai: [日間] 異世界転生/転移〔恋愛〕ランキング - すべて"
+                "label": "isekai - [日間] 異世界転生/転移〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "daily_1_t",
-                "label": "isekai: [日間] 異世界転生/転移〔恋愛〕ランキング - 短編"
+                "label": "isekai - [日間] 異世界転生/転移〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "daily_1_r",
-                "label": "isekai: [日間] 異世界転生/転移〔恋愛〕ランキング - 連載中"
+                "label": "isekai - [日間] 異世界転生/転移〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "daily_1_er",
-                "label": "isekai: [日間] 異世界転生/転移〔恋愛〕ランキング - 完結済"
+                "label": "isekai - [日間] 異世界転生/転移〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "daily_2_total",
-                "label": "isekai: [日間] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
+                "label": "isekai - [日間] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "daily_2_t",
-                "label": "isekai: [日間] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
+                "label": "isekai - [日間] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "daily_2_r",
-                "label": "isekai: [日間] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
+                "label": "isekai - [日間] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "daily_2_er",
-                "label": "isekai: [日間] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
+                "label": "isekai - [日間] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "daily_o_total",
-                "label": "isekai: [日間] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
+                "label": "isekai - [日間] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
               },
               {
                 "value": "daily_o_t",
-                "label": "isekai: [日間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
+                "label": "isekai - [日間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
               },
               {
                 "value": "daily_o_r",
-                "label": "isekai: [日間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
+                "label": "isekai - [日間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
               },
               {
                 "value": "daily_o_er",
-                "label": "isekai: [日間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
+                "label": "isekai - [日間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
               },
               {
                 "value": "weekly_1_total",
-                "label": "isekai: [週間] 異世界転生/転移〔恋愛〕ランキング - すべて"
+                "label": "isekai - [週間] 異世界転生/転移〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "weekly_1_t",
-                "label": "isekai: [週間] 異世界転生/転移〔恋愛〕ランキング - 短編"
+                "label": "isekai - [週間] 異世界転生/転移〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "weekly_1_r",
-                "label": "isekai: [週間] 異世界転生/転移〔恋愛〕ランキング - 連載中"
+                "label": "isekai - [週間] 異世界転生/転移〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "weekly_1_er",
-                "label": "isekai: [週間] 異世界転生/転移〔恋愛〕ランキング - 完結済"
+                "label": "isekai - [週間] 異世界転生/転移〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "weekly_2_total",
-                "label": "isekai: [週間] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
+                "label": "isekai - [週間] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "weekly_2_t",
-                "label": "isekai: [週間] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
+                "label": "isekai - [週間] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "weekly_2_r",
-                "label": "isekai: [週間] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
+                "label": "isekai - [週間] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "weekly_2_er",
-                "label": "isekai: [週間] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
+                "label": "isekai - [週間] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "weekly_o_total",
-                "label": "isekai: [週間] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
+                "label": "isekai - [週間] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
               },
               {
                 "value": "weekly_o_t",
-                "label": "isekai: [週間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
+                "label": "isekai - [週間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
               },
               {
                 "value": "weekly_o_r",
-                "label": "isekai: [週間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
+                "label": "isekai - [週間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
               },
               {
                 "value": "weekly_o_er",
-                "label": "isekai: [週間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
+                "label": "isekai - [週間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
               },
               {
                 "value": "monthly_1_total",
-                "label": "isekai: [月間] 異世界転生/転移〔恋愛〕ランキング - すべて"
+                "label": "isekai - [月間] 異世界転生/転移〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "monthly_1_t",
-                "label": "isekai: [月間] 異世界転生/転移〔恋愛〕ランキング - 短編"
+                "label": "isekai - [月間] 異世界転生/転移〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "monthly_1_r",
-                "label": "isekai: [月間] 異世界転生/転移〔恋愛〕ランキング - 連載中"
+                "label": "isekai - [月間] 異世界転生/転移〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "monthly_1_er",
-                "label": "isekai: [月間] 異世界転生/転移〔恋愛〕ランキング - 完結済"
+                "label": "isekai - [月間] 異世界転生/転移〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "monthly_2_total",
-                "label": "isekai: [月間] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
+                "label": "isekai - [月間] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "monthly_2_t",
-                "label": "isekai: [月間] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
+                "label": "isekai - [月間] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "monthly_2_r",
-                "label": "isekai: [月間] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
+                "label": "isekai - [月間] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "monthly_2_er",
-                "label": "isekai: [月間] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
+                "label": "isekai - [月間] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "monthly_o_total",
-                "label": "isekai: [月間] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
+                "label": "isekai - [月間] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
               },
               {
                 "value": "monthly_o_t",
-                "label": "isekai: [月間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
+                "label": "isekai - [月間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
               },
               {
                 "value": "monthly_o_r",
-                "label": "isekai: [月間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
+                "label": "isekai - [月間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
               },
               {
                 "value": "monthly_o_er",
-                "label": "isekai: [月間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
+                "label": "isekai - [月間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
               },
               {
                 "value": "quarter_1_total",
-                "label": "isekai: [四半期] 異世界転生/転移〔恋愛〕ランキング - すべて"
+                "label": "isekai - [四半期] 異世界転生/転移〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "quarter_1_t",
-                "label": "isekai: [四半期] 異世界転生/転移〔恋愛〕ランキング - 短編"
+                "label": "isekai - [四半期] 異世界転生/転移〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "quarter_1_r",
-                "label": "isekai: [四半期] 異世界転生/転移〔恋愛〕ランキング - 連載中"
+                "label": "isekai - [四半期] 異世界転生/転移〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "quarter_1_er",
-                "label": "isekai: [四半期] 異世界転生/転移〔恋愛〕ランキング - 完結済"
+                "label": "isekai - [四半期] 異世界転生/転移〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "quarter_2_total",
-                "label": "isekai: [四半期] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
+                "label": "isekai - [四半期] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "quarter_2_t",
-                "label": "isekai: [四半期] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
+                "label": "isekai - [四半期] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "quarter_2_r",
-                "label": "isekai: [四半期] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
+                "label": "isekai - [四半期] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "quarter_2_er",
-                "label": "isekai: [四半期] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
+                "label": "isekai - [四半期] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "quarter_o_total",
-                "label": "isekai: [四半期] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
+                "label": "isekai - [四半期] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
               },
               {
                 "value": "quarter_o_t",
-                "label": "isekai: [四半期] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
+                "label": "isekai - [四半期] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
               },
               {
                 "value": "quarter_o_r",
-                "label": "isekai: [四半期] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
+                "label": "isekai - [四半期] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
               },
               {
                 "value": "quarter_o_er",
-                "label": "isekai: [四半期] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
+                "label": "isekai - [四半期] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
               },
               {
                 "value": "yearly_1_total",
-                "label": "isekai: [年間] 異世界転生/転移〔恋愛〕ランキング - すべて"
+                "label": "isekai - [年間] 異世界転生/転移〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "yearly_1_t",
-                "label": "isekai: [年間] 異世界転生/転移〔恋愛〕ランキング - 短編"
+                "label": "isekai - [年間] 異世界転生/転移〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "yearly_1_r",
-                "label": "isekai: [年間] 異世界転生/転移〔恋愛〕ランキング - 連載中"
+                "label": "isekai - [年間] 異世界転生/転移〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "yearly_1_er",
-                "label": "isekai: [年間] 異世界転生/転移〔恋愛〕ランキング - 完結済"
+                "label": "isekai - [年間] 異世界転生/転移〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "yearly_2_total",
-                "label": "isekai: [年間] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
+                "label": "isekai - [年間] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "yearly_2_t",
-                "label": "isekai: [年間] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
+                "label": "isekai - [年間] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "yearly_2_r",
-                "label": "isekai: [年間] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
+                "label": "isekai - [年間] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "yearly_2_er",
-                "label": "isekai: [年間] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
+                "label": "isekai - [年間] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "yearly_o_total",
-                "label": "isekai: [年間] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
+                "label": "isekai - [年間] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
               },
               {
                 "value": "yearly_o_t",
-                "label": "isekai: [年間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
+                "label": "isekai - [年間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
               },
               {
                 "value": "yearly_o_r",
-                "label": "isekai: [年間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
+                "label": "isekai - [年間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
               },
               {
                 "value": "yearly_o_er",
-                "label": "isekai: [年間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
+                "label": "isekai - [年間] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
               },
               {
                 "value": "total_1_total",
-                "label": "isekai: [累計] 異世界転生/転移〔恋愛〕ランキング - すべて"
+                "label": "isekai - [累計] 異世界転生/転移〔恋愛〕ランキング - すべて"
               },
               {
                 "value": "total_1_t",
-                "label": "isekai: [累計] 異世界転生/転移〔恋愛〕ランキング - 短編"
+                "label": "isekai - [累計] 異世界転生/転移〔恋愛〕ランキング - 短編"
               },
               {
                 "value": "total_1_r",
-                "label": "isekai: [累計] 異世界転生/転移〔恋愛〕ランキング - 連載中"
+                "label": "isekai - [累計] 異世界転生/転移〔恋愛〕ランキング - 連載中"
               },
               {
                 "value": "total_1_er",
-                "label": "isekai: [累計] 異世界転生/転移〔恋愛〕ランキング - 完結済"
+                "label": "isekai - [累計] 異世界転生/転移〔恋愛〕ランキング - 完結済"
               },
               {
                 "value": "total_2_total",
-                "label": "isekai: [累計] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
+                "label": "isekai - [累計] 異世界転生/転移〔ファンタジー〕ランキング - すべて"
               },
               {
                 "value": "total_2_t",
-                "label": "isekai: [累計] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
+                "label": "isekai - [累計] 異世界転生/転移〔ファンタジー〕ランキング - 短編"
               },
               {
                 "value": "total_2_r",
-                "label": "isekai: [累計] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
+                "label": "isekai - [累計] 異世界転生/転移〔ファンタジー〕ランキング - 連載中"
               },
               {
                 "value": "total_2_er",
-                "label": "isekai: [累計] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
+                "label": "isekai - [累計] 異世界転生/転移〔ファンタジー〕ランキング - 完結済"
               },
               {
                 "value": "total_o_total",
-                "label": "isekai: [累計] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
+                "label": "isekai - [累計] 異世界転生/転移〔文芸・SF・その他〕ランキング - すべて"
               },
               {
                 "value": "total_o_t",
-                "label": "isekai: [累計] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
+                "label": "isekai - [累計] 異世界転生/転移〔文芸・SF・その他〕ランキング - 短編"
               },
               {
                 "value": "total_o_r",
-                "label": "isekai: [累計] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
+                "label": "isekai - [累計] 異世界転生/転移〔文芸・SF・その他〕ランキング - 連載中"
               },
               {
                 "value": "total_o_er",
-                "label": "isekai: [累計] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
+                "label": "isekai - [累計] 異世界転生/転移〔文芸・SF・その他〕ランキング - 完結済"
               }
             ]
           }
@@ -79127,10 +79129,11 @@
           "supportScihub": false
         },
         "name": "Rankings",
+        "url": "yomou.syosetu.com/rank/top",
         "maintainers": [
           "SnowAgar25"
         ],
-        "description": "\nSupport various ranking types:\n1. 総合ランキング `list`\n2. ジャンル別ランキング `genre`\n3. 異世界転生/転移ランキング `isekai`\n\nNote: The \"注目度ランキング\" (Attention Ranking) is not supported as syosetu does not provide a public API for this feature and the results cannot be replicated through the search API.\n注意事項：「注目度ランキング」については、API が非公開で検索 API でも同様の結果を得ることができないため、本 Route ではサポートしておりません。\n\nPeriod options:\n| Period | Description |\n| --- | --- |\n| daily | Daily Ranking |\n| weekly | Weekly Ranking |\n| monthly | Monthly Ranking |\n| quarter | Quarterly Ranking |\n| yearly | Yearly Ranking |\n\nNovel type options (not all available for every ranking):\n| Type | Description |\n| --- | --- |\n| total | All Works |\n| t | Short Stories |\n| r | Ongoing Series |\n| er | Completed Series |\n\nFor `isekai` ranking type:\nWhen multiple works have the same points, their order may differ from syosetu's ranking as syosetu randomizes the order for works with identical points.\n異世界転生/転移ランキングについて：\n集計の結果、同じポイントの作品が複数存在する場合、Syosetu ではランダムで順位が決定されるため、本 Route の順位と異なる場合があります。\n",
+        "description": "\n| Keyword | Description | 説明 |\n| --- | --- | --- |\n| list | Overall Ranking | 総合ランキング |\n| genre | Genre Ranking | ジャンル別ランキング |\n| isekai | Isekai/Reincarnation/Transfer Ranking | 異世界転生/転移ランキング |\n\n| Period | Description |\n| --- | --- |\n| daily | Daily Ranking |\n| weekly | Weekly Ranking |\n| monthly | Monthly Ranking |\n| quarter | Quarterly Ranking |\n| yearly | Yearly Ranking |\n\n\n| Type | Description |\n| --- | --- |\n| total | All Works |\n| t | Short Stories |\n| r | Ongoing Series |\n| er | Completed Series |\n\n:::warning\nPlease note that novel type options may vary depending on the ranking category.\n\nランキングの種類によって、小説タイプが異なる場合がございますのでご注意ください。\n:::\n\n:::danger 注意事項\nThe \"注目度ランキング\" (Attention Ranking) is not supported as syosetu does not provide a public API for this feature and the results cannot be replicated through the search API.\n\n「注目度ランキング」については、API が非公開で検索 API でも同様の結果を得ることができないため、本 Route ではサポートしておりません。\n:::\n\n:::tip 異世界転生/転移ランキングについて (Isekai)\nWhen multiple works have the same points, their order may differ from syosetu's ranking as syosetu randomizes the order for works with identical points.\n\n集計の結果、同じポイントの作品が複数存在する場合、Syosetu ではランダムで順位が決定されるため、本 Route の順位と異なる場合があります。\n:::\n",
         "radar": [
           {
             "source": [
@@ -79374,7 +79377,7 @@
         "location": "search.ts"
       }
     },
-    "name": "syosetu",
+    "name": "Syosetu",
     "url": "syosetu.com",
     "lang": "ja"
   },
