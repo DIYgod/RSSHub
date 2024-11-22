@@ -6,6 +6,7 @@ import queryString from 'query-string';
 import { parseNovelContent } from './utils';
 import type { NovelContent, NSFWNovelDetail } from './types';
 import { parseDate } from '@/utils/parse-date';
+import { getNovelLanguage } from './common';
 
 export async function getNSFWNovelContent(novelId: string, token: string): Promise<NovelContent> {
     return (await cache.tryGet(`https://app-api.pixiv.net/webview/v2/novel:${novelId}`, async () => {
@@ -43,6 +44,8 @@ export async function getNSFWNovelContent(novelId: string, token: string): Promi
 
         const parsedContent = await parseNovelContent(novelDetail.text, images, token);
 
+        const language = await getNovelLanguage(novelId);
+
         return {
             id: novelDetail.id,
             title: novelDetail.title,
@@ -68,6 +71,8 @@ export async function getNSFWNovelContent(novelId: string, token: string): Promi
 
             seriesId: novelDetail.seriesId || null,
             seriesTitle: novelDetail.seriesTitle || null,
+
+            language,
         };
     })) as NovelContent;
 }

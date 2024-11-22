@@ -3,6 +3,7 @@ import { parseDate } from '@/utils/parse-date';
 import pixivUtils from '../../utils';
 import { getSFWNovelContent } from '../content/sfw';
 import type { SFWNovelsResponse, NovelList } from './types';
+import { getNovelLanguage } from '../content/common';
 
 const baseUrl = 'https://www.pixiv.net';
 
@@ -36,16 +37,14 @@ export async function getSFWUserNovels(id: string, fullContent: boolean = false,
 
     const items = await Promise.all(
         Object.values(data.body.works).map(async (item) => {
+            const language = await getNovelLanguage(item.id);
             const baseItem = {
                 title: item.title,
                 description: `
                     <img src=${pixivUtils.getProxiedImageUrl(item.url)} />
+                    <div lang="${language}">
                     <p>${item.description}</p>
-                    <p>
-                    字數：${item.textCount}<br>
-                    閱讀時間：${item.readingTime} 分鐘<br>
-                    收藏數：${item.bookmarkCount}<br>
-                    </p>
+                    </div>
                 `,
                 link: `${baseUrl}/novel/show.php?id=${item.id}`,
                 author: item.userName,
