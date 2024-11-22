@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/shxyj/:year?/:issue?',
-    categories: ['Scientific Journal'],
+    categories: ['journal'],
     example: '/ajcass/shxyj/2024/1',
     parameters: { year: 'Year of the issue, `null` for the lastest', issue: 'Issue number, `null` for the lastest' },
     features: {
