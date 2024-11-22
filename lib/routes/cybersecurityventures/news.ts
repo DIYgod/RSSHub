@@ -101,7 +101,7 @@ async function handler(ctx: Context): Promise<Data> {
     });
 
     return {
-        title: label,
+        title: `${label} - Cybercrime Magazine`,
         link: `${rootUrl}/${category}`,
         item: data.records.map((item) => {
             const $ = load(item.field_3, null, false);
