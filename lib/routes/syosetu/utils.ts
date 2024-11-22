@@ -8,7 +8,7 @@ import { NarouNovelFetch, NarouSearchResult, SearchBuilder, SearchBuilderR18 } f
 
 export async function fetchNovelInfo(ncode: string): Promise<{ baseUrl: string; novel: NarouSearchResult }> {
     const api = new NarouNovelFetch();
-    const [generalRes, r18Res] = await Promise.all([new SearchBuilder({ gzip: 5, of: 't-s-k-ga-nt' }, api).ncode(ncode).execute(), new SearchBuilderR18({ gzip: 5, of: 't-s-k-ga-nt' }, api).ncode(ncode).execute()]);
+    const [generalRes, r18Res] = await Promise.all([new SearchBuilder({ gzip: 5, of: 't-s-k-ga-nt-nu' }, api).ncode(ncode).execute(), new SearchBuilderR18({ gzip: 5, of: 't-s-k-ga-nt-nu' }, api).ncode(ncode).execute()]);
 
     const isGeneral = generalRes.allcount !== 0;
     const novelData = isGeneral ? generalRes : r18Res;
@@ -24,7 +24,7 @@ export async function fetchNovelInfo(ncode: string): Promise<{ baseUrl: string; 
     };
 }
 
-export async function fetchChapterContent(chapterUrl: string): Promise<DataItem> {
+export async function fetchChapterContent(chapterUrl: string, chapter?: number): Promise<DataItem> {
     return (await cache.tryGet(chapterUrl, async () => {
         const response = await ofetch(chapterUrl, {
             headers: {
@@ -35,7 +35,7 @@ export async function fetchChapterContent(chapterUrl: string): Promise<DataItem>
 
         const $ = load(response);
 
-        const title = $('.p-novel__title').html() || '';
+        const title = `${chapter ? `#${chapter} ` : ''}${$('.p-novel__title').html() || ''}`;
         const description = $('.p-novel__body').html() || '';
         const pubDate = $('meta[name=WWWC]').attr('content');
 

@@ -1,4 +1,4 @@
-import { Route, Data } from '@/types';
+import { Route, Data, DataItem } from '@/types';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { Context } from 'hono';
@@ -136,9 +136,9 @@ function parseRankingType(type: string): { period: RankingPeriod; novelType: Nov
     };
 }
 
-function getRankingTitle(type: string): string {
+function getRankingTitle(type: string, limit: number): string {
     const { period, novelType } = parseRankingType(type);
-    return `${periodToJapanese[period]}${novelTypeToJapanese[novelType]}ランキング`;
+    return `${periodToJapanese[period]}${novelTypeToJapanese[novelType]}ランキング BEST${limit}`;
 }
 
 async function handler(ctx: Context): Promise<Data> {
@@ -152,7 +152,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const searchParams: SearchParams = {
         gzip: 5,
-        lim: 300,
+        lim: limit,
         order: periodToOrder[period],
     };
 
@@ -180,9 +180,9 @@ async function handler(ctx: Context): Promise<Data> {
     }));
 
     return {
-        title: `小説家になろう (${sub}) - ${getRankingTitle(type)}`,
+        title: `小説家になろう (${sub}) - ${getRankingTitle(type, limit)}`,
         link: rankingUrl,
-        item: items.slice(0, limit),
+        item: items as DataItem[],
         language: 'ja',
     };
 }

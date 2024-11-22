@@ -24,7 +24,12 @@ export const route: Route = {
     radar: [
         {
             title: 'Novel Updates',
-            source: ['novel18.syosetu.com/:ncode', 'ncode.syosetu.com/:ncode'],
+            source: ['ncode.syosetu.com/:ncode', 'ncode.syosetu.com/:ncode/:chapter'],
+            target: '/:ncode',
+        },
+        {
+            title: 'Novel Updates',
+            source: ['novel18.syosetu.com/:ncode', 'novel18.syosetu.com/:ncode/:chapter'],
             target: '/:ncode',
         },
     ],
@@ -41,6 +46,10 @@ async function handler(ctx: Context): Promise<Data> {
     if (novel.noveltype === NovelType.Tanpen) {
         const chapterUrl = `${baseUrl}/${ncode}`;
         const item = await fetchChapterContent(chapterUrl);
+
+        // Shorts are updated rather than having new chapters
+        // Use novelupdated_at as pubDate since RSS 2.0 doesn't have updated field
+        item.pubDate = novel.novelupdated_at;
 
         return {
             title: novel.title,
@@ -61,7 +70,7 @@ async function handler(ctx: Context): Promise<Data> {
             const chapterNumber = startChapter + index;
             const chapterUrl = `${baseUrl}/${ncode}/${chapterNumber}`;
 
-            const item = await fetchChapterContent(chapterUrl);
+            const item = await fetchChapterContent(chapterUrl, chapterNumber);
             return item;
         }).reverse()
     );

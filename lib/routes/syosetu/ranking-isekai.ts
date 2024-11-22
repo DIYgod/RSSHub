@@ -25,11 +25,11 @@ export function parseIsekaiRankingType(type: string): { period: RankingPeriod; c
     return { period, category, novelType };
 }
 
-function getIsekaiSearchParams(period, category, novelType): SearchParams {
+function getIsekaiSearchParams(period, category, novelType, limit): SearchParams {
     const searchParams: SearchParams = {
         order: periodToOrder[period],
         gzip: 5,
-        lim: 150,
+        lim: Math.ceil(limit / 2),
     };
 
     if (novelType !== NovelType.TOTAL) {
@@ -56,9 +56,9 @@ function getIsekaiSearchParams(period, category, novelType): SearchParams {
 export async function handleIsekaiRanking(type: string, limit: number): Promise<Data> {
     const { period, category, novelType } = parseIsekaiRankingType(type);
     const rankingUrl = `https://yomou.syosetu.com/rank/isekailist/type/${type}`;
-    const rankingTitle = `[${periodToJapanese[period]}] 異世界転生/転移${isekaiCategoryToJapanese[category]}ランキング - ${novelTypeToJapanese[novelType]}`;
+    const rankingTitle = `[${periodToJapanese[period]}] 異世界転生/転移${isekaiCategoryToJapanese[category]}ランキング - ${novelTypeToJapanese[novelType]} BEST${limit}`;
 
-    const searchParams = getIsekaiSearchParams(period, category, novelType);
+    const searchParams = getIsekaiSearchParams(period, category, novelType, limit);
     const api = new NarouNovelFetch();
 
     const [tenseiResult, tenniResult] = await Promise.all([new SearchBuilder({ ...searchParams, istensei: 1 }, api).execute(), new SearchBuilder({ ...searchParams, istenni: 1 }, api).execute()]);
@@ -86,7 +86,7 @@ export async function handleIsekaiRanking(type: string, limit: number): Promise<
     return {
         title: `小説家になろう - ${rankingTitle}`,
         link: rankingUrl,
-        item: (items as DataItem[]).slice(0, limit),
+        item: items as DataItem[],
         language: 'ja',
     };
 }

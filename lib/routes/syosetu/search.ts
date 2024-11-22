@@ -165,12 +165,12 @@ const setIfExists = (value) => value ?? undefined;
  * @see https://deflis.github.io/node-narou/index.html
  * @see https://dev.syosetu.com/man/api/
  */
-function mapToSearchParams(query: string): SearchParams {
+function mapToSearchParams(query: string, limit: number): SearchParams {
     const params = queryString.parse(query) as NarouSearchParams;
 
     const searchParams: SearchParams = {
         gzip: 5,
-        lim: 40,
+        lim: limit,
     };
 
     searchParams.word = setIfExists(params.word);
@@ -251,7 +251,8 @@ async function handler(ctx: Context): Promise<Data> {
     const { sub, query } = ctx.req.param();
     const searchUrl = `https://${sub}.syosetu.com/search/search/search.php?${query}`;
 
-    const searchParams = mapToSearchParams(query);
+    const limit = Math.min(Number(ctx.req.query('limit') ?? 40), 40);
+    const searchParams = mapToSearchParams(query, limit);
     const builder = createNovelSearchBuilder(sub, searchParams);
     const result = await builder.execute();
 

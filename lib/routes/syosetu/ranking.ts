@@ -1,4 +1,4 @@
-import { Route, Data } from '@/types';
+import { Route, Data, DataItem } from '@/types';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { Context } from 'hono';
@@ -212,7 +212,7 @@ async function handler(ctx: Context): Promise<Data> {
     const api = new NarouNovelFetch();
     const searchParams: SearchParams = {
         gzip: 5,
-        lim: 300,
+        lim: limit,
     };
 
     let rankingUrl: string;
@@ -223,7 +223,7 @@ async function handler(ctx: Context): Promise<Data> {
         case RankingType.LIST: {
             const { period, novelType } = parseGeneralRankingType(type);
             rankingUrl = `https://yomou.syosetu.com/rank/list/type/${type}`;
-            rankingTitle = `[${periodToJapanese[period]}] 総合ランキング - ${novelTypeToJapanese[novelType]}`;
+            rankingTitle = `[${periodToJapanese[period]}] 総合ランキング - ${novelTypeToJapanese[novelType]} BEST${limit}`;
 
             searchParams.order = periodToOrder[period];
             if (novelType !== NovelType.TOTAL) {
@@ -235,7 +235,7 @@ async function handler(ctx: Context): Promise<Data> {
         case RankingType.GENRE: {
             const { period, genre, novelType } = parseGenreRankingType(type);
             rankingUrl = `https://yomou.syosetu.com/rank/genrelist/type/${type}`;
-            rankingTitle = `[${periodToJapanese[period]}] ${GenreNotation[genre]}ランキング - ${novelTypeToJapanese[novelType]}`;
+            rankingTitle = `[${periodToJapanese[period]}] ${GenreNotation[genre]}ランキング - ${novelTypeToJapanese[novelType]} BEST${limit}`;
 
             searchParams.order = periodToOrder[period];
             searchParams.genre = genre as Genre;
@@ -247,7 +247,6 @@ async function handler(ctx: Context): Promise<Data> {
 
         case RankingType.ISEKAI:
             return handleIsekaiRanking(type, limit);
-
 
         default:
             throw new InvalidParameterError(`Invalid ranking type: ${type}`);
@@ -269,7 +268,7 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title: `小説家になろう - ${rankingTitle}`,
         link: rankingUrl,
-        item: items.slice(0, limit),
+        item: items as DataItem[],
         language: 'ja',
     };
 }
