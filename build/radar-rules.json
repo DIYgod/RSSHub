@@ -7635,6 +7635,67 @@
       }
     ]
   },
+  "cybersecurityventures.com": {
+    "_name": "Cybercrime Magazine",
+    ".": [
+      {
+        "title": "Today's News",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/today"
+        ],
+        "target": "/cybersecurityventures/news/today"
+      },
+      {
+        "title": "Cyberattacks",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/intrusion-daily-cyber-threat-alert"
+        ],
+        "target": "/cybersecurityventures/news/intrusion-daily-cyber-threat-alert"
+      },
+      {
+        "title": "Ransomware",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/ransomware-minute"
+        ],
+        "target": "/cybersecurityventures/news/ransomware-minute"
+      },
+      {
+        "title": "Cryptocrime",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/cryptocrime"
+        ],
+        "target": "/cybersecurityventures/news/cryptocrime"
+      },
+      {
+        "title": "Hack Blotter",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/hack-blotter"
+        ],
+        "target": "/cybersecurityventures/news/hack-blotter"
+      },
+      {
+        "title": "VC Deal Flow",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/cybersecurity-venture-capital-vc-deals"
+        ],
+        "target": "/cybersecurityventures/news/cybersecurity-venture-capital-vc-deals"
+      },
+      {
+        "title": "M&A Tracker",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/mergers-and-acquisitions-report"
+        ],
+        "target": "/cybersecurityventures/news/mergers-and-acquisitions-report"
+      }
+    ]
+  },
   "cyzone.cn": {
     "_name": "创业邦",
     ".": [

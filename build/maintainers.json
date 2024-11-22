@@ -1598,6 +1598,9 @@
   "/cw/today": [
     "TonyRL"
   ],
+  "/cybersecurityventures/news/:category?": [
+    "KarasuShin"
+  ],
   "/cyzone/author/:id": [
     "nczitzk"
   ],
