@@ -18,7 +18,7 @@ export const parseToken = (link: string) =>
             });
             await page.evaluate(() => document.documentElement.innerHTML);
             const cookies = await getCookies(page);
-            return String(cookies);
+            return cookies;
         },
         config.cache.routeExpire,
         false
