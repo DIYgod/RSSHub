@@ -5,6 +5,7 @@ import { Context } from 'hono';
 
 export const route: Route = {
     name: 'DockerHub Repositories',
+    description: `List of repositories for an image owner`,
     maintainers: ['CaoMeiYouRen'],
     path: '/repositories/:owner',
     categories: ['program-update'],
