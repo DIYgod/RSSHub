@@ -17954,14 +17954,19 @@
   },
   "cnki": {
     "routes": {
-      "/author/:code": {
-        "path": "/author/:code",
+      "/author/:name/:company": {
+        "name": "作者",
+        "maintainers": [
+          "Derekmini",
+          "harveyqiu"
+        ],
         "categories": [
           "journal"
         ],
-        "example": "/cnki/author/000042423923",
+        "path": "/author/:name/:company",
         "parameters": {
-          "code": "作者对应code，可以在网址中得到"
+          "name": "作者姓名",
+          "company": "作者单位"
         },
         "features": {
           "requireConfig": false,
@@ -17971,12 +17976,8 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "作者期刊文献",
+        "example": "/cnki/author/丁晓东/中国人民大学",
         "description": ":::tip\n    可能仅限中国大陆服务器访问，以实际情况为准。\n    :::",
-        "maintainers": [
-          "harveyqiu",
-          "Derekmini"
-        ],
         "location": "author.ts"
       },
       "/journals/debut/:name": {

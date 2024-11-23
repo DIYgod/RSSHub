@@ -1431,9 +1431,9 @@
     "nczitzk"
   ],
   "/cnjxol/:category?/:id?": [],
-  "/cnki/author/:code": [
-    "harveyqiu",
-    "Derekmini"
+  "/cnki/author/:name/:company": [
+    "Derekmini",
+    "harveyqiu"
   ],
   "/cnki/journals/debut/:name": [
     "Fatpandac"
