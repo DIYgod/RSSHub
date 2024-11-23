@@ -59,32 +59,27 @@ async function handler(ctx) {
     const response = await got(link);
     const $ = load(response.data);
 
-    let list;
-    if (type === 0) {
-        // 使用后一种 list 结构
-        list = $('div.my_box_nei')
-            .toArray()
-            .map((item) => {
-                item = $(item);
-                return {
-                    title: item.find('a b.am-text-truncate').text().trim(), // 获取标题
-                    pubDate: item.find('a i').text().trim(),                // 获取发布时间
-                    link: new URL(item.find('a').attr('href'), baseUrl).href, // 构建完整链接
-                };
-            });
-    } else {
-        // 使用前一种 list 结构
-        list = $('div.list_txt.am-fr ul.am-list li')
-            .toArray()
-            .map((item) => {
-                item = $(item);
-                return {
-                    title: item.find('a span').text().trim(), // 获取标题
-                    pubDate: item.find('a i').text().trim(),  // 获取发布时间
-                    link: new URL(item.find('a').attr('href'), baseUrl).href, // 构建完整链接
-                };
-            });
-    }
+const list = type === 0
+    ? $('div.my_box_nei')
+        .toArray()
+        .map((item) => {
+            item = $(item);
+            return {
+                title: item.find('a b.am-text-truncate').text().trim(), // 获取标题
+                pubDate: item.find('a i').text().trim(),                // 获取发布时间
+                link: new URL(item.find('a').attr('href'), baseUrl).href, // 构建完整链接
+            };
+        })
+    : $('div.list_txt.am-fr ul.am-list li')
+        .toArray()
+        .map((item) => {
+            item = $(item);
+            return {
+                title: item.find('a span').text().trim(), // 获取标题
+                pubDate: item.find('a i').text().trim(),  // 获取发布时间
+                link: new URL(item.find('a').attr('href'), baseUrl).href, // 构建完整链接
+            };
+        });
 
     let items = await Promise.all(
         list.map((item) =>
