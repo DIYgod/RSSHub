@@ -52,8 +52,8 @@ async function handler(ctx) {
             title: $.text(),
             link: item.htmlLink,
             doi: item.doi,
-            authors: Object.hasOwn(item, 'authors') ? item.authors.map((itemAuth) => itemAuth.preferredName).join('; ') : 'Do not have author',
-            abstract: Object.hasOwn(item, 'abstract') ? item.abstract : '',
+            authors: 'authors' in item ? item.authors.map((itemAuth) => itemAuth.preferredName).join('; ') : 'Do not have author',
+            abstract: 'abstract' in item ? item.abstract : '',
         };
     });
 
