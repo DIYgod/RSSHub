@@ -203,7 +203,11 @@
     },
     "pnpm": {
         "overrides": {
-            "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed"
+            "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
+            "is-core-module": "npm:@nolyfill/is-core-module@1.0.39",
+            "safe-buffer": "npm:@nolyfill/safe-buffer@1.0.41",
+            "safer-buffer": "npm:@nolyfill/safer-buffer@1.0.41",
+            "side-channel": "npm:@nolyfill/side-channel@1.0.29"
         }
     }
 }
