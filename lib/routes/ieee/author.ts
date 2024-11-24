@@ -25,7 +25,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    example: '/ieee/author/37264968900/newest/20',
+    example: '/ieee/author/37264968900/newest',
     handler,
 };
 
