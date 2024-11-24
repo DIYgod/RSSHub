@@ -7822,12 +7822,12 @@
   },
   "dataguidance.com": {
     "_name": "DataGuidance",
-    ".": [
+    "www": [
       {
         "title": "News",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
-          "/search/news"
+          "/info"
         ],
         "target": "/dataguidance/news"
       }

@@ -20521,14 +20521,14 @@
         "radar": [
           {
             "source": [
-              "dataguidance.com/search/news"
+              "www.dataguidance.com/info"
             ]
           }
         ],
         "maintainers": [
           "harveyqiu"
         ],
-        "url": "dataguidance.com/news",
+        "url": "https://www.dataguidance.com/info?article_type=news_post",
         "location": "index.ts"
       }
     },
