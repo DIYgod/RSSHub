@@ -57,13 +57,11 @@ export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10):
                 title: `#${chapterStartNum + index} ${novelContent.title}`,
                 description: `
                     <img src="${pixivUtils.getProxiedImageUrl(novelContent.coverUrl)}" />
+                    <div lang="${novelContent.language}">
                     <p>${novelContent.description}</p>
-                    <p>
-                    收藏數：${novelContent.bookmarkCount}<br>
-                    閱覧數：${novelContent.viewCount}<br>
-                    喜歡數：${novelContent.likeCount}<br>
-                    </p><hr>
+                    <hr>
                     ${novelContent.content}
+                    </div>
                 `,
                 link: `${baseUrl}/novel/show.php?id=${novelContent.id}`,
                 pubDate: novelContent.createDate,

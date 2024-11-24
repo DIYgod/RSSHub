@@ -11,6 +11,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
 import { getToken } from '../../token';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { getNovelLanguage } from '../content/common';
 
 function getNovels(user_id: string, token: string): Promise<NSFWNovelsResponse> {
     return got('https://app-api.pixiv.net/v1/user/novels', {
@@ -46,17 +47,14 @@ export async function getNSFWUserNovels(id: string, fullContent: boolean = false
 
     const items = await Promise.all(
         novels.map(async (novel) => {
+            const language = await getNovelLanguage(novel.id);
             const baseItem = {
                 title: novel.series?.title ? `${novel.series.title} - ${novel.title}` : novel.title,
                 description: `
                     <img src="${pixivUtils.getProxiedImageUrl(novel.image_urls.large)}" />
+                    <div lang="${language}">
                     <p>${convertPixivProtocolExtended(novel.caption)}</p>
-                    <p>
-                    字數：${novel.text_length}<br>
-                    閱覽數：${novel.total_view}<br>
-                    收藏數：${novel.total_bookmarks}<br>
-                    評論數：${novel.total_comments}<br>
-                    </p>`,
+                    </div>`,
                 author: novel.user.name,
                 pubDate: parseDate(novel.create_date),
                 link: `https://www.pixiv.net/novel/show.php?id=${novel.id}`,

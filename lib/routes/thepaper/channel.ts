@@ -5,7 +5,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/channel/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/thepaper/channel/25950',
     parameters: { id: '频道 id，可在频道页 URL 中找到' },
     features: {

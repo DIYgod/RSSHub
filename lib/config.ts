@@ -351,6 +351,9 @@ export type Config = {
         device_id?: string;
         refresh_token?: string;
     };
+    xiaohongshu: {
+        cookie?: string;
+    };
     ximalaya: {
         token?: string;
     };
@@ -771,6 +774,9 @@ const calculateValue = () => {
         xiaoyuzhou: {
             device_id: envs.XIAOYUZHOU_ID,
             refresh_token: envs.XIAOYUZHOU_TOKEN,
+        },
+        xiaohongshu: {
+            cookie: envs.XIAOHONGSHU_COOKIE,
         },
         ximalaya: {
             token: envs.XIMALAYA_TOKEN,
