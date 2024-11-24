@@ -93,7 +93,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
 
                 // 如果是公众号链接
-                item.description = item.link.includes("https://mp.weixin.qq.com/s/")
+                item.description = item.link.includes("weixin")
                     ? item.title // 将 description 设置为 title 的内容
                     : $('.v_news_content').length
                     ? (() => {
