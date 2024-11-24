@@ -4,24 +4,25 @@ import { parseDate } from '@/utils/parse-date';
 import { Context } from 'hono';
 
 export const route: Route = {
-    name: 'DockerHub Repositories',
-    description: `List of repositories for an image owner`,
+    name: 'Owner Repositories',
+    description: 'List of repositories for an image owner',
     maintainers: ['CaoMeiYouRen'],
     path: '/repositories/:owner',
     categories: ['program-update'],
     view: ViewType.Notifications,
-    example: '/dockerhub/repositories/library',
+    example: '/dockerhub/repositories/diygod',
     parameters: { owner: 'Image owner' },
     handler,
 };
 
 async function handler(ctx: Context) {
-    const { owner, limits } = ctx.req.param();
+    const owner = ctx.req.param('owner').toLowerCase();
+    const limit = Number.parseInt(ctx.req.query('limit') || '10');
     const link = `https://hub.docker.com/r/${owner}`;
     const url = `https://hub.docker.com/v2/repositories/${owner}`;
     const response = await got(url, {
         searchParams: {
-            page_size: Number.parseInt(limits) || 10,
+            page_size: limit,
         },
     });
     const item = response.data.results.map((repo) => ({
