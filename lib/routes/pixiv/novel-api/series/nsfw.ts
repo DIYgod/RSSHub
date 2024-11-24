@@ -43,7 +43,7 @@ export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10):
         appSeriesData.novels.map(async (novel) => {
             const novelContent = await getNSFWNovelContent(novel.id, token);
             return {
-                title: novelContent.title,
+                title: novel.title,
                 description: `
                     <img src="${pixivUtils.getProxiedImageUrl(novelContent.coverUrl)}" />
                     <div lang="${novelContent.language}">
@@ -52,7 +52,7 @@ export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10):
                     ${novelContent.content}
                     </div>
                 `,
-                link: `${baseUrl}/novel/show.php?id=${novelContent.id}`,
+                link: `${baseUrl}/novel/show.php?id=${novel.id}`,
                 pubDate: novel.create_date,
                 author: novel.user.name,
                 category: novelContent.tags,

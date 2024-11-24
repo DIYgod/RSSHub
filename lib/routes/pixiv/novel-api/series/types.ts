@@ -87,6 +87,7 @@ export interface AppNovelSeries {
     novel_series_detail: AppNovelSeriesDetail;
     novels: {
         id: string;
+        title: string;
         create_date: Date;
         user: AppUser;
     }[];
