@@ -59,64 +59,62 @@ async function handler(ctx) {
     const response = await got(link);
     const $ = load(response.data);
 
-const list = type === 0
-    ? $('div.my_box_nei')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            return {
-                title: item.find('a b.am-text-truncate').text().trim(), // 获取标题
-                pubDate: item.find('a i').text().trim(),                // 获取发布时间
-                link: new URL(item.find('a').attr('href'), baseUrl).href, // 构建完整链接
-            };
-        })
-    : $('div.list_txt.am-fr ul.am-list li')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            return {
-                title: item.find('a span').text().trim(), // 获取标题
-                pubDate: item.find('a i').text().trim(),  // 获取发布时间
-                link: new URL(item.find('a').attr('href'), baseUrl).href, // 构建完整链接
-            };
-        });
+    const list = type === 0
+        ? $('div.my_box_nei')
+            .toArray()
+            .map((item) => {
+                item = $(item);
+                return {
+                    title: item.find('a b.am-text-truncate').text().trim(),
+                    pubDate: item.find('a i').text().trim(),
+                    link: new URL(item.find('a').attr('href'), baseUrl).href,
+                };
+            })
+        : $('div.list_txt.am-fr ul.am-list li')
+            .toArray()
+            .map((item) => {
+                item = $(item);
+                return {
+                    title: item.find('a span').text().trim(),
+                    pubDate: item.find('a i').text().trim(),
+                    link: new URL(item.find('a').attr('href'), baseUrl).href,
+                };
+            });
 
     let items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 let response;
                 try {
-                    // 实测发现有些链接无法访问
                     response = await got(item.link);
                 } catch {
-                    return null;
+                    return item;
                 }
                 const $ = load(response.data);
 
-                if ($('.prompt').length) {
-                    item.description = $('.prompt').html();
-                    return item;
-                }
+                // 如果是公众号链接
+                item.description = item.link.includes("https://mp.weixin.qq.com/s/")
+                    ? item.title // 将 description 设置为 title 的内容
+                    : $('.v_news_content').length
+                    ? (() => {
+                        const content = $('.v_news_content');
+                        content.find('img').remove(); // 移除所有图片
+                        return content.text().trim(); // 提取文本内容
+                    })()
+                    : $('.prompt').length
+                    ? $('.prompt').html() // 提取提示内容
+                    : item.title; // 如果没有内容，设置title
 
-                const content = $('.content');
-
-                content.find('img').each((_, e) => {
-                    e = $(e);
-                    if (e.attr('orisrc')) {
-                        const newUrl = new URL(e.attr('orisrc'), baseUrl);
-                        e.attr('src', newUrl.href);
-                        e.removeAttr('orisrc');
-                        e.removeAttr('vurl');
-                    }
-                });
-
-                item.description = content.html();
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')), +8) : item.pubDate;
+                // 处理 pubDate
+                item.pubDate = $('meta[name="PubDate"]').length
+                    ? timezone(parseDate($('meta[name="PubDate"]').attr('content')), +8)
+                    : item.pubDate;
 
                 return item;
             })
         )
     );
+
     items = items.filter((item) => item !== null);
 
     return {
