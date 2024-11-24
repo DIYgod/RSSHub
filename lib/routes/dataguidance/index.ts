@@ -27,11 +27,11 @@ async function handler() {
     const data = response.data;
 
     let items = data.map((item) => ({
-            title: item.title.en,
-            link: `${rootUrl}${item.url}`,
-            url: item.url,
-            pubDate: parseDate(item.publishedOn),
-        }));
+        title: item.title.en,
+        link: `${rootUrl}${item.url}`,
+        url: item.url,
+        pubDate: parseDate(item.publishedOn),
+    }));
     const baseUrl = 'https://dgcb20-ca-northeurope-dglive.yellowground-c1f17366.northeurope.azurecontainerapps.io/api/v1/content/articles/by_path?path=';
     items = await Promise.all(
         items.map((item) =>
@@ -49,7 +49,7 @@ async function handler() {
 
     return {
         title: 'Data Guidance News',
-        link: 'www.dataguidance.com/info?article_type=news_post',
+        link: 'https://www.dataguidance.com/info?article_type=news_post',
         item: items,
     };
 }
