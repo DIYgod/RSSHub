@@ -91,7 +91,7 @@ async function handler(ctx) {
             const dateElem = $('.publish-time');
             const dateString = dateElem.text().match(/\d+\.\d+\.\d+/));
             dateElem.remove();
-            item.pubDate = dateString ? timezone(parseDate(dateString[0], +9)) : item.pubDate;
+            item.pubDate = dateString ? timezone(parseDate(dateString[0]), +9) : item.pubDate;
 
             const description = fixDesc($, $('.article-content-body .content-wrapper'));
 
