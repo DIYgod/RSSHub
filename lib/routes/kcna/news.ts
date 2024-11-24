@@ -7,9 +7,11 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import asyncPool from 'tiny-async-pool';
 import { art } from '@/utils/render';
-import { parseJucheDate, fixDesc, fetchPhoto, fetchVideo } from './utils';
+import { fixDesc, fetchPhoto, fetchVideo } from './utils';
 import path from 'node:path';
 import sanitizeHtml from 'sanitize-html';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:lang/:category?',
@@ -71,7 +73,7 @@ async function handler(ctx) {
             return {
                 title: item.text(),
                 link: rootUrl + item.attr('href'),
-                pubDate: parseJucheDate(dateString),
+                pubDate: timezone(parseDate(dateString.match(/\d+\.\d+\.\d+/)[0]), +9),
             };
         })
         .get();
@@ -89,7 +91,7 @@ async function handler(ctx) {
             const dateElem = $('.publish-time');
             const dateString = dateElem.text();
             dateElem.remove();
-            item.pubDate = parseJucheDate(dateString) || item.pubDate;
+            item.pubDate = timezone(parseDate(dateString.match(/\d+\.\d+\.\d+/)[0]), +9) || item.pubDate;
 
             const description = fixDesc($, $('.article-content-body .content-wrapper'));
 
