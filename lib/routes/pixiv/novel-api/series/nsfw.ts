@@ -33,10 +33,11 @@ export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10):
     });
     const seriesData = seriesResponse.data as SeriesDetail;
 
-    let appSeriesData = await getNovelSeries(seriesId, 0, token);
-    if (appSeriesData.novel_series_detail.content_count > limit) {
-        appSeriesData = await getNovelSeries(seriesId, appSeriesData.novel_series_detail.content_count - limit, token);
+    let offset = seriesData.body.total - limit;
+    if (offset < 0) {
+        offset = 0;
     }
+    const appSeriesData = await getNovelSeries(seriesId, offset, token);
 
     const items = await Promise.all(
         appSeriesData.novels.map(async (novel) => {

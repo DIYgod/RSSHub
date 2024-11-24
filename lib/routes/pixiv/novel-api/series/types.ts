@@ -28,6 +28,7 @@ export interface SeriesDetail {
         latestNovelId: string;
         xRestrict: number;
         isOriginal: boolean;
+        total: number;
         cover: {
             urls: {
                 original: string;
