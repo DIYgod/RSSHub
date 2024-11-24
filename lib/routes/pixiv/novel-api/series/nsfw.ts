@@ -2,14 +2,28 @@ import got from '../../pixiv-got';
 import { maskHeader } from '../../constants';
 import { getNSFWNovelContent } from '../content/nsfw';
 import pixivUtils from '../../utils';
-import { SeriesDetail, SeriesFeed } from './types';
+import { AppNovelSeries, SeriesDetail, SeriesFeed } from './types';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { getToken } from '../../token';
 import { config } from '@/config';
 import cache from '@/utils/cache';
-import getNovelSeries from './common';
+import queryString from 'query-string';
 
 const baseUrl = 'https://www.pixiv.net';
+
+async function getNovelSeries(seriesId: string, offset: number, token: string): Promise<AppNovelSeries> {
+    const rsp = await got('https://app-api.pixiv.net/v2/novel/series', {
+        headers: {
+            ...maskHeader,
+            Authorization: 'Bearer ' + token,
+        },
+        searchParams: queryString.stringify({
+            series_id: seriesId,
+            last_order: offset,
+        }),
+    });
+    return rsp.data as AppNovelSeries;
+}
 
 export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10): Promise<SeriesFeed> {
     if (limit > 30) {
