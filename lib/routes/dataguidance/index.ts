@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { load } from 'cheerio';
+import ofetch from '@/utils/ofetch';
+
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -10,49 +10,38 @@ export const route: Route = {
     path: '/news',
     radar: [
         {
-            source: ['dataguidance.com/search/news'],
+            source: ['www.dataguidance.com/info'],
         },
     ],
     maintainers: ['harveyqiu'],
     handler,
-    url: 'dataguidance.com/news',
+    url: 'https://www.dataguidance.com/info?article_type=news_post',
 };
 
 async function handler() {
     const rootUrl = 'https://www.dataguidance.com';
-    const currentUrl = `${rootUrl}/search/news/`;
+    const url = 'https://dgcb20-ca-northeurope-dglive.yellowground-c1f17366.northeurope.azurecontainerapps.io/api/v1/content/articles?order=DESC_publishedOn&limit=25&article_types=news_post';
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
+    const response = await ofetch(url);
 
-    const $ = load(response.data);
+    const data = response.data;
 
-    let items = $('.field-name-title')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
-
-            return {
-                title: a.text(),
-                link: `${rootUrl}${a.attr('href')}`,
-            };
-        });
-
+    let items = data.map((item) => ({
+        title: item.title.en,
+        link: `${rootUrl}${item.url}`,
+        url: item.url,
+        pubDate: parseDate(item.publishedOn),
+    }));
+    const baseUrl = 'https://dgcb20-ca-northeurope-dglive.yellowground-c1f17366.northeurope.azurecontainerapps.io/api/v1/content/articles/by_path?path=';
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+                const detailUrl = `${baseUrl}${item.url}`;
 
-                const content = load(detailResponse.data);
-                item.pubDate = parseDate(content('.field-name-post-date').text());
-                item.description = content('.field-name-body').html();
+                const detailResponse = await ofetch(detailUrl);
 
+                item.description = detailResponse.contentBody?.html.en.replaceAll('\n', '<br>');
+                delete item.url;
                 return item;
             })
         )
@@ -60,7 +49,7 @@ async function handler() {
 
     return {
         title: 'Data Guidance News',
-        link: currentUrl,
+        link: 'https://www.dataguidance.com/info?article_type=news_post',
         item: items,
     };
 }
