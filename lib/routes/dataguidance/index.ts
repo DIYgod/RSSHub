@@ -10,7 +10,7 @@ export const route: Route = {
     path: '/news',
     radar: [
         {
-            source: ['www.dataguidance.com/info?article_type=news_post'],
+            source: ['www.dataguidance.com/info'],
         },
     ],
     maintainers: ['harveyqiu'],
@@ -40,7 +40,7 @@ async function handler() {
 
                 const detailResponse = await ofetch(detailUrl);
 
-                item.description = detailResponse.contentBody?.text.en;
+                item.description = detailResponse.contentBody?.html.en.replaceAll('\n', '<br>');
                 delete item.url;
                 return item;
             })
