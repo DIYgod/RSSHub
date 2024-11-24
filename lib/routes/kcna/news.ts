@@ -89,7 +89,7 @@ async function handler(ctx) {
             item.title = $('article-main-title').text() || item.title;
 
             const dateElem = $('.publish-time');
-            const dateString = dateElem.text().match(/\d+\.\d+\.\d+/));
+            const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
             dateElem.remove();
             item.pubDate = dateString ? timezone(parseDate(dateString[0]), +9) : item.pubDate;
 
