@@ -3,18 +3,19 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import path from 'node:path';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     name: 'IEEE Author Articles',
     maintainers: ['Derekmini'],
     categories: ['journal'],
-    path: '/author/:aid/:sortType/:count?',
+    path: '/author/:aid/:sortType',
     parameters: {
         aid: 'Author ID',
         sortType: 'Sort Type of papers',
-        count: 'Number of papers to show',
     },
     features: {
         requireConfig: false,
@@ -29,13 +30,16 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { aid, sortType, count = 10 } = ctx.req.param();
+    const { aid, sortType } = ctx.req.param();
+    const count = ctx.req.query('limit') || 10;
     const host = 'https://ieeexplore.ieee.org';
 
-    const author = await ofetch(`${host}/rest/author/${aid}`).then((res) => res[0]);
+    const res = await ofetch(`${host}/rest/author/${aid}`);
+    const author = res[0];
     const title = `${author.preferredName} on IEEE Xplore`;
     const link = `${host}/author/${aid}`;
-    const description = author.bioParagraphs.join('<br/>');
+    const description = author.bioParagraphs.join('\n');
+    const image = `${host}${author.photoUrl}`;
 
     const response = await ofetch(`${host}/rest/search`, {
         method: 'POST',
@@ -46,16 +50,13 @@ async function handler(ctx) {
         },
     });
 
-    const list = response.records.map((item) => {
-        const $ = load(item.articleTitle);
-        return {
-            title: $.text(),
-            link: item.htmlLink,
-            doi: item.doi,
-            authors: 'authors' in item ? item.authors.map((itemAuth) => itemAuth.preferredName).join('; ') : 'Do not have author',
-            abstract: 'abstract' in item ? item.abstract : '',
-        };
-    });
+    const list = response.records.map((item) => ({
+        title: item.articleTitle,
+        link: item.htmlLink,
+        doi: item.doi,
+        authors: 'authors' in item ? item.authors.map((itemAuth) => itemAuth.preferredName).join('; ') : 'Do not have author',
+        abstract: 'abstract' in item ? item.abstract : '',
+    }));
 
     const items = await Promise.all(
         list.map((item) =>
@@ -67,8 +68,8 @@ async function handler(ctx) {
                     const $ = load(res);
                     const metadataMatch = $.html().match(/metadata=(.*);/);
                     const metadata = metadataMatch ? JSON.parse(metadataMatch[1]) : null;
-                    const $2 = load(metadata?.abstract || '');
-                    item.abstract = $2.text();
+                    item.pubDate = metadata?.insertDate ? parseDate(metadata.insertDate) : undefined;
+                    item.abstract = load(metadata?.abstract || '').text();
                 }
                 return {
                     ...item,
@@ -83,11 +84,11 @@ async function handler(ctx) {
         link,
         description,
         item: items,
+        image,
     };
 }
 
 function renderDescription(item: { title: string; authors: string; abstract: string; doi: string }) {
-    const __dirname = getCurrentPath(import.meta.url);
     return art(path.join(__dirname, 'templates/description.art'), {
         item,
     });
