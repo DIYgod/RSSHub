@@ -22508,6 +22508,23 @@
         ],
         "location": "build.ts"
       },
+      "/repositories/:owner": {
+        "name": "Owner Repositories",
+        "description": "List of repositories for an image owner",
+        "maintainers": [
+          "CaoMeiYouRen"
+        ],
+        "path": "/repositories/:owner",
+        "categories": [
+          "program-update"
+        ],
+        "view": 5,
+        "example": "/dockerhub/repositories/diygod",
+        "parameters": {
+          "owner": "Image owner"
+        },
+        "location": "repositories.ts"
+      },
       "/tag/:owner/:image/:limits?": {
         "path": "/tag/:owner/:image/:limits?",
         "categories": [

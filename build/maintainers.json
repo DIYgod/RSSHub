@@ -1820,6 +1820,9 @@
   "/dockerhub/build/:owner/:image/:tag?": [
     "HenryQW"
   ],
+  "/dockerhub/repositories/:owner": [
+    "CaoMeiYouRen"
+  ],
   "/dockerhub/tag/:owner/:image/:limits?": [],
   "/docschina/weekly/:category?": [
     "daijinru",
