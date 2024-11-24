@@ -102,7 +102,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         return ctx.json(result);
     }
 
-    if (ctx.get('no-content')) {
+    if (ctx.get('redirect')) {
+        return ctx.redirect(ctx.get('redirect'), 301);
+    } else if (ctx.get('no-content')) {
         return ctx.body(null);
     } else {
         // retain .ums for backward compatibility

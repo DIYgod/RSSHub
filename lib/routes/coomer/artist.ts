@@ -16,7 +16,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['coomer.party/onlyfans/user/:id', 'coomer.party/'],
+            source: ['coomer.su/onlyfans/user/:id', 'coomer.su/'],
         },
     ],
     name: 'Artist',

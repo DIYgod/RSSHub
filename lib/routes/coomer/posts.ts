@@ -16,13 +16,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['coomer.party/posts', 'coomer.party/'],
+            source: ['coomer.su/posts', 'coomer.su/'],
         },
     ],
     name: 'Recent Posts',
     maintainers: ['nczitzk'],
     handler,
-    url: 'coomer.party/posts',
+    url: 'coomer.su/posts',
 };
 
 async function handler(ctx) {

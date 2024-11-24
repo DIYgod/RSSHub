@@ -41,7 +41,7 @@ export default async function test({ github, context, core }, baseUrl, routes, n
 
         let routeFeedback = `
 <details>
-<summary><a href="${lks}">${lks}</a> - ${success ? 'Success ✔️' : '<b>Failed ❌</b>'}</summary>
+<summary><a href="${lks}">${lks.replaceAll('&', '&amp;')}</a> - ${success ? 'Success ✔️' : '<b>Failed ❌</b>'}</summary>
 
 \`\`\`${success ? 'rss' : ''}`;
         routeFeedback += `

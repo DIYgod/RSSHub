@@ -12,6 +12,7 @@ const md = MarkdownIt({
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { config } from '@/config';
+import { parseDate } from '@/utils/parse-date';
 
 art.defaults.imports.render = function (string) {
     return md.render(string);
@@ -39,6 +40,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         volumes.map(async (volume) => {
             const current = volume.num;
+            const lastmod = volume.lastmod;
             const currentUrl = `${rootUrl}/periodical/volume/${current}`;
             const key = `hellogithub:${currentUrl}`;
             return await cache.tryGet(
@@ -61,6 +63,7 @@ async function handler(ctx) {
                         description: art(path.join(__dirname, 'templates/volume.art'), {
                             data: data.pageProps.volume.data,
                         }),
+                        pubDate: parseDate(lastmod),
                     };
                 },
                 config.cache.routeExpire,

@@ -14,4 +14,7 @@ export default {
         }
         return images;
     },
+    getProxiedImageUrl(originalUrl: string): string {
+        return originalUrl.replace('https://i.pximg.net', config.pixiv.imgProxy || '');
+    },
 };

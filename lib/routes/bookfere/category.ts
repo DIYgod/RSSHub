@@ -1,13 +1,25 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category',
-    categories: ['reading'],
+    categories: ['reading', 'popular'],
+    view: ViewType.Articles,
     example: '/bookfere/skills',
-    parameters: { category: '分类名' },
+    parameters: {
+        category: {
+            description: '分类名',
+            options: [
+                { value: 'weekly', label: '每周一书' },
+                { value: 'skills', label: '使用技巧' },
+                { value: 'books', label: '图书推荐' },
+                { value: 'news', label: '新闻速递' },
+                { value: 'essay', label: '精选短文' },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

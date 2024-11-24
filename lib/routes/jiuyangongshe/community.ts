@@ -1,10 +1,10 @@
-import type { Data, Route } from '@/types';
+import { Data, Route, ViewType } from '@/types';
 import type { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import md5 from '@/utils/md5';
-import path from 'path';
+import path from 'node:path';
 import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
 
@@ -97,6 +97,8 @@ const render = (data) => art(path.join(__dirname, 'templates', 'community-descri
 
 export const route: Route = {
     path: '/community',
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/jiuyangongshe/community',
     maintainers: ['TonyRL'],
     name: '社群',

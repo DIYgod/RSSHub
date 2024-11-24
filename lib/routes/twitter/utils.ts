@@ -35,7 +35,7 @@ const formatText = (item) => {
     const urls = item.entities.urls || [];
     for (const url of urls) {
         // trim link pointing to the tweet itself (usually appears when the tweet is truncated)
-        text = text.replaceAll(url.url, url.expanded_url.endsWith(id_str) ? '' : url.expanded_url);
+        text = text.replaceAll(url.url, url.expanded_url?.endsWith(id_str) ? '' : url.expanded_url);
     }
     const media = item.extended_entities?.media || [];
     for (const m of media) {
@@ -52,6 +52,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         readable: fallback(params.readable, queryToBoolean(routeParams.get('readable')), false),
         authorNameBold: fallback(params.authorNameBold, queryToBoolean(routeParams.get('authorNameBold')), false),
         showAuthorInTitle: fallback(params.showAuthorInTitle, queryToBoolean(routeParams.get('showAuthorInTitle')), false),
+        showAuthorAsTitleOnly: fallback(params.showAuthorAsTitleOnly, queryToBoolean(routeParams.get('showAuthorAsTitleOnly')), false),
         showAuthorInDesc: fallback(params.showAuthorInDesc, queryToBoolean(routeParams.get('showAuthorInDesc')), false),
         showQuotedAuthorAvatarInDesc: fallback(params.showQuotedAuthorAvatarInDesc, queryToBoolean(routeParams.get('showQuotedAuthorAvatarInDesc')), false),
         showAuthorAvatarInDesc: fallback(params.showAuthorAvatarInDesc, queryToBoolean(routeParams.get('showAuthorAvatarInDesc')), false),
@@ -74,6 +75,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         readable,
         authorNameBold,
         showAuthorInTitle,
+        showAuthorAsTitleOnly,
         showAuthorInDesc,
         showQuotedAuthorAvatarInDesc,
         showAuthorAvatarInDesc,
@@ -292,6 +294,10 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             title += quoteInTitle;
         }
 
+        if (showAuthorAsTitleOnly) {
+            title = originalItem.user.name;
+        }
+
         // Make description
         let description = '';
         if (showAuthorInDesc && showAuthorAvatarInDesc) {
@@ -451,7 +457,7 @@ if (config.twitter.consumer_key && config.twitter.consumer_secret) {
 }
 
 const parseRouteParams = (routeParams) => {
-    let count, exclude_replies, include_rts;
+    let count, exclude_replies, include_rts, only_media;
     let force_web_api = false;
     switch (routeParams) {
         case 'exclude_rts_replies':
@@ -479,9 +485,10 @@ const parseRouteParams = (routeParams) => {
             exclude_replies = fallback(undefined, queryToBoolean(parsed.get('excludeReplies')), false);
             include_rts = fallback(undefined, queryToBoolean(parsed.get('includeRts')), true);
             force_web_api = fallback(undefined, queryToBoolean(parsed.get('forceWebApi')), false);
+            only_media = fallback(undefined, queryToBoolean(parsed.get('onlyMedia')), false);
         }
     }
-    return { count, exclude_replies, include_rts, force_web_api };
+    return { count, exclude_replies, include_rts, force_web_api, only_media };
 };
 
 export const excludeRetweet = function (tweets) {
@@ -495,4 +502,9 @@ export const excludeRetweet = function (tweets) {
     return excluded;
 };
 
-export default { ProcessFeed, getAppClient, parseRouteParams, excludeRetweet };
+export const keepOnlyMedia = function (tweets) {
+    const excluded = tweets.filter((t) => t.extended_entities && t.extended_entities.media);
+    return excluded;
+};
+
+export default { ProcessFeed, getAppClient, parseRouteParams, excludeRetweet, keepOnlyMedia };
