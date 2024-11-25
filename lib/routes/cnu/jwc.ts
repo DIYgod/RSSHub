@@ -58,7 +58,10 @@ async function handler() {
                         const text = content(el).text();
                         return !/分享到：|版权所有|地址：|E-mail:|网站地图|ICP备|京公网安备/.test(text);
                     })
-                    .map((_, el) => content(el).html()?.trim())
+                    .map((_, el) => {
+                        content(el).find('img').remove(); // 移除 <img> 标签
+                        return content(el).html()?.trim();
+                    })
                     .toArray()
                     .join('<br/><br/>');
 
