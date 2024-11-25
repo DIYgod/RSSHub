@@ -1,5 +1,5 @@
 {{  if novel.story }}
-<p>{{ novel.story.replaceAll('\n', '<br>') }}</p>
+<p>{{@ novel.story.replaceAll('\n', '<br>') }}</p>
 {{ /if }}
 
 <h2>作品情報</h2>
@@ -27,7 +27,7 @@
     {{ /if }}
     <tr>
         <td>キーワード</td>
-        <td>{{ novel.keyword }}</td>
+        <td>{{ novel.keyword.replaceAll(' ', '、') }}</td>
     </tr>
     <tr>
         <td>最終掲載</td>
