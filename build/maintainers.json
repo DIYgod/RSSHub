@@ -5252,7 +5252,8 @@
     "ClarkeCheng"
   ],
   "/pixiv/novel/series/:id": [
-    "SnowAgar25"
+    "SnowAgar25",
+    "keocheung"
   ],
   "/pixiv/user/novels/:id/:full_content?": [
     "TonyRL",
