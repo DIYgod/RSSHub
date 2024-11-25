@@ -79400,9 +79400,29 @@
         "categories": [
           "reading"
         ],
-        "example": "/syosetu/search/noc/word=ハーレム&notword=&type=r&mintime=&maxtime=&minlen=30000&maxlen=&min_globalpoint=&max_globalpoint=&minlastup=&maxlastup=&minfirstup=&maxfirstup=&isgl=1&notbl=1&order=new",
+        "example": "/syosetu/search/noc/word=ハーレム&notword=&type=r&mintime=&maxtime=&minlen=30000&maxlen=&min_globalpoint=&max_globalpoint=&minlastup=&maxlastup=&minfirstup=&maxfirstup=&isgl=1&notbl=1&order=new?limit=5",
         "parameters": {
-          "sub": "The target Syosetu subsite (yomou/noc/mnlt/mid).",
+          "sub": {
+            "description": "The target Syosetu subsite.",
+            "options": [
+              {
+                "value": "yomou",
+                "label": "小説を読もう"
+              },
+              {
+                "value": "noc",
+                "label": "ノクターン"
+              },
+              {
+                "value": "mnlt",
+                "label": "ムーンライト"
+              },
+              {
+                "value": "mid",
+                "label": "ミッドナイト"
+              }
+            ]
+          },
           "query": "Search parameters in Syosetu format."
         },
         "features": {
