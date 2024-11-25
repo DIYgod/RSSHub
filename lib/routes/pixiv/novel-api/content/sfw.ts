@@ -4,7 +4,6 @@ import pixivUtils from '../../utils';
 import { parseNovelContent } from './utils';
 import { NovelContent, SFWNovelDetail } from './types';
 import { parseDate } from '@/utils/parse-date';
-import { getNovelLanguage } from './common';
 
 const baseUrl = 'https://www.pixiv.net';
 
@@ -34,8 +33,6 @@ export async function getSFWNovelContent(novelId: string): Promise<NovelContent>
 
         const parsedContent = await parseNovelContent(novelDetail.body.content, images);
 
-        const language = await getNovelLanguage(novelId);
-
         return {
             id: body.id,
             title: body.title,
@@ -61,8 +58,6 @@ export async function getSFWNovelContent(novelId: string): Promise<NovelContent>
 
             seriesId: body.seriesNavData?.seriesId?.toString() || null,
             seriesTitle: body.seriesNavData?.title || null,
-
-            language,
         };
     })) as NovelContent;
 }

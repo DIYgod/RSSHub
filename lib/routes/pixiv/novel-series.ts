@@ -28,7 +28,7 @@ Pixiv 登錄後的 refresh_token，用於獲取 R18 小說
         supportScihub: false,
     },
     name: 'Novel Series',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['SnowAgar25', 'keocheung'],
     handler,
     radar: [
         {
