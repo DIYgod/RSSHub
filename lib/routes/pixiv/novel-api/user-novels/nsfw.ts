@@ -11,7 +11,6 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
 import { getToken } from '../../token';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { getNovelLanguage } from '../content/common';
 
 function getNovels(user_id: string, token: string): Promise<NSFWNovelsResponse> {
     return got('https://app-api.pixiv.net/v1/user/novels', {
@@ -47,12 +46,11 @@ export async function getNSFWUserNovels(id: string, fullContent: boolean = false
 
     const items = await Promise.all(
         novels.map(async (novel) => {
-            const language = await getNovelLanguage(novel.id);
             const baseItem = {
                 title: novel.series?.title ? `${novel.series.title} - ${novel.title}` : novel.title,
                 description: `
                     <img src="${pixivUtils.getProxiedImageUrl(novel.image_urls.large)}" />
-                    <div lang="${language}">
+                    <div>
                     <p>${convertPixivProtocolExtended(novel.caption)}</p>
                     </div>`,
                 author: novel.user.name,

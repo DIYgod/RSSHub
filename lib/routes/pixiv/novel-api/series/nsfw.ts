@@ -60,7 +60,7 @@ export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10):
                 title: novel.title,
                 description: `
                     <img src="${pixivUtils.getProxiedImageUrl(novelContent.coverUrl)}" />
-                    <div lang="${novelContent.language}">
+                    <div>
                     <p>${novelContent.description}</p>
                     <hr>
                     ${novelContent.content}
