@@ -41796,6 +41796,30 @@
   },
   "ieee": {
     "routes": {
+      "/author/:aid/:sortType": {
+        "name": "IEEE Author Articles",
+        "maintainers": [
+          "Derekmini"
+        ],
+        "categories": [
+          "journal"
+        ],
+        "path": "/author/:aid/:sortType",
+        "parameters": {
+          "aid": "Author ID",
+          "sortType": "Sort Type of papers"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": true
+        },
+        "example": "/ieee/author/37264968900/newest",
+        "location": "author.ts"
+      },
       "/journal/:punumber/:earlyAccess?": {
         "name": "IEEE Journal Articles",
         "maintainers": [

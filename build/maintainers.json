@@ -3466,6 +3466,9 @@
   "/idolypride/news": [
     "Mingxia1"
   ],
+  "/ieee/author/:aid/:sortType": [
+    "Derekmini"
+  ],
   "/ieee/journal/:punumber/:earlyAccess?": [
     "HenryQW"
   ],
