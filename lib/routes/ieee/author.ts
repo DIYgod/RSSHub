@@ -38,7 +38,7 @@ async function handler(ctx) {
     const author = res[0];
     const title = `${author.preferredName} on IEEE Xplore`;
     const link = `${host}/author/${aid}`;
-    const description = author.bioParagraphs.join('\n');
+    const description = author.bioParagraphs.join(' ');
     const image = `${host}${author.photoUrl}`;
 
     const response = await ofetch(`${host}/rest/search`, {
