@@ -179,7 +179,7 @@ export const route: Route = {
   If you subscribe to [InfoQ Live Jan 2024](https://www.infoq.com/infoq-live-jan-2024/presentations/)，where the URL is \`https://www.infoq.com/infoq-live-jan-2024/presentations/\`, extract the part \`https://www.infoq.com/\` to the end, which is \`/presentations/\`, and use it as the parameter to fill in. Therefore, the route will be [\`/infoq/presentations/infoq-live-jan-2024\`](https://rsshub.app/infoq/presentations/infoq-live-jan-2024).
   :::
     `,
-    categories: ['programming'],
+    categories: ['programming', 'popular'],
 
     features: {
         requireConfig: false,

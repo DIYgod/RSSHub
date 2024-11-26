@@ -8,8 +8,11 @@ export const route: Route = {
             source: ['grist.org/articles/'],
         },
     ],
-    name: 'Unknown',
+    name: 'Latest Articles',
     maintainers: ['Rjnishant530'],
+    categories: ['new-media', 'popular'],
+    example: '/grist',
+    parameters: {},
     handler,
     url: 'grist.org/articles/',
 };

@@ -13,7 +13,7 @@ const baseUrl = 'https://news.google.com';
 
 export const route: Route = {
     path: '/news/:category/:locale',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/google/news/Top stories/hl=en-US&gl=US&ceid=US:en',
     parameters: { category: 'Category Title', locale: 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters' },
     features: {
