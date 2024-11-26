@@ -57,7 +57,7 @@ async function handler() {
                 // Cache the detail page
                 const detailResponse = await got({ method: 'get', url: item.link });
                 const content = load(detailResponse.data);
-                const paragraphs = content('.article02')
+                const paragraphs = content('.article02') // with `.article02`
                     .toArray()
                     .map((el) => content(el).html()?.trim())
                     .join('<br/><br/>');
