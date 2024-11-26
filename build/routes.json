@@ -4013,7 +4013,8 @@
       "/:category?": {
         "path": "/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/agirls/app",
         "parameters": {
@@ -4045,7 +4046,8 @@
       "/topic_list": {
         "path": "/topic_list",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/agirls/topic_list",
         "parameters": {},
@@ -4075,7 +4077,8 @@
       "/topic/:topic": {
         "path": "/topic/:topic",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/agirls/topic/AppleWatch",
         "parameters": {
@@ -5998,7 +6001,8 @@
       "/information/:type?": {
         "path": "/information/:type?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/aliresearch/information",
         "parameters": {
@@ -15533,7 +15537,8 @@
       "/banner": {
         "path": "/banner",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/chaping/banner",
         "parameters": {},
@@ -15562,7 +15567,8 @@
       "/news/:caty?": {
         "path": "/news/:caty?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/chaping/news/15",
         "parameters": {
@@ -15586,7 +15592,8 @@
       "/newsflash": {
         "path": "/newsflash",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/chaping/newsflash",
         "parameters": {},
@@ -19701,6 +19708,9 @@
         "path": "/:category?",
         "name": "分类",
         "url": "cuilingmag.com",
+        "categories": [
+          "new-media"
+        ],
         "maintainers": [
           "nczitzk"
         ],
@@ -19709,9 +19719,6 @@
           "category": "分类，默认为空，即全部，可在对应分类页 URL 中找到"
         },
         "description": ":::tip\n  若订阅 [#哲学·文明](https://www.cuilingmag.com/category/philosophy_civilization)，网址为 `https://www.cuilingmag.com/category/philosophy_civilization`。截取 `https://www.cuilingmag.com/category` 到末尾的部分 `philosophy_civilization` 作为参数填入，此时路由为 [`/cuilingmag/philosophy_civilization`](https://rsshub.app/cuilingmag/philosophy_civilization)。\n  :::\n\n  | 分类                                                                       | ID                                                                                |\n  | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |\n  | [哲学 · 文明](https://www.cuilingmag.com/category/philosophy_civilization) | [philosophy_civilization](https://rsshub.app/cuilingmag/philosophy_civilization) |\n  | [艺术 · 科技](https://www.cuilingmag.com/category/art_science)             | [art_science](https://rsshub.app/cuilingmag/art_science)                         |\n  | [未来 · 生命](https://www.cuilingmag.com/category/future_life)             | [future_life](https://rsshub.app/cuilingmag/future_life)                         |\n  | [行星智慧](https://www.cuilingmag.com/category/planetary_wisdom)           | [planetary_wisdom](https://rsshub.app/cuilingmag/planetary_wisdom)               |\n  | [数字治理](https://www.cuilingmag.com/category/digital_governance)         | [digital_governance](https://rsshub.app/cuilingmag/digital_governance)           |\n  | [Noema精选](https://www.cuilingmag.com/category/selected_noema)            | [selected_noema](https://rsshub.app/cuilingmag/selected_noema)                   |\n  ",
-        "categories": [
-          "new-media"
-        ],
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -20076,7 +20083,8 @@
       "/author/:id": {
         "path": "/author/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/cyzone/author/1225562",
         "parameters": {
@@ -20149,7 +20157,8 @@
       "/label/:name": {
         "path": "/label/:name",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/cyzone/label/创业邦周报",
         "parameters": {
@@ -20982,14 +20991,27 @@
       },
       "/:category?": {
         "path": "/:category?",
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "文章",
+        "maintainers": [
+          "nczitzk",
+          "pseudoyu"
+        ],
+        "categories": [
+          "new-media",
+          "popular"
+        ],
+        "example": "/dedao",
+        "parameters": {
+          "category": "分类，见下表，默认为`news`"
+        },
+        "description": "| 新闻 | 人物故事 | 视频 |\n  | ---- | ---- | ---- |\n  | news | figure | video |",
         "location": "index.ts"
       },
       "/knowledge/:topic?/:type?": {
         "path": "/knowledge/:topic?/:type?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/dedao/knowledge",
         "parameters": {
@@ -21022,7 +21044,8 @@
       "/list/:category?": {
         "path": "/list/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/dedao/list/年度日更",
         "parameters": {
@@ -21053,7 +21076,8 @@
       "/user/:id/:type?": {
         "path": "/user/:id/:type?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/dedao/user/VkA5OqLX4RyGxmZRNBMlwBrDaJQ9og",
         "parameters": {
@@ -21714,7 +21738,8 @@
       "/news/:cate?": {
         "path": "/news/:cate?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/diandong/news",
         "parameters": {
@@ -22746,7 +22771,8 @@
       "/daily": {
         "path": "/daily",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/dongqiudi/daily",
         "radar": [
@@ -22767,7 +22793,8 @@
       "/player_news/:id": {
         "path": "/player_news/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/dongqiudi/player_news/50000339",
         "parameters": {
@@ -22789,7 +22816,8 @@
       "/result/:team": {
         "path": "/result/:team",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/dongqiudi/result/50001755",
         "parameters": {
@@ -22811,7 +22839,8 @@
       "/special/:id": {
         "path": "/special/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/dongqiudi/special/41",
         "parameters": {
@@ -22834,7 +22863,8 @@
       "/team_news/:team": {
         "path": "/team_news/:team",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/dongqiudi/team_news/50001755",
         "parameters": {
@@ -22856,7 +22886,8 @@
       "/top_news/:id?": {
         "path": "/top_news/:id?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/dongqiudi/top_news/1",
         "parameters": {
@@ -24253,7 +24284,8 @@
       "/:type?/:category?": {
         "path": "/:type?/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/dx2025",
         "parameters": {
@@ -29527,7 +29559,8 @@
       "/category/:category": {
         "path": "/category/:category",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/gcores/category/news",
         "parameters": {
@@ -29559,7 +29592,8 @@
       "/collections/:collection": {
         "path": "/collections/:collection",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/gcores/collections/64",
         "parameters": {
@@ -29589,7 +29623,8 @@
       "/radios/:category?": {
         "path": "/radios/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/gcores/radios/45",
         "parameters": {
@@ -29621,7 +29656,8 @@
       "/tag/:tag/:category?": {
         "path": "/tag/:tag/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/gcores/tag/42/articles",
         "parameters": {
@@ -29723,9 +29759,10 @@
         "parameters": {
           "column": "栏目 id，默认为空，即首页资讯，可在对应栏目页 URL 中找到"
         },
-        "description": ":::tip\n  若订阅 [综合报道](https://www.geekpark.net/column/179)，网址为 `https://www.geekpark.net/column/179`。截取 `https://www.geekpark.net/column/` 到末尾的部分 `179` 作为参数填入，此时路由为 [`/geekpark/179`](https://rsshub.app/geekpark/179)。\n  :::\n  \n  | 栏目                                                         | ID                                     |\n  | ------------------------------------------------------------ | -------------------------------------- |\n  | [综合报道](https://www.geekpark.net/column/179)              | [179](https://rsshub.app/geekpark/179) |\n  | [AI新浪潮观察](https://www.geekpark.net/column/304)          | [304](https://rsshub.app/geekpark/304) |\n  | [新造车观察](https://www.geekpark.net/column/305)            | [305](https://rsshub.app/geekpark/305) |\n  | [财报解读](https://www.geekpark.net/column/271)              | [271](https://rsshub.app/geekpark/271) |\n  | [底稿对话CEO系列](https://www.geekpark.net/column/308)       | [308](https://rsshub.app/geekpark/308) |\n  | [Geek Insight 特稿系列](https://www.geekpark.net/column/306) | [306](https://rsshub.app/geekpark/306) |\n  | [心科技](https://www.geekpark.net/column/307)                | [307](https://rsshub.app/geekpark/307) |\n  | [行业资讯](https://www.geekpark.net/column/2)                | [2](https://rsshub.app/geekpark/2)     |\n  ",
+        "description": ":::tip\n  若订阅 [综合报道](https://www.geekpark.net/column/179)，网址为 `https://www.geekpark.net/column/179`。截取 `https://www.geekpark.net/column/` 到末尾的部分 `179` 作为参数填入，此时路由为 [`/geekpark/179`](https://rsshub.app/geekpark/179)。\n  :::\n\n  | 栏目                                                         | ID                                     |\n  | ------------------------------------------------------------ | -------------------------------------- |\n  | [综合报道](https://www.geekpark.net/column/179)              | [179](https://rsshub.app/geekpark/179) |\n  | [AI新浪潮观察](https://www.geekpark.net/column/304)          | [304](https://rsshub.app/geekpark/304) |\n  | [新造车观察](https://www.geekpark.net/column/305)            | [305](https://rsshub.app/geekpark/305) |\n  | [财报解读](https://www.geekpark.net/column/271)              | [271](https://rsshub.app/geekpark/271) |\n  | [底稿对话CEO系列](https://www.geekpark.net/column/308)       | [308](https://rsshub.app/geekpark/308) |\n  | [Geek Insight 特稿系列](https://www.geekpark.net/column/306) | [306](https://rsshub.app/geekpark/306) |\n  | [心科技](https://www.geekpark.net/column/307)                | [307](https://rsshub.app/geekpark/307) |\n  | [行业资讯](https://www.geekpark.net/column/2)                | [2](https://rsshub.app/geekpark/2)     |\n  ",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "features": {
           "requireConfig": false,
@@ -36868,7 +36905,8 @@
       "/column/:channel": {
         "path": "/column/:channel",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/guokr/column/calendar",
         "parameters": {
@@ -36893,7 +36931,8 @@
       "/scientific": {
         "path": "/scientific",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/guokr/scientific",
         "radar": [
@@ -37706,7 +37745,8 @@
       "/information/:channel?": {
         "path": "/information/:channel?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/hellobtc/information/latest",
         "parameters": {
@@ -37729,7 +37769,8 @@
       "/kepu/:channel?": {
         "path": "/kepu/:channel?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/hellobtc/kepu/latest",
         "parameters": {
@@ -37753,7 +37794,8 @@
       "/news": {
         "path": "/news",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/hellobtc/news",
         "parameters": {},
@@ -41242,7 +41284,8 @@
       "/briefcolumn/:id": {
         "path": "/briefcolumn/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/huxiu/briefcolumn/1",
         "parameters": {
@@ -41269,7 +41312,8 @@
           "/channel/:id?"
         ],
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/huxiu/article",
         "parameters": {},
@@ -41303,7 +41347,8 @@
           "/channel/:id?"
         ],
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/huxiu/article",
         "parameters": {},
@@ -41333,7 +41378,15 @@
       },
       "/club/:id": {
         "path": "/club/:id",
-        "name": "Unknown",
+        "name": "源流",
+        "categories": [
+          "new-media",
+          "popular"
+        ],
+        "example": "/huxiu/club/2029",
+        "parameters": {
+          "id": "俱乐部 id，可在对应俱乐部页 URL 中找到"
+        },
         "maintainers": [
           "nczitzk"
         ],
@@ -41342,7 +41395,8 @@
       "/collection/:id": {
         "path": "/collection/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/huxiu/collection/212",
         "parameters": {
@@ -41369,8 +41423,18 @@
           "/author/:id/:type?",
           "/member/:id/:type?"
         ],
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "用户",
+        "example": "/huxiu/member/2313050",
+        "categories": [
+          "new-media",
+          "popular"
+        ],
+        "parameters": {
+          "id": "用户 id，可在对应用户页 URL 中找到"
+        },
+        "maintainers": [
+          "nczitzk"
+        ],
         "description": "| TA 的文章 | TA 的 24 小时 |\n  | --------- | ------------- |\n  | article   | moment        |",
         "location": "member.ts"
       },
@@ -41379,15 +41443,26 @@
           "/author/:id/:type?",
           "/member/:id/:type?"
         ],
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "用户",
+        "example": "/huxiu/member/2313050",
+        "categories": [
+          "new-media",
+          "popular"
+        ],
+        "parameters": {
+          "id": "用户 id，可在对应用户页 URL 中找到"
+        },
+        "maintainers": [
+          "nczitzk"
+        ],
         "description": "| TA 的文章 | TA 的 24 小时 |\n  | --------- | ------------- |\n  | article   | moment        |",
         "location": "member.ts"
       },
       "/moment": {
         "path": "/moment",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/huxiu/moment",
         "parameters": {},
@@ -41416,7 +41491,8 @@
       "/search/:keyword": {
         "path": "/search/:keyword",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/huxiu/search/生活",
         "parameters": {
@@ -41449,7 +41525,8 @@
       "/tag/:id": {
         "path": "/tag/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/huxiu/tag/291",
         "parameters": {
@@ -50844,7 +50921,8 @@
       "/:sid?/:tid?": {
         "path": "/:sid?/:tid?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/medsci",
         "parameters": {
@@ -54114,7 +54192,8 @@
       "/:type?": {
         "path": "/:type?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/mittrchina/index",
         "parameters": {
@@ -62485,7 +62564,8 @@
       "/focus/:category?": {
         "path": "/focus/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/pconline/focus",
         "parameters": {
@@ -63042,7 +63122,8 @@
       "/status": {
         "path": "/status",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/pingwest/status",
         "parameters": {},
@@ -63072,7 +63153,8 @@
       "/tag/:tag/:type/:option?": {
         "path": "/tag/:tag/:type/:option?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/pingwest/tag/ChinaJoy/1",
         "parameters": {
@@ -63098,7 +63180,8 @@
       "/user/:uid/:type?/:option?": {
         "path": "/user/:uid/:type?/:option?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/pingwest/user/7781550877/article",
         "parameters": {
@@ -65142,7 +65225,8 @@
       "/category/:category": {
         "path": "/category/:category",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/qbitai/category/资讯",
         "parameters": {
@@ -65173,7 +65257,8 @@
       "/tag/:tag": {
         "path": "/tag/:tag",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/qbitai/tag/大语言模型",
         "parameters": {
@@ -71741,7 +71826,8 @@
       "/:category?": {
         "path": "/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/simpleinfo",
         "parameters": {
@@ -71857,7 +71943,14 @@
       },
       "/sports/:type?": {
         "path": "/sports/:type?",
-        "name": "Unknown",
+        "name": "新浪体育",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/sports",
+        "parameters": {
+          "type": "类别"
+        },
         "maintainers": [
           "nczitzk"
         ],
@@ -72683,7 +72776,8 @@
       "/:type?": {
         "path": "/:type?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/slowmist/research",
         "parameters": {
@@ -73332,7 +73426,8 @@
       "/mp/:xpt": {
         "path": "/mp/:xpt",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sohu/mp/c29odXptdGhnbjZ3NEBzb2h1LmNvbQ==",
         "parameters": {
@@ -74592,7 +74687,8 @@
       "/activity/:slug": {
         "path": "/activity/:slug",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/activity/urfp0d9i",
         "parameters": {
@@ -74623,7 +74719,8 @@
       "/author/:id": {
         "path": "/author/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/author/796518",
         "parameters": {
@@ -74654,7 +74751,8 @@
       "/bookmarks/:slug": {
         "path": "/bookmarks/:slug",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/bookmarks/urfp0d9i",
         "parameters": {
@@ -74684,7 +74782,8 @@
       "/column/:id": {
         "path": "/column/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/column/262",
         "parameters": {
@@ -74745,7 +74844,8 @@
       "/matrix": {
         "path": "/matrix",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/matrix",
         "parameters": {},
@@ -74807,7 +74907,8 @@
       "/series/:id": {
         "path": "/series/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/series/77",
         "parameters": {
@@ -74840,7 +74941,8 @@
       "/series": {
         "path": "/series",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/series",
         "parameters": {},
@@ -74870,7 +74972,8 @@
       "/shortcuts": {
         "path": "/shortcuts",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/shortcuts",
         "parameters": {},
@@ -74899,7 +75002,8 @@
       "/tag/:keyword": {
         "path": "/tag/:keyword",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/tag/apple",
         "parameters": {
@@ -74929,7 +75033,8 @@
       "/topic/:id": {
         "path": "/topic/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/topic/250",
         "parameters": {
@@ -74959,7 +75064,8 @@
       "/topics": {
         "path": "/topics",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/sspai/topics",
         "parameters": {},
@@ -75034,7 +75140,8 @@
       "/:category?": {
         "path": "/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/startuplatte",
         "parameters": {
@@ -81531,7 +81638,8 @@
       "/app/:category?": {
         "path": "/app/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/theinitium/app",
         "parameters": {
@@ -81579,7 +81687,8 @@
         ],
         "example": "/theinitium/author/ninghuilulu/zh-hans",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "location": "author.ts"
       },
@@ -81604,7 +81713,8 @@
         ],
         "example": "/theinitium/channel/latest/zh-hans",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "description": "Type 栏目：\n\n  | 最新   | 深度    | What’s New | 广场              | 科技       | 风物    | 特约     | ... |\n  | ------ | ------- | ---------- | ----------------- | ---------- | ------- | -------- | --- |\n  | latest | feature | news-brief | notes-and-letters | technology | culture | pick_up | ... |",
         "location": "channel.ts"
@@ -81673,7 +81783,8 @@
         ],
         "example": "/theinitium/tags/2019_10/zh-hans",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "location": "tags.ts"
       }
@@ -81835,7 +81946,8 @@
       "/channel/:id": {
         "path": "/channel/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/thepaper/channel/25950",
         "parameters": {
@@ -81861,7 +81973,8 @@
       "/factpaper/:status?": {
         "path": "/factpaper/:status?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/thepaper/factpaper",
         "parameters": {
@@ -81893,7 +82006,8 @@
       "/featured": {
         "path": "/featured",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/thepaper/featured",
         "parameters": {},
@@ -81924,7 +82038,8 @@
       "/list/:id": {
         "path": "/list/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/thepaper/list/25457",
         "parameters": {
@@ -81956,7 +82071,15 @@
             "target": "/sidebar"
           }
         ],
-        "name": "Unknown",
+        "name": "侧边栏",
+        "categories": [
+          "new-media",
+          "popular"
+        ],
+        "example": "/thepaper/sidebar",
+        "parameters": {
+          "sec": "侧边栏 id，可选 `hotNews` 即 澎湃热榜、`financialInformationNews` 即 澎湃财讯、`morningEveningNews` 即 早晚报，默认为 `hotNews`"
+        },
         "maintainers": [
           "bigfei"
         ],
@@ -81966,7 +82089,8 @@
       "/user/:pphId": {
         "path": "/user/:pphId",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/thepaper/user/4221423",
         "parameters": {
@@ -81987,7 +82111,7 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "澎湃美数课作品集 - 分类",
         "maintainers": [
           "umm233"
         ],
@@ -81996,7 +82120,7 @@
       },
       "/839studio": {
         "path": "/839studio",
-        "name": "Unknown",
+        "name": "澎湃美数课作品集",
         "maintainers": [
           "umm233"
         ],
@@ -82293,7 +82417,8 @@
       "/news/:type?": {
         "path": "/news/:type?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/timednews/news",
         "parameters": {
@@ -83083,7 +83208,8 @@
       "/:id": {
         "path": "/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/tophub/Om4ejxvxEN",
         "parameters": {
@@ -83119,7 +83245,8 @@
       "/list/:id": {
         "path": "/list/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/tophub/list/Om4ejxvxEN",
         "parameters": {
@@ -84155,7 +84282,8 @@
       "/category/:category": {
         "path": "/category/:category",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/twreporter/category/world",
         "parameters": {
@@ -84186,7 +84314,8 @@
       "/newest": {
         "path": "/newest",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/twreporter/newest",
         "parameters": {},
@@ -85978,7 +86107,8 @@
       "/category/:category?": {
         "path": "/category/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/utgd/category/method",
         "parameters": {
@@ -86011,7 +86141,8 @@
       "/timeline": {
         "path": "/timeline",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/utgd/timeline",
         "parameters": {},
@@ -86040,7 +86171,8 @@
       "/topic/:topic?": {
         "path": "/topic/:topic?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/utgd/topic/在线阅读专栏",
         "parameters": {
@@ -86385,7 +86517,8 @@
       "/latest": {
         "path": "/latest",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/vertikal/latest",
         "radar": [
@@ -91427,7 +91560,8 @@
       "/news/:region/:category?": {
         "path": "/news/:region/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/yahoo/news/hk/world",
         "parameters": {
@@ -91465,7 +91599,8 @@
       "/news/list/:region/:listId": {
         "path": "/news/list/:region/:listId",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/yahoo/news/list/hk/09fcf7b0-0ab2-11e8-bf1f-4d52d4f79454",
         "parameters": {
@@ -91504,7 +91639,8 @@
       "/news/providers/:region/list": {
         "path": "/news/providers/:region/list",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/yahoo/news/providers/tw/list",
         "parameters": {
@@ -91540,7 +91676,8 @@
       "/news/provider/:region/:providerId": {
         "path": "/news/provider/:region/:providerId",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/yahoo/news/provider/tw/yahoo_tech_tw_942",
         "parameters": {

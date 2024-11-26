@@ -28421,7 +28421,7 @@
         "target": "/thepaper/featured"
       },
       {
-        "title": "Unknown",
+        "title": "侧边栏",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
@@ -28429,7 +28429,7 @@
         "target": "/thepaper/sidebar"
       },
       {
-        "title": "Unknown",
+        "title": "澎湃美数课作品集 - 分类",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
