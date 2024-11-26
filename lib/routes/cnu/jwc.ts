@@ -57,11 +57,14 @@ async function handler() {
                 // Cache the detail page
                 const detailResponse = await got({ method: 'get', url: item.link });
                 const content = load(detailResponse.data);
-                const detailContent = content('.article02').html()?.trim();
+                const paragraphs = content('.article02')
+                    .toArray()
+                    .map((el) => content(el).html()?.trim())
+                    .join('<br/><br/>');
 
                 return {
                     ...item,
-                    description: detailContent || '<p>暂无内容</p>', // Fallback to prevent empty description
+                    description: paragraphs || '暂无内容',
                 };
             })
         )
