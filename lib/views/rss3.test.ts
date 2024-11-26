@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import rss3 from './rss3';
 
-const NETWORK = 'RSS';
+const NETWORK = 'rsshub';
 const TAG = 'RSS';
 const TYPE = 'feed';
 
