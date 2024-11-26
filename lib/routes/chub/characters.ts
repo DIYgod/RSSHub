@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/characters',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/chub/characters',
     name: 'Characters',
     maintainers: ['flameleaf'],

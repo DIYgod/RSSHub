@@ -5,7 +5,7 @@ import { getData } from './utils';
 
 export const route: Route = {
     path: '/category/:category',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/aeon/category/philosophy',
     parameters: { category: 'Category' },
     features: {

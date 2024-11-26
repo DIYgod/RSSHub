@@ -6,7 +6,7 @@ import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/blog',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/deepmind/blog',
     parameters: {},
     features: {
