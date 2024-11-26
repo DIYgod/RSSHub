@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/category/:category',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/gcores/category/news',
     parameters: { category: '分类名' },
     features: {

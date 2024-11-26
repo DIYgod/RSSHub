@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/matrix',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sspai/matrix',
     parameters: {},
     features: {

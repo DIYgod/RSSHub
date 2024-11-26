@@ -8,7 +8,7 @@ const rootUrl = 'https://www.hellobtc.com';
 
 export const route: Route = {
     path: '/news',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/hellobtc/news',
     parameters: {},
     features: {

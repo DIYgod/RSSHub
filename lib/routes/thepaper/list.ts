@@ -5,7 +5,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/list/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/thepaper/list/25457',
     parameters: { id: '栏目 id，可在栏目页 URL 中找到' },
     features: {

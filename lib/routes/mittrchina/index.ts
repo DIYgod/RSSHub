@@ -10,7 +10,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/:type?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/mittrchina/index',
     parameters: { type: '类型，见下表，默认为首页资讯' },
     features: {

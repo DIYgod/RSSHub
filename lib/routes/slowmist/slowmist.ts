@@ -6,7 +6,7 @@ import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/:type?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/slowmist/research',
     parameters: { type: '分类，见下表，默认为公司新闻' },
     features: {

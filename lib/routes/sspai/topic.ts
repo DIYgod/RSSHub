@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topic/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sspai/topic/250',
     parameters: { id: '专题 id，可在专题主页URL中找到' },
     features: {

@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/latest',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/vertikal/latest',
     radar: [
         {

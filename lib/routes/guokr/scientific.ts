@@ -4,7 +4,7 @@ import { parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/scientific',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/guokr/scientific',
     radar: [
         {

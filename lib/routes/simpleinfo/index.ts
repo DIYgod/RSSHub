@@ -12,7 +12,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/simpleinfo',
     parameters: { category: '分类名' },
     features: {

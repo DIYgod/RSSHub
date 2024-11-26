@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/information/:type?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/aliresearch/information',
     parameters: { type: '类型，见下表，默认为新闻' },
     features: {

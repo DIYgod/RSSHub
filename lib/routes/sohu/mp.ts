@@ -11,7 +11,7 @@ import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/mp/:xpt',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sohu/mp/c29odXptdGhnbjZ3NEBzb2h1LmNvbQ==',
     parameters: { xpt: '搜狐号 xpt ，可在URL中找到或搜狐号 ID' },
     radar: [

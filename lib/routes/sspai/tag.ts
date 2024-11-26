@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/tag/:keyword',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sspai/tag/apple',
     parameters: { keyword: '关键词' },
     features: {

@@ -6,7 +6,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/tag/:tag/:type/:option?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/pingwest/tag/ChinaJoy/1',
     parameters: { tag: '话题名或话题id, 可从话题页url中得到', type: '内容类型', option: '参数, 默认无' },
     features: {

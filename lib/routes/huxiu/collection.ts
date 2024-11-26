@@ -6,7 +6,7 @@ import { rootUrl, apiArticleRootUrl, processItems, fetchData } from './util';
 
 export const route: Route = {
     path: '/collection/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/huxiu/collection/212',
     parameters: { id: '文集 id，可在对应文集页 URL 中找到' },
     features: {

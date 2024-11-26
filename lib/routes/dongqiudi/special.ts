@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/special/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/dongqiudi/special/41',
     parameters: { id: '专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配' },
     radar: [
