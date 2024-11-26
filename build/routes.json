@@ -48212,7 +48212,8 @@
       "/today/:edition/publisher/:id": {
         "path": "/today/:edition/publisher/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/line/today/th/publisher/101048",
         "parameters": {
@@ -48235,7 +48236,8 @@
       "/today/:edition?/:tab?": {
         "path": "/today/:edition?/:tab?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/line/today",
         "parameters": {
@@ -48618,7 +48620,8 @@
       "/:region?": {
         "path": "/:region?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/liveuamap",
         "parameters": {
@@ -49856,7 +49859,8 @@
       "/blog": {
         "path": "/blog",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/macfilos/blog",
         "parameters": {},
@@ -50508,7 +50512,8 @@
     "name": "Matters",
     "url": "matters.town",
     "categories": [
-      "new-media"
+      "new-media",
+      "popular"
     ],
     "lang": "en"
   },
@@ -53776,7 +53781,8 @@
       "/:id": {
         "path": "/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/mirror/tingfei.eth",
         "parameters": {
@@ -54938,7 +54944,8 @@
       "/:label?": {
         "path": "/:label?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/mygopen",
         "parameters": {
@@ -55469,7 +55476,8 @@
       "/topic/:tid": {
         "path": "/topic/:tid",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/nautil/topic/arts",
         "parameters": {
@@ -60427,7 +60435,8 @@
       "/activity": {
         "path": "/activity",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/odaily/activity",
         "parameters": {},
@@ -60457,7 +60466,8 @@
       "/newsflash": {
         "path": "/newsflash",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/odaily/newsflash",
         "parameters": {},
@@ -60487,7 +60497,8 @@
       "/:id?": {
         "path": "/:id?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/odaily",
         "parameters": {
@@ -60519,7 +60530,8 @@
       "/search/news/:keyword": {
         "path": "/search/news/:keyword",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/odaily/search/news/RSS3",
         "parameters": {
@@ -60549,7 +60561,8 @@
       "/user/:id": {
         "path": "/user/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/odaily/user/2147486902",
         "parameters": {
@@ -61949,7 +61962,8 @@
           "/column/:id"
         ],
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/panewslab/author/166",
         "parameters": {
@@ -61983,7 +61997,8 @@
           "/column/:id"
         ],
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/panewslab/author/166",
         "parameters": {
@@ -62014,7 +62029,8 @@
       "/news": {
         "path": "/news",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/panewslab/news",
         "radar": [
@@ -62034,7 +62050,8 @@
       "/profundity/:category?": {
         "path": "/profundity/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/panewslab/profundity",
         "parameters": {
@@ -62059,7 +62076,8 @@
       "/topic/:id": {
         "path": "/topic/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/panewslab/topic/1629365774078402",
         "parameters": {
@@ -62690,7 +62708,8 @@
       "/:category?/:topic?": {
         "path": "/:category?/:topic?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/phoronix/linux/KDE",
         "parameters": {
@@ -64818,7 +64837,8 @@
       "/topic/:topic": {
         "path": "/topic/:topic",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/psyche/topic/therapeia",
         "parameters": {
@@ -66341,7 +66361,8 @@
       "/report/:industry?/:label?": {
         "path": "/report/:industry?/:label?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/questmobile/report",
         "parameters": {
@@ -67102,7 +67123,8 @@
       "/daily": {
         "path": "/daily",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/readhub/daily",
         "parameters": {},
@@ -67132,7 +67154,8 @@
       "/:category?": {
         "path": "/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/readhub",
         "parameters": {
@@ -67210,7 +67233,8 @@
       "/geekdaily": {
         "path": "/geekdaily",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/rebase/geekdaily",
         "radar": [
@@ -81989,7 +82013,8 @@
       "/:term?": {
         "path": "/:term?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/thepetcity",
         "parameters": {
