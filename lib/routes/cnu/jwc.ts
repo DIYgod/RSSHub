@@ -15,7 +15,7 @@ export const route: Route = {
             source: [new URL(BASE_URL).host],
         },
     ],
-    name: '首都师范大学教务处',
+    name: '教务处', // Name of the route
     maintainers: ['Aicnal'],
     handler,
     url: new URL(BASE_URL).host + new URL(BASE_URL).pathname, // host + pathname
@@ -57,16 +57,11 @@ async function handler() {
                 // Cache the detail page
                 const detailResponse = await got({ method: 'get', url: item.link });
                 const content = load(detailResponse.data);
-                const paragraphs = content(
-                    'body p:not(:contains("分享到：")):not(:contains("版权所有")):not(:contains("地址：")):not(:contains("E-mail:")):not(:contains("网站地图")):not(:contains("ICP备")):not(:contains("京公网安备"))'
-                )
-                    .toArray()
-                    .map((el) => content(el).html()?.trim())
-                    .join('<br/><br/>');
+                const detailContent = content('.article02').html()?.trim();
 
                 return {
                     ...item,
-                    description: paragraphs || '暂无内容',
+                    description: detailContent || '<p>暂无内容</p>',
                 };
             })
         )
