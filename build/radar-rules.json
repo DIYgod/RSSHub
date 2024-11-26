@@ -20640,7 +20640,7 @@
           "/web/:category",
           "/"
         ],
-        "target": "/mvm/:category?"
+        "target": "/mwm/:category?"
       }
     ]
   },
