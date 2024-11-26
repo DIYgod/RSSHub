@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';
+import cache from '@/utils/cache';
 
 const BASE_URL = 'https://jwc.cnu.edu.cn/tzgg/index.htm';
 
@@ -11,13 +12,13 @@ export const route: Route = {
     example: '/cnu/jwc',
     radar: [
         {
-            source: [BASE_URL],
+            source: [new URL(BASE_URL).host],
         },
     ],
     name: '首都师范大学教务处',
     maintainers: ['Aicnal'],
     handler,
-    url: BASE_URL,
+    url: new URL(BASE_URL).host + new URL(BASE_URL).pathname, // host + pathname
 };
 
 async function handler() {
@@ -51,33 +52,24 @@ async function handler() {
         .filter(Boolean);
 
     const items = await Promise.all(
-        list.map(async (item) => {
-            try {
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                // Cache the detail page
                 const detailResponse = await got({ method: 'get', url: item.link });
                 const content = load(detailResponse.data);
-                const paragraphs = content('body p')
-                    .toArray() // Convert to an array first
-                    .filter((el) => {
-                        const text = content(el).text();
-                        return !/分享到：|版权所有|地址：|E-mail:|网站地图|ICP备|京公网安备/.test(text);
-                    })
-                    .map((el) => {
-                        content(el).find('img').remove(); // Remove <img> tags
-                        return content(el).html()?.trim();
-                    })
+                const paragraphs = content(
+                    'body p:not(:contains("分享到：")):not(:contains("版权所有")):not(:contains("地址：")):not(:contains("E-mail:")):not(:contains("网站地图")):not(:contains("ICP备")):not(:contains("京公网安备"))'
+                )
+                    .toArray()
+                    .map((el) => content(el).html()?.trim())
                     .join('<br/><br/>');
 
                 return {
                     ...item,
                     description: paragraphs || '暂无内容',
                 };
-            } catch (error) {
-                return {
-                    ...item,
-                    description: `内容获取失败: ${error.message}`,
-                };
-            }
-        })
+            })
+        )
     );
 
     return {
