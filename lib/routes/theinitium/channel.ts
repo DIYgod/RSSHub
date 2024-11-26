@@ -19,7 +19,7 @@ export const route: Route = {
     ],
     handler,
     example: '/theinitium/channel/latest/zh-hans',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     description: `Type 栏目：
 
   | 最新   | 深度    | What’s New | 广场              | 科技       | 风物    | 特约     | ... |
