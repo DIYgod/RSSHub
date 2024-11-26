@@ -90264,7 +90264,8 @@
                 "value": "collect",
                 "label": "collect"
               }
-            ]
+            ],
+            "default": "notes"
           }
         },
         "location": "user.ts"
