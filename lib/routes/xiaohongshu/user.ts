@@ -43,6 +43,7 @@ export const route: Route = {
                     label: 'collect',
                 },
             ],
+            default: 'notes',
         },
     },
 };
