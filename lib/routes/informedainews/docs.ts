@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/zh-Hans/docs/:type',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/informedainews/zh-Hans/docs/world-news-daily',
     parameters: { type: 'world-news-daily|tech-enthusiast-weekly|ai-enthusiast-daily' },
     features: {
