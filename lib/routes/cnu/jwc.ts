@@ -61,7 +61,7 @@ async function handler() {
 
                 return {
                     ...item,
-                    description: detailContent || '<p>暂无内容</p>',
+                    description: detailContent || '<p>暂无内容</p>', // Fallback to prevent empty description
                 };
             })
         )
