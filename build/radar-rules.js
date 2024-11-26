@@ -6080,7 +6080,7 @@
         source:[ "/" ],
         target:"/guanhai/" } ] },
   "guduodata.com":{ _name:"骨朵数据",
-    data:[ { title:"日榜",
+    ".":[ { title:"日榜",
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/" ],
         target:"/guduodata/daily" } ] },

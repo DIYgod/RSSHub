@@ -36815,7 +36815,7 @@
         "radar": [
           {
             "source": [
-              "data.guduodata.com/"
+              "guduodata.com/"
             ]
           }
         ],
@@ -36823,7 +36823,7 @@
         "maintainers": [
           "Gem1ni"
         ],
-        "url": "data.guduodata.com/",
+        "url": "guduodata.com/",
         "location": "daily.ts"
       }
     },
