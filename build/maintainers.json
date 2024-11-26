@@ -1826,7 +1826,9 @@
   "/dockerhub/repositories/:owner": [
     "CaoMeiYouRen"
   ],
-  "/dockerhub/tag/:owner/:image/:limits?": [],
+  "/dockerhub/tag/:owner/:image/:limits?": [
+    "pseudoyu"
+  ],
   "/docschina/weekly/:category?": [
     "daijinru",
     "hestudy"

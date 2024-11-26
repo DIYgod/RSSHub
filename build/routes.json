@@ -22590,7 +22590,9 @@
           "supportScihub": false
         },
         "name": "Image New Tag",
-        "maintainers": [],
+        "maintainers": [
+          "pseudoyu"
+        ],
         "description": ":::warning\n  Use `library` as the `owner` for official images, such as [https://rsshub.app/dockerhub/tag/library/mysql](https://rsshub.app/dockerhub/tag/library/mysql)\n  :::",
         "location": "tag.ts"
       }
