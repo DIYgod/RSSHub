@@ -12,7 +12,7 @@ const baseUrl = 'https://nautil.us';
 
 export const route: Route = {
     path: '/topic/:tid',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/nautil/topic/arts',
     parameters: { tid: 'topic' },
     features: {

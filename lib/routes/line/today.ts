@@ -4,7 +4,7 @@ import { baseUrl as rootUrl, parseList, parseItems } from './utils';
 
 export const route: Route = {
     path: '/today/:edition?/:tab?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/line/today',
     parameters: { edition: 'Edition, see below, Taiwan by default', tab: 'Tag, can be found in URL, `top` by default' },
     radar: [

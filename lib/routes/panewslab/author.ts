@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: ['/author/:id', '/column/:id'],
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/panewslab/author/166',
     parameters: { id: '专栏 id，可在地址栏 URL 中找到' },
     features: {

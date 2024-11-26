@@ -31,7 +31,7 @@ const parseTree = (tree, result = []) => {
 
 export const route: Route = {
     path: '/report/:industry?/:label?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/questmobile/report',
     parameters: { industry: '行业，见下表，默认为 `-1`，即全部行业', label: '标签，见下表，默认为 `-1`，即全部标签' },
     features: {

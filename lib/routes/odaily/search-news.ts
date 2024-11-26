@@ -6,7 +6,7 @@ import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/search/news/:keyword',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/odaily/search/news/RSS3',
     parameters: { keyword: '搜索关键字' },
     features: {

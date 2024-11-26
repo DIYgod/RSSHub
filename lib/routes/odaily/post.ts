@@ -19,7 +19,7 @@ const titles = {
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/odaily',
     parameters: { id: 'id，见下表，默认为最新' },
     features: {

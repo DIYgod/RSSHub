@@ -8,7 +8,7 @@ const baseUrl = 'https://thepetcity.co';
 
 export const route: Route = {
     path: '/:term?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/thepetcity',
     parameters: { term: '見下表，留空為全部文章' },
     radar: Object.entries(termsMap).map(([key, value]) => ({
