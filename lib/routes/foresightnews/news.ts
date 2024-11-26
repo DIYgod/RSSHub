@@ -3,7 +3,7 @@ import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
 
 export const route: Route = {
     path: '/news',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/foresightnews/news',
     parameters: {},
     features: {
