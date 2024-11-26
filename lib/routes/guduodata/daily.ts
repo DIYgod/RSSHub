@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
-const host = 'http://guduodata.com';
+const host = 'http://d.guduodata.com';
 
 const types = {
     collect: {
