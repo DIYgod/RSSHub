@@ -31692,7 +31692,8 @@
       "/news/:category/:locale": {
         "path": "/news/:category/:locale",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/google/news/Top stories/hl=en-US&gl=US&ceid=US:en",
         "parameters": {
@@ -36307,7 +36308,8 @@
       "/featured": {
         "path": "/featured",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/grist/featured",
         "parameters": {},
@@ -36342,17 +36344,24 @@
             ]
           }
         ],
-        "name": "Unknown",
+        "name": "Latest Articles",
         "maintainers": [
           "Rjnishant530"
         ],
+        "categories": [
+          "new-media",
+          "popular"
+        ],
+        "example": "/grist",
+        "parameters": {},
         "url": "grist.org/articles/",
         "location": "index.ts"
       },
       "/series/:series": {
         "path": "/series/:series",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/grist/series/best-of-grist",
         "parameters": {
@@ -36383,7 +36392,8 @@
       "/topic/:topic": {
         "path": "/topic/:topic",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/grist/topic/extreme-heat",
         "parameters": {
@@ -37441,7 +37451,8 @@
       "/health/blog": {
         "path": "/health/blog",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/harvard/health/blog",
         "parameters": {},
@@ -38468,7 +38479,8 @@
       "/:category?": {
         "path": "/:category?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/hkepc/news",
         "parameters": {
@@ -42648,7 +42660,8 @@
         },
         "description": ":::tip\n  If you subscribe to [InfoQ Live Jan 2024](https://www.infoq.com/infoq-live-jan-2024/presentations/)，where the URL is `https://www.infoq.com/infoq-live-jan-2024/presentations/`, extract the part `https://www.infoq.com/` to the end, which is `/presentations/`, and use it as the parameter to fill in. Therefore, the route will be [`/infoq/presentations/infoq-live-jan-2024`](https://rsshub.app/infoq/presentations/infoq-live-jan-2024).\n  :::\n    ",
         "categories": [
-          "programming"
+          "programming",
+          "popular"
         ],
         "features": {
           "requireConfig": false,
@@ -42672,7 +42685,8 @@
       "/recommend": {
         "path": "/recommend",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/infoq/recommend",
         "parameters": {},
@@ -42701,7 +42715,8 @@
       "/topic/:id": {
         "path": "/topic/:id",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/infoq/topic/1",
         "parameters": {
@@ -42738,7 +42753,8 @@
       "/zh-Hans/docs/:type": {
         "path": "/zh-Hans/docs/:type",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/informedainews/zh-Hans/docs/world-news-daily",
         "parameters": {

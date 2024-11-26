@@ -6029,7 +6029,7 @@
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/" ],
         target:"/grist/featured" },
-      { title:"Unknown",
+      { title:"Latest Articles",
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/articles/" ],
         target:"/grist/" },
