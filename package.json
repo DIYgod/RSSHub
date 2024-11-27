@@ -51,7 +51,7 @@
     },
     "dependencies": {
         "@bbob/html": "4.1.1",
-        "@bbob/preset-html5": "4.1.1",
+        "@bbob/preset-html5": "4.2.0",
         "@hono/node-server": "1.13.7",
         "@hono/zod-openapi": "0.18.0",
         "@notionhq/client": "2.2.15",
