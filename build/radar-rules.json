@@ -28026,43 +28026,28 @@
       }
     ]
   },
-  "taptap.com": {
-    "_name": "TapTap 中国",
+  "taptap.cn": {
+    "_name": "TapTap",
+    "www": [
+      {
+        "title": "游戏更新",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:id"
+        ],
+        "target": "/taptap/changelog/:id"
+      },
+      {
+        "title": "游戏评价",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:id/review",
+          "/app/:id"
+        ],
+        "target": "/taptap/review/:id"
+      }
+    ],
     ".": [
-      {
-        "title": "游戏更新",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/app/:id"
-        ],
-        "target": "/taptap/changelog/:id"
-      },
-      {
-        "title": "游戏更新",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/app/:id"
-        ],
-        "target": "/taptap/changelog/:id"
-      },
-      {
-        "title": "游戏评价",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/app/:id/review",
-          "/app/:id"
-        ],
-        "target": "/taptap/review/:id"
-      },
-      {
-        "title": "游戏评价",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/app/:id/review",
-          "/app/:id"
-        ],
-        "target": "/taptap/review/:id"
-      },
       {
         "title": "游戏论坛",
         "docs": "https://docs.rsshub.app/routes/game",
@@ -28071,6 +28056,28 @@
           "/app/:id"
         ],
         "target": "/taptap/topic/:id"
+      }
+    ]
+  },
+  "taptap.io": {
+    "_name": "TapTap",
+    "www": [
+      {
+        "title": "Game's Changelog",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:id"
+        ],
+        "target": "/taptap/intl/changelog/:id"
+      },
+      {
+        "title": "Ratings & Reviews",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:id/review",
+          "/app/:id"
+        ],
+        "target": "/taptap/intl/review/:id"
       }
     ]
   },
