@@ -72,7 +72,10 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got(item.link); // 获取详情页内容
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link
+                }); // 获取详情页内容
                 const content = load(detailResponse.data); // 使用cheerio解析内容
 
                 item.description = content('div.ej_main').html() || item.description; // 提取内容区详情
