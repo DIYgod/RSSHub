@@ -20,7 +20,7 @@ export const route: Route = {
         },
     ],
     name: '教务部',
-    maintainers: ['GhhG123'],
+    maintainers: ['tuxinghuan', 'GhhG123'],
     handler,
     description: `| 通知通告 | 新闻 | 政策文件(bug) |
   | -------- | ---- | -------- |
