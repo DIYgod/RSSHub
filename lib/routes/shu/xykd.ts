@@ -71,7 +71,7 @@ async function handler(ctx) {
                 description: item.find('div.zy').text().trim(), // 提取简要描述
             };
         })
-        .get();
+        .toArray();
 
     const items = await Promise.all(
         list.map((item) =>
@@ -82,7 +82,7 @@ async function handler(ctx) {
                 }); // 获取详情页内容
                 const content = load(detailResponse.data); // 使用cheerio解析内容
 
-                item.description = content('div.ej_main').html() || item.description; // 提取内容区详情
+                item.description = content('#vsb_content_500 .v_news_content').html() || item.description; // 提取内容区详情
 
                 return item; // 返回完整的item
             })

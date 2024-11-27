@@ -67,7 +67,7 @@ async function handler(ctx) {
                 description: item.find('p.zy').text().trim(),
             };
         })
-        .get();
+        .toArray();
 
     const items = await Promise.all(
         list.map((item) =>
@@ -78,7 +78,7 @@ async function handler(ctx) {
                 });
                 const content = load(detailResponse.data);
 
-                item.description = content('div.ej_main').html() || item.description;
+                item.description = content('#vsb_content .v_news_content').html() || item.description;
 
                 return item;
             })

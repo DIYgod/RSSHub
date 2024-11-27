@@ -56,31 +56,39 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const list = $('div.only-list1 ul li') // 定位到HTML结构中的li元素
+    const list = $('tr[id^="line_u17_"]') // 定位到每个包含新闻的<tr>元素
         .map((_, el) => {
-            const item = $(el); // 使用Cheerio包装每个li元素
-            const rawLink = item.find('a').attr('href');
-            const pubDate = item.find('span').text().trim(); // 提取日期
+            const item = $(el); // 使用Cheerio包装每个<tr>元素
+            const rawLink = item.find('a').attr('href'); // 获取链接
+            const title = item.find('a').text().trim(); // 获取标题
+            const dateParts = item.find('td').eq(1).text().trim(); // 获取日期
 
             return {
-                title: item.find('a').text().trim(), // 获取标题
+                title: title, // 获取标题
                 link: rawLink ? new URL(rawLink, rootUrl).href : rootUrl, // 生成完整链接
-                pubDate: timezone(parseDate(pubDate, 'YYYY年MM月DD日'), +8), // 解析并转换日期
-                description: '', // 没有提供简要描述，设为空字符串
+                pubDate: timezone(parseDate(dateParts, 'YYYY/MM/DD HH:mm:ss'), +8), // 解析日期
+                description: item.find('td').eq(2).text().trim(), // 提取访问次数或其他信息
             };
         })
-        .get();
+        .toArray();
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
+                if (item.link.startsWith('https://gs1.shu.edu.cn')) { //需校内访问
+                    // Skip or handle differently for URLs with gs1.shu.edu.cn domain
+                    item.description = 'gs1.shu.edu.cn, 无法直接获取'
+                    return item;
+                }
+
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link
                 }); // 获取详情页内容
                 const content = load(detailResponse.data); // 使用cheerio解析内容
 
-                item.description = content('div.ej_main').html() || item.description; // 提取内容区详情
+                item.description = content('#vsb_content .v_news_content').html() || item.description;
+
 
                 return item; // 返回完整的item
             })
