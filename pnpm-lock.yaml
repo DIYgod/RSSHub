@@ -19,8 +19,8 @@ importers:
         specifier: 4.1.1
         version: 4.1.1
       '@bbob/preset-html5':
-        specifier: 4.1.1
-        version: 4.1.1
+        specifier: 4.2.0
+        version: 4.2.0
       '@hono/node-server':
         specifier: 1.13.7
         version: 1.13.7(hono@4.6.12)
@@ -1000,8 +1000,8 @@ packages:
   '@bbob/plugin-helper@4.1.1':
     resolution: {integrity: sha512-Ew7V2Yym+Os6wtiR4Se1irudFY5wLSTZGRNy8CSPq3QqBMk1LDi7phQvj8SFfqFCElG/UDciQb07lE7KQpiqbA==}
 
-  '@bbob/preset-html5@4.1.1':
-    resolution: {integrity: sha512-9dgO0Jui2qYshObGezso9AU30dtFYGg0AfvxDONATkL+1lBpIvwUrL3Xj+gDUotAdRw6QHCaU0x+rplxa0CLnA==}
+  '@bbob/preset-html5@4.2.0':
+    resolution: {integrity: sha512-X2EIeb2vqTz/n34KWQXEL5IC0SuB6i2/ltRpEaMTyK7IoDEs0XGIWcqVpenb7Z2d4eNA3gTWhkoUUkKlZmfQRQ==}
 
   '@bbob/preset@4.1.1':
     resolution: {integrity: sha512-Qas/hd1jOoZiux9LyPDStxxbSM/qVyts3ZJmFFHa3uzT0d7mKrnHjnI7qahHdo7Ry8CyrvGDDD8qL2A4bIfMqA==}
@@ -6543,7 +6543,7 @@ snapshots:
     dependencies:
       '@bbob/types': 4.2.0
 
-  '@bbob/preset-html5@4.1.1':
+  '@bbob/preset-html5@4.2.0':
     dependencies:
       '@bbob/plugin-helper': 4.1.1
       '@bbob/preset': 4.1.1
