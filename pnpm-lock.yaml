@@ -16,8 +16,8 @@ importers:
   .:
     dependencies:
       '@bbob/html':
-        specifier: 4.1.1
-        version: 4.1.1
+        specifier: 4.2.0
+        version: 4.2.0
       '@bbob/preset-html5':
         specifier: 4.2.0
         version: 4.2.0
@@ -991,8 +991,8 @@ packages:
   '@bbob/core@4.1.1':
     resolution: {integrity: sha512-cH2Fi+K1R0lKlEcUk+vQbOWP3Lny+A/jyYvrN1pRL71TEdamvbvlb5vTT8dwtOs5hWKFxMsDOcIVchjVaZmiFg==}
 
-  '@bbob/html@4.1.1':
-    resolution: {integrity: sha512-u1PsKlsM9os+TI9zqB2jh3CdGuZrNcGCAII/ZocgoW/asu49OXWQrcGHheJqBbeZLRagXMHYTWJ+W/DvDEgZ3g==}
+  '@bbob/html@4.2.0':
+    resolution: {integrity: sha512-mZG7MmE/YluH1/FNCr2Jv/Vz3Mq5stZ5tFAjBmYpVVN6Ndus4+FA84vKoHFdUHDiuU1p/e2/o/VUrwsWwLdoIA==}
 
   '@bbob/parser@4.1.1':
     resolution: {integrity: sha512-pNSx4WWp9qBpUf8pgfINEAxtN0E829IPNdDioP8JNf2N3enFFrDWdkVq3TnEy2QWyTBhEA+n5ARMM+lSId1w5A==}
@@ -6528,7 +6528,7 @@ snapshots:
       '@bbob/plugin-helper': 4.1.1
       '@bbob/types': 4.2.0
 
-  '@bbob/html@4.1.1':
+  '@bbob/html@4.2.0':
     dependencies:
       '@bbob/core': 4.1.1
       '@bbob/plugin-helper': 4.1.1
