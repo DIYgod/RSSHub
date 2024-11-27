@@ -8,7 +8,7 @@ const host = 'https://jwb.shu.edu.cn/';
 const alias = new Map([
     ['notice', 'tzgg'], // 通知公告
     ['news', 'xw'], // 新闻动态
-    //['policy', 'zcwj'], // 政策文件 //BUG
+    /* ['policy', 'zcwj'],  政策文件 //BUG */
 ]);
 
 export const route: Route = {

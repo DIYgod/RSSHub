@@ -62,8 +62,8 @@ async function handler(ctx) {
             const rawLink = item.find('a').attr('href');
             const dateParts = item
                 .find('div.sj p')
-                .map((_, p) => $(p).text().trim())
-                .get(); // 提取日期部分
+                .toArray()
+                .map(p => $(p).text().trim()); // 提取日期部分
 
             return {
                 title: item.find('p.bt').text().trim(), // 获取标题

@@ -79,7 +79,7 @@ async function handler(ctx) {
                 // 确保链接是以正确的域名开头，并且不为空
                 if (url.hostname === 'gs1.shu.edu.cn') {  // 需校内访问
                     // Skip or handle differently for URLs with gs1.shu.edu.cn domain
-                    item.description = 'gs1.shu.edu.cn, 无法直接获取'
+                    item.description = 'gs1.shu.edu.cn, 无法直接获取';
                     return item;
                 }
 
