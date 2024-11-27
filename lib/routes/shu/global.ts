@@ -55,7 +55,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('div.only-list1 ul li') // 定位到HTML结构中的li元素
-        .map((_, el) => {
+        .toArray()
+        .map((el) => {
             const item = $(el); // 使用Cheerio包装每个li元素
             const rawLink = item.find('a').attr('href');
             const pubDate = item.find('span').text().trim(); // 提取日期
@@ -66,8 +67,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate(pubDate, 'YYYY年MM月DD日'), +8), // 解析并转换日期
                 description: '', // 没有提供简要描述，设为空字符串
             };
-        })
-        .toArray();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

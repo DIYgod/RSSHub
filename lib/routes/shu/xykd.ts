@@ -56,7 +56,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('div.xsbg_list ul li') // 定位到HTML结构中的li元素
-        .map((_, el) => {
+        .toArray()
+        .map((el) => {
             const item = $(el); // 使用Cheerio包装每个li元素
             const rawLink = item.find('a').attr('href');
             const dateParts = item
@@ -70,8 +71,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate(`${dateParts[1]}-${dateParts[0]}`, 'MM-DD'), +8), // 拼接并解析日期
                 description: item.find('div.zy').text().trim(), // 提取简要描述
             };
-        })
-        .toArray();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

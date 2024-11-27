@@ -57,7 +57,8 @@ async function handler(ctx) {
 
     const list = $('div.list ul li') // 以下获取信息需要根据网页结构定制
         // For cheerio 1.x.x . The item parameter in the .map callback is now explicitly typed as a Cheerio<Element>, not just Element. --fixed
-        .map((_, el) => {
+        .toArray()
+        .map((el) => {
             const item = $(el); // Wrap `el` in a Cheerio object
             const rawLink = item.find('a').attr('href');
             return {
@@ -66,8 +67,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate(item.find('p.sj').text().trim(), 'YYYY.MM.DD'), +8),
                 description: item.find('p.zy').text().trim(),
             };
-        })
-        .toArray();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

@@ -57,25 +57,27 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('tr[id^="line_u17_"]') // 定位到每个包含新闻的<tr>元素
-        .map((_, el) => {
+        .toArray()
+        .map((el) => {
             const item = $(el); // 使用Cheerio包装每个<tr>元素
             const rawLink = item.find('a').attr('href'); // 获取链接
             const title = item.find('a').text().trim(); // 获取标题
             const dateParts = item.find('td').eq(1).text().trim(); // 获取日期
 
             return {
-                title: title, // 获取标题
+                title, // 获取标题
                 link: rawLink ? new URL(rawLink, rootUrl).href : rootUrl, // 生成完整链接
                 pubDate: timezone(parseDate(dateParts, 'YYYY/MM/DD HH:mm:ss'), +8), // 解析日期
                 description: item.find('td').eq(2).text().trim(), // 提取访问次数或其他信息
             };
-        })
-        .toArray();
+        });
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (item.link.startsWith('https://gs1.shu.edu.cn')) { //需校内访问
+                const url = new URL(item.link); // 创建 URL 对象以验证链接
+                // 确保链接是以正确的域名开头，并且不为空
+                if (url.hostname === 'gs1.shu.edu.cn') {  // 需校内访问
                     // Skip or handle differently for URLs with gs1.shu.edu.cn domain
                     item.description = 'gs1.shu.edu.cn, 无法直接获取'
                     return item;
