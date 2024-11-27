@@ -1,24 +1,26 @@
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
+import cache from '@/utils/cache';
+import { Detail } from './types';
 
-// Please do not change %26 to &
-const X_UA = (lang = 'zh_CN') => `X-UA=V=1%26PN=WebApp%26VN=0.1.0%26LANG=${lang}%26PLT=PC`;
+const X_UA = (lang = 'zh_CN') => `X-UA=${encodeURIComponent(`V=1&PN=WebApp&VN=0.1.0&LANG=${lang}&PLT=PC`)}`;
 
-const getRootUrl = (isIntl = false) => (isIntl ? 'https://www.taptap.io' : 'https://www.taptap.com');
+const getRootUrl = (isIntl = false) => (isIntl ? 'https://www.taptap.io' : 'https://www.taptap.cn');
 
-const appDetail = async (appId, lang = 'zh_CN', isIntl = false) => {
-    const { data } = await got(`${getRootUrl(isIntl)}/webapiv2/group/v1/detail?app_id=${appId}&${X_UA(lang)}`, {
-        headers: {
-            Referer: `${getRootUrl(isIntl)}/app/${appId}`,
-        },
-    });
-    return data.data;
-};
+const appDetail = (appId, lang = 'zh_CN', isIntl = false) =>
+    cache.tryGet(`taptap:appDetail:${appId}:${lang}:${isIntl}`, async () => {
+        const data = await ofetch(`${getRootUrl(isIntl)}/webapiv2/group/v1/detail?app_id=${appId}&${X_UA(lang)}`, {
+            headers: {
+                Referer: `${getRootUrl(isIntl)}/app/${appId}`,
+            },
+        });
+        return data.data;
+    }) as Promise<Detail>;
 
 const imagePost = (images) =>
     art(path.join(__dirname, 'templates/imagePost.art'), {
@@ -26,25 +28,23 @@ const imagePost = (images) =>
     });
 
 const topicPost = async (appId, topicId, lang = 'zh_CN') => {
-    const res = await got(`${getRootUrl(false)}/webapiv2/topic/v1/detail?id=${topicId}&${X_UA(lang)}`, {
+    const res = await ofetch(`${getRootUrl(false)}/webapiv2/topic/v1/detail?id=${topicId}&${X_UA(lang)}`, {
         headers: {
             Referer: `${getRootUrl(false)}/app/${appId}`,
         },
     });
-    const $ = load(res.data.data.first_post.contents.text, null, false);
+    const $ = load(res.data.first_post.contents.text, null, false);
     $('img').each((_, e) => {
-        e = $(e);
-        e.attr('src', e.attr('data-origin-url'));
-        e.attr('referrerpolicy', 'no-referrer');
-        e.removeAttr('data-origin-url');
+        const $e = $(e);
+        $e.attr('src', $e.attr('data-origin-url'));
+        $e.removeAttr('data-origin-url');
     });
     return $.html();
 };
 
 const videoPost = (video) =>
     art(path.join(__dirname, 'templates/videoPost.art'), {
-        intro: video?.intro?.text,
-        previewUrl: video?.video_resource.preview_animation.original_url,
+        previewUrl: video.thumbnail.original_url || video.thumbnail.url,
     });
 
 export { getRootUrl, X_UA, appDetail, imagePost, topicPost, videoPost };
