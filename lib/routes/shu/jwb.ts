@@ -8,21 +8,21 @@ const host = 'https://jwb.shu.edu.cn/';
 const alias = new Map([
     ['notice', 'tzgg'], // 通知公告
     ['news', 'xw'], // 新闻动态
-    ['policy', 'zcwj'], // 政策文件
+    /* ['policy', 'zcwj'],  政策文件 //BUG */
 ]);
 
 export const route: Route = {
-    path: ['/jwc/:type?', '/jwb/:type?'],
+    path: ['/jwb/:type?'],
     radar: [
         {
-            source: ['www.shu.edu.cn/:type'],
-            target: '/:type',
+            source: ['www.shu.edu.cn/index'],
+            target: '/:type?',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '教务部',
+    maintainers: ['tuxinghuan', 'GhhG123'],
     handler,
-    description: `| 通知通告 | 新闻 | 政策文件 |
+    description: `| 通知通告 | 新闻 | 政策文件(bug) |
   | -------- | ---- | -------- |
   | notice   | news | policy   |`,
 };
