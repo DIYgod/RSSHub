@@ -71537,14 +71537,14 @@
   },
   "shu": {
     "routes": {
-      "/:type?": {
-        "path": "/:type?",
+      "/global/:type?": {
+        "path": "/global/:type?",
         "categories": [
           "university"
         ],
-        "example": "/shu/news",
+        "example": "/shu/global/tzgg",
         "parameters": {
-          "type": "消息类型,默认为`news`"
+          "type": "分类，默认为通知公告"
         },
         "features": {
           "requireConfig": false,
@@ -71557,57 +71557,143 @@
         "radar": [
           {
             "source": [
-              "www.shu.edu.cn/:type"
+              "global.shu.edu.cn/"
             ],
-            "target": "/:type"
+            "target": "/global"
           }
         ],
-        "name": "官网信息",
+        "name": "国际部港澳台办公室",
         "maintainers": [
-          "lonelyion"
+          "GhhG123"
         ],
-        "description": "| 综合新闻 | 科研动态 | 通知公告 | 重要新闻  |\n  | -------- | -------- | -------- | --------- |\n  | news     | research | notice   | important |",
-        "location": "index.ts"
+        "url": "global.shu.edu.cn/",
+        "description": "| 通知公告 |\n  | -------- |\n  | tzgg     |",
+        "location": "global.ts"
       },
-      "/jwc/:type?": {
-        "path": [
-          "/jwc/:type?",
-          "/jwb/:type?"
+      "/gs/:type?": {
+        "path": "/gs/:type?",
+        "categories": [
+          "university"
         ],
+        "example": "/shu/gs/zhxw",
+        "parameters": {
+          "type": "分类，默认为学术公告"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
         "radar": [
           {
             "source": [
-              "www.shu.edu.cn/:type"
+              "gs.shu.edu.cn/"
             ],
-            "target": "/:type"
+            "target": "/gs"
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "description": "| 通知通告 | 新闻 | 政策文件 |\n  | -------- | ---- | -------- |\n  | notice   | news | policy   |",
-        "location": "jwb.ts"
+        "name": "研究生院",
+        "maintainers": [
+          "GhhG123"
+        ],
+        "url": "gs.shu.edu.cn/",
+        "description": "| 综合新闻 | 培养管理 | 国际交流 |\n  | -------- | --------- | --------- |\n  | zhxw     | pygl      | gjjl      |",
+        "location": "gs.ts"
+      },
+      "/news/:type?": {
+        "path": "/news/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/shu/news/tzgg",
+        "parameters": {
+          "type": "分类，默认为通知公告"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.shu.edu.cn/"
+            ],
+            "target": "/news"
+          }
+        ],
+        "name": "官网通知公告",
+        "maintainers": [
+          "lonelyion",
+          "GhhG123"
+        ],
+        "url": "www.shu.edu.cn/",
+        "description": "| 通知公告 | 重要新闻 |\n  | -------- | --------- |\n  | tzgg     | zyxw      |",
+        "location": "index.ts"
       },
       "/jwb/:type?": {
         "path": [
-          "/jwc/:type?",
           "/jwb/:type?"
         ],
         "radar": [
           {
             "source": [
-              "www.shu.edu.cn/:type"
+              "www.shu.edu.cn/index"
             ],
-            "target": "/:type"
+            "target": "/:type?"
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "description": "| 通知通告 | 新闻 | 政策文件 |\n  | -------- | ---- | -------- |\n  | notice   | news | policy   |",
+        "name": "教务部",
+        "maintainers": [
+          "tuxinghuan",
+          "GhhG123"
+        ],
+        "description": "| 通知通告 | 新闻 | 政策文件(bug) |\n  | -------- | ---- | -------- |\n  | notice   | news | policy   |",
         "location": "jwb.ts"
+      },
+      "/xykd/:type?": {
+        "path": "/xykd/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/shu/xykd/xsbg",
+        "parameters": {
+          "type": "分类，默认为学术公告"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.shu.edu.cn/"
+            ],
+            "target": "/xykd"
+          }
+        ],
+        "name": "校园看点",
+        "maintainers": [
+          "GhhG123"
+        ],
+        "url": "www.shu.edu.cn/",
+        "description": "| 文化信息 | 学术报告 |\n  | -------- | --------- |\n  | whxx     | xsbg      |",
+        "location": "xykd.ts"
       }
     },
     "name": "上海大学",
-    "url": "jwb.shu.edu.cn",
+    "url": "www.shu.edu.cn",
+    "description": "上海大学相关网网站",
     "lang": "zh-CN"
   },
   "shuiguopai": {

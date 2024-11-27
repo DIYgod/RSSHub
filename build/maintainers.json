@@ -6024,11 +6024,23 @@
   "/showstart/site/:siteId": [
     "lchtao26"
   ],
-  "/shu/:type?": [
-    "lonelyion"
+  "/shu/global/:type?": [
+    "GhhG123"
   ],
-  "/shu/jwc/:type?": [],
-  "/shu/jwb/:type?": [],
+  "/shu/gs/:type?": [
+    "GhhG123"
+  ],
+  "/shu/news/:type?": [
+    "lonelyion",
+    "GhhG123"
+  ],
+  "/shu/jwb/:type?": [
+    "tuxinghuan",
+    "GhhG123"
+  ],
+  "/shu/xykd/:type?": [
+    "GhhG123"
+  ],
   "/shuiguopai/": [
     "nczitzk"
   ],
