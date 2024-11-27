@@ -30,7 +30,7 @@ export const route: Route = {
         },
     ],
     name: '官网通知公告',
-    maintainers: ['GhhG123', 'lonelyion'],
+    maintainers: ['lonelyion', 'GhhG123'],
     handler,
     url: 'www.shu.edu.cn/',
     description: `| 通知公告 | 重要新闻 |
