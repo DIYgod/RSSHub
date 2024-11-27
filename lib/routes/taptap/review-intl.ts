@@ -37,5 +37,5 @@ Language Code
 
 | English (US) | 繁體中文 | 한국어 | 日本語 |
 | ------------ | -------- | ------ | ------ |
-| en\_US       | zh\_TW   | ko\_KR | ja\_JP |`,
+| en_US       | zh_TW   | ko_KR | ja_JP |`,
 };

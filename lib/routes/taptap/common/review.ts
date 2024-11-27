@@ -2,6 +2,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRootUrl, appDetail, X_UA } from '../utils';
 
+/*
 const sortMap = {
     default: {
         en_US: 'Default',
@@ -39,6 +40,7 @@ const intlSortMap = {
         ko_KR: '최근순',
     },
 };
+*/
 
 const makeSortParam = (isIntl: boolean, order: string) => {
     if (isIntl) {
@@ -116,7 +118,7 @@ export async function handler(ctx) {
     const items = isIntl ? await fetchIntlItems({ id, order, lang }) : await fetchMainlandItems({ id, order, lang });
 
     return {
-        title: `TapTap 评价 ${appName} - ${(isIntl ? intlSortMap : sortMap)[order][lang]} 排序`,
+        title: `TapTap 评价 ${appName}`,
         link: `${getRootUrl(isIntl)}/app/${id}/review?${makeSortParam(isIntl, order)}`,
         image: appImg,
         item: items,
