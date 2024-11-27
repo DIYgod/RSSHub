@@ -4010,39 +4010,6 @@
   },
   "agirls": {
     "routes": {
-      "/:category?": {
-        "path": "/:category?",
-        "categories": [
-          "new-media",
-          "popular"
-        ],
-        "example": "/agirls/app",
-        "parameters": {
-          "category": "分类，默认为最新文章，可在对应主题页的 URL 中找到，下表仅列出部分"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "agirls.aotter.net/posts/:category"
-            ],
-            "target": "/:category"
-          }
-        ],
-        "name": "分类",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "description": "| App 评测 | 手机开箱 | 笔电开箱 | 3C 周边     | 教学小技巧 | 科技情报 |\n  | -------- | -------- | -------- | ----------- | ---------- | -------- |\n  | app      | phone    | computer | accessories | tutorial   | techlife |",
-        "location": "index.ts"
-      },
       "/topic_list": {
         "path": "/topic_list",
         "categories": [
@@ -4104,6 +4071,39 @@
           "TonyRL"
         ],
         "location": "topic.ts"
+      },
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "new-media",
+          "popular"
+        ],
+        "example": "/agirls/app",
+        "parameters": {
+          "category": "分类，默认为最新文章，可在对应主题页的 URL 中找到，下表仅列出部分"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "agirls.aotter.net/posts/:category"
+            ],
+            "target": "/:category"
+          }
+        ],
+        "name": "分类",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "description": "| App 评测 | 手机开箱 | 笔电开箱 | 3C 周边     | 教学小技巧 | 科技情报 |\n  | -------- | -------- | -------- | ----------- | ---------- | -------- |\n  | app      | phone    | computer | accessories | tutorial   | techlife |",
+        "location": "z-index.ts"
       }
     },
     "name": "电獭少女",

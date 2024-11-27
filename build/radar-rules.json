@@ -1556,14 +1556,6 @@
     "_name": "电獭少女",
     "agirls": [
       {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/posts/:category"
-        ],
-        "target": "/agirls/:category"
-      },
-      {
         "title": "当前精选主题列表",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
@@ -1579,6 +1571,14 @@
           "/topic/:topic"
         ],
         "target": "/agirls/topic/:topic"
+      },
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/posts/:category"
+        ],
+        "target": "/agirls/:category"
       }
     ]
   },
