@@ -5,7 +5,7 @@ import { load } from 'cheerio'; // cheerio@1.0.0
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const notice_type = {
+const noticeType = {
     zhxw: { title: '上海大学研究生院-综合新闻', url: 'https://gs.shu.edu.cn/xwlb/zh.htm' }, // 综合新闻
     pygl: { title: '上海大学研究生院-培养管理', url: 'https://gs.shu.edu.cn/xwlb/py.htm' }, // local //BUG error: Request https://gs1.shu.edu.cn:8080/py/KCBInfo.asp fail: TypeError: fetch failed
     gjjl: { title: '上海大学研究生院-国际交流', url: 'https://gs.shu.edu.cn/xwlb/gjjl.htm' },
@@ -51,7 +51,7 @@ async function handler(ctx) {
             'user-agent': UA,
             cookie: await getCookie(ctx),
         }, */
-        url: notice_type[type].url,
+        url: noticeType[type].url,
     });
 
     const $ = load(response.data);
@@ -85,9 +85,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: notice_type[type].title,
-        description: notice_type[type].title,
-        link: notice_type[type].url,
+        title: noticeType[type].title,
+        description: noticeType[type].title,
+        link: noticeType[type].url,
         item: items,
     };
 }

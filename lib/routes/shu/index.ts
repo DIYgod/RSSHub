@@ -5,7 +5,7 @@ import { load } from 'cheerio'; // cheerio@1.0.0
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const notice_type = {
+const noticeType = {
     tzgg: { title: '上海大学 - 通知公告', url: 'https://www.shu.edu.cn/tzgg.htm' },
     zyxw: { title: '上海大学 - 重要新闻', url: 'https://www.shu.edu.cn/zyxw.htm' },
 };
@@ -50,7 +50,7 @@ async function handler(ctx) {
             'user-agent': UA,
             cookie: await getCookie(ctx),
         }, */
-        url: notice_type[type].url,
+        url: noticeType[type].url,
     });
 
     const $ = load(response.data);
@@ -83,9 +83,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: notice_type[type].title,
-        description: notice_type[type].title,
-        link: notice_type[type].url,
+        title: noticeType[type].title,
+        description: noticeType[type].title,
+        link: noticeType[type].url,
         item: items,
     };
 }
