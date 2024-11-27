@@ -77,7 +77,8 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const url = new URL(item.link); // 创建 URL 对象以验证链接
                 // 确保链接是以正确的域名开头，并且不为空
-                if (url.hostname === 'gs1.shu.edu.cn') {  // 需校内访问
+                if (url.hostname === 'gs1.shu.edu.cn') {
+                    // 需校内访问
                     // Skip or handle differently for URLs with gs1.shu.edu.cn domain
                     item.description = 'gs1.shu.edu.cn, 无法直接获取';
                     return item;
@@ -85,12 +86,11 @@ async function handler(ctx) {
 
                 const detailResponse = await got({
                     method: 'get',
-                    url: item.link
+                    url: item.link,
                 }); // 获取详情页内容
                 const content = load(detailResponse.data); // 使用cheerio解析内容
 
                 item.description = content('#vsb_content .v_news_content').html() || item.description;
-
 
                 return item; // 返回完整的item
             })

@@ -78,7 +78,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
-                    url: item.link
+                    url: item.link,
                 }); // 获取详情页内容
                 const content = load(detailResponse.data); // 使用cheerio解析内容
 

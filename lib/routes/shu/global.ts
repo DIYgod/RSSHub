@@ -74,11 +74,11 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
-                    url: item.link
+                    url: item.link,
                 }); // 获取详情页内容
                 const content = load(detailResponse.data); // 使用cheerio解析内容
 
-                item.description = content('#vsb_content_2 .v_news_content').html() || '内容无法提取';// 提取内容区详情
+                item.description = content('#vsb_content_2 .v_news_content').html() || '内容无法提取'; // 提取内容区详情
 
                 return item; // 返回完整的item
             })
