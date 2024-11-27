@@ -63,7 +63,7 @@ async function handler(ctx) {
             const dateParts = item
                 .find('div.sj p')
                 .toArray()
-                .map(p => $(p).text().trim()); // 提取日期部分
+                .map((p) => $(p).text().trim()); // 提取日期部分
 
             return {
                 title: item.find('p.bt').text().trim(), // 获取标题
