@@ -6,14 +6,13 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const noticeType = {
-    tzgg: { title: '上海大学 - 通知公告', url: 'https://www.shu.edu.cn/tzgg.htm' },
-    zyxw: { title: '上海大学 - 重要新闻', url: 'https://www.shu.edu.cn/zyxw.htm' },
+    tzgg: { title: '上海大学国际部港澳台-通知公告', url: 'https://global.shu.edu.cn/cd/tzgg/3.htm' },
 };
 
 export const route: Route = {
-    path: '/news/:type?',
+    path: '/global/:type?',
     categories: ['university'],
-    example: '/shu/news/tzgg',
+    example: '/shu/global/tzgg',
     parameters: { type: '分类，默认为通知公告' },
     features: {
         requireConfig: false,
@@ -25,22 +24,22 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.shu.edu.cn/'],
-            target: '/news',
+            source: ['global.shu.edu.cn/'],
+            target: '/global',
         },
     ],
-    name: '官网通知公告',
-    maintainers: ['lonelyion', 'GhhG123'],
+    name: '国际部港澳台办公室',
+    maintainers: ['GhhG123'],
     handler,
-    url: 'www.shu.edu.cn/',
-    description: `| 通知公告 | 重要新闻 |
-  | -------- | --------- |
-  | tzgg     | zyxw      |`,
+    url: 'global.shu.edu.cn/',
+    description: `| 通知公告 |
+  | -------- |
+  | tzgg     |`,
 };
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'tzgg';
-    const rootUrl = 'https://www.shu.edu.cn';
+    const rootUrl = 'https://global.shu.edu.cn';
 
     // 发起 HTTP GET 请求
     const response = await got({
@@ -55,17 +54,18 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const list = $('div.list ul li') // 以下获取信息需要根据网页结构定制
-        // For cheerio 1.x.x . The item parameter in the .map callback is now explicitly typed as a Cheerio<Element>, not just Element. --fixed
+    const list = $('div.only-list1 ul li') // 定位到HTML结构中的li元素
         .toArray()
         .map((el) => {
-            const item = $(el); // Wrap `el` in a Cheerio object
+            const item = $(el); // 使用Cheerio包装每个li元素
             const rawLink = item.find('a').attr('href');
+            const pubDate = item.find('span').text().trim(); // 提取日期
+
             return {
-                title: item.find('p.bt').text().trim(),
-                link: rawLink ? new URL(rawLink, rootUrl).href : rootUrl,
-                pubDate: timezone(parseDate(item.find('p.sj').text().trim(), 'YYYY.MM.DD'), +8),
-                description: item.find('p.zy').text().trim(),
+                title: item.find('a').text().trim(), // 获取标题
+                link: rawLink ? new URL(rawLink, rootUrl).href : rootUrl, // 生成完整链接
+                pubDate: timezone(parseDate(pubDate, 'YYYY年MM月DD日'), +8), // 解析并转换日期
+                description: '', // 没有提供简要描述，设为空字符串
             };
         });
 
@@ -75,12 +75,12 @@ async function handler(ctx) {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link
-                });
-                const content = load(detailResponse.data);
+                }); // 获取详情页内容
+                const content = load(detailResponse.data); // 使用cheerio解析内容
 
-                item.description = content('#vsb_content .v_news_content').html() || item.description;
+                item.description = content('#vsb_content_2 .v_news_content').html() || '内容无法提取';// 提取内容区详情
 
-                return item;
+                return item; // 返回完整的item
             })
         )
     );
