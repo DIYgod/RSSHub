@@ -29,7 +29,7 @@ export const route: Route = {
             target: '/xykd',
         },
     ],
-    name: '官网的校园看点',
+    name: '校园看点',
     maintainers: ['GhhG123'],
     handler,
     url: 'www.shu.edu.cn/',
