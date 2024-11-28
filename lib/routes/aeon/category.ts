@@ -1,13 +1,24 @@
 import { Route } from '@/types';
-import { load } from 'cheerio';
-import got from '@/utils/got';
-import { getData } from './utils';
+import ofetch from '@/utils/ofetch';
+import { getBuildId, getData } from './utils';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/category/:category',
     categories: ['new-media', 'popular'],
     example: '/aeon/category/philosophy',
-    parameters: { category: 'Category' },
+    parameters: {
+        category: {
+            description: 'Category',
+            options: [
+                { value: 'philosophy', label: 'Philosophy' },
+                { value: 'science', label: 'Science' },
+                { value: 'psychology', label: 'Psychology' },
+                { value: 'society', label: 'Society' },
+                { value: 'culture', label: 'Culture' },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,34 +29,40 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['aeon.aeon.co/:category'],
+            source: ['aeon.co/:category'],
         },
     ],
     name: 'Categories',
     maintainers: ['emdoe'],
     handler,
-    description: `Supported categories: Philosophy, Science, Psychology, Society, and Culture.`,
 };
 
 async function handler(ctx) {
-    const url = `https://aeon.co/${ctx.req.param('category')}`;
-    const { data: response } = await got(url);
-    const $ = load(response);
+    const category = ctx.req.param('category').toLowerCase();
+    const url = `https://aeon.co/category/${category}`;
+    const buildId = await getBuildId();
+    const response = await ofetch(`https://aeon.co/_next/data/${buildId}/${category}.json`);
 
-    const data = JSON.parse($('script#__NEXT_DATA__').text());
+    const section = response.pageProps.section;
 
-    const list = data.props.pageProps.section.articles.edges.map((item) => ({
-        title: item.node.title,
-        author: item.node.authors.map((author) => author.displayName).join(', '),
-        link: `https://aeon.co/${item.node.type.toLowerCase()}s/${item.node.slug}`,
+    const list = section.articles.edges.map(({ node }) => ({
+        title: node.title,
+        description: node.standfirstLong,
+        author: node.authors.map((author) => author.displayName).join(', '),
+        link: `https://aeon.co/${node.type}s/${node.slug}`,
+        pubDate: parseDate(node.createdAt),
+        category: [node.section.title, ...node.topics.map((topic) => topic.title)],
+        image: node.image.url,
+        type: node.type,
+        slug: node.slug,
     }));
 
-    const items = await getData(ctx, list);
+    const items = await getData(list);
 
     return {
-        title: `AEON | ${data.props.pageProps.section.title}`,
+        title: `AEON | ${section.title}`,
         link: url,
-        description: data.props.pageProps.section.metaDescription,
+        description: section.metaDescription,
         item: items,
     };
 }
