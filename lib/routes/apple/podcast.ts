@@ -4,10 +4,13 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/podcast/:id',
+    path: '/podcast/:id/:region?',
     categories: ['multimedia'],
-    example: '/apple/podcast/id1559695855',
-    parameters: { id: '播客id，可以在 Apple 播客app 内分享的播客的 URL 中找到' },
+    example: '/apple/podcast/id1559695855/cn',
+    parameters: {
+        id: '播客id，可以在 Apple 播客app 内分享的播客的 URL 中找到',
+        region: '地區代碼，例如 cn、us、jp，預設為 cn',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,17 +21,18 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['podcasts.apple.com/cn/podcast/:id'],
+            source: ['podcasts.apple.com/:region/podcast/:id'],
         },
     ],
     name: '播客',
     maintainers: ['Acring'],
     handler,
-    url: 'www.apple.com.cn/apple-podcasts/',
+    url: 'www.apple.com/apple-podcasts/',
 };
 
 async function handler(ctx) {
-    const link = `https://podcasts.apple.com/cn/podcast/${ctx.req.param('id')}`;
+    const { id, region } = ctx.req.param();
+    const link = `https://podcasts.apple.com/${region || `cn`}/podcast/${id}`;
     const response = await got({
         method: 'get',
         url: link,
