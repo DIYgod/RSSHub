@@ -69,14 +69,15 @@ async function handler() {
     // 获取全文
     const fullTextApi = 'https://api-we.foodtalks.cn/news/news/{id}?language=ZH';
 
-    await processItems(list, fullTextApi);
-
-    // 返回一个 Data
-    return {
-        title: namespace.name,
-        description: namespace.description,
-        link: 'https://' + namespace.url,
-        item: list,
-        image: 'https://www.foodtalks.cn/static/img/news-site-logo.7aaa5463.svg',
-    };
+    // 返回 processItems 的 Promise
+    return processItems(list, fullTextApi).then(() =>
+        // 返回一个 Data
+         ({
+            title: namespace.name,
+            description: namespace.description,
+            link: 'https://' + namespace.url,
+            item: list,
+            image: 'https://www.foodtalks.cn/static/img/news-site-logo.7aaa5463.svg',
+        })
+    );
 }
