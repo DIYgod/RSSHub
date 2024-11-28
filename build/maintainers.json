@@ -5251,6 +5251,9 @@
   "/pingwest/user/:uid/:type?/:option?": [
     "sanmmm"
   ],
+  "/pinterest/user/:username/:type?": [
+    "TonyRL"
+  ],
   "/pixabay/search/:q/:order?": [
     "TonyRL"
   ],

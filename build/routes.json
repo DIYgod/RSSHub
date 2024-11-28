@@ -63261,6 +63261,51 @@
     "url": "pingwest.com",
     "lang": "zh-CN"
   },
+  "pinterest": {
+    "routes": {
+      "/user/:username/:type?": {
+        "path": "/user/:username/:type?",
+        "categories": [
+          "picture"
+        ],
+        "example": "/pinterest/user/howieserious",
+        "parameters": {
+          "username": "Username",
+          "type": {
+            "description": "Type, default to `_created`",
+            "default": "_created",
+            "options": [
+              {
+                "value": "_created",
+                "label": "Created"
+              },
+              {
+                "value": "_saved",
+                "label": "Saved"
+              }
+            ]
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "www.pinterest.com/:id/:type?",
+              "www.pinterest.com/:id"
+            ],
+            "target": "/user/:id/:type?"
+          }
+        ],
+        "name": "User",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "user.ts"
+      }
+    },
+    "name": "Pinterest",
+    "url": "www.pinterest.com",
+    "lang": "en"
+  },
   "pixabay": {
     "routes": {
       "/search/:q/:order?": {

@@ -23082,6 +23082,20 @@
       }
     ]
   },
+  "pinterest.com": {
+    "_name": "Pinterest",
+    "www": [
+      {
+        "title": "User",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/:id/:type",
+          "/:id"
+        ],
+        "target": "/pinterest/user/:id/:type?"
+      }
+    ]
+  },
   "pixabay.com": {
     "_name": "Pixabay",
     ".": [
