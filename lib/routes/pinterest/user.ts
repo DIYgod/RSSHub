@@ -49,7 +49,7 @@ async function handler(ctx) {
               }))
             : (response as BoardsFeedResource[]).map((item) => ({
                   title: item.name,
-                  description: item.description + (item.images ? '<br>' + item.images['170x'].map((img) => `<img src="${img.url}">`).join('') : ''),
+                  description: item.description + (item.images?.['170x'] ? '<br>' + item.images['170x'].map((img) => `<img src="${img.url}">`).join('') : ''),
                   link: `${baseUrl}${item.url}`,
                   author: item.owner.full_name,
                   pubDate: parseDate(item.created_at),
