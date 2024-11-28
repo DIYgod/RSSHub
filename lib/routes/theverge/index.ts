@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:hub?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/theverge',
     parameters: { hub: 'Hub, see below, All Posts by default' },
     features: {
