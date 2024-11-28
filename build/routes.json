@@ -82288,7 +82288,8 @@
       "/:hub?": {
         "path": "/:hub?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/theverge",
         "parameters": {
