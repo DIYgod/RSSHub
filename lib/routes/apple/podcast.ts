@@ -32,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id, region } = ctx.req.param();
-    const link = `https://podcasts.apple.com/${region ? region : `cn`}/podcast/${id}`;
+    const link = `https://podcasts.apple.com/${region || `cn`}/podcast/${id}`;
     const response = await got({
         method: 'get',
         url: link,
