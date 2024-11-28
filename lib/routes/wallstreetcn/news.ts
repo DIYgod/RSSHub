@@ -74,7 +74,14 @@ async function handler(ctx) {
                     url: `${apiRootUrl}/apiv1/content/${item.type === 'live' ? `lives/${item.guid}` : `articles/${item.guid}?extract=0`}`,
                 });
 
-                const data = detailResponse.data.data;
+                const responseData = detailResponse.data;
+
+                // 处理 { code: 60301, message: '内容不存在或已被删除', data: {} }
+                if (responseData.code !== 20000) {
+                    return null;
+                }
+
+                const data = responseData.data;
 
                 item.title = data.title || data.content_text;
                 item.author = data.source_name ?? data.author.display_name;
@@ -94,6 +101,8 @@ async function handler(ctx) {
             })
         )
     );
+
+    items = items.filter((item) => item !== null);
 
     return {
         title: `华尔街见闻 - 资讯 - ${titles[category]}`,
