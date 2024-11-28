@@ -62,7 +62,7 @@ interface CoverPin {
     scale?: number;
     image_url?: string;
     custom_cover?: boolean;
-    image_size?: (number | null)[];
+    image_size?: number[] | null;
 }
 
 interface Owner {
