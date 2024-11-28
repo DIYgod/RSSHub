@@ -3271,9 +3271,9 @@
         "title": "播客",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
-          "/cn/podcast/:id"
+          "/:region/podcast/:id"
         ],
-        "target": "/apple/podcast/:id"
+        "target": "/apple/podcast/:id/:region?"
       }
     ]
   },

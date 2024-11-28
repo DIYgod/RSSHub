@@ -7033,14 +7033,15 @@
         ],
         "location": "exchange-repair.ts"
       },
-      "/podcast/:id": {
-        "path": "/podcast/:id",
+      "/podcast/:id/:region?": {
+        "path": "/podcast/:id/:region?",
         "categories": [
           "multimedia"
         ],
-        "example": "/apple/podcast/id1559695855",
+        "example": "/apple/podcast/id1559695855/cn",
         "parameters": {
-          "id": "播客id，可以在 Apple 播客app 内分享的播客的 URL 中找到"
+          "id": "播客id，可以在 Apple 播客app 内分享的播客的 URL 中找到",
+          "region": "地區代碼，例如 cn、us、jp，預設為 cn"
         },
         "features": {
           "requireConfig": false,
@@ -7053,7 +7054,7 @@
         "radar": [
           {
             "source": [
-              "podcasts.apple.com/cn/podcast/:id"
+              "podcasts.apple.com/:region/podcast/:id"
             ]
           }
         ],
@@ -7061,7 +7062,7 @@
         "maintainers": [
           "Acring"
         ],
-        "url": "www.apple.com.cn/apple-podcasts/",
+        "url": "www.apple.com/apple-podcasts/",
         "location": "podcast.ts"
       }
     },
