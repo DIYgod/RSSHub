@@ -691,7 +691,7 @@
           "/" ],
         target:"/aeaweb/:id" } ] },
   "aeon.co":{ _name:"AEON",
-    aeon:[ { title:"Categories",
+    ".":[ { title:"Categories",
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/:category" ],
         target:"/aeon/category/:category" },
