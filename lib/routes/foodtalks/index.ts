@@ -19,26 +19,22 @@ export const route: Route = {
     url: 'www.foodtalks.cn',
 };
 
-async function processItems(list, fullTextApi) {
-    try {
-        // Return the Promise.all directly
-        return await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const response = await ofetch(fullTextApi.replace('{id}', item.id), {
-                        headers: {
-                            referrer: 'https://www.foodtalks.cn/',
-                            method: 'GET',
-                        },
-                    });
-                    item.description = response.data.content;
-                    return item;
-                })
-            )
-        );
-    } catch (error) {
-        logger.error('Error occurred while processing items:', error);
-    }
+function processItems(list, fullTextApi) {
+    // Simple return of Promise.all, allowing the caller (handler) to manage exceptions
+    return Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(fullTextApi.replace('{id}', item.id), {
+                    headers: {
+                        referrer: 'https://www.foodtalks.cn/',
+                        method: 'GET',
+                    },
+                });
+                item.description = response.data.content;
+                return item;
+            })
+        )
+    );
 }
 
 async function handler() {
@@ -51,7 +47,6 @@ async function handler() {
     });
     const records = response.data.records;
 
-    // Get non-full content info
     const list = records.map((item) => ({
         title: item.title,
         pubDate: new Date(item.publishTime),
@@ -62,13 +57,15 @@ async function handler() {
         image: item.coverImg,
     }));
 
-    // Get full text
     const fullTextApi = 'https://api-we.foodtalks.cn/news/news/{id}?language=ZH';
 
-    // Now we handle the returned promises, if needed.
-    await processItems(list, fullTextApi);
+    try {
+        // Handle returned promises and potential errors here
+        await processItems(list, fullTextApi);
+    } catch (error) {
+        logger.error('Error occurred in handler:', error);
+    }
 
-    // Return a Data
     return {
         title: namespace.name,
         description: namespace.description,
