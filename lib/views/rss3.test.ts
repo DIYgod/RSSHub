@@ -4,6 +4,7 @@ import rss3 from './rss3';
 const NETWORK = 'rsshub';
 const TAG = 'RSS';
 const TYPE = 'feed';
+const PLATFORM = 'RSSHub';
 
 describe('rss3', () => {
     it('should return UMS Result', () => {
@@ -48,7 +49,7 @@ describe('rss3', () => {
                         {
                             tag: TAG,
                             type: TYPE,
-                            platform: 'example.com',
+                            platform: PLATFORM,
                             from: 'example.com',
                             to: 'example.com',
                             metadata: {
@@ -77,7 +78,7 @@ describe('rss3', () => {
                         {
                             tag: TAG,
                             type: TYPE,
-                            platform: 'example.com',
+                            platform: PLATFORM,
                             from: 'example.com',
                             to: 'example.com',
                             metadata: {
