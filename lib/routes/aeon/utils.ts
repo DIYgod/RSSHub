@@ -3,28 +3,61 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import { config } from '@/config';
+import { parseDate } from '@/utils/parse-date';
 
-const getData = async (ctx, list) => {
+export const getBuildId = () =>
+    cache.tryGet(
+        'aeon:buildId',
+        async () => {
+            const response = await ofetch('https://aeon.co');
+            const $ = load(response);
+            const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+            return nextData.buildId;
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+const getData = async (list) => {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link);
-                const $ = load(response);
+                const buildId = await getBuildId();
+                const response = await ofetch(`https://aeon.co/_next/data/${buildId}/${item.type}s/${item.slug}.json?id=${item.slug}`);
 
-                const data = JSON.parse($('script#__NEXT_DATA__').text());
-                const type = data.props.pageProps.article.type.toLowerCase();
+                const data = response.pageProps.article;
+                const type = data.type.toLowerCase();
 
-                item.pubDate = new Date(data.props.pageProps.article.publishedAt).toUTCString();
+                item.pubDate = parseDate(data.publishedAt);
 
                 if (type === 'video') {
-                    item.description = art(path.join(__dirname, 'templates/video.art'), { article: data.props.pageProps.article });
+                    item.description = art(path.join(__dirname, 'templates/video.art'), { article: data });
                 } else {
-                    // Essay or Audio
-                    // But unfortunately, the method based on __NEXT_DATA__
-                    // does not include the information of the audio link.
+                    if (data.audio?.id) {
+                        const response = await ofetch('https://api.aeonmedia.co/graphql', {
+                            method: 'POST',
+                            body: {
+                                query: `query getAudio($audioId: ID!) {
+                                    audio(id: $audioId) {
+                                        id
+                                        streamUrl
+                                    }
+                                }`,
+                                variables: {
+                                    audioId: data.audio.id,
+                                },
+                                operationName: 'getAudio',
+                            },
+                        });
+
+                        delete item.image;
+                        item.enclosure_url = response.data.audio.streamUrl;
+                        item.enclosure_type = 'audio/mpeg';
+                    }
 
                     // Besides, it seems that the method based on __NEXT_DATA__
                     // does not include the information of the two-column
@@ -32,14 +65,11 @@ const getData = async (ctx, list) => {
                     // e.g. https://aeon.co/essays/how-to-mourn-a-forest-a-lesson-from-west-papua .
                     // But that's very rare.
 
-                    item.author = data.props.pageProps.article.authors.map((author) => author.name).join(', ');
-
-                    const article = data.props.pageProps.article;
-                    const capture = load(article.body);
-                    const banner = article.image?.url;
+                    const capture = load(data.body, null, false);
+                    const banner = data.image;
                     capture('p.pullquote').remove();
 
-                    const authorsBio = article.authors.map((author) => '<p>' + author.name + author.authorBio.replaceAll(/^<p>/g, ' ')).join('');
+                    const authorsBio = data.authors.map((author) => '<p>' + author.name + author.authorBio.replaceAll(/^<p>/g, ' ')).join('');
 
                     item.description = art(path.join(__dirname, 'templates/essay.art'), { banner, authorsBio, content: capture.html() });
                 }
