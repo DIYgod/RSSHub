@@ -12,6 +12,7 @@ export const route: Route = {
         username: 'Username',
         type: {
             description: 'Type, default to `_created`',
+            default: '_created',
             options: [
                 { value: '_created', label: 'Created' },
                 { value: '_saved', label: 'Saved' },
