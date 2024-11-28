@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache'; // 导入缓存工具
+import cache from '@/utils/cache';
 import { namespace } from './namespace';
 import logger from '@/utils/logger';
 
@@ -19,19 +19,25 @@ export const route: Route = {
     url: 'www.foodtalks.cn',
 };
 
-function processItems(list, fullTextApi) {
-    // Simple return of Promise.all, allowing the caller (handler) to manage exceptions
+function processItems(list: any[], fullTextApi: string) {
     return Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(fullTextApi.replace('{id}', item.id), {
-                    headers: {
-                        referrer: 'https://www.foodtalks.cn/',
-                        method: 'GET',
-                    },
-                });
-                item.description = response.data.content;
-                return item;
+                try {
+                    const response = await ofetch(fullTextApi.replace('{id}', item.id), {
+                        headers: {
+                            referrer: 'https://www.foodtalks.cn/',
+                            method: 'GET',
+                        },
+                    });
+                    item.description = response.data.content;
+                    return item;
+                } catch (error) {
+                    // Log the error for debugging, but don't rethrow to avoid halting the entire batch.
+                    // Consider adding a fallback description or other handling here.
+                    logger.error(`Error fetching full text for ${item.link}:`, error);
+                    return item; // Return the original item, even without the description
+                }
             })
         )
     );
@@ -59,18 +65,14 @@ async function handler() {
 
     const fullTextApi = 'https://api-we.foodtalks.cn/news/news/{id}?language=ZH';
 
-    try {
-        // Handle returned promises and potential errors here
-        await processItems(list, fullTextApi);
-    } catch (error) {
-        logger.error('Error occurred in handler:', error);
-    }
+    // Assign the result of processItems to the items variable
+    const items = await processItems(list, fullTextApi);
 
     return {
         title: namespace.name,
         description: namespace.description,
         link: 'https://' + namespace.url,
-        item: list,
+        item: items, // Use the processed items here
         image: 'https://www.foodtalks.cn/static/img/news-site-logo.7aaa5463.svg',
     };
 }
