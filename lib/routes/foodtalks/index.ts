@@ -7,8 +7,7 @@ import logger from '@/utils/logger';
 export const route: Route = {
     path: '/',
     categories: namespace.categories,
-    example: '/foodtalks?limit=30',
-    parameters: { limit: 'number of articles being fetched' },
+    example: '/foodtalks',
     radar: [
         {
             source: ['www.foodtalks.cn'],
