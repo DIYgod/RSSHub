@@ -1,4 +1,4 @@
-import { baseUrl, gqlMap, gqlFeatures, gqlMapThirdParty } from './constants';
+import { baseUrl, gqlMap, gqlFeatures } from './constants';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import { twitterGot, paginationTweets, gatherLegacyFromData } from './utils';
@@ -24,7 +24,7 @@ const getUserData = (id) =>
         };
 
         if (config.twitter.thirdPartyApi) {
-            const endpoint = id.startsWith('+') ? gqlMapThirdParty.UserByRestId : gqlMapThirdParty.UserByScreenName;
+            const endpoint = id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName;
 
             return ofetch(`${config.twitter.thirdPartyApi}${endpoint}`, {
                 method: 'GET',
