@@ -5,9 +5,10 @@ import { namespace } from './namespace';
 import logger from '@/utils/logger';
 
 export const route: Route = {
-    path: '/',
+    path: '/:limit?',
     categories: namespace.categories,
-    example: '/foodtalks',
+    example: '/foodtalks/30',
+    parameters: { limit: 'number of articles being fetched' },
     radar: [
         {
             source: ['www.foodtalks.cn'],
@@ -43,8 +44,9 @@ function processItems(list: any[], fullTextApi: string) {
     );
 }
 
-async function handler() {
-    const url = 'https://api-we.foodtalks.cn/news/news/page?current=1&size=30&isLatest=1&language=ZH';
+async function handler(ctx) {
+    const { limit = 15 } = ctx.req.param();
+    const url = `https://api-we.foodtalks.cn/news/news/page?current=1&size=${limit}&isLatest=1&language=ZH`;
     const response = await ofetch(url, {
         headers: {
             referrer: 'https://www.foodtalks.cn/',
