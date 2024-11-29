@@ -62420,10 +62420,118 @@
           "AntiKnot"
         ],
         "location": "lordslibrary.ts"
+      },
+      "/petitions/:state?": {
+        "path": "/petitions/:state?",
+        "name": "Petitions",
+        "url": "petition.parliament.uk",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/parliament.uk/petitions/all",
+        "parameters": {
+          "state": "State, `all` by default, see below"
+        },
+        "description": ":::tip\nIf you subscribe to [Recent petitions](https://petition.parliament.uk/petitions?state=recent)，where the URL is `https://petition.parliament.uk/petitions?state=recent`, use the value of `state` as the parameter to fill in. Therefore, the route will be [`/parliament.uk/petitions/recent`](https://rsshub.app/parliament.uk/petitions/recent).\n:::\n\n<details>\n  <summary>More states</summary>\n\n| Name                            | ID                |\n| ------------------------------- | ----------------- |\n| All petitions                   | all               |\n| Open petitions                  | open              |\n| Recent petitions                | recent            |\n| Closed petitions                | closed            |\n| Rejected petitions              | rejected          |\n| Awaiting government response    | awaiting_response |\n| Government responses            | with_response     |\n| Awaiting a debate in Parliament | awaiting_debate   |\n| Debated in Parliament           | debated           |\n| Not debated in Parliament       | not_debated       |\n\n</details>\n    ",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "petition.parliament.uk/petitions"
+            ]
+          },
+          {
+            "title": "All petitions",
+            "source": [
+              "petition.parliament.uk/petitions"
+            ],
+            "target": "/petitions/all"
+          },
+          {
+            "title": "Open petitions",
+            "source": [
+              "petition.parliament.uk/petitions"
+            ],
+            "target": "/petitions/open"
+          },
+          {
+            "title": "Recent petitions",
+            "source": [
+              "petition.parliament.uk/petitions"
+            ],
+            "target": "/petitions/recent"
+          },
+          {
+            "title": "Closed petitions",
+            "source": [
+              "petition.parliament.uk/petitions"
+            ],
+            "target": "/petitions/closed"
+          },
+          {
+            "title": "Rejected petitions",
+            "source": [
+              "petition.parliament.uk/petitions"
+            ],
+            "target": "/petitions/rejected"
+          },
+          {
+            "title": "Awaiting government response",
+            "source": [
+              "petition.parliament.uk/petitions"
+            ],
+            "target": "/petitions/awaiting_response"
+          },
+          {
+            "title": "Government responses",
+            "source": [
+              "petition.parliament.uk/petitions"
+            ],
+            "target": "/petitions/with_response"
+          },
+          {
+            "title": "Awaiting a debate in Parliament",
+            "source": [
+              "petition.parliament.uk/petitions"
+            ],
+            "target": "/petitions/awaiting_debate"
+          },
+          {
+            "title": "Debated in Parliament",
+            "source": [
+              "petition.parliament.uk/petitions"
+            ],
+            "target": "/petitions/debated"
+          },
+          {
+            "title": "Not debated in Parliament",
+            "source": [
+              "petition.parliament.uk/petitions"
+            ],
+            "target": "/petitions/not_debated"
+          }
+        ],
+        "view": 0,
+        "location": "petitions.ts"
       }
     },
     "name": "UK Parliament",
     "url": "parliament.uk",
+    "categories": [
+      "government"
+    ],
+    "description": "The UK Parliament has two Houses that work on behalf of UK citizens to check and challenge the work of Government, make and shape effective laws, and debate/make decisions on the big issues of the day.",
     "lang": "en"
   },
   "patagonia": {
