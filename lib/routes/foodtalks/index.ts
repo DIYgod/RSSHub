@@ -5,9 +5,9 @@ import { namespace } from './namespace';
 import logger from '@/utils/logger';
 
 export const route: Route = {
-    path: '/:limit?',
+    path: '/',
     categories: namespace.categories,
-    example: '/foodtalks/30',
+    example: '/foodtalks?limit=30',
     parameters: { limit: 'number of articles being fetched' },
     radar: [
         {
@@ -34,10 +34,8 @@ function processItems(list: any[], fullTextApi: string) {
                     item.description = response.data.content;
                     return item;
                 } catch (error) {
-                    // Log the error for debugging, but don't rethrow to avoid halting the entire batch.
-                    // Consider adding a fallback description or other handling here.
                     logger.error(`Error fetching full text for ${item.link}:`, error);
-                    return item; // Return the original item, even without the description
+                    return item;
                 }
             })
         )
@@ -45,7 +43,7 @@ function processItems(list: any[], fullTextApi: string) {
 }
 
 async function handler(ctx) {
-    const { limit = 15 } = ctx.req.param();
+    const limit = ctx.req.query('limit') || 15;
     const url = `https://api-we.foodtalks.cn/news/news/page?current=1&size=${limit}&isLatest=1&language=ZH`;
     const response = await ofetch(url, {
         headers: {
@@ -66,15 +64,13 @@ async function handler(ctx) {
     }));
 
     const fullTextApi = 'https://api-we.foodtalks.cn/news/news/{id}?language=ZH';
-
-    // Assign the result of processItems to the items variable
     const items = await processItems(list, fullTextApi);
 
     return {
         title: namespace.name,
         description: namespace.description,
         link: 'https://' + namespace.url,
-        item: items, // Use the processed items here
+        item: items,
         image: 'https://www.foodtalks.cn/static/img/news-site-logo.7aaa5463.svg',
     };
 }
