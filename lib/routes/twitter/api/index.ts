@@ -3,6 +3,7 @@ import mobileApi from './mobile-api/api';
 import webApi from './web-api/api';
 import { config } from '@/config';
 
+const enableThirdPartyApi = config.twitter.thirdPartyApi;
 const enableMobileApi = config.twitter.username && config.twitter.password;
 const enableWebApi = config.twitter.authToken;
 
@@ -35,7 +36,9 @@ let api: {
     getHomeLatestTimeline: () => null,
 };
 
-if (enableWebApi) {
+if (enableThirdPartyApi) {
+    api = webApi;
+} else if (enableWebApi) {
     api = webApi;
 } else if (enableMobileApi) {
     api = mobileApi;
