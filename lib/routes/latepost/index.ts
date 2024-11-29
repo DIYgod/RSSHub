@@ -43,6 +43,24 @@ export const route: Route = {
   |          | 1        | 2        | 3          | 4      |`,
 };
 
+function itemCategory(programa) {
+    if (typeof programa === 'object' && programa.title) {
+        return programa.title;
+    }
+
+    if (typeof programa === 'string') {
+        const categoryMap = {
+            '1': '晚点独家',
+            '2': '人物访谈',
+            '3': '晚点早知道',
+            '4': '长报道',
+        };
+        return categoryMap[programa] || undefined;
+    }
+
+    return;
+}
+
 async function handler(ctx) {
     const proma = ctx.req.param('proma');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
@@ -72,7 +90,7 @@ async function handler(ctx) {
     let items = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(item.detail_url, rootUrl).href,
-        category: [item.is_dj ? exclusiveCategory : undefined, item.programa ? columns[item.programa].title : undefined, ...item.label.map((c) => c.label)],
+        category: [item.is_dj ? exclusiveCategory : undefined, itemCategory(item.programa), ...item.label.map((c) => c.label)],
         guid: item.id,
         pubDate: parseDate(item.release_time, ['MM月DD日', 'YYYY年MM月DD日']),
     }));
@@ -95,7 +113,7 @@ async function handler(ctx) {
                 item.title = item.title ?? content('div.article-header-title').text();
                 item.description = content('#select-main').html().replaceAll('<p><br></p>', '');
                 item.author = content('div.article-header-author div.author-link a.label').first().text();
-                item.category = item.category.filter(Boolean);
+                item.category = [...new Set(item.category.filter(Boolean))];
                 item.guid = `latepost-${item.guid}`;
 
                 const pubDate = content('div.article-header-date').text();
