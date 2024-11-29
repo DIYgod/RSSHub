@@ -32,6 +32,11 @@ export const route: Route = {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
             },
+            {
+                name: 'TWITTER_THIRD_PARTY_API',
+                description: 'Use third-party API to query twitter data',
+                optional: true,
+            },
         ],
         requirePuppeteer: false,
         antiCrawler: false,
