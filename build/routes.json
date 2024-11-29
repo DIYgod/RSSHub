@@ -56683,7 +56683,8 @@
         },
         "name": "微信公众号",
         "maintainers": [
-          "lessmoe"
+          "lessmoe",
+          "pseudoyu"
         ],
         "location": "wechat.ts"
       }
