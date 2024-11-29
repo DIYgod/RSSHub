@@ -44,7 +44,7 @@ function processItems(list: any[], fullTextApi: string) {
 }
 
 async function handler() {
-    const url = 'https://api-we.foodtalks.cn/news/news/page?current=1&size=15&isLatest=1&language=ZH';
+    const url = 'https://api-we.foodtalks.cn/news/news/page?current=1&size=30&isLatest=1&language=ZH';
     const response = await ofetch(url, {
         headers: {
             referrer: 'https://www.foodtalks.cn/',
