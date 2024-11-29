@@ -63119,7 +63119,7 @@
         "radar": [
           {
             "source": [
-              "picnob.com/profile/:id/*"
+              "piokok.com/profile/:id/*"
             ],
             "target": "/user/:id"
           }

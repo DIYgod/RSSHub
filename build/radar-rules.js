@@ -10586,7 +10586,7 @@
         docs:"https://docs.rsshub.app/routes/multimedia",
         source:[ "/" ],
         target:"/pianyuan/index" } ] },
-  "picnob.com":{ _name:"Instagram",
+  "piokok.com":{ _name:"Instagram",
     ".":[ { title:"User Profile - Picnob",
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/profile/:id/*" ],
