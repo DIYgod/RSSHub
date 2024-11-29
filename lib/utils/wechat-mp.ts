@@ -623,19 +623,21 @@ const fetchArticle = (url: string, bypassHostCheck: boolean = false) => {
  * @return {Promise<object>} - The incoming `item` object, with the article and its metadata filled in.
  */
 const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = false) => {
-    const fetchedItem = await fetchArticle(item.link);
-    for (const key in fetchedItem) {
-        switch (key) {
-            case 'author':
-                item.author = setMpNameAsAuthor
-                    ? fetchedItem.mpName || item.author // the Official Account itself. if your route return articles from different accounts, you may want to use this
-                    : fetchedItem.author || item.author; // the real author of the article. if your route return articles from a certain account, use this
-                break;
-            case 'link':
-                item.link = skipLink ? item.link : fetchedItem.link || item.link;
-                break;
-            default:
-                item[key] = item[key] || fetchedItem[key];
+    if (item.link) {
+        const fetchedItem = await fetchArticle(item.link);
+        for (const key in fetchedItem) {
+            switch (key) {
+                case 'author':
+                    item.author = setMpNameAsAuthor
+                        ? fetchedItem.mpName || item.author // the Official Account itself. if your route return articles from different accounts, you may want to use this
+                        : fetchedItem.author || item.author; // the real author of the article. if your route return articles from a certain account, use this
+                    break;
+                case 'link':
+                    item.link = skipLink ? item.link : fetchedItem.link || item.link;
+                    break;
+                default:
+                    item[key] = item[key] || fetchedItem[key];
+            }
         }
     }
     return item;
