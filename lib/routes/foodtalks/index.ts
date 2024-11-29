@@ -33,18 +33,17 @@ function processItems(list: any[], fullTextApi: string) {
                     item.description = response.data.content;
                     return item;
                 } catch (error) {
-                    // Log the error for debugging, but don't rethrow to avoid halting the entire batch.
-                    // Consider adding a fallback description or other handling here.
                     logger.error(`Error fetching full text for ${item.link}:`, error);
-                    return item; // Return the original item, even without the description
+                    return item;
                 }
             })
         )
     );
 }
 
-async function handler() {
-    const url = 'https://api-we.foodtalks.cn/news/news/page?current=1&size=15&isLatest=1&language=ZH';
+async function handler(ctx) {
+    const limit = ctx.req.query('limit') || 15;
+    const url = `https://api-we.foodtalks.cn/news/news/page?current=1&size=${limit}&isLatest=1&language=ZH`;
     const response = await ofetch(url, {
         headers: {
             referrer: 'https://www.foodtalks.cn/',
@@ -64,15 +63,13 @@ async function handler() {
     }));
 
     const fullTextApi = 'https://api-we.foodtalks.cn/news/news/{id}?language=ZH';
-
-    // Assign the result of processItems to the items variable
     const items = await processItems(list, fullTextApi);
 
     return {
         title: namespace.name,
         description: namespace.description,
         link: 'https://' + namespace.url,
-        item: items, // Use the processed items here
+        item: items,
         image: 'https://www.foodtalks.cn/static/img/news-site-logo.7aaa5463.svg',
     };
 }
