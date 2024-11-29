@@ -1,12 +1,13 @@
 import path from 'node:path';
+
 import { type Context } from 'hono';
-import { ofetch } from 'ofetch';
 import { load, type CheerioAPI } from 'cheerio';
 
 import { type DataItem, type Route, type Data, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
+import ofetch from '@/utils/ofetch';
 
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -23,7 +24,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const language: string = $('html').prop('lang') ?? 'en';
 
     const jsonResponse = await ofetch(jsonUrl, {
-        searchParams: {
+        query: {
             page: 1,
             state,
         },
@@ -84,7 +85,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/petitions/:state{.+}?',
+    path: '/petitions/:state?',
     name: 'Petitions',
     url: 'petition.parliament.uk',
     maintainers: ['nczitzk'],
