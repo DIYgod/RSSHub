@@ -2306,6 +2306,9 @@
   "/followin/topic/:topicId/:lang?": [
     "TonyRL"
   ],
+  "/foodtalks/": [
+    "Geraldxm"
+  ],
   "/foresightnews/article": [
     "nczitzk"
   ],

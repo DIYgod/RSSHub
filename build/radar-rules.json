@@ -9714,6 +9714,19 @@
       }
     ]
   },
+  "foodtalks.cn": {
+    "_name": "FoodTalks全球食品资讯网",
+    "www": [
+      {
+        "title": "FoodTalks global food information network",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/foodtalks/"
+      }
+    ]
+  },
   "foresightnews.pro": {
     "_name": "Foresight News",
     ".": [
