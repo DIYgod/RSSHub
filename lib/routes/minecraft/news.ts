@@ -39,13 +39,13 @@ async function handler() {
 
     const items = $('.MC_imageGridA_picture')
         .parent('a')
-        .map((_, element) => {
-            const $element = $(element);
+        .toArray()
+        .map((element) => {
+            const $element = cheerio(element);
             const title = $element.find('h3.MC_Heading_4').text().trim();
             const link = new URL($element.attr('href'), baseUrl).href;
             return { title, link };
-        })
-        .get();
+        });
 
     const detailedItems = await Promise.all(
         items.map(async (item) => {
