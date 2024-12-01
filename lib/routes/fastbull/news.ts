@@ -10,7 +10,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: ['/news', '/'],
+    path: '/news',
     categories: ['finance', 'popular'],
     view: ViewType.Articles,
     example: '/fastbull/news',
@@ -28,10 +28,10 @@ export const route: Route = {
             source: ['fastbull.com/cn/news', 'fastbull.com/cn'],
         },
     ],
-    name: '新闻',
+    name: 'News',
     maintainers: ['nczitzk'],
     handler,
-    url: 'fastbull.cn/news',
+    url: 'fastbull.com/news',
 };
 
 async function handler() {
