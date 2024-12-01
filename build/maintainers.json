@@ -2204,9 +2204,6 @@
   "/fastbull/news": [
     "nczitzk"
   ],
-  "/fastbull/": [
-    "nczitzk"
-  ],
   "/fda/cdrh/:titleOnly?": [],
   "/fediverse/timeline/:account": [
     "DIYgod",

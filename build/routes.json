@@ -26590,23 +26590,20 @@
         "radar": [
           {
             "source": [
-              "fastbull.cn/express-news",
-              "fastbull.cn/"
+              "fastbull.com/express-news",
+              "fastbull.com/"
             ]
           }
         ],
-        "name": "快讯",
+        "name": "News Flash",
         "maintainers": [
           "nczitzk"
         ],
-        "url": "fastbull.cn/express-news",
+        "url": "fastbull.com/express-news",
         "location": "express-news.ts"
       },
       "/news": {
-        "path": [
-          "/news",
-          "/"
-        ],
+        "path": "/news",
         "categories": [
           "finance",
           "popular"
@@ -26625,57 +26622,22 @@
         "radar": [
           {
             "source": [
-              "fastbull.cn/news",
-              "fastbull.cn/"
+              "fastbull.com/cn/news",
+              "fastbull.com/cn"
             ]
           }
         ],
-        "name": "新闻",
+        "name": "News",
         "maintainers": [
           "nczitzk"
         ],
-        "url": "fastbull.cn/news",
-        "location": "news.ts"
-      },
-      "/": {
-        "path": [
-          "/news",
-          "/"
-        ],
-        "categories": [
-          "finance",
-          "popular"
-        ],
-        "view": 0,
-        "example": "/fastbull/news",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "fastbull.cn/news",
-              "fastbull.cn/"
-            ]
-          }
-        ],
-        "name": "新闻",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "fastbull.cn/news",
+        "url": "fastbull.com/news",
         "location": "news.ts"
       }
     },
-    "name": "法布财经",
-    "url": "fastbull.cn",
-    "lang": "zh-CN"
+    "name": "FastBull",
+    "url": "fastbull.com",
+    "lang": "en"
   },
   "fda": {
     "routes": {

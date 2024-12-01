@@ -9399,11 +9399,11 @@
       }
     ]
   },
-  "fastbull.cn": {
-    "_name": "法布财经",
+  "fastbull.com": {
+    "_name": "FastBull",
     ".": [
       {
-        "title": "快讯",
+        "title": "News Flash",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
           "/express-news",
@@ -9412,22 +9412,13 @@
         "target": "/fastbull/express-news"
       },
       {
-        "title": "新闻",
+        "title": "News",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/news",
-          "/"
+          "/cn/news",
+          "/cn"
         ],
         "target": "/fastbull/news"
-      },
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/news",
-          "/"
-        ],
-        "target": "/fastbull/"
       }
     ]
   },
