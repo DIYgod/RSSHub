@@ -3497,6 +3497,15 @@
   "/ifi-audio/download/:val/:id": [
     "EthanWng97"
   ],
+  "/ifun/n/category/:id?": [
+    "nczitzk"
+  ],
+  "/ifun/n/search/:keywords": [
+    "nczitzk"
+  ],
+  "/ifun/n/tag/:name": [
+    "nczitzk"
+  ],
   "/iguoguo/html5": [
     "yuxinliu-alex"
   ],
