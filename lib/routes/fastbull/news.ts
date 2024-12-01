@@ -25,7 +25,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['fastbull.cn/news', 'fastbull.cn/'],
+            source: ['fastbull.com/cn/news', 'fastbull.com/cn'],
         },
     ],
     name: '新闻',
@@ -35,8 +35,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const rootUrl = 'https://www.fastbull.cn';
-    const currentUrl = `${rootUrl}/news`;
+    const rootUrl = 'https://www.fastbull.com';
+    const currentUrl = `${rootUrl}/cn/news`;
 
     const response = await got({
         method: 'get',
