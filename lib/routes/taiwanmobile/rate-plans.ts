@@ -27,7 +27,8 @@ async function handler() {
     const $ = load(response);
 
     const list = $('.pagination_data')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const element = $(item);
             const title = element.find('a').text().trim();
             const link = new URL(element.find('a').attr('href') ?? '', baseUrl).href;
@@ -38,8 +39,7 @@ async function handler() {
                 link,
                 pubDate,
             };
-        })
-        .toArray();
+        });
 
     const items = await Promise.all(
         list.slice(0, 20).map((item) =>
