@@ -1,11 +1,12 @@
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
+import querystring from 'querystring';
 import { getUser, renderNotesFulltext, getUserWithCookie } from './util';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { config } from '@/config';
-
+import { fallback, queryToBoolean } from '@/utils/readable-social';
 export const route: Route = {
-    path: '/user/:user_id/:category',
+    path: '/user/:user_id/:category/:routeParams?',
     name: '用户笔记/收藏',
     categories: ['social-media', 'popular'],
     view: ViewType.Articles,
@@ -45,12 +46,18 @@ export const route: Route = {
             ],
             default: 'notes',
         },
+        routeParams: {
+            description: 'displayLivePhoto,`/user/:user_id/notes/displayLivePhoto=0`,不限时LivePhoto显示为图片,`/user/:user_id/notes/displayLivePhoto=1`,取值不为0时LivePhoto显示为视频',
+            default: '0',
+        },
     },
 };
 
 async function handler(ctx) {
     const userId = ctx.req.param('user_id');
     const category = ctx.req.param('category');
+    const routeParams = querystring.parse(ctx.req.param('routeParams'));
+    const displayLivePhoto = !!fallback(undefined, queryToBoolean(routeParams.displayLivePhoto), false);
     const url = `https://www.xiaohongshu.com/user/profile/${userId}`;
     const cookie = config.xiaohongshu.cookie;
 
@@ -58,7 +65,7 @@ async function handler(ctx) {
         try {
             const urlNotePrefix = 'https://www.xiaohongshu.com/explore';
             const user = await getUserWithCookie(url, cookie);
-            const notes = await renderNotesFulltext(user.notes, urlNotePrefix);
+            const notes = await renderNotesFulltext(user.notes, urlNotePrefix, displayLivePhoto);
             return {
                 title: `${user.userPageData.basicInfo.nickname} - 笔记 • 小红书 / RED`,
                 description: user.userPageData.basicInfo.desc,
