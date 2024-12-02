@@ -98,7 +98,7 @@
         "jsrsasign": "10.9.0",
         "lru-cache": "11.0.2",
         "lz-string": "1.5.0",
-        "mailparser": "3.7.1",
+        "mailparser": "3.7.2",
         "markdown-it": "14.1.0",
         "module-alias": "2.2.3",
         "narou": "1.0.0",
