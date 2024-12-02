@@ -80660,6 +80660,33 @@
     "url": "public.tableau.com",
     "lang": "en"
   },
+  "taiwanmobile": {
+    "routes": {
+      "/rate-plans": {
+        "path": "/rate-plans",
+        "categories": [
+          "other"
+        ],
+        "example": "/taiwanmobile/rate-plans",
+        "radar": [
+          {
+            "source": [
+              "taiwanmobile.com/cs/public/servAnn/queryList.htm"
+            ]
+          }
+        ],
+        "name": "資費公告",
+        "maintainers": [
+          "Tsuyumi25"
+        ],
+        "url": "www.taiwanmobile.com/cs/public/servAnn/queryList.htm?type=1",
+        "location": "rate-plans.ts"
+      }
+    },
+    "name": "台灣大哥大",
+    "url": "www.taiwanmobile.com",
+    "lang": "zh-TW"
+  },
   "taiwannews": {
     "routes": {
       "/hot/:lang?": {
