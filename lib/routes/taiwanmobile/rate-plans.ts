@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/rate-plans',
-    categories: ['program-update'],
+    categories: ['other'],
     example: '/taiwanmobile/rate-plans',
     radar: [
         {
