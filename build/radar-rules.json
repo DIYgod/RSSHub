@@ -8333,6 +8333,19 @@
       }
     ]
   },
+  "dingshao.cn": {
+    "_name": "盯梢",
+    "www": [
+      {
+        "title": "频道",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/share/:shortId"
+        ],
+        "target": "/dingshao/share/:shortId"
+      }
+    ]
+  },
   "discord.com": {
     "_name": "Discord",
     ".": [

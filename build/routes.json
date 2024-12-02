@@ -21932,6 +21932,35 @@
     "url": "digitalcameraworld.com",
     "lang": "en"
   },
+  "dingshao": {
+    "routes": {
+      "/share/:shortId": {
+        "path": "/share/:shortId",
+        "categories": [
+          "other"
+        ],
+        "example": "/dingshao/share/FzFypN",
+        "parameters": {
+          "shortId": "频道 ID"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.dingshao.cn/share/:shortId"
+            ]
+          }
+        ],
+        "name": "频道",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "share.ts"
+      }
+    },
+    "name": "盯梢",
+    "url": "www.dingshao.cn",
+    "lang": "zh-CN"
+  },
   "discord": {
     "routes": {
       "/channel/:channelId": {

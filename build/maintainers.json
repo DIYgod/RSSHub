@@ -1769,6 +1769,9 @@
   "/digitalcameraworld/news": [
     "EthanWng97"
   ],
+  "/dingshao/share/:shortId": [
+    "TonyRL"
+  ],
   "/discord/channel/:channelId": [
     "TonyRL"
   ],
