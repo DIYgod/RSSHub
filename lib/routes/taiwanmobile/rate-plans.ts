@@ -16,7 +16,7 @@ export const route: Route = {
     name: '資費公告',
     maintainers: ['Tsuyumi25'],
     handler,
-    url: 'https://www.taiwanmobile.com/cs/public/servAnn/queryList.htm?type=1',
+    url: 'www.taiwanmobile.com/cs/public/servAnn/queryList.htm?type=1',
 };
 
 async function handler() {
