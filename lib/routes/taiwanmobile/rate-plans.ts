@@ -39,7 +39,8 @@ async function handler() {
                 link,
                 pubDate,
             };
-        }).slice(0, 20);
+        })
+        .slice(0, 20);
 
     const items = await Promise.all(
         list.map((item) =>
