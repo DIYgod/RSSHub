@@ -368,8 +368,8 @@ importers:
         specifier: 8.16.0
         version: 8.16.0(eslint@9.15.0)(typescript@5.7.2)
       '@vercel/nft':
-        specifier: 0.27.6
-        version: 0.27.6
+        specifier: 0.27.7
+        version: 0.27.7(rollup@4.24.4)
       '@vitest/coverage-v8':
         specifier: 2.0.5
         version: 2.0.5(vitest@2.0.5(@types/node@22.10.1)(jsdom@25.0.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
@@ -1670,9 +1670,14 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@rollup/pluginutils@4.2.1':
-    resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
-    engines: {node: '>= 8.0.0'}
+  '@rollup/pluginutils@5.1.3':
+    resolution: {integrity: sha512-Pnsb6f32CD2W3uCaLZIzDmeFyQ2b8UWMFI7xtwUezpcGBDVDW6y9XgAWIlARiGAo6eNF5FK5aQTr0LFyNyqq5A==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
 
   '@rollup/rollup-android-arm-eabi@4.24.4':
     resolution: {integrity: sha512-jfUJrFct/hTA0XDM5p/htWKoNNTbDLY0KRwEt6pyOA6k2fmk0WVwl65PdUdJZgzGEHWx+49LilkcSaumQRyNQw==}
@@ -2084,8 +2089,8 @@ packages:
   '@unhead/schema@1.11.11':
     resolution: {integrity: sha512-xSGsWHPBYcMV/ckQeImbrVu6ddeRnrdDCgXUKv3xIjGBY+ob/96V80lGX8FKWh8GwdFSwhblISObKlDAt5K9ZQ==}
 
-  '@vercel/nft@0.27.6':
-    resolution: {integrity: sha512-mwuyUxskdcV8dd7N7JnxBgvFEz1D9UOePI/WyLLzktv6HSCwgPNQGit/UJ2IykAWGlypKw4pBQjOKWvIbXITSg==}
+  '@vercel/nft@0.27.7':
+    resolution: {integrity: sha512-FG6H5YkP4bdw9Ll1qhmbxuE8KwW2E/g8fJpM183fWQLeVDGqzeywMIeJ9h2txdWZ03psgWMn6QymTxaDLmdwUg==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -7142,10 +7147,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rollup/pluginutils@4.2.1':
+  '@rollup/pluginutils@5.1.3(rollup@4.24.4)':
     dependencies:
+      '@types/estree': 1.0.6
       estree-walker: 2.0.2
-      picomatch: 2.3.1
+      picomatch: 4.0.2
+    optionalDependencies:
+      rollup: 4.24.4
 
   '@rollup/rollup-android-arm-eabi@4.24.4':
     optional: true
@@ -7570,10 +7578,10 @@ snapshots:
       hookable: 5.5.3
       zhead: 2.2.4
 
-  '@vercel/nft@0.27.6':
+  '@vercel/nft@0.27.7(rollup@4.24.4)':
     dependencies:
       '@mapbox/node-pre-gyp': 1.0.11
-      '@rollup/pluginutils': 4.2.1
+      '@rollup/pluginutils': 5.1.3(rollup@4.24.4)
       acorn: 8.14.0
       acorn-import-attributes: 1.9.5(acorn@8.14.0)
       async-sema: 3.1.1
@@ -7586,6 +7594,7 @@ snapshots:
       resolve-from: 5.0.0
     transitivePeerDependencies:
       - encoding
+      - rollup
       - supports-color
 
   '@vitest/coverage-v8@2.0.5(vitest@2.0.5(@types/node@22.10.1)(jsdom@25.0.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
