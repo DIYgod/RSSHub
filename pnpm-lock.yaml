@@ -395,8 +395,8 @@ importers:
         specifier: 56.0.1
         version: 56.0.1(eslint@9.15.0)
       eslint-plugin-yml:
-        specifier: 1.15.0
-        version: 1.15.0(eslint@9.15.0)
+        specifier: 1.16.0
+        version: 1.16.0(eslint@9.15.0)
       fs-extra:
         specifier: 11.2.0
         version: 11.2.0
@@ -2971,6 +2971,12 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
+  eslint-compat-utils@0.6.4:
+    resolution: {integrity: sha512-/u+GQt8NMfXO8w17QendT4gvO5acfxQsAKirAt0LVxDnr2N8YLCVbregaNc/Yhp7NM128DwCaRvr8PLDfeNkQw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      eslint: '>=6.0.0'
+
   eslint-config-prettier@9.1.0:
     resolution: {integrity: sha512-NSWl5BFQWEPi1j4TjVNItzYV7dZXZ+wP6I6ZhrBGpChQhZRUaElihE9uRRkcbRnNb76UMKDF3r+WTmNcGPKsqw==}
     hasBin: true
@@ -3026,8 +3032,8 @@ packages:
     peerDependencies:
       eslint: '>=8.56.0'
 
-  eslint-plugin-yml@1.15.0:
-    resolution: {integrity: sha512-leC8APYVOsKyWUlvRwVhewytK5wS70BfMqIaUplFstRfzCoVp0YoEroV4cUEvQrBj93tQ3M9LcjO/ewr6D4kjA==}
+  eslint-plugin-yml@1.16.0:
+    resolution: {integrity: sha512-t4MNCetPjTn18/fUDlQ/wKkcYjnuLYKChBrZ0qUaNqRigVqChHWzTP8SrfFi5s4keX3vdlkWRSu8zHJMdKwxWQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
@@ -8536,6 +8542,11 @@ snapshots:
       eslint: 9.15.0
       semver: 7.6.3
 
+  eslint-compat-utils@0.6.4(eslint@9.15.0):
+    dependencies:
+      eslint: 9.15.0
+      semver: 7.6.3
+
   eslint-config-prettier@9.1.0(eslint@9.15.0):
     dependencies:
       eslint: 9.15.0
@@ -8613,11 +8624,11 @@ snapshots:
       semver: 7.6.3
       strip-indent: 3.0.0
 
-  eslint-plugin-yml@1.15.0(eslint@9.15.0):
+  eslint-plugin-yml@1.16.0(eslint@9.15.0):
     dependencies:
       debug: 4.3.7
       eslint: 9.15.0
-      eslint-compat-utils: 0.5.1(eslint@9.15.0)
+      eslint-compat-utils: 0.6.4(eslint@9.15.0)
       lodash: 4.17.21
       natural-compare: 1.4.0
       yaml-eslint-parser: 1.2.3
