@@ -49,7 +49,7 @@ async function handler() {
 
                 return {
                     ...item,
-                    description: content('.v2-page-change__current').html() || '暫無內容',
+                    description: content('.v2-page-change__current').find('.v2-uikit__typography-text.-h3, .v2-m-faq-card__description.gray.pad_btm1').remove().end().html() || '暫無內容',
                 };
             })
         )
