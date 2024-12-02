@@ -90630,8 +90630,8 @@
         ],
         "location": "board.ts"
       },
-      "/user/:user_id/:category": {
-        "path": "/user/:user_id/:category",
+      "/user/:user_id/:category/:routeParams?": {
+        "path": "/user/:user_id/:category/:routeParams?",
         "name": "用户笔记/收藏",
         "categories": [
           "social-media",
@@ -90680,6 +90680,10 @@
               }
             ],
             "default": "notes"
+          },
+          "routeParams": {
+            "description": "displayLivePhoto,`/user/:user_id/notes/displayLivePhoto=0`,不限时LivePhoto显示为图片,`/user/:user_id/notes/displayLivePhoto=1`,取值不为0时LivePhoto显示为视频",
+            "default": "0"
           }
         },
         "location": "user.ts"
