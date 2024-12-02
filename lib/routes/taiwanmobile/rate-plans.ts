@@ -39,10 +39,10 @@ async function handler() {
                 link,
                 pubDate,
             };
-        });
+        }).slice(0, 20);
 
     const items = await Promise.all(
-        list.slice(0, 20).map((item) =>
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
