@@ -5484,11 +5484,13 @@
     "LogicJake"
   ],
   "/qingting/channel/:id": [
-    "nczitzk"
+    "nczitzk",
+    "pseudoyu"
   ],
   "/qingting/podcast/:id": [
     "RookieZoe",
-    "huyyi"
+    "huyyi",
+    "pseudoyu"
   ],
   "/qipamaijia/:cate?": [
     "Fatpandac",
