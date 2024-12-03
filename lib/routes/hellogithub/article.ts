@@ -9,7 +9,7 @@ const sorts = {
 };
 
 export const route: Route = {
-    path: ['/article/:sort?'],
+    path: '/article/:sort?',
     categories: ['programming'],
     example: '/hellogithub/article',
     parameters: { sort: '排序方式，见下表，默认为 `last`，即最近' },

@@ -10,7 +10,7 @@ const sorts = {
 };
 
 export const route: Route = {
-    path: ['/home/:sort?/:id?'],
+    path: '/home/:sort?/:id?',
     categories: ['programming'],
     example: '/hellogithub/home',
     parameters: { sort: '排序方式，见下表，默认为 `featured`，即精选', id: '标签 id，可在对应标签页 URL 中找到，默认为全部标签' },
