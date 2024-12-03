@@ -23,7 +23,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '开源项目',
-    maintainers: ['moke8', 'nczitzk'],
+    maintainers: ['moke8', 'nczitzk', 'CaoMeiYouRen'],
     handler,
     description: `| 精选 | 全部 |
   | ---- | ---- |
