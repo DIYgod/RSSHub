@@ -187,7 +187,7 @@
         "lint-staged": "15.2.10",
         "mockdate": "3.0.5",
         "msw": "2.4.3",
-        "node-network-devtools": "1.0.22",
+        "node-network-devtools": "1.0.23",
         "prettier": "3.4.1",
         "remark-parse": "11.0.0",
         "supertest": "7.0.0",
