@@ -3846,6 +3846,9 @@
   "/joins/chinese/:category?": [
     "nczitzk"
   ],
+  "/joneslanglasalle/:language?/:category{.+}?": [
+    "nczitzk"
+  ],
   "/jornada/:date?/:category?": [
     "Thealf154"
   ],

@@ -16494,6 +16494,99 @@
       }
     ]
   },
+  "joneslanglasalle.com.cn": {
+    "_name": "Jones Lang LaSalle",
+    ".": [
+      {
+        "title": "Trends & Insights",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:language/:category"
+        ],
+        "target": "/joneslanglasalleparams=>{const language=params.language;const category=params.category;return language?`/${language}${category?`/${category}`:\"\"}`:\"\"}"
+      },
+      {
+        "title": "Latest",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/en/trends-and-insights"
+        ],
+        "target": "/joneslanglasalle/en/trends-and-insights"
+      },
+      {
+        "title": "Workplace",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/en/trends-and-insights/workplace"
+        ],
+        "target": "/joneslanglasalle/en/trends-and-insights/workplace"
+      },
+      {
+        "title": "Investor",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/en/trends-and-insights/investor"
+        ],
+        "target": "/joneslanglasalle/en/trends-and-insights/investor"
+      },
+      {
+        "title": "Cities",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/en/trends-and-insights/cities"
+        ],
+        "target": "/joneslanglasalle/en/trends-and-insights/cities"
+      },
+      {
+        "title": "Research",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/en/trends-and-insights/research"
+        ],
+        "target": "/joneslanglasalle/en/trends-and-insights/research"
+      },
+      {
+        "title": "房地产趋势与洞察",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zh/trends-and-insights"
+        ],
+        "target": "/joneslanglasalle/zh/trends-and-insights"
+      },
+      {
+        "title": "办公空间",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zh/trends-and-insights/workplace"
+        ],
+        "target": "/joneslanglasalle/zh/trends-and-insights/workplace"
+      },
+      {
+        "title": "投资者",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zh/trends-and-insights/investor"
+        ],
+        "target": "/joneslanglasalle/zh/trends-and-insights/investor"
+      },
+      {
+        "title": "城市",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zh/trends-and-insights/cities"
+        ],
+        "target": "/joneslanglasalle/zh/trends-and-insights/cities"
+      },
+      {
+        "title": "研究报告",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zh/trends-and-insights/research"
+        ],
+        "target": "/joneslanglasalle/zh/trends-and-insights/research"
+      }
+    ]
+  },
   "jou.edu.cn": {
     "_name": "江苏海洋大学",
     "www": [

@@ -45966,6 +45966,140 @@
     "description": "",
     "lang": "ko"
   },
+  "joneslanglasalle": {
+    "routes": {
+      "/:language?/:category{.+}?": {
+        "path": "/:language?/:category{.+}?",
+        "name": "Trends & Insights",
+        "url": "joneslanglasalle.com.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/joneslanglasalle/en/trends-and-insights",
+        "parameters": {
+          "language": "Language, `zh` by default",
+          "category": "Category, `trends-and-insights` by default"
+        },
+        "description": ":::tip\nIf you subscribe to [Trends & Insights](https://www.joneslanglasalle.com.cn/en/trends-and-insights)，where the URL is `https://www.joneslanglasalle.com.cn/en/trends-and-insights`, extract the part `https://joneslanglasalle.com.cn/` to the end. Use `zh` and `trends-and-insights` as the parameters to fill in. Therefore, the route will be [`/joneslanglasalle/trends-and-insights/en/trends-and-insights`](https://rsshub.app/joneslanglasalle/trends-and-insights/en/trends-and-insights).\n:::\n\n| Category  | ID                            |\n| --------- | ----------------------------- |\n| Latest    | trends-and-insights           |\n| Workplace | trends-and-insights/workplace |\n| Investor  | trends-and-insights/investor  |\n| Cities    | trends-and-insights/cities    |\n| Research  | trends-and-insights/research  |\n",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "joneslanglasalle.com.cn/:language/:category"
+            ]
+          },
+          {
+            "title": "Latest",
+            "source": [
+              "joneslanglasalle.com.cn/en/trends-and-insights"
+            ],
+            "target": "/en/trends-and-insights"
+          },
+          {
+            "title": "Workplace",
+            "source": [
+              "joneslanglasalle.com.cn/en/trends-and-insights/workplace"
+            ],
+            "target": "/en/trends-and-insights/workplace"
+          },
+          {
+            "title": "Investor",
+            "source": [
+              "joneslanglasalle.com.cn/en/trends-and-insights/investor"
+            ],
+            "target": "/en/trends-and-insights/investor"
+          },
+          {
+            "title": "Cities",
+            "source": [
+              "joneslanglasalle.com.cn/en/trends-and-insights/cities"
+            ],
+            "target": "/en/trends-and-insights/cities"
+          },
+          {
+            "title": "Research",
+            "source": [
+              "joneslanglasalle.com.cn/en/trends-and-insights/research"
+            ],
+            "target": "/en/trends-and-insights/research"
+          },
+          {
+            "title": "房地产趋势与洞察",
+            "source": [
+              "joneslanglasalle.com.cn/zh/trends-and-insights"
+            ],
+            "target": "/zh/trends-and-insights"
+          },
+          {
+            "title": "办公空间",
+            "source": [
+              "joneslanglasalle.com.cn/zh/trends-and-insights/workplace"
+            ],
+            "target": "/zh/trends-and-insights/workplace"
+          },
+          {
+            "title": "投资者",
+            "source": [
+              "joneslanglasalle.com.cn/zh/trends-and-insights/investor"
+            ],
+            "target": "/zh/trends-and-insights/investor"
+          },
+          {
+            "title": "城市",
+            "source": [
+              "joneslanglasalle.com.cn/zh/trends-and-insights/cities"
+            ],
+            "target": "/zh/trends-and-insights/cities"
+          },
+          {
+            "title": "研究报告",
+            "source": [
+              "joneslanglasalle.com.cn/zh/trends-and-insights/research"
+            ],
+            "target": "/zh/trends-and-insights/research"
+          }
+        ],
+        "view": 0,
+        "zh": {
+          "path": "/:language?/:category{.+}?",
+          "name": "房地产趋势与洞察",
+          "url": "joneslanglasalle.com.cn",
+          "maintainers": [
+            "nczitzk"
+          ],
+          "example": "/joneslanglasalle/zh/trends-and-insights",
+          "parameters": {
+            "language": "语言，默认为 `zh`，可在对应分类页 URL 中找到",
+            "category": "分类，默认为 `trends-and-insights`，可在对应分类页 URL 中找到"
+          },
+          "description": ":::tip\n若订阅 [房地产趋势与洞察](https://www.joneslanglasalle.com.cn/zh/trends-and-insights)，网址为 `https://www.joneslanglasalle.com.cn/zh/trends-and-insights`，请截取 `https://joneslanglasalle.com.cn/` 到末尾的部分 `zh` 和 `trends-and-insights` 作为 `language` 和 `category` 参数填入，此时目标路由为 [`/joneslanglasalle/zh/trends-and-insights`](https://rsshub.app/joneslanglasalle/zh/trends-and-insights)。\n:::\n\n| 分类名称   | 分类 ID                       |\n| ---------- | ----------------------------- |\n| 趋势及洞察 | trends-and-insights           |\n| 办公空间   | trends-and-insights/workplace |\n| 投资者     | trends-and-insights/investor  |\n| 城市       | trends-and-insights/cities    |\n| 研究报告   | trends-and-insights/research  |\n"
+        },
+        "location": "index.ts"
+      }
+    },
+    "name": "Jones Lang LaSalle",
+    "url": "joneslanglasalle.com.cn",
+    "categories": [
+      "new-media"
+    ],
+    "description": "JLL is a global real estate services firm in commercial property and investment management, providing services for real estate owners, occupiers and investors.",
+    "lang": "zh-CN",
+    "zh": {
+      "name": "仲量联行JLL",
+      "description": "仲量联行JLL是全球领先的房地产专业服务和投资管理公司，为企业、房地产业主、投资者及政府提供各类资产的施工、租赁、管理、投资咨询服务。仲量联行也致力于高质量城市发展、打造理想空间、提供可持续的房地产解决方案。"
+    }
+  },
   "jornada": {
     "routes": {
       "/:date?/:category?": {
