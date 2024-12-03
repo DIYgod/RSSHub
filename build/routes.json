@@ -37892,10 +37892,34 @@
   },
   "hellogithub": {
     "routes": {
-      "/home/:sort?/:id?": {
-        "path": [
-          "/home/:sort?/:id?"
+      "/article/:sort?": {
+        "path": "/article/:sort?",
+        "categories": [
+          "programming"
         ],
+        "example": "/hellogithub/article",
+        "parameters": {
+          "sort": "排序方式，见下表，默认为 `last`，即最近"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "文章",
+        "maintainers": [
+          "moke8",
+          "nczitzk",
+          "CaoMeiYouRen"
+        ],
+        "description": "| 热门 | 最近 |\n  | ---- | ---- |\n  | hot  | last |",
+        "location": "article.ts"
+      },
+      "/home/:sort?/:id?": {
+        "path": "/home/:sort?/:id?",
         "categories": [
           "programming"
         ],
@@ -37915,16 +37939,14 @@
         "name": "开源项目",
         "maintainers": [
           "moke8",
-          "nczitzk"
+          "nczitzk",
+          "CaoMeiYouRen"
         ],
         "description": "| 精选 | 全部 |\n  | ---- | ---- |\n  | featured  | all |",
         "location": "index.ts"
       },
       "/ranking/:type?": {
-        "path": [
-          "/ranking/:type?",
-          "/report/:type?"
-        ],
+        "path": "/ranking/:type?",
         "example": "/hellogithub/ranking",
         "name": "榜单报告",
         "maintainers": [
@@ -37933,40 +37955,9 @@
         ],
         "description": "| 编程语言 | 服务器   | 数据库     |\n  | -------- | -------- | ---------- |\n  | tiobe    | netcraft | db-engines |",
         "location": "report.ts"
-      },
-      "/report/:type?": {
-        "path": [
-          "/ranking/:type?",
-          "/report/:type?"
-        ],
-        "example": "/hellogithub/ranking",
-        "name": "榜单报告",
-        "maintainers": [
-          "moke8",
-          "nczitzk"
-        ],
-        "description": "| 编程语言 | 服务器   | 数据库     |\n  | -------- | -------- | ---------- |\n  | tiobe    | netcraft | db-engines |",
-        "location": "report.ts"
-      },
-      "/month": {
-        "path": [
-          "/month",
-          "/volume"
-        ],
-        "example": "/hellogithub/volume",
-        "name": "月刊",
-        "maintainers": [
-          "moke8",
-          "nczitzk",
-          "CaoMeiYouRen"
-        ],
-        "location": "volume.ts"
       },
       "/volume": {
-        "path": [
-          "/month",
-          "/volume"
-        ],
+        "path": "/volume",
         "example": "/hellogithub/volume",
         "name": "月刊",
         "maintainers": [
