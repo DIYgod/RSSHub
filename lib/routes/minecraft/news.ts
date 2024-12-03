@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
-import cheerio from 'cheerio';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/news',
@@ -17,14 +17,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['minecraft.net/'],
+            source: ['minecraft.net/en-us/articles', 'minecraft.net/'],
         },
     ],
-    name: 'Minecraft News',
     maintainers: ['OutlinedArc217'],
-    handler,
     url: 'minecraft.net/',
-    description: `Catch up on the latest articles`,
+    description: 'Catch up on the latest articles',
     zh: {
         name: 'Minecraft最近新闻',
     },
@@ -34,40 +32,36 @@ async function handler() {
     const baseUrl = 'https://www.minecraft.net';
     const articlesUrl = `${baseUrl}/en-us/articles`;
 
-    const response = await got(articlesUrl);
-    const $ = cheerio.load(response.data);
+    const response = await got(articlesUrl, { responseType: 'json' });
+    const data = response.data;
 
-    const items = $('.MC_imageGridA_picture')
-        .parent('a')
-        .toArray()
-        .map((element) => {
-            const $element = cheerio(element);
-            const title = $element.find('h3.MC_Heading_4').text().trim();
-            const link = new URL($element.attr('href'), baseUrl).href;
-            return { title, link };
-        });
+    const items = data.article_grid.map((article) => ({
+        title: article.default_tile.title,
+        link: new URL(article.article_url, baseUrl).href,
+    }));
 
     const detailedItems = await Promise.all(
-        items.map(async (item) => {
-            const detailResponse = await got(item.link);
-            const $detail = cheerio.load(detailResponse.data);
-            const content = $detail('.MC_Link_Style_RichText').html() || 'No content available';
-            return {
-                title: item.title,
-                link: item.link,
-                description: content,
-            };
-        })
+        items.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const detailResponse = await got(item.link);
+                const $detail = cheerio.load(detailResponse.data);
+                const content = $detail('.MC_Link_Style_RichText').html() || 'No content available';
+
+                return {
+                    title: item.title,
+                    link: item.link,
+                    description: content,
+                };
+            })
+        )
     );
 
     return {
         title: 'Minecraft News',
         link: articlesUrl,
         description: 'Catch up on the latest articles',
-        item: detailedItems.map((item) => ({
-            title: item.title,
-            link: item.link,
-            description: item.description,
-        })),
+        item: detailedItems,
     };
 }
+
+export { handler };
