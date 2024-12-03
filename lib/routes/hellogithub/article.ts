@@ -35,7 +35,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://hellogithub.com';
     const apiRootUrl = 'https://api.hellogithub.com/v1/article/';
-    const currentUrl = `${rootUrl}/?sort_by=${sort}`;
+    const currentUrl = `${rootUrl}/article/?sort_by=${sort}`;
     const apiUrl = `${apiRootUrl}?sort_by=${sort}&page=1`;
 
     const response = await got({
