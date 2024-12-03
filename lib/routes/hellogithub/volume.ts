@@ -19,7 +19,7 @@ art.defaults.imports.render = function (string) {
 };
 
 export const route: Route = {
-    path: ['/month', '/volume'],
+    path: '/volume',
     example: '/hellogithub/volume',
     name: '月刊',
     maintainers: ['moke8', 'nczitzk', 'CaoMeiYouRen'],
