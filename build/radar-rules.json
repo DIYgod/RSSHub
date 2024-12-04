@@ -26498,7 +26498,7 @@
         "target": "/spotify/saved"
       },
       {
-        "title": "Show",
+        "title": "Show/Podcasts",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/show/:id"

@@ -12048,7 +12048,7 @@
         docs:"https://docs.rsshub.app/routes/multimedia",
         source:[ "/collection/tracks" ],
         target:"/spotify/saved" },
-      { title:"Show",
+      { title:"Show/Podcasts",
         docs:"https://docs.rsshub.app/routes/multimedia",
         source:[ "/show/:id" ],
         target:"/spotify/show/:id" },

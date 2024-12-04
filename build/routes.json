@@ -74635,8 +74635,10 @@
       "/show/:id": {
         "path": "/show/:id",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
+        "view": 4,
         "example": "/spotify/show/5CfCWKI5pZ28U0uOzXkDHe",
         "parameters": {
           "id": "Show ID"
@@ -74665,9 +74667,10 @@
             ]
           }
         ],
-        "name": "Show",
+        "name": "Show/Podcasts",
         "maintainers": [
-          "caiohsramos"
+          "caiohsramos",
+          "pseudoyu"
         ],
         "location": "show.ts"
       },
