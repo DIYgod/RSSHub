@@ -3941,6 +3941,7 @@
         "title": "热搜",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
+          "/",
           "/"
         ],
         "target": "/bilibili/hot-search"

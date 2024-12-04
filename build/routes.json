@@ -9681,7 +9681,8 @@
         "radar": [
           {
             "source": [
-              "www.bilibili.com/"
+              "www.bilibili.com/",
+              "m.bilibili.com/"
             ]
           }
         ],
