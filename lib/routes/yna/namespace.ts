@@ -5,6 +5,6 @@ export const namespace: Namespace = {
     url: 'yna.co.kr',
     lang: 'ko',
     zh: {
-    	name: '韩联社',
-    }
+        name: '韩联社',
+    },
 };
