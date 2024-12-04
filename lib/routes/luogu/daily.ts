@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: '日报',
-    maintainers: ['LogicJake ', 'prnake ', 'nczitzk'],
+    maintainers: ['LogicJake', 'prnake', 'nczitzk'],
     handler,
     url: 'luogu.com.cn/discuss/47327',
 };
