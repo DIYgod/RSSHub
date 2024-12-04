@@ -136,7 +136,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 }}
             ></div>
             <div className="w-full grow shrink-0 py-8 flex items-center justify-center flex-col space-y-4">
-                <img src="/logo.png" alt="RSSHub" width="100" loading="lazy" />
+                <img src="./logo.png" alt="RSSHub" width="100" loading="lazy" />
                 <h1 className="text-4xl font-bold">
                     Welcome to <span className="text-[#F5712C]">RSSHub</span>!
                 </h1>
