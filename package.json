@@ -188,7 +188,7 @@
         "mockdate": "3.0.5",
         "msw": "2.4.3",
         "node-network-devtools": "1.0.23",
-        "prettier": "3.4.1",
+        "prettier": "3.4.2",
         "remark-parse": "11.0.0",
         "supertest": "7.0.0",
         "typescript": "5.7.2",
