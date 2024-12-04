@@ -1,7 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'FastBull',
-    url: 'fastbull.com',
-    lang: 'en',
+    name: '台灣大哥大',
+    url: 'www.taiwanmobile.com',
+    lang: 'zh-TW',
 };
