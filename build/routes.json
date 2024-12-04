@@ -37710,12 +37710,30 @@
       "/topic/:topic?/:type?": {
         "path": "/topic/:topic?/:type?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
-        "example": "/hbr/topic/leadership",
+        "example": "/hbr/topic/Leadership/Popular",
         "parameters": {
           "topic": "Topic, can be found in URL, Leadership by default",
-          "type": "Type, see below, Latest by default"
+          "type": {
+            "description": "Type, see below, Popular by default",
+            "options": [
+              {
+                "value": "Popular",
+                "label": "Popular"
+              },
+              {
+                "value": "From the Store",
+                "label": "From the Store"
+              },
+              {
+                "value": "For You",
+                "label": "For You"
+              }
+            ],
+            "default": "Popular"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -37735,9 +37753,10 @@
         ],
         "name": "Topic",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "pseudoyu"
         ],
-        "description": "| LATEST | POPULAR | FROM THE STORE | FOR YOU |\n  | ------ | ------- | -------------- | ------- |\n  | Latest | Popular | From the Store | For You |\n\n  :::tip\n  Click here to view [All Topics](https://hbr.org/topics)\n  :::",
+        "description": "| POPULAR | FROM THE STORE | FOR YOU |\n  | ------- | -------------- | ------- |\n  | Popular | From the Store | For You |\n\n  :::tip\n  Click here to view [All Topics](https://hbr.org/topics)\n  :::",
         "location": "topic.ts"
       }
     },
