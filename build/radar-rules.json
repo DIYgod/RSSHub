@@ -17692,6 +17692,43 @@
         "target": "/luogu/daily"
       },
       {
+        "title": "用户文章",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/user/:uid"
+        ],
+        "target": "/luogu/user/article/:uid"
+      },
+      {
+        "title": "用户博客",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blog/:name"
+        ],
+        "target": "/luogu/user/blog/:name"
+      },
+      {
+        "title": "用户动态",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/user/:uid"
+        ],
+        "target": "/luogu/user/feed/:uid"
+      }
+    ]
+  },
+  "luogu.com": {
+    "_name": "洛谷",
+    ".": [
+      {
+        "title": "用户文章",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/user/:uid"
+        ],
+        "target": "/luogu/user/article/:uid"
+      },
+      {
         "title": "用户博客",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [

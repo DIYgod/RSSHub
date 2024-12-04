@@ -49922,12 +49922,47 @@
         ],
         "name": "日报",
         "maintainers": [
-          "LogicJake ",
-          "prnake ",
+          "LogicJake",
+          "prnake",
           "nczitzk"
         ],
         "url": "luogu.com.cn/discuss/47327",
         "location": "daily.ts"
+      },
+      "/user/article/:uid": {
+        "path": "/user/article/:uid",
+        "categories": [
+          "programming"
+        ],
+        "example": "/luogu/user/article/1",
+        "parameters": {
+          "name": "用户 UID"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "luogu.com/user/:uid"
+            ]
+          },
+          {
+            "source": [
+              "luogu.com.cn/user/:uid"
+            ]
+          }
+        ],
+        "name": "用户文章",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "user-article.ts"
       },
       "/user/blog/:name": {
         "path": "/user/blog/:name",
@@ -49949,12 +49984,19 @@
         "radar": [
           {
             "source": [
+              "luogu.com/blog/:name"
+            ]
+          },
+          {
+            "source": [
               "luogu.com.cn/blog/:name"
             ]
           }
         ],
         "name": "用户博客",
-        "maintainers": [],
+        "maintainers": [
+          "ftiasch"
+        ],
         "location": "user-blog.ts"
       },
       "/user/feed/:uid": {
@@ -49975,6 +50017,11 @@
           "supportScihub": false
         },
         "radar": [
+          {
+            "source": [
+              "luogu.com/user/:uid"
+            ]
+          },
           {
             "source": [
               "luogu.com.cn/user/:uid"
