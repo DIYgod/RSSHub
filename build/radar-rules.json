@@ -3135,6 +3135,19 @@
       }
     ]
   },
+  "amz123.com": {
+    "_name": "Amz123",
+    ".": [
+      {
+        "title": "AMZ123 快讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/kx"
+        ],
+        "target": "/amz123/kx"
+      }
+    ]
+  },
   "android.com": {
     "_name": "Android",
     "developer": [

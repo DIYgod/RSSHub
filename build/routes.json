@@ -6429,6 +6429,48 @@
     "url": "amazon.com",
     "lang": "en"
   },
+  "amz123": {
+    "routes": {
+      "/kx": {
+        "path": "/kx",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/amz123/kx",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "amz123.com/kx"
+            ],
+            "target": "/kx"
+          }
+        ],
+        "name": "AMZ123 快讯",
+        "maintainers": [
+          "defp"
+        ],
+        "url": "amz123.com/kx",
+        "view": 0,
+        "location": "kx.ts"
+      }
+    },
+    "name": "Amz123",
+    "url": "www.amz123.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": "跨境电商平台",
+    "lang": "zh-CN"
+  },
   "android": {
     "routes": {
       "/platform-tools-releases": {
