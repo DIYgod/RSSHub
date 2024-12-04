@@ -20,6 +20,9 @@ const server = serve({
     fetch: app.fetch,
     hostname: config.listenInaddrAny ? '::' : '127.0.0.1',
     port,
+    serverOptions: {
+        maxHeaderSize: 1024 * 64,
+    },
 });
 
 export default server;
