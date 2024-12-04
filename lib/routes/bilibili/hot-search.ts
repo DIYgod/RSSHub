@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.bilibili.com/'],
+            source: ['www.bilibili.com/', 'm.bilibili.com/'],
         },
     ],
     name: '热搜',
