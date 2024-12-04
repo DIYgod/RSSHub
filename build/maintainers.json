@@ -7671,6 +7671,9 @@
   "/ymgal/game/release": [
     "SunBK201"
   ],
+  "/yna/:lang?/:channel?": [
+    "quiniapiezoelectricity"
+  ],
   "/yoasobi-music/info/:category?": [],
   "/yoasobi-music/live": [
     "Kiotlin"

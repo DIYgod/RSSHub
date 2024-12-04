@@ -93069,6 +93069,41 @@
     "url": "ymgal.games",
     "lang": "zh-CN"
   },
+  "yna": {
+    "routes": {
+      "/:lang?/:channel?": {
+        "path": "/:lang?/:channel?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/yna/en/national",
+        "parameters": {
+          "lang": "Language, see below, `ko` by default",
+          "channel": "RSS Feed Channel, see below, `news` by default"
+        },
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "requireConfig": false
+        },
+        "name": "News",
+        "maintainers": [
+          "quiniapiezoelectricity"
+        ],
+        "description": "\n| Language  | 한국어 | English | 简体中文 | 日本語 | عربي   | Español | Français |\n| --------- | ------ | ------- | -------- | ------ | ------ | ------- | -------- |\n| `:lang` | `ko` | `en`  | `cn`   | `jp` | `ar` | `es`  | `fr`   |\n\nFor a full list of RSS Feed Channels, please refer to the RSS feed page of the corresponding language\n| RSS Feed Page                                             |\n| --------------------------------------------------------- |\n| [한국어](https://www.yna.co.kr/rss/index?site=footer_rss) |\n| [English](https://en.yna.co.kr/channel/index)             |\n| [简体中文](https://cn.yna.co.kr/channel/index)            |\n| [日本語](https://jp.yna.co.kr/channel/index)              |\n| [عربي](https://ar.yna.co.kr/channel/index)                |\n| [Español](https://sp.yna.co.kr/channel/index)             |\n| [Français](https://fr.yna.co.kr/channel/index)            |\n\n:::tip\nFor example, the path for the RSS feed url https://www.yna.co.kr/rss/economy.xml and https://cn.yna.co.kr/RSS/news.xml would be `/ko/economy` and `/cn/news` respectively. \n:::\n",
+        "location": "index.ts"
+      }
+    },
+    "name": "Yonhap News Agency",
+    "url": "yna.co.kr",
+    "lang": "ko",
+    "zh": {
+      "name": "韩联社"
+    }
+  },
   "yoasobi-music": {
     "routes": {
       "/info/:category?": {
