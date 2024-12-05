@@ -12,13 +12,13 @@ const rootUrl = 'https://devapi.qweather.com/v7/weather/now?';
 export const route: Route = {
     path: '/now/:location',
     categories: ['forecast'],
-    example: '/qweather/广州',
+    example: '/qweather/now/广州',
     parameters: { location: 'N' },
     features: {
         requireConfig: [
             {
                 name: 'HEFENG_KEY',
-                description: '',
+                description: '访问 `https://www.qweather.com/` 注册开发API Key。',
             },
         ],
         requirePuppeteer: false,
