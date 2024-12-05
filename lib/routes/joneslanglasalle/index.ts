@@ -35,7 +35,8 @@ const cleanHtml = (html: string, preservedTags: string[]): string => {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language: lang = 'zh', category = 'trends-and-insights' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
+    // default limit is 12
+    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '11', 11);
 
     const rootUrl: string = 'https://www.joneslanglasalle.com.cn';
     const targetUrl: string = new URL(`${lang}/${category}`, rootUrl).href;
@@ -191,7 +192,7 @@ export const route: Route = {
     path: '/:language?/:category{.+}?',
     name: 'Trends & Insights',
     url: 'joneslanglasalle.com.cn',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     example: '/joneslanglasalle/en/trends-and-insights',
     parameters: {
