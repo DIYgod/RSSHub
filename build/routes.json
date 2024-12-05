@@ -82151,7 +82151,8 @@
         ],
         "name": "News",
         "maintainers": [
-          "EthanWng97"
+          "EthanWng97",
+          "pseudoyu"
         ],
         "description": "| Popular      | Latest | Politics | Technology | Business |\n  | ------------ | ------ | -------- | ---------- | -------- |\n  | most-popular | latest | politics | technology | business |\n\n  More categories (except photo) can be found within the navigation bar at [https://www.theatlantic.com](https://www.theatlantic.com)",
         "location": "news.ts"
