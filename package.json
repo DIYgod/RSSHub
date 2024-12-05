@@ -59,7 +59,7 @@
         "@opentelemetry/exporter-prometheus": "0.55.0",
         "@opentelemetry/exporter-trace-otlp-http": "0.55.0",
         "@opentelemetry/resources": "1.28.0",
-        "@opentelemetry/sdk-metrics": "1.28.0",
+        "@opentelemetry/sdk-metrics": "1.29.0",
         "@opentelemetry/sdk-trace-base": "1.28.0",
         "@opentelemetry/semantic-conventions": "1.28.0",
         "@postlight/parser": "2.2.3",
