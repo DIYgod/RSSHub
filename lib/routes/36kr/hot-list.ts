@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 import { rootUrl, ProcessItem } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const categories = {
     24: {
@@ -53,6 +54,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '24';
+
+    if (!categories[category]) {
+        throw new InvalidParameterError('This category does not exist. Please refer to the documentation for the correct usage.');
+    }
 
     const currentUrl = category === '24' ? rootUrl : `${rootUrl}/hot-list/catalog`;
 
