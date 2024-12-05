@@ -21,7 +21,7 @@ const server = serve({
     hostname: config.listenInaddrAny ? '::' : '127.0.0.1',
     port,
     serverOptions: {
-        maxHeaderSize: 1024 * 64,
+        maxHeaderSize: 1024 * 32,
     },
 });
 
