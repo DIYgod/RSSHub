@@ -11654,7 +11654,8 @@
         ],
         "name": "Authors",
         "maintainers": [
-          "josh"
+          "josh",
+          "pseudoyu"
         ],
         "location": "authors.ts"
       },
