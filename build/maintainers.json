@@ -3852,7 +3852,8 @@
     "nczitzk"
   ],
   "/joneslanglasalle/:language?/:category{.+}?": [
-    "nczitzk"
+    "nczitzk",
+    "pseudoyu"
   ],
   "/jornada/:date?/:category?": [
     "Thealf154"

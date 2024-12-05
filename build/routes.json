@@ -46036,7 +46036,8 @@
         "name": "Trends & Insights",
         "url": "joneslanglasalle.com.cn",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "pseudoyu"
         ],
         "example": "/joneslanglasalle/en/trends-and-insights",
         "parameters": {
