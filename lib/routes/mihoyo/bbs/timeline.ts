@@ -47,7 +47,7 @@ async function handler(ctx) {
         page_size,
     };
     const link = 'https://www.miyoushe.com/ys/timeline';
-    const url = 'https://bbs-api.miyoushe.com/post/wapi/timelines';
+    const url = 'https://bbs-api.miyoushe.com/painter/wapi/timeline/list';
     const response = await got({
         method: 'get',
         url,
