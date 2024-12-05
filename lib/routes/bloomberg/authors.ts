@@ -1,18 +1,18 @@
 import { Route, ViewType } from '@/types';
 import { load } from 'cheerio';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import rssParser from '@/utils/rss-parser';
 import { asyncPoolAll, parseArticle } from './utils';
 
 const parseAuthorNewsList = async (slug) => {
     const baseURL = `https://www.bloomberg.com/authors/${slug}`;
     const apiUrl = `https://www.bloomberg.com/lineup/api/lazy_load_author_stories?slug=${slug}&authorType=default&page=1`;
-    const resp = await got(apiUrl);
+    const resp = await ofetch(apiUrl);
     // Likely rate limited
-    if (!resp.data.html) {
+    if (!resp.html) {
         return [];
     }
-    const $ = load(resp.data.html);
+    const $ = load(resp.html);
     const articles = $('article.story-list-story');
     return articles
         .map((index, item) => {
@@ -49,7 +49,7 @@ export const route: Route = {
         },
     ],
     name: 'Authors',
-    maintainers: ['josh'],
+    maintainers: ['josh', 'pseudoyu'],
     handler,
 };
 
@@ -67,7 +67,7 @@ async function handler(ctx) {
     }
 
     const item = await asyncPoolAll(1, list, (item) => parseArticle(item));
-    const authorName = item.find((i) => i.author)?.author ?? 'Unknown';
+    const authorName = item.find((i) => i.author)?.author ?? slug;
 
     return {
         title: `Bloomberg - ${authorName}`,
