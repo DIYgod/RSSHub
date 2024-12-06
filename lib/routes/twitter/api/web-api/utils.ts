@@ -222,32 +222,49 @@ export const twitterGot = async (
 };
 
 export const paginationTweets = async (endpoint: string, userId: number | undefined, variables: Record<string, any>, path?: string[]) => {
-    const { data } = await twitterGot(baseUrl + gqlMap[endpoint], {
-        variables: JSON.stringify({
-            ...variables,
-            userId,
-        }),
+    const params = {
+        variables: JSON.stringify({ ...variables, userId }),
         features: JSON.stringify(gqlFeatures[endpoint]),
-    });
-    let instructions;
-    if (path) {
-        instructions = data;
-        for (const p of path) {
-            instructions = instructions[p];
+    };
+
+    const fetchData = async () => {
+        if (config.twitter.thirdPartyApi) {
+            const { data } = await ofetch(`${config.twitter.thirdPartyApi}${gqlMap[endpoint]}`, {
+                method: 'GET',
+                params,
+            });
+            return data;
         }
-        instructions = instructions.instructions;
-    } else {
-        if (data?.user?.result?.timeline_v2?.timeline?.instructions) {
-            instructions = data.user.result.timeline_v2.timeline.instructions;
-        } else {
-            // throw new Error('Because Twitter Premium has features that hide your likes, this RSS link is not available for Twitter Premium accounts.');
+        const { data } = await twitterGot(baseUrl + gqlMap[endpoint], params);
+        return data;
+    };
+
+    const getInstructions = (data: any) => {
+        if (path) {
+            let instructions = data;
+            for (const p of path) {
+                instructions = instructions[p];
+            }
+            return instructions.instructions;
+        }
+
+        const instructions = data?.user?.result?.timeline_v2?.timeline?.instructions;
+        if (!instructions) {
             logger.debug(`twitter debug: instructions not found in data: ${JSON.stringify(data)}`);
         }
+        return instructions;
+    };
+
+    const data = await fetchData();
+    const instructions = getInstructions(data);
+    if (!instructions) {
+        return [];
     }
 
-    const entries1 = instructions?.find((i) => i.type === 'TimelineAddToModule')?.moduleItems; // Media
-    const entries2 = instructions?.find((i) => i.type === 'TimelineAddEntries').entries;
-    return entries1 || entries2 || [];
+    const moduleItems = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems;
+    const entries = instructions.find((i) => i.type === 'TimelineAddEntries')?.entries;
+
+    return moduleItems || entries || [];
 };
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {
