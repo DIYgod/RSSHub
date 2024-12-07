@@ -61,8 +61,8 @@ async function handler() {
             const $$ = load(articleResponse.body);
             const content = $$('#vsb_content .v_news_content').html() || '';
             const authors = $$('.show01 p i')
-                .map((_, el) => $$(el).text().trim())
-                .toArray();
+                .toArray()
+                .map((el) => $$(el).text().trim());
 
             return {
                 ...item,
