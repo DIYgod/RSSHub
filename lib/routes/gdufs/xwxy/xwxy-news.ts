@@ -78,7 +78,7 @@ async function handler() {
         }
     };
 
-    const enhancedItems = await Promise.all(items.map(fetchArticleDetail));
+    const enhancedItems = await Promise.all(items.map((item) => fetchArticleDetail(item)));
 
     return {
         title: '广外新传学院-学院新闻',
