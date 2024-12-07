@@ -46,6 +46,11 @@ export default function InstanceList(): JSX.Element {
     location: '🇺🇸',
     maintainer: 'limfoo',
     maintainerUrl: 'https://blog.limfoo.io',
+  }, {
+    url: 'https://raxytw-rss.us.kg',
+    location: 'aus',
+    maintainer: 'Raxy',
+    maintainerUrl: 'https://oiklm.com'
   }]
 
   return (
