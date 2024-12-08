@@ -1,6 +1,7 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import puppeteer from 'puppeteer';
 import cache from '@/utils/cache';
+import { URL } from 'url';
 
 export const route: Route = {
     path: '/news',
@@ -9,7 +10,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -28,39 +29,55 @@ export const route: Route = {
     },
 };
 
-async function handler() {
-    const baseUrl = 'https://www.minecraft.net';
-    const articlesUrl = `${baseUrl}/content/minecraftnet/language-masters/en-us/articles/jcr:content/root/container/image_grid_a.articles.page-1.json`;
+export async function getNewsItems(baseUrl: string, articlesUrl: string): Promise<any> {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
 
-    const response = await got(articlesUrl, { responseType: 'json' });
-    const data = response.data;
+    await page.goto(articlesUrl, { waitUntil: 'networkidle2' });
 
-    const items = data.article_grid.map((article) => ({
-        title: article.default_tile.title,
-        link: new URL(article.article_url, baseUrl).href,
-    }));
-    const detailedItems = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got(item.link);
-                const $detail = cheerio.load(detailResponse.data);
-                const content = $detail('.MC_Link_Style_RichText').html() || 'No content available';
+    const items = await page.evaluate(() => {
+        const articles = Array.from(
+            document.querySelectorAll('.MC_imageGridA_picture')
+        );
+        return articles.map((element) => {
+            const title = element.querySelector('h3.MC_Heading_4')?.textContent?.trim() || '';
+            const link = new URL(element.parentElement?.getAttribute('href') || '', window.location.href).href;
+            return { title, link };
+        });
+    });
 
-                return {
-                    title: item.title,
-                    link: item.link,
-                    description: content,
-                };
-            })
-        )
+    await browser.close();
+
+    return items;
+}
+
+export async function getDetailedItems(items: any[], browser: puppeteer.Browser): Promise<any[]> {
+    return await Promise.all(
+        items.map(async (item) => {
+            const detailPage = await browser.newPage();
+            await detailPage.goto(item.link, { waitUntil: 'networkidle2' });
+            const content = await detailPage.evaluate(() => {
+                return document.querySelector('.MC_Link_Style_RichText')?.innerHTML || 'No content available';
+            });
+            await detailPage.close();
+            return { ...item, description: content };
+        })
     );
+}
 
-    return {
+export async function handleRequest(baseUrl: string, articlesUrl: string) {
+    const browser = await puppeteer.launch();
+    const items = await getNewsItems(baseUrl, articlesUrl);
+    const detailedItems = await getDetailedItems(items, browser);
+
+    const result = {
         title: 'Minecraft News',
         link: articlesUrl,
         description: 'Catch up on the latest articles',
         item: detailedItems,
     };
-}
 
-export { handler };
+    await browser.close();
+
+    return result;
+    }
