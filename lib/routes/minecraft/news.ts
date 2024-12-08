@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import puppeteer from 'puppeteer';
-import cache from '@/utils/cache';
 import { URL } from 'url';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/news',
@@ -35,16 +35,13 @@ export async function getNewsItems(baseUrl: string, articlesUrl: string): Promis
 
     await page.goto(articlesUrl, { waitUntil: 'networkidle2' });
 
-    const items = await page.evaluate(() => {
-        const articles = Array.from(
-            document.querySelectorAll('.MC_imageGridA_picture')
-        );
-        return articles.map((element) => {
+    const items = await page.evaluate(() => 
+        [...document.querySelectorAll('.MC_imageGridA_picture')].map(element => {
             const title = element.querySelector('h3.MC_Heading_4')?.textContent?.trim() || '';
             const link = new URL(element.parentElement?.getAttribute('href') || '', window.location.href).href;
             return { title, link };
-        });
-    });
+        })
+    );
 
     await browser.close();
 
@@ -54,12 +51,16 @@ export async function getNewsItems(baseUrl: string, articlesUrl: string): Promis
 export async function getDetailedItems(items: any[], browser: puppeteer.Browser): Promise<any[]> {
     return await Promise.all(
         items.map(async (item) => {
-            const detailPage = await browser.newPage();
-            await detailPage.goto(item.link, { waitUntil: 'networkidle2' });
-            const content = await detailPage.evaluate(() => {
-                return document.querySelector('.MC_Link_Style_RichText')?.innerHTML || 'No content available';
+            const content = await cache.tryGet(item.link, async () => {
+                const detailPage = await browser.newPage();
+                await detailPage.goto(item.link, { waitUntil: 'networkidle2' });
+                const content = await detailPage.evaluate(() => 
+                    document.querySelector('.MC_Link_Style_RichText')?.innerHTML || 'No content available'
+                );
+                await detailPage.close();
+                return content;
             });
-            await detailPage.close();
+
             return { ...item, description: content };
         })
     );
@@ -68,6 +69,7 @@ export async function getDetailedItems(items: any[], browser: puppeteer.Browser)
 export async function handleRequest(baseUrl: string, articlesUrl: string) {
     const browser = await puppeteer.launch();
     const items = await getNewsItems(baseUrl, articlesUrl);
+
     const detailedItems = await getDetailedItems(items, browser);
 
     const result = {
@@ -80,4 +82,4 @@ export async function handleRequest(baseUrl: string, articlesUrl: string) {
     await browser.close();
 
     return result;
-    }
+}
