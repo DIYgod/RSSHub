@@ -1,7 +1,6 @@
-import { Route } from '@/types';
 import puppeteer from 'puppeteer';
-import { URL } from 'url';
 import cache from '@/utils/cache';
+import { Route } from '@/types';
 
 export const route: Route = {
     path: '/news',
@@ -11,7 +10,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: true,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -29,57 +28,54 @@ export const route: Route = {
     },
 };
 
-export async function getNewsItems(baseUrl: string, articlesUrl: string): Promise<any> {
-    const browser = await puppeteer.launch();
+export async function getData() {
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
+    const articlesUrl = 'https://www.minecraft.net/en-us/articles';
 
     await page.goto(articlesUrl, { waitUntil: 'networkidle2' });
 
-    const items = await page.evaluate(() => 
-        [...document.querySelectorAll('.MC_imageGridA_picture')].map(element => {
+    const items = await page.evaluate(() =>
+        [...document.querySelectorAll('.MC_imageGridA_picture')].map((element) => {
             const title = element.querySelector('h3.MC_Heading_4')?.textContent?.trim() || '';
             const link = new URL(element.parentElement?.getAttribute('href') || '', window.location.href).href;
             return { title, link };
         })
     );
 
-    await browser.close();
-
-    return items;
-}
-
-export async function getDetailedItems(items: any[], browser: puppeteer.Browser): Promise<any[]> {
-    return await Promise.all(
+    const detailedItems = await Promise.all(
         items.map(async (item) => {
-            const content = await cache.tryGet(item.link, async () => {
+            const cachedData = await cache.tryGet(item.link, async () => {
                 const detailPage = await browser.newPage();
                 await detailPage.goto(item.link, { waitUntil: 'networkidle2' });
-                const content = await detailPage.evaluate(() => 
-                    document.querySelector('.MC_Link_Style_RichText')?.innerHTML || 'No content available'
-                );
+
+                const content = await detailPage.evaluate(() => {
+                    return document.querySelector('.MC_Link_Style_RichText')?.innerHTML || 'No content available';
+                });
+
                 await detailPage.close();
-                return content;
+
+                return {
+                    title: item.title,
+                    link: item.link,
+                    description: content,
+                };
             });
 
-            return { ...item, description: content };
+            return cachedData;
         })
     );
-}
 
-export async function handleRequest(baseUrl: string, articlesUrl: string) {
-    const browser = await puppeteer.launch();
-    const items = await getNewsItems(baseUrl, articlesUrl);
+    await browser.close();
 
-    const detailedItems = await getDetailedItems(items, browser);
-
-    const result = {
+    return {
         title: 'Minecraft News',
         link: articlesUrl,
         description: 'Catch up on the latest articles',
-        item: detailedItems,
+        item: detailedItems.map((item) => ({
+            title: item.title,
+            link: item.link,
+            description: item.description,
+        })),
     };
-
-    await browser.close();
-
-    return result;
 }
