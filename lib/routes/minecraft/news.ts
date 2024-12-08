@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from '@/utils/cache';
 
@@ -28,7 +27,7 @@ export const route = {
     },
 };
 
-async function handler(ctx) {
+async function handler() {
     const baseUrl = 'https://www.minecraft.net';
     const articlesUrl = `${baseUrl}/content/minecraftnet/language-masters/en-us/articles/jcr:content/root/container/image_grid_a.articles.page-1.json`;
 
