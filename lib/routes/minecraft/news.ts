@@ -49,9 +49,9 @@ export async function getData() {
                 const detailPage = await browser.newPage();
                 await detailPage.goto(item.link, { waitUntil: 'networkidle2' });
 
-                const content = await detailPage.evaluate(() => {
-                    return document.querySelector('.MC_Link_Style_RichText')?.innerHTML || 'No content available';
-                });
+                const content = await detailPage.evaluate(() =>
+                    document.querySelector('.MC_Link_Style_RichText')?.innerHTML || 'No content available'
+                );
 
                 await detailPage.close();
 
