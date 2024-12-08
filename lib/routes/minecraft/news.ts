@@ -39,7 +39,6 @@ async function handler() {
         title: article.default_tile.title,
         link: new URL(article.article_url, baseUrl).href,
     }));
-    
     const detailedItems = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
