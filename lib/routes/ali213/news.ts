@@ -37,8 +37,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const link: string | undefined = aEl.prop('href');
 
             const imageEl: Cheerio<Element> = $item.find('img');
-            const imageSrc: string | undefined = imageEl.prop('src');
-            const imageAlt: string | undefined = imageEl.prop('alt');
+            const imageSrc: string | undefined = imageEl?.prop('src');
+            const imageAlt: string | undefined = imageEl?.prop('alt');
 
             const intro: string = $item.find('div.lone_f_r_t').text();
 
