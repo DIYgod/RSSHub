@@ -1,7 +1,8 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from '@/utils/cache';
 
-export const route = {
+export const route: Route = {
     path: '/news',
     categories: ['game'],
     example: '/minecraft/news',
@@ -31,20 +32,20 @@ async function handler() {
     const baseUrl = 'https://www.minecraft.net';
     const articlesUrl = `${baseUrl}/content/minecraftnet/language-masters/en-us/articles/jcr:content/root/container/image_grid_a.articles.page-1.json`;
 
-    const response = await got(articlesUrl);
-    const articleData = response.data.article_grid;
+    const response = await got(articlesUrl, { responseType: 'json' });
+    const data = response.data;
 
-    const items = articleData.map((article) => ({
+    const items = data.article_grid.map((article) => ({
         title: article.default_tile.title,
         link: new URL(article.article_url, baseUrl).href,
     }));
-
     const detailedItems = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
-                const $ = cheerio.load(detailResponse.data);
-                const content = $('.MC_Link_Style_RichText').html() || 'No content available';
+                const $detail = cheerio.load(detailResponse.data);
+                const content = $detail('.MC_Link_Style_RichText').html() || 'No content available';
+
                 return {
                     title: item.title,
                     link: item.link,
@@ -62,4 +63,4 @@ async function handler() {
     };
 }
 
-export default handler;
+export { handler };
