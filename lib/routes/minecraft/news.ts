@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://www.minecraft.net';
-    const articlesUrl = `${baseUrl}/en-us/articles`;
+    const articlesUrl = `${baseUrl}/content/minecraftnet/language-masters/en-us/articles/jcr:content/root/container/image_grid_a.articles.page-1.json`;
 
     const response = await got(articlesUrl, { responseType: 'json' });
     const data = response.data;
@@ -39,7 +39,7 @@ async function handler() {
         title: article.default_tile.title,
         link: new URL(article.article_url, baseUrl).href,
     }));
-
+    
     const detailedItems = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
