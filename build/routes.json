@@ -5961,6 +5961,114 @@
     "url": "m.ajmide.com",
     "lang": "zh-CN"
   },
+  "ali213": {
+    "routes": {
+      "/news/:category?": {
+        "path": "/news/:category?",
+        "name": "资讯",
+        "url": "www.ali213.net",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/ali213/news/new",
+        "parameters": {
+          "category": "分类，默认为 `new`，即最新资讯，可在对应分类页 URL 中找到"
+        },
+        "description": ":::tip\n若订阅 [游戏资讯](https://www.ali213.net/news/game/)，网址为 `https://www.ali213.net/news/game/`，请截取 `https://www.ali213.net/news/` 到末尾 `/` 的部分 `game` 作为 `category` 参数填入，此时目标路由为 [`/ali213/news/game`](https://rsshub.app/ali213/news/game)。\n:::\n\n| 分类名称 | 分类 ID |\n| -------- | ------- |\n| 最新资讯 | new     |\n| 评测     | pingce  |\n| 游戏     | game    |\n| 动漫     | comic   |\n| 影视     | movie   |\n| 科技     | tech    |\n| 电竞     | esports |\n| 娱乐     | amuse   |\n| 手游     | mobile  |\n",
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ali213.net/news/:category"
+            ]
+          },
+          {
+            "title": "最新资讯",
+            "source": [
+              "www.ali213.net/news/new"
+            ],
+            "target": "/news/new"
+          },
+          {
+            "title": "评测",
+            "source": [
+              "www.ali213.net/news/pingce"
+            ],
+            "target": "/news/pingce"
+          },
+          {
+            "title": "游戏",
+            "source": [
+              "www.ali213.net/news/game"
+            ],
+            "target": "/news/game"
+          },
+          {
+            "title": "动漫",
+            "source": [
+              "www.ali213.net/news/comic"
+            ],
+            "target": "/news/comic"
+          },
+          {
+            "title": "影视",
+            "source": [
+              "www.ali213.net/news/movie"
+            ],
+            "target": "/news/movie"
+          },
+          {
+            "title": "科技",
+            "source": [
+              "www.ali213.net/news/tech"
+            ],
+            "target": "/news/tech"
+          },
+          {
+            "title": "电竞",
+            "source": [
+              "www.ali213.net/news/esports"
+            ],
+            "target": "/news/esports"
+          },
+          {
+            "title": "娱乐",
+            "source": [
+              "www.ali213.net/news/amuse"
+            ],
+            "target": "/news/amuse"
+          },
+          {
+            "title": "手游",
+            "source": [
+              "www.ali213.net/news/mobile"
+            ],
+            "target": "/news/mobile"
+          }
+        ],
+        "view": 0,
+        "location": "news.ts"
+      }
+    },
+    "name": "游侠网",
+    "url": "ali213.net",
+    "categories": [
+      "game"
+    ],
+    "description": "",
+    "lang": "zh-CN"
+  },
   "alicesoft": {
     "routes": {
       "/information/:category?/:game?": {

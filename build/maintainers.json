@@ -392,6 +392,9 @@
   "/ajmide/:id": [
     "Fatpandac"
   ],
+  "/ali213/news/:category?": [
+    "nczitzk"
+  ],
   "/alicesoft/information/:category?/:game?": [
     "keocheung"
   ],
