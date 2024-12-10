@@ -47,7 +47,7 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.body);
-                item.description = $('.singleentry').html();
+                item.description = $('.contentwidth').find('h1, .infoline').remove().end().html();
                 // 上面每个列表项的每个属性都在此重用，
                 // 并增加了一个新属性“description”
                 return item;
