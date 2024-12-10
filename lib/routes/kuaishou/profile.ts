@@ -1,6 +1,6 @@
 import { Route, Data } from '@/types';
 import puppeteer from '@/utils/puppeteer';
-import cache from '@/utils/cache';
+import { config } from '@/config';
 export const route: Route = {
     name: 'Profile',
     path: '/profile/:principalId',
@@ -14,10 +14,10 @@ export const route: Route = {
         principalId: '用户 id, 可在主页中找到',
     },
     example: '/kuaishou/profile/3xk46q9cdnvgife',
-    maintainers: ['nczitzk'],
+    maintainers: ['GuoChen-thlg'],
     url: 'kuaishou.com/profile/:principalId',
     description: `:::tip
-    The profile page of the user, which contains the user's information, videos, and other information.
+The profile page of the user, which contains the user's information, videos, and other information.
     :::`,
     handler,
 };
@@ -26,11 +26,7 @@ async function handler(ctx) {
     const { principalId } = ctx.req.param();
     const browser = await puppeteer();
     const page = await browser.newPage();
-    await page.goto(`https://www.kuaishou.com`);
-    await new Promise((resolve) => {
-        setTimeout(resolve, 3e3);
-    });
-    const maxRetryCount = 3;
+
     let retryCount = 0;
     let resolve;
     let userInfo;
@@ -39,15 +35,9 @@ async function handler(ctx) {
     });
     await page.setRequestInterception(true);
     page.on('request', (req) => {
-        const url = req.url();
-        if (req.resourceType() === 'image' || req.resourceType() === 'media' || req.resourceType() === 'font') {
+        const resourceType = req.resourceType();
+        if (resourceType === 'image' || resourceType === 'media' || resourceType === 'font' || resourceType === 'stylesheet' || resourceType === 'ping') {
             req.abort();
-        } else if (url.includes('/live_api/profile/public')) {
-            const _url = new URL(url);
-            _url.searchParams.set('count', '999');
-            req.continue({
-                url: _url.toString(),
-            });
         } else {
             req.continue();
         }
@@ -58,13 +48,13 @@ async function handler(ctx) {
             if (resData.data.list.length > 0) {
                 resolve(resData.data);
             } else {
-                if (retryCount > maxRetryCount) {
+                if (retryCount > config.requestRetry) {
                     resolve({});
                 }
                 setTimeout(() => {
                     page.reload().then();
                     retryCount++;
-                }, 3e3);
+                }, 3000);
             }
         } else if (res.ok() && res.url().includes('/live_api/baseuser/userinfo/byid')) {
             // principalId
@@ -95,11 +85,9 @@ async function handler(ctx) {
             domain: '.www.kuaishou.com',
         }
     );
+    await page.goto(`https://www.kuaishou.com`);
     await page.goto(`https://live.kuaishou.com/profile/${principalId}`);
-    const resData = await cache.tryGet(`https://live.kuaishou.com/profile/${principalId}`, async () => {
-        const data = (await promise.catch((error) => error)) as Array<any>;
-        return data;
-    });
+    const resData = (await promise.catch((error) => error)) as Array<any>;
 
     await browser.close();
     const data: Data = {
@@ -107,16 +95,17 @@ async function handler(ctx) {
         // description: JSON.stringify(resData),
         item:
             resData?.list?.map((item) => ({
-                    // title: '',
-                    author: item.author.name,
+                // title: '',
+                author: item.author.name,
 
-                    // link: '',
-                    id: item.id,
-                    banner: item.poster,
-                    media: {
-                        content: { url: item.playUrl },
-                    },
-                })) || [],
+                // link: '',
+                id: item.id,
+                guid: item.id,
+                banner: item.poster,
+                media: {
+                    content: { url: item.playUrl },
+                },
+            })) || [],
     };
     return data;
 }
