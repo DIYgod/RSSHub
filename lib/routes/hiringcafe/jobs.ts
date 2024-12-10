@@ -53,7 +53,7 @@ async function handler(ctx) {
     const data = response.results[0].hits ?? [];
 
     const items = data.map((item) => {
-        const { job_information: jobInfo, v5_processed_job_data: processedData, published_date } = item;
+        const { job_information: jobInfo, v5_processed_job_data: processedData, published_date, apply_url } = item;
 
         const title = `${jobInfo.title} - ${processedData.company_name}`;
 
@@ -86,7 +86,7 @@ async function handler(ctx) {
         return {
             title,
             description,
-            link: item.apply_url,
+            link: apply_url,
             pubDate: new Date(published_date).toUTCString(),
             category: [processedData.job_category, ...processedData.role_activities, processedData.workplace_type].filter(Boolean),
             author: processedData.company_name,
