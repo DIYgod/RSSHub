@@ -31099,14 +31099,16 @@
         ],
         "location": "pulse.ts"
       },
-      "/repos/:user": {
-        "path": "/repos/:user",
+      "/repos/:user/:type?/:sort?": {
+        "path": "/repos/:user/:type?/:sort?",
         "categories": [
           "programming"
         ],
         "example": "/github/repos/DIYgod",
         "parameters": {
-          "user": "GitHub username"
+          "user": "GitHub username",
+          "type": "Type of repository, can be `all`, `owner`, `member`, `public`, `private`, `forks`, `sources`",
+          "sort": "Sort by `created`, `updated`, `pushed`, `full_name`"
         },
         "features": {
           "requireConfig": false,

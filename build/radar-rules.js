@@ -4851,7 +4851,7 @@
       { title:"User Repo",
         docs:"https://docs.rsshub.app/routes/programming",
         source:[ "/:user" ],
-        target:"/github/repos/:user" },
+        target:"/github/repos/:user/:type?/:sort?" },
       { title:"Repo Stars",
         docs:"https://docs.rsshub.app/routes/programming",
         source:[ "/:user/:repo/stargazers",
