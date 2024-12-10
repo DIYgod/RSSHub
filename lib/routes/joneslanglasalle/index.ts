@@ -35,7 +35,8 @@ const cleanHtml = (html: string, preservedTags: string[]): string => {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language: lang = 'zh', category = 'trends-and-insights' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '3', 10);
+    // default limit is 12
+    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
 
     const rootUrl: string = 'https://www.joneslanglasalle.com.cn';
     const targetUrl: string = new URL(`${lang}/${category}`, rootUrl).href;
@@ -92,7 +93,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         const guid: string = $$('meta[property="og:url"]').prop('content');
                         const image: string | undefined = $$('meta[property="og:image"]').prop('content');
 
-                        const pubDate: Date = parseDate($$('div.publicationdate').text().trim(), ['YYYY 年MM 月DD 日', 'MMMMDD,YYYY']);
+                        const pubDate: Date = parseDate($$('div.publicationdate').text().trim(), ['YYYY 年MM 月DD 日', 'MMMM DD, YYYY']);
 
                         const author: DataItem['author'] = $$('div.contributors ul li')
                             .toArray()
@@ -191,7 +192,7 @@ export const route: Route = {
     path: '/:language?/:category{.+}?',
     name: 'Trends & Insights',
     url: 'joneslanglasalle.com.cn',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     example: '/joneslanglasalle/en/trends-and-insights',
     parameters: {
@@ -199,7 +200,7 @@ export const route: Route = {
         category: 'Category, `trends-and-insights` by default',
     },
     description: `:::tip
-If you subscribe to [Trends & Insights](https://www.joneslanglasalle.com.cn/en/trends-and-insights)，where the URL is \`https://www.joneslanglasalle.com.cn/en/trends-and-insights\`, extract the part \`https://joneslanglasalle.com.cn/\` to the end. Use \`zh\` and \`trends-and-insights\` as the parameters to fill in. Therefore, the route will be [\`/joneslanglasalle/trends-and-insights/en/trends-and-insights\`](https://rsshub.app/joneslanglasalle/trends-and-insights/en/trends-and-insights).
+If you subscribe to [Trends & Insights](https://www.joneslanglasalle.com.cn/en/trends-and-insights)，where the URL is \`https://www.joneslanglasalle.com.cn/en/trends-and-insights\`, extract the part \`https://joneslanglasalle.com.cn/\` to the end. Use \`zh\` and \`trends-and-insights\` as the parameters to fill in. Therefore, the route will be [\`/joneslanglasalle/en/trends-and-insights\`](https://rsshub.app/joneslanglasalle/en/trends-and-insights).
 :::
 
 | Category  | ID                            |

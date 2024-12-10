@@ -8,6 +8,7 @@ import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
 import { art } from '@/utils/render';
+import CryptoJS from 'crypto-js';
 
 export const route: Route = {
     path: '/mp/:xpt',
@@ -39,6 +40,15 @@ function randomString(length = 32) {
 }
 const defaultSUV = '1612268936507kas0gk';
 
+function decryptImageUrl(cipherText) {
+    const key = CryptoJS.enc.Utf8.parse('www.sohu.com6666');
+    const cipher = CryptoJS.AES.decrypt(cipherText, key, {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7,
+    });
+    return cipher.toString(CryptoJS.enc.Utf8);
+}
+
 function fetchArticle(item) {
     return cache.tryGet(item.link, async () => {
         const response = await ofetch(item.link);
@@ -63,6 +73,13 @@ function fetchArticle(item) {
 
             article.find('#backsohucom, p[data-role="editor-name"]').each((i, e) => {
                 $(e).remove();
+            });
+            article.find('img').each((_, e) => {
+                const $e = $(e);
+                if ($e.attr('data-src') && !$e.attr('src')) {
+                    $e.attr('src', decryptImageUrl($e.attr('data-src')));
+                    $e.removeAttr('data-src');
+                }
             });
 
             item.description = article.html();
