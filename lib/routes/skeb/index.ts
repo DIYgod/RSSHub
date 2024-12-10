@@ -24,8 +24,8 @@ const workCategories = new Set(['new_art_works', 'new_voice_works', 'new_novel_w
 export const route: Route = {
     path: '/:category',
     categories: ['picture'],
-    example: '/new_art_works',
-    parameters: { category: 'Category, the div id of the section title on the homepage. Default is new_art_works' },
+    example: '/skeb/new_art_works',
+    parameters: { category: 'Category, the div id of the section title on the homepage.' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

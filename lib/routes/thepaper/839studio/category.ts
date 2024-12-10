@@ -9,7 +9,7 @@ export const route: Route = {
             source: ['thepaper.cn/'],
         },
     ],
-    name: 'Unknown',
+    name: '澎湃美数课作品集 - 分类',
     maintainers: ['umm233'],
     handler,
     url: 'thepaper.cn/',

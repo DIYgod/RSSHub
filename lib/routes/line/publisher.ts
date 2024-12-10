@@ -4,7 +4,7 @@ import { baseUrl, parseList, parseItems } from './utils';
 
 export const route: Route = {
     path: '/today/:edition/publisher/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/line/today/th/publisher/101048',
     parameters: { edition: 'Edition, see table above', id: 'Channel ID, can be found in URL' },
     radar: [

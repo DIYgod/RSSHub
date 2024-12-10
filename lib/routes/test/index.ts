@@ -32,6 +32,10 @@ async function handler(ctx) {
     if (ctx.req.param('id') === 'invalid-parameter-error') {
         throw new InvalidParameterError('Test invalid parameter error');
     }
+    if (ctx.req.param('id') === 'redirect') {
+        ctx.set('redirect', '/test/1');
+        return;
+    }
     let item: DataItem[] = [];
     let image: string | null = null;
     switch (ctx.req.param('id')) {

@@ -2,7 +2,7 @@ import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 import cache from '@/utils/cache';
 import { config } from '@/config';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -92,7 +92,43 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
 `,
     },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'TELEGRAM_SESSION',
+                optional: true,
+                description: 'Telegram API Authentication',
+            },
+            {
+                name: 'TELEGRAM_API_ID',
+                optional: true,
+                description: 'Telegram API ID',
+            },
+            {
+                name: 'TELEGRAM_API_HASH',
+                optional: true,
+                description: 'Telegram API Hash',
+            },
+            {
+                name: 'TELEGRAM_MAX_CONCURRENT_DOWNLOADS',
+                optional: true,
+                description: 'Telegram Max Concurrent Downloads',
+            },
+            {
+                name: 'TELEGRAM_PROXY_HOST',
+                optional: true,
+                description: 'Telegram Proxy Host',
+            },
+            {
+                name: 'TELEGRAM_PROXY_PORT',
+                optional: true,
+                description: 'Telegram Proxy Port',
+            },
+            {
+                name: 'TELEGRAM_PROXY_SECRET',
+                optional: true,
+                description: 'Telegram Proxy Secret',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -106,20 +142,15 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
         },
     ],
     name: 'Channel',
-    maintainers: ['DIYgod', 'Rongronggg9'],
+    maintainers: ['DIYgod', 'Rongronggg9', 'synchrone', 'pseudoyu'],
     handler,
     description: `
   :::tip
-  Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`.
+  Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`, it's recommended to deploy your own instance with telegram api configs (create your telegram application via \`https://core.telegram.org/api/obtaining_api_id\`, run this command \`node ./lib/routes/telegram/scripts/get-telegram-session.mjs\` to get \`TELEGRAM_SESSION\` and set it as Environment Variable).
   :::`,
 };
 
 async function handler(ctx) {
-    const useWeb = ctx.req.param('routeParams') || !config.telegram.session;
-    if (!useWeb) {
-        return tglibchannel(ctx);
-    }
-
     const username = ctx.req.param('username');
     let routeParams = ctx.req.param('routeParams');
     let showLinkPreview = true;
@@ -154,19 +185,20 @@ async function handler(ctx) {
         searchQuery = fallback(undefined, routeParams.searchQuery, null);
     }
 
+    // some channels are not available in t.me/s/, fallback to use Telegram api
     const resourceUrl = searchQuery ? `https://t.me/s/${username}?q=${encodeURIComponent(searchQuery)}` : `https://t.me/s/${username}`;
 
     const data = await cache.tryGet(
         resourceUrl,
         async () => {
-            const _r = await got(resourceUrl);
-            return _r.data;
+            const _r = await ofetch(resourceUrl);
+            return _r;
         },
         config.cache.routeExpire,
         false
     );
 
-    const $ = load(data);
+    const $ = load(data as string);
 
     /*
      * Since 2024/4/20, t.me/s/ mistakenly have every '&' in **hyperlinks** replaced by '&amp;'.
@@ -190,6 +222,10 @@ async function handler(ctx) {
         : $('.tgme_widget_message_wrap:not(.tgme_widget_message_wrap:has(.service_message,.tme_no_messages_found))'); // also exclude service messages
 
     if (list.length === 0 && $('.tgme_channel_history').length === 0) {
+        if (config.telegram.session) {
+            return tglibchannel(ctx);
+        }
+
         throw new Error(`Unable to fetch message feed from this channel. Please check this URL to see if you can view the message preview: ${resourceUrl}`);
     }
 

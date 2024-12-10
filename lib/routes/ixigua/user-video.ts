@@ -30,7 +30,7 @@ export const route: Route = {
         },
     ],
     name: '用户视频投稿',
-    maintainers: [],
+    maintainers: ['FlashWingShadow', 'Fatpandac', 'pseudoyu'],
     handler,
 };
 
@@ -39,13 +39,24 @@ async function handler(ctx) {
     const disableEmbed = ctx.req.param('disableEmbed');
     const url = `${host}/home/${uid}/?wid_try=1`;
 
-    const response = await got(url);
-    const $ = load(response.data);
-    const jsData = $('#SSR_HYDRATED_DATA').html().replace('window._SSR_HYDRATED_DATA=', '').replaceAll('undefined', '""');
-    const data = JSON.parse(jsData);
+    const { data } = await got(url);
+    const $ = load(data);
+    const jsData = $('#SSR_HYDRATED_DATA').html();
 
-    const videoInfos = data.AuthorVideoList.videoList;
-    const userInfo = data.AuthorDetailInfo;
+    if (!jsData) {
+        throw new Error('Failed to find SSR_HYDRATED_DATA');
+    }
+
+    const jsonData = JSON.parse(jsData.match(/var\s+data\s*=\s*({.*?});/s)?.[1].replaceAll('undefined', 'null') || '{}');
+
+    const {
+        AuthorVideoList: { videoList: videoInfos },
+        AuthorDetailInfo: userInfo,
+    } = jsonData;
+
+    if (!videoInfos || !userInfo) {
+        throw new Error('Failed to extract required data from JSON');
+    }
 
     return {
         title: `${userInfo.name} 的西瓜视频`,

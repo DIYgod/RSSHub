@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'junhe.com',
     categories: ['new-media'],
     description: '',
+    lang: 'zh-CN',
 };

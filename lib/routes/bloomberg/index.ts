@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { rootUrl, asyncPoolAll, parseNewsList, parseArticle } from './utils';
 const site_title_mapping = {
     '/': 'News',
@@ -17,10 +17,14 @@ const site_title_mapping = {
 
 export const route: Route = {
     path: '/:site?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/bloomberg/bbiz',
     parameters: {
-        site: 'Site ID, can be found below',
+        site: {
+            description: 'Site ID, can be found below',
+            options: Object.keys(site_title_mapping).map((key) => ({ value: key, label: site_title_mapping[key] })),
+        },
     },
     features: {
         requireConfig: false,
@@ -33,21 +37,21 @@ export const route: Route = {
     name: 'Bloomberg Site',
     maintainers: ['bigfei'],
     description: `
-    | Site ID      | Title        |
-    | ------------ | ------------ |
-    | /            | News         |
-    | bpol         | Politics     |
-    | bbiz         | Business     |
-    | markets      | Markets      |
-    | technology   | Technology   |
-    | green        | Green        |
-    | wealth       | Wealth       |
-    | pursuits     | Pursuits     |
-    | bview        | Opinion      |
-    | equality     | Equality     |
-    | businessweek | Businessweek |
-    | citylab      | CityLab      |
-    `,
+  | Site ID      | Title        |
+  | ------------ | ------------ |
+  | /            | News         |
+  | bpol         | Politics     |
+  | bbiz         | Business     |
+  | markets      | Markets      |
+  | technology   | Technology   |
+  | green        | Green        |
+  | wealth       | Wealth       |
+  | pursuits     | Pursuits     |
+  | bview        | Opinion      |
+  | equality     | Equality     |
+  | businessweek | Businessweek |
+  | citylab      | CityLab      |
+  `,
     handler,
 };
 
