@@ -3,14 +3,13 @@ import got from '@/utils/got';
 import { config } from '@/config';
 
 export const route: Route = {
-    path: '/repos/:user/:type?/:sort?/:direction?',
+    path: '/repos/:user/:type?/:sort?',
     categories: ['programming'],
     example: '/github/repos/DIYgod',
     parameters: {
         user: 'GitHub username',
         type: 'Type of repository, can be `all`, `owner`, `member`, `public`, `private`, `forks`, `sources`',
         sort: 'Sort by `created`, `updated`, `pushed`, `full_name`',
-        direction: 'Sort direction, can be `asc` or `desc`',
     },
     features: {
         requireConfig: false,
@@ -34,7 +33,6 @@ async function handler(ctx) {
     const user = ctx.req.param('user');
     const type = ctx.req.param('type') || 'all';
     const sort = ctx.req.param('sort') || 'created';
-    const direction = ctx.req.param('direction') || 'desc';
     let headers = {};
     if (config.github && config.github.access_token) {
         headers = {
@@ -48,7 +46,6 @@ async function handler(ctx) {
         searchParams: {
             type,
             sort,
-            direction,
         },
         headers,
     });
