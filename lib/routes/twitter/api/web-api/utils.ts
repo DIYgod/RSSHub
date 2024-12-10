@@ -1,5 +1,5 @@
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { baseUrl, gqlFeatures, bearerToken, gqlMap } from './constants';
+import { baseUrl, gqlFeatures, bearerToken, gqlMap, thirdPartySupportedAPI } from './constants';
 import { config } from '@/config';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
@@ -228,7 +228,7 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     };
 
     const fetchData = async () => {
-        if (config.twitter.thirdPartyApi) {
+        if (config.twitter.thirdPartyApi && thirdPartySupportedAPI.includes(endpoint)) {
             const { data } = await ofetch(`${config.twitter.thirdPartyApi}${gqlMap[endpoint]}`, {
                 method: 'GET',
                 params,

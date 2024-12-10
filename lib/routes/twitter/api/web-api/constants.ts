@@ -15,6 +15,8 @@ const graphQLEndpointsPlain = [
 
 const gqlMap = Object.fromEntries(graphQLEndpointsPlain.map((endpoint) => [endpoint.split('/')[3].replace(/V2$|Query$|QueryV2$/, ''), endpoint]));
 
+const thirdPartySupportedAPI = ['UserByScreenName', 'UserByRestId', 'UserTweets', 'UserTweetsAndReplies'];
+
 const gqlFeatureUser = {
     hidden_profile_subscriptions_enabled: true,
     rweb_tipjar_consumption_enabled: true,
@@ -112,4 +114,4 @@ const timelineParams = {
 
 const bearerToken = 'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
 
-export { baseUrl, gqlMap, gqlFeatures, timelineParams, bearerToken };
+export { baseUrl, gqlMap, gqlFeatures, timelineParams, bearerToken, thirdPartySupportedAPI };
