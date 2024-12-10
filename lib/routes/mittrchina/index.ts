@@ -97,6 +97,10 @@ async function handler(ctx) {
                         data: { data: details },
                     } = await got(`https://apii.web.mittrchina.com/information/details?id=${item.id}`);
 
+                    if (details === null) {
+                        return null;
+                    }
+
                     item.description = details.content;
 
                     if (!item.author) {
@@ -115,6 +119,7 @@ async function handler(ctx) {
                 })
             )
         );
+        items = items.filter((item) => item !== null);
     }
 
     return {
