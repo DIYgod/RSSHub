@@ -26,7 +26,7 @@ export const route: Route = {
     name: '新闻',
     maintainers: ['gz4zzxc'],
     handler,
-    url: 'https://www.gdufs.edu.cn/gwxw/gwxw1.htm',
+    url: 'www.gdufs.edu.cn/gwxw/gwxw1.htm',
 };
 
 async function handler() {
