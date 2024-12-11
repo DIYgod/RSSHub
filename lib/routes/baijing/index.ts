@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/article',
     categories: ['new-media'],
-    example: '/baijing/article/',
+    example: '/baijing/article',
     url: 'www.baijing.cn/article/',
     name: '资讯',
     maintainers: ['p3psi-boo'],
