@@ -20,7 +20,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://www.gdufs.edu.cn/gwxw/gwxw1.htm', 'https://www.gdufs.edu.cn/'],
+            source: ['www.gdufs.edu.cn/gwxw/gwxw1.htm', 'www.gdufs.edu.cn/'],
         },
     ],
     name: '广东外语外贸大学-新闻',
