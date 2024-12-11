@@ -42547,6 +42547,27 @@
     "url": "iguoguo.net",
     "lang": "zh-CN"
   },
+  "iheima": {
+    "routes": {
+      "/recommend": {
+        "path": "/recommend",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/iheima/recommend",
+        "url": "www.iheima.com",
+        "name": "推荐",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "i黑马网",
+    "url": "www.iheima.com",
+    "description": "",
+    "lang": "zh-CN"
+  },
   "iiilab": {
     "routes": {
       "/": {
