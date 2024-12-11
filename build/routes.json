@@ -47823,6 +47823,38 @@
     "url": "kuaidi100.com",
     "lang": "zh-CN"
   },
+  "kuaishou": {
+    "routes": {
+      "/profile/:principalId": {
+        "name": "Profile",
+        "path": "/profile/:principalId",
+        "radar": [
+          {
+            "source": [
+              "kuaishou.com/profile/:principalId"
+            ],
+            "target": "/profile/:principalId"
+          }
+        ],
+        "parameters": {
+          "principalId": "用户 id, 可在主页中找到"
+        },
+        "example": "/kuaishou/profile/3xk46q9cdnvgife",
+        "maintainers": [
+          "GuoChen-thlg"
+        ],
+        "url": "kuaishou.com/profile/:principalId",
+        "description": ":::tip\nThe profile page of the user, which contains the user's information, videos, and other information.\n    :::",
+        "location": "profile.ts"
+      }
+    },
+    "name": "快手",
+    "url": "kuaishou.com",
+    "categories": [
+      "social-media"
+    ],
+    "lang": "zh-CN"
+  },
   "kunchengblog": {
     "routes": {
       "/essay": {
