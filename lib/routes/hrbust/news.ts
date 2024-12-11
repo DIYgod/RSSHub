@@ -77,7 +77,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `哈尔滨理工大学-${bigTitle}`,
+        title: `哈尔滨理工大学新闻网 - ${bigTitle}`,
         link: `${rootUrl}/${category}.htm`,
         item: items,
     };
