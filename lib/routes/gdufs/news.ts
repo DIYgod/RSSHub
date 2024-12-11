@@ -1,5 +1,6 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -48,34 +49,42 @@ async function handler() {
 
             const pubDate = parseDate(dateString).toUTCString();
 
-            let description = '';
-            let author = '';
+            const content = await cache.tryGet(fullLink, async () => {
+                try {
+                    const articleRes = await got(fullLink);
+                    const $$ = load(articleRes.body);
+                    const description = $$('.v_news_content').html()?.trim() || '';
 
-            try {
-                const articleRes = await got(fullLink);
-                const $$ = load(articleRes.body);
-                description = $$('.v_news_content').html()?.trim() || '';
+                    // 提取作者信息
+                    let author = '';
+                    const authorSpans = $$('.nav01 h6 .ll span');
+                    authorSpans.each((_, el) => {
+                        const text = $$(el).text().trim();
+                        if (text.includes('责任编辑：')) {
+                            author = text.replace('责任编辑：', '').trim();
+                        } else if (text.includes('文字：')) {
+                            author = text.replace('文字：', '').trim();
+                        }
+                    });
 
-                // 提取作者信息
-                const authorSpans = $$('.nav01 h6 .ll span');
-                authorSpans.each((_, el) => {
-                    const text = $$(el).text().trim();
-                    if (text.includes('责任编辑：')) {
-                        author = text.replace('责任编辑：', '').trim();
-                    } else if (text.includes('文字：')) {
-                        author = text.replace('文字：', '').trim();
-                    }
-                });
-            } catch {
-                description = '内容获取失败。';
-            }
+                    return {
+                        description,
+                        author,
+                    };
+                } catch {
+                    return {
+                        description: '内容获取失败。',
+                        author: '',
+                    };
+                }
+            });
 
             return {
                 title,
                 link: fullLink,
-                description,
+                description: content.description,
                 pubDate,
-                author,
+                author: content.author,
             };
         })
     );

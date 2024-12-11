@@ -1,5 +1,6 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -53,29 +54,35 @@ async function handler() {
 
     // 获取文章详情
     const fetchArticleDetail = async (item) => {
-        try {
-            const articleResponse = await got(item.link);
-            if (!articleResponse.body) {
-                throw new Error('No article body');
-            }
-            const $$ = load(articleResponse.body);
-            const content = $$('#vsb_content .v_news_content').html() || '';
-            const authors = $$('.show01 p i')
-                .toArray()
-                .map((el) => $$(el).text().trim());
+        const contentData = await cache.tryGet(item.link, async () => {
+            try {
+                const articleResponse = await got(item.link);
+                if (!articleResponse.body) {
+                    throw new Error('No article body');
+                }
+                const $$ = load(articleResponse.body);
+                const content = $$('#vsb_content .v_news_content').html() || '';
+                const authors = $$('.show01 p i')
+                    .toArray()
+                    .map((el) => $$(el).text().trim());
 
-            return {
-                ...item,
-                description: content,
-                author: authors.join(' '),
-            };
-        } catch {
-            return {
-                ...item,
-                description: '无法获取内容',
-                author: '',
-            };
-        }
+                return {
+                    description: content,
+                    author: authors.join(' '),
+                };
+            } catch {
+                return {
+                    description: '无法获取内容',
+                    author: '',
+                };
+            }
+        });
+
+        return {
+            ...item,
+            description: contentData.description,
+            author: contentData.author,
+        };
     };
 
     const enhancedItems = await Promise.all(items.map((item) => fetchArticleDetail(item)));
