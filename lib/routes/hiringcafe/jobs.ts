@@ -19,7 +19,7 @@ export const route: Route = {
             source: ['hiring.cafe'],
         },
     ],
-    name: 'HiringCafe Jobs',
+    name: 'Jobs',
     maintainers: ['mintyfrankie'],
     handler,
 };
@@ -53,12 +53,12 @@ async function handler(ctx) {
     const data = response.results[0].hits ?? [];
 
     const items = data.map((item) => {
+        // TODO: use template
         const { job_information: jobInfo, v5_processed_job_data: processedData, published_date, apply_url } = item;
 
         const title = `${jobInfo.title} - ${processedData.company_name}`;
 
         const description = `
-            <h1>${jobInfo.title}</h1>
             <p><strong>Location:</strong> ${jobInfo.location}</p>
             <p><strong>Company:</strong> ${processedData.company_name}</p>
             ${
