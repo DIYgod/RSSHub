@@ -23,7 +23,7 @@ export const route: Route = {
             source: ['www.gdufs.edu.cn/gwxw/gwxw1.htm', 'www.gdufs.edu.cn/'],
         },
     ],
-    name: '广东外语外贸大学-新闻',
+    name: '新闻',
     maintainers: ['gz4zzxc'],
     handler,
     url: 'https://www.gdufs.edu.cn/gwxw/gwxw1.htm',
