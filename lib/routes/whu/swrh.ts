@@ -86,27 +86,20 @@ async function handler(ctx) {
     let items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                let response;
-                try {
-                    response = await got(item.link);
-                } catch {
-                    return item;
-                }
-                const $ = load(response.data);
-
-                // 如果是公众号链接
+                // 首先检查是否是微信公众号
                 item.description = item.link.includes('weixin')
                     ? await fetchArticle(item.link).then((article) => article.description)
-                    : $('.v_news_content').length
-                      ? (() => {
-                            const content = $('.v_news_content');
-                            return content.html().trim(); // 提取文本内容
-                        })()
-                      : $('.prompt').length
-                        ? $('.prompt').html() // 提取提示内容
-                        : item.title; // 如果没有内容，设置title
+                    : await (async () => {
+                          try {
+                              const response = await got(item.link);
+                              const $ = load(response.data);
 
-                // 处理 pubDate
+                              return $('.v_news_content').length ? $('.v_news_content').html().trim() : $('.prompt').length ? $('.prompt').html() : item.title;
+                          } catch {
+                              return item.title;
+                          }
+                      })();
+
                 item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')), +8) : item.pubDate;
 
                 return item;
