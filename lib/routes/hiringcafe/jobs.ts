@@ -4,7 +4,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/jobs/:keywords',
     categories: ['other'],
-    example: '/hiringcafe/jobs/sustainability/',
+    example: '/hiringcafe/jobs/sustainability',
     parameters: { keywords: 'Keywords to search for' },
     features: {
         requireConfig: false,
