@@ -62,7 +62,7 @@ async function handler(ctx) {
             userInfo = resData.data.userInfo;
         }
     });
-    await page.goto(`https://www.kuaishou.com`, {
+    await page.goto('https://www.kuaishou.com', {
         waitUntil: 'domcontentloaded',
     });
     await page.goto(`https://live.kuaishou.com/profile/${principalId}`);
@@ -76,7 +76,9 @@ async function handler(ctx) {
             resData?.list?.map((item) => ({
                 // title: '',
                 author: item.author.name,
-
+                description: `<video controls preload="metadata" poster="${item.poster}">
+                    <source src="${item.playUrl}" type="video/mp4">
+                </video>`,
                 // link: '',
                 id: item.id,
                 guid: item.id,
