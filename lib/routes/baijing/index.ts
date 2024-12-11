@@ -42,7 +42,7 @@ async function handler() {
 
     return {
         title: '白鲸出海 - 资讯',
-        link: apiUrl,
+        link: 'https://www.baijing.cn/article/',
         item: items,
     };
 }
