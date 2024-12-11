@@ -62,29 +62,6 @@ async function handler(ctx) {
             userInfo = resData.data.userInfo;
         }
     });
-
-    await page.setCookie(
-        {
-            name: 'kpf',
-            value: 'PC_WEB',
-            domain: '.www.kuaishou.com',
-        },
-        {
-            name: 'clientid',
-            value: '3',
-            domain: '.www.kuaishou.com',
-        },
-        {
-            name: 'did',
-            value: 'web_8fc521cc799984512f454de7d916ebab',
-            domain: '.kuaishou.com',
-        },
-        {
-            name: 'kpn',
-            value: 'KUAISHOU_VISION',
-            domain: '.www.kuaishou.com',
-        }
-    );
     await page.goto(`https://www.kuaishou.com`);
     await page.goto(`https://live.kuaishou.com/profile/${principalId}`);
     const resData = (await promise.catch((error) => error)) as Array<any>;
