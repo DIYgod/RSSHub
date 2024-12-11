@@ -21,7 +21,7 @@ export const route: Route = {
             source: ['xwxy.gdufs.edu.cn/xwzx/xyxw', 'xwxy.gdufs.edu.cn/'],
         },
     ],
-    name: '广东外语外贸大学新闻学院-学院新闻',
+    name: '新闻学院-学院新闻',
     maintainers: ['gz4zzxc'],
     handler,
     url: 'xwxy.gdufs.edu.cn/xwzx/xyxw',
