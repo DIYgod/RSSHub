@@ -1294,6 +1294,9 @@
   "/china/news/military": [
     "jiaaoMario"
   ],
+  "/chinacdc/:category{.+}?": [
+    "nczitzk"
+  ],
   "/chinadegrees/:province?": [
     "TonyRL"
   ],

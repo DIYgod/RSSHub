@@ -6334,6 +6334,443 @@
       }
     ]
   },
+  "chinacdc.cn": {
+    "_name": "中国疾病预防控制中心",
+    "www": [
+      {
+        "title": "通用",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/:category"
+        ],
+        "target": "/chinacdcparams=>{const category=params.category;return`/chinacdc${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "中心要闻",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zxyw/"
+        ],
+        "target": "/chinacdc/zxyw"
+      },
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/tzgg/"
+        ],
+        "target": "/chinacdc/tzgg"
+      },
+      {
+        "title": "党建园地 - 廉政文化",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/djgz_13611/"
+        ],
+        "target": "/chinacdc/dqgz/djgz_13611"
+      },
+      {
+        "title": "党建园地 - 党建工作",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/dqgz/"
+        ],
+        "target": "/chinacdc/dqgz/djgz"
+      },
+      {
+        "title": "党建园地 - 廉政文化",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/djgz_13611/"
+        ],
+        "target": "/chinacdc/dqgz/djgz_13611"
+      },
+      {
+        "title": "党建园地 - 工会工作",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ghgz/"
+        ],
+        "target": "/chinacdc/dqgz/ghgz"
+      },
+      {
+        "title": "党建园地 - 团青工作",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/tqgz/"
+        ],
+        "target": "/chinacdc/dqgz/tqgz"
+      },
+      {
+        "title": "党建园地 - 理论学习",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/tqgz_13618/"
+        ],
+        "target": "/chinacdc/dqgz/tqgz_13618"
+      },
+      {
+        "title": "疾控应急 - 传染病",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/crb2/"
+        ],
+        "target": "/chinacdc/jkyj/crb2"
+      },
+      {
+        "title": "疾控应急 - 突发公共卫生事件",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/tfggws/"
+        ],
+        "target": "/chinacdc/jkyj/tfggws"
+      },
+      {
+        "title": "疾控应急 - 慢性病与伤害防控",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/mxfcrxjb2/"
+        ],
+        "target": "/chinacdc/jkyj/mxfcrxjb2"
+      },
+      {
+        "title": "疾控应急 - 烟草控制",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/yckz/"
+        ],
+        "target": "/chinacdc/jkyj/yckz"
+      },
+      {
+        "title": "疾控应急 - 营养与健康",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/yyyjk2/"
+        ],
+        "target": "/chinacdc/jkyj/yyyjk2"
+      },
+      {
+        "title": "疾控应急 - 环境与健康",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/hjyjk/"
+        ],
+        "target": "/chinacdc/jkyj/hjyjk"
+      },
+      {
+        "title": "疾控应急 - 职业卫生与中毒控制",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/hjwsyzdkz/"
+        ],
+        "target": "/chinacdc/jkyj/hjwsyzdkz"
+      },
+      {
+        "title": "疾控应急 - 放射卫生",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/fsws/"
+        ],
+        "target": "/chinacdc/jkyj/fsws"
+      },
+      {
+        "title": "疾控应急 - 免疫规划",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/mygh02/"
+        ],
+        "target": "/chinacdc/jkyj/mygh02"
+      },
+      {
+        "title": "疾控应急 - 结核病防控",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/jhbfk/"
+        ],
+        "target": "/chinacdc/jkyj/jhbfk"
+      },
+      {
+        "title": "疾控应急 - 寄生虫病",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkyj/jscb/"
+        ],
+        "target": "/chinacdc/jkyj/jscb"
+      },
+      {
+        "title": "科学研究 - 科技进展",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/kxyj/kjjz/"
+        ],
+        "target": "/chinacdc/kxyj/kjjz"
+      },
+      {
+        "title": "科学研究 - 学术动态",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/kxyj/xsdt/"
+        ],
+        "target": "/chinacdc/kxyj/xsdt"
+      },
+      {
+        "title": "科学研究 - 科研平台",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/kxyj/xsjl/"
+        ],
+        "target": "/chinacdc/kxyj/xsjl"
+      },
+      {
+        "title": "科学研究 - 科研亮点",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/kxyj/kyld/"
+        ],
+        "target": "/chinacdc/kxyj/kyld"
+      },
+      {
+        "title": "科学研究 - 科技政策",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/kxyj/kjzc/"
+        ],
+        "target": "/chinacdc/kxyj/kjzc"
+      },
+      {
+        "title": "教育培训 - 研究生院",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jypx/yjsy/"
+        ],
+        "target": "/chinacdc/jypx/yjsy"
+      },
+      {
+        "title": "教育培训 - 继续教育",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jypx/jxjy/"
+        ],
+        "target": "/chinacdc/jypx/jxjy"
+      },
+      {
+        "title": "教育培训 - 博士后",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jypx/bsh/"
+        ],
+        "target": "/chinacdc/jypx/bsh"
+      },
+      {
+        "title": "教育培训 - 中国现场流行病学培训项目（CFETP）",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jypx/CFETP/"
+        ],
+        "target": "/chinacdc/jypx/CFETP"
+      },
+      {
+        "title": "全球公卫 - 合作伙伴",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/qqgw/hzhb/"
+        ],
+        "target": "/chinacdc/qqgw/hzhb"
+      },
+      {
+        "title": "全球公卫 - 世界卫生组织合作中心和参比实验室",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/qqgw/wszz/"
+        ],
+        "target": "/chinacdc/qqgw/wszz"
+      },
+      {
+        "title": "全球公卫 - 国际交流(港澳台交流)",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/qqgw/gjjl/"
+        ],
+        "target": "/chinacdc/qqgw/gjjl"
+      },
+      {
+        "title": "全球公卫 - 公共卫生援外与合作",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/qqgw/ggws/"
+        ],
+        "target": "/chinacdc/qqgw/ggws"
+      },
+      {
+        "title": "人才建设 - 院士风采",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/rcjs/ysfc/"
+        ],
+        "target": "/chinacdc/rcjs/ysfc"
+      },
+      {
+        "title": "人才建设 - 首席专家",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/rcjs/sxzj/"
+        ],
+        "target": "/chinacdc/rcjs/sxzj"
+      },
+      {
+        "title": "人才建设 - 人才队伍",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/rcjs/rcdw/"
+        ],
+        "target": "/chinacdc/rcjs/rcdw"
+      },
+      {
+        "title": "人才建设 - 人才招聘",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/rcjs/rczp/"
+        ],
+        "target": "/chinacdc/rcjs/rczp"
+      },
+      {
+        "title": "健康数据 - 全国法定传染病疫情情况",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jksj/jksj01/"
+        ],
+        "target": "/chinacdc/jksj/jksj01"
+      },
+      {
+        "title": "健康数据 - 全国新型冠状病毒感染疫情情况",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jksj/xgbdyq/"
+        ],
+        "target": "/chinacdc/jksj/xgbdyq"
+      },
+      {
+        "title": "健康数据 - 重点传染病和突发公共卫生事件风险评估报告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jksj/jksj02/"
+        ],
+        "target": "/chinacdc/jksj/jksj02"
+      },
+      {
+        "title": "健康数据 - 全球传染病事件风险评估报告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jksj/jksj03/"
+        ],
+        "target": "/chinacdc/jksj/jksj03"
+      },
+      {
+        "title": "健康数据 - 全国预防接种异常反应监测信息概况",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jksj/jksj04_14209/"
+        ],
+        "target": "/chinacdc/jksj/jksj04_14209"
+      },
+      {
+        "title": "健康数据 - 流感监测周报",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jksj/jksj04_14249/"
+        ],
+        "target": "/chinacdc/jksj/jksj04_14249"
+      },
+      {
+        "title": "健康数据 - 全国急性呼吸道传染病哨点监测情况",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jksj/jksj04_14275/"
+        ],
+        "target": "/chinacdc/jksj/jksj04_14275"
+      },
+      {
+        "title": "健康数据 - 健康报告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jksj/jksj04/"
+        ],
+        "target": "/chinacdc/jksj/jksj04"
+      },
+      {
+        "title": "健康科普 - 传染病",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkkp/crb/"
+        ],
+        "target": "/chinacdc/jkkp/crb"
+      },
+      {
+        "title": "健康科普 - 慢性非传染性疾病",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkkp/mxfcrb/"
+        ],
+        "target": "/chinacdc/jkkp/mxfcrb"
+      },
+      {
+        "title": "健康科普 - 免疫规划",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkkp/mygh/"
+        ],
+        "target": "/chinacdc/jkkp/mygh"
+      },
+      {
+        "title": "健康科普 - 公共卫生事件",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkkp/ggws/"
+        ],
+        "target": "/chinacdc/jkkp/ggws"
+      },
+      {
+        "title": "健康科普 - 烟草控制",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkkp/yckz/"
+        ],
+        "target": "/chinacdc/jkkp/yckz"
+      },
+      {
+        "title": "健康科普 - 营养与健康",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkkp/yyjk/"
+        ],
+        "target": "/chinacdc/jkkp/yyjk"
+      },
+      {
+        "title": "健康科普 - 环境健康",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkkp/hjjk/"
+        ],
+        "target": "/chinacdc/jkkp/hjjk"
+      },
+      {
+        "title": "健康科普 - 职业健康与中毒控制",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkkp/zyjk/"
+        ],
+        "target": "/chinacdc/jkkp/zyjk"
+      },
+      {
+        "title": "健康科普 - 放射卫生",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jkkp/fsws/"
+        ],
+        "target": "/chinacdc/jkkp/fsws"
+      }
+    ]
+  },
   "chinafactcheck.com": {
     "_name": "有据",
     ".": [
