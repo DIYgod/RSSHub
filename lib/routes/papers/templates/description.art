@@ -10,6 +10,10 @@
   <a href="{{ kimiUrl }}">[Kimi]</a>
 {{ /if }}
 
+{{ if authorString }}
+  <p><b>Authors:</b> {{ authorString }}</p>
+{{ /if }}
+
 {{ if summary }}
   <p>{{ summary }}</p>
 {{ /if }}
