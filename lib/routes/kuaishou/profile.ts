@@ -62,7 +62,9 @@ async function handler(ctx) {
             userInfo = resData.data.userInfo;
         }
     });
-    await page.goto(`https://www.kuaishou.com`);
+    await page.goto(`https://www.kuaishou.com`, {
+        waitUntil: 'domcontentloaded',
+    });
     await page.goto(`https://live.kuaishou.com/profile/${principalId}`);
     const resData = (await promise.catch((error) => error)) as Array<any>;
 
