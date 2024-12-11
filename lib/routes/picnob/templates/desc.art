@@ -1,4 +1,4 @@
-{{ if item.type === 'video' }}
+{{ if item.type === 'video' || item.type === 'igtv' }}
     <video poster="{{ item.pic }}" controls preload="metadata">
         <source src="{{ item.video }}" type="video/mp4">
     </video>
