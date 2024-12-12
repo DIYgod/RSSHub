@@ -1,31 +1,25 @@
 import { Route } from '@/types';
 import { namespace } from './namespace';
 import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 
 async function getPosts() {
-    const cacheKey = 'chongdiantou_posts';
     try {
-        // 尝试从缓存中获取数据，如果没有缓存则从 API 获取
-        const data = await cache.tryGet(cacheKey, async () => {
-            const response = await ofetch('https://www.chongdiantou.com/wp-json/wp/v2/posts?_embed&per_page=10', {
-                headers: {
-                    method: 'GET',
-                },
-            });
-            return response.map((post) => ({
-                title: post.title.rendered,
-                link: post.link,
-                pubDate: new Date(post.date),
-                category: post._embedded['wp:term'][0].map((term) => term.name).join(', '),
-                description: post.content.rendered,
-                author: post._embedded.author[0].name,
-                image: post._embedded['wp:featuredmedia'] ? post._embedded['wp:featuredmedia'][0].source_url : '',
-            }));
+        // Fetch data directly from the API without caching
+        const response = await ofetch('https://www.chongdiantou.com/wp-json/wp/v2/posts?_embed&per_page=10', {
+            headers: {
+                method: 'GET',
+            },
         });
-
-        return data;
+        return response.map((post) => ({
+            title: post.title.rendered,
+            link: post.link,
+            pubDate: new Date(post.date_gmt), // Use date_gmt instead of date
+            category: post._embedded['wp:term'][0].map((term) => term.name).join(', '),
+            description: post.content.rendered,
+            author: post._embedded.author[0].name,
+            image: post._embedded['wp:featuredmedia'] ? post._embedded['wp:featuredmedia'][0].source_url : '',
+        }));
     } catch (error) {
         logger.error('Error fetching posts:', error);
         return [];
