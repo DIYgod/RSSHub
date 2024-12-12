@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:category',
+    path: '/:category?',
     categories: ['new-media'],
     radar: [{ source: ['www.copernicium.tw'] }],
     name: '分类',
@@ -17,25 +17,32 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const CATEGORY_TO_ARG_MAP = new Map([
-        ['环球视角', '4_1'],
-        ['人文叙述', '4_3'],
-        ['观点评论', '4_5'],
-        ['专题报道', '4_7'],
-    ]);
-    if (!CATEGORY_TO_ARG_MAP.get(ctx.req.param().category)) {
-        throw new Error('The requested category does not exist or is not supported.');
+    let res;
+    if (ctx.req.param('category')) {
+        const CATEGORY_TO_ARG_MAP = new Map([
+            ['环球视角', '4_1'],
+            ['人文叙述', '4_3'],
+            ['观点评论', '4_5'],
+            ['专题报道', '4_7'],
+        ]);
+        if (!CATEGORY_TO_ARG_MAP.get(ctx.req.param().category)) {
+            throw new Error('The requested category does not exist or is not supported.');
+        }
+        const reqArgs = {
+            args: {
+                _jcp: CATEGORY_TO_ARG_MAP.get(ctx.req.param().category),
+                m31pageno: 1,
+            },
+            type: 0,
+        };
+        res = await ofetch(`https://www.copernicium.tw/nr.jsp`, {
+            query: { _reqArgs: reqArgs },
+        });
+    } else {
+        res = await ofetch(`https://www.copernicium.tw/sys-nr/`, {
+            query: { _reqArgs: { args: {}, type: 15 } },
+        });
     }
-    const reqArgs = {
-        args: {
-            _jcp: CATEGORY_TO_ARG_MAP.get(ctx.req.param().category),
-            m31pageno: 1,
-        },
-        type: 0,
-    };
-    const res = await ofetch(`https://www.copernicium.tw/nr.jsp`, {
-        query: { _reqArgs: reqArgs },
-    });
     const $ = load(res);
     const list = $('.J_newsResultLine a.mixNewsStyleTitle')
         .toArray()
