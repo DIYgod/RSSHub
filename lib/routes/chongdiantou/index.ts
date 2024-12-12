@@ -35,7 +35,7 @@ export const route: Route = {
             source: ['www.chongdiantou.com'],
         },
     ],
-    name: '充电头网',
+    name: '最新资讯',
     maintainers: ['Geraldxm'],
     handler,
     url: 'www.chongdiantou.com',
