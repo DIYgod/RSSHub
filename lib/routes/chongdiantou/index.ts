@@ -1,33 +1,35 @@
 import { Route } from '@/types';
 import { namespace } from './namespace';
-import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 
-function getFullText(list: any[]) {
-    return Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
-                    const response = await ofetch(item.link, {
-                        headers: {
-                            referrer: 'https://www.chongdiantou.com/',
-                            method: 'GET',
-                        },
-                    });
-                    const $ = load(response);
-                    item.description = $('.post-content').html();
-                    const authorText = $('.post-meta a').text().trim();
-                    item.author = authorText.split(/\s+/)[0] || '充电头网';
-                    return item;
-                } catch (error) {
-                    logger.error(`Error fetching full text for ${item.link}:`, error);
-                    return item;
-                }
-            })
-        )
-    );
+async function getPosts() {
+    const cacheKey = 'chongdiantou_posts';
+    try {
+        // 尝试从缓存中获取数据，如果没有缓存则从 API 获取
+        const data = await cache.tryGet(cacheKey, async () => {
+            const response = await ofetch('https://www.chongdiantou.com/wp-json/wp/v2/posts?_embed&per_page=10', {
+                headers: {
+                    method: 'GET',
+                },
+            });
+            return response.map((post) => ({
+                title: post.title.rendered,
+                link: post.link,
+                pubDate: new Date(post.date),
+                category: post._embedded['wp:term'][0].map((term) => term.name).join(', '),
+                description: post.content.rendered,
+                author: post._embedded.author[0].name,
+                image: post._embedded['wp:featuredmedia'] ? post._embedded['wp:featuredmedia'][0].source_url : '',
+            }));
+        });
+
+        return data;
+    } catch (error) {
+        logger.error('Error fetching posts:', error);
+        return [];
+    }
 }
 
 export const route: Route = {
@@ -46,40 +48,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = 'https://www.chongdiantou.com/';
-    const response = await ofetch(url, {
-        headers: {
-            referrer: 'https://www.chongdiantou.com/',
-            method: 'GET',
-        },
-    });
-    const $ = load(response);
-    const list = [];
-    $('.list-item.block').each((index, element) => {
-        const item = $(element);
-        // logger.info(item);
-        const titleElement = item.find('.list-title a');
-        const link = titleElement.attr('href');
-        const title = titleElement.text().trim();
-        const categoryElement = item.find('.item-badge');
-        const category = categoryElement.text().trim();
-        const timeElement = item.find('time');
-        const pubDateStr = timeElement.text().trim(); // 12月 11，2024 -> 12/11/2024
-        const pubDate = new Date(pubDateStr.replaceAll(/月|，/g, '/'));
-        const imageElement = item.find('img.lazy');
-        const imageSrc = imageElement.attr('data-src') || imageElement.attr('src');
-        if (!title) {
-            return;
-        }
-        list.push({
-            title,
-            link,
-            pubDate,
-            category,
-            image: imageSrc,
-        });
-    });
-    const items = await getFullText(list);
+    const items = await getPosts();
 
     return {
         title: '充电头网 - 最新资讯',
