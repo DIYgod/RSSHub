@@ -17059,6 +17059,37 @@
     "url": "daily-blog.chlinlearn.top",
     "lang": "zh-CN"
   },
+  "chongdiantou": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/chongdiantou",
+        "radar": [
+          {
+            "source": [
+              "www.chongdiantou.com"
+            ]
+          }
+        ],
+        "name": "最新资讯",
+        "maintainers": [
+          "Geraldxm"
+        ],
+        "url": "www.chongdiantou.com",
+        "location": "index.ts"
+      }
+    },
+    "name": "充电头网",
+    "url": "www.chongdiantou.com",
+    "categories": [
+      "new-media"
+    ],
+    "lang": "zh-CN",
+    "description": "充电头网是国内最早进行消费类电源技术及其周边配件（快充、充电头、充电器、无线充、车充、车载充电器、数据线、充电线材、移动电源及电芯、USB插排）评测、拆解的专业机构。"
+  },
   "chsi": {
     "routes": {
       "/hotnews": {

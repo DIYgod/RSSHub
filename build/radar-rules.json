@@ -6972,6 +6972,19 @@
       }
     ]
   },
+  "chongdiantou.com": {
+    "_name": "充电头网",
+    "www": [
+      {
+        "title": "最新资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/chongdiantou/"
+      }
+    ]
+  },
   "chsi.com.cn": {
     "_name": "中国研究生招生信息网",
     "yz": [
