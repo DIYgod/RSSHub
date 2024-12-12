@@ -15,7 +15,7 @@ const graphQLEndpointsPlain = [
 
 const gqlMap = Object.fromEntries(graphQLEndpointsPlain.map((endpoint) => [endpoint.split('/')[3].replace(/V2$|Query$|QueryV2$/, ''), endpoint]));
 
-const thirdPartySupportedAPI = ['UserByScreenName', 'UserByRestId', 'UserTweets', 'UserTweetsAndReplies'];
+const thirdPartySupportedAPI = ['UserByScreenName', 'UserByRestId', 'UserTweets', 'UserTweetsAndReplies', 'ListLatestTweetsTimeline'];
 
 const gqlFeatureUser = {
     hidden_profile_subscriptions_enabled: true,
