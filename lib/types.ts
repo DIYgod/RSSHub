@@ -247,9 +247,9 @@ interface RouteItem {
 }
 
 interface Route extends RouteItem {
-    ja?: NamespaceItem;
-    zh?: NamespaceItem;
-    'zh-TW'?: NamespaceItem;
+    ja?: RouteItem;
+    zh?: RouteItem;
+    'zh-TW'?: RouteItem;
 }
 
 export type { Route };
