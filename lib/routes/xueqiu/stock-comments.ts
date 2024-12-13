@@ -41,7 +41,10 @@ async function handler(ctx) {
 
     // 获取stock_name
     const stock_name = await cache.tryGet(`stock_name_${id}`, async () => {
-        const page = await getPage(`https://xueqiu.com/S/${id}`);
+        const page = await getPage();
+        await page.goto(`https://xueqiu.com/S/${id}`, {
+            waitUntil: 'domcontentloaded',
+        });
         await page.waitForSelector('.stock-name');
 
         // 获取文本并处理

@@ -7,7 +7,10 @@ export const parseToken = (link: string) =>
     cache.tryGet(
         'xueqiu:token',
         async () => {
-            const page = await getPage(link, null);
+            const page = await getPage();
+            await page.goto(link, {
+                waitUntil: 'domcontentloaded',
+            });
             await page.evaluate(() => document.documentElement.innerHTML);
             const cookies = await getCookies(page);
 
@@ -17,7 +20,7 @@ export const parseToken = (link: string) =>
         false
     );
 
-export const getPage = async (url: string, cookie: string | Record<string, any> | null = null) => {
+export const getPage = async () => {
     const browser = await puppeteer({ stealth: true });
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -26,18 +29,20 @@ export const getPage = async (url: string, cookie: string | Record<string, any> 
         request.resourceType() === 'document' ? request.continue() : request.abort();
     });
 
-    if (cookie) {
-        await setCookies(page, cookie, 'xueqiu.com');
-    }
     return page;
 };
 
 export const getJson = async (url: string, cookie: string | Record<string, any> | null = null) => {
-    const page = await getPage(url, cookie);
+    const page = await getPage();
+
+    if (cookie) {
+        await setCookies(page, cookie, 'xueqiu.com');
+    }
 
     const data = await page.goto(url, {
         waitUntil: 'domcontentloaded',
     });
+
     const res = await data?.json();
     return res;
 };
