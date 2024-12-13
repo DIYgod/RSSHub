@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/',
     categories: ['blog'],
-    example: '/daoxuan/',
+    example: '/daoxuan',
     radar: [
         {
             source: ['daoxuan.cc/'],
