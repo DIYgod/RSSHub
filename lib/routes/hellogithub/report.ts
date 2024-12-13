@@ -14,7 +14,7 @@ const types = {
 };
 
 export const route: Route = {
-    path: ['/ranking/:type?', '/report/:type?'],
+    path: '/ranking/:type?',
     example: '/hellogithub/ranking',
     name: '榜单报告',
     maintainers: ['moke8', 'nczitzk'],

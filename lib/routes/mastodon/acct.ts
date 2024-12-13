@@ -35,7 +35,7 @@ However, you can still specify these route-specific configurations if you need t
 
 async function handler(ctx) {
     const acct = ctx.req.param('acct');
-    const only_media = ctx.req.param('only_media') ? 'true' : 'false';
+    const only_media = ctx.req.param('only_media') === 'true' ? 'true' : 'false';
 
     const { site, account_id } = await utils.getAccountIdByAcct(acct);
 

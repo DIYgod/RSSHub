@@ -8,9 +8,17 @@ const baseUrl = 'https://xsijishe.com';
 
 export const route: Route = {
     path: '/rank/:type',
-    categories: ['bbs'],
+    categories: ['bbs', 'popular'],
     example: '/xsijishe/rank/weekly',
-    parameters: { type: '排行榜类型: weekly | monthly' },
+    parameters: {
+        type: {
+            description: '排行榜类型',
+            options: [
+                { value: 'weekly', label: '周榜' },
+                { value: 'monthly', label: '月榜' },
+            ],
+        },
+    },
     features: {
         requireConfig: [
             {
@@ -29,23 +37,25 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '排行榜',
-    maintainers: ['akynazh'],
+    maintainers: ['akynazh', 'AiraNadih'],
     handler,
 };
 
 async function handler(ctx) {
     const rankType = ctx.req.param('type');
     let title;
-    let rankId;
+    let index; // 用于选择第几个 li
+
     if (rankType === 'weekly') {
         title = '司机社综合周排行榜';
-        rankId = 'nex_recons_demens';
+        index = 0; // 第一个 li 是周榜
     } else if (rankType === 'monthly') {
         title = '司机社综合月排行榜';
-        rankId = 'nex_recons_demens1';
+        index = 1; // 第二个 li 是月榜
     } else {
         throw new InvalidParameterError('Invalid rank type');
     }
+
     const url = `${baseUrl}/portal.php`;
     const headers = {
         'Accept-Encoding': 'gzip, deflate, br',
@@ -53,11 +63,26 @@ async function handler(ctx) {
         Cookie: config.xsijishe.cookie,
         'User-Agent': config.xsijishe.user_agent,
     };
+
     const resp = await got(url, {
         headers,
     });
+
+    const redirectMatch = resp.data.match(/window\.location\.href\s*=\s*"([^"]+)"/);
+    if (redirectMatch) {
+        const redirectUrl = `${baseUrl}${redirectMatch[1]}`;
+        // 使用提取到的地址重新请求
+        const realResp = await got(redirectUrl, {
+            headers,
+        });
+        resp.data = realResp.data;
+    }
+
     const $ = load(resp.data);
-    let items = $(`#${rankId} dd`)
+    // 根据 index 选择对应的 li，然后获取其中的 dd 元素
+    let items = $('.nex_recon_lists ul li')
+        .eq(index)
+        .find('.nex_recons_demens dl dd')
         .toArray()
         .map((item) => {
             item = $(item);
@@ -68,6 +93,7 @@ async function handler(ctx) {
                 link: `${baseUrl}/${link}`,
             };
         });
+
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {

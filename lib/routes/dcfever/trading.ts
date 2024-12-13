@@ -6,7 +6,7 @@ import { baseUrl, parseTradeItem } from './utils';
 
 export const route: Route = {
     path: '/trading/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/dcfever/trading/1',
     parameters: { id: '分類 ID，見下表' },
     name: '二手市集',
@@ -29,16 +29,14 @@ async function handler(ctx) {
     const response = await ofetch(link.href);
     const $ = load(response);
 
-    const list = $('.item_list li a')
+    const list = $('.item_grid_wrap div a')
         .toArray()
-        .filter((item) => $(item).attr('href') !== '/documents/advertising.php')
         .map((item) => {
             item = $(item);
-            item.find('.optional').remove();
             return {
-                title: item.find('.trade_title').text(),
+                title: item.find('.lazyloadx').attr('alt'),
                 link: new URL(item.attr('href'), link.href).href,
-                author: item.find('.trade_info').text(),
+                author: item.find('.trade_info div span').eq(1).text(),
             };
         });
 

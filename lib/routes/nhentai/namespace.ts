@@ -4,4 +4,5 @@ export const namespace: Namespace = {
     name: 'nhentai',
     url: 'nhentai.net',
     categories: ['anime'],
+    lang: 'en',
 };

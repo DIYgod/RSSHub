@@ -4,7 +4,7 @@ import { getApiUrl, parseArticle } from './common';
 
 export const route: Route = {
     path: '/research',
-    categories: ['new-media'],
+    categories: ['programming'],
     example: '/openai/research',
     parameters: {},
     features: {

@@ -19,7 +19,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/information/:channel?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/hellobtc/information/latest',
     parameters: { channel: '类型，可填 `latest` 和 `application` 及最新和应用，默认为最新' },
     features: {

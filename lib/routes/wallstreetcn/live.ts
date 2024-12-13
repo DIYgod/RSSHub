@@ -19,7 +19,7 @@ const titles = {
 
 export const route: Route = {
     path: '/live/:category?/:score?',
-    categories: ['traditional-media'],
+    categories: ['finance'],
     example: '/wallstreetcn/live',
     parameters: { category: '快讯分类，默认`global`，见下表', score: '快讯重要度，默认`1`全部快讯，可设置为`2`只看重要的' },
     features: {

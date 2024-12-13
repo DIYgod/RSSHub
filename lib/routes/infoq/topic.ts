@@ -5,7 +5,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/topic/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/infoq/topic/1',
     parameters: { id: '话题id，可在 [InfoQ全部话题](https://www.infoq.cn/topics) 页面找到URL里的话题id' },
     features: {
