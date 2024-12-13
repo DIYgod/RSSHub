@@ -8355,6 +8355,19 @@
       }
     ]
   },
+  "daoxuan.cc": {
+    "_name": "道宣的窝",
+    ".": [
+      {
+        "title": "推荐阅读文章",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/daoxuan/"
+      }
+    ]
+  },
   "darwinawards.com": {
     "_name": "Darwin Awards",
     ".": [

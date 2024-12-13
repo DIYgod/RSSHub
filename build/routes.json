@@ -21114,6 +21114,33 @@
     "url": "open.dangdang.com",
     "lang": "zh-CN"
   },
+  "daoxuan": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "blog"
+        ],
+        "example": "/daoxuan",
+        "radar": [
+          {
+            "source": [
+              "daoxuan.cc/"
+            ]
+          }
+        ],
+        "name": "推荐阅读文章",
+        "maintainers": [
+          "dx2331lxz"
+        ],
+        "url": "daoxuan.cc/",
+        "location": "rss.ts"
+      }
+    },
+    "name": "道宣的窝",
+    "url": "daoxuan.cc",
+    "lang": "zh-CN"
+  },
   "dapenti": {
     "routes": {
       "/subject/:id": {
