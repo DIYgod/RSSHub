@@ -3,11 +3,10 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
+import { getJson, getPage } from '@/routes/xueqiu/cookies';
 import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
@@ -17,7 +16,7 @@ export const route: Route = {
     parameters: { id: '股票代码（需要带上交易所）' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -36,22 +35,21 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const res = await got({
-        method: 'get',
-        url: `https://xueqiu.com/query/v1/symbol/search/status?u=11111&count=100&comment=0&symbol=${id}&source=all&sort=time`,
-    });
+    const url = `https://xueqiu.com/query/v1/symbol/search/status?u=11111&count=100&comment=0&symbol=${id}&source=all&sort=time`;
+
+    const res = await getJson(url);
 
     // 获取stock_name
     const stock_name = await cache.tryGet(`stock_name_${id}`, async () => {
-        const res = await got({
-            method: 'get',
-            url: `https://xueqiu.com/S/${id}`,
-        });
-        const $ = load(res.data); // 使用 cheerio 加载返回的 HTML
-        return $('.stock-name').text().split('(')[0];
+        const page = await getPage(`https://xueqiu.com/S/${id}`);
+        await page.waitForSelector('.stock-name');
+
+        // 获取文本并处理
+        const stockName = await page.$eval('.stock-name', (element) => (element.textContent ? element.textContent.split('(')[0].trim() : ''));
+        return stockName;
     });
 
-    const data = res.data.list;
+    const data = res.list;
     return {
         title: `${id} ${stock_name} - 评论`,
         link: `https://xueqiu.com/S/${id}`,

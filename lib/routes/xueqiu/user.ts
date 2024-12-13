@@ -1,10 +1,9 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
-import { parseToken } from '@/routes/xueqiu/cookies';
+import { parseToken, getJson } from '@/routes/xueqiu/cookies';
 
 const rootUrl = 'https://xueqiu.com';
 
@@ -15,7 +14,7 @@ export const route: Route = {
     parameters: { id: '用户 id, 可在用户主页 URL 中找到', type: '动态的类型, 不填则默认全部' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -50,20 +49,12 @@ async function handler(ctx) {
 
     const link = `${rootUrl}/u/${id}`;
     const token = await parseToken(link);
-    const res2 = await got({
-        method: 'get',
-        url: `${rootUrl}/v4/statuses/user_timeline.json`,
-        searchParams: queryString.stringify({
-            user_id: id,
-            type,
-            source,
-        }),
-        headers: {
-            Cookie: token,
-            Referer: link,
-        },
-    });
-    const data = res2.data.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
+
+    const url = `${rootUrl}/v4/statuses/user_timeline.json?user_id=${id}&type=${type}&source=${source}`;
+
+    const res2 = await getJson(url, token);
+
+    const data = res2.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
 
     const items = await Promise.all(
         data.map((item) =>
