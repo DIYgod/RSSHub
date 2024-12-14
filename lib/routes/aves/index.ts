@@ -1,11 +1,12 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/:category?',
     categories: ['other'],
-    example: '/aves-art',
-    parameters: { category: '分类，见下表，默认为信息快递' },
+    example: '/aves',
+    parameters: { category: '分类，见下表' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -15,11 +16,11 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '分类',
-    maintainers: ['ddddanielx'],
+    maintainers: ['dddaniel1'],
     handler,
-    description: `| 小说 | 非虚构 | 档案 | 专栏 | 诗歌 |
+    description: `| 诗歌 | 小说 | 专栏 | 档案 | 非虚构 | all
   | -------- | -------- | -------- | -------- | -------- |
-  | 2     | 5     | 4     | 3     | 1     |`,
+  | 1     | 2     | 3     | 4     | 5     | all     |`,
 };
 
 async function handler(ctx) {
@@ -31,8 +32,8 @@ async function handler(ctx) {
     const cateMapping = new Map([
         ['1', '诗歌'],
         ['2', '小说'],
-        ['3', '档案'],
-        ['4', '专栏'],
+        ['3', '专栏'],
+        ['4', '档案'],
         ['5', '非虚构'],
         ['all', 'all'],
     ]);
@@ -56,18 +57,22 @@ async function handler(ctx) {
         }
         articleIds = articleIds.map((item) => item.id);
     }
-    let articles: any[] = await Promise.all(articleIds.map((id) => got.post(`${rootUrl}${detailPath}`, { json: { id } })));
-    articles = articles.map((item) => {
-        if (item.data.code === 200) {
-            return {
-                title: item.data.result.title,
-                description: item.data.result.content,
-                author: item.data.result.author,
-                pubDate: item.data.result.publishedAt,
-            };
-        }
-        return {};
-    });
+    const articles: any[] = await Promise.all(
+        articleIds.map((id) =>
+            cache.tryGet(String(id), async () => {
+                const res: any = await got.post(`${rootUrl}${detailPath}`, { json: { id } });
+                if (res.data.code === 200) {
+                    return {
+                        title: res.data.result.title,
+                        description: res.data.result.content,
+                        author: res.data.result.author,
+                        pubDate: res.data.result.publishedAt,
+                    };
+                }
+                return {};
+            })
+        )
+    );
     return {
         item: articles,
         title,
