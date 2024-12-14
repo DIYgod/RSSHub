@@ -3358,6 +3358,9 @@
   "/hrbust/jwzx/:type?/:page?": [
     "LenaNouzen"
   ],
+  "/hrbust/news/:category?": [
+    "cscnk52"
+  ],
   "/huanqiu/news/:category?": [
     "yuxinliu-alex"
   ],
