@@ -18,9 +18,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['dddaniel1'],
     handler,
-    description: `| 诗歌 | 小说 | 专栏 | 档案 | 非虚构 | all
+    description: `| 诗歌 | 小说 | 专栏 | 档案 | 非虚构 | all | current
   | -------- | -------- | -------- | -------- | -------- |
-  | 1     | 2     | 3     | 4     | 5     | all     |`,
+  | 1     | 2     | 3     | 4     | 5     | all     | 最新文章     |`,
 };
 
 async function handler(ctx) {
@@ -28,6 +28,7 @@ async function handler(ctx) {
     const currentUrl = 'http://aves.art/';
     const rootUrl = 'https://app.aves.art';
     const categoryPath = '/api/lb_catalog/get_catalog_post';
+    const currentPath = '/api/lb_periodical/current';
     const detailPath = '/api/lb_post/detail';
     const cateMapping = new Map([
         ['1', '诗歌'],
@@ -36,8 +37,9 @@ async function handler(ctx) {
         ['4', '档案'],
         ['5', '非虚构'],
         ['all', 'all'],
+        ['current', '最新文章'],
     ]);
-    const title = `小鸟文学 - ${cateMapping.get(category)}`;
+    const title = `小鸟文学(好奇心日报) - ${cateMapping.get(category)}`;
     const description =
         '小鸟文学是个独立 App，它的表达在不停变化，认识它的人都有不同的机缘。此前你可能会从各种短篇小说、长篇访谈，人类学田野笔记或者和它的前身《好奇心日报》的联系认识到它，如今它还在持续作出调整。不过它的价值观一以贯之：和我们所处的世界保持距离，与此同时又不会袖手旁观。';
     let articleIds: any[] = [];
@@ -50,6 +52,12 @@ async function handler(ctx) {
             }
         }
         articleIds = articleIds.flat().map((item) => item.id);
+    } else if (category === 'current') {
+        const { data } = await got.post(`${rootUrl}${currentPath}`);
+        if (data.code === 200) {
+            articleIds.push(...data.result.lbPostList);
+        }
+        articleIds = articleIds.map((item) => item.id);
     } else {
         const { data } = await got.post(`${rootUrl}${categoryPath}`, { json: { catalogId: category } });
         if (data.code === 200) {
