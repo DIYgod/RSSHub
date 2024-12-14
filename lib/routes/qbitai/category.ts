@@ -1,6 +1,8 @@
 import { Route } from '@/types';
 import parser from '@/utils/rss-parser';
-
+import ofetch from '@/utils/ofetch';
+import cache from '@/utils/cache';
+import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -22,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '分类',
-    maintainers: ['FuryMartin'],
+    maintainers: ['FuryMartin, Geraldxm'],
     handler,
     description: `| 资讯 | 数码     | 智能车 | 智库  | 活动    |
 | ---- | -------- | ------ | ----- | ------- |
@@ -31,24 +33,36 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
-    const link = encodeURI(`https://www.qbitai.com/category/${category}/feed`);
-    const feed = await parser.parseURL(link);
+    const url = encodeURI(`https://www.qbitai.com/category/${category}/feed`);
 
-    const items = feed.items.map((item) => ({
+    const feed = await parser.parseURL(url);
+    const entries = feed.items.map((item) => ({
         title: item.title,
         pubDate: parseDate(item.pubDate),
         link: item.link,
         author: '量子位',
         category: item.categories,
-        description: item['content:encoded'],
+        description: '', // Initialize description field
     }));
 
+    const resolvedEntries = await Promise.all(
+        entries.map((entry) =>
+            cache.tryGet(entry.link, async () => {
+                try {
+                    const response = await ofetch(entry.link);
+                    const $ = load(response);
+                    entry.description = $('.article').html() || 'No content found';
+                } catch {
+                    entry.description = 'Failed to fetch content';
+                }
+                return entry;
+            })
+        )
+    );
+
     return {
-        // 源标题
-        title: `量子位-${category}`,
-        // 源链接
+        title: `量子位 - ${category}`,
         link: `https://www.qbitai.com/category/${category}`,
-        // 源文章
-        item: items,
+        item: resolvedEntries,
     };
 }

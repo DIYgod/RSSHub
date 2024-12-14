@@ -82,14 +82,16 @@ async function handler(ctx) {
                           type: article.address.split('.').pop(),
                       },
                   })
-                : article.summary,
-        pubDate: article.start_time ? parseDate(article.start_time, 'X') : undefined,
+                : type === 'breaking'
+                  ? article.content
+                  : article.summary,
+        pubDate: article.start_time ? parseDate(article.start_time, 'X') : article.push_time ? parseDate(article.push_time, 'X') : undefined,
         id: article.id,
         link: `https://www.mittrchina.com/news/detail/${article.id}`,
     }));
 
     let items = list;
-    if (type !== 'video') {
+    if (type !== 'video' && type !== 'breaking') {
         items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
