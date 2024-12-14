@@ -65,7 +65,7 @@ async function handler(ctx) {
                     return {
                         title: res.data.result.title,
                         description: res.data.result.content,
-                        author: res.data.result.author,
+                        author: JSON.parse(res.data.result.author)[0].name,
                         pubDate: res.data.result.publishedAt,
                     };
                 }
