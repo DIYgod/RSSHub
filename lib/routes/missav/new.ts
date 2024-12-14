@@ -2,10 +2,11 @@ import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import puppeteer from '@/utils/puppeteer';
+import { puppeteerGet } from '@/routes/aip/utils';
 
 export const route: Route = {
     path: '/new',
@@ -33,9 +34,9 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://missav.com';
-    const { data: response } = await got(`${baseUrl}/dm397/new`);
+    const browser = await puppeteer();
+    const response = await puppeteerGet(`${baseUrl}/dm397/new`, browser);
     const $ = load(response);
-
     const items = $('.grid .group')
         .toArray()
         .map((item) => {
