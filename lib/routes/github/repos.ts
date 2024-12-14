@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/repos/:user/:type?/:sort?',
@@ -49,37 +50,46 @@ async function handler(ctx) {
         },
         headers,
     });
-    const data = response.data.filter((item) => {
-        switch (type) {
-            case 'all':
-                return true;
-            case 'owner':
-                return item.owner.login === user;
-            case 'member':
-                return item.owner.login !== user;
-            case 'public':
-                return item.private === false;
-            case 'private':
-                return item.private === true;
-            case 'forks':
-                return item.fork === true;
-            case 'sources':
-                return item.fork === false;
-            default:
-                return true;
-        }
-    });
+    const item = response.data
+        .filter((item) => {
+            switch (type) {
+                case 'all':
+                    return true;
+                case 'owner':
+                    return item.owner.login === user;
+                case 'member':
+                    return item.owner.login !== user;
+                case 'public':
+                    return item.private === false;
+                case 'private':
+                    return item.private === true;
+                case 'forks':
+                    return item.fork === true;
+                case 'sources':
+                    return item.fork === false;
+                default:
+                    return true;
+            }
+        })
+        .map((item) => {
+            let pubDate = parseDate(item.created_at);
+            if (sort === 'updated' && item.updated_at) {
+                pubDate = parseDate(item.updated_at);
+            } else if (sort === 'pushed' && item.pushed_at) {
+                pubDate = parseDate(item.pushed_at);
+            }
+            return {
+                title: item.name,
+                description: item.description || 'No description',
+                pubDate,
+                updated: parseDate(item.updated_at),
+                link: item.html_url,
+            };
+        });
     return {
         allowEmpty: true,
         title: `${user}'s GitHub repositories`,
         link: `https://github.com/${user}`,
-        item:
-            data &&
-            data.map((item) => ({
-                title: item.name,
-                description: item.description || 'No description',
-                pubDate: new Date(item.created_at).toUTCString(),
-                link: item.html_url,
-            })),
+        item,
     };
 }
