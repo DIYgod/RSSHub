@@ -14660,16 +14660,6 @@
         ],
         "target": "/hrbust/jwzx"
       }
-    ],
-    "news": [
-      {
-        "title": "新闻网",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/:category.htm"
-        ],
-        "target": "/hrbust/news/:category?"
-      }
     ]
   },
   "huanqiu.com": {
