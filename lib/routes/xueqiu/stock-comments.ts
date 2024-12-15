@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
-import { getJson, getPage } from '@/routes/xueqiu/cookies';
+import { getJson, getPuppeteerPage } from '@/routes/xueqiu/cookies';
 import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     // 获取stock_name
     const stock_name = await cache.tryGet(`stock_name_${id}`, async () => {
-        const page = await getPage();
+        const page = await getPuppeteerPage();
         await page.goto(`https://xueqiu.com/S/${id}`, {
             waitUntil: 'domcontentloaded',
         });

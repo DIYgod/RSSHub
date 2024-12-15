@@ -7,7 +7,7 @@ export const parseToken = (link: string) =>
     cache.tryGet(
         'xueqiu:token',
         async () => {
-            const page = await getPage();
+            const page = await getPuppeteerPage();
             await page.goto(link, {
                 waitUntil: 'domcontentloaded',
             });
@@ -20,7 +20,7 @@ export const parseToken = (link: string) =>
         false
     );
 
-export const getPage = async () => {
+export const getPuppeteerPage = async () => {
     const browser = await puppeteer({ stealth: true });
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -33,7 +33,7 @@ export const getPage = async () => {
 };
 
 export const getJson = async (url: string, cookie: string | Record<string, any> | null = null) => {
-    const page = await getPage();
+    const page = await getPuppeteerPage();
 
     if (cookie) {
         await setCookies(page, cookie, 'xueqiu.com');
