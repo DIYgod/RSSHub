@@ -18,13 +18,16 @@ export const route: Route = {
         {
             source: ['minecraft.net/en-us/articles', 'minecraft.net/'],
         },
-    };
+    ],
     maintainers: ['OutlinedArc217'],
-    url: 'minecraft.net/',
+    url: 'https://www.minecraft.net/',
     description: 'Catch up on the latest articles',
+    zh: {
+        name: 'Minecraft最近新闻',
+    },
 };
 
-export async function getData() {
+export async function handler(ctx: any) {
     const jsonUrl = 'https://www.minecraft.net/content/minecraftnet/language-masters/en-us/articles/jcr:content/root/container/image_grid_a.articles.page-1.json';
     const baseUrl = 'https://www.minecraft.net';
 
@@ -34,15 +37,13 @@ export async function getData() {
     const items = data.article_grid.map((article: any) => ({
         title: article.default_tile.title || 'No title available',
         link: new URL(article.article_url, baseUrl).href,
+        description: article.default_tile.subtitle || '',
     }));
 
-    return {
+    ctx.state.data = {
         title: 'Minecraft News',
         link: baseUrl,
         description: 'Catch up on the latest articles',
-        item: items.map((item: any) => ({
-            title: item.title,
-            link: item.link,
-        })),
+        item: items,
     };
 }
