@@ -43,7 +43,7 @@ async function handler() {
             link,
             pubDate,
             description,
-            category: item.tags.map((tag) => tag.name),
+            category: item.tags?.map((tag) => tag.name),
         };
     });
 
