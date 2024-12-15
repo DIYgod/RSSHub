@@ -23,7 +23,7 @@ export const route: Route = {
     url: 'minecraft.net/',
     description: 'Catch up on the latest articles',
     zh: {
-        name: 'Minecraft最近新闻',
+        name: 'Minecraft近期新闻',
     },
 };
 
