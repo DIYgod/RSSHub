@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
-import { parseToken, getJsonResult, getPuppeteerPage } from '@/routes/xueqiu/cookies';
+import { getJsonResult, getPuppeteerPage, parseToken } from '@/routes/xueqiu/cookies';
 
 const rootUrl = 'https://xueqiu.com';
 
@@ -59,7 +59,6 @@ async function handler(ctx) {
         data.map((item) =>
             cache.tryGet(item.target, async () => {
                 const page = await getPuppeteerPage(token);
-
                 await page.goto(`${rootUrl}${item.target}`, {
                     waitUntil: 'domcontentloaded',
                 });
