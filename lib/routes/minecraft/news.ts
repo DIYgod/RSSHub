@@ -1,5 +1,4 @@
-import puppeteer from 'puppeteer';
-import cache from '@/utils/cache';
+import got from 'got';
 import { Route } from '@/types';
 
 export const route: Route = {
@@ -9,8 +8,8 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -29,53 +28,24 @@ export const route: Route = {
 };
 
 export async function getData() {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-    const articlesUrl = 'https://www.minecraft.net/en-us/articles';
+    const jsonUrl = 'https://www.minecraft.net/content/minecraftnet/language-masters/en-us/articles/jcr:content/root/container/image_grid_a.articles.page-1.json';
+    const baseUrl = 'https://www.minecraft.net';
 
-    await page.goto(articlesUrl, { waitUntil: 'networkidle2' });
+    const response = await got(jsonUrl);
+    const data = JSON.parse(response.body);
 
-    const items = await page.evaluate(() =>
-        [...document.querySelectorAll('.MC_imageGridA_picture')].map((element) => {
-            const title = element.querySelector('h3.MC_Heading_4')?.textContent?.trim() || '';
-            const link = new URL(element.parentElement?.getAttribute('href') || '', window.location.href).href;
-            return { title, link };
-        })
-    );
-
-    const detailedItems = await Promise.all(
-        items.map(async (item) => {
-            const cachedData = await cache.tryGet(item.link, async () => {
-                const detailPage = await browser.newPage();
-                await detailPage.goto(item.link, { waitUntil: 'networkidle2' });
-
-                const content = await detailPage.evaluate(() =>
-                    document.querySelector('.MC_Link_Style_RichText')?.innerHTML || 'No content available'
-                );
-
-                await detailPage.close();
-
-                return {
-                    title: item.title,
-                    link: item.link,
-                    description: content,
-                };
-            });
-
-            return cachedData;
-        })
-    );
-
-    await browser.close();
+    const items = data.article_grid.map((article: any) => ({
+        title: article.default_tile.title || 'No title available',
+        link: new URL(article.article_url, baseUrl).href,
+    }));
 
     return {
         title: 'Minecraft News',
-        link: articlesUrl,
+        link: baseUrl,
         description: 'Catch up on the latest articles',
-        item: detailedItems.map((item) => ({
+        item: items.map((item: any) => ({
             title: item.title,
             link: item.link,
-            description: item.description,
         })),
     };
 }
