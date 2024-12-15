@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
-import { getJson, getPuppeteerPage } from '@/routes/xueqiu/cookies';
+import { getJsonResult, getPuppeteerPage } from '@/routes/xueqiu/cookies';
 import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
@@ -37,7 +37,7 @@ async function handler(ctx) {
 
     const url = `https://xueqiu.com/query/v1/symbol/search/status?u=11111&count=100&comment=0&symbol=${id}&source=all&sort=time`;
 
-    const res = await getJson(url);
+    const res = await getJsonResult(url);
 
     // 获取stock_name
     const stock_name = await cache.tryGet(`stock_name_${id}`, async () => {

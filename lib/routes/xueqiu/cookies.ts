@@ -32,7 +32,7 @@ export const getPuppeteerPage = async () => {
     return page;
 };
 
-export const getJson = async (url: string, cookie: string | Record<string, any> | null = null) => {
+export const getJsonResult = async (url: string, cookie: string | Record<string, any> | null = null) => {
     const page = await getPuppeteerPage();
 
     if (cookie) {

@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
-import { parseToken, getJson } from '@/routes/xueqiu/cookies';
+import { parseToken, getJsonResult } from '@/routes/xueqiu/cookies';
 
 const rootUrl = 'https://xueqiu.com';
 
@@ -52,7 +52,7 @@ async function handler(ctx) {
 
     const url = `${rootUrl}/v4/statuses/user_timeline.json?user_id=${id}&type=${type}&source=${source}`;
 
-    const res2 = await getJson(url, token);
+    const res2 = await getJsonResult(url, token);
 
     const data = res2.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
 
