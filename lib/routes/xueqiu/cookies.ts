@@ -20,10 +20,14 @@ export const parseToken = (link: string) =>
         false
     );
 
-export const getPuppeteerPage = async () => {
+export const getPuppeteerPage = async (cookie: string | Record<string, any> | null = null) => {
     const browser = await puppeteer({ stealth: true });
     const page = await browser.newPage();
     await page.setRequestInterception(true);
+
+    if (cookie !== null) {
+        await setCookies(page, cookie, 'xueqiu.com');
+    }
 
     page.on('request', (request) => {
         request.resourceType() === 'document' ? request.continue() : request.abort();
@@ -33,11 +37,7 @@ export const getPuppeteerPage = async () => {
 };
 
 export const getJsonResult = async (url: string, cookie: string | Record<string, any> | null = null) => {
-    const page = await getPuppeteerPage();
-
-    if (cookie) {
-        await setCookies(page, cookie, 'xueqiu.com');
-    }
+    const page = await getPuppeteerPage(cookie);
 
     const data = await page.goto(url, {
         waitUntil: 'domcontentloaded',

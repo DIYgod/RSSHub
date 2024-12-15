@@ -1,9 +1,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
-import { parseToken, getJsonResult } from '@/routes/xueqiu/cookies';
+import { parseToken, getJsonResult, getPuppeteerPage } from '@/routes/xueqiu/cookies';
 
 const rootUrl = 'https://xueqiu.com';
 
@@ -59,16 +58,21 @@ async function handler(ctx) {
     const items = await Promise.all(
         data.map((item) =>
             cache.tryGet(item.target, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: rootUrl + item.target,
-                    headers: {
-                        Referer: link,
-                        Cookie: token,
-                    },
+                const page = await getPuppeteerPage(token);
+
+                await page.goto(`${rootUrl}${item.target}`, {
+                    waitUntil: 'domcontentloaded',
                 });
 
-                const data = JSON.parse(detailResponse.data.match(/SNOWMAN_STATUS = (.*?});/)[1]);
+                const detailResponse = await page.content();
+
+                const snowmanStatus = detailResponse.match(/SNOWMAN_STATUS = (.*?});/);
+
+                if (snowmanStatus === null) {
+                    throw new Error('snowmanStatus is null');
+                }
+
+                const data = JSON.parse(snowmanStatus[1]);
                 item.text = data.text;
 
                 const retweetedStatus = item.retweeted_status ? `<blockquote>${item.retweeted_status.user.screen_name}:&nbsp;${item.retweeted_status.description}</blockquote>` : '';
