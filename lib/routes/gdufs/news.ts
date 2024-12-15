@@ -38,7 +38,7 @@ async function handler() {
     const list = $('ul.list_luntan li');
 
     const items = await Promise.all(
-        list.toArray().map(async (element) => {
+        list.toArray().map((element) => {
             const item = $(element);
             const href = item.find('a').attr('href') || '';
             const title = item.find('h5').text().trim();
@@ -46,16 +46,14 @@ async function handler() {
             const yearMonth = item.find('h6').text().trim();
             const dateString = yearMonth + '/' + day;
             const fullLink = href.startsWith('http') ? href : new URL(href, site).href;
-
             const pubDate = parseDate(dateString).toUTCString();
 
-            const content = await cache.tryGet(fullLink, async () => {
+            return cache.tryGet(fullLink, async () => {
                 try {
                     const articleRes = await got(fullLink);
                     const $$ = load(articleRes.body);
                     const description = $$('.v_news_content').html()?.trim() || '';
 
-                    // 提取作者信息
                     let author = '';
                     const authorSpans = $$('.nav01 h6 .ll span');
                     authorSpans.each((_, el) => {
@@ -68,31 +66,29 @@ async function handler() {
                     });
 
                     return {
+                        title,
+                        link: fullLink,
                         description,
+                        pubDate,
                         author,
                     };
                 } catch {
                     return {
+                        title,
+                        link: fullLink,
                         description: '内容获取失败。',
+                        pubDate,
                         author: '',
                     };
                 }
             });
-
-            return {
-                title,
-                link: fullLink,
-                description: content.description,
-                pubDate,
-                author: content.author,
-            };
         })
     );
 
     return {
-        title: '广东外语外贸大学-新闻',
+        title: '广外-大学要闻',
         link,
-        description: '广东外语外贸大学-新闻',
+        description: '广东外语外贸大学-大学要闻',
         item: items,
     };
 }

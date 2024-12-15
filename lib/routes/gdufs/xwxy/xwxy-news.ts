@@ -32,7 +32,6 @@ async function handler() {
     const BASE_URL = 'https://xwxy.gdufs.edu.cn';
     const link = `${BASE_URL}/xwzx/xyxw.htm`;
 
-    // 获取列表页面
     const response = await got(link);
     if (!response.body) {
         throw new Error('No response body');
@@ -52,40 +51,35 @@ async function handler() {
         };
     });
 
-    // 获取文章详情
-    const fetchArticleDetail = async (item) => {
-        const contentData = await cache.tryGet(item.link, async () => {
-            try {
-                const articleResponse = await got(item.link);
-                if (!articleResponse.body) {
-                    throw new Error('No article body');
+    const enhancedItems = await Promise.all(
+        items.map((item) =>
+            cache.tryGet(item.link, async () => {
+                try {
+                    const articleResponse = await got(item.link);
+                    if (!articleResponse.body) {
+                        throw new Error('No article body');
+                    }
+                    const $$ = load(articleResponse.body);
+                    const content = $$('#vsb_content .v_news_content').html() || '';
+                    const authors = $$('.show01 p i')
+                        .toArray()
+                        .map((el) => $$(el).text().trim());
+
+                    return {
+                        ...item,
+                        description: content,
+                        author: authors.join(' '),
+                    };
+                } catch {
+                    return {
+                        ...item,
+                        description: '无法获取内容',
+                        author: '',
+                    };
                 }
-                const $$ = load(articleResponse.body);
-                const content = $$('#vsb_content .v_news_content').html() || '';
-                const authors = $$('.show01 p i')
-                    .toArray()
-                    .map((el) => $$(el).text().trim());
-
-                return {
-                    description: content,
-                    author: authors.join(' '),
-                };
-            } catch {
-                return {
-                    description: '无法获取内容',
-                    author: '',
-                };
-            }
-        });
-
-        return {
-            ...item,
-            description: contentData.description,
-            author: contentData.author,
-        };
-    };
-
-    const enhancedItems = await Promise.all(items.map((item) => fetchArticleDetail(item)));
+            })
+        )
+    );
 
     return {
         title: '广外新传学院-学院新闻',
