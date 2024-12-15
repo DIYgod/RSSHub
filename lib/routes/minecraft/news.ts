@@ -18,13 +18,10 @@ export const route: Route = {
         {
             source: ['minecraft.net/en-us/articles', 'minecraft.net/'],
         },
-    ],
+    };
     maintainers: ['OutlinedArc217'],
     url: 'minecraft.net/',
     description: 'Catch up on the latest articles',
-    zh: {
-        name: 'Minecraft近期新闻',
-    },
 };
 
 export async function getData() {
