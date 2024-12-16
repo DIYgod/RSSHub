@@ -18,9 +18,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['dddaniel1'],
     handler,
-    description: `| 诗歌 | 小说 | 专栏 | 档案 | 非虚构 | all | current
+    description: `| 诗歌 | 小说 | 专栏 | 档案 | 非虚构 | all | 最新文章 |
   | -------- | -------- | -------- | -------- | -------- |
-  | 1     | 2     | 3     | 4     | 5     | all     | 最新文章     |`,
+  | 1     | 2     | 3     | 4     | 5     | all     | current  |`,
 };
 
 async function handler(ctx) {
