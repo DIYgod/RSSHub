@@ -2,8 +2,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+// import { parseDate } from '@/utils/parse-date';
+// import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
 import { fetchArticle } from '@/utils/wechat-mp';
 
@@ -99,8 +99,6 @@ async function handler(ctx) {
                               return item.title;
                           }
                       })();
-
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')), +8) : item.pubDate;
 
                 return item;
             })
