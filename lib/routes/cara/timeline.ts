@@ -11,7 +11,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: ['/timeline/:user'],
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/cara/timeline/fengz',
     parameters: { user: 'username' },
     name: 'Timeline',

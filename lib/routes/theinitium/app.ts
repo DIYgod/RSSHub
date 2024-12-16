@@ -9,7 +9,7 @@ import { getCurrentPath } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/app/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/theinitium/app',
     parameters: {
         category: 'Category, see below, latest_sc by default',

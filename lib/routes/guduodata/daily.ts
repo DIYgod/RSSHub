@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
-const host = 'http://data.guduodata.com';
+const host = 'http://d.guduodata.com';
 
 const types = {
     collect: {
@@ -46,13 +46,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['data.guduodata.com/'],
+            source: ['guduodata.com/'],
         },
     ],
     name: '日榜',
     maintainers: ['Gem1ni'],
     handler,
-    url: 'data.guduodata.com/',
+    url: 'guduodata.com/',
 };
 
 async function handler() {
@@ -65,7 +65,7 @@ async function handler() {
             type: key,
             name: `[${yestoday}] ${types[key].name} - ${types[key].categories[category]}`,
             category: category.toUpperCase(),
-            url: `${host}/show/datalist?type=DAILY&category=${category.toUpperCase()}&date=${yestoday}`,
+            url: `${host}/m/v3/billboard/list?type=DAILY&category=${category.toUpperCase()}&date=${yestoday}`,
         }))
     );
     return {
@@ -76,7 +76,7 @@ async function handler() {
             items.map((item) =>
                 cache.tryGet(item.url, async () => {
                     const response = await got.get(`${item.url}&t=${now}`, {
-                        headers: { Referer: `http://data.guduodata.com/` },
+                        headers: { Referer: `http://guduodata.com/` },
                     });
                     const data = response.data.data;
                     return {

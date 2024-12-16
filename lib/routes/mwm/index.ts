@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/:category?',
     categories: ['journal'],
-    example: '/mvm',
+    example: '/mwm',
     parameters: { category: '分类，见下表，默认为本期要目' },
     features: {
         requireConfig: false,

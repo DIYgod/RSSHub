@@ -330,6 +330,7 @@ export type Config = {
         authenticationSecret?: string[];
         phoneOrEmail?: string[];
         authToken?: string[];
+        thirdPartyApi?: string;
     };
     uestc: {
         bbsCookie?: string;
@@ -350,6 +351,9 @@ export type Config = {
     xiaoyuzhou: {
         device_id?: string;
         refresh_token?: string;
+    };
+    xiaohongshu: {
+        cookie?: string;
     };
     ximalaya: {
         token?: string;
@@ -751,6 +755,7 @@ const calculateValue = () => {
             authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
             phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
+            thirdPartyApi: envs.TWITTER_THIRD_PARTY_API,
         },
         uestc: {
             bbsCookie: envs.UESTC_BBS_COOKIE,
@@ -771,6 +776,9 @@ const calculateValue = () => {
         xiaoyuzhou: {
             device_id: envs.XIAOYUZHOU_ID,
             refresh_token: envs.XIAOYUZHOU_TOKEN,
+        },
+        xiaohongshu: {
+            cookie: envs.XIAOHONGSHU_COOKIE,
         },
         ximalaya: {
             token: envs.XIMALAYA_TOKEN,

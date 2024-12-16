@@ -12,7 +12,7 @@ const channelMap = {
 
 export const route: Route = {
     path: '/column/:channel',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/guokr/column/calendar',
     parameters: { channel: '专栏类别' },
     radar: [

@@ -1,29 +1,24 @@
-import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import { config } from '@/config';
-import { getAcwScV2ByArg1 } from '@/routes/5eplay/utils';
+import puppeteer from '@/utils/puppeteer';
+import { getCookies } from '@/utils/puppeteer-utils';
 
 export const parseToken = (link: string) =>
     cache.tryGet(
         'xueqiu:token',
         async () => {
-            const r = await ofetch(link);
-
-            let acw_sc__v2 = '';
-            const matches = r.match(/var arg1='(.*?)';/);
-            if (matches) {
-                acw_sc__v2 = getAcwScV2ByArg1(matches[1]);
-            }
-            const acw_sc__v2_cookie = `acw_sc__v2=${acw_sc__v2}`;
-            const res = await ofetch.raw(link, {
-                headers: {
-                    Cookie: acw_sc__v2_cookie,
-                },
+            const browser = await puppeteer({ stealth: true });
+            const page = await browser.newPage();
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                request.resourceType() === 'document' ? request.continue() : request.abort();
             });
-            const cookieArray = res.headers.getSetCookie();
-            const xq_a_token_cookie = cookieArray.find((c) => c.startsWith('xq_a_token='));
-
-            return `${acw_sc__v2_cookie}; ${xq_a_token_cookie}`;
+            await page.goto(link, {
+                waitUntil: 'domcontentloaded',
+            });
+            await page.evaluate(() => document.documentElement.innerHTML);
+            const cookies = await getCookies(page);
+            return cookies;
         },
         config.cache.routeExpire,
         false

@@ -3,37 +3,38 @@ import { config } from '@/config';
 import cache from '@/utils/cache';
 import { twitterGot, paginationTweets, gatherLegacyFromData } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import ofetch from '@/utils/ofetch';
 
 const getUserData = (id) =>
     cache.tryGet(`twitter-userdata-${id}`, () => {
-        if (id.startsWith('+')) {
-            return twitterGot(`${baseUrl}${gqlMap.UserByRestId}`, {
-                variables: JSON.stringify({
-                    userId: id.slice(1),
-                    withSafetyModeUserFields: true,
-                }),
-                features: JSON.stringify(gqlFeatures.UserByRestId),
-                fieldToggles: JSON.stringify({
-                    withAuxiliaryUserLabels: false,
-                }),
+        const params = {
+            variables: id.startsWith('+')
+                ? JSON.stringify({
+                      userId: id.slice(1),
+                      withSafetyModeUserFields: true,
+                  })
+                : JSON.stringify({
+                      screen_name: id,
+                      withSafetyModeUserFields: true,
+                  }),
+            features: JSON.stringify(id.startsWith('+') ? gqlFeatures.UserByRestId : gqlFeatures.UserByScreenName),
+            fieldToggles: JSON.stringify({
+                withAuxiliaryUserLabels: false,
+            }),
+        };
+
+        if (config.twitter.thirdPartyApi) {
+            const endpoint = id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName;
+
+            return ofetch(`${config.twitter.thirdPartyApi}${endpoint}`, {
+                method: 'GET',
+                params,
             });
         }
-        return twitterGot(
-            `${baseUrl}${gqlMap.UserByScreenName}`,
-            {
-                variables: JSON.stringify({
-                    screen_name: id,
-                    withSafetyModeUserFields: true,
-                }),
-                features: JSON.stringify(gqlFeatures.UserByScreenName),
-                fieldToggles: JSON.stringify({
-                    withAuxiliaryUserLabels: false,
-                }),
-            },
-            {
-                allowNoAuth: true,
-            }
-        );
+
+        return twitterGot(`${baseUrl}${id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName}`, params, {
+            allowNoAuth: !id.startsWith('+'),
+        });
     });
 
 const cacheTryGet = async (_id, params, func) => {
