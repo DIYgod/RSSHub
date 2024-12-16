@@ -9,6 +9,7 @@ import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { base32 } from 'rfc4648';
+import ofetch from '@/utils/ofetch';
 
 const baseUrl = 'https://www.zaobao.com';
 const got_ins = got.extend({
@@ -36,8 +37,8 @@ const parseList = async (
         link: string;
     }[];
 }> => {
-    const response = await got_ins.get(baseUrl + sectionUrl);
-    const $ = load(response.data);
+    const response = await ofetch(baseUrl + sectionUrl);
+    const $ = load(response);
     let data = $('.card-listing .card');
     if (data.length === 0) {
         // for HK version
