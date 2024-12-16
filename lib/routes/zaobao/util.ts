@@ -9,7 +9,6 @@ import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { base32 } from 'rfc4648';
-import ofetch from '@/utils/ofetch';
 
 const baseUrl = 'https://www.zaobao.com';
 const got_ins = got.extend({
@@ -37,8 +36,8 @@ const parseList = async (
         link: string;
     }[];
 }> => {
-    const response = await ofetch(baseUrl + sectionUrl);
-    const $ = load(response);
+    const response = await got_ins.get(baseUrl + sectionUrl);
+    const $ = load(response.data);
     let data = $('.card-listing .card');
     if (data.length === 0) {
         // for HK version
@@ -87,16 +86,20 @@ const parseList = async (
                 const article = await got_ins.get(link);
                 const $1 = load(article.data);
 
+                const title =
+                    $1('#seo-article-page').text() === ''
+                        ? $1('h1.article-title').text() // HK
+                        : JSON.parse($1('#seo-article-page').text())['@graph'][0]?.headline; // SG
                 const time = (() =>
-                    $1("head script[type='application/json']").text() === ''
+                    $1('#seo-article-page').text() === ''
                         ? new Date(JSON.parse($1("head script[type='application/ld+json']").eq(1).text())?.datePublished) // HK
-                        : new Date(Number(JSON.parse($1("head script[type='application/json']").text())?.articleDetails?.created) * 1000))(); // SG
+                        : new Date(JSON.parse($1('#seo-article-page').text())['@graph'][0]?.datePublished))(); // SG
 
                 $1('.overlay-microtransaction').remove();
                 $1('#video-freemium-player').remove();
                 $1('script').remove();
 
-                let articleBodyNode = $1('.article-content-rawhtml');
+                let articleBodyNode = $1('.articleBody');
                 if (articleBodyNode.length === 0) {
                     // for HK version
                     orderContent($1('.article-body'));
@@ -108,8 +111,8 @@ const parseList = async (
                 const imageDataArray = processImageData($1);
 
                 return {
-                    // <- for SG version  -> for HK version
-                    title: $1('h1', '.content').text().trim() || $1('h1.article-title').text(),
+                    // <- for HK version  -> for SG version
+                    title,
                     description: art(path.join(__dirname, 'templates/zaobao.art'), {
                         articleBody,
                         imageDataArray,
