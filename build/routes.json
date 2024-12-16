@@ -88899,6 +88899,27 @@
     "url": "voronoiapp.com",
     "lang": "en"
   },
+  "wabei": {
+    "routes": {
+      "/hot-recommend": {
+        "path": "/hot-recommend",
+        "categories": [
+          "finance"
+        ],
+        "example": "/wabei/hot-recommend",
+        "url": "www.wabei.cn",
+        "name": "热门推荐",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "挖贝网",
+    "url": "www.wabei.cn",
+    "description": "挖贝网专注于新三板、A股和港股报道",
+    "lang": "zh-CN"
+  },
   "wallhaven": {
     "routes": {
       "/search/:filter?/:needDetails?": {

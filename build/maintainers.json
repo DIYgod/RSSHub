@@ -7209,6 +7209,9 @@
   "/voronoiapp/search/:keyword": [
     "Cesaryuan"
   ],
+  "/wabei/hot-recommend": [
+    "p3psi-boo"
+  ],
   "/wallhaven/search/:filter?/:needDetails?": [
     "nczitzk",
     "Fatpandac"
