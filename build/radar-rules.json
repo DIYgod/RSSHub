@@ -10755,6 +10755,31 @@
       }
     ]
   },
+  "gdufs.edu.cn": {
+    "_name": "广东外语外贸大学",
+    "www": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/gwxw/gwxw1.htm",
+          "/"
+        ],
+        "target": "/gdufs/news"
+      }
+    ],
+    "xwxy": [
+      {
+        "title": "新闻学院-学院新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xwzx/xyxw",
+          "/"
+        ],
+        "target": "/gdufs/xwxy-news"
+      }
+    ]
+  },
   "gdut.edu.cn": {
     "_name": "广东工业大学",
     "oas": [

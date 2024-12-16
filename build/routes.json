@@ -30433,6 +30433,73 @@
     "url": "gdsrx.org.cn",
     "lang": "zh-CN"
   },
+  "gdufs": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "university"
+        ],
+        "example": "/gdufs/news",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.gdufs.edu.cn/gwxw/gwxw1.htm",
+              "www.gdufs.edu.cn/"
+            ]
+          }
+        ],
+        "name": "新闻",
+        "maintainers": [
+          "gz4zzxc"
+        ],
+        "url": "www.gdufs.edu.cn/gwxw/gwxw1.htm",
+        "location": "news.ts"
+      },
+      "/xwxy-news": {
+        "path": "/xwxy-news",
+        "categories": [
+          "university"
+        ],
+        "example": "/gdufs/xwxy-news",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "xwxy.gdufs.edu.cn/xwzx/xyxw",
+              "xwxy.gdufs.edu.cn/"
+            ]
+          }
+        ],
+        "name": "新闻学院-学院新闻",
+        "maintainers": [
+          "gz4zzxc"
+        ],
+        "url": "xwxy.gdufs.edu.cn/xwzx/xyxw",
+        "location": "xwxy/xwxy-news.ts"
+      }
+    },
+    "name": "广东外语外贸大学",
+    "url": "gdufs.edu.cn",
+    "lang": "zh-CN"
+  },
   "gdut": {
     "routes": {
       "/oa_news/:type?": {
