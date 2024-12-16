@@ -7370,6 +7370,9 @@
   "/whu/rsgis/:type/:sub?": [
     "HPDell"
   ],
+  "/whu/swrh/:type": [
+    "FanofZY"
+  ],
   "/whu/gs/:type?": [
     "Delreyaa"
   ],

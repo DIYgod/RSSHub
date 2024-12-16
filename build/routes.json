@@ -90429,6 +90429,38 @@
         "description": "\n\n|  分类名  | `type` 值 |  子类名  | `sub` 值 |\n| :------: | :-------- | :------: | :------- |\n|   首页   | `index`   |          |          |\n| 学院新闻 | `xyxw`    |   全部   | `all`    |\n|          |           | 学院要闻 | `xyyw`   |\n|          |           | 合作交流 | `hzjl`   |\n|          |           | 媒体聚焦 | `mtjj`   |\n|          |           | 学工要闻 | `xgyw`   |\n| 科学研究 | `kxyj`    |   全部   | `all`    |\n|          |           | 学术报告 | `xsbg`   |\n|          |           | 学术交流 | `xsjl`   |\n|          |           | 学术成果 | `kycg`   |\n|          |           | 申报信息 | `sbxx`   |\n| 通知公告 | `tzgg`    |   全部   | `all`    |\n|          |           | 学院通知 | `xytz`   |\n|          |           | 教学动态 | `jxdt`   |\n|          |           | 学术动态 | `xsdt`   |\n|          |           | 人才引进 | `rcyj`   |\n",
         "location": "rsgis.ts"
       },
+      "/swrh/:type": {
+        "path": "/swrh/:type",
+        "categories": [
+          "university"
+        ],
+        "example": "/whu/swrh/2",
+        "radar": [
+          {
+            "source": [
+              "swrh.whu.edu.cn/:type"
+            ],
+            "target": "/swrh/:type"
+          }
+        ],
+        "parameters": {
+          "type": "公告类型，详见表格"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "水利水电学院公告",
+        "maintainers": [
+          "FanofZY"
+        ],
+        "description": "| 公告类型 | 学院新闻 | 学术科研 | 通知公告 |\n  | -------- | -------- | -------- | -------- |\n  | 参数     | 0        | 1        | 2        |",
+        "location": "swrh.ts"
+      },
       "/gs/:type?": {
         "path": "/gs/:type?",
         "categories": [

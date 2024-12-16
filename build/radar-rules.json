@@ -31105,6 +31105,16 @@
         "target": "/whu/rsgis/index"
       }
     ],
+    "swrh": [
+      {
+        "title": "水利水电学院公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:type"
+        ],
+        "target": "/whu/swrh/:type"
+      }
+    ],
     "gs": [
       {
         "title": "研究生院",
