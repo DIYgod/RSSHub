@@ -27095,6 +27095,19 @@
       }
     ]
   },
+  "spglobal.com": {
+    "_name": "S&P Global",
+    "www": [
+      {
+        "title": "Ratings",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/ratings/:language"
+        ],
+        "target": "/spglobal/ratings/:language?"
+      }
+    ]
+  },
   "spotify.com": {
     "_name": "Spotify",
     "open": [

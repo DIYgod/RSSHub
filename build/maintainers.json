@@ -6285,6 +6285,9 @@
   "/spankbang/new_videos": [
     "TonyRL"
   ],
+  "/spglobal/ratings/:language?": [
+    "FYLSen"
+  ],
   "/spotify/artist/:id": [
     "outloudvi"
   ],
