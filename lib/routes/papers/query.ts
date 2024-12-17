@@ -12,14 +12,15 @@ const pdfUrlGenerators = {
 };
 
 export const handler = async (ctx) => {
-    const { category = 'arxiv/cs.AI' } = ctx.req.param();
+    const { keyword } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 150;
 
     const rootUrl = 'https://papers.cool';
-    const currentUrl = new URL(category, rootUrl).href;
-    const feedUrl = new URL(`arxiv/${category}/feed`, rootUrl).href;
+    const query = keyword.split(/\//)[1];
+    const currentUrl = new URL(`arxiv/search?highlight=1&query=${query}&sort=0`, rootUrl).href;
+    const feedUrl = new URL(`arxiv/search/feed?query=${query}`, rootUrl).href;
 
-    const site = category.split(/\//)[0];
+    const site = keyword.split(/\//)[0];
     const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
 
     const feed = await parser.parseURL(feedUrl);
@@ -76,24 +77,21 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/arxiv/:category{.+}?',
+    path: '/query/:keyword{.+}?',
     name: 'Topic',
     url: 'papers.cool',
-    maintainers: ['nczitzk', 'Muyun99'],
+    maintainers: ['Muyun99'],
     handler,
-    example: 'https://rsshub.app/papers/arxiv/cs.AI or /papers/query/Detection',
-    parameters: { category: 'Category, arXiv Artificial Intelligence (cs.AI) by default' },
+    example: '/papers/query/Detection',
+    parameters: { keyword: 'Keyword to search for papers, e.g., Detection, Segmentation, etc.' },
     description: `:::tip
-  If you subscribe to [arXiv Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI), where the URL is \`https://papers.cool/arxiv/cs.AI\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/arxiv/cs.AI\`](https://rsshub.app/papers/arxiv/cs.AI).
+  If you subscibe to [arXiv Paper queryed by Detection](https://papers.cool/arxiv/search?highlight=1&query=Detection), where the URL is \`https://papers.cool/arxiv/search?highlight=1&query=Detection\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/query/Detection\`](https://rsshub.app/papers/query/Detection).
   :::
 
   | Category                                              | id                  |
   | ----------------------------------------------------- | ------------------- |
-  | arXiv Artificial Intelligence (cs.AI)                 | arxiv/cs.AI         |
-  | arXiv Computation and Language (cs.CL)                | arxiv/cs.CL         |
-  | arXiv Computer Vision and Pattern Recognition (cs.CV) | arxiv/cs.CV         |
-  | arXiv Machine Learning (cs.LG)                        | arxiv/cs.LG         |
-  | arXiv Robotics (cs.RO)                                | arxiv/cs.RO         |
+  | arXiv Paper queryed by Detection                      | query/Detection     |
+  | arXiv Paper queryed by Segmentation                   | query/Segmentation  |
   `,
     categories: ['journal'],
 
@@ -108,29 +106,14 @@ export const route: Route = {
     },
     radar: [
         {
-            title: 'arXiv Artificial Intelligence (cs.AI)',
-            source: ['papers.cool/arxiv/cs.AI'],
-            target: '/arxiv/cs.AI',
+            title: 'arXiv Paper queryed by Detection',
+            source: ['papers.cool/arxiv/search?highlight=1&query=Detection&sort=0`'],
+            target: '/papers/query/Detection',
         },
         {
-            title: 'arXiv Computation and Language (cs.CL)',
-            source: ['papers.cool/arxiv/cs.CL'],
-            target: '/arxiv/cs.CL',
-        },
-        {
-            title: 'arXiv Computer Vision and Pattern Recognition (cs.CV)',
-            source: ['papers.cool/arxiv/cs.CV'],
-            target: '/arxiv/cs.CV',
-        },
-        {
-            title: 'arXiv Machine Learning (cs.LG)',
-            source: ['papers.cool/arxiv/cs.LG'],
-            target: '/arxiv/cs.LG',
-        },
-        {
-            title: 'arXiv Robotics (cs.RO)',
-            source: ['papers.cool/arxiv/cs.RO'],
-            target: '/arxiv/cs.RO',
+            title: 'arXiv Paper queryed by Segmentation',
+            source: ['papers.cool/arxiv/search?highlight=1&query=Segmentation&sort=0`'],
+            target: '/papers/query/Segmentation',
         },
     ],
 };
