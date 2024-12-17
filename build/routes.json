@@ -74458,7 +74458,24 @@
         ],
         "example": "/smzdm/haowen/1",
         "parameters": {
-          "day": "以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`"
+          "day": {
+            "description": "以天为时间跨度，默认为 `1`",
+            "options": [
+              {
+                "value": "1",
+                "label": "今日热门"
+              },
+              {
+                "value": "7",
+                "label": "周热门"
+              },
+              {
+                "value": "30",
+                "label": "月热门"
+              }
+            ],
+            "default": "1"
+          }
         },
         "features": {
           "requireConfig": false,
