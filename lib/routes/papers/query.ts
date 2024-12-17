@@ -12,7 +12,7 @@ const pdfUrlGenerators = {
 };
 
 export const handler = async (ctx) => {
-    const { keyword } = ctx.req.param();
+    const { keyword = 'query/Detection' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 150;
 
     const rootUrl = 'https://papers.cool';
