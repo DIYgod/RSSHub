@@ -4675,6 +4675,9 @@
   "/news/whxw": [
     "nczitzk"
   ],
+  "/newseed/latest": [
+    "p3psi-boo"
+  ],
   "/newsmarket/:category?": [
     "nczitzk"
   ],

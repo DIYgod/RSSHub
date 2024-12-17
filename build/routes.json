@@ -57942,6 +57942,27 @@
     "url": "news.cn",
     "lang": "zh-CN"
   },
+  "newseed": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/newseed/latest",
+        "url": "news.newseed.cn",
+        "name": "最新新闻",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "新芽",
+    "url": "newseed.cn",
+    "description": "新芽是专注于互联网创业的媒体平台，提供创业资讯、投融资信息、创业活动、创业服务等。",
+    "lang": "zh-CN"
+  },
   "newsmarket": {
     "routes": {
       "/:category?": {
