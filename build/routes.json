@@ -74470,7 +74470,8 @@
         },
         "name": "好文",
         "maintainers": [
-          "LogicJake"
+          "LogicJake",
+          "pseudoyu"
         ],
         "location": "haowen.ts"
       },
