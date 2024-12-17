@@ -58,8 +58,8 @@ importers:
         specifier: 0.0.23
         version: 0.0.23
       '@scalar/hono-api-reference':
-        specifier: 0.5.164
-        version: 0.5.164(hono@4.6.14)
+        specifier: 0.5.165
+        version: 0.5.165(hono@4.6.14)
       '@sentry/node':
         specifier: 7.119.1
         version: 7.119.1
@@ -1343,10 +1343,6 @@ packages:
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@eslint/js@9.16.0':
-    resolution: {integrity: sha512-tw2HxzQkrbeuvyj1tG2Yqq+0H9wGoI2IMk4EOsQeX+vmd75FtJAzf+gTA69WF+baUKRYQ3x2kbLE08js5OsTVg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
   '@eslint/js@9.17.0':
     resolution: {integrity: sha512-Sxc4hqcs1kTu0iID3kcZDW3JHq2a77HO9P8CP6YEA/FpH3Ll8UXE2r/86Rz9YJLKme39S9vU5OWNjC6Xl0Cr3w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -1783,8 +1779,8 @@ packages:
   '@rss3/sdk@0.0.23':
     resolution: {integrity: sha512-1cF1AqLU0k6dMwqQ5Fch3rOAbh4UXJ4UZLtOwzp/RWyGoCvu3lUOUIdJF41omunuH/JJSP2z6rJTPj4S6a60eg==}
 
-  '@scalar/hono-api-reference@0.5.164':
-    resolution: {integrity: sha512-6m8IscA2+5nqnN8sR5Iib2lboXIawJrScZ0cwVUvQ/uUCrFCyuZGRWXpecuCxelXifDlQxfi0iCfmxgvTiswNg==}
+  '@scalar/hono-api-reference@0.5.165':
+    resolution: {integrity: sha512-UOdH9vKQxNC5wi3fQufq44g93x3oE7YoeI1bdLncbrK3Nm+XtLe4Wc0kSpz1n6gsjvqSJij/ioXmkC8OJpM5hA==}
     engines: {node: '>=18'}
     peerDependencies:
       hono: ^4.0.0
@@ -1793,8 +1789,8 @@ packages:
     resolution: {integrity: sha512-6geH9ehvQ/sG/xUyy3e0lyOw3BaY5s6nn22wHjEJhcobdmWyFER0O6m7AU0ZN4QTjle/gYvFJOjj552l/rsNSw==}
     engines: {node: '>=18'}
 
-  '@scalar/types@0.0.24':
-    resolution: {integrity: sha512-ahMb4WYFx9OP32r7j8KhyMzg5zU78gnKxhDNapuC8WMzlSyyOsX5LQLx8sUQJfw3ZvUHp+F2zv5GJSHD+hdIiA==}
+  '@scalar/types@0.0.25':
+    resolution: {integrity: sha512-sGnOFnfiSn4o23rklU/jrg81hO+630bsFIdHg8MZ/w2Nc6IoUwARA2hbe4d4Fg+D0KBu40Tan/L+WAYDXkTJQg==}
     engines: {node: '>=18'}
 
   '@sec-ant/readable-stream@0.4.1':
@@ -6677,8 +6673,6 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
-  '@eslint/js@9.16.0': {}
-
   '@eslint/js@9.17.0': {}
 
   '@eslint/object-schema@2.1.4': {}
@@ -7124,14 +7118,14 @@ snapshots:
       '@rss3/api-core': 0.0.23
       '@rss3/api-utils': 0.0.23
 
-  '@scalar/hono-api-reference@0.5.164(hono@4.6.14)':
+  '@scalar/hono-api-reference@0.5.165(hono@4.6.14)':
     dependencies:
-      '@scalar/types': 0.0.24
+      '@scalar/types': 0.0.25
       hono: 4.6.14
 
   '@scalar/openapi-types@0.1.5': {}
 
-  '@scalar/types@0.0.24':
+  '@scalar/types@0.0.25':
     dependencies:
       '@scalar/openapi-types': 0.1.5
       '@unhead/schema': 1.11.11
