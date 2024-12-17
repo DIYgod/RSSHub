@@ -90,7 +90,7 @@ const parseList = async (
                 if ($1('#seo-article-page').text() === '') {
                     // HK
                     title = $1('h1.article-title').text();
-                    time = new Date(JSON.parse($1("head script[type='application/ld+json']").eq(1).text())?.datePublished)
+                    time = new Date(JSON.parse($1("head script[type='application/ld+json']").eq(1).text())?.datePublished);
                 } else {
                     // SG
                     title = JSON.parse($1('#seo-article-page').text())['@graph'][0]?.headline;
