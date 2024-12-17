@@ -1,8 +1,11 @@
-import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import path from 'node:path';
 import { art } from '@/utils/render';
 import { Context } from 'hono';
-import path from 'node:path';
+import { getCurrentPath } from '@/utils/helpers';
+import { Route } from '@/types';
+
+const __dirname = getCurrentPath(import.meta.url);
 
 interface GeoLocation {
     lat: number;
@@ -54,7 +57,7 @@ const ALGOLIA_API_KEY = '360c8026d33e372e6b37d18b177f7df5';
 const ALGOLIA_BASE_URL = 'https://8hemfgmpst-1.algolianet.com/1/indexes/*/queries';
 const ALGOLIA_INDEX_NAME = 'V2_Marketplace_Jobs';
 
-const renderJobDescription = (jobInfo, processedData) =>
+const renderJobDescription = (jobInfo: JobInformation, processedData: ProcessedJobData) =>
     art(path.join(__dirname, 'templates/jobs.art'), {
         company_name: processedData.company_name,
         location: jobInfo.location,
