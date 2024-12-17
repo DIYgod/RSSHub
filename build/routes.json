@@ -8969,7 +8969,8 @@
         "name": "News",
         "maintainers": [
           "HenryQW",
-          "DIYgod"
+          "DIYgod",
+          "pseudoyu"
         ],
         "example": "/bbc/world-asia",
         "parameters": {

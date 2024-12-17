@@ -665,7 +665,8 @@
   "/bast*": [],
   "/bbc/:site?/:channel?": [
     "HenryQW",
-    "DIYgod"
+    "DIYgod",
+    "pseudoyu"
   ],
   "/bbcnewslabs/news": [
     "elxy"
