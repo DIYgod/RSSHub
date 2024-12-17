@@ -18,7 +18,7 @@ export const route: Route = {
     url: 'kuaishou.com/profile/:principalId',
     description: `:::tip
 The profile page of the user, which contains the user's information, videos, and other information.
-    :::`,
+:::`,
     handler,
 };
 
