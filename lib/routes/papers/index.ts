@@ -81,7 +81,7 @@ export const route: Route = {
     url: 'papers.cool',
     maintainers: ['nczitzk', 'Muyun99'],
     handler,
-    example: 'https://rsshub.app/papers/arxiv/cs.AI or /papers/query/Detection',
+    example: '/papers/arxiv/cs.AI',
     parameters: { category: 'Category, arXiv Artificial Intelligence (cs.AI) by default' },
     description: `:::tip
   If you subscribe to [arXiv Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI), where the URL is \`https://papers.cool/arxiv/cs.AI\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/arxiv/cs.AI\`](https://rsshub.app/papers/arxiv/cs.AI).
