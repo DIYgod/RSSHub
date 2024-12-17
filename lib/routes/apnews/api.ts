@@ -57,7 +57,7 @@ async function handler(ctx) {
     const list = res.cards
         .map((e) => ({
             title: e.contents[0]?.headline,
-            link: e.contents[0]?.localLinkUrl ?? `https://apnews.com/${tags}-${e.contents[0]?.shortId}`,
+            link: e.contents[0]?.localLinkUrl ?? `https://apnews.com/${e.contents[0]?.canonicalUrl || tags}-${e.contents[0]?.shortId}`,
             pubDate: timezone(parseDate(e.publishedDate), 0),
             category: e.tagObjs.map((tag) => tag.name),
             updated: timezone(parseDate(e.contents[0]?.updated), 0),
