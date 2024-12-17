@@ -7,48 +7,93 @@ import { Route } from '@/types';
 
 const __dirname = getCurrentPath(import.meta.url);
 
+const CONFIG = {
+    DEFAULT_PAGE_SIZE: 20,
+    MAX_PAGE_SIZE: 100,
+} as const;
+
+const API = {
+    BASE_URL: 'https://hiring.cafe/api/search-jobs',
+    HEADERS: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'RSSHub/1.0',
+    },
+} as const;
+
 interface GeoLocation {
-    lat: number;
-    lon: number;
+    readonly lat: number;
+    readonly lon: number;
 }
 
 interface JobInformation {
-    title: string;
-    description: string;
+    readonly title: string;
+    readonly description: string;
 }
 
 interface ProcessedJobData {
-    company_name: string;
-    is_compensation_transparent: boolean;
-    yearly_min_compensation?: number;
-    yearly_max_compensation?: number;
-    workplace_type?: string;
-    requirements_summary?: string;
-    job_category: string;
-    role_activities: string[];
-    formatted_workplace_location?: string;
+    readonly company_name: string;
+    readonly is_compensation_transparent: boolean;
+    readonly yearly_min_compensation?: number;
+    readonly yearly_max_compensation?: number;
+    readonly workplace_type?: string;
+    readonly requirements_summary?: string;
+    readonly job_category: string;
+    readonly role_activities: readonly string[];
+    readonly formatted_workplace_location?: string;
 }
 
 interface JobResult {
-    id: string;
-    apply_url: string;
-    job_information: JobInformation;
-    v5_processed_job_data: ProcessedJobData;
-    _geoloc: GeoLocation[];
-    estimated_publish_date: string;
+    readonly id: string;
+    readonly apply_url: string;
+    readonly job_information: JobInformation;
+    readonly v5_processed_job_data: ProcessedJobData;
+    readonly _geoloc: readonly GeoLocation[];
+    readonly estimated_publish_date: string;
 }
 
 interface ApiResponse {
-    results: JobResult[];
-    total: number;
+    readonly results: readonly JobResult[];
+    readonly total: number;
 }
 
-const API_BASE_URL = 'https://hiring.cafe/api/search-jobs';
+interface SearchParams {
+    readonly keywords: string;
+    readonly page?: number;
+    readonly size?: number;
+}
 
-const renderJobDescription = (jobInfo: JobInformation, processedData: ProcessedJobData) =>
+const validateSearchParams = ({ keywords, page = 0, size = CONFIG.DEFAULT_PAGE_SIZE }: SearchParams): SearchParams => {
+    if (!keywords?.trim()) {
+        throw new Error('Keywords cannot be empty');
+    }
+
+    return {
+        keywords: keywords.trim(),
+        page: Math.max(0, Math.floor(Number(page))),
+        size: Math.min(Math.max(1, Math.floor(Number(size))), CONFIG.MAX_PAGE_SIZE),
+    };
+};
+
+const fetchJobs = async (searchParams: SearchParams): Promise<ApiResponse> => {
+    const payload = {
+        size: searchParams.size,
+        page: searchParams.page,
+        searchState: {
+            searchQuery: searchParams.keywords,
+        },
+    };
+
+    return await ofetch<ApiResponse>(API.BASE_URL, {
+        method: 'POST',
+        body: payload,
+        headers: API.HEADERS,
+    });
+};
+
+const renderJobDescription = (jobInfo: JobInformation, processedData: ProcessedJobData): string =>
     art(path.join(__dirname, 'templates/jobs.art'), {
         company_name: processedData.company_name,
-        location: processedData.formatted_workplace_location,
+        location: processedData.formatted_workplace_location ?? 'Remote/Unspecified',
         is_compensation_transparent: Boolean(processedData.is_compensation_transparent && processedData.yearly_min_compensation && processedData.yearly_max_compensation),
         yearly_min_compensation_formatted: processedData.yearly_min_compensation?.toLocaleString() ?? '',
         yearly_max_compensation_formatted: processedData.yearly_max_compensation?.toLocaleString() ?? '',
@@ -58,7 +103,7 @@ const renderJobDescription = (jobInfo: JobInformation, processedData: ProcessedJ
     });
 
 const transformJobItem = (item: JobResult) => {
-    const { job_information: jobInfo, v5_processed_job_data: processedData, estimated_publish_date, apply_url } = item;
+    const { job_information: jobInfo, v5_processed_job_data: processedData, estimated_publish_date, apply_url, id } = item;
 
     return {
         title: `${jobInfo.title} - ${processedData.company_name}`,
@@ -67,8 +112,26 @@ const transformJobItem = (item: JobResult) => {
         pubDate: new Date(estimated_publish_date).toUTCString(),
         category: [processedData.job_category, ...processedData.role_activities, processedData.workplace_type].filter((x): x is string => !!x),
         author: processedData.company_name,
+        guid: id,
     };
 };
+
+async function handler(ctx: Context) {
+    const searchParams = validateSearchParams({
+        keywords: ctx.req.param('keywords'),
+    });
+
+    const response = await fetchJobs(searchParams);
+    const items = response.results.map((item) => transformJobItem(item));
+
+    return {
+        title: `HiringCafe Jobs: ${searchParams.keywords}`,
+        description: `Job search results for "${searchParams.keywords}" on HiringCafe`,
+        link: `https://hiring.cafe/jobs?q=${encodeURIComponent(searchParams.keywords)}`,
+        item: items,
+        total: response.total,
+    };
+}
 
 export const route: Route = {
     path: '/jobs/:keywords',
@@ -92,32 +155,3 @@ export const route: Route = {
     maintainers: ['mintyfrankie'],
     handler,
 };
-
-async function handler(ctx: Context) {
-    const { keywords } = ctx.req.param();
-
-    const payload = {
-        size: 20,
-        page: 0,
-        searchState: {
-            searchQuery: keywords,
-        },
-    };
-
-    const response = await ofetch<ApiResponse>(API_BASE_URL, {
-        method: 'POST',
-        body: payload,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-    const items = response.results.map((item) => transformJobItem(item));
-
-    return {
-        title: `HiringCafe Jobs: ${keywords}`,
-        description: `Job search results for "${keywords}" on HiringCafe`,
-        link: `https://hiring.cafe/jobs?q=${encodeURIComponent(keywords)}`,
-        item: items,
-    };
-}
