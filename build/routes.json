@@ -38746,6 +38746,27 @@
     "url": "hex-rays.com",
     "lang": "en"
   },
+  "hexun": {
+    "routes": {
+      "/pe/news": {
+        "path": "/pe/news",
+        "categories": [
+          "finance"
+        ],
+        "example": "/hexun/pe/news",
+        "url": "pe.hexun.com/news/",
+        "name": "创投行业新闻",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "和讯网",
+    "url": "hexun.com",
+    "description": "",
+    "lang": "zh-CN"
+  },
   "hfut": {
     "routes": {
       "/hf/notice/:type?": {
