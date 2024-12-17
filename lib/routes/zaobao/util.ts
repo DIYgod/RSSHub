@@ -86,14 +86,16 @@ const parseList = async (
                 const article = await got_ins.get(link);
                 const $1 = load(article.data);
 
-                const title =
-                    $1('#seo-article-page').text() === ''
-                        ? $1('h1.article-title').text() // HK
-                        : JSON.parse($1('#seo-article-page').text())['@graph'][0]?.headline; // SG
-                const time = (() =>
-                    $1('#seo-article-page').text() === ''
-                        ? new Date(JSON.parse($1("head script[type='application/ld+json']").eq(1).text())?.datePublished) // HK
-                        : new Date(JSON.parse($1('#seo-article-page').text())['@graph'][0]?.datePublished))(); // SG
+                let title, time;
+                if ($1('#seo-article-page').text() === '') {
+                    // HK
+                    title = $1('h1.article-title').text();
+                    time = new Date(JSON.parse($1("head script[type='application/ld+json']").eq(1).text())?.datePublished)
+                } else {
+                    // SG
+                    title = JSON.parse($1('#seo-article-page').text())['@graph'][0]?.headline;
+                    time = new Date(JSON.parse($1('#seo-article-page').text())['@graph'][0]?.datePublished);
+                }
 
                 $1('.overlay-microtransaction').remove();
                 $1('#video-freemium-player').remove();
