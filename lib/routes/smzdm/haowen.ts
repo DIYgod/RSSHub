@@ -9,7 +9,17 @@ export const route: Route = {
     path: '/haowen/:day?',
     categories: ['shopping'],
     example: '/smzdm/haowen/1',
-    parameters: { day: '以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`' },
+    parameters: {
+        day: {
+            description: '以天为时间跨度，默认为 `1`',
+            options: [
+                { value: '1', label: '今日热门' },
+                { value: '7', label: '周热门' },
+                { value: '30', label: '月热门' },
+            ],
+            default: '1',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -24,7 +34,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const day = ctx.req.param('day') ?? 'all';
+    const day = ctx.req.param('day') ?? '1';
     const link = `https://post.smzdm.com/hot_${day}/`;
 
     const response = await ofetch(link);
