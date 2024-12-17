@@ -6623,6 +6623,9 @@
   "/techpowerup/review/:keyword?": [
     "TonyRL"
   ],
+  "/techsir/": [
+    "p3psi-boo"
+  ],
   "/telecompaper/news/:caty/:year?/:country?/:type?": [
     "nczitzk"
   ],

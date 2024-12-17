@@ -82431,6 +82431,27 @@
     "url": "techpowerup.com",
     "lang": "en"
   },
+  "techsir": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/techsir",
+        "url": "www.techsir.com",
+        "name": "最新资讯",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "TechSir",
+    "url": "techsir.com",
+    "description": "科技先生 TechSir.Com 是新酷科技创新与创业媒体",
+    "lang": "zh-CN"
+  },
   "telecompaper": {
     "routes": {
       "/news/:caty/:year?/:country?/:type?": {
