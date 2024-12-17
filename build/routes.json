@@ -7088,6 +7088,27 @@
     "url": "apnews.com",
     "lang": "en"
   },
+  "apnic": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/apnic/blog",
+        "url": "blog.apnic.net",
+        "name": "Blog",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "APNIC",
+    "url": "blog.apnic.net",
+    "description": "Asia-Pacific Network Information Centre",
+    "lang": "en"
+  },
   "app-center": {
     "routes": {
       "/release/:user/:app/:distribution_group": {
