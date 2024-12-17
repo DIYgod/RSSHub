@@ -4,9 +4,9 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/ratings/:language?',
-    categories: ['finance', 'popular'],
-    view: ViewType.Articles,
-    example: '/ratings/en/',
+    categories: ['finance'],
+    view: ViewType.Notifications,
+    example: '/spglobal/ratings/en',
     parameters: {
         language: {
             description: '语言',
@@ -21,36 +21,22 @@ export const route: Route = {
             ],
         },
     },
-    features: {
-        requireConfig: [
-            {
-                name: 'LANGUAGE',
-                description: '语言',
-            },
-        ],
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['www.spglobal.com/ratings/:language'],
         },
     ],
-    name: 'S&P Global Ratings',
+    name: 'Ratings',
     description: `
-    lang:
-    | Lang | Description |
-    | ---   | ---   |
-    | zh | 中文 |
-    | en | English |
-    | es | Español |
-    | pt | Português |
-    | jp | 日本語 |
-    | ru | Русский |
-    | ar | العربية |
+| language | Description |
+| ---   | ---   |
+| zh | 中文 |
+| en | English |
+| es | Español |
+| pt | Português |
+| jp | 日本語 |
+| ru | Русский |
+| ar | العربية |
     `,
     maintainers: ['FYLSen'],
     handler,
@@ -72,7 +58,7 @@ async function handler(ctx) {
         item: items.map((x) => ({
             title: x.title,
             pubDate: parseDate(x.custom_dt_meta_publish_date),
-            link: x.custom_s_local_url,
+            link: `https://www.spglobal.com${x.custom_s_local_url}`,
         })),
     };
 }
