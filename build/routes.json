@@ -73074,6 +73074,26 @@
         "description": "| 通知通告 | 新闻 | 政策文件(bug) |\n  | -------- | ---- | -------- |\n  | notice   | news | policy   |",
         "location": "jwb.ts"
       },
+      "/journals/society/current": {
+        "path": "/journals/society/current",
+        "categories": [
+          "journal"
+        ],
+        "example": "/journals/society/current",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "《社会》杂志当期目录",
+        "maintainers": [
+          "CNYoki"
+        ],
+        "location": "society.ts"
+      },
       "/xykd/:type?": {
         "path": "/xykd/:type?",
         "categories": [
