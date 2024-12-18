@@ -129,7 +129,7 @@ async function handler(ctx: Context) {
 export const route: Route = {
     path: '/jobs/:keywords',
     categories: ['other'],
-    example: '/hiringcafe/jobs/sustainability',
+    example: '/hiring.cafe/jobs/sustainability',
     parameters: { keywords: 'Keywords to search for' },
     features: {
         requireConfig: false,
