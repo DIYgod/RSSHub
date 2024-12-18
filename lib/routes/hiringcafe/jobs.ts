@@ -16,7 +16,6 @@ const API = {
     BASE_URL: 'https://hiring.cafe/api/search-jobs',
     HEADERS: {
         'Content-Type': 'application/json',
-        'User-Agent': 'RSSHub/1.0',
     },
 } as const;
 
@@ -63,10 +62,6 @@ interface SearchParams {
 }
 
 const validateSearchParams = ({ keywords, page = 0, size = CONFIG.DEFAULT_PAGE_SIZE }: SearchParams): SearchParams => {
-    if (!keywords?.trim()) {
-        throw new Error('Keywords cannot be empty');
-    }
-
     return {
         keywords: keywords.trim(),
         page: Math.max(0, Math.floor(Number(page))),
