@@ -14229,6 +14229,19 @@
       }
     ]
   },
+  "hiring.cafe": {
+    "_name": "HiringCafe",
+    ".": [
+      {
+        "title": "Jobs",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/hiring.cafe/jobs/:keywords"
+      }
+    ]
+  },
   "hit.edu.cn": {
     "_name": "哈尔滨工业大学",
     "hitgs": [

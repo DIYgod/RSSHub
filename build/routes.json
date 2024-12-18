@@ -38948,6 +38948,46 @@
     "url": "hinatazaka46.com",
     "lang": "zh-CN"
   },
+  "hiring.cafe": {
+    "routes": {
+      "/jobs/:keywords": {
+        "path": "/jobs/:keywords",
+        "categories": [
+          "other"
+        ],
+        "example": "/hiring.cafe/jobs/sustainability",
+        "parameters": {
+          "keywords": "Keywords to search for"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "hiring.cafe"
+            ]
+          }
+        ],
+        "name": "Jobs",
+        "maintainers": [
+          "mintyfrankie"
+        ],
+        "location": "jobs.ts"
+      }
+    },
+    "name": "HiringCafe",
+    "url": "hiring.cafe",
+    "description": "HiringCafe is a platform for job seekers to find job opportunities and for employers to post job listings.",
+    "zh": {
+      "name": "HiringCafe"
+    }
+  },
   "hit": {
     "routes": {
       "/hitgs": {
