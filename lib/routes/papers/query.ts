@@ -22,7 +22,6 @@ export const handler = async (ctx) => {
 
     const site = keyword.split(/\//)[0];
     const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
-
     const feed = await parser.parseURL(feedUrl);
 
     const language = 'en';
