@@ -61,13 +61,11 @@ interface SearchParams {
     readonly size?: number;
 }
 
-const validateSearchParams = ({ keywords, page = 0, size = CONFIG.DEFAULT_PAGE_SIZE }: SearchParams): SearchParams => {
-    return {
-        keywords: keywords.trim(),
-        page: Math.max(0, Math.floor(Number(page))),
-        size: Math.min(Math.max(1, Math.floor(Number(size))), CONFIG.MAX_PAGE_SIZE),
-    };
-};
+const validateSearchParams = ({ keywords, page = 0, size = CONFIG.DEFAULT_PAGE_SIZE }: SearchParams): SearchParams => ({
+    keywords: keywords.trim(),
+    page: Math.max(0, Math.floor(Number(page))),
+    size: Math.min(Math.max(1, Math.floor(Number(size))), CONFIG.MAX_PAGE_SIZE),
+});
 
 const fetchJobs = async (searchParams: SearchParams): Promise<ApiResponse> => {
     const payload = {
