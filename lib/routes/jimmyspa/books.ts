@@ -11,7 +11,7 @@ export const route: Route = {
     path: '/books/:language?',
     categories: ['design'],
     view: ViewType.Articles,
-    example: '/jimmy/books/tw',
+    example: '/jimmyspa/books/tw',
     parameters: {
         language: {
             description: '语言',
@@ -54,8 +54,8 @@ async function handler(ctx) {
         .map((item) => {
             const $$ = load(item);
             const title = $$('p.tit').text();
-            const imagesrc = $$('div.work_img img').prop('src');
-            const image = rootUrl + imagesrc;
+            const imagesrc = $$('div.work_img img').prop('src') || '';
+            const image = imagesrc ? rootUrl + imagesrc : '';
             const link = $$('li.work_block').prop('data-route');
             const date = $$('p.year').text() + '-02-02';
             const pubDate = parseDate(date);

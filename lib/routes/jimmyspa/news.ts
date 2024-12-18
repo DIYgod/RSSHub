@@ -11,7 +11,7 @@ export const route: Route = {
     path: '/news/:language?',
     categories: ['design'],
     view: ViewType.Pictures,
-    example: '/jimmy/news/tw',
+    example: '/jimmyspa/news/tw',
     parameters: {
         language: {
             description: '语言',
@@ -54,7 +54,7 @@ async function handler(ctx) {
         .map((item) => {
             const $$ = load(item);
             const title = $$('a.news_card .info_wrap h3').text();
-            const image = $$('a.news_card .card_img img').prop('src');
+            const image = $$('a.news_card .card_img img').prop('src') || '';
             const link = $$('a.news_card').prop('data-route');
             const itemdate = $$('a.news_card div.date').html() || '';
             const pubDate = convertHtmlDateToStandardFormat(itemdate.toString());
