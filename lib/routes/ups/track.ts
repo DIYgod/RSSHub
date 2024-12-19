@@ -7,8 +7,8 @@ import puppeteer from '@/utils/puppeteer';
 export const route: Route = {
     path: '/track/:trackingNumber',
     categories: ['other'],
-    example: '/ups/track/1Z78R1234567890123',
-    parameters: { trackingNumber: 'The UPS tracking number (e.g., 1Z78R1234567890123).' },
+    example: '/ups/track/1Z78R6790470567520',
+    parameters: { trackingNumber: 'The UPS tracking number (e.g., 1Z78R6790470567520).' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
