@@ -8,7 +8,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/news/:language?',
+    path: '/news/:language',
     categories: ['design'],
     view: ViewType.Pictures,
     example: '/jimmyspa/news/tw',
@@ -43,11 +43,11 @@ async function handler(ctx) {
     const language = ctx.req.param('language');
     const rootUrl = 'https://www.jimmyspa.com';
 
-    const currentUrl = new URL(`/${language}/News`, rootUrl).href;
+    const currentUrl = new URL(`/${language}/News/Ajax/changeList?year=&keyword=&categoryId=0&page=1`, rootUrl).href;
 
     const responseData = await got(currentUrl);
 
-    const $ = load(responseData.data);
+    const $ = load(responseData.data.view);
 
     const items = $('ul#appendNews li.card_block')
         .toArray()
@@ -91,7 +91,7 @@ async function handler(ctx) {
     };
 }
 
-function convertHtmlDateToStandardFormat(htmlContent: string): Date {
+function convertHtmlDateToStandardFormat(htmlContent: string): Date | undefined {
     const dateRegex = /<p>(\d{1,2})<\/p>\s*<p>(\d{1,2})\s*\.\s*([A-Za-z]{3})<\/p>/;
     const match = htmlContent.match(dateRegex);
 
@@ -119,5 +119,6 @@ function convertHtmlDateToStandardFormat(htmlContent: string): Date {
 
         return parseDate(`20${year}-${month}-${day}`);
     }
-    return new Date();
+
+    return undefined;
 }

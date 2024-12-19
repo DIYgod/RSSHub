@@ -8,7 +8,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/books/:language?',
+    path: '/books/:language',
     categories: ['design'],
     view: ViewType.Articles,
     example: '/jimmyspa/books/tw',
@@ -43,22 +43,33 @@ async function handler(ctx) {
     const language = ctx.req.param('language');
     const rootUrl = 'https://www.jimmyspa.com';
 
-    const currentUrl = new URL(`/${language}/Books`, rootUrl).href;
+    const currentUrl = new URL(`/${language}/Books/Ajax/changeList?year=&keyword=&categoryId=0&page=1`, rootUrl).href;
 
     const responseData = await got(currentUrl);
-
-    const $ = load(responseData.data);
+    const $ = load(responseData.data.view);
 
     const items = $('ul#appendWork li.work_block')
         .toArray()
-        .map((item) => {
+        .map(async (item) => {
             const $$ = load(item);
             const title = $$('p.tit').text();
             const imagesrc = $$('div.work_img img').prop('src') || '';
             const image = imagesrc ? rootUrl + imagesrc : '';
             const link = $$('li.work_block').prop('data-route');
-            const date = $$('p.year').text() + '-02-02';
-            const pubDate = parseDate(date);
+            const contData = await got(link);
+            const $cont = load(contData.data);
+            const cont = $cont('article.intro_cont').html() || '';
+            const wrap = $cont('div.info_wrap').html() || '';
+
+            const contHTML = cont.replaceAll(/<img\b[^>]*>/g, (imgTag) => imgTag.replaceAll(/\b(src|data-src)="(?!http|https|\/\/)([^"]*)"/g, (attrMatch, attrName, relativePath) => {
+                    const absolutePath = new URL(relativePath, rootUrl).href;
+                    return `${attrName}="${absolutePath}"`;
+                }));
+
+            const match = wrap.match(/<span>(首次出版|First Published|初版)<\/span>\s*<span class="num">([^<]+)<\/span>/);
+
+            const date = match ? match[2] : '';
+            const pubDate = parseDate(date + '-02');
             const description = art(path.join(__dirname, 'templates/description.art'), {
                 images: image
                     ? [
@@ -68,7 +79,7 @@ async function handler(ctx) {
                           },
                       ]
                     : undefined,
-                description: $$('p.cont').text(),
+                description: contHTML,
             });
 
             return {
@@ -87,6 +98,6 @@ async function handler(ctx) {
         title: `幾米 - ${$('title').text()}(${language})`,
         link: `${rootUrl}/${language}/Books`,
         allowEmpty: true,
-        item: items,
+        item: await Promise.all(items),
     };
 }
