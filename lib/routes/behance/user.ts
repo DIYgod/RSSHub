@@ -78,7 +78,7 @@ async function handler(ctx) {
         title: item.name,
         link: item.url,
         author: item.owners.map((owner) => owner.displayName).join(', '),
-        image: item.covers.size_808.url.replace('/808/', '/source/'),
+        image: item.covers.size_202.url.replace('/202/', '/source/'),
         pubDate: item.publishedOn ? parseDate(item.publishedOn, 'X') : undefined,
         category: item.fields?.map((field) => field.label.toLowerCase()),
         projectId: item.id,
