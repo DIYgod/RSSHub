@@ -44564,6 +44564,179 @@
   },
   "iresearch": {
     "routes": {
+      "/chart/:category?": {
+        "path": "/chart/:category?",
+        "name": "研究图表",
+        "url": "www.iresearch.com.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/iresearch/chart",
+        "parameters": {
+          "category": "分类，见下表"
+        },
+        "description": "\n| 媒体文娱 | 广告营销   | 游戏行业 | 视频媒体  | 消费电商 |\n| -------- | ---------- | -------- | --------- | -------- |\n| 电子商务 | 消费者洞察 | 旅游行业 | 汽车行业  | 教育行业 |\n| 企业服务 | 网络服务   | 应用服务 | AI 大数据 | 人工智能 |\n| 物流行业 | 金融行业   | 支付行业 | 房产行业  | 医疗健康 |\n| 先进制造 | 新能源     | 区块链   | 其他      |          |\n",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "研究图表 - 媒体文娱",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 广告营销",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 游戏行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 视频媒体",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 消费电商",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 电子商务",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 消费者洞察",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 旅游行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 汽车行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 教育行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 企业服务",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 网络服务",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 应用服务",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - AI大数据",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 人工智能",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 物流行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 金融行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 支付行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 房产行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 医疗健康",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 先进制造",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 新能源",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 区块链",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 其他",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          }
+        ],
+        "view": 0,
+        "location": "chart.ts"
+      },
       "/report": {
         "path": "/report",
         "categories": [
