@@ -1,7 +1,6 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
@@ -34,12 +33,6 @@ async function handler(ctx) {
 
     const browser = await puppeteer();
     const page = await browser.newPage();
-
-    await page.setUserAgent(config.ua);
-
-    await page.setExtraHTTPHeaders({
-        'Accept-Language': 'en-US,en;q=0.9',
-    });
 
     await page.setRequestInterception(true);
 
