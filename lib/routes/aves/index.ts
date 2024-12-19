@@ -3,8 +3,8 @@ import got from '@/utils/got';
 import cache from '@/utils/cache';
 
 export const route: Route = {
-    path: '/:category?',
-    categories: ['other'],
+    path: '/:category',
+    categories: ['reading'],
     example: '/aves/current',
     parameters: { category: '分类，见下表' },
     features: {
