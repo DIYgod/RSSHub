@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 export const route: Route = {
     path: '/:category?',
     categories: ['other'],
-    example: '/aves',
+    example: '/aves/current',
     parameters: { category: '分类，见下表' },
     features: {
         requireConfig: false,
