@@ -133,7 +133,7 @@ async function handler(ctx) {
 
     const $ = cheerio.load(response);
 
-    const list = $('div.listing-title > a')
+    const list = $('.main-listing-container div.listing-title > a')
         .toArray()
         .map((item) => {
             item = $(item);
