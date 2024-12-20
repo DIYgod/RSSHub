@@ -10,8 +10,8 @@ export const route: Route = {
             target: '/:id',
         },
     ],
-    name: 'Unknown',
-    maintainers: ['vzz64'],
+    name: 'Single Manga Feed',
+    maintainers: ['vzz64', 'chrisis58'],
     handler,
 };
 
