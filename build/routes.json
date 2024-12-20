@@ -267,14 +267,15 @@
         ],
         "location": "music/artist.ts"
       },
-      "/music/djradio/:id": {
-        "path": "/music/djradio/:id",
+      "/music/djradio/:id/:info?": {
+        "path": "/music/djradio/:id/:info?",
         "categories": [
           "multimedia"
         ],
         "example": "/163/music/djradio/347317067",
         "parameters": {
-          "id": "节目 id, 可在电台节目页 URL 中找到"
+          "id": "节目 id, 可在电台节目页 URL 中找到",
+          "info": "默认在正文尾部显示节目相关信息，任意值为不显示"
         },
         "features": {
           "requireConfig": false,

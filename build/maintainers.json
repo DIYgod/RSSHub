@@ -27,7 +27,7 @@
   "/163/music/artist/:id": [
     "metowolf"
   ],
-  "/163/music/djradio/:id": [
+  "/163/music/djradio/:id/:info?": [
     "magic-akari"
   ],
   "/163/music/playlist/:id": [
