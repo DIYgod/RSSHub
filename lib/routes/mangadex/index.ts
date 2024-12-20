@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/:id/:lang?',
     radar: [
         {
-            source: ['mangadex.org/title/:id/*', 'mangadex.org/title/:id'],
+            source: ['mangadex.org/title/:id/:suffix', 'mangadex.org/title/:id'],
             target: '/:id',
         },
     ],
