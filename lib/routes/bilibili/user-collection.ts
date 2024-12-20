@@ -59,6 +59,7 @@ async function handler(ctx) {
         title: `${userName} 的 bilibili 合集 ${data.meta.name}`,
         link,
         description: `${userName} 的 bilibili 合集`,
+        image: face,
         logo: face,
         icon: face,
         item: data.archives.map((item) => ({
