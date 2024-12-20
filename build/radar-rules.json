@@ -16884,6 +16884,27 @@
       }
     ]
   },
+  "jimmyspa.com": {
+    "_name": "幾米 JIMMY S.P.A. Official Website",
+    "www": [
+      {
+        "title": "Books",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/:language/Books"
+        ],
+        "target": "/jimmyspa/books/:language"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/:language/News"
+        ],
+        "target": "/jimmyspa/news/:language"
+      }
+    ]
+  },
   "jin10.com": {
     "_name": "金十数据",
     ".": [
