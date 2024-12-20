@@ -58,12 +58,10 @@ async function handler(ctx) {
             const list = programs.map((pg) => {
                 const description = (pg.description || '').split('\n').map((p) => p);
                 const duration = Math.trunc(pg.duration / 1000);
-                const mm_ss_duration = `${(duration / 60).toFixed(0).padStart(2, '0')}:${(duration % 60).toFixed(0).padStart(2, '0')}`;
 
                 const html = art(path.join(__dirname, '../templates/music/djradio-content.art'), {
                     pg,
                     description,
-                    itunes_duration: mm_ss_duration,
                 });
 
                 return {
