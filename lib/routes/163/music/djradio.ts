@@ -8,10 +8,10 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/music/djradio/:id',
+    path: '/music/djradio/:id/:info?',
     categories: ['multimedia'],
     example: '/163/music/djradio/347317067',
-    parameters: { id: '节目 id, 可在电台节目页 URL 中找到' },
+    parameters: { id: '节目 id, 可在电台节目页 URL 中找到', info: '默认在正文尾部显示节目相关信息，任意值为不显示' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -27,6 +27,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
+    const info = !ctx.req.param('info');
 
     const ProcessFeed = (limit, offset) =>
         got.post('https://music.163.com/api/dj/program/byradio', {
@@ -58,10 +59,13 @@ async function handler(ctx) {
             const list = programs.map((pg) => {
                 const description = (pg.description || '').split('\n').map((p) => p);
                 const duration = Math.trunc(pg.duration / 1000);
+                const mm_ss_duration = `${(duration / 60).toFixed(0).padStart(2, '0')}:${(duration % 60).toFixed(0).padStart(2, '0')}`;
 
                 const html = art(path.join(__dirname, '../templates/music/djradio-content.art'), {
                     pg,
                     description,
+                    itunes_duration: mm_ss_duration,
+                    info,
                 });
 
                 return {
