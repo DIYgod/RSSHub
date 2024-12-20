@@ -14,6 +14,8 @@
         {{ each module.components comp }}
             <img src="https://mir-s3-cdn-cf.behance.net/project_modules/source/{{ comp.filename }}">
         {{ /each }}
+    {{ else if module.__typename === 'EmbedModule' }}
+        {{@ module.fluidEmbed || module.originalEmbed }}
     {{ else }}
         UNHANDLED MODULE: {{ module.__typename }}
     {{ /if }}
