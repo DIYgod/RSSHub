@@ -20,22 +20,21 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    let items = $('div#dataList h3')
+    let items = $('div#dataList > dl > dd, div#dataList > ul > li')
         .slice(0, limit)
         .toArray()
         .map((item) => {
             item = $(item);
 
-            const title = item.text();
             const description = art(path.join(__dirname, 'templates/description.art'), {
-                intro: item.next().text(),
+                intro: item.find('p').text(),
             });
 
             return {
-                title,
+                title: item.find('h3 > a').text(),
                 description,
-                pubDate: parseDate(item.find('span').first().text()),
-                link: item.find('a').prop('href'),
+                pubDate: parseDate(item.find('span').text()),
+                link: item.find('h3 > a').prop('href'),
                 language,
             };
         });

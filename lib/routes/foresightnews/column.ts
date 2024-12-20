@@ -3,7 +3,7 @@ import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
 
 export const route: Route = {
     path: '/column/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/foresightnews/column/1',
     parameters: { id: '专栏 id, 可在对应专栏页 URL 中找到' },
     features: {

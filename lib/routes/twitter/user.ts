@@ -32,6 +32,11 @@ export const route: Route = {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
             },
+            {
+                name: 'TWITTER_THIRD_PARTY_API',
+                description: 'Use third-party API to query twitter data',
+                optional: true,
+            },
         ],
         requirePuppeteer: false,
         antiCrawler: false,
@@ -40,7 +45,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'User timeline',
-    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9', 'CaoMeiYouRen'],
+    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9', 'CaoMeiYouRen', 'pseudoyu'],
     handler,
     radar: [
         {

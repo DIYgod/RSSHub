@@ -5,7 +5,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/collections/:collection',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/gcores/collections/64',
     parameters: { collection: '专题id，可在专题页面的 URL 中找到，如 游戏开发设计心得分享 -- 64' },
     features: {

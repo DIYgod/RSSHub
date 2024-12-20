@@ -1,13 +1,40 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { apiUrl, favicon, getBParam, getBuildId, getGToken, parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/:categoryId?/:lang?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/followin',
-    parameters: { categoryId: 'Category ID, see table below, `1` by default', lang: 'Language, see table below, `en` by default' },
+    parameters: {
+        categoryId: {
+            description: 'Category ID',
+            options: [
+                { value: '1', label: 'For You' },
+                { value: '9', label: 'Market' },
+                { value: '13', label: 'Meme' },
+                { value: '14', label: 'BRC20' },
+                { value: '3', label: 'NFT' },
+                { value: '5', label: 'Thread' },
+                { value: '6', label: 'In-depth' },
+                { value: '8', label: 'Tutorials' },
+                { value: '11', label: 'Videos' },
+            ],
+            default: '1',
+        },
+        lang: {
+            description: 'Language',
+            options: [
+                { value: 'en', label: 'English' },
+                { value: 'zh-Hans', label: '简体中文' },
+                { value: 'zh-Hant', label: '繁體中文' },
+                { value: 'vi', label: 'Tiếng Việt' },
+            ],
+            default: 'en',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

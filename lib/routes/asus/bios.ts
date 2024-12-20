@@ -91,7 +91,6 @@ export const route: Route = {
                 'www.asus.com/:region/laptops/:productLine/:series/:model',
                 'www.asus.com/:region/motherboards-components/:productLine/:series/:model',
                 'www.asus.com/:region/networking-iot-servers/:productLine/:series/:model',
-                'asus.com.cn/',
             ],
             target: '/bios/:model',
         },

@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+import { load, type CheerioAPI, type Element } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
@@ -9,7 +9,7 @@ import { getCurrentPath } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/app/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/theinitium/app',
     parameters: {
         category: 'Category, see below, latest_sc by default',
@@ -52,38 +52,52 @@ Category 栏目：
 | 播客   | article_audio_sc | article_audio_tc |`,
 };
 
+const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl?: string) => {
+    // code from @/middleware/paratmeter.ts
+    const $elem = $(elem);
+
+    if (baseUrl) {
+        try {
+            const oldAttr = $elem.attr(attr);
+            if (oldAttr) {
+                // e.g. <video><source src="https://example.com"></video> should leave <video> unchanged
+                $elem.attr(attr, new URL(oldAttr, baseUrl).href);
+            }
+        } catch {
+            // no-empty
+        }
+    }
+};
+
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'latest_sc';
     const __dirname = getCurrentPath(import.meta.url);
+    const baseUrl = 'https://app.theinitium.com/';
 
-    const feedListLink = 'https://app.theinitium.com/timelines.json';
-
-    const feedList = await cache.tryGet(
-        feedListLink,
+    const feeds = await cache.tryGet(
+        new URL('timelines.json', baseUrl).href,
         async () =>
             await got({
                 method: 'get',
-                url: feedListLink,
+                url: new URL('timelines.json', baseUrl).href,
             }),
         config.cache.routeExpire,
         false
     );
 
-    const feedInfo = feedList.data.timelines.find((timeline) => timeline.id === category);
+    const metadata = feeds.data.timelines.find((timeline) => timeline.id === category);
 
-    const link = `https://app.theinitium.com${feedInfo.feed.slice(1)}`;
-
-    const feedResponse = await got({
+    const response = await got({
         method: 'get',
-        url: link,
+        url: new URL(metadata.feed, baseUrl).href,
     });
 
-    const feed = feedResponse.data.stories.filter((item) => item.type === 'article');
+    const feed = response.data.stories.filter((item) => item.type === 'article');
 
     const items = await Promise.all(
         feed.map((item) =>
-            cache.tryGet('https://app.theinitium.com/' + item.url.replaceAll('../', ''), async () => {
-                item.link = 'https://app.theinitium.com/' + item.url.replaceAll('../', '');
+            cache.tryGet(new URL(item.url, baseUrl).href, async () => {
+                item.link = item.shareurl ?? new URL(item.url, baseUrl).href;
                 item.description = item.summary;
                 item.pubDate = item.published;
                 item.category = [];
@@ -99,12 +113,30 @@ async function handler(ctx) {
                     }
                 }
                 item.category = [...new Set(item.category)];
-                const response = await got(item.link);
+                const response = await got(new URL(item.url, baseUrl).href);
                 const $ = load(response.data);
+                // resolve relative links with app.theinitium.com
+                // code from @/middleware/paratmeter.ts
+                $('a, area').each((_, elem) => {
+                    resolveRelativeLink($, elem, 'href', baseUrl);
+                    // $(elem).attr('rel', 'noreferrer');  // currently no such a need
+                });
+                // https://www.w3schools.com/tags/att_src.asp
+                $('img, video, audio, source, iframe, embed, track').each((_, elem) => {
+                    resolveRelativeLink($, elem, 'src', baseUrl);
+                    $(elem).removeAttr('srcset');
+                });
+                $('video[poster]').each((_, elem) => {
+                    resolveRelativeLink($, elem, 'poster', baseUrl);
+                });
                 const article = $('.pp-article__body');
                 article.find('.block-related-articles').remove();
+                article.find('figure.wp-block-pullquote').children().unwrap();
+                article.find('div.block-explanation-note').wrapInner('<blockquote></blockquote>');
+                article.find('div.wp-block-tcc-author-note').wrapInner('<em></em>').after('<hr>');
+                article.find('p.has-small-font-size').wrapInner('<small></small>');
                 item.description = art(path.join(__dirname, 'templates/description.art'), {
-                    header: $('.pp-header-group__standfirst').html(),
+                    standfirst: $('.pp-header-group__standfirst').html(),
                     coverImage: $('.pp-media__image').attr('src'),
                     coverCaption: $('.pp-media__caption').html(),
                     article: article.html(),
@@ -115,21 +147,15 @@ async function handler(ctx) {
         )
     );
 
-    let lang;
-    let titleLoc;
-    if (feedInfo.timeline_sets[0] === 'chinese-simplified') {
-        lang = 'zh-hans';
-        titleLoc = '端传媒';
-    } else if (feedInfo.timeline_sets[0] === 'chinese-traditional') {
+    let lang = 'zh-hans';
+    let name = '端传媒';
+    if (metadata.timeline_sets[0] === 'chinese-traditional') {
         lang = 'zh-hant';
-        titleLoc = '端傳媒';
-    } else {
-        lang = 'zh-hans';
-        titleLoc = '端传媒';
+        name = '端傳媒';
     }
 
     return {
-        title: `${titleLoc} - ${feedInfo.title}`,
+        title: `${name} - ${metadata.title}`,
         link: `https://app.theinitium.com/t/latest/${category}/`,
         language: lang,
         item: items,

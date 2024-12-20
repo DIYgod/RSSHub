@@ -1,8 +1,13 @@
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { load } from 'cheerio';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import crypto from 'node:crypto';
+import path from 'node:path';
+import { art } from '@/utils/render';
+import { getCurrentPath } from '@/utils/helpers';
+import { getAppreciatedQuery, getProfileProjectsAndSelectionsQuery, getProjectPageQuery } from './queries';
+const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/:user/:type?',
@@ -34,66 +39,84 @@ export const route: Route = {
     description: `Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://www.behance.net/mishapetrick) the username will be \`mishapetrick\`。`,
 };
 
-async function handler(ctx) {
-    const user = ctx.req.param('user') ?? '';
-    const type = ctx.req.param('type') ?? 'projects';
+const getUserProfile = async (nodes, user) =>
+    (await cache.tryGet(`behance:profile:${user}`, () => {
+        const profile = nodes.flatMap((item) => item.owners).find((owner) => owner.username === user);
 
-    const response = await got({
-        method: 'get',
-        url: `https://www.behance.net/${user}/${type}`, // 接口只获取12个项目
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
+        return Promise.resolve({
+            displayName: profile.displayName,
+            id: profile.id,
+            link: profile.url,
+            image: profile.images.size_50.url.replace('/user/50/', '/user/source/'),
+        });
+    })) as { displayName: string; id: string; link: string; image: string };
+
+async function handler(ctx) {
+    const { user, type = 'projects' } = ctx.req.param();
+
+    const uuid = crypto.randomUUID();
+    const headers = {
+        Cookie: `gk_suid=${Math.random().toString().substring(2, 10)}, gki=; originalReferrer=; bcp=${uuid}`,
+        'X-BCP': uuid,
+        'X-Requested-With': 'XMLHttpRequest',
+    };
+
+    const response = await ofetch('https://www.behance.net/v3/graphql', {
+        method: 'POST',
+        headers,
+        body: {
+            query: type === 'projects' ? getProfileProjectsAndSelectionsQuery : getAppreciatedQuery,
+            variables: {
+                username: user,
+                after: '',
+            },
         },
     });
-    const data = response.data;
-    let list;
-    if (type === 'projects') {
-        list = data.profile.activeSection.work.projects.slice(0, 12);
-    }
-    if (type === 'appreciated') {
-        list = data.profile.activeSection.appreciations.appreciations.slice(0, 12);
-    }
-    const articledata = await Promise.all(
-        list.map(async (item) => {
-            if (type === 'appreciated') {
-                item = item.project;
-            }
-            const url = `${item.url}?ilo0=1`;
-            const description = await cache.tryGet(url, async () => {
-                const response2 = await got({
-                    method: 'get',
-                    url,
+
+    const nodes = type === 'projects' ? response.data.user.profileProjects.nodes : response.data.user.appreciatedProjects.nodes;
+    const list = nodes.map((item) => ({
+        title: item.name,
+        link: item.url,
+        author: item.owners.map((owner) => owner.displayName).join(', '),
+        image: item.covers.size_202.url.replace('/202/', '/source/'),
+        pubDate: item.publishedOn ? parseDate(item.publishedOn, 'X') : undefined,
+        category: item.fields?.map((field) => field.label.toLowerCase()),
+        projectId: item.id,
+    }));
+
+    const profile = await getUserProfile(nodes, user);
+
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch('https://www.behance.net/v3/graphql', {
+                    method: 'POST',
+                    headers,
+                    body: {
+                        query: getProjectPageQuery,
+                        variables: {
+                            projectId: item.projectId,
+                        },
+                    },
                 });
-                const articleHtml = response2.data;
-                const $2 = load(articleHtml);
-                $2('.ImageElement-root-kir').remove();
-                $2('.embed-dimensions').remove();
-                $2('script.js-lightbox-slide-content').each((_, elem) => {
-                    elem = $2(elem);
-                    elem.replaceWith(elem.html());
+                const project = response.data.project;
+
+                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                    description: project.description,
+                    modules: project.allModules,
                 });
-                const content = $2('div.project-styles').html();
-                const single = {
-                    content,
-                };
-                return single;
-            });
-            return description;
-        })
+                item.category = [...new Set([...(item.category || []), ...(project.tags?.map((tag) => tag.title.toLowerCase()) || [])])];
+                item.pubDate = item.pubDate || (project.publishedOn ? parseDate(project.publishedOn, 'X') : undefined);
+
+                return item;
+            })
+        )
     );
+
     return {
-        title: `${data.profile.owner.first_name} ${data.profile.owner.last_name}'s ${type}`,
-        link: data.profile.owner.url,
-        item: list.map((item, index) => {
-            if (type === 'appreciated') {
-                item = item.project;
-            }
-            return {
-                title: item.name,
-                description: articledata[index].content,
-                link: item.url,
-                pubDate: parseDate(item.published_on * 1000),
-            };
-        }),
+        title: `${profile.displayName}'s ${type}`,
+        link: `https://www.behance.net/${user}/${type}`,
+        image: profile.image,
+        item: items,
     };
 }

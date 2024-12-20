@@ -1,15 +1,37 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-const baseUrl = 'https://www.pixiv.net';
+import { Data, Route, ViewType } from '@/types';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { config } from '@/config';
+import { getNSFWUserNovels } from './novel-api/user-novels/nsfw';
+import { getSFWUserNovels } from './novel-api/user-novels/sfw';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
-    path: '/user/novels/:id',
+    path: '/user/novels/:id/:full_content?',
     categories: ['social-media'],
+    view: ViewType.Articles,
     example: '/pixiv/user/novels/27104704',
-    parameters: { id: "User id, available in user's homepage URL" },
+    parameters: {
+        id: "User id, available in user's homepage URL",
+        full_content: {
+            description: 'Enable or disable the display of full content. ',
+            options: [
+                { value: 'true', label: 'true' },
+                { value: 'false', label: 'false' },
+            ],
+            default: 'false',
+        },
+    },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'PIXIV_REFRESHTOKEN',
+                optional: true,
+                description: `
+Pixiv 登錄後的 refresh_token，用於獲取 R18 小說
+refresh_token after Pixiv login, required for accessing R18 novels
+[https://docs.rsshub.app/deploy/config#pixiv](https://docs.rsshub.app/deploy/config#pixiv)`,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -18,54 +40,57 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.pixiv.net/users/:id/novels'],
+            title: 'User Novels (簡介 Basic info)',
+            source: ['www.pixiv.net/users/:id/novels', 'www.pixiv.net/users/:id'],
+            target: '/user/novels/:id',
+        },
+        {
+            title: 'User Novels (全文 Full text)',
+            source: ['www.pixiv.net/users/:id/novels', 'www.pixiv.net/users/:id'],
+            target: '/user/novels/:id/true',
         },
     ],
     name: 'User Novels',
-    maintainers: ['TonyRL'],
+    maintainers: ['TonyRL', 'SnowAgar25'],
     handler,
+    description: `
+| 小說類型 Novel Type | full_content | PIXIV_REFRESHTOKEN | 返回內容 Content |
+|-------------------|--------------|-------------------|-----------------|
+| Non R18           | false        | 不需要 Not Required  | 簡介 Basic info |
+| Non R18           | true         | 不需要 Not Required  | 全文 Full text  |
+| R18               | false        | 需要 Required       | 簡介 Basic info |
+| R18               | true         | 需要 Required       | 全文 Full text  |
+
+Default value for \`full_content\` is \`false\` if not specified.
+
+Example:
+- \`/pixiv/user/novels/79603797\` → 簡介 Basic info
+- \`/pixiv/user/novels/79603797/true\` → 全文 Full text`,
 };
 
-async function handler(ctx) {
-    const id = ctx.req.param('id');
-    const { limit = 100 } = ctx.req.query();
-    const url = `${baseUrl}/users/${id}/novels`;
-    const { data: allData } = await got(`${baseUrl}/ajax/user/${id}/profile/all`, {
-        headers: {
-            referer: url,
-        },
-    });
+const hasPixivAuth = () => Boolean(config.pixiv && config.pixiv.refreshToken);
 
-    const novels = Object.keys(allData.body.novels)
-        .sort((a, b) => b - a)
-        .slice(0, Number.parseInt(limit, 10));
-    const searchParams = new URLSearchParams();
-    for (const novel of novels) {
-        searchParams.append('ids[]', novel);
+async function handler(ctx): Promise<Data> {
+    const id = ctx.req.param('id');
+    const fullContent = fallback(undefined, queryToBoolean(ctx.req.param('full_content')), false);
+    const { limit } = ctx.req.query();
+
+    if (hasPixivAuth()) {
+        return await getNSFWUserNovels(id, fullContent, limit);
     }
 
-    const { data } = await got(`${baseUrl}/ajax/user/${id}/profile/novels`, {
-        headers: {
-            referer: url,
-        },
-        searchParams,
+    const nonR18Result = await getSFWUserNovels(id, fullContent, limit).catch((error) => {
+        if (error.name === 'Error') {
+            return null;
+        }
+        throw error;
     });
 
-    const items = Object.values(data.body.works).map((item) => ({
-        title: item.seriesTitle || item.title,
-        description: item.description || item.title,
-        link: `${baseUrl}/novel/series/${item.id}`,
-        author: item.userName,
-        pubDate: parseDate(item.createDate),
-        updated: parseDate(item.updateDate),
-        category: item.tags,
-    }));
+    if (nonR18Result) {
+        return nonR18Result;
+    }
 
-    return {
-        title: data.body.extraData.meta.title,
-        description: data.body.extraData.meta.ogp.description,
-        image: Object.values(data.body.works)[0].profileImageUrl,
-        link: url,
-        item: items,
-    };
+    throw new ConfigNotFoundError(
+        'This user may not have any novel works, or is an R18 creator, PIXIV_REFRESHTOKEN is required.\npixiv RSS is disabled due to the lack of relevant config.\n該用戶可能沒有小說作品，或者該用戶爲 R18 創作者，需要 PIXIV_REFRESHTOKEN。'
+    );
 }

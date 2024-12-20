@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import { getData, getList, getRedirectedLink } from './utils.js';
+import { baseUrl, getData, getList } from './utils.js';
 
 const variables = {
     version: 11,
@@ -28,6 +28,7 @@ const query = `
     edges {
       node {
         ...FeedPost
+        contentHtml
       }
     }
   }
@@ -42,6 +43,7 @@ const query = `
     image
     readTime
     permalink
+    commentsPermalink
     summary
     createdAt
     numUpvotes
@@ -72,27 +74,28 @@ export const route: Route = {
     example: '/daily',
     radar: [
         {
-            source: ['daily.dev/popular'],
+            source: ['app.daily.dev/popular'],
         },
     ],
     name: 'Popular',
     maintainers: ['Rjnishant530'],
     handler,
-    url: 'daily.dev/popular',
+    url: 'app.daily.dev/popular',
 };
 
 async function handler() {
-    const baseUrl = 'https://app.daily.dev/popular';
+    const link = `${baseUrl}/popular`;
+
     const data = await getData(graphqlQuery);
-    const list = getList(data);
-    const items = await getRedirectedLink(list);
+    const items = getList(data);
+
     return {
-        title: 'Popular',
-        link: baseUrl,
+        title: 'Popular posts on daily.dev',
+        link,
         item: items,
-        description: 'Popular Posts on Daily.dev',
-        logo: 'https://app.daily.dev/favicon-32x32.png',
-        icon: 'https://app.daily.dev/favicon-32x32.png',
+        description: 'daily.dev is the easiest way to stay updated on the latest programming news. Get the best content from the top tech publications on any topic you want.',
+        logo: `${baseUrl}/favicon-32x32.png`,
+        icon: `${baseUrl}/favicon-32x32.png`,
         language: 'en-us',
     };
 }

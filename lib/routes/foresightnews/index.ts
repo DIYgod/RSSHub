@@ -3,13 +3,15 @@ import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
 
 export const route: Route = {
     path: '/',
+    categories: ['new-media', 'popular'],
+    example: '/foresightnews',
     radar: [
         {
             source: ['foresightnews.pro/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '精选资讯',
     maintainers: ['nczitzk'],
     handler,
     url: 'foresightnews.pro/',
