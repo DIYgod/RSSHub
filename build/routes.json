@@ -33982,6 +33982,19 @@
         "maintainers": [],
         "location": "gz/index.ts"
       },
+      "/hainan/iitb/tzgg": {
+        "path": "/hainan/iitb/tzgg",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/hainan/iitb/tzgg",
+        "url": "iitb.hainan.gov.cn/iitb/tzgg/list2.shtml",
+        "name": "通知公告",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "hainan/iitb/tzgg.ts"
+      },
       "/hebei/czt/xwdt/:category?": {
         "path": "/hebei/czt/xwdt/:category?",
         "categories": [
