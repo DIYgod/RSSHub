@@ -84,7 +84,7 @@ async function handler(ctx) {
         });
 
     return {
-        title: `幾米 - ${$('title').text()}(${language})`,
+        title: `幾米 - 最新消息(${language})`,
         link: `${rootUrl}/${language}/News`,
         allowEmpty: true,
         item: items,
