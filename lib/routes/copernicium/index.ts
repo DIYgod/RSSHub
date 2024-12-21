@@ -17,15 +17,16 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    const category = ctx.req.param('category');
     let res;
-    if (ctx.req.param('category')) {
+    if (category) {
         const CATEGORY_TO_ARG_MAP = new Map([
             ['环球视角', '4_1'],
             ['人文叙述', '4_3'],
             ['观点评论', '4_5'],
             ['专题报道', '4_7'],
         ]);
-        if (!CATEGORY_TO_ARG_MAP.get(ctx.req.param().category)) {
+        if (!CATEGORY_TO_ARG_MAP.get(category)) {
             throw new Error('The requested category does not exist or is not supported.');
         }
         const reqArgs = {
