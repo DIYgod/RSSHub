@@ -6,6 +6,7 @@ import { getFilteredLanguages } from './_profile';
 const mangaMetaBaseUrl = 'https://api.mangadex.org/manga/';
 const mainCoverMetaBaseUrl = 'https://api.mangadex.org/cover/';
 const coverBaseUrl = 'https://uploads.mangadex.org/covers/';
+const chapterBaseUrl = 'https://mangadex.org/chapter/';
 
 const firstMatch = (source: Map<string, string> | object, keys: string[]) => {
     for (const key of keys) {
@@ -16,6 +17,31 @@ const firstMatch = (source: Map<string, string> | object, keys: string[]) => {
     }
     return null;
 };
+
+function toQueryString(params: Record<string, any>): string {
+    const queryParts: string[] = [];
+
+    for (const [key, value] of Object.entries(params)) {
+        if (typeof value === 'object' && !Array.isArray(value) && !(value instanceof Set)) {
+            for (const [subKey, subValue] of Object.entries(value)) {
+                if (typeof subValue === 'string' || typeof subValue === 'number' || typeof subValue === 'boolean') {
+                    queryParts.push(`${encodeURIComponent(key)}[${encodeURIComponent(subKey)}]=${encodeURIComponent(subValue)}`);
+                }
+            }
+        } else if (Array.isArray(value) || value instanceof Set) {
+            for (const item of value) {
+                queryParts.push(`${encodeURIComponent(key)}[]=${encodeURIComponent(item)}`);
+            }
+        } else {
+            queryParts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+        }
+    }
+
+    if (queryParts.length === 0) {
+        return '';
+    }
+    return '?' + queryParts.join('&');
+}
 
 const getMangaMeta = async (id: string, lang?: string, needCover: boolean = false) => {
     const rawMangaMeta = (await cache.tryGet(
@@ -68,4 +94,38 @@ const getMangaMeta = async (id: string, lang?: string, needCover: boolean = fals
     return { title, description };
 };
 
-export { getMangaMeta };
+const getMangaChapters = async (id: string, lang?: string) => {
+    const languages = new Set([lang, ...(await getFilteredLanguages())].filter(Boolean));
+
+    const url = `${mangaMetaBaseUrl}${id}/feed${toQueryString({
+        order: {
+            publishAt: 'desc',
+        },
+        translatedLanguage: languages,
+    })}`;
+
+    const chapters = (await cache.tryGet(`mangadex:manga-chapters:${id}`, async () => {
+        const { data } = await got.get(url);
+
+        if (data.result === 'error') {
+            throw new Error(data.errors[0].detail);
+        }
+
+        return data.data;
+    })) as any;
+
+    if (!chapters) {
+        return { count: 0 };
+    }
+
+    return {
+        count: chapters.length,
+        chapters: chapters.map((chapter) => ({
+            title: [chapter.attributes.volume ? `Vol. ${chapter.attributes.volume}` : null, chapter.attributes.chapter ? `Ch. ${chapter.attributes.chapter}` : null, chapter.attributes.title].filter(Boolean).join(' '),
+            link: `${chapterBaseUrl}${chapter.id}`,
+            pubDate: new Date(chapter.attributes.publishAt),
+        })),
+    };
+};
+
+export { getMangaMeta, getMangaChapters };
