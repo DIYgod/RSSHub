@@ -19432,8 +19432,8 @@
   },
   "copernicium": {
     "routes": {
-      "/:category": {
-        "path": "/:category",
+      "/:category?": {
+        "path": "/:category?",
         "categories": [
           "new-media"
         ],

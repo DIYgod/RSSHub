@@ -7737,7 +7737,7 @@
         "source": [
           "/"
         ],
-        "target": "/copernicium/:category"
+        "target": "/copernicium/:category?"
       }
     ]
   },
