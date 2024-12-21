@@ -25187,6 +25187,41 @@
     "description": "德阳人事考试网",
     "lang": "zh-CN"
   },
+  "dytt": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/dytt",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": true,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "ygdy8.net/index.html"
+            ]
+          }
+        ],
+        "name": "最新电影",
+        "maintainers": [
+          "junfengP"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "电影天堂",
+    "url": "www.ygdy8.net",
+    "lang": "zh-CN"
+  },
   "e-hentai": {
     "routes": {
       "/:what?/:id?/:needTorrents?/:needImages?": {

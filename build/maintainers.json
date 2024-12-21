@@ -2058,6 +2058,9 @@
   "/dykszx/news/:newsType?": [
     "zytomorrow"
   ],
+  "/dytt/": [
+    "junfengP"
+  ],
   "/e-hentai/:what?/:id?/:needTorrents?/:needImages?": [],
   "/eagle/blog/:cate?/:language?": [
     "Fatpandac"
