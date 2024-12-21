@@ -218,6 +218,14 @@ export type Config = {
         password?: string;
         refreshToken?: string;
     };
+    mangadex: {
+        username?: string;
+        password?: string;
+        clientId?: string;
+        clientSecret?: string;
+        refreshToken?: string;
+        filteredLanguages?: string[];
+    };
     manhuagui: {
         cookie?: string;
     };
@@ -647,6 +655,14 @@ const calculateValue = () => {
             email: envs.MALAYSIAKINI_EMAIL,
             password: envs.MALAYSIAKINI_PASSWORD,
             refreshToken: envs.MALAYSIAKINI_REFRESHTOKEN,
+        },
+        mangadex: {
+            username: envs.MANGADEX_USERNAME, // required when refresh-toekn is not set
+            password: envs.MANGADEX_PASSWORD, // required when refresh-toekn is not set
+            clientId: envs.MANGADEX_CLIENT_ID,
+            clientSecret: envs.MANGADEX_CLIENT_SECRET,
+            refreshToken: envs.MANGADEX_REFRESH_TOKEN,
+            filteredLanguages: envs.MANGADEX_FILTERED_LANGUAGES?.split(','),
         },
         manhuagui: {
             cookie: envs.MHGUI_COOKIE,
