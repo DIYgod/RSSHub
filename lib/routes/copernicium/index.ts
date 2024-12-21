@@ -68,7 +68,7 @@ async function handler(ctx) {
         )
     );
     return {
-        title: `日新说 - ${ctx.req.param().category ?? '全部文章'}`,
+        title: `日新说 - ${category ?? '全部文章'}`,
         link: 'http://www.copernicium.tw',
         item: items,
     };
