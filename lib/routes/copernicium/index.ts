@@ -35,11 +35,11 @@ async function handler(ctx) {
             },
             type: 0,
         };
-        res = await ofetch(`http://www.copernicium.tw/nr.jsp`, {
+        res = await ofetch('http://www.copernicium.tw/nr.jsp', {
             query: { _reqArgs: reqArgs },
         });
     } else {
-        res = await ofetch(`http://www.copernicium.tw/sys-nr/`, {
+        res = await ofetch('http://www.copernicium.tw/sys-nr/', {
             query: { _reqArgs: { args: {}, type: 15 } },
         });
     }
