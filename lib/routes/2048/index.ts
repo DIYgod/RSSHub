@@ -67,7 +67,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '2';
 
-    const rootUrl = 'https://fw5a.aidatenunjepara.com';
+    const rootUrl = 'https://208.biz';
 
     const entranceDomain = await cache.tryGet('2048:entranceDomain', async () => {
         const { data: response } = await got('https://hjd.tw', {
