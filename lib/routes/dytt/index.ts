@@ -1,9 +1,9 @@
-import type { Route, Context } from '@/types';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/',
@@ -23,47 +23,46 @@ export const route: Route = {
             source: ['ygdy8.net/index.html'],
         },
     ],
-    name: '电影天堂',
+    name: '最新电影',
     maintainers: ['junfengP'],
     handler,
 };
 
-async function loadContent(link: string, cache: Context['cache']) {
-    return await cache.tryGet(link, async () => {
-        const response = await got.get(link, {
-            responseType: 'buffer',
-        });
-        const data = iconv.decode(response.data, 'gb2312');
-        const $ = load(data);
-        return $('div#Zoom').html() || '';
+async function loadContent(link: string) {
+    const response = await got.get(link, {
+        responseType: 'buffer',
     });
+    const data = iconv.decode(response.data, 'gb2312');
+    const $ = load(data);
+    return $('div#Zoom').html() || '';
 }
 
 async function handler() {
-    const baseURL = 'https://www.ygdy8.net/index.html';
+    const baseURL = 'https://www.ygdy8.net/html/gndy/dyzz/index.html';
     const response = await got.get(baseURL, {
         responseType: 'buffer',
     });
     const data = iconv.decode(response.data, 'gb2312');
 
     const $ = load(data);
-    const list = $('.co_content8 table tr').toArray();
-    list.splice(0, 1);
+    const list = $('.co_content8 table tr b a').toArray();
 
     const items = await Promise.all(
-        list.slice(0, 20).map(async (item) => {
-            const link = $(item).find('a:nth-of-type(2)');
+        list.map(async (item) => {
+            const link = $(item);
             const itemUrl = 'https://www.ygdy8.net' + link.attr('href');
-            const description = await loadContent(itemUrl, cache);
 
-            return {
-                enclosure_url: String(description.match(/magnet:.*?(?=">)/) || ''),
-                enclosure_type: 'application/x-bittorrent',
-                title: link.text(),
-                description,
-                pubDate: parseDate($(item).find('font').text()),
-                link: itemUrl,
-            };
+            return await cache.tryGet(itemUrl, async () => {
+                const description = await loadContent(itemUrl);
+                return {
+                    enclosure_url: description.match(/magnet:.*?(?=">)/) || '',
+                    enclosure_type: 'application/x-bittorrent',
+                    title: link.text(),
+                    description,
+                    pubDate: parseDate($(item).find('font').text()),
+                    link: itemUrl,
+                };
+            });
         })
     );
 
