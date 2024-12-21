@@ -31,7 +31,7 @@ async function handler(ctx) {
         }
         const reqArgs = {
             args: {
-                _jcp: CATEGORY_TO_ARG_MAP.get(ctx.req.param().category),
+                _jcp: CATEGORY_TO_ARG_MAP.get(category),
                 m31pageno: 1,
             },
             type: 0,
