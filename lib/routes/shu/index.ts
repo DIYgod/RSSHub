@@ -89,6 +89,7 @@ async function handler(ctx) {
         title: noticeType[type].title,
         description: noticeType[type].title,
         link: noticeType[type].url,
+        image: 'https://www.shu.edu.cn/__local/0/08/C6/1EABE492B0CF228A5564D6E6ABE_779D1EE3_5BF7.png',
         item: items,
     };
 }
