@@ -23,19 +23,22 @@ export const route: Route = {
     url: 'https://www.minecraft.net/',
     description: 'Catch up on the latest articles',
     zh: {
-        name: 'Minecraft 最近新闻',
+        name: 'Minecraft最近新闻',
     },
-    handler: async (ctx: any) => {
-        const jsonUrl = 'https://www.minecraft.net/content/minecraftnet/language-masters/en-us/articles/jcr:content/root/container/image_grid_a.articles.page-1.json';
-        const baseUrl = 'https://www.minecraft.net';
+};
 
-        const response = await got(jsonUrl);
-        const data = JSON.parse(response.body);
+export async function handler(ctx: any) {
+    const jsonUrl = 'https://www.minecraft.net/content/minecraftnet/language-masters/en-us/articles/jcr:content/root/container/image_grid_a.articles.page-1.json';
+    const baseUrl = 'https://www.minecraft.net';
+
+    try {
+        const response = await got(jsonUrl, { responseType: 'json' });
+        const data = response.body;
 
         const items = data.article_grid.map((article: any) => ({
-            title: article.default_tile.title || 'No title available',
+            title: article.default_tile?.title || 'No title available',
             link: new URL(article.article_url, baseUrl).href,
-            description: article.description || '',
+            description: article.default_tile?.subtitle || '',
         }));
 
         ctx.state.data = {
@@ -44,5 +47,7 @@ export const route: Route = {
             description: 'Catch up on the latest articles',
             item: items,
         };
-    },
-};
+    } catch (error) {
+        ctx.throw(500, `Error fetching articles: ${error.message}`);
+    }
+}
