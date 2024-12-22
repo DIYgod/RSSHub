@@ -16,13 +16,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['ups.com/track?loc=en_US&tracknum=:trackingNumber'],
-            target: '/ups/track/:trackingNumber',
-        },
-    ],
-    name: 'UPS Tracking',
+    name: 'Tracking',
     maintainers: ['Aquabet'],
     handler,
 };
@@ -38,7 +32,7 @@ async function handler(ctx) {
 
     // skip loading images, stylesheets, and fonts
     page.on('request', (request) => {
-        if (['image', 'stylesheet', 'font'].includes(request.resourceType())) {
+        if (['image', 'stylesheet', 'font', 'ping', 'fetch'].includes(request.resourceType())) {
             request.abort();
         } else {
             request.continue();
@@ -47,58 +41,69 @@ async function handler(ctx) {
 
     await page.goto(url, { waitUntil: 'domcontentloaded' });
 
-    await page.waitForSelector('tr[id^="stApp_ShpmtProg_LVP_progress_row_"]', {
-        timeout: 30000,
-    });
+    const viewDetailsButton = '#st_App_View_Details';
+    try {
+        await page.waitForSelector(viewDetailsButton);
+        await page.click(viewDetailsButton);
+    } catch {
+        return {
+            title: `UPS Tracking - ${trackingNumber}`,
+            link: url,
+            item: [],
+        };
+    }
+
+    await page.waitForSelector('tr[id^="stApp_activitydetails_row"]');
 
     const content = await page.content();
-    browser.close();
+    await browser.close();
+
     const $ = load(content);
 
-    // Extract tracking events
-    const items = $('tr[id^="stApp_ShpmtProg_LVP_progress_row_"]')
-        .toArray()
-        .flatMap((el) => {
-            const $el = $(el);
+    const rows = $('tr[id^="stApp_activitydetails_row"]');
+    const items: { title: string; link: string; description: string; pubDate: Date }[] = [];
 
-            // Extract status, location, and datetime
-            const status = $el
-                .find(`td[id^="stApp_ShpmtProg_LVP_milestone_nameKey_"]`)
-                .contents()
-                .filter(function () {
-                    return this.type === 'text' && this.data.trim() !== '';
-                })
-                .toArray()
-                .map((element) => element.data)
-                .join('')
-                .trim();
+    rows.each((i, el) => {
+        const dateTimeRaw = $(el).find(`#stApp_activitiesdateTime${i}`).text() || 'Not Provided';
 
-            const location = $el.find(`span[id^="stApp_milestoneLocation"]`).text().trim();
-            const dateTimeText = $el.find(`span[id^="stApp_milestoneDateTime"]`).text().trim();
+        const dateTimeStr = dateTimeRaw
+            .trim()
+            .replace(/(\d{1,}\/\d{1,}\/\d{4})(\d{1,}:\d{1,}\s[AP]\.?M\.?)/, '$1 $2') // add a space between date and time
+            .replaceAll('P.M.', 'PM')
+            .replaceAll('A.M.', 'AM');
 
-            if (!dateTimeText) {
-                return [];
-            }
+        const pubDate = parseDate(dateTimeStr);
 
-            const cleanedDateTimeText = dateTimeText.normalize('NFKC').replaceAll(/\s+/g, ' ').replaceAll('A.M.', 'AM').replaceAll('P.M.', 'PM').trim();
+        const activityCellText = $(el)
+            .find(`#stApp_milestoneActivityLocation${i}`)
+            .text()
+            .trim()
+            .replaceAll(/\s*\n+\s*/g, '\n');
 
-            // Separate date and time
-            const [date, time] = cleanedDateTimeText.split(', ');
-            const formattedDateTime = `${date} ${time}`;
+        const lines = activityCellText
+            .split('\n')
+            .map((l) => l.trim())
+            .filter(Boolean);
 
-            return {
-                title: `${status}: ${location}`,
-                link: url,
-                description: `
-                    Status: ${status} <br>
-                    Location: ${location} <br>
-                    Date and Time: ${date} ${time}
-                `.trim(),
-                pubDate: parseDate(formattedDateTime, 'MM/DD/YYYY h:mm A'),
-            };
+        // Situation 0: There is text within the strong element
+        // Example: ["Delivered", "DELIVERED", "REDMOND, WA, United States"]
+        // Situation 1: strong is empty => the first line in lines is the status
+        // Example: ["Departed from Facility", "Seattle, WA, United States"]
+        const status = lines[0];
+        const location = lines.at(-1) || '';
+
+        items.push({
+            title: status,
+            link: url,
+            description: `
+                Status: ${status} <br>
+                Location: ${location} <br>
+                Date and Time: ${dateTimeStr}
+            `,
+            pubDate,
         });
+    });
 
-    // Return RSS data
     return {
         title: `UPS Tracking - ${trackingNumber}`,
         link: url,
