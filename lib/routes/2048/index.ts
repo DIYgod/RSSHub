@@ -67,10 +67,10 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '2';
 
-    const rootUrl = 'https://208.biz';
+    const rootUrl = 'https://2048.cc';
 
     const entranceDomain = await cache.tryGet('2048:entranceDomain', async () => {
-        const { data: response } = await got('https://hjd.tw', {
+        const { data: response } = await got('https://2048.cc', {
             headers: {
                 accept: '*/*',
             },
