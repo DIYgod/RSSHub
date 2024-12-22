@@ -6753,6 +6753,34 @@
     "description": ":::tip\n官方提供了混合的主页资讯 RSS: [https://api.anquanke.com/data/v1/rss](https://api.anquanke.com/data/v1/rss)\n:::",
     "lang": "zh-CN"
   },
+  "anthropic": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "programming"
+        ],
+        "example": "/anthropic/news",
+        "parameters": {},
+        "radar": [
+          {
+            "source": [
+              "anthropic.com"
+            ]
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "etShaw-zh"
+        ],
+        "url": "anthropic.com/news",
+        "location": "news.ts"
+      }
+    },
+    "name": "Anthropic",
+    "url": "anthropic.com",
+    "lang": "en"
+  },
   "apache": {
     "routes": {
       "/apisix/blog": {

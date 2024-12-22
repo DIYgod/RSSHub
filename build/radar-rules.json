@@ -3274,6 +3274,19 @@
       }
     ]
   },
+  "anthropic.com": {
+    "_name": "Anthropic",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/anthropic/news"
+      }
+    ]
+  },
   "apnews.com": {
     "_name": "AP News",
     ".": [

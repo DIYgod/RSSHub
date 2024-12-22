@@ -458,6 +458,9 @@
   "/anquanke/:category/:fulltext?": [
     "qwertyuiop6"
   ],
+  "/anthropic/news": [
+    "etShaw-zh"
+  ],
   "/apache/apisix/blog": [
     "aneasystone"
   ],
