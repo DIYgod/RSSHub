@@ -12,7 +12,7 @@ export const route: Route = {
             source: ['anthropic.com'],
         },
     ],
-    name: 'Anthropic News',
+    name: 'News',
     maintainers: ['etShaw-zh'],
     handler,
     url: 'anthropic.com/news',
