@@ -39815,6 +39815,25 @@
     "url": "scc.hnu.edu.cn",
     "lang": "zh-CN"
   },
+  "home-assistant": {
+    "routes": {
+      "/hacs/repositories": {
+        "path": "/hacs/repositories",
+        "name": "HACS Repositories",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "categories": [
+          "program-update"
+        ],
+        "example": "/home-assistant/hacs/repositories",
+        "location": "hacs.ts"
+      }
+    },
+    "name": "Home Assistant",
+    "url": "www.home-assistant.io",
+    "lang": "en"
+  },
   "hongkong": {
     "routes": {
       "/chp/:category?/:language?": {
