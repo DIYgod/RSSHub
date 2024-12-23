@@ -62148,6 +62148,18 @@
   },
   "obsidian": {
     "routes": {
+      "/plugins": {
+        "path": "/plugins",
+        "name": "Obsidian Plugins",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "categories": [
+          "program-update"
+        ],
+        "example": "/obsidian/plugins",
+        "location": "plugins.ts"
+      },
       "/publish/:id": {
         "path": "/publish/:id",
         "categories": [
