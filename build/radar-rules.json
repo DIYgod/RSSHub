@@ -3091,6 +3091,54 @@
           "/news/mobile"
         ],
         "target": "/ali213/news/mobile"
+      },
+      {
+        "title": "大侠号",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/zl/:category"
+        ],
+        "target": "/ali213params=>{const category=params.category;return`/ali213/zl${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/zl/"
+        ],
+        "target": "/ali213/zl"
+      },
+      {
+        "title": "游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/zl/game/"
+        ],
+        "target": "/ali213/zl/game"
+      },
+      {
+        "title": "动漫",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/zl/comic/"
+        ],
+        "target": "/ali213/zl/comic"
+      },
+      {
+        "title": "影视",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/zl/movie/"
+        ],
+        "target": "/ali213/zl/movie"
+      },
+      {
+        "title": "娱乐",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/zl/amuse/"
+        ],
+        "target": "/ali213/zl/amuse"
       }
     ]
   },

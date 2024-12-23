@@ -6060,6 +6060,75 @@
         ],
         "view": 0,
         "location": "news.ts"
+      },
+      "/zl/:category?": {
+        "path": "/zl/:category?",
+        "name": "大侠号",
+        "url": "www.ali213.net",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/ali213/zl",
+        "parameters": {
+          "category": "分类，默认为首页，可在对应分类页 URL 中找到"
+        },
+        "description": ":::tip\n若订阅 [游戏](https://www.ali213.net/news/zl/game/)，网址为 `https://www.ali213.net/news/zl/game/`，请截取 `https://www.ali213.net/news/zl/` 到末尾 `/` 的部分 `game` 作为 `category` 参数填入，此时目标路由为 [`/ali213/zl/game`](https://rsshub.app/ali213/zl/game)。\n:::\n\n| 首页                                     | 游戏                                         | 动漫                                           | 影视                                           | 娱乐                                           |\n| ---------------------------------------- | -------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |\n| [index](https://www.ali213.net/news/zl/) | [game](https://www.ali213.net/news/zl/game/) | [comic](https://www.ali213.net/news/zl/comic/) | [movie](https://www.ali213.net/news/zl/movie/) | [amuse](https://www.ali213.net/news/zl/amuse/) |\n",
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ali213.net/news/zl/:category"
+            ]
+          },
+          {
+            "title": "首页",
+            "source": [
+              "www.ali213.net/news/zl/"
+            ],
+            "target": "/zl"
+          },
+          {
+            "title": "游戏",
+            "source": [
+              "www.ali213.net/news/zl/game/"
+            ],
+            "target": "/zl/game"
+          },
+          {
+            "title": "动漫",
+            "source": [
+              "www.ali213.net/news/zl/comic/"
+            ],
+            "target": "/zl/comic"
+          },
+          {
+            "title": "影视",
+            "source": [
+              "www.ali213.net/news/zl/movie/"
+            ],
+            "target": "/zl/movie"
+          },
+          {
+            "title": "娱乐",
+            "source": [
+              "www.ali213.net/news/zl/amuse/"
+            ],
+            "target": "/zl/amuse"
+          }
+        ],
+        "view": 0,
+        "location": "zl.ts"
       }
     },
     "name": "游侠网",

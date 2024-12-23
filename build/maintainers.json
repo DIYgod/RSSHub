@@ -395,6 +395,9 @@
   "/ali213/news/:category?": [
     "nczitzk"
   ],
+  "/ali213/zl/:category?": [
+    "nczitzk"
+  ],
   "/alicesoft/information/:category?/:game?": [
     "keocheung"
   ],
