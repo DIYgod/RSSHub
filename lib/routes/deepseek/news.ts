@@ -29,7 +29,7 @@ const parseDateString = (dateString: string) => {
 const createDataItem = async (item: cheerio.Element, $: cheerio.Root): Promise<DataItem> => {
     const $item = $(item);
     const link = $item.find('a').attr('href');
-    const dateString = $item.find('a').text().split(' ').slice(-1)[0];
+    const dateString = $item.find('a').text().split(' ').at(-1); // 使用 at(-1)
     const pageURL = new URL(link || '', ROOT_URL).href;
 
     const $article = await fetchPageContent(pageURL);
@@ -49,7 +49,7 @@ const handler = async (): Promise<Data> => {
     const newsList = $(NEWS_LIST_SELECTOR);
 
     const items: DataItem[] = await Promise.all(
-        newsList.toArray().map(async (li) => createDataItem(li, $))
+        newsList.toArray().map((li) => createDataItem(li, $)) // 移除 async
     );
 
     return {
