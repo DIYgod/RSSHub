@@ -199,27 +199,27 @@ export const route: Route = {
         {
             title: '首页',
             source: ['www.ali213.net/news/zl/'],
-            target: '/ali213/zl',
+            target: '/zl',
         },
         {
             title: '游戏',
             source: ['www.ali213.net/news/zl/game/'],
-            target: '/ali213/zl/game',
+            target: '/zl/game',
         },
         {
             title: '动漫',
             source: ['www.ali213.net/news/zl/comic/'],
-            target: '/ali213/zl/comic',
+            target: '/zl/comic',
         },
         {
             title: '影视',
             source: ['www.ali213.net/news/zl/movie/'],
-            target: '/ali213/zl/movie',
+            target: '/zl/movie',
         },
         {
             title: '娱乐',
             source: ['www.ali213.net/news/zl/amuse/'],
-            target: '/ali213/zl/amuse',
+            target: '/zl/amuse',
         },
     ],
     view: ViewType.Articles,
