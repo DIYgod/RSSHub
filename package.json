@@ -79,7 +79,7 @@
         "destr": "2.0.3",
         "directory-import": "3.3.1",
         "dotenv": "16.4.7",
-        "entities": "5.0.0",
+        "entities": "6.0.0",
         "etag": "1.8.1",
         "fanfou-sdk": "5.0.0",
         "form-data": "4.0.1",
