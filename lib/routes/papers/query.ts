@@ -105,14 +105,9 @@ export const route: Route = {
     },
     radar: [
         {
-            title: 'arXiv Paper queryed by Detection',
-            source: ['papers.cool/arxiv/search?highlight=1&query=Detection&sort=0`'],
-            target: '/papers/query/Detection',
-        },
-        {
-            title: 'arXiv Paper queryed by Segmentation',
-            source: ['papers.cool/arxiv/search?highlight=1&query=Segmentation&sort=0`'],
-            target: '/papers/query/Segmentation',
+            title: 'arXiv Paper queryed by Keyword',
+            source: ['papers.cool/arxiv/search?highlight=1&query=*&sort=0'],
+            target: '/papers/query/:keyword',
         },
     ],
 };
