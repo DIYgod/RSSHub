@@ -9,6 +9,7 @@ export const route: Route = {
     path: '/:market/:name/:id',
     categories: ['traditional-media'],
     example: '/zh-tw/Bloomberg/sr-vid-08gw7ky4u229xjsjvnf4n6n7v67gxm0pjmv9fr4y2x9jjmwcri4s',
+    description: `MSN News`,
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -17,11 +18,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://www.msn.com/:market/channel/source/:name/:id'],
+            source: ['www.msn.com/:market/channel/source/:name/:id'],
             target: '/:market/:name/:id',
         },
     ],
-    name: 'MSN News',
+    name: 'News',
     maintainers: ['KTachibanaM'],
     handler: async (ctx) => {
         const { market, name, id } = ctx.req.param();
