@@ -64,13 +64,13 @@ async function handler(ctx) {
 
     const industry = ctx.req.param('industry') || '行业';
 
-    const IndustryID = industry
+    const industryId = industry
         .split('&')
         .map((name) => reversedIndustry[name.trim()])
         .filter((key) => key !== undefined)
         .join(',');
 
-    const responseData = await got(`https://www.moodysmismicrosite.com/micro/v2/report/list?page_num=1&page_size=25&keyword=&industry_ids=${IndustryID}`);
+    const responseData = await got(`https://www.moodysmismicrosite.com/micro/v2/report/list?page_num=1&page_size=25&keyword=&industry_ids=${industryId}`);
 
     const items = responseData?.data?.data?.list || [];
 
