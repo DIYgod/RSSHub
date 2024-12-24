@@ -64,6 +64,7 @@ async function handler(ctx) {
             const chapterUpdatedTime = item.find('td').last().text().trim();
 
             const isVip = item.find('span[itemprop="headline"] font').last().text() === '[VIP]';
+            const isLock = item.find('td').eq(1).last().text().trim() === '[锁]';
 
             return {
                 title: `${chapterName} ${chapterIntro}`,
@@ -82,6 +83,7 @@ async function handler(ctx) {
                 guid: `jjwxc-${id}#${chapterId}`,
                 pubDate: timezone(parseDate(chapterUpdatedTime), +8),
                 isVip,
+                isLock,
             };
         });
 
@@ -89,25 +91,27 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.slice(0, limit).map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.isVip) {
-                    const { data: detailResponse } = await got(item.link, {
-                        responseType: 'buffer',
-                    });
+            item.isLock
+                ? Promise.resolve(item)
+                : cache.tryGet(item.link, async () => {
+                      if (!item.isVip) {
+                          const { data: detailResponse } = await got(item.link, {
+                              responseType: 'buffer',
+                          });
 
-                    const content = load(iconv.decode(detailResponse, 'gbk'));
+                          const content = load(iconv.decode(detailResponse, 'gbk'));
 
-                    content('span.favorite_novel').parent().remove();
+                          content('span.favorite_novel').parent().remove();
 
-                    item.description += art(path.join(__dirname, 'templates/book.art'), {
-                        description: content('div.novelbody').html(),
-                    });
-                }
+                          item.description += art(path.join(__dirname, 'templates/book.art'), {
+                              description: content('div.novelbody').html(),
+                          });
+                      }
 
-                delete item.isVip;
+                      delete item.isVip;
 
-                return item;
-            })
+                      return item;
+                  })
         )
     );
 

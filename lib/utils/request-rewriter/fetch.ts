@@ -3,6 +3,7 @@ import { config } from '@/config';
 import undici, { Request, RequestInfo, RequestInit } from 'undici';
 import proxy from '@/utils/proxy';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
+import { useRegisterRequest } from 'node-network-devtools';
 
 const limiter = new RateLimiterMemory({
     points: 10,
@@ -11,8 +12,18 @@ const limiter = new RateLimiterMemory({
 });
 
 const limiterQueue = new RateLimiterQueue(limiter, {
-    maxQueueSize: 500,
+    maxQueueSize: 4800,
 });
+
+export const useCustomHeader = (headers: Headers) => {
+    process.env.NODE_ENV === 'dev' &&
+        useRegisterRequest((req) => {
+            for (const [key, value] of headers.entries()) {
+                req.requestHeaders[key] = value;
+            }
+            return req;
+        });
+};
 
 const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit) => {
     const request = new Request(input, init);
@@ -45,6 +56,8 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         isRetry = true;
         request.headers.delete('x-prefer-proxy');
     }
+
+    config.enableRemoteDebugging && useCustomHeader(request.headers);
 
     // proxy
     if (!init?.dispatcher && proxy.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {

@@ -3,6 +3,7 @@ import mobileApi from './mobile-api/api';
 import webApi from './web-api/api';
 import { config } from '@/config';
 
+const enableThirdPartyApi = config.twitter.thirdPartyApi;
 const enableMobileApi = config.twitter.username && config.twitter.password;
 const enableWebApi = config.twitter.authToken;
 
@@ -18,6 +19,7 @@ let api: {
     getSearch: ApiItem;
     getList: ApiItem;
     getHomeTimeline: ApiItem;
+    getHomeLatestTimeline: ApiItem;
 } = {
     init: () => {
         throw new ConfigNotFoundError('Twitter API is not configured');
@@ -31,9 +33,12 @@ let api: {
     getSearch: () => null,
     getList: () => null,
     getHomeTimeline: () => null,
+    getHomeLatestTimeline: () => null,
 };
 
-if (enableWebApi) {
+if (enableThirdPartyApi) {
+    api = webApi;
+} else if (enableWebApi) {
     api = webApi;
 } else if (enableMobileApi) {
     api = mobileApi;

@@ -5,11 +5,11 @@ import utils from './utils';
 import logger from '@/utils/logger';
 
 export const route: Route = {
-    path: '/user/video/:uid/:disableEmbed?',
+    path: '/user/video/:uid/:embed?',
     categories: ['social-media', 'popular'],
     view: ViewType.Videos,
     example: '/bilibili/user/video/2267573',
-    parameters: { uid: '用户 id, 可在 UP 主主页中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
+    parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -25,28 +25,27 @@ export const route: Route = {
         },
     ],
     name: 'UP 主投稿',
-    maintainers: ['DIYgod'],
+    maintainers: ['DIYgod', 'Konano', 'pseudoyu'],
     handler,
 };
 
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
-    const disableEmbed = ctx.req.param('disableEmbed');
+    const embed = !ctx.req.param('embed');
     const cookie = await cache.getCookie();
     const wbiVerifyString = await cache.getWbiVerifyString();
     const dmImgList = utils.getDmImgList();
+    const dmImgInter = utils.getDmImgInter();
+    const renderData = await cache.getRenderData(uid);
     const [name, face] = await cache.getUsernameAndFaceFromUID(uid);
 
-    // await got(`https://space.bilibili.com/${uid}/video?tid=0&page=1&keyword=&order=pubdate`, {
-    //     headers: {
-    //         Referer: `https://space.bilibili.com/${uid}/`,
-    //         Cookie: cookie,
-    //     },
-    // });
-    const params = utils.addWbiVerifyInfo(utils.addDmVerifyInfo(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, dmImgList), wbiVerifyString);
+    const params = utils.addWbiVerifyInfo(
+        utils.addRenderData(utils.addDmVerifyInfoWithInter(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, dmImgList, dmImgInter), renderData),
+        wbiVerifyString
+    );
     const response = await got(`https://api.bilibili.com/x/space/wbi/arc/search?${params}`, {
         headers: {
-            Referer: `https://space.bilibili.com/${uid}/video?tid=0&page=1&keyword=&order=pubdate`,
+            Referer: `https://space.bilibili.com/${uid}/video?tid=0&pn=1&keyword=&order=pubdate`,
             Cookie: cookie,
         },
     });
@@ -60,6 +59,7 @@ async function handler(ctx) {
         title: `${name} 的 bilibili 空间`,
         link: `https://space.bilibili.com/${uid}`,
         description: `${name} 的 bilibili 空间`,
+        image: face,
         logo: face,
         icon: face,
         item:
@@ -68,7 +68,7 @@ async function handler(ctx) {
             data.data.list.vlist &&
             data.data.list.vlist.map((item) => ({
                 title: item.title,
-                description: `${item.description}${disableEmbed ? '' : `<br><br>${utils.iframe(item.aid)}`}<br><img src="${item.pic}">`,
+                description: utils.renderUGCDescription(embed, item.pic, item.description, item.aid, undefined, item.bvid),
                 pubDate: new Date(item.created * 1000).toUTCString(),
                 link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                 author: name,

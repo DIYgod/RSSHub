@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/result/:team',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/dongqiudi/result/50001755',
     parameters: { team: '球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到' },
     radar: [

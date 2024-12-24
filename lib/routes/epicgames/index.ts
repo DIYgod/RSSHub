@@ -12,7 +12,7 @@ export const route: Route = {
     path: '/freegames/:locale?/:country?',
     categories: ['game', 'popular'],
     view: ViewType.Notifications,
-    example: '/epicgames/freegames',
+    example: '/epicgames/freegames/en-US/US',
     parameters: {
         locale: {
             description: 'Locale',

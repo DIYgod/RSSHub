@@ -14,7 +14,7 @@ const types = {
 };
 
 export const route: Route = {
-    path: ['/ranking/:type?', '/report/:type?'],
+    path: '/ranking/:type?',
     example: '/hellogithub/ranking',
     name: '榜单报告',
     maintainers: ['moke8', 'nczitzk'],
@@ -39,7 +39,7 @@ async function handler(ctx) {
 
     const buildId = buildResponse.data.match(/"buildId":"(.*?)",/)[1];
 
-    const apiUrl = `${rootUrl}/_next/data/${buildId}/report/${type}.json`;
+    const apiUrl = `${rootUrl}/_next/data/${buildId}/zh/report/${type}.json`;
 
     const response = await got({
         method: 'get',

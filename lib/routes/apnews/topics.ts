@@ -5,8 +5,8 @@ import { fetchArticle, removeDuplicateByKey } from './utils';
 const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
-    path: '/topics/:topic?',
-    categories: ['traditional-media', 'popular'],
+    path: ['/topics/:topic?', '/nav/:nav{.*}?'],
+    categories: ['traditional-media'],
     example: '/apnews/topics/apf-topnews',
     view: ViewType.Articles,
     parameters: {
@@ -35,28 +35,29 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { topic = 'trending-news' } = ctx.req.param();
-    const url = `${HOME_PAGE}/hub/${topic}`;
+    const { topic = 'trending-news', nav = '' } = ctx.req.param();
+    const useNav = ctx.req.routePath === '/apnews/nav/:nav{.*}?';
+    const url = useNav ? `${HOME_PAGE}/${nav}` : `${HOME_PAGE}/hub/${topic}`;
     const response = await got(url);
     const $ = load(response.data);
 
     const items = await Promise.all(
         $(':is(.PagePromo-content, .PageListStandardE-leadPromo-info) bsp-custom-headline')
-            .get()
+            .toArray()
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : Infinity)
             .map((e) => ({
                 title: $(e).find('span.PagePromoContentIcons-text').text(),
                 link: $(e).find('a').attr('href'),
             }))
             .filter((e) => typeof e.link === 'string')
-            .map((item) => fetchArticle(item))
+            .map((item) => (ctx.req.query('fulltext') === 'true' ? fetchArticle(item) : item))
     );
 
     return {
         title: $('title').text(),
         description: $("meta[property='og:description']").text(),
         link: url,
-        item: removeDuplicateByKey(items, 'guid'),
+        item: removeDuplicateByKey(items, 'link'),
         language: $('html').attr('lang'),
     };
 }

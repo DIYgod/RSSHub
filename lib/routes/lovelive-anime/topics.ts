@@ -3,11 +3,12 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/description.art'), desc);
 
 export const route: Route = {
@@ -27,7 +28,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Love Live Official Website Categories Topics',
+    name: 'Categories Topics',
     maintainers: ['axojhf'],
     handler,
     description: `| Sub-project Name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
@@ -40,10 +41,25 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const abbr = ctx.req.param('abbr');
-    const rootUrl = `https://www.lovelive-anime.jp/${abbr}`;
-    const topicsUrlPart = 'yuigaoka' === abbr ? 'topics/' : 'topics.php';
-    const baseUrl = `${rootUrl}/${'yuigaoka' === abbr ? 'topics/' : ''}`;
+    const { abbr, category = '', option } = ctx.req.param();
+    let rootUrl: string;
+    switch (abbr) {
+        case 'musical':
+            rootUrl = 'https://www.lovelive-anime.jp/special/musical';
+            break;
+        default:
+            rootUrl = `https://www.lovelive-anime.jp/${abbr}`;
+            break;
+    }
+    const topicsTable = {
+        otonokizaka: 'topics.php',
+        uranohoshi: 'topics.php',
+        nijigasaki: 'topics.php',
+        yuigaoka: 'topics/',
+        hasunosora: 'news/',
+        musical: 'topics.php',
+    };
+    const baseUrl = `${rootUrl}/${topicsTable[abbr]}`;
     const abbrDetail = {
         otonokizaka: 'ラブライブ！',
         uranohoshi: 'サンシャイン!!',
@@ -51,50 +67,85 @@ async function handler(ctx) {
         yuigaoka: 'スーパースター!!',
     };
 
-    const url = Object.hasOwn(ctx.params, 'category') && ctx.req.param('category') !== 'detail' ? `${rootUrl}/${topicsUrlPart}?cat=${ctx.req.param('category')}` : `${rootUrl}/${topicsUrlPart}`;
+    const url = category !== '' && category !== 'detail' ? `${baseUrl}?cat=${category}` : baseUrl;
 
-    const response = await got(url);
+    const response = await ofetch(url);
 
-    const $ = load(response.data);
+    const $ = load(response);
 
     const categoryName = 'uranohoshi' === abbr ? $('div.llbox > p').text() : $('div.category_title > h2').text();
 
-    let items = $('ul.listbox > li')
-        .map((_, item) => {
-            item = $(item);
+    const newsList = 'hasunosora' === abbr ? $('.list__content > ul > li').toArray() : $('ul.listbox > li').toArray();
+    let items;
 
-            const link = `${baseUrl}${item.find('div > a').attr('href')}`;
-            const pubDate = parseDate(item.find('a > p.date').text(), 'YYYY/MM/DD');
-            const title = item.find('a > p.title').text();
-            const category = item.find('a > p.category').text();
-            const imglink = `${baseUrl}${
-                item
-                    .find('a > img')
-                    .attr('style')
-                    .match(/background-image:url\((.*)\)/)[1]
-            }`;
+    switch (abbr) {
+        case 'hasunosora':
+            items = newsList.map((item) => {
+                item = $(item);
+                const link = `${rootUrl}/news/${item.find('a').attr('href')}`;
+                const pubDate = timezone(parseDate(item.find('.list--date').text(), 'YYYY.MM.DD'), +9);
+                const title = item.find('.list--text').text();
+                const category = item.find('.list--category').text();
 
-            return {
-                link,
-                pubDate,
-                title,
-                category,
-                description: renderDescription({
+                return {
+                    link,
+                    pubDate,
                     title,
-                    imglink,
-                }),
-            };
-        })
-        .get();
+                    category,
+                    description: title,
+                };
+            });
+            break;
+        default:
+            items = newsList.map((item) => {
+                item = $(item);
+                let link: string;
+                switch (abbr) {
+                    case 'yuigaoka':
+                        link = `${baseUrl}${item.find('div > a').attr('href')}`;
+                        break;
+                    default:
+                        link = `${rootUrl}/${item.find('div > a').attr('href')}`;
+                        break;
+                }
+                const pubDate = timezone(parseDate(item.find('a > p.date').text(), 'YYYY/MM/DD'), +9);
+                const title = item.find('a > p.title').text();
+                const category = item.find('a > p.category').text();
+                const imglink = `${rootUrl}/${
+                    item
+                        .find('a > img')
+                        .attr('style')
+                        .match(/background-image:url\((.*)\)/)[1]
+                }`;
 
-    if (ctx.req.param('option') === 'detail' || ctx.req.param('category') === 'detail') {
+                return {
+                    link,
+                    pubDate,
+                    title,
+                    category,
+                    description: renderDescription({
+                        imglink,
+                    }),
+                };
+            });
+            break;
+    }
+
+    if (option === 'detail' || category === 'detail') {
         items = await Promise.all(
             items.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const detailResp = await got(item.link);
-                    const $ = load(detailResp.data);
-
-                    const content = $('div.p-page__detail.p-article');
+                    const detailResp = await ofetch(item.link);
+                    const $ = load(detailResp);
+                    let content;
+                    switch (abbr) {
+                        case 'hasunosora':
+                            content = $('div.detail__content');
+                            break;
+                        default:
+                            content = $('div.p-page__detail.p-article');
+                            break;
+                    }
                     for (const v of content.find('img')) {
                         v.attribs.src = `${baseUrl}${v.attribs.src}`;
                     }

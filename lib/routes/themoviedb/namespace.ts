@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     description: `:::tip
 Refer to [https://developers.themoviedb.org/3/getting-started/languages](https://developers.themoviedb.org/3/getting-started/languages) for the language parameter in the route.
 :::`,
+    lang: 'en',
 };

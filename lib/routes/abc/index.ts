@@ -3,7 +3,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -11,6 +11,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/:category{.+}?',
+    example: '/wa',
     radar: [
         {
             source: ['abc.net.au/:category*'],
@@ -30,7 +31,7 @@ export const route: Route = {
 
   The supported channels are all listed in the table below. For other channels, please find the \`documentId\` in the source code of the channel page and fill it in as above.
   :::`,
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
 };
 
@@ -50,18 +51,18 @@ async function handler(ctx) {
         documentId = category;
         const feedUrl = new URL(`news/feed/${documentId}/rss.xml`, rootUrl).href;
 
-        const { data: feedResponse } = await got(feedUrl);
+        const feedResponse = await ofetch(feedUrl);
         currentUrl = feedResponse.match(/<link>([\w-./:?]+)<\/link>/)[1];
     }
 
-    const { data: currentResponse } = await got(currentUrl);
+    const currentResponse = await ofetch(currentUrl);
 
     const $ = load(currentResponse);
 
     documentId = documentId ?? $('div[data-uri^="coremedia://collection/"]').first().prop('data-uri').split(/\//).pop();
 
-    const { data: response } = await got(apiUrl, {
-        searchParams: {
+    const response = await ofetch(apiUrl, {
+        query: {
             name: 'PaginationArticles',
             documentId,
             size: limit,
@@ -71,7 +72,7 @@ async function handler(ctx) {
     let items = response.collection.slice(0, limit).map((i) => {
         const item = {
             title: i.title.children ?? i.title,
-            link: new URL(i.link.to, rootUrl).href,
+            link: i.link.startsWith('https://') ? i.link : new URL(i.link, rootUrl).href,
             description: art(path.join(__dirname, 'templates/description.art'), {
                 image: i.image
                     ? {
@@ -82,8 +83,8 @@ async function handler(ctx) {
             }),
             author: i.newsBylineProps?.authors?.map((a) => a.name).join('/') ?? undefined,
             guid: `abc-${i.id}`,
-            pubDate: parseDate(i.timestamp.dates.firstPublished),
-            updated: i.timestamp.dates.lastUpdated ? parseDate(i.timestamp.dates.lastUpdated) : undefined,
+            pubDate: parseDate(i.dates.firstPublished),
+            updated: i.dates.lastUpdated ? parseDate(i.dates.lastUpdated) : undefined,
         };
 
         if (i.mediaIndicator) {
@@ -99,7 +100,7 @@ async function handler(ctx) {
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
-                    const { data: detailResponse } = await got(item.link);
+                    const detailResponse = await ofetch(item.link);
 
                     const content = load(detailResponse);
 
@@ -173,7 +174,7 @@ async function handler(ctx) {
         )
     );
 
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href') || '', rootUrl).href;
 
     return {
         item: items,

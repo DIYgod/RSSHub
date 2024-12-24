@@ -20,7 +20,7 @@ export const handler = async (ctx) => {
     const feedUrl = new URL(`${category}/feed`, rootUrl).href;
 
     const site = category.split(/\//)[0];
-    const apiKimiUrl = new URL(`${site}/kimi/`, rootUrl).href;
+    const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
 
     const feed = await parser.parseURL(feedUrl);
 
@@ -34,10 +34,12 @@ export const handler = async (ctx) => {
         const kimiUrl = new URL(id, apiKimiUrl).href;
         const pdfUrl = Object.hasOwn(pdfUrlGenerators, site) ? pdfUrlGenerators[site](id) : undefined;
 
+        const authorString = item.author;
         const description = art(path.join(__dirname, 'templates/description.art'), {
             pdfUrl,
             siteUrl: item.link,
             kimiUrl,
+            authorString,
             summary: item.summary,
         });
 
@@ -47,7 +49,7 @@ export const handler = async (ctx) => {
             pubDate: parseDate(item.pubDate ?? ''),
             link: item.link,
             category: item.categories,
-            author: item.creator,
+            author: authorString,
             doi: `${site}${id}`,
             guid,
             id: guid,
@@ -77,7 +79,7 @@ export const route: Route = {
     path: '/:category{.+}?',
     name: 'Topic',
     url: 'papers.cool',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'Muyun99'],
     handler,
     example: '/papers/arxiv/cs.AI',
     parameters: { category: 'Category, arXiv Artificial Intelligence (cs.AI) by default' },
@@ -91,6 +93,7 @@ export const route: Route = {
   | arXiv Computation and Language (cs.CL)                | arxiv/cs.CL |
   | arXiv Computer Vision and Pattern Recognition (cs.CV) | arxiv/cs.CV |
   | arXiv Machine Learning (cs.LG)                        | arxiv/cs.LG |
+  | arXiv Robotics (cs.RO)                                | arxiv/cs.RO |
   `,
     categories: ['journal'],
 
@@ -123,6 +126,11 @@ export const route: Route = {
             title: 'arXiv Machine Learning (cs.LG)',
             source: ['papers.cool/arxiv/cs.LG'],
             target: '/arxiv/cs.LG',
+        },
+        {
+            title: 'arXiv Robotics (cs.RO)',
+            source: ['papers.cool/arxiv/cs.RO'],
+            target: '/arxiv/cs.RO',
         },
     ],
 };

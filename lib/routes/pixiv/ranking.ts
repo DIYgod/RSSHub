@@ -124,6 +124,7 @@ export const route: Route = {
                     label: 'R-18G rank',
                 },
             ],
+            default: 'day',
         },
         date: 'format: `2018-4-25`',
     },

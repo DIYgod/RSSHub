@@ -1,6 +1,7 @@
 import { Route, ViewType } from '@/types';
 import utils from './utils';
 import api from './api';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/user/:id/:routeParams?',
@@ -31,6 +32,11 @@ export const route: Route = {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
             },
+            {
+                name: 'TWITTER_THIRD_PARTY_API',
+                description: 'Use third-party API to query twitter data',
+                optional: true,
+            },
         ],
         requirePuppeteer: false,
         antiCrawler: false,
@@ -39,7 +45,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'User timeline',
-    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9', 'CaoMeiYouRen'],
+    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9', 'CaoMeiYouRen', 'pseudoyu'],
     handler,
     radar: [
         {
@@ -58,9 +64,14 @@ async function handler(ctx) {
 
     await api.init();
     const userInfo = await api.getUser(id);
-    let data = await (exclude_replies ? api.getUserTweets(id, params) : api.getUserTweetsAndReplies(id, params));
-    if (!include_rts) {
-        data = utils.excludeRetweet(data);
+    let data;
+    try {
+        data = await (exclude_replies ? api.getUserTweets(id, params) : api.getUserTweetsAndReplies(id, params));
+        if (!include_rts) {
+            data = utils.excludeRetweet(data);
+        }
+    } catch (error) {
+        logger.error(error);
     }
 
     const profileImageUrl = userInfo?.profile_image_url || userInfo?.profile_image_url_https;
@@ -70,8 +81,11 @@ async function handler(ctx) {
         link: `https://x.com/${userInfo?.screen_name}`,
         image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
         description: userInfo?.description,
-        item: utils.ProcessFeed(ctx, {
-            data,
-        }),
+        item:
+            data &&
+            utils.ProcessFeed(ctx, {
+                data,
+            }),
+        allowEmpty: true,
     };
 }

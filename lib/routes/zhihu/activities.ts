@@ -2,6 +2,7 @@ import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { header, processImage, getSignedHeader } from './utils';
 import { parseDate } from '@/utils/parse-date';
+import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
     path: '/people/activities/:id',
@@ -75,7 +76,7 @@ async function handler(ctx) {
                     url = `https://zhuanlan.zhihu.com/p/${detail.id}`;
                     break;
                 case 'pin':
-                    title = detail.excerpt_title;
+                    title = sanitizeHtml(detail.excerpt_title);
                     author = detail.author.name;
                     for (const contentItem of detail.content) {
                         switch (contentItem.type) {

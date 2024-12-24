@@ -8,6 +8,7 @@ WORKDIR /app
 ARG USE_CHINA_NPM_REGISTRY=0
 RUN \
     set -ex && \
+    corepack enable pnpm && \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         echo 'use npm mirror' && \
         npm config set registry https://registry.npmmirror.com && \
@@ -23,7 +24,6 @@ COPY ./package.json /app/
 RUN \
     set -ex && \
     export PUPPETEER_SKIP_DOWNLOAD=true && \
-    corepack enable pnpm && \
     pnpm install --frozen-lockfile && \
     pnpm rb
 

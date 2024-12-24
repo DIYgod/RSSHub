@@ -3,4 +3,6 @@ import type { Namespace } from '@/types';
 export const namespace: Namespace = {
     name: '飞客茶馆',
     url: 'flyert.com',
+    description: '',
+    lang: 'zh-CN',
 };

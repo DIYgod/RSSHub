@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, Data } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -25,17 +25,19 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['new.qq.com/omn/author/:mid'],
+            title: '当前作者文章',
+            source: ['news.qq.com/omn/author/:mid'],
         },
     ],
-    name: '更新',
+    name: '作者',
     maintainers: ['LogicJake', 'miles170'],
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const mid = ctx.req.param('mid');
-    const homePageInfoUrl = `https://i.news.qq.com/i/getUserHomepageInfo?chlid=${mid}`;
+    const userType = /^\d+$/.test(mid) ? 'chlid' : 'guestSuid';
+    const homePageInfoUrl = `https://i.news.qq.com/i/getUserHomepageInfo?${userType}=${mid}`;
     const userInfo = await cache.tryGet(homePageInfoUrl, async () => (await got(homePageInfoUrl)).data.userinfo);
     const title = userInfo.nick;
     const description = userInfo.user_desc;
@@ -98,5 +100,6 @@ async function handler(ctx) {
         description,
         link: `https://new.qq.com/omn/author/${mid}`,
         item: items,
+        image: userInfo?.shareImg,
     };
 }

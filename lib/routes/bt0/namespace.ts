@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     description: `:::tip
   (1-9)bt0.com 都指向同一个
   :::`,
+    lang: 'zh-CN',
 };

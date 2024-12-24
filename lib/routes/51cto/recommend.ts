@@ -2,6 +2,10 @@ import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { getToken, sign } from './utils';
+import { load } from 'cheerio';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/index/recommend',
@@ -13,10 +17,45 @@ export const route: Route = {
         },
     ],
     name: '推荐',
-    maintainers: ['cnkmmk'],
+    maintainers: ['cnkmmk', 'ovo-tim'],
     handler,
     url: '51cto.com/',
 };
+
+const pattern = /'(WTKkN|bOYDu|wyeCN)':\s*(\d+)/g;
+
+async function getFullcontent(item, cookie = '') {
+    let fullContent: null | string = null;
+    const articleResponse = await ofetch(item.url, {
+        headers: {
+            cookie,
+        },
+    });
+    const $ = load(articleResponse);
+
+    fullContent = new URL(item.url).host === 'ost.51cto.com' ? $('.posts-content').html() : $('article').html();
+
+    if (!fullContent && cookie === '') {
+        // If fullContent is null and haven't tried to request with cookie, try to get fullContent with cookie
+        try {
+            // More details: https://github.com/DIYgod/RSSHub/pull/16583#discussion_r1738643033
+            const _matches = articleResponse!.match(pattern)!.slice(0, 3);
+            const matches = _matches.map((str) => Number(str.split(':')[1]));
+            const [v1, v2, v3] = matches;
+            const cookie = '__tst_status=' + (v1 + v2 + v3) + '#;';
+            return await getFullcontent(item, cookie);
+        } catch (error) {
+            logger.error(error);
+        }
+    }
+
+    return {
+        title: item.title,
+        link: item.url,
+        pubDate: parseDate(item.pubdate, +8),
+        description: fullContent || item.abstract, // Return item.abstract if fullContent is null
+    };
+}
 
 async function handler(ctx) {
     const url = 'https://api-media.51cto.com';
@@ -29,6 +68,7 @@ async function handler(ctx) {
         limit_time: 0,
         name_en: '',
     };
+
     const response = await got(`${url}/${requestPath}`, {
         searchParams: {
             ...params,
@@ -38,15 +78,13 @@ async function handler(ctx) {
         },
     });
     const list = response.data.data.data.list;
+
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.url, async () => await getFullcontent(item))));
+
     return {
         title: '51CTO',
         link: 'https://www.51cto.com/',
         description: '51cto - 推荐',
-        item: list.map((item) => ({
-            title: item.title,
-            link: item.url,
-            pubDate: parseDate(item.pubdate, +8),
-            description: item.abstract,
-        })),
+        item: items,
     };
 }

@@ -1,24 +1,34 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import queryString from 'query-string';
 
 export const route: Route = {
     path: '/post/popular_recent/:period?',
-    categories: ['anime'],
+    categories: ['picture', 'popular'],
+    view: ViewType.Pictures,
     example: '/yande/post/popular_recent/1d',
     parameters: {
-        period: '展示时间',
+        period: {
+            description: '展示时间',
+            options: [
+                { value: '1d', label: '最近 24 小时' },
+                { value: '1w', label: '最近一周' },
+                { value: '1m', label: '最近一月' },
+                { value: '1y', label: '最近一年' },
+            ],
+            default: '1d',
+        },
     },
     radar: [
         {
-            source: ['yande.re/post/'],
+            source: ['yande.re/post'],
         },
     ],
-    name: 'posts',
-    maintainers: ['fashioncj'],
-    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     | 
-  | ------- | -------- | ------- | -------- | 
-  | 1d | 1w | 1m ｜1y｜`,
+    name: 'Popular Recent Posts',
+    maintainers: ['magic-akari', 'SettingDust', 'fashioncj', 'NekoAria'],
+    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     |
+  | ------- | -------- | ------- | -------- |
+  | 1d | 1w | 1m | 1y |`,
     handler,
 };
 

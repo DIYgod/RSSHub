@@ -21,7 +21,7 @@ const json = (data: Data) => {
             title: item.title,
             content_html: (item.content && item.content.html) || item.description || item.title,
             content_text: item.content && item.content.text,
-            image: item.image,
+            image: item.image || item.itunes_item_image,
             banner_image: item.banner,
             date_published: item.pubDate,
             date_modified: item.updated,

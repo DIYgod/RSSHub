@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/tag/:tag/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/gcores/tag/42/articles',
     parameters: { tag: '标签名，可在选定标签分类页面的 URL 中找到，如视觉动物——42', category: '分类名' },
     features: {

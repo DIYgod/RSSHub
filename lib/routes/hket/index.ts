@@ -40,7 +40,19 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['china.hket.com/:category/*', 'inews.hket.com/:category/*', 'topick.hket.com/:category/*', 'wealth.hket.com/:category/*'],
+            source: ['china.hket.com/:category/*'],
+            target: '/:category',
+        },
+        {
+            source: ['inews.hket.com/:category/*'],
+            target: '/:category',
+        },
+        {
+            source: ['topick.hket.com/:category/*'],
+            target: '/:category',
+        },
+        {
+            source: ['wealth.hket.com/:category/*'],
             target: '/:category',
         },
         {
@@ -121,7 +133,7 @@ async function handler(ctx) {
 
     const $ = cheerio.load(response);
 
-    const list = $('div.listing-title > a')
+    const list = $('.main-listing-container div.listing-title > a')
         .toArray()
         .map((item) => {
             item = $(item);

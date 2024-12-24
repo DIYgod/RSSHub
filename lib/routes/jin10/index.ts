@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,7 +12,8 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/:important?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Notifications,
     example: '/jin10',
     parameters: { important: '只看重要，任意值开启，留空关闭' },
     features: {

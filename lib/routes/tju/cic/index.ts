@@ -30,7 +30,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'College of Intelligence and Computing',
-    maintainers: ['SuperPung'],
+    maintainers: ['AlanZeng423', 'SuperPung'],
     handler,
     description: `| College News | Notification | TJU Forum for CIC |
   | :----------: | :----------: | :---------------: |
@@ -38,7 +38,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = ctx.params && ctx.req.param('type');
+    const type = ctx.req.param('type');
     let path, subtitle;
 
     switch (type) {

@@ -3,10 +3,10 @@ import got from '@/utils/got';
 import utils from './utils';
 
 export const route: Route = {
-    path: '/weekly/:disableEmbed?',
+    path: '/weekly/:embed?',
     categories: ['social-media'],
     example: '/bilibili/weekly',
-    parameters: { disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
+    parameters: { embed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,7 +21,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const disableEmbed = ctx.req.param('disableEmbed');
+    const embed = !ctx.req.param('embed');
 
     const status_response = await got({
         method: 'get',
@@ -48,12 +48,7 @@ async function handler(ctx) {
         description: 'B站每周必看',
         item: data.map((item) => ({
             title: item.title,
-            // description: `${weekly_name} ${item.title}<br>${item.rcmd_reason}<br>${!disableEmbed ? `${utils.iframe(item.param)}` : ''}<img src="${item.cover}">`,
-            description: `
-                ${weekly_name} ${item.title}<br>
-                ${item.rcmd_reason}<br>
-                ${disableEmbed ? '' : utils.iframe(item.param)}<img src="${item.cover}">
-            `,
+            description: utils.renderUGCDescription(embed, item.cover, `${weekly_name} ${item.title} - ${item.rcmd_reason}`, item.param, undefined, item.bvid),
             link: weekly_number > 60 && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.param}`,
         })),
     };

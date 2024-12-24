@@ -106,7 +106,7 @@ async function handler(ctx) {
         },
     });
 
-    const list = (data.pageProps.categoryArticleData as CategoryArticle[])
+    const list = (data.pageProps.categoryArticleDataForPc as CategoryArticle[])
         .filter((item) => !item.advertiserName)
         .map((item) => {
             const publicationDate = item.publishedAt?.slice(0, 7).replace('-', '');

@@ -12,7 +12,19 @@ export const route: Route = {
     path: '/followings/dynamic/:uid/:routeParams?',
     categories: ['social-media'],
     example: '/bilibili/followings/dynamic/109937383',
-    parameters: { uid: '用户 id', routeParams: '额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格' },
+    parameters: {
+        uid: '用户 id, 可在 UP 主主页中找到',
+        routeParams: `
+| 键         | 含义                              | 接受的值       | 默认值 |
+| ---------- | --------------------------------- | -------------- | ------ |
+| showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |
+| embed      | 默认开启内嵌视频                  | 0/1/true/false |  true  |
+| useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
+| directLink | 使用内容直链                      | 0/1/true/false | false  |
+| hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |
+
+用例：\`/bilibili/followings/dynamic/2267573/showEmoji=1&embed=0&useAvid=1\``,
+    },
     features: {
         requireConfig: [
             {
@@ -43,7 +55,7 @@ async function handler(ctx) {
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
 
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
-    const disableEmbed = fallback(undefined, queryToBoolean(routeParams.disableEmbed), false);
+    const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false);
 
     const name = await cache.getUsernameFromUID(uid);
@@ -74,7 +86,17 @@ async function handler(ctx) {
     const getOriginDes = (data) => (data && (data.apiSeasonInfo && data.apiSeasonInfo.title && `//转发自: ${data.apiSeasonInfo.title}`) + (data.index_title && `<br>${data.index_title}`)) || '';
     const getOriginName = (data) => data.uname || (data.author && data.author.name) || (data.upper && data.upper.name) || (data.user && (data.user.uname || data.user.name)) || (data.owner && data.owner.name) || '';
     const getOriginTitle = (data) => (data.title ? `${data.title}<br>` : '');
-    const getIframe = (data) => (!disableEmbed && data && data.aid ? `<br><br>${utils.iframe(data.aid)}<br>` : '');
+    const getIframe = (data) => {
+        if (!embed) {
+            return '';
+        }
+        const aid = data?.aid;
+        const bvid = data?.bvid;
+        if (aid === undefined && bvid === undefined) {
+            return '';
+        }
+        return utils.renderUGCDescription(embed, '', '', aid, undefined, bvid);
+    };
     const getImgs = (data) => {
         let imgs = '';
         // 动态图片
@@ -110,7 +132,9 @@ async function handler(ctx) {
         data.map(async (item) => {
             const parsed = JSONbig.parse(item.card);
             const data = parsed.apiSeasonInfo || (getTitle(parsed.item) ? parsed.item : parsed);
-            const origin = parsed.origin ? JSONbig.parse(parsed.origin) : null;
+            // parsed.origin is already parsed, and it may be json or string.
+            // Don't parse it again, or it will cause an error.
+            const origin = parsed.origin || null;
 
             // img
             let imgHTML = '';

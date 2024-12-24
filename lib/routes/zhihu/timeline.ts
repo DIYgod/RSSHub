@@ -60,10 +60,13 @@ async function handler(ctx) {
                 const questionId = e.target.question.id;
                 return `${urlBase}/question/${questionId}/answer/${id}`;
             }
+            case 'pin':
             case 'article':
                 return e.target.url;
             case 'question':
                 return `${urlBase}/question/${id}`;
+            default:
+                return;
         }
         return '';
     };
@@ -111,11 +114,12 @@ async function handler(ctx) {
             link,
             author: e.target.author ? e.target.author.name : '',
             guid: link,
+            category: [e.verb],
         };
     };
 
     const out = feeds
-        .filter((e) => e.verb && e.verb !== 'MEMBER_VOTEUP_ARTICLE' && e.verb !== 'MEMBER_VOTEUP_ANSWER')
+        .filter((e) => e.verb)
         .map((e) => {
             if (e && e.type && e.type === 'feed_group') {
                 // A feed group contains a list of feeds whose structure is the same as a single feed
@@ -134,6 +138,7 @@ async function handler(ctx) {
                     description,
                     pubDate,
                     guid,
+                    category: [e.verb],
                 };
             }
             return buildItem(e);

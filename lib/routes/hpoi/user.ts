@@ -16,7 +16,22 @@ export const route: Route = {
     path: '/user/:user_id/:caty',
     categories: ['anime'],
     example: '/hpoi/user/116297/buy',
-    parameters: { user_id: '用户ID', caty: '类别, 见下表' },
+    parameters: {
+        user_id: {
+            description: '用户ID',
+        },
+        caty: {
+            description: '类别',
+            options: [
+                { value: 'want', label: '想买' },
+                { value: 'preorder', label: '预定' },
+                { value: 'buy', label: '已入' },
+                { value: 'care', label: '关注' },
+                { value: 'resell', label: '有过' },
+            ],
+            default: 'buy',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -28,9 +43,6 @@ export const route: Route = {
     name: '用户动态',
     maintainers: ['DIYgod', 'luyuhuang'],
     handler,
-    description: `| 想买 | 预定     | 已入 | 关注 | 有过   |
-  | ---- | -------- | ---- | ---- | ------ |
-  | want | preorder | buy  | care | resell |`,
 };
 
 async function handler(ctx) {

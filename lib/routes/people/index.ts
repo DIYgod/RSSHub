@@ -32,8 +32,12 @@ async function handler(ctx) {
         responseType: 'buffer',
     });
 
-    const encoding = site === 'www' ? 'gbk' : 'utf-8';
-    const decodedResponse = iconv.decode(response, encoding);
+    // not seen Content-Type in response headers
+    // try to parse charset from meta tag
+    let decodedResponse = iconv.decode(response, 'utf-8');
+    const parsedCharset = decodedResponse.match(/<meta.*?charset=["']?([^"'>]+)["']?/i);
+    const encoding = parsedCharset ? parsedCharset[1].toLowerCase() : 'utf-8';
+    decodedResponse = encoding === 'utf-8' ? decodedResponse : iconv.decode(response, encoding);
     const $ = load(decodedResponse);
 
     $('em').remove();

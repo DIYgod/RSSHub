@@ -1,12 +1,13 @@
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 import { config } from '@/config';
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
 import CryptoJS from 'crypto-js';
-
-function iframe(aid: any, page?: any, bvid?: any) {
-    return `<iframe src="https://www.bilibili.com/blackboard/html5mobileplayer.html?${bvid ? `bvid=${bvid}` : `aid=${aid}`}${
-        page ? `&page=${page}` : ''
-    }&high_quality=1&autoplay=0" width="650" height="477" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>`;
-}
+import path from 'node:path';
+import { MediaResult, ResultResponse, SeasonResult } from './types';
 
 // a
 function randomHexStr(length) {
@@ -66,6 +67,10 @@ function hexsign(e) {
     return o;
 }
 
+function addRenderData(params, renderData) {
+    return `${params}&w_webid=${encodeURIComponent(renderData)}`;
+}
+
 function addWbiVerifyInfo(params, wbiVerifyString) {
     const searchParams = new URLSearchParams(params);
     searchParams.sort();
@@ -91,8 +96,8 @@ function getDmImgList() {
         const dmImgList = JSON.parse(config.bilibili.dmImgList);
         return JSON.stringify([dmImgList[Math.floor(Math.random() * dmImgList.length)]]);
     }
-    const x = Math.max(generateGaussianInteger(650, 5), 0);
-    const y = Math.max(generateGaussianInteger(400, 5), 0);
+    const x = Math.max(generateGaussianInteger(1245, 5), 0);
+    const y = Math.max(generateGaussianInteger(1285, 5), 0);
     const path = [
         {
             x: 3 * x + 2 * y,
@@ -105,21 +110,207 @@ function getDmImgList() {
     return JSON.stringify(path);
 }
 
-function addDmVerifyInfo(params, dmImgList) {
+function getDmImgInter() {
+    if (config.bilibili.dmImgInter !== undefined) {
+        const dmImgInter = JSON.parse(config.bilibili.dmImgInter);
+        return JSON.stringify([dmImgInter[Math.floor(Math.random() * dmImgInter.length)]]);
+    }
+    const p1 = getDmImgInterWh(274, 601);
+    const s1 = getDmImgInterOf(134, 30);
+    const p2 = getDmImgInterWh(332, 64);
+    const s2 = getDmImgInterOf(1101, 338);
+    const of = getDmImgInterOf(0, 0);
+    const wh = getDmImgInterWh(1245, 1285);
+    const ds = [
+        {
+            t: getDmImgInterT('div'),
+            c: getDmImgInterC('clearfix g-search search-container'),
+            p: [p1[0], p1[2], p1[1]],
+            s: [s1[2], s1[0], s1[1]],
+        },
+        {
+            t: getDmImgInterT('div'),
+            c: getDmImgInterC('wrapper'),
+            p: [p2[0], p2[2], p2[1]],
+            s: [s2[2], s2[0], s2[1]],
+        },
+    ];
+    return JSON.stringify({ ds, wh, of });
+}
+
+function getDmImgInterT(tag: string) {
+    return {
+        a: 4,
+        article: 29,
+        button: 7,
+        div: 2,
+        em: 27,
+        form: 17,
+        h1: 11,
+        h2: 12,
+        h3: 13,
+        h4: 14,
+        h5: 15,
+        h6: 16,
+        img: 5,
+        input: 6,
+        label: 25,
+        li: 10,
+        ol: 9,
+        option: 20,
+        p: 3,
+        section: 28,
+        select: 19,
+        span: 1,
+        strong: 26,
+        table: 21,
+        td: 23,
+        textarea: 18,
+        th: 24,
+        tr: 22,
+        ul: 8,
+    }[tag];
+}
+
+function getDmImgInterC(className: string) {
+    return Buffer.from(className).toString('base64').slice(0, -2);
+}
+
+function getDmImgInterOf(top: number, left: number) {
+    const seed = Math.floor(514 * Math.random());
+    return [3 * top + 2 * left + seed, 4 * top - 4 * left + 2 * seed, seed];
+}
+
+function getDmImgInterWh(width: number, height: number) {
+    const seed = Math.floor(114 * Math.random());
+    return [2 * width + 2 * height + 3 * seed, 4 * width - height + seed, seed];
+}
+
+function addDmVerifyInfo(params: string, dmImgList: string) {
     const dmImgStr = Buffer.from('no webgl').toString('base64').slice(0, -2);
     const dmCoverImgStr = Buffer.from('no webgl').toString('base64').slice(0, -2);
     return `${params}&dm_img_list=${dmImgList}&dm_img_str=${dmImgStr}&dm_cover_img_str=${dmCoverImgStr}`;
 }
 
+function addDmVerifyInfoWithInter(params: string, dmImgList: string, dmImgInter: string) {
+    return `${addDmVerifyInfo(params, dmImgList)}&dm_img_inter=${dmImgInter}`;
+}
+
 const bvidTime = 1_589_990_400;
 
+/**
+ * 获取番剧信息并缓存
+ *
+ * @param {string} id - 番剧 ID。
+ * @param cache - 缓存 module。
+ * @returns {Promise<MediaResult>} 番剧信息。
+ */
+export const getBangumi = (id: string, cache): Promise<MediaResult> =>
+    cache.tryGet(
+        `bilibili:getBangumi:${id}`,
+        async () => {
+            const res = await ofetch<ResultResponse<MediaResult>>('https://api.bilibili.com/pgc/view/web/media', {
+                query: {
+                    media_id: id,
+                },
+            });
+            if (res.result.share_url === undefined) {
+                // reference: https://api.bilibili.com/pgc/review/user?media_id=${id}
+                res.result.share_url = `https://www.bilibili.com/bangumi/media/md${res.result.media_id}`;
+            }
+            return res.result;
+        },
+        config.cache.routeExpire,
+        false
+    ) as Promise<MediaResult>;
+
+/**
+ * 获取番剧分集信息并缓存
+ *
+ * @param {string} id - 番剧 ID。
+ * @param cache - 缓存 module。
+ * @returns {Promise<SeasonResult>} 番剧分集信息。
+ */
+export const getBangumiItems = (id: string, cache): Promise<SeasonResult> =>
+    cache.tryGet(
+        `bilibili:getBangumiItems:${id}`,
+        async () => {
+            const res = await ofetch<ResultResponse<SeasonResult>>('https://api.bilibili.com/pgc/web/season/section', {
+                query: {
+                    season_id: id,
+                },
+            });
+            return res.result;
+        },
+        config.cache.routeExpire,
+        false
+    ) as Promise<SeasonResult>;
+
+/**
+ * 使用模板渲染 UGC（用户生成内容）描述。
+ *
+ * @param {boolean} embed - 是否嵌入视频。
+ * @param {string} img - 要包含在描述中的图片 URL。
+ * @param {string} description - UGC 的文本描述。
+ * @param {string} [aid] - 可选。UGC 的 aid。
+ * @param {string} [cid] - 可选。UGC 的 cid。
+ * @param {string} [bvid] - 可选。UGC 的 bvid。
+ * @returns {string} 渲染的 UGC 描述。
+ *
+ * @see https://player.bilibili.com/ 获取更多信息。
+ */
+export const renderUGCDescription = (embed: boolean, img: string, description: string, aid?: string, cid?: string, bvid?: string): string => {
+    // docs: https://player.bilibili.com/
+    const rendered = art(path.join(__dirname, 'templates/description.art'), {
+        embed,
+        ugc: true,
+        aid,
+        cid,
+        bvid,
+        img: img.replace('http://', 'https://'),
+        description,
+    });
+    return rendered;
+};
+
+/**
+ * 使用模板渲染 OGV（原创视频）描述。
+ *
+ * @param {boolean} embed - 是否嵌入视频。
+ * @param {string} img - 要包含在描述中的图片 URL。
+ * @param {string} description - OGV 的文本描述。
+ * @param {string} [seasonId] - 可选。OGV 的季 ID。
+ * @param {string} [episodeId] - 可选。OGV 的集 ID。
+ * @returns {string} 渲染的 OGV 描述。
+ *
+ * @see https://player.bilibili.com/ 获取更多信息。
+ */
+export const renderOGVDescription = (embed: boolean, img: string, description: string, seasonId?: string, episodeId?: string): string => {
+    // docs: https://player.bilibili.com/
+    const rendered = art(path.join(__dirname, 'templates/description.art'), {
+        embed,
+        ogv: true,
+        seasonId,
+        episodeId,
+        img: img.replace('http://', 'https://'),
+        description,
+    });
+    return rendered;
+};
+
 export default {
-    iframe,
     lsid,
     _uuid,
     hexsign,
     addWbiVerifyInfo,
     getDmImgList,
+    getDmImgInter,
     addDmVerifyInfo,
+    addDmVerifyInfoWithInter,
     bvidTime,
+    addRenderData,
+    getBangumi,
+    getBangumiItems,
+    renderUGCDescription,
+    renderOGVDescription,
 };

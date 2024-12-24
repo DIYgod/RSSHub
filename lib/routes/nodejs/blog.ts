@@ -25,7 +25,9 @@ export const route: Route = {
     name: 'News',
     maintainers: ['nczitzk'],
     handler,
-    description: `| العربية | Catalan | Deutsch | Español | زبان فارسی |
+    description: `Official RSS Source: https://nodejs.org/en/feed/blog.xml
+
+  | العربية | Catalan | Deutsch | Español | زبان فارسی |
   | ------- | ------- | ------- | ------- | ---------- |
   | ar      | ca      | de      | es      | fa         |
 
@@ -55,16 +57,22 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    $('.summary').remove();
-
-    let items = $('ul.blog-index li a')
+    let items = $('article')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((article) => {
+            const $article = load(article);
+
+            const author = $article('footer p').text();
+            const pubDate = parseDate($article('footer time').attr('datetime'));
+
+            const title = $article('a[aria-label]').prop('aria-label');
+            const href = $article('a[aria-label]').attr('href');
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href')}`,
+                title,
+                link: `${rootUrl}${href}`,
+                author,
+                pubDate,
             };
         });
 
@@ -76,17 +84,9 @@ async function handler(ctx) {
                     url: item.link,
                 });
 
-                const content = load(detailResponse.data);
+                const $content = load(detailResponse.data);
 
-                item.pubDate = parseDate(content('time').attr('datetime'));
-                item.author = content('.blogpost-meta')
-                    .text()
-                    .match(/by (.*), /)?.[1];
-
-                content('.blogpost-header').remove();
-
-                item.description = content('article').html();
-
+                item.description = $content('main').html();
                 return item;
             })
         )
