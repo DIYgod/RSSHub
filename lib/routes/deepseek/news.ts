@@ -32,7 +32,7 @@ const parseDateString = (dateString: string) => {
 
 
 // 创建消息 / create article
-const createDataItem = async (item: cheerio.Element, $: cheerio.Root): Promise<DataItem> => {
+const createDataItem = (item: cheerio.Element, $: cheerio.Root): Promise<DataItem> => {
     const $item = $(item);
     const link = $item.find('a').attr('href');
     const dateString = $item.find('a').text().split(' ').at(-1);
