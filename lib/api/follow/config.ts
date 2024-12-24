@@ -17,7 +17,7 @@ const handler: RouteHandler<typeof route> = (ctx) =>
         ownerUserId: config.follow.ownerUserId,
         description: config.follow.description,
         price: config.follow.price,
-        limit: config.follow.limit,
+        userLimit: config.follow.userLimit,
     });
 
 export { route, handler };
