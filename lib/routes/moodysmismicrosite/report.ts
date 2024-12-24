@@ -76,7 +76,7 @@ async function handler(ctx) {
 
     return {
         title: `穆迪评级(${industry})`,
-        link: 'hhttps://www.moodysmismicrosite.com/report',
+        link: 'https://www.moodysmismicrosite.com/report',
         allowEmpty: true,
         item: items.map((x) => ({
             title: x.title,
