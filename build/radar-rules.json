@@ -21529,6 +21529,19 @@
       }
     ]
   },
+  "moodysmismicrosite.com": {
+    "_name": "穆迪评级",
+    "www": [
+      {
+        "title": "industry",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/report"
+        ],
+        "target": "/moodysmismicrosite/report/:industry?"
+      }
+    ]
+  },
   "mox.moe": {
     "_name": "Mox.moe",
     ".": [

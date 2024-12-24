@@ -56298,6 +56298,78 @@
     "url": "mohw.gov.tw",
     "lang": "zh-TW"
   },
+  "moodysmismicrosite": {
+    "routes": {
+      "/report/:industry?": {
+        "path": "/report/:industry?",
+        "categories": [
+          "finance"
+        ],
+        "view": 0,
+        "example": "/moodysmismicrosite/report/企业&金融机构",
+        "parameters": {
+          "industry": {
+            "description": "可选参数，默认为全部行业。行业选择，支持使用&连接多个。",
+            "options": [
+              {
+                "value": "0",
+                "label": "企业"
+              },
+              {
+                "value": "1",
+                "label": "金融机构"
+              },
+              {
+                "value": "2",
+                "label": "主权"
+              },
+              {
+                "value": "3",
+                "label": "地方政府及城投公司"
+              },
+              {
+                "value": "4",
+                "label": "宏观经济"
+              },
+              {
+                "value": "5",
+                "label": "结构融资"
+              },
+              {
+                "value": "6",
+                "label": "基础设施及项目融资"
+              },
+              {
+                "value": "7",
+                "label": "ESG"
+              },
+              {
+                "value": "8",
+                "label": "其他"
+              }
+            ],
+            "default": "全部"
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "www.moodysmismicrosite.com/report"
+            ]
+          }
+        ],
+        "name": "industry",
+        "description": "\n| ID | Description |\n| ---   | ---   |\n| 0 | 企业 |\n| 1 | 金融机构 |\n| 2 | 主权 |\n| 3 | 地方政府及城投公司 |\n| 4 | 宏观经济 |\n| 5 | 结构融资 |\n| 6 | 基础设施项目融资 |\n| 7 | ESG |\n| 8 | 其他 |\n    ",
+        "maintainers": [
+          "FYLSen"
+        ],
+        "location": "report.ts"
+      }
+    },
+    "name": "穆迪评级",
+    "url": "www.moodysmismicrosite.com",
+    "lang": "zh-CN"
+  },
   "mox": {
     "routes": {
       "/:category?": {
