@@ -1,22 +1,26 @@
 import { Route, Data, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import cache from '@/utils/cache';
 
 const ROOT_URL = 'https://api-docs.deepseek.com/zh-cn';
 
 const NEWS_LIST_SELECTOR = 'ul.menu__list > li:nth-child(2) ul > li.theme-doc-sidebar-item-link';
 const ARTICLE_CONTENT_SELECTOR = '.theme-doc-markdown > div > div';
-const ARTICLE_TITLE_SELECTOR = '.theme-doc-markdown > div > div > h1';
+const ARTICLE_TITLE_SELECTOR = ARTICLE_CONTENT_SELECTOR + ' > h1';
 
+
+// 获取消息列表 / get article list
 const fetchPageContent = async (url: string) => {
     const response = await ofetch(url);
     return load(response);
 };
 
+// 提取正文内容 / extract article content
 const extractArticleInfo = ($article: cheerio.Root, pageURL: string) => {
     const contentElement = $article(ARTICLE_CONTENT_SELECTOR);
     const title = $article(ARTICLE_TITLE_SELECTOR).text();
-    $article(ARTICLE_TITLE_SELECTOR).remove();
+    $article(ARTICLE_TITLE_SELECTOR).remove();  // 移除标题，避免重复 / remove title to avoid duplication
     const content = contentElement.html();
     return { title, content, pageURL };
 };
@@ -26,22 +30,30 @@ const parseDateString = (dateString: string) => {
     return pubDate.toUTCString();
 };
 
+
+// 创建消息 / create article
 const createDataItem = async (item: cheerio.Element, $: cheerio.Root): Promise<DataItem> => {
     const $item = $(item);
     const link = $item.find('a').attr('href');
-    const dateString = $item.find('a').text().split(' ').at(-1); // 使用 at(-1)
+    const dateString = $item.find('a').text().split(' ').at(-1);
     const pageURL = new URL(link || '', ROOT_URL).href;
 
-    const $article = await fetchPageContent(pageURL);
-    const { title, content } = extractArticleInfo($article, pageURL);
-    const pubDate = parseDateString(dateString);
+    return cache.tryGet(
+        pageURL,
+        async () => {
+            const $article = await fetchPageContent(pageURL);
+            const { title, content } = extractArticleInfo($article, pageURL);
+            const pubDate = parseDateString(dateString);
 
-    return {
-        title,
-        link: pageURL,
-        pubDate,
-        description: content || undefined,
-    };
+            return {
+                title,
+                link: pageURL,
+                pubDate,
+                description: content || undefined,
+            };
+        },
+        21600 // 6 小时 / 6 hours
+    );
 };
 
 const handler = async (): Promise<Data> => {
@@ -49,7 +61,7 @@ const handler = async (): Promise<Data> => {
     const newsList = $(NEWS_LIST_SELECTOR);
 
     const items: DataItem[] = await Promise.all(
-        newsList.toArray().map((li) => createDataItem(li, $)) // 移除 async
+        newsList.toArray().map((li) => createDataItem(li, $))
     );
 
     return {
