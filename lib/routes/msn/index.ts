@@ -49,6 +49,7 @@ export const route: Route = {
         const channelLink = `https://www.msn.com/${market}/channel/source/${name}/${id}`;
         return {
             title: name,
+            image: 'https://www.msn.com/favicon.ico',
             link: channelLink,
             item: items,
         };
