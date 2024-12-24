@@ -18,7 +18,7 @@
 
 RSSHub is the world's largest RSS network, consisting of over 5,000 global instances.
 
-RSSHub delivers millions of contents aggregated from all kinds of sources, our vibrant open source community is ensuring the deliver of RSSHub's new routes, new features and bug fixes.
+RSSHub aggregates content from millions of sources. Our vibrant open source community ensures the delivery of new routes, new features and bug fixes.
 
 [Documentation](https://docs.rsshub.app) | [Telegram Group](https://t.me/rsshub) | [Telegram Channel](https://t.me/awesomeRSSHub) | [X (Twitter)](https://x.com/intent/follow?screen_name=_RSSHub)
 
