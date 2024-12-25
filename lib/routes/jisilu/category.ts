@@ -78,41 +78,37 @@ export const route: Route = {
     radar: [
         {
             source: ['www.jisilu.cn/category/:id'],
-            target: (params) => {
-                const id = params.id;
-
-                return `/jisilu/category/${id}`;
-            },
+            target: '/category/:id',
         },
         {
             title: '新股',
             source: ['www.jisilu.cn/category/3'],
-            target: '/jisilu/category/3',
+            target: '/category/3',
         },
         {
             title: '债券/可转债',
             source: ['www.jisilu.cn/category/4'],
-            target: '/jisilu/category/4',
+            target: '/category/4',
         },
         {
             title: '套利',
             source: ['www.jisilu.cn/category/5'],
-            target: '/jisilu/category/5',
+            target: '/category/5',
         },
         {
             title: '其他',
             source: ['www.jisilu.cn/category/6'],
-            target: '/jisilu/category/6',
+            target: '/category/6',
         },
         {
             title: '基金',
             source: ['www.jisilu.cn/category/7'],
-            target: '/jisilu/category/7',
+            target: '/category/7',
         },
         {
             title: '股票',
             source: ['www.jisilu.cn/category/8'],
-            target: '/jisilu/category/8',
+            target: '/category/8',
         },
     ],
     view: ViewType.Articles,

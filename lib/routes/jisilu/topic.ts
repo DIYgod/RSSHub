@@ -6,14 +6,9 @@ import { type DataItem, type Route, type Data, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 import { rootUrl, processItems } from './util';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-
-    if (!id) {
-        throw new InvalidParameterError('请填入合法的话题 id，参见话题广场 https://www.jisilu.cn/topic');
-    }
 
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
@@ -74,11 +69,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.jisilu.cn/topic/:id'],
-            target: (params) => {
-                const id = params.id;
-
-                return `/jisilu/topic/${id}`;
-            },
+            target: '/topic/:id',
         },
     ],
     view: ViewType.Articles,

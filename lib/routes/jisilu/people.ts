@@ -16,10 +16,6 @@ const actions: { [key: string]: string } = {
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id, type = 'questions' } = ctx.req.param();
 
-    if (!id) {
-        throw new InvalidParameterError('请填入合法的用户 id，参见用户排名 https://www.jisilu.cn/users/');
-    }
-
     if (type && type !== 'answers' && type !== 'questions') {
         throw new InvalidParameterError('请填入合法的类型 id，可选值为 `questions` 即 `主题` 或 `answer` 即 `回复`，默认为空，即全部');
     }
@@ -31,7 +27,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language: string = $('html').prop('lang') ?? 'zh';
-    const userId: string | undefined = response.match(/var\sPEOPLE_USER_ID\s=\s\'(\d+)\';/)?.[1];
+    const userId: string | undefined = response.match(/var\sPEOPLE_USER_ID\s=\s'(\d+)';/)?.[1];
 
     if (!userId) {
         throw new InvalidParameterError('请填入合法的用户 id，参见用户排名 https://www.jisilu.cn/users/');
@@ -92,11 +88,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.jisilu.cn/people/:id'],
-            target: (params) => {
-                const id = params.id;
-
-                return `/jisilu/people/${id}`;
-            },
+            target: '/people/:id',
         },
     ],
     view: ViewType.Articles,
