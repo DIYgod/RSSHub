@@ -32210,14 +32210,22 @@
   },
   "myzaker.com": {
     "_name": "ZAKER",
-    ".": [
+    "www": [
       {
-        "title": "Unknown",
+        "title": "分类",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
-          "/:type/:id"
+          "/channel/:id"
         ],
-        "target": "/zaker/:type/:id"
+        "target": "/zaker/channel/:id"
+      },
+      {
+        "title": "精读",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/zaker/focusread"
       }
     ]
   },

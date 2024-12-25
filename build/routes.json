@@ -95633,24 +95633,45 @@
   },
   "zaker": {
     "routes": {
-      "/:type/:id?": {
-        "path": "/:type/:id?",
+      "/channel/:id?": {
+        "path": "/channel/:id?",
+        "parameters": {
+          "id": "分类 ID，可在 URL 中找到，默认为 `1`"
+        },
         "radar": [
           {
             "source": [
-              "myzaker.com/:type/:id"
+              "www.myzaker.com/channel/:id"
             ],
-            "target": "/:type/:id"
+            "target": "/channel/:id"
           }
         ],
-        "name": "Unknown",
+        "name": "分类",
+        "example": "/zaker/channel/13",
         "maintainers": [
           "LogicJake",
           "kt286",
+          "TonyRL"
+        ],
+        "location": "channel.ts"
+      },
+      "/focusread": {
+        "path": "/focusread",
+        "radar": [
+          {
+            "source": [
+              "www.myzaker.com/"
+            ],
+            "target": "/focusread"
+          }
+        ],
+        "name": "精读",
+        "example": "/zaker/focusread",
+        "maintainers": [
           "AlexdanerZe",
           "TonyRL"
         ],
-        "location": "index.ts"
+        "location": "focus.ts"
       }
     },
     "name": "ZAKER",
