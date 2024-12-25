@@ -16,9 +16,8 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 150;
 
     const rootUrl = 'https://papers.cool';
-    const query = keyword.split(/\//)[1];
-    const currentUrl = new URL(`arxiv/search?highlight=1&query=${query}&sort=0`, rootUrl).href;
-    const feedUrl = new URL(`arxiv/search/feed?query=${query}`, rootUrl).href;
+    const currentUrl = new URL(`arxiv/search?highlight=1&query=${keyword}&sort=0`, rootUrl).href;
+    const feedUrl = new URL(`arxiv/search/feed?query=${keyword}`, rootUrl).href;
 
     const site = keyword.split(/\//)[0];
     const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
