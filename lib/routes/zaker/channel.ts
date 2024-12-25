@@ -39,6 +39,6 @@ async function handler(ctx) {
     return {
         title: feedTitle,
         link,
-        item: items.filter((t) => t.description !== '原文已被删除'),
+        item: items,
     };
 }

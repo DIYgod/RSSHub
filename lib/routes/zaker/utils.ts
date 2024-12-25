@@ -13,11 +13,10 @@ const hints = ['globalThis', 'headless', 'languages', 'permHook', 'vendor', 'web
 export const baseUrl = 'https://www.myzaker.com';
 
 const generateSalt = (input: string, targetZeros = 20) => {
-    for (let nonce = 0; nonce < 1e8; nonce++) {
+    for (let nonce = 0; nonce < 100_000_000; nonce++) {
         const hash = CryptoJS.SHA256(input + nonce).toString();
         let leadingZeros = 0;
 
-        // Count leading zeros in hex string
         for (const char of hash) {
             if (char !== '0') {
                 leadingZeros += 4 - Number.parseInt(char, 16).toString(2).length;
@@ -48,16 +47,16 @@ const encrypt = (data, seed: string) => {
 
 const encryptPayload = (data, seed: string) => encrypt(data, seed).ciphertext.toString();
 
-export const getSafeLineCookieWithData = async (link) => {
+export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string; data: string }> => {
     const cacheKey = 'zaker:cookie';
     const cacheAge = 3600;
     const cacheIn = await cache.get(cacheKey, false);
     if (cacheIn) {
         return JSON.parse(cacheIn);
     }
+    const apiBaseUrl = 'https://challenge.rivers.chaitin.cn/captcha/api';
 
     const headerResponse = await ofetch.raw(link);
-
     const session = headerResponse.headers
         .getSetCookie()
         .find((e) => e.startsWith('sl-session'))
@@ -68,14 +67,17 @@ export const getSafeLineCookieWithData = async (link) => {
     if (!/window\.captcha/.test(headerResponse._data)) {
         logger.debug('getSafeLineCookie: Failed to get once_id');
         return {
-            cookie: '',
+            cookie: headerResponse.headers
+                .getSetCookie()
+                .map((c) => c.split(';')[0])
+                .join('; '),
             data: headerResponse._data,
         };
     }
 
-    // await ofetch(`https://challenge.rivers.chaitin.cn/captcha/api/index.html?${Math.random()}`);
-    // await ofetch('https://challenge.rivers.chaitin.cn/captcha/api/sdk.js');
-    const seedResponse = await ofetch<{ req_id: string; seed: string }>('https://challenge.rivers.chaitin.cn/captcha/api/seed', {
+    // await ofetch(`${apiBaseUrl}/index.html?${Math.random()}`);
+    // await ofetch('${apiBaseUrl}/sdk.js');
+    const seedResponse = await ofetch<{ req_id: string; seed: string }>(`${apiBaseUrl}/seed`, {
         headers: {
             Referer: `${baseUrl}/`,
         },
@@ -102,7 +104,7 @@ export const getSafeLineCookieWithData = async (link) => {
         seed
     );
 
-    const inspectResponse = await ofetch<{ req_id: string; jwt: string; reason: string }>('https://challenge.rivers.chaitin.cn/captcha/api/inspect', {
+    const inspectResponse = await ofetch<{ req_id: string; jwt: string; reason: string }>(`${apiBaseUrl}/inspect`, {
         method: 'POST',
         headers: {
             Referer: `${baseUrl}/`,
@@ -116,7 +118,13 @@ export const getSafeLineCookieWithData = async (link) => {
     logger.debug(`getSafeLineCookie: inspectResponse=${JSON.stringify(inspectResponse)}`);
     if (inspectResponse.reason) {
         logger.error(`getSafeLineCookie: reason=${inspectResponse.reason}`);
-        return '';
+        return {
+            cookie: headerResponse.headers
+                .getSetCookie()
+                .map((c) => c.split(';')[0])
+                .join('; '),
+            data: headerResponse._data,
+        };
     }
 
     const response = await ofetch.raw(link, {
@@ -157,17 +165,11 @@ export const parseList = ($: cheerio.CheerioAPI) => {
 };
 
 export const fetchItem = async (item: DataItem, cookie: string) => {
-    let response = '';
-    if (cookie) {
-        response = await ofetch(item.link!, {
-            headers: {
-                Cookie: cookie as string,
-            },
-        });
-    } else {
-        const res = await getSafeLineCookieWithData(item.link!);
-        response = res.data;
-    }
+    const response = await ofetch(item.link!, {
+        headers: {
+            Cookie: cookie as string,
+        },
+    });
 
     const $ = cheerio.load(response);
 
@@ -178,7 +180,7 @@ export const fetchItem = async (item: DataItem, cookie: string) => {
         $img.removeAttr('data-original');
     });
 
-    item.description = content.html() ?? '原文已被删除';
+    item.description = content.html();
 
     return item;
 };
