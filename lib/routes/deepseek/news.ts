@@ -9,7 +9,6 @@ const NEWS_LIST_SELECTOR = 'ul.menu__list > li:nth-child(2) ul > li.theme-doc-si
 const ARTICLE_CONTENT_SELECTOR = '.theme-doc-markdown > div > div';
 const ARTICLE_TITLE_SELECTOR = ARTICLE_CONTENT_SELECTOR + ' > h1';
 
-
 // 获取消息列表 / get article list
 const fetchPageContent = async (url: string) => {
     const response = await ofetch(url);
@@ -20,7 +19,7 @@ const fetchPageContent = async (url: string) => {
 const extractArticleInfo = ($article: cheerio.Root, pageURL: string) => {
     const contentElement = $article(ARTICLE_CONTENT_SELECTOR);
     const title = $article(ARTICLE_TITLE_SELECTOR).text();
-    $article(ARTICLE_TITLE_SELECTOR).remove();  // 移除标题，避免重复 / remove title to avoid duplication
+    $article(ARTICLE_TITLE_SELECTOR).remove(); // 移除标题，避免重复 / remove title to avoid duplication
     const content = contentElement.html();
     return { title, content, pageURL };
 };
@@ -30,7 +29,6 @@ const parseDateString = (dateString: string) => {
     return pubDate.toUTCString();
 };
 
-
 // 创建消息 / create article
 const createDataItem = (item: cheerio.Element, $: cheerio.Root): Promise<DataItem> => {
     const $item = $(item);
@@ -38,30 +36,25 @@ const createDataItem = (item: cheerio.Element, $: cheerio.Root): Promise<DataIte
     const dateString = $item.find('a').text().split(' ').at(-1);
     const pageURL = new URL(link || '', ROOT_URL).href;
 
-    return cache.tryGet(
-        pageURL,
-        async () => {
-            const $article = await fetchPageContent(pageURL);
-            const { title, content } = extractArticleInfo($article, pageURL);
-            const pubDate = parseDateString(dateString);
+    return cache.tryGet(pageURL, async () => {
+        const $article = await fetchPageContent(pageURL);
+        const { title, content } = extractArticleInfo($article, pageURL);
+        const pubDate = parseDateString(dateString);
 
-            return {
-                title,
-                link: pageURL,
-                pubDate,
-                description: content || undefined,
-            };
-        },
-    );
+        return {
+            title,
+            link: pageURL,
+            pubDate,
+            description: content || undefined,
+        };
+    });
 };
 
 const handler = async (): Promise<Data> => {
     const $ = await fetchPageContent(ROOT_URL);
     const newsList = $(NEWS_LIST_SELECTOR);
 
-    const items: DataItem[] = await Promise.all(
-        newsList.toArray().map((li) => createDataItem(li, $))
-    );
+    const items: DataItem[] = await Promise.all(newsList.toArray().map((li) => createDataItem(li, $)));
 
     return {
         title: 'DeepSeek 新闻',
