@@ -7,6 +7,11 @@ const apiKey = '0QfOX3Vn51YCzitbLaRkTTBadtWpgTN8NZLW0C1SEM';
 
 export const route: Route = {
     path: '/:market/:name/:id',
+    parameters: {
+        market: 'Market code. Find it in MSN url, e.g. zh-tw',
+        name: 'Name of the channel. Find it in MSN url, e.g. Bloomberg',
+        id: 'ID of the channel (always starts with sr-vid). Find it in MSN url, e.g. sr-vid-08gw7ky4u229xjsjvnf4n6n7v67gxm0pjmv9fr4y2x9jjmwcri4s',
+    },
     categories: ['traditional-media'],
     example: '/zh-tw/Bloomberg/sr-vid-08gw7ky4u229xjsjvnf4n6n7v67gxm0pjmv9fr4y2x9jjmwcri4s',
     description: `MSN News`,
