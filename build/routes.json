@@ -22198,6 +22198,42 @@
     "url": "deepmind.com",
     "lang": "en"
   },
+  "deepseek": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "programming"
+        ],
+        "example": "/deepseek/news",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "api-docs.deepseek.com"
+            ],
+            "target": "/news"
+          }
+        ],
+        "name": "新闻",
+        "maintainers": [
+          "1837634311"
+        ],
+        "location": "news.ts"
+      }
+    },
+    "name": "Deepseek",
+    "url": "api-docs.deepseek.com",
+    "description": "Deepseek API 文档。",
+    "lang": "zh-CN"
+  },
   "dehenglaw": {
     "routes": {
       "/:language?/:category?": {
