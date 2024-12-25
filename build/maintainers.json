@@ -5271,8 +5271,11 @@
   "/panewslab/topic/:id": [
     "nczitzk"
   ],
-  "/papers/:category{.+}?": [
+  "/papers/arxiv/:category{.+}?": [
     "nczitzk",
+    "Muyun99"
+  ],
+  "/papers/query/:keyword{.+}?": [
     "Muyun99"
   ],
   "/paradigm/writing": [
