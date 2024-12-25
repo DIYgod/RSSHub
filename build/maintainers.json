@@ -3946,6 +3946,9 @@
   "/jpxgmn/weekly": [
     "Urabartin"
   ],
+  "/jrj/:channelNum": [
+    "p3psi-boo"
+  ],
   "/jseea/news/:type?": [
     "schen1024"
   ],
