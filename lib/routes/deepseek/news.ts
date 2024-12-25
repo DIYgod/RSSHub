@@ -52,7 +52,6 @@ const createDataItem = (item: cheerio.Element, $: cheerio.Root): Promise<DataIte
                 description: content || undefined,
             };
         },
-        21600 // 6 小时 / 6 hours
     );
 };
 
