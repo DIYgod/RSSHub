@@ -44,13 +44,29 @@ export const route: Route = {
         const requestMuid = parsedSettings.fd_muid;
 
         const jsonData = await ofetch(`https://assets.msn.com/service/news/feed/pages/providerfullpage?market=${market}&query=newest&CommunityProfileId=${truncatedId}&apikey=${apiKey}&user=m-${requestMuid}`);
-        const items = jsonData.sections[0].cards.map((card) => ({
-            title: card.title,
-            link: card.url,
-            description: card.abstract,
-            pubDate: parseDate(card.publishedDateTime),
-            category: [card.category],
-        }));
+        const items = jsonData.sections[0].cards.map(async (card) => {
+            let articleContentHtml = '';
+
+            const articleUrl = card.url;
+            const parsedArticleUrl = URL.parse(articleUrl);
+            let articleId = parsedArticleUrl?.pathname.split('/').pop();
+            if (articleId?.startsWith('ar-')) {
+                articleId = articleId.substring(3);
+                const articleData = await ofetch(`https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`);
+                articleContentHtml = articleData.body;
+            }
+
+            return {
+                title: card.title,
+                link: articleUrl,
+                description: card.abstract,
+                content: {
+                    html: articleContentHtml,
+                },
+                pubDate: parseDate(card.publishedDateTime),
+                category: [card.category],
+            };
+        });
 
         const channelLink = `https://www.msn.com/${market}/channel/source/${name}/${id}`;
         return {
