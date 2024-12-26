@@ -132,8 +132,8 @@ const weiboUtils = {
         }
 
         // drop live photo
-        const livePhotoCount = status.pics ? status.pics.filter((pic) => pic.type === 'livephotos').length : 0;
-        const pics = status.pics && status.pics.filter((pic) => pic.type !== 'livephotos');
+        const livePhotoCount = status.pics ? status.pics.filter((pic) => pic.type === 'livephoto').length : 0;
+        const pics = status.pics && status.pics.filter((pic) => pic.type !== 'livephoto');
 
         // 添加微博配图
         if (pics) {
@@ -263,7 +263,7 @@ const weiboUtils = {
     },
     formatVideo: (itemDesc, status) => {
         const pageInfo = status.page_info;
-        const livePhotos = status.pics && status.pics.filter((pic) => pic.type === 'livephotos' && pic.videoSrc);
+        const livePhotos = status.pics && status.pics.filter((pic) => pic.type === 'livephoto' && pic.videoSrc);
         let video = '<br clear="both" /><div style="clear: both"></div>';
         let anyVideo = false;
         if (livePhotos) {
