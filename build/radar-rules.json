@@ -21684,6 +21684,19 @@
       }
     ]
   },
+  "msn.com": {
+    "_name": "MSN",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:market/channel/source/:name/:id"
+        ],
+        "target": "/msn/:market/:name/:id"
+      }
+    ]
+  },
   "mwm.net.cn": {
     "_name": "管理世界",
     ".": [

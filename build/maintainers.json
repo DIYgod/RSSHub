@@ -4579,6 +4579,9 @@
   "/mrm/:category?": [
     "TonyRL"
   ],
+  "/msn/:market/:name/:id": [
+    "KTachibanaM"
+  ],
   "/mwm/:category?": [
     "nczitzk"
   ],
