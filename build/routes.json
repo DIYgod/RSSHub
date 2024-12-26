@@ -84966,6 +84966,41 @@
     "url": "thwiki.cc",
     "lang": "zh-CN"
   },
+  "tiddlywiki": {
+    "routes": {
+      "/releases": {
+        "path": "/releases",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/tiddlywiki/releases",
+        "url": "tiddlywiki.com",
+        "name": "Releases",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "radar": [
+          {
+            "source": [
+              "github.com/TiddlyWiki/TiddlyWiki5"
+            ],
+            "target": "/releases"
+          },
+          {
+            "source": [
+              "tiddlywiki.com"
+            ],
+            "target": "/releases"
+          }
+        ],
+        "location": "releases.ts"
+      }
+    },
+    "name": "TiddlyWiki",
+    "url": "tiddlywiki.com",
+    "description": "",
+    "lang": "en"
+  },
   "tiktok": {
     "routes": {
       "/user/:user/:iframe?": {

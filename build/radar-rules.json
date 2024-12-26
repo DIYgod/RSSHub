@@ -11296,6 +11296,14 @@
           "/:user/:repo/wiki"
         ],
         "target": "/github/wiki/:user/:repo/:page"
+      },
+      {
+        "title": "Releases",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/TiddlyWiki/TiddlyWiki5"
+        ],
+        "target": "/tiddlywiki/releases"
       }
     ],
     "gist": [
@@ -29748,6 +29756,19 @@
           "/%E6%97%A5%E7%A8%8B%E8%A1%A8"
         ],
         "target": "/thwiki/calendar"
+      }
+    ]
+  },
+  "tiddlywiki.com": {
+    "_name": "TiddlyWiki",
+    ".": [
+      {
+        "title": "Releases",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/"
+        ],
+        "target": "/tiddlywiki/releases"
       }
     ]
   },
