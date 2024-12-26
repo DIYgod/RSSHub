@@ -41085,6 +41085,37 @@
         "url": "huggingface.co/blog/zh",
         "location": "blog-zh.ts"
       },
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/huggingface/blog",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "huggingface.co/blog",
+              "huggingface.co/"
+            ]
+          }
+        ],
+        "name": "英文博客",
+        "maintainers": [
+          "cesaryuan",
+          "zcf0508"
+        ],
+        "url": "huggingface.co/blog",
+        "location": "blog.ts"
+      },
       "/daily-papers": {
         "path": "/daily-papers",
         "categories": [

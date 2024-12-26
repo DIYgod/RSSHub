@@ -3407,6 +3407,10 @@
   "/huggingface/blog-zh": [
     "zcf0508"
   ],
+  "/huggingface/blog": [
+    "cesaryuan",
+    "zcf0508"
+  ],
   "/huggingface/daily-papers": [
     "zeyugao"
   ],

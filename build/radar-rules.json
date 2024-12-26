@@ -14990,6 +14990,15 @@
         "target": "/huggingface/blog-zh"
       },
       {
+        "title": "英文博客",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blog",
+          "/"
+        ],
+        "target": "/huggingface/blog"
+      },
+      {
         "title": "Daily Papers",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
