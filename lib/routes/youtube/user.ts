@@ -29,7 +29,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.youtube.com/user/:username'],
+            source: ['www.youtube.com/user/:username', 'www.youtube.com/:username'],
             target: '/user/:username',
         },
     ],
