@@ -67,7 +67,7 @@ async function handler(ctx) {
     }
     const articles: any[] = await Promise.all(
         articleIds.map((id) =>
-            cache.tryGet(String(id), async () => {
+            cache.tryGet('articleId:' + id, async () => {
                 const res: any = await got.post(`${rootUrl}${detailPath}`, { json: { id } });
                 if (res.data.code === 200) {
                     return {
