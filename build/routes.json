@@ -95600,7 +95600,8 @@
         "radar": [
           {
             "source": [
-              "www.youtube.com/user/:username"
+              "www.youtube.com/user/:username",
+              "www.youtube.com/:username"
             ],
             "target": "/user/:username"
           }

@@ -32245,7 +32245,8 @@
         "title": "Channel with username",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
-          "/user/:username"
+          "/user/:username",
+          "/:username"
         ],
         "target": "/youtube/user/:username"
       }
