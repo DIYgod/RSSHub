@@ -46,6 +46,7 @@ async function handler() {
                 description: $section.html(),
                 link: url,
                 pubDate: parseDate(month),
+                guid: `webcatalog-${month}-${title}`,
             };
         });
 
