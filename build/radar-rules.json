@@ -8223,6 +8223,19 @@
       }
     ]
   },
+  "cursor.com": {
+    "_name": "Cursor",
+    "www": [
+      {
+        "title": "Changelog",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/changelog"
+        ],
+        "target": "/cursor/cursor/changelog"
+      }
+    ]
+  },
   "cw.com.tw": {
     "_name": "天下雜誌",
     ".": [

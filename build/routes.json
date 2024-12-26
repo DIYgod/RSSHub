@@ -20634,6 +20634,35 @@
     "url": "curius.app",
     "lang": "en"
   },
+  "cursor": {
+    "routes": {
+      "/changelog": {
+        "path": "/changelog",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/cursor/changelog",
+        "url": "www.cursor.com/changelog",
+        "name": "Changelog",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.cursor.com/changelog"
+            ],
+            "target": "/cursor/changelog"
+          }
+        ],
+        "location": "changelog.ts"
+      }
+    },
+    "name": "Cursor",
+    "url": "www.cursor.com",
+    "description": "",
+    "lang": "en"
+  },
   "cw": {
     "routes": {
       "/author/:channel": {
