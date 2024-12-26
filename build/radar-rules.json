@@ -31179,6 +31179,19 @@
       }
     ]
   },
+  "webcatalog.io": {
+    "_name": "WebCatalog",
+    "desktop": [
+      {
+        "title": "Changelog",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/:lang/changelog"
+        ],
+        "target": "/webcatalog/changelog"
+      }
+    ]
+  },
   "cimidata.com": {
     "_name": "微信小程序",
     ".": [

@@ -90645,6 +90645,42 @@
     "url": "web3caff.com",
     "lang": "en"
   },
+  "webcatalog": {
+    "routes": {
+      "/changelog": {
+        "path": "/changelog",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/webcatalog/changelog",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "desktop.webcatalog.io/:lang/changelog"
+            ]
+          }
+        ],
+        "name": "Changelog",
+        "maintainers": [
+          "Tsuyumi25"
+        ],
+        "url": "desktop.webcatalog.io/en/changelog",
+        "location": "changelog.ts"
+      }
+    },
+    "name": "WebCatalog",
+    "url": "desktop.webcatalog.io",
+    "lang": "en"
+  },
   "wechat": {
     "routes": {
       "/announce": {
