@@ -53,14 +53,10 @@ export const route: Route = {
             let articleId = parsedArticleUrl?.pathname.split('/').pop();
             if (articleId?.startsWith('ar-')) {
                 articleId = articleId.substring(3);
-                const fetchedArticleContentHtml = (await cache.tryGet(
-                    articleId,
-                    async () => {
-                        const articleData = await ofetch(`https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`);
-                        return articleData.body;
-                    },
-                    7_776_000
-                )) as string; // cache article content for 3 months
+                const fetchedArticleContentHtml = (await cache.tryGet(articleId, async () => {
+                    const articleData = await ofetch(`https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`);
+                    return articleData.body;
+                })) as string; // cache article content for 3 months
                 articleContentHtml = fetchedArticleContentHtml;
             }
 
