@@ -1,7 +1,13 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+const PATH_LIST = {
+    早报: 'ifanrnews',
+    评测: 'review',
+    糖纸众测: 'tangzhi-evaluation',
+    产品: 'product',
+};
 
 export const route: Route = {
     path: '/category/:name',
@@ -24,49 +30,42 @@ export const route: Route = {
     name: '分类',
     maintainers: ['donghongfei'],
     handler,
+    description: `支持分类：早报、评测、糖纸众测、产品`,
 };
 
 async function handler(ctx) {
     const name = ctx.req.param('name');
-    const name_encode = encodeURIComponent(decodeURIComponent(name));
-    const api_url = `https://sso.ifanr.com/api/v5/wp/article/?post_category=${name_encode}&limit=10&offset=0`;
+    const nameEncode = encodeURIComponent(decodeURIComponent(name));
+    const apiUrl = `https://sso.ifanr.com/api/v5/wp/article/?post_category=${nameEncode}&limit=20&offset=0`;
     const resp = await got({
         method: 'get',
-        url: api_url,
+        url: apiUrl,
     });
     const items = await Promise.all(
         resp.data.objects.map((item) => {
-            const link = `https://sso.ifanr.com/api/v5/wp/article/?post_id=${item.post_id}`;
             let description = '';
 
-            const key = `ifanr: ${item.id}`;
+            const banner = item.post_cover_image;
 
-            return cache.tryGet(key, async () => {
-                const response = await got({ method: 'get', url: link });
-                const articleData = response.data.objects[0];
-                const banner = articleData.post_cover_image;
+            if (banner) {
+                description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
+            }
+            description += item.post_content;
 
-                if (banner) {
-                    description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
-                }
-                description += articleData.post_content;
-
-                return {
-                    title: item.post_title.trim(),
-                    description,
-                    link: item.post_url,
-                    pubDate: parseDate(item.created_at * 1000),
-                    author: item.created_by.name,
-                    source: 'iFanr 爱范儿',
-                };
-            });
+            return {
+                title: item.post_title.trim(),
+                description,
+                link: item.post_url,
+                pubDate: parseDate(item.published_at * 1000),
+                author: item.created_by.name,
+            };
         })
     );
 
     return {
         title: `#${name} - iFanr 爱范儿`,
-        link: 'https://www.ifanr.com/category/',
-        description: `${name} 更新推送 `,
+        link: `https://www.ifanr.com/category/${PATH_LIST[name]}`,
+        description: `${name} 更新推送`,
         item: items,
     };
 }

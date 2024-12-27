@@ -29,17 +29,17 @@ export const route: Route = {
 };
 
 async function handler() {
-    const api_url = 'https://sso.ifanr.com/api/v5/wp/web-feed/?limit=10&offset=0';
+    const apiUrl = 'https://sso.ifanr.com/api/v5/wp/web-feed/?limit=20&offset=0';
     const resp = await got({
         method: 'get',
-        url: api_url,
+        url: apiUrl,
     });
     const items = await Promise.all(
         resp.data.objects.map((item) => {
             const link = `https://sso.ifanr.com/api/v5/wp/article/?post_id=${item.post_id}`;
             let description = '';
 
-            const key = `ifanr: ${item.id}`;
+            const key = `ifanr:${item.id}`;
 
             return cache.tryGet(key, async () => {
                 const response = await got({ method: 'get', url: link });
@@ -56,16 +56,15 @@ async function handler() {
                     link: item.post_url,
                     pubDate: parseDate(item.created_at * 1000),
                     author: item.created_by.name,
-                    source: 'iFanr 爱范儿',
                 };
             });
         })
     );
 
     return {
-        title: 'iFanr 爱范儿',
+        title: '爱范儿',
         link: 'https://www.ifanr.com',
-        description: 'iFanr首页',
+        description: '爱范儿首页',
         item: items,
     };
 }
