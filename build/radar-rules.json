@@ -16179,6 +16179,27 @@
       }
     ]
   },
+  "ifanr.com": {
+    "_name": "爱范儿",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/:name"
+        ],
+        "target": "/ifanr/category/:name"
+      },
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/index"
+        ],
+        "target": "/ifanr/index"
+      }
+    ]
+  },
   "ifun.cool": {
     "_name": "趣集",
     "n": [

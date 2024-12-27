@@ -43244,6 +43244,75 @@
     "url": "ielts.neea.cn",
     "lang": "zh-CN"
   },
+  "ifanr": {
+    "routes": {
+      "/category/:name": {
+        "path": "/category/:name",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/ifanr/category/早报",
+        "parameters": {
+          "name": "分类名称"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ifanr.com/category/:name"
+            ]
+          }
+        ],
+        "name": "分类",
+        "maintainers": [
+          "donghongfei"
+        ],
+        "description": "支持分类：早报、评测、糖纸众测、产品",
+        "location": "category.ts"
+      },
+      "/index": {
+        "path": "/index",
+        "categories": [
+          "new-media"
+        ],
+        "view": 0,
+        "example": "/ifanr/index",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ifanr.com/index"
+            ]
+          }
+        ],
+        "name": "首页",
+        "maintainers": [
+          "donghongfei"
+        ],
+        "url": "www.ifanr.com/index",
+        "location": "index.ts"
+      }
+    },
+    "name": "爱范儿",
+    "url": "www.ifanr.com",
+    "description": "",
+    "lang": "zh-CN"
+  },
   "ifeng": {
     "routes": {
       "/feng/:id/:type": {
