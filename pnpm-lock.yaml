@@ -97,8 +97,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       directory-import:
-        specifier: 3.3.1
-        version: 3.3.1
+        specifier: 3.3.2
+        version: 3.3.2
       dotenv:
         specifier: 16.4.7
         version: 16.4.7
@@ -2759,8 +2759,8 @@ packages:
     resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
-  directory-import@3.3.1:
-    resolution: {integrity: sha512-d9paCbverdqmuwR+B40phSqiHhgPKiP8dpsMz5WT9U6ug2VVQ3tqXNCedpa6iGHg6mgv9lHaoq5DJUu2IXMjsQ==}
+  directory-import@3.3.2:
+    resolution: {integrity: sha512-dSApZXgx29qO/6AVigdsoC6HSvaHWinJ4HTRPKrlMAxX71FgPzn/WEWbgM+aB1PlKD9IfSC3Ir2ouYYQR1uy+g==}
     engines: {node: '>=18.17.0'}
 
   discord-api-types@0.37.114:
@@ -8197,7 +8197,7 @@ snapshots:
     dependencies:
       heap: 0.2.7
 
-  directory-import@3.3.1: {}
+  directory-import@3.3.2: {}
 
   discord-api-types@0.37.114: {}
 
