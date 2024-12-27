@@ -23,6 +23,7 @@ export const route: Route = {
 | useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
 | directLink | 使用内容直链                      | 0/1/true/false | false  |
 | hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |
+| offset     | 偏移状态                         | string         | ""  |
 
 用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&embed=0&useAvid=1\``,
     },
@@ -232,13 +233,14 @@ async function handler(ctx) {
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
     const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = ctx.req.query('mode') === 'fulltext';
+    const offset = fallback(undefined, routeParams.offset, '');
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
     const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
     const hideGoods = fallback(undefined, queryToBoolean(routeParams.hideGoods), false);
 
     const cookie = await cacheIn.getCookie();
 
-    const params = utils.addDmVerifyInfo(`host_mid=${uid}&platform=web&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote`, utils.getDmImgList());
+    const params = utils.addDmVerifyInfo(`offset=${offset}&host_mid=${uid}&platform=web&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote`, utils.getDmImgList());
     const response = await got(`https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?${params}`, {
         headers: {
             Referer: `https://space.bilibili.com/${uid}/`,
