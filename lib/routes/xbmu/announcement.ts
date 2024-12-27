@@ -36,29 +36,27 @@ const handler: Route['handler'] = async () => {
 
         // Map through each list item to extract details
         const announcementList = await Promise.all(
-            listItems
-                .map(async (_, element) => {
-                    const rawDate = $(element).find('span').text().trim();
-                    const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
-                    const formattedDate = dayjs(`${yearMonth}-${day}`).toDate().toUTCString();
+            listItems.toArray().map(async (element) => {
+                const rawDate = $(element).find('span').text().trim();
+                const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
+                const formattedDate = dayjs(`${yearMonth}-${day}`).toDate().toUTCString();
 
-                    const title = $(element).find('a').attr('title') || '学术信息';
-                    const relativeHref = $(element).find('a').attr('href') || '';
-                    const link = `https://www.xbmu.edu.cn/${relativeHref.replace('../', '')}`;
+                const title = $(element).find('a').attr('title') || '通知公告';
+                const relativeHref = $(element).find('a').attr('href') || '';
+                const link = `https://www.xbmu.edu.cn/${relativeHref.replace('../', '')}`;
 
-                    const CONTENT_SELECTOR = '#vsb_content > div';
-                    const { data: contentResponse } = await got(link);
-                    const contentPage = load(contentResponse);
-                    const content = contentPage(CONTENT_SELECTOR).html() || '';
+                const CONTENT_SELECTOR = '#vsb_content > div';
+                const { data: contentResponse } = await got(link);
+                const contentPage = load(contentResponse);
+                const content = contentPage(CONTENT_SELECTOR).html() || '';
 
-                    return {
-                        date: formattedDate,
-                        title,
-                        link,
-                        content,
-                    };
-                })
-                .get()
+                return {
+                    date: formattedDate,
+                    title,
+                    link,
+                    content,
+                };
+            })
         );
 
         // Format the announcement information into DataItems
