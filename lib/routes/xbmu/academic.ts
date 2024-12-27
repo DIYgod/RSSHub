@@ -41,7 +41,7 @@ const handler: Route['handler'] = async () => {
 
                 const title = $(element).find('a').attr('title') || '学术信息';
                 const relativeHref = $(element).find('a').attr('href') || '';
-                const link = `https://www.xbmu.edu.cn/${relativeHref.replace('../', '')}`;
+                const link = `https://www.xbmu.edu.cn/${relativeHref.replaceAll('../', '')}`;
 
                 const CONTENT_SELECTOR = '#vsb_content > div';
                 const { data: contentResponse } = await got(link);
