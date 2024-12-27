@@ -35,18 +35,21 @@ async function handler(ctx) {
         url: api_url,
     });
     const items = await Promise.all(
-        resp.data.objects.map(async (item) => {
+        resp.data.objects.map((item) => {
+            const link = `https://sso.ifanr.com/api/v5/wp/article/?post_id=${item.post_id}`;
             let description = '';
 
             const key = `ifanr: ${item.id}`;
 
-             
             return cache.tryGet(key, async () => {
-                const banner = item.post_cover_image;
+                const response = await got({ method: 'get', url: link });
+                const articleData = response.data.objects[0];
+                const banner = articleData.post_cover_image;
+
                 if (banner) {
                     description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
                 }
-                description += item.post_content;
+                description += articleData.post_content;
 
                 return {
                     title: item.post_title.trim(),
