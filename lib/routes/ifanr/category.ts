@@ -35,12 +35,12 @@ async function handler(ctx) {
         url: api_url,
     });
     const items = await Promise.all(
-        resp.data.objects.map((item) => {
+        resp.data.objects.map(async (item) => {
             let description = '';
 
             const key = `ifanr: ${item.id}`;
 
-            // eslint-disable-next-line require-await
+             
             return cache.tryGet(key, async () => {
                 const banner = item.post_cover_image;
                 if (banner) {
