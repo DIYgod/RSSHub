@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 import { load } from 'cheerio';
 
 const apiKey = '0QfOX3Vn51YCzitbLaRkTTBadtWpgTN8NZLW0C1SEM';
@@ -52,8 +53,15 @@ export const route: Route = {
             let articleId = parsedArticleUrl?.pathname.split('/').pop();
             if (articleId?.startsWith('ar-')) {
                 articleId = articleId.substring(3);
-                const articleData = await ofetch(`https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`);
-                articleContentHtml = articleData.body;
+                const fetchedArticleContentHtml = (await cache.tryGet(
+                    articleId,
+                    async () => {
+                        const articleData = await ofetch(`https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`);
+                        return articleData.body;
+                    },
+                    7_776_000
+                )) as string; // cache article content for 3 months
+                articleContentHtml = fetchedArticleContentHtml;
             }
 
             return {
