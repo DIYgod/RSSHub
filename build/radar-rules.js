@@ -3075,7 +3075,7 @@
         docs:"https://docs.rsshub.app/routes/government",
         source:[ "/qqgw/wszz/" ],
         target:"/chinacdc/qqgw/wszz" },
-      { title:"全球公卫 - 国际交流(港澳台交流)",
+      { title:"全球公卫 - 国际交流 (港澳台交流)",
         docs:"https://docs.rsshub.app/routes/government",
         source:[ "/qqgw/gjjl/" ],
         target:"/chinacdc/qqgw/gjjl" },
