@@ -17,7 +17,7 @@ const handler: Route['handler'] = async () => {
         title: '西北民族大学通知公告',
         description: '西北民族大学近日通知公告',
         link: BASE_URL,
-        image: 'https://www.xbmu.edu.cn/images/logo.png',
+        image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
         item: [],
         allowEmpty: true,
         language: 'zh-cn',
@@ -59,7 +59,7 @@ const handler: Route['handler'] = async () => {
             })
         );
 
-        // Format the announcement information into DataItems
+        // Format the announcements into DataItems
         const dataItems: DataItem[] = announcementList.map((item) => ({
             title: item.title,
             pubDate: item.date,
@@ -68,7 +68,7 @@ const handler: Route['handler'] = async () => {
             category: ['university'],
             guid: item.link,
             id: item.link,
-            image: 'https://www.xbmu.edu.cn/images/logo.png',
+            image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
             content: {
                 html: item.content,
                 text: item.content,
@@ -78,7 +78,7 @@ const handler: Route['handler'] = async () => {
         }));
         result.item = dataItems.slice(0, ITEM_LIMIT);
     } catch (error) {
-        throw new Error(`Error fetching announcement announcements: ${error}`);
+        throw new Error(`Error fetching announcements: ${error}`);
     }
     return result;
 };
@@ -86,7 +86,7 @@ const handler: Route['handler'] = async () => {
 export const route: Route = {
     path: '/announcement',
     name: '西北民族大学学术信息',
-    maintainers: ['codemetic'],
+    maintainers: ['prinOrange'],
     handler,
     categories: ['university'],
     features: {

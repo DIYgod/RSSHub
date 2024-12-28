@@ -7,14 +7,14 @@ const BASE_URL = 'https://www.xbmu.edu.cn/xwzx/xsxx.htm';
 const ITEM_LIMIT = 20;
 
 /**
- * Fetch and parse the academic announcements for Northwestern Minzu University.
+ * Fetch and parse the academic information for Northwestern Minzu University.
  * @returns {Promise<Data>} Parsed academic information in RSS format.
  */
 const handler: Route['handler'] = async () => {
     const result: Data = {
         title: '西北民族大学学术信息',
         description: '西北民族大学近日学术公告',
-        image: 'https://www.xbmu.edu.cn/images/logo.png',
+        image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
         link: BASE_URL,
         item: [],
         allowEmpty: true,
@@ -66,7 +66,7 @@ const handler: Route['handler'] = async () => {
             category: ['university'],
             guid: item.link,
             id: item.link,
-            image: 'https://www.xbmu.edu.cn/images/logo.png',
+            image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
             content: {
                 html: item.content,
                 text: item.content,
@@ -76,7 +76,7 @@ const handler: Route['handler'] = async () => {
         }));
         result.item = dataItems.slice(0, ITEM_LIMIT);
     } catch (error) {
-        throw new Error(`Error fetching academic announcements: ${error}`);
+        throw new Error(`Error fetching academic information: ${error}`);
     }
     return result;
 };
@@ -84,7 +84,7 @@ const handler: Route['handler'] = async () => {
 export const route: Route = {
     path: '/academic',
     name: '西北民族大学学术信息',
-    maintainers: ['codemetic'],
+    maintainers: ['prinOrange'],
     handler,
     categories: ['university'],
     features: {
