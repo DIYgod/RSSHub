@@ -82,6 +82,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     return {
                         title,
                         description,
+                        link: item.link,
                         pubDate: parseDate($$('span.fb em').text()),
                         content: {
                             html: description,
@@ -122,7 +123,7 @@ export const route: Route = {
     handler,
     example: '/chinacdc/zxyw',
     parameters: {
-        category: '分类，默认为 `zxyw`，即中心要闻，可在对应分类页 URL 中找到, Category, `zxyw`，即中心要闻 by default',
+        category: '分类，默认为 `zxyw`，即中心要闻，可在对应分类页 URL 中找到，Category, `zxyw`，即中心要闻 by default',
     },
     description: `:::tip
 若订阅 [中心要闻](https://www.chinacdc.cn/zxyw/)，网址为 \`https://www.chinacdc.cn/zxyw/\`，请截取 \`https://www.chinacdc.cn/\` 到末尾 \`/\` 的部分 \`zxyw\` 作为 \`category\` 参数填入，此时目标路由为 [\`/chinacdc/zxyw\`](https://rsshub.app/chinacdc/zxyw)。
@@ -169,7 +170,7 @@ export const route: Route = {
 
 #### [全球公卫](https://www.chinacdc.cn/qqgw/)
 
-| [合作伙伴](https://www.chinacdc.cn/qqgw/hzhb/)     | [世界卫生组织合作中心和参比实验室](https://www.chinacdc.cn/qqgw/wszz/) | [国际交流(港澳台交流)](https://www.chinacdc.cn/qqgw/gjjl/) | [公共卫生援外与合作](https://www.chinacdc.cn/qqgw/ggws/) |
+| [合作伙伴](https://www.chinacdc.cn/qqgw/hzhb/)     | [世界卫生组织合作中心和参比实验室](https://www.chinacdc.cn/qqgw/wszz/) | [国际交流 (港澳台交流)](https://www.chinacdc.cn/qqgw/gjjl/) | [公共卫生援外与合作](https://www.chinacdc.cn/qqgw/ggws/) |
 | -------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------- |
 | [qqgw/hzhb](https://rsshub.app/chinacdc/qqgw/hzhb) | [qqgw/wszz](https://rsshub.app/chinacdc/qqgw/wszz)                     | [qqgw/gjjl](https://rsshub.app/chinacdc/qqgw/gjjl)         | [qqgw/ggws](https://rsshub.app/chinacdc/qqgw/ggws)       |
 
@@ -371,7 +372,7 @@ export const route: Route = {
             target: '/qqgw/wszz',
         },
         {
-            title: '全球公卫 - 国际交流(港澳台交流)',
+            title: '全球公卫 - 国际交流 (港澳台交流)',
             source: ['www.chinacdc.cn/qqgw/gjjl/'],
             target: '/qqgw/gjjl',
         },
