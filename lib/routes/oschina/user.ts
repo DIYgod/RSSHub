@@ -69,7 +69,7 @@ async function handler(ctx) {
     return {
         title: author + '的博客',
         description: $('.user-text .user-signature').text(),
-        link: `https://my.oschina.net/${id ?? uid}`,
+        link: `https://my.oschina.net/u/${id ?? uid}`,
         item: resultItem,
     };
 }
