@@ -28,7 +28,7 @@ async function handler() {
             pubDate: item.find('time').attr('datetime'),
             author: item.find('.flex.items-center span').text(),
             image: item.find('.aspect-social.relative.h-full.overflow-hidden.w-full img').attr('src'),
-            description: item.find('.line-clamp-2.sm\\:line-clamp-3.text-md.font-light.wt-body-font').text(),
+            description: item.find(String.raw`.line-clamp-2.sm\:line-clamp-3.text-md.font-light.wt-body-font`).text(),
         };
     });
     return {
