@@ -17,7 +17,7 @@ const handler: Route['handler'] = async () => {
         const listItems = $(ITEM_SELECTOR);
 
         // Map through each list item to extract details
-        const academicList = await Promise.all(
+        const academicLinkList = await Promise.all(
             listItems.toArray().map((element) => {
                 const rawDate = $(element).find('span').text().trim();
                 const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
@@ -41,7 +41,7 @@ const handler: Route['handler'] = async () => {
             link: BASE_URL,
             image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
             item: (await Promise.all(
-                academicList.map((item) =>
+                academicLinkList.map((item) =>
                     cache.tryGet(item.link, async () => {
                         const CONTENT_SELECTOR = '#vsb_content > div';
                         const { data: contentResponse } = await got(item.link);
@@ -76,7 +76,7 @@ const handler: Route['handler'] = async () => {
 export const route: Route = {
     path: '/academic',
     name: '学术信息',
-    maintainers: ['prinOrange'],
+    maintainers: ['PrinOrange'],
     handler,
     categories: ['university'],
     features: {

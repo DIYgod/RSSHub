@@ -1,5 +1,3 @@
-// Announcement for Northwestern Minzu University
-// Website https://www.xbmu.edu.cn/xwzx/tzgg.htm
 import { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -19,7 +17,7 @@ const handler: Route['handler'] = async () => {
         const listItems = $(ITEM_SELECTOR);
 
         // Map through each list item to extract details
-        const announcementList = await Promise.all(
+        const announcementLinkList = await Promise.all(
             listItems.toArray().map((element) => {
                 const rawDate = $(element).find('span').text().trim();
                 const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
@@ -43,7 +41,7 @@ const handler: Route['handler'] = async () => {
             link: BASE_URL,
             image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
             item: (await Promise.all(
-                announcementList.map((item) =>
+                announcementLinkList.map((item) =>
                     cache.tryGet(item.link, async () => {
                         const CONTENT_SELECTOR = '#vsb_content > div';
                         const { data: contentResponse } = await got(item.link);
@@ -78,7 +76,7 @@ const handler: Route['handler'] = async () => {
 export const route: Route = {
     path: '/announcement',
     name: '通知公告',
-    maintainers: ['prinOrange'],
+    maintainers: ['PrinOrange'],
     handler,
     categories: ['university'],
     features: {
