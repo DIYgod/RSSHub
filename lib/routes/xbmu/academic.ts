@@ -1,30 +1,14 @@
-import { Data, DataItem, Route } from '@/types';
+import { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
 const BASE_URL = 'https://www.xbmu.edu.cn/xwzx/xsxx.htm';
-const ITEM_LIMIT = 15;
 
-/**
- * Fetch and parse the academic information for Northwestern Minzu University.
- * @returns {Promise<Data>} Parsed academic information in RSS format.
- */
 const handler: Route['handler'] = async () => {
-    const result: Data = {
-        title: '西北民族大学学术信息',
-        description: '西北民族大学近日学术公告',
-        image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
-        link: BASE_URL,
-        item: [],
-        allowEmpty: true,
-        language: 'zh-cn',
-        feedLink: 'https://rsshub.app/xbmu/academic',
-        id: 'https://rsshub.app/xbmu/academic',
-    };
-
     try {
-        // Fetch the academic announcements page
+        // Fetch the academic page
         const { data: listResponse } = await got(BASE_URL);
         const $ = load(listResponse);
 
@@ -34,7 +18,7 @@ const handler: Route['handler'] = async () => {
 
         // Map through each list item to extract details
         const academicList = await Promise.all(
-            listItems.toArray().map(async (element) => {
+            listItems.toArray().map((element) => {
                 const rawDate = $(element).find('span').text().trim();
                 const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
                 const formattedDate = parseDate(`${yearMonth}-${day}`).toUTCString();
@@ -43,42 +27,50 @@ const handler: Route['handler'] = async () => {
                 const relativeHref = $(element).find('a').attr('href') || '';
                 const link = `https://www.xbmu.edu.cn/${relativeHref.replaceAll('../', '')}`;
 
-                const CONTENT_SELECTOR = '#vsb_content > div';
-                const { data: contentResponse } = await got(link);
-                const contentPage = load(contentResponse);
-                const content = contentPage(CONTENT_SELECTOR).html() || '';
-
                 return {
                     date: formattedDate,
                     title,
                     link,
-                    content,
                 };
             })
         );
 
-        // Format the academic information into DataItems
-        const dataItems: DataItem[] = academicList.map((item) => ({
-            title: item.title,
-            pubDate: item.date,
-            link: item.link,
-            description: item.content,
-            category: ['university'],
-            guid: item.link,
-            id: item.link,
+        return {
+            title: '西北民族大学学术信息',
+            description: '西北民族大学近日学术信息',
+            link: BASE_URL,
             image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
-            content: {
-                html: item.content,
-                text: item.content,
-            },
-            updated: item.date,
+            item: (await Promise.all(
+                academicList.map((item) =>
+                    cache.tryGet(item.link, async () => {
+                        const CONTENT_SELECTOR = '#vsb_content > div';
+                        const { data: contentResponse } = await got(item.link);
+                        const contentPage = load(contentResponse);
+                        const content = contentPage(CONTENT_SELECTOR).html() || '';
+                        return {
+                            title: item.title,
+                            pubDate: item.date,
+                            link: item.link,
+                            description: content,
+                            category: ['university'],
+                            guid: item.link,
+                            id: item.link,
+                            image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
+                            content,
+                            updated: item.date,
+                            language: 'zh-cn',
+                        };
+                    })
+                )
+            )) as DataItem[],
+            allowEmpty: true,
             language: 'zh-cn',
-        }));
-        result.item = dataItems.slice(0, ITEM_LIMIT);
+            feedLink: 'https://rsshub.app/xbmu/academic',
+            id: 'https://rsshub.app/xbmu/academic',
+        };
     } catch (error) {
         throw new Error(`Error fetching academic information: ${error}`);
     }
-    return result;
 };
 
 export const route: Route = {

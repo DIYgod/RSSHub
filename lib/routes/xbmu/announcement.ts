@@ -1,30 +1,14 @@
 // Announcement for Northwestern Minzu University
 // Website https://www.xbmu.edu.cn/xwzx/tzgg.htm
-import { Data, DataItem, Route } from '@/types';
+import { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
 const BASE_URL = 'https://www.xbmu.edu.cn/xwzx/tzgg.htm';
-const ITEM_LIMIT = 15;
 
-/**
- * Fetch and parse the announcement announcements for Northwestern Minzu University.
- * @returns {Promise<Data>} Parsed announcement information in RSS format.
- */
 const handler: Route['handler'] = async () => {
-    const result: Data = {
-        title: '西北民族大学通知公告',
-        description: '西北民族大学近日通知公告',
-        link: BASE_URL,
-        image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
-        item: [],
-        allowEmpty: true,
-        language: 'zh-cn',
-        feedLink: 'https://rsshub.app/xbmu/announcement',
-        id: 'https://rsshub.app/xbmu/announcement',
-    };
-
     try {
         // Fetch the announcements page
         const { data: listResponse } = await got(BASE_URL);
@@ -36,7 +20,7 @@ const handler: Route['handler'] = async () => {
 
         // Map through each list item to extract details
         const announcementList = await Promise.all(
-            listItems.toArray().map(async (element) => {
+            listItems.toArray().map((element) => {
                 const rawDate = $(element).find('span').text().trim();
                 const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
                 const formattedDate = parseDate(`${yearMonth}-${day}`).toUTCString();
@@ -45,47 +29,55 @@ const handler: Route['handler'] = async () => {
                 const relativeHref = $(element).find('a').attr('href') || '';
                 const link = `https://www.xbmu.edu.cn/${relativeHref.replaceAll('../', '')}`;
 
-                const CONTENT_SELECTOR = '#vsb_content > div';
-                const { data: contentResponse } = await got(link);
-                const contentPage = load(contentResponse);
-                const content = contentPage(CONTENT_SELECTOR).html() || '';
-
                 return {
                     date: formattedDate,
                     title,
                     link,
-                    content,
                 };
             })
         );
 
-        // Format the announcements into DataItems
-        const dataItems: DataItem[] = announcementList.map((item) => ({
-            title: item.title,
-            pubDate: item.date,
-            link: item.link,
-            description: item.content,
-            category: ['university'],
-            guid: item.link,
-            id: item.link,
+        return {
+            title: '西北民族大学通知公告',
+            description: '西北民族大学近日通知公告',
+            link: BASE_URL,
             image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
-            content: {
-                html: item.content,
-                text: item.content,
-            },
-            updated: item.date,
+            item: (await Promise.all(
+                announcementList.map((item) =>
+                    cache.tryGet(item.link, async () => {
+                        const CONTENT_SELECTOR = '#vsb_content > div';
+                        const { data: contentResponse } = await got(item.link);
+                        const contentPage = load(contentResponse);
+                        const content = contentPage(CONTENT_SELECTOR).html() || '';
+                        return {
+                            title: item.title,
+                            pubDate: item.date,
+                            link: item.link,
+                            description: content,
+                            category: ['university'],
+                            guid: item.link,
+                            id: item.link,
+                            image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
+                            content,
+                            updated: item.date,
+                            language: 'zh-cn',
+                        };
+                    })
+                )
+            )) as DataItem[],
+            allowEmpty: true,
             language: 'zh-cn',
-        }));
-        result.item = dataItems.slice(0, ITEM_LIMIT);
+            feedLink: 'https://rsshub.app/xbmu/announcement',
+            id: 'https://rsshub.app/xbmu/announcement',
+        };
     } catch (error) {
         throw new Error(`Error fetching announcements: ${error}`);
     }
-    return result;
 };
 
 export const route: Route = {
     path: '/announcement',
-    name: '学术信息',
+    name: '通知公告',
     maintainers: ['prinOrange'],
     handler,
     categories: ['university'],
