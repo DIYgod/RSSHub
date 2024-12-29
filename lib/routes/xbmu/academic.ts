@@ -1,7 +1,7 @@
 import { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 
 const BASE_URL = 'https://www.xbmu.edu.cn/xwzx/xsxx.htm';
 const ITEM_LIMIT = 15;
@@ -37,7 +37,7 @@ const handler: Route['handler'] = async () => {
             listItems.toArray().map(async (element) => {
                 const rawDate = $(element).find('span').text().trim();
                 const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
-                const formattedDate = dayjs(`${yearMonth}-${day}`).toDate().toUTCString();
+                const formattedDate = parseDate(`${yearMonth}-${day}`).toUTCString();
 
                 const title = $(element).find('a').attr('title') || '学术信息';
                 const relativeHref = $(element).find('a').attr('href') || '';
