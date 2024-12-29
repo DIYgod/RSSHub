@@ -85,7 +85,7 @@ const handler: Route['handler'] = async () => {
 
 export const route: Route = {
     path: '/announcement',
-    name: '西北民族大学学术信息',
+    name: '学术信息',
     maintainers: ['prinOrange'],
     handler,
     categories: ['university'],
@@ -97,5 +97,5 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    example: '/announcement',
+    example: '/xbmu/announcement',
 };
