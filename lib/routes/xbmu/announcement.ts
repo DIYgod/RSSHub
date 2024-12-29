@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 import dayjs from 'dayjs';
 
 const BASE_URL = 'https://www.xbmu.edu.cn/xwzx/tzgg.htm';
-const ITEM_LIMIT = 20;
+const ITEM_LIMIT = 15;
 
 /**
  * Fetch and parse the announcement announcements for Northwestern Minzu University.
