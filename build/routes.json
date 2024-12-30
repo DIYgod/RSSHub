@@ -92830,6 +92830,52 @@
     "url": "www.xaut.edu.cn",
     "lang": "zh-CN"
   },
+  "xbmu": {
+    "routes": {
+      "/academic": {
+        "path": "/academic",
+        "name": "学术信息",
+        "maintainers": [
+          "PrinOrange"
+        ],
+        "categories": [
+          "university"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "example": "/xbmu/academic",
+        "location": "academic.ts"
+      },
+      "/announcement": {
+        "path": "/announcement",
+        "name": "通知公告",
+        "maintainers": [
+          "PrinOrange"
+        ],
+        "categories": [
+          "university"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "example": "/xbmu/announcement",
+        "location": "announcement.ts"
+      }
+    },
+    "name": "西北民族大学",
+    "url": "www.xbmu.edu.cn"
+  },
   "xbookcn": {
     "routes": {
       "/:label?": {
