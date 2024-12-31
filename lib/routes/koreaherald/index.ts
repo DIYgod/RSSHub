@@ -10,7 +10,7 @@ export const route: Route = {
     categories: ['traditional-media'],
     example: '/koreaherald/National',
     parameters: {
-        category: 'Category from the path of the URL of the corresponding site, \`National\` by default',
+        category: 'Category from the path of the URL of the corresponding site, `National` by default',
     },
     features: {
         requirePuppeteer: false,
