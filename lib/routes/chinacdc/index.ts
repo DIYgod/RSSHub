@@ -32,7 +32,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const aEl: Cheerio<Element> = $item.find('a');
 
-            const title: string = aEl.prop('title') || aEl.text();
+            const title: string = aEl.prop('title') === undefined ? aEl.text() : aEl.prop('title');
 
             const description: string = art(path.join(__dirname, 'templates/description.art'), {
                 intro: $item.find('p.zy').text(),
@@ -74,13 +74,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const detailResponse = await ofetch(item.link);
                     const $$: CheerioAPI = load(detailResponse);
 
-                    const title: string = $$('h5').text();
+                    const detailTitle: string = $$('h5').text();
                     const description: string = art(path.join(__dirname, 'templates/description.art'), {
                         description: $$('div.TRS_Editor').html(),
                     });
 
                     return {
-                        title,
+                        title: detailTitle || item.title, // Use original title as fallback
                         description,
                         link: item.link,
                         pubDate: parseDate($$('span.fb em').text()),
