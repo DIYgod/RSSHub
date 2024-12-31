@@ -162,6 +162,15 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     url: 'app.daily.dev',
+    features: {
+        requireConfig: [
+            {
+                name: 'DAILY_DEV_INNER_SHARED_CONTENT',
+                description: 'Retrieve the content from shared posts rather than original post content',
+                optional: true,
+            },
+        ],
+    },
 };
 
 async function handler(ctx) {
