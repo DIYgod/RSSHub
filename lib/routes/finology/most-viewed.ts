@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Most Viewed',
     maintainers: ['Rjnishant530'],
     handler,
+    url: 'insider.finology.in/most-viewed',
 };
 
 async function handler() {
