@@ -62,7 +62,7 @@ export const getList = (edges) =>
                 content: node.contentHtml?.replaceAll('\n', '<br>') ?? node.summary,
             }),
             author: node.author?.name,
-            itunes_item_image: node?.image,
+            itunes_item_image: node.image,
             pubDate: parseDate(node.createdAt),
             upvotes: node.numUpvotes,
             comments: node.numComments,
