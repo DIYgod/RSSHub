@@ -17757,6 +17757,19 @@
       }
     ]
   },
+  "koreaherald.com": {
+    "_name": "The Korea Herald",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/koreaherald/:category"
+      }
+    ]
+  },
   "kpmg.com": {
     "_name": "KPMG",
     ".": [

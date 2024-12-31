@@ -4078,6 +4078,9 @@
   "/konghq/blog-posts": [
     "piglei"
   ],
+  "/koreaherald/:category{.+}?": [
+    "quiniapiezoelectricity"
+  ],
   "/kpmg/insights/:lang?": [
     "LogicJake"
   ],

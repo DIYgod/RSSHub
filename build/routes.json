@@ -49192,6 +49192,44 @@
     "description": "[Kong](https://konghq.com/) 是一家开源的 API 网关服务商，此处收集其官网的最新博客文章。",
     "lang": "zh-CN"
   },
+  "koreaherald": {
+    "routes": {
+      "/:category{.+}?": {
+        "path": "/:category{.+}?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/koreaherald/National",
+        "parameters": {
+          "category": "Category from the path of the URL of the corresponding site, `National` by default"
+        },
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "requireConfig": false
+        },
+        "name": "News",
+        "maintainers": [
+          "quiniapiezoelectricity"
+        ],
+        "description": "\n:::tip\nFor example, the category for the page https://www.koreaherald.com/Business and https://www.koreaherald.com/Business/Market would be `/Business` and `/Business/Market` respectively. \n:::\n",
+        "radar": [
+          {
+            "source": [
+              "www.koreaherald.com/:category"
+            ],
+            "target": "/:category"
+          }
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "The Korea Herald",
+    "url": "koreaherald.com"
+  },
   "kpmg": {
     "routes": {
       "/insights/:lang?": {
