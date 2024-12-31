@@ -15,15 +15,18 @@ const getData = (url) =>
 const getList = (data) =>
     data.map((value) => {
         const { ID, Description: title, Date: createdOn, NewsitemSecurities, NewsitemSectors, NewsitemIndustries } = value;
-        const securityID = NewsitemSecurities[0].SecurityID;
+        const securityID = NewsitemSecurities?.[0]?.SecurityID;
+        const securitySlug = NewsitemSecurities?.[0]?.SecuritySlug;
+        const sectors = NewsitemSectors.map((v) => v.SectorName);
+        const industries = NewsitemIndustries.map((v) => v.IndustryName);
         return {
             id: ID,
-            title: `${title}  [${NewsitemSectors.map((v) => v.SectorName).join(', ')}]`,
+            title: `${title}  [${sectors.join(', ')}]`,
             description: title,
             securityID,
-            link: `${baseUrl}${NewsitemSecurities[0].SecuritySlug}/${securityID}`,
+            link: `${baseUrl}${securitySlug}/${securityID}?section=news`,
             pubDate: parseDate(createdOn),
-            category: [...NewsitemIndustries.map((v) => v.IndustryName), ...NewsitemSectors.map((v) => v.SectorName)],
+            category: [...industries, ...sectors],
         };
     });
 
