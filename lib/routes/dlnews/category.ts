@@ -66,13 +66,14 @@ export const route: Route = {
     radar: [
         {
             source: ['dlnews.com/articles/:category'],
-            target: '/:category',
+            target: 'dlnews/:category',
         },
     ],
-    name: 'Unknown',
+    url: 'dlnews.com/articles',
+    name: 'Latest News',
     maintainers: ['Rjnishant530'],
     handler,
-    url: 'dlnews.com/articles/',
+    example: 'dlnews/people-culture',
 };
 
 async function handler(ctx) {
