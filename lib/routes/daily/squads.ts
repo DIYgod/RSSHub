@@ -1,17 +1,100 @@
 import { Route } from '@/types';
 import { baseUrl, getData, getList, variables } from './utils.js';
 
+const sourceQuery = `
+query Source($handle: ID!) {
+    source(id: $handle) {
+      ...SquadBaseInfo
+      moderationPostCount
+    }
+  }
+  fragment SquadBaseInfo on Source {
+    ...SourceBaseInfo
+    referralUrl
+    createdAt
+    flags {
+      featured
+      totalPosts
+      totalViews
+      totalUpvotes
+    }
+    category {
+      id
+      title
+      slug
+    }
+    ...PrivilegedMembers
+  }
+  fragment SourceBaseInfo on Source {
+    id
+    active
+    handle
+    name
+    permalink
+    public
+    type
+    description
+    image
+    membersCount
+    currentMember {
+      ...CurrentMember
+    }
+    memberPostingRole
+    memberInviteRole
+    moderationRequired
+  }
+  fragment CurrentMember on SourceMember {
+    user {
+      id
+    }
+    permissions
+    role
+    referralToken
+    flags {
+      hideFeedPosts
+      collapsePinnedPosts
+    }
+  }
+  fragment PrivilegedMembers on Source {
+    privilegedMembers {
+      user {
+        id
+        name
+        image
+        permalink
+        username
+        bio
+        reputation
+        companies {
+          name
+          image
+        }
+        contentPreference {
+          status
+        }
+      }
+      role
+    }
+  }
+
+`;
+
 const query = `
-    query MostUpvotedFeed(
+  query SourceFeed(
+    $source: ID!
     $loggedIn: Boolean! = false
     $first: Int
     $after: String
-    $period: Int
-    $supportedTypes: [String!] = ["article","share","freeform","video:youtube","collection"]
-    $source: ID
-    $tag: String
+    $ranking: Ranking
+    $supportedTypes: [String!]
   ) {
-    page: mostUpvotedFeed(first: $first, after: $after, period: $period, supportedTypes: $supportedTypes, source: $source, tag: $tag) {
+    page: sourceFeed(
+      source: $source
+      first: $first
+      after: $after
+      ranking: $ranking
+      supportedTypes: $supportedTypes
+    ) {
       ...FeedPostConnection
     }
   }
@@ -24,7 +107,7 @@ const query = `
     edges {
       node {
         ...FeedPost
-        contentHtml
+        pinnedAt contentHtml
         ...UserPost @include(if: $loggedIn)
       }
     }
@@ -115,26 +198,25 @@ const query = `
     bookmarked
     downvoted
   }
-
 `;
 
 export const route: Route = {
-    path: '/upvoted',
-    example: '/daily/upvoted',
+    path: '/squads/:squads',
+    example: '/daily/squads/watercooler',
     radar: [
         {
-            source: ['app.daily.dev/upvoted'],
+            source: ['app.daily.dev/squads/:squads'],
         },
     ],
-    name: 'Most upvoted',
+    name: 'Squads',
     maintainers: ['Rjnishant530'],
     handler,
-    url: 'app.daily.dev/upvoted',
+    url: 'app.daily.dev/squads/discover',
     features: {
         requireConfig: [
             {
                 name: 'DAILY_DEV_INNER_SHARED_CONTENT',
-                description: 'Retrieve the content from shared posts rather than original post content. TRUE/FALSE',
+                description: 'Retrieve the content from shared posts rather than original post content',
                 optional: true,
             },
         ],
@@ -142,24 +224,37 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const link = `${baseUrl}/posts/upvoted`;
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
-    const period = ctx.req.query('period') ? Number.parseInt(ctx.req.query('period'), 10) : 7;
+    const squads = ctx.req.param('squads');
+    const link = `${baseUrl}/squads/${squads}`;
+
+    const { id, description, name } = await getData(
+        {
+            query: sourceQuery,
+            variables: {
+                handle: squads,
+            },
+        },
+        true
+    );
+
     const data = await getData({
         query,
         variables: {
             ...variables,
-            period,
+            source: id,
+            ranking: 'TIME',
+            supportedTypes: ['article', 'share', 'freeform', 'video:youtube', 'collection', 'welcome'],
             first: limit,
         },
     });
     const items = getList(data);
 
     return {
-        title: 'Most upvoted posts for developers | daily.dev',
+        title: `${name} - daily.dev`,
         link,
         item: items,
-        description: 'Find the most upvoted developer posts on daily.dev. Explore top-rated content in coding, tutorials, and tech news from the largest developer network in the world.',
+        description,
         logo: `${baseUrl}/favicon-32x32.png`,
         icon: `${baseUrl}/favicon-32x32.png`,
         language: 'en-us',

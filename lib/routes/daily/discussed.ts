@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import { baseUrl, getData, getList } from './utils.js';
+import { baseUrl, getData, getList, variables } from './utils.js';
 
 const query = `
   query MostDiscussedFeed(
@@ -63,15 +63,25 @@ export const route: Route = {
     maintainers: ['Rjnishant530'],
     handler,
     url: 'app.daily.dev/discussed',
+    features: {
+        requireConfig: [
+            {
+                name: 'DAILY_DEV_INNER_SHARED_CONTENT',
+                description: 'Retrieve the content from shared posts rather than original post content',
+                optional: true,
+            },
+        ],
+    },
 };
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
-    const link = `${baseUrl}/discussed`;
+    const link = `${baseUrl}/posts/discussed`;
 
     const data = await getData({
         query,
         variables: {
+            ...variables,
             first: limit,
         },
     });
