@@ -32,7 +32,9 @@ export const getData = async (graphqlQuery, source = false) => {
         method: 'POST',
         body: graphqlQuery,
     });
-    if (source) {return response.data.source;}
+    if (source) {
+        return response.data.source;
+    }
     return response.data.page.edges;
 };
 
