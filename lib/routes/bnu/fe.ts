@@ -31,7 +31,6 @@ async function handler(ctx) {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                 Origin: 'https://fe.bnu.edu.cn',
                 Referer: 'https://fe.bnu.edu.cn/pc/cms1info/list/1/18',
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
                 'X-Requested-With': 'XMLHttpRequest',
             },
             body: `columnid=${category}&page=1`, // POST 数据
