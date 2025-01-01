@@ -42,9 +42,9 @@ export const route: Route = {
   | :----: | :------: | :----------: | :---: | :--------------: |
   |  date  | trending |  popularity  | alpha |       style      |
 
-  :::warning
+::: warning
   This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

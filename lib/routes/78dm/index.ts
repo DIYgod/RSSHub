@@ -142,11 +142,11 @@ export const route: Route = {
     handler,
     example: '/78dm/news',
     parameters: { category: '分类，默认为 `news`，即新品速递，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [新品速递](https://www.78dm.net/news)，网址为 \`https://www.78dm.net/news\`。截取 \`https://www.78dm.net/\` 到末尾的部分 \`news\` 作为参数填入，此时路由为 [\`/78dm/news\`](https://rsshub.app/78dm/news)。
 
   若订阅 [精彩评测 - 变形金刚](https://www.78dm.net/eval_list/109/0/0/1.html)，网址为 \`https://www.78dm.net/eval_list/109/0/0/1.html\`。截取 \`https://www.78dm.net/\` 到末尾 \`.html\` 的部分 \`eval_list/109/0/0/1\` 作为参数填入，此时路由为 [\`/78dm/eval_list/109/0/0/1\`](https://rsshub.app/78dm/eval_list/109/0/0/1)。
-  :::
+:::
 
   <details>
     <summary>更多分类</summary>

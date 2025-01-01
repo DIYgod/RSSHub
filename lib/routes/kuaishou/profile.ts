@@ -16,7 +16,7 @@ export const route: Route = {
     example: '/kuaishou/profile/3xk46q9cdnvgife',
     maintainers: ['GuoChen-thlg'],
     url: 'kuaishou.com/profile/:principalId',
-    description: `:::tip
+    description: `::: tip
 The profile page of the user, which contains the user's information, videos, and other information.
 :::`,
     handler,

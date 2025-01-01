@@ -148,7 +148,7 @@ export const route: Route = {
     description: `::: tip
   If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)，where the URL is \`https://www.deeplearning.ai/the-batch/tag/data-points/\`, extract the part \`https://www.deeplearning.ai/the-batch/tag\` to the end, which is \`data-points\`, and use it as the parameter to fill in. Therefore, the route will be [\`/deeplearning/the-batch/data-points\`](https://rsshub.app/deeplearning/the-batch/data-points).
 
-  :::
+:::
 
   | Tag                                                                    | ID                                                                   |
   | ---------------------------------------------------------------------- | -------------------------------------------------------------------- |

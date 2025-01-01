@@ -48,11 +48,11 @@ export const route: Route = {
     parameters: {
         id: '话题 id，可在对应话题页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [可转债](https://www.jisilu.cn/topic/可转债)，网址为 \`https://www.jisilu.cn/topic/可转债\`，请截取 \`https://www.jisilu.cn/topic/\` 到末尾的部分 \`可转债\` 作为 \`id\` 参数填入，此时目标路由为 [\`/jisilu/topic/可转债\`](https://rsshub.app/jisilu/topic/可转债)。
 :::
 
-:::tip
+::: tip
 前往 [话题广场](https://www.jisilu.cn/topic) 查看更多话题。
 :::
 `,

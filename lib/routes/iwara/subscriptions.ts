@@ -45,9 +45,9 @@ export const route: Route = {
     maintainers: ['FeCCC'],
     handler,
     url: 'ecchi.iwara.tv/',
-    description: `:::warning
+    description: `::: warning
   This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.
-  :::`,
+:::`,
 };
 
 async function handler() {

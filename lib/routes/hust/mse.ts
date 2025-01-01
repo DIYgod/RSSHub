@@ -98,9 +98,9 @@ export const route: Route = {
     handler,
     example: '/hust/mse/sylm/xyxw',
     parameters: { category: '分类，默认为 `sylm/xyxw`，即学院新闻，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [通知公告](https://mse.hust.edu.cn/sylm/tzgg.htm)，网址为 \`https://mse.hust.edu.cn/sylm/tzgg.htm\`。截取 \`https://mse.hust.edu.cn/\` 到末尾 \`.html\` 的部分 \`sylm/tzgg\` 作为参数填入，此时路由为 [\`/hust/mse/sylm/tzgg\`](https://rsshub.app/hust/mse/sylm/tzgg)。
-  :::
+:::
 
   #### [首页栏目](https://mse.hust.edu.cn/xyxw.htm)
 

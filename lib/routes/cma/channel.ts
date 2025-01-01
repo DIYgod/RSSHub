@@ -48,9 +48,9 @@ export const route: Route = {
   | 海洋天气公报   | 452                              |
   | 环境气象公报   | 467                              |
 
-  :::tip
+::: tip
   订阅更多细分频道，请前往对应上级频道页，使用下拉菜单选择项目后跳转到目标频道页，查看其 URL 找到对应频道 id
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

@@ -32,7 +32,7 @@ export const route: Route = {
     handler,
     description: `抓取[The Initium App](https://app.theinitium.com/)的文章列表
 
-:::warning
+::: warning
 此路由暂不支持登陆认证
 :::
 

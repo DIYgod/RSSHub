@@ -23,9 +23,9 @@ export const route: Route = {
     name: '标签',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   更多标签可以在 [标签列表](https://instant.1point3acres.com/tags) 中找到。
-  :::
+:::
 
   分类
 

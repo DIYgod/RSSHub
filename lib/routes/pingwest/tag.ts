@@ -30,9 +30,9 @@ export const route: Route = {
 
   -   \`fulltext\`，全文输出，例如：\`/pingwest/tag/ChinaJoy/1/fulltext\`
 
-  :::tip
+::: tip
   该路由一次最多显示 30 条文章
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

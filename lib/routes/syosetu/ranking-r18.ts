@@ -97,7 +97,7 @@ export const route: Route = {
 | r | Ongoing Series | 連載中 |
 | er | Completed Series | 完結済 |
 
-:::tip
+::: tip
 Combine Period and Novel Type with \`_\`.
 For example: \`daily_total\`, \`weekly_r\`, \`monthly_er\`
 :::`,
