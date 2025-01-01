@@ -111,7 +111,7 @@ export const route: Route = {
     handler,
     example: '/the',
     parameters: { filter: '过滤器，见下方描述' },
-    description: `:::tip
+    description: `::: tip
   如果你想订阅特定类别或标签，可以在路由中填写 filter 参数。\`/category/rawmw7dsta2jew\` 可以实现订阅 [剩余价值](https://the.bi/s/rawmw7dsta2jew) 类别。此时，路由是 [\`/the/category/rawmw7dsta2jew/\`](https://rsshub.app/the/category/rawmw7dsta2jew).
 
   你还可以订阅多个类别。\`/category/rawmw7dsta2jew,rawbcvxkktdkq8/\` 可以实现同时订阅 [剩余价值](https://the.bi/s/rawmw7dsta2jew) 和 [打江山](https://the.bi/s/rawbcvxkktdkq8) 两个类别。此时，路由是 [\`/the/category/rawmw7dsta2jew,rawbcvxkktdkq8\`](https://rsshub.app/the/category/rawmw7dsta2jew,rawbcvxkktdkq8).
@@ -119,7 +119,7 @@ export const route: Route = {
   类别和标签也可以合并订阅。\`/category/rawmw7dsta2jew/tag/raweekl3na8trq\` 订阅 [剩余价值](https://the.bi/s/rawmw7dsta2jew) 类别和 [动物](https://the.bi/s/raweekl3na8trq) 标签。此时，路由是 [\`/the/category/rawmw7dsta2jew/tag/raweekl3na8trq\`](https://rsshub.app/the/category/rawmw7dsta2jew/tag/raweekl3na8trq).
 
   你还可以搜索关键字。\`/search/中国\` 搜索关键字 [中国](https://the.bi/s/?s=中国)。在这种情况下，路径是 [\`/the/search/中国\`](https://rsshub.app/the/search/中国).
-  :::
+:::
 
   | 分类                                           | ID                                                               |
   | ---------------------------------------------- | ---------------------------------------------------------------- |

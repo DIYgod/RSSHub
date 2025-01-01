@@ -113,9 +113,9 @@ export const route: Route = {
     handler,
     example: '/fashionnetwork/cn/lists/0',
     parameters: { category: '分类，默认为 0，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [独家新闻](https://fashionnetwork.cn)，网址为 \`https://fashionnetwork.cn/lists/13.html\`。截取 \`https://fashionnetwork.cn/\` 到末尾 \`.html\` 的部分 \`13\` 作为参数填入，此时路由为 [\`/fashionnetwork/cn/lists/13\`](https://rsshub.app/fashionnetwork/cn/lists/13)。
-  :::
+:::
 
   | 分类                                           | ID                                                  |
   | ---------------------------------------------- | --------------------------------------------------- |

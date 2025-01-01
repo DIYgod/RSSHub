@@ -26,9 +26,9 @@ export const route: Route = {
     name: '用户关注时间线',
     maintainers: ['ErnestDong'],
     handler,
-    description: `:::warning
+    description: `::: warning
   用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::
+:::
 
   | -1   | -2       | 1             |
   | ---- | -------- | ------------- |

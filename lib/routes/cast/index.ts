@@ -60,9 +60,9 @@ export const route: Route = {
     name: '通用',
     maintainers: ['KarasuShin', 'TonyRL'],
     handler,
-    description: `:::tip
+    description: `::: tip
   在路由末尾处加上 \`?limit=限制获取数目\` 来限制获取条目数量，默认值为\`10\`
-  :::
+:::
 
   | 分类     | 编码 |
   | -------- | ---- |

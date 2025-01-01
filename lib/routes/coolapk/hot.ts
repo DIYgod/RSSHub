@@ -96,9 +96,9 @@ export const route: Route = {
   | -------- | ----- | ------ |
   | period   | daily | weekly |
 
-  :::tip
+::: tip
   今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

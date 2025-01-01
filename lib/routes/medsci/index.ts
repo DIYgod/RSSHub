@@ -20,11 +20,11 @@ export const route: Route = {
     name: '资讯',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   下表为科室对应的 sid，若想获得 tid，可以到对应科室页面 URL 中寻找 \`t_id\` 字段的值，下面是一个例子：
 
   如 [肿瘤 - NSCLC](https://www.medsci.cn/department/details?s_id=5\&t_id=277) 的 URL 为 \`https://www.medsci.cn/department/details?s_id=5&t_id=277\`，可以看到此时 \`s_id\` 对应 \`sid\` 的值为 5， \`t_id\` 对应 \`tid\` 的值为 277，所以可以得到路由 [\`/medsci/5/277\`](https://rsshub.app/medsci/5/277)
-  :::
+:::
 
   | 心血管 | 内分泌 | 消化 | 呼吸 | 神经科 |
   | ------ | ------ | ---- | ---- | ------ |

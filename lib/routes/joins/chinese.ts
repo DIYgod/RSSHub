@@ -108,9 +108,9 @@ export const route: Route = {
     handler,
     example: '/chinese',
     parameters: { category: '分类，默认为空，可在对应分类页 URL 中找到 `sc_section_code`' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [财经](https://chinese.joins.com/news/articleList.html?sc_section_code=S1N1)，网址为 \`https://chinese.joins.com/news/articleList.html?sc_section_code=S1N1\`。截取 \`sc_section_code\` 的值作为参数填入，此时路由为 [\`/joins/chinese/S1N1\`](https://rsshub.app/joins/chinese/S1N1)。
-  :::
+:::
 
   | 分类                                                                                       | \`sc_section_code\`                             |
   | ------------------------------------------------------------------------------------------ | ----------------------------------------------- |

@@ -107,9 +107,9 @@ export const route: Route = {
     handler,
     example: '/ccfa/1',
     parameters: { category: '分类，默认为 `1`，即协会动态，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [协会动态](https://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=1)，网址为 \`https://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=1\`。截取 \`https://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=\` 到末尾的部分 \`1\` 作为参数填入，此时路由为 [\`/ccfa/1\`](https://rsshub.app/ccfa/1)。
-  :::
+:::
 
   | 分类                                                                      | ID                                     |
   | ------------------------------------------------------------------------- | -------------------------------------- |
