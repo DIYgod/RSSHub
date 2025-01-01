@@ -12202,6 +12202,27 @@
         "maintainers": [],
         "location": "fdy.ts"
       },
+      "/fe/:category": {
+        "path": "/fe/:category",
+        "categories": [
+          "university"
+        ],
+        "example": "/bnu/fe/18",
+        "parameters": {},
+        "radar": [
+          {
+            "source": [
+              "fe.bnu.edu.cn/pc/cms1info/list/1/:category"
+            ]
+          }
+        ],
+        "name": "教育学部-培养动态",
+        "maintainers": [
+          "etShaw-zh"
+        ],
+        "description": "`https://fe.bnu.edu.cn/pc/cms1info/list/1/18` 则对应为 `/bnu/fe/18",
+        "location": "fe.ts"
+      },
       "/jwb": {
         "path": "/jwb",
         "categories": [
