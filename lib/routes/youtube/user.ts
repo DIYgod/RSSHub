@@ -72,7 +72,16 @@ async function handler(ctx) {
             };
         });
     }
-    const playlistId = userHandleData?.playlistId || (await utils.getChannelWithUsername(username, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+    const playlistId =
+        userHandleData?.playlistId ||
+        (await (async () => {
+            const channelData = await utils.getChannelWithUsername(username, 'contentDetails', cache);
+            const items = channelData.data.items;
+            if (!items) {
+                throw new NotFoundError(`The channel https://www.youtube.com/user/${username} does not exist.`);
+            }
+            return items[0].contentDetails.relatedPlaylists.uploads;
+        })());
 
     const playlistItems = await utils.getPlaylistItems(playlistId, 'snippet', cache);
     if (!playlistItems) {
