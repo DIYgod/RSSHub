@@ -29,7 +29,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const title: string = item.post_title;
         const description: string = item.post_content;
         const pubDate: number | string = item.created_at;
-        const linkUrl: string | undefined = `digest/${item.post_id}`;
+        const linkUrl: string = `digest/${item.post_id}`;
         const guid: string = `ifanr-digest-${item.post_id}`;
         const updated: number | string = item.updated_at ?? pubDate;
 
@@ -37,7 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             title,
             description,
             pubDate: pubDate ? parseDate(pubDate, 'X') : undefined,
-            link: linkUrl ?? new URL(item.id, baseUrl).href,
+            link: new URL(linkUrl, baseUrl).href,
             guid,
             id: guid,
             content: {
