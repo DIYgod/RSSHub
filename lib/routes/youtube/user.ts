@@ -13,7 +13,7 @@ export const route: Route = {
     categories: ['social-media', 'popular'],
     view: ViewType.Videos,
     example: '/youtube/user/@JFlaMusic',
-    parameters: { username: 'YouTuber username with @', embed: 'Default to embed the video, set to any value to disable embedding' },
+    parameters: { username: 'YouTuber handle with @', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {
         requireConfig: [
             {
@@ -33,7 +33,7 @@ export const route: Route = {
             target: '/user/:username',
         },
     ],
-    name: 'Channel with username',
+    name: 'Channel with user handle',
     maintainers: ['DIYgod'],
     handler,
 };
