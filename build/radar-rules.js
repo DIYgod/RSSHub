@@ -14672,7 +14672,7 @@
         source:[ "/feed/subscriptions",
           "/feed/channels" ],
         target:"/youtube/subscriptions" },
-      { title:"Channel with username",
+      { title:"Channel with user handle",
         docs:"https://docs.rsshub.app/routes/social-media",
         source:[ "/user/:username",
           "/:username" ],
