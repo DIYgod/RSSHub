@@ -4,24 +4,14 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { ofetch } from 'ofetch';
 import { DataItem } from '@/types';
-import { ofetch } from 'ofetch';
-import { DataItem } from '@/types';
 
 const getItems = async (url: string, extra: { date: boolean; selector: string }) => {
-const getItems = async (url: string, extra: { date: boolean; selector: string }) => {
     const mainUrl = 'https://insider.finology.in';
-    const response = await ofetch(url);
     const response = await ofetch(url);
     const $ = load(response);
     const listItems = $(extra.selector)
         .toArray()
         .map((item) => {
-            const $item = $(item);
-            const title = $item.find('p.text-m-height').text();
-            const link = $item.find('a').attr('href');
-            const pubDate = extra.date ? timezone(parseDate($item.find('div.text-light p').first().text()), 0) : '';
-            const itunes_item_image = $item.find('img').attr('src');
-            const category = [$item.find('p.pt025').text()];
             const $item = $(item);
             const title = $item.find('p.text-m-height').text();
             const link = $item.find('a').attr('href');
@@ -39,12 +29,12 @@ const getItems = async (url: string, extra: { date: boolean; selector: string })
 
     const items = (
         await Promise.allSettled(
-            listItems.map((item) =>
-                cache.tryGet(item.link || '', async () => {
-                    if (item.link === undefined) {
-                        return item;
-                    }
-                    const response = await ofetch(item.link);
+            listItems.map((item) => {
+                if (item.link === undefined) {
+                    return item;
+                }
+                return cache.tryGet(item.link, async () => {
+                    const response = await ofetch(item.link || '');
                     const $ = load(response);
                     const div = $('div.w60.flex.flex-wrap-badge');
                     item.author = div.find('div a p').text();
@@ -77,8 +67,8 @@ const getItems = async (url: string, extra: { date: boolean; selector: string })
                             .end()
                             .html() ?? '';
                     return item;
-                })
-            )
+                });
+            })
         )
     ).map((v, index) => (v.status === 'fulfilled' ? v.value : { ...listItems[index], description: `Website did not load within Timeout Limits. <a href="${listItems[index].link}">Check with Website if the page is slow</a>` }));
     const topicName = $('h1.font-heading.fs1875')?.text();
