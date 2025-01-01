@@ -57,7 +57,7 @@ async function handler(ctx) {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 item.author = '北京师范大学教育学部';
-                item.description = $('.news02_div').text() || '暂无详细内容';
+                item.description = $('.news02_div').html() || '暂无详细内容';
                 return item;
             })
         )
