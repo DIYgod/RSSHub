@@ -24,12 +24,12 @@ async function handler() {
     let items = [];
 
     items = response.data.map((item) => ({
-            title: item.title,
-            link: item.link,
-            image: item.cover,
-            pubDate: new Date(item.time),
-            category: item.cat.name,
-        }));
+        title: item.title,
+        link: item.link,
+        image: item.cover,
+        pubDate: new Date(item.time),
+        category: item.cat.name,
+    }));
 
     items = await Promise.all(
         items.map(
