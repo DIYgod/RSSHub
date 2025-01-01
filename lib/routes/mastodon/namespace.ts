@@ -3,7 +3,7 @@ import type { Namespace } from '@/types';
 export const namespace: Namespace = {
     name: 'Mastodon',
     url: 'mastodon.social',
-    description: `:::tip
+    description: `::: tip
 Official user RSS:
 
 -   RSS: \`https://**:instance**/users/**:username**.rss\` ([Example](https://pawoo.net/users/pawoo_support.rss))

@@ -94,9 +94,9 @@ export const route: Route = {
     handler,
     example: '/gov/ah/kjt',
     parameters: { category: '分类，默认为 `kjzx/tzgg`，即通知公告，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [通知公告](https://kjt.ah.gov.cn/kjzx/tzgg/)，网址为 \`https://kjt.ah.gov.cn/kjzx/tzgg/\`。截取 \`https://kjt.ah.gov.cn/\` 到末尾 \`/\` 的部分 \`\` 作为参数填入，此时路由为 [\`/gov/ah/kjt/kjzx/tzgg\`](https://rsshub.app/gov/ah/kjt/kjzx/tzgg)。
-  :::
+:::
 
   #### [科技资讯](https://kjt.ah.gov.cn/kjzx/index.html)
 

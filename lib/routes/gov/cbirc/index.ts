@@ -107,9 +107,9 @@ export const route: Route = {
     handler,
     example: '/gov/cbirc/:id?',
     parameters: { category: '分类，默认为监管动态，即 915，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [监管动态](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemId=915&itemUrl=ItemListRightList.html)，网址为 \`https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemId=915&itemUrl=ItemListRightList.html\`。截取 \`itemId\` 的值 \`915\` 作为参数填入，此时路由为 [\`/gov/cbirc/915\`](https://rsshub.app/gov/cbirc/915)。
-  :::
+:::
 
   #### [首页](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=899&itemId=971&itemUrl=ItemListRightMore.html)
 

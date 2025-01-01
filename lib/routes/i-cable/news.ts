@@ -37,7 +37,7 @@ export const route: Route = {
     handler,
     url: 'www.i-cable.com/',
     description: `
-:::tip
+::: tip
 分類只可用分類名稱，如：新聞資訊/港聞
 :::`,
 };

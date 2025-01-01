@@ -45,9 +45,9 @@ export const route: Route = {
     name: '博主',
     maintainers: ['DIYgod', 'iplusx', 'Rongronggg9', 'Konano'],
     handler,
-    description: `:::warning
+    description: `::: warning
   部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 \`https://m.weibo.cn/u/:uid\` 验证
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

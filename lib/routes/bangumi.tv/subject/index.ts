@@ -27,9 +27,9 @@ export const route: Route = {
     name: '条目的通用路由格式',
     maintainers: ['JimenezLi'],
     handler,
-    description: `:::warning
+    description: `::: warning
   此通用路由仅用于对路由参数的描述，具体信息请查看下方与条目相关的路由
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

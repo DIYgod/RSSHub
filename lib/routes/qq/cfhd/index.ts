@@ -87,9 +87,9 @@ export const route: Route = {
     handler,
     example: '/qq/cfhd/news',
     parameters: { category: '分类，默认为 60847，即最新，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [穿越火线 CFHD 专区资讯中心 - 最新](https://cfhd.cf.qq.com/webplat/info/news_version3/37427/59139/59140/60847/m22510/list_1.shtml)，网址为 \`https://cfhd.cf.qq.com/webplat/info/news_version3/37427/59139/59140/60847/m22510/list_1.shtml\`。截取 \`https://cfhd.cf.qq.com/webplat/info/news_version3/37427/59139/59140/\` 到末尾 \`/m22510/list_1.shtml\` 的部分 \`60847\` 作为参数填入，此时路由为 [\`/qq/cfhd/news/60847\`](https://rsshub.app/qq/cfhd/news/60847)。
-  :::
+:::
 
   | 分类                                                                                                  | ID                                            |
   | ----------------------------------------------------------------------------------------------------- | --------------------------------------------- |

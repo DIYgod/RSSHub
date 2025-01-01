@@ -121,9 +121,9 @@ export const route: Route = {
     handler,
     example: '/investor/information_release/news_release_from_authorities/zjhfb',
     parameters: { category: '分类，默认为证监会发布 `information_release/news_release_from_authorities/zjhfb`，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [证监会发布](https://www.investor.org.cn/information_release/news_release_from_authorities/zjhfb/)，网址为 \`https://www.investor.org.cn/information_release/news_release_from_authorities/zjhfb/\`。截取 \`https://www.investor.org.cn/\` 到末尾 \`/\` 的部分 \`information_release/news_release_from_authorities/zjhfb\` 作为参数填入，此时路由为 [\`/investor/information_release/news_release_from_authorities/zjhfb\`](https://rsshub.app/investor/information_release/news_release_from_authorities/zjhfb)。
-  :::
+:::
 
   #### [权威发布](https://www.investor.org.cn/information_release/news_release_from_authorities/)
 

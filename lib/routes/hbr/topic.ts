@@ -40,9 +40,9 @@ export const route: Route = {
   | ------- | -------------- | ------- |
   | Popular | From the Store | For You |
 
-  :::tip
+::: tip
   Click here to view [All Topics](https://hbr.org/topics)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

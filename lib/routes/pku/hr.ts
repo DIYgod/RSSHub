@@ -26,11 +26,11 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'hr.pku.edu.cn/',
-    description: `:::tip
+    description: `::: tip
   分类字段处填写的是对应北京大学人事处分类页网址中介于 **\`http://hr.pku.edu.cn/\`** 和 **/index.htm** 中间的一段，并将其中的 \`/\` 修改为 \`-\`。
 
   如 [北京大学人事处 - 人才招聘 - 教师 - 教学科研人员](https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm) 的网址为 \`https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm\` 其中介于 **\`http://hr.pku.edu.cn/\`** 和 **\`/index.ht\`** 中间的一段为 \`rczp/js/jxkyry\`。随后，并将其中的 \`/\` 修改为 \`-\`，可以得到 \`rczp-js-jxkyry\`。所以最终我们的路由为 [\`/pku/hr/rczp-js-jxkyry\`](https://rsshub.app/pku/hr/rczp-js-jxkyry)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

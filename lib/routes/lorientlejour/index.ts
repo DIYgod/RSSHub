@@ -47,10 +47,10 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `  :::tip
+    description: `  ::: tip
 For example, the path for the sites https://today.lorientlejour.com/section/977-lebanon and https://www.lorientlejour.com/rubrique/1-liban would be /lorientlejour/977-lebanon and /lorientlejour/1-liban respectively. 
 Multiple categories seperated by '|' is also supported, e.g. /lorientlejour/977-lebanon|1-liban.
-  :::`,
+:::`,
     radar: [
         {
             source: ['www.lorientlejour.com/*/:category'],

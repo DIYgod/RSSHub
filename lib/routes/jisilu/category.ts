@@ -57,7 +57,7 @@ export const route: Route = {
     parameters: {
         id: '分类 id，可在对应分类页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [债券/可转债](https://www.jisilu.cn/category/4)，网址为 \`https://www.jisilu.cn/category/4\`，请截取 \`https://www.jisilu.cn/category/\` 到末尾的部分 \`4\` 作为 \`id\` 参数填入，此时目标路由为 [\`/jisilu/category/4\`](https://rsshub.app/jisilu/category/4)。
 :::
 

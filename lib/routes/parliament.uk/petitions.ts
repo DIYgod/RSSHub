@@ -94,7 +94,7 @@ export const route: Route = {
     parameters: {
         state: 'State, `all` by default, see below',
     },
-    description: `:::tip
+    description: `::: tip
 If you subscribe to [Recent petitions](https://petition.parliament.uk/petitions?state=recent)，where the URL is \`https://petition.parliament.uk/petitions?state=recent\`, use the value of \`state\` as the parameter to fill in. Therefore, the route will be [\`/parliament.uk/petitions/recent\`](https://rsshub.app/parliament.uk/petitions/recent).
 :::
 

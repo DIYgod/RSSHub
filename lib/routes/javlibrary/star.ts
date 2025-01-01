@@ -22,11 +22,11 @@ export const route: Route = {
   | ------------------------------ | -------------------- |
   | 1                              | 2                    |
 
-  :::tip
+::: tip
   See [Ranking](https://www.javlibrary.com/en/star_mostfav.php) to view stars by ranks.
 
   See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

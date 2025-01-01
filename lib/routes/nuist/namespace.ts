@@ -3,7 +3,7 @@ import type { Namespace } from '@/types';
 export const namespace: Namespace = {
     name: '南京信息工程大学',
     url: 'bulletin.nuist.edu.cn',
-    description: `:::tip
+    description: `::: tip
 路由地址全部按照 **学校官网域名和栏目编号** 设计
 
 使用方法：

@@ -86,9 +86,9 @@ export const route: Route = {
     handler,
     example: '/aibase/discover',
     parameters: { id: '发现分类，默认为空，即全部产品，可在对应发现分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [图片背景移除](https://top.aibase.com/discover/37-49)，网址为 \`https://top.aibase.com/discover/37-49\`。截取 \`https://top.aibase.com/discover/\` 到末尾的部分 \`37-49\` 作为参数填入，此时路由为 [\`/aibase/discover/37-49\`](https://rsshub.app/aibase/discover/37-49)。
-  :::
+:::
 
   <details>
     <summary>更多分类</summary>

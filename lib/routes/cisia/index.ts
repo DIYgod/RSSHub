@@ -84,9 +84,9 @@ export const route: Route = {
     handler,
     example: '/cisia/9',
     parameters: { id: '栏目 id，默认为 `9`，即协会动态，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [市场信息](http://www.cisia.org/site/term/12.html)，网址为 \`http://www.cisia.org/site/term/12.html\`。截取 \`https://www.cisia.org/site/term/\` 到末尾 \`.html\` 的部分 \`12\` 作为参数填入，此时路由为 [\`/cisia/12\`](https://rsshub.app/cisia/12)。
-  :::
+:::
 
   <details>
     <summary>更多分类</summary>

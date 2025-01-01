@@ -28,9 +28,9 @@ export const route: Route = {
     description: `| 充电免停 | 酒店 | 美食 | 生活方式 |
   | -------- | ---- | ---- | -------- |
 
-  :::tip
+::: tip
   分类为 **充电免停** 时，城市参数不起作用
-  :::
+:::
 
 <details>
   <summary>可选城市</summary>

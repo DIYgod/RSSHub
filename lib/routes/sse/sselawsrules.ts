@@ -86,9 +86,9 @@ export const route: Route = {
     handler,
     example: '/sse/sselawsrules/latest',
     parameters: { category: '分类，默认为最新规则，即 `latest`，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [最新规则](https://www.sse.com.cn/lawandrules/sselawsrules/latest/)，网址为 \`https://www.sse.com.cn/lawandrules/sselawsrules/latest/\`。截取 \`https://www.sse.com.cn/lawandrules/sselawsrules/\` 到末尾 \`/\` 的部分 \`latest\` 作为参数填入，此时路由为 [\`/sse/sselawsrules/latest\`](https://rsshub.app/sse/sselawsrules/latest)。
-  :::
+:::
 
   | [最新规则](https://www.sse.com.cn/lawandrules/sselawsrules/latest/) | [章程](https://www.sse.com.cn/lawandrules/sselawsrules/article/) | [首发](https://www.sse.com.cn/lawandrules/sselawsrules/stocks/review/firstepisode/)          | [再融资](https://www.sse.com.cn/lawandrules/sselawsrules/stocks/review/refinancing/)       | [重组](https://www.sse.com.cn/lawandrules/sselawsrules/stocks/review/recombination/)           |
   | ------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |

@@ -79,9 +79,9 @@ export const route: Route = {
     handler,
     example: '/cngold/news-325',
     parameters: { category: '分类，默认为 `news-325`，即行业资讯，可在对应分类页 URL 中找到, Category, `news-325`，即行业资讯by default' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [行业资讯](https://www.cngold.org.cn/news-325.html)，网址为 \`https://www.cngold.org.cn/news-325.html\`。截取 \`https://www.cngold.org.cn/\` 到末尾 \`.html\` 的部分 \`news-325\` 作为参数填入，此时路由为 [\`/cngold/news-325\`](https://rsshub.app/cngold/news-325)。
-  :::
+:::
 
   #### 资讯中心
 

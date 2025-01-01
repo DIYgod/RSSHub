@@ -91,7 +91,7 @@ export const route: Route = {
     name: '剧集订阅',
     maintainers: ['savokiss'],
     handler,
-    description: `:::tip
+    description: `::: tip
 由于大部分详情页是 \`/html/xxx.html\`，还有部分是 \`/detail/123.html\`，所以此处做了兼容，id 取 \`xxx\` 或者 \`123\` 都可以。
 
 新增 \`second\` 参数，用于选择下载地址二（地址二不可用或者不填都默认地址一），用法: \`/domp4/detail/LBTANI22222I?second=1\`。

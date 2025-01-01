@@ -29,7 +29,7 @@ export const route: Route = {
     maintainers: ['WhoIsSure', 'Fatpandac'],
     handler,
     url: 'navi.cctv.com/',
-    description: `:::tip
+    description: `::: tip
 栏目 ID 查找示例:
 打开栏目具体某一期页面，F12 控制台输入\`column_id\`得到栏目 ID。
 :::

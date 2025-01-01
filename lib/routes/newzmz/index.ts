@@ -28,9 +28,9 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'newzmz.com/',
-    description: `:::tip
+    description: `::: tip
   [雪国列车 (剧版)](https://nzmz.xyz/details-qEzRyY3v.html) 的下载页 URL 为 \`https://v.ys99.xyz/view/qEzRyY3v.html\`，即剧集 id 为 \`qEzRyY3v\`
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

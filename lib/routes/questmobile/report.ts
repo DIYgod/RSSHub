@@ -45,7 +45,7 @@ export const route: Route = {
     name: '行业研究报告',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   若订阅行业 [互联网行业](https://www.questmobile.com.cn/research/reports/1/-1)，网址为 \`https://www.questmobile.com.cn/research/reports/1/-1\`
   参数 industry 为 \`互联网行业\` 或 \`1\`，此时路由为 [\`/questmobile/report/互联网行业\`](https://rsshub.app/questmobile/report/互联网行业) 或 [\`/questmobile/report/1/-1\`](https://rsshub.app/questmobile/report/1/-1)。
 
@@ -54,7 +54,7 @@ export const route: Route = {
 
   若订阅行业和标签 [品牌领域 - 互联网经济](https://www.questmobile.com.cn/research/reports/2/1)，网址为 \`https://www.questmobile.com.cn/research/reports/2/1\`
   参数 industry 为 \`品牌领域\` 或 \`2\`，参数 label 为 \`互联网经济\` 或 \`1\`，此时路由为 [\`/questmobile/report/品牌领域/互联网经济\`](https://rsshub.app/questmobile/report/品牌领域/互联网经济) 或 [\`/questmobile/report/2/1\`](https://rsshub.app/questmobile/report/2/1)，甚至 [\`/questmobile/report/品牌领域/1\`](https://rsshub.app/questmobile/report/品牌领域/1)。
-  :::
+:::
 
   <details>
     <summary>全部行业和标签</summary>

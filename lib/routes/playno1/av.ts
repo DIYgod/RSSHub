@@ -23,7 +23,7 @@ export const route: Route = {
     name: 'AV',
     maintainers: ['TonyRL'],
     handler,
-    description: `:::warning
+    description: `::: warning
 目前观测到该博客可能禁止日本 IP 访问。建议部署在日本区以外的服务器上。
 :::
 

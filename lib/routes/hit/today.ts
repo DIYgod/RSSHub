@@ -26,14 +26,14 @@ export const route: Route = {
     name: '今日哈工大',
     maintainers: ['ranpox'],
     handler,
-    description: `:::tip
+    description: `::: tip
   今日哈工大的文章分为公告公示和新闻快讯，每个页面右侧列出了更详细的分类，其编号为每个 URL 路径的最后一个数字。
   例如会议讲座的路径为\`/taxonomy/term/10/25\`，则可以通过 [\`/hit/today/25\`](https://rsshub.app/hit/today/25) 订阅该详细类别。
-  :::
+:::
 
-  :::warning
+::: warning
   部分文章需要经过统一身份认证后才能阅读全文。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

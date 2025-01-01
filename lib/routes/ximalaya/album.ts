@@ -104,11 +104,11 @@ export const route: Route = {
     handler,
     description: `目前喜马拉雅的 API 只能一集一集的获取各节目上的 ShowNote，会极大的占用系统资源，所以默认为不获取节目的 ShowNote。
 
-  :::warning
+::: warning
   专辑类型即 url 中的分类拼音，使用通用分类 \`album\` 通常是可行的，专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
 
   **付费内容需要配置好已购买账户的 token 才能收听，详情见部署页面的配置模块**
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

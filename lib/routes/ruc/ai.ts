@@ -79,9 +79,9 @@ export const route: Route = {
         };
     },
     url: 'ai.ruc.edu.cn/',
-    description: `:::tip
+    description: `::: tip
   分类字段处填写的是对应中国人民大学高瓴人工智能学院分类页网址中介于 **\`http://ai.ruc.edu.cn/\`** 和 **/index.htm** 中间的一段，并将其中的 \`/\` 修改为 \`-\`。
 
   如 [中国人民大学高瓴人工智能学院 - 新闻公告 - 学院新闻](http://ai.ruc.edu.cn/newslist/newsdetail/index.htm) 的网址为 \`http://ai.ruc.edu.cn/newslist/newsdetail/index.htm\` 其中介于 **\`http://ai.ruc.edu.cn/\`** 和 **/index.htm** 中间的一段为 \`newslist/newsdetail\`。随后，并将其中的 \`/\` 修改为 \`-\`，可以得到 \`newslist-newsdetail\`。所以最终我们的路由为 [\`/ruc/ai/newslist-newsdetail\`](https://rsshub.app/ruc/ai/newslist-newsdetail)
-  :::`,
+:::`,
 };

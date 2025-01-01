@@ -81,9 +81,9 @@ export const route: Route = {
     handler,
     example: '/cpcaauto/news/news',
     parameters: { type: '分类，默认为 news，可在对应分类页 URL 中找到', id: 'id，默认为 news，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [行业新闻 > 国内乘用车](http://cpcaauto.com/news.php?types=news&anid=10)，网址为 \`http://cpcaauto.com/news.php?types=news&anid=10\`。截取 \`types\` 和 \`anid\` 的部分 \`\` 作为参数填入，此时路由为 [\`/cpcaauto/news/news/10\`](https://rsshub.app/cpcaauto/news/news/10)。
-  :::
+:::
 
   #### [行业新闻](http://cpcaauto.com/news.php?types=news)
 

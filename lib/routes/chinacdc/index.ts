@@ -139,7 +139,7 @@ export const route: Route = {
     parameters: {
         category: '分类，默认为 `zxyw`，即中心要闻，可在对应分类页 URL 中找到，Category, `zxyw`，即中心要闻 by default',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [中心要闻](https://www.chinacdc.cn/zxyw/)，网址为 \`https://www.chinacdc.cn/zxyw/\`，请截取 \`https://www.chinacdc.cn/\` 到末尾 \`/\` 的部分 \`zxyw\` 作为 \`category\` 参数填入，此时目标路由为 [\`/chinacdc/zxyw\`](https://rsshub.app/chinacdc/zxyw)。
 :::
 

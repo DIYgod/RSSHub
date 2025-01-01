@@ -82,9 +82,9 @@ export const route: Route = {
     handler,
     example: '/papers/query/Detection',
     parameters: { keyword: 'Keyword to search for papers, e.g., Detection, Segmentation, etc.' },
-    description: `:::tip
+    description: `::: tip
   If you subscibe to [arXiv Paper queryed by Detection](https://papers.cool/arxiv/search?highlight=1&query=Detection), where the URL is \`https://papers.cool/arxiv/search?highlight=1&query=Detection\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/query/Detection\`](https://rsshub.app/papers/query/Detection).
-  :::
+:::
 
   | Category                                              | id                  |
   | ----------------------------------------------------- | ------------------- |

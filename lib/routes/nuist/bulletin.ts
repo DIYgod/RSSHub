@@ -52,9 +52,9 @@ export const route: Route = {
   | -------- | -------- | -------- | -------- | -------- | -------- | ---- |
   | 783      | 784      | 785      | 786      | 788      | 789      | qt   |
 
-  :::warning
+::: warning
   全文内容需使用 校园网或[VPN](http://vpn.nuist.edu.cn) 获取
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

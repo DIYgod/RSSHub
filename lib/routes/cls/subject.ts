@@ -125,9 +125,9 @@ export const route: Route = {
     handler,
     example: '/cls/subject/1103',
     parameters: { category: '分类，默认为 1103，即A股盘面直播，可在对应话题页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [有声早报](https://www.cls.cn/subject/1151)，网址为 \`https://www.cls.cn/subject/1151\`。截取 \`https://www.cls.cn/subject/\` 到末尾的部分 \`1151\` 作为参数填入，此时路由为 [\`/cls/subject/1151\`](https://rsshub.app/cls/subject/1151)。
-  :::
+:::
     `,
     categories: ['finance'],
 

@@ -22,9 +22,9 @@ export const route: Route = {
     name: '国内折扣 / 海外折扣',
     maintainers: ['Fatpandac'],
     handler,
-    description: `:::tip
+    description: `::: tip
   海外折扣: [\`/guangdiu/k=daily&c=us\`](https://rsshub.app/guangdiu/k=daily\&c=us)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

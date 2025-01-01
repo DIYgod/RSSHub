@@ -24,7 +24,7 @@ export const route: Route = {
     maintainers: ['quiniapiezoelectricity'],
     handler,
     description: `
-:::tip
+::: tip
 For example, the category for the page https://www.koreaherald.com/Business and https://www.koreaherald.com/Business/Market would be \`/Business\` and \`/Business/Market\` respectively. 
 :::
 `,

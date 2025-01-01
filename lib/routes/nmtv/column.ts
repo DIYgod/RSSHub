@@ -24,9 +24,9 @@ export const route: Route = {
     name: '点播',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   如 [蒙古语卫视新闻联播](http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877) 的 URL 为 \`http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877\`，其栏目 id 为末尾数字编号，即 \`877\`。可以得到其对应路由为 [\`/nmtv/column/877\`](https://rsshub.app/nmtv/column/877)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

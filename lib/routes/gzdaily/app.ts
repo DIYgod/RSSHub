@@ -26,9 +26,9 @@ export const route: Route = {
     name: '客户端',
     maintainers: ['TimWu007'],
     handler,
-    description: `:::tip
+    description: `::: tip
   在北京时间深夜可能无法获取内容。
-  :::
+:::
 
   常用栏目 ID：
 

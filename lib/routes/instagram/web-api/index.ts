@@ -23,7 +23,7 @@ export const route: Route = {
     name: 'User Profile / Hashtag',
     maintainers: ['TonyRL'],
     handler,
-    description: `:::tip
+    description: `::: tip
 You may need to setup cookie for a less restrictive rate limit and private profiles.
 :::
 

@@ -35,9 +35,9 @@ export const route: Route = {
   | -------- | ---------- | ------------ |
   | zdzy     | jjbxs      | dydhly       |
 
-  :::tip
+::: tip
   更多栏目请看 [这里](https://tv.cctv.com/lm)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

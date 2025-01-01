@@ -35,7 +35,7 @@ export const route: Route = {
     name: '榜单列表',
     maintainers: ['akynazh'],
     handler,
-    description: `:::tip
+    description: `::: tip
 将榜单条目集合到一个列表中，可避免推送大量条目，更符合阅读习惯且有热度排序，推荐使用。
 :::`,
 };

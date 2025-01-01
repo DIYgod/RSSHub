@@ -83,9 +83,9 @@ export const route: Route = {
     handler,
     example: '/gov/lswz',
     parameters: { category: '分类，默认为 `html/xinwen/index`，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [新闻发布](https://www.lswz.gov.cn/html/xinwen/index.shtml)，网址为 \`https://www.lswz.gov.cn/html/xinwen/index.shtml\`。截取 \`https://www.lswz.gov.cn/\` 到末尾 \`.shtml\` 的部分 \`html/xinwen/index\` 作为参数填入，此时路由为 [\`/gov/lswz/html/xinwen/index\`](https://rsshub.app/gov/lswz/html/xinwen/index)。
-  :::
+:::
 
   | [新闻发布](https://www.lswz.gov.cn/html/xinwen/index.shtml)        | [党建工作](https://www.lswz.gov.cn/html/djgz/index.shtml)      |
   | ------------------------------------------------------------------ | -------------------------------------------------------------- |

@@ -84,9 +84,9 @@ export const route: Route = {
     handler,
     example: '/bnu/mba/xwdt',
     parameters: { category: '分类，默认为 xwdt，即新闻聚焦' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [新闻聚焦](https://mba.bnu.edu.cn/xwdt/index.html)，网址为 \`https://mba.bnu.edu.cn/xwdt/index.html\`。截取 \`https://mba.bnu.edu.cn/\` 到末尾 \`/index.html\` 的部分 \`xwdt\` 作为参数填入，此时路由为 [\`/bnu/mba/xwdt\`](https://rsshub.app/bnu/mba/xwdt)。
-  :::
+:::
 
   #### [主页](https://mba.bnu.edu.cn)
 

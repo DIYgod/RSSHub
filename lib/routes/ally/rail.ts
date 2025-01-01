@@ -27,9 +27,9 @@ export const route: Route = {
     maintainers: ['Rongronggg9'],
     handler,
     url: 'rail.ally.net.cn/',
-    description: `:::tip
+    description: `::: tip
   默认抓取前 20 条，可通过 \`?limit=\` 改变。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

@@ -126,9 +126,9 @@ export const route: Route = {
     handler,
     example: '/423down',
     parameters: { category: '分类，默认为首页，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [Android - 423Down](https://www.423down.com/apk)，网址为 \`https://www.423down.com/apk\`。截取 \`https://www.423down.com/\` 到末尾的部分 \`apk\` 作为参数填入，此时路由为 [\`/423down/apk\`](https://rsshub.app/423down/apk)。
-  :::
+:::
 
   #### [安卓软件](https://www.423down.com/apk)
 

@@ -51,7 +51,7 @@ export const route: Route = {
     parameters: {
         category: '过滤器，默认为空，可在对应页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [债券/可转债 - 热门 - 30天](https://www.jisilu.cn/home/explore/category-4__sort_type-hot__day-30)，网址为 \`https://www.jisilu.cn/home/explore/category-4__sort_type-hot__day-30\`，请截取 \`https://www.jisilu.cn/home/explore/\` 到末尾的部分 \`category-4__sort_type-hot__day-30\` 作为 \`filter\` 参数填入，此时目标路由为 [\`/jisilu/explore/category-4__sort_type-hot__day-30\`](https://rsshub.app/jisilu/explore/category-4__sort_type-hot__day-30)。
 :::
     `,

@@ -80,9 +80,9 @@ export const route: Route = {
     handler,
     example: '/chinania/xiehuidongtai/xiehuitongzhi',
     parameters: { category: '分类，默认为 `xiehuidongtai/xiehuitongzhi`，即协会通知，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [协会通知](https://www.chinania.org.cn/html/xiehuidongtai/xiehuitongzhi/)，网址为 \`https://www.chinania.org.cn/html/xiehuidongtai/xiehuitongzhi/\`。截取 \`https://www.chinania.org.cn/html\` 到末尾 \`/\` 的部分 \`xiehuidongtai/xiehuitongzhi\` 作为参数填入，此时路由为 [\`/chinania/xiehuidongtai/xiehuitongzhi\`](https://rsshub.app/chinania/xiehuidongtai/xiehuitongzhi)。
-  :::
+:::
 
   <details>
     <summary>更多分类</summary>

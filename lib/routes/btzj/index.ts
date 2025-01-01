@@ -35,11 +35,11 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'btbtt20.com/',
-    description: `:::tip
+    description: `::: tip
   分类页中域名末尾到 \`.htm\` 前的字段即为对应分类，如 [电影](https://www.btbtt20.com/forum-index-fid-951.htm) \`https://www.btbtt20.com/forum-index-fid-951.htm\` 中域名末尾到 \`.htm\` 前的字段为 \`forum-index-fid-951\`，所以路由应为 [\`/btzj/forum-index-fid-951\`](https://rsshub.app/btzj/forum-index-fid-951)
 
   部分分类页，如 [电影](https://www.btbtt20.com/forum-index-fid-951.htm)、[剧集](https://www.btbtt20.com/forum-index-fid-950.htm) 等，提供了更复杂的分类筛选。你可以将选项选中后，获得结果分类页 URL 中分类参数，构成路由。如选中分类 [高清电影 - 年份：2021 - 地区：欧美](https://www.btbtt20.com/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0.htm) \`https://www.btbtt20.com/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0.htm\` 中域名末尾到 \`.htm\` 前的字段为 \`forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0\`，所以路由应为 [\`/btzj/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0\`](https://rsshub.app/btzj/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0)
-  :::
+:::
 
   基础分类如下：
 
@@ -59,13 +59,13 @@ export const route: Route = {
   | -------------------- | -------------------- |
   | forum-index-fid-1187 | forum-index-fid-1191 |
 
-  :::tip
+::: tip
   BT 之家的域名会变更，本路由以 \`https://www.btbtt20.com\` 为默认域名，若该域名无法访问，可以通过在路由后方加上 \`?domain=<域名>\` 指定路由访问的域名。如指定域名为 \`https://www.btbtt15.com\`，则在 \`/btzj\` 后加上 \`?domain=btbtt15.com\` 即可，此时路由为 [\`/btzj?domain=btbtt15.com\`](https://rsshub.app/btzj?domain=btbtt15.com)
 
   如果加入了分类参数，直接在分类参数后加入 \`?domain=<域名>\` 即可。如指定分类 [剧集](https://www.btbtt20.com/forum-index-fid-950.htm) \`https://www.btbtt20.com/forum-index-fid-950.htm\` 并指定域名为 \`https://www.btbtt15.com\`，即在 \`/btzj/forum-index-fid-950\` 后加上 \`?domain=btbtt15.com\`，此时路由为 [\`/btzj/forum-index-fid-950?domain=btbtt15.com\`](https://rsshub.app/btzj/forum-index-fid-950?domain=btbtt15.com)
 
   目前，你可以选择的域名有 \`btbtt10-20.com\` 共 10 个，或 \`88btbbt.com\`，该站也提供了专用网址查询工具。详见 [此贴](https://www.btbtt20.com/thread-index-fid-2-tid-4550191.htm)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

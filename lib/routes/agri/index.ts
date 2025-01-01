@@ -111,9 +111,9 @@ export const route: Route = {
     handler,
     example: '/agri/zx/zxfb',
     parameters: { category: '分类，默认为 `zx/zxfb`，即最新发布，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [最新发布](http://www.agri.cn/zx/zxfb/)，网址为 \`http://www.agri.cn/zx/zxfb/\`。截取 \`https://www.agri.cn/\` 到末尾的部分 \`zx/zxfb\` 作为参数填入，此时路由为 [\`/agri/zx/zxfb\`](https://rsshub.app/agri/zx/zxfb)。
-  :::
+:::
 
   #### [机构](http://www.agri.cn/jg/)
 

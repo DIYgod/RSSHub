@@ -17,9 +17,9 @@ export const route: Route = {
     name: '今日热榜',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   全部站点请见 [此处](https://hot.zyw.asia/#/list)
-  :::
+:::
 
   | 哔哩哔哩 | 微博 | 知乎 | 36 氪 | 百度 | 少数派 | IT 之家 | 澎湃新闻 | 今日头条 | 百度贴吧 | 稀土掘金 | 腾讯新闻 |
   | -------- | ---- | ---- | ----- | ---- | ------ | ------- | -------- | -------- | -------- | -------- | -------- |`,

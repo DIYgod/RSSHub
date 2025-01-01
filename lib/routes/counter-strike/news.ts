@@ -122,9 +122,9 @@ export const route: Route = {
     handler,
     example: '/counter-strike/news',
     parameters: { category: 'Category, `updates` or `all`, `all` by default', language: 'Language, english by default, see below for more languages' },
-    description: `:::tip
+    description: `::: tip
   If you subscribe to [Updates in English](https://www.counter-strike.net/news/updates?l=english)，where the URL is \`https://www.counter-strike.net/news/updates?l=english\`, extract the \`l\`, which is \`english\`, and use it as the parameter to fill in. Therefore, the route will be [\`/counter-strike/news/updates/english\`](https://rsshub.app/counter-strike/news/updates/english).
-  :::
+:::
 
   <details>
     <summary>More languages</summary>

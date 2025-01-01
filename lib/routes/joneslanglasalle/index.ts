@@ -199,7 +199,7 @@ export const route: Route = {
         language: 'Language, `zh` by default',
         category: 'Category, `trends-and-insights` by default',
     },
-    description: `:::tip
+    description: `::: tip
 If you subscribe to [Trends & Insights](https://www.joneslanglasalle.com.cn/en/trends-and-insights)，where the URL is \`https://www.joneslanglasalle.com.cn/en/trends-and-insights\`, extract the part \`https://joneslanglasalle.com.cn/\` to the end. Use \`zh\` and \`trends-and-insights\` as the parameters to fill in. Therefore, the route will be [\`/joneslanglasalle/en/trends-and-insights\`](https://rsshub.app/joneslanglasalle/en/trends-and-insights).
 :::
 
@@ -295,7 +295,7 @@ If you subscribe to [Trends & Insights](https://www.joneslanglasalle.com.cn/en/t
             language: '语言，默认为 `zh`，可在对应分类页 URL 中找到',
             category: '分类，默认为 `trends-and-insights`，可在对应分类页 URL 中找到',
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [房地产趋势与洞察](https://www.joneslanglasalle.com.cn/zh/trends-and-insights)，网址为 \`https://www.joneslanglasalle.com.cn/zh/trends-and-insights\`，请截取 \`https://joneslanglasalle.com.cn/\` 到末尾的部分 \`zh\` 和 \`trends-and-insights\` 作为 \`language\` 和 \`category\` 参数填入，此时目标路由为 [\`/joneslanglasalle/zh/trends-and-insights\`](https://rsshub.app/joneslanglasalle/zh/trends-and-insights)。
 :::
 

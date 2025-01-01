@@ -67,11 +67,11 @@ export const route: Route = {
         id: '用户 id，可在对应用户页 URL 中找到',
         type: '类型，可选值为 `questions` 即 `主题` 或 `answer` 即 `回复`，默认为 `questions` 即 `主题`',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [天书的主题](https://www.jisilu.cn/people/天书)，网址为 \`https://www.jisilu.cn/people/天书\`，请截取 \`https://www.jisilu.cn/people/\` 到末尾的部分 \`天书\` 作为 \`id\` 参数填入，此时目标路由为 [\`/jisilu/people/天书\`](https://rsshub.app/jisilu/people/天书)。
 :::
 
-:::tip
+::: tip
 前往 [用户排名](https://www.jisilu.cn/users/) 查看更多用户。
 :::
 `,

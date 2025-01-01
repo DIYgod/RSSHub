@@ -19,11 +19,11 @@ export const route: Route = {
     handler,
     description: `快递公司代号如果不能确定，可通过下方快递列表获得。
 
-  :::warning
+::: warning
   1.  构造链接前请确认所有参数正确：错误\`快递公司 - 订单号\`组合将会缓存信息一小段时间防止产生无用查询
   2.  正常查询的订单在未签收状态下不会被缓存：请控制查询频率
   3.  订单完成后请尽快取消订阅，避免资源浪费
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

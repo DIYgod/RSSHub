@@ -3,7 +3,7 @@ import type { Namespace } from '@/types';
 export const namespace: Namespace = {
     name: 'GitHub',
     url: 'github.com',
-    description: `:::tip
+    description: `::: tip
 GitHub provides some official RSS feeds:
 
 -   Repo releases: \`https://github.com/:owner/:repo/releases.atom\`

@@ -105,11 +105,11 @@ export const route: Route = {
     handler,
     example: '/ncc-cma/cmdp/image/RPJQWQYZ',
     parameters: { category: '图片，默认为 RPJQWQYZ，即日平均气温距平，可在对应列表项 data-id 属性中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅日平均气温距平，将其 data-id \`RPJQWQYZ\` 作为参数填入，此时路由为 [\`/ncc-cma/cmdp/image/RPJQWQYZ\`](https://rsshub.app/ncc-cma/cmdp/image/RPJQWQYZ)。
 
   若同时订阅日平均气温距平、近5天平均气温距和近10天平均气温距平，将其 data-id \`RPJQWQYZ\`、\`ZJ5TPJQWJP\` 和 \`ZJ10TQWJP\` 作为参数填入，此时路由为 [\`/ncc-cma/cmdp/image/RPJQWQYZ/ZJ5TPJQWJP/ZJ10TQWJP\`](https://rsshub.app/ncc-cma/cmdp/image/RPJQWQYZ/ZJ5TPJQWJP/ZJ10TQWJP)。
-  :::
+:::
 
   | 日平均气温距平                                              | 近5天平均气温距平                                               | 近10天平均气温距平                                            | 近20天平均气温距平                                            | 近30天平均气温距平                                            |
   | ----------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |

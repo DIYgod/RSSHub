@@ -89,9 +89,9 @@ export const route: Route = {
         bigId: '分类 id，默认为 `2`，即行业资讯，可在对应分类页 URL 中找到',
         smallId: '子分类 id，默认为 `11`，即行业资讯，可在对应分类页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
   若订阅 [行业资讯](http://www.cbpanet.com/dzp_news.aspx?bigid=2&smallid=11)，网址为 \`http://www.cbpanet.com/dzp_news.aspx?bigid=2&smallid=11\`。截取 \`https://www.cbpanet.com/\` 的 \`bigid\` 和 \`smallid\` 的部分作为参数填入，此时路由为 [\`/cbpanet/dzp_news/4/15\`](https://rsshub.app/cbpanet/dzp_news/4/15)。
-  :::
+:::
 
   <details>
     <summary>更多分类</summary>

@@ -25,11 +25,11 @@ export const route: Route = {
     name: '人力资源处',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   如 [通知公告](http://hr.uibe.edu.cn/tzgg) 的 URL 为 \`http://hr.uibe.edu.cn/tzgg\`，其路由为 [\`/uibe/hr/tzgg\`](https://rsshub.app/uibe/hr/tzgg)
 
   如 [教师招聘](http://hr.uibe.edu.cn/jszp) 中的 [招聘信息](http://hr.uibe.edu.cn/jszp/zpxx) 的 URL 为 \`http://hr.uibe.edu.cn/jszp/zpxx\`，其路由为 [\`/uibe/hr/jszp/zpxx\`](https://rsshub.app/uibe/jszp/zpxx)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

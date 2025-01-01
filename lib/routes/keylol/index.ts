@@ -41,10 +41,10 @@ export const route: Route = {
     ],
     maintainers: ['nczitzk', 'kennyfong19931'],
     handler,
-    description: `:::tip
+    description: `::: tip
   若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 \`https://keylol.com/f161-1\`。截取 \`https://keylol.com/\` 到末尾的部分 \`f161-1\` 作为参数，此时路由为 [\`/keylol/f161-1\`](https://rsshub.app/keylol/f161-1)。
   若订阅子分类 [试玩免费 - 热点聚焦](https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459)，网址为 \`https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459\`。提取\`fid\`及\`typeid\` 作为参数，此时路由为 [\`/keylol/fid=161&typeid=459\`](https://rsshub.app/keylol/fid=161&typeid=459)。注意不要包括\`filter\`，会调用[全局的内容过滤](https://docs.rsshub.app/guide/parameters#filtering)。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

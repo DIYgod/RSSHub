@@ -90,9 +90,9 @@ export const route: Route = {
     handler,
     example: '/hubu/zhxy/index/tzgg',
     parameters: { category: '分类，可在对应分类页 URL 中找到，默认为[通知公告](https://zhxy.hubu.edu.cn/index/tzgg.htm)' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [通知公告](https://zhxy.hubu.edu.cn/index/tzgg.htm)，网址为 \`https://zhxy.hubu.edu.cn/index/tzgg.htm\`。截取 \`https://zhxy.hubu.edu.cn/\` 到末尾 \`.htm\` 的部分 \`index/tzgg\` 作为参数填入，此时路由为 [\`/hubu/zhxy/index/tzgg\`](https://rsshub.app/hubu/zhxy/index/tzgg)。
-  :::
+:::
 
   | [通知公告](https://zhxy.hubu.edu.cn/index/tzgg.htm) | [新闻动态](https://zhxy.hubu.edu.cn/index/xwdt.htm) |
   | --------------------------------------------------- | --------------------------------------------------- |

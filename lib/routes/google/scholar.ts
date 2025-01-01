@@ -18,9 +18,9 @@ export const route: Route = {
     name: 'Scholar Keywords Monitoring',
     maintainers: ['HenryQW'],
     handler,
-    description: `:::warning
+    description: `::: warning
   Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
-  :::
+:::
 
   1.  Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
 

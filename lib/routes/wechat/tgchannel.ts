@@ -25,13 +25,13 @@ export const route: Route = {
   |      \`1\`     |     公众号全名     | 未启用 efb-patch-middleware |
   |      \`2\`     |     #公众号全名    | 已启用 efb-patch-middleware |
 
-  :::tip
+::: tip
   启用搜索有助于在订阅了过多公众号的频道里有效筛选，不易因为大量公众号同时推送导致一些公众号消息被遗漏，但必须正确选择搜索查询类型，否则会搜索失败。
-  :::
+:::
 
-  :::warning
+::: warning
   该方法需要通过 efb 进行频道绑定，具体操作见 [https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

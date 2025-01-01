@@ -34,7 +34,7 @@ export const route: Route = {
             },
         ],
     },
-    description: `:::warning
+    description: `::: warning
 百合会BBS访问部分板块需要用户登录认证，请参考配置说明
 :::`,
 };

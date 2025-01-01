@@ -18,7 +18,7 @@ export const route: Route = {
     parameters: {
         cddm: '菜单代码，可以是 2 位或者 4 位，默认为 `02`（通知公告）',
     },
-    description: `:::tip
+    description: `::: tip
 
 菜单代码（\`cddm\`）应填写链接中调用的 newsList 接口的参数，可以是 2 位或者 4 位数字。若为 2 位，则为 \`fcd\`（父菜单）；若为 4 位，则为 \`cddm\`（菜单代码），其中前 2 位为 \`fcd\`。
 示例：

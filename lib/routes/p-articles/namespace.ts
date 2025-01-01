@@ -4,7 +4,7 @@ export const namespace: Namespace = {
     name: '虚词',
     url: 'p-articles.com',
     description: `
-:::tip
+::: tip
 p-articles provides some official RSS feeds:
 
 -   section: \`https://p-articles.com/section/:section\`

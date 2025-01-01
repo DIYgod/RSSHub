@@ -60,7 +60,7 @@ Example:
 - \`/appcommunityfeed/730/rgSections[]=6\` for CS2 Workshop contents only.
 - \`/appcommunityfeed/570/rgSections[]=3&rgSections[]=9\` for Dota2 Video and Guides contents.
 
-:::tip
+::: tip
 It can also access community hub contents that require a logged-in account.
 :::
 `,

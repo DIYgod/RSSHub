@@ -24,7 +24,7 @@ export const route: Route = {
     name: '剧集',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
 本路由以 \`magnet\` 为默认 linktype，可以通过在路由后方加上 \`?linktype=链接类型\` 指定导出的链接类型。比如路由为 [\`/zimuxia/portfolio/我们这一天?linktype=baidu\`](https://rsshub.app/zimuxia/portfolio/我们这一天?linktype=baidu) 来导出百度盘链接。目前，你可以选择的 \`链接类型\` 包括: \`magnet\`(默认), \`all\`(所有), \`ed2k\`(电驴), \`baidu\`(百度盘), \`quark\`(夸克盘), \`115\`(115 盘), \`subhd\`(字幕).
 :::`,
 };

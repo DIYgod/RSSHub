@@ -78,9 +78,9 @@ export const route: Route = {
     handler,
     example: '/hust/gs/xwdt',
     parameters: { category: '分类，默认为新闻动态，即 `xwdt`，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [新闻动态](https://gs.hust.edu.cn/xwdt.htm)，网址为 \`https://gs.hust.edu.cn/xwdt.htm\`。截取 \`https://gs.hust.edu.cn/\` 到末尾 \`.htm\` 的部分 \`xwdt\` 作为参数填入，此时路由为 [\`/hust/gs/xwdt\`](https://rsshub.app/hust/gs/xwdt)。
-  :::
+:::
 
   | [新闻动态](https://gs.hust.edu.cn/xwdt.htm) | [研究生服务专区](https://gs.hust.edu.cn/yjsfwzq.htm) | [综合管理](https://gs.hust.edu.cn/gzzd/zhgl.htm)  |
   | ------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------- |
