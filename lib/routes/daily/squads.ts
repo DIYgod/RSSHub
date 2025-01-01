@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { baseUrl, getData, getList, variables } from './utils.js';
 
 const sourceQuery = `
@@ -203,6 +203,7 @@ const query = `
 export const route: Route = {
     path: '/squads/:squads',
     example: '/daily/squads/watercooler',
+    view: ViewType.Articles,
     radar: [
         {
             source: ['app.daily.dev/squads/:squads'],
@@ -212,20 +213,13 @@ export const route: Route = {
     maintainers: ['Rjnishant530'],
     handler,
     url: 'app.daily.dev/squads/discover',
-    features: {
-        requireConfig: [
-            {
-                name: 'DAILY_DEV_INNER_SHARED_CONTENT',
-                description: 'Retrieve the content from shared posts rather than original post content',
-                optional: true,
-            },
-        ],
-    },
 };
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const innerSharedContent = ctx.req.query('innerSharedContent') ? JSON.parse(ctx.req.query('innerSharedContent')) : false;
     const squads = ctx.req.param('squads');
+
     const link = `${baseUrl}/squads/${squads}`;
 
     const { id, description, name } = await getData(
@@ -248,7 +242,7 @@ async function handler(ctx) {
             first: limit,
         },
     });
-    const items = getList(data);
+    const items = getList(data, innerSharedContent, true);
 
     return {
         title: `${name} - daily.dev`,

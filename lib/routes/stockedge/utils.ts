@@ -1,3 +1,4 @@
+import { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -24,10 +25,11 @@ const getList = (data) =>
             title: `${title}  [${sectors.join(', ')}]`,
             description: title,
             securityID,
-            link: `${baseUrl}${securitySlug}/${securityID}?section=news`,
+            link: NewsitemSecurities?.length === 0 ? '' : `${baseUrl}${securitySlug}/${securityID}?section=news`,
+            guid: NewsitemSecurities?.length === 0 ? ID : `${baseUrl}${securitySlug}/${securityID}`,
             pubDate: parseDate(createdOn),
             category: [...industries, ...sectors],
-        };
+        } as DataItem;
     });
 
 export { getData, getList };

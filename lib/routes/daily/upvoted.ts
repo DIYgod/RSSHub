@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { baseUrl, getData, getList, variables } from './utils.js';
 
 const query = `
@@ -119,32 +119,38 @@ const query = `
 `;
 
 export const route: Route = {
-    path: '/upvoted',
-    example: '/daily/upvoted',
+    path: '/upvoted/:period?',
+    example: '/daily/upvoted/7',
+    view: ViewType.Articles,
     radar: [
         {
             source: ['app.daily.dev/upvoted'],
         },
     ],
+    parameters: {
+        period: {
+            description: 'Period of Lookup',
+            default: '7',
+            options: [
+                { value: '7', label: 'Last Week' },
+                { value: '30', label: 'Last Month' },
+                { value: '365', label: 'Last Year' },
+            ],
+        },
+    },
     name: 'Most upvoted',
     maintainers: ['Rjnishant530'],
     handler,
     url: 'app.daily.dev/upvoted',
-    features: {
-        requireConfig: [
-            {
-                name: 'DAILY_DEV_INNER_SHARED_CONTENT',
-                description: 'Retrieve the content from shared posts rather than original post content. TRUE/FALSE',
-                optional: true,
-            },
-        ],
-    },
 };
 
 async function handler(ctx) {
     const link = `${baseUrl}/posts/upvoted`;
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
-    const period = ctx.req.query('period') ? Number.parseInt(ctx.req.query('period'), 10) : 7;
+    const innerSharedContent = ctx.req.query('innerSharedContent') ? JSON.parse(ctx.req.query('innerSharedContent')) : false;
+    const dateSort = ctx.req.query('dateSort') ? JSON.parse(ctx.req.query('dateSort')) : true;
+    const period = ctx.req.param('period') ? Number.parseInt(ctx.req.param('period'), 10) : 7;
+
     const data = await getData({
         query,
         variables: {
@@ -153,7 +159,7 @@ async function handler(ctx) {
             first: limit,
         },
     });
-    const items = getList(data);
+    const items = getList(data, innerSharedContent, dateSort);
 
     return {
         title: 'Most upvoted posts for developers | daily.dev',

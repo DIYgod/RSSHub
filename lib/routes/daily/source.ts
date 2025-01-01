@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import { baseUrl, getBuildId, getData, getList } from './utils';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
@@ -139,22 +139,14 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     url: 'app.daily.dev',
-    features: {
-        requireConfig: [
-            {
-                name: 'DAILY_DEV_INNER_SHARED_CONTENT',
-                description: 'Retrieve the content from shared posts rather than original post content',
-                optional: true,
-            },
-        ],
-    },
 };
 
 async function handler(ctx) {
     const sourceId = ctx.req.param('sourceId');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
-    const link = `${baseUrl}/sources/${sourceId}`;
+    const innerSharedContent = ctx.req.query('innerSharedContent') ? JSON.parse(ctx.req.query('innerSharedContent')) : false;
 
+    const link = `${baseUrl}/sources/${sourceId}`;
     const buildId = await getBuildId();
 
     const userData = (await cache.tryGet(`daily:source:${sourceId}`, async () => {
@@ -176,7 +168,7 @@ async function handler(ctx) {
                     loggedIn: false,
                 },
             });
-            return getList(edges);
+            return getList(edges, innerSharedContent, true);
         },
         config.cache.routeExpire,
         false
@@ -186,7 +178,7 @@ async function handler(ctx) {
         title: `${userData.name} posts on daily.dev`,
         description: userData.description,
         link,
-        item: items,
+        item: items as DataItem[],
         image: userData.image,
         logo: userData.image,
         icon: userData.image,

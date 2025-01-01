@@ -116,9 +116,6 @@ export type Config = {
     civitai: {
         cookie?: string;
     };
-    daily: {
-        inner_shared_content?: string;
-    };
     dianping: {
         cookie?: string;
     };
@@ -548,9 +545,6 @@ const calculateValue = () => {
         },
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
-        },
-        daily: {
-            inner_shared_content: envs.DAILY_DEV_INNER_SHARED_CONTENT,
         },
         dianping: {
             cookie: envs.DIANPING_COOKIE,

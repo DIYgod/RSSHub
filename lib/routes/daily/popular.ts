@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { baseUrl, getData, getList, variables } from './utils.js';
 
 const query = `
@@ -123,29 +123,24 @@ const query = `
 export const route: Route = {
     path: '/popular',
     example: '/daily/popular',
+    view: ViewType.Articles,
     radar: [
         {
             source: ['app.daily.dev/popular'],
         },
     ],
+
     name: 'Popular',
     maintainers: ['Rjnishant530'],
     handler,
     url: 'app.daily.dev/popular',
-    features: {
-        requireConfig: [
-            {
-                name: 'DAILY_DEV_INNER_SHARED_CONTENT',
-                description: 'Retrieve the content from shared posts rather than original post content',
-                optional: true,
-            },
-        ],
-    },
 };
 
 async function handler(ctx) {
     const link = `${baseUrl}/posts`;
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const innerSharedContent = ctx.req.query('innerSharedContent') ? JSON.parse(ctx.req.query('innerSharedContent')) : false;
+    const dateSort = ctx.req.query('dateSort') ? JSON.parse(ctx.req.query('dateSort')) : true;
     const data = await getData({
         query,
         variables: {
@@ -154,7 +149,7 @@ async function handler(ctx) {
             first: limit,
         },
     });
-    const items = getList(data);
+    const items = getList(data, innerSharedContent, dateSort);
 
     return {
         title: 'Popular posts on daily.dev',

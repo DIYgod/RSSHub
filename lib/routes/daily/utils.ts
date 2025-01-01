@@ -5,6 +5,7 @@ import { config } from '@/config';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { getCurrentPath } from '@/utils/helpers';
+import { DataItem } from '@/types';
 const __dirname = getCurrentPath(import.meta.url);
 
 export const baseUrl = 'https://app.daily.dev';
@@ -13,8 +14,6 @@ export const variables = {
     version: 54,
     loggedIn: false,
 };
-const INNER_SHARED_CONTENT = Boolean(config.daily.inner_shared_content?.trim().toLowerCase() === 'true');
-
 export const getBuildId = () =>
     cache.tryGet(
         'daily:buildId',
@@ -32,19 +31,16 @@ export const getData = async (graphqlQuery, source = false) => {
         method: 'POST',
         body: graphqlQuery,
     });
-    if (source) {
-        return response.data.source;
-    }
-    return response.data.page.edges;
+    return source ? response.data.source : response.data.page.edges;
 };
 
 const render = (data) => art(path.join(__dirname, 'templates/posts.art'), data);
 
-export const getList = (edges) =>
+export const getList = (edges, innerSharedContent: boolean, dateSort: boolean) =>
     edges.map(({ node }) => {
         let link: string;
         let title: string;
-        if (INNER_SHARED_CONTENT && node.type === 'share') {
+        if (innerSharedContent && node.type === 'share') {
             link = node.sharedPost.permalink;
             title = node.sharedPost.title;
         } else {
@@ -63,9 +59,9 @@ export const getList = (edges) =>
             }),
             author: node.author?.name,
             itunes_item_image: node.image,
-            pubDate: parseDate(node.createdAt),
+            pubDate: dateSort ? parseDate(node.createdAt) : '',
             upvotes: node.numUpvotes,
             comments: node.numComments,
             category: node.tags,
-        };
+        } as DataItem;
     });
