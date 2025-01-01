@@ -67,6 +67,7 @@ const query = `
     slug
   }
   
+  
   fragment FeedPostInfo on Post {
     id
     title
