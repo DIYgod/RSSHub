@@ -59,6 +59,7 @@ interface SearchParams {
     readonly keywords: string;
     readonly page?: number;
     readonly size?: number;
+    readonly sortBy?: 'date' | 'default' | 'compensation_desc' | 'experience_asc';
 }
 
 const validateSearchParams = ({ keywords, page = 0, size = CONFIG.DEFAULT_PAGE_SIZE }: SearchParams): SearchParams => ({
@@ -69,10 +70,11 @@ const validateSearchParams = ({ keywords, page = 0, size = CONFIG.DEFAULT_PAGE_S
 
 const fetchJobs = async (searchParams: SearchParams): Promise<ApiResponse> => {
     const payload = {
-        size: searchParams.size,
-        page: searchParams.page,
+        size: searchParams.size || 20,
+        page: searchParams.page || 0,
         searchState: {
             searchQuery: searchParams.keywords,
+            sortBy: searchParams.sortBy || 'date',
         },
     };
 
