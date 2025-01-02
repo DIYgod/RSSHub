@@ -66,7 +66,7 @@ export default async function handler(ctx: Context) {
     let i = 0;
     const item: object[] = [];
     for (const message of messages) {
-        if (message.fwdFrom?.fromId !== undefined) {
+        if (message.fwdFrom?.fromId) {
             // eslint-disable-next-line no-await-in-loop
             const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
             attachments.push(`<b>Forwarded from: ${getDisplayName(fwdFrom)}</b>:`);
