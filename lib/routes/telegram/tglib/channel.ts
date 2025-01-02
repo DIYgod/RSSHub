@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { Context } from 'hono';
 import { Api } from 'telegram';
 import { HTMLParser } from 'telegram/extensions/html';
@@ -67,7 +68,6 @@ export default async function handler(ctx: Context) {
     const item: object[] = [];
     for (const message of messages) {
         if (message.fwdFrom?.fromId) {
-            // eslint-disable-next-line no-await-in-loop
             const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
             attachments.push(`<b>Forwarded from: ${getDisplayName(fwdFrom)}</b>:`);
         }
@@ -90,7 +90,7 @@ export default async function handler(ctx: Context) {
                 description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
             }
 
-            const title = message.text ? message.text : new Date(message.date * 1000).toLocaleString();
+            const title = message.text || new Date(message.date * 1000).toLocaleString();
             item.push({
                 title,
                 description,

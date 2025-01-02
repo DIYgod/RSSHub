@@ -227,10 +227,6 @@ async function handler(ctx) {
         : $('.tgme_widget_message_wrap:not(.tgme_widget_message_wrap:has(.service_message,.tme_no_messages_found))'); // also exclude service messages
 
     if (list.length === 0 && $('.tgme_channel_history').length === 0) {
-        if (config.telegram.session) {
-            return tglibchannel(ctx);
-        }
-
         throw new Error(`Unable to fetch message feed from this channel. Please check this URL to see if you can view the message preview: ${resourceUrl}`);
     }
 
