@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/people/allCollections/:id',
     categories: ['social-media'],
     view: ViewType.Articles,
-    example: '/zhihu/people/allCollections/79-36-76-94',
+    example: '/zhihu/people/allCollections/87-44-49-67',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
     features: {
         requireConfig: false,
@@ -103,7 +103,7 @@ async function handler(ctx) {
             // console.log('\n=== Original Item Data ===');
             // console.log('Original content:', item.content);
 
-             ({
+            ({
                 ...item,
                 collectionTitle: collection.collectionTitle,
             })
