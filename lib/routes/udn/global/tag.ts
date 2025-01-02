@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['global.udn.com/search/tagging/1020/:tag', 'global.udn.com/'],
-    },
+    radar: [
+        {
+            source: ['global.udn.com/search/tagging/1020/:tag', 'global.udn.com/'],
+        },
+    ],
     name: '轉角國際 - 標籤',
     maintainers: ['emdoe', 'nczitzk'],
     handler,

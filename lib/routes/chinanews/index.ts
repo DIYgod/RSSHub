@@ -9,10 +9,12 @@ const rootUrl = 'https://www.chinanews.com.cn';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['chinanews.com.cn/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['chinanews.com.cn/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['yuxinliu-alex'],
     handler,
@@ -32,7 +34,7 @@ async function handler(ctx) {
             title: $(item).text(),
         }))
         .get()
-        .slice(0, ctx.req.query('limit') ? (Number.parseInt(ctx.req.query('limit')) > 125 ? 125 : Number.parseInt(ctx.req.query('limit'))) : 50);
+        .slice(0, ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 125) : 50);
 
     const items = await Promise.all(
         list.map((item) =>

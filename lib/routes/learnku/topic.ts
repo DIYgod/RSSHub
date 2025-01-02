@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['learnku.com/:community'],
-        target: '/:community',
-    },
+    radar: [
+        {
+            source: ['learnku.com/:community'],
+            target: '/:community',
+        },
+    ],
     name: '社区',
     maintainers: ['kayw-geek'],
     handler,

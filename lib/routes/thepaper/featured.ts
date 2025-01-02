@@ -5,7 +5,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/featured',
-    categories: ['traditional-media'],
+    categories: ['new-media', 'popular'],
     example: '/thepaper/featured',
     parameters: {},
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['thepaper.cn/'],
-    },
+    radar: [
+        {
+            source: ['thepaper.cn/'],
+        },
+    ],
     name: '首页头条',
     maintainers: ['HenryQW', 'nczitzk', 'bigfei'],
     handler,

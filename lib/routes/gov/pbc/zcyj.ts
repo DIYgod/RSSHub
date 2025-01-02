@@ -9,9 +9,11 @@ const host = 'http://www.pbc.gov.cn';
 
 export const route: Route = {
     path: '/pbc/zcyj',
-    radar: {
-        source: ['pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html'],
-    },
+    radar: [
+        {
+            source: ['pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['Fatpandac'],
     handler,

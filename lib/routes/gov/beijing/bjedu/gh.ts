@@ -18,18 +18,20 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gh.bjedu.gov.cn/ghsite/:urlPath/index.html', 'gh.bjedu.gov.cn/ghsite/:urlPath'],
-        target: '/beijing/bjedu/gh/:urlPath',
-    },
+    radar: [
+        {
+            source: ['gh.bjedu.gov.cn/ghsite/:urlPath/index.html', 'gh.bjedu.gov.cn/ghsite/:urlPath'],
+            target: '/beijing/bjedu/gh/:urlPath',
+        },
+    ],
     name: '通用',
     maintainers: ['TonyRL'],
     handler,
-    description: `:::tip
+    description: `::: tip
   路径处填写对应页面 URL 中 \`https://gh.bjedu.cn/ghsite/\` 和 \`/index.html\` 之间的字段。下面是一个例子。
 
   若订阅 [通知公告](https://gh.bjedu.cn/ghsite/zxtzgg/index.html) 则将对应页面 URL \`https://gh.bjedu.cn/ghsite/zxtzgg/index.html\` 中 \`https://gh.bjedu.cn/ghsite/\` 和 \`/index.html\` 之间的字段 \`zxtzgg\` 作为路径填入。此时路由为 [\`/gov/beijing/bjedu/gh/zxtzgg\`](https://rsshub.app/gov/beijing/bjedu/gh/zxtzgg)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

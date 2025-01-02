@@ -1,5 +1,5 @@
-import cheerio from 'cheerio';
-import got from '@/utils/got';
+import { load } from 'cheerio';
+import ofetch from '@/utils/ofetch';
 import iconv from 'iconv-lite';
 
 function transElemText($, prop) {
@@ -37,8 +37,8 @@ function getProp(data, prop, $) {
 }
 
 async function buildData(data) {
-    const response = await got.get(data.url);
-    const contentType = response.headers['content-type'] || '';
+    const response = await ofetch.raw(data.url);
+    const contentType = response.headers.get('content-type') || '';
     // 若没有指定编码，则默认utf-8
     let charset = 'utf-8';
     for (const attr of contentType.split(';')) {
@@ -47,8 +47,8 @@ async function buildData(data) {
         }
     }
     // @ts-expect-error custom property
-    const responseData = charset === 'utf-8' ? response.data : iconv.decode((await got.get({ url: data.url, responseType: 'buffer' })).data, charset);
-    const $ = cheerio.load(responseData);
+    const responseData = charset === 'utf-8' ? response._data : iconv.decode(await ofetch(data.url, { responseType: 'buffer' }), charset);
+    const $ = load(responseData);
     const $item = $(data.item.item);
     // 这里应该是可以通过参数注入一些代码的，不过应该无伤大雅
     return {

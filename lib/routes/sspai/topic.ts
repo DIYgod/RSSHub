@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topic/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sspai/topic/250',
     parameters: { id: '专题 id，可在专题主页URL中找到' },
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/topic/:id'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/topic/:id'],
+        },
+    ],
     name: '专题内文章更新',
     maintainers: ['SunShinenny'],
     handler,
@@ -39,7 +41,7 @@ async function handler(ctx) {
         list.map((item) => {
             const title = item.title;
             const date = item.created_at;
-            const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second`;
+            const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`;
             const itemUrl = `https://sspai.com/post/${item.id}`;
             const author = item.author.nickname;
 
@@ -50,7 +52,13 @@ async function handler(ctx) {
             }
             return cache.tryGet(`sspai: ${item.id}`, async () => {
                 const response = await got(link);
-                const description = response.data.data.body;
+                let description = '';
+                const articleData = response.data.data;
+                const banner = articleData.promote_image;
+                if (banner) {
+                    description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
+                }
+                description += articleData.body;
 
                 const single = {
                     title,

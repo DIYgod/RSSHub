@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/health/blog',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/harvard/health/blog',
     parameters: {},
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.health.harvard.edu/blog'],
-    },
+    radar: [
+        {
+            source: ['www.health.harvard.edu/blog'],
+        },
+    ],
     name: 'Health Blog',
     maintainers: ['nczitzk'],
     handler,
@@ -37,7 +39,7 @@ async function handler() {
 
     const $ = load(response.data);
 
-    const list = $('.lg\\:text-2xl')
+    const list = $(String.raw`.lg\:text-2xl`)
         .toArray()
         .map((item) => {
             item = $(item).parent();

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cse.seu.edu.cn/:type/list.htm', 'cse.seu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['cse.seu.edu.cn/:type/list.htm', 'cse.seu.edu.cn/'],
+        },
+    ],
     name: '计算机技术与工程学院',
     maintainers: ['LogicJake'],
     handler,

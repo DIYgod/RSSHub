@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['blog.1point3acres.com/:category'],
-    },
+    radar: [
+        {
+            source: ['blog.1point3acres.com/:category'],
+        },
+    ],
     name: '博客',
     maintainers: ['nczitzk'],
     handler,

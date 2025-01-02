@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/blog',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/macfilos/blog',
     parameters: {},
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['macfilos.com/blog', 'macfilos.com/'],
-    },
+    radar: [
+        {
+            source: ['macfilos.com/blog', 'macfilos.com/'],
+        },
+    ],
     name: 'Blog',
     maintainers: ['nczitzk'],
     handler,

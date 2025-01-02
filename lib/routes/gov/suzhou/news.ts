@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/suzhou/news/:uid',
@@ -18,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.suzhou.gov.cn/szsrmzf/:uid/nav_list.shtml'],
-    },
+    radar: [
+        {
+            source: ['www.suzhou.gov.cn/szsrmzf/:uid/nav_list.shtml'],
+        },
+    ],
     name: '政府新闻',
     maintainers: ['EsuRt', 'luyuhuang'],
     handler,
@@ -42,13 +45,13 @@ export const route: Route = {
   |    往期专题    |  wqzt  |
   |    区县专题    |  qxzt  |
 
-  :::tip
+::: tip
   **热点专题**栏目包含**市本级专题**和**区县专题**
 
   **市本级专题**栏目包含**最新热点专题**和**往期专题**
 
   如需订阅完整的热点专题，仅需订阅 **热点专题**\`rdzt\` 一项即可。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -117,7 +120,7 @@ async function handler(ctx) {
             title = '苏州市政府 - 民生资讯';
             break;
         default:
-            throw new Error('pattern not matched');
+            throw new InvalidParameterError('pattern not matched');
     }
     if (apiUrl) {
         const response = await got(apiUrl);

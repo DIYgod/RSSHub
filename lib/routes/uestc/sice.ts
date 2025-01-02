@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sice.uestc.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['sice.uestc.edu.cn/'],
+        },
+    ],
     name: '信息与通信工程学院',
     maintainers: ['huyyi', 'mobyw'],
     handler,

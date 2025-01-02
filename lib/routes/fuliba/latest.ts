@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fuliba2023.net/'],
-    },
+    radar: [
+        {
+            source: ['fuliba2023.net/'],
+        },
+    ],
     name: '最新',
     maintainers: ['shinemoon'],
     handler,

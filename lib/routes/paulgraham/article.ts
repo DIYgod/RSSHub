@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['paulgraham.com/articles.html'],
-    },
+    radar: [
+        {
+            source: ['paulgraham.com/articles.html'],
+        },
+    ],
     name: 'Essays',
     maintainers: ['Maecenas', 'nczitzk'],
     handler,

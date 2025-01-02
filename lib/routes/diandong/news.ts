@@ -19,7 +19,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/news/:cate?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/diandong/news',
     parameters: { cate: '分类，见下表，默认为推荐' },
     features: {
@@ -30,10 +30,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['diandong.com/news'],
-        target: '/news/:cate',
-    },
+    radar: [
+        {
+            source: ['diandong.com/news'],
+            target: '/news/:cate',
+        },
+    ],
     name: '资讯',
     maintainers: ['Fatpandac'],
     handler,

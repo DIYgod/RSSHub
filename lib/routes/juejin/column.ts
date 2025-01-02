@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['juejin.cn/column/:id'],
-    },
+    radar: [
+        {
+            source: ['juejin.cn/column/:id'],
+        },
+    ],
     name: '专栏',
     maintainers: ['xiangzy1'],
     handler,

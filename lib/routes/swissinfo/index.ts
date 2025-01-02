@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['swissinfo.ch/:language/:category', 'swissinfo.ch/'],
-    },
+    radar: [
+        {
+            source: ['swissinfo.ch/:language/:category', 'swissinfo.ch/'],
+        },
+    ],
     name: 'Category',
     maintainers: ['nczitzk'],
     handler,

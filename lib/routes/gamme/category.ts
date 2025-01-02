@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import parser from '@/utils/rss-parser';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:domain/:category?',
@@ -15,7 +16,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { domain = 'news', category } = ctx.req.param();
     if (!isValidHost(domain)) {
-        throw new Error('Invalid domain');
+        throw new InvalidParameterError('Invalid domain');
     }
     const baseUrl = `https://${domain}.gamme.com.tw`;
     const feed = await parser.parseURL(`${baseUrl + (category ? `/category/${category}` : '')}/feed`);

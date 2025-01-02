@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sakurazaka46.com/s/s46/news/list', 'sakurazaka46.com/'],
-    },
+    radar: [
+        {
+            source: ['sakurazaka46.com/s/s46/news/list', 'sakurazaka46.com/'],
+        },
+    ],
     name: 'Sakurazaka46 News 櫻坂 46 新闻',
     maintainers: ['nczitzk'],
     handler,

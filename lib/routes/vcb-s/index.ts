@@ -5,17 +5,19 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const rootUrl = 'https://vcb-s.com';
 const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['vcb-s.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['vcb-s.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['cxfksword'],
     handler,

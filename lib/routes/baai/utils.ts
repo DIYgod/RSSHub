@@ -1,10 +1,24 @@
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { destr } from 'destr';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import cache from '@/utils/cache';
 
 const baseUrl = 'https://hub.baai.ac.cn';
 const eventUrl = 'https://event.baai.ac.cn';
 const apiHost = 'https://hub-api.baai.ac.cn';
+
+const getTagsData = () =>
+    cache.tryGet('baai:tags', async () => {
+        const { data } = await ofetch(`${apiHost}/api/v1/tags`);
+        return data.map((item) => ({
+            id: item.id,
+            title: item.title,
+            description: item.description,
+            brief: item.brief,
+            iconUrl: item.icon_url,
+        }));
+    });
 
 const parseItem = (item) => ({
     link: item.is_event ? `${eventUrl}/activities/${item.event_info.id}` : `${baseUrl}/view/${item.story_id}`,
@@ -16,12 +30,13 @@ const parseItem = (item) => ({
 });
 
 const parseEventDetail = async (item) => {
-    const { data } = await got(`${eventUrl}/api/api/Activity/IntroductionTypes`, {
-        searchParams: {
+    const data = await ofetch(`${eventUrl}/api/api/Activity/IntroductionTypes`, {
+        query: {
             activityId: item.eventId,
         },
+        parseResponse: (txt) => destr(txt),
     });
     return data.data.ac_desc + data.data.ac_desc_two;
 };
 
-export { baseUrl, eventUrl, apiHost, parseItem, parseEventDetail };
+export { baseUrl, eventUrl, apiHost, getTagsData, parseItem, parseEventDetail };

@@ -7,17 +7,25 @@ export const route: Route = {
     example: '/javdb/search/巨乳',
     parameters: { keyword: '关键字，默认为空', filter: '过滤，见下表，默认为 `可播放`', sort: '排序，见下表，默认为 `按相关度排序`' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'JAVDB_SESSION',
+                description: 'JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['javdb.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['javdb.com/'],
+            target: '',
+        },
+    ],
     name: '搜索',
     maintainers: ['nczitzk'],
     handler,
@@ -64,5 +72,5 @@ async function handler(ctx) {
 
     const title = `關鍵字 ${keyword} ${filters[filter] === '' ? '' : `+ ${filters[filter]}`} ${sorts[sort]} 搜索結果 - JavDB`;
 
-    ctx.set('data', await utils.ProcessItems(ctx, currentUrl, title));
+    return await utils.ProcessItems(ctx, currentUrl, title);
 }

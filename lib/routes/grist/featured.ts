@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/featured',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/grist/featured',
     parameters: {},
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['grist.org/'],
-    },
+    radar: [
+        {
+            source: ['grist.org/'],
+        },
+    ],
     name: 'Featured',
     maintainers: ['Rjnishant530'],
     handler,

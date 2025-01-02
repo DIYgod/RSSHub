@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['monitor.firefox.com/', 'monitor.firefox.com/breaches'],
-    },
+    radar: [
+        {
+            source: ['monitor.firefox.com/', 'monitor.firefox.com/breaches'],
+        },
+    ],
     name: 'Firefox Monitor',
     maintainers: ['TonyRL'],
     handler,

@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['finance.sina.com.cn/china', 'finance.sina.com.cn/'],
-        target: '/finance/china',
-    },
+    radar: [
+        {
+            source: ['finance.sina.com.cn/china', 'finance.sina.com.cn/'],
+            target: '/finance/china',
+        },
+    ],
     name: '财经－国內',
     maintainers: ['yubinbai'],
     handler,

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xboxfan.com/'],
-    },
+    radar: [
+        {
+            source: ['xboxfan.com/'],
+        },
+    ],
     name: '资讯',
     maintainers: ['XXY233'],
     handler,

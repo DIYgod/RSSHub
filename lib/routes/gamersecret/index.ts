@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gamersecret.com/:type', 'gamersecret.com/:type/:category', 'gamersecret.com/'],
-    },
+    radar: [
+        {
+            source: ['gamersecret.com/:type', 'gamersecret.com/:type/:category', 'gamersecret.com/'],
+        },
+    ],
     name: 'Category',
     maintainers: ['nczitzk'],
     handler,

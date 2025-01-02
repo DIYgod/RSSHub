@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -45,9 +45,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.iresearch.com.cn/report.shtml'],
-    },
+    radar: [
+        {
+            source: ['www.iresearch.com.cn/report.shtml'],
+        },
+    ],
     name: '产业研究报告',
     maintainers: ['brilon', 'Fatpandac'],
     handler,

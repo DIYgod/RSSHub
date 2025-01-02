@@ -6,10 +6,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:channel?',
-    radar: {
-        source: ['www.biodiscover.com/:channel'],
-        target: '/:channel',
-    },
+    radar: [
+        {
+            source: ['www.biodiscover.com/:channel'],
+            target: '/:channel',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['aidistan'],
     handler,
@@ -22,11 +24,11 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const items = $('.new_list .newList_box')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             pubDate: parseDate($(item).find('.news_flow_tag .times').text().trim()),
             link: 'http://www.biodiscover.com' + $(item).find('h2 a').attr('href'),
-        }))
-        .toArray();
+        }));
 
     return {
         title: '生物探索 - ' + $('.header li.sel a').text(),

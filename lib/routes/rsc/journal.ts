@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/journal/:id/:category?',
@@ -26,9 +26,9 @@ export const route: Route = {
     name: 'Journal',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   All journals at [Current journals](https://pubs.rsc.org/en/journals)
-  :::
+:::
 
   | All Recent Articles | Advance Articles |
   | ------------------- | ---------------- |

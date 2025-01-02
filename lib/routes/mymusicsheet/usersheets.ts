@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/user/sheets/:username/:iso?/:freeOnly?',
@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mymusicsheet.com/:username/*', 'mymusicsheet.com/:username'],
-        target: '/user/sheets/:username',
-    },
+    radar: [
+        {
+            source: ['mymusicsheet.com/:username/*', 'mymusicsheet.com/:username'],
+            target: '/user/sheets/:username',
+        },
+    ],
     name: 'User Sheets',
     maintainers: ['Freddd13'],
     handler,

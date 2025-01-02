@@ -2,7 +2,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
 const renderDescription = (description, images) => art(path.join(__dirname, '../templates/description.art'), { description, images });

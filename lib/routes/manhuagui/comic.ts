@@ -57,10 +57,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.mhgui.com/comic/:id/'],
-        target: '/comic/:id',
-    },
+    radar: [
+        {
+            source: ['www.mhgui.com/comic/:id/'],
+            target: '/comic/:id',
+        },
+    ],
     name: '漫画更新',
     maintainers: ['MegrezZhu'],
     handler,
@@ -124,7 +126,7 @@ async function handler(ctx) {
         const items = chapters.map((element) => genResult(element));
         let itemsLen = items.length;
         if (chapterCnt > 0) {
-            itemsLen = chapterCnt < $.newChapterCnt ? $.newChapterCnt : chapterCnt;
+            itemsLen = Math.max(chapterCnt, $.newChapterCnt);
         }
 
         return {

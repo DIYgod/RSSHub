@@ -1,0 +1,7 @@
+{{ if bannerImage }}
+<img src="{{ bannerImage }}"><br>
+{{ /if }}
+
+{{ if content }}
+{{@ content }}
+{{ /if }}

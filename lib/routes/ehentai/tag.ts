@@ -28,18 +28,15 @@ async function handler(ctx) {
     const embed_thumb = routeParams.get('embed_thumb') || false;
     const items = await EhAPI.getTagItems(cache, tag, page, bittorrent, embed_thumb);
 
-    ctx.set(
-        'data',
-        EhAPI.from_ex
-            ? {
-                  title: tag + ' - ExHentai Tag',
-                  link: `https://exhentai.org/tag/${tag}`,
-                  item: items,
-              }
-            : {
-                  title: tag + ' - E-Hentai Tag',
-                  link: `https://e-hentai.org/tag/${tag}`,
-                  item: items,
-              }
-    );
+    return EhAPI.from_ex
+        ? {
+              title: tag + ' - ExHentai Tag',
+              link: `https://exhentai.org/tag/${tag}`,
+              item: items,
+          }
+        : {
+              title: tag + ' - E-Hentai Tag',
+              link: `https://e-hentai.org/tag/${tag}`,
+              item: items,
+          };
 }

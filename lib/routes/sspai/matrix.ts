@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/matrix',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sspai/matrix',
     parameters: {},
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/matrix'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/matrix'],
+        },
+    ],
     name: 'Matrix',
     maintainers: ['feigaoxyz'],
     handler,
@@ -34,13 +36,19 @@ async function handler() {
     const data = resp.data.list;
     const items = await Promise.all(
         data.map((item) => {
-            const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second`;
+            const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`;
             let description = '';
 
             const key = `sspai: ${item.id}`;
             return cache.tryGet(key, async () => {
                 const response = await got(link);
-                description = response.data.data.body;
+                // description = response.data.data.body;
+                const articleData = response.data.data;
+                const banner = articleData.promote_image;
+                if (banner) {
+                    description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
+                }
+                description += articleData.body;
 
                 return {
                     title: item.title.trim(),

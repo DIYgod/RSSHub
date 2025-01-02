@@ -46,8 +46,7 @@ async function handler(ctx) {
             const slcProvince = $(`select#searchprovince option:contains('${province}')`);
 
             if (!slcProvince.length) {
-                ctx.set('data', result);
-                return;
+                return result;
             }
 
             queryParams.searchprovince = slcProvince.attr('value');
@@ -57,8 +56,7 @@ async function handler(ctx) {
             const slcOffice = $(`select#searchoffice option:contains('${office}')`);
 
             if (!slcOffice.length) {
-                ctx.set('data', result);
-                return;
+                return result;
             }
 
             queryParams.searchoffice = slcOffice.attr('value');
@@ -107,5 +105,5 @@ async function handler(ctx) {
             };
         });
 
-    ctx.set('data', result);
+    return result;
 }

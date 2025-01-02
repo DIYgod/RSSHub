@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 
 const renderDesc = (item) => art(path.join(__dirname, 'templates/daily.art'), item);
@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cztv.com/videos/zjxwlb', 'cztv.com/'],
-    },
+    radar: [
+        {
+            source: ['cztv.com/videos/zjxwlb', 'cztv.com/'],
+        },
+    ],
     name: '浙江新闻联播 - 每日合集',
     maintainers: ['yhkang'],
     handler,

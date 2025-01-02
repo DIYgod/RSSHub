@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['book.douban.com/:id/discussion'],
-    },
+    radar: [
+        {
+            source: ['book.douban.com/:id/discussion'],
+        },
+    ],
     name: '豆瓣读书论坛',
     maintainers: ['nightmare-mio'],
     handler,

@@ -1,7 +1,7 @@
 import * as entities from 'entities';
 import { load, type CheerioAPI, type Element } from 'cheerio';
 import { simplecc } from 'simplecc-wasm';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import { RE2JS } from 're2js';
 import markdownit from 'markdown-it';
@@ -32,15 +32,16 @@ const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl
     }
 };
 
-const summarizeArticle = async (articleText: string) => {
+const getAiCompletion = async (prompt: string, text: string) => {
     const apiUrl = `${config.openai.endpoint}/chat/completions`;
-    const response = await got.post(apiUrl, {
-        json: {
+    const response = await ofetch(apiUrl, {
+        method: 'POST',
+        body: {
             model: config.openai.model,
             max_tokens: config.openai.maxTokens,
             messages: [
-                { role: 'system', content: config.openai.prompt },
-                { role: 'user', content: articleText },
+                { role: 'system', content: prompt },
+                { role: 'user', content: text },
             ],
             temperature: config.openai.temperature,
         },
@@ -49,8 +50,7 @@ const summarizeArticle = async (articleText: string) => {
         },
     });
 
-    // @ts-expect-error custom field
-    return response.data.choices[0].message.content;
+    return response.choices[0].message.content;
 };
 
 const getAuthorString = (item) => {
@@ -305,8 +305,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     if (link) {
                         // if parser failed, return default description and not report error
                         try {
-                            // @ts-expect-error custom field
-                            const { data: res } = await got(link);
+                            const res = await ofetch(link);
                             const $ = load(res);
                             const result = await Parser.parse(link, {
                                 html: $.html(),
@@ -328,23 +327,53 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         if (ctx.req.query('chatgpt') && config.openai.apiKey) {
             data.item = await Promise.all(
                 data.item.map(async (item) => {
-                    if (item.description) {
-                        try {
-                            const summary = await cache.tryGet(`openai:${item.link}`, async () => {
-                                const text = convert(item.description!);
-                                if (text.length < 300) {
-                                    return '';
-                                }
-                                const summary_md = await summarizeArticle(text);
-                                return md.render(summary_md);
+                    try {
+                        // handle description
+                        if (config.openai.inputOption === 'description' && item.description) {
+                            const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
+                                const description = convert(item.description!);
+                                const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
+                                return md.render(descriptionMd);
                             });
-                            // 将总结结果添加到文章数据中
-                            if (summary !== '') {
-                                item.description = summary + '<hr/><br/>' + item.description;
+                            // add it to the description
+                            if (description !== '') {
+                                item.description = description + '<hr/><br/>' + item.description;
                             }
-                        } catch {
-                            // when openai failed, return default description and not write cache
                         }
+                        // handle title
+                        else if (config.openai.inputOption === 'title' && item.title) {
+                            const title = await cache.tryGet(`openai:title:${item.link}`, async () => {
+                                const title = convert(item.title!);
+                                return await getAiCompletion(config.openai.promptTitle, title);
+                            });
+                            // replace the title
+                            if (title !== '') {
+                                item.title = title + '';
+                            }
+                        }
+                        // handle both
+                        else if (config.openai.inputOption === 'both' && item.title && item.description) {
+                            const title = await cache.tryGet(`openai:title:${item.link}`, async () => {
+                                const title = convert(item.title!);
+                                return await getAiCompletion(config.openai.promptTitle, title);
+                            });
+                            // replace the title
+                            if (title !== '') {
+                                item.title = title + '';
+                            }
+
+                            const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
+                                const description = convert(item.description!);
+                                const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
+                                return md.render(descriptionMd);
+                            });
+                            // add it to the description
+                            if (description !== '') {
+                                item.description = description + '<hr/><br/>' + item.description;
+                            }
+                        }
+                    } catch {
+                        // when openai failed, return default content and not write cache
                     }
                     return item;
                 })
@@ -380,7 +409,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     }
                 }
             } else {
-                throw new Error(`Invalid parameter brief. Please check the doc https://docs.rsshub.app/parameter#shu-chu-jian-xun`);
+                throw new Error(`Invalid parameter brief. Please check the doc https://docs.rsshub.app/guide/parameters#shu-chu-jian-xun`);
             }
         }
         // some parameters are processed in `anti-hotlink.js`

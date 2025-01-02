@@ -5,11 +5,11 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/knowledge/:topic?/:type?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/dedao/knowledge',
     parameters: { topic: '话题 id，可在对应话题页 URL 中找到', type: '分享类型，`true` 指精选，`false` 指最新，默认为精选' },
     features: {
@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dedao.cn/knowledge/topic/:topic', 'dedao.cn/knowledge', 'dedao.cn/'],
-    },
+    radar: [
+        {
+            source: ['dedao.cn/knowledge/topic/:topic', 'dedao.cn/knowledge', 'dedao.cn/'],
+        },
+    ],
     name: '知识城邦',
     maintainers: ['nczitzk'],
     handler,

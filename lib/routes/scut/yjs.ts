@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www2.scut.edu.cn/graduate/14562/list.htm'],
-    },
+    radar: [
+        {
+            source: ['www2.scut.edu.cn/graduate/14562/list.htm'],
+        },
+    ],
     name: '研究生院通知公告',
     maintainers: ['shengmaosu'],
     handler,

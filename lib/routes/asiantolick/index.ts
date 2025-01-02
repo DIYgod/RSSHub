@@ -7,14 +7,16 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/:category{.+}?',
-    radar: {
-        source: ['asiantolick.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['asiantolick.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

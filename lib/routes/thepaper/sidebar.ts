@@ -10,11 +10,16 @@ const sections = {
 
 export const route: Route = {
     path: '/sidebar/:sec?',
-    radar: {
-        source: ['thepaper.cn/'],
-        target: '/sidebar',
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['thepaper.cn/'],
+            target: '/sidebar',
+        },
+    ],
+    name: '侧边栏',
+    categories: ['new-media', 'popular'],
+    example: '/thepaper/sidebar',
+    parameters: { sec: '侧边栏 id，可选 `hotNews` 即 澎湃热榜、`financialInformationNews` 即 澎湃财讯、`morningEveningNews` 即 早晚报，默认为 `hotNews`' },
     maintainers: ['bigfei'],
     handler,
     url: 'thepaper.cn/',

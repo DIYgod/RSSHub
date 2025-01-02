@@ -72,7 +72,7 @@ const webFetch = (url) =>
         try {
             return webFetchCb(await got(url));
         } catch (error) {
-            if (error.name === 'HTTPError' && error.response.statusCode === 404) {
+            if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.response.statusCode === 404) {
                 return '404';
             }
             throw error;
@@ -114,7 +114,7 @@ const tryFetch = async (category, topic) => {
 
 export const route: Route = {
     path: '/:category?/:topic?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/phoronix/linux/KDE',
     parameters: {
         category: 'Category',
@@ -128,9 +128,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['phoronix.com/:category?/:topic?'],
-    },
+    radar: [
+        {
+            source: ['phoronix.com/:category?/:topic?'],
+        },
+    ],
     name: 'News & Reviews',
     maintainers: ['oppliate', 'Rongronggg9'],
     handler,
@@ -258,5 +260,5 @@ async function handler(ctx) {
         )
     );
 
-    ctx.set('data', feed);
+    return feed;
 }

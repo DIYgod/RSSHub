@@ -4,10 +4,12 @@ import { rootUrl, apiRootUrl, processItems, getInfo } from './util';
 
 export const route: Route = {
     path: ['/channel/:id?', '/:id?'],
-    radar: {
-        source: ['cyzone.cn/channel/:id', 'cyzone.cn/'],
-        target: '/:id',
-    },
+    radar: [
+        {
+            source: ['cyzone.cn/channel/:id', 'cyzone.cn/'],
+            target: '/:id',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

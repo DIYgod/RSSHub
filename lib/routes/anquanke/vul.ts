@@ -2,7 +2,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async () => {
+const handler = async () => {
     const url = 'https://www.anquanke.com';
 
     const response = await got(`${url}/vul`);
@@ -32,3 +32,5 @@ export default async () => {
         item: items,
     };
 };
+
+export default handler;

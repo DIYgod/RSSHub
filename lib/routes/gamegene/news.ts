@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.gamegene.cn/news'],
-    },
+    radar: [
+        {
+            source: ['news.gamegene.cn/news'],
+        },
+    ],
     name: '资讯',
     maintainers: ['lone1y-51'],
     handler,

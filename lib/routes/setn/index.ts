@@ -56,10 +56,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['setn.com/ViewAll.aspx', 'setn.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['setn.com/ViewAll.aspx', 'setn.com/'],
+            target: '',
+        },
+    ],
     name: '新聞',
     maintainers: ['nczitzk'],
     handler,

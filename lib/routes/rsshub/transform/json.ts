@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 function jsonGet(obj, attr) {
     if (typeof attr !== 'string') {
@@ -38,16 +39,17 @@ export const route: Route = {
     handler,
     description: `Specify options (in the format of query string) in parameter \`routeParams\` parameter to extract data from JSON.
 
-| Key           | Meaning                                  | Accepted Values | Default                                    |
-| ------------- | ---------------------------------------- | --------------- | ------------------------------------------ |
-| \`title\`       | The title of the RSS                     | \`string\`        | Extracted from home page of current domain |
-| \`item\`        | The JSON Path as \`item\` element          | \`string\`        | Entire JSON response                       |
-| \`itemTitle\`   | The JSON Path as \`title\` in \`item\`       | \`string\`        | None                                       |
-| \`itemLink\`    | The JSON Path as \`link\` in \`item\`        | \`string\`        | None                                       |
-| \`itemDesc\`    | The JSON Path as \`description\` in \`item\` | \`string\`        | None                                       |
-| \`itemPubDate\` | The JSON Path as \`pubDate\` in \`item\`     | \`string\`        | None                                       |
+| Key                | Meaning                                      | Accepted Values   | Default                                    |
+| ------------------ | -------------------------------------------- | ----------------- | ------------------------------------------ |
+| \`title\`          | The title of the RSS                         | \`string\`        | Extracted from home page of current domain |
+| \`item\`           | The JSON Path as \`item\` element            | \`string\`        | Entire JSON response                       |
+| \`itemTitle\`      | The JSON Path as \`title\` in \`item\`       | \`string\`        | None                                       |
+| \`itemLink\`       | The JSON Path as \`link\` in \`item\`        | \`string\`        | None                                       |
+| \`itemLinkPrefix\` | Optional Prefix for \`itemLink\` value       | \`string\`        | None                                       |
+| \`itemDesc\`       | The JSON Path as \`description\` in \`item\` | \`string\`        | None                                       |
+| \`itemPubDate\`    | The JSON Path as \`pubDate\` in \`item\`     | \`string\`        | None                                       |
 
-:::tip
+::: tip
 JSON Path only supports format like \`a.b.c\`. if you need to access arrays, like \`a[0].b\`, you can write it as \`a.0.b\`.
 :::
 
@@ -70,7 +72,7 @@ JSON Path only supports format like \`a.b.c\`. if you need to access arrays, lik
 
 async function handler(ctx) {
     if (!config.feature.allow_user_supply_unsafe_domain) {
-        throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
     const url = ctx.req.param('url');
     const response = await got({
@@ -91,6 +93,11 @@ async function handler(ctx) {
 
     const items = jsonGet(response.data, routeParams.get('item')).map((item) => {
         let link = jsonGet(item, routeParams.get('itemLink')).trim();
+        const linkPrefix = routeParams.get('itemLinkPrefix');
+
+        if (link && linkPrefix) {
+            link = `${linkPrefix}${link}`;
+        }
         // 补全绝对链接
         if (link && !link.startsWith('http')) {
             link = `${new URL(url).origin}${link}`;

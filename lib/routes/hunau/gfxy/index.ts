@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xky.hunau.edu.cn/', 'xky.hunau.edu.cntzgg_8472', 'xky.hunau.edu.cn/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['xky.hunau.edu.cn/', 'xky.hunau.edu.cn/tzgg_8472', 'xky.hunau.edu.cn/:category'],
+            target: '/:category',
+        },
+    ],
     name: '公共管理与法学学院',
     maintainers: [],
     handler,

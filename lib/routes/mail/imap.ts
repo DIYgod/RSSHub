@@ -5,6 +5,7 @@ import { config } from '@/config';
 import { simpleParser } from 'mailparser';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/imap/:email/:folder{.+}?',
@@ -23,7 +24,7 @@ async function handler(ctx) {
     };
 
     if (!mailConfig.username || !mailConfig.password || !mailConfig.host || !mailConfig.port) {
-        throw new Error('Email Inbox RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install#route-specific-configurations">relevant config</a>');
+        throw new ConfigNotFoundError('Email Inbox RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/#route-specific-configurations">relevant config</a>');
     }
 
     const client = new ImapFlow({

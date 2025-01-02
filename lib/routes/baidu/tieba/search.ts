@@ -8,7 +8,7 @@ import iconv from 'iconv-lite';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/tieba/search/:qw/:routeParams?',
@@ -29,7 +29,7 @@ export const route: Route = {
     description: `| 键           | 含义                                                       | 接受的值      | 默认值 |
   | ------------ | ---------------------------------------------------------- | ------------- | ------ |
   | kw           | 在名为 kw 的贴吧中搜索                                     | 任意名称 / 无 | 无     |
-  | only\_thread | 只看主题帖，默认为 0 关闭                                  | 0/1           | 0      |
+  | only_thread  | 只看主题帖，默认为 0 关闭                                  | 0/1           | 0      |
   | rn           | 返回条目的数量                                             | 1-20          | 20     |
   | sm           | 排序方式，0 为按时间顺序，1 为按时间倒序，2 为按相关性顺序 | 0/1/2         | 1      |
 
@@ -41,7 +41,7 @@ async function handler(ctx) {
     const query = new URLSearchParams(ctx.req.param('routeParams'));
     query.set('ie', 'utf-8');
     query.set('qw', qw);
-    query.set('rn', query.get('rn') || 20); // Number of returned items
+    query.set('rn', query.get('rn') || '20'); // Number of returned items
     const link = `https://tieba.baidu.com/f/search/res?${query.toString()}`;
 
     const response = await got.get(link, {

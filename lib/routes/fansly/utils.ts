@@ -2,8 +2,10 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import cache from '@/utils/cache';
 
 const apiBaseUrl = 'https://apiv3.fansly.com';
 const baseUrl = 'https://fansly.com';
@@ -17,8 +19,8 @@ const findAccountById = (accountId, accounts) => {
     };
 };
 
-const getAccountByUsername = (username, tryGet) =>
-    tryGet(`fansly:account:${username.toLowerCase()}`, async () => {
+const getAccountByUsername = (username) =>
+    cache.tryGet(`fansly:account:${username.toLowerCase()}`, async () => {
         const { data: accountResponse } = await got(`${apiBaseUrl}/api/v1/account`, {
             searchParams: {
                 usernames: username,
@@ -27,7 +29,7 @@ const getAccountByUsername = (username, tryGet) =>
         });
 
         if (!accountResponse.response.length) {
-            throw new Error('This profile or page does not exist.');
+            throw new InvalidParameterError('This profile or page does not exist.');
         }
 
         return accountResponse.response[0];
@@ -47,8 +49,8 @@ const getTimelineByAccountId = async (accountId) => {
     return timeline.response;
 };
 
-const getTagId = (tag, tryGet) =>
-    tryGet(`fansly:tag:${tag.toLowerCase()}`, async () => {
+const getTagId = (tag) =>
+    cache.tryGet(`fansly:tag:${tag.toLowerCase()}`, async () => {
         const { data: tagResponse } = await got(`${apiBaseUrl}/api/v1/contentdiscovery/media/tag`, {
             searchParams: {
                 tag,

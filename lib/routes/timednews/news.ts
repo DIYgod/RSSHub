@@ -55,7 +55,7 @@ const PATH_LIST = {
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/timednews/news',
     parameters: { type: '子分类，见下表，默认为全部' },
     features: {
@@ -115,17 +115,13 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    const ret = {
         title: '时刻新闻',
         link: url,
         description: `时刻新闻 ${PATH_LIST[type].name}`,
         item: items,
     };
 
-    ctx.set('json', {
-        title: '时刻新闻',
-        link: url,
-        description: `时刻新闻 ${PATH_LIST[type].name}`,
-        item: items,
-    });
+    ctx.set('json', ret);
+    return ret;
 }

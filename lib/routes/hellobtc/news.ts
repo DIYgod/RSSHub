@@ -8,7 +8,7 @@ const rootUrl = 'https://www.hellobtc.com';
 
 export const route: Route = {
     path: '/news',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/hellobtc/news',
     parameters: {},
     features: {
@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hellobtc.com/news'],
-    },
+    radar: [
+        {
+            source: ['hellobtc.com/news'],
+        },
+    ],
     name: '快讯',
     maintainers: ['Fatpandac'],
     handler,

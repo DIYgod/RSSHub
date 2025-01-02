@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/express-news',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/fastbull/express-news',
     parameters: {},
     features: {
@@ -16,17 +17,19 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fastbull.cn/express-news', 'fastbull.cn/'],
-    },
-    name: '快讯',
+    radar: [
+        {
+            source: ['fastbull.com/express-news', 'fastbull.com/'],
+        },
+    ],
+    name: 'News Flash',
     maintainers: ['nczitzk'],
     handler,
-    url: 'fastbull.cn/express-news',
+    url: 'fastbull.com/express-news',
 };
 
 async function handler() {
-    const rootUrl = 'https://www.fastbull.cn';
+    const rootUrl = 'https://www.fastbull.com';
     const currentUrl = `${rootUrl}/express-news`;
 
     const response = await got({

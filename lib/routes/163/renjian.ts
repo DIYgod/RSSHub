@@ -27,9 +27,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['renjian.163.com/:category', 'renjian.163.com/'],
-    },
+    radar: [
+        {
+            source: ['renjian.163.com/:category', 'renjian.163.com/'],
+        },
+    ],
     name: '人间',
     maintainers: ['nczitzk'],
     handler,

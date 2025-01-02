@@ -3,6 +3,6 @@
     <br>
 {{ /if }}
 
-<video controls preload="none" poster="{{ image }}" width="{{ video.width }}">
+<video controls preload="metadata" poster="{{ image }}" width="{{ video.width }}">
     <source src="{{ video.url }}" type="video/mp4">
 </video>

@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/ani/new_anime',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Videos,
     example: '/gamer/ani/new_anime',
     parameters: {},
     features: {
@@ -16,12 +17,14 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ani.gamer.com.tw/'],
-        target: '/new_anime',
-    },
+    radar: [
+        {
+            source: ['ani.gamer.com.tw/'],
+            target: '/new_anime',
+        },
+    ],
     name: '動畫瘋 - 最後更新',
-    maintainers: [],
+    maintainers: ['maple3142', 'pseudoyu'],
     handler,
     url: 'ani.gamer.com.tw/',
 };

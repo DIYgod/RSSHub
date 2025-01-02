@@ -6,7 +6,7 @@ import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/newsflash',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/odaily/newsflash',
     parameters: {},
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['0daily.com/newsflash', '0daily.com/'],
-    },
+    radar: [
+        {
+            source: ['0daily.com/newsflash', '0daily.com/'],
+        },
+    ],
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,

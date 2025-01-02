@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/daily-updates/news',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Notifications,
     example: '/stockedge/daily-updates/news',
     parameters: {},
     features: {
@@ -15,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['web.stockedge.com/daily-updates/news'],
-    },
+    radar: [
+        {
+            source: ['web.stockedge.com/daily-updates/news'],
+        },
+    ],
     name: 'Daily Updates News',
     maintainers: ['Rjnishant530'],
     handler,

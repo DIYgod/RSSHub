@@ -30,7 +30,6 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const response = await got(`https://dy.163.com/v2/article/list.do?pageNo=1&wemediaId=${id}&size=10`);
-    const charset = response.headers['content-type'].split('=')[1];
 
     const list = response.data.data.list.map((e) => ({
         title: e.title,
@@ -40,7 +39,7 @@ async function handler(ctx) {
         imgsrc: e.imgsrc,
     }));
 
-    const items = await Promise.all(list.map((e) => parseDyArticle(charset, e, cache.tryGet)));
+    const items = await Promise.all(list.map((e) => parseDyArticle(e, cache.tryGet)));
 
     return {
         title: `网易号 - ${list[0].author}`,

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jwc.ncu.edu.cn/', 'jwc.ncu.edu.cn/jwtz/index.htm'],
-    },
+    radar: [
+        {
+            source: ['jwc.ncu.edu.cn/', 'jwc.ncu.edu.cn/jwtz/index.htm'],
+        },
+    ],
     name: '教务通知',
     maintainers: ['ywh555hhh'],
     handler,
@@ -29,6 +31,9 @@ async function handler() {
     const baseUrl = 'https://jwc.ncu.edu.cn';
     const response = await got(baseUrl);
     const $ = load(response.body);
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
 
     const list = $('.box3 .inner ul.img-list li');
 
@@ -36,6 +41,7 @@ async function handler() {
         title: '南昌大学教务处',
         link: baseUrl,
         description: '南昌大学教务处',
+
         item:
             list &&
             list.toArray().map((item) => {
@@ -44,12 +50,19 @@ async function handler() {
                 const date = el.text().split('】')[0].replace('【', '').trim();
                 const title = linkEl.attr('title');
                 const link = `${baseUrl}/${linkEl.attr('href')}`;
-                const month = date.slice(0, 2);
+
+                const newsDate = parseDate(date, 'MM-DD');
+                const newsMonth = newsDate.getMonth() + 1;
+
+                // If the news month is greater than the current month, subtract 1 from the year
+                const year = newsMonth > currentMonth ? currentYear - 1 : currentYear;
+
+                newsDate.setFullYear(year);
 
                 return {
                     title,
                     link,
-                    pubDate: parseDate(date, 'MM-DD').setFullYear(month < 6 ? new Date().getFullYear() - 1 : new Date().getFullYear()),
+                    pubDate: newsDate,
                 };
             }),
     };

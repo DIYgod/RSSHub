@@ -5,7 +5,7 @@ import { baseUrl, getPlurk } from './utils';
 
 export const route: Route = {
     path: '/anonymous',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/plurk/anonymous',
     parameters: {},
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['plurk.com/anonymous'],
-    },
+    radar: [
+        {
+            source: ['plurk.com/anonymous'],
+        },
+    ],
     name: 'Anonymous',
     maintainers: ['TonyRL'],
     handler,

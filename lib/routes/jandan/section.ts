@@ -33,7 +33,10 @@ async function handler(ctx) {
             item.find('.commenttext img, .tucao-report').remove();
 
             item.find('.commenttext .view_img_link').each(function () {
-                $(this).replaceWith(`<img src="${$(this).attr('href')}">`);
+                const url = new URL($(this).attr('href'), rootUrl);
+                url.protocol = 'https:';
+                url.host = url.host.replace('moyu.im', 'sinaimg.cn');
+                $(this).replaceWith(`<img src="${url}">`);
             });
 
             const author = item.find('b').first().text();

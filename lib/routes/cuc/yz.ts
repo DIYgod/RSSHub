@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yz.cuc.edu.cn/8549/list.htm', 'yz.cuc.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['yz.cuc.edu.cn/8549/list.htm', 'yz.cuc.edu.cn/'],
+        },
+    ],
     name: '研究生招生网',
     maintainers: ['niuyi1017'],
     handler,

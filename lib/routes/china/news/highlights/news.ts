@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.china.com/:category'],
-    },
+    radar: [
+        {
+            source: ['news.china.com/:category'],
+        },
+    ],
     name: 'News and current affairs 时事新闻',
     maintainers: ['jiaaoMario'],
     handler,

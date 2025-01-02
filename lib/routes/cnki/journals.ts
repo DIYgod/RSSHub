@@ -4,6 +4,8 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { ProcessItem } from './utils';
+import parser from '@/utils/rss-parser';
+import logger from '@/utils/logger';
 
 const rootUrl = 'https://navi.cnki.net';
 
@@ -20,16 +22,45 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['navi.cnki.net/knavi/journals/:name/detail'],
-    },
+    radar: [
+        {
+            source: ['navi.cnki.net/knavi/journals/:name/detail'],
+        },
+    ],
     name: '期刊',
-    maintainers: ['Fatpandac', 'Derekmini'],
+    maintainers: ['Fatpandac', 'Derekmini', 'pseudoyu'],
     handler,
 };
 
 async function handler(ctx) {
     const name = ctx.req.param('name');
+    const rssUrl = `https://rss.cnki.net/kns/rss.aspx?Journal=${name}&Virtual=knavi`;
+
+    const rssResponse = await got.get(rssUrl);
+
+    try {
+        const feed = await parser.parseString(rssResponse.data);
+
+        if (feed.items && feed.items.length !== 0) {
+            const items = feed.items.map((item) => ({
+                title: item.title,
+                description: item.content,
+                pubDate: parseDate(item.pubDate),
+                link: item.link,
+                author: item.author,
+            }));
+
+            return {
+                title: feed.title,
+                link: feed.link,
+                description: feed.description,
+                item: items,
+            };
+        }
+    } catch (error) {
+        logger.error(error);
+    }
+
     const journalUrl = `${rootUrl}/knavi/journals/${name}/detail`;
     const title = await got.get(journalUrl).then((res) => load(res.data)('head > title').text());
 

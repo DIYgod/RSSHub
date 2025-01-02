@@ -4,10 +4,12 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/releases/:brand/:model',
-    radar: {
-        source: ['openwrt.org/toh/:band/:model'],
-        target: '/releases/:model',
-    },
+    radar: [
+        {
+            source: ['openwrt.org/toh/:band/:model'],
+            target: '/releases/:model',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

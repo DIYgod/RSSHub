@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['diskanalyzer.com/whats-new', 'diskanalyzer.com/'],
-    },
+    radar: [
+        {
+            source: ['diskanalyzer.com/whats-new', 'diskanalyzer.com/'],
+        },
+    ],
     name: "What's New",
     maintainers: ['nczitzk'],
     handler,

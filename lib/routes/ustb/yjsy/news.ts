@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gs.ustb.edu.cn/:type'],
-    },
+    radar: [
+        {
+            source: ['gs.ustb.edu.cn/:type'],
+        },
+    ],
     name: '研究生院',
     maintainers: ['DA1Y1'],
     handler,

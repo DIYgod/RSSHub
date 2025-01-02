@@ -7,10 +7,12 @@ const baseUrl = 'http://www.tynu.edu.cn';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['tynu.edu.cn/index/tzgg.htm', 'tynu.edu.cn/index.htm', 'tynu.edu.cn/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['tynu.edu.cn/index/tzgg.htm', 'tynu.edu.cn/index.htm', 'tynu.edu.cn/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['2PoL'],
     handler,

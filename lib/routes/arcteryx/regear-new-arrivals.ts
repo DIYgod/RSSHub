@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const host = 'https://www.regear.arcteryx.com';
 function getUSDPrice(number) {
@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['regear.arcteryx.com/shop/new-arrivals', 'regear.arcteryx.com/'],
-    },
+    radar: [
+        {
+            source: ['regear.arcteryx.com/shop/new-arrivals', 'regear.arcteryx.com/'],
+        },
+    ],
     name: 'Regear New Arrivals',
     maintainers: ['EthanWng97'],
     handler,

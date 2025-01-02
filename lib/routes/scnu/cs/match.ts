@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cs.scnu.edu.cn/xueshenggongzuo/chengchangfazhan/kejichuangxin/', 'cs.scnu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['cs.scnu.edu.cn/xueshenggongzuo/chengchangfazhan/kejichuangxin/', 'cs.scnu.edu.cn/'],
+        },
+    ],
     name: '计算机学院竞赛通知',
     maintainers: ['fengkx'],
     handler,

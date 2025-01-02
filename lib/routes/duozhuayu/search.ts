@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import aesjs from 'aes-js';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['duozhuayu.com/search/book/:wd'],
-    },
+    radar: [
+        {
+            source: ['duozhuayu.com/search/book/:wd'],
+        },
+    ],
     name: '搜索结果',
     maintainers: ['fengkx'],
     handler,

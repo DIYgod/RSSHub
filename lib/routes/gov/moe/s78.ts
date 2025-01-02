@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['moe.gov.cn/s78/:column/tongzhi', 'moe.gov.cn/s78/:column'],
-    },
+    radar: [
+        {
+            source: ['moe.gov.cn/s78/:column/tongzhi', 'moe.gov.cn/s78/:column'],
+        },
+    ],
     name: '司局通知',
     maintainers: ['TonyRL'],
     handler,

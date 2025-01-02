@@ -1,17 +1,18 @@
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
+import cache from '@/utils/cache';
 
 const baseUrl = 'https://www.dcfever.com';
 
-const parseItem = (item, tryGet) =>
-    tryGet(item.link, async () => {
-        const { data: response } = await got(item.link);
+const parseItem = (item) =>
+    cache.tryGet(item.link, async () => {
+        const response = await ofetch(item.link);
         const $ = load(response);
         const content = $('div[itemprop="articleBody"], .column_article_content_html');
 
@@ -23,7 +24,7 @@ const parseItem = (item, tryGet) =>
         if (pageLinks.length) {
             const pages = await Promise.all(
                 pageLinks.map(async (pageLink) => {
-                    const { data: response } = await got(pageLink.link);
+                    const response = await ofetch(pageLink.link);
                     const $ = load(response);
                     return $('div[itemprop="articleBody"]').html();
                 })
@@ -32,7 +33,7 @@ const parseItem = (item, tryGet) =>
         }
 
         content.find('img').each((_, e) => {
-            if (e.attribs.src.includes('?')) {
+            if (e.attribs.src?.includes('?')) {
                 e.attribs.src = e.attribs.src.split('?')[0];
             }
         });
@@ -57,16 +58,25 @@ const parseItem = (item, tryGet) =>
         return item;
     });
 
-const parseTradeItem = (item, tryGet) =>
-    tryGet(item.link, async () => {
-        const { data: response } = await got(item.link);
+const parseTradeItem = (item) =>
+    cache.tryGet(item.link, async () => {
+        const response = await ofetch(item.link);
         const $ = load(response);
 
-        $('.selector_text').remove();
-        $('.selector_image_div').each((_, div) => {
+        const photoSelector = $('#trading_item_section .description')
+            .contents()
+            .filter((_, e) => e.type === 'comment')
+            .toArray()
+            .map((e) => e.data)
+            .join('');
+
+        const $photo = load(photoSelector, null, false);
+
+        $photo('.selector_text').remove();
+        $photo('.selector_image_div').each((_, div) => {
             delete div.attribs.onclick;
         });
-        $('.desktop_photo_selector img').each((_, img) => {
+        $photo('.desktop_photo_selector img').each((_, img) => {
             if (img.attribs.src.endsWith('_sqt.jpg')) {
                 img.attribs.src = img.attribs.src.replace('_sqt.jpg', '.jpg');
             }
@@ -75,7 +85,7 @@ const parseTradeItem = (item, tryGet) =>
         item.description = art(path.join(__dirname, 'templates/trading.art'), {
             info: $('.info_col'),
             description: $('.description_text').html(),
-            photo: $('.desktop_photo_selector').html(),
+            photo: $photo('.desktop_photo_selector').html(),
         });
 
         return item;

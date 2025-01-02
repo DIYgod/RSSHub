@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.dmzj.com/'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['news.dmzj.com/'],
+            target: '/news',
+        },
+    ],
     name: '新闻站',
     maintainers: ['vzz64'],
     handler,

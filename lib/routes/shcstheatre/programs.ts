@@ -8,7 +8,7 @@ import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/programs',
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.shcstheatre.com/Program/programList.aspx'],
-    },
+    radar: [
+        {
+            source: ['www.shcstheatre.com/Program/programList.aspx'],
+        },
+    ],
     name: '节目列表',
     maintainers: ['fuzy112'],
     handler,

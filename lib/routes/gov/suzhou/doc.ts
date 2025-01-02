@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.suzhou.gov.cn/szxxgk/front/xxgk_right.jsp', 'www.suzhou.gov.cn/'],
-    },
+    radar: [
+        {
+            source: ['www.suzhou.gov.cn/szxxgk/front/xxgk_right.jsp', 'www.suzhou.gov.cn/'],
+        },
+    ],
     name: '政府信息公开文件',
     maintainers: ['EsuRt'],
     handler,

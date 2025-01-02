@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['who.int/news-room/:type'],
-        target: '/news-room/:type',
-    },
+    radar: [
+        {
+            source: ['who.int/news-room/:type'],
+            target: '/news-room/:type',
+        },
+    ],
     name: 'Newsroom',
     maintainers: ['LogicJake', 'nczitzk'],
     handler,

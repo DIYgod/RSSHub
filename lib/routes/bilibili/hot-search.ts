@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.bilibili.com/'],
-    },
+    radar: [
+        {
+            source: ['www.bilibili.com/', 'm.bilibili.com/'],
+        },
+    ],
     name: '热搜',
     maintainers: ['CaoMeiYouRen'],
     handler,

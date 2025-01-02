@@ -7,7 +7,7 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://pubsonline.informs.org';

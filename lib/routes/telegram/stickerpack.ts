@@ -1,10 +1,12 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
+import { Route, ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/stickerpack/:name',
     categories: ['social-media'],
+    view: ViewType.Pictures,
     example: '/telegram/stickerpack/DIYgod',
     parameters: { name: 'Sticker Pack name, available in the sharing URL' },
     features: {
@@ -22,13 +24,12 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.telegram || !config.telegram.token) {
-        throw new Error('Telegram Sticker Pack RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new ConfigNotFoundError('Telegram Sticker Pack RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const name = ctx.req.param('name');
 
-    const response = await got({
+    const response = await ofetch(`https://api.telegram.org/bot${config.telegram.token}/getStickerSet?name=${name}`, {
         method: 'get',
-        url: `https://api.telegram.org/bot${config.telegram.token}/getStickerSet?name=${name}`,
     });
 
     const data = response.data.result;

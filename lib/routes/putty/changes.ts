@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.chiark.greenend.org.uk/~sgtatham/putty/changes.html', 'www.chiark.greenend.org.uk/'],
-    },
+    radar: [
+        {
+            source: ['www.chiark.greenend.org.uk/~sgtatham/putty/changes.html', 'www.chiark.greenend.org.uk/'],
+        },
+    ],
     name: 'Change Log',
     maintainers: ['nczitzk'],
     handler,

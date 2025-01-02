@@ -4,51 +4,66 @@ import utils from './utils';
 import { load } from 'cheerio';
 import { config } from '@/config';
 import logger from '@/utils/logger';
+import puppeteer from '@/utils/puppeteer';
+import { JSDOM } from 'jsdom';
+
+const disableConfigCookie = false;
 
 const getCookie = () => {
-    if (Object.keys(config.bilibili.cookies).length > 0) {
+    if (!disableConfigCookie && Object.keys(config.bilibili.cookies).length > 0) {
+        // Update b_lsid in cookies
+        for (const key of Object.keys(config.bilibili.cookies)) {
+            const cookie = config.bilibili.cookies[key];
+            if (cookie) {
+                const updatedCookie = cookie.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
+                config.bilibili.cookies[key] = updatedCookie;
+            }
+        }
+
         return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]];
     }
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
-        // default Referer: https://www.bilibili.com is limited
-        // Bilibili return cookies with multiple set-cookie
-        // let response = await got('https://space.bilibili.com/1');
-        // const setCookie = response.headers['set-cookie']; // should contain buvid3 and b_nut
-        // if (typeof setCookie === 'undefined') {
-        //     return '';
-        // }
-        // const cookie = setCookie.map((cookie) => cookie.split(';')[0]);
-        const cookie = [];
-        cookie.push(['b_lsid', utils.lsid()].join('='), ['_uuid', utils._uuid()].join('='), ['b_nut', Date.now().toString()].join('='));
-        let response = await got('https://api.bilibili.com/x/frontend/finger/spi', {
+        const browser = await puppeteer({
+            stealth: true,
+        });
+        const page = await browser.newPage();
+        const waitForRequest = new Promise<string>((resolve) => {
+            page.on('requestfinished', async (request) => {
+                if (request.url() === 'https://api.bilibili.com/x/internal/gaia-gateway/ExClimbWuzhi') {
+                    const cookies = await page.cookies();
+                    let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+
+                    cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
+                    resolve(cookieString);
+                }
+            });
+        });
+        await page.goto('https://space.bilibili.com/1/dynamic');
+        const cookieString = await waitForRequest;
+        logger.debug(`Got bilibili cookie: ${cookieString}`);
+        await browser.close();
+        return cookieString;
+    });
+};
+
+const getRenderData = (uid) => {
+    const key = 'bili-web-render-data';
+    return cache.tryGet(key, async () => {
+        const cookie = await getCookie();
+        const { data: response } = await got(`https://space.bilibili.com/${uid}`, {
             headers: {
                 Referer: 'https://www.bilibili.com/',
-                Cookie: cookie.join('; '),
+                Cookie: cookie,
             },
         });
-        cookie.push(['buvid3', encodeURIComponent(response.data.data.b_3)].join('='), ['bvuid4', encodeURIComponent(response.data.data.b_4)].join('='));
-        const e = Math.floor(Date.now() / 1000);
-        const hexsign = utils.hexsign(e);
-        // await got('https://space.bilibili.com/1', {
-        //     headers: {
-        //         Referer: 'https://www.bilibili.com/',
-        //         Cookie: cookie.join('; '),
-        //     },
-        // });
-        try {
-            response = await got.post(`https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket?key_id=ec02&hexsign=${hexsign}&context[ts]=${e}&csrf=`, {
-                headers: {
-                    Referer: 'https://space.bilibili.com/1',
-                    Cookie: cookie.join('; '),
-                },
-            });
-            cookie.push(['bili_ticket', response.data.data.ticket].join('='), ['bili_ticket_expires', (Number.parseInt(response.data.data.created_at) + Number.parseInt(response.data.data.ttl)).toString()].join('='));
-        } catch {
-            // HTTPError: Response code 429 (Too Many Requests)
-        }
-
-        return cookie.join('; ');
+        const dom = new JSDOM(response);
+        const document = dom.window.document;
+        const scriptElement = document.querySelector('#__RENDER_DATA__');
+        const innerText = scriptElement ? scriptElement.textContent || '{}' : '{}';
+        const renderData = JSON.parse(decodeURIComponent(innerText));
+        const accessId = renderData.access_id;
+        return accessId;
     });
 };
 
@@ -121,13 +136,9 @@ const getUsernameAndFaceFromUID = async (uid) => {
     if (!name || !face) {
         const cookie = await getCookie();
         const wbiVerifyString = await getWbiVerifyString();
-        // await got(`https://space.bilibili.com/${uid}/`, {
-        //     headers: {
-        //         Referer: `https://www.bilibili.com/`,
-        //         Cookie: cookie,
-        //     },
-        // });
-        const params = utils.addWbiVerifyInfo(`mid=${uid}&token=&platform=web&web_location=1550101`, wbiVerifyString);
+        const dmImgList = utils.getDmImgList();
+        const renderData = await getRenderData(uid);
+        const params = utils.addWbiVerifyInfo(utils.addRenderData(utils.addDmVerifyInfo(`mid=${uid}&token=&platform=web&web_location=1550101`, dmImgList), renderData), wbiVerifyString);
         const { data: nameResponse } = await got(`https://api.bilibili.com/x/space/wbi/acc/info?${params}`, {
             headers: {
                 Referer: `https://space.bilibili.com/${uid}/`,
@@ -274,4 +285,5 @@ export default {
     getCidFromId,
     getAidFromBvid,
     getArticleDataFromCvid,
+    getRenderData,
 };

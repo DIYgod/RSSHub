@@ -8,20 +8,20 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: ['/work/tags/:tag', '/tag/:tag', '*'],
-    radar: {
-        source: ['logonews.cn/work/tags/:tag'],
-    },
+    radar: [
+        {
+            source: ['logonews.cn/work/tags/:tag'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
     url: 'logonews.cn/',
-    url: 'logonews.cn/',
     description: `如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 \`https://www.logonews.cn/tag/china\`，可得路由为 [\`/logonews/tag/china\`](https://rsshub.app/logonews/tag/china)。`,
-    url: 'logonews.cn/work',
 };
 
 async function handler(ctx) {

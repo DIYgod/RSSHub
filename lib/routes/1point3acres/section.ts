@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['instant.1point3acres.com/section/:id', 'instant.1point3acres.com/'],
-    },
+    radar: [
+        {
+            source: ['instant.1point3acres.com/section/:id', 'instant.1point3acres.com/'],
+        },
+    ],
     name: '分区',
     maintainers: ['nczitzk'],
     handler,

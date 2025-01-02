@@ -8,11 +8,11 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/:language/news/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/dn/en-us/news',
     parameters: { language: 'Language, see below', category: 'Category, see below, The Latest by default' },
     features: {

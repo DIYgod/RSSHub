@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['penguinrandomhouse.com/articles'],
-    },
+    radar: [
+        {
+            source: ['penguinrandomhouse.com/articles'],
+        },
+    ],
     name: 'Articles',
     maintainers: ['StevenRCE0'],
     handler,

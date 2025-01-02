@@ -17,16 +17,18 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/collection/:id'],
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/collection/:id'],
+        },
+    ],
     name: 'xhu - 收藏夹',
     maintainers: ['JimenezLi'],
     handler,
 };
 
 async function handler(ctx) {
-    const xhuCookie = await auth.getCookie(ctx);
+    const xhuCookie = await auth.getCookie();
     const id = ctx.req.param('id');
     const link = `https://www.zhihu.com/collection/${id}`;
 

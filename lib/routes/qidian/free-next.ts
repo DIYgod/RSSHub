@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.qidian.com/free'],
-        target: '/free',
-    },
+    radar: [
+        {
+            source: ['www.qidian.com/free'],
+            target: '/free',
+        },
+    ],
     name: '限时免费下期预告',
     maintainers: ['LogicJake'],
     handler,

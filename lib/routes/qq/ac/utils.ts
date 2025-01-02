@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const rootUrl = 'https://ac.qq.com';
 const mobileRootUrl = 'https://m.ac.qq.com';

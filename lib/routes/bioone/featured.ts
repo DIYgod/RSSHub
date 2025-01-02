@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bioone.org/'],
-    },
+    radar: [
+        {
+            source: ['bioone.org/'],
+        },
+    ],
     name: 'Featured articles',
     maintainers: ['nczitzk'],
     handler,

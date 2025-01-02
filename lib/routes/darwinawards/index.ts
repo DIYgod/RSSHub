@@ -4,15 +4,16 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: ['/all', '/'],
-    radar: {
-        source: ['darwinawards.com/darwin', 'darwinawards.com/'],
-        target: '',
-    },
-    name: 'Unknown',
+    name: 'Award Winners',
+    example: '/darwinawards',
+    path: '/',
+    radar: [
+        {
+            source: ['darwinawards.com/darwin', 'darwinawards.com/'],
+        },
+    ],
     maintainers: ['zoenglinghou', 'nczitzk'],
     handler,
-    url: 'darwinawards.com/darwin',
     url: 'darwinawards.com/darwin',
 };
 

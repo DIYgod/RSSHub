@@ -22,13 +22,15 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['civitai.com/models/:modelId'],
-    },
+    radar: [
+        {
+            source: ['civitai.com/models/:modelId'],
+        },
+    ],
     name: 'Model discussions',
     maintainers: ['DIYgod'],
     handler,
-    description: `:::warning
+    description: `::: warning
 Need to configure \`CIVITAI_COOKIE\` to obtain image information of NSFW models.
 :::`,
 };

@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['science.org/journal/:journal', 'science.org/toc/:journal/0/0'],
-        target: '/early/:journal',
-    },
+    radar: [
+        {
+            source: ['science.org/journal/:journal', 'science.org/toc/:journal/0/0'],
+            target: '/early/:journal',
+        },
+    ],
     name: 'First Release',
     maintainers: ['y9c', 'TonyRL'],
     handler,

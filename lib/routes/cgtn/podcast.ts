@@ -27,9 +27,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cgtn.com/podcast/column/:category/*/:id'],
-    },
+    radar: [
+        {
+            source: ['cgtn.com/podcast/column/:category/*/:id'],
+        },
+    ],
     name: '播客',
     maintainers: ['5upernova-heng'],
     handler,

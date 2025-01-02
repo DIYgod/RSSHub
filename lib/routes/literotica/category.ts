@@ -6,9 +6,11 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/category/:category',
-    radar: {
-        source: ['literotica.com/c/:category', 'literotica.com/'],
-    },
+    radar: [
+        {
+            source: ['literotica.com/c/:category', 'literotica.com/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

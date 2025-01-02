@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { HOST, NEW_LIST, OFFICIAL_PAGE_TYPE, POST_FULL, LINK, PUBLIC_IMG, PRIVATE_IMG } from './constant';
 import { getI18nGameInfo, getI18nType } from './utils';
 
@@ -24,8 +24,8 @@ const getEventList = async ({ type, gids, size, language }) => {
         headers: {
             'X-Rpc-Language': language,
         },
-    }).json();
-    const list = res?.data?.list || [];
+    });
+    const list = res?.data?.data?.list || [];
     return list;
 };
 
@@ -48,9 +48,9 @@ const getPostContent = (list, { language }) =>
                     headers: {
                         'X-Rpc-Language': language,
                     },
-                }).json();
-                const author = res?.data?.post?.user?.nickname || '';
-                let content = res?.data?.post?.post?.content || '';
+                });
+                const author = res?.data?.data?.post?.user?.nickname || '';
+                let content = res?.data?.data?.post?.post?.content || '';
                 if (content === language || !content) {
                     content = post.content;
                 }

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['antibody-software.com/wizfile/download'],
-    },
+    radar: [
+        {
+            source: ['antibody-software.com/wizfile/download'],
+        },
+    ],
     name: 'Version History',
     maintainers: ['Fatpandac'],
     handler,

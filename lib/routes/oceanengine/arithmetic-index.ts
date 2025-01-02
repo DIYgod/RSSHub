@@ -7,10 +7,11 @@ import dayjs from 'dayjs';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
 import { createDecipheriv } from 'node:crypto';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 // Parameters
 const CACHE_MAX_AGE = config.cache.contentExpire;
@@ -43,7 +44,7 @@ const getMultiKeywordHotTrend = async (page, keyword, start_date, end_date, app_
             });
             return p;
         }
-        return Promise.all([queryData()]).then((result) => result);
+        return Promise.resolve(queryData()).then((result) => result);
     }, e);
     return res[0];
 };
@@ -95,10 +96,10 @@ async function handler(ctx) {
     const end_date = now.format('YYYYMMDD');
     const keyword = ctx.req.param('keyword');
     if (!keyword) {
-        throw new Error('Invalid keyword');
+        throw new InvalidParameterError('Invalid keyword');
     }
     if (ctx.req.param('channel') && !['douyin', 'toutiao'].includes(ctx.req.param('channel'))) {
-        throw new Error('Invalid channel。 Only support `douyin` or `toutiao`');
+        throw new InvalidParameterError('Invalid channel。 Only support `douyin` or `toutiao`');
     }
 
     const channel = ctx.req.param('channel') === 'toutiao' ? 'toutiao' : 'aweme'; // default channel is `douyin`

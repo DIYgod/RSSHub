@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['iqnew.com/post/new_100/', 'iqnew.com/'],
-    },
+    radar: [
+        {
+            source: ['iqnew.com/post/new_100/', 'iqnew.com/'],
+        },
+    ],
     name: '最近更新',
     maintainers: ['nczitzk'],
     handler,

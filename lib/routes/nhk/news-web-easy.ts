@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/news_web_easy',
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www3.nhk.or.jp/news/easy/', 'www3.nhk.or.jp/'],
-    },
+    radar: [
+        {
+            source: ['www3.nhk.or.jp/news/easy/', 'www3.nhk.or.jp/'],
+        },
+    ],
     name: 'News Web Easy',
     maintainers: ['Andiedie'],
     handler,

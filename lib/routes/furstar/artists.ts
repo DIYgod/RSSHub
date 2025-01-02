@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['furstar.jp/'],
-        target: '/artists',
-    },
+    radar: [
+        {
+            source: ['furstar.jp/'],
+            target: '/artists',
+        },
+    ],
     name: '画师列表',
     maintainers: ['NeverBehave'],
     handler,

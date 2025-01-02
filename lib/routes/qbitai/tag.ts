@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/tag/:tag',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/qbitai/tag/大语言模型',
     parameters: { tag: '标签名' },
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['qbitai.com/tag/:tag'],
-    },
+    radar: [
+        {
+            source: ['qbitai.com/tag/:tag'],
+        },
+    ],
     name: '标签',
     maintainers: ['FuryMartin'],
     handler,

@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['8kcosplay.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['8kcosplay.com/'],
+            target: '',
+        },
+    ],
     name: '最新',
     maintainers: ['KotoriK'],
     handler,

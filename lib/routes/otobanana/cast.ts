@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['otobanana.com/user/:id/cast', 'otobanana.com/user/:id'],
-    },
+    radar: [
+        {
+            source: ['otobanana.com/user/:id/cast', 'otobanana.com/user/:id'],
+        },
+    ],
     name: 'Cast 音声投稿',
     maintainers: ['TonyRL'],
     handler,
@@ -32,6 +34,11 @@ async function handler(ctx) {
 
     const casts = castData.results.map((item) => renderCast(item));
 
+    ctx.set('json', {
+        userInfo,
+        castData,
+    });
+
     return {
         title: `${userInfo.name} (@${userInfo.username}) - 音声投稿 | OTOBANANA`,
         description: userInfo.bio.replaceAll('\n', ' '),
@@ -44,9 +51,4 @@ async function handler(ctx) {
         itunes_author: userInfo.name,
         item: casts,
     };
-
-    ctx.set('json', {
-        userInfo,
-        castData,
-    });
 }

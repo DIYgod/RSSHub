@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import dayjs from 'dayjs';
 
 const domain = 'readhub.cn';
@@ -40,7 +40,7 @@ const processItems = async (items, tryGet) =>
 
                     const { data: detailResponse } = await got(item.link);
 
-                    const data = JSON.parse(detailResponse.match(/{\\"topic\\":(.*?)}]\\n"]\)<\/script>/)[1].replaceAll('\\"', '"'));
+                    const data = JSON.parse(detailResponse.match(/{\\"topic\\":(.*?)}]\\n"]\)<\/script>/)[1].replaceAll(String.raw`\"`, '"'));
 
                     item.title = data.title;
                     item.link = data.url ?? new URL(`topic/${data.uid}`, rootUrl).href;

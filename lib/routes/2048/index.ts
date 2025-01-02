@@ -8,7 +8,8 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:id?',
@@ -75,18 +76,15 @@ async function handler(ctx) {
             },
         });
         const $ = load(response);
-        const targetLink = $('table.group-table tr').eq(1).find('td a').eq(0).attr('href');
+        const targetLink = new URL($('table.group-table tr').eq(1).find('td a').eq(0).attr('href')).href;
         return targetLink;
     });
 
-    const currentUrl = `${entranceDomain}/2048/thread.php?fid-${id}.html`;
+    const currentUrl = `${entranceDomain}2048/thread.php?fid-${id}.html`;
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
+    const response = await ofetch.raw(currentUrl);
 
-    const $ = load(response.data);
+    const $ = load(response._data);
     const currentHost = `https://${new URL(response.url).host}`; // redirected host
 
     $('#shortcut').remove();
@@ -127,8 +125,8 @@ async function handler(ctx) {
                 item.pubDate = timezone(parseDate(content('span.fl.gray').first().attr('title')), +8);
 
                 const downloadLink = content('#read_tpc').first().find('a').last();
-
-                if (downloadLink?.text()?.startsWith('http') && /datapps\.org$/.test(new URL(downloadLink.text()).hostname)) {
+                const copyLink = content('#copytext')?.first()?.text();
+                if (downloadLink?.text()?.startsWith('http') && /down2048\.com$/.test(new URL(downloadLink.text()).hostname)) {
                     const torrentResponse = await got({
                         method: 'get',
                         url: downloadLink.text(),
@@ -137,7 +135,8 @@ async function handler(ctx) {
                     const torrent = load(torrentResponse.data);
 
                     item.enclosure_type = 'application/x-bittorrent';
-                    item.enclosure_url = `https://data.datapps.org/${torrent('.uk-button').last().attr('href')}`;
+                    const ahref = torrent('.uk-button').last().attr('href');
+                    item.enclosure_url = ahref?.startsWith('http') ? ahref : `https://data.datapps.org/${ahref}`;
 
                     const magnet = torrent('.uk-button').first().attr('href');
 
@@ -147,6 +146,10 @@ async function handler(ctx) {
                             torrent: item.enclosure_url,
                         })
                     );
+                } else if (copyLink?.startsWith('magnet')) {
+                    // copy link
+                    item.enclosure_url = copyLink;
+                    item.enclosure_type = 'x-scheme-handler/magnet';
                 }
 
                 const desp = content('#read_tpc').first();

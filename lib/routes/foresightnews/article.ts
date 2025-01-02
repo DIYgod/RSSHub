@@ -3,7 +3,7 @@ import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
 
 export const route: Route = {
     path: '/article',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/foresightnews/article',
     parameters: {},
     features: {
@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['foresightnews.pro/'],
-    },
+    radar: [
+        {
+            source: ['foresightnews.pro/'],
+        },
+    ],
     name: '文章',
     maintainers: ['nczitzk'],
     handler,

@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['icac.org.hk/:lang/press/index.html'],
-        target: '/news/:lang',
-    },
+    radar: [
+        {
+            source: ['icac.org.hk/:lang/press/index.html'],
+            target: '/news/:lang',
+        },
+    ],
     name: 'Press Releases',
     maintainers: ['linbuxiao, TonyRL'],
     handler,

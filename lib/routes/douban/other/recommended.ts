@@ -3,7 +3,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 import { fallback, queryToInteger } from '@/utils/readable-social';
 
@@ -30,9 +30,9 @@ export const route: Route = {
 
   用例：\`/douban/recommended/tv/playable=0&score=8\`
 
-  :::tip
+::: tip
   整合了 /douban/list/ 路由，省去每月手动更新 id 参数，因为当月推荐剧集片单中，会有还未播出 / 开评分剧集、海外平台播出剧集，请自行考虑是否使用额外参数。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/activity/:slug',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sspai/activity/urfp0d9i',
     parameters: { slug: '作者 slug，可在作者主页URL中找到' },
     features: {
@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/u/:id/updates'],
-        target: '/activity/:id',
-    },
+    radar: [
+        {
+            source: ['sspai.com/u/:id/updates'],
+            target: '/activity/:id',
+        },
+    ],
     name: '作者动态',
     maintainers: ['umm233'],
     handler,

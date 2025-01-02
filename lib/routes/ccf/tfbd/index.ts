@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tfbd.ccf.org.cn/tfbd/:caty/:id', 'tfbd.ccf.org.cn/'],
-    },
+    radar: [
+        {
+            source: ['tfbd.ccf.org.cn/tfbd/:caty/:id', 'tfbd.ccf.org.cn/'],
+        },
+    ],
     name: '大数据专家委员会',
     maintainers: ['tudou027'],
     handler,

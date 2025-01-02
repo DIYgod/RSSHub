@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['military.china.com/news'],
-    },
+    radar: [
+        {
+            source: ['military.china.com/news'],
+        },
+    ],
     name: 'Military - Military News 军事 - 军事新闻',
     maintainers: ['jiaaoMario'],
     handler,

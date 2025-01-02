@@ -3,7 +3,7 @@
 </p>
 <p>
     <span><small><i>{{ item.authors }}</i></small></span><br>
-    <span><small><i>https://doi.org/{{ item.doi }}</i></small></span><br>
+    <span><small><i><a href="https://doi.org/{{ item.doi }}">https://doi.org/{{ item.doi }}</a></i></small></span><br>
     <span><small><i>Volume {{ item.volume }}</i></small></span><br>
 </p>
 <p>

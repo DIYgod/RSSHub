@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 
 const bootstrapHost = 'https://weixin.shmtu.edu.cn/dynamic/shmtuHttps';
@@ -55,9 +55,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['portal.shmtu.edu.cn/:type'],
-    },
+    radar: [
+        {
+            source: ['portal.shmtu.edu.cn/:type'],
+        },
+    ],
     name: '数字平台',
     maintainers: ['imbytecat'],
     handler,

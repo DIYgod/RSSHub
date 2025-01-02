@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zhuanlan.zhihu.com/:id'],
-        target: '/zhuanlan/:id',
-    },
+    radar: [
+        {
+            source: ['zhuanlan.zhihu.com/:id'],
+            target: '/zhuanlan/:id',
+        },
+    ],
     name: 'xhu- 专栏',
     maintainers: ['JimenezLi'],
     handler,

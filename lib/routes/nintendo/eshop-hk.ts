@@ -7,13 +7,15 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/eshop/hk',
-    radar: {
-        source: ['nintendo.com.hk/software/switch', 'nintendo.com.hk/'],
-    },
+    radar: [
+        {
+            source: ['nintendo.com.hk/software/switch', 'nintendo.com.hk/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

@@ -7,26 +7,34 @@ export const route: Route = {
     example: '/javdb/tags/c2=5&c10=1',
     parameters: { query: '筛选，默认为 `c10=1`', category: '分类，见下表，默认为 `有碼`' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'JAVDB_SESSION',
+                description: 'JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['javdb.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['javdb.com/'],
+            target: '',
+        },
+    ],
     name: '分類',
     maintainers: ['nczitzk'],
     handler,
     url: 'javdb.com/',
-    description: `:::tip
+    description: `::: tip
   在 [分類](https://javdb.com/tags) 中选定分类后，URL 中 \`tags?\` 后的字段即为筛选参数。
 
   如 \`https://javdb.com/tags?c2=5&c10=1\` 中 \`c2=5&c10=1\` 为筛选参数。
-  :::
+:::
 
   分类
 
@@ -43,5 +51,5 @@ async function handler(ctx) {
 
     const title = `JavDB${query === '' ? '' : ` - ${query}`} `;
 
-    ctx.set('data', await utils.ProcessItems(ctx, currentUrl, title));
+    return await utils.ProcessItems(ctx, currentUrl, title);
 }

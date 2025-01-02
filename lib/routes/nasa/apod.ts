@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,7 +7,8 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/apod',
-    categories: ['picture'],
+    categories: ['picture', 'popular'],
+    view: ViewType.Pictures,
     example: '/nasa/apod',
     parameters: {},
     features: {
@@ -18,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['apod.nasa.govundefined'],
-    },
-    name: 'NASA',
+    radar: [
+        {
+            source: ['apod.nasa.govundefined'],
+        },
+    ],
+    name: 'Astronomy Picture of the Day',
     maintainers: ['nczitzk', 'williamgateszhao'],
     handler,
     url: 'apod.nasa.govundefined',

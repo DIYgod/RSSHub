@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
@@ -13,10 +13,12 @@ const rssUrl = 'https://www.tribalfootball.com/rss/mediafed/general/rss.xml';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['tribalfootball.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['tribalfootball.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['Rongronggg9'],
     handler,
@@ -39,7 +41,7 @@ async function handler() {
                 link,
                 guid: $item.find('guid').text(),
                 pubDate: parseDate($item.find('pubDate').text()),
-                author: $item.find('dc\\:creator').text(),
+                author: $item.find(String.raw`dc\:creator`).text(),
                 _header_image: $item.find('enclosure').attr('url'),
             };
         })

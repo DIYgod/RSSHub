@@ -1,7 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import wait from '@/utils/wait';
 import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 import { parseDate } from '@/utils/parse-date';
@@ -74,12 +73,14 @@ function getArg(type) {
 
 export const route: Route = {
     path: '/oa_news/:type?',
-    radar: {
-        source: ['oas.gdut.edu.cn/seeyon'],
-        target: '/oa_news/',
-    },
+    radar: [
+        {
+            source: ['oas.gdut.edu.cn/seeyon'],
+            target: '/oa_news/',
+        },
+    ],
     name: 'Unknown',
-    maintainers: ['Jim Kirisame'],
+    maintainers: ['jim-kirisame'],
     handler,
     url: 'oas.gdut.edu.cn/seeyon',
 };
@@ -113,18 +114,16 @@ async function handler(ctx) {
     }
 
     // 构造文章数组
-    const articles = [];
-    for (const item of resp.data.list) {
-        articles.push({
-            title: item.title,
-            guid: item.id,
-            link: site + '/newsData.do?method=newsView&newsId=' + item.id,
-            pubDate: timezone(parseDate(item.publishDate1), +8),
-            author: item.publishUserDepart,
-            category: item.typeName,
-        });
-    }
+    const articles = resp.data.list.map((item) => ({
+        title: item.title,
+        guid: item.id,
+        link: site + '/newsData.do?method=newsView&newsId=' + item.id,
+        pubDate: timezone(parseDate(item.publishDate1), +8),
+        author: item.publishUserDepart,
+        category: item.typeName,
+    }));
 
+    const results = [];
     // 获取实际的文章内容
     for await (const data of asyncPool(2, articles, async (data) => {
         const link = data.link;
@@ -207,18 +206,16 @@ async function handler(ctx) {
                 }
             });
 
-            // 防止太快被Ban
-            await wait(500);
             return node.html();
         });
     })) {
-        data;
+        results.push(data);
     }
 
     return {
         title: `广东工业大学新闻通知网 - ` + type.name,
         link: site,
         description: `广东工业大学新闻通知网`,
-        item: articles,
+        item: results,
     };
 }

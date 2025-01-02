@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['indienova.com/column/:columnId'],
-    },
+    radar: [
+        {
+            source: ['indienova.com/column/:columnId'],
+        },
+    ],
     name: '专题',
     maintainers: ['TonyRL'],
     handler,

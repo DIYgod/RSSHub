@@ -5,7 +5,7 @@ import { processList, ProcessFeed, baseUrl, apiUrl } from './utils';
 
 export const route: Route = {
     path: '/publication/:id',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/vocus/publication/bass',
     parameters: { id: '出版專題 id，可在出版專題主页的 URL 找到' },
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['vocus.cc/:id/home', 'vocus.cc/:id/introduce'],
-    },
+    radar: [
+        {
+            source: ['vocus.cc/:id/home', 'vocus.cc/:id/introduce'],
+        },
+    ],
     name: '出版專題',
     maintainers: ['Maecenas'],
     handler,

@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topics',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sspai/topics',
     parameters: {},
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/topics'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/topics'],
+        },
+    ],
     name: '专题',
     maintainers: ['SunShinenny'],
     handler,
@@ -40,7 +42,7 @@ async function handler() {
 
             const key = `sspai:topics:${item.id}`;
             return cache.tryGet(key, () => {
-                description = `${item.intro}<br><img src="https://cdn.sspai.com/${item.banner}" /><br>如有兴趣,请复制链接订阅 <br> <h3>https://rsshub.app/sspai/topic/${item.id}</h3>`;
+                description = `<br><img src="https://cdnfile.sspai.com/${item.banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"/>${item.intro}<br>如有兴趣,请复制链接订阅 <br> <h3>https://rsshub.app/sspai/topic/${item.id}</h3>`;
 
                 return {
                     title: item.title.trim(),

@@ -79,5 +79,5 @@ async function handler(ctx) {
         responseData.item = news;
     }
 
-    ctx.set('data', responseData);
+    return responseData;
 }

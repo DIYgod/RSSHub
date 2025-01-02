@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/zw/projectList',
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zw.cdzjryb.com/lottery/accept/projectList', 'zw.cdzjryb.com/'],
-    },
+    radar: [
+        {
+            source: ['zw.cdzjryb.com/lottery/accept/projectList', 'zw.cdzjryb.com/'],
+        },
+    ],
     name: '商品住房购房登记',
     maintainers: ['TonyRL'],
     handler,

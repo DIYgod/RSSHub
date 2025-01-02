@@ -19,11 +19,13 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['3dmgame.com/news/:category?', '3dmgame.com/news'],
-    },
+    radar: [
+        {
+            source: ['3dmgame.com/news/:category?', '3dmgame.com/news'],
+        },
+    ],
     name: '新闻中心',
-    maintainers: ['zhboner'],
+    maintainers: ['zhboner', 'lyqluis'],
     handler,
     description: `| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |
   | -------- | -------- | -------- | -------- | ----------- |
@@ -33,7 +35,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { category = '' } = ctx.req.param();
     const isArcPost = category && !isNaN(category); // https://www.3dmgame.com/news/\d+/
-    const url = `https://www.3dmgame.com/${category && category !== 'news_36_1' ? 'news/' : ''}${category ?? 'news'}/`;
+    const url = `https://www.3dmgame.com/${category === 'news_36_1' ? category : 'news/' + category}`;
     const res = await got(url);
     const $ = load(res.data);
     const list = $(isArcPost ? '.selectarcpost' : '.selectpost')
@@ -50,7 +52,7 @@ async function handler(ctx) {
             }
             const a = item.find('.text a');
             return {
-                title: a.text(),
+                title: a.first().text(),
                 link: a.attr('href'),
                 description: item.find('.miaoshu').text(),
                 pubDate: timezone(parseDate(item.find('.time').text().trim()), 8),

@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mp.weixin.qq.com/cgi-bin/announce'],
-    },
+    radar: [
+        {
+            source: ['mp.weixin.qq.com/cgi-bin/announce'],
+        },
+    ],
     name: '公众平台系统公告栏目',
     maintainers: ['xyqfer'],
     handler,

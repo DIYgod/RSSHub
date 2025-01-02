@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tradingview.com/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/'],
-    },
+    radar: [
+        {
+            source: ['tradingview.com/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/'],
+        },
+    ],
     name: 'Desktop releases and release notes',
     maintainers: ['nczitzk'],
     handler,

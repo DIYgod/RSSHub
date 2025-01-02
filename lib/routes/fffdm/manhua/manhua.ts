@@ -7,7 +7,7 @@ import got from '@/utils/got';
 const domain = 'manhua.fffdm.com';
 const host = `https://${domain}`;
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
 const get_pic = async (url) => {
@@ -34,10 +34,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.fffdm.com/manhua/:id', 'www.fffdm.com/:id'],
-        target: '/manhua/:id',
-    },
+    radar: [
+        {
+            source: ['www.fffdm.com/manhua/:id', 'www.fffdm.com/:id'],
+            target: '/manhua/:id',
+        },
+    ],
     name: '在线漫画',
     maintainers: ['zytomorrow'],
     handler,

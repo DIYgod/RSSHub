@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['v2ex.com/t/:postid'],
-    },
+    radar: [
+        {
+            source: ['v2ex.com/t/:postid'],
+        },
+    ],
     name: '帖子',
     maintainers: ['kt286'],
     handler,

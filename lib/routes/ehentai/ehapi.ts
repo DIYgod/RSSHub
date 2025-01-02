@@ -2,7 +2,7 @@ import got from '@/utils/got';
 import logger from '@/utils/logger';
 import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 
 const headers = {};

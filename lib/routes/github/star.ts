@@ -1,23 +1,27 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/stars/:user/:repo',
-    categories: ['programming'],
-    example: '/github/stars/DIYGod/RSSHub',
+    categories: ['programming', 'popular'],
+    example: '/github/stars/DIYgod/RSSHub',
+    view: ViewType.Notifications,
     parameters: { user: 'GitHub username', repo: 'GitHub repo name' },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
+        requireConfig: [
+            {
+                name: 'GITHUB_ACCESS_TOKEN',
+                description: 'GitHub Access Token',
+            },
+        ],
     },
-    radar: {
-        source: ['github.com/:user/:repo/stargazers', 'github.com/:user/:repo'],
-    },
+    radar: [
+        {
+            source: ['github.com/:user/:repo/stargazers', 'github.com/:user/:repo'],
+        },
+    ],
     name: 'Repo Stars',
     maintainers: ['HenryQW'],
     handler,
@@ -25,7 +29,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.github || !config.github.access_token) {
-        throw new Error('GitHub star RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new ConfigNotFoundError('GitHub star RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const user = ctx.req.param('user');
     const repo = ctx.req.param('repo');

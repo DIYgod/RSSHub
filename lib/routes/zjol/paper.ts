@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/paper/:id?',
@@ -31,7 +32,7 @@ async function handler(ctx) {
 
     const allowedId = ['zjrb', 'qjwb', 'msb', 'zjlnb', 'zjfzb', 'jnyb'];
     if (!allowedId.includes(id)) {
-        throw new Error('id not allowed');
+        throw new InvalidParameterError('id not allowed');
     }
 
     const query = id === 'jnyb' ? 'map[name="PagePicMap"] area' : 'ul.main-ed-articlenav-list li a';

@@ -7,9 +7,11 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import asyncPool from 'tiny-async-pool';
 import { art } from '@/utils/render';
-import { parseJucheDate, fixDesc, fetchPhoto, fetchVideo } from './utils';
-import * as path from 'node:path';
+import { fixDesc, fetchPhoto, fetchVideo } from './utils';
+import path from 'node:path';
 import sanitizeHtml from 'sanitize-html';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:lang/:category?',
@@ -24,10 +26,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.kcna.kp/:lang', 'www.kcna.kp/:lang/category/articles/q/1ee9bdb7186944f765208f34ecfb5407.kcmsf', 'www.kcna.kp/:lang/category/articles.kcmsf'],
-        target: '/:lang',
-    },
+    radar: [
+        {
+            source: ['www.kcna.kp/:lang', 'www.kcna.kp/:lang/category/articles/q/1ee9bdb7186944f765208f34ecfb5407.kcmsf', 'www.kcna.kp/:lang/category/articles.kcmsf'],
+            target: '/:lang',
+        },
+    ],
     name: 'News',
     maintainers: ['Rongronggg9'],
     handler,
@@ -64,12 +68,12 @@ async function handler(ctx) {
         .map((_, item) => {
             item = $(item);
             const dateElem = item.find('.publish-time');
-            const dateString = dateElem.text();
+            const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
             dateElem.remove();
             return {
                 title: item.text(),
                 link: rootUrl + item.attr('href'),
-                pubDate: parseJucheDate(dateString),
+                pubDate: timezone(parseDate(dateString[0]), +9),
             };
         })
         .get();
@@ -85,9 +89,9 @@ async function handler(ctx) {
             item.title = $('article-main-title').text() || item.title;
 
             const dateElem = $('.publish-time');
-            const dateString = dateElem.text();
+            const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
             dateElem.remove();
-            item.pubDate = parseJucheDate(dateString) || item.pubDate;
+            item.pubDate = dateString ? timezone(parseDate(dateString[0]), +9) : item.pubDate;
 
             const description = fixDesc($, $('.article-content-body .content-wrapper'));
 

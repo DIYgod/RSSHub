@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import auth from './auth';
-import utils from '../utils';
+import { processImage } from '../utils';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -17,25 +17,27 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/people/:id'],
-        target: '/people/activities/:id',
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/people/:id'],
+            target: '/people/activities/:id',
+        },
+    ],
     name: 'xhu - 用户动态',
     maintainers: ['JimenezLi'],
     handler,
     description: `[xhu](https://github.com/REToys/xhu)
 
-  :::tip
+::: tip
   用户的 16 进制 id 获取方式：
 
   1.  可以通过 RSSHub Radar 扩展获取；
   2.  或者在用户主页打开 F12 控制台，执行以下代码：\`console.log(/"id":"([0-9a-f]*?)","urlToken"/.exec(document.getElementById('js-initialData').innerHTML)[1]);\` 即可获取用户的 16 进制 id。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
-    const xhuCookie = await auth.getCookie(ctx);
+    const xhuCookie = await auth.getCookie();
     const hexId = ctx.req.param('hexId');
     const link = `https://www.zhihu.com/people/${hexId}`;
     const url = `https://api.zhihuvvv.workers.dev/people/${hexId}/activities?before_id=0&limit=20`;
@@ -60,7 +62,7 @@ async function handler(ctx) {
             let title;
             let description;
             let url;
-            const images = [];
+            const images: string[] = [];
             let text = '';
             let link = '';
             let author = '';
@@ -69,13 +71,13 @@ async function handler(ctx) {
                 case 'answer':
                     title = detail.question.title;
                     author = detail.author.name;
-                    description = utils.ProcessImage(detail.content);
+                    description = processImage(detail.content);
                     url = `https://www.zhihu.com/question/${detail.question.id}/answer/${detail.id}`;
                     break;
                 case 'article':
                     title = detail.title;
                     author = detail.author.name;
-                    description = utils.ProcessImage(detail.content);
+                    description = processImage(detail.content);
                     url = `https://zhuanlan.zhihu.com/p/${detail.id}`;
                     break;
                 case 'pin':
@@ -117,7 +119,7 @@ async function handler(ctx) {
                 case 'question':
                     title = detail.title;
                     author = detail.author.name;
-                    description = utils.ProcessImage(detail.detail);
+                    description = processImage(detail.detail);
                     url = `https://www.zhihu.com/question/${detail.id}`;
                     break;
                 case 'collection':
@@ -144,6 +146,8 @@ async function handler(ctx) {
                     description = detail.description;
                     url = `https://www.zhihu.com/roundtable/${detail.id}`;
                     break;
+                default:
+                    description = `未知类型 ${item.target.type}，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue`;
             }
 
             return {

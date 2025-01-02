@@ -19,6 +19,6 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
-    ctx.set('data', await utils.parseFeed({ subjectid: 70 }));
+async function handler() {
+    return await utils.parseFeed({ subjectid: 70 });
 }

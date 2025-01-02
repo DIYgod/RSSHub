@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cebbank.com/site/ygzx/whpj/index.html', 'cebbank.com/eportal/ui', 'cebbank.com/'],
-    },
+    radar: [
+        {
+            source: ['cebbank.com/site/ygzx/whpj/index.html', 'cebbank.com/eportal/ui', 'cebbank.com/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['linbuxiao'],
     handler,
@@ -61,7 +63,7 @@ async function handler(ctx) {
         })
         .get();
 
-    return {
+    const ret = {
         title: '中国光大银行',
         description: '中国光大银行 外汇牌价',
         link,
@@ -69,9 +71,8 @@ async function handler(ctx) {
     };
 
     ctx.set('json', {
-        title: '中国光大银行',
-        description: '中国光大银行 外汇牌价',
+        ...ret,
         pubDate: timezone(parseDate($('#t_id span').text().substring(5), 'YYYY-MM-DD HH:mm', true), 0),
-        item: items,
     });
+    return ret;
 }

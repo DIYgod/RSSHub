@@ -5,7 +5,7 @@ import { baseUrl } from './utils';
 
 export const route: Route = {
     path: '/topic_list',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/agirls/topic_list',
     parameters: {},
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['agirls.aotter.net/', 'agirls.aotter.net/topic'],
-    },
+    radar: [
+        {
+            source: ['agirls.aotter.net/', 'agirls.aotter.net/topic'],
+        },
+    ],
     name: '当前精选主题列表',
     maintainers: ['TonyRL'],
     handler,

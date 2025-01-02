@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
@@ -7,7 +7,8 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/kx',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Notifications,
     example: '/fx678/kx',
     parameters: {},
     features: {
@@ -18,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fx678.com/kx'],
-    },
+    radar: [
+        {
+            source: ['fx678.com/kx'],
+        },
+    ],
     name: '7x24 小时快讯',
     maintainers: ['occupy5', 'dousha'],
     handler,

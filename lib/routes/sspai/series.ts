@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/series',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sspai/series',
     parameters: {},
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/series'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/series'],
+        },
+    ],
     name: '最新上架付费专栏',
     maintainers: ['HenryQW'],
     handler,

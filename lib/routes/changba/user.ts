@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,12 +6,13 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
 
 export const route: Route = {
     path: '/:userid',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.Audios,
     example: '/changba/skp6hhF59n48R-UpqO3izw',
     parameters: { userid: '用户ID, 可在对应分享页面的 URL 中找到' },
     features: {
@@ -22,11 +23,13 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['changba.com/s/:userid'],
-    },
+    radar: [
+        {
+            source: ['changba.com/s/:userid'],
+        },
+    ],
     name: '用户',
-    maintainers: [],
+    maintainers: ['kt286', 'xizeyoupan', 'pseudoyu'],
     handler,
 };
 
@@ -99,9 +102,9 @@ async function handler(ctx) {
     items = items.filter(Boolean);
 
     return {
-        title: $('title').text(),
+        title: author + ' - 唱吧',
         link: url,
-        description: $('meta[name="description"]').attr('content') || $('title').text(),
+        description: $('meta[name="description"]').attr('content') || author + ' - 唱吧',
         item: items,
         image: authorimg,
         itunes_author: author,

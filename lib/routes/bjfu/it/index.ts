@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['it.bjfu.edu.cn/:type/index.html'],
-    },
+    radar: [
+        {
+            source: ['it.bjfu.edu.cn/:type/index.html'],
+        },
+    ],
     name: '信息学院通知',
     maintainers: ['wzc-blog'],
     handler,

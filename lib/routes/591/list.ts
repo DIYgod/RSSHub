@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import * as path from 'node:path';
+import path from 'node:path';
 
 import { CookieJar } from 'tough-cookie';
 import { load } from 'cheerio';
@@ -10,6 +10,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const cookieJar = new CookieJar();
 
@@ -123,9 +124,9 @@ export const route: Route = {
     name: 'Rental house',
     maintainers: ['Yukaii'],
     handler,
-    description: `:::tip
+    description: `::: tip
   Copy the URL of the 591 filter housing page and remove the front part \`https://rent.591.com.tw/?\`, you will get the query parameters.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -133,7 +134,7 @@ async function handler(ctx) {
     const country = ctx.req.param('country') ?? 'tw';
 
     if (!isValidHost(country) && country !== 'tw') {
-        throw new Error('Invalid country codes. Only "tw" is supported now.');
+        throw new InvalidParameterError('Invalid country codes. Only "tw" is supported now.');
     }
 
     /** @type {House[]} */
@@ -156,14 +157,14 @@ async function handler(ctx) {
         };
     });
 
+    ctx.set('json', {
+        houses,
+    });
+
     return {
         title: '591 租屋 - 自訂查詢',
         link: queryUrl,
         description: `591 租屋 - 自訂查詢, query: ${query}`,
         item: items,
     };
-
-    ctx.set('json', {
-        houses,
-    });
 }

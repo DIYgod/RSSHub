@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import utils from './utils';
-import { config } from '@/config';
+import api from './api';
 
 export const route: Route = {
     path: '/likes/:id/:routeParams?',
@@ -8,7 +8,12 @@ export const route: Route = {
     example: '/twitter/likes/DIYgod',
     parameters: { id: 'username', routeParams: 'extra parameters, see the table above' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'TWITTER_AUTH_TOKEN',
+                description: 'Please see above for details.',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -21,19 +26,22 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    if (!config.twitter || !config.twitter.consumer_key || !config.twitter.consumer_secret) {
-        throw new Error('Twitter RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
-    }
     const id = ctx.req.param('id');
-    const client = await utils.getAppClient();
-    const data = await client.v1.get('favorites/list.json', {
-        screen_name: id,
-        tweet_mode: 'extended',
-    });
+    const { count, include_rts, only_media } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const params = count ? { count } : {};
+
+    await api.init();
+    let data = await api.getUserLikes(id, params);
+    if (!include_rts) {
+        data = utils.excludeRetweet(data);
+    }
+    if (only_media) {
+        data = utils.keepOnlyMedia(data);
+    }
 
     return {
         title: `Twitter Likes - ${id}`,
-        link: `https://twitter.com/${id}/likes`,
+        link: `https://x.com/${id}/likes`,
         item: utils.ProcessFeed(ctx, {
             data,
         }),

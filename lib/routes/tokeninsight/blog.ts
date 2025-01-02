@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tokeninsight.com/:lang/blogs'],
-        target: '/blog/:lang',
-    },
+    radar: [
+        {
+            source: ['tokeninsight.com/:lang/blogs'],
+            target: '/blog/:lang',
+        },
+    ],
     name: 'Blogs',
     maintainers: ['fuergaosi233'],
     handler,

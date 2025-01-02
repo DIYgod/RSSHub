@@ -4,10 +4,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:id/:lang?',
-    radar: {
-        source: ['mangadex.org/title/:id/*', 'mangadex.org/title/:id'],
-        target: '/:id',
-    },
+    radar: [
+        {
+            source: ['mangadex.org/title/:id/*', 'mangadex.org/title/:id'],
+            target: '/:id',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['vzz64'],
     handler,

@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:label?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/mygopen',
     parameters: { label: '分類，见下表，默认为首页' },
     features: {
@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mygopen.com/search/label/:label', 'mygopen.com/'],
-    },
+    radar: [
+        {
+            source: ['mygopen.com/search/label/:label', 'mygopen.com/'],
+        },
+    ],
     name: '分類',
     maintainers: ['nczitzk'],
     handler,

@@ -1,27 +1,19 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 import { baseUrl, getTribeDetail, getTribeSets } from './utils';
 
 export const route: Route = {
     path: '/tribe/set/:id',
-    categories: ['picture'],
+    categories: ['picture', 'popular'],
+    view: ViewType.Pictures,
     example: '/500px/tribe/set/f5de0b8aa6d54ec486f5e79616418001',
     parameters: { id: '部落 ID' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: '部落影集',
     maintainers: ['TonyRL'],
     handler,
@@ -31,8 +23,8 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = Number.parseInt(ctx.req.query('limit')) || 100;
 
-    const { tribe } = await getTribeDetail(id, cache.tryGet);
-    const tribeSets = await getTribeSets(id, limit, cache.tryGet);
+    const { tribe } = await getTribeDetail(id);
+    const tribeSets = await getTribeSets(id, limit);
 
     const items = tribeSets.map((item) => ({
         title: item.title,

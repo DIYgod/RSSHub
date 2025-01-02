@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['houxu.app/lives/:id', 'houxu.app/'],
-    },
+    radar: [
+        {
+            source: ['houxu.app/lives/:id', 'houxu.app/'],
+        },
+    ],
     name: 'Live',
     maintainers: ['nczitzk'],
     handler,

@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/live/:id',
@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.pts.org.tw/live/:id', 'news.pts.org.tw/'],
-    },
+    radar: [
+        {
+            source: ['news.pts.org.tw/live/:id', 'news.pts.org.tw/'],
+        },
+    ],
     name: '整理報導',
     maintainers: [],
     handler,

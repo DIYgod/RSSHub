@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['crossbell.io/*'],
-    },
+    radar: [
+        {
+            source: ['crossbell.io/*'],
+        },
+    ],
     name: 'Notes',
     maintainers: ['DIYgod'],
     handler,

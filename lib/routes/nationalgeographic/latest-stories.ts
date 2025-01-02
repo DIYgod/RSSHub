@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const findNatgeo = ($) =>
     JSON.parse(
@@ -29,9 +29,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.nationalgeographic.com/pages/topic/latest-stories'],
-    },
+    radar: [
+        {
+            source: ['www.nationalgeographic.com/pages/topic/latest-stories'],
+        },
+    ],
     name: 'Latest Stories',
     maintainers: ['miles170'],
     handler,
@@ -56,7 +58,7 @@ async function handler() {
                 cache.tryGet(item.link, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);
-                    const mods = findNatgeo($).page.content.article.frms.find((f) => f.cmsType === 'ArticleBodyFrame').mods;
+                    const mods = findNatgeo($).page.content.prismarticle.frms.find((f) => f.cmsType === 'ArticleBodyFrame').mods;
                     const bodyTile = mods.find((m) => m.edgs[0].cmsType === 'ArticleBodyTile').edgs[0];
 
                     item.author = bodyTile.cntrbGrp

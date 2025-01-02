@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['agemys.org/detail/:id'],
-    },
+    radar: [
+        {
+            source: ['agemys.org/detail/:id'],
+        },
+    ],
     name: '番剧详情',
     maintainers: ['s2marine'],
     handler,

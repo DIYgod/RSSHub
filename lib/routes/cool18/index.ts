@@ -6,9 +6,11 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:id?/:type?/:keyword?',
-    radar: {
-        source: ['cool18.com/'],
-    },
+    radar: [
+        {
+            source: ['cool18.com/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

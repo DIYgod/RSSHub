@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['woshipm.com/'],
-        target: '/popular',
-    },
+    radar: [
+        {
+            source: ['woshipm.com/'],
+            target: '/popular',
+        },
+    ],
     name: '热门文章',
     maintainers: ['WenryXu'],
     handler,

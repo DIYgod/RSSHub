@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/column/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sspai/column/262',
     parameters: { id: '专栏 id' },
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sspai.com/column/:id'],
-    },
+    radar: [
+        {
+            source: ['sspai.com/column/:id'],
+        },
+    ],
     name: '专栏',
     maintainers: ['LogicJake'],
     handler,
@@ -56,7 +58,7 @@ async function handler(ctx) {
         list.map((item) => {
             const title = item.title;
             const date = item.created_at;
-            const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second`;
+            const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`;
             const itemUrl = `https://sspai.com/post/${item.id}`;
             const author = item.author.nickname;
 

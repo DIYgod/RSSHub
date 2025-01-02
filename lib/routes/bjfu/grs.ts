@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['graduate.bjfu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['graduate.bjfu.edu.cn/'],
+        },
+    ],
     name: '研究生院培养动态',
     maintainers: ['markmingjie'],
     handler,

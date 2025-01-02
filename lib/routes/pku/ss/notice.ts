@@ -6,9 +6,11 @@ const host = `${baseUrl}/newscenter/notice/`;
 
 export const route: Route = {
     path: '/ss/notice',
-    radar: {
-        source: ['ss.pku.edu.cn/index.php/newscenter/notice', 'ss.pku.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['ss.pku.edu.cn/index.php/newscenter/notice', 'ss.pku.edu.cn/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['legr4ndk'],
     handler,

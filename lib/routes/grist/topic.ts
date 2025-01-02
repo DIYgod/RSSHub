@@ -3,7 +3,7 @@ import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/grist/topic/extreme-heat',
     parameters: { topic: 'Any Topic from Table below' },
     features: {
@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['grist.org/:topic'],
-    },
+    radar: [
+        {
+            source: ['grist.org/:topic'],
+        },
+    ],
     name: 'Topic',
     maintainers: ['Rjnishant530'],
     handler,

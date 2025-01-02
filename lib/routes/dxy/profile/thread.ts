@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dxy.cn/bbs/newweb/pc/profile/:userId/threads', 'dxy.cn/bbs/newweb/pc/profile/:userId'],
-    },
+    radar: [
+        {
+            source: ['dxy.cn/bbs/newweb/pc/profile/:userId/threads', 'dxy.cn/bbs/newweb/pc/profile/:userId'],
+        },
+    ],
     name: '个人帖子',
     maintainers: ['TonyRL'],
     handler,
@@ -87,7 +89,7 @@ async function handler(ctx) {
             description: postInfo.simpleBody,
             pubDate: parseDate(createdTime, 'x'),
             author: postInfo.postUser.nickname,
-            category: postInfo.boardInfo.title,
+            category: [postInfo.boardInfo.title],
             link: `${webBaseUrl}/bbs/newweb/pc/post/${entityId}`,
             postId: entityId,
         };

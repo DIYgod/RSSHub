@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['unusualwhales.com/news', 'unusualwhales.com/'],
-    },
+    radar: [
+        {
+            source: ['unusualwhales.com/news', 'unusualwhales.com/'],
+        },
+    ],
     name: 'News Flow',
     maintainers: ['TonyRL'],
     handler,

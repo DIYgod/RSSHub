@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, Data } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/news/author/:mid',
@@ -23,17 +23,21 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['new.qq.com/omn/author/:mid'],
-    },
-    name: '更新',
+    radar: [
+        {
+            title: '当前作者文章',
+            source: ['news.qq.com/omn/author/:mid'],
+        },
+    ],
+    name: '作者',
     maintainers: ['LogicJake', 'miles170'],
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const mid = ctx.req.param('mid');
-    const homePageInfoUrl = `https://i.news.qq.com/i/getUserHomepageInfo?chlid=${mid}`;
+    const userType = /^\d+$/.test(mid) ? 'chlid' : 'guestSuid';
+    const homePageInfoUrl = `https://i.news.qq.com/i/getUserHomepageInfo?${userType}=${mid}`;
     const userInfo = await cache.tryGet(homePageInfoUrl, async () => (await got(homePageInfoUrl)).data.userinfo);
     const title = userInfo.nick;
     const description = userInfo.user_desc;
@@ -66,17 +70,19 @@ async function handler(ctx) {
                               .text()
                               .match(/window\.DATA = ({.+});/)[1]
                       );
-                      const $data = load(data.originContent.text, null, false);
-
-                      $data('*')
-                          .contents()
-                          .filter((_, elem) => elem.type === 'comment')
-                          .replaceWith((_, elem) =>
-                              art(path.join(__dirname, '../templates/news/image.art'), {
-                                  attribute: elem.data.trim(),
-                                  originAttribute: data.originAttribute,
-                              })
-                          );
+                      const $data = load(data.originContent?.text || '', null, false);
+                      if ($data) {
+                          // Not video page
+                          $data('*')
+                              .contents()
+                              .filter((_, elem) => elem.type === 'comment')
+                              .replaceWith((_, elem) =>
+                                  art(path.join(__dirname, '../templates/news/image.art'), {
+                                      attribute: elem.data.trim(),
+                                      originAttribute: data.originAttribute,
+                                  })
+                              );
+                      }
 
                       return {
                           title,
@@ -94,5 +100,6 @@ async function handler(ctx) {
         description,
         link: `https://new.qq.com/omn/author/${mid}`,
         item: items,
+        image: userInfo?.shareImg,
     };
 }

@@ -19,7 +19,7 @@ const titles = {
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/odaily',
     parameters: { id: 'id，见下表，默认为最新' },
     features: {
@@ -30,9 +30,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['0daily.com/'],
-    },
+    radar: [
+        {
+            source: ['0daily.com/'],
+        },
+    ],
     name: '文章',
     maintainers: ['nczitzk'],
     handler,

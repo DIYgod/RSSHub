@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xiaote.com/'],
-    },
+    radar: [
+        {
+            source: ['xiaote.com/'],
+        },
+    ],
     name: '首页帖子',
     maintainers: ['wxsimon'],
     handler,

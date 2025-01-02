@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bioone.org/journals/:journal', 'bioone.org/'],
-        target: '/journals/:journal',
-    },
+    radar: [
+        {
+            source: ['bioone.org/journals/:journal', 'bioone.org/'],
+            target: '/journals/:journal',
+        },
+    ],
     name: 'Journals',
     maintainers: ['nczitzk'],
     handler,

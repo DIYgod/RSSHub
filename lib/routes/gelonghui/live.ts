@@ -1,17 +1,18 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const baseUrl = 'https://www.gelonghui.com';
 
 export const route: Route = {
     path: '/live',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/gelonghui/live',
     parameters: {},
     features: {
@@ -22,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gelonghui.com/live', 'gelonghui.com/'],
-    },
+    radar: [
+        {
+            source: ['gelonghui.com/live', 'gelonghui.com/'],
+        },
+    ],
     name: '实时快讯',
     maintainers: [],
     handler,

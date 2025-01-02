@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yicai.com/vip/product/:id', 'yicai.com/'],
-        target: '/vip/:id',
-    },
+    radar: [
+        {
+            source: ['yicai.com/vip/product/:id', 'yicai.com/'],
+            target: '/vip/:id',
+        },
+    ],
     name: 'VIP 频道',
     maintainers: ['nczitzk'],
     handler,

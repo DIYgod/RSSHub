@@ -6,7 +6,7 @@ import { rootUrl, apiArticleRootUrl, processItems, fetchData } from './util';
 
 export const route: Route = {
     path: ['/article', '/channel/:id?'],
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/huxiu/article',
     parameters: {},
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['huxiu.com/article'],
-    },
+    radar: [
+        {
+            source: ['huxiu.com/article'],
+        },
+    ],
     name: '资讯',
     maintainers: ['HenryQW', 'nczitzk'],
     handler,

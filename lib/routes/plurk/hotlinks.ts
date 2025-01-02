@@ -5,7 +5,7 @@ import { baseUrl, getPlurk } from './utils';
 
 export const route: Route = {
     path: '/hotlinks',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/plurk/hotlinks',
     parameters: {},
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['plurk.com/hotlinks'],
-    },
+    radar: [
+        {
+            source: ['plurk.com/hotlinks'],
+        },
+    ],
     name: 'Hotlinks',
     maintainers: ['TonyRL'],
     handler,

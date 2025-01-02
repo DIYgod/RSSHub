@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.ntdtv.com/:language/:id'],
-    },
+    radar: [
+        {
+            source: ['www.ntdtv.com/:language/:id'],
+        },
+    ],
     name: '频道',
     maintainers: ['Fatpandac'],
     handler,

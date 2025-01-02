@@ -1,13 +1,13 @@
 import { type NotFoundHandler, type ErrorHandler } from 'hono';
 import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
 import { config } from '@/config';
-import Sentry from '@sentry/node';
+import * as Sentry from '@sentry/node';
 import logger from '@/utils/logger';
 import Error from '@/views/error';
 
-import RequestInProgressError from './request-in-progress';
-import RejectError from './reject';
-import NotFoundError from './not-found';
+import NotFoundError from './types/not-found';
+
+import { requestMetric } from '@/utils/otel';
 
 export const errorHandler: ErrorHandler = (error, ctx) => {
     const requestPath = ctx.req.path;
@@ -15,8 +15,12 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     const hasMatchedRoute = matchedRoute !== '/*';
 
     const debug = getDebugInfo();
-    if (ctx.res.headers.get('RSSHub-Cache-Status')) {
-        debug.hitCache++;
+    try {
+        if (ctx.res.headers.get('RSSHub-Cache-Status')) {
+            debug.hitCache++;
+        }
+    } catch {
+        // ignore
     }
     debug.error++;
 
@@ -38,42 +42,40 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
         });
     }
 
-    let message = '';
-    if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError')) {
-        ctx.status(503);
-        message = `${error.message}: target website might be blocking our access, you can host your own RSSHub instance for a better usability.`;
-    } else if (error instanceof RequestInProgressError) {
-        ctx.header('Cache-Control', `public, max-age=${config.requestTimeout / 1000}`);
-        ctx.status(503);
-        message = error.message;
-    } else if (error instanceof RejectError) {
-        ctx.status(403);
-        message = error.message;
-    } else if (error instanceof NotFoundError) {
-        ctx.status(404);
-        message = 'wrong path';
-        if (ctx.req.path.endsWith('/')) {
-            message += ', you can try removing the trailing slash in the path';
-        }
-    } else {
-        ctx.status(503);
-        message = process.env.NODE_ENV === 'production' ? error.message : error.stack || error.message;
+    let errorMessage = process.env.NODE_ENV === 'production' ? error.message : error.stack || error.message;
+    switch (error.constructor.name) {
+        case 'HTTPError':
+        case 'RequestError':
+        case 'FetchError':
+            ctx.status(503);
+            break;
+        case 'RequestInProgressError':
+            ctx.header('Cache-Control', `public, max-age=${config.requestTimeout / 1000}`);
+            ctx.status(503);
+            break;
+        case 'RejectError':
+            ctx.status(403);
+            break;
+        case 'NotFoundError':
+            ctx.status(404);
+            errorMessage += 'The route does not exist or has been deleted.';
+            break;
+        default:
+            ctx.status(503);
+            break;
     }
+    const message = `${error.name}: ${errorMessage}`;
 
     logger.error(`Error in ${requestPath}: ${message}`);
+    requestMetric.error({ path: matchedRoute, method: ctx.req.method, status: ctx.res.status });
 
-    return config.isPackage ? ctx.json({
-        error: {
-            message: error.message ?? error,
-        },
-    }) : ctx.html((
-        <Error
-            requestPath={requestPath}
-            message={message}
-            errorRoute={hasMatchedRoute ? matchedRoute : requestPath}
-            nodeVersion={process.version}
-        />
-    ));
+    return config.isPackage || ctx.req.query('format') === 'json'
+        ? ctx.json({
+              error: {
+                  message: error.message ?? error,
+              },
+          })
+        : ctx.html(<Error requestPath={requestPath} message={message} errorRoute={hasMatchedRoute ? matchedRoute : requestPath} nodeVersion={process.version} />);
 };
 
 export const notFoundHandler: NotFoundHandler = (ctx) => errorHandler(new NotFoundError(), ctx);

@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import utils from './utils';
-import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/artist/:id',
-    categories: ['multimedia'],
+    categories: ['multimedia', 'popular'],
+    view: ViewType.Audios,
     example: '/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1',
     parameters: { id: 'Artist ID' },
     features: {
@@ -25,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['open.spotify.com/artist/:id'],
-    },
+    radar: [
+        {
+            source: ['open.spotify.com/artist/:id'],
+        },
+    ],
     name: 'Artist Albums',
     maintainers: ['outloudvi'],
     handler,
@@ -36,21 +39,18 @@ export const route: Route = {
 async function handler(ctx) {
     const token = await utils.getPublicToken();
     const id = ctx.req.param('id');
-    const meta = await got
-        .get(`https://api.spotify.com/v1/artists/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        .json();
-
-    const itemsResponse = await got
-        .get(`https://api.spotify.com/v1/artists/${id}/albums`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        .json();
+    const meta = await ofetch(`https://api.spotify.com/v1/artists/${id}`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    const itemsResponse = await ofetch(`https://api.spotify.com/v1/artists/${id}/albums`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
     const albums = itemsResponse.items;
 
     return {

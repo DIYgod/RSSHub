@@ -72,7 +72,13 @@ export const route: Route = {
     example: '/coolapk/hot',
     parameters: { type: '默认为`jrrm`', period: '默认为`daily`' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_HOTLINK_TEMPLATE',
+                optional: true,
+                description: '设置为`true`并添加`image_hotlink_template`参数来代理图片',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -90,9 +96,9 @@ export const route: Route = {
   | -------- | ----- | ------ |
   | period   | daily | weekly |
 
-  :::tip
+::: tip
   今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

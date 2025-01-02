@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/new',
@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['missav.com/dm397/new', 'missav.com/new', 'missav.com/'],
-    },
+    radar: [
+        {
+            source: ['missav.com/dm397/new', 'missav.com/new', 'missav.com/'],
+        },
+    ],
     name: '最近更新',
     maintainers: ['TonyRL'],
     handler,

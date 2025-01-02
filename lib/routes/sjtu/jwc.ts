@@ -4,10 +4,13 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-const urlRoot = 'https://jwc.sjtu.edu.cn/xwtg';
+const urlRoot = 'https://jwc.sjtu.edu.cn';
 
 async function getFullArticle(link) {
-    const response = await got(link);
+    const response = await got(link).catch(() => null);
+    if (!response) {
+        return null;
+    }
     const $ = load(response.body);
     const content = $('.content-con');
     if (content.length === 0) {
@@ -43,9 +46,9 @@ export const route: Route = {
     name: '教务处通知公告',
     maintainers: ['SeanChao'],
     handler,
-    description: `| 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 语言文字 | 工会与支部 | 通识教育 |
+    description: `| 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 语言文字 | 工会与支部 | 通识教育 | 面向学生的通知 |
   | -------- | -------- | --------- | -------- | ------ | ------ | ------ | -------- | ---------- | -------- |
-  | news     | notice   | operation | affairs  | yjb    | jgb    | zhb    | language | party      | ge       |`,
+  | news     | notice   | operation | affairs  | yjb    | jgb    | zhb    | language | party      | ge       | students  |`,
 };
 
 async function handler(ctx) {
@@ -53,47 +56,51 @@ async function handler(ctx) {
     const config = {
         all: {
             section: '通知通告',
-            link: '/tztg.htm',
+            link: '/xwtg/tztg.htm',
         },
         news: {
-            link: '/xwzx.htm',
+            link: '/xwtg/xwzx.htm',
             section: '新闻中心',
         },
         notice: {
-            link: '/tztg.htm',
+            link: '/xwtg/tztg.htm',
             section: '通知通告',
         },
         operation: {
-            link: '/jxyx.htm',
+            link: '/xwtg/jxyx.htm',
             section: '教学运行',
         },
         affairs: {
-            link: '/zcxw.htm',
+            link: '/xwtg/zcxw.htm',
             section: '注册学务',
         },
         yjb: {
-            link: '/yjb.htm',
+            link: '/xwtg/yjb.htm',
             section: '研究办',
         },
         jgb: {
-            link: '/jgb.htm',
+            link: '/xwtg/jgb.htm',
             section: '教改办',
         },
         zhb: {
-            link: '/zhb.htm',
+            link: '/xwtg/zhb.htm',
             section: '综合办',
         },
         language: {
-            link: '/yywz.htm',
+            link: '/xwtg/yywz.htm',
             section: '语言文字',
         },
         party: {
-            link: '/ghyzb.htm',
+            link: '/xwtg/ghyzb.htm',
             section: '工会与支部',
         },
         ge: {
-            link: '/tsjy.htm',
+            link: '/xwtg/tsjy.htm',
             section: '通识教育',
+        },
+        students: {
+            link: '/index/mxxsdtz.htm',
+            section: '面向学生的通知',
         },
     };
 

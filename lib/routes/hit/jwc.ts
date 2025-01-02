@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jwc.hit.edu.cn/*'],
-    },
+    radar: [
+        {
+            source: ['jwc.hit.edu.cn/*'],
+        },
+    ],
     name: '教务处通知公告',
     maintainers: ['lty96117'],
     handler,

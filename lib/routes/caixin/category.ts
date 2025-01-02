@@ -6,6 +6,7 @@ import { isValidHost } from '@/utils/valid-host';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { parseArticle } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:column/:category',
@@ -47,7 +48,7 @@ async function handler(ctx) {
     const column = ctx.req.param('column');
     const url = `https://${column}.caixin.com/${category}`;
     if (!isValidHost(column)) {
-        throw new Error('Invalid column');
+        throw new InvalidParameterError('Invalid column');
     }
 
     const response = await got(url);
@@ -82,7 +83,7 @@ async function handler(ctx) {
         audio_image_url: item.pict.imgs[0].url,
     }));
 
-    const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseArticle(item))));
 
     return {
         title,

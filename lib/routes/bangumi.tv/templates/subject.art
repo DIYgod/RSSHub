@@ -1,0 +1,6 @@
+{{ if routeSubjectType === 'all' }}类型：{{ subjectTypeName }} <br>{{ /if }}
+{{ if subjectType === 2 }}看到：{{ epStatus }} / {{ subjectEps ? subjectEps: '???' }}<br>{{ /if }}
+{{ if subjectType === 1 }}读到：{{ epStatus }} / {{ subjectEps ? subjectEps: '???' }}<br>{{ /if }}
+评分：{{ score }}<br>
+放送时间：{{ date ? date : '未知' }}<br>
+<img src="{{ picUrl }}">

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['uraaka-joshi.com/:id'],
-    },
+    radar: [
+        {
+            source: ['uraaka-joshi.com/:id'],
+        },
+    ],
     name: 'User',
     maintainers: ['SettingDust', 'Halcao'],
     handler,

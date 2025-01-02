@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,7 +7,8 @@ import { parseItem } from './utils';
 
 export const route: Route = {
     path: '/subject/:id',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/gelonghui/subject/4',
     parameters: { id: '主题编号，可在主题页 URL 中找到' },
     features: {
@@ -18,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gelonghui.com/subject/:id'],
-    },
+    radar: [
+        {
+            source: ['gelonghui.com/subject/:id'],
+        },
+    ],
     name: '主题文章',
     maintainers: ['nczitzk'],
     handler,

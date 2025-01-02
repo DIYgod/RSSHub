@@ -81,9 +81,9 @@ async function handler(ctx) {
                     url: i.link,
                 });
 
-                const description = detailResponse.data.match(/(\\u003C.*?)","/)[1].replaceAll('\\"', '"');
+                const description = detailResponse.data.match(/(\\u003C.*?)","/)[1].replaceAll(String.raw`\"`, '"');
 
-                i.description = description.replaceAll(/\\u[\da-f]{4}/gi, (match) => String.fromCharCode(Number.parseInt(match.replaceAll('\\u', ''), 16)));
+                i.description = description.replaceAll(/\\u[\da-f]{4}/gi, (match) => String.fromCharCode(Number.parseInt(match.replaceAll(String.raw`\u`, ''), 16)));
 
                 return i;
             })

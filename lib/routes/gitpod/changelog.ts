@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gitpod.io/changelog', 'gitpod.io/'],
-    },
+    radar: [
+        {
+            source: ['gitpod.io/changelog', 'gitpod.io/'],
+        },
+    ],
     name: 'Changelog',
     maintainers: ['TonyRL'],
     handler,

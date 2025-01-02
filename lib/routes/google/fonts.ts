@@ -5,8 +5,9 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const titleMap = {
     date: 'Newest',
@@ -41,9 +42,9 @@ export const route: Route = {
   | :----: | :------: | :----------: | :---: | :--------------: |
   |  date  | trending |  popularity  | alpha |       style      |
 
-  :::warning
-  This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/install/#configuration-route-specific-configurations) for route-specific configurations.
-  :::`,
+::: warning
+  This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.
+:::`,
 };
 
 async function handler(ctx) {
@@ -52,7 +53,7 @@ async function handler(ctx) {
 
     const API_KEY = config.google.fontsApiKey;
     if (!API_KEY) {
-        throw new Error('Google Fonts API key is required.');
+        throw new ConfigNotFoundError('Google Fonts API key is required.');
     }
 
     const googleFontsAPI = `https://www.googleapis.com/webfonts/v1/webfonts?sort=${sort}&key=${API_KEY}`;

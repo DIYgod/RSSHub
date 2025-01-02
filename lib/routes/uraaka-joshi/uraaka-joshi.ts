@@ -5,10 +5,12 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['uraaka-joshi.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['uraaka-joshi.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['SettingDust', 'Halcao'],
     handler,

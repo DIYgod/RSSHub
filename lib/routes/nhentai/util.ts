@@ -3,10 +3,12 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import { load } from 'cheerio';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const baseUrl = 'https://nhentai.net';
 
@@ -66,9 +68,8 @@ const getCookie = async (username, password, cache) => {
     return userTokenCookie;
 };
 
-const gotByIp = (url, ...options) =>
-    // credit: https://github.com/sinkaroid/jandapress/pull/23
-    got(url.replace(/^https:\/\/nhentai.net\//, 'http://129.150.63.211:3002/'), {
+const oFetch = (url, ...options) =>
+    ofetch(url, {
         ...options,
         headers: {
             host: 'nhentai.net',
@@ -76,7 +77,7 @@ const gotByIp = (url, ...options) =>
     });
 
 const getSimple = async (url) => {
-    const { data } = await gotByIp(url);
+    const data = await oFetch(url);
     const $ = load(data);
 
     return $('.gallery a.cover')
@@ -88,11 +89,11 @@ const getDetails = (cache, simples, limit) => Promise.all(simples.slice(0, limit
 
 const getTorrents = async (cache, simples, limit) => {
     if (!config.nhentai || !config.nhentai.username || !config.nhentai.password) {
-        throw new Error('nhentai RSS with torrents is disabled due to the lack of <a href="https://docs.rsshub.app/en/install/#configuration-route-specific-configurations">relevant config</a>');
+        throw new ConfigNotFoundError('nhentai RSS with torrents is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const cookie = await getCookie(config.nhentai.username, config.nhentai.password, cache);
     if (!cookie) {
-        throw new Error('Invalid username (or email) or password for nhentai torrent download');
+        throw new ConfigNotFoundError('Invalid username (or email) or password for nhentai torrent download');
     }
     return getTorrentWithCookie(cache, simples, cookie, limit);
 };
@@ -112,17 +113,17 @@ const parseSimpleDetail = ($ele) => {
 
 const getTorrent = async (simple, cookie) => {
     const { link } = simple;
-    const response = await gotByIp(link + 'download', { followRedirect: false, responseType: 'buffer', headers: { Cookie: cookie } });
+    const response = await oFetch(link + 'download', { followRedirect: false, responseType: 'buffer', headers: { Cookie: cookie } });
     return {
         ...simple,
-        enclosure_url: response.data,
+        enclosure_url: response,
         enclosure_type: 'application/x-bittorrent',
     };
 };
 
 const getDetail = async (simple) => {
     const { link } = simple;
-    const { data } = await gotByIp(link);
+    const data = await oFetch(link);
     const $ = load(data);
 
     const galleryImgs = $('.gallerythumb img')

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['8kcosplay.com/tag/:tag'],
-    },
+    radar: [
+        {
+            source: ['8kcosplay.com/tag/:tag'],
+        },
+    ],
     name: '标签',
     maintainers: ['KotoriK'],
     handler,

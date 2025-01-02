@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['post.smzdm.com/fenlei/:name'],
-        target: '/haowen/fenlei/:name',
-    },
+    radar: [
+        {
+            source: ['post.smzdm.com/fenlei/:name'],
+            target: '/haowen/fenlei/:name',
+        },
+    ],
     name: '好文分类',
     maintainers: ['LogicJake'],
     handler,

@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['chaincatcher.com/news', 'chaincatcher.com/'],
-    },
+    radar: [
+        {
+            source: ['chaincatcher.com/news', 'chaincatcher.com/'],
+        },
+    ],
     name: '快讯',
     maintainers: ['TonyRL'],
     handler,

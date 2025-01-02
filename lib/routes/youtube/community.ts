@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { isYouTubeChannelId } from './utils';
 
 export const route: Route = {
@@ -14,14 +14,6 @@ export const route: Route = {
     categories: ['social-media'],
     example: '/youtube/community/@JFlaMusic',
     parameters: { handle: 'YouTube handles or channel id' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: 'Community',
     maintainers: ['TonyRL'],
     handler,
@@ -40,7 +32,7 @@ async function handler(ctx) {
     const ytInitialData = JSON.parse(
         $('script')
             .text()
-            .match(/ytInitialData = ({.*?});/)[1]
+            .match(/ytInitialData = ({.*?});/)?.[1] ?? '{}'
     );
 
     const channelMetadata = ytInitialData.metadata.channelMetadataRenderer;

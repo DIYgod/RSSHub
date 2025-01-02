@@ -14,17 +14,19 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zhujia.zhuwang.cc/'],
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['zhujia.zhuwang.cc/'],
+        },
+    ],
+    name: '全国今日生猪价格',
     maintainers: [],
     handler,
     url: 'zhujia.zhuwang.cc/',
 };
 
 async function handler() {
-    const baseUrl = 'https://zhujia.zhuwang.cc/';
+    const baseUrl = 'https://zhujia.zhuwang.com.cn/';
     const now = new Date();
     const date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
     const response = await got(`${baseUrl}/api/chartData`, {

@@ -7,9 +7,11 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/jwc/:listId',
-    radar: {
-        source: ['jwc.sspu.edu.cn/jwc/:listId/list.htm'],
-    },
+    radar: [
+        {
+            source: ['jwc.sspu.edu.cn/jwc/:listId/list.htm'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,

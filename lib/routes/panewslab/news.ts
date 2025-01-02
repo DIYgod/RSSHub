@@ -3,25 +3,17 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: ['/news', '/newsflash'],
-    categories: ['new-media'],
+    path: '/news',
+    categories: ['new-media', 'popular'],
     example: '/panewslab/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['panewslab.com/'],
-    },
+    radar: [
+        {
+            source: ['panewslab.com/'],
+        },
+    ],
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,
-    url: 'panewslab.com/',
     url: 'panewslab.com/',
 };
 

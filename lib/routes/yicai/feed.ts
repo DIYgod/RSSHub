@@ -18,16 +18,18 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yicai.com/feed/:id', 'yicai.com/feed'],
-        target: '/feed/:id',
-    },
+    radar: [
+        {
+            source: ['yicai.com/feed/:id', 'yicai.com/feed'],
+            target: '/feed/:id',
+        },
+    ],
     name: '关注',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   全部主题词见 [此处](https://www.yicai.com/feed/alltheme)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

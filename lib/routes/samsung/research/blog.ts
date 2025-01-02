@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['research.samsung.com/blog', 'research.samsung.com/'],
-    },
+    radar: [
+        {
+            source: ['research.samsung.com/blog', 'research.samsung.com/'],
+        },
+    ],
     name: 'Research Blog',
     maintainers: ['nczitzk'],
     handler,

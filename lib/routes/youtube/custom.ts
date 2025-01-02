@@ -5,21 +5,40 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/c/:username/:embed?',
-    radar: {
-        source: ['www.youtube.com/c/:id'],
-        target: '/c/:id',
+    categories: ['social-media'],
+    example: '/youtube/c/YouTubeCreators',
+    parameters: { username: 'YouTube custom URL', embed: 'Default to embed the video, set to any value to disable embedding' },
+    features: {
+        requireConfig: [
+            {
+                name: 'YOUTUBE_KEY',
+                description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
     },
-    name: 'Unknown',
-    maintainers: [],
+    radar: [
+        {
+            source: ['www.youtube.com/c/:id'],
+            target: '/c/:id',
+        },
+    ],
+    name: 'Custom URL',
+    maintainers: ['TonyRL'],
     handler,
 };
 
 async function handler(ctx) {
     if (!config.youtube || !config.youtube.key) {
-        throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new ConfigNotFoundError('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const username = ctx.req.param('username');
     const embed = !ctx.req.param('embed');
@@ -29,7 +48,7 @@ async function handler(ctx) {
     const ytInitialData = JSON.parse(
         $('script')
             .text()
-            .match(/ytInitialData = ({.*?});/)[1]
+            .match(/ytInitialData = ({.*?});/)?.[1] || '{}'
     );
     const externalId = ytInitialData.metadata.channelMetadataRenderer.externalId;
     const playlistId = (await utils.getChannelWithId(externalId, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
@@ -40,6 +59,7 @@ async function handler(ctx) {
         title: `${username} - YouTube`,
         link: `https://www.youtube.com/c/${username}`,
         description: ytInitialData.metadata.channelMetadataRenderer.description,
+        image: ytInitialData.metadata.channelMetadataRenderer.avatar?.thumbnails?.[0]?.url,
         item: data
             .filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video')
             .map((item) => {
@@ -52,6 +72,7 @@ async function handler(ctx) {
                     pubDate: parseDate(snippet.publishedAt),
                     link: `https://www.youtube.com/watch?v=${videoId}`,
                     author: snippet.videoOwnerChannelTitle,
+                    image: img.url,
                 };
             }),
     };

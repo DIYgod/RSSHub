@@ -6,7 +6,7 @@ import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/search/news/:keyword',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/odaily/search/news/RSS3',
     parameters: { keyword: '搜索关键字' },
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['0daily.com/search/:keyword'],
-    },
+    radar: [
+        {
+            source: ['0daily.com/search/:keyword'],
+        },
+    ],
     name: '搜索快讯',
     maintainers: ['snowraincloud'],
     handler,

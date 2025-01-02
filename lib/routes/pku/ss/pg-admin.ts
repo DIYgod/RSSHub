@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ss.pku.edu.cn/admission/admbrochure/admission01', 'ss.pku.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['ss.pku.edu.cn/admission/admbrochure/admission01', 'ss.pku.edu.cn/'],
+        },
+    ],
     name: '软件与微电子学院 - 硕士统考招生通知',
     maintainers: ['legr4ndk'],
     handler,

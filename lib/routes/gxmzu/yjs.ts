@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yjs.gxmzu.edu.cn/tzgg/zsgg.htm', 'yjs.gxmzu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['yjs.gxmzu.edu.cn/tzgg/zsgg.htm', 'yjs.gxmzu.edu.cn/'],
+        },
+    ],
     name: '研究生院招生公告',
     maintainers: ['real-jiakai'],
     handler,
@@ -29,7 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const out = await getNoticeList(ctx, url, host, 'a', '.timestyle55267', {
         title: '.titlestyle55269',
-        content: '#vsb_content',
+        content: '#vsb_newscontent',
         date: '.timestyle55269',
     });
 

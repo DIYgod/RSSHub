@@ -11,9 +11,9 @@ export const route: Route = {
   | ------------------------------ | -------------------- |
   | 1                              | 2                    |
 
-  :::tip
+::: tip
   See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -22,5 +22,5 @@ async function handler(ctx) {
     const language = ctx.req.param('language') ?? defaultLanguage;
     const currentUrl = `${rootUrl}/${language}/vl_genre.php?list&g=${genre}&mode=${mode}`;
 
-    ctx.set('data', await ProcessItems(language, currentUrl, cache.tryGet));
+    return await ProcessItems(language, currentUrl, cache.tryGet);
 }

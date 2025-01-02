@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rattibha.com/:user'],
-    },
+    radar: [
+        {
+            source: ['rattibha.com/:user'],
+        },
+    ],
     name: 'User Threads',
     maintainers: ['yshalsager'],
     handler,

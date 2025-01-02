@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.uber.com/blog/pittsburgh/engineering'],
-        target: '/blog',
-    },
+    radar: [
+        {
+            source: ['www.uber.com/:language/blog/engineering', 'www.uber.com/:language/blog'],
+            target: '/blog',
+        },
+    ],
     name: 'Engineering',
     maintainers: ['hulb'],
     handler,

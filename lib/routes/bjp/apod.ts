@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
@@ -7,7 +7,8 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/apod',
-    categories: ['picture'],
+    categories: ['picture', 'popular'],
+    view: ViewType.Pictures,
     example: '/bjp/apod',
     parameters: {},
     features: {
@@ -18,16 +19,18 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bjp.org.cn/APOD/today.shtml', 'bjp.org.cn/APOD/list.shtml', 'bjp.org.cn/'],
-    },
+    radar: [
+        {
+            source: ['bjp.org.cn/APOD/today.shtml', 'bjp.org.cn/APOD/list.shtml', 'bjp.org.cn/'],
+        },
+    ],
     name: '每日一图',
     maintainers: ['HenryQW'],
     handler,
     url: 'bjp.org.cn/APOD/today.shtml',
 };
 
-async function handler() {
+async function handler(ctx) {
     const baseUrl = 'https://www.bjp.org.cn';
     const listUrl = `${baseUrl}/APOD/list.shtml`;
 
@@ -44,7 +47,9 @@ async function handler() {
                 link: `${baseUrl}${e.find('a').attr('href')}`,
                 pubDate: timezone(parseDate(e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
             };
-        });
+        })
+        .sort((a, b) => b.pubDate - a.pubDate)
+        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10);
 
     const items = await Promise.all(
         list.map((e) =>

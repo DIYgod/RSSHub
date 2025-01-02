@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['remnote.com/changelog', 'remnote.com/'],
-    },
+    radar: [
+        {
+            source: ['remnote.com/changelog', 'remnote.com/'],
+        },
+    ],
     name: 'Changelog',
     maintainers: ['TonyRL', 'amakerlife'],
     handler,

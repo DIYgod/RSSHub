@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['agorahub.github.io/pen0'],
-    },
+    radar: [
+        {
+            source: ['agorahub.github.io/pen0'],
+        },
+    ],
     name: '共和報',
     maintainers: ['TonyRL'],
     handler,

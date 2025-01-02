@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({
     html: true,
@@ -25,9 +25,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['chuanliu.org/nice'],
-    },
+    radar: [
+        {
+            source: ['chuanliu.org/nice'],
+        },
+    ],
     name: '严选',
     maintainers: ['nczitzk'],
     handler,

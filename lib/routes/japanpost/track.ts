@@ -1,38 +1,16 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 import utils from './utils';
 
 let baseTitle = '日本郵便';
 const baseUrl = 'https://trackings.post.japanpost.jp/services/srv/search/direct?';
 
-export const route: Route = {
-    path: '/track/:reqCode/:locale?',
-    categories: ['other'],
-    example: '/japanpost/track/EJ123456789JP/en',
-    parameters: { reqCode: 'Package Number', locale: 'Language, default to japanese `ja`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Track & Trace Service 郵便追跡サービス',
-    maintainers: ['tuzi3040'],
-    handler,
-    description: `| Japanese | English |
-  | -------- | ------- |
-  | ja       | en      |`,
-};
-
-async function handler(ctx) {
+export async function track(ctx) {
     const reqCode = ctx.req.param('reqCode');
     const reqReqCode = 'reqCodeNo1=' + reqCode;
 

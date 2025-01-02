@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { renderDescription } from './utils';
 import { config } from '@/config';
 
@@ -9,14 +9,6 @@ export const route: Route = {
     categories: ['social-media'],
     example: '/youtube/charts',
     parameters: { category: 'Chart, see table below, default to `TopVideos`', country: 'Country Code, see table below, default to global', embed: 'Default to embed the video, set to any value to disable embedding' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: 'Music Charts',
     maintainers: ['TonyRL'],
     handler,
@@ -95,12 +87,13 @@ async function handler(ctx) {
     const { content } = await cache.tryGet(
         `youtube:charts:${country ?? 'global'}`,
         async () => {
-            const { data } = await got.post('https://charts.youtube.com/youtubei/v1/browse', {
-                searchParams: {
+            const data = await ofetch('https://charts.youtube.com/youtubei/v1/browse', {
+                method: 'POST',
+                query: {
                     alt: 'json',
                     key: 'AIzaSyCzEW7JUJdSql0-2V4tHUb6laYm4iAE_dM',
                 },
-                json: {
+                body: {
                     browseId: 'FEmusic_analytics_charts_home',
                     context: {
                         capabilities: {},

@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['whitehouse.gov/briefing-room/:category', 'whitehouse.gov/'],
-        target: '/briefing-room/:category',
-    },
+    radar: [
+        {
+            source: ['whitehouse.gov/briefing-room/:category', 'whitehouse.gov/'],
+            target: '/briefing-room/:category',
+        },
+    ],
     name: 'Briefing Room',
     maintainers: ['nczitzk'],
     handler,

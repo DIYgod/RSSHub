@@ -2,10 +2,11 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:region?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/liveuamap',
     parameters: { region: 'region 热点地区，默认为`ukraine`，其他选项见liveuamap.com的三级域名' },
     features: {
@@ -16,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['liveuamap.com/:region*'],
-        target: '/:region',
-    },
+    radar: [
+        {
+            source: ['liveuamap.com/:region*'],
+            target: '/:region',
+        },
+    ],
     name: '实时消息',
     maintainers: ['CoderSherlock'],
     handler,
@@ -29,7 +32,7 @@ async function handler(ctx) {
     const region = ctx.req.param('region') ?? 'ukraine';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
     if (!isValidHost(region)) {
-        throw new Error('Invalid region');
+        throw new InvalidParameterError('Invalid region');
     }
 
     const url = `https://${region}.liveuamap.com/`;

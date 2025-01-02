@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['qbittorrent.org/news.php', 'qbittorrent.org/'],
-    },
+    radar: [
+        {
+            source: ['qbittorrent.org/news.php', 'qbittorrent.org/'],
+        },
+    ],
     name: 'News',
     maintainers: ['TonyRL'],
     handler,
@@ -69,15 +71,12 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    const ret = {
         title: 'qBittorrent News',
         link: `${baseUrl}/news.php`,
         item,
     };
 
-    ctx.set('json', {
-        title: 'qBittorrent News',
-        link: `${baseUrl}/news.php`,
-        item,
-    });
+    ctx.set('json', ret);
+    return ret;
 }

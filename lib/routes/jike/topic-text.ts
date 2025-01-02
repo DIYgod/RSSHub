@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['web.okjike.com/topic/:id'],
-    },
+    radar: [
+        {
+            source: ['web.okjike.com/topic/:id'],
+        },
+    ],
     name: '圈子 - 纯文字',
     maintainers: ['HenryQW'],
     handler,
@@ -30,7 +32,7 @@ async function handler(ctx) {
     const data = await constructTopicEntry(ctx, topicUrl);
 
     if (data) {
-        const result = ctx.get('data');
+        const result = data.result;
         result.item = data.posts.map((item) => {
             const date = dayjs(item.createdAt);
             return {
@@ -40,6 +42,6 @@ async function handler(ctx) {
                 link: `https://m.okjike.com/originalPosts/${item.id}`,
             };
         });
-        ctx.set('data', result);
+        return result;
     }
 }

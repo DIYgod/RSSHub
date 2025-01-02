@@ -92,5 +92,5 @@ async function handler(ctx) {
         };
     }
 
-    ctx.set('data', data);
+    return data;
 }

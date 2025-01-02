@@ -2,8 +2,9 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
-const getItems = async (ctx, url, extra) => {
+const getItems = async (url: string, extra: { date: boolean; selector: string; topicName?: string }) => {
     const mainUrl = 'https://insider.finology.in';
     const { data: response } = await got(url);
     const $ = load(response);
@@ -13,7 +14,7 @@ const getItems = async (ctx, url, extra) => {
             item = $(item);
             const title = item.find('p.text-m-height').text();
             const link = item.find('a').attr('href');
-            const pubDate = extra.date ? parseDate(item.find('div.text-light p').first().text(), 'DD-MMM-YYYY') : '';
+            const pubDate = extra.date ? timezone(parseDate(item.find('div.text-light p').first().text()), 0) : '';
             const itunes_item_image = item.find('img').attr('src');
             const category = item.find('p.pt025').text();
             return {

@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.hpoi.net/bannerItem/list'],
-    },
+    radar: [
+        {
+            source: ['www.hpoi.net/bannerItem/list'],
+        },
+    ],
     name: '热门推荐',
     maintainers: ['DIYgod'],
     handler,

@@ -2,12 +2,15 @@ import { Route } from '@/types';
 import utils from './utils';
 
 export const route: Route = {
-    path: ['/home/:category?/:sort?/:filter?', '/:category?/:sort?/:filter?'],
-    radar: {
-        source: ['javdb.com/'],
-        target: '',
-    },
-    name: 'Unknown',
+    path: '/home/:category?/:sort?/:filter?',
+    radar: [
+        {
+            source: ['javdb.com/'],
+        },
+    ],
+    name: '主页',
+    example: '/javdb/home',
+    parameters: { category: '分类，见下表，默认为 `有碼`', sort: '排序，见下表，默认为 `磁鏈更新排序`', filter: '过滤，见下表，默认为 `可下载`' },
     maintainers: ['nczitzk'],
     handler,
     url: 'javdb.com/',
@@ -28,7 +31,6 @@ export const route: Route = {
   | 全部 | 可下载 | 含字幕 | 含短評 |
   | ---- | ------ | ------ | ------ |
   | 0    | 1      | 2      | 3      |`,
-    url: 'javdb.com/',
 };
 
 async function handler(ctx) {
@@ -59,5 +61,5 @@ async function handler(ctx) {
 
     const title = `${categories[category]} - JavDB - ${filters[filter] === '' ? '|' : `${filters[filter]} | `}${sorts[sort]}`;
 
-    ctx.set('data', await utils.ProcessItems(ctx, currentUrl, title));
+    return await utils.ProcessItems(ctx, currentUrl, title);
 }

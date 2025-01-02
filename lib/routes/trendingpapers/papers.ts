@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -30,14 +30,9 @@ async function handler(ctx) {
     const rootUrl = 'https://trendingpapers.com';
     const currentUrl = `${rootUrl}/api/papers?p=1&o=pagerank_growth&pd=${time}&cc=${cited}&c=${category}`;
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
+    const response = await ofetch(currentUrl);
 
-    const $ = response.data;
-
-    const papers = $.data.map((_) => {
+    const papers = response.data.map((_) => {
         const title = _.title;
         const abstract = _.abstract;
         const url = _.url;
@@ -60,6 +55,5 @@ async function handler(ctx) {
         title: `Trending Papers on arXiv.org | ${category} | ${time} | ${cited} | `,
         link: currentUrl,
         item: papers,
-        language: $('html').attr('lang'),
     };
 }

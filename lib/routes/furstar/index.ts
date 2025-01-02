@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['furstar.jp/:lang', 'furstar.jp/'],
-        target: '/characters/:lang',
-    },
+    radar: [
+        {
+            source: ['furstar.jp/:lang', 'furstar.jp/'],
+            target: '/characters/:lang',
+        },
+    ],
     name: '最新售卖角色列表',
     maintainers: ['NeverBehave'],
     handler,

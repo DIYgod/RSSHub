@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.cas.cn/cg/:caty?'],
-    },
+    radar: [
+        {
+            source: ['www.cas.cn/cg/:caty?'],
+        },
+    ],
     name: '成果转化',
     maintainers: ['nczitzk'],
     handler,

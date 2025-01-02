@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/database',
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['k.caixin.com/web', 'k.caixin.com/'],
-    },
+    radar: [
+        {
+            source: ['k.caixin.com/web', 'k.caixin.com/'],
+        },
+    ],
     name: '财新数据通',
     maintainers: ['nczitzk'],
     handler,

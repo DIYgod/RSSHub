@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import locations from './locations';
 
 export const route: Route = {
@@ -42,9 +42,9 @@ export const route: Route = {
 
   在 **精选** 分类下的 **运营设计** 子分类全部内容基础上，筛选出有 **视频**，且城市选择 **北京**，可直接使用路由 [\`/zcool/discover/0/617/1/北京\`](https://rsshub.app/zcool/discover/0/617/1/北京)
 
-  :::tip
+::: tip
   下方仅提供 **分类及其子分类** 参数的代码。**学校** 参数的代码可以在 [站酷发现页](https://www.zcool.com.cn/discover) 中选择跳转后，从浏览器地址栏中找到。
-  :::
+:::
 
   分类 cate
 
@@ -219,7 +219,8 @@ async function handler(ctx) {
                 queries.subCate = '809824';
                 queries.recommendLevel = '2';
                 break;
-            case 'editor' || 'edit':
+            case 'editor':
+            case 'edit':
                 queries.recommendLevel = '2';
                 break;
             default:

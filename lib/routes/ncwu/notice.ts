@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ncwu.edu.cn/xxtz.htm'],
-    },
+    radar: [
+        {
+            source: ['ncwu.edu.cn/xxtz.htm'],
+        },
+    ],
     name: '学校通知',
     maintainers: [],
     handler,

@@ -3,7 +3,7 @@ import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/series/:series',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/grist/series/best-of-grist',
     parameters: { series: 'Find in the URL which has /series/' },
     features: {
@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['grist.org/series/:series'],
-    },
+    radar: [
+        {
+            source: ['grist.org/series/:series'],
+        },
+    ],
     name: 'Series',
     maintainers: ['Rjnishant530'],
     handler,

@@ -31,12 +31,14 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['nature.com/:journal/research-articles', 'nature.com/:journal', 'nature.com/'],
-        target: '/research/:journal',
-    },
+    radar: [
+        {
+            source: ['nature.com/:journal/research-articles', 'nature.com/:journal', 'nature.com/'],
+            target: '/research/:journal',
+        },
+    ],
     name: 'Latest Research',
-    maintainers: ['y9c', 'TonyRL'],
+    maintainers: ['y9c', 'TonyRL', 'pseudoyu'],
     handler,
     description: `|   \`:journal\`  |   Full Name of the Journal  | Route                                                                              |
   | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |

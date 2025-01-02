@@ -6,7 +6,7 @@ import { rootUrl, apiMomentRootUrl, processItems, fetchData } from './util';
 
 export const route: Route = {
     path: '/moment',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/huxiu/moment',
     parameters: {},
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['huxiu.com/moment'],
-    },
+    radar: [
+        {
+            source: ['huxiu.com/moment'],
+        },
+    ],
     name: '24 小时',
     maintainers: ['nczitzk'],
     handler,

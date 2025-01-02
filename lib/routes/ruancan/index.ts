@@ -3,10 +3,12 @@ import fetchFeed from './utils';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['ruancan.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['ruancan.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,
@@ -16,5 +18,5 @@ export const route: Route = {
 async function handler(ctx) {
     const currentUrl = '';
 
-    ctx.set('data', await fetchFeed(ctx, currentUrl));
+    return await fetchFeed(ctx, currentUrl);
 }

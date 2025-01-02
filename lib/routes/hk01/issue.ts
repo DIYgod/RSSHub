@@ -5,9 +5,11 @@ import { rootUrl, apiRootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/issue/:id?',
-    radar: {
-        source: ['hk01.com/issue/:id', 'hk01.com/'],
-    },
+    radar: [
+        {
+            source: ['hk01.com/issue/:id', 'hk01.com/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

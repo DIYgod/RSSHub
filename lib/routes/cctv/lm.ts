@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.cctv.com/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['news.cctv.com/:category'],
+            target: '/:category',
+        },
+    ],
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,
@@ -33,9 +35,9 @@ export const route: Route = {
   | -------- | ---------- | ------------ |
   | zdzy     | jjbxs      | dydhly       |
 
-  :::tip
+::: tip
   更多栏目请看 [这里](https://tv.cctv.com/lm)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

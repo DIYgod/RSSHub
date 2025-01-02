@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { getArticleDetails } from './utils';
 export const route: Route = {
@@ -15,11 +15,13 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.theatlantic.com/:category'],
-    },
+    radar: [
+        {
+            source: ['www.theatlantic.com/:category'],
+        },
+    ],
     name: 'News',
-    maintainers: ['EthanWng97'],
+    maintainers: ['EthanWng97', 'pseudoyu'],
     handler,
     description: `| Popular      | Latest | Politics | Technology | Business |
   | ------------ | ------ | -------- | ---------- | -------- |
@@ -32,11 +34,8 @@ async function handler(ctx) {
     const host = 'https://www.theatlantic.com';
     const category = ctx.req.param('category');
     const url = `${host}/${category}/`;
-    const response = await got({
-        method: 'get',
-        url,
-    });
-    const $ = load(response.data);
+    const response = await ofetch(url);
+    const $ = load(response);
     const contents = JSON.parse($('script#__NEXT_DATA__').text()).props.pageProps.urqlState;
     const keyWithContent = Object.keys(contents).filter((key) => contents[key].data.includes(category));
     const data = JSON.parse(contents[keyWithContent].data);

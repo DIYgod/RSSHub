@@ -4,6 +4,7 @@ import { load } from 'cheerio';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
+import { parseToken } from '@/routes/xueqiu/cookies';
 
 export const route: Route = {
     path: '/stock_info/:id/:type?',
@@ -18,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xueqiu.com/S/:id', 'xueqiu.com/s/:id'],
-        target: '/stock_info/:id',
-    },
+    radar: [
+        {
+            source: ['xueqiu.com/S/:id', 'xueqiu.com/s/:id'],
+            target: '/stock_info/:id',
+        },
+    ],
     name: '股票信息',
     maintainers: ['YuYang'],
     handler,
@@ -43,12 +46,13 @@ async function handler(ctx) {
     };
     const source = typename[type];
 
+    const link = `https://xueqiu.com/S/${id}`;
     const res1 = await got({
         method: 'get',
-        url: `https://xueqiu.com/S/${id}`,
+        url: link,
     });
-    const token = res1.headers['set-cookie'].find((s) => s.startsWith('xq_a_token=')).split(';')[0];
 
+    const token = await parseToken(link);
     const $ = load(res1.data); // 使用 cheerio 加载返回的 HTML
     const stock_name = $('.stock-name').text().split('(')[0];
 
@@ -70,26 +74,20 @@ async function handler(ctx) {
         }),
         headers: {
             Cookie: token,
-            Referer: `https://xueqiu.com/u/${id}`,
+            Referer: link,
         },
     });
 
     const data = res2.data.list;
     return {
         title: `${id} ${stock_name} - ${source}`,
-        link: `https://xueqiu.com/S/${id}`,
+        link,
         description: `${stock_name} - ${source}`,
-        item: data.map((item) => {
-            let link = `https://xueqiu.com${item.target}`;
-            if (item.quote_cards) {
-                link = item.quote_cards[0].target_url;
-            }
-            return {
-                title: item.title || sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} }),
-                description: item.description,
-                pubDate: parseDate(item.created_at),
-                link,
-            };
-        }),
+        item: data.map((item) => ({
+            title: item.title || sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} }),
+            description: item.description,
+            pubDate: parseDate(item.created_at),
+            link: `https://xueqiu.com${item.target}`,
+        })),
     };
 }

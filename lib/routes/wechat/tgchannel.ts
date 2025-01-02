@@ -25,13 +25,13 @@ export const route: Route = {
   |      \`1\`     |     公众号全名     | 未启用 efb-patch-middleware |
   |      \`2\`     |     #公众号全名    | 已启用 efb-patch-middleware |
 
-  :::tip
+::: tip
   启用搜索有助于在订阅了过多公众号的频道里有效筛选，不易因为大量公众号同时推送导致一些公众号消息被遗漏，但必须正确选择搜索查询类型，否则会搜索失败。
-  :::
+:::
 
-  :::warning
+::: warning
   该方法需要通过 efb 进行频道绑定，具体操作见 [https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -149,11 +149,18 @@ async function handler(ctx) {
 
                 const pubDate = new Date(item.find('.tgme_widget_message_date time').attr('datetime')).toUTCString();
 
+                /*
+                 * Since 2024/4/20, t.me/s/ mistakenly have every '&' in **hyperlinks** replaced by '&amp;'.
+                 * wechat-mp will take care of this, so no need to fix it here.
+                 * However, once the bug is eventually fixed, all guid will be changed again.
+                 * Considering that this is almost certain to happen, let's break guid consistency now by using
+                 * normalized URL from wechat-mp as guid to avoid similar issues in the future.
+                 */
                 const single = {
                     title,
                     pubDate,
                     link,
-                    guid: link,
+                    // guid: link,
                 };
 
                 if (link !== undefined) {
@@ -170,7 +177,7 @@ async function handler(ctx) {
 
     out.reverse();
     return {
-        title: $('.tgme_channel_info_header_title').text(),
+        title: mpName || $('.tgme_channel_info_header_title').text(),
         link: `https://t.me/s/${id}`,
         item: out.filter(Boolean),
         allowEmpty: !!mpName,

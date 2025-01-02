@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['vom.mn/:lang', 'vom.mn/'],
-        target: '/featured/:lang',
-    },
+    radar: [
+        {
+            source: ['vom.mn/:lang', 'vom.mn/'],
+            target: '/featured/:lang',
+        },
+    ],
     name: 'News',
     maintainers: ['TonyRL'],
     handler,

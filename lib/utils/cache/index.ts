@@ -63,6 +63,14 @@ if (config.cache.type === 'redis') {
 // plz, write these tips in comments!
 export default {
     ...cacheModule,
+    /**
+     * Try to get the cache. If the cache does not exist, the `getValueFunc` function will be called to get the data, and the data will be cached.
+     * @param key The key used to store and retrieve the cache. You can use `:` as a separator to create a hierarchy.
+     * @param getValueFunc A function that returns data to be cached when a cache miss occurs.
+     * @param maxAge The maximum age of the cache in seconds. This should left to the default value in most cases which is `CACHE_CONTENT_EXPIRE`.
+     * @param refresh Whether to renew the cache expiration time when the cache is hit. `true` by default.
+     * @returns
+     */
     tryGet: async (key: string, getValueFunc: () => Promise<string | Record<string, any>>, maxAge = config.cache.contentExpire, refresh = true) => {
         if (typeof key !== 'string') {
             throw new TypeError('Cache key must be a string');

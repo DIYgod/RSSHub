@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/scholar/:query',
-    categories: ['journal'],
+    categories: ['journal', 'popular'],
     example: '/google/scholar/data+visualization',
     parameters: { query: 'query statement which supports「Basic」and「Advanced」modes' },
     features: {
@@ -15,12 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Keywords Monitoring',
+    name: 'Scholar Keywords Monitoring',
     maintainers: ['HenryQW'],
     handler,
-    description: `:::warning
+    description: `::: warning
   Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
-  :::
+:::
 
   1.  Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
 

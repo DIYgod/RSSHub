@@ -2,12 +2,38 @@ import { config } from '@/config';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
+import { ofetch } from 'ofetch';
+import { load } from 'cheerio';
+import cache from '@/utils/cache';
+
+// Common headers for requests
+const getHeaders = (cookie?: string) => ({
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Cache-Control': 'no-cache',
+    Connection: 'keep-alive',
+    Host: 'www.xiaohongshu.com',
+    Pragma: 'no-cache',
+    'Sec-Ch-Ua': '"Chromium";v="122", "Not(A:Brand";v="24", "Google Chrome";v="122"',
+    'Sec-Ch-Ua-Mobile': '?0',
+    'Sec-Ch-Ua-Platform': '"Windows"',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-User': '?1',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+    ...(cookie ? { Cookie: cookie } : {}),
+});
 
 const getUser = (url, cache) =>
     cache.tryGet(
         url,
         async () => {
-            const browser = await puppeteer();
+            const browser = await puppeteer({
+                stealth: true,
+            });
             try {
                 const page = await browser.newPage();
                 await page.setRequestInterception(true);
@@ -21,7 +47,7 @@ const getUser = (url, cache) =>
                 });
                 await page.waitForSelector('div.reds-tab-item:nth-child(2)');
 
-                const initialState = await page.evaluate(() => window.__INITIAL_STATE__);
+                const initialState = await page.evaluate(() => (window as any).__INITIAL_STATE__);
 
                 if (!(await page.$('.lock-icon'))) {
                     await page.click('div.reds-tab-item:nth-child(2)');
@@ -66,113 +92,11 @@ const getBoard = (url, cache) =>
                 logger.http(`Requesting ${url}`);
                 await page.goto(url);
                 await page.waitForSelector('.pc-container');
-                const initialSsrState = await page.evaluate(() => window.__INITIAL_SSR_STATE__);
+                const initialSsrState = await page.evaluate(() => (window as any).__INITIAL_SSR_STATE__);
                 return initialSsrState.Main;
             } finally {
                 browser.close();
             }
-        },
-        config.cache.routeExpire,
-        false
-    );
-
-const setPageFilter = async (page) => {
-    await page.setRequestInterception(true);
-    page.on('request', (req) => {
-        req.resourceType() === 'document' || req.resourceType() === 'script' || req.resourceType() === 'xhr' || req.resourceType() === 'other' ? req.continue() : req.abort();
-    });
-};
-
-const getNotes = (url, cache) =>
-    cache.tryGet(
-        url + '/notes', // To avoid mixing with the cache for `user.js`
-        async () => {
-            let user = '';
-            let notes = [];
-
-            const browser = await puppeteer({ stealth: true });
-            try {
-                const page = await browser.newPage();
-                await setPageFilter(page);
-
-                logger.http(`Requesting ${url}`);
-                await page.goto(url);
-
-                let otherInfo = {};
-                let userPosted = {};
-                try {
-                    [otherInfo, userPosted] = await Promise.all(
-                        ['/api/sns/web/v1/user/otherinfo', '/api/sns/web/v1/user_posted'].map((p) =>
-                            page
-                                .waitForResponse((res) => {
-                                    const req = res.request();
-                                    return req.url().includes(p) && req.method() === 'GET';
-                                })
-                                .then((r) => r.json())
-                        )
-                    );
-                } catch (error) {
-                    throw new Error(`Could not get user information and note list\n${error}`);
-                }
-
-                await page.close();
-
-                // Get full text for each note
-                const notesPromise = userPosted.data.notes.map((n) => {
-                    const noteUrl = url + '/' + n.note_id;
-
-                    return cache.tryGet(noteUrl, async () => {
-                        const notePage = await browser.newPage();
-                        await setPageFilter(notePage);
-
-                        logger.http(`Requesting ${noteUrl}`);
-                        await notePage.goto(noteUrl);
-
-                        let feed = {};
-                        try {
-                            feed = await notePage.evaluate(() => window.__INITIAL_STATE__);
-
-                            // Sometimes the page is not server-side rendered
-                            if (feed?.note?.note === undefined || JSON.stringify(feed?.note?.note) === '{}') {
-                                const res = await notePage.waitForResponse((res) => {
-                                    const req = res.request();
-                                    return req.url().includes('/api/sns/web/v1/feed') && req.method() === 'POST';
-                                });
-
-                                const json = await res.json();
-                                const note_card = json.data.items[0].note_card;
-                                feed.note.note = {
-                                    title: note_card.title,
-                                    noteId: note_card.id,
-                                    desc: note_card.desc,
-                                    tagList: note_card.tag_list,
-                                    imageList: note_card.image_list,
-                                    user: note_card.user,
-                                    time: note_card.time,
-                                    lastUpdateTime: note_card.last_update_time,
-                                };
-                            }
-                        } catch (error) {
-                            throw new Error(`Could not get note ${n.note_id}\n${error}`);
-                        }
-
-                        await notePage.close();
-
-                        if (feed?.note?.note !== undefined && JSON.stringify(feed?.note?.note) !== '{}') {
-                            return feed.note.note;
-                        } else {
-                            throw new Error(`Could not get note ${n.note_id}`);
-                        }
-                    });
-                });
-
-                user = otherInfo.data.basic_info;
-                notes = await Promise.all(notesPromise);
-            } finally {
-                await browser.close();
-            }
-
-            return { user, notes };
         },
         config.cache.routeExpire,
         false
@@ -194,4 +118,149 @@ const formatNote = (url, note) => ({
     updated: parseDate(note.lastUpdateTime, 'x'),
 });
 
-export { getUser, getBoard, getNotes, formatText, formatNote };
+async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
+    const data: Array<{
+        title: string;
+        link: string;
+        description: string;
+        author: string;
+        guid: string;
+        pubDate: Date;
+    }> = [];
+    const promises = notes.flatMap((note) =>
+        note.map(async ({ noteCard, id }) => {
+            const link = `${urlPrex}/${id}`;
+            const { title, description, pubDate } = await getFullNote(link, displayLivePhoto);
+            return {
+                title,
+                link,
+                description,
+                author: noteCard.user.nickName,
+                guid: noteCard.noteId,
+                pubDate,
+            };
+        })
+    );
+    data.push(...(await Promise.all(promises)));
+    return data;
+}
+
+async function getFullNote(link, displayLivePhoto) {
+    const data = (await cache.tryGet(link, async () => {
+        const res = await ofetch(link, {
+            headers: getHeaders(config.xiaohongshu.cookie),
+        });
+        const $ = load(res);
+        const script = extractInitialState($);
+        const state = JSON.parse(script);
+        const note = state.note.noteDetailMap[state.note.firstNoteId].note;
+        const title = note.title;
+        let desc = note.desc;
+        desc = desc.replaceAll(/\[.*?\]/g, '');
+        desc = desc.replaceAll(/#(.*?)#/g, '#$1');
+        desc = desc.replaceAll('\n', '<br>');
+        const pubDate = new Date(note.time);
+
+        let mediaContent = '';
+        if (note.type === 'video') {
+            const originVideoKey = note.video?.consumer?.originVideoKey;
+            const videoUrls: string[] = [];
+
+            if (originVideoKey) {
+                videoUrls.push(`http://sns-video-al.xhscdn.com/${originVideoKey}`);
+            }
+
+            const streamTypes = ['av1', 'h264', 'h265', 'h266'];
+            for (const type of streamTypes) {
+                const streams = note.video?.media?.stream?.[type];
+                if (streams?.length > 0) {
+                    const stream = streams[0];
+                    if (stream.masterUrl) {
+                        videoUrls.push(stream.masterUrl);
+                    }
+                    if (stream.backupUrls?.length) {
+                        videoUrls.push(...stream.backupUrls);
+                    }
+                }
+            }
+
+            const posterUrl = note.imageList?.[0]?.urlDefault;
+
+            if (videoUrls.length > 0) {
+                mediaContent = `<video controls ${posterUrl ? `poster="${posterUrl}"` : ''}>
+                    ${videoUrls.map((url) => `<source src="${url}" type="video/mp4">`).join('\n')}
+                </video><br>`;
+            }
+        } else {
+            mediaContent = note.imageList
+                .map((image) => {
+                    if (image.livePhoto && displayLivePhoto) {
+                        const videoUrls: string[] = [];
+
+                        const streamTypes = ['av1', 'h264', 'h265', 'h266'];
+                        for (const type of streamTypes) {
+                            const streams = image.stream?.[type];
+                            if (streams?.length > 0) {
+                                if (streams[0].masterUrl) {
+                                    videoUrls.push(streams[0].masterUrl);
+                                }
+                                if (streams[0].backupUrls?.length) {
+                                    videoUrls.push(...streams[0].backupUrls);
+                                }
+                            }
+                        }
+
+                        if (videoUrls.length > 0) {
+                            return `<video controls poster="${image.urlDefault}">
+                            ${videoUrls.map((url) => `<source src="${url}" type="video/mp4">`).join('\n')}
+                        </video>`;
+                        }
+                    }
+                    return `<img src="${image.urlDefault}">`;
+                })
+                .join('<br>');
+        }
+
+        const description = `${mediaContent}<br>${title}<br>${desc}`;
+        return {
+            title,
+            description,
+            pubDate,
+        };
+    })) as Promise<{ title: string; description: string; pubDate: Date }>;
+    return data;
+}
+
+async function getUserWithCookie(url: string, cookie: string) {
+    const res = await ofetch(url, {
+        headers: getHeaders(cookie),
+    });
+    const $ = load(res);
+    const paths = $('#userPostedFeeds > section > div > a.cover.ld.mask').map((i, item) => item.attributes[3].value);
+    const script = extractInitialState($);
+    const state = JSON.parse(script);
+    let index = 0;
+    for (const item of state.user.notes.flat()) {
+        const path = paths[index];
+        if (path && path.includes('?')) {
+            item.id = item.id + path?.substring(path.indexOf('?'));
+        }
+        index = index + 1;
+    }
+    return state.user;
+}
+
+// Add helper function to extract initial state
+function extractInitialState($) {
+    let script = $('script')
+        .filter((i, script) => {
+            const text = script.children[0]?.data;
+            return text?.startsWith('window.__INITIAL_STATE__=');
+        })
+        .text();
+    script = script.slice('window.__INITIAL_STATE__='.length);
+    script = script.replaceAll('undefined', 'null');
+    return script;
+}
+
+export { getUser, getBoard, formatText, formatNote, renderNotesFulltext, getFullNote, getUserWithCookie };

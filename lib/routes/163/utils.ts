@@ -3,18 +3,16 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import iconv from 'iconv-lite';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
-const parseDyArticle = (charset, item, tryGet) =>
+const parseDyArticle = (item, tryGet) =>
     tryGet(item.link, async () => {
         const response = await got(item.link, {
             responseType: 'buffer',
         });
 
-        const html = iconv.decode(response.data, charset);
-        const $ = load(html);
+        const $ = load(response.data);
 
         $('.post_main img').each((_, i) => {
             if (!i.attribs.src) {
@@ -26,8 +24,9 @@ const parseDyArticle = (charset, item, tryGet) =>
             }
         });
 
+        const imgUrl = new URL(item.imgsrc);
         item.description = art(path.join(__dirname, 'templates/dy.art'), {
-            imgsrc: item.imgsrc?.split('?')[0],
+            imgsrc: imgUrl.searchParams.get('url'),
             postBody: $('.post_body').html(),
         });
 

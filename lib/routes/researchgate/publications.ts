@@ -6,10 +6,12 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/publications/:id',
-    radar: {
-        source: ['researchgate.net/profile/:username'],
-        target: '/publications/:username',
-    },
+    radar: [
+        {
+            source: ['researchgate.net/profile/:username'],
+            target: '/publications/:username',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yxdown.com/'],
-    },
+    radar: [
+        {
+            source: ['yxdown.com/'],
+        },
+    ],
     name: '精彩推荐',
     maintainers: ['nczitzk'],
     handler,

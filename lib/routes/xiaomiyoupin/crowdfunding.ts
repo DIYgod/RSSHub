@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const base_url = 'https://m.xiaomiyoupin.com';
 export const route: Route = {
@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xiaomiyoupin.com/'],
-    },
+    radar: [
+        {
+            source: ['xiaomiyoupin.com/'],
+        },
+    ],
     name: '小米有品众筹',
     maintainers: ['bigfei'],
     handler,

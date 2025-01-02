@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,12 +7,13 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 
 export const route: Route = {
     path: '/:important?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Notifications,
     example: '/jin10',
     parameters: { important: '只看重要，任意值开启，留空关闭' },
     features: {
@@ -23,10 +24,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jin10.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['jin10.com/'],
+            target: '',
+        },
+    ],
     name: '市场快讯',
     maintainers: ['laampui'],
     handler,

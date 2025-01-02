@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['newsmarket.com.tw/blog/category/:category', 'newsmarket.com.tw/'],
-    },
+    radar: [
+        {
+            source: ['newsmarket.com.tw/blog/category/:category', 'newsmarket.com.tw/'],
+        },
+    ],
     name: '分類',
     maintainers: ['nczitzk'],
     handler,

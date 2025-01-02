@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yicai.com/video/:id', 'yicai.com/video'],
-        target: '/video/:id',
-    },
+    radar: [
+        {
+            source: ['yicai.com/video/:id', 'yicai.com/video'],
+            target: '/video/:id',
+        },
+    ],
     name: '视听',
     maintainers: ['nczitzk'],
     handler,

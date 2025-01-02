@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['fjksbm.com/portal/:category?', 'fjksbm.com/portal'],
-    },
+    radar: [
+        {
+            source: ['fjksbm.com/portal/:category?', 'fjksbm.com/portal'],
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,

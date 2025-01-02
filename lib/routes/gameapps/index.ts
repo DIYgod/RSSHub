@@ -3,20 +3,22 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['gameapps.hk/'],
-        target: '',
-    },
-    name: 'Unknown',
+    example: '/gameapps',
+    radar: [
+        {
+            source: ['gameapps.hk/'],
+        },
+    ],
+    name: '最新消息',
     maintainers: ['TonyRL'],
     handler,
     url: 'gameapps.hk/',
@@ -29,12 +31,14 @@ async function handler() {
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link, {
+                const response = await ofetch(item.link, {
                     headers: {
                         Referer: baseUrl,
                     },
                 });
                 const $ = load(response);
+
+                item.title = $('meta[property="og:title"]').attr('content') ?? $('.news-title h1').text();
 
                 const nextPages = $('.pagination li')
                     .not('.disabled')
@@ -69,12 +73,13 @@ async function handler() {
                 }
 
                 item.description = art(path.join(__dirname, 'templates/description.art'), {
-                    src: $('div.introduction.media.news-intro div.media-left').find('img').attr('src'),
-                    intro: $('div.introduction.media.news-intro div.media-body').html().trim(),
-                    desc: content.html().trim(),
+                    intro: $('div.introduction.media.news-intro div.media-body').html()?.trim(),
+                    desc: content.html()?.trim(),
                 });
                 item.guid = item.guid.substring(0, item.link.lastIndexOf('/'));
                 item.pubDate = parseDate(item.pubDate);
+                item.enclosure_url = $('div.introduction.media.news-intro div.media-left').find('img').attr('src');
+                item.enclosure_type = 'image/jpeg';
 
                 return item;
             })

@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sxw.nua.edu.cn/:type/list.htm'],
-    },
+    radar: [
+        {
+            source: ['sxw.nua.edu.cn/:type/list.htm'],
+        },
+    ],
     name: 'Shuangxing Information',
     maintainers: ['evnydd0sf'],
     handler,

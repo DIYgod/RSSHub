@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
 const parseBookInList = (element) => {

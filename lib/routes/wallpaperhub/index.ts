@@ -5,14 +5,16 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['wallpaperhub.app/wallpaperhub', 'wallpaperhub.app/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['wallpaperhub.app/wallpaperhub', 'wallpaperhub.app/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

@@ -1,12 +1,12 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://chaping.cn';
 
 export const route: Route = {
     path: '/newsflash',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/chaping/newsflash',
     parameters: {},
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['chaping.cn/newsflash'],
-    },
+    radar: [
+        {
+            source: ['chaping.cn/newsflash'],
+        },
+    ],
     name: '快讯',
     maintainers: ['Fatpandac'],
     handler,
@@ -28,7 +30,7 @@ export const route: Route = {
 
 async function handler() {
     const newflashAPI = `${host}/api/official/information/newsflash?page=1&limit=21`;
-    const response = await got(newflashAPI).json();
+    const response = await ofetch(newflashAPI);
     const data = response.data;
 
     return {

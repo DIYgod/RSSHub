@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const titles = {
     global: '要闻',
@@ -19,7 +19,7 @@ const titles = {
 
 export const route: Route = {
     path: '/live/:category?/:score?',
-    categories: ['traditional-media'],
+    categories: ['finance'],
     example: '/wallstreetcn/live',
     parameters: { category: '快讯分类，默认`global`，见下表', score: '快讯重要度，默认`1`全部快讯，可设置为`2`只看重要的' },
     features: {
@@ -30,10 +30,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wallstreetcn.com/live/:category', 'wallstreetcn.com/'],
-        target: '/live/:category?',
-    },
+    radar: [
+        {
+            source: ['wallstreetcn.com/live/:category', 'wallstreetcn.com/'],
+            target: '/live/:category?',
+        },
+    ],
     name: '实时快讯',
     maintainers: ['nczitzk'],
     handler,

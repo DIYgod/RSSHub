@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.cts.com.tw/:category/index.html'],
-    },
+    radar: [
+        {
+            source: ['news.cts.com.tw/:category/index.html'],
+        },
+    ],
     name: '新聞',
     maintainers: ['miles170'],
     handler,

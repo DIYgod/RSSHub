@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +6,8 @@ import { baseUrl, fetchFriends, getPlurk } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/plurk/topic/standwithukraine',
     parameters: { topic: 'Topic ID, can be found in URL' },
     features: {
@@ -17,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['plurk.com/topic/:topic'],
-    },
+    radar: [
+        {
+            source: ['plurk.com/topic/:topic'],
+        },
+    ],
     name: 'Topic',
     maintainers: ['TonyRL'],
     handler,

@@ -5,6 +5,7 @@ import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/live/:username/:embed?',
@@ -12,7 +13,12 @@ export const route: Route = {
     example: '/youtube/live/@GawrGura',
     parameters: { username: 'YouTuber id', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'YOUTUBE_KEY',
+                description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -26,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.youtube || !config.youtube.key) {
-        throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new ConfigNotFoundError('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const username = ctx.req.param('username');
     const embed = !ctx.req.param('embed');
@@ -62,6 +68,7 @@ async function handler(ctx) {
                 pubDate: parseDate(snippet.publishedAt),
                 guid: liveVideoId,
                 link: `https://www.youtube.com/watch?v=${liveVideoId}`,
+                image: img.url,
             };
         }),
         allowEmpty: true,

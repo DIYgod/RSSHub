@@ -8,10 +8,12 @@ const articleRootUrl = 'https://www.lifeweek.com.cn/article';
 
 export const route: Route = {
     path: '/tag/:id',
-    radar: {
-        source: ['lifeweek.com.cn/articleList/:tag'],
-        target: '/tag/:tag',
-    },
+    radar: [
+        {
+            source: ['lifeweek.com.cn/articleList/:tag'],
+            target: '/tag/:tag',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

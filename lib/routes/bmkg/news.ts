@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bmkg.go.id/', 'bmkg.go.id/berita'],
-    },
+    radar: [
+        {
+            source: ['bmkg.go.id/', 'bmkg.go.id/berita'],
+        },
+    ],
     name: 'News',
     maintainers: ['Shinanory'],
     handler,

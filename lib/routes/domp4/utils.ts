@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const defaultDomain = 'mp4us.com';
 
@@ -72,13 +73,13 @@ function decodeCipherText(p, a, c, k, e, d) {
             },
         ];
         e = function () {
-            return '\\w+';
+            return String.raw`\w+`;
         };
         c = 1;
     }
     while (c--) {
         if (k[c]) {
-            p = p.replaceAll(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
+            p = p.replaceAll(new RegExp(String.raw`\b` + e(c) + String.raw`\b`, 'g'), k[c]);
         }
     }
     return p;
@@ -87,7 +88,7 @@ function decodeCipherText(p, a, c, k, e, d) {
 function ensureDomain(ctx, domain = defaultDomain) {
     const origin = `https://${domain}`;
     if (!config.feature.allow_user_supply_unsafe_domain && !allowedDomains.has(new URL(origin).hostname)) {
-        throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
     return origin;
 }

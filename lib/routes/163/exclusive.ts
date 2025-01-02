@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const ids = {
     '': {
@@ -90,9 +90,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['3g.163.com/touch/exclusive/sub/:id'],
-    },
+    radar: [
+        {
+            source: ['3g.163.com/touch/exclusive/sub/:id'],
+        },
+    ],
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,

@@ -6,7 +6,7 @@ import { rootUrl, apiSearchRootUrl, generateSignature, processItems, fetchData }
 
 export const route: Route = {
     path: '/search/:keyword',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/huxiu/search/生活',
     parameters: { keyword: '关键字' },
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    radar: {
-        source: ['huxiu.com/'],
-    },
+    radar: [
+        {
+            source: ['huxiu.com/'],
+        },
+    ],
     name: '搜索',
     maintainers: ['xyqfer', 'HenryQW', 'nczitzk'],
     handler,

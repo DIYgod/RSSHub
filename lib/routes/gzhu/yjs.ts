@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yjsy.gzhu.edu.cn/zsxx/zsdt/zsdt.htm', 'yjsy.gzhu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['yjsy.gzhu.edu.cn/zsxx/zsdt/zsdt.htm', 'yjsy.gzhu.edu.cn/'],
+        },
+    ],
     name: '研究生院招生动态',
     maintainers: ['shengmaosu'],
     handler,

@@ -5,7 +5,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/recommend',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/infoq/recommend',
     parameters: {},
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['infoq.cn/'],
-    },
+    radar: [
+        {
+            source: ['infoq.cn/'],
+        },
+    ],
     name: '推荐',
     maintainers: ['brilon'],
     handler,

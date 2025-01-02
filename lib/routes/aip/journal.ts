@@ -16,17 +16,19 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['pubs.aip.org/:pub/:jrn'],
-    },
+    radar: [
+        {
+            source: ['pubs.aip.org/:pub/:jrn'],
+        },
+    ],
     name: 'Journal',
     maintainers: ['Derekmini', 'auto-bot-ty'],
     handler,
     description: `Refer to the URL format \`pubs.aip.org/:pub/:jrn\`
 
-  :::tip
+::: tip
   More jounals can be found in [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal).
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

@@ -33,9 +33,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['scse.uestc.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['scse.uestc.edu.cn/'],
+        },
+    ],
     name: '计算机科学与工程学院',
     maintainers: ['talengu', 'mobyw'],
     handler,

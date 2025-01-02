@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/:id',
@@ -22,17 +22,19 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['aeaweb.org/journals/:id', 'aeaweb.org/'],
-    },
+    radar: [
+        {
+            source: ['aeaweb.org/journals/:id', 'aeaweb.org/'],
+        },
+    ],
     name: 'Journal',
     maintainers: ['nczitzk'],
     handler,
     description: `The URL of the journal [American Economic Review](https://www.aeaweb.org/journals/aer) is \`https://www.aeaweb.org/journals/aer\`, where \`aer\` is the id of the journal, so the route for this journal is \`/aeaweb/aer\`.
 
-  :::tip
+::: tip
   More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

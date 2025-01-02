@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({
     html: true,
@@ -32,15 +32,16 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['farmatters.com/exclusive'],
-        target: '/exclusive',
-    },
+    radar: [
+        {
+            source: ['farmatters.com/exclusive'],
+            target: '/exclusive',
+        },
+    ],
     name: 'Exclusive',
     maintainers: ['nczitzk'],
     handler,
     url: 'farmatters.com/news',
-    url: 'farmatters.com/exclusive',
 };
 
 async function handler(ctx) {

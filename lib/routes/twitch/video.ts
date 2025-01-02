@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -13,9 +14,21 @@ const FILTER_NODE_TYPE_MAP = {
 
 export const route: Route = {
     path: '/video/:login/:filter?',
-    categories: ['live'],
+    categories: ['live', 'popular'],
+    view: ViewType.Videos,
     example: '/twitch/video/riotgames/highlights',
-    parameters: { login: 'Twitch username', filter: 'Video type, Default to all' },
+    parameters: {
+        login: 'Twitch username',
+        filter: {
+            description: 'Video type, Default to all',
+            options: [
+                { value: 'archive', label: 'Archive' },
+                { value: 'highlights', label: 'Highlights' },
+                { value: 'all', label: 'All' },
+            ],
+            default: 'all',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -24,23 +37,22 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.twitch.tv/:login/videos'],
-        target: '/video/:login',
-    },
+    radar: [
+        {
+            source: ['www.twitch.tv/:login/videos'],
+            target: '/video/:login',
+        },
+    ],
     name: 'Channel Video',
     maintainers: ['hoilc'],
     handler,
-    description: `| archive           | highlights                    | all        |
-| ----------------- | ----------------------------- | ---------- |
-| Recent broadcasts | Recent highlights and uploads | All videos |`,
 };
 
 async function handler(ctx) {
     const login = ctx.req.param('login');
     const filter = ctx.req.param('filter')?.toLowerCase() || 'all';
     if (!FILTER_NODE_TYPE_MAP[filter]) {
-        throw new Error(`Unsupported filter type "${filter}", please choose from { ${Object.keys(FILTER_NODE_TYPE_MAP).join(', ')} }`);
+        throw new InvalidParameterError(`Unsupported filter type "${filter}", please choose from { ${Object.keys(FILTER_NODE_TYPE_MAP).join(', ')} }`);
     }
 
     const response = await got({
@@ -70,14 +82,14 @@ async function handler(ctx) {
     const channelVideoShelvesQueryData = response.data[0].data;
 
     if (!channelVideoShelvesQueryData.user.id) {
-        throw new Error(`Username does not exist`);
+        throw new InvalidParameterError(`Username does not exist`);
     }
 
     const displayName = channelVideoShelvesQueryData.user.displayName;
 
     const videoShelvesEdge = channelVideoShelvesQueryData.user.videoShelves.edges.find((edge) => edge.node.type === FILTER_NODE_TYPE_MAP[filter]);
     if (!videoShelvesEdge) {
-        throw new Error(`No video under filter type "${filter}"`);
+        throw new InvalidParameterError(`No video under filter type "${filter}"`);
     }
 
     const out = videoShelvesEdge.node.items.map((item) => ({

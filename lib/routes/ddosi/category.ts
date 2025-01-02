@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ddosi.org/category/:category/'],
-        target: '/category/:category',
-    },
+    radar: [
+        {
+            source: ['ddosi.org/category/:category/'],
+            target: '/category/:category',
+        },
+    ],
     name: '分类',
     maintainers: [],
     handler,

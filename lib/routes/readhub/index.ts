@@ -6,13 +6,13 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import * as path from 'node:path';
+import path from 'node:path';
 
 import { rootUrl, apiTopicUrl, art, processItems } from './util';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/readhub',
     parameters: { category: '分类，见下表，默认为热门话题' },
     features: {

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['lanqiao.cn/questions/', 'lanqiao.cn/questions/topics/:id'],
-    },
+    radar: [
+        {
+            source: ['lanqiao.cn/questions/', 'lanqiao.cn/questions/topics/:id'],
+        },
+    ],
     name: '技术社区',
     maintainers: ['huhuhang'],
     handler,

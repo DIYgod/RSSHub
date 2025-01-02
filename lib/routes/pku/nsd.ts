@@ -34,9 +34,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nsd.pku.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['nsd.pku.edu.cn/'],
+        },
+    ],
     name: '观点 - 国家发展研究院',
     maintainers: ['MisLink'],
     handler,

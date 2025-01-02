@@ -1,1 +1,1 @@
-## Please refer to [Join Us](https://docs.rsshub.app/joinus/quick-start)
+## Please refer to [Join Us](https://docs.rsshub.app/joinus/)

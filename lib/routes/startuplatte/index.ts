@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/startuplatte',
     parameters: { category: '分类，见下表，默认为首頁' },
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['startuplatte.com/category/:category', 'startuplatte.com/'],
-    },
+    radar: [
+        {
+            source: ['startuplatte.com/category/:category', 'startuplatte.com/'],
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,

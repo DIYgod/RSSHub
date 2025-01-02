@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tesla.cn/model3/design', 'tesla.cn/'],
-    },
+    radar: [
+        {
+            source: ['tesla.cn/model3/design', 'tesla.cn/'],
+        },
+    ],
     name: '价格',
     maintainers: ['xiaokyo'],
     handler,

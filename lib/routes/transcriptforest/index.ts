@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const bakeTimestamp = (seconds) => {
     const hours = Math.floor(seconds / 3600);
@@ -23,10 +23,12 @@ const bakeTimestamp = (seconds) => {
 
 export const route: Route = {
     path: '/:channel?',
-    radar: {
-        source: ['www.transcriptforest.com/en/channel'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['www.transcriptforest.com/en/channel'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

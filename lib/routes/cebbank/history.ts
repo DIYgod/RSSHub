@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 import utils from './utils';
 
@@ -65,16 +65,13 @@ async function handler(ctx) {
         })
         .get();
     items.pop();
-    return {
+
+    const ret = {
         title: '中国光大银行',
         description: `中国光大银行 外汇牌价 ${TYPE[type].name}`,
         link: `https://www.cebbank.com/site/ygzx/whpj/rmbwhpjlspj/index.html?currcode=${TYPE[type].id}`,
         item: items,
     };
-
-    ctx.set('json', {
-        title: '中国光大银行',
-        description: `中国光大银行 外汇牌价 ${TYPE[type].name}`,
-        item: items,
-    });
+    ctx.set('json', ret);
+    return ret;
 }

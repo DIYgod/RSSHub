@@ -38,11 +38,11 @@ export const route: Route = {
 };
 
 async function handler() {
-    const res = await got({
+    const { data: res } = await got({
         method: 'post',
         url,
         json: reqBodyByYear(new Date().getFullYear()),
-    }).json();
+    });
 
     const list = res.d.data.map((item) => ({
         title: item.Title,

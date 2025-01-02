@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,18 +8,11 @@ export const route: Route = {
     path: '/weekly',
     categories: ['traditional-media'],
     example: '/caixin/weekly',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['weekly.caixin.com/', 'weekly.caixin.com/*'],
-    },
+    radar: [
+        {
+            source: ['weekly.caixin.com/', 'weekly.caixin.com/*'],
+        },
+    ],
     name: '财新周刊',
     maintainers: ['TonyRL'],
     handler,
@@ -36,16 +29,16 @@ async function handler(ctx) {
         ...$('.mi')
             .toArray()
             .map((item) => ({
-                link: $(item).find('a').attr('href'),
+                link: $(item).find('a').attr('href')?.replace('http:', 'https:'),
             })),
         ...$('.xsjCon a')
             .toArray()
             .map((item) => ({
                 link: $(item).attr('href'),
             })),
-    ].slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10);
+    ].slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10) as DataItem[];
 
-    const items = await Promise.all(
+    const items = (await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data } = await got(item.link);
@@ -71,7 +64,7 @@ async function handler(ctx) {
                 return item;
             })
         )
-    );
+    )) as DataItem[];
 
     return {
         title: $('head title')

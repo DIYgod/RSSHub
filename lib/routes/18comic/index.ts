@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jmcomic.group/'],
-    },
+    radar: [
+        {
+            source: ['jmcomic.group/'],
+        },
+    ],
     name: '成人 A 漫',
     maintainers: ['nczitzk'],
     handler,
@@ -55,5 +57,5 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/albums${category === 'all' ? '' : `/${category}`}${keyword ? `?screen=${keyword}` : '?'}${time === 'a' ? '' : `&t=${time}`}${order === 'mr' ? '' : `&o=${order}`}`;
 
-    ctx.set('data', await ProcessItems(ctx, currentUrl, rootUrl));
+    return await ProcessItems(ctx, currentUrl, rootUrl);
 }

@@ -17,11 +17,13 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['qipamaijia.com/', 'qipamaijia.com/:cate'],
-        target: '/:cate',
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['qipamaijia.com/', 'qipamaijia.com/:cate'],
+            target: '/:cate',
+        },
+    ],
+    name: '频道',
     maintainers: ['Fatpandac', 'nczitzk'],
     handler,
     url: 'qipamaijia.com/',

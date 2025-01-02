@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gs.sass.org.cn/:type/list.htm'],
-    },
+    radar: [
+        {
+            source: ['gs.sass.org.cn/:type/list.htm'],
+        },
+    ],
     name: '研究生院',
     maintainers: ['yanbot-team'],
     handler,

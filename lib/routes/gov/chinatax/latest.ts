@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.chinatax.gov.cn/*'],
-    },
+    radar: [
+        {
+            source: ['www.chinatax.gov.cn/*'],
+        },
+    ],
     name: '最新文件',
     maintainers: ['nczitzk', 'fuzy112'],
     handler,
@@ -54,7 +56,7 @@ async function handler() {
                     item.description = content('#fontzoom').html();
                     return item;
                 } catch (error) {
-                    if (error.name === 'HTTPError') {
+                    if (error.name === 'HTTPError' || error.name === 'FetchError') {
                         item.description = error.message;
                         return item;
                     }

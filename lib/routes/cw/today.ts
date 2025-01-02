@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cw.com.tw/today', 'cw.com.tw/'],
-    },
+    radar: [
+        {
+            source: ['cw.com.tw/today', 'cw.com.tw/'],
+        },
+    ],
     name: '最新上線',
     maintainers: ['TonyRL'],
     handler,

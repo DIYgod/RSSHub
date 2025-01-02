@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ndss-symposium.org/'],
-    },
+    radar: [
+        {
+            source: ['ndss-symposium.org/'],
+        },
+    ],
     name: 'Accepted papers',
     maintainers: ['ZeddYu'],
     handler,

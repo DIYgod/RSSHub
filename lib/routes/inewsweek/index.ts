@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['inewsweek.cn/:channel', 'inewsweek.cn/'],
-    },
+    radar: [
+        {
+            source: ['inewsweek.cn/:channel', 'inewsweek.cn/'],
+        },
+    ],
     name: '栏目',
     maintainers: ['changren-wcr'],
     handler,

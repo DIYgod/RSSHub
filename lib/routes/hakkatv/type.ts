@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hakkatv.org.tw/news'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['hakkatv.org.tw/news'],
+            target: '/news',
+        },
+    ],
     name: '新聞首頁',
     maintainers: ['TonyRL'],
     handler,

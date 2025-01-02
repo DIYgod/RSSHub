@@ -26,7 +26,7 @@ function getDomList($, detailUrl) {
     return list;
 }
 
-function getItemList($, detailUrl, second) {
+export function getItemList($, detailUrl, second) {
     const encoded = $('.article script[type]')
         .text()
         .match(/return p}\('(.*)',(\d+),(\d+),'(.*)'.split\(/);
@@ -37,7 +37,7 @@ function getItemList($, detailUrl, second) {
     const data = JSON.parse(
         decodeCipherText(encoded[1], encoded[2], encoded[3], encoded[4].split('|'), 0, {})
             .match(/var down_urls=\\'(.*)\\'/)[1]
-            .replaceAll('\\\\"', '"')
+            .replaceAll(String.raw`\\"`, '"')
             .replaceAll(/\\{3}/g, '')
     );
     // support secondary download address
@@ -83,13 +83,15 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['domp4.cc/detail/:id'],
-    },
+    radar: [
+        {
+            source: ['domp4.cc/detail/:id'],
+        },
+    ],
     name: '剧集订阅',
     maintainers: ['savokiss'],
     handler,
-    description: `:::tip
+    description: `::: tip
 由于大部分详情页是 \`/html/xxx.html\`，还有部分是 \`/detail/123.html\`，所以此处做了兼容，id 取 \`xxx\` 或者 \`123\` 都可以。
 
 新增 \`second\` 参数，用于选择下载地址二（地址二不可用或者不填都默认地址一），用法: \`/domp4/detail/LBTANI22222I?second=1\`。

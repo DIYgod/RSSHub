@@ -27,9 +27,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['huanbao.bjx.com.cn/yw', 'huanbao.bjx.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['huanbao.bjx.com.cn/yw', 'huanbao.bjx.com.cn/'],
+        },
+    ],
     name: '环保要闻',
     maintainers: ['zsimple'],
     handler,

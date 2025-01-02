@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ruancan.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['ruancan.com/'],
+            target: '',
+        },
+    ],
     name: '搜索',
     maintainers: [],
     handler,
@@ -28,5 +30,5 @@ async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
     const currentUrl = `/?s=${keyword}`;
 
-    ctx.set('data', await fetchFeed(ctx, currentUrl));
+    return await fetchFeed(ctx, currentUrl);
 }

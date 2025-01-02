@@ -39,9 +39,11 @@ const titles = {
 
 export const route: Route = {
     path: '/chp/:category?/:language?',
-    radar: {
-        source: ['dh.gov.hk/'],
-    },
+    radar: [
+        {
+            source: ['dh.gov.hk/'],
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,

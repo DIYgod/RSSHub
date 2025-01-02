@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['postman.com/downloads/release-notes', 'postman.com/'],
-    },
+    radar: [
+        {
+            source: ['postman.com/downloads/release-notes', 'postman.com/'],
+        },
+    ],
     name: 'Release Notes',
     maintainers: ['nczitzk'],
     handler,

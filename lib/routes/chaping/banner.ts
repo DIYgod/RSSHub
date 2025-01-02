@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/banner',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/chaping/banner',
     parameters: {},
     features: {
@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['chaping.cn/'],
-    },
+    radar: [
+        {
+            source: ['chaping.cn/'],
+        },
+    ],
     name: '图片墙',
     maintainers: ['nczitzk'],
     handler,

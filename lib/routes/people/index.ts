@@ -6,6 +6,7 @@ import iconv from 'iconv-lite';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:site?/:category{.+}?',
@@ -22,7 +23,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
     if (!isValidHost(site)) {
-        throw new Error('Invalid site');
+        throw new InvalidParameterError('Invalid site');
     }
     const rootUrl = `http://${site}.people.com.cn`;
     const currentUrl = new URL(`GB/${category}`, rootUrl).href;
@@ -31,7 +32,13 @@ async function handler(ctx) {
         responseType: 'buffer',
     });
 
-    const $ = load(iconv.decode(response, 'gbk'));
+    // not seen Content-Type in response headers
+    // try to parse charset from meta tag
+    let decodedResponse = iconv.decode(response, 'utf-8');
+    const parsedCharset = decodedResponse.match(/<meta.*?charset=["']?([^"'>]+)["']?/i);
+    const encoding = parsedCharset ? parsedCharset[1].toLowerCase() : 'utf-8';
+    decodedResponse = encoding === 'utf-8' ? decodedResponse : iconv.decode(response, encoding);
+    const $ = load(decodedResponse);
 
     $('em').remove();
     $('.bshare-more, .page_n, .page').remove();
@@ -63,7 +70,7 @@ async function handler(ctx) {
                         responseType: 'buffer',
                     });
 
-                    const data = iconv.decode(detailResponse, 'gbk');
+                    const data = iconv.decode(detailResponse, encoding);
                     const content = load(data);
 
                     content('.paper_num, #rwb_tjyd').remove();

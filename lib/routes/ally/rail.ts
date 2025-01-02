@@ -18,16 +18,18 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rail.ally.net.cn/', 'rail.ally.net.cn/html/:category?/:topic?'],
-    },
+    radar: [
+        {
+            source: ['rail.ally.net.cn/', 'rail.ally.net.cn/html/:category?/:topic?'],
+        },
+    ],
     name: '世界轨道交通资讯网',
     maintainers: ['Rongronggg9'],
     handler,
     url: 'rail.ally.net.cn/',
-    description: `:::tip
+    description: `::: tip
   默认抓取前 20 条，可通过 \`?limit=\` 改变。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import { config } from '@/config';
 const baseUrl = 'https://xsijishe.com';
 
 export const route: Route = {
@@ -11,7 +12,16 @@ export const route: Route = {
     example: '/xsijishe/forum/51',
     parameters: { fid: '子论坛 id' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'XSIJISHE_COOKIE',
+                description: '',
+            },
+            {
+                name: 'XSIJISHE_USER_AGENT',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -21,15 +31,23 @@ export const route: Route = {
     name: '论坛',
     maintainers: ['akynazh'],
     handler,
-    description: `:::tip[关于子论坛 id 的获取方法]
+    description: `::: tip 关于子论坛 id 的获取方法
   \`/xsijishe/forum/51\` 对应于论坛 \`https://xsijishe.com/forum-51-1.html\`，这个论坛的 fid 为 51，也就是 \`forum-{fid}-1\` 中的 fid。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
     const fid = ctx.req.param('fid');
     const url = `${baseUrl}/forum-${fid}-1.html`;
-    const resp = await got(url);
+    const headers = {
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+        Cookie: config.xsijishe.cookie,
+        'User-Agent': config.xsijishe.userAgent,
+    };
+    const resp = await got(url, {
+        headers,
+    });
     const $ = load(resp.data);
     const forumCategory = $('.nex_bkinterls_top .nex_bkinterls_ls a').text();
     let items = $('[id^="normalthread"]')
@@ -51,7 +69,9 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const resp = await got(item.link);
+                const resp = await got(item.link, {
+                    headers,
+                });
                 const $ = load(resp.data);
                 const firstViewBox = $('.t_f').first();
 

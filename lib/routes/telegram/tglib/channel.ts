@@ -71,6 +71,10 @@ export default async function handler(ctx: Context) {
             const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
             attachments.push(`<b>Forwarded from: ${getDisplayName(fwdFrom)}</b>:`);
         }
+        if (message.media instanceof Api.MessageMediaStory) {
+            const storyFrom = await client.getEntity(message.media.peer);
+            attachments.push(`<b>Story from: ${getDisplayName(storyFrom)}</b>:`);
+        }
         if (message.media) {
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible

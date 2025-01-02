@@ -48,9 +48,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wtu.91wllm.com/news/index/tag/:type'],
-    },
+    radar: [
+        {
+            source: ['wtu.91wllm.com/news/index/tag/:type'],
+        },
+    ],
     name: '就业信息',
     maintainers: ['ticks-tan'],
     handler,

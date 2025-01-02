@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['iqiyi.com/u/:uid/*'],
-    },
+    radar: [
+        {
+            source: ['iqiyi.com/u/:uid/*'],
+        },
+    ],
     name: '用户视频',
     maintainers: ['talengu', 'JimenezLi'],
     handler,
@@ -73,5 +75,5 @@ async function handler(ctx) {
     );
     browser.close();
 
-    ctx.set('data', data);
+    return data;
 }

@@ -1,67 +1,110 @@
-import { load } from 'cheerio';
-import got from '@/utils/got';
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+import path from 'node:path';
 
-export default async function fetch(address) {
-    const res = await got(address);
-    const capture = load(res.data);
-    capture('.gIMvvS').remove();
+export default async function fetch(slug: string) {
+    const url = `https://go-api.twreporter.org/v2/posts/${slug}?full=true`;
+    const res = await ofetch(url);
+    const post = res.data;
 
-    let metaInfoBox = capture('.ffAPnj')
-        .filter((index) => index === 0)
-        .get();
-
-    // For photography
-    if (metaInfoBox.length === 0) {
-        metaInfoBox = capture('.deNvJY')
-            .filter((index) => index === 0)
-            .get();
+    const time = post.published_date;
+    // For `writers`
+    let authors = '';
+    if (post.writers) {
+        authors = post.writers.map((writer) => (writer.job_title ? writer.job_title + ' / ' + writer.name : '文字 / ' + writer.name)).join('，');
     }
 
-    const acquire = load(metaInfoBox);
-    let time = acquire('.gimsRe').text();
-
-    // For `photography`
-    if (!time) {
-        time = acquire('.kHluJP').text();
+    // For `photography`, if it exists
+    let photographers = '';
+    if (post.photographers) {
+        photographers = post.photographers
+            .map((photographer) => {
+                let title = '攝影 / ';
+                if (photographer.job_title) {
+                    title = photographer.job_title + ' / ';
+                }
+                return title + photographer.name;
+            })
+            .join('，');
+        authors += '；' + photographers;
     }
-    // # Author(s) of the article
-    //
-    // There exists two formats for this section.
-    // 1. 文字 /...` with `摄影 / ..` in separate line, or
-    // 2. just a simple line starts with `文/ ...`
-    // For the first condition, we use a array
-    // to record the list of author(s), and use
-    // `；` to connect two lines.
-    const authors = [];
 
-    if (acquire('.loxoWO').text() === '') {
-        for (const item of acquire('.flciyI').get()) {
-            const $ = load(item);
-            const job = $('.hGsNtm').text();
-            // An article may have multiple authors
-            const name = [];
-            for (const item of $('.cidPTd > a').get()) {
-                const $ = load(item);
-                name.push($('.fJSaZP').text());
+    const bannerImage = post.hero_image.resized_targets.desktop.url;
+    const caption = post.leading_image_description;
+    const bannerDescription = post.hero_image.description;
+    const ogDescription = post.og_description;
+    const banner = art(path.join(__dirname, 'templates/image.art'), { image: bannerImage, description: bannerDescription, caption });
+
+    function format(type, content) {
+        let block = '';
+        if (content !== '' && type !== 'embeddedcode') {
+            switch (type) {
+                case 'image':
+                case 'slideshow':
+                    block = content.map((image) => art(path.join(__dirname, 'templates/image.art'), { image: image.desktop.url, description: image.description, caption: image.description })).join('<br>');
+
+                    break;
+
+                case 'blockquote':
+                    block = `<blockquote>${content}</blockquote>`;
+
+                    break;
+
+                case 'header-one':
+                    block = `<h1>${content}</h1>`;
+
+                    break;
+
+                case 'header-two':
+                    block = `<h2>${content}</h2>`;
+
+                    break;
+
+                case 'infobox': {
+                    const box = content[0];
+                    block = `<h2>${box.title}</h2>${box.body}`;
+
+                    break;
+                }
+                case 'youtube': {
+                    const video = content[0].youtubeId;
+                    const id = video.split('?')[0];
+                    block = art(path.join(__dirname, 'templates/youtube.art'), { video: id });
+
+                    break;
+                }
+                case 'quoteby': {
+                    const quote = content[0];
+                    block = `<blockquote>${quote.quote}</blockquote><p>${quote.quoteBy}</p>`;
+
+                    break;
+                }
+                default:
+                    block = `${content}<br>`;
             }
-
-            const author = job + '／' + name.join('，');
-            authors.push(author);
         }
-    } else {
-        authors.push(acquire('.loxoWO').text());
+        return block;
     }
-    const author = authors.join('；');
 
-    // contents = cover photo + italic intro + text
-    const contents = '<em>' + capture('.hxFBKc').html() + '</em><br>' + capture('.jONJYq').html();
+    const text = post.content.api_data
+        .map((item) => {
+            const content = item.content;
+            const type = item.type;
+            return format(type, content);
+        })
+        .filter(Boolean)
+        .join('<br>');
+    const contents = [banner, ogDescription, text].filter(Boolean).join('<br><br>');
 
     return {
-        author,
+        author: authors,
         description: contents,
-        link: address,
-        guid: address,
-        pubDate: parseDate(time, 'M/D/YYYY'),
+        link: `https://www.twreporter.org/a/${slug}`,
+        guid: `https://www.twreporter.org/a/${slug}`,
+        pubDate: parseDate(time, 'YYYY-MM-DDTHH:mm:ssZ'),
     };
 }

@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['modelscope.cn/models'],
-    },
+    radar: [
+        {
+            source: ['modelscope.cn/models'],
+        },
+    ],
     name: '模型库',
     maintainers: ['TonyRL'],
     handler,

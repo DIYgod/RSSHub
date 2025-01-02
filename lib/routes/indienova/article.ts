@@ -17,7 +17,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Unknown',
+    name: '文章',
     maintainers: ['GensouSakuya', 'kt286'],
     handler,
 };

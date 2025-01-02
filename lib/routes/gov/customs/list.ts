@@ -20,17 +20,19 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.customs.gov.cn/'],
-        target: '/customs/list',
-    },
+    radar: [
+        {
+            source: ['www.customs.gov.cn/'],
+            target: '/customs/list',
+        },
+    ],
     name: '拍卖信息 / 海关法规',
     maintainers: ['Jeason0228', 'TonyRL', 'he1q'],
     handler,
     url: 'www.customs.gov.cn/',
-    description: `:::warning
-  由于区域限制，建议在国内 IP 的机器上自建
-  :::`,
+    description: `::: warning
+由于区域限制，建议在国内 IP 的机器上自建
+:::`,
 };
 
 async function handler(ctx) {
@@ -79,6 +81,9 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((info) =>
             cache.tryGet(info.link, async () => {
+                if (info.link.endsWith('.pdf') || info.link.endsWith('.doc')) {
+                    return info;
+                }
                 const response = await puppeteerGet(info.link, browser);
                 const $ = load(response);
                 let date;

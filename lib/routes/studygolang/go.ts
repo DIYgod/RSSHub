@@ -14,14 +14,16 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['studygolang.com/go/:id', 'studygolang.com/'],
-    },
+    radar: [
+        {
+            source: ['studygolang.com/go/:id', 'studygolang.com/'],
+        },
+    ],
     name: '板块',
     maintainers: ['nczitzk'],
     handler,
 };
 
 async function handler(ctx) {
-    ctx.set('data', await FetchGoItems(ctx));
+    return await FetchGoItems(ctx);
 }

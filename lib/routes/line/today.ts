@@ -1,24 +1,17 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { baseUrl as rootUrl, parseList, parseItems } from './utils';
 
 export const route: Route = {
     path: '/today/:edition?/:tab?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/line/today',
     parameters: { edition: 'Edition, see below, Taiwan by default', tab: 'Tag, can be found in URL, `top` by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['today.line.me/'],
-    },
+    radar: [
+        {
+            source: ['today.line.me/'],
+        },
+    ],
     name: 'TODAY',
     maintainers: ['nczitzk'],
     handler,
@@ -47,7 +40,7 @@ async function handler(ctx) {
             url: tabUrl,
         });
 
-        const listing = moduleResponse.data.modules.filter((item) => item.source === 'CATEGORY_MOST_VIEW').pop().listings[0];
+        const listing = moduleResponse.data.modules.findLast((item) => item.source === 'CATEGORY_MOST_VIEW').listings[0];
 
         title = moduleResponse.data.name;
         moduleUrl =
@@ -63,7 +56,7 @@ async function handler(ctx) {
 
     const list = parseList(response.data.items);
 
-    const items = await parseItems(list, cache.tryGet);
+    const items = await parseItems(list);
 
     return {
         title: `${title} - Line Today`,

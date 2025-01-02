@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['agemys.org/update', 'agemys.org/'],
-    },
+    radar: [
+        {
+            source: ['agemys.org/update', 'agemys.org/'],
+        },
+    ],
     name: '最近更新',
     maintainers: ['nczitzk'],
     handler,

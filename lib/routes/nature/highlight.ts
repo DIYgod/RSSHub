@@ -16,16 +16,18 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: true,
     },
-    radar: {
-        source: ['nature.com/:journal/articles', 'nature.com/:journal', 'nature.com/'],
-        target: '/highlight/:journal',
-    },
+    radar: [
+        {
+            source: ['nature.com/:journal/articles', 'nature.com/:journal', 'nature.com/'],
+            target: '/highlight/:journal',
+        },
+    ],
     name: 'Research Highlight',
     maintainers: [],
     handler,
-    description: `:::warning
+    description: `::: warning
   Only some journals are supported.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

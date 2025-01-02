@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['acg17.com/post'],
-    },
+    radar: [
+        {
+            source: ['acg17.com/post'],
+        },
+    ],
     name: '全部文章',
     maintainers: ['SunBK201'],
     handler,

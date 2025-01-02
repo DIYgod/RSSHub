@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { load } from 'cheerio';
 const host = 'https://www.snowpeak.com';
 export const route: Route = {
@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['snowpeak.com/collections/new-arrivals', 'snowpeak.com/'],
-    },
+    radar: [
+        {
+            source: ['snowpeak.com/collections/new-arrivals', 'snowpeak.com/'],
+        },
+    ],
     name: 'New Arrivals(USA)',
     maintainers: ['EthanWng97'],
     handler,

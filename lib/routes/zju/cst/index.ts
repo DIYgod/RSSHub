@@ -37,7 +37,7 @@ async function getPage(id) {
                 return {
                     title: item.find('a').text(),
                     pubDate: parseDate(item.find('.fr').text()),
-                    link: new URL(item.find('a').attr('href'), res.url).href,
+                    link: new URL(item.find('a').attr('href'), host).href,
                 };
             })
             .get()
@@ -57,7 +57,10 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Unknown',
+    name: '软件学院',
+    description: `| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国际实习 | 国内合作科研 | 国际合作科研 | 校园服务 |
+  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | -------- |
+  | 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8            | 9            | 10       |`,
     maintainers: ['yonvenne', 'zwithz'],
     handler,
 };

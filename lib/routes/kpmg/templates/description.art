@@ -1,0 +1,11 @@
+{{ if image }}
+<img src="https://assets.kpmg.com{{ image }}" {{ if alt }} alt="{{ alt }}" {{ /if }}>
+{{ /if }}
+
+{{ if content }}
+<br>{{@ content }}
+{{ /if }}
+
+{{ if pdf }}
+<br>{{@ pdf }}
+{{ /if }}

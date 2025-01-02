@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yzb.seu.edu.cn/:type/list.htm'],
-    },
+    radar: [
+        {
+            source: ['yzb.seu.edu.cn/:type/list.htm'],
+        },
+    ],
     name: '研究生招生网通知公告',
     maintainers: ['fuzy112'],
     handler,

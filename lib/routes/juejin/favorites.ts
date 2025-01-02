@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['juejin.cn/user/:id', 'juejin.cn/user/:id/collections'],
-        target: '/collections/:id',
-    },
+    radar: [
+        {
+            source: ['juejin.cn/user/:id', 'juejin.cn/user/:id/collections'],
+            target: '/collections/:id',
+        },
+    ],
     name: '收藏集',
     maintainers: ['isQ'],
     handler,

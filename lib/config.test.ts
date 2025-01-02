@@ -1,5 +1,4 @@
 import { describe, expect, it, afterEach, vi } from 'vitest';
-import nock from 'nock';
 
 afterEach(() => {
     vi.resetModules();
@@ -93,11 +92,6 @@ describe('config', () => {
     it('remote config', async () => {
         process.env.REMOTE_CONFIG = 'http://rsshub.test/config';
 
-        nock(/rsshub\.test/)
-            .get('/config')
-            .reply(200, {
-                UA: 'test',
-            });
         const { config } = await import('./config');
         await new Promise((resolve) => setTimeout(resolve, 100));
         expect(config.ua).toBe('test');

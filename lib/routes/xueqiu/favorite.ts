@@ -2,6 +2,8 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
+import { parseToken } from '@/routes/xueqiu/cookies';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/favorite/:id',
@@ -16,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xueqiu.com/u/:id'],
-    },
+    radar: [
+        {
+            source: ['xueqiu.com/u/:id'],
+        },
+    ],
     name: '用户收藏动态',
     maintainers: ['imlonghao'],
     handler,
@@ -27,12 +31,8 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const res1 = await got({
-        method: 'get',
-        url: 'https://xueqiu.com/',
-    });
-    const token = res1.headers['set-cookie'].find((s) => s.startsWith('xq_a_token=')).split(';')[0];
-
+    const link = `https://xueqiu.com/u/${id}`;
+    const token = await parseToken(link);
     const res2 = await got({
         method: 'get',
         url: 'https://xueqiu.com/favorites.json',
@@ -41,20 +41,33 @@ async function handler(ctx) {
         }),
         headers: {
             Cookie: token,
-            Referer: `https://xueqiu.com/u/${id}`,
+            Referer: link,
         },
     });
     const data = res2.data.list;
 
+    const {
+        user: { screen_name },
+    } = await ofetch('https://xueqiu.com/statuses/original/show.json', {
+        query: {
+            user_id: id,
+        },
+        headers: {
+            Cookie: token,
+            Referer: link,
+        },
+    });
+
     return {
-        title: `ID: ${id} 的雪球收藏动态`,
-        link: `https://xueqiu.com/u/${id}`,
-        description: `ID: ${id} 的雪球收藏动态`,
+        title: `${screen_name} 的雪球收藏动态`,
+        link,
+        description: `${screen_name} 的雪球收藏动态`,
         item: data.map((item) => ({
             title: item.title,
             description: item.description,
             pubDate: parseDate(item.created_at),
             link: `https://xueqiu.com${item.target}`,
         })),
+        allowEmpty: true,
     };
 }

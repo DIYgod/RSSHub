@@ -7,11 +7,11 @@ import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/factpaper/:status?',
-    categories: ['traditional-media'],
+    categories: ['new-media', 'popular'],
     example: '/thepaper/factpaper',
     parameters: { status: '状态 id，可选 `1` 即 有定论 或 `0` 即 核查中，默认为 `1`' },
     features: {
@@ -22,10 +22,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['factpaper.cn/'],
-        target: '/factpaper/:status',
-    },
+    radar: [
+        {
+            source: ['factpaper.cn/'],
+            target: '/factpaper/:status',
+        },
+    ],
     name: '明查',
     maintainers: ['nczitzk'],
     handler,

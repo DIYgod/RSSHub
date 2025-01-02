@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['news.nogizaka46.com/s/n46/news/list'],
-    },
+    radar: [
+        {
+            source: ['news.nogizaka46.com/s/n46/news/list'],
+        },
+    ],
     name: 'Nogizaka46 News 乃木坂 46 新闻',
     maintainers: ['crispgm', 'Fatpandac'],
     handler,

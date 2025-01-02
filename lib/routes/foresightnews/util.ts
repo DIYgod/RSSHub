@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import zlib from 'zlib';
 
 const constants = {
@@ -61,7 +61,7 @@ const processItems = async (apiUrl, limit, ...searchParams) => {
             column,
             item.event_type,
             item.is_hot ? constants.labelHot : undefined,
-            item.is_important ? item.important_tag?.name ?? constants.labelImportant : '',
+            item.is_important ? (item.important_tag?.name ?? constants.labelImportant) : '',
             item.label,
             ...(item.tags?.map((c) => c.name) ?? []),
         ].filter((v, index, self) => v && self.indexOf(v) === index);

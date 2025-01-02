@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['huggingface.co/blog/zh', 'huggingface.co/'],
-    },
+    radar: [
+        {
+            source: ['huggingface.co/blog/zh', 'huggingface.co/'],
+        },
+    ],
     name: '中文博客',
     maintainers: ['zcf0508'],
     handler,
@@ -45,7 +47,7 @@ async function handler() {
         title: item.blog.title,
         link: `https://huggingface.co${item.link}`,
         category: item.blog.tags,
-        pubDate: parseDate(item.blog.date),
+        pubDate: parseDate(item.blog.publishedAt),
         author: item.blog.author,
     }));
 

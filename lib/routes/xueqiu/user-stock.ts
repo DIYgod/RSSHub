@@ -1,6 +1,7 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
-import queryString from 'query-string';
+import ofetch from '@/utils/ofetch';
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -9,52 +10,59 @@ export const route: Route = {
     example: '/xueqiu/user_stock/1247347556',
     parameters: { id: '用户 id, 可在用户主页 URL 中找到' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'XUEQIU_COOKIES',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['xueqiu.com/u/:id'],
-    },
+    radar: [
+        {
+            source: ['xueqiu.com/u/:id'],
+        },
+    ],
     name: '用户自选动态',
     maintainers: ['hillerliao'],
     handler,
+    description: `::: warning
+  用户自选动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+:::`,
 };
 
 async function handler(ctx) {
+    const cookie = config.xueqiu.cookies;
+    if (cookie === undefined) {
+        throw new ConfigNotFoundError('缺少雪球用户登录后的 Cookie 值');
+    }
+
     const id = ctx.req.param('id');
 
-    const res1 = await got({
-        method: 'get',
-        url: 'https://xueqiu.com/',
-    });
-    const token = res1.headers['set-cookie'].find((s) => s.startsWith('xq_a_token=')).split(';')[0];
-
-    const res2 = await got({
-        method: 'get',
-        url: `https://stock.xueqiu.com/v5/stock/portfolio/stock/list.json?category=1&size=1000&uid=${id}`,
+    const {
+        data: { stocks: data },
+    } = await ofetch(`https://stock.xueqiu.com/v5/stock/portfolio/stock/list.json?category=1&size=1000&uid=${id}`, {
         headers: {
-            Cookie: token,
+            Cookie: cookie,
             Referer: `https://xueqiu.com/u/${id}`,
         },
     });
-    const data = res2.data.data.stocks;
 
-    const res3 = await got({
-        method: 'get',
-        url: 'https://xueqiu.com/statuses/original/show.json',
-        searchParams: queryString.stringify({
+    const {
+        user: { screen_name },
+    } = await ofetch('https://xueqiu.com/statuses/original/show.json', {
+        query: {
             user_id: id,
-        }),
+        },
         headers: {
-            Cookie: token,
+            Cookie: cookie,
             Referer: `https://xueqiu.com/u/${id}`,
         },
     });
-    const screen_name = res3.data.user.screen_name;
 
     return {
         title: `${screen_name} 的雪球自选动态`,
@@ -62,7 +70,7 @@ async function handler(ctx) {
         description: `@${screen_name} 的雪球自选动态`,
         item: data.map((item) => ({
             title: `@${screen_name} 关注了股票 ${item.name}`,
-            description: `@${screen_name} 在${parseDate(item.created).toLocaleString()} 关注了 ${item.name}(${item.exchange}:${item.symbol})。`,
+            description: `@${screen_name} 在${parseDate(item.created).toLocaleString()} 关注了 ${item.marketplace} ${item.name}(${item.exchange}:${item.symbol})。`,
             pubDate: parseDate(item.created),
             link: `https://xueqiu.com/s/${item.symbol}`,
         })),

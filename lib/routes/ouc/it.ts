@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['it.ouc.edu.cn/'],
-        target: '/it',
-    },
+    radar: [
+        {
+            source: ['it.ouc.edu.cn/'],
+            target: '/it',
+        },
+    ],
     name: '信息科学与工程学院',
     maintainers: ['GeoffreyChen777', '3401797899'],
     handler,

@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['coomer.party/onlyfans/user/:id', 'coomer.party/'],
-    },
+    radar: [
+        {
+            source: ['coomer.su/onlyfans/user/:id', 'coomer.su/'],
+        },
+    ],
     name: 'Artist',
     maintainers: ['nczitzk'],
     handler,
@@ -27,5 +29,5 @@ async function handler(ctx) {
 
     const currentUrl = `onlyfans/user/${id}`;
 
-    ctx.set('data', await fetchItems(ctx, currentUrl));
+    return await fetchItems(ctx, currentUrl);
 }

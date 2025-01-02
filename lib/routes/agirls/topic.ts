@@ -6,7 +6,7 @@ import { baseUrl, parseArticle } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/agirls/topic/AppleWatch',
     parameters: { topic: '精选主题，可通过下方精选主题列表获得' },
     features: {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['agirls.aotter.net/topic/:topic'],
-    },
+    radar: [
+        {
+            source: ['agirls.aotter.net/topic/:topic'],
+        },
+    ],
     name: '精选主题',
     maintainers: ['TonyRL'],
     handler,

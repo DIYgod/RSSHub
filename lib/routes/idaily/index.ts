@@ -3,12 +3,21 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
-    path: ['/today/:language?', '/:language?'],
-    name: 'Unknown',
-    maintainers: [],
+    path: ['/:language?'],
+    name: '每日环球视野',
+    example: '/idaily',
+    maintainers: ['zphw', 'nczitzk'],
+    parameters: { language: '语言，见下表，默认为简体中文' },
+    radar: [
+        {
+            source: ['idai.ly/'],
+        },
+    ],
     handler,
     description: `| 简体中文 | 繁体中文 |
   | -------- | -------- |

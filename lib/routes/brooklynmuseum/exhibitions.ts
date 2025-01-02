@@ -32,18 +32,15 @@ async function handler(ctx) {
             link = `https://www.brooklynmuseum.org/exhibitions/${state}`;
     }
 
-    ctx.set(
-        'data',
-        await buildData({
-            link,
-            url: link,
-            title: 'Brooklyn Museum - Exhibitions',
-            item: {
-                item: '.exhibitions .image-card',
-                title: `$('h2 > a, h3 > a').text()`,
-                link: `$('h2 > a, h3 > a').attr('href')`,
-                description: `$('h6').text()`,
-            },
-        })
-    );
+    return await buildData({
+        link,
+        url: link,
+        title: 'Brooklyn Museum - Exhibitions',
+        item: {
+            item: '.exhibitions .image-card',
+            title: `$('h2 > a, h3 > a').text()`,
+            link: `$('h2 > a, h3 > a').attr('href')`,
+            description: `$('h6').text()`,
+        },
+    });
 }

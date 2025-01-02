@@ -6,10 +6,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['supchina.com/feed', 'supchina.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['supchina.com/feed', 'supchina.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
@@ -38,7 +40,7 @@ async function handler(ctx) {
                 title: item.find('title').text(),
                 link: item.find('guid').text(),
                 author: item
-                    .find('dc\\:creator')
+                    .find(String.raw`dc\:creator`)
                     .html()
                     .match(/CDATA\[(.*?)]/)[1],
                 category: item

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['apps.apple.com/'],
-    },
+    radar: [
+        {
+            source: ['apps.apple.com/'],
+        },
+    ],
     name: 'Price Drop',
     maintainers: ['HenryQW'],
     handler,

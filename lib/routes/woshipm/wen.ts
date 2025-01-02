@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wen.woshipm.com/'],
-    },
+    radar: [
+        {
+            source: ['wen.woshipm.com/'],
+        },
+    ],
     name: '天天问',
     maintainers: ['WenryXu'],
     handler,

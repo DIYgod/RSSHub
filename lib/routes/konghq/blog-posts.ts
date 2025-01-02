@@ -21,9 +21,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['konghq.com/blog/*'],
-    },
+    radar: [
+        {
+            source: ['konghq.com/blog/*'],
+        },
+    ],
     name: '博客最新文章',
     maintainers: ['piglei'],
     handler,

@@ -6,10 +6,12 @@ import { rootUrl, mobileRootUrl } from './utils';
 
 export const route: Route = {
     path: '/ac/comic/:id?',
-    radar: {
-        source: ['ac.qq.com/Comic/ComicInfo/id/:id', 'ac.qq.com/'],
-        target: '/ac/comic/:id',
-    },
+    radar: [
+        {
+            source: ['ac.qq.com/Comic/ComicInfo/id/:id', 'ac.qq.com/'],
+            target: '/ac/comic/:id',
+        },
+    ],
     name: 'Unknown',
     maintainers: [],
     handler,

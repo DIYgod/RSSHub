@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['taoguba.com.cn/blog/:id', 'taoguba.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['taoguba.com.cn/blog/:id', 'taoguba.com.cn/'],
+        },
+    ],
     name: '用户博客',
     maintainers: ['nczitzk'],
     handler,
@@ -62,7 +64,7 @@ async function handler(ctx) {
                     method: 'get',
                     url: item.link,
                 });
-                if (detailResponse.url.startsWith('https://www.taoguba.com.cn/topic/transfer')) {
+                if (detailResponse.url?.startsWith('https://www.taoguba.com.cn/topic/transfer')) {
                     item.description = '登录后查看完整文章';
                     return item;
                 }

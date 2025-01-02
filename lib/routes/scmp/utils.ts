@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
-import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
 
 export const renderHTML = (node) => {
     if (!node) {
@@ -60,7 +60,7 @@ export const renderHTML = (node) => {
 };
 
 export const parseItem = async (item) => {
-    const { data: response, url } = await got(item.link);
+    const { _data: response, url } = await ofetch.raw(item.link);
 
     if (new URL(url).hostname !== 'www.scmp.com') {
         // e.g., https://multimedia.scmp.com/

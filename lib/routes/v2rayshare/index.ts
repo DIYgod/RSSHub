@@ -4,10 +4,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['v2rayshare.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['v2rayshare.com/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['77taibai'],
     handler,

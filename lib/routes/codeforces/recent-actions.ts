@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
 export const route: Route = {
@@ -15,10 +15,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['codeforces.com/recent-actions'],
-        target: '/recent-actions',
-    },
+    radar: [
+        {
+            source: ['codeforces.com/recent-actions'],
+            target: '/recent-actions',
+        },
+    ],
     name: 'Recent actions',
     maintainers: [],
     handler,
@@ -28,7 +30,7 @@ export const route: Route = {
 async function handler(ctx) {
     const minRating = ctx.req.param('minrating') || 1;
 
-    const rsp = await got.get('https://codeforces.com/api/recentActions?maxCount=100').json();
+    const rsp = await ofetch('https://codeforces.com/api/recentActions?maxCount=100');
 
     const actions = rsp.result.map((action) => {
         const pubDate = new Date(action.timeSeconds * 1000);

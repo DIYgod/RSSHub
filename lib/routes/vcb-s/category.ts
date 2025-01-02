@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const rootUrl = 'https://vcb-s.com';
 const cateAPIUrl = `${rootUrl}/wp-json/wp/v2/categories`;
@@ -25,9 +25,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['vcb-s.com/archives/category/:cate'],
-    },
+    radar: [
+        {
+            source: ['vcb-s.com/archives/category/:cate'],
+        },
+    ],
     name: '分类文章',
     maintainers: ['cxfksword'],
     handler,

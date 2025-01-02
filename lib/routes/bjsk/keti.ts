@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['keti.bjsk.org.cn/indexAction!to_index.action', 'keti.bjsk.org.cn/'],
-        target: '/keti/:id',
-    },
+    radar: [
+        {
+            source: ['keti.bjsk.org.cn/indexAction!to_index.action', 'keti.bjsk.org.cn/'],
+            target: '/keti/:id',
+        },
+    ],
     name: '基金项目管理平台',
     maintainers: ['nczitzk'],
     handler,

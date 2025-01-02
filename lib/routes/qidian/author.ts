@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['my.qidian.com/author/:id'],
-    },
+    radar: [
+        {
+            source: ['my.qidian.com/author/:id'],
+        },
+    ],
     name: '作者',
     maintainers: ['miles170'],
     handler,

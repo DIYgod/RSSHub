@@ -4,6 +4,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 import { rootUrl, ProcessItem } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const categories = {
     24: {
@@ -26,7 +27,7 @@ const categories = {
 
 export const route: Route = {
     path: '/hot-list/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/36kr/hot-list',
     parameters: { category: '分类，默认为24小时热榜' },
     features: {
@@ -37,10 +38,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['36kr.com/hot-list/:category', '36kr.com/'],
-        target: '/hot-list/:category',
-    },
+    radar: [
+        {
+            source: ['36kr.com/hot-list/:category', '36kr.com/'],
+            target: '/hot-list/:category',
+        },
+    ],
     name: '资讯热榜',
     maintainers: ['nczitzk'],
     handler,
@@ -51,6 +54,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '24';
+
+    if (!categories[category]) {
+        throw new InvalidParameterError('This category does not exist. Please refer to the documentation for the correct usage.');
+    }
 
     const currentUrl = category === '24' ? rootUrl : `${rootUrl}/hot-list/catalog`;
 

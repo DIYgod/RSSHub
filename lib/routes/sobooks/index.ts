@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sobooks.net/:category'],
-        target: '/:category',
-    },
+    radar: [
+        {
+            source: ['sobooks.net/:category'],
+            target: '/:category',
+        },
+    ],
     name: '首页',
     maintainers: ['nczitzk'],
     handler,
@@ -36,5 +38,5 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
-    ctx.set('data', await utils(ctx, category));
+    return await utils(ctx, category);
 }

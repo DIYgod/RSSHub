@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['leiphone.com/'],
-    },
+    radar: [
+        {
+            source: ['leiphone.com/'],
+        },
+    ],
     name: '业界资讯',
     maintainers: [],
     handler,

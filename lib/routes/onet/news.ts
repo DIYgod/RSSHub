@@ -8,7 +8,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseArticleContent, parseMainImage } from './utils';
 
 export const route: Route = {
@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wiadomosci.onet.pl/'],
-    },
+    radar: [
+        {
+            source: ['wiadomosci.onet.pl/'],
+        },
+    ],
     name: 'News',
     maintainers: ['Vegann'],
     handler,

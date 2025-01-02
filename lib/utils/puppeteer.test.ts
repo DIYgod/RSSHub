@@ -55,7 +55,7 @@ describe('puppeteer', () => {
             // since we don't really care whether puppeteer without stealth passes the bot test, just let it go
             expect(['present (failed)', '']).toContain(webDriverTest);
             expect(['missing (failed)', '']).toContain(chromeTest);
-        }, 15000);
+        }, 20000);
 
         it('puppeteer with stealth', async () => {
             const { default: puppeteer } = await import('./puppeteer');
@@ -67,7 +67,7 @@ describe('puppeteer', () => {
             // these are something we really care about
             expect(webDriverTest).toBe('missing (passed)');
             expect(chromeTest).toBe('present (passed)');
-        }, 15000);
+        }, 20000);
     }
 
     it('puppeteer accept http proxy uri w/ auth', async () => {

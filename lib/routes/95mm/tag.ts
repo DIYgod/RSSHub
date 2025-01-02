@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['95mm.org/'],
-    },
+    radar: [
+        {
+            source: ['95mm.org/'],
+        },
+    ],
     name: '标签',
     maintainers: ['nczitzk'],
     handler,
@@ -28,5 +30,5 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/tag-${tag}/page-1/index.html`;
 
-    ctx.set('data', await ProcessItems(ctx, tag, currentUrl));
+    return await ProcessItems(ctx, tag, currentUrl);
 }

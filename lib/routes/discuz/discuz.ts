@@ -5,6 +5,8 @@ import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 function fixUrl(itemLink, baseUrl) {
     // 处理相对链接
@@ -68,7 +70,7 @@ async function handler(ctx) {
 
     const cookie = cid === undefined ? '' : config.discuz.cookies[cid];
     if (cookie === undefined) {
-        throw new Error('缺少对应论坛的cookie.');
+        throw new ConfigNotFoundError('缺少对应论坛的cookie.');
     }
 
     const header = {
@@ -149,7 +151,7 @@ async function handler(ctx) {
             )
         );
     } else {
-        throw new Error('不支持当前Discuz版本.');
+        throw new InvalidParameterError('不支持当前Discuz版本.');
     }
 
     return {

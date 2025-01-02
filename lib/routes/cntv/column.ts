@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -20,14 +20,16 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['navi.cctv.com/'],
-    },
+    radar: [
+        {
+            source: ['navi.cctv.com/'],
+        },
+    ],
     name: '栏目',
     maintainers: ['WhoIsSure', 'Fatpandac'],
     handler,
     url: 'navi.cctv.com/',
-    description: `:::tip
+    description: `::: tip
 栏目 ID 查找示例:
 打开栏目具体某一期页面，F12 控制台输入\`column_id\`得到栏目 ID。
 :::

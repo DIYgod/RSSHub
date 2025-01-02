@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/douyin/:dyid',
@@ -24,14 +25,14 @@ export const route: Route = {
     name: '抖音短视频',
     maintainers: ['lessmoe'],
     handler,
-    description: `:::warning
+    description: `::: warning
 免费版账户抖音每天查询次数 20 次，如需增加次数可购买新榜会员或等待未来多账户支持
 :::`,
 };
 
 async function handler(ctx) {
     if (!config.newrank || !config.newrank.cookie) {
-        throw new Error('newrank RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new ConfigNotFoundError('newrank RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const uid = ctx.req.param('dyid');
     const nonce = utils.random_nonce(9);

@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['miit.gov.cn/gzcy/yjzj/index.html'],
-    },
+    radar: [
+        {
+            source: ['miit.gov.cn/gzcy/yjzj/index.html'],
+        },
+    ],
     name: '意见征集',
     maintainers: ['Fatpandac'],
     handler,

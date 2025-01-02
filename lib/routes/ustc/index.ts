@@ -40,10 +40,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ustc.edu.cn/'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['ustc.edu.cn/'],
+            target: '/news',
+        },
+    ],
     name: '官网通知公告',
     maintainers: ['hang333', 'jasongzy'],
     handler,

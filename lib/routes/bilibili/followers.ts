@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/user/followers/:uid/:loginUid',
@@ -25,16 +26,18 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['space.bilibili.com/:uid'],
-        target: '/user/followers/:uid',
-    },
+    radar: [
+        {
+            source: ['space.bilibili.com/:uid'],
+            target: '/user/followers/:uid',
+        },
+    ],
     name: 'UP 主粉丝',
     maintainers: ['Qixingchen'],
     handler,
-    description: `:::warning
+    description: `::: warning
   UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -43,7 +46,7 @@ async function handler(ctx) {
 
     const cookie = config.bilibili.cookies[loginUid];
     if (cookie === undefined) {
-        throw new Error('缺少对应 loginUid 的 Bilibili 用户登录后的 Cookie 值 <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">bilibili 用户关注动态系列路由</a>');
+        throw new ConfigNotFoundError('缺少对应 loginUid 的 Bilibili 用户登录后的 Cookie 值 <a href="https://docs.rsshub.app/zh/deploy/config#route-specific-configurations">bilibili 用户关注动态系列路由</a>');
     }
 
     const name = await cache.getUsernameFromUID(uid);
@@ -66,7 +69,7 @@ async function handler(ctx) {
         },
     });
     if (response.data.code === -6 || response.data.code === -101) {
-        throw new Error('对应 loginUid 的 Bilibili 用户的 Cookie 已过期');
+        throw new ConfigNotFoundError('对应 loginUid 的 Bilibili 用户的 Cookie 已过期');
     }
     const data = response.data.data.list;
 

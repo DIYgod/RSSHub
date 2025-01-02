@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['show.bilibili.com/platform'],
-    },
+    radar: [
+        {
+            source: ['show.bilibili.com/platform'],
+        },
+    ],
     name: '会员购票务',
     maintainers: ['nightmare-mio'],
     handler,

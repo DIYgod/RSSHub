@@ -4,44 +4,62 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/stats/*',
-    name: 'Unknown',
-    maintainers: [],
+    name: '国家统计局 通用',
+    url: 'www.stats.gov.cn',
+    categories: ['government'],
+    maintainers: ['bigfei', 'nczitzk'],
+    example: '/stats/sj/zxfb',
     handler,
+    radar: [
+        {
+            title: '国家统计局 通用',
+            source: ['www.stats.gov.cn/*path'],
+            target: '/gov/stats/*path',
+        },
+    ],
+    description: `::: tip
+路径处填写对应页面 URL 中 \`http://www.stats.gov.cn/\` 后的字段。下面是一个例子。
+
+若订阅 [数据 > 数据解读](http://www.stats.gov.cn/sj/sjjd/)
+则将对应页面 URL \`http://www.stats.gov.cn/sj/sjjd/\` 中 \`http://www.stats.gov.cn/\` 后的字段 \`sj/sjjd\` 作为路径填入。
+此时路由为 [\`/gov/stats/sj/sjjd\`](https://rsshub.app/gov/stats/sj/sjjd)
+
+若订阅 [新闻 > 时政要闻 > 中央精神](http://www.stats.gov.cn/xw/szyw/zyjs/)
+则将对应页面 URL \`http://www.stats.gov.cn/xw/szyw/zyjs/\` 中 \`http://www.stats.gov.cn/\`
+后的字段 \`xw/szyw/zyjs\` 作为路径填入。此时路由为 [\`/gov/stats/xw/szyw/zyjs\`](https://rsshub.app/gov/stats/xw/szyw/zyjs)
+:::`,
 };
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15;
-
-    const defaultPath = '/sj/zxfb/';
-
     const rootUrl = 'http://www.stats.gov.cn';
-    const currentUrl = `${rootUrl}${getSubPath(ctx) === '/stats' ? defaultPath : getSubPath(ctx).replace(/^\/stats(.*)/, '$1/')}`;
 
-    let response = await got({
-        method: 'get',
-        url: rootUrl,
+    const { headers } = await ofetch.raw(rootUrl);
+    const sid = headers
+        ?.getSetCookie()
+        .find((s) => s.startsWith('wzws_sessionid='))
+        ?.split(';')[0] as string;
+
+    const pathname = getSubPath(ctx) === '/stats' ? '/sj/zxfb/' : getSubPath(ctx).replace(/^\/stats(.*)/, '$1');
+    const currentUrl = `${rootUrl}${pathname.endsWith('/') ? pathname : pathname + '/'}`;
+
+    const response = await ofetch(currentUrl, {
+        headers: {
+            Cookie: sid,
+            Referer: currentUrl,
+        },
     });
 
-    const headers = {
-        cookie: response.headers['set-cookie'].join(' ').match(/(wzws_sessionid=.*?);/)[1],
-    };
-
-    response = await got({
-        method: 'get',
-        url: currentUrl,
-        headers,
-    });
-
-    const $ = load(response.data);
+    const $ = load(response);
 
     let items = $($('a.pchide').length === 0 ? 'a[title]' : '.list-content a.pchide')
         .slice(0, limit)
@@ -58,13 +76,14 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                    headers,
+                const detailResponse = await ofetch(item.link, {
+                    headers: {
+                        Cookie: sid,
+                        Referer: rootUrl,
+                    },
                 });
 
-                const content = load(detailResponse.data);
+                const content = load(detailResponse);
 
                 // articles from www.news.cn or www.gov.cn
 

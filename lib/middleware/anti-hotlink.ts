@@ -17,7 +17,7 @@ const matchPath = (path: string, paths: string[]) => {
     return false;
 };
 
-// return ture if the path needs to be processed
+// return true if the path needs to be processed
 const filterPath = (path: string) => {
     const include = config.hotlink.includePaths;
     const exclude = config.hotlink.excludePaths;
@@ -44,6 +44,18 @@ const parseUrl = (str: string) => {
 
     return url;
 };
+
+const replaceUrl = (template?: string, url?: string) => {
+    if (!template || !url) {
+        return url;
+    }
+    const oldUrl = parseUrl(url);
+    if (oldUrl && oldUrl.protocol !== 'data:') {
+        return interpolate(template, oldUrl);
+    }
+    return url;
+};
+
 const replaceUrls = ($: CheerioAPI, selector: string, template: string, attribute = 'src') => {
     $(selector).each(function () {
         const oldSrc = $(this).attr(attribute);
@@ -105,6 +117,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     // Force config hotlink template on conflict
     if (config.hotlink.template) {
         imageHotlinkTemplate = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
+        multimediaHotlinkTemplate = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
     }
 
     if (!imageHotlinkTemplate && !multimediaHotlinkTemplate) {
@@ -120,6 +133,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     // image link
     const data: Data = ctx.get('data');
     if (data) {
+        if (data.image) {
+            data.image = replaceUrl(imageHotlinkTemplate, data.image);
+        }
         if (data.description) {
             data.description = process(data.description, imageHotlinkTemplate, multimediaHotlinkTemplate);
         }
@@ -128,6 +144,19 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             for (const item of data.item) {
                 if (item.description) {
                     item.description = process(item.description, imageHotlinkTemplate, multimediaHotlinkTemplate);
+                }
+                if (item.enclosure_url && item.enclosure_type) {
+                    if (item.enclosure_type.startsWith('image/')) {
+                        item.enclosure_url = replaceUrl(imageHotlinkTemplate, item.enclosure_url);
+                    } else if (/^(video|audio)\//.test(item.enclosure_type)) {
+                        item.enclosure_url = replaceUrl(multimediaHotlinkTemplate, item.enclosure_url);
+                    }
+                }
+                if (item.image) {
+                    item.image = replaceUrl(imageHotlinkTemplate, item.image);
+                }
+                if (item.itunes_item_image) {
+                    item.itunes_item_image = replaceUrl(imageHotlinkTemplate, item.itunes_item_image);
                 }
             }
         }

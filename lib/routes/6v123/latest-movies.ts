@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hao6v.com/', 'hao6v.com/gvod/zx.html'],
-    },
+    radar: [
+        {
+            source: ['hao6v.com/', 'hao6v.com/gvod/zx.html'],
+        },
+    ],
     name: '最新电影',
     maintainers: ['tc9011'],
     handler,
@@ -26,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const item = await processItems(ctx, baseURL);
+    const item = await processItems(ctx, baseURL, [/第*集/, /第*季/, /(ep)\d+/i, /(s)\d+/i, /更新/]);
 
     return {
         title: '6v电影-最新电影',

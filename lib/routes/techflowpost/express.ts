@@ -1,30 +1,23 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
 
 export const route: Route = {
-    path: ['/express', '/newsflash'],
-    categories: ['finance'],
+    path: '/express',
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/techflowpost/express',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['techflowpost.com/newsletter/index.html'],
-    },
+    radar: [
+        {
+            source: ['techflowpost.com/newsletter/index.html'],
+        },
+    ],
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,
     url: 'techflowpost.com/',
-    url: 'techflowpost.com/newsletter/index.html',
 };
 
 async function handler(ctx) {

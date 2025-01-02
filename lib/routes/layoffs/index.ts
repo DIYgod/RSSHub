@@ -40,10 +40,12 @@ const getMappings = function (obj) {
 
 export const route: Route = {
     path: '/',
-    radar: {
-        source: ['layoffs.fyi/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['layoffs.fyi/'],
+            target: '',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['BrandNewLifeJackie26'],
     handler,
@@ -93,7 +95,7 @@ async function handler() {
             $('script')
                 .text()
                 .match(/urlWithParams: "(.*?)"/)[1]
-                .replaceAll('\\u002F', '/');
+                .replaceAll(String.raw`\u002F`, '/');
 
         // Cache it again
         cache.set(ENTRY_URL, dataSourceUrl);

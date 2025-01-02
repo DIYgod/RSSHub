@@ -48,9 +48,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['guancha.cn/'],
-    },
+    radar: [
+        {
+            source: ['guancha.cn/'],
+        },
+    ],
     name: '首页',
     maintainers: ['nczitzk', 'Jeason0228'],
     handler,
@@ -63,9 +65,9 @@ export const route: Route = {
 
   others = 热点新闻 + 滚动新闻
 
-  :::tip
+::: tip
   观察者网首页左中右的三个 column 分别对应 **评论 & 研究**、**要闻**、**风闻** 三个部分。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

@@ -14,10 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['dribbble.com/'],
-        target: '/popular',
-    },
+    radar: [
+        {
+            source: ['dribbble.com/'],
+            target: '/popular',
+        },
+    ],
     name: 'Popular',
     maintainers: ['DIYgod', 'loganrockmore'],
     handler,
@@ -30,5 +32,5 @@ async function handler(ctx) {
 
     const title = 'Dribbble - Popular Shots';
 
-    ctx.set('data', await utils.getData(ctx, url, title));
+    return await utils.getData(url, title);
 }

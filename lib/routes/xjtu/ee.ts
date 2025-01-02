@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ee.xjtu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['ee.xjtu.edu.cn/'],
+        },
+    ],
     name: '电气学院',
     maintainers: ['DylanXie123'],
     handler,

@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['shopback.com.tw/:category', 'shopback.com.tw/'],
-    },
+    radar: [
+        {
+            source: ['shopback.com.tw/:category', 'shopback.com.tw/'],
+        },
+    ],
     name: 'Store',
     maintainers: ['nczitzk'],
     handler,

@@ -8,7 +8,7 @@ import { baseUrl, categoryMap } from './data';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/hkepc/news',
     parameters: { category: '分类，见下表，默认为最新消息' },
     features: {
@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['hkepc.com/'],
-        target: '',
-    },
+    radar: [
+        {
+            source: ['hkepc.com/'],
+            target: '',
+        },
+    ],
     name: 'HKEPC 电脑领域',
     maintainers: ['TonyRL'],
     handler,

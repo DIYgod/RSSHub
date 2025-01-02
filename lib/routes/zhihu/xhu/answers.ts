@@ -16,17 +16,19 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/people/:id/answers'],
-        target: '/people/answers/:id',
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/people/:id/answers'],
+            target: '/people/answers/:id',
+        },
+    ],
     name: 'xhu - 用户回答',
     maintainers: ['JimenezLi'],
     handler,
 };
 
 async function handler(ctx) {
-    const xhuCookie = await auth.getCookie(ctx);
+    const xhuCookie = await auth.getCookie();
     const hexId = ctx.req.param('hexId');
     const link = `https://www.zhihu.com/people/${hexId}/answers`;
     const url = `https://api.zhihuvvv.workers.dev/people/${hexId}/answers?limit=20&offset=0`;

@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -121,9 +122,18 @@ const setUrl = (info) => {
 
 export const route: Route = {
     path: '/campaign/:type/:free?',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
     example: '/dlsite/campaign/home',
-    parameters: { type: 'Type, see table above', free: 'Free only, empty means false, other value means true' },
+    parameters: {
+        type: {
+            description: '类型',
+            options: Object.values(infos).map((info) => ({ value: info.type, label: info.name })),
+        },
+        free: {
+            description: '免费',
+            options: [{ value: '1', label: '是' }],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -141,16 +151,15 @@ async function handler(ctx) {
     const info = infos[ctx.req.param('type')];
     // 判断参数是否合理
     if (info === undefined) {
-        throw new Error('不支持指定类型！');
+        throw new InvalidParameterError('不支持指定类型！');
     }
     if (ctx.req.param('free') !== undefined) {
         info.params.is_free = 1;
     }
     const link = setUrl(info);
 
-    const response = await got(link, {
+    const response = await got(new URL(link, host), {
         method: 'GET',
-        prefixUrl: host,
     });
     const data = response.data;
     const $ = load(data);

@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['topys.cn/search/:keyword', 'topys.cn/'],
-    },
+    radar: [
+        {
+            source: ['topys.cn/search/:keyword', 'topys.cn/'],
+        },
+    ],
     name: '关键字',
     maintainers: ['nczitzk'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['mpaypass.com.cn/'],
-    },
+    radar: [
+        {
+            source: ['mpaypass.com.cn/'],
+        },
+    ],
     name: '新闻',
     maintainers: ['LogicJake', 'genghis-yang'],
     handler,

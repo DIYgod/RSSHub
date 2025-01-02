@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 // import weiboUtils from '../utils';
 
 // Default hide all picture
@@ -16,9 +16,18 @@ let fullpic = 'false';
 
 export const route: Route = {
     path: '/search/hot/:fulltext?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/weibo/search/hot',
-    parameters: { fulltext: 'N' },
+    parameters: {
+        fulltext: {
+            description: `
+-   使用\`/weibo/search/hot\`可以获取热搜条目列表；
+-   使用\`/weibo/search/hot/fulltext\`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
+-   使用\`/weibo/search/hot/fulltext?pic=true\`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为\`https://weibo.com\`，以规避微博的外链限制，否则图片无法显示。）
+-   使用\`/weibo/search/hot/fulltext?pic=true&fullpic=true\`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为\`https://weibo.com\`，以规避微博的外链限制，否则图片无法显示。）`,
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -27,17 +36,15 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['s.weibo.com/top/summary'],
-    },
+    radar: [
+        {
+            source: ['s.weibo.com/top/summary'],
+        },
+    ],
     name: '热搜榜',
     maintainers: ['xyqfer', 'shinemoon'],
     handler,
     url: 's.weibo.com/top/summary',
-    description: `-   使用\`/weibo/search/hot\`可以获取热搜条目列表；
--   使用\`/weibo/search/hot/fulltext\`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
--   使用\`/weibo/search/hot/fulltext?pic=true\`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为\`https://weibo.com\`，以规避微博的外链限制，否则图片无法显示。）
--   使用\`/weibo/search/hot/fulltext?pic=true&fullpic=true\`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为\`https://weibo.com\`，以规避微博的外链限制，否则图片无法显示。）`,
 };
 
 async function handler(ctx) {
@@ -93,14 +100,12 @@ async function handler(ctx) {
         });
     }
 
-    // Update ctx
     return {
         title: '微博热搜榜',
         link: 'https://s.weibo.com/top/summary?cate=realtimehot',
         description: '实时热点，每分钟更新一次',
         item: resultItems,
     };
-    // ctx.set('data', weiboUtils.sinaimgTvax(ctx.state.data)); // no image in the route
 }
 
 async function fetchContent(url) {

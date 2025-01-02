@@ -4,10 +4,12 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/839studio/:id',
-    radar: {
-        source: ['thepaper.cn/'],
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['thepaper.cn/'],
+        },
+    ],
+    name: '澎湃美数课作品集 - 分类',
     maintainers: ['umm233'],
     handler,
     url: 'thepaper.cn/',

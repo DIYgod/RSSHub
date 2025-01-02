@@ -18,17 +18,19 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['barronschina.com.cn/'],
-        target: '/:category?',
-    },
+    radar: [
+        {
+            source: ['barronschina.com.cn/'],
+            target: '/:category?',
+        },
+    ],
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,
     url: 'barronschina.com.cn/',
-    description: `:::tip
+    description: `::: tip
   栏目 id 留空则返回快讯，在对应页地址栏 \`columnId=\` 后可以看到。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

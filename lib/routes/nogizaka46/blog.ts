@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['blog.nogizaka46.com/s/n46/diary/MEMBER'],
-        target: '/blog',
-    },
+    radar: [
+        {
+            source: ['blog.nogizaka46.com/s/n46/diary/MEMBER'],
+            target: '/blog',
+        },
+    ],
     name: 'Nogizaka46 Blog 乃木坂 46 博客',
     maintainers: ['Kasper4649', 'akashigakki'],
     handler,

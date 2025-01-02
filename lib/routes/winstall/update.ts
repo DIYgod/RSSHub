@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/:appId',
@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['winstall.app/apps/:appId'],
-    },
+    radar: [
+        {
+            source: ['winstall.app/apps/:appId'],
+        },
+    ],
     name: 'Apps Update',
     maintainers: ['TonyRL'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nea.gov.cn/sjzz/ghs/'],
-    },
+    radar: [
+        {
+            source: ['nea.gov.cn/sjzz/ghs/'],
+        },
+    ],
     name: '发展规划司',
     maintainers: ['nczitzk'],
     handler,

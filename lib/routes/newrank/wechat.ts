@@ -4,6 +4,7 @@ import { finishArticleItem } from '@/utils/wechat-mp';
 import { load } from 'cheerio';
 import utils from './utils';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/wechat/:wxid',
@@ -24,13 +25,13 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '微信公众号',
-    maintainers: ['lessmoe'],
+    maintainers: ['lessmoe', 'pseudoyu'],
     handler,
 };
 
 async function handler(ctx) {
     if (!config.newrank || !config.newrank.cookie) {
-        throw new Error('newrank RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new ConfigNotFoundError('newrank RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const uid = ctx.req.param('wxid');
     const nonce = utils.random_nonce(9);
@@ -69,16 +70,21 @@ async function handler(ctx) {
             xyz: utils.decrypt_wechat_detail_xyz(uid, nonce),
         },
     });
+
     const name = response.data.value.user.name;
     const realTimeArticles = utils.flatten(response.data.value.realTimeArticles);
     const articles = utils.flatten(response.data.value.articles);
     const newArticles = [...realTimeArticles, ...articles];
+
     const items = newArticles.map((item) => ({
+        id: item.id,
         title: item.title,
         description: '',
         link: item.url,
         pubDate: item.publicTime,
     }));
+
+    // TODO: link is empty
     await Promise.all(items.map((item) => finishArticleItem(item)));
 
     return {

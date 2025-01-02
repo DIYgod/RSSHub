@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['consumer.org.hk/'],
-    },
+    radar: [
+        {
+            source: ['consumer.org.hk/'],
+        },
+    ],
     name: '文章',
     maintainers: ['nczitzk'],
     handler,

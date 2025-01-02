@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['otobanana.com/user/:id/livestream', 'otobanana.com/user/:id'],
-    },
+    radar: [
+        {
+            source: ['otobanana.com/user/:id/livestream', 'otobanana.com/user/:id'],
+        },
+    ],
     name: 'Livestream ライブ配信',
     maintainers: ['TonyRL'],
     handler,
@@ -32,6 +34,11 @@ async function handler(ctx) {
 
     const casts = liveData.results.map((item) => renderLive(item));
 
+    ctx.set('json', {
+        userInfo,
+        liveData,
+    });
+
     return {
         title: `${userInfo.name} (@${userInfo.username}) - ライブ配信 | OTOBANANA`,
         description: userInfo.bio.replaceAll('\n', ' '),
@@ -44,9 +51,4 @@ async function handler(ctx) {
         itunes_author: userInfo.name,
         item: casts,
     };
-
-    ctx.set('json', {
-        userInfo,
-        liveData,
-    });
 }

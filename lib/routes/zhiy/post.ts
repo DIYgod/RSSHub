@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { baseUrl, fetchUserDate } from './utils';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import dayjs from 'dayjs';
 
 export const route: Route = {
@@ -23,9 +23,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['zhiy.cc/:author'],
-    },
+    radar: [
+        {
+            source: ['zhiy.cc/:author'],
+        },
+    ],
     name: '笔记',
     maintainers: ['TonyRL'],
     handler,

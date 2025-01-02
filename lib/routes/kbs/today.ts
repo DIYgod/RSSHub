@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['world.kbs.co.kr/'],
-        target: '/today',
-    },
+    radar: [
+        {
+            source: ['world.kbs.co.kr/'],
+            target: '/today',
+        },
+    ],
     name: 'Today',
     maintainers: ['nczitzk'],
     handler,

@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/manga/:id',
@@ -22,9 +22,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rawkuma.com/manga/:id', 'rawkuma.com/'],
-    },
+    radar: [
+        {
+            source: ['rawkuma.com/manga/:id', 'rawkuma.com/'],
+        },
+    ],
     name: 'Manga',
     maintainers: ['nczitzk'],
     handler,

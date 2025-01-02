@@ -3,7 +3,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
@@ -26,9 +26,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['github.com/:user/:repo/pulse', 'github.com/:user/:repo/pulse/:period'],
-    },
+    radar: [
+        {
+            source: ['github.com/:user/:repo/pulse', 'github.com/:user/:repo/pulse/:period'],
+        },
+    ],
     name: 'Repo Pulse',
     maintainers: ['jameschensmith'],
     handler,
@@ -52,8 +54,8 @@ async function handler(ctx) {
     const $overview = $mainSections.eq(1);
     const overviewItems = $overview
         .find('ul ul li')
-        .map((_, el) => $(el).text())
-        .toArray();
+        .toArray()
+        .map((el) => $(el).text());
 
     const $commitActivity = $mainSections.eq(2);
     let commitActivity;
@@ -69,32 +71,30 @@ async function handler(ctx) {
     let githubActivity;
     const $sections = $githubActivity.find('h3');
     if ($sections.length) {
-        githubActivity = $sections
-            .map((_, section) => {
-                const $section = $(section);
-                const $sectionSiblings = $section.nextUntil('h3');
-                const $paragraph = $section.nextUntil('ul');
-                const $list = $sectionSiblings.last();
-                return {
-                    heading: $section.text(),
-                    paragraph: $paragraph.length > 0 ? $paragraph.text() : undefined,
-                    items: $list
-                        .children()
-                        .map((_, item) => {
-                            const $item = $(item);
-                            const $link = $item.find('a');
-                            const $details = $item.find('p');
-                            const $relativeTime = $details.find('relative-time');
-                            $relativeTime.replaceWith($relativeTime.attr('datetime'));
-                            return {
-                                link: { text: $link.text(), url: $link.attr('href') },
-                                details: $details.text(),
-                            };
-                        })
-                        .toArray(),
-                };
-            })
-            .toArray();
+        githubActivity = $sections.toArray().map((section) => {
+            const $section = $(section);
+            const $sectionSiblings = $section.nextUntil('h3');
+            const $paragraph = $section.nextUntil('ul');
+            const $list = $sectionSiblings.last();
+            return {
+                heading: $section.text(),
+                paragraph: $paragraph.length > 0 ? $paragraph.text() : undefined,
+                items: $list
+                    .children()
+                    .toArray()
+                    .map((item) => {
+                        const $item = $(item);
+                        const $link = $item.find('a');
+                        const $details = $item.find('p');
+                        const $relativeTime = $details.find('relative-time');
+                        $relativeTime.replaceWith($relativeTime.attr('datetime'));
+                        return {
+                            link: { text: $link.text(), url: $link.attr('href') },
+                            details: $details.text(),
+                        };
+                    }),
+            };
+        });
     }
 
     return {

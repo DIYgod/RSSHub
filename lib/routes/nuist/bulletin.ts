@@ -35,10 +35,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['bulletin.nuist.edu.cn/:category/list.htm'],
-        target: '/bulletin/:category',
-    },
+    radar: [
+        {
+            source: ['bulletin.nuist.edu.cn/:category/list.htm'],
+            target: '/bulletin/:category',
+        },
+    ],
     name: '南信大信息公告栏',
     maintainers: ['gylidian'],
     handler,
@@ -50,9 +52,9 @@ export const route: Route = {
   | -------- | -------- | -------- | -------- | -------- | -------- | ---- |
   | 783      | 784      | 785      | 786      | 788      | 789      | qt   |
 
-  :::warning
+::: warning
   全文内容需使用 校园网或[VPN](http://vpn.nuist.edu.cn) 获取
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

@@ -3,6 +3,7 @@ import { config } from '@/config';
 
 import parseArticle from './parse-article.js';
 import { getWebInlineRecommendedFeedQuery } from './graphql.js';
+import ConfigNotFoundError from '@/errors/types/config-not-found.js';
 
 export const route: Route = {
     path: '/for-you/:user',
@@ -25,9 +26,9 @@ export const route: Route = {
     name: 'Personalized Recommendations - For You',
     maintainers: ['ImSingee'],
     handler,
-    description: `:::warning
+    description: `::: warning
   Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -35,7 +36,7 @@ async function handler(ctx) {
 
     const cookie = config.medium.cookies[user];
     if (cookie === undefined) {
-        throw new Error(`缺少 Medium 用户 ${user} 登录后的 Cookie 值`);
+        throw new ConfigNotFoundError(`缺少 Medium 用户 ${user} 登录后的 Cookie 值`);
     }
 
     const posts = await getWebInlineRecommendedFeedQuery(user, cookie);
@@ -43,7 +44,7 @@ async function handler(ctx) {
 
     if (!posts) {
         // login failed
-        throw new Error(`Medium 用户 ${user} 的 Cookie 无效或已过期`);
+        throw new ConfigNotFoundError(`Medium 用户 ${user} 的 Cookie 无效或已过期`);
     }
 
     const urls = posts.items.map((data) => data.post.mediumUrl);

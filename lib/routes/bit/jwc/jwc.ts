@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['jwc.bit.edu.cn/tzgg', 'jwc.bit.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['jwc.bit.edu.cn/tzgg', 'jwc.bit.edu.cn/'],
+        },
+    ],
     name: '教务处通知',
     maintainers: ['sinofp'],
     handler,

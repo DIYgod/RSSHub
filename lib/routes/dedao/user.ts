@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const types = {
     0: '动态',
@@ -15,7 +15,7 @@ const types = {
 
 export const route: Route = {
     path: '/user/:id/:type?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/dedao/user/VkA5OqLX4RyGxmZRNBMlwBrDaJQ9og',
     parameters: { id: '用户 id，可在对应用户主页 URL 中找到', type: '类型，见下表，默认为`0`，即动态' },
     features: {

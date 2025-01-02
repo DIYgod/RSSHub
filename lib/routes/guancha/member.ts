@@ -23,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['guancha.cn/'],
-        target: '/:category?',
-    },
+    radar: [
+        {
+            source: ['guancha.cn/'],
+            target: '/:category?',
+        },
+    ],
     name: '观学院',
     maintainers: ['nczitzk'],
     handler,
@@ -66,7 +68,7 @@ async function handler(ctx) {
 
                 for (const i of item.items) {
                     const newPubDate = new Date(i.publish_time);
-                    pubDate = pubDate > newPubDate ? pubDate : newPubDate;
+                    pubDate = Math.max(pubDate, newPubDate);
                     description += `<a href="${rootUrl}/zaixianke/content.html?id=${i.id}">${i.title}</a><br>`;
                 }
 

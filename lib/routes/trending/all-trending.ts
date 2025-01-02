@@ -8,11 +8,12 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 dayjs.extend(utc);
 dayjs.extend(timezone);
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 import md5 from '@/utils/md5';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 // Constants
 const CACHE_KEY = 'trending-all-in-one';
@@ -74,7 +75,7 @@ const filterKeyword = (keywordList) => (res) => res.filter(({ title }) => hasKey
 // Data Fetcher
 // TODO: support channel selection
 const fetchAllData = async (keywordList = [], dateList = [], cache) => {
-    const cachedGetData = (url) => cache.tryGet(url, () => got(url).json(), config.cache.contentExpire, false);
+    const cachedGetData = (url) => cache.tryGet(url, () => ofetch(url), config.cache.contentExpire, false);
 
     let data = await Promise.all(
         dateList.map(async (dateTime) => ({
@@ -187,7 +188,7 @@ export const route: Route = {
 async function handler(ctx) {
     // Prevent making over 100 requests per invocation
     if (ctx.req.param('numberOfDays') > 14) {
-        throw new Error('days must be less than 14');
+        throw new InvalidParameterError('days must be less than 14');
     }
     const numberOfDays = ctx.req.param('numberOfDays') || 3;
     const currentShanghaiDateTime = dayjs(toShanghaiTimezone(new Date()));

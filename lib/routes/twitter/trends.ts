@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import utils from './utils';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/trends/:woeid?',
@@ -22,7 +23,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.twitter || !config.twitter.consumer_key || !config.twitter.consumer_secret) {
-        throw new Error('Twitter RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new ConfigNotFoundError('Twitter RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const woeid = ctx.req.param('woeid') ?? 1; // Global information is available by using 1 as the WOEID
     const client = await utils.getAppClient();
@@ -31,7 +32,7 @@ async function handler(ctx) {
 
     return {
         title: `Twitter Trends on ${data[0].locations[0].name}`,
-        link: `https://twitter.com/i/trends`,
+        link: `https://x.com/i/trends`,
         item: trends
             .filter((t) => !t.promoted_content)
             .map((t) => ({

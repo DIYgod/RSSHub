@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['auto.uestc.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['auto.uestc.edu.cn/'],
+        },
+    ],
     name: '自动化工程学院',
     maintainers: ['talengu', 'mobyw'],
     handler,

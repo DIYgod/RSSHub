@@ -19,10 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['rodong.rep.kp/cn/index.php', 'rodong.rep.kp/en/index.php', 'rodong.rep.kp/ko/index.php', 'rodong.rep.kp/cn', 'rodong.rep.kp/en', 'rodong.rep.kp/ko'],
-        target: '/news',
-    },
+    radar: [
+        {
+            source: ['rodong.rep.kp/cn/index.php', 'rodong.rep.kp/en/index.php', 'rodong.rep.kp/ko/index.php', 'rodong.rep.kp/cn', 'rodong.rep.kp/en', 'rodong.rep.kp/ko'],
+            target: '/news',
+        },
+    ],
     name: 'News',
     maintainers: ['TonyRL'],
     handler,

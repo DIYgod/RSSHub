@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['freewechat.com/profile/:id'],
-    },
-    name: 'Unknown',
+    radar: [
+        {
+            source: ['freewechat.com/profile/:id'],
+        },
+    ],
+    name: '公众号',
     maintainers: ['TonyRL'],
     handler,
 };
@@ -63,7 +65,7 @@ async function handler(ctx) {
                 $('.js_img_placeholder').remove();
                 $('amp-img').each((_, e) => {
                     e = $(e);
-                    e.replaceWith(`<img src="${new URL(e.attr('src'), response.url).href}" width="${e.attr('width')}" height="${e.attr('height')}" decoding="async">`);
+                    e.replaceWith(`<img src="${new URL(e.attr('src'), item.link).href}" width="${e.attr('width')}" height="${e.attr('height')}" decoding="async">`);
                 });
                 $('amp-video').each((_, e) => {
                     e = $(e);

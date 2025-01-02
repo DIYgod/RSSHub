@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import utils from './utils';
+import { getCookieValueByKey, header, processImage } from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.zhihu.com/people/:id/answers'],
-    },
+    radar: [
+        {
+            source: ['www.zhihu.com/people/:id/answers'],
+        },
+    ],
     name: '用户回答',
     maintainers: ['DIYgod', 'prnake'],
     handler,
@@ -27,9 +29,13 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
+
+    const zc0 = getCookieValueByKey('z_c0');
+
     const headers = {
         'User-Agent': 'ZhihuHybrid com.zhihu.android/Futureve/6.59.0 Mozilla/5.0 (Linux; Android 10; GM1900 Build/QKQ1.190716.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/85.0.4183.127 Mobile Safari/537.36',
         Referer: `https://www.zhihu.com/people/${id}/answers`,
+        Cookie: zc0 ? `z_c0=${zc0}` : '',
     };
 
     const response = await got({
@@ -49,7 +55,7 @@ async function handler(ctx) {
                 method: 'get',
                 url: `https://www.zhihu.com${apiPath}`,
                 headers: {
-                    ...utils.header,
+                    ...header,
                     Referer: `https://www.zhihu.com/people/${id}`,
                 },
             });
@@ -69,7 +75,7 @@ async function handler(ctx) {
                     url: `https://api.zhihu.com/appview/api/v4/answers/${item.id}?include=content&is_appview=true`,
                     headers,
                 });
-                description = utils.ProcessImage(detail.data.content);
+                description = processImage(detail.data.content);
             } catch {
                 description = `<a href="${link}" target="_blank">${title}</a>`;
             }

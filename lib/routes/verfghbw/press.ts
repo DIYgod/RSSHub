@@ -16,10 +16,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['verfgh.baden-wuerttemberg.de/de/presse-und-service/pressemitteilungen/'],
-        target: '/press',
-    },
+    radar: [
+        {
+            source: ['verfgh.baden-wuerttemberg.de/de/presse-und-service/pressemitteilungen/'],
+            target: '/press',
+        },
+    ],
     name: 'Press releases',
     maintainers: ['quinn-dev'],
     handler,

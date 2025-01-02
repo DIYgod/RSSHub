@@ -1,12 +1,13 @@
 import { IgApiClient } from 'instagram-private-api';
 import logger from '@/utils/logger';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const ig = new IgApiClient();
 
 async function login(ig, cache) {
     if (!config.instagram || !config.instagram.username || !config.instagram.password) {
-        throw new Error('Instagram RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
+        throw new ConfigNotFoundError('Instagram RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const LOGIN_CACHE_KEY = 'instagram:login';
     const { username, password } = config.instagram;

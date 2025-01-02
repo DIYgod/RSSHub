@@ -14,9 +14,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['ac.qq.com/Rank/comicRank/type/:type', 'ac.qq.com/'],
-    },
+    radar: [
+        {
+            source: ['ac.qq.com/Rank/comicRank/type/:type', 'ac.qq.com/'],
+        },
+    ],
     name: '排行榜',
     maintainers: ['nczitzk'],
     handler,
@@ -24,9 +26,9 @@ export const route: Route = {
   | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
   | mt     | rise   | new    | pay    | top    | male   | female |
 
-  :::tip
+::: tip
   \`time\` 参数仅在 \`type\` 参数选为 **月票榜** 的时候生效。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -45,5 +47,5 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/Rank/comicRank/type/${type}`;
 
-    ctx.set('data', await ProcessItems(ctx, currentUrl, time, titles[type]));
+    return await ProcessItems(ctx, currentUrl, time, titles[type]);
 }

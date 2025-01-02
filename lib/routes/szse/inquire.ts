@@ -5,7 +5,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/inquire/:category?/:select?/:keyword?',
@@ -20,10 +20,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['szse.cn/disclosure/supervision/inquire/index.html', 'szse.cn/'],
-        target: '/inquire',
-    },
+    radar: [
+        {
+            source: ['szse.cn/disclosure/supervision/inquire/index.html', 'szse.cn/'],
+            target: '/inquire',
+        },
+    ],
     name: '问询函件',
     maintainers: ['Jeason0228', 'nczitzk'],
     handler,

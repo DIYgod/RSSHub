@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import { google } from 'googleapis';
 const { OAuth2 } = google.auth;
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
 
 let count = 0;
@@ -45,114 +45,124 @@ if (config.youtube && config.youtube.clientId && config.youtube.clientSecret && 
     youtubeOAuth2Client.setCredentials({ refresh_token: config.youtube.refreshToken });
 }
 
-const youtubeUtils = {
-    getPlaylistItems: (id, part, cache) =>
-        cache.tryGet(
-            `youtube:getPlaylistItems:${id}`,
-            async () => {
-                const res = await exec((youtube) =>
-                    youtube.playlistItems.list({
-                        part,
-                        playlistId: id,
-                        maxResults: 50, // youtube api param value default is 5
-                    })
-                );
-                return res;
-            },
-            config.cache.routeExpire,
-            false
-        ),
-    getPlaylist: (id, part, cache) =>
-        cache.tryGet(`youtube:getPlaylist:${id}`, async () => {
+export const getPlaylistItems = (id, part, cache) =>
+    cache.tryGet(
+        `youtube:getPlaylistItems:${id}`,
+        async () => {
             const res = await exec((youtube) =>
-                youtube.playlists.list({
+                youtube.playlistItems.list({
                     part,
-                    id,
+                    playlistId: id,
+                    maxResults: 50, // youtube api param value default is 5
                 })
             );
             return res;
-        }),
-    getChannelWithId: (id, part, cache) =>
-        cache.tryGet(`youtube:getChannelWithId:${id}`, async () => {
-            const res = await exec((youtube) =>
-                youtube.channels.list({
-                    part,
-                    id,
-                })
-            );
-            return res;
-        }),
-    getChannelWithUsername: (username, part, cache) =>
-        cache.tryGet(`youtube:getChannelWithUsername:${username}`, async () => {
-            const res = await exec((youtube) =>
-                youtube.channels.list({
-                    part,
-                    forUsername: username,
-                })
-            );
-            return res;
-        }),
-    // not in use
-    // getVideoAuthor: async (id, part) => {
-    //     const res = await exec((youtube) =>
-    //         youtube.videos.list({
-    //             part,
-    //             id,
-    //         })
-    //     );
-    //     return res;
-    // },
-    getThumbnail: (thumbnails) => thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default,
-    formatDescription: (description) => description.replaceAll(/\r\n|\r|\n/g, '<br>'),
-    renderDescription: (embed, videoId, img, description) =>
-        art(path.join(__dirname, 'templates/description.art'), {
-            embed,
-            videoId,
-            img,
-            description,
-        }),
-
-    getSubscriptions: async (part, cache) => {
-        // access tokens expire after one hour
-        let accessToken = await cache.get('youtube:accessToken', false);
-        if (!accessToken) {
-            const data = await youtubeOAuth2Client.getAccessToken();
-            accessToken = data.token;
-            await cache.set('youtube:accessToken', accessToken, 3600); // ~3600s
-        }
-        youtubeOAuth2Client.setCredentials({ access_token: accessToken, refresh_token: config.youtube.refreshToken });
-
-        return cache.tryGet('youtube:getSubscriptions', () => youtubeUtils.getSubscriptionsRecusive(part), config.cache.routeExpire, false);
-    },
-    getSubscriptionsRecusive: async (part, nextPageToken) => {
-        const res = await google.youtube('v3').subscriptions.list({
-            auth: youtubeOAuth2Client,
-            part,
-            mine: true,
-            maxResults: 50,
-            pageToken: nextPageToken ?? undefined,
-        });
-        // recursively get next page
-        if (res.data.nextPageToken) {
-            const next = await youtubeUtils.getSubscriptionsRecusive(part, res.data.nextPageToken);
-            res.data.items = [...res.data.items, ...next.data.items];
-        }
+        },
+        config.cache.routeExpire,
+        false
+    );
+export const getPlaylist = (id, part, cache) =>
+    cache.tryGet(`youtube:getPlaylist:${id}`, async () => {
+        const res = await exec((youtube) =>
+            youtube.playlists.list({
+                part,
+                id,
+            })
+        );
         return res;
-    },
-    // taken from https://webapps.stackexchange.com/a/101153
-    isYouTubeChannelId: (id) => /^UC[\w-]{21}[AQgw]$/.test(id),
-    getLive: (id, cache) =>
-        cache.tryGet(`youtube:getLive:${id}`, async () => {
-            const res = await exec((youtube) =>
-                youtube.search.list({
-                    part: 'snippet',
-                    channelId: id,
-                    eventType: 'live',
-                    type: 'video',
-                })
-            );
-            return res;
-        }),
-};
+    });
+export const getChannelWithId = (id, part, cache) =>
+    cache.tryGet(`youtube:getChannelWithId:${id}`, async () => {
+        const res = await exec((youtube) =>
+            youtube.channels.list({
+                part,
+                id,
+            })
+        );
+        return res;
+    });
+export const getChannelWithUsername = (username, part, cache) =>
+    cache.tryGet(`youtube:getChannelWithUsername:${username}`, async () => {
+        const res = await exec((youtube) =>
+            youtube.channels.list({
+                part,
+                forUsername: username,
+            })
+        );
+        return res;
+    });
+// not in use
+// export const getVideoAuthor = async (id, part) => {
+//     const res = await exec((youtube) =>
+//         youtube.videos.list({
+//             part,
+//             id,
+//         })
+//     );
+//     return res;
+// }
+export const getThumbnail = (thumbnails) => thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
+export const formatDescription = (description) => description.replaceAll(/\r\n|\r|\n/g, '<br>');
+export const renderDescription = (embed, videoId, img, description) =>
+    art(path.join(__dirname, 'templates/description.art'), {
+        embed,
+        videoId,
+        img,
+        description,
+    });
 
+export const getSubscriptions = async (part, cache) => {
+    // access tokens expire after one hour
+    let accessToken = await cache.get('youtube:accessToken', false);
+    if (!accessToken) {
+        const data = await youtubeOAuth2Client.getAccessToken();
+        accessToken = data.token;
+        await cache.set('youtube:accessToken', accessToken, 3600); // ~3600s
+    }
+    youtubeOAuth2Client.setCredentials({ access_token: accessToken, refresh_token: config.youtube.refreshToken });
+
+    return cache.tryGet('youtube:getSubscriptions', () => getSubscriptionsRecusive(part), config.cache.routeExpire, false);
+};
+export async function getSubscriptionsRecusive(part, nextPageToken?) {
+    const res = await google.youtube('v3').subscriptions.list({
+        auth: youtubeOAuth2Client,
+        part,
+        mine: true,
+        maxResults: 50,
+        pageToken: nextPageToken ?? undefined,
+    });
+    // recursively get next page
+    if (res.data.nextPageToken) {
+        const next = await getSubscriptionsRecusive(part, res.data.nextPageToken);
+        res.data.items = [...res.data.items, ...next.data.items];
+    }
+    return res;
+}
+// taken from https://webapps.stackexchange.com/a/101153
+export const isYouTubeChannelId = (id) => /^UC[\w-]{21}[AQgw]$/.test(id);
+export const getLive = (id, cache) =>
+    cache.tryGet(`youtube:getLive:${id}`, async () => {
+        const res = await exec((youtube) =>
+            youtube.search.list({
+                part: 'snippet',
+                channelId: id,
+                eventType: 'live',
+                type: 'video',
+            })
+        );
+        return res;
+    });
+const youtubeUtils = {
+    getPlaylistItems,
+    getPlaylist,
+    getChannelWithId,
+    getChannelWithUsername,
+    getThumbnail,
+    formatDescription,
+    renderDescription,
+    getSubscriptions,
+    getSubscriptionsRecusive,
+    isYouTubeChannelId,
+    getLive,
+};
 export default youtubeUtils;

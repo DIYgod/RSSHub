@@ -1,13 +1,15 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { baseUrl, getPlurk } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const categoryList = new Set(['topReplurks', 'topFavorites', 'topResponded']);
 
 export const route: Route = {
     path: '/top/:category?/:lang?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/plurk/top/topReplurks',
     parameters: { category: 'Category, see the table below, `topReplurks` by default', lang: 'Language, see the table below, `en` by default' },
     features: {
@@ -33,7 +35,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { category = 'topReplurks', lang = 'en' } = ctx.req.param();
     if (!categoryList.has(category)) {
-        throw new Error(`Invalid category: ${category}`);
+        throw new InvalidParameterError(`Invalid category: ${category}`);
     }
 
     const { data: apiResponse } = await got(`${baseUrl}/Stats/${category}`, {

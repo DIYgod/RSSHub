@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['coindesk.com/'],
-    },
+    radar: [
+        {
+            source: ['coindesk.com/'],
+        },
+    ],
     name: '新闻周刊',
     maintainers: ['jameshih'],
     handler,

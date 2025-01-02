@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['support.typora.io/'],
-    },
+    radar: [
+        {
+            source: ['support.typora.io/'],
+        },
+    ],
     name: 'Changelog',
     maintainers: ['cnzgray'],
     handler,

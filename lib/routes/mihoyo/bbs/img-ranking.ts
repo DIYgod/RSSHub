@@ -52,10 +52,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['miyoushe.com/:game/imgRanking/:forum_id/:ranking_id/:cate_id'],
-        target: '/bbs/img-ranking/:game',
-    },
+    radar: [
+        {
+            source: ['miyoushe.com/:game/imgRanking/:forum_id/:ranking_id/:cate_id'],
+            target: '/bbs/img-ranking/:game',
+        },
+    ],
     name: '米游社 - 同人榜',
     maintainers: ['CaoMeiYouRen'],
     handler,
@@ -66,11 +68,11 @@ export const route: Route = {
   | rankingType | 排行榜类型（崩坏二没有日榜）          | daily/weekly/monthly                                                 | daily        |
   | lastId      | 当前页 id（用于分页）                 | 数字                                                                 | 1            |
 
-  游戏缩写（目前绝区零还没有同人榜
+  游戏缩写
 
-  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 大别野 |
-  | ------ | ---- | ------ | ---------- | -------- | ------ |
-  | bh3    | ys   | bh2    | wd         | sr       | dby    |
+  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 大别野 | 绝区零 |
+  | ------ | ---- | ------ | ---------- | -------- | ------ | ------ |
+  | bh3    | ys   | bh2    | wd         | sr       | dby    | zzz    |
 
   主榜类型
 
@@ -138,5 +140,5 @@ async function handler(ctx) {
         link: url,
         item: items,
     };
-    ctx.set('data', data);
+    return data;
 }

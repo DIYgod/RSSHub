@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({
@@ -21,13 +21,22 @@ const typeDict = {
 };
 
 export const route: Route = {
-    path: ['/comments/:user/:repo/:type/:number', '/comments/:user/:repo/:number?'],
-    radar: {
-        source: ['github.com/:user/:repo/:type'],
-        target: '/comments/:user/:repo',
+    path: '/comments/:user/:repo/:number?',
+    categories: ['programming'],
+    example: '/github/comments/DIYgod/RSSHub/8116',
+    parameters: {
+        user: 'User / Org name',
+        repo: 'Repo name',
+        number: 'Issue or pull number (if omitted: all)',
     },
-    name: 'Unknown',
-    maintainers: [],
+    radar: [
+        {
+            source: ['github.com/:user/:repo/:type', 'github.com/:user/:repo/:type/:number'],
+            target: '/comments/:user/:repo/:number?',
+        },
+    ],
+    name: 'Issue / Pull Request comments',
+    maintainers: ['TonyRL', 'FliegendeWurst'],
     handler,
 };
 
@@ -46,20 +55,20 @@ async function handler(ctx) {
                   Accept: 'application/vnd.github.v3+json',
               };
 
-    await (isNaN(number) ? allIssues(ctx, user, repo, limit, headers) : singleIssue(ctx, user, repo, number, limit, headers));
+    return await (isNaN(number) ? allIssues(ctx, user, repo, limit, headers) : singleIssue(ctx, user, repo, number, limit, headers));
 }
 
 async function allIssues(ctx, user, repo, limit, headers) {
-    const response = await got(`${apiUrl}/repos/${user}/${repo}/issues/comments`, {
+    const response = await ofetch.raw(`${apiUrl}/repos/${user}/${repo}/issues/comments`, {
         headers,
-        searchParams: {
+        query: {
             sort: 'updated',
             direction: 'desc',
             per_page: limit,
         },
     });
 
-    const timeline = response.data;
+    const timeline = response._data;
 
     const items = timeline.map((item) => {
         const actor = item.actor?.login ?? item.user?.login ?? 'ghost';
@@ -78,51 +87,53 @@ async function allIssues(ctx, user, repo, limit, headers) {
     });
 
     const rateLimit = {
-        limit: Number.parseInt(response.headers['x-ratelimit-limit']),
-        remaining: Number.parseInt(response.headers['x-ratelimit-remaining']),
-        reset: parseDate(Number.parseInt(response.headers['x-ratelimit-reset']) * 1000),
-        resoure: response.headers['x-ratelimit-resource'],
-        used: Number.parseInt(response.headers['x-ratelimit-used']),
+        limit: Number.parseInt(response.headers.get('x-ratelimit-limit')),
+        remaining: Number.parseInt(response.headers.get('x-ratelimit-remaining')),
+        reset: parseDate(Number.parseInt(response.headers.get('x-ratelimit-reset')) * 1000),
+        resoure: response.headers.get('x-ratelimit-resource'),
+        used: Number.parseInt(response.headers.get('x-ratelimit-used')),
     };
 
-    return {
+    const ret = {
         title: `${user}/${repo}: Issue & Pull request comments`,
         link: `${rootUrl}/${user}/${repo}`,
         item: items,
     };
 
     ctx.set('json', {
-        title: `${user}/${repo}: Issue & Pull request comments`,
-        link: `${rootUrl}/${user}/${repo}`,
-        item: items,
+        ...ret,
         rateLimit,
     });
+    return ret;
 }
 
 async function singleIssue(ctx, user, repo, number, limit, headers) {
-    const response = await got(`${apiUrl}/repos/${user}/${repo}/issues/${number}`, {
+    const response = await ofetch.raw(`${apiUrl}/repos/${user}/${repo}/issues/${number}`, {
         headers,
     });
-    const issue = response.data;
+    const issue = response._data;
     const type = issue.pull_request ? 'pull' : 'issue';
 
-    const timelineResponse = await got(issue.timeline_url, {
+    let timelineResponse = await ofetch.raw(issue.timeline_url, {
         headers,
-        searchParams: {
+        query: {
             per_page: limit,
         },
     });
-    const timeline = timelineResponse.data;
-
-    const items = [
-        {
+    const items = [];
+    const lastUrl = timelineResponse.headers.get('link')?.match(/<(\S+?)>; rel="last"/)?.[1];
+    if (lastUrl) {
+        timelineResponse = await ofetch.raw(lastUrl, { headers });
+    } else {
+        items.push({
             title: `${issue.user.login} created ${user}/${repo}: ${typeDict[type].title} #${issue.number}`,
             description: issue.body ? md.render(issue.body) : null,
             author: issue.user.login,
             pubDate: parseDate(issue.created_at),
             link: `${issue.html_url}#issue-${issue.id}`,
-        },
-    ];
+        });
+    }
+    const timeline = timelineResponse._data;
 
     for (const item of timeline) {
         const actor = item.actor?.login ?? item.user?.login ?? 'ghost';
@@ -177,22 +188,21 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
         }
     }
 
-    return {
+    const ret = {
         title: `${user}/${repo}: ${typeDict[type].title} #${number} - ${issue.title}`,
         link: issue.html_url,
         item: items,
     };
 
     ctx.set('json', {
-        title: `${user}/${repo}: ${typeDict[type].title} #${number} - ${issue.title}`,
-        link: issue.html_url,
-        item: items,
+        ...ret,
         rateLimit: {
-            limit: Number.parseInt(response.headers['x-ratelimit-limit']),
-            remaining: Number.parseInt(response.headers['x-ratelimit-remaining']),
-            reset: parseDate(Number.parseInt(response.headers['x-ratelimit-reset']) * 1000),
-            resoure: response.headers['x-ratelimit-resource'],
-            used: Number.parseInt(response.headers['x-ratelimit-used']),
+            limit: Number.parseInt(response.headers.get('x-ratelimit-limit')),
+            remaining: Number.parseInt(response.headers.get('x-ratelimit-remaining')),
+            reset: parseDate(Number.parseInt(response.headers.get('x-ratelimit-reset')) * 1000),
+            resoure: response.headers.get('x-ratelimit-resource'),
+            used: Number.parseInt(response.headers.get('x-ratelimit-used')),
         },
     });
+    return ret;
 }

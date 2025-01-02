@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import got from '@/utils/got';
@@ -9,8 +9,9 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/keyword/:keyword/:routeParams?',
-    categories: ['social-media'],
-    example: '/weibo/keyword/DIYgod',
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
+    example: '/weibo/keyword/RSSHub',
     parameters: { keyword: '你想订阅的微博关键词', routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {
         requireConfig: false,
@@ -53,15 +54,17 @@ async function handler(ctx) {
         title: `又有人在微博提到${keyword}了`,
         link: `http://s.weibo.com/weibo/${encodeURIComponent(keyword)}&b=1&nodup=1`,
         description: `又有人在微博提到${keyword}了`,
-        item: data.map((item) => {
-            item.mblog.created_at = timezone(item.mblog.created_at, +8);
-            if (item.mblog.retweeted_status && item.mblog.retweeted_status.created_at) {
-                item.mblog.retweeted_status.created_at = timezone(item.mblog.retweeted_status.created_at, +8);
-            }
-            return weiboUtils.formatExtended(ctx, item.mblog, undefined, {
-                showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),
-                showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.showAuthorInDesc), true),
-            });
-        }),
+        item: data
+            .filter((i) => i.mblog)
+            .map((item) => {
+                item.mblog.created_at = timezone(item.mblog.created_at, +8);
+                if (item.mblog.retweeted_status && item.mblog.retweeted_status.created_at) {
+                    item.mblog.retweeted_status.created_at = timezone(item.mblog.retweeted_status.created_at, +8);
+                }
+                return weiboUtils.formatExtended(ctx, item.mblog, undefined, {
+                    showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),
+                    showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.showAuthorInDesc), true),
+                });
+            }),
     });
 }

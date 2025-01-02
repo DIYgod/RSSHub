@@ -31,10 +31,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['nltimes.nl/categories/:category'],
-        target: '/news/:category',
-    },
+    radar: [
+        {
+            source: ['nltimes.nl/categories/:category'],
+            target: '/news/:category',
+        },
+    ],
     name: 'News',
     maintainers: ['Hivol'],
     handler,

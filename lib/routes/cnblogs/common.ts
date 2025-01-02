@@ -18,17 +18,17 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.cnblogs.com/aggsite/topdiggs'],
-    },
+    radar: [
+        {
+            source: ['www.cnblogs.com/aggsite/topdiggs'],
+        },
+    ],
     name: '10 天推荐排行榜',
     maintainers: ['hujingnb'],
     handler,
     url: 'www.cnblogs.com/pick',
     description: `在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: \`https://www.cnblogs.com/cate/go/\`, 则: [\`/cnblogs/cate/go\`](https://rsshub.app/cnblogs/cate/go)`,
     url: 'www.cnblogs.com/aggsite/headline',
-    url: 'www.cnblogs.com/aggsite/topviews',
-    url: 'www.cnblogs.com/aggsite/topdiggs',
 };
 
 async function handler(ctx) {

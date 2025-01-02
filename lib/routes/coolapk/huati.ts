@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/huati/:tag',
@@ -8,7 +9,13 @@ export const route: Route = {
     example: '/coolapk/huati/iPhone',
     parameters: { tag: '话题名称' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_HOTLINK_TEMPLATE',
+                optional: true,
+                description: '设置为`true`并添加`image_hotlink_template`参数来代理图片',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -32,7 +39,7 @@ async function handler(ctx) {
 
     out = out.filter(Boolean); // 去除空值
     if (out.length === 0) {
-        throw new Error('这个话题还没有被创建或现在没有图文及动态内容。');
+        throw new InvalidParameterError('这个话题还没有被创建或现在没有图文及动态内容。');
     }
     return {
         title: `酷安话题-${tag}`,

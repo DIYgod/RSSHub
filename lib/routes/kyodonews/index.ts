@@ -8,7 +8,9 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const resolveRelativeLink = (link, baseUrl) => (link.startsWith('http') ? link : `${baseUrl}${link}`);
 
@@ -33,11 +35,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'china';
-    const keyword = ctx.req.param('keyword') === 'RSS' ? 'rss' : ctx.req.param('keyword') ?? '';
+    const keyword = ctx.req.param('keyword') === 'RSS' ? 'rss' : (ctx.req.param('keyword') ?? '');
 
     // raise error for invalid languages
     if (!['china', 'tchina'].includes(language)) {
-        throw new Error('Invalid language');
+        throw new ConfigNotFoundError('Invalid language');
     }
 
     const rootUrl = `https://${language}.kyodonews.net`;
@@ -47,7 +49,7 @@ async function handler(ctx) {
     try {
         response = await got(currentUrl);
     } catch (error) {
-        throw error.response && error.response.statusCode === 404 ? new Error('Invalid keyword') : error;
+        throw error.response && error.response.statusCode === 404 ? new InvalidParameterError('Invalid keyword') : error;
     }
 
     const $ = load(response.data, { xmlMode: keyword === 'rss' });

@@ -3,12 +3,15 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import wait from '@/utils/wait';
 import cache from '@/utils/cache';
+import { fetchArticle } from '@/utils/wechat-mp';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 let cacheIndex = 0;
 
 export const route: Route = {
-    path: '/:id',
-    name: 'Unknown',
+    path: '/:id/:params?',
+    name: 'Test',
     maintainers: ['DIYgod', 'NeverBehave'],
     handler,
 };
@@ -23,7 +26,18 @@ async function handler(ctx) {
             url: 'https://httpbingo.org/status/404',
         });
     }
+    if (ctx.req.param('id') === 'config-not-found-error') {
+        throw new ConfigNotFoundError('Test config not found error');
+    }
+    if (ctx.req.param('id') === 'invalid-parameter-error') {
+        throw new InvalidParameterError('Test invalid parameter error');
+    }
+    if (ctx.req.param('id') === 'redirect') {
+        ctx.set('redirect', '/test/1');
+        return;
+    }
     let item: DataItem[] = [];
+    let image: string | null = null;
     switch (ctx.req.param('id')) {
         case 'filter':
             item = [
@@ -79,13 +93,9 @@ async function handler(ctx) {
             break;
 
         case 'cache': {
-            const description = await cache.tryGet(
-                'test',
-                () => ({
-                    text: `Cache${++cacheIndex}`,
-                }),
-                config.cache.routeExpire * 2
-            );
+            const description = await cache.tryGet('test', () => ({
+                text: `Cache${++cacheIndex}`,
+            }));
             item.push({
                 title: 'Cache Title',
                 description: description.text,
@@ -136,6 +146,7 @@ async function handler(ctx) {
             break;
         }
         case 'complicated':
+            image = 'https://mock.com/DIYgod/RSSHub.png';
             item.push(
                 {
                     title: `Complicated Title`,
@@ -161,15 +172,38 @@ async function handler(ctx) {
                     pubDate: new Date(`2019-3-1`).toUTCString(),
                     link: `https://mock.com/DIYgod/RSSHub`,
                     author: `DIYgod`,
+                },
+                {
+                    title: `Complicated Title`,
+                    description: `<a href="/DIYgod/RSSHub"></a>
+<img src="/DIYgod/RSSHub.jpg">
+<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">`,
+                    pubDate: new Date(`2019-3-1`).toUTCString(),
+                    link: `//mock.com/DIYgod/RSSHub`,
+                    author: `DIYgod`,
+                    enclosure_url: 'https://mock.com/DIYgod/RSSHub.png',
+                    enclosure_type: 'image/png',
+                    itunes_item_image: 'https://mock.com/DIYgod/RSSHub.gif',
+                },
+                {
+                    title: `Complicated Title`,
+                    description: `<a href="/DIYgod/RSSHub"></a>
+<img src="/DIYgod/RSSHub.jpg">
+<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">`,
+                    pubDate: new Date(`2019-3-1`).toUTCString(),
+                    link: `//mock.com/DIYgod/RSSHub`,
+                    author: `DIYgod`,
+                    image: 'https://mock.com/DIYgod/RSSHub.jpg',
                 }
             );
 
             break;
 
         case 'multimedia':
-            item.push({
-                title: `Multimedia Title`,
-                description: `<img src="/DIYgod/RSSHub.jpg">
+            item.push(
+                {
+                    title: `Multimedia Title`,
+                    description: `<img src="/DIYgod/RSSHub.jpg">
 <video src="/DIYgod/RSSHub.mp4"></video>
 <video poster="/DIYgod/RSSHub.jpg">
 <source src="/DIYgod/RSSHub.mp4" type="video/mp4">
@@ -177,10 +211,21 @@ async function handler(ctx) {
 </video>
 <audio src="/DIYgod/RSSHub.mp3"></audio>
 <iframe src="/DIYgod/RSSHub.html"></iframe>`,
-                pubDate: new Date(`2019-3-1`).toUTCString(),
-                link: `https://mock.com/DIYgod/RSSHub`,
-                author: `DIYgod`,
-            });
+                    pubDate: new Date(`2019-3-1`).toUTCString(),
+                    link: `https://mock.com/DIYgod/RSSHub`,
+                    author: `DIYgod`,
+                },
+                {
+                    title: `Multimedia Title`,
+                    description: `<img src="/DIYgod/RSSHub.jpg">
+<video src="/DIYgod/RSSHub.mp4"></video>`,
+                    pubDate: new Date(`2019-3-1`).toUTCString(),
+                    link: `https://mock.com/DIYgod/RSSHub`,
+                    author: `DIYgod`,
+                    enclosure_url: 'https://mock.com/DIYgod/RSSHub.mp4',
+                    enclosure_type: 'video/mp4',
+                }
+            );
 
             break;
 
@@ -294,42 +339,12 @@ async function handler(ctx) {
             break;
 
         case 'gpt':
-            item.push(
-                {
-                    title: 'Title0',
-                    description: 'Description0',
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: 'https://github.com/DIYgod/RSSHub/issues/0',
-                },
-                {
-                    title: 'Title1',
-                    description:
-                        '快速开始\n' +
-                        '如果您在使用 RSSHub 过程中遇到了问题或者有建议改进，我们很乐意听取您的意见！您可以通过 Pull Request 来提交您的修改。无论您对 Pull Request 的使用是否熟悉，我们都欢迎不同经验水平的开发者参与贡献。如果您不懂编程，也可以通过 报告错误 的方式来帮助我们。\n' +
-                        '\n' +
-                        '参与讨论\n' +
-                        'Telegram 群组 GitHub Issues GitHub 讨论\n' +
-                        '\n' +
-                        '开始之前\n' +
-                        '要制作一个 RSS 订阅，您需要结合使用 Git、HTML、JavaScript、jQuery 和 Node.js。\n' +
-                        '\n' +
-                        '如果您对它们不是很了解，但想要学习它们，以下是一些好的资源：\n' +
-                        '\n' +
-                        'MDN Web Docs 上的 JavaScript 指南\n' +
-                        'W3Schools\n' +
-                        'Codecademy 上的 Git 课程\n' +
-                        '如果您想查看其他开发人员如何使用这些技术来制作 RSS 订阅的示例，您可以查看 我们的代码库 中的一些代码。\n' +
-                        '\n' +
-                        '提交新的 RSSHub 规则\n' +
-                        '如果您发现一个网站没有提供 RSS 订阅，您可以使用 RSSHub 制作一个 RSS 规则。RSS 规则是一个短小的 Node.js 程序代码（以下简称 “路由”），它告诉 RSSHub 如何从网站中提取内容并生成 RSS 订阅。通过制作新的 RSS 路由，您可以帮助让您喜爱的网站的内容被更容易访问和关注。\n' +
-                        '\n' +
-                        '在您开始编写 RSS 路由之前，请确保源站点没有提供 RSS。一些网页会在 HTML 头部中包含一个 type 为 application/atom+xml 或 application/rss+xml 的 link 元素来指示 RSS 链接。\n' +
-                        '\n' +
-                        '这是在 HTML 头部中看到 RSS 链接可能会长成这样：<link rel="alternate" type="application/rss+xml" href="http://example.com/rss.xml" />。如果您看到这样的链接，这意味着这个网站已经有了一个 RSS 订阅，您不需要为它制作一个新的 RSS 路由。',
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: 'https://github.com/DIYgod/RSSHub/issues/1',
-                }
-            );
+            item.push({
+                title: 'Title0',
+                description: 'Description0',
+                pubDate: new Date(`2019-3-1`).toUTCString(),
+                link: 'https://github.com/DIYgod/RSSHub/issues/0',
+            });
 
             break;
 
@@ -371,6 +386,10 @@ async function handler(ctx) {
         await wait(1000);
     }
 
+    if (ctx.req.param('id') === 'slow4') {
+        await wait(4000);
+    }
+
     if (ctx.req.query('mode') === 'fulltext') {
         item = [
             {
@@ -380,7 +399,17 @@ async function handler(ctx) {
         ];
     }
 
+    if (ctx.req.param('id') === 'wechat-mp') {
+        const params = ctx.req.param('params');
+        if (!params) {
+            throw new InvalidParameterError('Invalid parameter');
+        }
+        const mpUrl = 'https:/mp.weixin.qq.com/s' + (params.includes('&') ? '?' : '/') + params;
+        item = [await fetchArticle(mpUrl)];
+    }
+
     return {
+        image,
         title: `Test ${ctx.req.param('id')}`,
         itunes_author: ctx.req.param('id') === 'enclosure' ? 'DIYgod' : null,
         link: 'https://github.com/DIYgod/RSSHub',

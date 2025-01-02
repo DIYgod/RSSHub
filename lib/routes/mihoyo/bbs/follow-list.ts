@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import cache from './cache';
 
 const renderDescription = (description, images) => art(path.join(__dirname, '../templates/description.art'), { description, images });
@@ -68,5 +68,5 @@ async function handler(ctx) {
         link,
         item: items,
     };
-    ctx.set('data', data);
+    return data;
 }

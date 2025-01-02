@@ -37,7 +37,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'The Office of Academic Affairs',
-    maintainers: ['AmosChenYQ', 'SuperPung'],
+    maintainers: ['AlanZeng423', 'AmosChenYQ', 'SuperPung'],
     handler,
     description: `| News | Notification |
   | :--: | :----------: |
@@ -45,7 +45,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = ctx.params && ctx.req.param('type');
+    const type = ctx.req.param('type');
     let path, subtitle;
 
     switch (type) {

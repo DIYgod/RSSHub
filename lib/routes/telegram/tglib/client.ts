@@ -1,15 +1,14 @@
-import { config } from '@/config';
-import * as readline from 'node:readline/promises';
-import process from 'node:process';
-import { fileURLToPath } from 'node:url';
 import { Api, TelegramClient } from 'telegram';
 import { UserAuthParams } from 'telegram/client/auth';
 import { StringSession } from 'telegram/sessions';
 
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+
 let client: TelegramClient | undefined;
-export async function getClient(authParams?: Partial<UserAuthParams>, session?: string) {
+export async function getClient(authParams?: UserAuthParams, session?: string) {
     if (!config.telegram.session && session === undefined) {
-        throw new Error('TELEGRAM_SESSION is not configured');
+        throw new ConfigNotFoundError('TELEGRAM_SESSION is not configured');
     }
     if (client) {
         return client;
@@ -23,12 +22,23 @@ export async function getClient(authParams?: Partial<UserAuthParams>, session?: 
         autoReconnect: true,
         retryDelay: 3000,
         maxConcurrentDownloads: Number(config.telegram.maxConcurrentDownloads ?? 10),
+        proxy:
+            config.telegram.proxy?.host && config.telegram.proxy.port && config.telegram.proxy.secret
+                ? {
+                      ip: config.telegram.proxy.host,
+                      port: Number(config.telegram.proxy.port),
+                      MTProxy: true,
+                      secret: config.telegram.proxy.secret,
+                  }
+                : undefined,
     });
+
     await client.start(Object.assign(authParams ?? {}, {
         onError: (err: Error) => { throw new Error('Cannot start TG: ' + err); },
     }) as any);
     return client;
 }
+
 
 export function getFilename(x: Api.TypeMessageMedia) {
     if (x instanceof Api.MessageMediaDocument) {
@@ -50,17 +60,14 @@ export function getDocument(m: Api.TypeMessageMedia) {
     }
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-    Promise.resolve().then(async () => {
-        const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-        const client = await getClient({
-            phoneNumber: () => rl.question('Please enter your phone number: '),
-            password: () => rl.question('Please enter your password: '),
-            phoneCode: () => rl.question('Please enter the code you received: ')
-        }, '');
-        process.stdout.write(`TELEGRAM_SESSION=${client.session.save()}\n`);
-        process.exit(0);
-    });
+export async function getStoryMedia(entity: Api.TypeEntityLike, id: number){
+    const result = await client.invoke(
+        new Api.stories.GetStoriesByID({
+            id: [id],
+            peer: entity
+        })
+    );
+    return (result.stories[0] as Api.StoryItem).media;
 }
 
 export async function unwrapMedia(media: Api.TypeMessageMedia | undefined) {
@@ -68,14 +75,7 @@ export async function unwrapMedia(media: Api.TypeMessageMedia | undefined) {
         throw new Error('media not found in ' + media);
     }
     if (media instanceof Api.MessageMediaStory) {
-        const result = await client.invoke(
-            new Api.stories.GetStoriesByID({
-                id: [media.id],
-                peer: media.peer
-            })
-        );
-        const storyMedia = (result.stories[0] as Api.StoryItem).media;
-        return storyMedia;
+        return getStoryMedia(media.peer, media.id);
     }
     return media;
 }

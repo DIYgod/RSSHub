@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'http://www.mztoday.gov.cn';
@@ -133,10 +133,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.mztoday.gov.cn/*'],
-        target: '/sichuan/deyang/mztoday',
-    },
+    radar: [
+        {
+            source: ['www.mztoday.gov.cn/*'],
+            target: '/sichuan/deyang/mztoday',
+        },
+    ],
     name: '今日绵竹',
     maintainers: ['zytomorrow'],
     handler,

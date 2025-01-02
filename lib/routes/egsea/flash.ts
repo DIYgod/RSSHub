@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['egsea.com/news/flash'],
-    },
+    radar: [
+        {
+            source: ['egsea.com/news/flash'],
+        },
+    ],
     name: '快讯',
     maintainers: ['hillerliao'],
     handler,
@@ -41,7 +43,7 @@ async function handler() {
             link,
             pubDate,
             description,
-            category: item.tags.map((tag) => tag.name),
+            category: item.tags?.map((tag) => tag.name),
         };
     });
 

@@ -54,7 +54,7 @@ const fetchVideo = (ctx, url) =>
         const js = $('script[type="text/javascript"]:not([src])').html();
         let sources = js.match(/<[^>]*source[^>]+src[^>]+>/g);
         sources = sources && sources.map((item) => item.replaceAll("'", '"').replaceAll(/src="([^"]+)"/g, `src="${rootUrl}$1"`));
-        return `<video controls preload="none">${sources.join('\n')}</video>`;
+        return `<video controls preload="metadata">${sources.join('\n')}</video>`;
     });
 
 export { parseJucheDate, fixDesc, fetchPhoto, fetchVideo };

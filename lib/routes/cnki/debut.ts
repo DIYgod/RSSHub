@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const rootUrl = 'https://chn.oversea.cnki.net';
 
@@ -24,9 +24,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['navi.cnki.net/knavi/journals/:name/detail'],
-    },
+    radar: [
+        {
+            source: ['navi.cnki.net/knavi/journals/:name/detail'],
+        },
+    ],
     name: '网络首发',
     maintainers: ['Fatpandac'],
     handler,

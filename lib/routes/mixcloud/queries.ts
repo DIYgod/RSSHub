@@ -1,8 +1,6 @@
 const queries = {
     stream: {
-        query: `query UserStreamQuery(
-            $lookup: UserLookup!
-          ) {
+        query: `query UserStreamQuery($lookup: UserLookup!) {
             user: userLookup(lookup: $lookup) {
               username
               ...UserStreamPage_user
@@ -15,23 +13,13 @@ const queries = {
           }
 
           fragment AudioCardActions_cloudcast on Cloudcast {
-            id
-            isPublic
-            slug
             isExclusive
-            isUnlisted
-            isScheduled
-            isDraft
             audioType
-            isDisabledCopyright
             owner {
-              id
               username
               isSubscribedTo
               isViewer
-              affiliateUsers {
-                totalCount
-              }
+              id
             }
             ...AudioCardFavoriteButton_cloudcast
             ...AudioCardRepostButton_cloudcast
@@ -40,19 +28,14 @@ const queries = {
             ...AudioCardHighlightButton_cloudcast
             ...AudioCardBoostButton_cloudcast
             ...AudioCardStats_cloudcast
+            ...AudioCardMoreOptions_cloudcast
           }
 
           fragment AudioCardActions_viewer on Viewer {
-            me {
-              uploadLimits {
-                tracksPublishRemaining
-                showsPublishRemaining
-              }
-              id
-            }
             ...AudioCardFavoriteButton_viewer
             ...AudioCardRepostButton_viewer
             ...AudioCardHighlightButton_viewer
+            ...AudioCardMoreOptions_viewer
           }
 
           fragment AudioCardAddToButton_cloudcast on Cloudcast {
@@ -115,18 +98,61 @@ const queries = {
             }
           }
 
+          fragment AudioCardMoreOptions_cloudcast on Cloudcast {
+            id
+            isPublic
+            slug
+            isUnlisted
+            isScheduled
+            isDraft
+            audioType
+            isDisabledCopyright
+            viewerAttribution {
+              status
+              id
+            }
+            viewerAttributionRequest {
+              id
+            }
+            creatorAttributions(first: 2) {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+            owner {
+              id
+              username
+              isViewer
+              hasProFeatures
+              viewerIsAffiliate
+              displayName
+              affiliateUsers {
+                totalCount
+              }
+            }
+          }
+
+          fragment AudioCardMoreOptions_viewer on Viewer {
+            me {
+              id
+              hasProFeatures
+              uploadLimits {
+                tracksPublishRemaining
+                showsPublishRemaining
+              }
+            }
+          }
+
           fragment AudioCardPlayButton_cloudcast on Cloudcast {
             id
             restrictedReason
             owner {
-              displayName
-              country
-              username
               isSubscribedTo
               isViewer
               id
             }
-            slug
             isAwaitingAudio
             isDraft
             isPlayable
@@ -138,14 +164,16 @@ const queries = {
             }
             audioLength
             currentPosition
-            proportionListened
             repeatPlayAmount
             hasPlayCompleted
             seekRestriction
             previewUrl
-            isExclusivePreviewOnly
             isExclusive
             isDisabledCopyright
+            ...AudioCardStaticPlayButton_cloudcast
+            ...useAudioPreview_cloudcast
+            ...useExclusivePreviewModal_cloudcast
+            ...useExclusiveCloudcastModal_cloudcast
           }
 
           fragment AudioCardProgress_cloudcast on Cloudcast {
@@ -193,6 +221,16 @@ const queries = {
             }
           }
 
+          fragment AudioCardStaticPlayButton_cloudcast on Cloudcast {
+            owner {
+              username
+              id
+            }
+            slug
+            id
+            restrictedReason
+          }
+
           fragment AudioCardStats_cloudcast on Cloudcast {
             isExclusive
             isDraft
@@ -206,11 +244,7 @@ const queries = {
               id
             }
             tags(country: "GLOBAL") {
-              tag {
-                name
-                slug
-                id
-              }
+              ...AudioCardTagsPreviewer_tag
             }
             ...AudioCardTags_cloudcast
           }
@@ -234,6 +268,14 @@ const queries = {
                   ...Hovercard_user
                 }
               }
+            }
+          }
+
+          fragment AudioCardTagsPreviewer_tag on CloudcastTag {
+            tag {
+              name
+              slug
+              id
             }
           }
 
@@ -271,7 +313,6 @@ const queries = {
           fragment AudioCard_cloudcast on Cloudcast {
             id
             slug
-            name
             audioType
             isAwaitingAudio
             isDraft
@@ -285,13 +326,11 @@ const queries = {
               username
               id
             }
-            picture {
-              ...UGCImage_picture
-            }
+            ...ImageCloudcast_cloudcast
             ...AudioCardTitle_cloudcast
             ...AudioCardProgress_cloudcast
             ...AudioCardActions_cloudcast
-            ...QuantcastCloudcastTracking_cloudcast
+            ...CopyrightSupport_cloudcast
           }
 
           fragment AudioCard_viewer on Viewer {
@@ -301,6 +340,15 @@ const queries = {
                 tracksPublishRemaining
                 showsPublishRemaining
               }
+              id
+            }
+          }
+
+          fragment CopyrightSupport_cloudcast on Cloudcast {
+            name
+            slug
+            owner {
+              username
               id
             }
           }
@@ -320,10 +368,11 @@ const queries = {
             id
           }
 
-          fragment QuantcastCloudcastTracking_cloudcast on Cloudcast {
-            owner {
-              quantcastTrackingPixel
-              id
+          fragment ImageCloudcast_cloudcast on Cloudcast {
+            name
+            picture {
+              urlRoot
+              primaryColor
             }
           }
 
@@ -336,11 +385,6 @@ const queries = {
             picture {
               urlRoot
             }
-          }
-
-          fragment UGCImage_picture on Picture {
-            urlRoot
-            primaryColor
           }
 
           fragment UserBadge_user on User {
@@ -373,16 +417,45 @@ const queries = {
 
           fragment UserStreamPage_viewer on Viewer {
             ...AudioCard_viewer
+          }
+
+          fragment useAudioPreview_cloudcast on Cloudcast {
+            id
+            previewUrl
+          }
+
+          fragment useExclusiveCloudcastModal_cloudcast on Cloudcast {
+            id
+            isExclusive
+            owner {
+              username
+              id
+            }
+          }
+
+          fragment useExclusivePreviewModal_cloudcast on Cloudcast {
+            id
+            isExclusivePreviewOnly
+            owner {
+              username
+              id
+            }
           }`,
     },
     uploads: {
         query: `query UserUploadsQuery(
             $lookup: UserLookup!
             $orderBy: CloudcastOrderByEnum
+            $onlyAttributedTo: ID!
+            $hasAttributedTo: Boolean!
           ) {
             user: userLookup(lookup: $lookup) {
               username
-              ...UserUploadsPage_user_7FfCv
+              ...UserUploadsPage_user_38hcZE
+              id
+            }
+            affiliateUser: user(id: $onlyAttributedTo) @include(if: $hasAttributedTo) {
+              ...UserUploadsPageAffiliate_user
               id
             }
             viewer {
@@ -392,23 +465,13 @@ const queries = {
           }
 
           fragment AudioCardActions_cloudcast on Cloudcast {
-            id
-            isPublic
-            slug
             isExclusive
-            isUnlisted
-            isScheduled
-            isDraft
             audioType
-            isDisabledCopyright
             owner {
-              id
               username
               isSubscribedTo
               isViewer
-              affiliateUsers {
-                totalCount
-              }
+              id
             }
             ...AudioCardFavoriteButton_cloudcast
             ...AudioCardRepostButton_cloudcast
@@ -417,19 +480,14 @@ const queries = {
             ...AudioCardHighlightButton_cloudcast
             ...AudioCardBoostButton_cloudcast
             ...AudioCardStats_cloudcast
+            ...AudioCardMoreOptions_cloudcast
           }
 
           fragment AudioCardActions_viewer on Viewer {
-            me {
-              uploadLimits {
-                tracksPublishRemaining
-                showsPublishRemaining
-              }
-              id
-            }
             ...AudioCardFavoriteButton_viewer
             ...AudioCardRepostButton_viewer
             ...AudioCardHighlightButton_viewer
+            ...AudioCardMoreOptions_viewer
           }
 
           fragment AudioCardAddToButton_cloudcast on Cloudcast {
@@ -492,18 +550,61 @@ const queries = {
             }
           }
 
+          fragment AudioCardMoreOptions_cloudcast on Cloudcast {
+            id
+            isPublic
+            slug
+            isUnlisted
+            isScheduled
+            isDraft
+            audioType
+            isDisabledCopyright
+            viewerAttribution {
+              status
+              id
+            }
+            viewerAttributionRequest {
+              id
+            }
+            creatorAttributions(first: 2) {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+            owner {
+              id
+              username
+              isViewer
+              hasProFeatures
+              viewerIsAffiliate
+              displayName
+              affiliateUsers {
+                totalCount
+              }
+            }
+          }
+
+          fragment AudioCardMoreOptions_viewer on Viewer {
+            me {
+              id
+              hasProFeatures
+              uploadLimits {
+                tracksPublishRemaining
+                showsPublishRemaining
+              }
+            }
+          }
+
           fragment AudioCardPlayButton_cloudcast on Cloudcast {
             id
             restrictedReason
             owner {
-              displayName
-              country
-              username
               isSubscribedTo
               isViewer
               id
             }
-            slug
             isAwaitingAudio
             isDraft
             isPlayable
@@ -515,14 +616,16 @@ const queries = {
             }
             audioLength
             currentPosition
-            proportionListened
             repeatPlayAmount
             hasPlayCompleted
             seekRestriction
             previewUrl
-            isExclusivePreviewOnly
             isExclusive
             isDisabledCopyright
+            ...AudioCardStaticPlayButton_cloudcast
+            ...useAudioPreview_cloudcast
+            ...useExclusivePreviewModal_cloudcast
+            ...useExclusiveCloudcastModal_cloudcast
           }
 
           fragment AudioCardProgress_cloudcast on Cloudcast {
@@ -570,6 +673,16 @@ const queries = {
             }
           }
 
+          fragment AudioCardStaticPlayButton_cloudcast on Cloudcast {
+            owner {
+              username
+              id
+            }
+            slug
+            id
+            restrictedReason
+          }
+
           fragment AudioCardStats_cloudcast on Cloudcast {
             isExclusive
             isDraft
@@ -583,11 +696,7 @@ const queries = {
               id
             }
             tags(country: "GLOBAL") {
-              tag {
-                name
-                slug
-                id
-              }
+              ...AudioCardTagsPreviewer_tag
             }
             ...AudioCardTags_cloudcast
           }
@@ -611,6 +720,14 @@ const queries = {
                   ...Hovercard_user
                 }
               }
+            }
+          }
+
+          fragment AudioCardTagsPreviewer_tag on CloudcastTag {
+            tag {
+              name
+              slug
+              id
             }
           }
 
@@ -648,7 +765,6 @@ const queries = {
           fragment AudioCard_cloudcast on Cloudcast {
             id
             slug
-            name
             audioType
             isAwaitingAudio
             isDraft
@@ -662,13 +778,11 @@ const queries = {
               username
               id
             }
-            picture {
-              ...UGCImage_picture
-            }
+            ...ImageCloudcast_cloudcast
             ...AudioCardTitle_cloudcast
             ...AudioCardProgress_cloudcast
             ...AudioCardActions_cloudcast
-            ...QuantcastCloudcastTracking_cloudcast
+            ...CopyrightSupport_cloudcast
           }
 
           fragment AudioCard_viewer on Viewer {
@@ -678,6 +792,15 @@ const queries = {
                 tracksPublishRemaining
                 showsPublishRemaining
               }
+              id
+            }
+          }
+
+          fragment CopyrightSupport_cloudcast on Cloudcast {
+            name
+            slug
+            owner {
+              username
               id
             }
           }
@@ -697,10 +820,20 @@ const queries = {
             id
           }
 
-          fragment QuantcastCloudcastTracking_cloudcast on Cloudcast {
-            owner {
-              quantcastTrackingPixel
-              id
+          fragment ImageCloudcast_cloudcast on Cloudcast {
+            name
+            picture {
+              urlRoot
+              primaryColor
+            }
+          }
+
+          fragment ProfileSearchAudioCardList_user on User {
+            username
+            displayName
+            id
+            picture {
+              urlRoot
             }
           }
 
@@ -715,24 +848,37 @@ const queries = {
             }
           }
 
-          fragment UGCImage_picture on Picture {
-            urlRoot
-            primaryColor
-          }
-
           fragment UserBadge_user on User {
             hasProFeatures
             isStaff
             hasPremiumFeatures
           }
 
-          fragment UserUploadsPage_user_7FfCv on User {
+          fragment UserUploadsPageAffiliate_user on User {
+            displayName
+            username
+            id
+            picture {
+              urlRoot
+            }
+          }
+
+          fragment UserUploadsPage_user_38hcZE on User {
             id
             displayName
             username
             isViewer
+            hasProFeatures
+            viewerIsAffiliate
             ...ShareAudioCardList_user
-            uploads(first: 10, isPublic: true, orderBy: $orderBy, audioTypes: [SHOW]) {
+            ...ProfileSearchAudioCardList_user
+            uploads(
+              first: 10
+              isPublic: true
+              orderBy: $orderBy
+              audioTypes: [SHOW]
+              onlyAttributedTo: $onlyAttributedTo
+            ) {
               edges {
                 node {
                   ...AudioCard_cloudcast
@@ -745,17 +891,483 @@ const queries = {
                 endCursor
                 hasNextPage
               }
+              totalCount
             }
           }
 
           fragment UserUploadsPage_viewer on Viewer {
             ...AudioCard_viewer
+          }
+
+          fragment useAudioPreview_cloudcast on Cloudcast {
+            id
+            previewUrl
+          }
+
+          fragment useExclusiveCloudcastModal_cloudcast on Cloudcast {
+            id
+            isExclusive
+            owner {
+              username
+              id
+            }
+          }
+
+          fragment useExclusivePreviewModal_cloudcast on Cloudcast {
+            id
+            isExclusivePreviewOnly
+            owner {
+              username
+              id
+            }
+          }`,
+    },
+    reposts: {
+        query: `query UserRepostsQuery($lookup: UserLookup!) {
+            user: userLookup(lookup: $lookup) {
+              username
+              ...UserRepostsPage_user
+              id
+            }
+            viewer {
+              ...UserRepostsPage_viewer
+              id
+            }
+          }
+
+          fragment AudioCardActions_cloudcast on Cloudcast {
+            isExclusive
+            audioType
+            owner {
+              username
+              isSubscribedTo
+              isViewer
+              id
+            }
+            ...AudioCardFavoriteButton_cloudcast
+            ...AudioCardRepostButton_cloudcast
+            ...AudioCardShareButton_cloudcast
+            ...AudioCardAddToButton_cloudcast
+            ...AudioCardHighlightButton_cloudcast
+            ...AudioCardBoostButton_cloudcast
+            ...AudioCardStats_cloudcast
+            ...AudioCardMoreOptions_cloudcast
+          }
+
+          fragment AudioCardActions_viewer on Viewer {
+            ...AudioCardFavoriteButton_viewer
+            ...AudioCardRepostButton_viewer
+            ...AudioCardHighlightButton_viewer
+            ...AudioCardMoreOptions_viewer
+          }
+
+          fragment AudioCardAddToButton_cloudcast on Cloudcast {
+            id
+            isUnlisted
+            isPublic
+          }
+
+          fragment AudioCardBoostButton_cloudcast on Cloudcast {
+            id
+            isPublic
+            owner {
+              id
+              isViewer
+            }
+          }
+
+          fragment AudioCardFavoriteButton_cloudcast on Cloudcast {
+            id
+            isFavorited
+            isPublic
+            hiddenStats
+            favorites {
+              totalCount
+            }
+            slug
+            owner {
+              id
+              isFollowing
+              username
+              isSelect
+              displayName
+              isViewer
+            }
+          }
+
+          fragment AudioCardFavoriteButton_viewer on Viewer {
+            me {
+              id
+            }
+          }
+
+          fragment AudioCardHighlightButton_cloudcast on Cloudcast {
+            id
+            isPublic
+            isHighlighted
+            owner {
+              isViewer
+              id
+            }
+          }
+
+          fragment AudioCardHighlightButton_viewer on Viewer {
+            me {
+              id
+              hasProFeatures
+              highlighted {
+                totalCount
+              }
+            }
+          }
+
+          fragment AudioCardMoreOptions_cloudcast on Cloudcast {
+            id
+            isPublic
+            slug
+            isUnlisted
+            isScheduled
+            isDraft
+            audioType
+            isDisabledCopyright
+            viewerAttribution {
+              status
+              id
+            }
+            viewerAttributionRequest {
+              id
+            }
+            creatorAttributions(first: 2) {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+            owner {
+              id
+              username
+              isViewer
+              hasProFeatures
+              viewerIsAffiliate
+              displayName
+              affiliateUsers {
+                totalCount
+              }
+            }
+          }
+
+          fragment AudioCardMoreOptions_viewer on Viewer {
+            me {
+              id
+              hasProFeatures
+              uploadLimits {
+                tracksPublishRemaining
+                showsPublishRemaining
+              }
+            }
+          }
+
+          fragment AudioCardPlayButton_cloudcast on Cloudcast {
+            id
+            restrictedReason
+            owner {
+              isSubscribedTo
+              isViewer
+              id
+            }
+            isAwaitingAudio
+            isDraft
+            isPlayable
+            streamInfo {
+              hlsUrl
+              dashUrl
+              url
+              uuid
+            }
+            audioLength
+            currentPosition
+            repeatPlayAmount
+            hasPlayCompleted
+            seekRestriction
+            previewUrl
+            isExclusive
+            isDisabledCopyright
+            ...AudioCardStaticPlayButton_cloudcast
+            ...useAudioPreview_cloudcast
+            ...useExclusivePreviewModal_cloudcast
+            ...useExclusiveCloudcastModal_cloudcast
+          }
+
+          fragment AudioCardProgress_cloudcast on Cloudcast {
+            id
+            proportionListened
+            audioLength
+          }
+
+          fragment AudioCardRepostButton_cloudcast on Cloudcast {
+            id
+            isReposted
+            isExclusive
+            isPublic
+            reposts {
+              totalCount
+            }
+            owner {
+              isViewer
+              isSubscribedTo
+              id
+            }
+          }
+
+          fragment AudioCardRepostButton_viewer on Viewer {
+            me {
+              id
+            }
+          }
+
+          fragment AudioCardShareButton_cloudcast on Cloudcast {
+            id
+            isUnlisted
+            isPublic
+            slug
+            description
+            audioType
+            picture {
+              urlRoot
+            }
+            owner {
+              displayName
+              isViewer
+              username
+              id
+            }
+          }
+
+          fragment AudioCardStaticPlayButton_cloudcast on Cloudcast {
+            owner {
+              username
+              id
+            }
+            slug
+            id
+            restrictedReason
+          }
+
+          fragment AudioCardStats_cloudcast on Cloudcast {
+            isExclusive
+            isDraft
+            hiddenStats
+            plays
+            publishDate
+            qualityScore
+            listenerMinutes
+            owner {
+              isSubscribedTo
+              id
+            }
+            tags(country: "GLOBAL") {
+              ...AudioCardTagsPreviewer_tag
+            }
+            ...AudioCardTags_cloudcast
+          }
+
+          fragment AudioCardSubLinks_cloudcast on Cloudcast {
+            id
+            isExclusive
+            owner {
+              id
+              displayName
+              username
+              ...Hovercard_user
+            }
+            creatorAttributions(first: 2) {
+              totalCount
+              edges {
+                node {
+                  id
+                  displayName
+                  username
+                  ...Hovercard_user
+                }
+              }
+            }
+          }
+
+          fragment AudioCardTagsPreviewer_tag on CloudcastTag {
+            tag {
+              name
+              slug
+              id
+            }
+          }
+
+          fragment AudioCardTags_cloudcast on Cloudcast {
+            tags(country: "GLOBAL") {
+              tag {
+                name
+                slug
+                id
+              }
+            }
+          }
+
+          fragment AudioCardTitle_cloudcast on Cloudcast {
+            id
+            slug
+            name
+            audioType
+            audioQuality
+            isLiveRecording
+            isExclusive
+            owner {
+              id
+              username
+              ...UserBadge_user
+            }
+            creatorAttributions(first: 2) {
+              totalCount
+            }
+            ...AudioCardSubLinks_cloudcast
+            ...AudioCardPlayButton_cloudcast
+            ...ExclusiveCloudcastBadgeContainer_cloudcast
+          }
+
+          fragment AudioCard_cloudcast on Cloudcast {
+            id
+            slug
+            audioType
+            isAwaitingAudio
+            isDraft
+            isScheduled
+            restrictedReason
+            publishDate
+            isLiveRecording
+            isDisabledCopyright
+            owner {
+              isViewer
+              username
+              id
+            }
+            ...ImageCloudcast_cloudcast
+            ...AudioCardTitle_cloudcast
+            ...AudioCardProgress_cloudcast
+            ...AudioCardActions_cloudcast
+            ...CopyrightSupport_cloudcast
+          }
+
+          fragment AudioCard_viewer on Viewer {
+            ...AudioCardActions_viewer
+            me {
+              uploadLimits {
+                tracksPublishRemaining
+                showsPublishRemaining
+              }
+              id
+            }
+          }
+
+          fragment CopyrightSupport_cloudcast on Cloudcast {
+            name
+            slug
+            owner {
+              username
+              id
+            }
+          }
+
+          fragment ExclusiveCloudcastBadgeContainer_cloudcast on Cloudcast {
+            isExclusive
+            isExclusivePreviewOnly
+            slug
+            id
+            owner {
+              username
+              id
+            }
+          }
+
+          fragment Hovercard_user on User {
+            id
+          }
+
+          fragment ImageCloudcast_cloudcast on Cloudcast {
+            name
+            picture {
+              urlRoot
+              primaryColor
+            }
+          }
+
+          fragment ShareAudioCardList_user on User {
+            biog
+            username
+            displayName
+            id
+            isUploader
+            picture {
+              urlRoot
+            }
+          }
+
+          fragment UserBadge_user on User {
+            hasProFeatures
+            isStaff
+            hasPremiumFeatures
+          }
+
+          fragment UserRepostsPage_user on User {
+            id
+            displayName
+            username
+            isViewer
+            ...ShareAudioCardList_user
+            reposted(first: 10, audioTypes: [SHOW, TRACK]) {
+              edges {
+                node {
+                  ...AudioCard_cloudcast
+                  id
+                  __typename
+                }
+                cursor
+              }
+              pageInfo {
+                endCursor
+                hasNextPage
+              }
+              totalCount
+            }
+          }
+
+          fragment UserRepostsPage_viewer on Viewer {
+            ...AudioCard_viewer
+          }
+
+          fragment useAudioPreview_cloudcast on Cloudcast {
+            id
+            previewUrl
+          }
+
+          fragment useExclusiveCloudcastModal_cloudcast on Cloudcast {
+            id
+            isExclusive
+            owner {
+              username
+              id
+            }
+          }
+
+          fragment useExclusivePreviewModal_cloudcast on Cloudcast {
+            id
+            isExclusivePreviewOnly
+            owner {
+              username
+              id
+            }
           }`,
     },
     favorites: {
-        query: `query UserFavoritesQuery(
-            $lookup: UserLookup!
-          ) {
+        query: `query UserFavoritesQuery($lookup: UserLookup!) {
             user: userLookup(lookup: $lookup) {
               username
               hiddenFavorites: favorites {
@@ -771,23 +1383,13 @@ const queries = {
           }
 
           fragment AudioCardActions_cloudcast on Cloudcast {
-            id
-            isPublic
-            slug
             isExclusive
-            isUnlisted
-            isScheduled
-            isDraft
             audioType
-            isDisabledCopyright
             owner {
-              id
               username
               isSubscribedTo
               isViewer
-              affiliateUsers {
-                totalCount
-              }
+              id
             }
             ...AudioCardFavoriteButton_cloudcast
             ...AudioCardRepostButton_cloudcast
@@ -796,19 +1398,14 @@ const queries = {
             ...AudioCardHighlightButton_cloudcast
             ...AudioCardBoostButton_cloudcast
             ...AudioCardStats_cloudcast
+            ...AudioCardMoreOptions_cloudcast
           }
 
           fragment AudioCardActions_viewer on Viewer {
-            me {
-              uploadLimits {
-                tracksPublishRemaining
-                showsPublishRemaining
-              }
-              id
-            }
             ...AudioCardFavoriteButton_viewer
             ...AudioCardRepostButton_viewer
             ...AudioCardHighlightButton_viewer
+            ...AudioCardMoreOptions_viewer
           }
 
           fragment AudioCardAddToButton_cloudcast on Cloudcast {
@@ -871,18 +1468,61 @@ const queries = {
             }
           }
 
+          fragment AudioCardMoreOptions_cloudcast on Cloudcast {
+            id
+            isPublic
+            slug
+            isUnlisted
+            isScheduled
+            isDraft
+            audioType
+            isDisabledCopyright
+            viewerAttribution {
+              status
+              id
+            }
+            viewerAttributionRequest {
+              id
+            }
+            creatorAttributions(first: 2) {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+            owner {
+              id
+              username
+              isViewer
+              hasProFeatures
+              viewerIsAffiliate
+              displayName
+              affiliateUsers {
+                totalCount
+              }
+            }
+          }
+
+          fragment AudioCardMoreOptions_viewer on Viewer {
+            me {
+              id
+              hasProFeatures
+              uploadLimits {
+                tracksPublishRemaining
+                showsPublishRemaining
+              }
+            }
+          }
+
           fragment AudioCardPlayButton_cloudcast on Cloudcast {
             id
             restrictedReason
             owner {
-              displayName
-              country
-              username
               isSubscribedTo
               isViewer
               id
             }
-            slug
             isAwaitingAudio
             isDraft
             isPlayable
@@ -894,14 +1534,16 @@ const queries = {
             }
             audioLength
             currentPosition
-            proportionListened
             repeatPlayAmount
             hasPlayCompleted
             seekRestriction
             previewUrl
-            isExclusivePreviewOnly
             isExclusive
             isDisabledCopyright
+            ...AudioCardStaticPlayButton_cloudcast
+            ...useAudioPreview_cloudcast
+            ...useExclusivePreviewModal_cloudcast
+            ...useExclusiveCloudcastModal_cloudcast
           }
 
           fragment AudioCardProgress_cloudcast on Cloudcast {
@@ -949,6 +1591,16 @@ const queries = {
             }
           }
 
+          fragment AudioCardStaticPlayButton_cloudcast on Cloudcast {
+            owner {
+              username
+              id
+            }
+            slug
+            id
+            restrictedReason
+          }
+
           fragment AudioCardStats_cloudcast on Cloudcast {
             isExclusive
             isDraft
@@ -962,11 +1614,7 @@ const queries = {
               id
             }
             tags(country: "GLOBAL") {
-              tag {
-                name
-                slug
-                id
-              }
+              ...AudioCardTagsPreviewer_tag
             }
             ...AudioCardTags_cloudcast
           }
@@ -990,6 +1638,14 @@ const queries = {
                   ...Hovercard_user
                 }
               }
+            }
+          }
+
+          fragment AudioCardTagsPreviewer_tag on CloudcastTag {
+            tag {
+              name
+              slug
+              id
             }
           }
 
@@ -1027,7 +1683,6 @@ const queries = {
           fragment AudioCard_cloudcast on Cloudcast {
             id
             slug
-            name
             audioType
             isAwaitingAudio
             isDraft
@@ -1041,13 +1696,11 @@ const queries = {
               username
               id
             }
-            picture {
-              ...UGCImage_picture
-            }
+            ...ImageCloudcast_cloudcast
             ...AudioCardTitle_cloudcast
             ...AudioCardProgress_cloudcast
             ...AudioCardActions_cloudcast
-            ...QuantcastCloudcastTracking_cloudcast
+            ...CopyrightSupport_cloudcast
           }
 
           fragment AudioCard_viewer on Viewer {
@@ -1057,6 +1710,15 @@ const queries = {
                 tracksPublishRemaining
                 showsPublishRemaining
               }
+              id
+            }
+          }
+
+          fragment CopyrightSupport_cloudcast on Cloudcast {
+            name
+            slug
+            owner {
+              username
               id
             }
           }
@@ -1076,10 +1738,11 @@ const queries = {
             id
           }
 
-          fragment QuantcastCloudcastTracking_cloudcast on Cloudcast {
-            owner {
-              quantcastTrackingPixel
-              id
+          fragment ImageCloudcast_cloudcast on Cloudcast {
+            name
+            picture {
+              urlRoot
+              primaryColor
             }
           }
 
@@ -1092,11 +1755,6 @@ const queries = {
             picture {
               urlRoot
             }
-          }
-
-          fragment UGCImage_picture on Picture {
-            urlRoot
-            primaryColor
           }
 
           fragment UserBadge_user on User {
@@ -1132,12 +1790,33 @@ const queries = {
               id
             }
             ...AudioCard_viewer
+          }
+
+          fragment useAudioPreview_cloudcast on Cloudcast {
+            id
+            previewUrl
+          }
+
+          fragment useExclusiveCloudcastModal_cloudcast on Cloudcast {
+            id
+            isExclusive
+            owner {
+              username
+              id
+            }
+          }
+
+          fragment useExclusivePreviewModal_cloudcast on Cloudcast {
+            id
+            isExclusivePreviewOnly
+            owner {
+              username
+              id
+            }
           }`,
     },
     listens: {
-        query: `query UserListensQuery(
-            $lookup: UserLookup!
-          ) {
+        query: `query UserListensQuery($lookup: UserLookup!) {
             user: userLookup(lookup: $lookup) {
               username
               hiddenListeningHistory: listeningHistory {
@@ -1153,23 +1832,13 @@ const queries = {
           }
 
           fragment AudioCardActions_cloudcast on Cloudcast {
-            id
-            isPublic
-            slug
             isExclusive
-            isUnlisted
-            isScheduled
-            isDraft
             audioType
-            isDisabledCopyright
             owner {
-              id
               username
               isSubscribedTo
               isViewer
-              affiliateUsers {
-                totalCount
-              }
+              id
             }
             ...AudioCardFavoriteButton_cloudcast
             ...AudioCardRepostButton_cloudcast
@@ -1178,19 +1847,14 @@ const queries = {
             ...AudioCardHighlightButton_cloudcast
             ...AudioCardBoostButton_cloudcast
             ...AudioCardStats_cloudcast
+            ...AudioCardMoreOptions_cloudcast
           }
 
           fragment AudioCardActions_viewer on Viewer {
-            me {
-              uploadLimits {
-                tracksPublishRemaining
-                showsPublishRemaining
-              }
-              id
-            }
             ...AudioCardFavoriteButton_viewer
             ...AudioCardRepostButton_viewer
             ...AudioCardHighlightButton_viewer
+            ...AudioCardMoreOptions_viewer
           }
 
           fragment AudioCardAddToButton_cloudcast on Cloudcast {
@@ -1253,18 +1917,61 @@ const queries = {
             }
           }
 
+          fragment AudioCardMoreOptions_cloudcast on Cloudcast {
+            id
+            isPublic
+            slug
+            isUnlisted
+            isScheduled
+            isDraft
+            audioType
+            isDisabledCopyright
+            viewerAttribution {
+              status
+              id
+            }
+            viewerAttributionRequest {
+              id
+            }
+            creatorAttributions(first: 2) {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+            owner {
+              id
+              username
+              isViewer
+              hasProFeatures
+              viewerIsAffiliate
+              displayName
+              affiliateUsers {
+                totalCount
+              }
+            }
+          }
+
+          fragment AudioCardMoreOptions_viewer on Viewer {
+            me {
+              id
+              hasProFeatures
+              uploadLimits {
+                tracksPublishRemaining
+                showsPublishRemaining
+              }
+            }
+          }
+
           fragment AudioCardPlayButton_cloudcast on Cloudcast {
             id
             restrictedReason
             owner {
-              displayName
-              country
-              username
               isSubscribedTo
               isViewer
               id
             }
-            slug
             isAwaitingAudio
             isDraft
             isPlayable
@@ -1276,14 +1983,16 @@ const queries = {
             }
             audioLength
             currentPosition
-            proportionListened
             repeatPlayAmount
             hasPlayCompleted
             seekRestriction
             previewUrl
-            isExclusivePreviewOnly
             isExclusive
             isDisabledCopyright
+            ...AudioCardStaticPlayButton_cloudcast
+            ...useAudioPreview_cloudcast
+            ...useExclusivePreviewModal_cloudcast
+            ...useExclusiveCloudcastModal_cloudcast
           }
 
           fragment AudioCardProgress_cloudcast on Cloudcast {
@@ -1331,6 +2040,16 @@ const queries = {
             }
           }
 
+          fragment AudioCardStaticPlayButton_cloudcast on Cloudcast {
+            owner {
+              username
+              id
+            }
+            slug
+            id
+            restrictedReason
+          }
+
           fragment AudioCardStats_cloudcast on Cloudcast {
             isExclusive
             isDraft
@@ -1344,11 +2063,7 @@ const queries = {
               id
             }
             tags(country: "GLOBAL") {
-              tag {
-                name
-                slug
-                id
-              }
+              ...AudioCardTagsPreviewer_tag
             }
             ...AudioCardTags_cloudcast
           }
@@ -1372,6 +2087,14 @@ const queries = {
                   ...Hovercard_user
                 }
               }
+            }
+          }
+
+          fragment AudioCardTagsPreviewer_tag on CloudcastTag {
+            tag {
+              name
+              slug
+              id
             }
           }
 
@@ -1409,7 +2132,6 @@ const queries = {
           fragment AudioCard_cloudcast on Cloudcast {
             id
             slug
-            name
             audioType
             isAwaitingAudio
             isDraft
@@ -1423,13 +2145,11 @@ const queries = {
               username
               id
             }
-            picture {
-              ...UGCImage_picture
-            }
+            ...ImageCloudcast_cloudcast
             ...AudioCardTitle_cloudcast
             ...AudioCardProgress_cloudcast
             ...AudioCardActions_cloudcast
-            ...QuantcastCloudcastTracking_cloudcast
+            ...CopyrightSupport_cloudcast
           }
 
           fragment AudioCard_viewer on Viewer {
@@ -1439,6 +2159,15 @@ const queries = {
                 tracksPublishRemaining
                 showsPublishRemaining
               }
+              id
+            }
+          }
+
+          fragment CopyrightSupport_cloudcast on Cloudcast {
+            name
+            slug
+            owner {
+              username
               id
             }
           }
@@ -1458,10 +2187,11 @@ const queries = {
             id
           }
 
-          fragment QuantcastCloudcastTracking_cloudcast on Cloudcast {
-            owner {
-              quantcastTrackingPixel
-              id
+          fragment ImageCloudcast_cloudcast on Cloudcast {
+            name
+            picture {
+              urlRoot
+              primaryColor
             }
           }
 
@@ -1474,11 +2204,6 @@ const queries = {
             picture {
               urlRoot
             }
-          }
-
-          fragment UGCImage_picture on Picture {
-            urlRoot
-            primaryColor
           }
 
           fragment UserBadge_user on User {
@@ -1519,6 +2244,29 @@ const queries = {
               id
             }
             ...AudioCard_viewer
+          }
+
+          fragment useAudioPreview_cloudcast on Cloudcast {
+            id
+            previewUrl
+          }
+
+          fragment useExclusiveCloudcastModal_cloudcast on Cloudcast {
+            id
+            isExclusive
+            owner {
+              username
+              id
+            }
+          }
+
+          fragment useExclusivePreviewModal_cloudcast on Cloudcast {
+            id
+            isExclusivePreviewOnly
+            owner {
+              username
+              id
+            }
           }`,
     },
 };

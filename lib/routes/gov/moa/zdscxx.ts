@@ -1,18 +1,12 @@
 import { Route } from '@/types';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: ['/moa/sjzxfb/:category{.+}?', '/moa/zdscxx/:category{.+}?'],
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
-    const category = ctx.req.param('category');
+export const handler = async (ctx) => {
+    const { category } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
 
     const domain = 'moa.gov.cn';
@@ -36,7 +30,7 @@ async function handler(ctx) {
         });
 
         const filters = filterResponse.result.reduce((filters, f) => {
-            filters[f.name] = f.data.map((d) => d.name);
+            filters[f.name.trim()] = f.data.map((d) => d.name.trim());
             return filters;
         }, {});
 
@@ -92,20 +86,76 @@ async function handler(ctx) {
     const $ = load(frameResponse);
 
     const title = $('title').text();
-    const description = '数据';
-    const icon = new URL('favicon.ico', rootUrl).href;
 
     return {
-        item: items,
-        title: `${title} - ${description} - ${category}`,
+        title: `${title}${category ? ` - ${category}` : ''}`,
+        description: '数据',
         link: currentUrl,
-        description,
-        language: 'zh',
-        image: $('h1.logo a img').prop('src'),
-        icon,
-        logo: icon,
-        subtitle: category,
-        author: title,
+        item: items,
         allowEmpty: true,
+        image: $('h1.logo a img').prop('src'),
+        author: title,
     };
-}
+};
+
+export const route: Route = {
+    path: '/moa/zdscxx/:category{.+}?',
+    name: '中华人民共和国农业农村部数据',
+    url: 'www.moa.gov.cn',
+    maintainers: ['nczitzk'],
+    handler,
+    example: '/gov/moa/zdscxx',
+    parameters: { category: '分类，默认为全部，见下表' },
+    description: `::: tip
+  若订阅 [中华人民共和国农业农村部数据](http://zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp) 的 \`价格指数\` 报告主题。此时路由为 [\`/gov/moa/zdscxx/价格指数\`](https://rsshub.app/gov/moa/zdscxx/价格指数)。
+  
+  若订阅 \`央视网\` 报告来源 的 \`蔬菜生产\` 报告主题。此时路由为 [\`/gov/moa/zdscxx/央视网/蔬菜生产\`](https://rsshub.app/gov/moa/zdscxx/央视网/蔬菜生产)。
+:::
+
+  | 价格指数 | 供需形势 | 分析报告周报 | 分析报告日报 | 日历信息 | 蔬菜生产 |
+  | -------- | -------- | ------------ | ------------ | -------- | -------- |
+    `,
+    categories: ['government'],
+
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportRadar: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            title: '价格指数',
+            source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
+            target: '/gov/moa/zdscxx/价格指数',
+        },
+        {
+            title: '供需形势',
+            source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
+            target: '/gov/moa/zdscxx/供需形势',
+        },
+        {
+            title: '分析报告周报',
+            source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
+            target: '/gov/moa/zdscxx/分析报告周报',
+        },
+        {
+            title: '分析报告日报',
+            source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
+            target: '/gov/moa/zdscxx/分析报告日报',
+        },
+        {
+            title: '日历信息',
+            source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
+            target: '/gov/moa/zdscxx/日历信息',
+        },
+        {
+            title: '蔬菜生产',
+            source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
+            target: '/gov/moa/zdscxx/蔬菜生产',
+        },
+    ],
+};

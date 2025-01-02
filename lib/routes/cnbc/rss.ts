@@ -17,10 +17,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.cnbc.com/id/:id/device/rss/rss.html'],
-        target: '/rss/:id',
-    },
+    radar: [
+        {
+            source: ['www.cnbc.com/id/:id/device/rss/rss.html'],
+            target: '/rss/:id',
+        },
+    ],
     name: 'Full article RSS',
     maintainers: ['TonyRL'],
     handler,
@@ -63,7 +65,7 @@ async function handler(ctx) {
                     }
 
                     const meta = JSON.parse($('[type=application/ld+json]').last().text());
-                    item.author = meta.author ? meta.author.name ?? meta.author.map((a) => a.name).join(', ') : null;
+                    item.author = meta.author ? (meta.author.name ?? meta.author.map((a) => a.name).join(', ')) : null;
                     item.category = meta.keywords;
 
                     return item;

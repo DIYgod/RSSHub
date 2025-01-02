@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/programme/:id?/:limit?/:isFull?',
@@ -25,11 +25,11 @@ export const route: Route = {
     name: '电视回放',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   参数 **是否仅获取完整视频** 设置为 \`true\` \`yes\` \`t\` \`y\` 等值后，路由仅返回当期节目的完整视频，而不会返回节目所提供的节选视频。
 
   查看更多电视节目请前往 [电视回放](https://www.sctv.com/column/list)
-  :::
+:::
 
   | 节目                   | id      |
   | ---------------------- | ------- |

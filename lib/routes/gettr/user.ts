@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const actionMap = {
     pub_pst: 'Published a post: ',
@@ -15,7 +15,8 @@ const actionMap = {
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/gettr/user/jasonmillerindc',
     parameters: { id: 'User id' },
     features: {
@@ -26,9 +27,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['gettr.com/user/:id'],
-    },
+    radar: [
+        {
+            source: ['gettr.com/user/:id'],
+        },
+    ],
     name: 'User timeline',
     maintainers: ['TonyRL'],
     handler,

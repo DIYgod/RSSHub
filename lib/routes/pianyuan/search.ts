@@ -5,10 +5,12 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/indexers/pianyuan/results/search/api',
-    radar: {
-        source: ['pianyuan.org/'],
-        target: '/index',
-    },
+    radar: [
+        {
+            source: ['pianyuan.org/'],
+            target: '/index',
+        },
+    ],
     name: 'Unknown',
     maintainers: ['jerry1119'],
     handler,

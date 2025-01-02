@@ -5,8 +5,9 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const rootUrl = 'https://kyfw.12306.cn';
 
@@ -85,7 +86,7 @@ async function handler(ctx) {
         },
     });
     if (response.data.data === undefined || response.data.data.length === 0) {
-        throw new Error('没有找到相关车次，请检查参数是否正确');
+        throw new InvalidParameterError('没有找到相关车次，请检查参数是否正确');
     }
     const data = response.data.data.result;
     const map = response.data.data.map;

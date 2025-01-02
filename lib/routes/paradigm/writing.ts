@@ -19,9 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['paradigm.xyz/writing'],
-    },
+    radar: [
+        {
+            source: ['paradigm.xyz/writing'],
+        },
+    ],
     name: 'Writing',
     maintainers: ['Fatpandac'],
     handler,

@@ -18,9 +18,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yjsy.hrbeu.edu.cn/:id/list.htm'],
-    },
+    radar: [
+        {
+            source: ['yjsy.hrbeu.edu.cn/:id/list.htm'],
+        },
+    ],
     name: '研究生院',
     maintainers: ['Derekmini'],
     handler,

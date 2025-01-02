@@ -15,15 +15,17 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['sony.com/electronics/support/:productType/:productId/downloads'],
-    },
+    radar: [
+        {
+            source: ['sony.com/electronics/support/:productType/:productId/downloads'],
+        },
+    ],
     name: 'Software Downloads',
     maintainers: ['EthanWng97'],
     handler,
-    description: `:::tip
+    description: `::: tip
   Open \`https://www.sony.com/electronics/support\` and search for the corresponding product, such as \`Sony A7M4\`, the website corresponding to which is \`https://www.sony.com/electronics/support/e-mount-body-ilce-7-series/ilce-7m4/downloads\`, where \`productType\` is \`e-mount-body-ilce-7-series\` and \`productId\` is \`ilce-7m4\`.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

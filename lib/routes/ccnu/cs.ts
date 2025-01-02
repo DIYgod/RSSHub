@@ -16,9 +16,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['cs.ccnu.edu.cn/xwzx/tzgg.htm', 'cs.ccnu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['cs.ccnu.edu.cn/xwzx/tzgg.htm', 'cs.ccnu.edu.cn/'],
+        },
+    ],
     name: '计算机学院',
     maintainers: ['shengmaosu'],
     handler,

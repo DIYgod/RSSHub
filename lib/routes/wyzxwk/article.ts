@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['wyzxwk.com/Article/:id', 'wyzxwk.com/'],
-    },
+    radar: [
+        {
+            source: ['wyzxwk.com/Article/:id', 'wyzxwk.com/'],
+        },
+    ],
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,

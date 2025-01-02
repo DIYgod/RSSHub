@@ -9,14 +9,16 @@ const baseUrl = 'https://u9a9.com';
 
 export const route: Route = {
     path: ['/:preview?', '/search/:keyword/:preview?'],
-    radar: {
-        source: ['u9a9.com/'],
-        target: '',
-    },
-    name: 'Unknown',
+    example: '/u9a9/search/新片速递',
+    radar: [
+        {
+            source: ['u9a9.com/'],
+            target: '',
+        },
+    ],
+    name: 'Search',
     maintainers: ['TonyRL'],
     handler,
-    url: 'u9a9.com/',
     url: 'u9a9.com/',
 };
 

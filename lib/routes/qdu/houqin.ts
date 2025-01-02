@@ -20,9 +20,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['houqin.qdu.edu.cn/tzgg.htm', 'houqin.qdu.edu.cn/'],
-    },
+    radar: [
+        {
+            source: ['houqin.qdu.edu.cn/tzgg.htm', 'houqin.qdu.edu.cn/'],
+        },
+    ],
     name: '后勤管理处通知',
     maintainers: ['abc1763613206'],
     handler,

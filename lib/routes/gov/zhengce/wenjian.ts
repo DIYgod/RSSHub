@@ -18,10 +18,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.gov.cn/'],
-        target: '/zhengce/wenjian',
-    },
+    radar: [
+        {
+            source: ['www.gov.cn/'],
+            target: '/zhengce/wenjian',
+        },
+    ],
     name: '最新文件',
     maintainers: ['ciaranchen'],
     handler,

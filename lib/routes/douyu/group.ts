@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 export const route: Route = {
     path: '/group/:id/:sort?',
@@ -21,10 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['yuba.douyu.com/group/:id', 'yuba.douyu.com/group/newself/:id', 'yuba.douyu.com/group/newall/:id', 'yuba.douyu.com/'],
-        target: '/group/:id',
-    },
+    radar: [
+        {
+            source: ['yuba.douyu.com/group/:id', 'yuba.douyu.com/group/newself/:id', 'yuba.douyu.com/group/newall/:id', 'yuba.douyu.com/'],
+            target: '/group/:id',
+        },
+    ],
     name: '鱼吧帖子',
     maintainers: ['nczitzk'],
     handler,

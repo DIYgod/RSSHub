@@ -17,9 +17,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['tangshufang.com/:category', 'tangshufang.com/'],
-    },
+    radar: [
+        {
+            source: ['tangshufang.com/:category', 'tangshufang.com/'],
+        },
+    ],
     name: '分类',
     maintainers: ['nczitzk'],
     handler,
