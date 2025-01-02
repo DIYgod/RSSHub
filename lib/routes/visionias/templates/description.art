@@ -1,0 +1,6 @@
+{{ if heading }}
+  <h1>{{ heading }}</h1>
+{{ /if }}
+{{ if articleContent }}
+  {{@ articleContent }}
+{{ /if }}
