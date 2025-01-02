@@ -1,7 +1,7 @@
 import { Data, Route, ViewType } from '@/types';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/bullets',

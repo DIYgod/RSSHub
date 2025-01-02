@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import { DataItem } from '@/types';
 
 const getItems = async (url: string, extra: { date: boolean; selector: string }) => {
