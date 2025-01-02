@@ -143,6 +143,7 @@ export const route: Route = {
 | mtnd    | 媒体农大   | 相关对甘肃农业大学的媒体报道 |
     `,
     maintainers: ['PrinOrange'],
+    url: 'https://www.gsau.edu.cn/xwzx/xxyw.htm',
     handler,
     categories: ['university'],
     features: {
