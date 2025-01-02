@@ -1,7 +1,7 @@
 import { Context } from 'hono';
 import { Api } from 'telegram';
 import { HTMLParser } from 'telegram/extensions/html';
-import { getClient, getDocument, getFilename } from './client';
+import { getClient, getDocument, getFilename, unwrapMedia } from './client';
 import { getDisplayName } from 'telegram/Utils';
 
 function getPeerId(p: Api.TypePeer) {
@@ -74,8 +74,9 @@ export default async function handler(ctx: Context) {
         if (message.media) {
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
-            const src = `${new URL(ctx.req.url).origin}/telegram/channel/${username}/${getPeerId(message.peerId)}_${message.id}`;
-            attachments.push(getMediaLink(src, message.media));
+            const src = `${new URL(ctx.req.url).origin}/telegram/media/${username}/${getPeerId(message.peerId)}_${message.id}`;
+            const media = await unwrapMedia(message.media);
+            attachments.push(getMediaLink(src, media));
         }
         if (message.text !== '' || ++i === messages.length - 1) {
             let description = attachments.join('<br/>\n');

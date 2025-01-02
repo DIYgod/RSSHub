@@ -62,3 +62,20 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
         process.exit(0);
     });
 }
+
+export async function unwrapMedia(media: Api.TypeMessageMedia | undefined) {
+    if (!media) {
+        throw new Error('media not found in ' + media);
+    }
+    if (media instanceof Api.MessageMediaStory) {
+        const result = await client.invoke(
+            new Api.stories.GetStoriesByID({
+                id: [media.id],
+                peer: media.peer
+            })
+        );
+        const storyMedia = (result.stories[0] as Api.StoryItem).media;
+        return storyMedia;
+    }
+    return media;
+}

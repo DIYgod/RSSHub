@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { Context } from 'hono';
 import { stream } from 'hono/streaming';
 import { Api, TelegramClient } from 'telegram';
@@ -5,7 +6,7 @@ import { IterDownloadFunction } from 'telegram/client/downloads';
 import { getAppropriatedPartSize } from 'telegram/Utils';
 import { config } from '@/config';
 import cacheModule from '@/utils/cache/index';
-import { getClient, getDocument, getFilename } from './client';
+import { getClient, getDocument, getFilename, unwrapMedia } from './client';
 import { returnBigInt as bigInt } from 'telegram/Helpers';
 
 /**
@@ -87,7 +88,7 @@ export async function decodeMedia(client: TelegramClient, channelName: string, x
         const msgs = await client.getMessages(channel, {
             ids: [Number(msg)],
         });
-        return msgs[0]?.media;
+        return unwrapMedia(msgs[0]?.media);
     } catch (error) {
         if (!retry) {
             // channel likely not seen before, we need to resolve ID and retry
