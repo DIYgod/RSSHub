@@ -1,4 +1,4 @@
-import type { Context, TypedResponse } from 'hono';
+import type { Context } from 'hono';
 
 // Make sure it's synchronise with scripts/workflow/data.ts
 // and lib/routes/rsshub/routes.ts

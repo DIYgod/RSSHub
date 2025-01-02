@@ -158,7 +158,6 @@ async function configureMiddlewares(ctx: Context) {
     // media is too heavy to cache in memory or redis, and lock-up is not needed
     await cacheModule.set(ctx.get('cacheControlKey'), '0', config.cache.requestTimeout);
     ctx.req.raw.headers.delete('Accept-Encoding'); // avoid hono compress() middleware detecting Accept-Encoding on req
-    ctx.set('no-template', true); // skip RSSHub template middleware
 }
 
 function streamResponse(c: Context, bodyIter: AsyncGenerator<Buffer>) {
@@ -183,7 +182,13 @@ export const route: Route = {
     example: '/media/telegram/123123213_1233',
     parameters: { username: 'entity name', media: 'entityId_messageId' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'TELEGRAM_SESSION',
+                optional: true,
+                description: 'Telegram API Authentication',
+            }
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -194,7 +199,11 @@ export const route: Route = {
     name: 'Channel Media',
     maintainers: ['synchrone'],
     handler,
-    description: ``,
+    description: `
+::: tip
+  Serves telegram media, like pictures, video or files. Supports HTTP Range requests
+:::
+`,
 };
 
 export default async function handler(ctx: Context) {
