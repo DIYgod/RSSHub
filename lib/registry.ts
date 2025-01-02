@@ -84,7 +84,14 @@ if (Object.keys(modules).length) {
 export { namespaces };
 
 const app = new Hono();
-const sortRoutes = (routes: Record<string, Route & { location: string }>) =>
+const sortRoutes = (
+    routes: Record<
+        string,
+        Route & {
+            location: string;
+        }
+    >
+) =>
     Object.entries(routes).sort(([pathA], [pathB]) => {
         const segmentsA = pathA.split('/');
         const segmentsB = pathB.split('/');
@@ -108,7 +115,12 @@ const sortRoutes = (routes: Record<string, Route & { location: string }>) =>
 for (const namespace in namespaces) {
     const subApp = app.basePath(`/${namespace}`);
 
-    const sortedRoutes = sortRoutes(namespaces[namespace].routes);
+    const namespaceData = namespaces[namespace];
+    if (!namespaceData || !namespaceData.routes) {
+        continue;
+    }
+
+    const sortedRoutes = sortRoutes(namespaceData.routes);
 
     for (const [path, routeData] of sortedRoutes) {
         const wrappedHandler: Handler = async (ctx) => {
