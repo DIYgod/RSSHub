@@ -1,4 +1,6 @@
 import { Data, DataItem, Route } from '@/types';
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
 import { baseUrl } from './utils';
 import dayjs from 'dayjs';
 import ofetch from '@/utils/ofetch';
@@ -83,9 +85,7 @@ async function processCurrentNews(currentUrl) {
             normalNews.push(item);
         }
     }
-    const finalItems = await Promise.allSettled(
-        normalNews.map((item) => processOnePerPage(item))
-    );
+    const finalItems = await Promise.allSettled(normalNews.map((item) => processOnePerPage(item)));
     const alsoInNewsItems = await processMultiplePerPage(alsoInNews[0]);
     return [...finalItems.map((item) => (item.status === 'fulfilled' ? item.value : { title: 'Error : Something Went Wrong' })), ...alsoInNewsItems];
 }
