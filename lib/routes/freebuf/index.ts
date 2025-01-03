@@ -23,9 +23,9 @@ export const route: Route = {
     name: '文章',
     maintainers: ['trganda'],
     handler,
-    description: `:::tip
+    description: `::: tip
   Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

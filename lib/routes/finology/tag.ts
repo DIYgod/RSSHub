@@ -15,7 +15,7 @@ export const route: Route = {
     name: 'Trending Topic',
     maintainers: ['Rjnishant530'],
     handler,
-    description: `:::note Topic
+    description: `::: info Topic
   | Topic                    | Link                     |
   | ------------------------ | ------------------------ |
   | Investment Decisions     | investment-decisions     |

@@ -38,6 +38,8 @@ async function handler() {
                 });
                 const $ = load(response);
 
+                item.title = $('meta[property="og:title"]').attr('content') ?? $('.news-title h1').text();
+
                 const nextPages = $('.pagination li')
                     .not('.disabled')
                     .not('.active')

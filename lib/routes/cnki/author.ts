@@ -20,9 +20,9 @@ export const route: Route = {
         supportScihub: false,
     },
     example: '/cnki/author/丁晓东/中国人民大学',
-    description: `:::tip
+    description: `::: tip
     可能仅限中国大陆服务器访问，以实际情况为准。
-    :::`,
+:::`,
     handler,
 };
 

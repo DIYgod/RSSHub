@@ -184,7 +184,7 @@ export const route: Route = {
     parameters: {
         category: '分类，默认为 `new`，即最新资讯，可在对应分类页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [游戏资讯](https://www.ali213.net/news/game/)，网址为 \`https://www.ali213.net/news/game/\`，请截取 \`https://www.ali213.net/news/\` 到末尾 \`/\` 的部分 \`game\` 作为 \`category\` 参数填入，此时目标路由为 [\`/ali213/news/game\`](https://rsshub.app/ali213/news/game)。
 :::
 

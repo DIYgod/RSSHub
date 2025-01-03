@@ -13,7 +13,7 @@ export const route: Route = {
     categories: ['social-media', 'popular'],
     view: ViewType.Videos,
     example: '/youtube/user/@JFlaMusic',
-    parameters: { username: 'YouTuber username with @', embed: 'Default to embed the video, set to any value to disable embedding' },
+    parameters: { username: 'YouTuber handle with @', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {
         requireConfig: [
             {
@@ -29,11 +29,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.youtube.com/user/:username'],
+            source: ['www.youtube.com/user/:username', 'www.youtube.com/:username'],
             target: '/user/:username',
         },
     ],
-    name: 'Channel with username',
+    name: 'Channel with user handle',
     maintainers: ['DIYgod'],
     handler,
 };
@@ -72,7 +72,16 @@ async function handler(ctx) {
             };
         });
     }
-    const playlistId = userHandleData?.playlistId || (await utils.getChannelWithUsername(username, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+    const playlistId =
+        userHandleData?.playlistId ||
+        (await (async () => {
+            const channelData = await utils.getChannelWithUsername(username, 'contentDetails', cache);
+            const items = channelData.data.items;
+            if (!items) {
+                throw new NotFoundError(`The channel https://www.youtube.com/user/${username} does not exist.`);
+            }
+            return items[0].contentDetails.relatedPlaylists.uploads;
+        })());
 
     const playlistItems = await utils.getPlaylistItems(playlistId, 'snippet', cache);
     if (!playlistItems) {

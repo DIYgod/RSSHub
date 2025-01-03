@@ -26,9 +26,9 @@ export const route: Route = {
   | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
   | mt     | rise   | new    | pay    | top    | male   | female |
 
-  :::tip
+::: tip
   \`time\` 参数仅在 \`type\` 参数选为 **月票榜** 的时候生效。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

@@ -28,7 +28,7 @@ export const route: Route = {
     ],
     handler,
     description: `
-:::tip
+::: tip
 欄目可用\`名稱\`或對應網頁的\`path\`，
 如 \`https://www.tkww.hk/hong_kong\` 的欄目可以填\`香港\`或是\`hong_kong\`
 而 \`https://www.tkww.hk/china/shanghai\` 的欄目則需填\`china/shanghai\`

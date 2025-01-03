@@ -35,9 +35,9 @@ export const route: Route = {
 
   所以对应路由为 [\`/radio/album/15682090498666\`](https://rsshub.app/radio/album/15682090498666)
 
-  :::tip
+::: tip
   部分专辑不适用该路由，此时可以尝试 [节目](#yun-ting-jie-mu) 路由
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

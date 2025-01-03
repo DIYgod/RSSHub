@@ -31,8 +31,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $item: Cheerio<Element> = $(item);
 
             const aEl: Cheerio<Element> = $item.find('a');
+            const title: string = aEl.prop('title') === undefined ? aEl.text() : aEl.prop('title');
 
-            const title: string = aEl.prop('title') || aEl.text();
+            const dateMatch = title.match(/(\d{4}-\d{2}-\d{2})$/);
+            let pubDate;
+            let cleanTitle = title;
+
+            if (dateMatch) {
+                pubDate = parseDate(dateMatch[0]);
+                cleanTitle = title.replace(/\d{4}-\d{2}-\d{2}$/, '').trim();
+            } else {
+                const spanText = $item.find('span').text().trim();
+                pubDate = spanText ? parseDate(spanText) : undefined;
+            }
 
             const description: string = art(path.join(__dirname, 'templates/description.art'), {
                 intro: $item.find('p.zy').text(),
@@ -48,9 +59,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return {
-                title,
+                title: cleanTitle,
                 description,
-                pubDate: parseDate($item.find('span').text()),
+                pubDate,
                 link: new URL(aEl.prop('href') as string, targetUrl).href,
                 content: {
                     html: description,
@@ -74,15 +85,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const detailResponse = await ofetch(item.link);
                     const $$: CheerioAPI = load(detailResponse);
 
-                    const title: string = $$('h5').text();
+                    const detailTitle: string = $$('h5').text();
                     const description: string = art(path.join(__dirname, 'templates/description.art'), {
                         description: $$('div.TRS_Editor').html(),
                     });
 
+                    const detailDate = $$('span.fb em').text().trim();
+                    const pubDate = detailDate ? parseDate(detailDate) : item.pubDate;
+
                     return {
-                        title,
+                        title: detailTitle || item.title, // Use original title as fallback
                         description,
-                        pubDate: parseDate($$('span.fb em').text()),
+                        link: item.link,
+                        pubDate,
                         content: {
                             html: description,
                             text: $$('div.TRS_Editor').text(),
@@ -122,9 +137,9 @@ export const route: Route = {
     handler,
     example: '/chinacdc/zxyw',
     parameters: {
-        category: '分类，默认为 `zxyw`，即中心要闻，可在对应分类页 URL 中找到, Category, `zxyw`，即中心要闻 by default',
+        category: '分类，默认为 `zxyw`，即中心要闻，可在对应分类页 URL 中找到，Category, `zxyw`，即中心要闻 by default',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [中心要闻](https://www.chinacdc.cn/zxyw/)，网址为 \`https://www.chinacdc.cn/zxyw/\`，请截取 \`https://www.chinacdc.cn/\` 到末尾 \`/\` 的部分 \`zxyw\` 作为 \`category\` 参数填入，此时目标路由为 [\`/chinacdc/zxyw\`](https://rsshub.app/chinacdc/zxyw)。
 :::
 
@@ -169,7 +184,7 @@ export const route: Route = {
 
 #### [全球公卫](https://www.chinacdc.cn/qqgw/)
 
-| [合作伙伴](https://www.chinacdc.cn/qqgw/hzhb/)     | [世界卫生组织合作中心和参比实验室](https://www.chinacdc.cn/qqgw/wszz/) | [国际交流(港澳台交流)](https://www.chinacdc.cn/qqgw/gjjl/) | [公共卫生援外与合作](https://www.chinacdc.cn/qqgw/ggws/) |
+| [合作伙伴](https://www.chinacdc.cn/qqgw/hzhb/)     | [世界卫生组织合作中心和参比实验室](https://www.chinacdc.cn/qqgw/wszz/) | [国际交流 (港澳台交流)](https://www.chinacdc.cn/qqgw/gjjl/) | [公共卫生援外与合作](https://www.chinacdc.cn/qqgw/ggws/) |
 | -------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------- |
 | [qqgw/hzhb](https://rsshub.app/chinacdc/qqgw/hzhb) | [qqgw/wszz](https://rsshub.app/chinacdc/qqgw/wszz)                     | [qqgw/gjjl](https://rsshub.app/chinacdc/qqgw/gjjl)         | [qqgw/ggws](https://rsshub.app/chinacdc/qqgw/ggws)       |
 
@@ -371,7 +386,7 @@ export const route: Route = {
             target: '/qqgw/wszz',
         },
         {
-            title: '全球公卫 - 国际交流(港澳台交流)',
+            title: '全球公卫 - 国际交流 (港澳台交流)',
             source: ['www.chinacdc.cn/qqgw/gjjl/'],
             target: '/qqgw/gjjl',
         },

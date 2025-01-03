@@ -17,7 +17,7 @@ export const handler = async (ctx) => {
 
     const rootUrl = 'https://papers.cool';
     const currentUrl = new URL(category, rootUrl).href;
-    const feedUrl = new URL(`${category}/feed`, rootUrl).href;
+    const feedUrl = new URL(`arxiv/${category}/feed`, rootUrl).href;
 
     const site = category.split(/\//)[0];
     const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
@@ -76,16 +76,16 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/:category{.+}?',
+    path: '/arxiv/:category{.+}?',
     name: 'Topic',
     url: 'papers.cool',
     maintainers: ['nczitzk', 'Muyun99'],
     handler,
     example: '/papers/arxiv/cs.AI',
     parameters: { category: 'Category, arXiv Artificial Intelligence (cs.AI) by default' },
-    description: `:::tip
-  If you subscribe to [arXiv Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI)，where the URL is \`https://papers.cool/arxiv/cs.AI\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/arxiv/cs.AI\`](https://rsshub.app/papers/arxiv/cs.AI).
-  :::
+    description: `::: tip
+  If you subscribe to [arXiv Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI), where the URL is \`https://papers.cool/arxiv/cs.AI\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/arxiv/cs.AI\`](https://rsshub.app/papers/arxiv/cs.AI).
+:::
 
   | Category                                              | id          |
   | ----------------------------------------------------- | ----------- |
