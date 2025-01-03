@@ -201,9 +201,19 @@ const query = `
 `;
 
 export const route: Route = {
-    path: '/squads/:squads',
+    path: '/squads/:squads/:innerSharedContent?',
     example: '/daily/squads/watercooler',
     view: ViewType.Articles,
+    parameters: {
+        innerSharedContent: {
+            description: 'Where to Fetch inner Shared Posts instead of original',
+            default: 'false',
+            options: [
+                { value: 'false', label: 'False' },
+                { value: 'true', label: 'True' },
+            ],
+        },
+    },
     radar: [
         {
             source: ['app.daily.dev/squads/:squads'],
@@ -217,7 +227,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
-    const innerSharedContent = ctx.req.query('innerSharedContent') ? JSON.parse(ctx.req.query('innerSharedContent')) : false;
+    const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
     const squads = ctx.req.param('squads');
 
     const link = `${baseUrl}/squads/${squads}`;

@@ -122,7 +122,7 @@ const query = `
 `;
 
 export const route: Route = {
-    path: '/popular',
+    path: '/popular/:innerSharedContent?/:dateSort?',
     example: '/daily/popular',
     view: ViewType.Articles,
     radar: [
@@ -130,7 +130,24 @@ export const route: Route = {
             source: ['app.daily.dev/popular'],
         },
     ],
-
+    parameters: {
+        innerSharedContent: {
+            description: 'Where to Fetch inner Shared Posts instead of original',
+            default: 'false',
+            options: [
+                { value: 'false', label: 'False' },
+                { value: 'true', label: 'True' },
+            ],
+        },
+        dateSort: {
+            description: 'Sort posts by publication date instead of popularity',
+            default: 'true',
+            options: [
+                { value: 'false', label: 'False' },
+                { value: 'true', label: 'True' },
+            ],
+        },
+    },
     name: 'Popular',
     maintainers: ['Rjnishant530'],
     handler,
@@ -140,8 +157,9 @@ export const route: Route = {
 async function handler(ctx) {
     const link = `${baseUrl}/posts`;
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
-    const innerSharedContent = ctx.req.query('innerSharedContent') ? JSON.parse(ctx.req.query('innerSharedContent')) : false;
-    const dateSort = ctx.req.query('dateSort') ? JSON.parse(ctx.req.query('dateSort')) : true;
+    const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
+    const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
+
     const data = await getData({
         query,
         variables: {

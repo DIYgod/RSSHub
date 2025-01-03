@@ -125,10 +125,18 @@ fragment UserPost on Post {
 }`;
 
 export const route: Route = {
-    path: '/source/:sourceId',
+    path: '/source/:sourceId/:innerSharedContent?',
     example: '/daily/source/hn',
     parameters: {
         sourceId: 'The source id',
+        innerSharedContent: {
+            description: 'Where to Fetch inner Shared Posts instead of original',
+            default: 'false',
+            options: [
+                { value: 'false', label: 'False' },
+                { value: 'true', label: 'True' },
+            ],
+        },
     },
     radar: [
         {
@@ -144,7 +152,7 @@ export const route: Route = {
 async function handler(ctx) {
     const sourceId = ctx.req.param('sourceId');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
-    const innerSharedContent = ctx.req.query('innerSharedContent') ? JSON.parse(ctx.req.query('innerSharedContent')) : false;
+    const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
 
     const link = `${baseUrl}/sources/${sourceId}`;
     const buildId = await getBuildId();
