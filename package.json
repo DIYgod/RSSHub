@@ -161,7 +161,7 @@
         "@types/mailparser": "3.4.5",
         "@types/markdown-it": "14.1.2",
         "@types/module-alias": "2.0.4",
-        "@types/node": "22.10.3",
+        "@types/node": "22.10.5",
         "@types/sanitize-html": "2.13.0",
         "@types/supertest": "6.0.2",
         "@types/tiny-async-pool": "2.0.3",
