@@ -7,7 +7,7 @@ import { rootUrl, apiRootUrl, processItems } from './util';
 
 export const route: Route = {
     path: '/daily',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/readhub/daily',
     parameters: {},
     features: {

@@ -96,8 +96,17 @@ function generateMd(lang) {
                 }
             });
 
+            const processedPaths = new Set();
+
             for (const realPath of realPaths) {
                 const data = docs[category][namespace].routes[realPath];
+                if (Array.isArray(data.path)) {
+                    if (processedPaths.has(data.path[0])) {
+                        continue;
+                    }
+                    processedPaths.add(data.path[0]);
+                }
+
                 const test = testResult.find((t) => t.title === realPath);
                 const parsedTest = test
                     ? {

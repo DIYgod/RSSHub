@@ -5,12 +5,14 @@ import { ofetch } from 'ofetch';
 let envs = process.env;
 
 export type Config = {
+    // app config
     disallowRobot: boolean;
     enableCluster?: string;
     isPackage: boolean;
     nodeName?: string;
     puppeteerWSEndpoint?: string;
     chromiumExecutablePath?: string;
+    // network
     connect: {
         port: number;
     };
@@ -20,6 +22,7 @@ export type Config = {
     ua: string;
     trueUA: string;
     allowOrigin?: string;
+    // cache
     cache: {
         type: string;
         requestTimeout: number;
@@ -32,6 +35,7 @@ export type Config = {
     redis: {
         url: string;
     };
+    // proxy
     proxyUri?: string;
     proxy: {
         protocol?: string;
@@ -43,7 +47,9 @@ export type Config = {
     };
     pacUri?: string;
     pacScript?: string;
+    // access control
     accessKey?: string;
+    // logging
     debugInfo: string;
     loggerLevel: string;
     noLogfiles?: boolean;
@@ -56,6 +62,8 @@ export type Config = {
         dsn?: string;
         routeTimeout: number;
     };
+    enableRemoteDebugging?: boolean;
+    // feed config
     hotlink: {
         template?: string;
         includePaths?: string[];
@@ -78,9 +86,18 @@ export type Config = {
         promptTitle: string;
         promptDescription: string;
     };
+    follow: {
+        ownerUserId?: string;
+        description?: string;
+        price?: number;
+        userLimit?: number;
+    };
+
+    // Route-specific Configurations
     bilibili: {
         cookies: Record<string, string | undefined>;
         dmImgList?: string;
+        dmImgInter?: string;
     };
     bitbucket: {
         username?: string;
@@ -93,7 +110,13 @@ export type Config = {
     bupt: {
         portal_cookie?: string;
     };
+    caixin: {
+        cookie?: string;
+    };
     civitai: {
+        cookie?: string;
+    };
+    dianping: {
         cookie?: string;
     };
     dida365: {
@@ -149,6 +172,9 @@ export type Config = {
     };
     google: {
         fontsApiKey?: string;
+    };
+    guozaoke: {
+        cookies?: string;
     };
     hefeng: {
         key?: string;
@@ -232,6 +258,9 @@ export type Config = {
     notion: {
         key?: string;
     };
+    patreon: {
+        sessionId?: string;
+    };
     pianyuan: {
         cookie?: string;
     };
@@ -266,6 +295,15 @@ export type Config = {
     scihub: {
         host?: string;
     };
+    sis001: {
+        baseUrl?: string;
+    };
+    skeb: {
+        bearerToken?: string;
+    };
+    sorrycc: {
+        cookie?: string;
+    };
     spotify: {
         clientId?: string;
         clientSecret?: string;
@@ -276,6 +314,15 @@ export type Config = {
     };
     telegram: {
         token?: string;
+        session?: string;
+        apiId?: number;
+        apiHash?: string;
+        maxConcurrentDownloads?: number;
+        proxy?: {
+            host?: string;
+            port?: number;
+            secret?: string;
+        };
     };
     tophub: {
         cookie?: string;
@@ -287,7 +334,9 @@ export type Config = {
         username?: string[];
         password?: string[];
         authenticationSecret?: string[];
+        phoneOrEmail?: string[];
         authToken?: string[];
+        thirdPartyApi?: string;
     };
     uestc: {
         bbsCookie?: string;
@@ -308,6 +357,9 @@ export type Config = {
     xiaoyuzhou: {
         device_id?: string;
         refresh_token?: string;
+    };
+    xiaohongshu: {
+        cookie?: string;
     };
     ximalaya: {
         token?: string;
@@ -352,7 +404,7 @@ const toBoolean = (value: string | undefined, defaultValue: boolean) => {
     }
 };
 
-const toInt = (value: string | undefined, defaultValue: number) => (value === undefined ? defaultValue : Number.parseInt(value));
+const toInt = (value: string | undefined, defaultValue?: number) => (value === undefined ? defaultValue : Number.parseInt(value));
 
 const calculateValue = () => {
     const bilibili_cookies: Record<string, string | undefined> = {};
@@ -397,7 +449,6 @@ const calculateValue = () => {
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
         ua: envs.UA ?? (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : randUserAgent({ browser: 'chrome', os: 'mac os', device: 'desktop' })),
         trueUA: TRUE_UA,
-        // cors request
         allowOrigin: envs.ALLOW_ORIGIN,
         // cache
         cache: {
@@ -441,6 +492,7 @@ const calculateValue = () => {
             dsn: envs.SENTRY,
             routeTimeout: toInt(envs.SENTRY_ROUTE_TIMEOUT, 30000),
         },
+        enableRemoteDebugging: toBoolean(envs.ENABLE_REMOTE_DEBUGGING, false),
         // feed config
         hotlink: {
             template: envs.HOTLINK_TEMPLATE,
@@ -464,11 +516,18 @@ const calculateValue = () => {
             promptDescription: envs.OPENAI_PROMPT || 'Please summarize the following article and reply with markdown format.',
             promptTitle: envs.OPENAI_PROMPT_TITLE || 'Please translate the following title into Simplified Chinese and reply only translated text.',
         },
+        follow: {
+            ownerUserId: envs.FOLLOW_OWNER_USER_ID,
+            description: envs.FOLLOW_DESCRIPTION,
+            price: toInt(envs.FOLLOW_PRICE),
+            userLimit: toInt(envs.FOLLOW_USER_LIMIT),
+        },
 
         // Route-specific Configurations
         bilibili: {
             cookies: bilibili_cookies,
             dmImgList: envs.BILIBILI_DM_IMG_LIST,
+            dmImgInter: envs.BILIBILI_DM_IMG_INTER,
         },
         bitbucket: {
             username: envs.BITBUCKET_USERNAME,
@@ -481,8 +540,14 @@ const calculateValue = () => {
         bupt: {
             portal_cookie: envs.BUPT_PORTAL_COOKIE,
         },
+        caixin: {
+            cookie: envs.CAIXIN_COOKIE,
+        },
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
+        },
+        dianping: {
+            cookie: envs.DIANPING_COOKIE,
         },
         dida365: {
             username: envs.DIDA365_USERNAME,
@@ -537,6 +602,9 @@ const calculateValue = () => {
         },
         google: {
             fontsApiKey: envs.GOOGLE_FONTS_API_KEY,
+        },
+        guozaoke: {
+            cookies: envs.GUOZAOKE_COOKIES,
         },
         hefeng: {
             // weather
@@ -621,6 +689,9 @@ const calculateValue = () => {
         notion: {
             key: envs.NOTION_TOKEN,
         },
+        patreon: {
+            sessionId: envs.PATREON_SESSION_ID,
+        },
         pianyuan: {
             cookie: envs.PIANYUAN_COOKIE,
         },
@@ -655,6 +726,15 @@ const calculateValue = () => {
         scihub: {
             host: envs.SCIHUB_HOST || 'https://sci-hub.se/',
         },
+        sis001: {
+            baseUrl: envs.SIS001_BASE_URL || 'https://sis001.com',
+        },
+        skeb: {
+            bearerToken: envs.SKEB_BEARER_TOKEN,
+        },
+        sorrycc: {
+            cookie: envs.SORRYCC_COOKIES,
+        },
         spotify: {
             clientId: envs.SPOTIFY_CLIENT_ID,
             clientSecret: envs.SPOTIFY_CLIENT_SECRET,
@@ -669,6 +749,11 @@ const calculateValue = () => {
             apiId: envs.TELEGRAM_API_ID,
             apiHash: envs.TELEGRAM_API_HASH,
             maxConcurrentDownloads: envs.TELEGRAM_MAX_CONCURRENT_DOWNLOADS,
+            proxy: {
+                host: envs.TELEGRAM_PROXY_HOST,
+                port: envs.TELEGRAM_PROXY_PORT,
+                secret: envs.TELEGRAM_PROXY_SECRET,
+            },
         },
         tophub: {
             cookie: envs.TOPHUB_COOKIE,
@@ -680,7 +765,9 @@ const calculateValue = () => {
             username: envs.TWITTER_USERNAME?.split(','),
             password: envs.TWITTER_PASSWORD?.split(','),
             authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
+            phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
+            thirdPartyApi: envs.TWITTER_THIRD_PARTY_API,
         },
         uestc: {
             bbsCookie: envs.UESTC_BBS_COOKIE,
@@ -701,6 +788,9 @@ const calculateValue = () => {
         xiaoyuzhou: {
             device_id: envs.XIAOYUZHOU_ID,
             refresh_token: envs.XIAOYUZHOU_TOKEN,
+        },
+        xiaohongshu: {
+            cookie: envs.XIAOHONGSHU_COOKIE,
         },
         ximalaya: {
             token: envs.XIMALAYA_TOKEN,

@@ -107,9 +107,9 @@ export const route: Route = {
     handler,
     example: '/ccfa/1',
     parameters: { category: '分类，默认为 `1`，即协会动态，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [协会动态](https://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=1)，网址为 \`https://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=1\`。截取 \`https://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=\` 到末尾的部分 \`1\` 作为参数填入，此时路由为 [\`/ccfa/1\`](https://rsshub.app/ccfa/1)。
-  :::
+:::
 
   | 分类                                                                      | ID                                     |
   | ------------------------------------------------------------------------- | -------------------------------------- |
@@ -159,57 +159,57 @@ export const route: Route = {
         },
         {
             title: '协会动态',
-            source: ['www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=1'],
+            source: ['www.ccfa.org.cn/portal/cn/xiehui_list.jsp'],
             target: '/1',
         },
         {
             title: '行业动态',
-            source: ['www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=2'],
+            source: ['www.ccfa.org.cn/portal/cn/xiehui_list.jsp'],
             target: '/2',
         },
         {
             title: '政策/报告/标准',
-            source: ['www.ccfa.org.cn/portal/cn/hybz_list.jsp?type=33'],
+            source: ['www.ccfa.org.cn/portal/cn/hybz_list.jsp'],
             target: '/33',
         },
         {
             title: '行业统计',
-            source: ['www.ccfa.org.cn/portal/cn/lsbq.jsp?type=10003'],
+            source: ['www.ccfa.org.cn/portal/cn/lsbq.jsp'],
             target: '/10003',
         },
         {
             title: '创新案例',
-            source: ['www.ccfa.org.cn/portal/cn/hybzs_list.jsp?type=10004'],
+            source: ['www.ccfa.org.cn/portal/cn/hybzs_list.jsp'],
             target: '/10004',
         },
         {
             title: '党建工作',
-            source: ['www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=7'],
+            source: ['www.ccfa.org.cn/portal/cn/xiehui_list.jsp'],
             target: '/7',
         },
         {
             title: '新消费论坛',
-            source: ['www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=10005'],
+            source: ['www.ccfa.org.cn/portal/cn/xiehui_list.jsp'],
             target: '/10005',
         },
         {
             title: '政策/报告/标准 - 行业报告',
-            source: ['www.ccfa.org.cn/portal/cn/hybz_list.jsp?type=33'],
+            source: ['www.ccfa.org.cn/portal/cn/hybz_list.jsp'],
             target: '/33',
         },
         {
             title: '政策/报告/标准 - 行业标准',
-            source: ['www.ccfa.org.cn/portal/cn/hybz_list.jsp?type=34'],
+            source: ['www.ccfa.org.cn/portal/cn/hybz_list.jsp'],
             target: '/34',
         },
         {
             title: '政策/报告/标准 - 行业政策',
-            source: ['www.ccfa.org.cn/portal/cn/fangyizhuanqu_list.jsp?type=39'],
+            source: ['www.ccfa.org.cn/portal/cn/fangyizhuanqu_list.jsp'],
             target: '/39',
         },
         {
             title: '政策/报告/标准 - 政策权威解读',
-            source: ['www.ccfa.org.cn/portal/cn/fangyizhuanqu_list.jsp?type=40'],
+            source: ['www.ccfa.org.cn/portal/cn/fangyizhuanqu_list.jsp'],
             target: '/40',
         },
     ],

@@ -86,9 +86,9 @@ export const route: Route = {
     handler,
     example: '/szse/rule/allrules/bussiness',
     parameters: { channel: '频道，默认为 `allrules/bussiness`，即全部业务规则，可在对应频道页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [综合类](https://www.szse.cn/www/lawrules/rule/all/index.html)，网址为 \`https://www.szse.cn/www/lawrules/rule/all/index.html\`。截取 \`https://www.szse.cn/www/lawrules/rule/\` 到末尾 \`/index.html\` 的部分 \`all\` 作为参数填入，此时路由为 [\`/szse/rule/all\`](https://rsshub.app/szse/rule/all)。
-  :::
+:::
 
   | 频道                                                                        | ID                                                    |
   | --------------------------------------------------------------------------- | ----------------------------------------------------- |

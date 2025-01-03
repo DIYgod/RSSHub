@@ -4,7 +4,7 @@ export const namespace: Namespace = {
     name: 'Informed AI News',
     url: 'informedainews.com',
     description: `
-:::tip
+::: tip
 informed AI RSS feeds:
 
 -   World News Daily: 'https://rsshub.app/informedainews/zh-Hans/docs/world-news-daily'
@@ -15,4 +15,5 @@ informed AI RSS feeds:
     zh: {
         name: '知闻AI',
     },
+    lang: 'en',
 };

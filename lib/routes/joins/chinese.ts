@@ -108,9 +108,9 @@ export const route: Route = {
     handler,
     example: '/chinese',
     parameters: { category: '分类，默认为空，可在对应分类页 URL 中找到 `sc_section_code`' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [财经](https://chinese.joins.com/news/articleList.html?sc_section_code=S1N1)，网址为 \`https://chinese.joins.com/news/articleList.html?sc_section_code=S1N1\`。截取 \`sc_section_code\` 的值作为参数填入，此时路由为 [\`/joins/chinese/S1N1\`](https://rsshub.app/joins/chinese/S1N1)。
-  :::
+:::
 
   | 分类                                                                                       | \`sc_section_code\`                             |
   | ------------------------------------------------------------------------------------------ | ----------------------------------------------- |
@@ -151,67 +151,67 @@ export const route: Route = {
         },
         {
             title: '财经',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N1'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N1',
         },
         {
             title: '国际',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N2'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N2',
         },
         {
             title: '北韩',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N3'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N3',
         },
         {
             title: '政治·社会',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N4'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N4',
         },
         {
             title: '中国观察',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N5'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N5',
         },
         {
             title: '社论',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N26'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N26',
         },
         {
             title: '专栏·观点',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N11'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N11',
         },
         {
             title: '军事·科技',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N6'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N6',
         },
         {
             title: '娱乐体育',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N7'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N7',
         },
         {
             title: '教育',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N8'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N8',
         },
         {
             title: '旅游美食',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N9'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N9',
         },
         {
             title: '时尚',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N10'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N10',
         },
         {
             title: '图集',
-            source: ['chinese.joins.com/news/articleList.html?sc_section_code=S1N12'],
+            source: ['chinese.joins.com/news/articleList.html'],
             target: '/chinese/S1N12',
         },
     ],

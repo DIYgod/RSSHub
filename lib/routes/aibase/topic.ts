@@ -56,13 +56,13 @@ export const route: Route = {
     handler,
     example: '/aibase/topic',
     parameters: { id: '标签，默认为空，即全部产品，可在对应标签页 URL 中找到', filter: '过滤器，默认为 `id` 即最新，可选 `pv` 即热门' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [AI](https://top.aibase.com/topic/AI)，网址为 \`https://top.aibase.com/topic/AI\`。截取 \`https://top.aibase.com/topic\` 到末尾的部分 \`AI\` 作为参数填入，此时路由为 [\`/aibase/topic/AI\`](https://rsshub.app/aibase/topic/AI)。
-  :::
+:::
 
-  :::tip
+::: tip
   此处查看 [全部标签](https://top.aibase.com/topic)
-  :::
+:::
 
   <details>
     <summary>更多标签</summary>
@@ -90,7 +90,7 @@ export const route: Route = {
     | [娱乐](https://top.aibase.com/topic/%E5%A8%B1%E4%B9%90)                                             | [简历](https://top.aibase.com/topic/%E7%AE%80%E5%8E%86)                                             | [OpenAI](https://top.aibase.com/topic/OpenAI)                                            | [客户服务](https://top.aibase.com/topic/%E5%AE%A2%E6%88%B7%E6%9C%8D%E5%8A%A1)            | [室内设计](https://top.aibase.com/topic/%E5%AE%A4%E5%86%85%E8%AE%BE%E8%AE%A1) |
   </details>
     `,
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
 
     features: {
         requireConfig: false,

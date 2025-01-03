@@ -23,8 +23,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { topic } = ctx.req.param();
-    const baseUrl = 'https://lordslibrary.parliament.uk/type';
-    const url = `${baseUrl}/${topic}/`;
+    const baseUrl = 'https://lordslibrary.parliament.uk';
+    const url = `${baseUrl}/type/${topic}/`;
     const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -38,18 +38,18 @@ async function handler(ctx) {
     const html = await page.evaluate(() => document.documentElement.innerHTML);
     await page.close();
     const $ = load(html);
-    const items = $('article.card--horizontal')
-        .map((_, article) => ({
+    const items = $('div.l-box.l-box--no-border.card__text')
+        .toArray()
+        .map((article) => ({
             title: $(article).find('.card__text a').text().trim(),
             link: $(article).find('.card__text a').attr('href'),
             description: $(article).find('p').last().text().trim(),
             pubDate: timezone($(article).find('.card__date time').attr('datetime')),
-        }))
-        .toArray();
+        }));
     browser.close();
     return {
         title: `parliament - lordslibrary - ${topic}`,
-        link: baseUrl,
+        link: url,
         item: items,
     };
 }

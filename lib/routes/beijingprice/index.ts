@@ -10,9 +10,7 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
     const rootUrl = 'https://www.beijingprice.cn';
-    const apiRootUrl = 'https://www.beijingprice.cn:8086';
     const currentUrl = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;
-    const apiNewsUrl = new URL('price/priceInformation/MorningDayWeekNews/MorningNews', apiRootUrl).href;
 
     const { data: response } = await got(currentUrl);
 
@@ -20,45 +18,42 @@ export const handler = async (ctx) => {
 
     const language = $('html').prop('lang');
 
-    let items = [];
+    let items = $('div.jgzx.rightcontent ul li')
+        .slice(0, limit)
+        .toArray()
+        .map((item) => {
+            item = $(item);
 
-    if (/^jgzx\/jgzb\/?$/.test(category)) {
-        const { data: apiResponse } = await got(apiNewsUrl, {
-            searchParams: {
-                page: 1,
-                jsoncallback: '',
-            },
+            const a = item.find('a');
+            const link = a.prop('href');
+            const msg = a.prop('msg');
+
+            const title = a.text()?.trim() ?? a.prop('title');
+
+            let enclosureUrl;
+            let enclosureType;
+
+            if (msg) {
+                const parsedMsg = JSON.parse(msg);
+                enclosureUrl = new URL(`${parsedMsg.path}${parsedMsg.fileName}`, rootUrl).href;
+                enclosureType = `application/${parsedMsg.suffix}`;
+            }
+
+            return {
+                title,
+                pubDate: parseDate(item.contents().last().text()),
+                link: enclosureUrl ?? (link.startsWith('http') ? link : new URL(link, rootUrl).href),
+                language,
+                enclosure_url: enclosureUrl,
+                enclosure_type: enclosureType,
+                enclosure_title: enclosureUrl ? title : undefined,
+            };
         });
-
-        items = (JSON.parse(apiResponse.replaceAll(/^\(|\)$/g, ''))?.[0]?.Info ?? []).map((item) => ({
-            title: item.Title,
-            pubDate: parseDate(item.PublishDate),
-            link: item.Url,
-            language,
-        }));
-    } else {
-        items = $('div.jgzx.rightcontent ul li')
-            .slice(0, limit)
-            .toArray()
-            .map((item) => {
-                item = $(item);
-
-                const a = item.find('a');
-                const link = a.prop('href');
-
-                return {
-                    title: a.text()?.trim() ?? a.prop('title'),
-                    pubDate: parseDate(item.contents().last().text()),
-                    link: link.startsWith('http') ? link : new URL(link, rootUrl).href,
-                    language,
-                };
-            });
-    }
 
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (!item.link.includes('www.beijingprice.cn')) {
+                if (!item.link.includes('www.beijingprice.cn') || item.link.endsWith('.pdf')) {
                     return item;
                 }
 
@@ -113,9 +108,9 @@ export const route: Route = {
     handler,
     example: '/beijingprice/jgzx/xwzx',
     parameters: { category: '分类，默认为 `jgzx/xwzx` 即新闻资讯，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [新闻资讯](https://www.beijingprice.cn/jgzx/xwzx/)，网址为 \`https://www.beijingprice.cn/jgzx/xwzx/\`。截取 \`https://beijingprice.cn/\` 到末尾 \`/\` 的部分 \`jgzx/xwzx\` 作为参数填入，此时路由为 [\`/beijingprice/jgzx/xwzx\`](https://rsshub.app/beijingprice/jgzx/xwzx)。
-  :::
+:::
 
   #### [价格资讯](https://www.beijingprice.cn/jgzx/xwzx/)
 

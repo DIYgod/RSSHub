@@ -123,9 +123,9 @@ export const route: Route = {
     handler,
     example: '/accessbriefing/latest/news',
     parameters: { category: 'Category, Latest News by default' },
-    description: `:::tip
+    description: `::: tip
   If you subscribe to [Latest News](https://www.accessbriefing.com/latest/news)，where the URL is \`https://www.accessbriefing.com/latest/news\`, extract the part \`https://www.accessbriefing.com/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/accessbriefing/latest/news\`](https://rsshub.app/accessbriefing/latest/news).
-  :::
+:::
 
   #### Latest
 

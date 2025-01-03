@@ -81,9 +81,9 @@ export const route: Route = {
     handler,
     example: '/cpcaauto/news/news',
     parameters: { type: '分类，默认为 news，可在对应分类页 URL 中找到', id: 'id，默认为 news，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [行业新闻 > 国内乘用车](http://cpcaauto.com/news.php?types=news&anid=10)，网址为 \`http://cpcaauto.com/news.php?types=news&anid=10\`。截取 \`types\` 和 \`anid\` 的部分 \`\` 作为参数填入，此时路由为 [\`/cpcaauto/news/news/10\`](https://rsshub.app/cpcaauto/news/news/10)。
-  :::
+:::
 
   #### [行业新闻](http://cpcaauto.com/news.php?types=news)
 
@@ -143,112 +143,112 @@ export const route: Route = {
         },
         {
             title: '行业新闻 - 国内乘用车',
-            source: ['cpcaauto.com/news.php?types=news&anid=10'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/news/10',
         },
         {
             title: '行业新闻 - 进口及国外乘用车',
-            source: ['cpcaauto.com/news.php?types=news&anid=64'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/news/64',
         },
         {
             title: '行业新闻 - 后市场',
-            source: ['cpcaauto.com/news.php?types=news&anid=44'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/news/44',
         },
         {
             title: '行业新闻 - 商用车',
-            source: ['cpcaauto.com/news.php?types=news&anid=62'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/news/62',
         },
         {
             title: '车市解读 - 周度',
-            source: ['cpcaauto.com/news.php?types=csjd&anid=128'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/csjd/128',
         },
         {
             title: '车市解读 - 月度',
-            source: ['cpcaauto.com/news.php?types=csjd&anid=129'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/csjd/129',
         },
         {
             title: '车市解读 - 指数',
-            source: ['cpcaauto.com/news.php?types=csjd&anid=130'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/csjd/130',
         },
         {
             title: '车市解读 - 预测',
-            source: ['cpcaauto.com/news.php?types=csjd&anid=131'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/csjd/131',
         },
         {
             title: '发布会报告 - 上海市场上牌数',
-            source: ['cpcaauto.com/news.php?types=bgzl&anid=119'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/bgzl/119',
         },
         {
             title: '发布会报告 - 京城车市',
-            source: ['cpcaauto.com/news.php?types=bgzl&anid=122'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/bgzl/122',
         },
         {
             title: '发布会报告 - 进口车市场分析',
-            source: ['cpcaauto.com/news.php?types=bgzl&anid=120'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/bgzl/120',
         },
         {
             title: '发布会报告 - 二手车市场分析',
-            source: ['cpcaauto.com/news.php?types=bgzl&anid=121'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/bgzl/121',
         },
         {
             title: '发布会报告 - 价格指数',
-            source: ['cpcaauto.com/news.php?types=bgzl&anid=124'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/bgzl/124',
         },
         {
             title: '发布会报告 - 热点评述',
-            source: ['cpcaauto.com/news.php?types=bgzl&anid=125'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/bgzl/125',
         },
         {
             title: '发布会报告 - 新能源月报',
-            source: ['cpcaauto.com/news.php?types=bgzl&anid=126'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/bgzl/126',
         },
         {
             title: '发布会报告 - 商用车月报',
-            source: ['cpcaauto.com/news.php?types=bgzl&anid=127'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/bgzl/127',
         },
         {
             title: '发布会报告 - 政策分析',
-            source: ['cpcaauto.com/news.php?types=bgzl&anid=123'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/bgzl/123',
         },
         {
             title: '经济与政策 - 一周经济',
-            source: ['cpcaauto.com/news.php?types=meeting&anid=46'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/meeting/46',
         },
         {
             title: '经济与政策 - 一周政策',
-            source: ['cpcaauto.com/news.php?types=meeting&anid=47'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/meeting/47',
         },
         {
             title: '乘联会论坛 - 论坛文章',
-            source: ['cpcaauto.com/news.php?types=yjsy&anid=49'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/yjsy/49',
         },
         {
             title: '乘联会论坛 - 两会',
-            source: ['cpcaauto.com/news.php?types=yjsy&anid=111'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/yjsy/111',
         },
         {
             title: '乘联会论坛 - 车展看点',
-            source: ['cpcaauto.com/news.php?types=yjsy&anid=113'],
+            source: ['cpcaauto.com/news.php'],
             target: '/news/yjsy/113',
         },
     ],

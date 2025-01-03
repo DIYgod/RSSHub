@@ -136,10 +136,10 @@ export const route: Route = {
     handler,
     example: '/geekpark',
     parameters: { column: '栏目 id，默认为空，即首页资讯，可在对应栏目页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [综合报道](https://www.geekpark.net/column/179)，网址为 \`https://www.geekpark.net/column/179\`。截取 \`https://www.geekpark.net/column/\` 到末尾的部分 \`179\` 作为参数填入，此时路由为 [\`/geekpark/179\`](https://rsshub.app/geekpark/179)。
-  :::
-  
+:::
+
   | 栏目                                                         | ID                                     |
   | ------------------------------------------------------------ | -------------------------------------- |
   | [综合报道](https://www.geekpark.net/column/179)              | [179](https://rsshub.app/geekpark/179) |
@@ -151,7 +151,7 @@ export const route: Route = {
   | [心科技](https://www.geekpark.net/column/307)                | [307](https://rsshub.app/geekpark/307) |
   | [行业资讯](https://www.geekpark.net/column/2)                | [2](https://rsshub.app/geekpark/2)     |
   `,
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
 
     features: {
         requireConfig: false,

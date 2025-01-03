@@ -57,11 +57,12 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.logo img').prop('content'), rootUrl).href;
+    const title = $('meta[name="keywords"]').prop('content')?.replace(/,/g, ' - ') ?? $('title').text();
+    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
 
     return {
-        title: $('title').text(),
-        description: $('META[Name="keywords"]').prop('Content'),
+        title,
+        description: title.split(/-/).pop()?.trim(),
         link: currentUrl,
         item: items,
         allowEmpty: true,
@@ -77,9 +78,9 @@ export const route: Route = {
     handler,
     example: '/hust/gs/xwdt',
     parameters: { category: '分类，默认为新闻动态，即 `xwdt`，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [新闻动态](https://gs.hust.edu.cn/xwdt.htm)，网址为 \`https://gs.hust.edu.cn/xwdt.htm\`。截取 \`https://gs.hust.edu.cn/\` 到末尾 \`.htm\` 的部分 \`xwdt\` 作为参数填入，此时路由为 [\`/hust/gs/xwdt\`](https://rsshub.app/hust/gs/xwdt)。
-  :::
+:::
 
   | [新闻动态](https://gs.hust.edu.cn/xwdt.htm) | [研究生服务专区](https://gs.hust.edu.cn/yjsfwzq.htm) | [综合管理](https://gs.hust.edu.cn/gzzd/zhgl.htm)  |
   | ------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------- |
@@ -91,7 +92,7 @@ export const route: Route = {
   | --------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------- | --------------------------------------------- |
   | [tzgg/kcjksap](https://rsshub.app/hust/gs/tzgg/kcjksap)   | [tzgg/gjjl](https://rsshub.app/hust/gs/tzgg/gjjl) | [tzgg/xwgz](https://rsshub.app/hust/gs/tzgg/xwgz) | [tzgg/tjyxy](https://rsshub.app/hust/gs/tzgg/tjyxy) | [tzgg/qt](https://rsshub.app/hust/gs/tzgg/qt) |
 
-    #### [学籍管理](https://gs.hust.edu.cn/pygz/zbjs1/xjyd.htm)
+  #### [学籍管理](https://gs.hust.edu.cn/pygz/zbjs1/xjyd.htm)
 
   | [学籍异动](https://gs.hust.edu.cn/pygz/zbjs1/xjyd.htm)        | [毕业管理](https://gs.hust.edu.cn/pygz/zbjs1/bygl.htm)        |
   | ------------------------------------------------------------- | ------------------------------------------------------------- |

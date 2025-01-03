@@ -32,11 +32,11 @@ export const route: Route = {
     name: '个人时间线',
     maintainers: ['zytomorrow', 'DIYgod', 'Rongronggg9'],
     handler,
-    description: `:::warning
+    description: `::: warning
   需要对应用户打开页面进行授权生成 token 才能生成内容
 
   自部署需要申请并配置微博 key，具体见部署文档
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -95,7 +95,8 @@ async function handler(ctx) {
             ctx.set({
                 'Cache-Control': 'no-cache',
             });
-            ctx.redirect(`https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${routeParams}` : ''}`);
+            ctx.set('redirect', `https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${routeParams}` : ''}`);
+            return;
         }
         const resultItem = await Promise.all(
             response.statuses.map(async (item) => {
@@ -183,6 +184,6 @@ async function handler(ctx) {
         ctx.set({
             'Cache-Control': 'no-cache',
         });
-        ctx.redirect(`https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${feature}/${routeParams.replaceAll('&', '%26')}` : ''}`);
+        ctx.set('redirect', `https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${feature}/${routeParams.replaceAll('&', '%26')}` : ''}`);
     }
 }

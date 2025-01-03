@@ -1,6 +1,6 @@
 import { Resource } from '@opentelemetry/resources';
 import { PrometheusExporter, PrometheusSerializer } from '@opentelemetry/exporter-prometheus';
-import { SEMRESATTRS_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
+import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import { MeterProvider } from '@opentelemetry/sdk-metrics';
 import { Attributes } from '@opentelemetry/api';
 import { config } from '@/config';
@@ -21,7 +21,7 @@ const exporter = new PrometheusExporter({});
 
 const provider = new MeterProvider({
     resource: new Resource({
-        [SEMRESATTRS_SERVICE_NAME]: 'rsshub',
+        [ATTR_SERVICE_NAME]: 'rsshub',
     }),
     readers: [exporter],
 });
