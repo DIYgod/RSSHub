@@ -1,17 +1,13 @@
-import { Data, DataItem, Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-import { baseUrl } from './utils';
+import { Data, Route } from '@/types';
+import { baseUrl, extractNews } from './utils';
 import dayjs from 'dayjs';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
 import logger from '@/utils/logger';
 
 export const route: Route = {
-    path: '/newsToday',
+    path: '/newsToday/:filter?',
     example: '/visionias/newsToday',
     features: {
         requireConfig: false,
@@ -20,6 +16,16 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+    },
+    parameters: {
+        filter: {
+            description: 'Period to fetch news for the current month. All news for the current month or only the latest',
+            default: 'latest',
+            options: [
+                { value: 'all', label: 'All' },
+                { value: 'latest', label: 'Latest' },
+            ],
+        },
     },
     radar: [
         {
@@ -32,7 +38,8 @@ export const route: Route = {
     handler,
 };
 
-async function handler(): Promise<Data> {
+async function handler(ctx): Promise<Data> {
+    const filter = ctx.req.param('filter') ?? 'latest';
     const currentYear = dayjs().year();
     const currentMonth = dayjs().month() + 1;
     logger.info(`Getting news for month ${currentMonth} and year ${currentYear}`);
@@ -40,16 +47,20 @@ async function handler(): Promise<Data> {
 
     let items: any = [];
     // let title = 'News Today';
-    let currentUrl = '';
-    if (response.length !== 0) {
-        currentUrl = response[0].url;
-        // title = response[0].formatted_published_at;
-        items = await processCurrentNews(currentUrl);
-    }
 
+    if (response.length !== 0) {
+        if (filter === 'latest') {
+            const currentUrl = response[0].url;
+            // title = response[0].formatted_published_at;
+            items = await processCurrentNews(currentUrl);
+        } else {
+            const results = await Promise.all(response.map((element) => processCurrentNews(element.url)));
+            items.push(...results.flat());
+        }
+    }
     return {
         title: `News Today | Current Affairs | Vision IAS`,
-        link: `${baseUrl}${currentUrl === '' ? '/current-affairs/news-today/' : currentUrl}`,
+        link: `${baseUrl}/current-affairs/news-today/archive`,
         description: 'News Today is a daily bulletin providing readers with a comprehensive overview of news developments, news types, and technical terms.',
         language: 'en',
         item: items,
@@ -74,95 +85,16 @@ async function processCurrentNews(currentUrl) {
                 guid: link,
             };
         });
-
-    const normalNews: any = [];
-    const alsoInNews: any = [];
-
-    for (const item of items) {
-        if (item.title === 'Also in News') {
-            alsoInNews.push(item);
+    const newsPromises = await Promise.allSettled(items.map((item) => extractNews(item, 'main > div > div.mt-6 > div.flex > div.flex.mt-6')));
+    const finalItems: any = [];
+    for (const news of newsPromises) {
+        if (news.status === 'fulfilled') {
+            finalItems.push(...(Array.isArray(news.value) ? news.value : [news.value]));
         } else {
-            normalNews.push(item);
+            finalItems.push({
+                title: 'Error Parse News',
+            });
         }
     }
-    const finalItems = await Promise.allSettled(normalNews.map((item) => processOnePerPage(item)));
-    const alsoInNewsItems = await processMultiplePerPage(alsoInNews[0]);
-    return [...finalItems.map((item) => (item.status === 'fulfilled' ? item.value : { title: 'Error : Something Went Wrong' })), ...alsoInNewsItems];
-}
-
-async function processMultiplePerPage(groupedItem) {
-    if (groupedItem.link === '') {
-        return groupedItem;
-    }
-    const response = await ofetch(groupedItem.link || '');
-    const $$ = load(response);
-    const mainGroup = $$('main > div > div.mt-6 > div.flex > div.flex.mt-6 > div.flex > div.w-full');
-    const postedDate = mainGroup.find('p:contains("Posted ") > strong').text();
-    const shortArticles = mainGroup.find('[x-data^="{isShortArticleOpen"]');
-    const items = shortArticles.map((_, element) => {
-        const title = $$(element).find('a > div > h1').text().trim();
-        const id = $$(element).find('a').attr('href');
-        const articleContent = $$(element).find('#article-content').html();
-        const tags = $$(element)
-            .find('ul > li:contains("Tags :")')
-            .nextAll('li')
-            .toArray()
-            .map((tag) => $$(tag).text());
-        const description = art(path.join(__dirname, 'templates/description.art'), {
-            heading: title,
-            articleContent,
-        });
-        return {
-            title: `${title} | ${groupedItem.title}`,
-            pubDate: parseDate(postedDate),
-            category: tags,
-            description,
-            link: `${groupedItem.link}${id}`,
-            author: 'Vision IAS',
-        } as DataItem;
-    });
-    return items;
-}
-
-async function processOnePerPage(item) {
-    if (item.link === '') {
-        return item;
-    }
-    try {
-        const response = await ofetch(item.link || '');
-        const $$ = load(response);
-        const content = $$('main > div > div.mt-6 > div.flex > div.flex.mt-6');
-        const heading = content.find('div.space-y-4 > h1').text();
-        const mainGroup = content.find('div.flex > div.w-full');
-        const postedDate = mainGroup.find('p:contains("Posted ") > strong').text();
-        const articleContent = mainGroup.find('#article-content');
-        articleContent.find('figure').each((_, element) => {
-            $$(element).css('width', '');
-        });
-        const htmlContent = articleContent.html();
-        const tags = mainGroup
-            .find('ul > li:contains("Tags :")')
-            .nextAll('li')
-            .toArray()
-            .map((tag) => $$(tag).text());
-        const description = art(path.join(__dirname, 'templates/description.art'), {
-            heading,
-            articleContent: htmlContent,
-        });
-        return {
-            title: item.title,
-            pubDate: parseDate(postedDate),
-            category: tags,
-            description,
-            link: item.link,
-            author: 'Vision IAS',
-        } as DataItem;
-    } catch {
-        return {
-            title: item.title,
-            description: 'Unable to Fetch',
-            link: item.link,
-            author: 'Vision IAS',
-        } as DataItem;
-    }
+    return finalItems;
 }
