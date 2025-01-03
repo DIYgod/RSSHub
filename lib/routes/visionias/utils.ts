@@ -95,10 +95,10 @@ export async function extractNews(item, selector) {
     }
 }
 
-function extractArticle(articleDiv, selector: string = '#article-content') {
+function extractArticle(articleDiv, selectorString: string = '#article-content') {
     const $ = load(articleDiv, null, false);
     const articleDiv$ = $(articleDiv);
-    const articleContent = articleDiv$.find(selector);
+    const articleContent = articleDiv$.find(String(selectorString));
     articleContent.find('figure').each((_, element) => {
         $(element).css('width', '');
     });
