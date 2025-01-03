@@ -6,13 +6,14 @@ export const route: Route = {
     radar: [
         {
             source: ['alistapart.com/articles/'],
-            target: '',
+            target: '/',
         },
     ],
-    name: 'Unknown',
+    name: 'Home Feed',
     maintainers: ['Rjnishant530'],
     handler,
     url: 'alistapart.com/articles/',
+    example: '/alistapart',
 };
 
 async function handler() {

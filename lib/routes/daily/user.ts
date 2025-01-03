@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import { baseUrl, getBuildId, getData, getList } from './utils';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
@@ -151,13 +151,23 @@ const userPostQuery = `
   }`;
 
 export const route: Route = {
-    path: '/user/:userId',
+    path: '/user/:userId/:innerSharedContent?',
     example: '/daily/user/kramer',
     radar: [
         {
             source: ['app.daily.dev/:userId/posts', 'app.daily.dev/:userId'],
         },
     ],
+    parameters: {
+        innerSharedContent: {
+            description: 'Where to Fetch inner Shared Posts instead of original',
+            default: 'false',
+            options: [
+                { value: 'false', label: 'False' },
+                { value: 'true', label: 'True' },
+            ],
+        },
+    },
     name: 'User Posts',
     maintainers: ['TonyRL'],
     handler,
@@ -167,7 +177,7 @@ export const route: Route = {
 async function handler(ctx) {
     const userId = ctx.req.param('userId');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 7;
-
+    const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
     const buildId = await getBuildId();
 
     const userData = await cache.tryGet(`daily:user:${userId}`, async () => {
@@ -191,7 +201,7 @@ async function handler(ctx) {
                     loggedIn: false,
                 },
             });
-            return getList(edges);
+            return getList(edges, innerSharedContent, true);
         },
         config.cache.routeExpire,
         false
@@ -201,7 +211,7 @@ async function handler(ctx) {
         title: `${user.name} | daily.dev`,
         description: user.bio,
         link: `${baseUrl}/${userId}/posts`,
-        item: items,
+        item: items as DataItem[],
         image: user.image,
         logo: user.image,
         icon: user.image,

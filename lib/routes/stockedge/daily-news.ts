@@ -37,6 +37,9 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
+                if (!item.securityID) {
+                    return item;
+                }
                 const info = await getData(`${apiInfo}/${item.securityID}`);
                 item.description = item.description + '<br><br>' + info?.AboutCompanyText;
                 return item;

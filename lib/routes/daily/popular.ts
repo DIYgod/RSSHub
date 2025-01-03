@@ -2,16 +2,21 @@ import { Route, ViewType } from '@/types';
 import { baseUrl, getData, getList, variables } from './utils.js';
 
 const query = `
-    query MostUpvotedFeed(
+  query AnonymousFeed(
     $loggedIn: Boolean! = false
     $first: Int
     $after: String
-    $period: Int
+    $ranking: Ranking
+    $version: Int
     $supportedTypes: [String!] = ["article","share","freeform","video:youtube","collection"]
-    $source: ID
-    $tag: String
   ) {
-    page: mostUpvotedFeed(first: $first, after: $after, period: $period, supportedTypes: $supportedTypes, source: $source, tag: $tag) {
+    page: anonymousFeed(
+      first: $first
+      after: $after
+      ranking: $ranking
+      version: $version
+      supportedTypes: $supportedTypes
+    ) {
       ...FeedPostConnection
     }
   }
@@ -62,6 +67,7 @@ const query = `
     slug
   }
   
+  
   fragment FeedPostInfo on Post {
     id
     title
@@ -105,8 +111,6 @@ const query = `
     slug
     clickbaitTitleDetected
   }
-
-
   
   fragment UserPost on Post {
     read
@@ -115,16 +119,15 @@ const query = `
     bookmarked
     downvoted
   }
-
 `;
 
 export const route: Route = {
-    path: '/upvoted/:period?/:innerSharedContent?/:dateSort?',
-    example: '/daily/upvoted/7',
+    path: '/popular/:innerSharedContent?/:dateSort?',
+    example: '/daily/popular',
     view: ViewType.Articles,
     radar: [
         {
-            source: ['app.daily.dev/upvoted'],
+            source: ['app.daily.dev/popular'],
         },
     ],
     parameters: {
@@ -144,44 +147,34 @@ export const route: Route = {
                 { value: 'true', label: 'True' },
             ],
         },
-        period: {
-            description: 'Period of Lookup',
-            default: '7',
-            options: [
-                { value: '7', label: 'Last Week' },
-                { value: '30', label: 'Last Month' },
-                { value: '365', label: 'Last Year' },
-            ],
-        },
     },
-    name: 'Most upvoted',
+    name: 'Popular',
     maintainers: ['Rjnishant530'],
     handler,
-    url: 'app.daily.dev/upvoted',
+    url: 'app.daily.dev/popular',
 };
 
 async function handler(ctx) {
-    const link = `${baseUrl}/posts/upvoted`;
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const link = `${baseUrl}/posts`;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
     const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
     const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
-    const period = ctx.req.param('period') ? Number.parseInt(ctx.req.param('period'), 10) : 7;
 
     const data = await getData({
         query,
         variables: {
             ...variables,
-            period,
+            ranking: 'POPULARITY',
             first: limit,
         },
     });
     const items = getList(data, innerSharedContent, dateSort);
 
     return {
-        title: 'Most upvoted posts for developers | daily.dev',
+        title: 'Popular posts on daily.dev',
         link,
         item: items,
-        description: 'Find the most upvoted developer posts on daily.dev. Explore top-rated content in coding, tutorials, and tech news from the largest developer network in the world.',
+        description: 'daily.dev is the easiest way to stay updated on the latest programming news. Get the best content from the top tech publications on any topic you want.',
         logo: `${baseUrl}/favicon-32x32.png`,
         icon: `${baseUrl}/favicon-32x32.png`,
         language: 'en-us',

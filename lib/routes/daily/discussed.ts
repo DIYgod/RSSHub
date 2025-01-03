@@ -1,5 +1,5 @@
-import { Route } from '@/types';
-import { baseUrl, getData, getList } from './utils.js';
+import { Route, ViewType } from '@/types';
+import { baseUrl, getData, getList, variables } from './utils.js';
 
 const query = `
   query MostDiscussedFeed(
@@ -52,8 +52,9 @@ const query = `
 `;
 
 export const route: Route = {
-    path: '/discussed',
-    example: '/daily/discussed',
+    path: '/discussed/:period?/:innerSharedContent?/:dateSort?',
+    example: '/daily/discussed/30',
+    view: ViewType.Articles,
     radar: [
         {
             source: ['app.daily.dev/discussed'],
@@ -63,19 +64,52 @@ export const route: Route = {
     maintainers: ['Rjnishant530'],
     handler,
     url: 'app.daily.dev/discussed',
+    parameters: {
+        innerSharedContent: {
+            description: 'Where to Fetch inner Shared Posts instead of original',
+            default: 'false',
+            options: [
+                { value: 'false', label: 'False' },
+                { value: 'true', label: 'True' },
+            ],
+        },
+        dateSort: {
+            description: 'Sort posts by publication date instead of popularity',
+            default: 'true',
+            options: [
+                { value: 'false', label: 'False' },
+                { value: 'true', label: 'True' },
+            ],
+        },
+        period: {
+            description: 'Period of Lookup',
+            default: '7',
+            options: [
+                { value: '7', label: 'Last Week' },
+                { value: '30', label: 'Last Month' },
+                { value: '365', label: 'Last Year' },
+            ],
+        },
+    },
 };
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
-    const link = `${baseUrl}/discussed`;
+    const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
+    const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
+    const period = ctx.req.param('period') ? Number.parseInt(ctx.req.param('period'), 10) : 7;
+
+    const link = `${baseUrl}/posts/discussed`;
 
     const data = await getData({
         query,
         variables: {
+            ...variables,
             first: limit,
+            period,
         },
     });
-    const items = getList(data);
+    const items = getList(data, innerSharedContent, dateSort);
 
     return {
         title: 'Real-time discussions in the developer community | daily.dev',
