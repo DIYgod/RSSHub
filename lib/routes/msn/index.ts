@@ -5,6 +5,7 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 
 const apiKey = '0QfOX3Vn51YCzitbLaRkTTBadtWpgTN8NZLW0C1SEM';
+const fetchedArticleContentHtmlImgRegex = /<img data-reference="image" data-document-id="cms\/api\/amp\/image\/([A-Za-z0-9]+)">/;
 
 export const route: Route = {
     path: '/:market/:name/:id',
@@ -57,8 +58,8 @@ export const route: Route = {
                     const fetchedArticleContentHtml = (await cache.tryGet(articleId, async () => {
                         const articleData = await ofetch(`https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`);
                         return articleData.body;
-                    })) as string; // cache article content for 3 months
-                    articleContentHtml = fetchedArticleContentHtml;
+                    })) as string;
+                    articleContentHtml = fetchedArticleContentHtml.replace(fetchedArticleContentHtmlImgRegex, '<img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/$1.img">');
                 }
 
                 return {
