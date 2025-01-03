@@ -154,7 +154,7 @@ function parseRange(range: string, length: bigInt.BigInteger) {
     return parsedSegs;
 }
 
-async function configureMiddlewares(ctx: Context) {
+export async function configureMiddlewares(ctx: Context) {
     // media is too heavy to cache in memory or redis, and lock-up is not needed
     await cacheModule.set(ctx.get('cacheControlKey'), '0', config.cache.requestTimeout);
     ctx.req.raw.headers.delete('Accept-Encoding'); // avoid hono compress() middleware detecting Accept-Encoding on req
@@ -206,14 +206,7 @@ export const route: Route = {
 `,
 };
 
-export default async function handler(ctx: Context) {
-    await configureMiddlewares(ctx);
-    const client = await getClient();
-    const media = await decodeMedia(client, ctx.req.param('username'), ctx.req.param('media'));
-    if (!media) {
-        return ctx.text('Unknown media', 404);
-    }
-
+export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramClient, ctx: Context) {
     if (media instanceof Api.MessageMediaPhoto) {
         const buf = await client.downloadMedia(media);
         return new Response(buf, {headers: {'Content-Type': 'image/jpeg'}});
@@ -245,7 +238,7 @@ export default async function handler(ctx: Context) {
             return streamResponse(ctx, streamDocument(client, doc));
         } else {
             const [offset, limit] = range[0];
-            console.log(`Range: ${rangeHeader}`);
+            // console.log(`Range: ${rangeHeader}`);
             ctx.status(206); // partial content
             ctx.header('Content-Length', (limit.subtract(offset).add(1)).toString());
             ctx.header('Content-Range', `bytes ${offset}-${limit}/${doc.size}`);
@@ -254,4 +247,15 @@ export default async function handler(ctx: Context) {
     }
 
     return ctx.text(media.className, 415);
+}
+
+export default async function handler(ctx: Context) {
+    await configureMiddlewares(ctx);
+    const client = await getClient();
+    const media = await decodeMedia(client, ctx.req.param('username'), ctx.req.param('media'));
+    if (!media) {
+        return ctx.text('Unknown media', 404);
+    }
+
+    return await handleMedia(media, client, ctx);
 }

@@ -167,7 +167,7 @@ interface RouteItem {
     /**
      * The handler function of the route
      */
-    handler: (ctx: Context) => Promise<Data|Response> | Data | Response;
+    handler: (ctx: Context) => Promise<Data | Response> | Data | Response;
 
     /**
      * An example URL of the route

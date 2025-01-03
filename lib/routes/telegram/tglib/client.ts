@@ -60,22 +60,27 @@ export function getDocument(m: Api.TypeMessageMedia) {
     }
 }
 
-export async function getStoryMedia(entity: Api.TypeEntityLike, id: number){
+export async function getStory(entity: Api.TypeEntityLike, id: number){
     const result = await client.invoke(
         new Api.stories.GetStoriesByID({
             id: [id],
             peer: entity
         })
     );
-    return (result.stories[0] as Api.StoryItem).media;
+    return result.stories[0] as Api.StoryItem;
 }
 
-export async function unwrapMedia(media: Api.TypeMessageMedia | undefined) {
-    if (!media) {
-        throw new Error('media not found in ' + media);
-    }
+export async function unwrapMedia(media: Api.TypeMessageMedia | undefined, backupPeerId?: Api.TypePeer) {
     if (media instanceof Api.MessageMediaStory) {
-        return getStoryMedia(media.peer, media.id);
+        if (media.story instanceof Api.StoryItem && media.story.media) {
+            return media.story.media;
+        }
+        let storyItem = await getStory(media.peer, media.id);
+        if (!storyItem?.media && backupPeerId) {
+            // it's possible the story got hidden by the original user, but we've saved it into Saved Messages - we can still get it
+            storyItem = await getStory(backupPeerId, media.id);
+        }
+        return storyItem?.media;
     }
     return media;
 }

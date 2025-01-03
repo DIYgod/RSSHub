@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+import { DataItem } from '@/types';
 import { Context } from 'hono';
 import { Api } from 'telegram';
 import { HTMLParser } from 'telegram/extensions/html';
@@ -11,7 +12,11 @@ function getPeerId(p: Api.TypePeer) {
         /* groups are negative */ p.chatId.multiply(-1);
 }
 
-function getMediaLink(src: string, m: Api.TypeMessageMedia) {
+export function getGeoLink(geo: Api.GeoPoint) {
+    return `<a href="https://www.google.com/maps/search/?api=1&query=${geo.lat}%2C${geo.long}" target="_blank">Geo LatLon: ${geo.lat}, ${geo.long}</a>`;
+}
+
+export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
     const doc = getDocument(m);
     const mime = doc ? doc.mimeType : '';
 
@@ -37,7 +42,7 @@ function getMediaLink(src: string, m: Api.TypeMessageMedia) {
         return `<a href="${src}" target="_blank">${linkText}</a>`;
     }
     if ((m instanceof Api.MessageMediaGeo || m instanceof Api.MessageMediaGeoLive) && m.geo instanceof Api.GeoPoint) {
-        return `<a href="https://www.google.com/maps/search/?api=1&query=${m.geo.lat}%2C${m.geo.long}" target="_blank">Geo LatLon: ${m.geo.lat}, ${m.geo.long}</a>`;
+        return getGeoLink(m.geo);
     }
     if (m instanceof Api.MessageMediaPoll) {
         return `<h4>${m.poll.quiz ? 'Quiz' : 'Poll'}: ${m.poll.question}</h4><br />
@@ -45,6 +50,10 @@ function getMediaLink(src: string, m: Api.TypeMessageMedia) {
     }
     if (m instanceof Api.MessageMediaWebPage) {
         return ''; // a link without a document attach, usually is in the message text, so we can skip here
+    }
+    if (m instanceof Api.MessageMediaContact) {
+        return `Contact: <a href="tel:${m.phoneNumber}" target="_blank">${m.firstName} ${m.lastName} ${m.phoneNumber}</a>`;
+        // TODO: download vCard as media ?
     }
 
     return m.className;
@@ -65,37 +74,39 @@ export default async function handler(ctx: Context) {
     const messages = await client.getMessages(peer, { limit: 50 });
 
     let i = 0;
-    const item: object[] = [];
+    const item: DataItem[] = [];
     for (const message of messages) {
+        let text = message.text;
+
         if (message.fwdFrom?.fromId) {
             const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
-            attachments.push(`<b>Forwarded from: ${getDisplayName(fwdFrom)}</b>:`);
+            text = `<b>Forwarded from: ${getDisplayName(fwdFrom)}</b>: ${text}`;
         }
-        if (message.media instanceof Api.MessageMediaStory) {
+        const media = await unwrapMedia(message.media, message.peerId);
+        if (message.media instanceof Api.MessageMediaStory && media) { // if successfully loaded the story
             const storyFrom = await client.getEntity(message.media.peer);
-            attachments.push(`<b>Story from: ${getDisplayName(storyFrom)}</b>:`);
+            text = `<b>Story from: ${getDisplayName(storyFrom)}</b>: ${text}`;
         }
-        if (message.media) {
+        if (media) {
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
             const src = `${new URL(ctx.req.url).origin}/telegram/media/${username}/${getPeerId(message.peerId)}_${message.id}`;
-            const media = await unwrapMedia(message.media);
             attachments.push(getMediaLink(src, media));
         }
-        if (message.text !== '' || ++i === messages.length - 1) {
+        if (text !== '' || ++i === messages.length - 1) {
             let description = attachments.join('<br/>\n');
             attachments = []; // emitting these, buffer other ones
 
-            if (message.text) {
+            if (text) {
                 description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
             }
 
-            const title = message.text || new Date(message.date * 1000).toLocaleString();
+            const title = text || new Date(message.date * 1000).toLocaleString();
             item.push({
                 title,
                 description,
                 pubDate: new Date(message.date * 1000).toUTCString(),
-                link: `https://t.me/s/${username}/${message.id}`,
+                link: `https://t.me/${username}/${message.id}`,
                 author: getDisplayName(message.sender ?? entity),
             });
         }
