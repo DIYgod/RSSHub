@@ -24,7 +24,7 @@ export const route: Route = {
     ],
     description: 'The Latest reviews from a Steam Curator.',
     name: 'Latest Curator Reviews',
-    maintainers: ['naremloa', 'fenx'],
+    maintainers: ['naremloa', 'fenxer'],
     handler: async (ctx) => {
         const { id } = ctx.req.param();
 
