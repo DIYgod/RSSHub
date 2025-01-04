@@ -64481,6 +64481,39 @@
     "description": "\n::: tip\np-articles provides some official RSS feeds:\n\n-   section: `https://p-articles.com/section/:section`\n-   contributors: `https://p-articles.com/contributors/:author`\n:::",
     "lang": "en"
   },
+  "pacilution": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "name": "最新文章",
+        "maintainers": [
+          "PrinOrange"
+        ],
+        "categories": [
+          "journal"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "example": "/pacilution/latest",
+        "radar": [
+          {
+            "source": [
+              "www.pacilution.com"
+            ]
+          }
+        ],
+        "location": "latest.ts"
+      }
+    },
+    "name": "普世社会科学研究所",
+    "url": "www.pacilution.com"
+  },
   "panewslab": {
     "routes": {
       "/author/:id": {

@@ -23882,6 +23882,19 @@
       }
     ]
   },
+  "pacilution.com": {
+    "_name": "普世社会科学研究所",
+    "www": [
+      {
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/"
+        ],
+        "target": "/pacilution/latest"
+      }
+    ]
+  },
   "panewslab.com": {
     "_name": "PANews",
     ".": [
