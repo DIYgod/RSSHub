@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, DataItem } from '@/types';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
@@ -61,14 +61,13 @@ async function handler(ctx) {
     const $ = load(content);
 
     const rows = $('tr[id^="stApp_activitydetails_row"]');
-    const items: { title: string; link: string; description: string; pubDate: Date }[] = [];
 
-    rows.each((i, el) => {
+    const items: DataItem[] = rows.toArray().map((el, i) => {
         const dateTimeRaw = $(el).find(`#stApp_activitiesdateTime${i}`).text() || 'Not Provided';
 
         const dateTimeStr = dateTimeRaw
             .trim()
-            .replace(/(\d{1,}\/\d{1,}\/\d{4})(\d{1,}:\d{1,}\s[AP]\.?M\.?)/, '$1 $2') // add a space between date and time
+            .replace(/(\d{1,}\/\d{1,}\/\d{4})(\d{1,}:\d{1,}\s[AP]\.?M\.?)/, '$1 $2')
             .replaceAll('P.M.', 'PM')
             .replaceAll('A.M.', 'AM');
 
@@ -92,7 +91,7 @@ async function handler(ctx) {
         const status = lines[0];
         const location = lines.at(-1) || '';
 
-        items.push({
+        const item: DataItem = {
             title: status,
             link: url,
             description: `
@@ -101,7 +100,9 @@ async function handler(ctx) {
                 Date and Time: ${dateTimeStr}
             `,
             pubDate,
-        });
+        };
+
+        return item;
     });
 
     return {
