@@ -15,7 +15,8 @@ export const route: Route = {
     name: 'Trending Topic',
     maintainers: ['Rjnishant530'],
     handler,
-    description: `::: info Topic
+    url: 'insider.finology.in/tag',
+    description: `:::note Topic
   | Topic                    | Link                     |
   | ------------------------ | ------------------------ |
   | Investment Decisions     | investment-decisions     |
@@ -51,5 +52,10 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { topic } = ctx.req.param();
-    return await commonHandler('https://insider.finology.in', `/tag/${topic}`, 2);
+    const extra = {
+        description: (topic: string) => `Everything that Insider has to offer about ${topic} for you to read and learn.`,
+        date: true,
+        selector: `div.card`,
+    };
+    return await commonHandler('https://insider.finology.in', `/tag/${topic}`, extra);
 }
