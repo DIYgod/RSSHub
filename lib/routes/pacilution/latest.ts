@@ -21,18 +21,16 @@ const handler: Route['handler'] = async () => {
     const listItems = $(ITEM_SELECTOR);
 
     // Map through each list item to extract details
-    const contentLinkList = await Promise.all(
-        listItems.toArray().map((element) => {
-            const title = $(element).find('a').text();
-            const relativeHref = $(element).find('a').attr('href') || '';
-            const link = `${BASE_URL}${relativeHref}`;
+    const contentLinkList = listItems.toArray().map((element) => {
+        const title = $(element).find('a').text();
+        const relativeHref = $(element).find('a').attr('href') || '';
+        const link = `${BASE_URL}${relativeHref}`;
 
-            return {
-                title,
-                link,
-            };
-        })
-    );
+        return {
+            title,
+            link,
+        };
+    });
 
     return {
         title: '普世社会科学研究网最新文章',
