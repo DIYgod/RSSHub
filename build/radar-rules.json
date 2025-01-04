@@ -23683,6 +23683,16 @@
   },
   "oschina.net": {
     "_name": "开源中国",
+    "www": [
+      {
+        "title": "专栏",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/oschina(_,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"id\")??void 0;return`/oschina/column/${id}`}"
+      }
+    ],
     ".": [
       {
         "title": "资讯",
