@@ -30,21 +30,20 @@ async function handler(ctx): Promise<Data> {
     const response = await ofetch(`${baseUrl}/current-affairs/weekly-focus/archive`);
     const $ = load(response);
     const cards = $('div.weekly-focus-single-card').slice(0, limit).toArray();
-    const individualLinks: any = [];
-    for (const card of cards) {
-        for (const item of $(card)
+    const individualLinks = cards.flatMap((card) =>
+        $(card)
             .find('a:has(p)')
-            .toArray()) {
+            .toArray()
+            .map((item) => {
                 const link = $(item).attr('href');
-                individualLinks.push({
-                    link: link?.startsWith('http') ? link : `${baseUrl}${link}`,
-                });
-            }
-    }
+                return { link: link?.startsWith('http') ? link : `${baseUrl}${link}` };
+            })
+    );
+
     const itemsPromise = await Promise.allSettled(individualLinks.map(({ link }) => extractNews({ link }, 'main > div > div.flex > div.flex.w-full > div.w-full.mt-6')));
 
     return {
-        title: `Weekly Focus | Current Affairs | Vision IAS`,
+        title: 'Weekly Focus | Current Affairs | Vision IAS',
         link: `${baseUrl}/current-affairs/weekly-focus/archive`,
         description: 'Weekly Focus provides weekly comprehensive analysis of current themes with multidimensional and consolidated content.',
         language: 'en',

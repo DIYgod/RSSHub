@@ -42,7 +42,7 @@ async function handler(ctx): Promise<Data> {
     const filter = ctx.req.param('filter') ?? 'latest';
     const currentYear = dayjs().year();
     const currentMonth = dayjs().month() + 1;
-    logger.info(`Getting news for month ${currentMonth} and year ${currentYear}`);
+    logger.debug(`Getting news for month ${currentMonth} and year ${currentYear}`);
     const response = await ofetch(`${baseUrl}/current-affairs/news-today/getbymonth?year=${currentYear}&month=${currentMonth}`);
 
     let items: any = [];
@@ -59,7 +59,7 @@ async function handler(ctx): Promise<Data> {
         }
     }
     return {
-        title: `News Today | Current Affairs | Vision IAS`,
+        title: 'News Today | Current Affairs | Vision IAS',
         link: `${baseUrl}/current-affairs/news-today/archive`,
         description: 'News Today is a daily bulletin providing readers with a comprehensive overview of news developments, news types, and technical terms.',
         language: 'en',
