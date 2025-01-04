@@ -83,7 +83,7 @@ export const route: Route = {
         {
             title: '软考新闻动态',
             source: ['www.ruankao.org.cn/index/work', 'www.ruankao.org.cn'],
-            target: `/ruankao/news`,
+            target: `/news`,
         },
     ],
     example: '/ruankao/news',
