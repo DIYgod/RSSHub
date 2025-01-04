@@ -52,20 +52,6 @@ const getItems = async (url: string, extra: { date: boolean; selector: string })
                             .remove()
                             .end()
                             .html() ?? '';
-                    item.updated = extra.date ? parseDate(div.find('p:contains("Updated on") span').text()) : '';
-                    item.description =
-                        $('div#main-wrapper div#insiderhead')
-                            .find('div.flex.flex-col.w100.align-center')
-                            .children('div.m-position-r')
-                            .remove()
-                            .end()
-                            .find('a[href="https://quest.finology.in/"]')
-                            .remove()
-                            .end()
-                            .find('div.blur-wall-wrap')
-                            .remove()
-                            .end()
-                            .html() ?? '';
                     return item;
                 });
             })

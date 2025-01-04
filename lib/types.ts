@@ -85,8 +85,6 @@ export type Data = {
     itunes_category?: string;
     itunes_explicit?: string | boolean;
     id?: string;
-    logo?: string;
-    icon?: string;
     atomlink?: string;
     ttl?: number;
 };
