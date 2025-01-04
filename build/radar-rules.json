@@ -9076,7 +9076,7 @@
     "_name": "DL NEWS",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Latest News",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/articles/:category"
@@ -10200,7 +10200,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/finology/:category"
+        "target": "/finology/category/:category"
       },
       {
         "title": "Most Viewed",
@@ -10208,7 +10208,7 @@
         "source": [
           "/most-viewed"
         ],
-        "target": "/finology/most-viewed/monthly"
+        "target": "/finology/most-viewed"
       },
       {
         "title": "Trending Topic",
