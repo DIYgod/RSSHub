@@ -112,4 +112,9 @@ export const route: Route = {
         supportRadar: true,
     },
     example: '/catti/news/zxzc',
+    radar: [
+        {
+            source: ['www.catticenter.com/:category'],
+        },
+    ],
 };
