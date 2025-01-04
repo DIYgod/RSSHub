@@ -78805,6 +78805,37 @@
     "url": "subhd.tv",
     "lang": "zh-CN"
   },
+  "substack": {
+    "routes": {
+      "/subscribe/:user": {
+        "path": "/subscribe/:user",
+        "categories": [
+          "blog"
+        ],
+        "view": 1,
+        "example": "/substack/subscribe/mangoread",
+        "parameters": {
+          "user": "Username of the Substack"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Substack Subscription",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "location": "subscribe.ts"
+      }
+    },
+    "name": "Substack",
+    "url": "substack.com",
+    "lang": "en"
+  },
   "supchina": {
     "routes": {
       "/": {
