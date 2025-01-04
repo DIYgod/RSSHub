@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
     const baseUrl: string = 'https://www.oschina.net';
-    const userBaseUrl: string = 'https://my.oschina.net';
+    const userHostRegex: string = String.raw`https://my\.oschina\.net`;
     const targetUrl: string = new URL(`news/column?columnId=${id}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -97,7 +97,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
                     const authorEls: Element[] = $$('div.article-box__meta div.item-list div.item a')
                         .toArray()
-                        .filter((i) => ($$(i).attr('href') ? new RegExp(`^${userBaseUrl}/u/\\d+$`).test($$(i).attr('href') as string) : false));
+                        .filter((i) => ($$(i).attr('href') ? new RegExp(`^${userHostRegex}/u/\\d+$`).test($$(i).attr('href') as string) : false));
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {
                         const $authorEl: Cheerio<Element> = $$(authorEl);
 
