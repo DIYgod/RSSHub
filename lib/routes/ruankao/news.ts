@@ -81,7 +81,7 @@ export const route: Route = {
     },
     radar: [
         {
-            title: `软考新闻动态`,
+            title: '软考新闻动态',
             source: ['www.ruankao.org.cn/index/work', 'www.ruankao.org.cn'],
             target: `/ruankao/news`,
         },
