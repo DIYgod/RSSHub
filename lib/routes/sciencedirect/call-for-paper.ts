@@ -28,16 +28,18 @@ export const route: Route = {
 async function handler(ctx) {
     const { subject = '' } = ctx.req.param();
     const apiUrl = `https://www.sciencedirect.com/browse/calls-for-papers?subject=${subject}`;
-    const response = await got(apiUrl);
+    const headers = {
+        accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', // need this to avoid 403, 503 error
+    };
+    const response = await got(apiUrl, { headers });
     const $ = load(response.body);
 
-    // 1) Grab the JSON from the script tag with data-iso-key="_0".
     const scriptJSON = $('script[data-iso-key="_0"]').text();
     if (!scriptJSON) {
         throw new Error('Cannot find the script with data-iso-key="_0"');
     }
 
-    // 2) Parse the JSON string
     let data;
     try {
         data = JSON.parse(JSON.parse(scriptJSON));
@@ -45,13 +47,11 @@ async function handler(ctx) {
         throw new Error(`Failed to parse embedded script JSON: ${error.message}`);
     }
 
-    // 3) Extract Calls for Papers array
     const cfpList = data?.callsForPapers?.list || [];
     if (!cfpList.length) {
         throw new Error('No Calls for Papers found');
     }
 
-    // 4) Build a list of items to return in the feed
     const items = cfpList.map((cfp) => {
         const link = `https://www.sciencedirect.com/special-issue/${cfp.contentId}/${cfp.url}`;
         const description = art(path.join(__dirname, 'templates/description.art'), {
@@ -64,14 +64,13 @@ async function handler(ctx) {
 
         return {
             title: cfp.title,
-            author: cfp.journal ? `${cfp.journal.displayName} (IF: ${cfp.journal.impactFactor})` : '',
+            author: `${cfp.journal.displayName} (IF: ${cfp.journal.impactFactor})`,
             link,
             description,
             pubDate: cfp.submissionDeadline || '',
         };
     });
 
-    // 5) Return your feed data in whatever format your code expects
     return {
         title: `ScienceDirect Calls for Papers - ${subject}`,
         link: apiUrl,
