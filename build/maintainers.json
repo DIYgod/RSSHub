@@ -1142,6 +1142,9 @@
     "KarasuShin",
     "TonyRL"
   ],
+  "/catti/news/:category": [
+    "PrinOrange"
+  ],
   "/cau/ele": [
     "shengmaosu"
   ],

@@ -14180,6 +14180,44 @@
     "url": "cast.org.cn",
     "lang": "zh-CN"
   },
+  "catti": {
+    "routes": {
+      "/news/:category": {
+        "path": "/news/:category",
+        "name": "CATTI 考试消息",
+        "maintainers": [
+          "PrinOrange"
+        ],
+        "description": "\n| Category  | 标题       | 描述                |\n|-----------|------------|--------------------|\n| ggl       | 通知公告   | CATTI 考试通知和公告 |\n| ywdt      | 要闻动态   | CATTI 考试要闻动态   |\n| zxzc      | 最新政策   | CATTI 考试最新政策   |\n",
+        "categories": [
+          "study"
+        ],
+        "parameters": {
+          "category": "消息分类名，可在下面的描述中找到。"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "example": "/catti/news/zxzc",
+        "radar": [
+          {
+            "source": [
+              "www.catticenter.com/:category"
+            ]
+          }
+        ],
+        "location": "news.ts"
+      }
+    },
+    "name": "全国翻译专业资格水平考试 (CATTI)",
+    "url": "www.catticenter.com"
+  },
   "cau": {
     "routes": {
       "/ele": {
