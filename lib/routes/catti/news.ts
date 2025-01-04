@@ -40,20 +40,18 @@ const handler: Route['handler'] = async (context) => {
     const listItems = $(ITEM_SELECTOR);
 
     // Map through each list item to extract details
-    const contentLinkList = await Promise.all(
-        listItems.toArray().map((element) => {
-            const date = $(element).find('span.ui-right-time').text();
-            const title = $(element).find('a').attr('title')!;
-            const relativeLink = $(element).find('a').attr('href')!;
-            const absoluteLink = `https://www.catticenter.com${relativeLink}`;
-            const formattedDate = parseDate(date);
-            return {
-                date: formattedDate,
-                title,
-                link: absoluteLink,
-            };
-        })
-    );
+    const contentLinkList = listItems.toArray().map((element) => {
+        const date = $(element).find('span.ui-right-time').text();
+        const title = $(element).find('a').attr('title')!;
+        const relativeLink = $(element).find('a').attr('href')!;
+        const absoluteLink = `https://www.catticenter.com${relativeLink}`;
+        const formattedDate = parseDate(date);
+        return {
+            date: formattedDate,
+            title,
+            link: absoluteLink,
+        };
+    });
 
     return {
         title: NEWS_TYPES[category].title,
