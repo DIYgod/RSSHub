@@ -41,7 +41,7 @@ async function handler(ctx) {
     const $ = load(response.body);
 
     // 1) Grab the JSON from the script tag with data-iso-key="_0".
-    const scriptJSON = $('script[data-iso-key="_0"]').html();
+    const scriptJSON = $('script[data-iso-key="_0"]').text();
     if (!scriptJSON) {
         throw new Error('Cannot find the script with data-iso-key="_0"');
     }
@@ -49,22 +49,7 @@ async function handler(ctx) {
     // 2) Parse the JSON string
     let data;
     try {
-        // It looks like the script tag might contain a *stringified* JSON object,
-        // so we may need to parse twice:
-        //   1st parse: remove surrounding quotes if present
-        //   2nd parse: parse the resulting JSON object
-        //
-        // The snippet in your question shows something like:
-        //    "<script type="application/json" data-iso-key="_0">"{"config": {...}, "callsForPapers": {...}}"</script>"
-        // sometimes it comes with extra quotes at the start/end.
-        // Adjust logic below if needed based on actual site response.
-
-        let raw = scriptJSON.trim();
-        if (raw.startsWith('"') && raw.endsWith('"')) {
-            raw = raw.substring(1, raw.length - 1);
-            raw = raw.replaceAll(String.raw`\"`, '"');
-        }
-        data = JSON.parse(raw);
+        data = JSON.parse(JSON.parse(scriptJSON ));
     } catch (error) {
         throw new Error(`Failed to parse embedded script JSON: ${error.message}`);
     }
