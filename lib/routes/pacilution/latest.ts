@@ -94,4 +94,9 @@ export const route: Route = {
         supportScihub: false,
     },
     example: '/pacilution/latest',
+    radar: [
+        {
+            source: ['www.pacilution.com'],
+        },
+    ],
 };
