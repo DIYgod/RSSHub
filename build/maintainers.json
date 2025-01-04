@@ -7293,6 +7293,12 @@
   "/vimeo/user/:username/:cat?": [
     "MisteryMonster"
   ],
+  "/visionias/newsToday/:filter?": [
+    "Rjnishant530"
+  ],
+  "/visionias/weeklyFocus": [
+    "Rjnishant530"
+  ],
   "/vocus/publication/:id": [
     "Maecenas"
   ],

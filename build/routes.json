@@ -89651,6 +89651,82 @@
     "url": "vimeo.com",
     "lang": "en"
   },
+  "visionias": {
+    "routes": {
+      "/newsToday/:filter?": {
+        "path": "/newsToday/:filter?",
+        "example": "/visionias/newsToday",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "parameters": {
+          "filter": {
+            "description": "Period to fetch news for the current month. All news for the current month or only the latest",
+            "default": "latest",
+            "options": [
+              {
+                "value": "all",
+                "label": "All"
+              },
+              {
+                "value": "latest",
+                "label": "Latest"
+              }
+            ]
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "visionias.in/current-affairs/news-today"
+            ],
+            "target": "/newsToday"
+          }
+        ],
+        "name": "News Today",
+        "maintainers": [
+          "Rjnishant530"
+        ],
+        "location": "news-today.ts"
+      },
+      "/weeklyFocus": {
+        "path": "/weeklyFocus",
+        "example": "/visionias/weeklyFocus",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "visionias.in/current-affairs/weekly-focus"
+            ],
+            "target": "/weeklyFocus"
+          }
+        ],
+        "name": "Weekly Focus",
+        "maintainers": [
+          "Rjnishant530"
+        ],
+        "location": "weekly-focus.ts"
+      }
+    },
+    "name": "VisionIAS",
+    "url": "visionias.in",
+    "lang": "en",
+    "categories": [
+      "study"
+    ]
+  },
   "vocus": {
     "routes": {
       "/publication/:id": {

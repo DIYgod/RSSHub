@@ -31018,6 +31018,27 @@
       }
     ]
   },
+  "visionias.in": {
+    "_name": "VisionIAS",
+    ".": [
+      {
+        "title": "News Today",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/current-affairs/news-today"
+        ],
+        "target": "/visionias/newsToday"
+      },
+      {
+        "title": "Weekly Focus",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/current-affairs/weekly-focus"
+        ],
+        "target": "/visionias/weeklyFocus"
+      }
+    ]
+  },
   "vocus.cc": {
     "_name": "方格子",
     ".": [
