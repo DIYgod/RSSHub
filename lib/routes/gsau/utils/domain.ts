@@ -8,7 +8,7 @@ const OFFICIAL_DOMAIN = 'gsau.edu.cn';
  */
 export const isSubdomainOfGsau = (url: string): boolean => {
     try {
-        const normalizedUrl = url.startsWith('http://') || url.startsWith('https://') ? url : `https://${url}`;
+        const normalizedUrl = url.startsWith('http') ? url : `https://${url}`;
         const parsedUrl = new URL(normalizedUrl);
         const hostname = parsedUrl.hostname;
         return hostname === OFFICIAL_DOMAIN || hostname.endsWith(`.${OFFICIAL_DOMAIN}`);
