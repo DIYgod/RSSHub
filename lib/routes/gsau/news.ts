@@ -57,10 +57,6 @@ const NEWS_TYPES: Record<string, NewsCategory> = {
 const handler: Route['handler'] = async (context) => {
     const { category } = context.req.param();
 
-    if (!category || !NEWS_TYPES[category]) {
-        throw new Error('Invalid category');
-    }
-
     const BASE_URL = `https://www.gsau.edu.cn/xwzx/${category}.htm`;
 
     const { data: listResponse } = await got(BASE_URL);
@@ -71,21 +67,20 @@ const handler: Route['handler'] = async (context) => {
     const listItems = $(ITEM_SELECTOR);
 
     // Map through each list item to extract details
-    const contentLinkList = (
-        await Promise.all(
-            listItems.toArray().map((element) => {
-                const title = $(element).find('a').attr('title')?.trim();
-                const date: string = parseDate($(element).find('a > span').text().trim()).toISOString();
+    const contentLinkList = listItems
+        .toArray()
+        .map((element) => {
+            const title = $(element).find('a').attr('title')?.trim();
+            const date: string = parseDate($(element).find('a > span').text().trim()).toISOString();
 
-                const relativeLink = $(element).find('a').attr('href') || '';
-                const absoluteLink = new URL(relativeLink, BASE_URL).href;
-                if (title && date && relativeLink) {
-                    return { title, date, link: absoluteLink };
-                }
-                return null;
-            })
-        )
-    ).filter((item) => item !== null);
+            const relativeLink = $(element).find('a').attr('href') || '';
+            const absoluteLink = new URL(relativeLink, BASE_URL).href;
+            if (title && date && relativeLink) {
+                return { title, date, link: absoluteLink };
+            }
+            return null;
+        })
+        .filter((item) => item !== null);
 
     return {
         title: NEWS_TYPES[category].title,
@@ -128,22 +123,25 @@ const handler: Route['handler'] = async (context) => {
 export const route: Route = {
     path: '/news/:category',
     name: '主页新闻',
+    parameters: {
+        category: '新闻栏目代码，取值可见描述中的列表。',
+    },
     description: `
-| 类型    | 标题       | 描述                         |
-| ------- | ---------- | ---------------------------- |
-| xxyw    | 学校要闻   | 甘肃农业大学学校要闻         |
-| xykx    | 校园快讯   | 甘肃农业大学校园快讯         |
-| tzgg    | 通知公告   | 甘肃农业大学校内通知公告     |
-| jzbg    | 讲座报告   | 甘肃农业大学讲座报告信息     |
-| jqgz    | 近期关注   | 甘肃农业大学近期关注         |
-| jyjx    | 教育教学   | 甘肃农业大学教育教学新闻     |
-| xsky    | 学术科研   | 甘肃农业大学学术科研信息     |
-| hzjl    | 合作交流   | 甘肃农业大学合作交流信息     |
-| mzgn    | 每周甘农   | 甘肃农业大学周记总结         |
-| mtnd    | 媒体农大   | 相关对甘肃农业大学的媒体报道 |
+| category | 标题       |
+| -------- | ---------- |
+| xxyw     | 学校要闻   |
+| xykx     | 校园快讯   |
+| tzgg     | 通知公告   |
+| jzbg     | 讲座报告   |
+| jqgz     | 近期关注   |
+| jyjx     | 教育教学   |
+| xsky     | 学术科研   |
+| hzjl     | 合作交流   |
+| mzgn     | 每周甘农   |
+| mtnd     | 媒体农大   |
     `,
     maintainers: ['PrinOrange'],
-    url: 'https://www.gsau.edu.cn/xwzx/xxyw.htm',
+    url: 'www.gsau.edu.cn/xwzx/xxyw.htm',
     handler,
     categories: ['university'],
     features: {
