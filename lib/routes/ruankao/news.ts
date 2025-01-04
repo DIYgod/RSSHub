@@ -16,20 +16,18 @@ const handler: Route['handler'] = async () => {
     const listItems = $(ITEM_SELECTOR);
 
     // Map through each list item to extract details
-    const contentLinkList = await Promise.all(
-        listItems.toArray().map((element) => {
-            const date = $(element).find('label.time').text().trim().slice(1, -1);
-            const title = $(element).find('a').attr('title')!;
-            const link = $(element).find('a').attr('href')!;
+    const contentLinkList = listItems.toArray().map((element) => {
+        const date = $(element).find('label.time').text().trim().slice(1, -1);
+        const title = $(element).find('a').attr('title')!;
+        const link = $(element).find('a').attr('href')!;
 
-            const formattedDate = parseDate(date);
-            return {
-                date: formattedDate,
-                title,
-                link,
-            };
-        })
-    );
+        const formattedDate = parseDate(date);
+        return {
+            date: formattedDate,
+            title,
+            link,
+        };
+    });
 
     return {
         title: '计算机职业技术资格考试（软考）最新动态',
