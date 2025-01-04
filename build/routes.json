@@ -70700,6 +70700,43 @@
     "url": "ruancan.com",
     "lang": "zh-CN"
   },
+  "ruankao": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "name": "软考最新动态",
+        "maintainers": [
+          "PrinOrange"
+        ],
+        "categories": [
+          "study"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "title": "软考新闻动态",
+            "source": [
+              "www.ruankao.org.cn/index/work",
+              "www.ruankao.org.cn"
+            ],
+            "target": "/news"
+          }
+        ],
+        "example": "/ruankao/news",
+        "location": "news.ts"
+      }
+    },
+    "name": "中国计算机职业技术资格考试",
+    "url": "www.ruankao.org.cn"
+  },
   "ruc": {
     "routes": {
       "/ai/:category?": {
