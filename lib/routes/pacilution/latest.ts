@@ -25,7 +25,7 @@ const handler: Route['handler'] = async () => {
         listItems.toArray().map((element) => {
             const title = $(element).find('a').text();
             const relativeHref = $(element).find('a').attr('href') || '';
-            const link = `http://www.pacilution.com/${relativeHref}`;
+            const link = `${BASE_URL}${relativeHref}`;
 
             return {
                 title,
