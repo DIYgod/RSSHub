@@ -26,9 +26,7 @@ const NEWS_TYPES: Record<string, NewsCategory> = {
 
 const handler: Route['handler'] = async (context) => {
     const category = context.req.param('category');
-    if (category === undefined || !NEWS_TYPES[category]) {
-        throw new Error('Invalid category');
-    }
+
     const BASE_URL = `https://www.catticenter.com/${category}`;
 
     // Fetch the index page
