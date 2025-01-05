@@ -319,6 +319,28 @@
       }
     ]
   },
+  "30secondsofcode.org": {
+    "_name": "30 Seconds of code",
+    ".": [
+      {
+        "title": "Category and Subcategory",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:category/:subCategory/",
+          "/:category/"
+        ],
+        "target": "/30secondsofcode/category/:category/:subCategory"
+      },
+      {
+        "title": "New & Popular Snippets",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/30secondsofcode/latest"
+      }
+    ]
+  },
   "36kr.com": {
     "_name": "36kr",
     ".": [

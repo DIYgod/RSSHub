@@ -138,6 +138,12 @@
   "/2cycd/:fid/:sort?": [
     "shelken"
   ],
+  "/30secondsofcode/category/:category?/:subCategory?": [
+    "Rjnishant530"
+  ],
+  "/30secondsofcode/latest": [
+    "Rjnishant530"
+  ],
   "/36kr/hot-list/:category?": [
     "nczitzk"
   ],
