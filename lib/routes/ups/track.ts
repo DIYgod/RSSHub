@@ -94,6 +94,7 @@ async function handler(ctx) {
         const item: DataItem = {
             title: status,
             link: url,
+            guid: `${trackingNumber}-${i}`,
             description: `
                 Status: ${status} <br>
                 Location: ${location} <br>
