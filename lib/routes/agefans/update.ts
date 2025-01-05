@@ -46,7 +46,7 @@ async function handler() {
             };
         });
 
-    const items:any[] = []
+    const items:any[] = [];
     for (const item of list) {
         const _item = await cache.tryGet(item.link, async () => {
             const detailResponse = await got(item.link);
@@ -63,8 +63,8 @@ async function handler() {
             item.description = content('.video_detail_left').html();
 
             return item;
-        })
-        items.push(_item)
+        });
+        items.push(_item);
     }
 
 
