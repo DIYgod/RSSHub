@@ -3189,7 +3189,7 @@
     "_name": "A List Apart",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Home Feed",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/articles/"
@@ -8415,7 +8415,7 @@
         "source": [
           "/discussed"
         ],
-        "target": "/daily/discussed"
+        "target": "/daily/discussed/:period?/:innerSharedContent?/:dateSort?"
       },
       {
         "title": "Popular",
@@ -8423,7 +8423,7 @@
         "source": [
           "/popular"
         ],
-        "target": "/daily/"
+        "target": "/daily/popular/:innerSharedContent?/:dateSort?"
       },
       {
         "title": "Source Posts",
@@ -8431,7 +8431,15 @@
         "source": [
           "/sources/:sourceId"
         ],
-        "target": "/daily/source/:sourceId"
+        "target": "/daily/source/:sourceId/:innerSharedContent?"
+      },
+      {
+        "title": "Squads",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/squads/:squads"
+        ],
+        "target": "/daily/squads/:squads/:innerSharedContent?"
       },
       {
         "title": "Most upvoted",
@@ -8439,7 +8447,7 @@
         "source": [
           "/upvoted"
         ],
-        "target": "/daily/upvoted"
+        "target": "/daily/upvoted/:period?/:innerSharedContent?/:dateSort?"
       },
       {
         "title": "User Posts",
@@ -8448,7 +8456,7 @@
           "/:userId/posts",
           "/:userId"
         ],
-        "target": "/daily/user/:userId"
+        "target": "/daily/user/:userId/:innerSharedContent?"
       }
     ]
   },

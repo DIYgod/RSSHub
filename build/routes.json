@@ -6259,19 +6259,23 @@
     "routes": {
       "/": {
         "path": "/",
+        "categories": [
+          "programming"
+        ],
         "radar": [
           {
             "source": [
               "alistapart.com/articles/"
             ],
-            "target": ""
+            "target": "/"
           }
         ],
-        "name": "Unknown",
+        "name": "Home Feed",
         "maintainers": [
           "Rjnishant530"
         ],
         "url": "alistapart.com/articles/",
+        "example": "/alistapart",
         "location": "index.ts"
       },
       "/:topic": {
@@ -6295,7 +6299,8 @@
           {
             "source": [
               "alistapart.com/blog/topic/:topic"
-            ]
+            ],
+            "target": "/:topic"
           }
         ],
         "name": "Topics",
@@ -21159,9 +21164,10 @@
   },
   "daily": {
     "routes": {
-      "/discussed": {
-        "path": "/discussed",
-        "example": "/daily/discussed",
+      "/discussed/:period?/:innerSharedContent?/:dateSort?": {
+        "path": "/discussed/:period?/:innerSharedContent?/:dateSort?",
+        "example": "/daily/discussed/30",
+        "view": 0,
         "radar": [
           {
             "source": [
@@ -21174,11 +21180,60 @@
           "Rjnishant530"
         ],
         "url": "app.daily.dev/discussed",
+        "parameters": {
+          "innerSharedContent": {
+            "description": "Where to Fetch inner Shared Posts instead of original",
+            "default": "false",
+            "options": [
+              {
+                "value": "false",
+                "label": "False"
+              },
+              {
+                "value": "true",
+                "label": "True"
+              }
+            ]
+          },
+          "dateSort": {
+            "description": "Sort posts by publication date instead of popularity",
+            "default": "true",
+            "options": [
+              {
+                "value": "false",
+                "label": "False"
+              },
+              {
+                "value": "true",
+                "label": "True"
+              }
+            ]
+          },
+          "period": {
+            "description": "Period of Lookup",
+            "default": "7",
+            "options": [
+              {
+                "value": "7",
+                "label": "Last Week"
+              },
+              {
+                "value": "30",
+                "label": "Last Month"
+              },
+              {
+                "value": "365",
+                "label": "Last Year"
+              }
+            ]
+          }
+        },
         "location": "discussed.ts"
       },
-      "/": {
-        "path": "/",
-        "example": "/daily",
+      "/popular/:innerSharedContent?/:dateSort?": {
+        "path": "/popular/:innerSharedContent?/:dateSort?",
+        "example": "/daily/popular",
+        "view": 0,
         "radar": [
           {
             "source": [
@@ -21186,18 +21241,62 @@
             ]
           }
         ],
+        "parameters": {
+          "innerSharedContent": {
+            "description": "Where to Fetch inner Shared Posts instead of original",
+            "default": "false",
+            "options": [
+              {
+                "value": "false",
+                "label": "False"
+              },
+              {
+                "value": "true",
+                "label": "True"
+              }
+            ]
+          },
+          "dateSort": {
+            "description": "Sort posts by publication date instead of popularity",
+            "default": "true",
+            "options": [
+              {
+                "value": "false",
+                "label": "False"
+              },
+              {
+                "value": "true",
+                "label": "True"
+              }
+            ]
+          }
+        },
         "name": "Popular",
         "maintainers": [
           "Rjnishant530"
         ],
         "url": "app.daily.dev/popular",
-        "location": "index.ts"
+        "location": "popular.ts"
       },
-      "/source/:sourceId": {
-        "path": "/source/:sourceId",
+      "/source/:sourceId/:innerSharedContent?": {
+        "path": "/source/:sourceId/:innerSharedContent?",
         "example": "/daily/source/hn",
         "parameters": {
-          "sourceId": "The source id"
+          "sourceId": "The source id",
+          "innerSharedContent": {
+            "description": "Where to Fetch inner Shared Posts instead of original",
+            "default": "false",
+            "options": [
+              {
+                "value": "false",
+                "label": "False"
+              },
+              {
+                "value": "true",
+                "label": "True"
+              }
+            ]
+          }
         },
         "radar": [
           {
@@ -21213,9 +21312,44 @@
         "url": "app.daily.dev",
         "location": "source.ts"
       },
-      "/upvoted": {
-        "path": "/upvoted",
-        "example": "/daily/upvoted",
+      "/squads/:squads/:innerSharedContent?": {
+        "path": "/squads/:squads/:innerSharedContent?",
+        "example": "/daily/squads/watercooler",
+        "view": 0,
+        "parameters": {
+          "innerSharedContent": {
+            "description": "Where to Fetch inner Shared Posts instead of original",
+            "default": "false",
+            "options": [
+              {
+                "value": "false",
+                "label": "False"
+              },
+              {
+                "value": "true",
+                "label": "True"
+              }
+            ]
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "app.daily.dev/squads/:squads"
+            ]
+          }
+        ],
+        "name": "Squads",
+        "maintainers": [
+          "Rjnishant530"
+        ],
+        "url": "app.daily.dev/squads/discover",
+        "location": "squads.ts"
+      },
+      "/upvoted/:period?/:innerSharedContent?/:dateSort?": {
+        "path": "/upvoted/:period?/:innerSharedContent?/:dateSort?",
+        "example": "/daily/upvoted/7",
+        "view": 0,
         "radar": [
           {
             "source": [
@@ -21223,6 +21357,54 @@
             ]
           }
         ],
+        "parameters": {
+          "innerSharedContent": {
+            "description": "Where to Fetch inner Shared Posts instead of original",
+            "default": "false",
+            "options": [
+              {
+                "value": "false",
+                "label": "False"
+              },
+              {
+                "value": "true",
+                "label": "True"
+              }
+            ]
+          },
+          "dateSort": {
+            "description": "Sort posts by publication date instead of popularity",
+            "default": "true",
+            "options": [
+              {
+                "value": "false",
+                "label": "False"
+              },
+              {
+                "value": "true",
+                "label": "True"
+              }
+            ]
+          },
+          "period": {
+            "description": "Period of Lookup",
+            "default": "7",
+            "options": [
+              {
+                "value": "7",
+                "label": "Last Week"
+              },
+              {
+                "value": "30",
+                "label": "Last Month"
+              },
+              {
+                "value": "365",
+                "label": "Last Year"
+              }
+            ]
+          }
+        },
         "name": "Most upvoted",
         "maintainers": [
           "Rjnishant530"
@@ -21230,8 +21412,8 @@
         "url": "app.daily.dev/upvoted",
         "location": "upvoted.ts"
       },
-      "/user/:userId": {
-        "path": "/user/:userId",
+      "/user/:userId/:innerSharedContent?": {
+        "path": "/user/:userId/:innerSharedContent?",
         "example": "/daily/user/kramer",
         "radar": [
           {
@@ -21241,6 +21423,22 @@
             ]
           }
         ],
+        "parameters": {
+          "innerSharedContent": {
+            "description": "Where to Fetch inner Shared Posts instead of original",
+            "default": "false",
+            "options": [
+              {
+                "value": "false",
+                "label": "False"
+              },
+              {
+                "value": "true",
+                "label": "True"
+              }
+            ]
+          }
+        },
         "name": "User Posts",
         "maintainers": [
           "TonyRL"
