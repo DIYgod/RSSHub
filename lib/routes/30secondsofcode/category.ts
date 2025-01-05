@@ -3,9 +3,9 @@ import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import { processList } from './utils';
 export const route: Route = {
-    path: '/:category?/:subCategory?',
-    categories: ['programming', 'popular'],
-    example: '/css/interactivity',
+    path: '/category/:category?/:subCategory?',
+    categories: ['programming'],
+    example: '/category/css/interactivity',
     parameters: {
         category: {
             description: 'Main Category. For Complete list visit site "https://www.30secondsofcode.org/collections/p/1/"',
@@ -31,7 +31,7 @@ export const route: Route = {
     radar: [
         {
             source: ['30secondsofcode.org/:category/:subCategory/', '30secondsofcode.org/:category/'],
-            target: '/:category/:subCategory',
+            target: '/category/:category/:subCategory',
         },
     ],
     name: 'Category and Subcategory',

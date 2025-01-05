@@ -4,9 +4,9 @@ import { processList, rootUrl } from './utils';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
-    path: '/',
-    categories: ['programming', 'popular'],
-    example: '/',
+    path: '/latest',
+    categories: ['programming'],
+    example: '/latest',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,7 +18,7 @@ export const route: Route = {
     radar: [
         {
             source: ['30secondsofcode.org'],
-            target: '/',
+            target: '/latest',
         },
     ],
     name: 'New & Popular Snippets',

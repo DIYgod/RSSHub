@@ -37,7 +37,7 @@ async function processItem({ link: articleLink, date }) {
             }
         });
         const image = article.find('img').attr('src');
-        const description = article.clone().find('script').remove().end().html();
+        const description = article.clone().find('h1, script').remove().end().html();
 
         return {
             title,
