@@ -3,6 +3,7 @@ import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/',
+    categories: ['programming'],
     radar: [
         {
             source: ['alistapart.com/articles/'],
