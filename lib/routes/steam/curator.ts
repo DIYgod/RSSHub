@@ -9,11 +9,26 @@ import { art } from '@/utils/render';
 const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
-    path: '/curator/:id',
+    path: '/curator/:id/:routeParams?',
     categories: ['game'],
     example: '/steam/curator/34646096-80-Days',
     parameters: {
         id: "Steam curator id. It usually consists of a sereis of numbers and the curator's name.",
+        routeParams: {
+            description: `Extra parameters to filter the reviews. The following parameters are supported:
+| Key             | Description                                                                                   | Accepts                                    | Defaults to |
+| --------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------- |
+| \`curations\`   | Review type to filter by. \`0\`: Recommended, \`1\`: Not Recommended, \`2\`: Informational    | \`0\`/\`1\`/\`2\`/\`0,1\`/\`0,2\`/\`1,2\`  |             |
+| \`tagids\`      | Tag to filter by. Details are provided below.                                                 | use comma to separate multiple tagid       |             |
+
+Note: There is a [‘Popular Tags’](https://store.steampowered.com/tag/browse) page where you can find many but not all of the tags. The tag’s ID is in the \`data-tagid\` attribute of the element.Steam does not currently provide a page that comprehensively lists all tags, and you may need to explore alternative ways to find them.
+
+Examples:
+* \`/steam/curator/34646096-80-Days/curations=&tagids=\`
+* \`/steam/curator/34646096-80-Days/curations=0&tagids=19\`
+* \`/steam/curator/34646096-80-Days/curations=0,2&tagids=19,21\`
+`,
+        },
     },
     radar: [
         {
@@ -26,47 +41,59 @@ export const route: Route = {
     name: 'Latest Curator Reviews',
     maintainers: ['naremloa', 'fenxer'],
     handler: async (ctx) => {
-        const { id } = ctx.req.param();
+        const { id, routeParams } = ctx.req.param();
+        const params = new URLSearchParams(routeParams);
 
-        const url = `https://store.steampowered.com/curator/${id}`;
-        const response = await ofetch(url);
-        const $ = load(response);
+        const url = new URL(`https://store.steampowered.com/curator/${id}/ajaxgetfilteredrecommendations/?query&start=0&count=10&dynamic_data=&sort=recent&app_types=&reset=false&curations=&tagids=`);
+        for (const [key, value] of params) {
+            let setValue = value;
+            switch (key) {
+                case 'curations':
+                case 'tagids':
+                    setValue = value || '';
+                    break;
+                default:
+                    continue;
+            }
+            url.searchParams.set(key, setValue);
+        }
 
-        const items = await Promise.all(
-            $('#RecommendationsRows .recommendation')
-                .toArray()
-                .slice(0, 1)
-                .map((item) => {
-                    const el = $(item);
-                    const appTitle = el.find('img').attr('alt')!;
-                    const appLink = el.find('.recommendation_link').first().attr('href');
-                    const appImage = el.find('img').attr('src') ?? '';
-                    const reviewContent = el.find('.recommendation_desc').text().trim();
-                    const reviewDateText = el.find('.curator_review_date').text().trim();
+        const response = await ofetch(url.toString());
+        const $ = load(response.results_html ?? '');
 
-                    const currentYearPattern = /,\s\b\d{4}\b$/;
-                    const reviewPubDate = currentYearPattern.test(reviewDateText) ? parseDate(`${reviewDateText}, ${new Date().getFullYear()}`) : parseDate(reviewDateText);
+        const items = $('.recommendation')
+            .toArray()
+            .map((item) => {
+                const el = $(item);
+                const appImageEl = el.find('a.store_capsule img');
+                const appTitle = appImageEl.attr('alt')!;
+                const appImage = appImageEl.attr('src') ?? '';
+                const appLink = el.find('.recommendation_link').first().attr('href');
+                const reviewContent = el.find('.recommendation_desc').text().trim();
+                const reviewDateText = el.find('.curator_review_date').text().trim();
 
-                    const description = art(path.join(__dirname, 'templates/curator-description.art'), { image: appImage, description: reviewContent });
+                const notCurrentYearPattern = /,\s\b\d{4}\b$/;
+                const reviewPubDate = notCurrentYearPattern.test(reviewDateText) ? parseDate(reviewDateText) : parseDate(`${reviewDateText}, ${new Date().getFullYear()}`);
 
-                    return {
-                        title: appTitle,
-                        link: appLink,
-                        description,
-                        pubDate: reviewPubDate,
-                        media: {
-                            content: {
-                                url: appImage,
-                                medium: 'image',
-                            },
+                const description = art(path.join(__dirname, 'templates/curator-description.art'), { image: appImage, description: reviewContent });
+
+                return {
+                    title: appTitle,
+                    link: appLink,
+                    description,
+                    pubDate: reviewPubDate,
+                    media: {
+                        content: {
+                            url: appImage,
+                            medium: 'image',
                         },
-                    };
-                })
-        );
+                    },
+                };
+            });
 
         return {
             title: `Steam Curator ${id} Reviews`,
-            link: url,
+            link: url.toString(),
             item: items,
         };
     },
