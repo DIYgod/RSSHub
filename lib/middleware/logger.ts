@@ -1,5 +1,6 @@
 import { requestMetric } from '@/utils/otel';
 import { MiddlewareHandler } from 'hono';
+import { getConnInfo } from '@hono/node-server/conninfo';
 import logger from '@/utils/logger';
 import { getPath, time } from '@/utils/helpers';
 
@@ -28,8 +29,9 @@ const colorStatus = (status: number) => {
 const middleware: MiddlewareHandler = async (ctx, next) => {
     const { method, raw, routePath } = ctx.req;
     const path = getPath(raw);
+    const info = getConnInfo(ctx);
 
-    logger.info(`${LogPrefix.Incoming} ${method} ${path}`);
+    logger.info(`${LogPrefix.Incoming} ${info.remote.address} ${method} ${path}`);
 
     const start = Date.now();
 
@@ -37,7 +39,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     const status = ctx.res.status;
 
-    logger.info(`${LogPrefix.Outgoing} ${method} ${path} ${colorStatus(status)} ${time(start)}`);
+    logger.info(`${LogPrefix.Outgoing} ${info.remote.address} ${method} ${path} ${colorStatus(status)} ${time(start)}`);
     requestMetric.success(Date.now() - start, { path: routePath, method, status });
 };
 
