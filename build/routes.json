@@ -88835,6 +88835,40 @@
     "url": "computer.upc.edu.cn",
     "lang": "zh-CN"
   },
+  "ups": {
+    "routes": {
+      "/track/:trackingNumber": {
+        "path": "/track/:trackingNumber",
+        "categories": [
+          "other"
+        ],
+        "example": "/ups/track/1Z78R6790470567520",
+        "parameters": {
+          "trackingNumber": "The UPS tracking number (e.g., 1Z78R6790470567520)."
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Tracking",
+        "maintainers": [
+          "Aquabet"
+        ],
+        "location": "track.ts"
+      }
+    },
+    "name": "UPS",
+    "url": "ups.com",
+    "description": "United Parcel Service (UPS) updates, news, and tracking RSS feeds.",
+    "zh": {
+      "name": "UPS(联合包裹服务公司)",
+      "description": "联合包裹服务公司（UPS）的更新、新闻和追踪 RSS 源。"
+    }
+  },
   "uptimerobot": {
     "routes": {
       "/rss/:id/:routeParams?": {
