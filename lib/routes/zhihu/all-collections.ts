@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '用户全部收藏内容',
-    maintainers: ['CohenV'],
+    maintainers: ['Healthyyue'],
     handler,
 };
 
