@@ -172,8 +172,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       notion-to-md:
-        specifier: 3.1.1
-        version: 3.1.1
+        specifier: 3.1.2
+        version: 3.1.2
       oauth-1.0a:
         specifier: 2.2.6
         version: 2.2.6
@@ -4295,8 +4295,8 @@ packages:
     resolution: {integrity: sha512-IO9QvjUMWxPQQhs60oOu10CRkWCiZzSUkzbXGGV9pviYl1fXYcvkzQ5jV9z8Y6un8ARoVRl4EtC6v6jNqbaJ/w==}
     engines: {node: '>=14.16'}
 
-  notion-to-md@3.1.1:
-    resolution: {integrity: sha512-Zaa2P1B9Rx99bevFYTGuUMYbbfdHn2G1AZMsytYGDWIJjr6Ie1qp/8CorpwVUh1qrquES/V2PkEREqCuTu1zKA==}
+  notion-to-md@3.1.2:
+    resolution: {integrity: sha512-0ua8rrHeIGw5OmEw5yNCuHMJV3MhFJO21T6p6O4VAHl3bwXGjGYyANSnFm6IuoZsyr7PxQo7qQqCtOFrj+YRYg==}
     engines: {node: '>=12'}
 
   npm-run-path@5.3.0:
@@ -10034,7 +10034,7 @@ snapshots:
 
   normalize-url@8.0.1: {}
 
-  notion-to-md@3.1.1:
+  notion-to-md@3.1.2:
     dependencies:
       markdown-table: 2.0.0
       node-fetch: 2.7.0
