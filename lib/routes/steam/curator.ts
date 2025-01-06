@@ -46,16 +46,9 @@ Examples:
 
         const url = new URL(`https://store.steampowered.com/curator/${id}/ajaxgetfilteredrecommendations/?query&start=0&count=10&dynamic_data=&sort=recent&app_types=&reset=false&curations=&tagids=`);
         for (const [key, value] of params) {
-            let setValue = value;
-            switch (key) {
-                case 'curations':
-                case 'tagids':
-                    setValue = value || '';
-                    break;
-                default:
-                    continue;
+            if (['curations', 'tagids'].includes(key)) {
+                url.searchParams.set(key, value || '');
             }
-            url.searchParams.set(key, setValue);
         }
 
         const response = await ofetch(url.toString());
