@@ -319,6 +319,1227 @@
       }
     ]
   },
+  "21jingji.com": {
+    "_name": "21财经",
+    "m": [
+      {
+        "title": "热点",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/"
+        ],
+        "target": "/21caijing/channel/热点"
+      },
+      {
+        "title": "投资通",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通"
+      },
+      {
+        "title": "投资通/推荐",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/推荐"
+      },
+      {
+        "title": "投资通/盘前情报",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/盘前情报"
+      },
+      {
+        "title": "投资通/公司洞察",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/公司洞察"
+      },
+      {
+        "title": "投资通/南财研选",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/南财研选"
+      },
+      {
+        "title": "投资通/龙虎榜",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/龙虎榜"
+      },
+      {
+        "title": "投资通/公告精选",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/公告精选"
+      },
+      {
+        "title": "投资通/牛熊透视",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/牛熊透视"
+      },
+      {
+        "title": "投资通/一周前瞻",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/一周前瞻"
+      },
+      {
+        "title": "投资通/财经日历",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/财经日历"
+      },
+      {
+        "title": "投资通/风口掘金",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/风口掘金"
+      },
+      {
+        "title": "投资通/实时解盘",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/实时解盘"
+      },
+      {
+        "title": "投资通/调研内参",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/调研内参"
+      },
+      {
+        "title": "投资通/趋势前瞻",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/趋势前瞻"
+      },
+      {
+        "title": "投资通/硬核选基",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/硬核选基"
+      },
+      {
+        "title": "投资通/3分钟理财",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/3分钟理财"
+      },
+      {
+        "title": "投资通/AI智讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/AI智讯"
+      },
+      {
+        "title": "投资通/北向资金",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投资通/北向资金"
+      },
+      {
+        "title": "金融",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/finance"
+        ],
+        "target": "/21caijing/channel/金融"
+      },
+      {
+        "title": "金融/动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/动态"
+      },
+      {
+        "title": "金融/最保险",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/最保险"
+      },
+      {
+        "title": "金融/资管",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/资管"
+      },
+      {
+        "title": "金融/数字金融",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/数字金融"
+      },
+      {
+        "title": "金融/私人银行",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/私人银行"
+      },
+      {
+        "title": "金融/普惠",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/普惠"
+      },
+      {
+        "title": "金融/观债",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/观债"
+      },
+      {
+        "title": "金融/金融研究",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/金融研究"
+      },
+      {
+        "title": "金融/投教基地",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/投教基地"
+      },
+      {
+        "title": "金融/银行",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/银行"
+      },
+      {
+        "title": "金融/非银金融",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/非银金融"
+      },
+      {
+        "title": "金融/金融人事",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/金融/金融人事"
+      },
+      {
+        "title": "宏观",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/politics"
+        ],
+        "target": "/21caijing/channel/宏观"
+      },
+      {
+        "title": "学习经济",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/jujiao/xxjjIndexV3"
+        ],
+        "target": "/21caijing/channel/学习经济"
+      },
+      {
+        "title": "学习经济/经济思想",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/学习经济/经济思想"
+      },
+      {
+        "title": "学习经济/学习经济卡片",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/学习经济/学习经济卡片"
+      },
+      {
+        "title": "学习经济/高质量发展",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/学习经济/高质量发展"
+      },
+      {
+        "title": "学习经济/经济政策",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/学习经济/经济政策"
+      },
+      {
+        "title": "学习经济/广东在行动",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/学习经济/广东在行动"
+      },
+      {
+        "title": "学习经济/数说经济",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/学习经济/数说经济"
+      },
+      {
+        "title": "学习经济/学习视频",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/学习经济/学习视频"
+      },
+      {
+        "title": "学习经济/学习党史",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/学习经济/学习党史"
+      },
+      {
+        "title": "大湾区",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/GHM_GreaterBay"
+        ],
+        "target": "/21caijing/channel/大湾区"
+      },
+      {
+        "title": "大湾区/动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/大湾区/动态"
+      },
+      {
+        "title": "大湾区/湾区金融",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/大湾区/湾区金融"
+      },
+      {
+        "title": "大湾区/大湾区直播室",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/大湾区/大湾区直播室"
+      },
+      {
+        "title": "大湾区/高成长企业",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/大湾区/高成长企业"
+      },
+      {
+        "title": "大湾区/产业地理",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/大湾区/产业地理"
+      },
+      {
+        "title": "大湾区/数智湾区",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/大湾区/数智湾区"
+      },
+      {
+        "title": "大湾区/湾区金融大咖会",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/大湾区/湾区金融大咖会"
+      },
+      {
+        "title": "大湾区/“港”创科25人",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/大湾区/“港”创科25人"
+      },
+      {
+        "title": "大湾区/湾区论坛",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/大湾区/湾区论坛"
+      },
+      {
+        "title": "证券",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/capital"
+        ],
+        "target": "/21caijing/channel/证券"
+      },
+      {
+        "title": "证券/动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/证券/动态"
+      },
+      {
+        "title": "证券/赢基金",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/证券/赢基金"
+      },
+      {
+        "title": "证券/券业观察",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/证券/券业观察"
+      },
+      {
+        "title": "证券/期市一线",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/证券/期市一线"
+      },
+      {
+        "title": "证券/ETF",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/证券/ETF"
+      },
+      {
+        "title": "汽车",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/auto"
+        ],
+        "target": "/21caijing/channel/汽车"
+      },
+      {
+        "title": "汽车/热闻",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/汽车/热闻"
+      },
+      {
+        "title": "汽车/新汽车",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/汽车/新汽车"
+      },
+      {
+        "title": "汽车/车访间",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/汽车/车访间"
+      },
+      {
+        "title": "汽车/财说车",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/汽车/财说车"
+      },
+      {
+        "title": "汽车/汽车人",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/汽车/汽车人"
+      },
+      {
+        "title": "汽车/汽车商业地理",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/汽车/汽车商业地理"
+      },
+      {
+        "title": "汽车/汽车金融",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/汽车/汽车金融"
+      },
+      {
+        "title": "汽车/行业报告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/汽车/行业报告"
+      },
+      {
+        "title": "汽车/聚焦",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/汽车/聚焦"
+      },
+      {
+        "title": "观点",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/opinion"
+        ],
+        "target": "/21caijing/channel/观点"
+      },
+      {
+        "title": "新健康",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/healthnews"
+        ],
+        "target": "/21caijing/channel/新健康"
+      },
+      {
+        "title": "新健康/动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/新健康/动态"
+      },
+      {
+        "title": "新健康/21健讯Daily",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/新健康/21健讯Daily"
+      },
+      {
+        "title": "新健康/21CC",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/新健康/21CC"
+      },
+      {
+        "title": "新健康/21健谈",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/新健康/21健谈"
+      },
+      {
+        "title": "新健康/名医说",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/新健康/名医说"
+      },
+      {
+        "title": "新健康/数字医疗",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/新健康/数字医疗"
+      },
+      {
+        "title": "新健康/21H院长对话",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/新健康/21H院长对话"
+      },
+      {
+        "title": "新健康/医健IPO解码",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/新健康/医健IPO解码"
+      },
+      {
+        "title": "新健康/研究报告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/新健康/研究报告"
+      },
+      {
+        "title": "新健康/21科普",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/新健康/21科普"
+      },
+      {
+        "title": "ESG",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/esg"
+        ],
+        "target": "/21caijing/channel/ESG"
+      },
+      {
+        "title": "ESG/ESG发布厅",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/ESG/ESG发布厅"
+      },
+      {
+        "title": "ESG/绿色公司",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/ESG/绿色公司"
+      },
+      {
+        "title": "ESG/绿色金融",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/ESG/绿色金融"
+      },
+      {
+        "title": "ESG/净零碳城市",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/ESG/净零碳城市"
+      },
+      {
+        "title": "ESG/碳市场",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/ESG/碳市场"
+      },
+      {
+        "title": "ESG/生物多样性",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/ESG/生物多样性"
+      },
+      {
+        "title": "ESG/行业周报",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/ESG/行业周报"
+      },
+      {
+        "title": "ESG/研究报告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/ESG/研究报告"
+      },
+      {
+        "title": "全球市场",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/global"
+        ],
+        "target": "/21caijing/channel/全球市场"
+      },
+      {
+        "title": "全球市场/动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/动态"
+      },
+      {
+        "title": "全球市场/全球财经连线",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/全球财经连线"
+      },
+      {
+        "title": "全球市场/直击华尔街",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/直击华尔街"
+      },
+      {
+        "title": "全球市场/百家跨国公司看中国",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/百家跨国公司看中国"
+      },
+      {
+        "title": "全球市场/全球央行观察",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/全球央行观察"
+      },
+      {
+        "title": "全球市场/全球能源观察",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/全球能源观察"
+      },
+      {
+        "title": "全球市场/美股一线",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/美股一线"
+      },
+      {
+        "title": "全球市场/港股一线",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/港股一线"
+      },
+      {
+        "title": "全球市场/全球金融观察",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/全球金融观察"
+      },
+      {
+        "title": "全球市场/联合国现场",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/联合国现场"
+      },
+      {
+        "title": "全球市场/全球央行月报",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/全球央行月报"
+      },
+      {
+        "title": "全球市场/全球商品观察",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/全球市场/全球商品观察"
+      },
+      {
+        "title": "一带一路",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/BandR"
+        ],
+        "target": "/21caijing/channel/一带一路"
+      },
+      {
+        "title": "数读",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/readnumber"
+        ],
+        "target": "/21caijing/channel/数读"
+      },
+      {
+        "title": "理财通",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/financing"
+        ],
+        "target": "/21caijing/channel/理财通"
+      },
+      {
+        "title": "理财通/动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/理财通/动态"
+      },
+      {
+        "title": "理财通/数据库",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/理财通/数据库"
+      },
+      {
+        "title": "理财通/研报",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/理财通/研报"
+      },
+      {
+        "title": "理财通/投教",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/理财通/投教"
+      },
+      {
+        "title": "理财通/政策",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/理财通/政策"
+      },
+      {
+        "title": "理财通/固收+",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/理财通/固收+"
+      },
+      {
+        "title": "理财通/纯固收",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/理财通/纯固收"
+      },
+      {
+        "title": "理财通/现金",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/理财通/现金"
+      },
+      {
+        "title": "理财通/混合",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/理财通/混合"
+      },
+      {
+        "title": "理财通/权益",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/理财通/权益"
+      },
+      {
+        "title": "直播",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/live"
+        ],
+        "target": "/21caijing/channel/直播"
+      },
+      {
+        "title": "长三角",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/yangtzeriverdelta"
+        ],
+        "target": "/21caijing/channel/长三角"
+      },
+      {
+        "title": "论坛活动",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/market"
+        ],
+        "target": "/21caijing/channel/论坛活动"
+      },
+      {
+        "title": "创投",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/entrepreneur"
+        ],
+        "target": "/21caijing/channel/创投"
+      },
+      {
+        "title": "投教",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/tjzjy"
+        ],
+        "target": "/21caijing/channel/投教"
+      },
+      {
+        "title": "投教/动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投教/动态"
+      },
+      {
+        "title": "投教/投教知识",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投教/投教知识"
+      },
+      {
+        "title": "投教/公益活动",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/投教/公益活动"
+      },
+      {
+        "title": "海洋经济",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/oceaneconomy"
+        ],
+        "target": "/21caijing/channel/海洋经济"
+      },
+      {
+        "title": "数字合规",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/compliance"
+        ],
+        "target": "/21caijing/channel/数字合规"
+      },
+      {
+        "title": "公司",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/company"
+        ],
+        "target": "/21caijing/channel/公司"
+      },
+      {
+        "title": "公司/动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/公司/动态"
+      },
+      {
+        "title": "公司/电子通信",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/公司/电子通信"
+      },
+      {
+        "title": "公司/互联网",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/公司/互联网"
+      },
+      {
+        "title": "公司/高端制造",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/公司/高端制造"
+      },
+      {
+        "title": "公司/新能源",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/公司/新能源"
+      },
+      {
+        "title": "公司/消费",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/公司/消费"
+      },
+      {
+        "title": "公司/地产基建",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/公司/地产基建"
+      },
+      {
+        "title": "公司/IPO",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/公司/IPO"
+      },
+      {
+        "title": "公司/文旅",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/公司/文旅"
+      },
+      {
+        "title": "人文",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/life"
+        ],
+        "target": "/21caijing/channel/人文"
+      },
+      {
+        "title": "SFC Global",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/SFCGlobal"
+        ],
+        "target": "/21caijing/channel/SFC Global"
+      },
+      {
+        "title": "SFC Global/News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/SFC Global/News"
+      },
+      {
+        "title": "SFC Global/SFC Markets and Finance",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/SFC Global/SFC Markets and Finance"
+      },
+      {
+        "title": "SFC Global/SFC Market Talk",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/SFC Global/SFC Market Talk"
+      },
+      {
+        "title": "SFC Global/CBN",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/SFC Global/CBN"
+      },
+      {
+        "title": "SFC Global/Multinationals on China",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/SFC Global/Multinationals on China"
+      },
+      {
+        "title": "SFC Global/Companies in the GBA",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/SFC Global/Companies in the GBA"
+      },
+      {
+        "title": "南方财经报道",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/nfcjbd"
+        ],
+        "target": "/21caijing/channel/南方财经报道"
+      },
+      {
+        "title": "专题",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/jujiao"
+        ],
+        "target": "/21caijing/channel/专题"
+      },
+      {
+        "title": "链上预制菜",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/precookedfood"
+        ],
+        "target": "/21caijing/channel/链上预制菜"
+      },
+      {
+        "title": "链上预制菜/动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/链上预制菜/动态"
+      },
+      {
+        "title": "链上预制菜/活动",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/链上预制菜/活动"
+      },
+      {
+        "title": "链上预制菜/报道",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/链上预制菜/报道"
+      },
+      {
+        "title": "链上预制菜/智库/课题",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/链上预制菜/智库/课题"
+      },
+      {
+        "title": "链上预制菜/数据/创新案例",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/链上预制菜/数据/创新案例"
+      },
+      {
+        "title": "链上预制菜/链接平台",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/#/channel/investment"
+        ],
+        "target": "/21caijing/channel/链上预制菜/链接平台"
+      }
+    ]
+  },
   "30secondsofcode.org": {
     "_name": "30 Seconds of code",
     ".": [
