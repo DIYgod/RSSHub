@@ -132,7 +132,7 @@
         "twitter-api-v2": "1.19.0",
         "ufo": "1.5.4",
         "undici": "6.21.0",
-        "uuid": "11.0.3",
+        "uuid": "11.0.4",
         "winston": "3.17.0",
         "xxhash-wasm": "1.1.0",
         "zod": "3.24.1"
@@ -197,7 +197,7 @@
         "vitest": "2.0.5",
         "yaml-eslint-parser": "1.2.3"
     },
-    "packageManager": "pnpm@9.14.4",
+    "packageManager": "pnpm@9.15.3",
     "engines": {
         "node": ">=22"
     },
