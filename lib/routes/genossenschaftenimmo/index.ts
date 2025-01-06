@@ -3,8 +3,10 @@ import ofetch from '@/utils/ofetch';
 import type { Data, DataItem, Route } from '@/types';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(timezone);
+dayjs.extend(utc);
 
 const FEED_TITLE = 'Genossenschaften.immo';
 const FEED_LOGO = 'https://genossenschaften.immo/static/gimmo/img/favicon/favicon-128x128.png';
