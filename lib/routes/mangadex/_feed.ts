@@ -50,7 +50,16 @@ function toQueryString(params: Record<string, any>): string {
     return '?' + queryParts.join('&');
 }
 
-const getMangaMeta = async (id: string, lang?: string, needCover: boolean = false) => {
+/**
+ * Retrieves the title, description, and cover of a manga.
+ *
+ * @author chrisis58, vzz64
+ * @param id manga id
+ * @param lang language(s), absent for default
+ * @param needCover whether to fetch cover
+ * @returns title, description, and cover of the manga
+ */
+const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string | string[]) => {
     const rawMangaMeta = (await cache.tryGet(
         `mangadex:manga-meta:${id}`,
         async () => {
@@ -65,7 +74,7 @@ const getMangaMeta = async (id: string, lang?: string, needCover: boolean = fals
     )) as any;
 
     const languages = [
-        lang,
+        ...(typeof lang === 'string' ? [lang] : lang || []),
         ...(await getFilteredLanguages()),
         rawMangaMeta.attributes.originalLanguage, // fallback to original language
     ].filter(Boolean);
@@ -76,9 +85,9 @@ const getMangaMeta = async (id: string, lang?: string, needCover: boolean = fals
         ...Object.fromEntries(rawMangaMeta.attributes.altTitles.flatMap((element) => Object.entries(element))),
     };
 
-    const title = firstMatch(titles, languages);
+    const title = firstMatch(titles, languages) as string;
 
-    const description = firstMatch(rawMangaMeta.attributes.description, languages);
+    const description = firstMatch(rawMangaMeta.attributes.description, languages) as string;
 
     if (!needCover) {
         return { title, description };
@@ -101,8 +110,16 @@ const getMangaMeta = async (id: string, lang?: string, needCover: boolean = fals
     return { title, description };
 };
 
-const getMangaChapters = async (id: string, lang?: string) => {
-    const languages = new Set([lang, ...(await getFilteredLanguages())].filter(Boolean));
+/**
+ * Retrieves the chapters of a manga.
+ *
+ * @author chrisis58, vzz64
+ * @param id manga id
+ * @param lang language(s), absent for default
+ * @returns chapters of the manga
+ */
+const getMangaChapters = async (id: string, lang?: string | string[]) => {
+    const languages = new Set([...(typeof lang === 'string' ? [lang] : lang || []), ...(await getFilteredLanguages())].filter(Boolean));
 
     const url = `${mangaMetaBaseUrl}${id}/feed${toQueryString({
         order: {
@@ -129,7 +146,20 @@ const getMangaChapters = async (id: string, lang?: string) => {
         title: [chapter.attributes.volume ? `Vol. ${chapter.attributes.volume}` : null, chapter.attributes.chapter ? `Ch. ${chapter.attributes.chapter}` : null, chapter.attributes.title].filter(Boolean).join(' '),
         link: `${chapterBaseUrl}${chapter.id}`,
         pubDate: new Date(chapter.attributes.publishAt),
-    }));
+    })) as Array<{ title: string; link: string; pubDate: Date }>;
 };
 
-export { getMangaMeta, getMangaChapters };
+/**
+ * Retrieves the title, description, cover, and chapters of a manga.
+ * Cominbation of getMangaMeta and getMangaChapters.
+ *
+ * @param id manga id
+ * @param lang language, absent for default
+ * @returns title, description, cover, and chapters of the manga
+ */
+const getMangaDetails = async (id: string, needCover: boolean = true, lang?: string | string[]) => {
+    const [meta, chapters] = await Promise.all([getMangaMeta(id, needCover, lang), getMangaChapters(id, lang)]);
+    return { ...meta, chapters };
+};
+
+export { getMangaMeta, getMangaChapters, getMangaDetails };
