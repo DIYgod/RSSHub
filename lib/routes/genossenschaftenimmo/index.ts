@@ -99,7 +99,7 @@ coming in. Copy everything starting with the \`?\` to the end of the URL.
 
                 const titleAppendix = numbers.length ? ` | ${numbers.join(' · ')}` : '';
                 const itemTitle = name + titleAppendix;
-                const itemDescription = itemCategories.join(' · ') + (body.length ? ` / ${body} · ` : '');
+                const itemDescription = itemCategories.join(' · ') + (body.length ? ` / ${body}` : '');
 
                 return {
                     title: itemTitle,
