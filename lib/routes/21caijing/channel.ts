@@ -15,8 +15,8 @@ const processMenu = (data: any[]) => {
     const processMenuItem = (item, parentPath = '', parentUrl?, parentShort?) => {
         const currentPath = parentPath ? `${parentPath}/${item.name}` : item.name;
         const currentUrl = item.url || parentUrl;
-        const currentApiUrl = item.api || (item.children && item.children.length > 0 ? item.children[0].api : undefined);
-        const currentShort = parentShort || (currentUrl && currentUrl.includes('/channel/') ? currentUrl.split('/channel/').pop() : undefined);
+        const currentApiUrl = item.api || item.children?.[0]?.api;
+        const currentShort = parentShort || currentUrl.split('/channel/').pop();
 
         if (currentUrl && currentApiUrl) {
             result[currentPath] = {
