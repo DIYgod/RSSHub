@@ -1340,6 +1340,9 @@
   "/chinania/:category{.+}?": [
     "nczitzk"
   ],
+  "/chinaratings/CreditResearch/:category{.+}?": [
+    "nczitzk"
+  ],
   "/chinathinktanks/:id": [
     "Aeliu"
   ],
