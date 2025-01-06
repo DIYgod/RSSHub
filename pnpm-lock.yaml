@@ -133,8 +133,8 @@ importers:
         specifier: 0.6.3
         version: 0.6.3
       imapflow:
-        specifier: 1.0.171
-        version: 1.0.171
+        specifier: 1.0.172
+        version: 1.0.172
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -3522,8 +3522,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.0.171:
-    resolution: {integrity: sha512-4H33FkLk1bDBdfSF0uacFFHuha83S1F7njhskh20vO1CweZ+jO65f3SD47ZcoE9HEQ5SqeaEwCkiQPBPkjcIhw==}
+  imapflow@1.0.172:
+    resolution: {integrity: sha512-hFIO5PDFkHAbUU+/GXdYVBZLks9wxtolciPw8S1idjl8sz6xlzGlSqBszMQ5IK5VUw0dfxlprFfw2amiTvbNuA==}
 
   immediate@3.0.6:
     resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
@@ -4513,8 +4513,8 @@ packages:
   pino-std-serializers@7.0.0:
     resolution: {integrity: sha512-e906FRY0+tV27iq4juKzSYPbUj2do2X2JX4EzSca1631EB2QJQUqGbDuERal7LCtOpxl6x3+nvo9NPZcmjkiFA==}
 
-  pino@9.5.0:
-    resolution: {integrity: sha512-xSEmD4pLnV54t0NOUN16yCl7RIB1c5UUOse5HSyEXtBp+FgFQyPeDutc+Q2ZO7/22vImV7VfEjH/1zV2QuqvYw==}
+  pino@9.6.0:
+    resolution: {integrity: sha512-i85pKRCt4qMjZ1+L7sy2Ag4t1atFcdbEt76+7iRJn1g2BvsnRMGu9p8pivl9fs63M2kF/A0OacFZhTub+m/qMg==}
     hasBin: true
 
   pluralize@8.0.0:
@@ -9176,7 +9176,7 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.0.171:
+  imapflow@1.0.172:
     dependencies:
       encoding-japanese: 2.2.0
       iconv-lite: 0.6.3
@@ -9185,7 +9185,7 @@ snapshots:
       libqp: 2.1.1
       mailsplit: 5.4.2
       nodemailer: 6.9.16
-      pino: 9.5.0
+      pino: 9.6.0
       socks: 2.8.3
 
   immediate@3.0.6: {}
@@ -10265,7 +10265,7 @@ snapshots:
 
   pino-std-serializers@7.0.0: {}
 
-  pino@9.5.0:
+  pino@9.6.0:
     dependencies:
       atomic-sleep: 1.0.0
       fast-redact: 3.5.0
