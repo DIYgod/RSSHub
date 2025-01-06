@@ -5,6 +5,18 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const tokenUrl = 'https://auth.mangadex.org/realms/mangadex/protocol/openid-connect/token';
 
+/**
+ * Retrieves an access token.
+ *
+ * @important Ensure the request includes a User-Agent header.
+ * @throws {ConfigNotFoundError} If the required configuration is missing.
+ * The following credentials are mandatory:
+ * - `client ID` and `client secret`
+ * - One of the following:
+ *   - `username` and `password`
+ *   - `refresh token`
+ * @returns {Promise<string>} A promise that resolves to the access token.
+ */
 const getToken = () => {
     if (!config.mangadex.clientId || !config.mangadex.clientSecret) {
         throw new ConfigNotFoundError('Cannot get access token since MangaDex client ID or secret is not set.');
