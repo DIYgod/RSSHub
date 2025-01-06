@@ -4441,6 +4441,9 @@
   "/medieval-china/": [
     "artefaritaKuniklo"
   ],
+  "/medium/feed/:user": [
+    "pseudoyu"
+  ],
   "/medium/following/:user": [
     "ImSingee"
   ],

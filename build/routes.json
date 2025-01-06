@@ -53487,6 +53487,38 @@
   },
   "medium": {
     "routes": {
+      "/feed/:user": {
+        "path": "/feed/:user",
+        "categories": [
+          "blog"
+        ],
+        "view": 1,
+        "example": "/medium/feed/zhgchgli",
+        "parameters": {
+          "user": "Username of the Medium"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "medium.com/@:user"
+            ],
+            "target": "/feed/:user"
+          }
+        ],
+        "name": "Medium Feed",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "location": "feed.ts"
+      },
       "/following/:user": {
         "path": "/following/:user",
         "categories": [

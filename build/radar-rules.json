@@ -18956,6 +18956,19 @@
       }
     ]
   },
+  "medium.com": {
+    "_name": "Medium",
+    ".": [
+      {
+        "title": "Medium Feed",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/@:user"
+        ],
+        "target": "/medium/feed/:user"
+      }
+    ]
+  },
   "meishichina.com": {
     "_name": "美食天下",
     "home": [
