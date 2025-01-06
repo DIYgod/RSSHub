@@ -79933,6 +79933,35 @@
         ],
         "location": "appcommunityfeed.ts"
       },
+      "/curator/:id/:routeParams?": {
+        "path": "/curator/:id/:routeParams?",
+        "categories": [
+          "game"
+        ],
+        "example": "/steam/curator/34646096-80-Days",
+        "parameters": {
+          "id": "Steam curator id. It usually consists of a series of numbers and the curator's name.",
+          "routeParams": {
+            "description": "Extra parameters to filter the reviews. The following parameters are supported:\n| Key             | Description                                                                                   | Accepts                                    | Defaults to |\n| --------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------- |\n| `curations`   | Review type to filter by. `0`: Recommended, `1`: Not Recommended, `2`: Informational    | `0`/`1`/`2`/`0,1`/`0,2`/`1,2`  |             |\n| `tagids`      | Tag to filter by. Details are provided below.                                                 | use comma to separate multiple tagid       |             |\n\nNote: There is a [‘Popular Tags’](https://store.steampowered.com/tag/browse) page where you can find many but not all of the tags. The tag’s ID is in the `data-tagid` attribute of the element.Steam does not currently provide a page that comprehensively lists all tags, and you may need to explore alternative ways to find them.\n\nExamples:\n* `/steam/curator/34646096-80-Days/curations=&tagids=`\n* `/steam/curator/34646096-80-Days/curations=0&tagids=19`\n* `/steam/curator/34646096-80-Days/curations=0,2&tagids=19,21`\n"
+          }
+        },
+        "radar": [
+          {
+            "title": "Latest Curator Reviews",
+            "source": [
+              "store.steampowered.com/curator/:id"
+            ],
+            "target": "/curator/:id"
+          }
+        ],
+        "description": "The Latest reviews from a Steam Curator.",
+        "name": "Latest Curator Reviews",
+        "maintainers": [
+          "naremloa",
+          "fenxer"
+        ],
+        "location": "curator.ts"
+      },
       "/search/:params": {
         "path": "/search/:params",
         "categories": [

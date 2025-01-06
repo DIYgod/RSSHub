@@ -29476,6 +29476,14 @@
         "target": "/steam/appcommunityfeed/:appid"
       },
       {
+        "title": "Latest Curator Reviews",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/curator/:id"
+        ],
+        "target": "/steam/curator/:id"
+      },
+      {
         "title": "Store Search",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
