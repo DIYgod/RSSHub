@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { rootUrl } from './utils';
+import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
     path: '/update',
@@ -47,8 +48,8 @@ async function handler() {
         });
 
     const items:any[] = [];
-    for (const item of list) {
-        const _item = await cache.tryGet(item.link, async () => {
+    for await (const item of asyncPool(3, list, (item) =>
+        cache.tryGet(item.link, async () => {
             const detailResponse = await got(item.link);
             const content = load(detailResponse.data);
 
@@ -63,10 +64,10 @@ async function handler() {
             item.description = content('.video_detail_left').html();
 
             return item;
-        });
-        items.push(_item);
+        })
+    )) {
+        items.push(item);
     }
-
 
     return {
         title: $('title').text(),
