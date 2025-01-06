@@ -13,7 +13,7 @@ export const route: Route = {
     categories: ['game'],
     example: '/steam/curator/34646096-80-Days',
     parameters: {
-        id: "Steam curator id. It usually consists of a sereis of numbers and the curator's name.",
+        id: "Steam curator id. It usually consists of a series of numbers and the curator's name.",
         routeParams: {
             description: `Extra parameters to filter the reviews. The following parameters are supported:
 | Key             | Description                                                                                   | Accepts                                    | Defaults to |
