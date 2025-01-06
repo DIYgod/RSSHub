@@ -8,6 +8,13 @@ const mainCoverMetaBaseUrl = 'https://api.mangadex.org/cover/';
 const coverBaseUrl = 'https://uploads.mangadex.org/covers/';
 const chapterBaseUrl = 'https://mangadex.org/chapter/';
 
+/**
+ * Get the first value that matches the keys in the source object
+ *
+ * @param source the source object
+ * @param keys the keys to search
+ * @returns the first match value, or the first value as fallback
+ */
 const firstMatch = (source: Map<string, string> | object, keys: string[]) => {
     for (const key of keys) {
         const value = source instanceof Map ? source.get(key) : source[key];
@@ -15,7 +22,7 @@ const firstMatch = (source: Map<string, string> | object, keys: string[]) => {
             return value;
         }
     }
-    return null;
+    return Object.values(source)[0];
 };
 
 function toQueryString(params: Record<string, any>): string {
@@ -69,9 +76,9 @@ const getMangaMeta = async (id: string, lang?: string, needCover: boolean = fals
         ...Object.fromEntries(rawMangaMeta.attributes.altTitles.flatMap((element) => Object.entries(element))),
     };
 
-    const title = firstMatch(titles, languages) || Object.values(rawMangaMeta.attributes.title)[0];
+    const title = firstMatch(titles, languages);
 
-    const description = firstMatch(rawMangaMeta.attributes.description, languages) || Object.values(rawMangaMeta.attributes.description)[0];
+    const description = firstMatch(rawMangaMeta.attributes.description, languages);
 
     if (!needCover) {
         return { title, description };
