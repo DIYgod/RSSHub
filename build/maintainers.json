@@ -8021,6 +8021,9 @@
   "/zhihu/people/activities/:id": [
     "DIYgod"
   ],
+  "/zhihu/people/allCollections/:id": [
+    "Healthyyue"
+  ],
   "/zhihu/people/answers/:id": [
     "DIYgod",
     "prnake"
