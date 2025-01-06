@@ -122,17 +122,14 @@ const getMangaChapters = async (id: string, lang?: string) => {
     })) as any;
 
     if (!chapters) {
-        return { count: 0 };
+        return [];
     }
 
-    return {
-        count: chapters.length,
-        chapters: chapters.map((chapter) => ({
-            title: [chapter.attributes.volume ? `Vol. ${chapter.attributes.volume}` : null, chapter.attributes.chapter ? `Ch. ${chapter.attributes.chapter}` : null, chapter.attributes.title].filter(Boolean).join(' '),
-            link: `${chapterBaseUrl}${chapter.id}`,
-            pubDate: new Date(chapter.attributes.publishAt),
-        })),
-    };
+    return chapters.map((chapter) => ({
+        title: [chapter.attributes.volume ? `Vol. ${chapter.attributes.volume}` : null, chapter.attributes.chapter ? `Ch. ${chapter.attributes.chapter}` : null, chapter.attributes.title].filter(Boolean).join(' '),
+        link: `${chapterBaseUrl}${chapter.id}`,
+        pubDate: new Date(chapter.attributes.publishAt),
+    }));
 };
 
 export { getMangaMeta, getMangaChapters };
