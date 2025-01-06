@@ -1,4 +1,4 @@
-import { Route, ViewType } from '@/types';
+import { Route, ViewType, Collection, CollectionItem } from '@/types';
 import got from '@/utils/got';
 import { header } from './utils';
 import { parseDate } from '@/utils/parse-date';
@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '用户全部收藏内容',
-    maintainers: ['CohenV'],
+    maintainers: ['Healthyyue'],
     handler,
 };
 
@@ -33,19 +33,17 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const apiPath = `https://api.zhihu.com/people/${id}/collections`;
 
-    const response = await got(String(apiPath), {
+    const response = await got(apiPath, {
         headers: {
             Referer: `https://www.zhihu.com/people/${id}/collections`,
         },
     });
 
-    const collections = response.data.data;
+    const collections = response.data.data as Collection[];
 
     const allCollectionItems = await Promise.all(
         collections.map(async (collection) => {
-            const firstPageResponse = await got({
-                method: 'get',
-                url: `https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=0&limit=20`,
+            const firstPageResponse = await got(`https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=0&limit=20`, {
                 headers: {
                     ...header,
                     Referer: `https://www.zhihu.com/collection/${collection.id}`,
@@ -63,9 +61,7 @@ async function handler(ctx) {
                 const otherPages = await Promise.all(
                     offsetList.map((offset) =>
                         cache.tryGet(`https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=${offset}&limit=20`, async () => {
-                            const response = await got({
-                                method: 'get',
-                                url: `https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=${offset}&limit=20`,
+                            const response = await got(`https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=${offset}&limit=20`, {
                                 headers: {
                                     ...header,
                                     Referer: `https://www.zhihu.com/collection/${collection.id}`,
@@ -87,11 +83,12 @@ async function handler(ctx) {
         })
     );
 
-    const items = allCollectionItems.flatMap((collection) =>
-        collection.items.map((item) => ({
-            ...item,
-            collectionTitle: collection.collectionTitle,
-        }))
+    const items = allCollectionItems.flatMap(
+        (collection) =>
+            collection.items.map((item) => ({
+                ...item,
+                collectionTitle: collection.collectionTitle,
+            })) as CollectionItem[]
     );
 
     return {
@@ -100,15 +97,13 @@ async function handler(ctx) {
         item: items.map((item) => {
             const content = item.content;
 
-            const transformed = {
+            return {
                 title: content.type === 'article' || content.type === 'zvideo' ? content.title : content.question.title,
                 link: content.url,
                 description: content.type === 'zvideo' ? `<img src=${content.video.url}/>` : content.content,
                 pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time) * 1000),
-                collectionTitle: item.collectionTitle,
+                category: [item.collectionTitle],
             };
-
-            return transformed;
         }),
     };
 }
