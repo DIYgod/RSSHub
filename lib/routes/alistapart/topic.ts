@@ -17,6 +17,7 @@ export const route: Route = {
     radar: [
         {
             source: ['alistapart.com/blog/topic/:topic'],
+            target: '/:topic',
         },
     ],
     name: 'Topics',
