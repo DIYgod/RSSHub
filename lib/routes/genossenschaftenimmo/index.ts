@@ -1,6 +1,10 @@
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import type { Data, DataItem, Route } from '@/types';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(timezone);
 
 const FEED_TITLE = 'Genossenschaften.immo';
 const FEED_LOGO = 'https://genossenschaften.immo/static/gimmo/img/favicon/favicon-128x128.png';
@@ -76,9 +80,10 @@ coming in. Copy everything starting with the \`?\` to the end of the URL.
                 const $el = $(el);
                 const name = $el.find('[itemprop=name]').text();
                 const body = $el.find('.card-body').text().trim();
+                const dateTime = $el.find('time').attr('datetime');
                 const itemLink = BASE_URL + $el.find('[itemprop=url]').attr('href');
                 const itemImage = $el.find('[itemprop=image]').attr('href');
-                const itemPubDate = $el.find('time').attr('datetime');
+                const itemPubDate = dayjs.tz(dateTime, 'Europe/Vienna').toISOString();
 
                 // e.g. ['2', '60,00 m²', '500,00 €', '10.000,00 €']
                 const numbers = $el
