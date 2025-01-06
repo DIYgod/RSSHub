@@ -47,7 +47,7 @@ async function handler() {
             };
         });
 
-    const items:any[] = [];
+    const items: any[] = [];
     for await (const item of asyncPool(3, list, (item) =>
         cache.tryGet(item.link, async () => {
             const detailResponse = await got(item.link);
