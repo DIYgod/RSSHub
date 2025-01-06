@@ -37,11 +37,10 @@ coming in. Copy everything starting with the \`?\` to the end of the URL.
         '?district=wien-1-innere-stadt&district=wien-2-leopoldstadt&district=wien-3-landstrasse&district=wien-4-wieden&district=wien-5-margareten&district=wien-6-mariahilf&district=wien-7-neubau&district=wien-8-josefstadt&district=wien-9-alsergrund&district=wien-10-favoriten&district=wien-11-simmering&district=wien-12-meidling&district=wien-13-hietzing&district=wien-14-penzing&district=wien-15-rudolfsheim-fuenfhaus&district=wien-16-ottakring&district=wien-17-hernals&district=wien-18-waehring&district=wien-19-doebling&district=wien-20-brigittenau&district=wien-21-floridsdorf&district=wien-22-donaustadt&district=wien-23-liesing' +
         '&has_rent=on&has_rent_option=on' +
         '&status=available&status=construction' +
-        '&cost=1000&room=2&size=60' +
+        '&cost=1000&room=2&size=50' +
         '&has_property=off&has_rent=on&has_rent_option=on' +
         '&status=available&status=construction&status=planned' +
-        '&type=residence&type=project' +
-        '&keywords=text',
+        '&type=residence&type=project',
     parameters: {
         // labels are in german language because it's the same on the website
         cost: 'Miete bis (in €, number)',
@@ -115,6 +114,7 @@ coming in. Copy everything starting with the \`?\` to the end of the URL.
             title: FEED_TITLE,
             language: FEED_LANGUAGE,
             logo: FEED_LOGO,
+            allowEmpty: true,
             item: items,
             link,
         } satisfies Data;
