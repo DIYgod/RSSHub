@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
-const tokenUrl = 'https://auth.mangadex.org/realms/mangadex/protocol/openid-connect/token';
+import constants from './_constants';
 
 /**
  * Retrieves an access token.
@@ -27,7 +27,7 @@ const getToken = () => {
         async () => {
             const refreshToken = await getRefreshToken();
 
-            const response = await got.post(tokenUrl, {
+            const response = await got.post(constants.API.TOEKN, {
                 headers: {
                     'User-Agent': config.trueUA,
                 },
@@ -59,7 +59,7 @@ const getRefreshToken = async () => {
         throw new ConfigNotFoundError('Cannot get refresh token since MangaDex username or password is not set');
     }
 
-    const response = await got.post(tokenUrl, {
+    const response = await got.post(constants.API.TOEKN, {
         headers: {
             'User-Agent': config.trueUA,
         },

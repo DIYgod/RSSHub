@@ -4,7 +4,7 @@ import cache from '@/utils/cache';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import getToken from './_access';
 
-const settingUrl = 'https://api.mangadex.org/settings';
+import constants from './_constants';
 
 const getSetting = async () => {
     const accessToken = await getToken();
@@ -12,7 +12,7 @@ const getSetting = async () => {
     return cache.tryGet(
         'mangadex:settings',
         async () => {
-            const response = await got.get(settingUrl, {
+            const response = await got.get(constants.API.SETTING, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                     'User-Agent': config.trueUA,

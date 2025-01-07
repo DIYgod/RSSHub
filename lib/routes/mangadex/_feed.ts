@@ -3,10 +3,7 @@ import { config } from '@/config';
 import cache from '@/utils/cache';
 import { getFilteredLanguages } from './_profile';
 
-const mangaMetaBaseUrl = 'https://api.mangadex.org/manga/';
-const mainCoverMetaBaseUrl = 'https://api.mangadex.org/cover/';
-const coverBaseUrl = 'https://uploads.mangadex.org/covers/';
-const chapterBaseUrl = 'https://mangadex.org/chapter/';
+import constants from './_constants';
 
 /**
  * Get the first value that matches the keys in the source object
@@ -63,7 +60,7 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
     const rawMangaMeta = (await cache.tryGet(
         `mangadex:manga-meta:${id}`,
         async () => {
-            const { data } = await got.get(`${mangaMetaBaseUrl}${id}`);
+            const { data } = await got.get(`${constants.API.MANGA_META}${id}`);
 
             if (data.result === 'error') {
                 throw new Error(data.errors[0].detail);
@@ -98,12 +95,12 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
         const coverFilename = await cache.tryGet(
             `mangadex:cover:${coverId}`,
             async () => {
-                const { data } = await got.get(`${mainCoverMetaBaseUrl}${coverId}`);
+                const { data } = await got.get(`${constants.API.COVERS}${coverId}`);
                 return data.data.attributes.fileName;
             },
             config.cache.contentExpire
         );
-        const cover = `${coverBaseUrl}${id}/${coverFilename}`;
+        const cover = `${constants.API.COVER_IMAGE}${id}/${coverFilename}`;
         return { title, description, cover };
     }
 
@@ -121,7 +118,7 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
 const getMangaChapters = async (id: string, lang?: string | string[]) => {
     const languages = new Set([...(typeof lang === 'string' ? [lang] : lang || []), ...(await getFilteredLanguages())].filter(Boolean));
 
-    const url = `${mangaMetaBaseUrl}${id}/feed${toQueryString({
+    const url = `${constants.API.MANGA_META}${id}/feed${toQueryString({
         order: {
             publishAt: 'desc',
         },
@@ -144,7 +141,7 @@ const getMangaChapters = async (id: string, lang?: string | string[]) => {
 
     return chapters.map((chapter) => ({
         title: [chapter.attributes.volume ? `Vol. ${chapter.attributes.volume}` : null, chapter.attributes.chapter ? `Ch. ${chapter.attributes.chapter}` : null, chapter.attributes.title].filter(Boolean).join(' '),
-        link: `${chapterBaseUrl}${chapter.id}`,
+        link: `${constants.API.MANGA_CHAPTERS}${chapter.id}`,
         pubDate: new Date(chapter.attributes.publishAt),
     })) as Array<{ title: string; link: string; pubDate: Date }>;
 };
