@@ -45,8 +45,8 @@ export const route: Route = {
         return fetchAutoNews(typeMap[type].path, typeMap[type].name);
     },
     description: `| 通知公告  | 研究生教育 |    本科教学    | 学生工作  |
-                  | -------- | -------- |   --------    | -------- |
-                  | notice   | graduate | undergraduate | student  |`,
+| -------- | -------- |   --------    | -------- |
+| notice   | graduate | undergraduate | student  |`,
     radar: [
         {
             source: ['auto.hdu.edu.cn/main.htm', 'auto.hdu.edu.cn/3779/list.htm'],
