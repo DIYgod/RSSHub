@@ -1,0 +1,50 @@
+import { Data, Route, ViewType } from '@/types';
+import { extractMiniCards, processCards, rootUrl } from './utils';
+export const route: Route = {
+    path: '/fresh/:dateSort?',
+    view: ViewType.Articles,
+    categories: ['programming'],
+    example: '/fresh',
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    parameters: {
+        dateSort: {
+            description: 'Sort posts by publication date instead of popularity',
+            default: 'true',
+            options: [
+                { value: 'false', label: 'False' },
+                { value: 'true', label: 'True' },
+            ],
+        },
+    },
+    radar: [
+        {
+            source: ['css-tricks.com'],
+            target: '/fresh',
+        },
+    ],
+    name: 'Fresh From the Almanac',
+    maintainers: ['Rjnishant530'],
+    handler,
+};
+
+async function handler(ctx) {
+    const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
+    const popularCards = await extractMiniCards('body > div.page-wrap > section.post-sliders > div:nth-child(4) article.mini-card.module.module-article');
+    const items = await processCards(popularCards, true, dateSort);
+    return {
+        title: 'Fresh From the Almanac',
+        description: 'Properties, selectors, rules, and functions!',
+        link: rootUrl,
+        item: items,
+        language: 'en',
+        logo: `${rootUrl}/favicon.ico`,
+        icon: `${rootUrl}/favicon.ico`,
+    } as Data;
+}
