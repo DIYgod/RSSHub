@@ -1,4 +1,5 @@
-const utils = require('./utils');
+import { ProcessFeed } from './utils';
+import { Route } from '@/types';
 
 const type_map = {
     0: '達人專欄',
@@ -56,18 +57,38 @@ const subcategory_map = {
     34: '其他',
 };
 
-module.exports = async (ctx) => {
-    const type = ctx.params.type ?? '1';
-    const category = ctx.params.category ?? '0';
-    const subcategory = ctx.params.subcategory ?? '0';
+async function handler(ctx) {
+    const { type = '1', category = '0', subcategory = '0' } = ctx.req.param();
 
     const url = `https://home.gamer.com.tw/index.php?k1=${category}&k2=${subcategory}&vt=${type}&sm=3`;
 
-    const { items } = await utils.ProcessFeed(url, ctx);
+    const { items } = await ProcessFeed(url);
 
-    ctx.state.data = {
-        title: `巴哈姆特创作大厅${category === '0' ? '' : ' - ' + category_map[category]}${subcategory === '0' ? '' : ' - ' + subcategory_map[subcategory]} - ${type_map[type]}`,
+    return {
+        title: `巴哈姆特的創作大廳${category === '0' ? '' : ' - ' + category_map[category]}${subcategory === '0' ? '' : ' - ' + subcategory_map[subcategory]} - ${type_map[type]}`,
         link: url,
         item: items,
     };
+}
+
+export const route: Route = {
+    path: '/creation_index/:category?/:subcategory?/:type?',
+    categories: ['anime'],
+    example: '/bahamut/creation_index/0/0/0',
+    parameters: {
+        category: '分类',
+        subcategory: '子分类',
+        type: '类型',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '巴哈姆特的創作大廳 - 首頁',
+    maintainers: ['hoilc', 'bGZo'],
+    handler,
 };
