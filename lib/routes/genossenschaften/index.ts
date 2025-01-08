@@ -8,10 +8,11 @@ import utc from 'dayjs/plugin/utc';
 dayjs.extend(timezone);
 dayjs.extend(utc);
 
-const FEED_TITLE = 'Genossenschaften.immo';
-const FEED_LOGO = 'https://genossenschaften.immo/static/gimmo/img/favicon/favicon-128x128.png';
-const FEED_LANGUAGE = 'de';
-const BASE_URL = 'https://genossenschaften.immo';
+const FEED_TITLE = 'Genossenschaften.immo' as const;
+const FEED_LOGO = 'https://genossenschaften.immo/static/gimmo/img/favicon/favicon-128x128.png' as const;
+const FEED_LANGUAGE = 'de' as const;
+const BASE_URL = 'https://genossenschaften.immo' as const;
+const PATH_PREFIX = '/genossenschaften/' as const;
 
 export const route: Route = {
     name: 'Immobiliensuche',
@@ -20,7 +21,7 @@ export const route: Route = {
     categories: ['other'],
     description: `
 Note that all parameters are optional and many can be specified multiple times
-(e.g. \`&district=wien-1-innere-stadt&district=wien-2-leopoldstadt\`).
+(e.g. \`district=wien-1-innere-stadt&district=wien-2-leopoldstadt\`).
 
 Only returns the first page of search results, allowing you to keep track of
 newly added apartments. If you're looking for an apartment, make sure to also
@@ -31,12 +32,12 @@ To get your query URL, go to https://genossenschaften.immo, open your browser's
 dev tools (F12 or Ctrl+Shift+I) and go to the Network tab and filter for
 XHR/Fetch requests. On the website, set up your search parameters. As the
 results refresh, you'll see new requests to https://genossenschaften.immo/?…
-coming in. Copy everything starting with the \`?\` to the end of the URL.
+coming in. Copy everything after the \`?\` until the end of the URL.
 :::
 `,
     example:
-        '/genossenschaften' +
-        '?district=wien-1-innere-stadt&district=wien-2-leopoldstadt&district=wien-3-landstrasse&district=wien-4-wieden&district=wien-5-margareten&district=wien-6-mariahilf&district=wien-7-neubau&district=wien-8-josefstadt&district=wien-9-alsergrund&district=wien-10-favoriten&district=wien-11-simmering&district=wien-12-meidling&district=wien-13-hietzing&district=wien-14-penzing&district=wien-15-rudolfsheim-fuenfhaus&district=wien-16-ottakring&district=wien-17-hernals&district=wien-18-waehring&district=wien-19-doebling&district=wien-20-brigittenau&district=wien-21-floridsdorf&district=wien-22-donaustadt&district=wien-23-liesing' +
+        PATH_PREFIX +
+        'district=wien-1-innere-stadt&district=wien-2-leopoldstadt&district=wien-3-landstrasse&district=wien-4-wieden&district=wien-5-margareten&district=wien-6-mariahilf&district=wien-7-neubau&district=wien-8-josefstadt&district=wien-9-alsergrund&district=wien-10-favoriten&district=wien-11-simmering&district=wien-12-meidling&district=wien-13-hietzing&district=wien-14-penzing&district=wien-15-rudolfsheim-fuenfhaus&district=wien-16-ottakring&district=wien-17-hernals&district=wien-18-waehring&district=wien-19-doebling&district=wien-20-brigittenau&district=wien-21-floridsdorf&district=wien-22-donaustadt&district=wien-23-liesing' +
         '&has_rent=on&has_rent_option=on' +
         '&status=available&status=construction' +
         '&cost=1000&room=2&size=50' +
@@ -67,11 +68,13 @@ coming in. Copy everything starting with the \`?\` to the end of the URL.
         supportScihub: false,
     },
     async handler(ctx) {
-        // `?cost=1000&district=wien-1-innere-stadt&…`
-        const { search } = new URL(ctx.req.url);
-        // path might be something like `/genossenschaften/immobilien/regionen/wien`
-        const path = ctx.req.path.slice('/genossenschaften/'.length);
-        const link = `${BASE_URL}/${path}${search}`;
+        let path = ctx.req.path.slice(PATH_PREFIX.length);
+        if (path.startsWith('&')) {
+            // in case request url is something like `/genossenschaften/&cost=…`
+            path = path.slice(1);
+        }
+
+        const link = `${BASE_URL}/?${path}`;
         const response = await ofetch(link);
         const $ = load(response);
 
