@@ -11048,6 +11048,14 @@
     ],
     ".": [
       {
+        "title": "Call for Papers",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/"
+        ],
+        "target": "/sciencedirect/call-for-paper/:subject"
+      },
+      {
         "title": "Journal",
         "docs": "https://docs.rsshub.app/routes/journal",
         "source": [

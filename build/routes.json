@@ -72919,6 +72919,30 @@
   },
   "sciencedirect": {
     "routes": {
+      "/call-for-paper/:subject": {
+        "path": "/call-for-paper/:subject",
+        "categories": [
+          "journal"
+        ],
+        "example": "/sciencedirect/call-for-paper/education",
+        "parameters": {
+          "subject": "学科分类，例如“education”"
+        },
+        "radar": [
+          {
+            "source": [
+              "sciencedirect.com"
+            ]
+          }
+        ],
+        "name": "Call for Papers",
+        "maintainers": [
+          "etShaw-zh"
+        ],
+        "url": "sciencedirect.com/browse/calls-for-papers",
+        "description": "`sciencedirect.com/browse/calls-for-papers?subject=education` -> `/sciencedirect/call-for-paper/education`",
+        "location": "call-for-paper.ts"
+      },
       "/journal/:id": {
         "path": "/journal/:id",
         "categories": [
