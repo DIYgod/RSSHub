@@ -1,0 +1,5 @@
+<div>
+    <p><strong>Summary:</strong> {{summary}} </p>
+    <p><strong>Submission Deadline:</strong> {{submissionDeadline}}</p>
+    <p><strong>Journal:</strong> {{displayName}} (IF: {{impactFactor}}, CiteScore: {{citeScore}})</p>
+</div>
