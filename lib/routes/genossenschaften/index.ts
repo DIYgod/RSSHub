@@ -1,12 +1,6 @@
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import type { Data, DataItem, Route } from '@/types';
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
-
-dayjs.extend(timezone);
-dayjs.extend(utc);
 
 const FEED_TITLE = 'Genossenschaften.immo' as const;
 const FEED_LOGO = 'https://genossenschaften.immo/static/gimmo/img/favicon/favicon-128x128.png' as const;
@@ -85,10 +79,11 @@ filters, copy the part of the URL after the \`?\`.
                 const $el = $(el);
                 const name = $el.find('[itemprop=name]').text();
                 const body = $el.find('.card-body').text().trim();
+                // UTC timestamp: <time datetime="2025-01-07T15:48:07.089153">
                 const dateTime = $el.find('time').attr('datetime');
+                const itemPubDate = dateTime ? new Date(dateTime + 'Z') : undefined;
                 const itemLink = BASE_URL + $el.find('[itemprop=url]').attr('href');
                 const itemImage = $el.find('[itemprop=image]').attr('href');
-                const itemPubDate = dayjs.tz(dateTime, 'Europe/Vienna').toISOString();
 
                 // e.g. ['2', '60,00 m²', '500,00 €', '10.000,00 €']
                 const numbers = $el
