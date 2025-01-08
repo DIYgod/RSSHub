@@ -1,4 +1,4 @@
-import { ProcessFeed } from './utils';
+import { processFeed } from './utils';
 import { Route } from '@/types';
 
 const type_map = {
@@ -62,7 +62,7 @@ async function handler(ctx) {
 
     const url = `https://home.gamer.com.tw/index.php?k1=${category}&k2=${subcategory}&vt=${type}&sm=3`;
 
-    const { items } = await ProcessFeed(url);
+    const { items } = await processFeed(url);
 
     return {
         title: `巴哈姆特的創作大廳${category === '0' ? '' : ' - ' + category_map[category]}${subcategory === '0' ? '' : ' - ' + subcategory_map[subcategory]} - ${type_map[type]}`,
@@ -73,7 +73,7 @@ async function handler(ctx) {
 
 export const route: Route = {
     path: '/creation_index/:category?/:subcategory?/:type?',
-    categories: ['anime'],
+    categories: ['anime', 'social-media'],
     example: '/bahamut/creation_index/0/0/0',
     parameters: {
         category: '分类',
@@ -88,7 +88,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '巴哈姆特的創作大廳 - 首頁',
+    radar: [
+        {
+            source: ['home.gamer.com.tw/index.php?k1=', 'home.gamer.com.tw/index.php?k2=', 'home.gamer.com.tw/index.php?vt='],
+        },
+    ],
+    name: '創作大廳 - 首頁',
     maintainers: ['hoilc', 'bGZo'],
     handler,
 };

@@ -4,7 +4,7 @@ import cache from '@/utils/cache';
 
 const base = 'https://home.gamer.com.tw/';
 
-export const ProcessFeed = async (url: string) => {
+export const processFeed = async (url: string) => {
     const response = await got.get(url);
     const $ = load(response.data);
 
