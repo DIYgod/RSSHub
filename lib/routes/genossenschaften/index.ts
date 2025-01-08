@@ -28,11 +28,12 @@ newly added apartments. If you're looking for an apartment, make sure to also
 look through the other pages on the website.
 
 :::tip
-To get your query URL, go to https://genossenschaften.immo, open your browser's
-dev tools (F12 or Ctrl+Shift+I) and go to the Network tab and filter for
-XHR/Fetch requests. On the website, set up your search parameters. As the
-results refresh, you'll see new requests to https://genossenschaften.immo/?…
-coming in. Copy everything after the \`?\` until the end of the URL.
+To get your query URL, go to https://genossenschaften.immo, and apply all
+desired filters. If you want to filter by (all districts of a) federal state
+(e.g. \`/immobilien/regionen/wien/\`), please open the district selector, de-
+and re-select any district, so that the region in the URL gets replaced with
+a number of \`district\` parameters. Once you've set up all desired filters,
+copy the part of the URL after the \`?\`.
 :::
 `,
     example:
