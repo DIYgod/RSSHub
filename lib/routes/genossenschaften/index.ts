@@ -28,12 +28,12 @@ newly added apartments. If you're looking for an apartment, make sure to also
 look through the other pages on the website.
 
 :::tip
-To get your query URL, go to https://genossenschaften.immo, and apply all
+To get your query URL, go to https://genossenschaften.immo and apply all
 desired filters. If you want to filter by (all districts of a) federal state
-(e.g. \`/immobilien/regionen/wien/\`), please open the district selector, de-
-and re-select any district, so that the region in the URL gets replaced with
-a number of \`district\` parameters. Once you've set up all desired filters,
-copy the part of the URL after the \`?\`.
+(e.g. \`/immobilien/regionen/wien/\`), please open the district selector and
+de- and re-select any district, so that the region in the URL gets replaced
+with a number of \`district\` parameters. Once you've set up all desired
+filters, copy the part of the URL after the \`?\`.
 :::
 `,
     example:
