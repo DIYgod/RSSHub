@@ -52,7 +52,7 @@ const parsers = {
                 image: item.find('.item-pic').attr('src'),
             };
         }),
-    hs: ($) => 
+    hs: ($) =>
         $('.article-container>a').toArray().map((item) => {
             item = $(item);
             return {
@@ -87,17 +87,13 @@ function getList(category, $) {
 }
 
 async function fetchDetail(item, category) {
-    return cache.tryGet(item.link, async () => {
+    return await cache.tryGet(item.link, async () => {
         const response = await ofetch(item.link);
         const $ = load(response);
 
         const parseDetail = detailParsers[category];
-        if (parseDetail) {
-            item.description = parseDetail($);
-        } else {
-            item.description = '无法解析详情内容';
-        }
-
+        item.description = parseDetail($);
+        
         return item;
     });
 }
@@ -137,6 +133,7 @@ async function handler(ctx) {
             item: items,
         };
     } catch (error) {
+        console.error('抓取新闻时出错。'+error);
         return {
             title: `${categoryNames[category]}新闻`,
             description: '抓取新闻时出错。',
