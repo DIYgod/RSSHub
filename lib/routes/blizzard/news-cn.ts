@@ -93,7 +93,6 @@ async function fetchDetail(item, category) {
 
         const parseDetail = detailParsers[category];
         item.description = parseDetail($);
-        
         return item;
     });
 }
@@ -110,34 +109,25 @@ async function handler(ctx) {
 
     const rootUrl = `https://${category}.blizzard.cn/news`;
 
-    try {
-        const response = await ofetch(rootUrl);
-        const $ = load(response);
+    const response = await ofetch(rootUrl);
+    const $ = load(response);
 
-        const list = getList(category, $);
-        if (!list.length) {
-            return {
-                title: `${categoryNames[category]}新闻`,
-                description: '未找到相关新闻。',
-                item: [],
-            };
-        }
-
-        const items = await Promise.all(
-            list.map((item) => fetchDetail(item, category))
-        );
-
+    const list = getList(category, $);
+    if (!list.length) {
         return {
             title: `${categoryNames[category]}新闻`,
-            link: rootUrl,
-            item: items,
-        };
-    } catch (error) {
-        console.error('抓取新闻时出错。'+error);
-        return {
-            title: `${categoryNames[category]}新闻`,
-            description: '抓取新闻时出错。',
+            description: '未找到相关新闻。',
             item: [],
         };
     }
+
+    const items = await Promise.all(
+        list.map((item) => fetchDetail(item, category))
+    );
+
+    return {
+        title: `${categoryNames[category]}新闻`,
+        link: rootUrl,
+        item: items,
+    };
 }
