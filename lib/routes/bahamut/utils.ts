@@ -54,7 +54,7 @@ export const processFeed = async (url: string) => {
                 }
                 topic.description = result.description;
             } catch {
-                return '';
+                topic.description = '';
             }
             cache.set(link, JSON.stringify(topic));
             return topic;
