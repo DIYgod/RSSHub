@@ -21708,6 +21708,43 @@
     "url": "career.csu.edu.cn",
     "lang": "zh-CN"
   },
+  "ctbu": {
+    "routes": {
+      "/xxgg": {
+        "path": "/xxgg",
+        "categories": [
+          "university"
+        ],
+        "example": "/ctbu/xxgg",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ctbu.edu.cn/",
+              "www.ctbu.edu.cn/index/xxgg.htm"
+            ]
+          }
+        ],
+        "name": "学校公告",
+        "maintainers": [
+          "Skylwn"
+        ],
+        "url": "www.ctbu.edu.cn/",
+        "location": "xxgg.ts"
+      }
+    },
+    "name": "重庆工商大学",
+    "url": "www.ctbu.edu.cn/",
+    "lang": "zh-CN"
+  },
   "cts": {
     "routes": {
       "/:category": {
