@@ -100,7 +100,7 @@ async function fetchDetail(item, category) {
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'ow';
     if (!categoryNames[category]) {
-        throw Error('Invalid category');
+        throw new Error('Invalid category');
     }
 
     const rootUrl = `https://${category}.blizzard.cn/news`;
@@ -110,7 +110,7 @@ async function handler(ctx) {
 
     const list = getList(category, $);
     if (!list.length) {
-        throw Error('No news found');
+        throw new Error('No news found');
     }
 
     const items = await Promise.all(
