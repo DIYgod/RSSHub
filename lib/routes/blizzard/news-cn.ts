@@ -100,11 +100,7 @@ async function fetchDetail(item, category) {
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'ow';
     if (!categoryNames[category]) {
-        return {
-            title: '错误的类别',
-            description: '您请求的类别不存在。',
-            item: [],
-        };
+        throw Error('Invalid category');
     }
 
     const rootUrl = `https://${category}.blizzard.cn/news`;
@@ -114,11 +110,7 @@ async function handler(ctx) {
 
     const list = getList(category, $);
     if (!list.length) {
-        return {
-            title: `${categoryNames[category]}新闻`,
-            description: '未找到相关新闻。',
-            item: [],
-        };
+        throw Error('No news found');
     }
 
     const items = await Promise.all(
