@@ -4,10 +4,39 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 
+const descriptionDoc: string = `
+Subscribe to the new beatmaps on https://osu.ppy.sh/beatmapsets.
+
+Parameters allows you to:
+
+- Filter game mode
+- Limit beatmap difficulty
+- Show/hide game mode in feed title
+
+Check out paramters description for more details.
+
+:::tip
+You could make use of \`difficultyLimit\` paramters to create a "high difficulty/low difficulty only" only feed.
+
+For example, if you only wants to play low star rating beatmap like 1 or 2 star, you could subscribe to:
+
+    /osu/latest-ranked/difficultyLimit=U2
+
+This will filter out all beatmapsets that do not provide at least one beatmap with star rating<=\`2.00\`.
+
+Similarly, you could use lower bound to filter out beatmapsets which don't have at least one beatmap
+with star rating higher than a certain threshold.
+
+    /osu/latest-ranked/difficultyLimit=L6
+
+Now all beatmapsets that don't provided at least one beatmap with star rating higher than \`6.00\` will be filtered.
+:::
+`;
+
 export const route: Route = {
     path: '/latest-ranked/:routeParams?',
     categories: ['game'],
-    example: '/osu/latest-ranked/includedMode=osu&includedMode=mania&difficultyLimit=L3&difficultyLimit=U7',
+    example: '/osu/latest-ranked/includeMode=osu&includeMode=mania&difficultyLimit=L3&difficultyLimit=U7',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -15,11 +44,12 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        supportRadar: true,
     },
     parameters: {
         includeMode: {
-            description: 'Determine included mode of beatmaps. Contains this parameter several times to specify multiple mode, e.g.: `includeMode=osu&includeMode=mania`',
-            default: 'All Mode',
+            description: 'Specify included game mode of beatmaps. Including this parameter multiple times to specify multiple game modes, e.g.: `includeMode=osu&includeMode=mania`. Subscribe to all game modes if not specified.',
+            default: 'all',
             options: [
                 {
                     value: 'osu',
@@ -41,8 +71,7 @@ export const route: Route = {
         },
         difficultyLimit: {
             default: '',
-            description:
-                'Lower/upper limit difficulties of the beatmap in the beatmapset item, E.g.: `L3.50`, `U5.0`. Note that the beatmapset will be included as long as at least one beatmap in the beatmapset satisfies the requirements. `U` and `L` each should only be specified once, for example, `difficultyLimit=U3&difficultyLimit=U5` is not allowed because upper limit being specified for twice.',
+            description: 'Lower/upper limit of star rating of the beatmaps in the beatmapset item, e.g.:`difficultyLimit=U6`. Checkout tips in descriptions for detailed explaination and examples.',
         },
         modeInTitle: {
             description: 'Add mode info into feed title.',
@@ -60,6 +89,7 @@ export const route: Route = {
         },
     },
     name: 'Latest Ranked Beatmap',
+    description: descriptionDoc,
     maintainers: ['nfnfgo'],
     radar: [
         {
@@ -166,13 +196,13 @@ interface BeatmapsetInfo {
 
 async function handler(ctx): Promise<Data> {
     // Parse & retrive searchParams
-    const includedModesStr = ctx.req.param('routeParams');
-    // Here user actually pass the query using path param, like: `/osu/latest-ranked/includedMode=osu`
-    // We first retrieve path param part: `includedMode=osu`, then concat it with host to construct a "fake" URL:
-    // `https://osu.ppy.sh?includedMode=osu`
+    const pathParams = ctx.req.param('routeParams');
+    // Here user actually pass the query using path param, like: `/osu/latest-ranked/includeMode=osu`
+    // We first retrieve path param part: `includeMode=osu`, then concat it with host to construct a "fake" URL:
+    // `https://osu.ppy.sh?includeMode=osu`
     // Then we use URL.searchParams to parse and retrieve params from this "fake" URL.
-    const searchParams = new URL(`https://osu.ppy.sh?${includedModesStr}`).searchParams; // use URL to parse params
-    const includedModes = searchParams.getAll('includedMode');
+    const searchParams = new URL(`https://osu.ppy.sh?${pathParams}`).searchParams; // use URL to parse params
+    const includeModes = searchParams.getAll('includeMode');
     const difficultyLimits = searchParams.getAll('difficultyLimit');
     const modeInTitle = searchParams.get('modeInTitle') ?? 'true'; // show mode name in title, default to true.
 
@@ -206,8 +236,8 @@ async function handler(ctx): Promise<Data> {
     // Note:
     // One Osu beatmapset could actually contains several beatmaps with different game mode.
     // Here for simplicity we just use the mode of first beatmap in this set for filtering criteria.
-    if (includedModes?.length && includedModes?.length > 0) {
-        beatmapsetList = beatmapsetList.filter((bm) => includedModes.includes(bm.beatmaps[0].mode));
+    if (includeModes?.length && includeModes?.length > 0) {
+        beatmapsetList = beatmapsetList.filter((bm) => includeModes.includes(bm.beatmaps[0].mode));
     }
 
     let upperLimit = 99; // Osu! will never have maps with 99+ star rating right?
@@ -313,6 +343,7 @@ async function handler(ctx): Promise<Data> {
     return {
         title: `Osu! Latest Ranked Map`,
         link: `https://osu.ppy.sh/beatmapsets`,
+        description: 'Newly ranked beatmaps at https://osu.ppy.sh/beatmapsets',
         item: rssItems,
     };
 }
