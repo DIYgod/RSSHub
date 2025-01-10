@@ -1,7 +1,9 @@
 import got from '@/utils/got';
-import { load } from 'cheerio';
+import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
+
+import ofetch from '@/utils/ofetch';
 const md = MarkdownIt({
     html: true,
 });
@@ -21,15 +23,21 @@ async function loadContent(id) {
 
     return { description };
 }
+export const getArticle = async (link) => {
+    const response = await ofetch(link);
+    const $ = cheerio.load(response);
+    // console.log($.html());
+    return $('.article-viewer').html();
+};
 
 const loadNews = async (link) => {
     const response = await got(link);
-    const $ = load(response.data);
+    const $ = cheerio.load(response.data);
     $('h1.title, .main-box .message').remove();
     return { description: $('.main-box .article').html() };
 };
 
-const ProcessFeed = (list, caches) =>
+export const ProcessFeed = (list, caches) =>
     Promise.all(
         list.map(async (item) => {
             const isArticle = !!item.article_info;
@@ -51,5 +59,3 @@ const ProcessFeed = (list, caches) =>
             return { ...single, ...other };
         })
     );
-
-export default { ProcessFeed };
