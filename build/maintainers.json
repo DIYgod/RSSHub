@@ -2587,6 +2587,9 @@
   "/gelonghui/user/:id": [
     "nczitzk"
   ],
+  "/genossenschaften*": [
+    "sk22"
+  ],
   "/geocaching/blogs": [
     "HankChow"
   ],
