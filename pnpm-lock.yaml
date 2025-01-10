@@ -422,8 +422,8 @@ importers:
         specifier: 2.4.3
         version: 2.4.3(typescript@5.7.3)
       node-network-devtools:
-        specifier: 1.0.24
-        version: 1.0.24(bufferutil@4.0.8)(undici@6.21.0)(utf-8-validate@5.0.10)
+        specifier: 1.0.25
+        version: 1.0.25(bufferutil@4.0.8)(undici@6.21.0)(utf-8-validate@5.0.10)
       prettier:
         specifier: 3.4.2
         version: 3.4.2
@@ -4266,8 +4266,8 @@ packages:
     resolution: {integrity: sha512-vv8fJuOUCCvSPjDjBLlMqYMHob4aGjkmrkaE42/mZr0VT+ZAU10jRF8oTnX9+pgU9/vYJ8P7YT3Vd6ajkmzSCw==}
     engines: {node: '>=0.12'}
 
-  node-network-devtools@1.0.24:
-    resolution: {integrity: sha512-t0IDK8JB1ayCfaRfoVaWuF6dj6CcaTjU+T1vm8q3pBYkmO9jWTDoccUZYOEmeWICM/iBuiqg0VxbuklqhdVBTw==}
+  node-network-devtools@1.0.25:
+    resolution: {integrity: sha512-lPOdXdkh3I6haAUz+dTtfOCdt6/J6tJdQsKXxix9TmHV2wwecEVXLrZuawkkCMfbU4tb6/PJLqfiIO3R/VARiw==}
     peerDependencies:
       undici: ^6
 
@@ -10009,7 +10009,7 @@ snapshots:
     dependencies:
       write-file-atomic: 1.3.4
 
-  node-network-devtools@1.0.24(bufferutil@4.0.8)(undici@6.21.0)(utf-8-validate@5.0.10):
+  node-network-devtools@1.0.25(bufferutil@4.0.8)(undici@6.21.0)(utf-8-validate@5.0.10):
     dependencies:
       iconv-lite: 0.6.3
       open: 8.4.2
