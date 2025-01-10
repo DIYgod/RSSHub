@@ -45382,6 +45382,30 @@
     "url": "ikea.com",
     "lang": "en"
   },
+  "iknowwhatyoudownload": {
+    "routes": {
+      "/stats/daily/:country": {
+        "path": "/stats/daily/:country",
+        "categories": [
+          "other"
+        ],
+        "example": "/iknowwhatyoudownload/stats/daily/CN",
+        "url": "iknowwhatyoudownload.com",
+        "name": "Daily Torrents Statistics",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "parameters": {
+          "country": "the country of the stats. ISO 3166-1 alpha-2 code."
+        },
+        "location": "daily.ts"
+      }
+    },
+    "name": "I Know What You Download",
+    "url": "iknowwhatyoudownload.com",
+    "description": "",
+    "lang": "en"
+  },
   "imagemagick": {
     "routes": {
       "/changelog": {
