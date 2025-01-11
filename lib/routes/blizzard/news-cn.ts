@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/news-cn/:category',
+    path: '/news-cn/:category?',
     categories: ['game'],
     example: '/blizzard/news-cn/ow',
     parameters: { category: '游戏类别, 默认为 ow' },
