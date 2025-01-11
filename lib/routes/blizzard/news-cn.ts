@@ -77,7 +77,7 @@ const parsers = {
 
 // 详情页解析逻辑
 const detailParsers = {
-    ow: ($) => $('.detail-content-box').first().html(),
+    ow: ($) => $('.deatil-content').first().html(),
     hs: ($) => $('.article').first().html(),
     wow: ($) => $('.detail').first().html(),
 };
