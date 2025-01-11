@@ -1,7 +1,6 @@
 import { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
 type NewsCategory = {
@@ -9,6 +8,8 @@ type NewsCategory = {
     baseUrl: string;
     description: string;
 };
+
+const WEBSITE_URL = 'http://www.cpta.com.cn';
 
 const NEWS_TYPES: Record<string, NewsCategory> = {
     notice: {
@@ -23,6 +24,12 @@ const NEWS_TYPES: Record<string, NewsCategory> = {
     },
 };
 
+async function randomPause() {
+    // Random pause 3-10 seconds intently for avoiding IP gateway frequency restriction.
+    const randomDelay = Math.floor(Math.random() * (10000 - 3000 + 1)) + 3000;
+    return await new Promise((resolve) => setTimeout(resolve, randomDelay));
+}
+
 const handler: Route['handler'] = async (context) => {
     const category = context.req.param('category');
     const BASE_URL = NEWS_TYPES[category].baseUrl;
@@ -31,22 +38,29 @@ const handler: Route['handler'] = async (context) => {
     const $ = load(listResponse);
 
     // Select all list items containing news information
-    const ITEM_SELECTOR = 'ul[class*="list_14"] > li';
+    const ITEM_SELECTOR = 'ul[class*="list_14"] > li:has(*)';
     const listItems = $(ITEM_SELECTOR);
 
     // Map through each list item to extract details
-    const contentLinkList = listItems.toArray().map((element) => {
-        const title = $(element).find('a').attr('title')!;
-        const relativeLink = $(element).find('a').attr('href')!;
-        return {
-            title,
-            link: relativeLink,
-        };
-    });
+    const contentLinkList = listItems
+        .toArray()
+        .map((element) => {
+            const title = $(element).find('a').attr('title')!;
+            const date = $(element).find('i').text()!.replaceAll(/[[\]]/g, '');
+            const relativeLink = $(element).find('a').attr('href')!;
+            const absoluteLink = new URL(relativeLink, WEBSITE_URL).href;
+            return {
+                title,
+                date,
+                link: absoluteLink,
+            };
+        })
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .slice(0, 12);
 
     return {
-        title: '计算机职业技术资格考试（软考）最新动态',
-        description: '计算机职业技术资格考试（软考）网站最新动态和消息推送',
+        title: `中国人事考试网-${NEWS_TYPES[category].title}`,
+        description: NEWS_TYPES[category].description,
         link: BASE_URL,
         image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
         item: (await Promise.all(
@@ -55,28 +69,25 @@ const handler: Route['handler'] = async (context) => {
                     item.link,
                     async () => {
                         const CONTENT_SELECTOR = '#p_content';
-                        const TIME_SELECTOR = '#p_publishtime';
+                        await randomPause();
                         const { data: contentResponse } = await got(item.link);
                         const contentPage = load(contentResponse);
                         const content = contentPage(CONTENT_SELECTOR).html() || '';
-                        const originLink = `http://www.cpta.com.cn/${item.link}`;
-                        const publishTime = contentPage(TIME_SELECTOR).text() as string;
-                        const formattedDate = parseDate(publishTime);
                         return {
                             title: item.title,
-                            pubDate: formattedDate,
+                            pubDate: item.date,
                             link: item.link,
                             description: content,
                             category: ['study'],
-                            guid: originLink,
-                            id: originLink,
+                            guid: item.link,
+                            id: item.link,
                             image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
                             content,
-                            updated: formattedDate,
+                            updated: item.date,
                             language: 'zh-CN',
                         };
                     },
-                    129600
+                    80000
                 )
             )
         )) as DataItem[],
