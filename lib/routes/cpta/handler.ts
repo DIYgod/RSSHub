@@ -51,29 +51,33 @@ const handler: Route['handler'] = async (context) => {
         image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
         item: (await Promise.all(
             contentLinkList.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const CONTENT_SELECTOR = '#p_content';
-                    const TIME_SELECTOR = '#p_publishtime';
-                    const { data: contentResponse } = await got(item.link);
-                    const contentPage = load(contentResponse);
-                    const content = contentPage(CONTENT_SELECTOR).html() || '';
-                    const originLink = `http://www.cpta.com.cn/${item.link}`;
-                    const publishTime = contentPage(TIME_SELECTOR).text() as string;
-                    const formattedDate = parseDate(publishTime);
-                    return {
-                        title: item.title,
-                        pubDate: formattedDate,
-                        link: item.link,
-                        description: content,
-                        category: ['study'],
-                        guid: originLink,
-                        id: originLink,
-                        image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
-                        content,
-                        updated: formattedDate,
-                        language: 'zh-CN',
-                    };
-                })
+                cache.tryGet(
+                    item.link,
+                    async () => {
+                        const CONTENT_SELECTOR = '#p_content';
+                        const TIME_SELECTOR = '#p_publishtime';
+                        const { data: contentResponse } = await got(item.link);
+                        const contentPage = load(contentResponse);
+                        const content = contentPage(CONTENT_SELECTOR).html() || '';
+                        const originLink = `http://www.cpta.com.cn/${item.link}`;
+                        const publishTime = contentPage(TIME_SELECTOR).text() as string;
+                        const formattedDate = parseDate(publishTime);
+                        return {
+                            title: item.title,
+                            pubDate: formattedDate,
+                            link: item.link,
+                            description: content,
+                            category: ['study'],
+                            guid: originLink,
+                            id: originLink,
+                            image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
+                            content,
+                            updated: formattedDate,
+                            language: 'zh-CN',
+                        };
+                    },
+                    129600
+                )
             )
         )) as DataItem[],
         allowEmpty: true,
