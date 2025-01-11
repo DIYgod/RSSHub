@@ -13011,6 +13011,40 @@
   },
   "blizzard": {
     "routes": {
+      "/news-cn/:category?": {
+        "path": "/news-cn/:category?",
+        "categories": [
+          "game"
+        ],
+        "example": "/blizzard/news-cn/ow",
+        "parameters": {
+          "category": "游戏类别, 默认为 ow"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "ow.blizzard.cn",
+              "wow.blizzard.cn",
+              "hs.blizzard.cn"
+            ],
+            "target": "/news-cn/"
+          }
+        ],
+        "name": "暴雪游戏国服新闻",
+        "maintainers": [
+          "zhangpeng2k"
+        ],
+        "description": "\n| 守望先锋 | 炉石传说 | 魔兽世界 |\n|----------|----------|---------|\n| ow       | hs       | wow     |\n",
+        "location": "news-cn.ts"
+      },
       "/news/:language?/:category?": {
         "path": "/news/:language?/:category?",
         "categories": [

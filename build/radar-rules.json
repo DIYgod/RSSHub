@@ -5687,6 +5687,21 @@
       }
     ]
   },
+  "blizzard.cn": {
+    "_name": "Blizzard",
+    "ow": [
+      {
+        "title": "暴雪游戏国服新闻",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/",
+          "/",
+          "/"
+        ],
+        "target": "/blizzard/news-cn/"
+      }
+    ]
+  },
   "blogread.cn": {
     "_name": "技术头条",
     ".": [
