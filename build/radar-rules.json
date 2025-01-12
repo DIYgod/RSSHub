@@ -30781,7 +30781,7 @@
       }
     ]
   },
-  "taoguba.com.cn": {
+  "tgb.cn": {
     "_name": "淘股吧",
     ".": [
       {
@@ -30792,15 +30792,6 @@
           "/"
         ],
         "target": "/taoguba/blog/:id"
-      },
-      {
-        "title": "用户博客",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/blog/:id",
-          "/"
-        ],
-        "target": "/taoguba/user/:id"
       }
     ]
   },

@@ -6715,12 +6715,6 @@
   "/taoguba/blog/:id": [
     "nczitzk"
   ],
-  "/taoguba/user/:id": [
-    "nczitzk"
-  ],
-  "/taoguba/index": [
-    "nczitzk"
-  ],
   "/taoguba/:category?": [
     "nczitzk"
   ],
