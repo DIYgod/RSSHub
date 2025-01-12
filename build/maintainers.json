@@ -4211,6 +4211,9 @@
   "/lfsyd/user/:id?": [
     "auto-bot-ty"
   ],
+  "/lhratings/research/:type?": [
+    "nczitzk"
+  ],
   "/lianxh/:category?": [
     "nczitzk"
   ],

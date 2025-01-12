@@ -19470,6 +19470,67 @@
       }
     ]
   },
+  "lhratings.com": {
+    "_name": "联合资信评估股份有限公司",
+    "www": [
+      {
+        "title": "研究报告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/research.html"
+        ],
+        "target": "/lhratings(_,url)=>{const urlObj=new URL(url);const type=urlObj.searchParams.get(\"type\")??void 0;return`/lhratings/research/${type?`/${type}`:\"\"}`}"
+      },
+      {
+        "title": "宏观经济",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/research.html?type=1"
+        ],
+        "target": "/lhratings/research/1"
+      },
+      {
+        "title": "债券市场",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/research.html?type=2"
+        ],
+        "target": "/lhratings/research/2"
+      },
+      {
+        "title": "行业研究",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/research.html?type=3"
+        ],
+        "target": "/lhratings/research/3"
+      },
+      {
+        "title": "评级理论与方法",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/research.html?type=4"
+        ],
+        "target": "/lhratings/research/4"
+      },
+      {
+        "title": "国际债券市场与评级",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/research.html?type=5"
+        ],
+        "target": "/lhratings/research/5"
+      },
+      {
+        "title": "评级表现",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/research.html?type=6"
+        ],
+        "target": "/lhratings/research/6"
+      }
+    ]
+  },
   "lianxh.cn": {
     "_name": "连享会",
     "www": [
