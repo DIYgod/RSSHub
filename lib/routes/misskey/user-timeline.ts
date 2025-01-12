@@ -1,4 +1,4 @@
-import { Route, ViewType } from '@/types';
+import { Route, ViewType, Data } from '@/types';
 import utils from './utils';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -38,7 +38,7 @@ Examples:
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const username = ctx.req.param('username');
     const [, pureUsername, site] = username.match(/@?(\w+)@(\w+\.\w+)/) || [];
     if (!pureUsername || !site) {
@@ -57,7 +57,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('withRenotes and mediaOnly cannot both be true.');
     }
 
-    const { accountData } = await utils.getUserTimelineByUsername(pureUsername, site, {
+    const { accountData, avatarUrl } = await utils.getUserTimelineByUsername(pureUsername, site, {
         withRenotes,
         mediaOnly,
     });
@@ -65,6 +65,7 @@ async function handler(ctx) {
     return {
         title: `User timeline for ${username} on ${site}`,
         link: `https://${site}/@${pureUsername}`,
+        image: avatarUrl || '',
         item: utils.parseNotes(accountData, site),
     };
 }
