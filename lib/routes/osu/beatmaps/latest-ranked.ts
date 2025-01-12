@@ -1,11 +1,26 @@
 import { Data, DataItem, Route } from '@/types';
+import path from 'node:path';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
+import { config } from '@/config';
+import { art } from '@/utils/render';
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
+const actualParametersDescTable = `
+| Name              | Default  | Description                                                                                                                                                                                                                                          |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| \`includeMode\`     | All mode | Could be \`osu\`, \`mania\`, \`fruits\` or \`taiko\`. Specify included game mode of beatmaps. Including this paramseter multiple times to specify multiple game modes, e.g.: \`includeMode=osu&includeMode=mania\`. Subscribe to all game modes if not specified |
+| \`difficultyLimit\` | None     | Lower/upper limit of star rating of the beatmaps in the beatmapset item, e.g.:\`difficultyLimit=U6\`. Checkout tips in descriptions for detailed explaination and examples.                                                                            |
+| \`modeInTitle\`     | \`true\`   | \`true\` or \`false\` Add mode info into feed title.
+`;
 
 const descriptionDoc: string = `
 Subscribe to the new beatmaps on https://osu.ppy.sh/beatmapsets.
+
+### Parameter Description
 
 Parameters allows you to:
 
@@ -13,7 +28,13 @@ Parameters allows you to:
 - Limit beatmap difficulty
 - Show/hide game mode in feed title
 
-Check out paramters description for more details.
+Below is a table of all allowed parameters passed to \`routeParams\`
+
+${actualParametersDescTable}
+
+This actual parameters should be passed as \`routeParams\` in URL Query String format without \`?\`, e.g.:
+
+    /osu/latest-ranked/modeInTitle=true&includeMode=osu
 
 :::tip
 You could make use of \`difficultyLimit\` paramters to create a "high difficulty/low difficulty only" only feed.
@@ -47,45 +68,9 @@ export const route: Route = {
         supportRadar: true,
     },
     parameters: {
-        includeMode: {
-            description: 'Specify included game mode of beatmaps. Including this parameter multiple times to specify multiple game modes, e.g.: `includeMode=osu&includeMode=mania`. Subscribe to all game modes if not specified.',
-            default: 'all',
-            options: [
-                {
-                    value: 'osu',
-                    label: 'Osu!',
-                },
-                {
-                    value: 'mania',
-                    label: 'Osu!Mania',
-                },
-                {
-                    value: 'fruits',
-                    label: 'Osu!Catch',
-                },
-                {
-                    value: 'taiko',
-                    label: 'Osu!Taiko',
-                },
-            ],
-        },
-        difficultyLimit: {
-            default: '',
-            description: 'Lower/upper limit of star rating of the beatmaps in the beatmapset item, e.g.:`difficultyLimit=U6`. Checkout tips in descriptions for detailed explaination and examples.',
-        },
-        modeInTitle: {
-            description: 'Add mode info into feed title.',
-            default: 'true',
-            options: [
-                {
-                    value: 'true',
-                    label: 'Show beatmap mode info in title',
-                },
-                {
-                    value: 'false',
-                    label: 'Do not show beatmap mode info in title',
-                },
-            ],
+        routeParams: {
+            description: 'Used to pass route parameters in Query String format. Check out route description for more info.',
+            default: 'null',
         },
     },
     name: 'Latest Ranked Beatmap',
@@ -207,23 +192,28 @@ async function handler(ctx): Promise<Data> {
     const modeInTitle = searchParams.get('modeInTitle') ?? 'true'; // show mode name in title, default to true.
 
     // fetch beatmap JSON info from website within cache
-    let beatmapsetList = (await cache.tryGet('https://osu.ppy.sh/beatmapsets:JSON', async () => {
-        const link = `https://osu.ppy.sh/beatmapsets`;
+    let beatmapsetList = (await cache.tryGet(
+        'https://osu.ppy.sh/beatmapsets:JSON',
+        async () => {
+            const link = 'https://osu.ppy.sh/beatmapsets';
 
-        const response = await got.get(link);
-        const $ = load(response.data);
+            const response = await got.get(link);
+            const $ = load(response.data);
 
-        const beatmapInfo = JSON.parse($('#json-beatmaps').html() ?? '{"beatmapsets": undefined}');
+            const beatmapInfo = JSON.parse($('#json-beatmaps').text() ?? '{"beatmapsets": undefined}');
 
-        const beatmapList: BeatmapsetInfo[] = beatmapInfo.beatmapsets;
+            const beatmapList: BeatmapsetInfo[] = beatmapInfo.beatmapsets;
 
-        // Failed to fetch, raise error
-        if (beatmapList === undefined) {
-            throw new Error('Failed to retrieve JSON beatmap info from osu! website');
-        }
+            // Failed to fetch, raise error
+            if (beatmapList === undefined) {
+                throw new Error('Failed to retrieve JSON beatmap info from osu! website');
+            }
 
-        return beatmapList;
-    })) as BeatmapsetInfo[];
+            return beatmapList;
+        },
+        config.cache.routeExpire,
+        false
+    )) as BeatmapsetInfo[];
 
     // Sort beatmap by difficultyRate.desc
     // This step is necessary even if difficultyLimit not enabled, since we want the beatmap
@@ -265,60 +255,19 @@ async function handler(ctx): Promise<Data> {
     }
 
     // Construct beatmap feed items
-    const rssItems: DataItem[] = beatmapsetList.map((item) => {
+    const rssItems: DataItem[] = beatmapsetList.map((beatmapset) => {
         // Format publication date using parseDate utility
         // Here it make sense to consider the ranked date as the pubDate of this item since this is ranked map RSS
-        const pubDate = parseDate(item.ranked_date);
+        const pubDate = parseDate(beatmapset.ranked_date);
 
         // Select the best resolution cover (2x if available)
-        const coverImage = item.covers['cover@2x'] || item.covers.cover;
-        const bannerImage = item.covers['card@2x'] || item.covers.card;
+        const coverImage = beatmapset.covers['cover@2x'] || beatmapset.covers.cover;
+        const bannerImage = beatmapset.covers['card@2x'] || beatmapset.covers.card;
 
         // Readable beatmap total length
-        const readableTotalLength = `${Math.floor(item.beatmaps[0].total_length / 60)
+        const readableTotalLength = `${Math.floor(beatmapset.beatmaps[0].total_length / 60)
             .toString()
-            .padStart(2, '0')}:${(item.beatmaps[0].total_length % 60).toString().padStart(2, '0')}`;
-
-        // Create a description with beatmap details and a table of difficulties
-        const description = `
-        <img src="${coverImage}" alt="${item.title}" style="max-width: 100%; height: auto;" />
-        <h1>${item.title_unicode ?? item.title}</h1>
-        <h3>Beatmap Details</h3>
-        <ul>
-            <li><strong>English Title:</strong> ${item.title}</li>
-            <li><strong>Mode:</strong> ${item.beatmaps[0].mode}</li>
-            <li><strong>Artist:</strong> ${item.artist_unicode} (${item.artist})</li>
-            <li><strong>Creator:</strong> ${item.creator}</li>
-            <li><strong>Length:</strong> ${readableTotalLength}</li>
-            <li><strong>BPM:</strong> ${item.bpm}</li>
-        </ul>
-        <h4>Valid Difficulties</h4>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Version</th>
-                    <th>Rating</th>
-                    <th>AR</th>
-                    <th>Drain</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${item.beatmaps
-                    .sort((a, b) => a.difficulty_rating - b.difficulty_rating)
-                    .map(
-                        (beatmap) => `
-                                <tr>
-                                    <td><a href="${beatmap.url}" target="_blank">${beatmap.version}</a></td>
-                                    <td>${beatmap.difficulty_rating.toFixed(2)}</td>
-                                    <td>${beatmap.ar.toFixed(1)}</td>
-                                    <td>${beatmap.drain}</td>
-                                </tr>
-                            `
-                    )
-                    .join('')}
-            </tbody>
-        </table>
-    `;
+            .padStart(2, '0')}:${(beatmapset.beatmaps[0].total_length % 60).toString().padStart(2, '0')}`;
 
         const modeLiteralToDisplayNameMap = {
             osu: 'Osu!',
@@ -327,16 +276,19 @@ async function handler(ctx): Promise<Data> {
             mania: 'Osu!Mania',
         };
 
+        // Create a description with beatmap details and a table of difficulties
+        const description = art(path.join(__dirname, 'templates/beatmapset.art'), { ...beatmapset, readableTotalLength, modeLiteralToDisplayNameMap });
+
         return {
-            title: `${modeInTitle === 'true' ? `[${modeLiteralToDisplayNameMap[item.beatmaps[0].mode]}] ` : ``}${item.title_unicode ?? item.title}`,
+            title: `${modeInTitle === 'true' ? `[${modeLiteralToDisplayNameMap[beatmapset.beatmaps[0].mode]}] ` : ``}${beatmapset.title_unicode ?? beatmapset.title}`,
             description,
             pubDate,
-            link: `https://osu.ppy.sh/beatmapsets/${item.id}`,
+            link: `https://osu.ppy.sh/beatmapsets/${beatmapset.id}`,
             category: ['osu!', 'game'],
-            author: [{ name: item.creator }],
+            author: [{ name: beatmapset.creator }],
             image: coverImage,
             banner: bannerImage,
-            updated: item.last_updated,
+            updated: beatmapset.last_updated,
         };
     });
 
