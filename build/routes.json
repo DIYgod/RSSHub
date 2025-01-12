@@ -92637,34 +92637,6 @@
     "url": "www.washingtonpost.com",
     "lang": "en"
   },
-  "watasuke": {
-    "routes": {
-      "/blog": {
-        "path": "/blog",
-        "example": "/watasuke/blog",
-        "radar": [
-          {
-            "source": [
-              "watasuke.net/blog/",
-              "watasuke.net/"
-            ]
-          }
-        ],
-        "name": "Blog",
-        "maintainers": [
-          "honahuku"
-        ],
-        "url": "watasuke.net/blog/",
-        "location": "blog.ts"
-      }
-    },
-    "name": "Watasuke",
-    "url": "watasuke.net",
-    "categories": [
-      "blog"
-    ],
-    "lang": "ja"
-  },
   "wchscu": {
     "routes": {
       "/recruit": {

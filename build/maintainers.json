@@ -7407,9 +7407,6 @@
   "/washingtonpost/app/:category{.+}?": [
     "quiniapiezoelectricity"
   ],
-  "/watasuke/blog": [
-    "honahuku"
-  ],
   "/wchscu/recruit": [
     "ViggoC"
   ],

@@ -32611,20 +32611,6 @@
       }
     ]
   },
-  "watasuke.net": {
-    "_name": "Watasuke",
-    ".": [
-      {
-        "title": "Blog",
-        "docs": "https://docs.rsshub.app/routes/blog",
-        "source": [
-          "/blog/",
-          "/"
-        ],
-        "target": "/watasuke/blog"
-      }
-    ]
-  },
   "wchscu.cn": {
     "_name": "华西医院",
     "www": [
