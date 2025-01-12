@@ -65,30 +65,26 @@ const handler: Route['handler'] = async (context) => {
         image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
         item: (await Promise.all(
             contentLinkList.map((item) =>
-                cache.tryGet(
-                    item.link,
-                    async () => {
-                        const CONTENT_SELECTOR = '#p_content';
-                        await randomPause();
-                        const { data: contentResponse } = await got(item.link);
-                        const contentPage = load(contentResponse);
-                        const content = contentPage(CONTENT_SELECTOR).html() || '';
-                        return {
-                            title: item.title,
-                            pubDate: item.date,
-                            link: item.link,
-                            description: content,
-                            category: ['study'],
-                            guid: item.link,
-                            id: item.link,
-                            image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
-                            content,
-                            updated: item.date,
-                            language: 'zh-CN',
-                        };
-                    },
-                    80000
-                )
+                cache.tryGet(item.link, async () => {
+                    const CONTENT_SELECTOR = '#p_content';
+                    await randomPause();
+                    const { data: contentResponse } = await got(item.link);
+                    const contentPage = load(contentResponse);
+                    const content = contentPage(CONTENT_SELECTOR).html() || '';
+                    return {
+                        title: item.title,
+                        pubDate: item.date,
+                        link: item.link,
+                        description: content,
+                        category: ['study'],
+                        guid: item.link,
+                        id: item.link,
+                        image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
+                        content,
+                        updated: item.date,
+                        language: 'zh-CN',
+                    };
+                })
             )
         )) as DataItem[],
         allowEmpty: true,
