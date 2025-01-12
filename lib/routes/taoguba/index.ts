@@ -4,8 +4,11 @@ import { load } from 'cheerio';
 import { rootUrl, renderPostDetail } from './util';
 
 export const route: Route = {
-    path: ['/index', '/:category?'],
-    name: '论坛帖子',
+    path: '/:category?',
+    categories: ['finance'],
+    example: '/taoguba',
+    parameters: { id: '分类，见下表，默认为社区总版' },
+    name: '淘股论坛',
     maintainers: ['nczitzk'],
     handler,
     description: `| 淘股论坛 | 社区总版 | 精华加油 | 网友点赞 |
