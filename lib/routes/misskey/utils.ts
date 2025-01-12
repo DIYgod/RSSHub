@@ -7,7 +7,7 @@ import path from 'node:path';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { MisskeyNote } from './types';
+import { MisskeyNote, MisskeyUser } from './types';
 
 const allowSiteList = ['misskey.io', 'madost.one', 'mk.nixnet.social'];
 
@@ -71,7 +71,7 @@ async function getUserTimelineByUsername(username, site, { withRenotes = false, 
     const searchUrl = `https://${site}/api/users/search-by-username-and-host`;
     const cacheUid = `misskey_username/${site}/${username}`;
 
-    const accountId = await cache.tryGet(cacheUid, async () => {
+    const userData = (await cache.tryGet(cacheUid, async () => {
         const searchResponse = await got({
             method: 'post',
             url: searchUrl,
@@ -82,13 +82,16 @@ async function getUserTimelineByUsername(username, site, { withRenotes = false, 
                 limit: 1,
             },
         });
-        const userData = searchResponse.data.find((item) => item.username === username);
+        const user = searchResponse.data.find((item) => item.username === username);
 
-        if (!userData) {
+        if (!user) {
             throw new Error(`username ${username} not found`);
         }
-        return userData.id;
-    });
+        return user;
+    })) as MisskeyUser;
+
+    const accountId = userData.id;
+    const avatarUrl = userData.avatarUrl;
 
     // https://misskey.io/api-doc#tag/users/operation/users___notes
     const usernotesUrl = `https://${site}/api/users/notes`;
@@ -106,7 +109,7 @@ async function getUserTimelineByUsername(username, site, { withRenotes = false, 
         },
     });
     const accountData = usernotesResponse.data;
-    return { site, accountId, accountData };
+    return { site, accountId, accountData, avatarUrl };
 }
 
 export default { parseNotes, getUserTimelineByUsername, allowSiteList };
