@@ -4,7 +4,7 @@ import { getRelativeUrlList, processList, rootUrl } from './utils';
 export const route: Route = {
     path: '/popular/:dateSort?',
     categories: ['programming'],
-    example: '/popular/false',
+    example: '/joshwcomeau/popular/false',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
