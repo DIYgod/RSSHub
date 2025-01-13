@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const rootUrl = 'https://news.hrbust.edu.cn';
+const rootUrl = 'https://news.hrbust.edu.cn/';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -15,11 +15,9 @@ export const route: Route = {
     handler,
     example: '/hrbust/news',
     parameters: { category: '栏目标识，默认为理工要闻' },
-    description: `
-| lgyw | xwdd | zhenew | jxky | ycdt | xskc | jlhz | zsjy | djsz | zxbf | lgxb | mtlg | jzlt |
+    description: `| lgyw | xwdd | zhenew | jxky | ycdt | xskc | jlhz | zsjy | djsz | zxbf | lgxb | mtlg | jzlt |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 理工要闻 | 新闻导读 | 综合新闻 | 教学科研 | 院处动态 | 学术科创 | 交流合作 | 招生就业 | 党建思政 | 在线播放 | 理工校报 | 媒体理工 | 讲座论坛 |
-`,
+| 理工要闻 | 新闻导读 | 综合新闻 | 教学科研 | 院处动态 | 学术科创 | 交流合作 | 招生就业 | 党建思政 | 在线播放 | 理工校报 | 媒体理工 | 讲座论坛 |`,
     categories: ['university'],
     features: {
         supportRadar: true,
@@ -35,7 +33,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { category = 'lgyw' } = ctx.req.param();
 
-    const response = await got(`${rootUrl}/${category}.htm`);
+    const response = await got(`${rootUrl}${category}.htm`);
 
     const $ = load(response.data);
 
@@ -58,6 +56,11 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
+                if (!item.link.startsWith(rootUrl)) {
+                    item.description = '本文需跳转，请点击标题后阅读';
+                    return item;
+                }
+
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
@@ -67,7 +70,7 @@ async function handler(ctx) {
                     item.pubDate = pubTime;
                 }
 
-                item.description = content('div.v_news_content').html() || '本文需跳转，请点击标题后阅读';
+                item.description = content('div.v_news_content').html() || '解析正文失败';
                 return item;
             })
         )
@@ -75,7 +78,7 @@ async function handler(ctx) {
 
     return {
         title: `哈尔滨理工大学新闻网 - ${bigTitle}`,
-        link: `${rootUrl}/${category}.htm`,
+        link: `${rootUrl}${category}.htm`,
         item: items,
     };
 }
