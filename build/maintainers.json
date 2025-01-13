@@ -1567,6 +1567,9 @@
   "/cpcey/:type?": [
     "Fatpandac"
   ],
+  "/cpta/:category": [
+    "PrinOrange"
+  ],
   "/cpuid/news": [],
   "/cqgas/tqtz": [
     "Mai19930513"

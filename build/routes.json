@@ -21198,6 +21198,55 @@
     "url": "cpc.ey.gov.tw",
     "lang": "zh-TW"
   },
+  "cpta": {
+    "routes": {
+      "/:category": {
+        "path": "/:category",
+        "name": "中国人事考试网发布",
+        "maintainers": [
+          "PrinOrange"
+        ],
+        "parameters": {
+          "category": "栏目参数，可见下表描述。"
+        },
+        "description": "\n| Category    | Title     | Description                         |\n|-------------|-----------|-------------------------------------|\n| notice      | 通知公告  | 中国人事考试网 考试通知公告汇总    |\n| performance | 成绩公布  | 中国人事考试网 考试成绩公布汇总    |\n",
+        "categories": [
+          "study"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true,
+          "antiCrawler": true
+        },
+        "radar": [
+          {
+            "title": "中国人事考试网通知公告",
+            "source": [
+              "www.cpta.com.cn/notice.html",
+              "www.cpta.com.cn"
+            ],
+            "target": "/notice"
+          },
+          {
+            "title": "中国人事考试网成绩发布",
+            "source": [
+              "www.cpta.com.cn/performance.html",
+              "www.cpta.com.cn"
+            ],
+            "target": "/performance"
+          }
+        ],
+        "example": "/cpta/notice",
+        "location": "handler.ts"
+      }
+    },
+    "name": "中国人事考试网",
+    "url": "www.cpta.com.cn"
+  },
   "cpuid": {
     "routes": {
       "/news": {

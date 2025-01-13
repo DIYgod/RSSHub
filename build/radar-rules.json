@@ -9298,6 +9298,29 @@
       }
     ]
   },
+  "cpta.com.cn": {
+    "_name": "中国人事考试网",
+    "www": [
+      {
+        "title": "中国人事考试网通知公告",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/notice.html",
+          "/"
+        ],
+        "target": "/cpta/notice"
+      },
+      {
+        "title": "中国人事考试网成绩发布",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/performance.html",
+          "/"
+        ],
+        "target": "/cpta/performance"
+      }
+    ]
+  },
   "cpuid.com": {
     "_name": "CPUID",
     ".": [
