@@ -4,7 +4,7 @@ import { getRelativeUrlList, processList, rootUrl } from './utils';
 export const route: Route = {
     path: '/latest/:category?',
     categories: ['programming'],
-    example: '/latest/css',
+    example: '/joshwcomeau/latest/css',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
