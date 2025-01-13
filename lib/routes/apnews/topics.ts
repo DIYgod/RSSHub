@@ -50,7 +50,7 @@ async function handler(ctx) {
         }))
         .filter((e) => typeof e.link === 'string');
 
-    const items = ctx.req.query('fulltext') === 'true' ? await asyncPoolAll(20, list, (item) => fetchArticle(item)) : list;
+    const items = ctx.req.query('fulltext') === 'true' ? await asyncPoolAll(10, list, (item) => fetchArticle(item)) : list;
 
     return {
         title: $('title').text(),
