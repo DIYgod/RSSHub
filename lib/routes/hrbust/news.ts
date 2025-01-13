@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const rootUrl = 'https://news.hrbust.edu.cn';
+const rootUrl = 'https://news.hrbust.edu.cn/';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -33,7 +33,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { category = 'lgyw' } = ctx.req.param();
 
-    const response = await got(`${rootUrl}/${category}.htm`);
+    const response = await got(`${rootUrl}${category}.htm`);
 
     const $ = load(response.data);
 
@@ -78,7 +78,7 @@ async function handler(ctx) {
 
     return {
         title: `哈尔滨理工大学新闻网 - ${bigTitle}`,
-        link: `${rootUrl}/${category}.htm`,
+        link: `${rootUrl}${category}.htm`,
         item: items,
     };
 }
