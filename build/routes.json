@@ -34379,7 +34379,8 @@
         "example": "/google/research",
         "name": "Research Blog",
         "maintainers": [
-          "Levix"
+          "Levix",
+          "cscnk52"
         ],
         "radar": [
           {
