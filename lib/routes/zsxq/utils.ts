@@ -38,6 +38,7 @@ export function generateTopicDataItem(topics: Topic[]): DataItem[] {
     return topics.map((topic) => {
         let description: string | undefined;
         let title = '';
+        const url = `https://wx.zsxq.com/topic/${topic.topic_id}`;
         switch (topic.type) {
             case 'talk':
                 title = topic.talk?.text?.split('\n')[0] ?? '文章';
@@ -66,6 +67,7 @@ export function generateTopicDataItem(topics: Topic[]): DataItem[] {
             title: topic.title ?? title,
             description,
             pubDate: parseDate(topic.create_time),
+            link: url,
         };
     });
 }
