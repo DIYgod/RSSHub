@@ -2,6 +2,7 @@ import { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
+import asyncPool from 'tiny-async-pool';
 
 type NewsCategory = {
     title: string;
@@ -23,12 +24,6 @@ const NEWS_TYPES: Record<string, NewsCategory> = {
         description: '中国人事考试网 考试成绩公布汇总',
     },
 };
-
-async function randomPause() {
-    // Random pause 3-10 seconds intently for avoiding IP gateway frequency restriction.
-    const randomDelay = Math.floor(Math.random() * (10000 - 3000 + 1)) + 3000;
-    return await new Promise((resolve) => setTimeout(resolve, randomDelay));
-}
 
 const handler: Route['handler'] = async (context) => {
     const category = context.req.param('category');
@@ -58,35 +53,42 @@ const handler: Route['handler'] = async (context) => {
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 10);
 
+    const fetchDataItem = (item: { title: string; date: string; link: string }) =>
+        cache.tryGet(item.link, async () => {
+            const CONTENT_SELECTOR = '#p_content';
+            const { data: contentResponse } = await got(item.link);
+            const contentPage = load(contentResponse);
+            const content = contentPage(CONTENT_SELECTOR).html() || '';
+            return {
+                title: item.title,
+                pubDate: item.date,
+                link: item.link,
+                description: content,
+                category: ['study'],
+                guid: item.link,
+                id: item.link,
+                image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
+                content: {
+                    html: content,
+                    text: content,
+                },
+                updated: item.date,
+                language: 'zh-CN',
+            } as DataItem;
+        });
+
+    const dataItems: DataItem[] = [];
+
+    for await (const item of await asyncPool(1, contentLinkList, fetchDataItem)) {
+        dataItems.push(item as DataItem);
+    }
+
     return {
         title: `中国人事考试网-${NEWS_TYPES[category].title}`,
         description: NEWS_TYPES[category].description,
         link: BASE_URL,
         image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
-        item: (await Promise.all(
-            contentLinkList.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const CONTENT_SELECTOR = '#p_content';
-                    await randomPause();
-                    const { data: contentResponse } = await got(item.link);
-                    const contentPage = load(contentResponse);
-                    const content = contentPage(CONTENT_SELECTOR).html() || '';
-                    return {
-                        title: item.title,
-                        pubDate: item.date,
-                        link: item.link,
-                        description: content,
-                        category: ['study'],
-                        guid: item.link,
-                        id: item.link,
-                        image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
-                        content,
-                        updated: item.date,
-                        language: 'zh-CN',
-                    };
-                })
-            )
-        )) as DataItem[],
+        item: dataItems,
         allowEmpty: true,
         language: 'zh-CN',
         feedLink: `https://rsshub.app/cpta/${category}`,
@@ -98,6 +100,15 @@ export const route: Route = {
     path: '/:category',
     name: '中国人事考试网发布',
     maintainers: ['PrinOrange'],
+    parameters: {
+        category: '栏目参数，可见下表描述。',
+    },
+    description: `
+| Category    | Title     | Description                         |
+|-------------|-----------|-------------------------------------|
+| notice      | 通知公告  | 中国人事考试网 考试通知公告汇总    |
+| performance | 成绩公布  | 中国人事考试网 考试成绩公布汇总    |
+`,
     handler,
     categories: ['study'],
     features: {
