@@ -20,7 +20,7 @@ const actualParametersDescTable = `
 const descriptionDoc: string = `
 Subscribe to the new beatmaps on https://osu.ppy.sh/beatmapsets.
 
-### Parameter Description
+#### Parameter Description
 
 Parameters allows you to:
 
@@ -57,7 +57,7 @@ Now all beatmapsets that don't provided at least one beatmap with star rating hi
 export const route: Route = {
     path: '/latest-ranked/:routeParams?',
     categories: ['game'],
-    example: '/osu/latest-ranked/includeMode=osu&includeMode=mania&difficultyLimit=L3&difficultyLimit=U7',
+    example: '/osu/latest-ranked/includeMode=osu&difficultyLimit=L3&difficultyLimit=U7',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -78,7 +78,7 @@ export const route: Route = {
     maintainers: ['nfnfgo'],
     radar: [
         {
-            source: ['https://osu.ppy.sh/beatmapsets'],
+            source: ['osu.ppy.sh/beatmapsets'],
         },
     ],
     handler,
@@ -254,6 +254,18 @@ async function handler(ctx): Promise<Data> {
         beatmapsetList = beatmapsetList.filter((item) => difficultyRateFilterFunc(item));
     }
 
+    // Returns a user-readble string that shows details about route parameter config
+    function getReadableFeedConfig(): string {
+        if (!pathParams) {
+            return '';
+        }
+
+        let readableConf = 'Feed Configurations:\n';
+        readableConf += `Game Mode: ${includeModes.length > 0 ? JSON.stringify(includeModes) : 'All modes'}\n`;
+        readableConf += `Star Rating Limit: Lower=${lowerLimit}, Upper=${upperLimit}`;
+        return readableConf;
+    }
+
     // Construct beatmap feed items
     const rssItems: DataItem[] = beatmapsetList.map((beatmapset) => {
         // Format publication date using parseDate utility
@@ -293,9 +305,9 @@ async function handler(ctx): Promise<Data> {
     });
 
     return {
-        title: `Osu! Latest Ranked Map`,
-        link: `https://osu.ppy.sh/beatmapsets`,
-        description: 'Newly ranked beatmaps at https://osu.ppy.sh/beatmapsets',
+        title: 'Osu! Latest Ranked Map',
+        link: 'https://osu.ppy.sh/beatmapsets',
+        description: `Newly ranked beatmaps at https://osu.ppy.sh/beatmapsets.\n${getReadableFeedConfig()}`,
         item: rssItems,
     };
 }
