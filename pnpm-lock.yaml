@@ -171,6 +171,9 @@ importers:
       narou:
         specifier: 1.1.0
         version: 1.1.0
+      node-network-devtools:
+        specifier: 1.0.25
+        version: 1.0.25(bufferutil@4.0.8)(undici@6.21.0)(utf-8-validate@5.0.10)
       notion-to-md:
         specifier: 3.1.4
         version: 3.1.4
@@ -421,9 +424,6 @@ importers:
       msw:
         specifier: 2.4.3
         version: 2.4.3(typescript@5.7.3)
-      node-network-devtools:
-        specifier: 1.0.25
-        version: 1.0.25(bufferutil@4.0.8)(undici@6.21.0)(utf-8-validate@5.0.10)
       prettier:
         specifier: 3.4.2
         version: 3.4.2
