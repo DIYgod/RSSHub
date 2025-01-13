@@ -25156,6 +25156,19 @@
       }
     ]
   },
+  "ppy.sh": {
+    "_name": "osu!",
+    "osu": [
+      {
+        "title": "Latest Ranked Beatmap",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/beatmapsets"
+        ],
+        "target": "/osu/latest-ranked/:routeParams?"
+      }
+    ]
+  },
   "otobanana.com": {
     "_name": "OTOBANANA",
     ".": [

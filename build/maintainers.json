@@ -5276,6 +5276,9 @@
   "/oshwhub/:sortType?": [
     "tylinux"
   ],
+  "/osu/latest-ranked/:routeParams?": [
+    "nfnfgo"
+  ],
   "/osu/packs/:type?": [
     "JimenezLi"
   ],
