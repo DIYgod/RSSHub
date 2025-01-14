@@ -49,21 +49,18 @@ async function handler(ctx) {
     });
 
     const data = response.data as Article[];
-    const list = data
-        .map((item) => {
-            const isArticle = !!item.article_info;
+    const list = data.map((item) => {
+        const isArticle = !!item.article_info;
 
-            return {
-                title: isArticle ? item.article_info.title : item.content_info.title,
-                description: (isArticle ? item.article_info.brief_content : item.content_info.brief) || '无描述',
-                // .replaceAll(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, ''),
-                pubDate: parseDate(isArticle ? item.article_info.ctime : item.content_info.ctime, 'X'),
-                author: item.author_user_info.user_name,
-                link: `https://juejin.cn${isArticle ? `/post/${item.article_id}` : `/news/${item.content_id}`}`,
-                categories: [...new Set([item.category.category_name, ...item.tags.map((tag) => tag.tag_name)])],
-            };
-        })
-        .slice(0, 1);
+        return {
+            title: isArticle ? item.article_info.title : item.content_info.title,
+            description: (isArticle ? item.article_info.brief_content : item.content_info.brief) || '无描述',
+            pubDate: parseDate(isArticle ? item.article_info.ctime : item.content_info.ctime, 'X'),
+            author: item.author_user_info.user_name,
+            link: `https://juejin.cn${isArticle ? `/post/${item.article_id}` : `/news/${item.content_id}`}`,
+            categories: [...new Set([item.category.category_name, ...item.tags.map((tag) => tag.tag_name)])],
+        };
+    });
 
     const authorInfo = await getUserInfo(id, data[0].author_user_info);
 

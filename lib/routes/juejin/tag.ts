@@ -1,7 +1,6 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import util from './utils';
+import ofetch from '@/utils/ofetch';
+import { getFeedItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag',
@@ -29,37 +28,33 @@ export const route: Route = {
 async function handler(ctx) {
     const tag = ctx.req.param('tag');
 
-    const idResponse = await got({
-        method: 'post',
-        url: 'https://api.juejin.cn/tag_api/v1/query_tag_detail',
-        json: {
+    const idResponse = await ofetch('https://api.juejin.cn/tag_api/v1/query_tag_detail', {
+        method: 'POST',
+        body: {
             key_word: tag,
         },
     });
 
-    const id = idResponse.data.data.tag_id;
+    const id = idResponse.data.tag_id;
 
-    const response = await got({
-        method: 'post',
-        url: 'https://api.juejin.cn/recommend_api/v1/article/recommend_tag_feed',
-        json: {
+    const response = await ofetch('https://api.juejin.cn/recommend_api/v1/article/recommend_tag_feed', {
+        method: 'POST',
+        body: {
             id_type: 2,
             cursor: '0',
             tag_ids: [id],
-            sort_type: 200,
+            sort_type: 300,
         },
     });
 
-    let originalData = [];
-    if (response.data.data) {
-        originalData = response.data.data.slice(0, 10);
-    }
-    const resultItems = await util.ProcessFeed(originalData, cache);
+    const list = parseList(response.data);
+    const resultItems = await Promise.all(getFeedItem(list));
 
     return {
         title: `掘金 ${tag}`,
         link: `https://juejin.cn/tag/${encodeURIComponent(tag)}`,
         description: `掘金 ${tag}`,
+        image: idResponse.data.tag.icon,
         item: resultItems,
     };
 }

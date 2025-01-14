@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -28,15 +28,13 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got({
-        method: 'get',
-        url: 'https://api.juejin.cn/user_api/v1/user/dynamic',
-        searchParams: {
+    const response = await ofetch('https://api.juejin.cn/user_api/v1/user/dynamic', {
+        query: {
             user_id: id,
             cursor: 0,
         },
     });
-    const list = response.data.data.list;
+    const list = response.data.list;
 
     const username = list[0].user.user_name;
 

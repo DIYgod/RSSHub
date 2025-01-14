@@ -2,11 +2,23 @@ import got from '@/utils/got';
 import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
+import crypto from 'node:crypto';
+import cache from '@/utils/cache';
 
 import ofetch from '@/utils/ofetch';
 const md = MarkdownIt({
     html: true,
 });
+
+const b64tou8a = (str) => Uint8Array.from(Buffer.from(str, 'base64'));
+const b64tohex = (str) => Buffer.from(str, 'base64').toString('hex');
+const s256 = (s1: Uint8Array, s2: string) => {
+    const sha = crypto.createHash('sha256');
+    sha.update(s1);
+    sha.update(s2);
+    return sha.digest('hex');
+};
+
 // 加载文章页
 async function loadContent(id) {
     const response = await got({
@@ -23,10 +35,40 @@ async function loadContent(id) {
 
     return { description };
 }
+
+const solveWafChallenge = (cs) => {
+    const c = JSON.parse(Buffer.from(cs, 'base64').toString());
+    const prefix = b64tou8a(c.v.a);
+    const expect = b64tohex(c.v.c);
+
+    for (let i = 0; i < 1_000_000; i++) {
+        const hash = s256(prefix, i.toString());
+        if (hash === expect) {
+            c.d = Buffer.from(i.toString()).toString('base64');
+            break;
+        }
+    }
+    return Buffer.from(JSON.stringify(c)).toString('base64');
+};
+
 export const getArticle = async (link) => {
-    const response = await ofetch(link);
-    const $ = cheerio.load(response);
-    // console.log($.html());
+    let response = await ofetch(link);
+    let $ = cheerio.load(response);
+    if ($('script').text().includes('_wafchallengeid')) {
+        const cs = $('script:contains("_wafchallengeid")')
+            .text()
+            .match(/cs="(.*?)",c/)?.[1];
+        const cookie = solveWafChallenge(cs);
+
+        response = await ofetch(link, {
+            headers: {
+                cookie: `_wafchallengeid=${cookie};`,
+            },
+        });
+
+        $ = cheerio.load(response);
+    }
+
     return $('.article-viewer').html();
 };
 
@@ -36,6 +78,29 @@ const loadNews = async (link) => {
     $('h1.title, .main-box .message').remove();
     return { description: $('.main-box .article').html() };
 };
+
+export const parseList = (data) =>
+    data.map((item) => {
+        const isArticle = !!item.article_info;
+
+        return {
+            title: isArticle ? item.article_info.title : item.content_info.title,
+            description: (isArticle ? item.article_info.brief_content : item.content_info.brief) || '无描述',
+            pubDate: parseDate(isArticle ? item.article_info.ctime : item.content_info.ctime, 'X'),
+            author: item.author_user_info.user_name,
+            link: `https://juejin.cn${isArticle ? `/post/${item.article_id}` : `/news/${item.content_id}`}`,
+            categories: [...new Set([item.category.category_name, ...item.tags.map((tag) => tag.tag_name)])],
+        };
+    });
+
+export const getFeedItem = (list) =>
+    list.map((item) =>
+        cache.tryGet(item.link, async () => {
+            item.description = (await getArticle(item.link)) || item.description;
+
+            return item;
+        })
+    );
 
 export const ProcessFeed = (list, caches) =>
     Promise.all(
