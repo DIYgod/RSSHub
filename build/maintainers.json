@@ -5980,6 +5980,9 @@
   "/sciencenet/user/:id": [
     "nczitzk"
   ],
+  "/scientificamerican/podcast/:id?": [
+    "nczitzk"
+  ],
   "/scmp/coronavirus": [
     "DIYgod"
   ],

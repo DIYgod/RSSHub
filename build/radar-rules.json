@@ -27210,6 +27210,36 @@
       }
     ]
   },
+  "scientificamerican.com": {
+    "_name": "Scientific American",
+    "www": [
+      {
+        "title": "Podcasts",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/podcasts/",
+          "/podcast/:id"
+        ],
+        "target": "/scientificamericanparams=>{const id=params.id;return`/scientificamerican/podcast${id?`/${id}`:\"\"}`}"
+      },
+      {
+        "title": "Science Quickly",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/podcast/science-quickly/"
+        ],
+        "target": "/scientificamerican/podcast/science-quickly"
+      },
+      {
+        "title": "Uncertain",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/podcast/science-talk/"
+        ],
+        "target": "/scientificamerican/podcast/science-talk"
+      }
+    ]
+  },
   "scmp.com": {
     "_name": "Corona Virus Disease 2019",
     ".": [
