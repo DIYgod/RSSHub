@@ -76,7 +76,6 @@ async function handler(ctx) {
                 const body = $('div.body');
                 body.find('[style]').removeAttr('style');
                 body.find('font').contents().unwrap();
-                body.find(':empty').remove();
                 body.html(body.html()?.replaceAll('&nbsp;', ''));
                 body.find('[align]').removeAttr('align');
                 item.description = body.html();
