@@ -199,7 +199,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: ['/podcasts/:id?', '/podcast/:id?'],
+    path: '/podcast/:id?',
     name: 'Podcasts',
     url: 'www.scientificamerican.com',
     maintainers: ['nczitzk'],
@@ -209,7 +209,7 @@ export const route: Route = {
         id: 'ID, see below',
     },
     description: `:::tip
-If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast/science-quickly/)，where the URL is \`https://www.scientificamerican.com/podcast/science-quickly/\`, extract the part \`https://www.scientificamerican.com/podcast/\` to the end, which is \`science-quickly\`, and use it as the parameter to fill in. Therefore, the route will be [\`/scientificamerican/podcasts/science-quickly\`](https://rsshub.app/scientificamerican/podcasts/science-quickly).
+If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast/science-quickly/)，where the URL is \`https://www.scientificamerican.com/podcast/science-quickly/\`, extract the part \`https://www.scientificamerican.com/podcast/\` to the end, which is \`science-quickly\`, and use it as the parameter to fill in. Therefore, the route will be [\`/scientificamerican/podcast/science-quickly\`](https://rsshub.app/scientificamerican/podcast/science-quickly).
 :::
 
 | All | Science Quickly | Uncertain    |
@@ -249,7 +249,7 @@ If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast
     view: ViewType.Articles,
 
     zh: {
-        path: ['/podcasts/:id?', '/podcast/:id?'],
+        path: '/podcast/:id?',
         name: 'Podcasts',
         url: 'www.scientificamerican.com',
         maintainers: ['nczitzk'],
@@ -259,7 +259,7 @@ If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast
             id: 'ID，见下表',
         },
         description: `:::tip
-若订阅 [Science Quickly](https://www.scientificamerican.com/podcast/science-quickly/)，网址为 \`https://www.scientificamerican.com/podcast/science-quickly/\`，请截取 \`https://www.scientificamerican.com/podcast/\` 到末尾 \`/\` 的部分 \`science-quickly\` 作为 \`id\` 参数填入，此时目标路由为 [\`/scientificamerican/podcasts/science-quickly\`](https://rsshub.app/scientificamerican/podcasts/science-quickly)。
+若订阅 [Science Quickly](https://www.scientificamerican.com/podcast/science-quickly/)，网址为 \`https://www.scientificamerican.com/podcast/science-quickly/\`，请截取 \`https://www.scientificamerican.com/podcast/\` 到末尾 \`/\` 的部分 \`science-quickly\` 作为 \`id\` 参数填入，此时目标路由为 [\`/scientificamerican/podcast/science-quickly\`](https://rsshub.app/scientificamerican/podcast/science-quickly)。
 :::
 
 | 全部 | Science Quickly | Uncertain    |
