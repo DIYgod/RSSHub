@@ -58053,7 +58053,6 @@
           "multimedia"
         ],
         "example": "/missav/new",
-        "parameters": {},
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -58065,9 +58064,16 @@
         "radar": [
           {
             "source": [
-              "missav.com/dm397/new",
-              "missav.com/new",
-              "missav.com/"
+              "missav.ws/dm397/new",
+              "missav.ws/new",
+              "missav.ws/"
+            ]
+          },
+          {
+            "source": [
+              "missav.ai/dm397/new",
+              "missav.ai/new",
+              "missav.ai/"
             ]
           }
         ],
@@ -58075,12 +58081,12 @@
         "maintainers": [
           "TonyRL"
         ],
-        "url": "missav.com/dm397/new",
+        "url": "missav.ws/dm397/new",
         "location": "new.ts"
       }
     },
-    "name": "MissAV.com",
-    "url": "missav.com",
+    "name": "MissAV",
+    "url": "missav.ws",
     "lang": "en"
   },
   "misskey": {
