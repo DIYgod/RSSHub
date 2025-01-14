@@ -40,6 +40,7 @@ async function handler(ctx) {
             link: e.url,
             pubDate: e.time,
             category: e.channelObject.name,
+            appContentId: e.appContentId,
         }))
         .filter((item) => !item.link.startsWith('https://fm.caixin.com/') && !item.link.startsWith('https://video.caixin.com/') && !item.link.startsWith('https://datanews.caixin.com/')); // content filter
 
@@ -54,6 +55,10 @@ async function handler(ctx) {
                     item.description = authorizedFullText === '' ? desc.description : authorizedFullText;
                 } else {
                     item.description = desc.description;
+                }
+
+                if (item.appContentId) {
+                    item.description += `<div style="text-align:center;"><a href="${`https://datayi.cn/1lnZaaido8xd?id=${item.appContentId}&article_type=1&isHttp=0&type=%E6%99%AE%E9%80%9A%E6%96%87%E7%AB%A0%E9%A1%B5&open_type=6`}">打开App</a></div>`;
                 }
                 // prevent cache coliision with /caixin/article and /caixin/:column/:category
                 // since those have podcasts
