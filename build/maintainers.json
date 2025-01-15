@@ -7055,6 +7055,9 @@
   "/tsdm39/bd/:type?": [
     "equt"
   ],
+  "/tsinghua/lib/tzgg/:category": [
+    "linsenwang"
+  ],
   "/tsinghua/lib/zydt/:category?": [
     "nczitzk"
   ],

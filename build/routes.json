@@ -88636,6 +88636,36 @@
   },
   "tsinghua": {
     "routes": {
+      "/lib/tzgg/:category": {
+        "path": "/lib/tzgg/:category",
+        "categories": [
+          "university"
+        ],
+        "example": "/tsinghua/lib/tzgg/qtkx",
+        "parameters": {
+          "category": "分类，可在对应分类页 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "lib.tsinghua.edu.cn/tzgg/:category"
+            ]
+          }
+        ],
+        "name": "图书馆通知公告",
+        "maintainers": [
+          "linsenwang"
+        ],
+        "location": "lib/tzgg.ts"
+      },
       "/lib/zydt/:category?": {
         "path": "/lib/zydt/:category?",
         "name": "图书馆资源动态",
