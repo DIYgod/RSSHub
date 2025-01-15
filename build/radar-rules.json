@@ -18897,12 +18897,29 @@
         "target": "/juejin/books"
       },
       {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:category"
+        ],
+        "target": "/juejin/category/:category"
+      },
+      {
         "title": "单个收藏夹",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/collection/:collectionId"
         ],
         "target": "/juejin/collection/:collectionId"
+      },
+      {
+        "title": "收藏集",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/user/:id",
+          "/user/:id/collections"
+        ],
+        "target": "/juejin/collections/:id"
       },
       {
         "title": "专栏",
@@ -18919,15 +18936,6 @@
           "/user/:id"
         ],
         "target": "/juejin/dynamic/:id"
-      },
-      {
-        "title": "收藏集",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/user/:id",
-          "/user/:id/collections"
-        ],
-        "target": "/juejin/collections/:id"
       },
       {
         "title": "用户文章",
