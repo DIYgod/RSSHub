@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { getFeedItem, parseList } from './utils';
+import { parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/trending/:category/:type',
@@ -104,7 +104,7 @@ async function handler(ctx) {
     }
     const list = parseList(entrylist);
 
-    const resultItems = await Promise.all(getFeedItem(list));
+    const resultItems = await ProcessFeed(list);
 
     return {
         title,

@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { getFeedItem, parseList } from './utils';
+import { parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag',
@@ -47,8 +47,8 @@ async function handler(ctx) {
         },
     });
 
-    const list = parseList(response.data);
-    const resultItems = await Promise.all(getFeedItem(list));
+    const originalData = parseList(response.data);
+    const resultItems = await ProcessFeed(originalData);
 
     return {
         title: `掘金 ${tag}`,

@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { getFeedItem, parseList } from './utils';
+import { parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/column/:id',
@@ -39,7 +39,7 @@ async function handler(ctx) {
     });
     const detailData = columnDetail.data;
     const list = parseList(response.data);
-    const resultItems = await Promise.all(getFeedItem(list));
+    const resultItems = await ProcessFeed(list);
 
     return {
         title: `${detailData.column_version.title} - ${detailData.author.user_name}的专栏 - 掘金`,

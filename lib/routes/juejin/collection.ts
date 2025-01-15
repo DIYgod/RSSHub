@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseList, getFeedItem } from './utils';
+import { parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/collection/:collectionId',
@@ -35,9 +35,9 @@ async function handler(ctx) {
         },
     });
 
-    const list = parseList(collectPage.data.article_list);
+    const items = parseList(collectPage.data.article_list);
 
-    const result = await Promise.all(getFeedItem(list));
+    const result = await ProcessFeed(items);
 
     return {
         title: `${collectPage.data.detail.tag_name} - ${collectPage.data.create_user.user_name}的收藏集 - 掘金`,

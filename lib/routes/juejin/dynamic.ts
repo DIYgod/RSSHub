@@ -36,7 +36,8 @@ async function handler(ctx) {
     });
     const list = response.data.list;
 
-    const username = list[0].user.user_name;
+    const user = list[0].user;
+    const username = user.user_name;
 
     const items = list.map((e) => {
         const { target_type, target_data, action, time } = e; // action: 0.发布文章；1.点赞文章；2.发布沸点；3.点赞沸点；4.关注用户
@@ -105,7 +106,8 @@ async function handler(ctx) {
     return {
         title: `掘金用户动态-${username}`,
         link: `https://juejin.cn/user/${id}/`,
-        description: `掘金用户动态-${username}`,
+        description: user.description || `掘金用户动态-${username}`,
+        image: user.avatar_large,
         item: items,
         author: username,
     };

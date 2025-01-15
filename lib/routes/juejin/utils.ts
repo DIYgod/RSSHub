@@ -1,14 +1,13 @@
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+// import MarkdownIt from 'markdown-it';
 import crypto from 'node:crypto';
 import cache from '@/utils/cache';
 
-import ofetch from '@/utils/ofetch';
-const md = MarkdownIt({
-    html: true,
-});
+// const md = MarkdownIt({
+//     html: true,
+// });
 
 const b64tou8a = (str) => Uint8Array.from(Buffer.from(str, 'base64'));
 const b64tohex = (str) => Buffer.from(str, 'base64').toString('hex');
@@ -20,21 +19,20 @@ const s256 = (s1: Uint8Array, s2: string) => {
 };
 
 // 加载文章页
-async function loadContent(id) {
-    const response = await got({
-        method: 'post',
-        url: 'https://api.juejin.cn/content_api/v1/article/detail',
-        json: {
-            article_id: id,
-        },
-    });
-    let description;
-    if (response.data.data) {
-        description = md.render(response.data.data.article_info.mark_content) || response.data.data.article_info.content;
-    }
+// async function loadContent(id) {
+//     const response = await ofetch('https://api.juejin.cn/content_api/v1/article/detail', {
+//         method: 'post',
+//         body: {
+//             article_id: id,
+//         },
+//     });
+//     let description;
+//     if (response.data) {
+//         description = md.render(response.data.article_info.mark_content) || response.data.article_info.content;
+//     }
 
-    return { description };
-}
+//     return { description };
+// }
 
 const solveWafChallenge = (cs) => {
     const c = JSON.parse(Buffer.from(cs, 'base64').toString());
@@ -72,12 +70,12 @@ export const getArticle = async (link) => {
     return $('.article-viewer').html();
 };
 
-const loadNews = async (link) => {
-    const response = await got(link);
-    const $ = cheerio.load(response.data);
-    $('h1.title, .main-box .message').remove();
-    return { description: $('.main-box .article').html() };
-};
+// const loadNews = async (link) => {
+//     const response = await ofetch(link);
+//     const $ = cheerio.load(response);
+//     $('h1.title, .main-box .message').remove();
+//     return { description: $('.main-box .article').html() };
+// };
 
 export const parseList = (data) =>
     data.map((item) => {
@@ -93,34 +91,36 @@ export const parseList = (data) =>
         };
     });
 
-export const getFeedItem = (list) =>
-    list.map((item) =>
-        cache.tryGet(item.link, async () => {
-            item.description = (await getArticle(item.link)) || item.description;
-
-            return item;
-        })
-    );
-
-export const ProcessFeed = (list, caches) =>
+export const ProcessFeed = (list) =>
     Promise.all(
-        list.map(async (item) => {
-            const isArticle = !!item.article_info;
-            const pubDate = parseDate((isArticle ? item.article_info.ctime : item.content_info.ctime) * 1000);
-            const link = `https://juejin.cn${isArticle ? '/post/' + item.article_id : '/news/' + item.content_id}`;
-            // 列表上提取到的信息
-            const single = {
-                title: isArticle ? item.article_info.title : item.content_info.title,
-                description: ((isArticle ? item.article_info.brief_content : item.content_info.brief) || '无描述').replaceAll(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, ''),
-                pubDate,
-                author: item.author_user_info.user_name,
-                link,
-            };
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                item.description = (await getArticle(item.link)) || item.description;
 
-            // 使用tryGet方法从缓存获取内容。
-            // 当缓存中无法获取到链接内容的时候，则使用load方法加载文章内容。
-            const other = await caches.tryGet(link, () => (isArticle ? loadContent(item.article_id) : loadNews(link)));
-            // 合并解析后的结果集作为该篇文章最终的输出结果
-            return { ...single, ...other };
-        })
+                return item;
+            })
+        )
     );
+
+// export const ProcessFeed = (list, caches) =>
+//     Promise.all(
+//         list.map(async (item) => {
+//             const isArticle = !!item.article_info;
+//             const pubDate = parseDate((isArticle ? item.article_info.ctime : item.content_info.ctime) * 1000);
+//             const link = `https://juejin.cn${isArticle ? '/post/' + item.article_id : '/news/' + item.content_id}`;
+//             // 列表上提取到的信息
+//             const single = {
+//                 title: isArticle ? item.article_info.title : item.content_info.title,
+//                 description: ((isArticle ? item.article_info.brief_content : item.content_info.brief) || '无描述').replaceAll(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, ''),
+//                 pubDate,
+//                 author: item.author_user_info.user_name,
+//                 link,
+//             };
+
+//             // 使用tryGet方法从缓存获取内容。
+//             // 当缓存中无法获取到链接内容的时候，则使用load方法加载文章内容。
+//             const other = await caches.tryGet(link, () => (isArticle ? loadContent(item.article_id) : loadNews(link)));
+//             // 合并解析后的结果集作为该篇文章最终的输出结果
+//             return { ...single, ...other };
+//         })
+//     );

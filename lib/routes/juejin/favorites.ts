@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { getFeedItem, parseList } from './utils';
+import { parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/collections/:userId',
@@ -49,7 +49,7 @@ async function handler(ctx) {
     const posts = temp.flat();
     const list = parseList(posts);
 
-    const result = await Promise.all(getFeedItem(list));
+    const result = await ProcessFeed(list);
 
     return {
         title: '掘金 - 收藏集',
