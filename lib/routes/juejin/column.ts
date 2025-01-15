@@ -1,7 +1,6 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import util from './utils';
+import ofetch from '@/utils/ofetch';
+import { parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/column/:id',
@@ -28,29 +27,25 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const detail = await got({
-        method: 'get',
-        url: `https://api.juejin.cn/content_api/v1/column/detail?column_id=${id}`,
-    });
-    const response = await got({
-        method: 'post',
-        url: 'https://api.juejin.cn/content_api/v1/column/articles_cursor',
-        json: {
+    const columnDetail = await ofetch(`https://api.juejin.cn/content_api/v1/column/detail?column_id=${id}`);
+    const response = await ofetch('https://api.juejin.cn/content_api/v1/column/articles_cursor', {
+        method: 'POST',
+        body: {
             column_id: id,
-            limit: 20,
             cursor: '0',
+            limit: 20,
             sort: 0,
         },
     });
-    const { data } = response.data;
-    const detailData = detail.data.data;
-    const columnName = detailData && detailData.column_version && detailData.column_version.title;
-    const resultItems = await util.ProcessFeed(data, cache);
+    const detailData = columnDetail.data;
+    const list = parseList(response.data);
+    const resultItems = await ProcessFeed(list);
 
     return {
-        title: `掘金专栏-${columnName}`,
+        title: `${detailData.column_version.title} - ${detailData.author.user_name}的专栏 - 掘金`,
         link: `https://juejin.cn/column/${id}`,
-        description: `掘金专栏-${columnName}`,
+        description: detailData.column_version.description,
+        image: columnDetail.data.column_version.cover,
         item: resultItems,
     };
 }
