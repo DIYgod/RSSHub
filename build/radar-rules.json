@@ -33498,6 +33498,19 @@
       }
     ]
   },
+  "xmu.edu.cn": {
+    "_name": "Xiamen University",
+    "soe": [
+      {
+        "title": "科研动态",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/kxyj/kydt.htm"
+        ],
+        "target": "/xmu/kydt"
+      }
+    ]
+  },
   "xueqiu.com": {
     "_name": "雪球",
     ".": [

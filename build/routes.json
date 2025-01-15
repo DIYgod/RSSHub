@@ -96257,6 +96257,42 @@
     "url": "epaper.xmnn.cn",
     "lang": "zh-CN"
   },
+  "xmu": {
+    "routes": {
+      "/kydt": {
+        "path": "/kydt",
+        "categories": [
+          "university"
+        ],
+        "example": "/xmu/kydt",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "soe.xmu.edu.cn/kxyj/kydt.htm"
+            ]
+          }
+        ],
+        "name": "科研动态",
+        "maintainers": [
+          "linsenwang"
+        ],
+        "location": "kydt.ts"
+      }
+    },
+    "name": "Xiamen University",
+    "url": "soe.xmu.edu.cn",
+    "zh": {
+      "name": "厦门大学经济学院"
+    }
+  },
   "xmut": {
     "routes": {
       "/jwc/bkjw/:category?": {
