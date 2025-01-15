@@ -15,9 +15,9 @@ export const route: Route = {
     handler,
     example: '/hrbust/news',
     parameters: { category: '栏目标识，默认为理工要闻' },
-    description: `| lgyw | xwdd | zhenew | jxky | ycdt | xskc | jlhz | zsjy | djsz | zxbf | lgxb | mtlg | jzlt |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 理工要闻 | 新闻导读 | 综合新闻 | 教学科研 | 院处动态 | 学术科创 | 交流合作 | 招生就业 | 党建思政 | 在线播放 | 理工校报 | 媒体理工 | 讲座论坛 |`,
+    description: `| 理工要闻 | 新闻导读 | 综合新闻   | 教学科研 | 院处动态 | 学术科创 | 交流合作 | 招生就业 | 党建思政 | 在线播放 | 理工校报 | 媒体理工 | 讲座论坛 |
+|------|------|--------|------|------|------|------|------|------|------|------|------|------|
+| lgyw | xwdd | zhenew | jxky | ycdt | xskc | jlhz | zsjy | djsz | zxbf | lgxb | mtlg | jzlt |`,
     categories: ['university'],
     features: {
         supportRadar: true,
@@ -25,6 +25,11 @@ export const route: Route = {
     radar: [
         {
             source: ['news.hrbust.edu.cn/:category.htm'],
+            target: '/news/:category',
+        },
+        {
+            source: ['news.hrbust.edu.cn/'],
+            target: '/news/',
         },
     ],
     view: ViewType.Notifications,
