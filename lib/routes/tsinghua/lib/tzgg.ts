@@ -7,7 +7,7 @@ export const route: Route = {
     path: '/lib/tzgg/:category',
     categories: ['university'],
     example: '/tsinghua/lib/tzgg/qtkx',
-    parameters: { category: '分类，必须填写，可在对应分类页 URL 中找到' },
+    parameters: { category: '分类，可在对应分类页 URL 中找到' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
