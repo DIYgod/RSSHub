@@ -26,8 +26,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const host = `https://soe.xmu.edu.cn/kxyj/kydt.htm`;
-    const response = await ofetch(`https://soe.xmu.edu.cn/kxyj/kydt.htm`);
+    const host = 'https://soe.xmu.edu.cn/kxyj/kydt.htm';
+    const response = await ofetch(host);
     const $ = load(response);
 
     const list = $('div.news li')
