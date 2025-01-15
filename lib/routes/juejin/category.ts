@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseList, ProcessFeed } from './utils';
+import { getCategoryBrief, parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/category/:category',
@@ -31,9 +31,12 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category');
 
-    const idResponse = await ofetch('https://api.juejin.cn/tag_api/v1/query_category_briefs?show_type=0');
+    const idResponse = await getCategoryBrief();
 
-    const cat = idResponse.data.find((item) => item.category_url === category);
+    const cat = idResponse.find((item) => item.category_url === category);
+    if (!cat) {
+        throw new Error('分类不存在');
+    }
     const id = cat.category_id;
 
     const response = await ofetch('https://api.juejin.cn/recommend_api/v1/article/recommend_cate_feed', {

@@ -2,12 +2,12 @@ import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 // import MarkdownIt from 'markdown-it';
-import crypto from 'node:crypto';
-import cache from '@/utils/cache';
-
 // const md = MarkdownIt({
 //     html: true,
 // });
+import crypto from 'node:crypto';
+import cache from '@/utils/cache';
+import { Category, Collection, Tag } from './types';
 
 const b64tou8a = (str) => Uint8Array.from(Buffer.from(str, 'base64'));
 const b64tohex = (str) => Buffer.from(str, 'base64').toString('hex');
@@ -87,7 +87,7 @@ export const parseList = (data) =>
             pubDate: parseDate(isArticle ? item.article_info.ctime : item.content_info.ctime, 'X'),
             author: item.author_user_info.user_name,
             link: `https://juejin.cn${isArticle ? `/post/${item.article_id}` : `/news/${item.content_id}`}`,
-            categories: [...new Set([item.category.category_name, ...item.tags.map((tag) => tag.tag_name)])],
+            category: [...new Set([item.category.category_name, ...item.tags.map((tag) => tag.tag_name)])],
         };
     });
 
@@ -124,3 +124,31 @@ export const ProcessFeed = (list) =>
 //             return { ...single, ...other };
 //         })
 //     );
+
+export const getCategoryBrief = () =>
+    cache.tryGet('juejin:categoryBriefs', async () => {
+        const response = await ofetch('https://api.juejin.cn/tag_api/v1/query_category_briefs');
+        return response.data;
+    }) as Promise<Category[]>;
+
+export const getCollection = (collectionId) =>
+    cache.tryGet(`juejin:collectionId:${collectionId}`, async () => {
+        const response = await ofetch('https://api.juejin.cn/interact_api/v1/collectionSet/get', {
+            query: {
+                tag_id: collectionId,
+                cursor: 0,
+            },
+        });
+        return response.data;
+    }) as Promise<Collection>;
+
+export const getTag = (tag) =>
+    cache.tryGet(`juejin:tag:${tag}`, async () => {
+        const response = await ofetch('https://api.juejin.cn/tag_api/v1/query_tag_detail', {
+            method: 'POST',
+            body: {
+                key_word: tag,
+            },
+        });
+        return response.data;
+    }) as Promise<{ tag_id: string; tag: Tag }>;

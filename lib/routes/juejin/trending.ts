@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseList, ProcessFeed } from './utils';
+import { getCategoryBrief, parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/trending/:category/:type',
@@ -45,8 +45,8 @@ async function handler(ctx) {
     let id = '';
     let name = '';
     let url = 'recommended';
-    const idResponse = await ofetch('https://api.juejin.cn/tag_api/v1/query_category_briefs');
-    const cat = idResponse.data.find((item) => item.category_url === category);
+    const idResponse = await getCategoryBrief();
+    const cat = idResponse.find((item) => item.category_url === category);
     if (cat) {
         id = cat.category_id;
         name = cat.category_name;

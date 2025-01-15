@@ -1,6 +1,5 @@
 import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { parseList, ProcessFeed } from './utils';
+import { getCollection, parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/collection/:collectionId',
@@ -28,19 +27,14 @@ export const route: Route = {
 async function handler(ctx) {
     const collectionId = ctx.req.param('collectionId');
 
-    const collectPage = await ofetch('https://api.juejin.cn/interact_api/v1/collectionSet/get', {
-        query: {
-            tag_id: collectionId,
-            cursor: 0,
-        },
-    });
+    const collectPage = await getCollection(collectionId);
 
-    const items = parseList(collectPage.data.article_list);
+    const items = parseList(collectPage.article_list);
 
     const result = await ProcessFeed(items);
 
     return {
-        title: `${collectPage.data.detail.tag_name} - ${collectPage.data.create_user.user_name}的收藏集 - 掘金`,
+        title: `${collectPage.detail.tag_name} - ${collectPage.create_user.user_name}的收藏集 - 掘金`,
         link: `https://juejin.cn/collection/${collectionId}`,
         description: '掘金，用户单个收藏夹',
         item: result,

@@ -1,5 +1,4 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseList, ProcessFeed } from './utils';
 import { Article, AuthorUserInfo } from './types';
@@ -27,14 +26,11 @@ export const route: Route = {
     handler,
 };
 
-const getUserInfo = (id: string, data: AuthorUserInfo) =>
-    cache.tryGet(`juejin:user:${id}`, () =>
-        Promise.resolve({
-            username: data.user_name,
-            description: data.description,
-            avatar: data.avatar_large,
-        })
-    ) as Promise<{ username: string; description: string; avatar: string }>;
+const getUserInfo = (data: AuthorUserInfo) => ({
+    username: data.user_name,
+    description: data.description,
+    avatar: data.avatar_large,
+});
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
@@ -46,10 +42,9 @@ async function handler(ctx) {
             sort_type: 2,
         },
     });
-
     const data = response.data as Article[];
     const list = parseList(data);
-    const authorInfo = await getUserInfo(id, data[0].author_user_info);
+    const authorInfo = getUserInfo(data[0].author_user_info);
     const resultItems = await ProcessFeed(list);
 
     return {

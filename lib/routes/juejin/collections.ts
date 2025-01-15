@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseList, ProcessFeed } from './utils';
+import { getCollection, parseList, ProcessFeed } from './utils';
+import { Article } from './types';
 
 export const route: Route = {
     path: '/collections/:userId',
@@ -27,15 +28,10 @@ export const route: Route = {
 };
 
 // 获取所有收藏夹文章内容
-async function getPostId(item) {
-    const collectPage = await ofetch('https://api.juejin.cn/interact_api/v1/collectionSet/get', {
-        query: {
-            tag_id: item,
-            cursor: 0,
-        },
-    });
+async function getArticleList(collectionId) {
+    const collectPage = await getCollection(collectionId);
 
-    return collectPage.data.article_list;
+    return collectPage.article_list;
 }
 
 async function handler(ctx) {
@@ -45,7 +41,7 @@ async function handler(ctx) {
     // 获取用户所有收藏夹id
     const collectionId = response.data.map((item) => item.tag_id);
 
-    const temp = await Promise.all(collectionId.map((element) => getPostId(element)));
+    const temp = (await Promise.all(collectionId.map((id) => getArticleList(id)))) as Article[][];
     const posts = temp.flat();
     const list = parseList(posts);
 

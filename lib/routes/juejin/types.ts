@@ -125,7 +125,7 @@ export interface AuthorUserInfo {
     user_priv_info: UserPrivInfo;
 }
 
-interface Category {
+export interface Category {
     category_id: string;
     category_name: string;
     category_url: string;
@@ -140,7 +140,7 @@ interface Category {
     promote_priority: number;
 }
 
-interface Tag {
+export interface Tag {
     id: number;
     tag_id: string;
     tag_name: string;
@@ -223,4 +223,10 @@ export interface Article {
     status: Status;
     theme_list: any[];
     extra: Extra;
+}
+
+export interface Collection {
+    article_list: Article[];
+    create_user: AuthorUserInfo;
+    detail: Tag;
 }
