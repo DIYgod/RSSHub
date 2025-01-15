@@ -1,7 +1,7 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import util from './utils';
+import ofetch from '@/utils/ofetch';
+import { getCollection, parseList, ProcessFeed } from './utils';
+import { Article } from './types';
 
 export const route: Route = {
     path: '/collections/:userId',
@@ -23,37 +23,29 @@ export const route: Route = {
         },
     ],
     name: '收藏集',
-    maintainers: ['isQ'],
+    maintainers: ['yang131323'],
     handler,
 };
 
+// 获取所有收藏夹文章内容
+async function getArticleList(collectionId) {
+    const collectPage = await getCollection(collectionId);
+
+    return collectPage.article_list;
+}
+
 async function handler(ctx) {
     const userId = ctx.req.param('userId');
-    const response = await got({
-        method: 'get',
-        url: `https://api.juejin.cn/interact_api/v1/collectionSet/list?user_id=${userId}&cursor=0&limit=20`,
-    });
+    const response = await ofetch(`https://api.juejin.cn/interact_api/v1/collectionSet/list?user_id=${userId}&cursor=0&limit=20`);
 
     // 获取用户所有收藏夹id
-    const collectionId = response.data.data.map((item) => item.tag_id);
+    const collectionId = response.data.map((item) => item.tag_id);
 
-    // 获取所有收藏夹文章内容
-    async function getPostId(item) {
-        const collectPage = await got({
-            method: 'get',
-            url: `https://api.juejin.cn/interact_api/v1/collectionSet/get?tag_id=${item}&cursor=0`,
-        });
+    const temp = (await Promise.all(collectionId.map((id) => getArticleList(id)))) as Article[][];
+    const posts = temp.flat();
+    const list = parseList(posts);
 
-        return (Array.isArray(collectPage.data.data.article_list) && collectPage.data.data.article_list.slice(0, 10)) || [];
-    }
-
-    const temp = await Promise.all(collectionId.map((element) => getPostId(element)));
-    const posts = [];
-    for (const item of temp) {
-        posts.push(...item);
-    }
-
-    const result = await util.ProcessFeed(posts, cache);
+    const result = await ProcessFeed(list);
 
     return {
         title: '掘金 - 收藏集',
