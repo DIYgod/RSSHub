@@ -46,7 +46,13 @@ const languageToLabel = { de: 'Deutsch', fr: 'Français', es: 'Español', nl: 'N
 async function handler(ctx) {
     const baseUrl = 'https://www.geocaching.com';
     const language = ctx.req.param('language') ?? 'en';
-    const searchParams = {
+    const searchParams: {
+        per_page: number;
+        _embed: number;
+        _fields: string[];
+        categories_exclude?: string;
+        categories?: number;
+    } = {
         per_page: 20,
         _embed: 1,
         _fields: ['id', 'title', 'link', 'guid', 'excerpt', 'date_gmt', 'modified_gmt', '_embedded', '_links'],
