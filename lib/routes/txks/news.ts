@@ -66,7 +66,7 @@ const handler: Route['handler'] = async () => {
 
 export const route: Route = {
     path: '/news',
-    name: '通信技术考试动态',
+    name: '全国通信专业技术人员职业水平考试动态',
     description: '**注意：** 官方网站限制了国外网络请求，可能需要通过部署在中国大陆内的 RSSHub 实例访问。',
     maintainers: ['PrinOrange'],
     handler,
@@ -82,7 +82,7 @@ export const route: Route = {
     },
     radar: [
         {
-            title: '通信技术考试动态',
+            title: '全国通信专业技术人员职业水平考试动态',
             source: ['www.txks.org.cn/index/work', 'www.txks.org.cn'],
             target: `/news`,
         },
