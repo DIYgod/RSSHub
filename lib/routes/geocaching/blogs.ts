@@ -60,8 +60,12 @@ async function handler(ctx) {
 
     if (language === 'en') {
         searchParams.categories_exclude = Object.values(languageToCategory).join(',');
-    } else if (language !== 'all') {
+    } else if (language in languageToCategory) {
         searchParams.categories = languageToCategory[language];
+    } else if (language === 'all') {
+        // do nothing
+    } else {
+        throw new Error(`Unsupported language: ${language}`);
     }
 
     // console.log(searchParams);
