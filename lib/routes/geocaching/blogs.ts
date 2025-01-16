@@ -49,13 +49,13 @@ async function handler(ctx) {
     const searchParams: {
         per_page: number;
         _embed: number;
-        _fields: string[];
+        _fields: string;
         categories_exclude?: string;
         categories?: number;
     } = {
         per_page: 20,
         _embed: 1,
-        _fields: ['id', 'title', 'link', 'guid', 'excerpt', 'date_gmt', 'modified_gmt', '_embedded', '_links'],
+        _fields: ['id', 'title', 'link', 'guid', 'excerpt', 'date_gmt', 'modified_gmt', '_embedded', '_links'].join(','),
     };
 
     if (language === 'en') {
