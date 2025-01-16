@@ -184,7 +184,7 @@
         "got": "14.4.5",
         "husky": "9.1.7",
         "js-beautify": "1.15.1",
-        "lint-staged": "15.3.0",
+        "lint-staged": "15.4.0",
         "mockdate": "3.0.5",
         "msw": "2.4.3",
         "node-network-devtools": "1.0.25",
