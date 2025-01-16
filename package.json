@@ -63,7 +63,7 @@
         "@opentelemetry/sdk-trace-base": "1.30.1",
         "@opentelemetry/semantic-conventions": "1.28.0",
         "@postlight/parser": "2.2.3",
-        "@rss3/sdk": "0.0.23",
+        "@rss3/sdk": "0.0.25",
         "@scalar/hono-api-reference": "0.5.165",
         "@sentry/node": "7.119.1",
         "@tonyrl/rand-user-agent": "2.0.81",
