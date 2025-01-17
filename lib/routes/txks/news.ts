@@ -1,40 +1,25 @@
-import { DataItem, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
-import { JSDOM } from 'jsdom';
 
 const BASE_URL = 'https://www.txks.org.cn/index/work';
 
-const removeFontPresetting = (html: string) => {
-    const dom = new JSDOM(html);
-    const document = dom.window.document;
+const removeFontPresetting = (html: string = ''): string => {
+    const $ = load(html);
+    $('[style]').each((_, element) => {
+        const style = $(element).attr('style') || '';
+        const cleanedStyle = style.replaceAll(/font-family:[^;]*;?/gi, '').trim();
+        $(element).attr('style', cleanedStyle || null);
+    });
+    $('style').each((_, styleElement) => {
+        const cssText = $(styleElement).html() || '';
+        const cleanedCssText = cssText.replaceAll(/font-family:[^;]*;?/gi, '');
+        $(styleElement).html(cleanedCssText);
+    });
 
-    for (const element of document.querySelectorAll('[style]')) {
-        const style = element.getAttribute('style') || '';
-        const cleanedStyle = style
-            .split(';')
-            .filter((rule) => !rule.trim().startsWith('font-family') && !rule.trim().startsWith('font-size') && !rule.trim().startsWith('font-weight') && !rule.trim().startsWith('font-style'))
-            .join(';');
-        if (cleanedStyle.trim()) {
-            element.setAttribute('style', cleanedStyle);
-        } else {
-            element.removeAttribute('style');
-        }
-    }
-
-    for (const styleElement of document.querySelectorAll('style')) {
-        const cssText = styleElement.textContent || '';
-        const cleanedCssText = cssText
-            .replaceAll(/font-family:[^;]*;?/gi, '')
-            .replaceAll(/font-size:[^;]*;?/gi, '')
-            .replaceAll(/font-weight:[^;]*;?/gi, '')
-            .replaceAll(/font-style:[^;]*;?/gi, '');
-        styleElement.textContent = cleanedCssText;
-    }
-
-    return document.documentElement.outerHTML;
+    return $.html();
 };
 
 const handler: Route['handler'] = async () => {
