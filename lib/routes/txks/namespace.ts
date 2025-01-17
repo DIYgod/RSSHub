@@ -1,7 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: '中国计算机职业技术资格考试',
-    url: 'www.ruankao.org.cn',
+    name: '全国通信专业技术人员职业水平考试',
+    url: 'www.txks.org.cn',
     lang: 'zh-CN',
 };
