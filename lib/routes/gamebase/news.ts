@@ -63,9 +63,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 if (!metaDesc) {
                     const detailResponse = await ofetch(item.link);
 
-                    metaDesc = (detailResponse.match(/(\\u003C.*?)","/)?.[1] ?? '')
-                        .replaceAll(String.raw`\"`, '"')
-                        .replaceAll(/\\u[\da-f]{4}/gi, (match: string) => String.fromCharCode(Number.parseInt(match.replaceAll(String.raw`\u`, ''), 16)));
+                    metaDesc = (detailResponse.match(/(\\u003C.*?)","/)?.[1] ?? '').replaceAll(String.raw`\"`, '"').replaceAll(/\\u([\da-f]{4})/gi, (match, hex) => String.fromCodePoint(Number.parseInt(hex, 16)));
                 }
 
                 const description: string = art(path.join(__dirname, 'templates/description.art'), {
