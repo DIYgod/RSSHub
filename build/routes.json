@@ -31651,27 +31651,52 @@
     "routes": {
       "/news/:type?/:category?": {
         "path": "/news/:type?/:category?",
-        "categories": [
-          "game"
+        "name": "新聞",
+        "url": "news.gamebase.com.tw",
+        "maintainers": [
+          "nczitzk"
         ],
         "example": "/gamebase/news",
         "parameters": {
-          "type": "类型，见下表，默认为 newslist",
-          "category": "分类，可在对应分类页 URL 中找到，默认为 `all` 即全部"
+          "type": "類型，見下表，預設為 newslist",
+          "category": "分類，預設為 `all`，即全部，可在對應分類頁 URL 中找到"
         },
+        "description": ":::tip\n若訂閱 [手機遊戲新聞](https://news.gamebase.com.tw/news/newslist?type=mobile)，網址為 `https://news.gamebase.com.tw/news/newslist?type=mobile`，請截取 `https://news.gamebase.com.tw/news/` 到末尾的部分 `newslist` 作為 `type` 參數填入，`mobile` 作為 `category` 參數填入，此時目標路由為 [`/gamebase/news/newslist/mobile`](https://rsshub.app/gamebase/news/newslist/mobile)。\n:::\n\n| newslist | r18list |\n| -------- | ------- |\n",
+        "categories": [
+          "game"
+        ],
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "新聞",
-        "maintainers": [
-          "nczitzk"
+        "radar": [
+          {
+            "source": [
+              "news.gamebase.com.tw/news",
+              "news.gamebase.com.tw/news/:type"
+            ]
+          }
         ],
-        "description": "类型\n\n  | newslist | r18list |\n  | -------- | ------- |",
+        "view": 0,
+        "zh": {
+          "path": "/news/:type?/:category?",
+          "name": "新闻",
+          "url": "news.gamebase.com.tw",
+          "maintainers": [
+            "nczitzk"
+          ],
+          "example": "/gamebase/news",
+          "parameters": {
+            "type": "类型，见下表，默认为 newslist",
+            "category": "分类，默认为 `all`，即全部，可在对应分类页 URL 中找到"
+          },
+          "description": ":::tip\n若订阅 [手机游戏新闻](https://news.gamebase.com.tw/news/newslist?type=mobile)，网址为 `https://news.gamebase.com.tw/news/newslist?type=mobile`，请截取 `https://news.gamebase.com.tw/news/` 到末尾的部分 `newslist` 作为 `type` 参数填入，`mobile` 作为 `category` 参数填入，此时目标路由为 [`/gamebase/news/newslist/mobile`](https://rsshub.app/gamebase/news/newslist/mobile)。\n:::\n\n| newslist | r18list |\n| -------- | ------- |\n"
+        },
         "location": "news.ts"
       }
     },
