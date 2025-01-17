@@ -3,8 +3,38 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
-
+import { JSDOM } from 'jsdom';
 const BASE_URL = 'https://www.ruankao.org.cn/index/work';
+
+const removeFontPresetting = (html: string) => {
+    const dom = new JSDOM(html);
+    const document = dom.window.document;
+
+    for (const element of document.querySelectorAll('[style]')) {
+        const style = element.getAttribute('style') || '';
+        const cleanedStyle = style
+            .split(';')
+            .filter((rule) => !rule.trim().startsWith('font-family') && !rule.trim().startsWith('font-size') && !rule.trim().startsWith('font-weight') && !rule.trim().startsWith('font-style'))
+            .join(';');
+        if (cleanedStyle.trim()) {
+            element.setAttribute('style', cleanedStyle);
+        } else {
+            element.removeAttribute('style');
+        }
+    }
+
+    for (const styleElement of document.querySelectorAll('style')) {
+        const cssText = styleElement.textContent || '';
+        const cleanedCssText = cssText
+            .replaceAll(/font-family:[^;]*;?/gi, '')
+            .replaceAll(/font-size:[^;]*;?/gi, '')
+            .replaceAll(/font-weight:[^;]*;?/gi, '')
+            .replaceAll(/font-style:[^;]*;?/gi, '');
+        styleElement.textContent = cleanedCssText;
+    }
+
+    return document.documentElement.outerHTML;
+};
 
 const handler: Route['handler'] = async () => {
     // Fetch the index page
@@ -30,8 +60,8 @@ const handler: Route['handler'] = async () => {
     });
 
     return {
-        title: '计算机职业技术资格考试（软考）最新动态',
-        description: '计算机职业技术资格考试（软考）网站最新动态和消息推送',
+        title: '计算机职业技术资格考试（软考）动态',
+        description: '计算机职业技术资格考试（软考）消息推送',
         link: BASE_URL,
         image: 'https://bm.ruankao.org.cn/asset/image/public/logo.png',
         item: (await Promise.all(
@@ -40,7 +70,7 @@ const handler: Route['handler'] = async () => {
                     const CONTENT_SELECTOR = '#contentTxt';
                     const { data: contentResponse } = await got(item.link);
                     const contentPage = load(contentResponse);
-                    const content = contentPage(CONTENT_SELECTOR).html() || '';
+                    const content = removeFontPresetting(contentPage(CONTENT_SELECTOR).html() || '');
                     return {
                         title: item.title,
                         pubDate: item.date,
@@ -52,13 +82,13 @@ const handler: Route['handler'] = async () => {
                         image: 'https://bm.ruankao.org.cn/asset/image/public/logo.png',
                         content,
                         updated: item.date,
-                        language: 'zh-cn',
+                        language: 'zh-CN',
                     };
                 })
             )
         )) as DataItem[],
         allowEmpty: true,
-        language: 'zh-cn',
+        language: 'zh-CN',
         feedLink: 'https://rsshub.app/ruankao/news',
         id: 'https://rsshub.app/ruankao/news',
     };
@@ -66,7 +96,8 @@ const handler: Route['handler'] = async () => {
 
 export const route: Route = {
     path: '/news',
-    name: '软考最新动态',
+    name: '计算机职业技术资格考试（软考）动态',
+    description: '**注意：** 官方网站限制了国外网络请求，可能需要通过部署在中国大陆内的 RSSHub 实例访问。',
     maintainers: ['PrinOrange'],
     handler,
     categories: ['study'],
@@ -81,7 +112,7 @@ export const route: Route = {
     },
     radar: [
         {
-            title: '软考新闻动态',
+            title: '计算机职业技术资格考试（软考）动态',
             source: ['www.ruankao.org.cn/index/work', 'www.ruankao.org.cn'],
             target: `/news`,
         },
