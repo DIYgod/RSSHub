@@ -48,7 +48,7 @@ export async function getPostContent({ url, cardTitle }) {
         description,
         author,
         pubDate: processDate(pubDate),
-        updateDate: processDate(updateDate),
+        updated: processDate(updateDate),
         link: `${rootUrl}${url}`,
         content: { html: description, text: summary },
         category: [tag],
