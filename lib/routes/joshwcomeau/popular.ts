@@ -2,9 +2,9 @@ import { Data, Route } from '@/types';
 import { getRelativeUrlList, processList, rootUrl } from './utils';
 
 export const route: Route = {
-    path: '/popular/:dateSort?',
+    path: '/popular',
     categories: ['programming'],
-    example: '/joshwcomeau/popular/false',
+    example: '/joshwcomeau/popular',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -12,16 +12,6 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
-    },
-    parameters: {
-        dateSort: {
-            description: 'Sort posts by publication date instead of popularity',
-            default: 'true',
-            options: [
-                { value: 'false', label: 'False' },
-                { value: 'true', label: 'True' },
-            ],
-        },
     },
     radar: [
         {
@@ -34,10 +24,9 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
-    const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
+async function handler() {
     const { urls } = await getRelativeUrlList(rootUrl, 'section > ol > li > a');
-    const items = await processList(urls, { dateSort });
+    const items = await processList(urls);
     return {
         title: 'Popular Content | Josh W. Comeau',
         description: 'Friendly tutorials for developers. Focus on React, CSS, Animation, and more!',

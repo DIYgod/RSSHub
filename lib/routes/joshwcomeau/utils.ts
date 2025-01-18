@@ -20,14 +20,12 @@ export async function getRelativeUrlList(url, selector) {
     return { heading, urls };
 }
 
-export async function processList(list, { dateSort = true } = {}) {
-    const listPromise = await Promise.allSettled(
-        list.map(async (item) => await cache.tryGet(`joshwcomeau:${item.url}`, async () => await getPostContent(item, dateSort)))
-    );
+export async function processList(list) {
+    const listPromise = await Promise.allSettled(list.map(async (item) => await cache.tryGet(`joshwcomeau:${item.url}`, async () => await getPostContent(item))));
     return listPromise.map((item, index) => (item.status === 'fulfilled' ? item.value : ({ title: 'Error Reading Item', link: `${rootUrl}${list[index]?.url}` } as DataItem)));
 }
 
-export async function getPostContent({ url, cardTitle }, dateSort: boolean) {
+export async function getPostContent({ url, cardTitle }) {
     if (url.startsWith('https')) {
         return {
             title: cardTitle ?? 'External Content',
@@ -49,8 +47,8 @@ export async function getPostContent({ url, cardTitle }, dateSort: boolean) {
         title,
         description,
         author,
-        pubDate: dateSort ? processDate(pubDate) : '',
-        updateDate: dateSort ? processDate(updateDate) : '',
+        pubDate: processDate(pubDate),
+        updateDate: processDate(updateDate),
         link: `${rootUrl}${url}`,
         content: { html: description, text: summary },
         category: [tag],
