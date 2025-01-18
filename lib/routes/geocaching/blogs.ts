@@ -46,8 +46,6 @@ const languageToLabel = { de: 'Deutsch', fr: 'Français', es: 'Español', nl: 'N
 async function handler(ctx) {
     const baseUrl = 'https://www.geocaching.com';
     const language = ctx.req.param('language') ?? 'en';
-    const isFulltext = ctx.req.param('mode') === 'fulltext';
-    const descField = isFulltext ? 'content' : 'excerpt';
     const searchParams: {
         per_page: number;
         _embed: number;
@@ -57,7 +55,7 @@ async function handler(ctx) {
     } = {
         per_page: ctx.req.query('limit') ?? 20,
         _embed: 1,
-        _fields: ['id', 'title', 'link', 'guid', descField, 'date_gmt', 'modified_gmt', '_embedded', '_links'].join(','),
+        _fields: ['id', 'title', 'link', 'guid', 'content', 'date_gmt', 'modified_gmt', '_embedded', '_links'].join(','),
     };
 
     if (language === 'en') {
@@ -80,7 +78,7 @@ async function handler(ctx) {
             title: item.title.rendered.trim(),
             link: item.link,
             guid: item.guid.rendered,
-            description: (isFulltext ? item.content : item.excerpt).rendered,
+            description: item.content.rendered,
             pubDate: parseDate(item.date_gmt),
             updated: parseDate(item.modified_gmt),
             author: item._embedded.author[0].name,
