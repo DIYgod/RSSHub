@@ -18,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '文章列表',
-    maintainers: ['lidashuang'],
+    maintainers: ['defp'],
     handler,
     description: '获取铅笔道最新文章',
 };
