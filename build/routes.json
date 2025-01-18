@@ -67120,6 +67120,39 @@
     "description": "\n::: tip\n太平洋科技是专业IT门户网站,为用户和经销商提供IT资讯和行情报价,涉及电脑,手机,数码产品,软件等.\n:::",
     "lang": "zh-CN"
   },
+  "pencilnews": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/pencilnews",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "文章列表",
+        "maintainers": [
+          "defp"
+        ],
+        "description": "获取铅笔道最新文章",
+        "location": "index.ts"
+      }
+    },
+    "name": "铅笔道",
+    "url": "www.pencilnews.cn",
+    "categories": [
+      "new-media"
+    ],
+    "description": "铅笔道是一家专注于泛互联网领域的科技媒体",
+    "lang": "zh-CN"
+  },
   "penguin-random-house": {
     "routes": {
       "/articles": {

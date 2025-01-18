@@ -5390,6 +5390,9 @@
   "/pconline/focus/:category?": [
     "CH563"
   ],
+  "/pencilnews/": [
+    "defp"
+  ],
   "/penguin-random-house/articles": [
     "StevenRCE0"
   ],
