@@ -1,7 +1,7 @@
 import { Data, Route, ViewType } from '@/types';
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
-import { processCards } from './utils';
+import { processWithWp } from './utils';
 export const route: Route = {
     path: '/articles',
     view: ViewType.Articles,
@@ -35,7 +35,7 @@ async function handler() {
     const response = await ofetch(currentUrl);
     const $ = load(response);
     const articleCards = $('article.article-card').toArray();
-    const items = await processCards(articleCards);
+    const items = await processWithWp(articleCards);
     return {
         title: 'Articles - CSS-Tricks',
         description: 'Latest Articles - CSS-Tricks',

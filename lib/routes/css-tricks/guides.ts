@@ -1,5 +1,5 @@
 import { Data, Route, ViewType } from '@/types';
-import { extractMiniCards, processCards, rootUrl } from './utils';
+import { extractMiniCards, processWithWp, rootUrl } from './utils';
 export const route: Route = {
     path: '/guides',
     view: ViewType.Articles,
@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler() {
     const guideCards = await extractMiniCards('body > div.page-wrap > section.post-sliders > div:nth-child(3) article.mini-card.module.module-article');
-    const items = await processCards(guideCards, true);
+    const items = await processWithWp(guideCards, true);
     return {
         title: 'Latest CSS Guides',
         description: 'Dive deep into CSS features and concepts',

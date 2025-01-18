@@ -1,7 +1,7 @@
 import { Data, Route, ViewType } from '@/types';
-import { extractMiniCards, processCards, rootUrl } from './utils';
+import { extractMiniCards, processWithWp, rootUrl } from './utils';
 export const route: Route = {
-    path: '/popular/:dateSort?',
+    path: '/popular',
     view: ViewType.Articles,
     categories: ['programming'],
     example: '/popular',
@@ -12,16 +12,6 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
-    },
-    parameters: {
-        dateSort: {
-            description: 'Sort posts by publication date instead of popularity',
-            default: 'true',
-            options: [
-                { value: 'false', label: 'False' },
-                { value: 'true', label: 'True' },
-            ],
-        },
     },
     radar: [
         {
@@ -34,10 +24,9 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
-    const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
+async function handler() {
     const popularCards = await extractMiniCards('div.popular-articles > div.mini-card-grid article.mini-card.module.module-article');
-    const items = await processCards(popularCards, true, dateSort);
+    const items = await processWithWp(popularCards, true);
     return {
         title: 'Popular this month',
         description: 'Popular CSS articles this month',

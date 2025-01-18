@@ -1,7 +1,7 @@
 import { Data, Route, ViewType } from '@/types';
 import { extractMiniCards, processCards, rootUrl } from './utils';
 export const route: Route = {
-    path: '/fresh/:dateSort?',
+    path: '/fresh',
     view: ViewType.Articles,
     categories: ['programming'],
     example: '/fresh',
@@ -12,16 +12,6 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
-    },
-    parameters: {
-        dateSort: {
-            description: 'Sort posts by publication date instead of popularity',
-            default: 'true',
-            options: [
-                { value: 'false', label: 'False' },
-                { value: 'true', label: 'True' },
-            ],
-        },
     },
     radar: [
         {
@@ -34,10 +24,10 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
-    const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
+async function handler() {
     const popularCards = await extractMiniCards('body > div.page-wrap > section.post-sliders > div:nth-child(4) article.mini-card.module.module-article');
-    const items = await processCards(popularCards, true, dateSort);
+    // Can't use wordPress API, these post Id's aren't available in the response
+    const items = await processCards(popularCards, true);
     return {
         title: 'Fresh From the Almanac',
         description: 'Properties, selectors, rules, and functions!',

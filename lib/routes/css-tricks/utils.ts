@@ -51,15 +51,22 @@ function extractMiniCardsInfo(cards) {
     });
 }
 
-export async function processCards(cards, mini: boolean = false, dateSort: boolean = true) {
+export async function processWithWp(cards, mini: boolean = false) {
     const cardsWithInfo = mini ? extractMiniCardsInfo(cards) : extractCardsInfo(cards);
-    const cardsPromise = await Promise.allSettled(
-        cardsWithInfo.map(async (card: Card) => await fetchCardDetails(card, dateSort))
-    );
+    const ids = cardsWithInfo.map((card: Card) => card.id.replace('post-', ''));
+    const allPosts = await ofetch(`${rootUrl}/wp-json/wp/v2/posts?include=${ids.join(',')}&_embed&per_page=${ids.length}`);
+    // To maintain the ID/post Order
+    const idMappedPost = Object.fromEntries(allPosts.map((post) => [post.id, post]));
+    return ids.map((id) => extractPostDetails(idMappedPost[id]));
+}
+
+export async function processCards(cards, mini: boolean = false) {
+    const cardsWithInfo = mini ? extractMiniCardsInfo(cards) : extractCardsInfo(cards);
+    const cardsPromise = await Promise.allSettled(cardsWithInfo.map(async (card: Card) => await fetchCardDetails(card)));
     return cardsPromise.filter((card) => card.status === 'fulfilled').map((card) => card.value as DataItem);
 }
 
-export async function fetchCardDetails(card: Card, dateSort: boolean) {
+export async function fetchCardDetails(card: Card) {
     return await cache.tryGet(`css-tricks:${card.id}`, async () => {
         const response = await ofetch(card.link);
         const $ = load(response);
@@ -79,8 +86,8 @@ export async function fetchCardDetails(card: Card, dateSort: boolean) {
             description: content,
             banner: card.thumbnail,
             image: card.thumbnail,
-            pubDate: dateSort ? parseDate(date) : '',
-            updated: dateSort ? parseDate(updateDate) : '',
+            pubDate: parseDate(date),
+            updated: parseDate(updateDate),
             author: [
                 {
                     name: authorName || '',
@@ -95,4 +102,40 @@ export async function fetchCardDetails(card: Card, dateSort: boolean) {
             category: tags,
         } as DataItem;
     });
+}
+
+function extractPostDetails(data) {
+    const title = data.title.rendered;
+    const link = data.link;
+    const content = data.content.rendered;
+    const summary = data.excerpt.rendered;
+    const date = data.date_gmt;
+    const updateDate = data.modified_gmt;
+    const author = data._embedded.author;
+    const authorName = author[0]?.name;
+    const authorUrl = author[0]?.link;
+    const authorAvatar = author[0]?.avatar_urls['48'];
+    const thumbnail = data._embedded['wp:featuredmedia']?.[0]?.source_url;
+    const tags = data._embedded['wp:term']?.[1]?.map((tag) => tag.name);
+    return {
+        title,
+        link,
+        description: content,
+        banner: thumbnail,
+        image: thumbnail,
+        pubDate: parseDate(date),
+        updated: parseDate(updateDate),
+        author: [
+            {
+                name: authorName || '',
+                url: authorUrl || '',
+                avatar: authorAvatar || '',
+            },
+        ],
+        content: {
+            html: content,
+            text: summary,
+        },
+        category: tags,
+    } as DataItem;
 }
