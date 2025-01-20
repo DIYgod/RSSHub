@@ -133,8 +133,8 @@ importers:
         specifier: 0.6.3
         version: 0.6.3
       imapflow:
-        specifier: 1.0.176
-        version: 1.0.176
+        specifier: 1.0.177
+        version: 1.0.177
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -3582,8 +3582,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.0.176:
-    resolution: {integrity: sha512-46Qeb0PSh0Np17hO2/d7XmFtxNGRga+SUgmLkq3UcCYkWJxNazCJj4l3V+fPCTLOsZag7siGpXGry5nzwMO3Vg==}
+  imapflow@1.0.177:
+    resolution: {integrity: sha512-FXM2wR3eD7YyrvvUif/0C3IGhpGuHhCASqRWWz4+1EcbwdySefayWahkRe43dF61XEYxhwbWhD39LbAwJxxX1g==}
 
   immediate@3.0.6:
     resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
@@ -4611,8 +4611,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  process-warning@4.0.0:
-    resolution: {integrity: sha512-/MyYDxttz7DfGMMHiysAsFE4qF+pQYAA8ziO/3NcRVrQ5fSk+Mns4QZA/oRPFzvcqNoVJXQNWNAsdwBXLUkQKw==}
+  process-warning@4.0.1:
+    resolution: {integrity: sha512-3c2LzQ3rY9d0hc1emcsHhfT9Jwz0cChib/QN89oME2R451w5fy3f0afAhERFZAwrbDU43wk12d0ORBpDVME50Q==}
 
   progress@2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
@@ -9318,7 +9318,7 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.0.176:
+  imapflow@1.0.177:
     dependencies:
       encoding-japanese: 2.2.0
       iconv-lite: 0.6.3
@@ -10416,7 +10416,7 @@ snapshots:
       on-exit-leak-free: 2.1.2
       pino-abstract-transport: 2.0.0
       pino-std-serializers: 7.0.0
-      process-warning: 4.0.0
+      process-warning: 4.0.1
       quick-format-unescaped: 4.0.4
       real-require: 0.2.0
       safe-stable-stringify: 2.5.0
@@ -10466,7 +10466,7 @@ snapshots:
 
   prettier@3.4.2: {}
 
-  process-warning@4.0.0: {}
+  process-warning@4.0.1: {}
 
   progress@2.0.3: {}
 
