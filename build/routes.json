@@ -32932,13 +32932,48 @@
   },
   "geocaching": {
     "routes": {
-      "/blogs": {
-        "path": "/blogs",
+      "/blogs/:language?": {
+        "path": "/blogs/:language?",
         "categories": [
           "blog"
         ],
-        "example": "/geocaching/blogs",
-        "parameters": {},
+        "example": "/geocaching/blogs/en",
+        "parameters": {
+          "language": {
+            "description": "language",
+            "default": "en",
+            "options": [
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "de",
+                "label": "Deutsch"
+              },
+              {
+                "value": "fr",
+                "label": "Français"
+              },
+              {
+                "value": "es",
+                "label": "Español"
+              },
+              {
+                "value": "nl",
+                "label": "Nederlands"
+              },
+              {
+                "value": "cs",
+                "label": "Čeština"
+              },
+              {
+                "value": "all",
+                "label": "Not Specified"
+              }
+            ]
+          }
+        },
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -32957,7 +32992,8 @@
         ],
         "name": "Official Blogs",
         "maintainers": [
-          "HankChow"
+          "HankChow",
+          "Konano"
         ],
         "url": "geocaching.com/blog/",
         "location": "blogs.ts"

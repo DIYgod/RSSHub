@@ -12538,7 +12538,7 @@
           "/blog/",
           "/"
         ],
-        "target": "/geocaching/blogs"
+        "target": "/geocaching/blogs/:language?"
       }
     ]
   },

@@ -5770,7 +5770,7 @@
         docs:"https://docs.rsshub.app/routes/blog",
         source:[ "/blog/",
           "/" ],
-        target:"/geocaching/blogs" } ] },
+        target:"/geocaching/blogs/:language?" } ] },
   "getdr.com":{ _name:"趨勢科技防詐達人",
     ".":[ { title:"Unknown",
         docs:"https://docs.rsshub.app/routes/other",
