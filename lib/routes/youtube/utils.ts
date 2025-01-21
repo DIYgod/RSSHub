@@ -152,6 +152,8 @@ export const getLive = (id, cache) =>
         );
         return res;
     });
+export const getVideoUrl = (id: string) => `https://www.youtube-nocookie.com/embed/${id}?controls=1&autoplay=1&mute=0`;
+
 const youtubeUtils = {
     getPlaylistItems,
     getPlaylist,
@@ -164,5 +166,6 @@ const youtubeUtils = {
     getSubscriptionsRecusive,
     isYouTubeChannelId,
     getLive,
+    getVideoUrl,
 };
 export default youtubeUtils;

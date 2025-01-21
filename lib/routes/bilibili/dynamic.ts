@@ -2,7 +2,7 @@ import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import JSONbig from 'json-bigint';
-import utils from './utils';
+import utils, { getLiveUrl, getVideoUrl } from './utils';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import cacheIn from './cache';
@@ -161,6 +161,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
     }
     let url = '';
     let text = '';
+    let videoPageUrl;
     const major = data.module_dynamic?.major;
     if (!major) {
         return null;
@@ -179,6 +180,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
             const id = useAvid ? `av${archive?.aid}` : archive?.bvid;
             url = `https://www.bilibili.com/video/${id}`;
             text = `视频地址：<a href=${url}>${url}</a>`;
+            videoPageUrl = getVideoUrl(archive?.bvid);
             break;
         }
         case 'MAJOR_TYPE_COMMON':
@@ -215,6 +217,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
         case 'MAJOR_TYPE_LIVE_RCMD': {
             const live_play_info = JSON.parse(major.live_rcmd?.content || '{}')?.live_play_info;
             url = `https://live.bilibili.com/${live_play_info?.room_id}`;
+            videoPageUrl = getLiveUrl(live_play_info?.room_id);
             text = `直播间地址：<a href=${url}>${url}</a>`;
             break;
         }
@@ -224,6 +227,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
     return {
         url,
         text,
+        videoPageUrl,
     };
 };
 
@@ -377,6 +381,15 @@ async function handler(ctx) {
                     link,
                     author,
                     category: category.length ? [...new Set(category)] : undefined,
+                    attachments:
+                        urlResult?.videoPageUrl || originUrlResult?.videoPageUrl
+                            ? [
+                                  {
+                                      url: urlResult?.videoPageUrl || originUrlResult?.videoPageUrl,
+                                      mime_type: 'text/html',
+                                  },
+                              ]
+                            : undefined,
                 };
             })
     );
