@@ -7129,6 +7129,155 @@
       }
     ]
   },
+  "cccmc.org.cn": {
+    "_name": "中国五矿化工进出口商会",
+    "www": [
+      {
+        "title": "通用",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/cccmcparams=>{const category=params.category;return`/cccmc${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "商业机会 - 供应信息",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/syjh/gyxx/"
+        ],
+        "target": "/cccmc/syjh/gyxx"
+      },
+      {
+        "title": "商业机会 - 需求信息",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/syjh/xqxx/"
+        ],
+        "target": "/cccmc/syjh/xqxx"
+      },
+      {
+        "title": "商业机会 - 合作信息",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/syjh/hzxx/"
+        ],
+        "target": "/cccmc/syjh/hzxx"
+      },
+      {
+        "title": "商会党建 - 党群动态",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/shdj/dqdt/"
+        ],
+        "target": "/cccmc/shdj/dqdt"
+      },
+      {
+        "title": "商会党建 - 党内法规",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/shdj/dnfg/"
+        ],
+        "target": "/cccmc/shdj/dnfg"
+      },
+      {
+        "title": "商会党建 - 青年工作",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/shdj/qngz/"
+        ],
+        "target": "/cccmc/shdj/qngz"
+      },
+      {
+        "title": "行业资讯 - 统计分析",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/hyzx/tjfx/"
+        ],
+        "target": "/cccmc/hyzx/tjfx"
+      },
+      {
+        "title": "行业资讯 - 石油化工",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/hyzx/syhg/"
+        ],
+        "target": "/cccmc/hyzx/syhg"
+      },
+      {
+        "title": "行业资讯 - 金属矿产",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/hyzx/jskc/"
+        ],
+        "target": "/cccmc/hyzx/jskc"
+      },
+      {
+        "title": "行业资讯 - 五金建材",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/hyzx/wjjc/"
+        ],
+        "target": "/cccmc/hyzx/wjjc"
+      },
+      {
+        "title": "会员之家 - 会员之声",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/hyzj/hyzs/"
+        ],
+        "target": "/cccmc/hyzj/hyzs"
+      },
+      {
+        "title": "会员之家 - 会员动态",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/hyzj/hydt/"
+        ],
+        "target": "/cccmc/hyzj/hydt"
+      },
+      {
+        "title": "会员之家 - 会员推介",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/hyzj/hytj/"
+        ],
+        "target": "/cccmc/hyzj/hytj"
+      },
+      {
+        "title": "政策法规 - 综合政策",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zcfg/zhzc/"
+        ],
+        "target": "/cccmc/zcfg/zhzc"
+      },
+      {
+        "title": "政策法规 - 国内贸易",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zcfg/gnmy/"
+        ],
+        "target": "/cccmc/zcfg/gnmy"
+      },
+      {
+        "title": "政策法规 - 对外贸易",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zcfg/dwmy/"
+        ],
+        "target": "/cccmc/zcfg/dwmy"
+      },
+      {
+        "title": "政策法规 - 投资合作",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zcfg/tzhz/"
+        ],
+        "target": "/cccmc/zcfg/tzhz"
+      }
+    ]
+  },
   "ccf.org.cn": {
     "_name": "中国计算机学会",
     ".": [

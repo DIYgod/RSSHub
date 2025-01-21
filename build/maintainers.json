@@ -1185,6 +1185,9 @@
   "/cccfna/:category/:type?": [
     "hualiong"
   ],
+  "/cccmc/:category{.+}?": [
+    "nczitzk"
+  ],
   "/ccf/news/:category?": [
     "nczitzk"
   ],
