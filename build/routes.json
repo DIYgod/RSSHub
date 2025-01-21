@@ -71092,7 +71092,8 @@
         ],
         "name": "在线读刊",
         "maintainers": [
-          "TonyRL"
+          "TonyRL",
+          "cscnk52"
         ],
         "location": "magazine.ts"
       }
