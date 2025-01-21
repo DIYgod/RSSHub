@@ -36,7 +36,7 @@ async function handler() {
             time_start: oneHourAgo,
             time_end: currentTime,
             limit: 40,
-            fields: ['share_description', 'share_image', 'word_comments', 'stock_list', 'is_important', 'duration', 'word_classify'].join(';'),
+            fields: ['share_description', 'share_image', 'word_comments', 'stock_list', 'is_important', 'duration', 'word_classify', 'share_link'].join(';'),
         },
         headers: {
             'app-version': 'web1.0',
@@ -52,7 +52,7 @@ async function handler() {
             title: item.title,
             description: item.detail,
             pubDate: parseDate(item.time_published, 'X'),
-            link: item.share_link || `https://www.tmtpost.com/word/${item.id}`,
+            link: item.share_link || `https://www.tmtpost.com/nictation/${item.guid}.html`,
             author: item.author_name,
         })),
     };
