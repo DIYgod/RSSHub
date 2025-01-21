@@ -60,6 +60,13 @@ export type DataItem = {
     itunes_duration?: number | string;
     itunes_item_image?: string;
     media?: Record<string, Record<string, string>>;
+    attachments?: {
+        url: string;
+        mime_type: string;
+        title?: string;
+        size_in_bytes?: number;
+        duration_in_seconds?: number;
+    }[];
 
     _extra?: Record<string, any> & {
         links?: {
@@ -273,7 +280,7 @@ interface RouteItem {
     /**
      * The handler function of the route
      */
-    handler: (ctx: Context) => Promise<Data> | Data;
+    handler: (ctx: Context) => Promise<Data | null> | Data | null;
 
     /**
      * An example URL of the route
