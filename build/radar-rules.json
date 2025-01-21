@@ -25334,6 +25334,30 @@
           "/"
         ],
         "target": "/oschina(_,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"id\")??void 0;return`/oschina/column/${id}`}"
+      },
+      {
+        "title": "活动",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/oschina(_,url)=>{const urlObj=new URL(url);const category=urlObj.searchParams.get(\"tab\")??void 0;return`/oschina/event${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "强力推荐",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/oschina/event/recommend"
+      },
+      {
+        "title": "最新活动",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/oschina/event/latest"
       }
     ],
     ".": [

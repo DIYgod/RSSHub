@@ -5272,6 +5272,9 @@
   "/oschina/column/:id": [
     "nczitzk"
   ],
+  "/oschina/event/:category?": [
+    "nczitzk"
+  ],
   "/oschina/news/:category?": [
     "tgly307",
     "zengxs"
