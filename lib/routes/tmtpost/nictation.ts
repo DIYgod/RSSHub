@@ -21,7 +21,7 @@ export const route: Route = {
     name: '快报',
     maintainers: ['defp'],
     handler,
-    url: 'www.tmtpost.com',
+    url: 'www.tmtpost.com/nictation',
 };
 
 async function handler() {
