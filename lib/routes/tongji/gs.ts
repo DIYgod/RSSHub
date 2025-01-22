@@ -5,9 +5,9 @@ import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 
 export const route: Route = {
-    path: '/yjs',
+    path: '/gs',
     categories: ['university'],
-    example: '/tongji/yjs',
+    example: '/tongji/gs',
     parameters: {},
     features: {
         requireConfig: false,
@@ -19,35 +19,35 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['yz.tongji.edu.cn/zsxw/ggtz.htm', 'yz.tongji.edu.cn/'],
+            source: ['gs.tongji.edu.cn/tzgg.htm', 'gs.tongji.edu.cn/'],
         },
     ],
-    name: '研究生招生网通知公告',
-    maintainers: ['shengmaosu', 'sitdownkevin'],
+    name: '研究生院通知公告',
+    maintainers: ['sitdownkevin'],
     handler,
-    url: 'yz.tongji.edu.cn/zsxw/ggtz.htm',
+    url: 'gs.tongji.edu.cn/tzgg.htm',
 };
 
 async function getNoticeContent(item) {
     const response = await got(item.link);
-    const $ = load(response.data);
+    const $ = load(response.body);
     const content = $('#vsb_content').html();
     item.description = content;
     return item;
 }
 
 async function handler() {
-    const baseUrl = 'https://yz.tongji.edu.cn';
-    const response = await got(`${baseUrl}/zsxw/ggtz.htm`);
+    const baseUrl = 'https://gs.tongji.edu.cn';
+    const response = await got(`${baseUrl}/tzgg.htm`);
     const $ = load(response.body);
-    const container = $('#content-box > div.content > div.list_main_content > ul');
+    const container = $('body > div > div.con_list.ma0a > div > div.list_content_right > div.list_list > ul');
     const items = container
         .find('li')
         .toArray()
         .map((item) => {
             const title = $(item).find('a').attr('title');
             const linkRaw = $(item).find('a').attr('href');
-            const link = linkRaw.startsWith('http') ? linkRaw : new URL(linkRaw, `${baseUrl}/zsxw`).toString();
+            const link = linkRaw.startsWith('http') ? linkRaw : `${baseUrl}/${linkRaw}`;
             const pubDate = $(item).find('span').text();
             return { title, link, pubDate: parseDate(pubDate, 'YYYY-MM-DD') };
         });
@@ -55,9 +55,9 @@ async function handler() {
     const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link, () => getNoticeContent(item))));
 
     return {
-        title: '同济大学研究生招生网',
+        title: '同济大学研究生院',
         link: baseUrl,
-        description: '同济大学研究生招生网通知公告',
+        description: '同济大学研究生院通知公告',
         image: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
         icon: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
         logo: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
