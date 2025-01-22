@@ -89788,6 +89788,45 @@
     "url": "twreporter.org",
     "lang": "zh-TW"
   },
+  "txks": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "name": "通信考试动态",
+        "description": "**注意：** 官方网站限制了国外网络请求，可能需要通过部署在中国大陆内的 RSSHub 实例访问。",
+        "maintainers": [
+          "PrinOrange"
+        ],
+        "categories": [
+          "study"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "title": "全国通信专业技术人员职业水平考试动态",
+            "source": [
+              "www.txks.org.cn/index/work",
+              "www.txks.org.cn"
+            ],
+            "target": "/news"
+          }
+        ],
+        "example": "/txks/news",
+        "location": "news.ts"
+      }
+    },
+    "name": "全国通信专业技术人员职业水平考试",
+    "url": "www.txks.org.cn",
+    "lang": "zh-CN"
+  },
   "txrjy": {
     "routes": {
       "/fornumtopic/:channel?": {
