@@ -88268,6 +88268,44 @@
     "url": "www.tkww.hk",
     "lang": "zh-HK"
   },
+  "tmtpost": {
+    "routes": {
+      "/nictation": {
+        "path": "/nictation",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/tmtpost/word",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": {
+          "source": [
+            "www.tmtpost.com"
+          ]
+        },
+        "name": "快报",
+        "maintainers": [
+          "defp"
+        ],
+        "url": "www.tmtpost.com/nictation",
+        "location": "nictation.ts"
+      }
+    },
+    "name": "钛媒体",
+    "url": "tmtpost.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": "钛媒体是一家专注于新媒体领域的科技媒体",
+    "lang": "zh-CN"
+  },
   "tokeninsight": {
     "routes": {
       "/blog/:lang?": {
