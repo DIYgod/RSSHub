@@ -1,0 +1,197 @@
+{
+  root: 'D:\\projects\\RSS\\RSSHub',
+  registry: 'https://registry.npmmirror.com',
+  pkgs: [],
+  production: false,
+  cacheStrict: false,
+  cacheDir: 'C:\\Users\\许超\\.npminstall_tarball',
+  env: {
+    npm_config_registry: 'https://registry.npmmirror.com',
+    npm_config_argv: '{"remain":[],"cooked":["--fix-bug-versions","--china","--userconfig=C:\\\\Users\\\\许超\\\\.cnpmrc","--disturl=https://cdn.npmmirror.com/binaries/node","--registry=https://registry.npmmirror.com"],"original":["--fix-bug-versions","--china","--userconfig=C:\\\\Users\\\\许超\\\\.cnpmrc","--disturl=https://cdn.npmmirror.com/binaries/node","--registry=https://registry.npmmirror.com"]}',
+    npm_config_user_agent: 'npminstall/7.12.0 npm/? node/v22.12.0 win32 x64',
+    npm_config_cache: 'C:\\Users\\许超\\.npminstall_tarball',
+    NODE: 'C:\\Program Files\\nodejs\\node.exe',
+    npm_node_execpath: 'C:\\Program Files\\nodejs\\node.exe',
+    npm_execpath: 'C:\\Users\\许超\\AppData\\Roaming\\npm\\node_modules\\cnpm\\node_modules\\npminstall\\bin\\install.js',
+    npm_config_userconfig: 'C:\\Users\\许超\\.cnpmrc',
+    npm_config_disturl: 'https://cdn.npmmirror.com/binaries/node',
+    npm_config_r: 'https://registry.npmmirror.com',
+    COREPACK_NPM_REGISTRY: 'https://registry.npmmirror.com',
+    EDGEDRIVER_CDNURL: 'https://npmmirror.com/mirrors/edgedriver',
+    NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
+    NVM_NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
+    PHANTOMJS_CDNURL: 'https://cdn.npmmirror.com/binaries/phantomjs',
+    CHROMEDRIVER_CDNURL: 'https://cdn.npmmirror.com/binaries/chromedriver',
+    OPERADRIVER_CDNURL: 'https://cdn.npmmirror.com/binaries/operadriver',
+    CYPRESS_DOWNLOAD_PATH_TEMPLATE: 'https://cdn.npmmirror.com/binaries/cypress/${version}/${platform}-${arch}/cypress.zip',
+    ELECTRON_MIRROR: 'https://cdn.npmmirror.com/binaries/electron/',
+    ELECTRON_BUILDER_BINARIES_MIRROR: 'https://cdn.npmmirror.com/binaries/electron-builder-binaries/',
+    SASS_BINARY_SITE: 'https://cdn.npmmirror.com/binaries/node-sass',
+    SWC_BINARY_SITE: 'https://cdn.npmmirror.com/binaries/node-swc',
+    NWJS_URLBASE: 'https://cdn.npmmirror.com/binaries/nwjs/v',
+    PUPPETEER_DOWNLOAD_HOST: 'https://cdn.npmmirror.com/binaries/chrome-for-testing',
+    PUPPETEER_DOWNLOAD_BASE_URL: 'https://cdn.npmmirror.com/binaries/chrome-for-testing',
+    PLAYWRIGHT_DOWNLOAD_HOST: 'https://cdn.npmmirror.com/binaries/playwright',
+    SENTRYCLI_CDNURL: 'https://cdn.npmmirror.com/binaries/sentry-cli',
+    SAUCECTL_INSTALL_BINARY_MIRROR: 'https://cdn.npmmirror.com/binaries/saucectl',
+    RE2_DOWNLOAD_MIRROR: 'https://cdn.npmmirror.com/binaries/node-re2',
+    RE2_DOWNLOAD_SKIP_PATH: 'true',
+    PRISMA_ENGINES_MIRROR: 'https://cdn.npmmirror.com/binaries/prisma',
+    npm_config_better_sqlite3_binary_host: 'https://cdn.npmmirror.com/binaries/better-sqlite3',
+    npm_config_keytar_binary_host: 'https://cdn.npmmirror.com/binaries/keytar',
+    npm_config_sharp_binary_host: 'https://cdn.npmmirror.com/binaries/sharp',
+    npm_config_sharp_libvips_binary_host: 'https://cdn.npmmirror.com/binaries/sharp-libvips',
+    npm_config_robotjs_binary_host: 'https://cdn.npmmirror.com/binaries/robotjs',
+    npm_rootpath: 'D:\\projects\\RSS\\RSSHub',
+    INIT_CWD: 'D:\\projects\\RSS\\RSSHub'
+  },
+  binaryMirrors: {
+    ENVS: {
+      COREPACK_NPM_REGISTRY: 'https://registry.npmmirror.com',
+      EDGEDRIVER_CDNURL: 'https://npmmirror.com/mirrors/edgedriver',
+      NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
+      NVM_NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
+      PHANTOMJS_CDNURL: 'https://cdn.npmmirror.com/binaries/phantomjs',
+      CHROMEDRIVER_CDNURL: 'https://cdn.npmmirror.com/binaries/chromedriver',
+      OPERADRIVER_CDNURL: 'https://cdn.npmmirror.com/binaries/operadriver',
+      CYPRESS_DOWNLOAD_PATH_TEMPLATE: 'https://cdn.npmmirror.com/binaries/cypress/${version}/${platform}-${arch}/cypress.zip',
+      ELECTRON_MIRROR: 'https://cdn.npmmirror.com/binaries/electron/',
+      ELECTRON_BUILDER_BINARIES_MIRROR: 'https://cdn.npmmirror.com/binaries/electron-builder-binaries/',
+      SASS_BINARY_SITE: 'https://cdn.npmmirror.com/binaries/node-sass',
+      SWC_BINARY_SITE: 'https://cdn.npmmirror.com/binaries/node-swc',
+      NWJS_URLBASE: 'https://cdn.npmmirror.com/binaries/nwjs/v',
+      PUPPETEER_DOWNLOAD_HOST: 'https://cdn.npmmirror.com/binaries/chrome-for-testing',
+      PUPPETEER_DOWNLOAD_BASE_URL: 'https://cdn.npmmirror.com/binaries/chrome-for-testing',
+      PLAYWRIGHT_DOWNLOAD_HOST: 'https://cdn.npmmirror.com/binaries/playwright',
+      SENTRYCLI_CDNURL: 'https://cdn.npmmirror.com/binaries/sentry-cli',
+      SAUCECTL_INSTALL_BINARY_MIRROR: 'https://cdn.npmmirror.com/binaries/saucectl',
+      RE2_DOWNLOAD_MIRROR: 'https://cdn.npmmirror.com/binaries/node-re2',
+      RE2_DOWNLOAD_SKIP_PATH: 'true',
+      PRISMA_ENGINES_MIRROR: 'https://cdn.npmmirror.com/binaries/prisma',
+      npm_config_better_sqlite3_binary_host: 'https://cdn.npmmirror.com/binaries/better-sqlite3',
+      npm_config_keytar_binary_host: 'https://cdn.npmmirror.com/binaries/keytar',
+      npm_config_sharp_binary_host: 'https://cdn.npmmirror.com/binaries/sharp',
+      npm_config_sharp_libvips_binary_host: 'https://cdn.npmmirror.com/binaries/sharp-libvips',
+      npm_config_robotjs_binary_host: 'https://cdn.npmmirror.com/binaries/robotjs'
+    },
+    '@ali/s2': { host: 'https://cdn.npmmirror.com/binaries/looksgood-s2' },
+    sharp: { replaceHostFiles: [Array], replaceHostMap: [Object] },
+    '@tensorflow/tfjs-node': {
+      replaceHostFiles: [Array],
+      replaceHostRegExpMap: [Object],
+      replaceHostMap: [Object]
+    },
+    cypress: {
+      host: 'https://cdn.npmmirror.com/binaries/cypress',
+      newPlatforms: [Object]
+    },
+    'utf-8-validate': {
+      host: 'https://cdn.npmmirror.com/binaries/utf-8-validate/v{version}'
+    },
+    xprofiler: {
+      remote_path: './xprofiler/v{version}/',
+      host: 'https://cdn.npmmirror.com/binaries'
+    },
+    leveldown: { host: 'https://cdn.npmmirror.com/binaries/leveldown/v{version}' },
+    couchbase: { host: 'https://cdn.npmmirror.com/binaries/couchbase/v{version}' },
+    gl: { host: 'https://cdn.npmmirror.com/binaries/gl/v{version}' },
+    sqlite3: {
+      host: 'https://cdn.npmmirror.com/binaries/sqlite3',
+      remote_path: 'v{version}'
+    },
+    '@journeyapps/sqlcipher': { host: 'https://cdn.npmmirror.com/binaries' },
+    grpc: {
+      host: 'https://cdn.npmmirror.com/binaries',
+      remote_path: '{name}/v{version}'
+    },
+    'grpc-tools': { host: 'https://cdn.npmmirror.com/binaries' },
+    wrtc: {
+      host: 'https://cdn.npmmirror.com/binaries',
+      remote_path: '{name}/v{version}'
+    },
+    fsevents: { host: 'https://cdn.npmmirror.com/binaries/fsevents' },
+    nodejieba: { host: 'https://cdn.npmmirror.com/binaries/nodejieba' },
+    canvas: { host: 'https://cdn.npmmirror.com/binaries/canvas' },
+    'skia-canvas': { host: 'https://cdn.npmmirror.com/binaries/skia-canvas' },
+    'flow-bin': {
+      replaceHost: 'https://github.com/facebook/flow/releases/download/v',
+      host: 'https://cdn.npmmirror.com/binaries/flow/v'
+    },
+    'jpegtran-bin': {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/jpegtran-bin'
+    },
+    'cwebp-bin': {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/cwebp-bin'
+    },
+    'zopflipng-bin': {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/zopflipng-bin'
+    },
+    'optipng-bin': {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/optipng-bin'
+    },
+    mozjpeg: {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/mozjpeg-bin'
+    },
+    gifsicle: {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/gifsicle-bin'
+    },
+    'pngquant-bin': {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/pngquant-bin',
+      replaceHostMap: [Object]
+    },
+    'pngcrush-bin': {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/pngcrush-bin'
+    },
+    'jpeg-recompress-bin': {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/jpeg-recompress-bin'
+    },
+    'advpng-bin': {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/advpng-bin'
+    },
+    'pngout-bin': {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/pngout-bin'
+    },
+    'jpegoptim-bin': {
+      replaceHost: [Array],
+      host: 'https://cdn.npmmirror.com/binaries/jpegoptim-bin'
+    },
+    argon2: { host: 'https://cdn.npmmirror.com/binaries/argon2' },
+    'ali-zeromq': { host: 'https://cdn.npmmirror.com/binaries/ali-zeromq' },
+    'ali-usb_ctl': { host: 'https://cdn.npmmirror.com/binaries/ali-usb_ctl' },
+    'gdal-async': { host: 'https://cdn.npmmirror.com/binaries/node-gdal-async' },
+    'libpg-query': { host: 'https://cdn.npmmirror.com/binaries' }
+  },
+  forbiddenLicenses: null,
+  flatten: false,
+  proxy: undefined,
+  prune: false,
+  disableFallbackStore: false,
+  workspacesMap: Map(0) {},
+  enableWorkspace: false,
+  workspaceRoot: 'D:\\projects\\RSS\\RSSHub',
+  isWorkspaceRoot: true,
+  isWorkspacePackage: false,
+  offline: false,
+  strictSSL: true,
+  ignoreScripts: false,
+  foregroundScripts: false,
+  ignoreOptionalDependencies: false,
+  detail: false,
+  forceLinkLatest: false,
+  trace: false,
+  engineStrict: false,
+  registryOnly: false,
+  client: false,
+  autoFixVersion: [Function: autoFixVersion]
+}
