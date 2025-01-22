@@ -84,14 +84,14 @@ async function handler(ctx) {
                 const author = content('p.xinxi span:contains("作者：")').text().replace('作者：', '').trim();
                 item.author = author || null;
 
-                const news_content = content('div.v_news_content') || '解析正文失败';
-                const list_attachments = content('ul[style="list-style-type:none;"] a');
-                let list_attachments_html = '';
-                list_attachments.each((_, a_element) => {
-                    list_attachments_html += '<br />' + content(a_element).prop('outerHTML');
+                const newsContent = content('div.v_news_content') || '解析正文失败';
+                const listAttachments = content('ul[style="list-style-type:none;"] a');
+                let listAttachmentsHtml = '';
+                listAttachments.each((_, a_element) => {
+                    listAttachmentsHtml += '<br />' + content(a_element).prop('outerHTML');
                 });
 
-                item.description = news_content + list_attachments_html;
+                item.description = newsContent + listAttachmentsHtml;
                 return item;
             })
         )
