@@ -46,8 +46,8 @@ async function handler() {
     const data = response.data.data;
 
     return {
-        title: '钛媒体 - 快讯',
-        link: 'https://www.tmtpost.com',
+        title: '钛媒体 - 快报',
+        link: 'https://www.tmtpost.com/nictation',
         item: data.map((item) => ({
             title: item.title,
             description: item.detail,
