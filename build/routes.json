@@ -42764,11 +42764,17 @@
         "parameters": {
           "category": "栏目标识，默认为 lgyw（理工要闻）"
         },
-        "description": "| 理工要闻 | 新闻导读 | 综合新闻 | 教学科研 | 院处动态 | 学术科创 | 交流合作 | 招生就业 | 党建思政 | 在线播放 | 理工校报 | 媒体理工 | 讲座论坛 | 人才招聘 |\n|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|\n| lgyw     | xwdd     | zhenew   | jxky     | ycdt     | xskc     | jlhz     | zsjy     | djsz     | zxbf     | lgxb     | mtlg     | jzlt     | rczp     |",
+        "description": "| 理工要闻 | 新闻导读 | 图文报道 | 综合新闻 | 教学科研 | 院处动态 | 学术科创 | 交流合作 | 学生天地 | 招生就业 | 党建思政 | 在线播放 | 理工人物 | 理工校报 | 媒体理工 | 讲座论坛 | 人才招聘 | 学科建设 |\n|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|\n| lgyw     | xwdd     | twbd     | zhenew   | jxky     | ycdt     | xskc     | jlhz     | xstd     | zsjy     | djsz     | zxbf     | lgrw     | lgxb     | mtlg     | jzlt     | rczp     | xkjs     |",
         "categories": [
           "university"
         ],
         "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
           "supportRadar": true
         },
         "radar": [
