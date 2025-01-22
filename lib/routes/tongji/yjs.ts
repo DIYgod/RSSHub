@@ -31,7 +31,7 @@ export const route: Route = {
 async function getNoticeContent(item) {
     const response = await got(item.link);
     const $ = load(response.data);
-    const content = $('#vsb_content').text();
+    const content = $('#vsb_content').html();
     item.description = content;
     return item;
 }
