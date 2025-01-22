@@ -12511,7 +12511,7 @@
           "/" ],
         target:"/ruancan/user/:id" } ] },
   "ruankao.org.cn":{ _name:"中国计算机职业技术资格考试",
-    www:[ { title:"软考新闻动态",
+    www:[ { title:"计算机职业技术资格考试（软考）动态",
         docs:"https://docs.rsshub.app/routes/study",
         source:[ "/index/work",
           "/" ],

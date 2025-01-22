@@ -72981,7 +72981,8 @@
     "routes": {
       "/news": {
         "path": "/news",
-        "name": "软考最新动态",
+        "name": "软考动态",
+        "description": "**注意：** 官方网站限制了国外网络请求，可能需要通过部署在中国大陆内的 RSSHub 实例访问。",
         "maintainers": [
           "PrinOrange"
         ],
@@ -72991,7 +72992,7 @@
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
-          "antiCrawler": false,
+          "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false,
@@ -72999,7 +73000,7 @@
         },
         "radar": [
           {
-            "title": "软考新闻动态",
+            "title": "计算机职业技术资格考试（软考）动态",
             "source": [
               "www.ruankao.org.cn/index/work",
               "www.ruankao.org.cn"
