@@ -81,7 +81,7 @@ const handler: Route['handler'] = async () => {
 
 export const route: Route = {
     path: '/news',
-    name: '计算机职业技术资格考试（软考）动态',
+    name: '软考动态',
     description: '**注意：** 官方网站限制了国外网络请求，可能需要通过部署在中国大陆内的 RSSHub 实例访问。',
     maintainers: ['PrinOrange'],
     handler,
