@@ -11784,7 +11784,8 @@
         },
         "name": "UP 主频道的合集",
         "maintainers": [
-          "shininome"
+          "shininome",
+          "cscnk52"
         ],
         "location": "user-collection.ts"
       },
