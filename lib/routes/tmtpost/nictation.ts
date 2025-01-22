@@ -18,7 +18,7 @@ export const route: Route = {
     radar: {
         source: ['www.tmtpost.com'],
     },
-    name: '快讯',
+    name: '快报',
     maintainers: ['defp'],
     handler,
     url: 'www.tmtpost.com',
