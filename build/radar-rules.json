@@ -31807,9 +31807,20 @@
         "target": "/tongji/bks"
       }
     ],
-    "yz": [
+    "gs": [
       {
         "title": "研究生院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg.htm",
+          "/"
+        ],
+        "target": "/tongji/gs"
+      }
+    ],
+    "yz": [
+      {
+        "title": "研究生招生网通知公告",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/zsxw/ggtz.htm",

@@ -88441,6 +88441,36 @@
         "url": "bksy.tongji.edu.cn/",
         "location": "bks.ts"
       },
+      "/gs": {
+        "path": "/gs",
+        "categories": [
+          "university"
+        ],
+        "example": "/tongji/gs",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "gs.tongji.edu.cn/tzgg.htm",
+              "gs.tongji.edu.cn/"
+            ]
+          }
+        ],
+        "name": "研究生院通知公告",
+        "maintainers": [
+          "sitdownkevin"
+        ],
+        "url": "gs.tongji.edu.cn/tzgg.htm",
+        "location": "gs.ts"
+      },
       "/yjs": {
         "path": "/yjs",
         "categories": [
@@ -88464,9 +88494,10 @@
             ]
           }
         ],
-        "name": "研究生院通知公告",
+        "name": "研究生招生网通知公告",
         "maintainers": [
-          "shengmaosu"
+          "shengmaosu",
+          "sitdownkevin"
         ],
         "url": "yz.tongji.edu.cn/zsxw/ggtz.htm",
         "location": "yjs.ts"
