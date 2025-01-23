@@ -118,7 +118,7 @@ const formatNote = (url, note) => ({
     updated: parseDate(note.lastUpdateTime, 'x'),
 });
 
-async function renderNotesFulltext(notes, urlPrex) {
+async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
     const data: Array<{
         title: string;
         link: string;
@@ -130,7 +130,7 @@ async function renderNotesFulltext(notes, urlPrex) {
     const promises = notes.flatMap((note) =>
         note.map(async ({ noteCard, id }) => {
             const link = `${urlPrex}/${id}`;
-            const { title, description, pubDate } = await getFullNote(link);
+            const { title, description, pubDate } = await getFullNote(link, displayLivePhoto);
             return {
                 title,
                 link,
@@ -145,7 +145,7 @@ async function renderNotesFulltext(notes, urlPrex) {
     return data;
 }
 
-async function getFullNote(link) {
+async function getFullNote(link, displayLivePhoto) {
     const data = (await cache.tryGet(link, async () => {
         const res = await ofetch(link, {
             headers: getHeaders(config.xiaohongshu.cookie),
@@ -154,14 +154,74 @@ async function getFullNote(link) {
         const script = extractInitialState($);
         const state = JSON.parse(script);
         const note = state.note.noteDetailMap[state.note.firstNoteId].note;
-        const images = note.imageList.map((image) => image.urlDefault);
         const title = note.title;
         let desc = note.desc;
         desc = desc.replaceAll(/\[.*?\]/g, '');
         desc = desc.replaceAll(/#(.*?)#/g, '#$1');
         desc = desc.replaceAll('\n', '<br>');
         const pubDate = new Date(note.time);
-        const description = `${images.map((image) => `<img src="${image}">`).join('')}<br>${title}<br>${desc}`;
+
+        let mediaContent = '';
+        if (note.type === 'video') {
+            const originVideoKey = note.video?.consumer?.originVideoKey;
+            const videoUrls: string[] = [];
+
+            if (originVideoKey) {
+                videoUrls.push(`http://sns-video-al.xhscdn.com/${originVideoKey}`);
+            }
+
+            const streamTypes = ['av1', 'h264', 'h265', 'h266'];
+            for (const type of streamTypes) {
+                const streams = note.video?.media?.stream?.[type];
+                if (streams?.length > 0) {
+                    const stream = streams[0];
+                    if (stream.masterUrl) {
+                        videoUrls.push(stream.masterUrl);
+                    }
+                    if (stream.backupUrls?.length) {
+                        videoUrls.push(...stream.backupUrls);
+                    }
+                }
+            }
+
+            const posterUrl = note.imageList?.[0]?.urlDefault;
+
+            if (videoUrls.length > 0) {
+                mediaContent = `<video controls ${posterUrl ? `poster="${posterUrl}"` : ''}>
+                    ${videoUrls.map((url) => `<source src="${url}" type="video/mp4">`).join('\n')}
+                </video><br>`;
+            }
+        } else {
+            mediaContent = note.imageList
+                .map((image) => {
+                    if (image.livePhoto && displayLivePhoto) {
+                        const videoUrls: string[] = [];
+
+                        const streamTypes = ['av1', 'h264', 'h265', 'h266'];
+                        for (const type of streamTypes) {
+                            const streams = image.stream?.[type];
+                            if (streams?.length > 0) {
+                                if (streams[0].masterUrl) {
+                                    videoUrls.push(streams[0].masterUrl);
+                                }
+                                if (streams[0].backupUrls?.length) {
+                                    videoUrls.push(...streams[0].backupUrls);
+                                }
+                            }
+                        }
+
+                        if (videoUrls.length > 0) {
+                            return `<video controls poster="${image.urlDefault}">
+                            ${videoUrls.map((url) => `<source src="${url}" type="video/mp4">`).join('\n')}
+                        </video>`;
+                        }
+                    }
+                    return `<img src="${image.urlDefault}">`;
+                })
+                .join('<br>');
+        }
+
+        const description = `${mediaContent}<br>${title}<br>${desc}`;
         return {
             title,
             description,

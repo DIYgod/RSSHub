@@ -171,16 +171,16 @@ export const route: Route = {
     handler,
     example: '/meishichina/recipe',
     parameters: { category: '分类，默认为最新推荐，见下表' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [菜谱大全](https://home.meishichina.com/recipe.html) 中的 \`最新推荐\` 分类，将 \`最新推荐\` 作为参数填入，此时路由为 [\`/meishichina/recipe/最新推荐/\`](https://rsshub.app/meishichina/recipe/最新推荐)。
 
   若订阅 [菜谱大全](https://home.meishichina.com/recipe.html) 中的 \`自制食材\` 分类，将 \`自制食材\` 作为参数填入，此时路由为 [\`/meishichina/recipe/自制食材/\`](https://rsshub.app/meishichina/recipe/自制食材)。
-  :::
+:::
 
   | [最新推荐](https://home.meishichina.com/recipe.html) | [最新发布](https://home.meishichina.com/recipe.html) | [热菜](https://home.meishichina.com/recipe.html) | [凉菜](https://home.meishichina.com/recipe.html) | [汤羹](https://home.meishichina.com/recipe.html) | [主食](https://home.meishichina.com/recipe.html) | [小吃](https://home.meishichina.com/recipe.html) | [西餐](https://home.meishichina.com/recipe.html) | [烘焙](https://home.meishichina.com/recipe.html) | [自制食材](https://home.meishichina.com/recipe.html) |
   | ---------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ---------------------------------------------------- |
 
-  :::tip
+::: tip
   若订阅 [全部分类](https://home.meishichina.com/recipe-type.html) 中的对应分类页，见下方说明。
 
   若订阅 [热菜最新菜谱](https://home.meishichina.com/recipe/recai/)，网址为 \`https://home.meishichina.com/recipe/recai/\`。截取 \`https://home.meishichina.com/recipe/\` 到末尾 \`/\` 的部分 \`recai\` 作为参数填入，此时路由为 [\`/meishichina/recipe/recai/\`](https://rsshub.app/meishichina/recipe/recai)。
@@ -188,7 +188,7 @@ export const route: Route = {
   若订阅 [米饭最热菜谱](https://home.meishichina.com/recipe/mifan/hot/)，网址为 \`https://home.meishichina.com/recipe/mifan/hot/\`。截取 \`https://home.meishichina.com/recipe/\` 到末尾 \`/\` 的部分 \`mifan/hot\` 作为参数填入，此时路由为 [\`/meishichina/recipe/mifan/hot/\`](https://rsshub.app/meishichina/recipe/mifan/hot)。
   
   若订阅 [制作难度简单菜谱](https://home.meishichina.com/recipe-type-do-level-view-1.html)，网址为 \`https://home.meishichina.com/recipe-type-do-level-view-1.html\`。截取 \`https://home.meishichina.com/\` 到末尾 \`.html\` 的部分 \`recipe-type-do-level-view-1\` 作为参数填入，此时路由为 [\`/meishichina/recipe/recipe-type-do-level-view-1/\`](https://rsshub.app/meishichina/recipe/recipe-type-do-level-view-1)。
-  :::
+:::
 
   <details>
     <summary>更多分类</summary>

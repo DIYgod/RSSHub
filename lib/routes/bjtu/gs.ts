@@ -188,10 +188,10 @@ export const route: Route = {
   | 招生简章 - 招生专题 | zsjz_zszt    |
   | 政策法规 - 招生专题 | zcfg_zszt    |
 
-  :::tip 文章来源
+::: tip
   文章来源的命名均来自研究生院网站标题。
   最常用的几项有“通知公告_招生”、“通知公告”、“博士招生 - 招生专题”、“硕士招生 - 招生专题”。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

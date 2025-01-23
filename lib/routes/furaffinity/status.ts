@@ -5,7 +5,7 @@ export const route: Route = {
     path: '/status',
     name: 'Status',
     url: 'furaffinity.net',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/furaffinity/status',
     maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: {},

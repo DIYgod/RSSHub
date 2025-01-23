@@ -110,7 +110,7 @@ export const handler = async (ctx) => {
 
 export const route: Route = {
     path: '/focus/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/pconline/focus',
     parameters: {
         category: {

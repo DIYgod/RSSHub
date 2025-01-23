@@ -11,9 +11,9 @@ export const route: Route = {
   | ------------------------------ | -------------------- |
   | 1                              | 2                    |
 
-  :::tip
+::: tip
   See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

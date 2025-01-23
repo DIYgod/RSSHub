@@ -3,7 +3,7 @@ import type { Namespace } from '@/types';
 export const namespace: Namespace = {
     name: '中文播客榜',
     url: 'xyzrank.com',
-    description: `:::tip
+    description: `::: tip
 可以通过指定 \`limit\` 参数确定榜单排名下限，默认为 250。
 
 若只查看榜单前 50，可在订阅 URL 后加入 \`?limit=50\`。

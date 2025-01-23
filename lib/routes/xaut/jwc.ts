@@ -20,9 +20,9 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['mocusez'],
     handler,
-    description: `:::warning
+    description: `::: warning
   有些内容需使用校园网或 VPN 访问知行网获取
-  :::
+:::
 
   | 通知公告 | 新闻动态 | 规章制度 | 竞赛结果公示 | 竞赛获奖通知 | 竞赛信息 | 公开公示 |
   | :------: | :------: | :------: | :----------: | :----------: | :------: | :------: |

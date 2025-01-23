@@ -32,11 +32,11 @@ export const route: Route = {
     name: '个人时间线',
     maintainers: ['zytomorrow', 'DIYgod', 'Rongronggg9'],
     handler,
-    description: `:::warning
+    description: `::: warning
   需要对应用户打开页面进行授权生成 token 才能生成内容
 
   自部署需要申请并配置微博 key，具体见部署文档
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

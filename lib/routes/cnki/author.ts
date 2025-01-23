@@ -1,16 +1,16 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 import { ProcessItem } from './utils';
 
-const rootUrl = 'https://kns.cnki.net';
-
 export const route: Route = {
-    path: '/author/:code',
+    name: '作者',
+    maintainers: ['Derekmini', 'harveyqiu'],
     categories: ['journal'],
-    example: '/cnki/author/000042423923',
-    parameters: { code: '作者对应code，可以在网址中得到' },
+    path: '/author/:name/:company',
+    parameters: { name: '作者姓名', company: '作者单位' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -19,62 +19,134 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '作者期刊文献',
-    description: `:::tip
+    example: '/cnki/author/丁晓东/中国人民大学',
+    description: `::: tip
     可能仅限中国大陆服务器访问，以实际情况为准。
-    :::`,
-    maintainers: ['harveyqiu', 'Derekmini'],
+:::`,
     handler,
 };
 
 async function handler(ctx) {
-    const code = ctx.req.param('code');
+    const name = ctx.req.param('name');
+    const company = ctx.req.param('company');
+    const host = 'https://kns.cnki.net';
+    const link = `${host}/kns8s/AdvSearch?classid=WD0FTY92`;
 
-    const authorInfoUrl = `${rootUrl}/kcms/detail/knetsearch.aspx?sfield=au&code=${code}`;
-    const res = await got(authorInfoUrl);
-    const $ = load(res.data);
-    const authorName = $('#showname').text();
-    const companyName = $('body > div.wrapper > div.main > div.container.full-screen > div > div:nth-child(3) > h3:nth-child(2) > span > a').text();
+    const params = new URLSearchParams();
+    params.append('boolSearch', 'true');
+    params.append(
+        'QueryJson',
+        JSON.stringify({
+            Platform: '',
+            Resource: 'CROSSDB',
+            Classid: 'WD0FTY92',
+            Products: '',
+            QNode: {
+                QGroup: [
+                    {
+                        Key: 'Subject',
+                        Title: '',
+                        Logic: 0,
+                        Items: [],
+                        ChildItems: [
+                            {
+                                Key: 'input[data-tipid=gradetxt-1]',
+                                Title: '作者',
+                                Logic: 0,
+                                Items: [
+                                    {
+                                        Key: 'input[data-tipid=gradetxt-1]',
+                                        Title: '作者',
+                                        Logic: 0,
+                                        Field: 'AU',
+                                        Operator: 'DEFAULT',
+                                        Value: name,
+                                        Value2: '',
+                                    },
+                                ],
+                                ChildItems: [],
+                            },
+                            {
+                                Key: 'input[data-tipid=gradetxt-2]',
+                                Title: '作者单位',
+                                Logic: 0,
+                                Items: [
+                                    {
+                                        Key: 'input[data-tipid=gradetxt-2]',
+                                        Title: '作者单位',
+                                        Logic: 0,
+                                        Field: 'AF',
+                                        Operator: 'FUZZY',
+                                        Value: company,
+                                        Value2: '',
+                                    },
+                                ],
+                                ChildItems: [],
+                            },
+                        ],
+                    },
+                    {
+                        Key: 'ControlGroup',
+                        Title: '',
+                        Logic: 0,
+                        Items: [],
+                        ChildItems: [],
+                    },
+                ],
+            },
+            ExScope: '0',
+            SearchType: 3,
+            Rlang: 'CHINESE',
+            KuaKuCode: 'YSTT4HG0,LSTPFY1C,JUP3MUPD,MPMFIG1A,EMRPGLPA,WQ0UVIAA,BLZOG7CK,PWFIRAGL,NN3FJMUV,NLBO1Z6R',
+        })
+    );
+    params.append('pageNum', '1');
+    params.append('pageSize', '20');
+    params.append('sortField', 'PT');
+    params.append('sortType', 'desc');
+    params.append('dstyle', 'listmode');
+    params.append('productStr', 'YSTT4HG0,LSTPFY1C,RMJLXHZ3,JQIRZIYA,JUP3MUPD,1UR4K4HZ,BPBAFJ5S,R79MZMCB,MPMFIG1A,EMRPGLPA,J708GVCE,ML4DRIDX,WQ0UVIAA,NB3BWEHK,XVLO76FD,HR1YT1Z9,BLZOG7CK,PWFIRAGL,NN3FJMUV,NLBO1Z6R,');
+    params.append('aside', `（作者：${name}(精确)）AND（作者单位：${company}(模糊)）`);
+    params.append('searchFrom', '资源范围：总库;  时间范围：更新时间：不限;');
+    params.append('CurPage', '1');
 
-    const res2 = await got(`${rootUrl}/kns8/Detail`, {
-        searchParams: {
-            sdb: 'CAPJ',
-            sfield: '作者',
-            skey: authorName,
-            scode: code,
-            acode: code,
+    const response = await ofetch(`${host}/kns8s/brief/grid`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+            referer: `${host}/kns8s/AdvSearch?classid=WD0FTY92`,
         },
-        followRedirect: false,
+        body: params.toString(),
     });
-    const authorPageUrl = res2.headers.location;
-
-    const regex = /v=([^&]+)/;
-    const code2 = authorPageUrl.match(regex)[1];
-
-    const url = `${rootUrl}/restapi/knowledge-api/v1/experts/relations/resources?v=${code2}&sequence=PT&size=10&sort=desc&start=1&resource=CJFD`;
-
-    const res3 = await got(url, { headers: { Referer: authorPageUrl } });
-    const publications = res3.data.data.data;
-
-    const list = publications.map((publication) => {
-        const metadata = publication.metadata;
-        const { value: title = '' } = metadata.find((md) => md.name === 'TI') || {};
-        const { value: date = '' } = metadata.find((md) => md.name === 'PT') || {};
-        const { value: filename = '' } = metadata.find((md) => md.name === 'FN') || {};
-
-        return {
-            title,
-            link: `https://cnki.net/kcms/detail/detail.aspx?filename=${filename}&dbcode=CJFD`,
-            author: authorName,
-            pubDate: date,
-        };
-    });
+    const $ = load(response);
+    const list = $('tr')
+        .toArray()
+        .slice(1)
+        .map((item) => {
+            const title = $(item).find('a.fz14').text();
+            const filename = $(item).find('a.icon-collect').attr('data-filename');
+            const link = `https://cnki.net/kcms/detail/detail.aspx?filename=${filename}&dbcode=CJFD`;
+            const pubDate = parseDate($(item).find('td.date').text(), 'YYYY-MM-DD');
+            return {
+                title,
+                link,
+                pubDate,
+            };
+        });
 
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => ProcessItem(item))));
 
+    const processedItems = items
+        .filter((item): item is Record<string, any> => item !== null && typeof item === 'object')
+        .map((item) => ({
+            title: item.title || '',
+            link: item.link,
+            pubDate: item.pubDate,
+        }));
+
     return {
-        title: `知网 ${authorName} ${companyName}`,
-        link: authorInfoUrl,
-        item: items,
+        title: `知网 ${name} ${company}`,
+        link,
+        item: processedItems,
     };
 }

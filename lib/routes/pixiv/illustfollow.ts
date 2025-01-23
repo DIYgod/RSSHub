@@ -34,9 +34,9 @@ export const route: Route = {
     maintainers: ['ClarkeCheng'],
     handler,
     url: 'www.pixiv.net/bookmark_new_illust.php',
-    description: `:::warning
+    description: `::: warning
   Only for self-hosted
-  :::`,
+:::`,
 };
 
 async function handler() {

@@ -49,7 +49,7 @@ export const route: Route = {
 | \`itemDesc\`       | The JSON Path as \`description\` in \`item\` | \`string\`        | None                                       |
 | \`itemPubDate\`    | The JSON Path as \`pubDate\` in \`item\`     | \`string\`        | None                                       |
 
-:::tip
+::: tip
 JSON Path only supports format like \`a.b.c\`. if you need to access arrays, like \`a[0].b\`, you can write it as \`a.0.b\`.
 :::
 

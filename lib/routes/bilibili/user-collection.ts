@@ -28,7 +28,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'UP 主频道的合集',
-    maintainers: ['shininome'],
+    maintainers: ['shininome', 'cscnk52'],
     handler,
 };
 
@@ -42,7 +42,7 @@ async function handler(ctx) {
 
     const link = `https://space.bilibili.com/${uid}/channel/collectiondetail?sid=${sid}`;
     const [userName, face] = await cache.getUsernameAndFaceFromUID(uid);
-    const host = `https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=${uid}&season_id=${sid}&sort_reverse=${sortReverse}&page_num=${page}&page_size=${limit}`;
+    const host = `https://api.bilibili.com/x/polymer/web-space/seasons_archives_list?mid=${uid}&season_id=${sid}&sort_reverse=${sortReverse}&page_num=${page}&page_size=${limit}`;
 
     const response = await got(host, {
         headers: {
@@ -59,6 +59,7 @@ async function handler(ctx) {
         title: `${userName} 的 bilibili 合集 ${data.meta.name}`,
         link,
         description: `${userName} 的 bilibili 合集`,
+        image: face,
         logo: face,
         icon: face,
         item: data.archives.map((item) => ({

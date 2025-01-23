@@ -6,7 +6,7 @@ import { JSDOM } from 'jsdom';
 
 export const route: Route = {
     path: '/tag/:name?/:type?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/lofter/tag/cosplay/date',
     parameters: { name: 'tag name, such as `名侦探柯南`, `摄影` by default', type: 'ranking type, see below, new by default' },
     features: {

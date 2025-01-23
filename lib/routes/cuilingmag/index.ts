@@ -135,13 +135,14 @@ export const route: Route = {
     path: '/:category?',
     name: '分类',
     url: 'cuilingmag.com',
+    categories: ['new-media', 'popular'],
     maintainers: ['nczitzk'],
     handler,
     example: '/cuilingmag',
     parameters: { category: '分类，默认为空，即全部，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [#哲学·文明](https://www.cuilingmag.com/category/philosophy_civilization)，网址为 \`https://www.cuilingmag.com/category/philosophy_civilization\`。截取 \`https://www.cuilingmag.com/category\` 到末尾的部分 \`philosophy_civilization\` 作为参数填入，此时路由为 [\`/cuilingmag/philosophy_civilization\`](https://rsshub.app/cuilingmag/philosophy_civilization)。
-  :::
+:::
 
   | 分类                                                                       | ID                                                                                |
   | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |

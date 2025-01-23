@@ -9,7 +9,7 @@ import { getCurrentPath } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/app/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/theinitium/app',
     parameters: {
         category: 'Category, see below, latest_sc by default',
@@ -32,7 +32,7 @@ export const route: Route = {
     handler,
     description: `抓取[The Initium App](https://app.theinitium.com/)的文章列表
 
-:::warning
+::: warning
 此路由暂不支持登陆认证
 :::
 

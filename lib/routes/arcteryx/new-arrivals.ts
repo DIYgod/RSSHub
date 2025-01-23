@@ -40,9 +40,9 @@ export const route: Route = {
   | ---- | ------ |
   | mens | womens |
 
-  :::tip
+::: tip
   Parameter \`country\` can be found within the url of \`Arcteryx\` website.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

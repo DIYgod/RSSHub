@@ -145,9 +145,9 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
     maintainers: ['DIYgod', 'Rongronggg9', 'synchrone', 'pseudoyu'],
     handler,
     description: `
-  :::tip
+::: tip
   Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`, it's recommended to deploy your own instance with telegram api configs (create your telegram application via \`https://core.telegram.org/api/obtaining_api_id\`, run this command \`node ./lib/routes/telegram/scripts/get-telegram-session.mjs\` to get \`TELEGRAM_SESSION\` and set it as Environment Variable).
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

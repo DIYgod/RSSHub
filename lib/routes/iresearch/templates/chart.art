@@ -1,0 +1,13 @@
+{{ if newsId }}
+  <a href="/Detail/report?id={{ newsId }}&amp;isfree=0" target="_blank">查看报告</a>
+{{ /if }}
+
+{{ if images }}
+  {{ each images image }}
+    {{ if image?.src }}
+      <figure>
+        <img src="{{ image.src }}">
+      </figure>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}

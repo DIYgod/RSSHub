@@ -12,7 +12,7 @@ import { rootUrl, apiTopicUrl, art, processItems } from './util';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/readhub',
     parameters: { category: '分类，见下表，默认为热门话题' },
     features: {

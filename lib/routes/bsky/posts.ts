@@ -85,5 +85,6 @@ async function handler(ctx) {
         icon: profile.avatar,
         logo: profile.avatar,
         item: items,
+        allowEmpty: true,
     };
 }

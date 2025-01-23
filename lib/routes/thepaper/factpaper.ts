@@ -11,7 +11,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/factpaper/:status?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/thepaper/factpaper',
     parameters: { status: '状态 id，可选 `1` 即 有定论 或 `0` 即 核查中，默认为 `1`' },
     features: {
