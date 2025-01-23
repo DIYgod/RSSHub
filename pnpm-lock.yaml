@@ -58,8 +58,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.5.167
-        version: 0.5.167(hono@4.6.17)
+        specifier: 0.5.168
+        version: 0.5.168(hono@4.6.17)
       '@sentry/node':
         specifier: 7.119.1
         version: 7.119.1
@@ -1839,8 +1839,8 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/hono-api-reference@0.5.167':
-    resolution: {integrity: sha512-e4VSymppR9miMQKeWk6aqu69/htBPQvFOXIqtdJ68pjo//iZ4F9bWDpGfiIVUI6y6XiUlbEO7PyKfgxHSUJ7eA==}
+  '@scalar/hono-api-reference@0.5.168':
+    resolution: {integrity: sha512-kNtmHki6vaNbCpCo3eJQT+UOz+8MG/9l4XqnD9LAmPahBsKrmVvnwzpRYCovHvT8gf2bIHqFdhJUAz5sxF/MNA==}
     engines: {node: '>=18'}
     peerDependencies:
       hono: ^4.0.0
@@ -7284,7 +7284,7 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/hono-api-reference@0.5.167(hono@4.6.17)':
+  '@scalar/hono-api-reference@0.5.168(hono@4.6.17)':
     dependencies:
       '@scalar/types': 0.0.27
       hono: 4.6.17
