@@ -42793,6 +42793,47 @@
         ],
         "view": 5,
         "location": "news.ts"
+      },
+      "/nic/:category?": {
+        "path": "/nic/:category?",
+        "name": "网络信息中心",
+        "url": "nic.hrbust.edu.cn",
+        "maintainers": [
+          "cscnk52"
+        ],
+        "example": "/hrbust/nic",
+        "parameters": {
+          "category": "栏目标识，默认为 3988（新闻动态）"
+        },
+        "description": "| 服务指南 | 常见问题 | 新闻动态 | 通知公告 | 国家政策法规 | 学校规章制度 | 部门规章制度 | 宣传教育 | 安全法规 |\n|----------|----------|----------|----------|--------------|--------------|--------------|----------|----------|\n| 3982     | 3983     | 3988     | 3989     | 3990         | 3991         | 3992         | 3993     | 3994     |",
+        "categories": [
+          "university"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "nic.hrbust.edu.cn/:category/list.htm"
+            ],
+            "target": "/nic/:category"
+          },
+          {
+            "source": [
+              "nic.hrbust.edu.cn/"
+            ],
+            "target": "/nic/"
+          }
+        ],
+        "view": 5,
+        "location": "nic.ts"
       }
     },
     "name": "哈尔滨理工大学",

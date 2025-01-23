@@ -3441,6 +3441,9 @@
   "/hrbust/news/:category?": [
     "cscnk52"
   ],
+  "/hrbust/nic/:category?": [
+    "cscnk52"
+  ],
   "/huanqiu/news/:category?": [
     "yuxinliu-alex"
   ],

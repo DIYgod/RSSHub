@@ -16372,6 +16372,24 @@
         ],
         "target": "/hrbust/news/"
       }
+    ],
+    "nic": [
+      {
+        "title": "网络信息中心",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:category/list.htm"
+        ],
+        "target": "/hrbust/nic/:category"
+      },
+      {
+        "title": "网络信息中心",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/hrbust/nic/"
+      }
     ]
   },
   "huanqiu.com": {
