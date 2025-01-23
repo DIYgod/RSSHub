@@ -133,10 +133,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             .filter((_): _ is { url: string; type: string; content_html: string } => true);
 
                         return {
+                            ...item,
                             title,
                             description,
                             pubDate: timezone(parseDate($$('div.newstag_l').text().split(/\s/)[0]), +8),
-                            author: item.author,
                             content: {
                                 html: description,
                                 text: $$('div#Content').html() ?? '',
