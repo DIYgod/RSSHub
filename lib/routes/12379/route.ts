@@ -61,7 +61,7 @@ export const route: Route = {
 `,
     maintainers: ['PrinOrange'],
     handler,
-    categories: ['study'],
+    categories: ['forecast'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
