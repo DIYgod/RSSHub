@@ -2144,6 +2144,9 @@
   "/easynomad/": [
     "jiangsong216"
   ],
+  "/ebc/realtime/:category?": [
+    "quiniapiezoelectricity"
+  ],
   "/ecnu/acm/contest/:category?": [
     "a180285"
   ],

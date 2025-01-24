@@ -11078,6 +11078,19 @@
       }
     ]
   },
+  "ebc.net.tw": {
+    "_name": "東森新聞",
+    "news": [
+      {
+        "title": "即時新聞",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/realtime/:category"
+        ],
+        "target": "/ebc/:category"
+      }
+    ]
+  },
   "ecnu.edu.cn": {
     "_name": "East China Normal University 华东师范大学",
     "acm": [

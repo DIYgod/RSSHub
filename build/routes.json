@@ -27637,6 +27637,44 @@
     "url": "easynomad.cn",
     "lang": "zh-CN"
   },
+  "ebc": {
+    "routes": {
+      "/realtime/:category?": {
+        "path": "/realtime/:category?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/ebc/realtime/politics",
+        "parameters": {
+          "category": "Category from the last segment of the URL of the corresponding site"
+        },
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "requireConfig": false
+        },
+        "name": "即時新聞",
+        "maintainers": [
+          "quiniapiezoelectricity"
+        ],
+        "description": "",
+        "radar": [
+          {
+            "source": [
+              "news.ebc.net.tw/realtime/:category"
+            ],
+            "target": "/:category"
+          }
+        ],
+        "location": "realtime.ts"
+      }
+    },
+    "name": "東森新聞",
+    "url": "ebc.net.tw"
+  },
   "ecnu": {
     "routes": {
       "/acm/contest/:category?": {
