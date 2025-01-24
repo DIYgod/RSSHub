@@ -32,32 +32,26 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const itemsPerPage = 15;
     const category = ctx.req.param('category') ?? '';
-    const pages = ctx.req.query('limit') ? Math.ceil(Number.parseInt(ctx.req.query('limit')) / itemsPerPage) : 1;
-    const feed = await Promise.all(
-        [...Array(pages).keys()].map(async (page) => {
-            const response = await got('https://news.ebc.net.tw/list/load', {
-                method: 'POST',
-                headers: {
-                    Accept: '*/*',
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: new URLSearchParams({
-                    list_type: 'realtime',
-                    cate_code: category,
-                    page: (page + 1).toString(),
-                }).toString(),
-            });
-            const $ = load(response.data);
-            return $('div.list > a')
-                .toArray()
-                .map((item) => new URL($(item).attr('href') ?? '', 'https://news.ebc.net.tw').href);
-        })
-    );
+    const response = await got('https://news.ebc.net.tw/list/load', {
+        method: 'POST',
+        headers: {
+            Accept: '*/*',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: new URLSearchParams({
+            list_type: 'realtime',
+            cate_code: category,
+            page: '1',
+        }).toString(),
+    });
+    const $ = load(response.data);
+    const feed = $('div.list > a')
+        .toArray()
+        .map((item) => new URL($(item).attr('href') ?? '', 'https://news.ebc.net.tw').href);
     const items = await Promise.all(
-        feed.flat().map((url) =>
+        feed.map((url) =>
             cache.tryGet(url, async () => {
                 const response = await got(url);
                 const $ = load(response.data);
