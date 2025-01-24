@@ -7561,6 +7561,35 @@
       }
     ]
   },
+  "ce.cn": {
+    "_name": "中国经济网",
+    "district": [
+      {
+        "title": "地方经济",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/newarea/:category/index.shtml"
+        ],
+        "target": "/ce/district/:category?"
+      },
+      {
+        "title": "地方经济",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/newarea/:category"
+        ],
+        "target": "/ce/district/:category?"
+      },
+      {
+        "title": "地方经济",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/ce/district"
+      }
+    ]
+  },
   "cebbank.com": {
     "_name": "中国光大银行",
     ".": [

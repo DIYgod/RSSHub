@@ -1248,6 +1248,9 @@
   "/cdzjryb/zw/projectList": [
     "TonyRL"
   ],
+  "/ce/district/:category?": [
+    "cscnk52"
+  ],
   "/cebbank/quotation/all": [
     "linbuxiao"
   ],
