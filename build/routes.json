@@ -94434,12 +94434,12 @@
   },
   "whitehouse": {
     "routes": {
-      "/briefing-room/:category?": {
-        "path": "/briefing-room/:category?",
+      "/news/:category?": {
+        "path": "/news/:category?",
         "categories": [
           "government"
         ],
-        "example": "/whitehouse/briefing-room",
+        "example": "/whitehouse/news",
         "parameters": {
           "category": "Category, see below, all by default"
         },
@@ -94454,48 +94454,19 @@
         "radar": [
           {
             "source": [
-              "whitehouse.gov/briefing-room/:category",
+              "whitehouse.gov/:category",
               "whitehouse.gov/"
             ],
-            "target": "/briefing-room/:category"
+            "target": "/news/:category"
           }
         ],
-        "name": "Briefing Room",
+        "name": "News",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "hkamran80"
         ],
-        "description": "| All | Blog | Legislation | Presidential Actions | Press Briefings | Speeches and Remarks | Statements and Releases |\n  | --- | ---- | ----------- | -------------------- | --------------- | -------------------- | ----------------------- |\n  |     | blog | legislation | presidential-actions | press-briefings | speeches-remarks     | statements-releases     |",
-        "location": "briefing-room.ts"
-      },
-      "/ostp": {
-        "path": "/ostp",
-        "categories": [
-          "government"
-        ],
-        "example": "/whitehouse/ostp",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "whitehouse.gov/ostp",
-              "whitehouse.gov/"
-            ]
-          }
-        ],
-        "name": "Office of Science and Technology Policy",
-        "maintainers": [
-          "LyleLee"
-        ],
-        "url": "whitehouse.gov/ostp",
-        "location": "ostp.ts"
+        "description": "| All | Articles | Briefings and Statements | Presidential Actions | Remarks |\n  | --- | -------- | ------------------------ | -------------------- | ------- |\n  |     | articles | briefings-statements     | presidential-actions | remarks |",
+        "location": "news.ts"
       }
     },
     "name": "The White House",

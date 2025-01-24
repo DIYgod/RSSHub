@@ -7557,11 +7557,9 @@
   "/wfu/news/:type?": [
     "cccht"
   ],
-  "/whitehouse/briefing-room/:category?": [
-    "nczitzk"
-  ],
-  "/whitehouse/ostp": [
-    "LyleLee"
+  "/whitehouse/news/:category?": [
+    "nczitzk",
+    "hkamran80"
   ],
   "/who/news-room/:category?/:language?": [
     "LogicJake",

@@ -33269,22 +33269,13 @@
     "_name": "The White House",
     ".": [
       {
-        "title": "Briefing Room",
+        "title": "News",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/briefing-room/:category",
+          "/:category",
           "/"
         ],
-        "target": "/whitehouse/briefing-room/:category"
-      },
-      {
-        "title": "Office of Science and Technology Policy",
-        "docs": "https://docs.rsshub.app/routes/government",
-        "source": [
-          "/ostp",
-          "/"
-        ],
-        "target": "/whitehouse/ostp"
+        "target": "/whitehouse/news/:category"
       }
     ]
   },
