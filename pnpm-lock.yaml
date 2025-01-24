@@ -23,10 +23,10 @@ importers:
         version: 4.2.0
       '@hono/node-server':
         specifier: 1.13.7
-        version: 1.13.7(hono@4.6.17)
+        version: 1.13.7(hono@4.6.18)
       '@hono/zod-openapi':
         specifier: 0.18.3
-        version: 0.18.3(hono@4.6.17)(zod@3.24.1)
+        version: 0.18.3(hono@4.6.18)(zod@3.24.1)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -59,7 +59,7 @@ importers:
         version: 0.0.25
       '@scalar/hono-api-reference':
         specifier: 0.5.168
-        version: 0.5.168(hono@4.6.17)
+        version: 0.5.168(hono@4.6.18)
       '@sentry/node':
         specifier: 7.119.1
         version: 7.119.1
@@ -118,8 +118,8 @@ importers:
         specifier: 144.0.0
         version: 144.0.0
       hono:
-        specifier: 4.6.17
-        version: 4.6.17
+        specifier: 4.6.18
+        version: 4.6.18
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -3478,8 +3478,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.6.17:
-    resolution: {integrity: sha512-Kbh4M0so2RzLiIg6iP33DoTU68TdvP2O/kb1Hhhdwa37fazuf402ig8ZRfjkz2dqXwiWl2dAgh0f++TuKAdOtQ==}
+  hono@4.6.18:
+    resolution: {integrity: sha512-Fu7hEPvdwtPG8LqSAiPn8p8HjD+PDxrP/HVnwRBnwtVKOn5zDDKsw0ma2Xt58oq97Rlp3t/mRNADEV/Ym6cDng==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -3990,6 +3990,7 @@ packages:
 
   lodash.pick@4.4.0:
     resolution: {integrity: sha512-hXt6Ul/5yWjfklSGvLQl8vM//l3FtyHZeuelpzK6mm99pNvN9yTDruNZPEJZD1oWrqo+izBmB7oUfWgcCX7s4Q==}
+    deprecated: This package is deprecated. Use destructuring assignment syntax instead.
 
   lodash.reduce@4.6.0:
     resolution: {integrity: sha512-6raRe2vxCYBhpBu+B+TtNGUzah+hQjVdu3E17wfusjyrXBka2nBS8OH/gjVZ5PvHOhWmIZTYri09Z6n/QfnNMw==}
@@ -6841,20 +6842,20 @@ snapshots:
       '@eslint/core': 0.10.0
       levn: 0.4.1
 
-  '@hono/node-server@1.13.7(hono@4.6.17)':
+  '@hono/node-server@1.13.7(hono@4.6.18)':
     dependencies:
-      hono: 4.6.17
+      hono: 4.6.18
 
-  '@hono/zod-openapi@0.18.3(hono@4.6.17)(zod@3.24.1)':
+  '@hono/zod-openapi@0.18.3(hono@4.6.18)(zod@3.24.1)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.2.0(zod@3.24.1)
-      '@hono/zod-validator': 0.4.1(hono@4.6.17)(zod@3.24.1)
-      hono: 4.6.17
+      '@hono/zod-validator': 0.4.1(hono@4.6.18)(zod@3.24.1)
+      hono: 4.6.18
       zod: 3.24.1
 
-  '@hono/zod-validator@0.4.1(hono@4.6.17)(zod@3.24.1)':
+  '@hono/zod-validator@0.4.1(hono@4.6.18)(zod@3.24.1)':
     dependencies:
-      hono: 4.6.17
+      hono: 4.6.18
       zod: 3.24.1
 
   '@humanfs/core@0.19.1': {}
@@ -7284,10 +7285,10 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/hono-api-reference@0.5.168(hono@4.6.17)':
+  '@scalar/hono-api-reference@0.5.168(hono@4.6.18)':
     dependencies:
       '@scalar/types': 0.0.27
-      hono: 4.6.17
+      hono: 4.6.18
 
   '@scalar/openapi-types@0.1.6': {}
 
@@ -9196,7 +9197,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.6.17: {}
+  hono@4.6.18: {}
 
   hookable@5.5.3: {}
 
