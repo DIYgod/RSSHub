@@ -61816,7 +61816,8 @@
         "name": "WORLD-JAPAN - Top Stories",
         "maintainers": [
           "TonyRL",
-          "pseudoyu"
+          "pseudoyu",
+          "cscnk52"
         ],
         "location": "news.ts"
       }
