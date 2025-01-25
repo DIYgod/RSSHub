@@ -17793,6 +17793,16 @@
         ],
         "target": "/ielts/"
       }
+    ],
+    "jlpt": [
+      {
+        "title": "日本语能力测试JLPT通知",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/"
+        ],
+        "target": "/neea/jlpt"
+      }
     ]
   },
   "ifanr.com": {
@@ -24301,17 +24311,6 @@
           "/"
         ],
         "target": "/neea/local/ccpt"
-      }
-    ],
-    "jlpt": [
-      {
-        "title": "日本语能力测试(JLPT)通知",
-        "docs": "https://docs.rsshub.app/routes/study",
-        "source": [
-          "/",
-          "/"
-        ],
-        "target": "/neea/global/jlpt"
       }
     ]
   },
