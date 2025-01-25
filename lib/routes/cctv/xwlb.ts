@@ -39,7 +39,7 @@ export const route: Route = {
         },
     ],
     name: '新闻联播',
-    maintainers: ['zengxs'],
+    maintainers: ['zengxs', 'cscnk52'],
     handler,
     url: 'tv.cctv.com/lm/xwlb',
     description: `新闻联播内容摘要。`,
@@ -75,14 +75,21 @@ const getXWLB = async () => {
                     const res = await got(url);
                     const content = load(res.data);
                     const list: string[] = [];
-                    content('body li').map((i, elem) => {
-                        const e = content(elem);
-                        const href = e.find('a').attr('href');
-                        const title = e.find('a').attr('title');
-                        const dur = e.find('span').text();
-                        list.push(`<a href="${href}">${title} ⏱${dur}</a>`);
-                        return i;
-                    });
+                    await Promise.all(
+                        content('body li').map(async (i, elem) => {
+                            const e = content(elem);
+                            const href = e.find('a').attr('href');
+                            const title = e.find('a').attr('title');
+                            const dur = e.find('span').text();
+
+                            const detailPage = await got(href);
+                            const detailContent = load(detailPage.data);
+                            const detail = detailContent('div.content_area').html();
+
+                            list.push(`<a href="${href}">${title} ⏱${dur}</a>${detail}`);
+                            return i;
+                        })
+                    );
                     return list.join('<br/>\n');
                 }),
             };
