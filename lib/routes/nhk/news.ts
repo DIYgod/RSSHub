@@ -58,7 +58,7 @@ export const route: Route = {
         },
     ],
     name: 'WORLD-JAPAN - Top Stories',
-    maintainers: ['TonyRL', 'pseudoyu'],
+    maintainers: ['TonyRL', 'pseudoyu', 'cscnk52'],
     handler,
 };
 
@@ -82,7 +82,7 @@ async function handler(ctx) {
                 item.category = Object.values(data.data.categories);
                 item.description = art(path.join(__dirname, 'templates/news.art'), {
                     img: data.data.thumbnails,
-                    description: data.data.detail.replace('\n\n', '<br><br>'),
+                    description: data.data.detail.replaceAll('\n\n', '<br><br>'),
                 });
                 delete item.id;
                 return item;
