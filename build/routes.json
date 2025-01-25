@@ -51770,6 +51770,48 @@
     "url": "lala.im",
     "lang": "zh-CN"
   },
+  "landiannews": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "name": "资讯",
+        "url": "www.landiannews.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/landiannews",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.landiannews.com"
+            ],
+            "target": "/"
+          }
+        ],
+        "view": 0,
+        "location": "index.ts"
+      }
+    },
+    "name": "蓝点网",
+    "url": "landiannews.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": "",
+    "lang": "zh-CN"
+  },
   "lang": {
     "routes": {
       "/live/room/:id": {

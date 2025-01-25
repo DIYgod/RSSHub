@@ -19520,6 +19520,19 @@
       }
     ]
   },
+  "landiannews.com": {
+    "_name": "蓝点网",
+    "www": [
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/landiannews/"
+      }
+    ]
+  },
   "lang.live": {
     "_name": "浪 Play 直播",
     ".": [
