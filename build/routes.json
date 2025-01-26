@@ -27188,17 +27188,83 @@
   },
   "dytt": {
     "routes": {
-      "/": {
-        "path": "/",
+      "/:category{.+}?": {
+        "path": "/:category{.+}?",
+        "name": "分类",
+        "url": "www.dydytt.net",
+        "maintainers": [
+          "junfengP",
+          "nczitzk"
+        ],
+        "example": "/dytt/gndy/dyzz",
+        "parameters": {
+          "category": {
+            "description": "分类，默认为 `gndy/dyzz`，即最新影片，可在对应分类页 URL 中找到",
+            "options": [
+              {
+                "label": "最新影片",
+                "value": "gndy/dyzz"
+              },
+              {
+                "label": "经典影片",
+                "value": "gndy"
+              },
+              {
+                "label": "国内电影",
+                "value": "gndy/china"
+              },
+              {
+                "label": "欧美电影",
+                "value": "gndy/oumei"
+              },
+              {
+                "label": "其它电影",
+                "value": "gndy/rihan"
+              },
+              {
+                "label": "华语电视",
+                "value": "tv/hytv"
+              },
+              {
+                "label": "欧美电视",
+                "value": "tv/oumeitv"
+              },
+              {
+                "label": "最新综艺",
+                "value": "zongyi2013"
+              },
+              {
+                "label": "旧版综艺",
+                "value": "2009zongyi"
+              },
+              {
+                "label": "动漫资源",
+                "value": "dongman"
+              },
+              {
+                "label": "旧版游戏",
+                "value": "game"
+              },
+              {
+                "label": "游戏下载",
+                "value": "newgame"
+              },
+              {
+                "label": "日韩剧集专区",
+                "value": "tv/rihantv"
+              }
+            ]
+          }
+        },
+        "description": ":::tip\n若订阅 [最新影片](https://www.dydytt.net/html/gndy/dyzz)，网址为 `https://www.dydytt.net/html/gndy/dyzz`，请截取 `https://www.dydytt.net/html/` 到末尾的部分 `gndy/dyzz` 作为 `category` 参数填入，此时目标路由为 [`/dytt/gndy/dyzz`](https://rsshub.app/dytt/gndy/dyzz)。\n\n:::\n\n<details>\n  <summary>更多分类</summary>\n\n| 分类                                                  | ID                                               |\n| ----------------------------------------------------- | ------------------------------------------------ |\n| [最新影片](https://www.dydytt.net/html/gndy/dyzz/index.html)      | [gndy/dyzz](https://rsshub.app/dytt/gndy/dyzz)   |\n| [经典影片](https://www.dydytt.net/html/gndy/index.html)           | [gndy](https://rsshub.app/dytt/gndy)             |\n| [国内电影](https://www.dydytt.net/html/gndy/china/index.html)     | [gndy/china](https://rsshub.app/dytt/gndy/china) |\n| [欧美电影](https://www.dydytt.net/html/gndy/oumei/index.html)     | [gndy/oumei](https://rsshub.app/dytt/gndy/oumei) |\n| [其它电影](https://www.dydytt.net/html/gndy/rihan/index.html)     | [gndy/rihan](https://rsshub.app/dytt/gndy/rihan) |\n| [华语电视](https://www.dydytt.net/html/tv/hytv/index.html)        | [tv/hytv](https://rsshub.app/dytt/tv/hytv)       |\n| [欧美电视](https://www.dydytt.net/html/tv/oumeitv/index.html)     | [tv/oumeitv](https://rsshub.app/dytt/tv/oumeitv) |\n| [最新综艺](https://www.dydytt.net/html/zongyi2013/index.html)     | [zongyi2013](https://rsshub.app/dytt/zongyi2013) |\n| [旧版综艺](https://www.dydytt.net/html/2009zongyi/index.html)     | [2009zongyi](https://rsshub.app/dytt/2009zongyi) |\n| [动漫资源](https://www.dydytt.net/html/dongman/index.html)        | [dongman](https://rsshub.app/dytt/dongman)       |\n| [旧版游戏](https://www.dydytt.net/html/game/index.html)           | [game](https://rsshub.app/dytt/game)             |\n| [游戏下载](https://www.dydytt.net/html/newgame/index.html)        | [newgame](https://rsshub.app/dytt/newgame)       |\n| [日韩剧集专区](https://www.dydytt.net/html/tv/rihantv/index.html) | [tv/rihantv](https://rsshub.app/dytt/tv/rihantv) |\n\n</details>\n",
         "categories": [
           "multimedia"
         ],
-        "example": "/dytt",
-        "parameters": {},
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": true,
           "supportBT": true,
           "supportPodcast": false,
           "supportScihub": false
@@ -27206,19 +27272,108 @@
         "radar": [
           {
             "source": [
-              "ygdy8.net/index.html"
+              "${domain}/index.htm",
+              "www.dydytt.net/html/:category"
             ]
+          },
+          {
+            "title": "最新影片",
+            "source": [
+              "https://www.dydytt.net/html/gndy/dyzz/index.html"
+            ],
+            "target": "/gndy/dyzz"
+          },
+          {
+            "title": "经典影片",
+            "source": [
+              "https://www.dydytt.net/html/gndy/index.html"
+            ],
+            "target": "/gndy"
+          },
+          {
+            "title": "国内电影",
+            "source": [
+              "https://www.dydytt.net/html/gndy/china/index.html"
+            ],
+            "target": "/gndy/china"
+          },
+          {
+            "title": "欧美电影",
+            "source": [
+              "https://www.dydytt.net/html/gndy/oumei/index.html"
+            ],
+            "target": "/gndy/oumei"
+          },
+          {
+            "title": "其它电影",
+            "source": [
+              "https://www.dydytt.net/html/gndy/rihan/index.html"
+            ],
+            "target": "/gndy/rihan"
+          },
+          {
+            "title": "华语电视",
+            "source": [
+              "https://www.dydytt.net/html/tv/hytv/index.html"
+            ],
+            "target": "/tv/hytv"
+          },
+          {
+            "title": "欧美电视",
+            "source": [
+              "https://www.dydytt.net/html/tv/oumeitv/index.html"
+            ],
+            "target": "/tv/oumeitv"
+          },
+          {
+            "title": "最新综艺",
+            "source": [
+              "https://www.dydytt.net/html/zongyi2013/index.html"
+            ],
+            "target": "/zongyi2013"
+          },
+          {
+            "title": "旧版综艺",
+            "source": [
+              "https://www.dydytt.net/html/2009zongyi/index.html"
+            ],
+            "target": "/2009zongyi"
+          },
+          {
+            "title": "动漫资源",
+            "source": [
+              "https://www.dydytt.net/html/dongman/index.html"
+            ],
+            "target": "/dongman"
+          },
+          {
+            "title": "旧版游戏",
+            "source": [
+              "https://www.dydytt.net/html/game/index.html"
+            ],
+            "target": "/game"
+          },
+          {
+            "title": "游戏下载",
+            "source": [
+              "https://www.dydytt.net/html/newgame/index.html"
+            ],
+            "target": "/newgame"
+          },
+          {
+            "title": "日韩剧集专区",
+            "source": [
+              "https://www.dydytt.net/html/tv/rihantv/index.html"
+            ],
+            "target": "/tv/rihantv"
           }
         ],
-        "name": "最新电影",
-        "maintainers": [
-          "junfengP"
-        ],
+        "view": 0,
         "location": "index.ts"
       }
     },
     "name": "电影天堂",
-    "url": "www.ygdy8.net",
+    "url": "www.dydytt.net",
     "lang": "zh-CN"
   },
   "e-hentai": {

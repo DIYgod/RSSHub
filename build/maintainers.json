@@ -2107,8 +2107,9 @@
   "/dykszx/news/:newsType?": [
     "zytomorrow"
   ],
-  "/dytt/": [
-    "junfengP"
+  "/dytt/:category{.+}?": [
+    "junfengP",
+    "nczitzk"
   ],
   "/e-hentai/:what?/:id?/:needTorrents?/:needImages?": [],
   "/eagle/blog/:cate?/:language?": [
