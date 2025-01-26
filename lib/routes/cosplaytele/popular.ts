@@ -1,13 +1,13 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
 import loadArticle from './article';
+import { WPPost } from './types';
 
 export const route: Route = {
     path: '/popular/:period',
-    categories: ['picture', 'popular'],
+    categories: ['picture'],
     example: '/cosplaytele/popular/3',
     parameters: { period: 'Days' },
     features: {
@@ -60,16 +60,16 @@ async function handler(ctx) {
     });
 
     const $ = load(data.widget);
-    const posts = $('.wpp-list li').toArray();
+    const links = $('.wpp-list li')
+        .toArray()
+        .map((post) => $(post).find('.wpp-post-title').attr('href'))
+        .filter((link) => link !== undefined);
+    const slugs = links.map((link) => link.split('/').findLast(Boolean));
+    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?slug=${slugs.join(',')}&per_page=${limit}`);
 
     return {
         title,
         link: url,
-        item: await Promise.all(
-            posts.map((post) => {
-                const link = $(post).find('.wpp-post-title').attr('href');
-                return cache.tryGet(link, () => loadArticle(link));
-            })
-        ),
+        item: posts.map((post) => loadArticle(post as WPPost)),
     };
 }
