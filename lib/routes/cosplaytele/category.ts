@@ -1,9 +1,9 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
 import loadArticle from './article';
+import { WPPost } from './types';
 
 export const route: Route = {
     path: '/category/:category',
@@ -21,6 +21,7 @@ export const route: Route = {
     radar: [
         {
             source: ['cosplaytele.com/category/:category'],
+            target: '/category/:category',
         },
     ],
     name: 'Category',
@@ -30,22 +31,18 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    const limit = Number.parseInt(ctx.req.query('limit')) || 20;
     const category = ctx.req.param('category');
-    const url = `${SUB_URL}category/${category}/`;
+    const categoryUrl = `${SUB_URL}category/${category}/`;
 
-    const response = await got(url);
-    const $ = load(response.body);
-    const itemRaw = $('#content .post-item').toArray();
+    const {
+        data: [{ id: categoryId }],
+    } = await got(`${SUB_URL}wp-json/wp/v2/categories?slug=${category}`);
+    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?categories=${categoryId}&per_page=${limit}`);
 
     return {
         title: `${SUB_NAME_PREFIX} - Category: ${category}`,
-        link: url,
-        item: await Promise.all(
-            itemRaw.map((e) => {
-                const item = $(e);
-                const link = item.find('h5.post-title a').attr('href');
-                return cache.tryGet(link, () => loadArticle(link));
-            })
-        ),
+        link: categoryUrl,
+        item: await Promise.all(posts.map(({ link, ...post }) => cache.tryGet(link, () => loadArticle(link, post as WPPost)))),
     };
 }
