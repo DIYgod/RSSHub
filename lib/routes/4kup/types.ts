@@ -5,7 +5,7 @@ interface WPPost {
     content: {
         rendered: string;
     };
-    date: string;
+    date_gmt: string;
     link: string;
 }
 
