@@ -9274,6 +9274,43 @@
       }
     ]
   },
+  "cosplaytele.com": {
+    "_name": "CosplayTele",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/category/:category"
+        ],
+        "target": "/cosplaytele/category/:category"
+      },
+      {
+        "title": "Latest",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/"
+        ],
+        "target": "/cosplaytele/"
+      },
+      {
+        "title": "Popular",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/:period"
+        ],
+        "target": "/cosplaytele/popular/:period"
+      },
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/tag/:tag"
+        ],
+        "target": "/cosplaytele/tag/:tag"
+      }
+    ]
+  },
   "counter-strike.net": {
     "_name": "Counter Strike",
     "www": [

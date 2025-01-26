@@ -1565,6 +1565,18 @@
     "marvolo666",
     "yan12125"
   ],
+  "/cosplaytele/category/:category": [
+    "AiraNadih"
+  ],
+  "/cosplaytele/": [
+    "AiraNadih"
+  ],
+  "/cosplaytele/popular/:period": [
+    "AiraNadih"
+  ],
+  "/cosplaytele/tag/:tag": [
+    "AiraNadih"
+  ],
   "/counter-strike/news/:category?/:language?": [
     "nczitzk"
   ],

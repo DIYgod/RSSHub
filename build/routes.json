@@ -21146,6 +21146,140 @@
     "url": "copymanga.com",
     "lang": "zh-CN"
   },
+  "cosplaytele": {
+    "routes": {
+      "/category/:category": {
+        "path": "/category/:category",
+        "categories": [
+          "picture"
+        ],
+        "example": "/cosplaytele/category/cosplay",
+        "parameters": {
+          "category": "Category"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "cosplaytele.com/category/:category"
+            ],
+            "target": "/category/:category"
+          }
+        ],
+        "name": "Category",
+        "maintainers": [
+          "AiraNadih"
+        ],
+        "url": "cosplaytele.com/",
+        "location": "category.ts"
+      },
+      "/": {
+        "path": "/",
+        "categories": [
+          "picture"
+        ],
+        "example": "/cosplaytele",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "cosplaytele.com/"
+            ],
+            "target": ""
+          }
+        ],
+        "name": "Latest",
+        "maintainers": [
+          "AiraNadih"
+        ],
+        "url": "cosplaytele.com/",
+        "location": "latest.ts"
+      },
+      "/popular/:period": {
+        "path": "/popular/:period",
+        "categories": [
+          "picture"
+        ],
+        "example": "/cosplaytele/popular/3",
+        "parameters": {
+          "period": "Days"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "cosplaytele.com/:period"
+            ],
+            "target": "/popular/:period"
+          }
+        ],
+        "name": "Popular",
+        "maintainers": [
+          "AiraNadih"
+        ],
+        "url": "cosplaytele.com/",
+        "location": "popular.ts"
+      },
+      "/tag/:tag": {
+        "path": "/tag/:tag",
+        "categories": [
+          "picture"
+        ],
+        "example": "/cosplaytele/tag/aqua",
+        "parameters": {
+          "tag": "Tag"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "cosplaytele.com/tag/:tag"
+            ],
+            "target": "/tag/:tag"
+          }
+        ],
+        "name": "Tag",
+        "maintainers": [
+          "AiraNadih"
+        ],
+        "url": "cosplaytele.com/",
+        "location": "tag.ts"
+      }
+    },
+    "name": "CosplayTele",
+    "url": "cosplaytele.com",
+    "description": "Cosplaytele - Fast - Security - Free",
+    "lang": "en"
+  },
   "counter-strike": {
     "routes": {
       "/news/:category?/:language?": {
