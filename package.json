@@ -138,7 +138,7 @@
         "zod": "3.24.1"
     },
     "devDependencies": {
-        "@babel/preset-env": "7.26.0",
+        "@babel/preset-env": "7.26.7",
         "@babel/preset-typescript": "7.26.0",
         "@bbob/types": "4.2.0",
         "@eslint/eslintrc": "3.2.0",
@@ -146,7 +146,7 @@
         "@microsoft/eslint-formatter-sarif": "3.1.0",
         "@stylistic/eslint-plugin": "2.13.0",
         "@types/aes-js": "3.1.4",
-        "@types/babel__preset-env": "7.9.7",
+        "@types/babel__preset-env": "7.10.0",
         "@types/crypto-js": "4.2.2",
         "@types/eslint": "9.6.1",
         "@types/etag": "1.8.3",
