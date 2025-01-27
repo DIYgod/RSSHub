@@ -2593,6 +2593,9 @@
   "/gcores/collections/:collection": [
     "kudryavka1013"
   ],
+  "/gcores/news": [
+    "nczitzk"
+  ],
   "/gcores/radios/:category?": [
     "eternasuno"
   ],

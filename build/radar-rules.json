@@ -12466,6 +12466,16 @@
         ],
         "target": "/gcores/tag/:tag"
       }
+    ],
+    "www": [
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news"
+        ],
+        "target": "/gcores/gcores/news"
+      }
     ]
   },
   "gdufs.edu.cn": {
