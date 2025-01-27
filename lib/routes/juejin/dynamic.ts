@@ -40,7 +40,7 @@ async function handler(ctx) {
     const username = user.user_name;
 
     const items = list.map((e) => {
-        const { target_type, target_data, action, time } = e; // action: 0.发布文章；1.点赞文章；2.发布沸点；3.点赞沸点；4.关注用户
+        const { target_type, target_data, action, time } = e; // action: 0.发布文章；1.点赞文章；2.发布沸点；3.点赞沸点；4.关注用户；5.关注标签
         let title: string | undefined;
         let description: string | undefined;
         let pubDate: Date | undefined;
@@ -87,6 +87,16 @@ async function handler(ctx) {
                 description = `${user_name}<br>简介：${target_data.description}`;
                 author = user_name;
                 link = `https://juejin.cn/user/${user_id}`;
+                pubDate = parseDate(time * 1000);
+                break;
+            }
+            case 'tag': {
+                // 关注标签
+                const { tag_name } = target_data;
+                title = `${username} 关注了标签 ${tag_name}`;
+                description = tag_name;
+                category = [tag_name];
+                link = `https://juejin.cn/tag/${encodeURIComponent(tag_name)}`;
                 pubDate = parseDate(time * 1000);
                 break;
             }
