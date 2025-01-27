@@ -187,7 +187,7 @@ const parseBlock = (block: Block, entityMap: { [key: string]: Entity }): string 
 };
 
 /**
- * Parses a Content object into an HTML string.
+ * Parses a Content object into an HTML string using a for loop.
  * @param content The Content object to parse.
  * @returns The parsed HTML string.
  */
@@ -198,47 +198,44 @@ const parseContent = (content: Content): string => {
         return '';
     }
 
-    /**
-     * Accumulator for the reduce operation.
-     * @property html - Accumulated HTML string.
-     * @property currentParent - Current parent element tag name (e.g., 'ul', 'ol').
-     * @property parentContent - Content within the current parent element.
-     */
-    interface ReduceAcc {
-        html: string;
-        currentParent: string | undefined;
-        parentContent: string;
-    }
+    let html = '';
+    let currentParent: string | undefined = undefined;
+    let parentContent = '';
 
-    const initialAcc: ReduceAcc = { html: '', currentParent: undefined, parentContent: '' };
-
-    const finalResult = blocks.reduce((acc: ReduceAcc, block) => {
+    for (const block of blocks) {
         const blockType = BLOCK_TYPES[block.type];
         if (!blockType) {
-            return acc;
+            continue;
         }
 
         const parentElement = blockType.parentElement;
         const parsedBlock = parseBlock(block, entityMap);
 
         if (parentElement) {
-            if (acc.currentParent === parentElement) {
-                // Same parent, append to parent content.
-                return { ...acc, parentContent: acc.parentContent + parsedBlock };
+            if (currentParent === parentElement) {
+                parentContent += parsedBlock;
             } else {
-                // Different parent, close previous parent and open new one.
-                const closedParent = acc.currentParent ? `<${acc.currentParent}>${acc.parentContent}</${acc.currentParent}>` : '';
-                return { html: acc.html + closedParent, currentParent: parentElement, parentContent: parsedBlock };
+                if (currentParent) {
+                    html += `<${currentParent}>${parentContent}</${currentParent}>`;
+                }
+                currentParent = parentElement;
+                parentContent = parsedBlock;
             }
         } else {
-            // No parent, close previous parent and append the block.
-            const closedParent = acc.currentParent ? `<${acc.currentParent}>${acc.parentContent}</${acc.currentParent}>` : '';
-            return { html: acc.html + closedParent + parsedBlock, currentParent: undefined, parentContent: '' };
+            if (currentParent) {
+                html += `<${currentParent}>${parentContent}</${currentParent}>`;
+                currentParent = undefined;
+                parentContent = '';
+            }
+            html += parsedBlock;
         }
-    }, initialAcc);
+    }
 
-    // Close the last parent tag if any.
-    return finalResult.currentParent ? finalResult.html + `<${finalResult.currentParent}>${finalResult.parentContent}</${finalResult.currentParent}>` : finalResult.html;
+    if (currentParent) {
+        html += `<${currentParent}>${parentContent}</${currentParent}>`;
+    }
+
+    return html;
 };
 
 export { parseContent };

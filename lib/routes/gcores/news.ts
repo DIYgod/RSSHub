@@ -68,7 +68,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         let processedItem: DataItem = {
             title,
             pubDate: pubDate ? parseDate(pubDate) : undefined,
-            link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
+            link: linkUrl,
             category: categories,
             author: authors,
             guid,
