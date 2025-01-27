@@ -76,8 +76,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       chrono-node:
-        specifier: 2.7.7
-        version: 2.7.7
+        specifier: 2.7.8
+        version: 2.7.8
       city-timezones:
         specifier: 1.3.0
         version: 1.3.0
@@ -2499,8 +2499,8 @@ packages:
     peerDependencies:
       devtools-protocol: '*'
 
-  chrono-node@2.7.7:
-    resolution: {integrity: sha512-p3S7gotuTPu5oqhRL2p1fLwQXGgdQaRTtWR3e8Di9P1Pa9mzkK5DWR5AWBieMUh2ZdOnPgrK+zCrbbtyuA+D/Q==}
+  chrono-node@2.7.8:
+    resolution: {integrity: sha512-pzxemrTKu6jFVyAfkNxUckp9nlrmRFtr5lGrEJcVKyeKV9WSeGT78Oysazlzd/H0BdMv7EzACtJrw0pi2KODBQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   ci-info@4.0.0:
@@ -8072,7 +8072,7 @@ snapshots:
       urlpattern-polyfill: 10.0.0
       zod: 3.22.4
 
-  chrono-node@2.7.7:
+  chrono-node@2.7.8:
     dependencies:
       dayjs: 1.11.8
 
