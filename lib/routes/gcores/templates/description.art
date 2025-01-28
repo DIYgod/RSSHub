@@ -27,6 +27,22 @@
   {{ /each }}
 {{ /if }}
 
+{{ if video }}
+  {{ each videos video }}
+    {{ if video?.src }}
+      <video
+        controls>
+        <source
+          src="{{ video.src }}"
+          type="{{ video.type }}">
+        <object data="{{ video.src }}">
+          <embed src="{{ video.src }}">
+        </object>
+      </video>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
 {{ if intro }}
   <blockquote>{{ intro }}</blockquote>
 {{ /if }}

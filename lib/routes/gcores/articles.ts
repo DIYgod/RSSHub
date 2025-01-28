@@ -14,19 +14,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const apiUrl: string = new URL('gapi/v1/articles', baseUrl).href;
 
     const query = {
-        'filter[is-news]': 1,
+        'filter[is-news]': 0,
     };
 
     return await processItems(limit, query, apiUrl, targetUrl);
 };
 
 export const route: Route = {
-    path: '/news',
-    name: '资讯',
+    path: '/articles',
+    name: '文章',
     url: 'www.gcores.com',
     maintainers: ['nczitzk'],
     handler,
-    example: '/gcores/news',
+    example: '/gcores/articles',
     parameters: undefined,
     description: undefined,
     categories: ['game'],
@@ -41,8 +41,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.gcores.com/news'],
-            target: '/gcores/news',
+            source: ['www.gcores.com/articles'],
+            target: '/gcores/articles',
         },
     ],
     view: ViewType.Articles,
