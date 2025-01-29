@@ -40,7 +40,7 @@ Examples:
     - → \`${ROUTE_PATH_PREFIX}mietwohnungen/wien/unterregionen=g90101&merkmale=balkon\`
 :::
 `,
-    example: ROUTE_PATH_PREFIX + 'mietwohnungen/wien/' + 'unterregionen=g90101--g90201--g90301--g90401--g90501' + '&flaeche=40&preis=-1000',
+    example: ROUTE_PATH_PREFIX + 'mietwohnungen/wien/unterregionen=g90101--g90201--g90301--g90401--g90501&flaeche=40&preis=-1000',
     parameters: {
         category: 'Category (`mietwohnungen`, `eigentumswohnungen`, `grundstuecke`, …)',
         region: 'Region (`wien`, `oesterreich`, …)',
