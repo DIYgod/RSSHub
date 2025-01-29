@@ -1,241 +1,172 @@
+import { type Data, type DataItem } from '@/types';
+
 import { art } from '@/utils/render';
 import { getCurrentPath } from '@/utils/helpers';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
+import { type CheerioAPI, load } from 'cheerio';
 import path from 'node:path';
 
-export const __dirname = getCurrentPath(import.meta.url);
+const __dirname = getCurrentPath(import.meta.url);
 
-interface Style {
-    [key: string]: string;
-}
+import { parseContent } from './parser';
 
-interface BlockType {
-    element: string;
-    parentElement?: string;
-    aliasedElements?: string[];
-}
-
-interface InlineStyleRange {
-    offset: number;
-    length: number;
-    style: string;
-}
-
-interface EntityRange {
-    offset: number;
-    length: number;
-    key: number;
-}
-
-interface Entity {
-    type: string;
-    mutability: string;
-    data: any;
-}
-
-interface Block {
-    key: string;
-    text: string;
-    type: string;
-    depth: number;
-    inlineStyleRanges: InlineStyleRange[];
-    entityRanges: EntityRange[];
-    data: any;
-}
-
-interface Content {
-    blocks: Block[];
-    entityMap: { [key: string]: Entity };
-}
-
+const baseUrl: string = 'https://www.gcores.com';
 const imageBaseUrl: string = 'https://image.gcores.com';
+const audioBaseUrl: string = 'https://alioss.gcores.com';
 
-const STYLES: Readonly<Record<string, Style>> = {
-    BOLD: { fontWeight: 'bold' },
-    CODE: { fontFamily: 'monospace', wordWrap: 'break-word' },
-    ITALIC: { fontStyle: 'italic' },
-    STRIKETHROUGH: { textDecoration: 'line-through' },
-    UNDERLINE: { textDecoration: 'underline' },
+const baseQuery = {
+    sort: '-published-at',
+    include: 'category,user,media',
+    'filter[list-all]': 1,
+    'filter[is-news]': 1,
 };
 
-const BLOCK_TYPES: Readonly<Record<string, BlockType>> = {
-    'header-one': { element: 'h1' },
-    'header-two': { element: 'h2' },
-    'header-three': { element: 'h3' },
-    'header-four': { element: 'h4' },
-    'header-five': { element: 'h5' },
-    'header-six': { element: 'h6' },
-    'unordered-list-item': { element: 'li', parentElement: 'ul' },
-    'ordered-list-item': { element: 'li', parentElement: 'ol' },
-    blockquote: { element: 'blockquote' },
-    atomic: { element: 'figure' },
-    'code-block': { element: 'pre' },
-    unstyled: { element: 'div', aliasedElements: ['p'] },
-};
+const processItems = async (limit: number, query: any, apiUrl: string, targetUrl: string): Promise<Data> => {
+    const response = await ofetch(apiUrl, {
+        query: {
+            ...baseQuery,
+            query,
+        },
+    });
 
-/**
- * Creates a styled HTML fragment for a given text and style object.
- * @param text The text content of the fragment.
- * @param style An object containing CSS styles (key-value pairs).
- * @returns An HTML string representing the styled fragment.
- */
-const createStyledFragment = (text: string, style: Record<string, string>): string =>
-    `<span style="${Object.entries(style)
-        .map(([key, value]) => `${key}: ${value};`)
-        .join('')}">${text}</span>`;
+    const included = response.included;
 
-/**
- * Applies inline styles to a text string.
- * @param text The text to style.
- * @param inlineStyleRanges An array of inline style ranges.
- * @returns The styled text.
- */
-const applyStyles = (text: string, inlineStyleRanges: readonly InlineStyleRange[]): string => {
-    if (!inlineStyleRanges || inlineStyleRanges.length === 0) {
-        return text;
-    }
+    const targetResponse = await ofetch(targetUrl);
+    const $: CheerioAPI = load(targetResponse);
+    const language = $('html').attr('lang') ?? 'zh-CN';
 
-    const sortedRanges = [...inlineStyleRanges].sort((a, b) => a.offset - b.offset);
+    let items: DataItem[] = [];
 
-    let lastOffset = 0;
-    const styledFragments = sortedRanges.map((range) => {
-        const style = STYLES[range.style];
-        if (!style) {
-            return text.substring(lastOffset, range.offset);
+    items = response.data?.slice(0, limit).map((item): DataItem => {
+        const attributes = item.attributes;
+        const relationships = item.relationships;
+
+        const title: string = attributes.title;
+        const pubDate: number | string = attributes['published-at'];
+        const linkUrl: string | undefined = `${item.type}/${item.id}`;
+
+        const categoryObj = relationships?.category?.data;
+        const categories: string[] = categoryObj ? [included.find((i) => i.type === categoryObj.type && i.id === categoryObj.id)?.attributes?.name].filter(Boolean) : [];
+
+        const authorObj = relationships?.user?.data;
+        const authorIncluded = included.find((i) => i.type === authorObj.type && i.id === authorObj.id);
+        const authors: DataItem['author'] = authorIncluded
+            ? [
+                  {
+                      name: authorIncluded.attributes?.nickname,
+                      url: authorIncluded.id ? new URL(`${authorObj.type}/${authorIncluded.id}`, baseUrl).href : undefined,
+                      avatar: authorIncluded.thumb ? new URL(authorIncluded.thumb, imageBaseUrl).href : undefined,
+                  },
+              ]
+            : undefined;
+
+        const guid: string = `gcores-${item.id}`;
+        const image: string | undefined = (attributes.cover ?? attributes.thumb) ? new URL(attributes.cover ?? attributes.thumb, imageBaseUrl).href : undefined;
+        const updated: number | string = pubDate;
+
+        let processedItem: DataItem = {
+            title,
+            pubDate: pubDate ? parseDate(pubDate) : undefined,
+            link: linkUrl,
+            category: categories,
+            author: authors,
+            guid,
+            id: guid,
+            image,
+            banner: image,
+            updated: updated ? parseDate(updated) : undefined,
+            language,
+        };
+
+        let enclosureUrl: string | undefined;
+        let enclosureType: string | undefined;
+
+        const mediaAttrs = included.find((i) => i.id === relationships.media?.data?.id)?.attributes;
+
+        if (attributes['speech-path']) {
+            enclosureUrl = new URL(`uploads/audio/${attributes['speech-path']}`, audioBaseUrl).href;
+            enclosureType = `audio/${enclosureUrl?.split(/\./).pop()}`;
+        } else if (mediaAttrs) {
+            if (mediaAttrs.audio) {
+                enclosureUrl = mediaAttrs.audio;
+                enclosureType = `audio/${enclosureUrl?.split(/\./).pop()}`;
+            } else if (mediaAttrs['original-src']) {
+                enclosureUrl = mediaAttrs['original-src'];
+                enclosureType = 'video/mpeg';
+            }
         }
 
-        const styledText = createStyledFragment(text.substring(range.offset, range.offset + range.length), style);
-        const preText = text.substring(lastOffset, range.offset);
-        lastOffset = range.offset + range.length;
-        return preText + styledText;
-    });
-    let result = styledFragments.join('');
-    result += text.substring(lastOffset);
-    return result;
-};
+        if (enclosureUrl) {
+            const enclosureLength: number = attributes.duration ? Number(attributes.duration) : 0;
 
-/**
- * Creates an HTML element for a given entity.
- * @param entity The entity to create an element for.
- * @param block The current block the entity belongs to, for debugging purposes.
- * @returns The HTML element string.
- */
-const createEntityElement = (entity: Entity, block: Block): string => {
-    switch (entity.type) {
-        case 'EMBED':
-            return entity.data.content.startsWith('http') ? `<a href="${entity.data.content}" target="_blank">${entity.data.content}</a>` : entity.data.content;
-        case 'IMAGE':
-            return art(path.join(__dirname, 'templates/description.art'), {
-                images: entity.data.path
+            processedItem = {
+                ...processedItem,
+                enclosure_url: enclosureUrl,
+                enclosure_type: enclosureType,
+                enclosure_title: title,
+                enclosure_length: enclosureLength,
+                itunes_duration: enclosureLength,
+                itunes_item_image: image,
+            };
+        }
+
+        const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            images: attributes.cover
+                ? [
+                      {
+                          src: new URL(attributes.cover, imageBaseUrl).href,
+                          alt: title,
+                      },
+                  ]
+                : undefined,
+            audios:
+                enclosureType?.startsWith('audio') && enclosureUrl
                     ? [
                           {
-                              src: new URL(entity.data.path, imageBaseUrl).href,
-                              alt: entity.data.caption,
-                              width: entity.data.width,
-                              height: entity.data.height,
+                              src: enclosureUrl,
+                              type: enclosureType,
                           },
                       ]
                     : undefined,
-            });
-        case 'GALLERY':
-            if (!entity.data.images || !Array.isArray(entity.data.images)) {
-                return '';
-            }
-            return art(path.join(__dirname, 'templates/description.art'), {
-                images: entity.data.images.map((image: any) => ({
-                    src: new URL(image.path, imageBaseUrl).href,
-                    alt: image.caption,
-                    width: image.width,
-                    height: image.height,
-                })),
-            });
-        case 'LINK':
-            return `<a href="${entity.data.href}" target="_blank">${block.text}</a>`;
-        case 'WIDGET':
-            return `<a href="${entity.data.url}" target="_blank">${entity.data.title}</a>`;
-        default:
-            return '';
-    }
+            videos:
+                enclosureType?.startsWith('video') && enclosureUrl
+                    ? [
+                          {
+                              src: enclosureUrl,
+                              type: enclosureType,
+                          },
+                      ]
+                    : undefined,
+            intro: attributes.desc || attributes.excerpt,
+            description: attributes.content ? parseContent(JSON.parse(attributes.content)) : undefined,
+        });
+
+        processedItem = {
+            ...processedItem,
+            description,
+            content: {
+                html: description,
+                text: description,
+            },
+        };
+
+        return processedItem;
+    });
+
+    const title: string = $('title').text();
+
+    return {
+        title,
+        description: $('meta[name="description"]').attr('content'),
+        link: targetUrl,
+        item: items,
+        allowEmpty: true,
+        author: title.split(/\|/).pop()?.trim(),
+        language,
+        id: $('meta[property="og:url"]').attr('content'),
+    };
 };
 
-/**
- * Parses a single content block into an HTML string.
- * @param block The block to parse.
- * @param entityMap The entity map.
- * @returns The parsed HTML string.
- */
-const parseBlock = (block: Block, entityMap: { [key: string]: Entity }): string => {
-    const blockType = BLOCK_TYPES[block.type];
-    if (!blockType) {
-        return '';
-    }
-
-    const usedElement = blockType.aliasedElements?.[0] ?? blockType.element;
-
-    let content = applyStyles(block.text, block.inlineStyleRanges);
-
-    if (block.entityRanges && block.entityRanges.length > 0) {
-        const entityElements = block.entityRanges
-            .map((range) => entityMap[range.key])
-            .filter(Boolean)
-            .map((entity) => createEntityElement(entity!, block));
-
-        content = entityElements.join('');
-    }
-
-    return `<${usedElement}>${content}</${usedElement}>`;
-};
-
-/**
- * Parses a Content object into an HTML string using a for loop.
- * @param content The Content object to parse.
- * @returns The parsed HTML string.
- */
-const parseContent = (content: Content): string => {
-    const { blocks, entityMap } = content;
-
-    if (!blocks || blocks.length === 0) {
-        return '';
-    }
-
-    let html = '';
-    let currentParent: string | undefined = undefined;
-    let parentContent = '';
-
-    for (const block of blocks) {
-        const blockType = BLOCK_TYPES[block.type];
-        if (!blockType) {
-            continue;
-        }
-
-        const parentElement = blockType.parentElement;
-        const parsedBlock = parseBlock(block, entityMap);
-
-        if (parentElement) {
-            if (currentParent === parentElement) {
-                parentContent += parsedBlock;
-            } else {
-                if (currentParent) {
-                    html += `<${currentParent}>${parentContent}</${currentParent}>`;
-                }
-                currentParent = parentElement;
-                parentContent = parsedBlock;
-            }
-        } else {
-            if (currentParent) {
-                html += `<${currentParent}>${parentContent}</${currentParent}>`;
-                currentParent = undefined;
-                parentContent = '';
-            }
-            html += parsedBlock;
-        }
-    }
-
-    if (currentParent) {
-        html += `<${currentParent}>${parentContent}</${currentParent}>`;
-    }
-
-    return html;
-};
-
-export { parseContent };
+export { baseUrl, imageBaseUrl, audioBaseUrl, processItems };
