@@ -11,7 +11,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
     const targetUrl: string = new URL('news', baseUrl).href;
-    const apiUrl: string = new URL('gapi/v1/articles', baseUrl).href;
+    const apiUrl: string = new URL(`gapi/v1/articles`, baseUrl).href;
 
     const query = {
         'filter[is-news]': 0,

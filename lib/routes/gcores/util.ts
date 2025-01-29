@@ -1,11 +1,14 @@
 import { type Data, type DataItem } from '@/types';
 
 import { art } from '@/utils/render';
+import { getCurrentPath } from '@/utils/helpers';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { type CheerioAPI, load } from 'cheerio';
 import path from 'node:path';
+
+const __dirname = getCurrentPath(import.meta.url);
 
 import { parseContent } from './parser';
 
@@ -78,14 +81,20 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
         };
 
         let enclosureUrl: string | undefined;
+        let enclosureType: string | undefined;
+
+        const mediaAttrs = included.find((i) => i.id === relationships.media?.data?.id)?.attributes;
 
         if (attributes['speech-path']) {
             enclosureUrl = new URL(`uploads/audio/${attributes['speech-path']}`, audioBaseUrl).href;
-        } else {
-            const mediaAttrs = included.find((i) => i.id === relationships.media?.data?.id)?.attributes;
-
-            if (mediaAttrs) {
-                enclosureUrl = mediaAttrs.audio ?? mediaAttrs['original-src'];
+            enclosureType = `audio/${enclosureUrl?.split(/\./).pop()}`;
+        } else if (mediaAttrs) {
+            if (mediaAttrs.audio) {
+                enclosureUrl = mediaAttrs.audio;
+                enclosureType = `audio/${enclosureUrl?.split(/\./).pop()}`;
+            } else if (mediaAttrs['original-src']) {
+                enclosureUrl = mediaAttrs['original-src'];
+                enclosureType = 'video/mpeg';
             }
         }
 
@@ -95,6 +104,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
             processedItem = {
                 ...processedItem,
                 enclosure_url: enclosureUrl,
+                enclosure_type: enclosureType,
                 enclosure_title: title,
                 enclosure_length: enclosureLength,
                 itunes_duration: enclosureLength,
@@ -111,14 +121,24 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
                       },
                   ]
                 : undefined,
-            audios: enclosureUrl
-                ? [
-                      {
-                          src: enclosureUrl,
-                          type: `audio/${enclosureUrl.split(/\./).pop()}`,
-                      },
-                  ]
-                : undefined,
+            audios:
+                enclosureType?.startsWith('audio') && enclosureUrl
+                    ? [
+                          {
+                              src: enclosureUrl,
+                              type: enclosureType,
+                          },
+                      ]
+                    : undefined,
+            videos:
+                enclosureType?.startsWith('video') && enclosureUrl
+                    ? [
+                          {
+                              src: enclosureUrl,
+                              type: enclosureType,
+                          },
+                      ]
+                    : undefined,
             intro: attributes.desc || attributes.excerpt,
             description: attributes.content ? parseContent(JSON.parse(attributes.content)) : undefined,
         });
@@ -145,7 +165,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
         allowEmpty: true,
         author: title.split(/\|/).pop()?.trim(),
         language,
-        id: $('meta[property="og: url"]').attr('content'),
+        id: $('meta[property="og:url"]').attr('content'),
     };
 };
 
