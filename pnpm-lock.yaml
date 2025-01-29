@@ -133,8 +133,8 @@ importers:
         specifier: 0.6.3
         version: 0.6.3
       imapflow:
-        specifier: 1.0.178
-        version: 1.0.178
+        specifier: 1.0.179
+        version: 1.0.179
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -3606,8 +3606,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.0.178:
-    resolution: {integrity: sha512-Pl2rBKn39e/szBYIHhP9lGSob0KkRmVMbiCMTDWc1S94icELaFumnCrt6mynV8Ro6T78QbwucBjr47u3pDhaPw==}
+  imapflow@1.0.179:
+    resolution: {integrity: sha512-I2MfddxWmPltchxpPguoJNnuDwKZIWrGeySZq1CgB0gkEWHbdZ+nRRcQ9Z23hjw2lJyF9/WoRSN76kcwW34Jjg==}
 
   immediate@3.0.6:
     resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
@@ -9380,7 +9380,7 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.0.178:
+  imapflow@1.0.179:
     dependencies:
       encoding-japanese: 2.2.0
       iconv-lite: 0.6.3
