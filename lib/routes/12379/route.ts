@@ -1,20 +1,20 @@
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import iconv from 'iconv-lite';
 import type { AlertItem } from './types';
-import { generateContent } from './content';
+import { art } from '@/utils/render';
+import path from 'node:path';
 
 const BASE_URL = 'http://www.12379.cn/data/alarm_list_all.html';
+
+const renderAlert = (alertItem: AlertItem) => art(path.join(__dirname, 'templates/alert.art'), alertItem);
 
 const handler: Route['handler'] = async (context) => {
     const filterWords = context.req.param('filter').split(',').sort();
     const feedLink = `https://rsshub.app/12379/alert/${filterWords.join(',')}`;
 
     // Fetch the index page
-    const { data: response } = await got(BASE_URL, {
-        responseType: 'buffer',
-    });
-    const originAlertItems: AlertItem[] = JSON.parse(iconv.decode(response, 'UTF-8')).alertData;
+    const { data: response } = await got(BASE_URL);
+    const originAlertItems: AlertItem[] = response.alertData;
     const filteredAlertItems = originAlertItems.filter((alert) => filterWords.some((filterWord) => alert.description.includes(filterWord) || alert.headline.includes(filterWord)));
 
     return {
@@ -24,7 +24,7 @@ const handler: Route['handler'] = async (context) => {
         image: 'http://www.12379.cn/html/new2018/img/logo.png',
         item: filteredAlertItems.map((alertItem) => {
             const link = `http://www.12379.cn/html/new2018/alarmcontent.shtml?file=${alertItem.identifier}.html`;
-            const htmlContent = generateContent(alertItem);
+            const htmlContent = renderAlert(alertItem);
             return {
                 title: alertItem.headline,
                 pubDate: alertItem.ctime,
@@ -78,5 +78,5 @@ export const route: Route = {
             target: `/alert/:filter`,
         },
     ],
-    example: '/alert/重庆,沙坪坝',
+    example: '/12379/alert/重庆,沙坪坝',
 };
