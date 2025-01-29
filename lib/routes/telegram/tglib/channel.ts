@@ -6,12 +6,6 @@ import { HTMLParser } from 'telegram/extensions/html';
 import { getClient, getDocument, getFilename, unwrapMedia } from './client';
 import { getDisplayName } from 'telegram/Utils';
 
-function getPeerId(p: Api.TypePeer) {
-    return p instanceof Api.PeerChannel ? p.channelId :
-        p instanceof Api.PeerUser ? p.userId :
-        /* groups are negative */ p.chatId.multiply(-1);
-}
-
 export function getGeoLink(geo: Api.GeoPoint) {
     return `<a href="https://www.google.com/maps/search/?api=1&query=${geo.lat}%2C${geo.long}" target="_blank">Geo LatLon: ${geo.lat}, ${geo.long}</a>`;
 }
@@ -126,7 +120,7 @@ export default async function handler(ctx: Context) {
         if (media) {
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
-            const src = `${new URL(ctx.req.url).origin}/telegram/media/${username}/${getPeerId(message.peerId)}_${message.id}`;
+            const src = `${new URL(ctx.req.url).origin}/telegram/channel/${username}/${message.id}`;
             attachments.push(getMediaLink(src, media));
         }
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {

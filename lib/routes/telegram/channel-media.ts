@@ -82,24 +82,6 @@ export async function* streamThumbnail(client: TelegramClient, doc: Api.Document
     throw new Error('no thumbnails available');
 }
 
-export async function decodeMedia(client: TelegramClient, channelName: string, x: string, retry = false) {
-    const [channel, msg] = x.split('_');
-
-    try {
-        const msgs = await client.getMessages(channel, {
-            ids: [Number(msg)],
-        });
-        return unwrapMedia(msgs[0]?.media);
-    } catch (error) {
-        if (!retry) {
-            // channel likely not seen before, we need to resolve ID and retry
-            await client.getInputEntity(channelName);
-            return decodeMedia(client, channelName, x, true);
-        }
-        throw error;
-    }
-}
-
 export async function* streamDocument(client: TelegramClient, obj: Api.Document, thumbSize = '', offset?: bigInt.BigInteger, limit?: bigInt.BigInteger) {
     const chunkSize = (obj.size ? getAppropriatedPartSize(obj.size) : 64) * 1024;
     const iterFileParams: IterDownloadFunction = {
@@ -177,15 +159,15 @@ function streamResponse(c: Context, bodyIter: AsyncGenerator<Buffer>) {
 }
 
 export const route: Route = {
-    path: '/media/:username/:media',
+    path: '/channel/:entityName/:messageId',
     categories: ['social-media'],
-    example: '/media/telegram/123123213_1233',
-    parameters: { username: 'entity name', media: 'entityId_messageId' },
+    example: '/channel/telegram/1233',
+    parameters: { entityName: 'entity name', messageId: 'message id' },
     features: {
         requireConfig: [
             {
                 name: 'TELEGRAM_SESSION',
-                optional: true,
+                optional: false,
                 description: 'Telegram API Authentication',
             }
         ],
@@ -201,7 +183,7 @@ export const route: Route = {
     handler,
     description: `
 ::: tip
-  Serves telegram media, like pictures, video or files. Supports HTTP Range requests
+  Serves telegram media like pictures, video or files.
 :::
 `,
 };
@@ -252,7 +234,13 @@ export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramC
 export default async function handler(ctx: Context) {
     await configureMiddlewares(ctx);
     const client = await getClient();
-    const media = await decodeMedia(client, ctx.req.param('username'), ctx.req.param('media'));
+
+    const { entityName, messageId } = ctx.req.param();
+    const entity = await client.getInputEntity(entityName);
+    const msgs = await client.getMessages(entity, {
+        ids: [Number(messageId)],
+    });
+    const media = await unwrapMedia(msgs[0]?.media);
     if (!media) {
         return ctx.text('Unknown media', 404);
     }
