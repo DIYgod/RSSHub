@@ -32820,6 +32820,37 @@
   },
   "gcores": {
     "routes": {
+      "/articles": {
+        "path": "/articles",
+        "name": "文章",
+        "url": "www.gcores.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/gcores/articles",
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.gcores.com/articles"
+            ],
+            "target": "/gcores/articles"
+          }
+        ],
+        "view": 0,
+        "location": "articles.ts"
+      },
       "/category/:category": {
         "path": "/category/:category",
         "categories": [
