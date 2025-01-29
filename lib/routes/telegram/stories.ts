@@ -1,6 +1,7 @@
 /* eslint-disable no-await-in-loop */
+import NotFoundError from '@/errors/types/not-found';
 import { configureMiddlewares, handleMedia } from '@/routes/telegram/channel-media';
-import { DataItem, Route } from '@/types';
+import { Data, DataItem, Route } from '@/types';
 import { Context } from 'hono';
 import { Api} from 'telegram';
 import { getClient, getStory, unwrapMedia } from './tglib/client';
@@ -48,7 +49,7 @@ export default async function handler(ctx: Context) {
     const c = await getClient();
     const {username, story} = ctx.req.param();
     if (!username) {
-        return;
+        throw new NotFoundError();
     }
     const peer = await c.getInputEntity(username);
     if (story) {
@@ -61,31 +62,30 @@ export default async function handler(ctx: Context) {
 
     const item: DataItem[] = [];
     for (const story of storiesRes.stories.stories) {
-        if (story instanceof Api.StoryItem) {
-            const src = `${new URL(ctx.req.url).origin}/telegram/stories/${username}/${story.id}`;
-            const pubDate = new Date(story.date * 1000).toUTCString();
-            const media = await unwrapMedia(story.media);
-            if (!media) { // cannot load the story
-                continue;
-            }
-
-            const description = getMediaLink(src, media) + getMediaAreas(story.mediaAreas);
-            item.push({
-                title: story.caption ?? pubDate,
-                description,
-                pubDate,
-                link: `https://t.me/${username}/s/${story.id}`,
-                author: username,
-            });
+        if (!(story instanceof Api.StoryItem)) { // story is deleted (archived) or skipped
+            continue;
         }
+        const src = `${new URL(ctx.req.url).origin}/telegram/stories/${username}/${story.id}`;
+        const pubDate = new Date(story.date * 1000).toUTCString();
+        const media = await unwrapMedia(story.media);
+        if (!media) { // cannot load the story
+            continue;
+        }
+        const description = getMediaLink(src, media) + getMediaAreas(story.mediaAreas);
+        item.push({
+            title: story.caption ?? pubDate,
+            description,
+            pubDate,
+            link: `https://t.me/${username}/s/${story.id}`,
+            author: username,
+        });
     }
 
     return {
         title: `Stories of @${username}`,
-        language: null,
         link: `https://t.me/${username}`,
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',
         description: `Stories of @${username} on Telegram`,
-    };
+    } as Data;
 }
