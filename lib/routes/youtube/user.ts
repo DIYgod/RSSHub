@@ -1,6 +1,6 @@
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
-import utils from './utils';
+import utils, { getVideoUrl } from './utils';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
@@ -106,6 +106,12 @@ async function handler(ctx) {
                     link: `https://www.youtube.com/watch?v=${videoId}`,
                     author: snippet.videoOwnerChannelTitle,
                     image: img.url,
+                    attachments: [
+                        {
+                            url: getVideoUrl(videoId),
+                            mime_type: 'text/html',
+                        },
+                    ],
                 };
             }),
     };

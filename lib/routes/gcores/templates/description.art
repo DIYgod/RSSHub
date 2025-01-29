@@ -1,0 +1,52 @@
+{{ if images }}
+  {{ each images image }}
+    {{ if image?.src }}
+      <img
+        {{ if image.alt }}
+          alt="{{ image.alt }}"
+        {{ /if }}
+        src="{{ image.src }}"
+      >
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
+{{ if audios }}
+  {{ each audios audio }}
+    {{ if audio?.src }}
+      <audio
+        controls>
+        <source
+          src="{{ audio.src }}"
+          type="{{ audio.type }}">
+        <object data="{{ audio.src }}">
+          <embed src="{{ audio.src }}">
+        </object>
+      </audio>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
+{{ if video }}
+  {{ each videos video }}
+    {{ if video?.src }}
+      <video
+        controls>
+        <source
+          src="{{ video.src }}"
+          type="{{ video.type }}">
+        <object data="{{ video.src }}">
+          <embed src="{{ video.src }}">
+        </object>
+      </video>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
+{{ if intro }}
+  <blockquote>{{ intro }}</blockquote>
+{{ /if }}
+
+{{ if description }}
+  {{@ description }}
+{{ /if }}

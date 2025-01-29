@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { rootUrl } from './utils';
+import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
     path: '/update',
@@ -46,26 +47,27 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got(item.link);
-                const content = load(detailResponse.data);
+    const items: any[] = [];
+    for await (const item of asyncPool(3, list, (item) =>
+        cache.tryGet(item.link, async () => {
+            const detailResponse = await got(item.link);
+            const content = load(detailResponse.data);
 
-                content('img').each((_, ele) => {
-                    if (ele.attribs['data-original']) {
-                        ele.attribs.src = ele.attribs['data-original'];
-                        delete ele.attribs['data-original'];
-                    }
-                });
-                content('.video_detail_collect').remove();
+            content('img').each((_, ele) => {
+                if (ele.attribs['data-original']) {
+                    ele.attribs.src = ele.attribs['data-original'];
+                    delete ele.attribs['data-original'];
+                }
+            });
+            content('.video_detail_collect').remove();
 
-                item.description = content('.video_detail_left').html();
+            item.description = content('.video_detail_left').html();
 
-                return item;
-            })
-        )
-    );
+            return item;
+        })
+    )) {
+        items.push(item);
+    }
 
     return {
         title: $('title').text(),

@@ -1,7 +1,7 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import util from './utils';
+import ofetch from '@/utils/ofetch';
+import { parseList, ProcessFeed } from './utils';
+import { Article, AuthorUserInfo } from './types';
 
 export const route: Route = {
     path: '/posts/:id',
@@ -26,25 +26,32 @@ export const route: Route = {
     handler,
 };
 
+const getUserInfo = (data: AuthorUserInfo) => ({
+    username: data.user_name,
+    description: data.description,
+    avatar: data.avatar_large,
+});
+
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got({
-        method: 'post',
-        url: 'https://api.juejin.cn/content_api/v1/article/query_list',
-        json: {
+    const response = await ofetch('https://api.juejin.cn/content_api/v1/article/query_list', {
+        method: 'POST',
+        body: {
             user_id: id,
             sort_type: 2,
         },
     });
-    const { data } = response.data;
-    const username = data[0] && data[0].author_user_info && data[0].author_user_info.user_name;
-    const resultItems = await util.ProcessFeed(data, cache);
+    const data = response.data as Article[];
+    const list = parseList(data);
+    const authorInfo = getUserInfo(data[0].author_user_info);
+    const resultItems = await ProcessFeed(list);
 
     return {
-        title: `掘金专栏-${username}`,
+        title: `掘金专栏-${authorInfo.username}`,
         link: `https://juejin.cn/user/${id}/posts`,
-        description: `掘金专栏-${username}`,
+        description: authorInfo.description,
+        image: authorInfo.avatar,
         item: resultItems,
     };
 }
