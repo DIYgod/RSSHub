@@ -152,26 +152,29 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         };
                     }
 
-                    const medias: Record<string, Record<string, string>> = [...(data.full_size_images ?? data.images ?? [])].reduce((acc: Record<string, Record<string, string>>, media) => {
-                        const url: string | undefined = media.url ?? media;
+                    const medias: Record<string, Record<string, string>> = {};
 
-                        if (!url) {
-                            return acc;
+                    if (data.full_size_images ?? data.images) {
+                        const images = data.full_size_images ?? data.images;
+                        for (const media of images) {
+                            const url: string | undefined = media.url ?? media;
+
+                            if (!url) {
+                                continue;
+                            }
+
+                            const medium: string = 'image';
+                            const count: number = Object.values(medias).filter((m) => m.medium === medium).length + 1;
+                            const key: string = `${medium}${count}`;
+
+                            medias[key] = {
+                                url,
+                                medium,
+                                title,
+                                thumbnail: media.thumbnail ?? url,
+                            };
                         }
-
-                        const medium: string = 'image';
-                        const count: number = Object.values(acc).filter((m) => m.medium === medium).length + 1;
-                        const key: string = `${medium}${count}`;
-
-                        acc[key] = {
-                            url,
-                            medium,
-                            title,
-                            thumbnail: media.thumbnail ?? url,
-                        };
-
-                        return acc;
-                    }, {});
+                    }
 
                     if (medias) {
                         processedItem = {
