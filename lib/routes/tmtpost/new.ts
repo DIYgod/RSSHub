@@ -176,12 +176,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         }
                     }
 
-                    if (medias) {
-                        processedItem = {
-                            ...processedItem,
-                            media: medias,
-                        };
-                    }
+                    processedItem = {
+                        ...processedItem,
+                        media: medias,
+                    };
 
                     return {
                         ...item,
