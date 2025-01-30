@@ -145,7 +145,7 @@ export default async function handler(ctx: Context) {
                 title,
                 description,
                 pubDate: new Date(message.date * 1000).toUTCString(),
-                link: `https://t.me/${username}/${message.id}`,
+                link: `https://t.me/s/${username}/${message.id}`,
                 author: getDisplayName(message.sender ?? entity),
             });
         }
