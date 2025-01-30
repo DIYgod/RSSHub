@@ -31917,6 +31917,19 @@
       }
     ]
   },
+  "tmtpost.com": {
+    "_name": "钛媒体",
+    "www": [
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/tmtpost/new"
+      }
+    ]
+  },
   "tokeninsight.com": {
     "_name": "TokenInsight",
     ".": [

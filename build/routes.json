@@ -88947,6 +88947,37 @@
   },
   "tmtpost": {
     "routes": {
+      "/new": {
+        "path": "/new",
+        "name": "最新",
+        "url": "www.tmtpost.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/tmtpost/new",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.tmtpost.com"
+            ],
+            "target": "/new"
+          }
+        ],
+        "view": 0,
+        "location": "new.ts"
+      },
       "/nictation": {
         "path": "/nictation",
         "categories": [
