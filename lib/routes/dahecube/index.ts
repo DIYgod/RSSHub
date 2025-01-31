@@ -22,8 +22,8 @@ export const route: Route = {
     maintainers: ['linbuxiao'],
     handler,
     description: `| 推荐      | 党史    | 豫股  | 财经     | 投教      | 金融    | 科创    | 投融   | 专栏   |
-  | --------- | ------- | ----- | -------- | --------- | ------- | ------- | ------ | ------ |
-  | recommend | history | stock | business | education | finance | science | invest | column |`,
+| --------- | ------- | ----- | -------- | --------- | ------- | ------- | ------ | ------ |
+| recommend | history | stock | business | education | finance | science | invest | column |`,
 };
 
 async function handler(ctx) {

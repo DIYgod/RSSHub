@@ -22,21 +22,21 @@ export const route: Route = {
 
 对于豆瓣用户广播内容，在 \`routeParams\` 参数中以 query string 格式设置如下选项可以控制输出的样式
 
-  | 键                         | 含义                                                           | 接受的值       | 默认值 |
-  | -------------------------- | -------------------------------------------------------------- | -------------- | ------ |
-  | readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false  |
-  | authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false  |
-  | showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | true   |
-  | showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |
-  | showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |
-  | showEmojiForRetweet        | 显示 “🔁” 取代 “Fw”（转发）                                    | 0/1/true/false | false  |
-  | showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发的广播）  | 0/1/true/false | false  |
-  | addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |
-  | showTimestampInDescription | 在正文处显示广播的时间戳                                       | 0/1/true/false | false  |
-  | showComments               | 在正文处显示评论                                               | 0/1/true/false | false  |
-  | widthOfPics                | 广播配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
-  | heightOfPics               | 广播配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
-  | sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |
+| 键                         | 含义                                                           | 接受的值       | 默认值 |
+| -------------------------- | -------------------------------------------------------------- | -------------- | ------ |
+| readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false  |
+| authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false  |
+| showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | true   |
+| showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |
+| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |
+| showEmojiForRetweet        | 显示 “🔁” 取代 “Fw”（转发）                                    | 0/1/true/false | false  |
+| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发的广播）  | 0/1/true/false | false  |
+| addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |
+| showTimestampInDescription | 在正文处显示广播的时间戳                                       | 0/1/true/false | false  |
+| showComments               | 在正文处显示评论                                               | 0/1/true/false | false  |
+| widthOfPics                | 广播配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
+| heightOfPics               | 广播配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
+| sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |
 
   指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 

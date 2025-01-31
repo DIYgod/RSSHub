@@ -39,8 +39,8 @@ export const route: Route = {
     handler,
     url: 'math.ustc.edu.cn/',
     description: `| 学院新闻 | 通知公告 | 学术交流 | 学术报告 |
-  | -------- | -------- | -------- | -------- |
-  | xyxw     | tzgg     | xsjl     | xsbg     |`,
+| -------- | -------- | -------- | -------- |
+| xyxw     | tzgg     | xsjl     | xsbg     |`,
 };
 
 async function handler(ctx) {

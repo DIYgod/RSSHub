@@ -44,8 +44,8 @@ export const route: Route = {
     maintainers: ['chrisis58'],
     handler,
     description: `| 研究生通知 | 教师通知 |
-  | -------- | -------- |
-  | yjstz    | jstz     |`,
+| -------- | -------- |
+| yjstz    | jstz     |`,
 };
 
 async function handler(ctx) {

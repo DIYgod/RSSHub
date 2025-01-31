@@ -28,8 +28,8 @@ export const route: Route = {
     maintainers: ['shaoye'],
     handler,
     description: `| 通知公告 | 教务快讯 |
-  | -------- | -------- |
-  | notice   | news     |`,
+| -------- | -------- |
+| notice   | news     |`,
 };
 
 async function handler(ctx) {

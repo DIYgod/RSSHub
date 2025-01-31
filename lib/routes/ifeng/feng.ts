@@ -23,8 +23,8 @@ export const route: Route = {
     maintainers: ['Jamch'],
     handler,
     description: `| 文章 | 视频  |
-  | ---- | ----- |
-  | doc  | video |`,
+| ---- | ----- |
+| doc  | video |`,
 };
 
 async function handler(ctx) {

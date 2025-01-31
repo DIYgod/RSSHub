@@ -23,16 +23,16 @@ export const route: Route = {
     maintainers: ['nicolaszf', 'nczitzk'],
     handler,
     description: `| 分类       | category |
-  | ---------- | -------- |
-  | 领导人活动 | gjldrhd  |
-  | 外事日程   | wsrc     |
-  | 部领导活动 | wjbxw    |
-  | 业务动态   | sjxw     |
-  | 发言人表态 | fyrbt    |
-  | 吹风会     | cfhsl    |
-  | 大使任免   | dsrm     |
-  | 驻外报道   | zwbd     |
-  | 政策解读   | zcjd     |`,
+| ---------- | -------- |
+| 领导人活动 | gjldrhd  |
+| 外事日程   | wsrc     |
+| 部领导活动 | wjbxw    |
+| 业务动态   | sjxw     |
+| 发言人表态 | fyrbt    |
+| 吹风会     | cfhsl    |
+| 大使任免   | dsrm     |
+| 驻外报道   | zwbd     |
+| 政策解读   | zcjd     |`,
 };
 
 async function handler(ctx) {

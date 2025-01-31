@@ -21,8 +21,8 @@ export const route: Route = {
     maintainers: ['Shujakuinkuraudo'],
     handler,
     description: `| 教师通知 | 新闻动态 | 学生通知 |
-  | -------- | -------- | -------- |
-  | jstz     | xwdt     | xstz     |`,
+| -------- | -------- | -------- |
+| jstz     | xwdt     | xstz     |`,
 };
 
 async function handler(ctx) {

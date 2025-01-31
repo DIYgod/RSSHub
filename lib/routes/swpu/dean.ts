@@ -30,8 +30,8 @@ export const route: Route = {
     handler,
     url: 'swpu.edu.cn/',
     description: `| 栏目 | 通知公告 | 新闻报道 | 视点声音 |
-  | ---- | -------- | -------- | -------- |
-  | 代码 | tzgg     | xwbd     | sdsy     |`,
+| ---- | -------- | -------- | -------- |
+| 代码 | tzgg     | xwbd     | sdsy     |`,
 };
 
 async function handler(ctx): Promise<Data> {

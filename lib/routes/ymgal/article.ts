@@ -29,8 +29,8 @@ export const route: Route = {
     maintainers: ['SunBK201'],
     handler,
     description: `| 全部文章 | 资讯 | 专栏   |
-  | -------- | ---- | ------ |
-  | all      | news | column |`,
+| -------- | ---- | ------ |
+| all      | news | column |`,
 };
 
 async function handler(ctx) {

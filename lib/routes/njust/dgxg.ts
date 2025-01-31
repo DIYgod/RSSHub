@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: ['jasongzy'],
     handler,
     description: `| 公示通知 | 学术文化 | 就业指导 |
-  | -------- | -------- | -------- |
-  | gstz     | xswh     | jyzd     |`,
+| -------- | -------- | -------- |
+| gstz     | xswh     | jyzd     |`,
 };
 
 async function handler(ctx) {

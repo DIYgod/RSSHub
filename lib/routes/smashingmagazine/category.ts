@@ -28,40 +28,40 @@ export const route: Route = {
     handler,
     url: 'smashingmagazine.com/articles/',
     description: `| **Category**       |                    |
-  | ------------------ | ------------------ |
-  | Accessibility      | accessibility      |
-  | Best practices     | best-practices     |
-  | Business           | business           |
-  | Career             | career             |
-  | Checklists         | checklists         |
-  | CSS                | css                |
-  | Data Visualization | data-visualization |
-  | Design             | design             |
-  | Design Patterns    | design-patterns    |
-  | Design Systems     | design-systems     |
-  | E-Commerce         | e-commerce         |
-  | Figma              | figma              |
-  | Freebies           | freebies           |
-  | HTML               | html               |
-  | Illustrator        | illustrator        |
-  | Inspiration        | inspiration        |
-  | JavaScript         | javascript         |
-  | Mobile             | mobile             |
-  | Performance        | performance        |
-  | Privacy            | privacy            |
-  | React              | react              |
-  | Responsive Design  | responsive-design  |
-  | Round-Ups          | round-ups          |
-  | SEO                | seo                |
-  | Typography         | typography         |
-  | Tools              | tools              |
-  | UI                 | ui                 |
-  | Usability          | usability          |
-  | UX                 | ux                 |
-  | Vue                | vue                |
-  | Wallpapers         | wallpapers         |
-  | Web Design         | web-design         |
-  | Workflow           | workflow           |`,
+| ------------------ | ------------------ |
+| Accessibility      | accessibility      |
+| Best practices     | best-practices     |
+| Business           | business           |
+| Career             | career             |
+| Checklists         | checklists         |
+| CSS                | css                |
+| Data Visualization | data-visualization |
+| Design             | design             |
+| Design Patterns    | design-patterns    |
+| Design Systems     | design-systems     |
+| E-Commerce         | e-commerce         |
+| Figma              | figma              |
+| Freebies           | freebies           |
+| HTML               | html               |
+| Illustrator        | illustrator        |
+| Inspiration        | inspiration        |
+| JavaScript         | javascript         |
+| Mobile             | mobile             |
+| Performance        | performance        |
+| Privacy            | privacy            |
+| React              | react              |
+| Responsive Design  | responsive-design  |
+| Round-Ups          | round-ups          |
+| SEO                | seo                |
+| Typography         | typography         |
+| Tools              | tools              |
+| UI                 | ui                 |
+| Usability          | usability          |
+| UX                 | ux                 |
+| Vue                | vue                |
+| Wallpapers         | wallpapers         |
+| Web Design         | web-design         |
+| Workflow           | workflow           |`,
 };
 
 async function handler(ctx) {

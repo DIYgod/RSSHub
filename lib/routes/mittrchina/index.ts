@@ -25,8 +25,8 @@ export const route: Route = {
     maintainers: ['EsuRt', 'queensferryme'],
     handler,
     description: `| 快讯     | 本周热文 | 首页资讯 | 视频  |
-  | -------- | -------- | -------- | ----- |
-  | breaking | hot      | index    | video |`,
+| -------- | -------- | -------- | ----- |
+| breaking | hot      | index    | video |`,
 };
 
 async function handler(ctx) {

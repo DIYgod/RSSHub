@@ -25,15 +25,15 @@ export const route: Route = {
     handler,
     description: `平台
 
-  |  安卓服 | iOS 服 |   B 服   |
-  | :-----: | :----: | :------: |
-  | Android |   IOS  | Bilibili |
+|  安卓服 | iOS 服 |   B 服   |
+| :-----: | :----: | :------: |
+| Android |   IOS  | Bilibili |
 
   分组
 
-  | 全部 | 系统公告 | 活动公告 |
-  | :--: | :------: | :------: |
-  |  ALL |  SYSTEM  | ACTIVITY |`,
+| 全部 | 系统公告 | 活动公告 |
+| :--: | :------: | :------: |
+|  ALL |  SYSTEM  | ACTIVITY |`,
 };
 
 async function handler(ctx) {

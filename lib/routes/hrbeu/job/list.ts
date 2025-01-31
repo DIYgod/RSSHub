@@ -33,8 +33,8 @@ export const route: Route = {
     name: '就业服务平台',
     maintainers: ['Derekmini'],
     description: `| 通知公告 | 热点新闻 |
-    | :------: | :------: |
-    |   tzgg   |   rdxw   |`,
+| :------: | :------: |
+|   tzgg   |   rdxw   |`,
     handler,
 };
 

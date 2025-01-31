@@ -33,9 +33,9 @@ export const route: Route = {
     handler,
     description: `Category of news
 
-  | China News | International News | Social News | Breaking News |
-  | ---------- | ------------------ | ----------- | ------------- |
-  | domestic   | international      | social      | news100       |`,
+| China News | International News | Social News | Breaking News |
+| ---------- | ------------------ | ----------- | ------------- |
+| domestic   | international      | social      | news100       |`,
 };
 
 async function handler(ctx) {

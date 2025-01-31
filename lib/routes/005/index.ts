@@ -108,9 +108,9 @@ export const route: Route = {
     example: '/005/zx',
     parameters: { category: '分类，可在对应分类页 URL 中找到，默认为二次元资讯' },
     description: `
-  | 二次元资讯 | 慢慢说 | 道听途说 | 展会资讯 |
-  | ---------- | ------ | -------- | -------- |
-  | zx         | zwh    | dtts     | zh       |
+| 二次元资讯 | 慢慢说 | 道听途说 | 展会资讯 |
+| ---------- | ------ | -------- | -------- |
+| zx         | zwh    | dtts     | zh       |
     `,
     categories: ['anime'],
 

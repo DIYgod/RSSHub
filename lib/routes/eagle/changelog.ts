@@ -21,9 +21,9 @@ export const route: Route = {
     handler,
     description: `Language
 
-  | Simplified Chinese | Traditional Chinese | English |
-  | ------------------ | ------------------- | ------- |
-  | cn                 | tw                  | en      |`,
+| Simplified Chinese | Traditional Chinese | English |
+| ------------------ | ------------------- | ------- |
+| cn                 | tw                  | en      |`,
 };
 
 async function handler(ctx) {

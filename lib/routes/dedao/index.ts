@@ -12,8 +12,8 @@ export const route: Route = {
     example: '/dedao',
     parameters: { category: '分类，见下表，默认为`news`' },
     description: `| 新闻 | 人物故事 | 视频 |
-  | ---- | ---- | ---- |
-  | news | figure | video |`,
+| ---- | ---- | ---- |
+| news | figure | video |`,
     handler,
 };
 

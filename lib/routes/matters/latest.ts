@@ -69,6 +69,6 @@ export const route: Route = {
         },
     ],
     description: `| 最新   | 热门 | 精华    |
-  | ------ | ---- | ------- |
-  | latest | heat | essence |`,
+| ------ | ---- | ------- |
+| latest | heat | essence |`,
 };

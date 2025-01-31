@@ -28,9 +28,9 @@ export const route: Route = {
     url: 'dh.gov.hk/',
     description: `Language
 
-  | English | 中文简体 | 中文繁體 |
-  | ------- | -------- | -------- |
-  | english | chs      | tc\_chi  |`,
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| english | chs      | tc\_chi  |`,
 };
 
 async function handler(ctx) {

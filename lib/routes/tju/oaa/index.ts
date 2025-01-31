@@ -40,8 +40,8 @@ export const route: Route = {
     maintainers: ['AlanZeng423', 'AmosChenYQ', 'SuperPung'],
     handler,
     description: `| News | Notification |
-  | :--: | :----------: |
-  | news | notification |`,
+| :--: | :----------: |
+| news | notification |`,
 };
 
 async function handler(ctx) {

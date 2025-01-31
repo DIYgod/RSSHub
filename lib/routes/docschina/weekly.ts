@@ -18,8 +18,8 @@ export const route: Route = {
     maintainers: ['daijinru', 'hestudy'],
     handler,
     description: `| javascript | node | react |
-  | ---------- | ---- | ----- |
-  | js         | node | react |`,
+| ---------- | ---- | ----- |
+| js         | node | react |`,
     radar: [
         {
             source: ['docschina.org/news/weekly/js/*', 'docschina.org/news/weekly/js', 'docschina.org/'],

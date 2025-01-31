@@ -93,9 +93,9 @@ export const route: Route = {
     description: `::: tip
   若订阅 [专业文章](https://dehenglaw.com/)，网址为 \`https://www.dehenglaw.com/CN/paper/0008/000902.aspx\`。截取 \`https://dehenglaw.com/\` 到末尾 \`/0008/000902.aspx\` 的部分 \`CN/paper\` 作为参数填入，此时路由为 [\`/dehenglaw/CN/paper\`](https://rsshub.app/dehenglaw/CN/paper)。
 
-  | 专业文章 | 出版物  | 德恒论坛 |
-  | -------- | ------- | -------- |
-  | paper    | publish | luntan   |
+| 专业文章 | 出版物  | 德恒论坛 |
+| -------- | ------- | -------- |
+| paper    | publish | luntan   |
 :::`,
     categories: ['new-media'],
 

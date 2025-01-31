@@ -32,8 +32,8 @@ export const route: Route = {
     maintainers: ['FanofZY'],
     handler,
     description: `| 公告类型 | 学院新闻 | 学术科研 | 通知公告 |
-  | -------- | -------- | -------- | -------- |
-  | 参数     | 0        | 1        | 2        |`,
+| -------- | -------- | -------- | -------- |
+| 参数     | 0        | 1        | 2        |`,
 };
 
 async function handler(ctx) {

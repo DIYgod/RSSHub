@@ -80,12 +80,12 @@ export const route: Route = {
         },
     ],
     description: `|    快讯   |   文章  |
-  | :-------: | :-----: |
-  | newsflash | article |
+| :-------: | :-----: |
+| newsflash | article |
 
-  | 全部 | 深度 | 精选 | 热点追踪 |
-  | :--: | :--: | :--: | :---: |
-  |     | -2  | 1    |  2     |`,
+| 全部 | 深度 | 精选 | 热点追踪 |
+| :--: | :--: | :--: | :---: |
+|     | -2  | 1    |  2     |`,
 };
 
 async function handler(ctx) {

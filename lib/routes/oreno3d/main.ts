@@ -56,8 +56,8 @@ export const route: Route = {
     maintainers: ['xueli_sherryli'],
     handler,
     description: `| favorites | hot | latest | popularity |
-  | --------- | --- | ------ | ---------- |
-  | favorites | hot | latest | popularity |`,
+| --------- | --- | ------ | ---------- |
+| favorites | hot | latest | popularity |`,
 };
 
 async function handler(ctx) {

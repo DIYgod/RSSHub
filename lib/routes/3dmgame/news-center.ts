@@ -28,8 +28,8 @@ export const route: Route = {
     maintainers: ['zhboner', 'lyqluis'],
     handler,
     description: `| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |
-  | -------- | -------- | -------- | -------- | ----------- |
-  |          | game     | acg      | next     | news\_36\_1 |`,
+| -------- | -------- | -------- | -------- | ----------- |
+|          | game     | acg      | next     | news\_36\_1 |`,
 };
 
 async function handler(ctx) {

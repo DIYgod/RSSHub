@@ -11,8 +11,8 @@ export const route: Route = {
     maintainers: ['shunf4'],
     handler,
     description: `| 中国  | 新加坡    | 国际  | 财经     |
-  | ----- | --------- | ----- | -------- |
-  | china | singapore | world | zfinance |`,
+| ----- | --------- | ----- | -------- |
+| china | singapore | world | zfinance |`,
 };
 
 async function handler(ctx) {

@@ -23,8 +23,8 @@ export const route: Route = {
     maintainers: ['xyqfer', 'Fatpandac'],
     handler,
     description: `| 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |
-  | ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
-  | all  | tech | agriculture | acg  | design | love | tele | music | book | game | other |`,
+| ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
+| all  | tech | agriculture | acg  | design | love | tele | music | book | game | other |`,
 };
 
 async function handler(ctx) {

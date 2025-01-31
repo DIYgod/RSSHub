@@ -21,8 +21,8 @@ export const route: Route = {
     maintainers: ['immmortal', 'luyuhuang'],
     handler,
     description: `| 24h           | 7days    | monthly |
-  | ------------- | -------- | ------- |
-  | 24 小时阅读榜 | 7 天最热 | 月榜    |`,
+| ------------- | -------- | ------- |
+| 24 小时阅读榜 | 7 天最热 | 月榜    |`,
 };
 
 async function handler(ctx) {

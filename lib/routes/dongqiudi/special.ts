@@ -18,8 +18,8 @@ export const route: Route = {
     maintainers: ['dxmpalb'],
     handler,
     description: `| 新闻大爆炸 | 懂球帝十佳球 | 懂球帝本周 MVP |
-  | ---------- | ------------ | -------------- |
-  | 41         | 52           | 53             |`,
+| ---------- | ------------ | -------------- |
+| 41         | 52           | 53             |`,
 };
 
 async function handler(ctx) {

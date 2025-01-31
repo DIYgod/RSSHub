@@ -40,8 +40,8 @@ export const route: Route = {
     maintainers: ['Caicailiushui'],
     handler,
     description: `| 本院动态 | 科研进展 | 研究生教育最新消息 |
-  | -------- | -------- | ------------------ |
-  | 1        | 2        | 3                  |`,
+| -------- | -------- | ------------------ |
+| 1        | 2        | 3                  |`,
 };
 
 async function handler(ctx) {

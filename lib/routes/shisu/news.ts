@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: ['Duuckjing'],
     handler,
     description: `| 首页 | 特稿    | 学术      | 教学       | 国际          | 校园   | 人物   | 视讯       | 公告   |
-  | ---- | ------- | --------- | ---------- | ------------- | ------ | ------ | ---------- | ------ |
-  | news | gazette | research- | academics- | international | campus | people | multimedia | notice |`,
+| ---- | ------- | --------- | ---------- | ------------- | ------ | ------ | ---------- | ------ |
+| news | gazette | research- | academics- | international | campus | people | multimedia | notice |`,
 };
 
 async function handler(ctx) {

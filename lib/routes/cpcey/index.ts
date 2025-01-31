@@ -34,8 +34,8 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| 新闻稿 | 消费资讯 |
-  | :----: | :------: |
-  |   xwg  |   xfzx   |`,
+| :----: | :------: |
+|   xwg  |   xfzx   |`,
 };
 
 async function handler(ctx) {

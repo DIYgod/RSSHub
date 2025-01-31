@@ -30,9 +30,9 @@ export const route: Route = {
     handler,
     description: `地区：
 
-  | hk   | tw   |
-  | ---- | ---- |
-  | 香港 | 台湾 |`,
+| hk   | tw   |
+| ---- | ---- |
+| 香港 | 台湾 |`,
 };
 
 async function handler(ctx) {

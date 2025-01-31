@@ -37,8 +37,8 @@ export const route: Route = {
     maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     description: `| POPULAR | FROM THE STORE | FOR YOU |
-  | ------- | -------------- | ------- |
-  | Popular | From the Store | For You |
+| ------- | -------------- | ------- |
+| Popular | From the Store | For You |
 
 ::: tip
   Click here to view [All Topics](https://hbr.org/topics)

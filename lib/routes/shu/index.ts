@@ -34,8 +34,8 @@ export const route: Route = {
     handler,
     url: 'www.shu.edu.cn/',
     description: `| 通知公告 | 重要新闻 |
-  | -------- | --------- |
-  | tzgg     | zyxw      |`,
+| -------- | --------- |
+| tzgg     | zyxw      |`,
 };
 
 async function handler(ctx) {

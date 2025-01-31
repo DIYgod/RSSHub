@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: ['Misaka13514'],
     handler,
     description: `| Shows   | Reposts | Favorites | History | Stream |
-  | ------- | ------- | --------- | ------- | ------ |
-  | uploads | reposts | favorites | listens | stream |`,
+| ------- | ------- | --------- | ------- | ------ |
+| uploads | reposts | favorites | listens | stream |`,
 };
 
 async function handler(ctx) {

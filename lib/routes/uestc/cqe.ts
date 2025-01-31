@@ -40,8 +40,8 @@ export const route: Route = {
     handler,
     url: 'cqe.uestc.edu.cn/',
     description: `| 活动预告 | 通知公告 |
-  | -------- | -------- |
-  | hdyg     | tzgg     |`,
+| -------- | -------- |
+| hdyg     | tzgg     |`,
 };
 
 async function handler(ctx) {

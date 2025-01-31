@@ -40,8 +40,8 @@ export const route: Route = {
     handler,
     url: 'huanqiu.com/',
     description: `| 国内新闻 | 国际新闻 | 军事 | 台海   | 评论    |
-  | -------- | -------- | ---- | ------ | ------- |
-  | china    | world    | mil  | taiwai | opinion |`,
+| -------- | -------- | ---- | ------ | ------- |
+| china    | world    | mil  | taiwai | opinion |`,
 };
 
 async function handler(ctx) {

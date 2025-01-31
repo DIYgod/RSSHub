@@ -38,8 +38,8 @@ export const route: Route = {
     maintainers: ['Derekmini'],
     handler,
     description: `| 学校要闻 | 综合新闻 | 媒体聚焦 |
-  | -------- | -------- | -------- |
-  | xxyw     | zhxw     | mtjj     |`,
+| -------- | -------- | -------- |
+| xxyw     | zhxw     | mtjj     |`,
 };
 
 async function handler(ctx) {

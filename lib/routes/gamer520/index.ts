@@ -21,9 +21,9 @@ export const route: Route = {
     url: 'www.gamer520.com/',
     description: `分类
 
-  | 所有 | Switch 游戏下载 | 金手指     | 3A 巨作 | switch 主题 | PC 游戏 |
-  | ---- | --------------- | ---------- | ------- | ----------- | ------- |
-  | all  | switchyouxi     | jinshouzhi | 3ajuzuo | zhuti       | pcgame  |`,
+| 所有 | Switch 游戏下载 | 金手指     | 3A 巨作 | switch 主题 | PC 游戏 |
+| ---- | --------------- | ---------- | ------- | ----------- | ------- |
+| all  | switchyouxi     | jinshouzhi | 3ajuzuo | zhuti       | pcgame  |`,
 };
 
 interface Post {

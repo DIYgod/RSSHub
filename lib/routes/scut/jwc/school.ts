@@ -69,8 +69,8 @@ export const route: Route = {
     maintainers: ['imkero', 'Rongronggg9'],
     handler,
     description: `| 全部 | 选课   | 考试 | 信息 |
-  | ---- | ------ | ---- | ---- |
-  | all  | course | exam | info |`,
+| ---- | ------ | ---- | ---- |
+| all  | course | exam | info |`,
 };
 
 async function handler(ctx) {

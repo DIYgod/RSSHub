@@ -31,8 +31,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 回复时间排序 | 发布时间排序 |
-  | ------------ | ------------ |
-  | 1            | 2            |`,
+| ------------ | ------------ |
+| 1            | 2            |`,
 };
 
 async function handler(ctx) {

@@ -37,8 +37,8 @@ export const route: Route = {
     handler,
     url: 'eeis.ustc.edu.cn/',
     description: `| 通知公告 | 新闻信息 |
-  | -------- | -------- |
-  | tzgg     | xwxx     |`,
+| -------- | -------- |
+| tzgg     | xwxx     |`,
 };
 
 async function handler(ctx) {

@@ -27,8 +27,8 @@ export const route: Route = {
     handler,
     url: 'ngocn2.org/',
     description: `| 所有文章 | 早报        | 热点     |
-  | -------- | ----------- | -------- |
-  | article  | daily-brief | trending |`,
+| -------- | ----------- | -------- |
+| article  | daily-brief | trending |`,
 };
 
 async function handler(ctx) {

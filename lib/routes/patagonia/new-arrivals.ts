@@ -36,8 +36,8 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `| Men's | Women's | Kids' & Baby | Packs & Gear |
-  | ----- | ------- | ------------ | ------------ |
-  | mens  | womens  | kids         | luggage      |`,
+| ----- | ------- | ------------ | ------------ |
+| mens  | womens  | kids         | luggage      |`,
 };
 
 async function handler(ctx) {

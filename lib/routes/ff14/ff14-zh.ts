@@ -32,8 +32,8 @@ export const route: Route = {
     handler,
     url: 'ff.web.sdo.com/web8/index.html',
     description: `| 新闻 | 公告     | 活动   | 广告      | 所有 |
-  | ---- | -------- | ------ | --------- | ---- |
-  | news | announce | events | advertise | all  |`,
+| ---- | -------- | ------ | --------- | ---- |
+| news | announce | events | advertise | all  |`,
 };
 
 async function handler(ctx) {

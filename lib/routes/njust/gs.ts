@@ -29,8 +29,8 @@ export const route: Route = {
     maintainers: ['MilkShakeYoung', 'jasongzy'],
     handler,
     description: `| 首页通知公告 | 首页新闻动态 | 最新通知 | 招生信息 | 培养信息 | 学术活动 |
-  | ------------ | ------------ | -------- | -------- | -------- | -------- |
-  | sytzgg\_4568 | sytzgg       | 14686    | 14687    | 14688    | xshdggl  |`,
+| ------------ | ------------ | -------- | -------- | -------- | -------- |
+| sytzgg\_4568 | sytzgg       | 14686    | 14687    | 14688    | xshdggl  |`,
 };
 
 async function handler(ctx) {

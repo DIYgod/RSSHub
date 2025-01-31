@@ -29,8 +29,8 @@ export const route: Route = {
     handler,
     url: 'swpu.edu.cn/',
     description: `| 栏目 | 学院新闻 | 学院通知 |
-  | ---- | -------- | -------- |
-  | 代码 | xyxw     | xytz     |`,
+| ---- | -------- | -------- |
+| 代码 | xyxw     | xytz     |`,
 };
 
 async function handler(ctx) {

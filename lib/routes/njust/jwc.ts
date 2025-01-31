@@ -31,8 +31,8 @@ export const route: Route = {
     maintainers: ['MilkShakeYoung', 'jasongzy'],
     handler,
     description: `| 教师通知 | 学生通知 | 新闻 | 学院动态 |
-  | -------- | -------- | ---- | -------- |
-  | jstz     | xstz     | xw   | xydt     |`,
+| -------- | -------- | ---- | -------- |
+| jstz     | xstz     | xw   | xydt     |`,
 };
 
 async function handler(ctx) {

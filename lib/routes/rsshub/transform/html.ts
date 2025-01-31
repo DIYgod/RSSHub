@@ -47,16 +47,16 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
 
   Parameters parsing in the above example:
 
-  | Parameter     | Value                                     |
-  | ------------- | ----------------------------------------- |
-  | \`url\`         | \`https://wechat2rss.xlab.app/posts/list/\` |
-  | \`routeParams\` | \`item=div[class='post-content'] p a\`      |
+| Parameter     | Value                                     |
+| ------------- | ----------------------------------------- |
+| \`url\`         | \`https://wechat2rss.xlab.app/posts/list/\` |
+| \`routeParams\` | \`item=div[class='post-content'] p a\`      |
 
   Parsing of \`routeParams\` parameter:
 
-  | Parameter | Value                           |
-  | --------- | ------------------------------- |
-  | \`item\`    | \`div[class='post-content'] p a\` |`,
+| Parameter | Value                           |
+| --------- | ------------------------------- |
+| \`item\`    | \`div[class='post-content'] p a\` |`,
     handler: async (ctx) => {
         if (!config.feature.allow_user_supply_unsafe_domain) {
             throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);

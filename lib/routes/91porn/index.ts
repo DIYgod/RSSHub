@@ -34,8 +34,8 @@ export const route: Route = {
     handler,
     url: '91porn.com/index.php',
     description: `| English | 简体中文 | 繁體中文 |
-  | ------- | -------- | -------- |
-  | en\_US  | cn\_CN   | zh\_ZH   |`,
+| ------- | -------- | -------- |
+| en\_US  | cn\_CN   | zh\_ZH   |`,
 };
 
 async function handler(ctx) {

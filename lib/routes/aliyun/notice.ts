@@ -34,12 +34,12 @@ export const route: Route = {
     maintainers: ['muzea'],
     handler,
     description: `| 类型     | type |
-  | -------- | ---- |
-  | 全部     |      |
-  | 升级公告 | 1    |
-  | 安全公告 | 2    |
-  | 备案公告 | 3    |
-  | 其他     | 4    |`,
+| -------- | ---- |
+| 全部     |      |
+| 升级公告 | 1    |
+| 安全公告 | 2    |
+| 备案公告 | 3    |
+| 其他     | 4    |`,
 };
 
 async function handler(ctx) {

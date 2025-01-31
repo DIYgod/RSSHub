@@ -91,29 +91,29 @@ export const route: Route = {
     maintainers: ['ZenoTian'],
     handler,
     description: `| Language         | Code  |
-  | ---------------- | ----- |
-  | 简体中文         | zh-cn |
-  | 繁體中文         | zh-tw |
-  | 日本語           | ja-jp |
-  | 한국어           | ko-kr |
-  | English (US)     | en-us |
-  | Español (EU)     | es-es |
-  | Français         | fr-fr |
-  | Deutsch          | de-de |
-  | Русский          | ru-ru |
-  | Português        | pt-pt |
-  | Español (Latino) | es-mx |
-  | Indonesia        | id-id |
-  | Tiếng Việt       | vi-vn |
-  | ภาษาไทย          | th-th |
+| ---------------- | ----- |
+| 简体中文         | zh-cn |
+| 繁體中文         | zh-tw |
+| 日本語           | ja-jp |
+| 한국어           | ko-kr |
+| English (US)     | en-us |
+| Español (EU)     | es-es |
+| Français         | fr-fr |
+| Deutsch          | de-de |
+| Русский          | ru-ru |
+| Português        | pt-pt |
+| Español (Latino) | es-mx |
+| Indonesia        | id-id |
+| Tiếng Việt       | vi-vn |
+| ภาษาไทย          | th-th |
 
-  | Honkai Impact 3rd | Genshin Impact | Tears of Themis | HoYoLAB | Honkai: Star Rail | Zenless Zone Zero |
-  | ----------------- | -------------- | --------------- | ------- | ----------------- | ----------------- |
-  | 1                 | 2              | 4               | 5       | 6                 | 8                 |
+| Honkai Impact 3rd | Genshin Impact | Tears of Themis | HoYoLAB | Honkai: Star Rail | Zenless Zone Zero |
+| ----------------- | -------------- | --------------- | ------- | ----------------- | ----------------- |
+| 1                 | 2              | 4               | 5       | 6                 | 8                 |
 
-  | Notices | Events | Info |
-  | ------- | ------ | ---- |
-  | 1       | 2      | 3    |`,
+| Notices | Events | Info |
+| ------- | ------ | ---- |
+| 1       | 2      | 3    |`,
 };
 
 async function handler(ctx) {

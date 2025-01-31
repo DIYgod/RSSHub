@@ -32,8 +32,8 @@ export const route: Route = {
     handler,
     url: 'hakkatv.org.tw/news',
     description: `| 客家焦點 | 政經要聞  | 民生醫療 | 地方風采 | 國際萬象      |
-  | -------- | --------- | -------- | -------- | ------------- |
-  | hakka    | political | medical  | local    | international |`,
+| -------- | --------- | -------- | -------- | ------------- |
+| hakka    | political | medical  | local    | international |`,
 };
 
 async function handler(ctx) {

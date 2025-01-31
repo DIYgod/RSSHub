@@ -23,8 +23,8 @@ export const route: Route = {
     maintainers: ['tuxinghuan', 'GhhG123'],
     handler,
     description: `| 通知通告 | 新闻 | 政策文件(bug) |
-  | -------- | ---- | -------- |
-  | notice   | news | policy   |`,
+| -------- | ---- | -------- |
+| notice   | news | policy   |`,
 };
 
 async function handler(ctx) {

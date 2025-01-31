@@ -28,9 +28,9 @@ export const route: Route = {
     handler,
     description: `Channels:
 
-  | समाचार | अर्थ / वाणिज्य | विचार     | खेलकुद   | उपत्यका     | मनोरञ्जन         | फोटोफिचर          | फिचर     | विश्व    | ब्लग   |
-  | ---- | -------- | ------- | ------ | -------- | ------------- | -------------- | ------- | ----- | ---- |
-  | news | business | opinion | sports | national | entertainment | photo\_feature | feature | world | blog |`,
+| समाचार | अर्थ / वाणिज्य | विचार     | खेलकुद   | उपत्यका     | मनोरञ्जन         | फोटोफिचर          | फिचर     | विश्व    | ब्लग   |
+| ---- | -------- | ------- | ------ | -------- | ------------- | -------------- | ------- | ----- | ---- |
+| news | business | opinion | sports | national | entertainment | photo\_feature | feature | world | blog |`,
 };
 
 async function handler(ctx) {

@@ -92,53 +92,53 @@ export const route: Route = {
     handler,
     description: `Type
 
-  | クリエイター | 投稿  | 商品     | コミッション |
-  | ------------ | ----- | -------- | ------------ |
-  | fanclubs     | posts | products | commissions  |
+| クリエイター | 投稿  | 商品     | コミッション |
+| ------------ | ----- | -------- | ------------ |
+| fanclubs     | posts | products | commissions  |
 
   Category
 
-  | 分类                   | 分类名     |
-  | ---------------------- | ---------- |
-  | イラスト               | illust     |
-  | 漫画                   | comic      |
-  | コスプレ               | cosplay    |
-  | YouTuber・配信者       | youtuber   |
-  | Vtuber                 | vtuber     |
-  | 音声作品・ASMR         | voice      |
-  | 声優・歌い手           | voiceactor |
-  | アイドル               | idol       |
-  | アニメ・映像・写真     | anime      |
-  | 3D                     | 3d         |
-  | ゲーム制作             | game       |
-  | 音楽                   | music      |
-  | 小説                   | novel      |
-  | ドール                 | doll       |
-  | アート・デザイン       | art        |
-  | プログラム             | program    |
-  | 創作・ハンドメイド     | handmade   |
-  | 歴史・評論・情報       | history    |
-  | 鉄道・旅行・ミリタリー | railroad   |
-  | ショップ               | shop       |
-  | その他                 | other      |
+| 分类                   | 分类名     |
+| ---------------------- | ---------- |
+| イラスト               | illust     |
+| 漫画                   | comic      |
+| コスプレ               | cosplay    |
+| YouTuber・配信者       | youtuber   |
+| Vtuber                 | vtuber     |
+| 音声作品・ASMR         | voice      |
+| 声優・歌い手           | voiceactor |
+| アイドル               | idol       |
+| アニメ・映像・写真     | anime      |
+| 3D                     | 3d         |
+| ゲーム制作             | game       |
+| 音楽                   | music      |
+| 小説                   | novel      |
+| ドール                 | doll       |
+| アート・デザイン       | art        |
+| プログラム             | program    |
+| 創作・ハンドメイド     | handmade   |
+| 歴史・評論・情報       | history    |
+| 鉄道・旅行・ミリタリー | railroad   |
+| ショップ               | shop       |
+| その他                 | other      |
 
   Ranking period
 
-  | デイリー | ウィークリー | マンスリー | 全期間 |
-  | -------- | ------------ | ---------- | ------ |
-  | daily    | weekly       | monthly    | all    |
+| デイリー | ウィークリー | マンスリー | 全期間 |
+| -------- | ------------ | ---------- | ------ |
+| daily    | weekly       | monthly    | all    |
 
   Sorting
 
-  | 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |
-  | -------------- | ------------ | -------------- | ------------ | -------------- |
-  | updater        | update\_old  | newer          | create\_old  | popular        |
+| 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |
+| -------------- | ------------ | -------------- | ------------ | -------------- |
+| updater        | update\_old  | newer          | create\_old  | popular        |
 
   Rating
 
-  | すべて | 一般のみ | R18 のみ |
-  | ------ | -------- | -------- |
-  | all    | general  | adult    |`,
+| すべて | 一般のみ | R18 のみ |
+| ------ | -------- | -------- |
+| all    | general  | adult    |`,
 };
 
 async function handler(ctx) {

@@ -22,9 +22,9 @@ export const route: Route = {
     handler,
     description: `内容类型
 
-  | 最新 | 热门 |
-  | ---- | ---- |
-  | 1    | 2    |
+| 最新 | 热门 |
+| ---- | ---- |
+| 1    | 2    |
 
   参数
 

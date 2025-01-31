@@ -27,8 +27,8 @@ export const route: Route = {
     handler,
     url: 'aamacau.com/',
     description: `| 即時報道     | 每週專題    | 藝文爛鬼樓 | 論盡紙本 | 新聞事件 | 特別企劃 |
-  | ------------ | ----------- | ---------- | -------- | -------- | -------- |
-  | breakingnews | weeklytopic | culture    | press    | case     | special  |
+| ------------ | ----------- | ---------- | -------- | -------- | -------- |
+| breakingnews | weeklytopic | culture    | press    | case     | special  |
 
 ::: tip
   除了直接订阅分类全部文章（如 [每週專題](https://aamacau.com/topics/weeklytopic) 的对应路由为 [/aamacau/weeklytopic](https://rsshub.app/aamacau/weeklytopic)），你也可以订阅特定的专题，如 [【9-12】2021 澳門立法會選舉](https://aamacau.com/topics/【9-12】2021澳門立法會選舉) 的对应路由为 [/【9-12】2021 澳門立法會選舉](https://rsshub.app/aamacau/【9-12】2021澳門立法會選舉)。

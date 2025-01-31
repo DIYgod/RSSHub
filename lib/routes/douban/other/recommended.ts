@@ -24,9 +24,9 @@ export const route: Route = {
     maintainers: ['honue'],
     handler,
     description: `| 额外参数 | 含义                   | 接受的值 | 默认值 |
-  | -------- | ---------------------- | -------- | ------ |
-  | playable | 仅看有可播放片源的影片 | 0/1      | 0      |
-  | score    | 筛选评分               | 0-10     | 0      |
+| -------- | ---------------------- | -------- | ------ |
+| playable | 仅看有可播放片源的影片 | 0/1      | 0      |
+| score    | 筛选评分               | 0-10     | 0      |
 
   用例：\`/douban/recommended/tv/playable=0&score=8\`
 

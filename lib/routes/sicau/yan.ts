@@ -28,8 +28,8 @@ export const route: Route = {
     handler,
     url: 'yan.sicau.edu.cn/',
     description: `| 新闻公告 | 学术报告 |
-  | -------- | -------- |
-  | xwgg     | xsbg     |`,
+| -------- | -------- |
+| xwgg     | xsbg     |`,
 };
 
 async function handler(ctx) {

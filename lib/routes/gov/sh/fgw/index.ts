@@ -117,9 +117,9 @@ export const route: Route = {
   若订阅 [最新信息公开](https://fgw.sh.gov.cn/fgw_zxxxgk/index.html)，网址为 \`https://fgw.sh.gov.cn/fgw_zxxxgk/index.html\`。截取 \`https://fgw.sh.gov.cn/\` 到末尾 \`/index.html\` 的部分 \`fgw_zxxxgk\` 作为参数填入，此时路由为 [\`/gov/sh/fgw/fgw_zxxxgk\`](https://rsshub.app/gov/sh/fgw/fgw_zxxxgk)。
 :::
 
-  | 最新信息公开 | 要闻动态   |
-  | ------------ | ---------- |
-  | fgw_zxxxgk   | fgw_fzggdt |
+| 最新信息公开 | 要闻动态   |
+| ------------ | ---------- |
+| fgw_zxxxgk   | fgw_fzggdt |
   `,
     categories: ['government'],
 

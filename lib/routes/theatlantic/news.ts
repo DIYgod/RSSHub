@@ -24,8 +24,8 @@ export const route: Route = {
     maintainers: ['EthanWng97', 'pseudoyu'],
     handler,
     description: `| Popular      | Latest | Politics | Technology | Business |
-  | ------------ | ------ | -------- | ---------- | -------- |
-  | most-popular | latest | politics | technology | business |
+| ------------ | ------ | -------- | ---------- | -------- |
+| most-popular | latest | politics | technology | business |
 
   More categories (except photo) can be found within the navigation bar at [https://www.theatlantic.com](https://www.theatlantic.com)`,
 };

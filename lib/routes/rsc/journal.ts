@@ -30,9 +30,9 @@ export const route: Route = {
   All journals at [Current journals](https://pubs.rsc.org/en/journals)
 :::
 
-  | All Recent Articles | Advance Articles |
-  | ------------------- | ---------------- |
-  | allrecentarticles   | advancearticles  |`,
+| All Recent Articles | Advance Articles |
+| ------------------- | ---------------- |
+| allrecentarticles   | advancearticles  |`,
 };
 
 async function handler(ctx) {

@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: ['dykderrick'],
     handler,
     description: `| Blog | In The News |
-  | ---- | ----------- |
-  | blog | inthenews   |`,
+| ---- | ----------- |
+| blog | inthenews   |`,
 };
 
 async function handler(ctx) {

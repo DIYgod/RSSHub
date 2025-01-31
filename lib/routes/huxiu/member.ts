@@ -13,8 +13,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| TA 的文章 | TA 的 24 小时 |
-  | --------- | ------------- |
-  | article   | moment        |`,
+| --------- | ------------- |
+| article   | moment        |`,
 };
 
 async function handler(ctx) {

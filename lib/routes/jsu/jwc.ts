@@ -23,8 +23,8 @@ export const route: Route = {
     maintainers: ['wenjia03'],
     handler,
     description: `| 教务通知 | 教务动态 |
-  | -------- | -------- |
-  | jwtz     | jwdt     |`,
+| -------- | -------- |
+| jwtz     | jwdt     |`,
 };
 
 async function handler(ctx) {

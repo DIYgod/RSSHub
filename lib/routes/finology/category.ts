@@ -17,23 +17,23 @@ export const route: Route = {
     maintainers: ['Rjnishant530'],
     handler,
     description: `::: info Category
-  | Category              | Link               |
-  | --------------------- | ------------------ |
-  | **Business**          | business           |
-  | Big Shots             | entrepreneurship   |
-  | Startups              | startups-india     |
-  | Brand Games           | success-stories    |
-  | Juicy Scams           | juicy-scams        |
-  | **Finance**           | finance            |
-  | Macro Moves           | economy            |
-  | News Platter          | market-news        |
-  | Tax Club              | tax                |
-  | Your Money            | your-money         |
-  | **Invest**            | investing          |
-  | Stock Market          | stock-market       |
-  | Financial Ratios      | stock-ratios       |
-  | Investor's Psychology | behavioral-finance |
-  | Mutual Funds          | mutual-fund        |
+| Category              | Link               |
+| --------------------- | ------------------ |
+| **Business**          | business           |
+| Big Shots             | entrepreneurship   |
+| Startups              | startups-india     |
+| Brand Games           | success-stories    |
+| Juicy Scams           | juicy-scams        |
+| **Finance**           | finance            |
+| Macro Moves           | economy            |
+| News Platter          | market-news        |
+| Tax Club              | tax                |
+| Your Money            | your-money         |
+| **Invest**            | investing          |
+| Stock Market          | stock-market       |
+| Financial Ratios      | stock-ratios       |
+| Investor's Psychology | behavioral-finance |
+| Mutual Funds          | mutual-fund        |
 :::`,
 };
 

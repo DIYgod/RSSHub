@@ -21,8 +21,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 首页 | オトナの土ドラ | 日剧 | 日剧 SP |
-  | ---- | -------------- | ---- | ------- |
-  |      | 10             | 5    | 11      |`,
+| ---- | -------------- | ---- | ------- |
+|      | 10             | 5    | 11      |`,
 };
 
 async function handler(ctx) {

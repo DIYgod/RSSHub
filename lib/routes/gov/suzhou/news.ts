@@ -28,22 +28,22 @@ export const route: Route = {
     maintainers: ['EsuRt', 'luyuhuang'],
     handler,
     description: `| 新闻栏目名 |       :uid       |
-  | :--------: | :--------------: |
-  |  苏州要闻  |   news 或 szyw   |
-  |  区县快讯  | district 或 qxkx |
-  |  部门动态  |       bmdt       |
-  |  新闻视频  |       xwsp       |
-  |  政务公告  |       zwgg       |
-  |  便民公告  |       mszx       |
-  |  民生资讯  |       bmzx       |
+| :--------: | :--------------: |
+|  苏州要闻  |   news 或 szyw   |
+|  区县快讯  | district 或 qxkx |
+|  部门动态  |       bmdt       |
+|  新闻视频  |       xwsp       |
+|  政务公告  |       zwgg       |
+|  便民公告  |       mszx       |
+|  民生资讯  |       bmzx       |
 
-  | 热点专题栏目名 |  :uid  |
-  | :------------: | :----: |
-  |    热点专题    |  rdzt  |
-  |   市本级专题   |  sbjzt |
-  |  最新热点专题  | zxrdzt |
-  |    往期专题    |  wqzt  |
-  |    区县专题    |  qxzt  |
+| 热点专题栏目名 |  :uid  |
+| :------------: | :----: |
+|    热点专题    |  rdzt  |
+|   市本级专题   |  sbjzt |
+|  最新热点专题  | zxrdzt |
+|    往期专题    |  wqzt  |
+|    区县专题    |  qxzt  |
 
 ::: tip
   **热点专题**栏目包含**市本级专题**和**区县专题**

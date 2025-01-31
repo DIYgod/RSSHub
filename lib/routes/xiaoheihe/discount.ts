@@ -19,8 +19,8 @@ export const route: Route = {
     maintainers: ['tssujt'],
     handler,
     description: `| PC  | Switch  | PSN   | Xbox |
-  | ----- | ------ | ----- | ----- |
-  | pc    | switch | psn   | xbox  |`,
+| ----- | ------ | ----- | ----- |
+| pc    | switch | psn   | xbox  |`,
 };
 
 const PLATFORM_MAP = {

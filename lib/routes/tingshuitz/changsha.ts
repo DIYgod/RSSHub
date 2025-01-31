@@ -22,10 +22,10 @@ export const route: Route = {
     handler,
     description: `可能仅限于中国大陆服务器访问，以实际情况为准。
 
-  | channelId | 分类     |
-  | --------- | -------- |
-  | 78        | 计划停水 |
-  | 157       | 抢修停水 |`,
+| channelId | 分类     |
+| --------- | -------- |
+| 78        | 计划停水 |
+| 157       | 抢修停水 |`,
 };
 
 async function handler(ctx) {

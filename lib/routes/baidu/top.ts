@@ -24,8 +24,8 @@ export const route: Route = {
     maintainers: ['xyqfer'],
     handler,
     description: `| 热搜榜   | 小说榜 | 电影榜 | 电视剧榜 | 汽车榜 | 游戏榜 |
-  | -------- | ------ | ------ | -------- | ------ | ------ |
-  | realtime | novel  | movie  | teleplay | car    | game   |`,
+| -------- | ------ | ------ | -------- | ------ | ------ |
+| realtime | novel  | movie  | teleplay | car    | game   |`,
 };
 
 async function handler(ctx) {

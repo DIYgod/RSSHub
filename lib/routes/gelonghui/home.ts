@@ -33,8 +33,8 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| 推荐            | 股票  | 基金 | 新股       | 研报     |
-  | --------------- | ----- | ---- | ---------- | -------- |
-  | web\_home\_page | stock | fund | new\_stock | research |`,
+| --------------- | ----- | ---- | ---------- | -------- |
+| web\_home\_page | stock | fund | new\_stock | research |`,
 };
 
 async function handler(ctx) {

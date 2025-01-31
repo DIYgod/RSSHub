@@ -26,16 +26,16 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 首页 | 老唐实盘 | 书房拾遗 | 理念 & 估值 | 经典陪读 | 财务套利 |
-  | ---- | -------- | -------- | ----------- | -------- | -------- |
-  |      | shipan   | wenda    | linian      | peidu    | taoli    |
+| ---- | -------- | -------- | ----------- | -------- | -------- |
+|      | shipan   | wenda    | linian      | peidu    | taoli    |
 
-  | 企业分析 | 白酒企业 | 腾讯控股 | 分众传媒 | 海康威视 | 其他企业 |
-  | -------- | -------- | -------- | -------- | -------- | -------- |
-  | qiye     | baijiu   | tengxun  | fenzhong | haikang  | qita     |
+| 企业分析 | 白酒企业 | 腾讯控股 | 分众传媒 | 海康威视 | 其他企业 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| qiye     | baijiu   | tengxun  | fenzhong | haikang  | qita     |
 
-  | 核心五篇 | 读者投稿 | 读书随笔 | 财报浅析 | 出行游记 | 巴芒连载 |
-  | -------- | -------- | -------- | -------- | -------- | -------- |
-  | hexin    | tougao   | suibi    | caibao   | youji    | bamang   |`,
+| 核心五篇 | 读者投稿 | 读书随笔 | 财报浅析 | 出行游记 | 巴芒连载 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| hexin    | tougao   | suibi    | caibao   | youji    | bamang   |`,
 };
 
 async function handler(ctx) {

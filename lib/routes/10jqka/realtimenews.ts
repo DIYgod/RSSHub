@@ -84,8 +84,8 @@ export const route: Route = {
   若订阅 [7×24小时要闻直播](https://news.10jqka.com.cn/realtimenews.html) 的 \`公告\` 和 \`A股\` 标签。将 \`公告,A股\` 作为标签参数填入，此时路由为 [\`/10jqka/realtimenews/公告,A股\`](https://rsshub.app/10jqka/realtimenews/公告,A股)。
 :::
 
-  | 全部 | 重要 | A股 | 港股 | 美股 | 机会 | 异动 | 公告 |
-  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 全部 | 重要 | A股 | 港股 | 美股 | 机会 | 异动 | 公告 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
     `,
     categories: ['finance'],
 

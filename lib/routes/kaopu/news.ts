@@ -17,8 +17,8 @@ export const route: Route = {
     name: '全部',
     maintainers: ['fashioncj'],
     description: `| 简体中文    | 繁体中文     |
-  | ------- | -------- |
-  | zh-hans | zh-hant | `,
+| ------- | -------- |
+| zh-hans | zh-hant | `,
     handler,
 };
 

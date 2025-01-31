@@ -15,9 +15,9 @@ export const route: Route = {
     parameters: { lang: '语言，缺省为 zh' },
     name: '香港餐廳精選優惠券',
     description: `
-  | 简体 | 繁體 | EN |
-  | ----- | ------ | ----- |
-  | zh-cn | zh | en |
+| 简体 | 繁體 | EN |
+| ----- | ------ | ----- |
+| zh-cn | zh | en |
   `,
 };
 

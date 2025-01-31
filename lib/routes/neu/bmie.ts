@@ -41,22 +41,22 @@ export const route: Route = {
     maintainers: ['tennousuathena'],
     handler,
     description: `| Id                      | 名称       |
-  | ----------------------- | ---------- |
-  | news                    | 学院新闻   |
-  | academic                | 学术科研   |
-  | talent\_development     | 人才培养   |
-  | international\_exchange | 国际交流   |
-  | announcement            | 通知公告   |
-  | undergraduate\_dev      | 本科生培养 |
-  | postgraduate\_dev       | 研究生培养 |
-  | undergraduate\_recruit  | 本科生招募 |
-  | postgraduate\_recruit   | 研究生招募 |
-  | CPC\_build              | 党的建设   |
-  | CPC\_work               | 党委工作   |
-  | union\_work             | 工会工作   |
-  | CYL\_work               | 共青团工作 |
-  | security\_management    | 安全管理   |
-  | alumni\_style           | 校友风采   |`,
+| ----------------------- | ---------- |
+| news                    | 学院新闻   |
+| academic                | 学术科研   |
+| talent\_development     | 人才培养   |
+| international\_exchange | 国际交流   |
+| announcement            | 通知公告   |
+| undergraduate\_dev      | 本科生培养 |
+| postgraduate\_dev       | 研究生培养 |
+| undergraduate\_recruit  | 本科生招募 |
+| postgraduate\_recruit   | 研究生招募 |
+| CPC\_build              | 党的建设   |
+| CPC\_work               | 党委工作   |
+| union\_work             | 工会工作   |
+| CYL\_work               | 共青团工作 |
+| security\_management    | 安全管理   |
+| alumni\_style           | 校友风采   |`,
 };
 
 async function handler(ctx) {

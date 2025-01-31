@@ -22,14 +22,14 @@ export const route: Route = {
     name: 'Posts',
     maintainers: ['hellodword'],
     description: `| 分类     | 标识       |
-  | :------- | :--------- |
-  | 威胁情报 | \`threaten\` |
-  | 安全动态 | \`security\` |
-  | 漏洞预警 | \`hole\`     |
-  | 数据泄露 | \`leakage\`  |
-  | 专题报告 | \`speech\`   |
-  | 技术分析 | \`skill\`    |
-  | 安全工具 | \`tool\`     |`,
+| :------- | :--------- |
+| 威胁情报 | \`threaten\` |
+| 安全动态 | \`security\` |
+| 漏洞预警 | \`hole\`     |
+| 数据泄露 | \`leakage\`  |
+| 专题报告 | \`speech\`   |
+| 技术分析 | \`skill\`    |
+| 安全工具 | \`tool\`     |`,
     handler,
     radar: [
         {

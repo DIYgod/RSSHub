@@ -39,8 +39,8 @@ export const route: Route = {
     maintainers: ['kukeya'],
     handler,
     description: `| 重要通知 | 管理服务 | 创新实践 | 
-  | -------- | -------- |-------- |
-  | zytz     | glfw     | cxsj    | `,
+| -------- | -------- |-------- |
+| zytz     | glfw     | cxsj    | `,
 };
 
 async function handler(ctx) {

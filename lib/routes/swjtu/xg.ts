@@ -75,9 +75,9 @@ export const route: Route = {
     url: 'xg.swjtu.edu.cn/web/Home/PushNewsList',
     description: `栏目列表：
 
-  | 通知公告 | 扬华新闻 | 多彩学院 | 学工之家 |
-  | -------- | -------- | -------- | -------- |
-  | tzgg     | yhxw     | dcxy     | xgzj     |`,
+| 通知公告 | 扬华新闻 | 多彩学院 | 学工之家 |
+| -------- | -------- | -------- | -------- |
+| tzgg     | yhxw     | dcxy     | xgzj     |`,
 };
 
 async function handler(ctx) {

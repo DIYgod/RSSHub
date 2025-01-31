@@ -22,8 +22,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 浙江日报 | 钱江晚报 | 美术报 | 浙江老年报 | 浙江法制报 | 江南游报 |
-  | -------- | -------- | ------ | ---------- | ---------- | -------- |
-  | zjrb     | qjwb     | msb    | zjlnb      | zjfzb      | jnyb     |`,
+| -------- | -------- | ------ | ---------- | ---------- | -------- |
+| zjrb     | qjwb     | msb    | zjlnb      | zjfzb      | jnyb     |`,
 };
 
 async function handler(ctx) {

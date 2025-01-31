@@ -29,9 +29,9 @@ export const route: Route = {
     handler,
     description: `Category
 
-  | WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
-  | -------- | --------- | --------- | ------- | -- | ------------------ |
-  | mobile   | internet  | boardcast | general | it | industry-resources |
+| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
+| -------- | --------- | --------- | ------- | -- | ------------------ |
+| mobile   | internet  | boardcast | general | it | industry-resources |
 
 ::: tip
   If \`country\` or \`type\` includes empty space, use \`-\` instead. For example, \`United States\` needs to be replaced with \`United-States\`, \`White paper\` needs to be replaced with \`White-paper\`

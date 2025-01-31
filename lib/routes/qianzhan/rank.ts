@@ -29,8 +29,8 @@ export const route: Route = {
     handler,
     url: 'qianzhan.com/analyst',
     description: `| 周排行 | 月排行 |
-  | ------ | ------ |
-  | week   | month  |`,
+| ------ | ------ |
+| week   | month  |`,
 };
 
 async function handler(ctx) {

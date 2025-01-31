@@ -33,8 +33,8 @@ export const route: Route = {
     handler,
     url: 'sensortower.com/blog',
     description: `| English | Chinese | Japanese | Korean |
-  | ------- | ------- | -------- | ------ |
-  |         | zh-CN   | ja       | ko     |`,
+| ------- | ------- | -------- | ------ |
+|         | zh-CN   | ja       | ko     |`,
 };
 
 async function handler(ctx) {
