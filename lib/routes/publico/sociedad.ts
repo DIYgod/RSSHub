@@ -5,9 +5,9 @@ import { load } from 'cheerio';
 import getItems from './items-processor';
 
 export const route: Route = {
-    path: '/politica/:subsection?',
+    path: '/sociedad/:subsection?',
     categories: ['traditional-media'],
-    example: '/politica',
+    example: '/sociedad',
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -18,11 +18,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['publico.es/politica'],
-            target: '/politica',
+            source: ['publico.es/sociedad'],
+            target: '/sociedad',
         },
     ],
-    name: 'Política - Público',
+    name: 'Sociedad - Público',
     maintainers: ['adrianrico97'],
     handler,
 };
@@ -31,7 +31,7 @@ async function handler(ctx) {
     const { subsection } = ctx.req.param();
 
     const rootUrl = 'https://www.publico.es';
-    const currentUrl = subsection ? `${rootUrl}/politica/${subsection}` : `${rootUrl}/politica`;
+    const currentUrl = subsection ? `${rootUrl}/sociedad/${subsection}` : `${rootUrl}/sociedad`;
 
     const response = await got({
         method: 'get',
@@ -40,11 +40,10 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const title = $('.article-section h1').text();
     const items = getItems($);
 
     return {
-        title: `${title} | Público`,
+        title: 'Medio Ambiente | Sociedad | Público',
         link: currentUrl,
         item: items,
     };

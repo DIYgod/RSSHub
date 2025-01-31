@@ -5,9 +5,9 @@ import { load } from 'cheerio';
 import getItems from './items-processor';
 
 export const route: Route = {
-    path: '/opinion/vinetas',
+    path: '/mujer/:subsection?',
     categories: ['traditional-media'],
-    example: '/opinion/vinetas',
+    example: '/mujer',
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -18,18 +18,20 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['publico.es/opinion/vinetas'],
-            target: '/opinion/vinetas',
+            source: ['publico.es/mujer'],
+            target: '/mujer',
         },
     ],
-    name: 'Viñetas | Opinión | Público',
+    name: 'Mujer - Público',
     maintainers: ['adrianrico97'],
     handler,
 };
 
-async function handler() {
+async function handler(ctx) {
+    const { subsection } = ctx.req.param();
+
     const rootUrl = 'https://www.publico.es';
-    const currentUrl = `${rootUrl}/opinion/vinetas`;
+    const currentUrl = subsection ? `${rootUrl}/mujer/${subsection}` : `${rootUrl}/mujer`;
 
     const response = await got({
         method: 'get',
@@ -37,11 +39,11 @@ async function handler() {
     });
 
     const $ = load(response.data);
-
+    const title = $('.article-section h1').text();
     const items = getItems($);
 
     return {
-        title: 'Viñetas | Opinión | Público',
+        title: `${title} | Público`,
         link: currentUrl,
         item: items,
     };
