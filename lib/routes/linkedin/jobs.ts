@@ -63,20 +63,20 @@ export const route: Route = {
 
   #### \`routeParams\` additional query parameters
 
-  ##### \`f_WT\` list
+##### \`f_WT\` list
 
 | Onsite | Remote | Hybrid |
 | ------ | ------- | ------ |
 |    1   |    2    |   3    |
 
-  ##### \`geoId\`
+##### \`geoId\`
 
   Geographic location ID. You can find this ID in the URL of a LinkedIn job search page that is filtered by location.
 
   For example:
   91000012 is the ID of East Asia.
 
-  ##### \`f_TPR\`
+##### \`f_TPR\`
 
   Time posted range. Here are some possible values:
 
