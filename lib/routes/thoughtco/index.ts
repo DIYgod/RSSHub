@@ -27,46 +27,46 @@ export const route: Route = {
     handler,
     description: `#### Science, Tech, Math
 
-  | category         | id                         |
-  | ---------------- | -------------------------- |
-  | Science          | science-4132464            |
-  | Math             | math-4133545               |
-  | Social Sciences  | social-sciences-4133522    |
-  | Computer Science | computer-science-4133486   |
-  | Animals & Nature | animals-and-nature-4133421 |
+| category         | id                         |
+| ---------------- | -------------------------- |
+| Science          | science-4132464            |
+| Math             | math-4133545               |
+| Social Sciences  | social-sciences-4133522    |
+| Computer Science | computer-science-4133486   |
+| Animals & Nature | animals-and-nature-4133421 |
 
   #### Humanities
 
-  | category          | id                          |
-  | ----------------- | --------------------------- |
-  | History & Culture | history-and-culture-4133356 |
-  | Visual Arts       | visual-arts-4132957         |
-  | Literature        | literature-4133251          |
-  | English           | english-4688281             |
-  | Geography         | geography-4133035           |
-  | Philosophy        | philosophy-4133025          |
-  | Issues            | issues-4133022              |
+| category          | id                          |
+| ----------------- | --------------------------- |
+| History & Culture | history-and-culture-4133356 |
+| Visual Arts       | visual-arts-4132957         |
+| Literature        | literature-4133251          |
+| English           | english-4688281             |
+| Geography         | geography-4133035           |
+| Philosophy        | philosophy-4133025          |
+| Issues            | issues-4133022              |
 
   #### Languages
 
-  | category                     | id               |
-  | ---------------------------- | ---------------- |
-  | English as a Second Language | esl-4133095      |
-  | Spanish                      | spanish-4133085  |
-  | French                       | french-4133079   |
-  | German                       | german-4133073   |
-  | Italian                      | italian-4133069  |
-  | Japanese                     | japanese-4133062 |
-  | Mandarin                     | mandarin-4133057 |
-  | Russian                      | russian-4175265  |
+| category                     | id               |
+| ---------------------------- | ---------------- |
+| English as a Second Language | esl-4133095      |
+| Spanish                      | spanish-4133085  |
+| French                       | french-4133079   |
+| German                       | german-4133073   |
+| Italian                      | italian-4133069  |
+| Japanese                     | japanese-4133062 |
+| Mandarin                     | mandarin-4133057 |
+| Russian                      | russian-4175265  |
 
   #### Resources
 
-  | category               | id                           |
-  | ---------------------- | ---------------------------- |
-  | For Students & Parents | for-students-parents-4132588 |
-  | For Educators          | for-educators-4132509        |
-  | For Adult Learners     | for-adult-learners-4132469   |
+| category               | id                           |
+| ---------------------- | ---------------------------- |
+| For Students & Parents | for-students-parents-4132588 |
+| For Educators          | for-educators-4132509        |
+| For Adult Learners     | for-adult-learners-4132469   |
 
   <details>
     <summary>More categories</summary>

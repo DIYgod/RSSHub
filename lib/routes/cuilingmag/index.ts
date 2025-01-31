@@ -144,14 +144,14 @@ export const route: Route = {
   若订阅 [#哲学·文明](https://www.cuilingmag.com/category/philosophy_civilization)，网址为 \`https://www.cuilingmag.com/category/philosophy_civilization\`。截取 \`https://www.cuilingmag.com/category\` 到末尾的部分 \`philosophy_civilization\` 作为参数填入，此时路由为 [\`/cuilingmag/philosophy_civilization\`](https://rsshub.app/cuilingmag/philosophy_civilization)。
 :::
 
-  | 分类                                                                       | ID                                                                                |
-  | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-  | [哲学 · 文明](https://www.cuilingmag.com/category/philosophy_civilization) | [philosophy_civilization](https://rsshub.app/cuilingmag/philosophy_civilization) |
-  | [艺术 · 科技](https://www.cuilingmag.com/category/art_science)             | [art_science](https://rsshub.app/cuilingmag/art_science)                         |
-  | [未来 · 生命](https://www.cuilingmag.com/category/future_life)             | [future_life](https://rsshub.app/cuilingmag/future_life)                         |
-  | [行星智慧](https://www.cuilingmag.com/category/planetary_wisdom)           | [planetary_wisdom](https://rsshub.app/cuilingmag/planetary_wisdom)               |
-  | [数字治理](https://www.cuilingmag.com/category/digital_governance)         | [digital_governance](https://rsshub.app/cuilingmag/digital_governance)           |
-  | [Noema精选](https://www.cuilingmag.com/category/selected_noema)            | [selected_noema](https://rsshub.app/cuilingmag/selected_noema)                   |
+| 分类                                                                       | ID                                                                                |
+| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [哲学 · 文明](https://www.cuilingmag.com/category/philosophy_civilization) | [philosophy_civilization](https://rsshub.app/cuilingmag/philosophy_civilization) |
+| [艺术 · 科技](https://www.cuilingmag.com/category/art_science)             | [art_science](https://rsshub.app/cuilingmag/art_science)                         |
+| [未来 · 生命](https://www.cuilingmag.com/category/future_life)             | [future_life](https://rsshub.app/cuilingmag/future_life)                         |
+| [行星智慧](https://www.cuilingmag.com/category/planetary_wisdom)           | [planetary_wisdom](https://rsshub.app/cuilingmag/planetary_wisdom)               |
+| [数字治理](https://www.cuilingmag.com/category/digital_governance)         | [digital_governance](https://rsshub.app/cuilingmag/digital_governance)           |
+| [Noema精选](https://www.cuilingmag.com/category/selected_noema)            | [selected_noema](https://rsshub.app/cuilingmag/selected_noema)                   |
   `,
     categories: ['new-media'],
 
