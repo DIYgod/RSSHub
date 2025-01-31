@@ -1,6 +1,7 @@
 export default function getItems(data) {
     const items = data('.category-list li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = data(item);
             const title = item.find('h2').text();
             const link = item.find('a').attr('href');
@@ -12,8 +13,7 @@ export default function getItems(data) {
                 link,
                 description: `<img src="${image}" alt="${title}"><p>${author}</p>`,
             };
-        })
-        .get();
+        });
 
     return items;
 }
