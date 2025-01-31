@@ -3,14 +3,14 @@ import { getCurrentPath } from '@/utils/helpers';
 
 import path from 'node:path';
 
-export const __dirname = getCurrentPath(import.meta.url);
+const __dirname = getCurrentPath(import.meta.url);
 
 interface Style {
     [key: string]: string;
 }
 
 interface BlockType {
-    element: string;
+    element: string | undefined;
     parentElement?: string;
     aliasedElements?: string[];
 }
@@ -68,59 +68,31 @@ const BLOCK_TYPES: Readonly<Record<string, BlockType>> = {
     'unordered-list-item': { element: 'li', parentElement: 'ul' },
     'ordered-list-item': { element: 'li', parentElement: 'ol' },
     blockquote: { element: 'blockquote' },
-    atomic: { element: 'figure' },
+    atomic: { element: undefined },
     'code-block': { element: 'pre' },
-    unstyled: { element: 'div', aliasedElements: ['p'] },
+    unstyled: { element: 'p' },
 };
 
 /**
  * Creates a styled HTML fragment for a given text and style object.
- * @param text The text content of the fragment.
- * @param style An object containing CSS styles (key-value pairs).
- * @returns An HTML string representing the styled fragment.
+ * @param text - The text content.
+ * @param style - CSS styles as key-value pairs.
+ * @returns HTML string with applied styles.
  */
-const createStyledFragment = (text: string, style: Record<string, string>): string =>
-    `<span style="${Object.entries(style)
-        .map(([key, value]) => `${key}: ${value};`)
-        .join('')}">${text}</span>`;
-
-/**
- * Applies inline styles to a text string.
- * @param text The text to style.
- * @param inlineStyleRanges An array of inline style ranges.
- * @returns The styled text.
- */
-const applyStyles = (text: string, inlineStyleRanges: readonly InlineStyleRange[]): string => {
-    if (!inlineStyleRanges || inlineStyleRanges.length === 0) {
-        return text;
-    }
-
-    const sortedRanges = [...inlineStyleRanges].sort((a, b) => a.offset - b.offset);
-
-    let lastOffset = 0;
-    const styledFragments = sortedRanges.map((range) => {
-        const style = STYLES[range.style];
-        if (!style) {
-            return text.substring(lastOffset, range.offset);
-        }
-
-        const styledText = createStyledFragment(text.substring(range.offset, range.offset + range.length), style);
-        const preText = text.substring(lastOffset, range.offset);
-        lastOffset = range.offset + range.length;
-        return preText + styledText;
-    });
-    let result = styledFragments.join('');
-    result += text.substring(lastOffset);
-    return result;
+const createStyledFragment = (text: string, style: Readonly<Style>): string => {
+    const styleString = Object.entries(style)
+        .map(([key, value]) => `${key.replaceAll(/([A-Z])/g, '-$1').toLowerCase()}: ${value}`)
+        .join('; ');
+    return `<span style="${styleString}">${text}</span>`;
 };
 
 /**
  * Creates an HTML element for a given entity.
- * @param entity The entity to create an element for.
- * @param block The current block the entity belongs to, for debugging purposes.
- * @returns The HTML element string.
+ * @param entity - The entity to create an element for.
+ * @param text - The text content of the entity.
+ * @returns HTML element string.
  */
-const createEntityElement = (entity: Entity, block: Block): string => {
+const createEntityElement = (entity: Entity, text: string): string => {
     switch (entity.type) {
         case 'EMBED':
             return entity.data.content.startsWith('http') ? `<a href="${entity.data.content}" target="_blank">${entity.data.content}</a>` : entity.data.content;
@@ -136,7 +108,7 @@ const createEntityElement = (entity: Entity, block: Block): string => {
                           },
                       ]
                     : undefined,
-            });
+            }).replaceAll('\n', '');
         case 'GALLERY':
             if (!entity.data.images || !Array.isArray(entity.data.images)) {
                 return '';
@@ -144,13 +116,13 @@ const createEntityElement = (entity: Entity, block: Block): string => {
             return art(path.join(__dirname, 'templates/description.art'), {
                 images: entity.data.images.map((image: any) => ({
                     src: new URL(image.path, imageBaseUrl).href,
-                    alt: image.caption,
+                    alt: image.caption ?? entity.data.caption,
                     width: image.width,
                     height: image.height,
                 })),
-            });
+            }).replaceAll('\n', '');
         case 'LINK':
-            return `<a href="${entity.data.href}" target="_blank">${block.text}</a>`;
+            return `<a href="${entity.data.url}" target="_blank">${text}</a>`;
         case 'WIDGET':
             return `<a href="${entity.data.url}" target="_blank">${entity.data.title}</a>`;
         default:
@@ -159,37 +131,109 @@ const createEntityElement = (entity: Entity, block: Block): string => {
 };
 
 /**
- * Parses a single content block into an HTML string.
- * @param block The block to parse.
- * @param entityMap The entity map.
- * @returns The parsed HTML string.
+ * Parses a block into an HTML string with applied styles and entities.
+ * @param block - The block to parse.
+ * @param entityMap - The entity map.
+ * @returns HTML string representing the block.
  */
-const parseBlock = (block: Block, entityMap: { [key: string]: Entity }): string => {
+const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): string => {
     const blockType = BLOCK_TYPES[block.type];
     if (!blockType) {
         return '';
     }
 
-    const usedElement = blockType.aliasedElements?.[0] ?? blockType.element;
+    const { text, inlineStyleRanges, entityRanges } = block;
 
-    let content = applyStyles(block.text, block.inlineStyleRanges);
+    // Combine and sort ranges
+    const combinedRanges: Array<{
+        offset: number;
+        length: number;
+        styles: Style[];
+        entity: Entity | null;
+    }> = [];
 
-    if (block.entityRanges && block.entityRanges.length > 0) {
-        const entityElements = block.entityRanges
-            .map((range) => entityMap[range.key])
-            .filter(Boolean)
-            .map((entity) => createEntityElement(entity!, block));
-
-        content = entityElements.join('');
+    for (const range of inlineStyleRanges) {
+        combinedRanges.push({
+            ...range,
+            styles: [STYLES[range.style]],
+            entity: null,
+        });
     }
 
-    return `<${usedElement}>${content}</${usedElement}>`;
+    for (const range of entityRanges) {
+        combinedRanges.push({
+            ...range,
+            styles: [],
+            entity: entityMap[range.key],
+        });
+    }
+
+    combinedRanges.sort((a, b) => a.offset - b.offset);
+
+    // Group ranges by offset and length
+    const groupedRangesMap = new Map<string, { offset: number; length: number; styles: Style[]; entities: Entity[] }>();
+    const groupedRanges: { offset: number; length: number; styles: Style[]; entities: Entity[] }[] = [];
+
+    for (const range of combinedRanges) {
+        const rangeKey = `${range.offset}-${range.length}`;
+        let existingRange = groupedRangesMap.get(rangeKey);
+        if (!existingRange) {
+            existingRange = {
+                offset: range.offset,
+                length: range.length,
+                styles: [],
+                entities: [],
+            };
+            groupedRangesMap.set(rangeKey, existingRange);
+            groupedRanges.push(existingRange);
+        }
+
+        if (range.styles.length > 0) {
+            existingRange.styles.push(...range.styles);
+        }
+        if (range.entity) {
+            existingRange.entities.push(range.entity);
+        }
+    }
+
+    // Apply styles and entities
+    const resultParts: string[] = [];
+    let lastOffset = 0;
+
+    for (const range of groupedRanges) {
+        resultParts.push(text.substring(lastOffset, range.offset));
+
+        let styledText = text.substring(range.offset, range.offset + range.length);
+
+        if (range.styles.length > 0) {
+            const combinedStyle: Style = {};
+            for (const style of range.styles) {
+                for (const [key, value] of Object.entries(style)) {
+                    combinedStyle[key] = value;
+                }
+            }
+            styledText = createStyledFragment(styledText, combinedStyle);
+        }
+
+        if (range.entities.length > 0) {
+            for (const entity of range.entities) {
+                styledText = createEntityElement(entity, styledText);
+            }
+        }
+
+        resultParts.push(styledText);
+        lastOffset = range.offset + range.length;
+    }
+
+    resultParts.push(text.substring(lastOffset));
+
+    return `${blockType.element ? `<${blockType.element}>` : ''}${resultParts.join('').replaceAll('\n', '<br>')}${blockType.element ? `</${blockType.element}>` : ''}`;
 };
 
 /**
- * Parses a Content object into an HTML string using a for loop.
- * @param content The Content object to parse.
- * @returns The parsed HTML string.
+ * Parses a Content object into an HTML string.
+ * @param content - The Content object to parse.
+ * @returns HTML string representing the content.
  */
 const parseContent = (content: Content): string => {
     const { blocks, entityMap } = content;
@@ -198,9 +242,9 @@ const parseContent = (content: Content): string => {
         return '';
     }
 
-    let html = '';
+    const htmlParts: string[] = [];
     let currentParent: string | undefined = undefined;
-    let parentContent = '';
+    let parentContent: string[] = [];
 
     for (const block of blocks) {
         const blockType = BLOCK_TYPES[block.type];
@@ -208,34 +252,33 @@ const parseContent = (content: Content): string => {
             continue;
         }
 
-        const parentElement = blockType.parentElement;
         const parsedBlock = parseBlock(block, entityMap);
 
-        if (parentElement) {
-            if (currentParent === parentElement) {
-                parentContent += parsedBlock;
+        if (blockType.parentElement) {
+            if (currentParent === blockType.parentElement) {
+                parentContent.push(parsedBlock);
             } else {
                 if (currentParent) {
-                    html += `<${currentParent}>${parentContent}</${currentParent}>`;
+                    htmlParts.push(`<${currentParent}>${parentContent.join('')}</${currentParent}>`);
                 }
-                currentParent = parentElement;
-                parentContent = parsedBlock;
+                currentParent = blockType.parentElement;
+                parentContent = [parsedBlock];
             }
         } else {
             if (currentParent) {
-                html += `<${currentParent}>${parentContent}</${currentParent}>`;
+                htmlParts.push(`<${currentParent}>${parentContent.join('')}</${currentParent}>`);
                 currentParent = undefined;
-                parentContent = '';
+                parentContent = [];
             }
-            html += parsedBlock;
+            htmlParts.push(parsedBlock);
         }
     }
 
     if (currentParent) {
-        html += `<${currentParent}>${parentContent}</${currentParent}>`;
+        htmlParts.push(`<${currentParent}>${parentContent.join('')}</${currentParent}>`);
     }
 
-    return html;
+    return htmlParts.join('');
 };
 
 export { parseContent };
