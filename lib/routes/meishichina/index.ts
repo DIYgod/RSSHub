@@ -190,8 +190,8 @@ export const route: Route = {
   若订阅 [制作难度简单菜谱](https://home.meishichina.com/recipe-type-do-level-view-1.html)，网址为 \`https://home.meishichina.com/recipe-type-do-level-view-1.html\`。截取 \`https://home.meishichina.com/\` 到末尾 \`.html\` 的部分 \`recipe-type-do-level-view-1\` 作为参数填入，此时路由为 [\`/meishichina/recipe/recipe-type-do-level-view-1/\`](https://rsshub.app/meishichina/recipe/recipe-type-do-level-view-1)。
 :::
 
-  <details>
-    <summary>更多分类</summary>
+<details>
+<summary>更多分类</summary>
 
 #### 常见菜式
 
@@ -449,7 +449,7 @@ export const route: Route = {
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | [recipe-type-do-technics-view-37](https://rsshub.app/meishichina/recipe/recipe-type-do-technics-view-37) | [recipe-type-do-technics-view-38](https://rsshub.app/meishichina/recipe/recipe-type-do-technics-view-38) | [recipe-type-do-technics-view-39](https://rsshub.app/meishichina/recipe/recipe-type-do-technics-view-39) | [recipe-type-do-technics-view-50](https://rsshub.app/meishichina/recipe/recipe-type-do-technics-view-50) |
 
-  </details>
+</details>
   `,
     categories: ['new-media'],
 

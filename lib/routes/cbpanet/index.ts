@@ -93,8 +93,8 @@ export const route: Route = {
   若订阅 [行业资讯](https://www.cbpanet.com/dzp_news.aspx?bigid=2&smallid=11)，网址为 \`https://www.cbpanet.com/dzp_news.aspx?bigid=2&smallid=11\`。截取 \`https://www.cbpanet.com/\` 的 \`bigid\` 和 \`smallid\` 的部分作为参数填入，此时路由为 [\`/cbpanet/dzp_news/4/15\`](https://rsshub.app/cbpanet/dzp_news/4/15)。
 :::
 
-  <details>
-    <summary>更多分类</summary>
+<details>
+<summary>更多分类</summary>
 
 #### [协会](https://www.cbpanet.com/dzp_xiehui.aspx)
 
@@ -142,7 +142,7 @@ export const route: Route = {
 | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | [7/25](https://rsshub.app/cbpanet/dzp_news/7/25)                        | [7/26](https://rsshub.app/cbpanet/dzp_news/7/26)                              | [7/27](https://rsshub.app/cbpanet/dzp_news/7/27)                                  | [7/29](https://rsshub.app/cbpanet/dzp_news/7/29)                      | [7/41](https://rsshub.app/cbpanet/dzp_news/7/41)                    | [7/49](https://rsshub.app/cbpanet/dzp_news/7/49)                    |
 
-  </details>
+</details>
     `,
     categories: ['new-media'],
 

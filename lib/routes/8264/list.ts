@@ -32,7 +32,7 @@ export const route: Route = {
 | 751      | 238      | 204      |
 
 <details>
-  <summary>更多列表</summary>
+<summary>更多列表</summary>
 
 #### 热门推荐
 

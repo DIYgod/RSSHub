@@ -23,7 +23,7 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `<details>
-    <summary>市场公告</summary>
+<summary>市场公告</summary>
 
     外汇市场公告
 
@@ -42,17 +42,17 @@ export const route: Route = {
 | 最新      | 公开市场操作 | 中央国库现金管理 |
 | --------- | ------------ | ---------------- |
 | 2845,2846 | 2845         | 2846             |
-  </details>
+</details>
 
-  <details>
-    <summary>本币市场</summary>
+<details>
+<summary>本币市场</summary>
 
     贷款市场报价利率
 
 | LPR 市场公告 |
 | ------------ |
 | 3686         |
-  </details>`,
+</details>`,
 };
 
 async function handler(ctx) {

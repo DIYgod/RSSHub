@@ -68,8 +68,8 @@ export const route: Route = {
 | For Educators          | for-educators-4132509        |
 | For Adult Learners     | for-adult-learners-4132469   |
 
-  <details>
-    <summary>More categories</summary>
+<details>
+<summary>More categories</summary>
 
 #### Science
 
@@ -319,7 +319,7 @@ export const route: Route = {
 | ----------------------- | ------------------------------- |
 | Tips For Adult Students | tips-for-adult-students-4132468 |
 | Getting Your Ged        | getting-your-ged-4132466        |
-  </details>`,
+</details>`,
 };
 
 async function handler(ctx) {

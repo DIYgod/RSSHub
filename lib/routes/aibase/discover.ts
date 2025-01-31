@@ -90,8 +90,8 @@ export const route: Route = {
   若订阅 [图片背景移除](https://top.aibase.com/discover/37-49)，网址为 \`https://top.aibase.com/discover/37-49\`。截取 \`https://top.aibase.com/discover/\` 到末尾的部分 \`37-49\` 作为参数填入，此时路由为 [\`/aibase/discover/37-49\`](https://rsshub.app/aibase/discover/37-49)。
 :::
 
-  <details>
-    <summary>更多分类</summary>
+<details>
+<summary>更多分类</summary>
 
 #### 图像处理
 
@@ -187,7 +187,7 @@ export const route: Route = {
 | 分类                                            | ID                                                    |
 | ----------------------------------------------- | ----------------------------------------------------- |
 | [法律](https://top.aibase.com/discover/138-139) | [138-139](https://rsshub.app/aibase/discover/138-139) |
-  </details>
+</details>
     `,
     categories: ['new-media', 'popular'],
 

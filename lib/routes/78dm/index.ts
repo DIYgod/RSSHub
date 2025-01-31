@@ -148,8 +148,8 @@ export const route: Route = {
   若订阅 [精彩评测 - 变形金刚](https://www.78dm.net/eval_list/109/0/0/1.html)，网址为 \`https://www.78dm.net/eval_list/109/0/0/1.html\`。截取 \`https://www.78dm.net/\` 到末尾 \`.html\` 的部分 \`eval_list/109/0/0/1\` 作为参数填入，此时路由为 [\`/78dm/eval_list/109/0/0/1\`](https://rsshub.app/78dm/eval_list/109/0/0/1)。
 :::
 
-  <details>
-    <summary>更多分类</summary>
+<details>
+<summary>更多分类</summary>
 
 #### [新品速递](https://www.78dm.net/news)
 
@@ -212,7 +212,7 @@ export const route: Route = {
 | [飞机模型](https://www.78dm.net/ht_list/133/0/0/1.html) | [ht_list/133/0/0/1](https://rsshub.app/78dm/ht_list/133/0/0/1) |
 | [民用模型](https://www.78dm.net/ht_list/134/0/0/1.html) | [ht_list/134/0/0/1](https://rsshub.app/78dm/ht_list/134/0/0/1) |
 | [兵人模型](https://www.78dm.net/ht_list/135/0/0/1.html) | [ht_list/135/0/0/1](https://rsshub.app/78dm/ht_list/135/0/0/1) |
-  </details>
+</details>
   `,
     categories: ['new-media'],
 

@@ -27,7 +27,7 @@ export const route: Route = {
 | 5g   | cj2020 | zzqh2020 | hw2020 |
 
 <details>
-  <summary>更多栏目</summary>
+<summary>更多栏目</summary>
 
 #### 要闻
 

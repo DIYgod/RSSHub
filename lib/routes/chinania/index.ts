@@ -84,8 +84,8 @@ export const route: Route = {
   若订阅 [协会通知](https://www.chinania.org.cn/html/xiehuidongtai/xiehuitongzhi/)，网址为 \`https://www.chinania.org.cn/html/xiehuidongtai/xiehuitongzhi/\`。截取 \`https://www.chinania.org.cn/html\` 到末尾 \`/\` 的部分 \`xiehuidongtai/xiehuitongzhi\` 作为参数填入，此时路由为 [\`/chinania/xiehuidongtai/xiehuitongzhi\`](https://rsshub.app/chinania/xiehuidongtai/xiehuitongzhi)。
 :::
 
-  <details>
-    <summary>更多分类</summary>
+<details>
+<summary>更多分类</summary>
 
 #### [协会动态](https://www.chinania.org.cn/html/xiehuidongtai/)
 
@@ -129,7 +129,7 @@ export const route: Route = {
 | ------------------------------------------------------------------ | -------------------------------------------------------------------- |
 | [hyzl/huiyizhanlan](https://rsshub.app/chinania/hyzl/huiyizhanlan) | [hyzl/huizhanbaodao](https://rsshub.app/chinania/hyzl/huizhanbaodao) |
 
-  </details>
+</details>
     `,
     categories: ['new-media'],
 

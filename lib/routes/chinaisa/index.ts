@@ -29,7 +29,7 @@ export const route: Route = {
 | 图片新闻 | 806254321b2459bddb3c2cb5590fef6332bd849079d3082daf6153d7f8d62e1e |
 
 <details>
-  <summary>更多栏目</summary>
+<summary>更多栏目</summary>
 
 #### 党建工作
 

@@ -56,8 +56,8 @@ export const route: Route = {
   参数 industry 为 \`品牌领域\` 或 \`2\`，参数 label 为 \`互联网经济\` 或 \`1\`，此时路由为 [\`/questmobile/report/品牌领域/互联网经济\`](https://rsshub.app/questmobile/report/品牌领域/互联网经济) 或 [\`/questmobile/report/2/1\`](https://rsshub.app/questmobile/report/2/1)，甚至 [\`/questmobile/report/品牌领域/1\`](https://rsshub.app/questmobile/report/品牌领域/1)。
 :::
 
-  <details>
-    <summary>全部行业和标签</summary>
+<details>
+<summary>全部行业和标签</summary>
 
 #### 行业
 
@@ -154,7 +154,7 @@ export const route: Route = {
 | 智能终端 | 国产终端 | 5G 手机 | 盘点 | 季度报告 |
 | -------- | -------- | ------- | ---- | -------- |
 | 9001     | 9002     | 9003    | 10   | 10001    |
-  </details>`,
+</details>`,
 };
 
 async function handler(ctx) {

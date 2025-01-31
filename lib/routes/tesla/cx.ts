@@ -33,7 +33,7 @@ export const route: Route = {
 :::
 
 <details>
-  <summary>可选城市</summary>
+<summary>可选城市</summary>
 
 | 成都 | 深圳 | 洛阳 | 北京 | 南京 | 绍兴 |
 | ---- | ---- | ---- | ---- | ---- | ---- |

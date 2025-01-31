@@ -88,8 +88,8 @@ export const route: Route = {
   若订阅 [市场信息](http://www.cisia.org/site/term/12.html)，网址为 \`http://www.cisia.org/site/term/12.html\`。截取 \`https://www.cisia.org/site/term/\` 到末尾 \`.html\` 的部分 \`12\` 作为参数填入，此时路由为 [\`/cisia/12\`](https://rsshub.app/cisia/12)。
 :::
 
-  <details>
-    <summary>更多分类</summary>
+<details>
+<summary>更多分类</summary>
 
 #### [分支机构信息](http://www.cisia.org/site/term/14.html)
 
@@ -133,7 +133,7 @@ export const route: Route = {
 | -------------------------------------------------- | -------------------------------------------------- |
 | [35](https://rsshub.app/cisia/35)                  | [68](https://rsshub.app/cisia/68)                  |
 
-  </details>
+</details>
     `,
     categories: ['government'],
 

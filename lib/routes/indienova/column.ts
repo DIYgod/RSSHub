@@ -26,7 +26,7 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `<details>
-    <summary>专题 ID</summary>
+<summary>专题 ID</summary>
 
     游戏推荐
 
@@ -63,7 +63,7 @@ export const route: Route = {
 | Ludum Dare | Global Game Jam |
 | ---------- | --------------- |
 | 31         | 13              |
-  </details>`,
+</details>`,
 };
 
 async function handler(ctx) {

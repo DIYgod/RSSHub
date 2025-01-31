@@ -4,7 +4,7 @@ export const namespace: Namespace = {
     name: '中国人民银行',
     url: 'pbc.gov.cn',
     description: `<details>
-  <summary>*业务咨询* 和 *投诉建议* 可用的站点参数</summary>
+<summary>*业务咨询* 和 *投诉建议* 可用的站点参数</summary>
 
 | 上海市   | 北京市  | 天津市  | 河北省 |
 | -------- | ------- | ------- | ------ |

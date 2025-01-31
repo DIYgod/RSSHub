@@ -112,8 +112,8 @@ export const route: Route = {
 | -------------------------------------------- | -------------------------------------------- | -------------------------------------------- | ---------------------------------------------- |
 | [qkdt](https://rsshub.app/hust/mse/qkdt)     | [xshd](https://rsshub.app/hust/mse/xshd)     | [sstd](https://rsshub.app/hust/mse/sstd)     | [STARfc](https://rsshub.app/hust/mse/STARfc)   |
 
-  <details>
-    <summary>更多分类</summary>
+<details>
+<summary>更多分类</summary>
 
 #### [理论学习](https://mse.hust.edu.cn/llxx1.htm)
 
@@ -199,7 +199,7 @@ export const route: Route = {
 | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
 | [xyzl/xydt](https://rsshub.app/hust/mse/xyzl/xydt) | [xyzl/jcxy](https://rsshub.app/hust/mse/xyzl/jcxy) | [xyzl/xyml](https://rsshub.app/hust/mse/xyzl/xyml) | [xyzl/xyzp](https://rsshub.app/hust/mse/xyzl/xyzp) | [xyzl/fwxy](https://rsshub.app/hust/mse/xyzl/fwxy) | [xyzl/cyxz](https://rsshub.app/hust/mse/xyzl/cyxz) |
 
-  </details>
+</details>
     `,
     categories: ['university'],
 
