@@ -115,13 +115,13 @@ export const route: Route = {
   若订阅 [最新发布](http://www.agri.cn/zx/zxfb/)，网址为 \`http://www.agri.cn/zx/zxfb/\`。截取 \`https://www.agri.cn/\` 到末尾的部分 \`zx/zxfb\` 作为参数填入，此时路由为 [\`/agri/zx/zxfb\`](https://rsshub.app/agri/zx/zxfb)。
 :::
 
-  #### [机构](http://www.agri.cn/jg/)
+#### [机构](http://www.agri.cn/jg/)
 
 | 分类                                    | ID                                         |
 | --------------------------------------- | ------------------------------------------ |
 | [成果展示](http://www.agri.cn/jg/cgzs/) | [jg/cgzs](https://rsshub.app/agri/jg/cgzs) |
 
-  #### [资讯](http://www.agri.cn/zx/)
+#### [资讯](http://www.agri.cn/zx/)
 
 | 分类                                        | ID                                         |
 | ------------------------------------------- | ------------------------------------------ |
@@ -131,7 +131,7 @@ export const route: Route = {
 | [通知公告](http://www.agri.cn/zx/hxgg/)     | [zx/hxgg](https://rsshub.app/agri/zx/hxgg) |
 | [全国信息联播](http://www.agri.cn/zx/xxlb/) | [zx/xxlb](https://rsshub.app/agri/zx/xxlb) |
 
-  #### [生产](http://www.agri.cn/sc/)
+#### [生产](http://www.agri.cn/sc/)
 
 | 分类                                    | ID                                         |
 | --------------------------------------- | ------------------------------------------ |
@@ -141,7 +141,7 @@ export const route: Route = {
 | [农业气象](http://www.agri.cn/sc/nyqx/) | [sc/nyqx](https://rsshub.app/agri/sc/nyqx) |
 | [专项监测](http://www.agri.cn/sc/zxjc/) | [sc/zxjc](https://rsshub.app/agri/sc/zxjc) |
 
-  #### [数据](http://www.agri.cn/sj/)
+#### [数据](http://www.agri.cn/sj/)
 
 | 分类                                    | ID                                         |
 | --------------------------------------- | ------------------------------------------ |
@@ -149,7 +149,7 @@ export const route: Route = {
 | [供需形势](http://www.agri.cn/sj/gxxs/) | [sj/gxxs](https://rsshub.app/agri/sj/gxxs) |
 | [监测预警](http://www.agri.cn/sj/jcyj/) | [sj/jcyj](https://rsshub.app/agri/sj/jcyj) |
 
-  #### [信息化](http://www.agri.cn/xxh/)
+#### [信息化](http://www.agri.cn/xxh/)
 
 | 分类                                           | ID                                               |
 | ---------------------------------------------- | ------------------------------------------------ |
@@ -157,7 +157,7 @@ export const route: Route = {
 | [信息化标准](http://www.agri.cn/xxh/xxhbz/)    | [xxh/xxhbz](https://rsshub.app/agri/xxh/xxhbz)   |
 | [中国乡村资讯](http://www.agri.cn/xxh/zgxczx/) | [xxh/zgxczx](https://rsshub.app/agri/xxh/zgxczx) |
 
-  #### [视频](http://www.agri.cn/video/)
+#### [视频](http://www.agri.cn/video/)
 
 | 分类                                               | ID                                                               |
 | -------------------------------------------------- | ---------------------------------------------------------------- |

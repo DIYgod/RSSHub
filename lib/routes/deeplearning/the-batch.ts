@@ -163,7 +163,7 @@ export const route: Route = {
 | [Hardware](https://www.deeplearning.ai/the-batch/tag/hardware/)        | [hardware](https://rsshub.app/deeplearning/the-batch/hardware)       |
 | [AI Careers](https://www.deeplearning.ai/the-batch/tag/ai-careers/)    | [ai-careers](https://rsshub.app/deeplearning/the-batch/ai-careers)   |
 
-  #### [Letters from Andrew Ng](https://www.deeplearning.ai/the-batch/tag/letters/)
+#### [Letters from Andrew Ng](https://www.deeplearning.ai/the-batch/tag/letters/)
 
 | Tag                                                                                     | ID                                                                                     |
 | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |

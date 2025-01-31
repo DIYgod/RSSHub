@@ -96,7 +96,7 @@ export const route: Route = {
   <details>
     <summary>更多分类</summary>
 
-  #### [协会](https://www.cbpanet.com/dzp_xiehui.aspx)
+#### [协会](https://www.cbpanet.com/dzp_xiehui.aspx)
 
 | [协会介绍](https://www.cbpanet.com/dzp_news.aspx?bigid=1&smallid=1) | [协会章程](https://www.cbpanet.com/dzp_news.aspx?bigid=1&smallid=2) | [理事会](https://www.cbpanet.com/dzp_news.aspx?bigid=1&smallid=3) | [内设机构](https://www.cbpanet.com/dzp_news.aspx?bigid=1&smallid=4) | [协会通知](https://www.cbpanet.com/dzp_news.aspx?bigid=1&smallid=5) | [协会活动](https://www.cbpanet.com/dzp_news.aspx?bigid=1&smallid=6) |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ---------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
@@ -106,37 +106,37 @@ export const route: Route = {
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | [1/7](https://rsshub.app/cbpanet/dzp_news/1/7)                   | [1/30](https://rsshub.app/cbpanet/dzp_news/1/30)                          |
 
-  #### [行业资讯](https://www.cbpanet.com/dzp_news_list.aspx)
+#### [行业资讯](https://www.cbpanet.com/dzp_news_list.aspx)
 
 | [国内资讯](https://www.cbpanet.com/dzp_news.aspx?bigid=2&smallid=8) | [海外资讯](https://www.cbpanet.com/dzp_news.aspx?bigid=2&smallid=9) | [企业新闻](https://www.cbpanet.com/dzp_news.aspx?bigid=2&smallid=10) | [行业资讯](https://www.cbpanet.com/dzp_news.aspx?bigid=2&smallid=11) | [热点聚焦](https://www.cbpanet.com/dzp_news.aspx?bigid=2&smallid=43) | [今日推荐](https://www.cbpanet.com/dzp_news.aspx?bigid=2&smallid=44) |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | [2/8](https://rsshub.app/cbpanet/dzp_news/2/8)                     | [2/9](https://rsshub.app/cbpanet/dzp_news/2/9)                     | [2/10](https://rsshub.app/cbpanet/dzp_news/2/10)                    | [2/11](https://rsshub.app/cbpanet/dzp_news/2/11)                    | [2/43](https://rsshub.app/cbpanet/dzp_news/2/43)                    | [2/44](https://rsshub.app/cbpanet/dzp_news/2/44)                    |
 
-  #### [原料信息](https://www.cbpanet.com/dzp_yuanliao.aspx)
+#### [原料信息](https://www.cbpanet.com/dzp_yuanliao.aspx)
 
 | [价格行情](https://www.cbpanet.com/dzp_news.aspx?bigid=3&smallid=12) | [分析预测](https://www.cbpanet.com/dzp_news.aspx?bigid=3&smallid=13) | [原料信息](https://www.cbpanet.com/dzp_news.aspx?bigid=3&smallid=40) | [热点聚焦](https://www.cbpanet.com/dzp_news.aspx?bigid=3&smallid=45) |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | [3/12](https://rsshub.app/cbpanet/dzp_news/3/12)                    | [3/13](https://rsshub.app/cbpanet/dzp_news/3/13)                    | [3/40](https://rsshub.app/cbpanet/dzp_news/3/40)                    | [3/45](https://rsshub.app/cbpanet/dzp_news/3/45)                    |
 
-  #### [法规标准](https://www.cbpanet.com/dzp_fagui.aspx)
+#### [法规标准](https://www.cbpanet.com/dzp_fagui.aspx)
 
 | [法规资讯](https://www.cbpanet.com/dzp_news.aspx?bigid=4&smallid=15) | [法律法规](https://www.cbpanet.com/dzp_news.aspx?bigid=4&smallid=16) | [国内标准](https://www.cbpanet.com/dzp_news.aspx?bigid=4&smallid=14) | [国外标准](https://www.cbpanet.com/dzp_news.aspx?bigid=4&smallid=17) | [法规聚焦](https://www.cbpanet.com/dzp_news.aspx?bigid=4&smallid=46) | [今日推荐](https://www.cbpanet.com/dzp_news.aspx?bigid=4&smallid=47) |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | [4/15](https://rsshub.app/cbpanet/dzp_news/4/15)                    | [4/16](https://rsshub.app/cbpanet/dzp_news/4/16)                    | [4/14](https://rsshub.app/cbpanet/dzp_news/4/14)                    | [4/17](https://rsshub.app/cbpanet/dzp_news/4/17)                    | [4/46](https://rsshub.app/cbpanet/dzp_news/4/46)                    | [4/47](https://rsshub.app/cbpanet/dzp_news/4/47)                    |
 
-  #### [技术专区](https://www.cbpanet.com/dzp_jishu.aspx)
+#### [技术专区](https://www.cbpanet.com/dzp_jishu.aspx)
 
 | [产品介绍](https://www.cbpanet.com/dzp_news.aspx?bigid=5&smallid=18) | [科技成果](https://www.cbpanet.com/dzp_news.aspx?bigid=5&smallid=19) | [学术论文](https://www.cbpanet.com/dzp_news.aspx?bigid=5&smallid=20) | [资料下载](https://www.cbpanet.com/dzp_news.aspx?bigid=5&smallid=21) | [专家](https://www.cbpanet.com/dzp_news.aspx?bigid=5&smallid=50) | [民间智库](https://www.cbpanet.com/dzp_news.aspx?bigid=5&smallid=57) |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------- |
 | [5/18](https://rsshub.app/cbpanet/dzp_news/5/18)                    | [5/19](https://rsshub.app/cbpanet/dzp_news/5/19)                    | [5/20](https://rsshub.app/cbpanet/dzp_news/5/20)                    | [5/21](https://rsshub.app/cbpanet/dzp_news/5/21)                    | [5/50](https://rsshub.app/cbpanet/dzp_news/5/50)                | [5/57](https://rsshub.app/cbpanet/dzp_news/5/57)                    |
 
-  #### [豆制品消费指南](https://www.cbpanet.com/dzp_zhinan.aspx)
+#### [豆制品消费指南](https://www.cbpanet.com/dzp_zhinan.aspx)
 
 | [膳食指南](https://www.cbpanet.com/dzp_news.aspx?bigid=6&smallid=22) | [营养成分](https://www.cbpanet.com/dzp_news.aspx?bigid=6&smallid=23) | [豆食菜谱](https://www.cbpanet.com/dzp_news.aspx?bigid=6&smallid=24) | [问与答](https://www.cbpanet.com/dzp_news.aspx?bigid=6&smallid=31) | [今日推荐](https://www.cbpanet.com/dzp_news.aspx?bigid=6&smallid=48) | [消费热点](https://www.cbpanet.com/dzp_news.aspx?bigid=6&smallid=53) |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | [6/22](https://rsshub.app/cbpanet/dzp_news/6/22)                    | [6/23](https://rsshub.app/cbpanet/dzp_news/6/23)                    | [6/24](https://rsshub.app/cbpanet/dzp_news/6/24)                    | [6/31](https://rsshub.app/cbpanet/dzp_news/6/31)                  | [6/48](https://rsshub.app/cbpanet/dzp_news/6/48)                    | [6/53](https://rsshub.app/cbpanet/dzp_news/6/53)                    |
 
-  #### [营养与健康](https://www.cbpanet.com/dzp_yingyang.aspx)
+#### [营养与健康](https://www.cbpanet.com/dzp_yingyang.aspx)
 
 | [大豆营养概况](https://www.cbpanet.com/dzp_news.aspx?bigid=7&smallid=25) | [大豆食品和人类健康](https://www.cbpanet.com/dzp_news.aspx?bigid=7&smallid=26) | [世界豆类日，爱豆大行动](https://www.cbpanet.com/dzp_news.aspx?bigid=7&smallid=27) | [谣言粉碎机](https://www.cbpanet.com/dzp_news.aspx?bigid=7&smallid=29) | [最新资讯](https://www.cbpanet.com/dzp_news.aspx?bigid=7&smallid=41) | [专家视点](https://www.cbpanet.com/dzp_news.aspx?bigid=7&smallid=49) |
 | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |

@@ -98,25 +98,25 @@ export const route: Route = {
 | --------------------------------------------------- | --------------------------------------------------- |
 | index/tzgg                                          | index/xwdt                                          |  
 
-  #### [人才培养](https://zhxy.hubu.edu.cn/rcpy.htm)
+#### [人才培养](https://zhxy.hubu.edu.cn/rcpy.htm)
   
 | [人才培养](https://zhxy.hubu.edu.cn/rcpy.htm) | [本科生教育](https://zhxy.hubu.edu.cn/rcpy/bksjy.htm) | [研究生教育](https://zhxy.hubu.edu.cn/rcpy/yjsjy.htm) | [招生与就业](https://zhxy.hubu.edu.cn/rcpy/zsyjy/zsxx.htm) |
 | --------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------- |
 | rcpy                                          | rcpy/bksjy                                            | rcpy/yjsjy                                            | rcpy/zsyjy/zsxx                                            |
   
-  #### [学科建设](https://zhxy.hubu.edu.cn/xkjianshe/zdxk.htm)
+#### [学科建设](https://zhxy.hubu.edu.cn/xkjianshe/zdxk.htm)
   
 | [学科建设](https://zhxy.hubu.edu.cn/xkjianshe/zdxk.htm) | [重点学科](https://zhxy.hubu.edu.cn/xkjianshe/zdxk.htm) | [硕士点](https://zhxy.hubu.edu.cn/xkjianshe/ssd.htm) | [博士点](https://zhxy.hubu.edu.cn/xkjianshe/bsd.htm) |
 | ------------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
 | xkjianshe/zdxk                                          | xkjianshe/zdxk                                          | xkjianshe/ssd                                        | xkjianshe/bsd                                        |
   
-  #### [科研服务](https://zhxy.hubu.edu.cn/kyfw.htm)
+#### [科研服务](https://zhxy.hubu.edu.cn/kyfw.htm)
   
 | [科研服务](https://zhxy.hubu.edu.cn/kyfw.htm) | [科研动态](https://zhxy.hubu.edu.cn/kyfw/kydongt.htm) | [学术交流](https://zhxy.hubu.edu.cn/kyfw/xsjl.htm) | [科研平台](https://zhxy.hubu.edu.cn/kyfw/keyapt.htm) | [社会服务](https://zhxy.hubu.edu.cn/kyfw/shfuw.htm) |
 | --------------------------------------------- | ----------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------- | --------------------------------------------------- |
 | kyfw                                          | kyfw/kydongt                                          | kyfw/xsjl                                          | kyfw/keyapt                                          | kyfw/shfuw                                          |
   
-  #### [党群工作](https://zhxy.hubu.edu.cn/dqgz.htm)
+#### [党群工作](https://zhxy.hubu.edu.cn/dqgz.htm)
   
 | [党群工作](https://zhxy.hubu.edu.cn/dqgz.htm) | [党建工作](https://zhxy.hubu.edu.cn/dqgz/djgz/jgdj.htm) | [工会工作](https://zhxy.hubu.edu.cn/dqgz/ghgon.htm) |
 | --------------------------------------------- | ------------------------------------------------------- | --------------------------------------------------- |

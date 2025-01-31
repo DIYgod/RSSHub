@@ -96,7 +96,7 @@ export const route: Route = {
 | [html/zmhd/lysj/lsjy](https://rsshub.app/gov/lswz/html/zmhd/lysj/lsjy) | [html/zmhd/lysj/lszl](https://rsshub.app/gov/lswz/html/zmhd/lysj/lszl) |
 
 
-  #### [业务频道](https://www.lswz.gov.cn/html/ywpd/index.shtml)
+#### [业务频道](https://www.lswz.gov.cn/html/ywpd/index.shtml)
 
 | [粮食调控](https://www.lswz.gov.cn/html/ywpd/lstk/index.shtml)           | [物资储备](https://www.lswz.gov.cn/html/ywpd/wzcb/index.shtml)           | [能源储备](https://www.lswz.gov.cn/html/ywpd/nycb/index.shtml)           | [安全应急](https://www.lswz.gov.cn/html/ywpd/aqyj/index.shtml)           | [法规体改](https://www.lswz.gov.cn/html/ywpd/fgtg/index.shtml)           |
 | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
@@ -110,25 +110,25 @@ export const route: Route = {
 | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | [html/ywpd/rsrc/index](https://rsshub.app/gov/lswz/html/ywpd/rsrc/index) | [html/ywpd/bzzl/index](https://rsshub.app/gov/lswz/html/ywpd/bzzl/index) | [html/ywpd/lshcbyj/index](https://rsshub.app/gov/lswz/html/ywpd/lshcbyj/index) |
 
-  #### [政策发布](https://www.lswz.gov.cn/html/zcfb/index.shtml)
+#### [政策发布](https://www.lswz.gov.cn/html/zcfb/index.shtml)
 
 | [文件](https://www.lswz.gov.cn/html/zcfb/wenjian.shtml)            | [法律法规](https://www.lswz.gov.cn/html/zcfb/fggz-fg.shtml)        | [规章](https://www.lswz.gov.cn/html/zcfb/fggz-gz.shtml)            |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
 | [html/zcfb/wenjian](https://rsshub.app/gov/lswz/html/zcfb/wenjian) | [html/zcfb/fggz-fg](https://rsshub.app/gov/lswz/html/zcfb/fggz-fg) | [html/zcfb/fggz-gz](https://rsshub.app/gov/lswz/html/zcfb/fggz-gz) |
 
-  #### [通知公告](https://www.lswz.gov.cn/html/tzgg/index.shtml)
+#### [通知公告](https://www.lswz.gov.cn/html/tzgg/index.shtml)
 
 | [行政通知](https://www.lswz.gov.cn/html/tzgg/xztz.shtml)     | [公告通告](https://www.lswz.gov.cn/html/tzgg/ggtg.shtml)     |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [html/tzgg/xztz](https://rsshub.app/gov/lswz/html/tzgg/xztz) | [html/tzgg/ggtg](https://rsshub.app/gov/lswz/html/tzgg/ggtg) |
 
-  #### [粮食收购](https://www.lswz.gov.cn/html/zmhd/lysj/lssg-szym.shtml)
+#### [粮食收购](https://www.lswz.gov.cn/html/zmhd/lysj/lssg-szym.shtml)
 
 | [收购数据](https://www.lswz.gov.cn/html/zmhd/lysj/lssg-szym.shtml)               | [政策·解读](https://www.lswz.gov.cn/html/zmhd/lysj/lssg-gzdt.shtml)              |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | [html/zmhd/lysj/lssg-szym](https://rsshub.app/gov/lswz/html/zmhd/lysj/lssg-szym) | [html/zmhd/lysj/lssg-gzdt](https://rsshub.app/gov/lswz/html/zmhd/lysj/lssg-gzdt) |
 
-  #### [粮食价格](https://www.lswz.gov.cn/html/zmhd/lysj/lsjg-scjc.shtml)
+#### [粮食价格](https://www.lswz.gov.cn/html/zmhd/lysj/lsjg-scjc.shtml)
 
 | [市场监测](https://www.lswz.gov.cn/html/zmhd/lysj/lsjg-scjc.shtml)               | [市场价格](https://www.lswz.gov.cn/html/zmhd/lysj/lsjg-scjg.shtml)               |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |

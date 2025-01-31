@@ -193,7 +193,7 @@ export const route: Route = {
   <details>
     <summary>更多分类</summary>
 
-    #### 常见菜式
+#### 常见菜式
 
 | [热菜](https://home.meishichina.com/recipe/recai/)   | [凉菜](https://home.meishichina.com/recipe/liangcai/)      | [汤羹](https://home.meishichina.com/recipe/tanggeng/)      | [主食](https://home.meishichina.com/recipe/zhushi/)    | [小吃](https://home.meishichina.com/recipe/xiaochi/)     | [家常菜](https://home.meishichina.com/recipe/jiachang/)    |
 | ---------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------- | ---------------------------------------------------------- |
@@ -207,7 +207,7 @@ export const route: Route = {
 | ------------------------------------------------------ | ---------------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------- |
 | [huoguo](https://rsshub.app/meishichina/recipe/huoguo) | [zizhishicai](https://rsshub.app/meishichina/recipe/zizhishicai) | [haixian](https://rsshub.app/meishichina/recipe/haixian) | [yankecai](https://rsshub.app/meishichina/recipe/yankecai) |
 
-    #### 主食/小吃
+#### 主食/小吃
 
 | [米饭](https://home.meishichina.com/recipe/mifan/)   | [炒饭](https://home.meishichina.com/recipe/chaofan/)     | [面食](https://home.meishichina.com/recipe/mianshi/)     | [包子](https://home.meishichina.com/recipe/baozi/)   | [饺子](https://home.meishichina.com/recipe/jiaozi/)    | [馒头花卷](https://home.meishichina.com/recipe/mantou/) |
 | ---------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------- |
@@ -229,7 +229,7 @@ export const route: Route = {
 | ------------------------------------------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------ |
 | [henanxiaochi](https://rsshub.app/meishichina/recipe/henanxiaochi) | [taiwanxiaochi](https://rsshub.app/meishichina/recipe/taiwanxiaochi) | [jiangzhexiaochi](https://rsshub.app/meishichina/recipe/jiangzhexiaochi) | [yunguixiaochi](https://rsshub.app/meishichina/recipe/yunguixiaochi) | [dongbeixiaochi](https://rsshub.app/meishichina/recipe/dongbeixiaochi) | [xibeixiaochi](https://rsshub.app/meishichina/recipe/xibeixiaochi) |
 
-    #### 甜品/饮品
+#### 甜品/饮品
 
 | [甜品](https://home.meishichina.com/recipe/tianpin/)     | [冰品](https://home.meishichina.com/recipe/bingpin/)     | [果汁](https://home.meishichina.com/recipe/guozhi/)    | [糖水](https://home.meishichina.com/recipe/tangshui/)      | [布丁](https://home.meishichina.com/recipe/buding/)    | [果酱](https://home.meishichina.com/recipe/guojiang/)      |
 | -------------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- |
@@ -243,7 +243,7 @@ export const route: Route = {
 | ------------------------------------------------------------ |
 | [bingqilin](https://rsshub.app/meishichina/recipe/bingqilin) |
 
-    #### 适宜人群
+#### 适宜人群
 
 | [孕妇](https://home.meishichina.com/recipe/yunfu/)   | [产妇](https://home.meishichina.com/recipe/chanfu/)    | [婴儿](https://home.meishichina.com/recipe/yinger/)    | [儿童](https://home.meishichina.com/recipe/ertong/)    | [老人](https://home.meishichina.com/recipe/laoren/)    | [幼儿](https://home.meishichina.com/recipe/youer/)   |
 | ---------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ---------------------------------------------------- |
@@ -253,7 +253,7 @@ export const route: Route = {
 | ------------------------------------------------------ | ------------------------------------------------------------------ |
 | [buruqi](https://rsshub.app/meishichina/recipe/buruqi) | [qingshaonian](https://rsshub.app/meishichina/recipe/qingshaonian) |
 
-    #### 食疗食补
+#### 食疗食补
 
 | [健康食谱](https://home.meishichina.com/recipe/jiankangshipu/)       | [减肥瘦身](https://home.meishichina.com/recipe/shoushen/)  | [贫血](https://home.meishichina.com/recipe/pinxue/)    | [痛经](https://home.meishichina.com/recipe/tongjing/)      | [清热祛火](https://home.meishichina.com/recipe/qingrequhuo/)     | [滋阴](https://home.meishichina.com/recipe/ziyin/)   |
 | -------------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------- |
@@ -271,7 +271,7 @@ export const route: Route = {
 | -------------------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
 | [tigaomianyili](https://rsshub.app/meishichina/recipe/tigaomianyili) | [liugan](https://rsshub.app/meishichina/recipe/liugan) | [quhannuanshen](https://rsshub.app/meishichina/recipe/quhannuanshen) | [qiudongjinbu](https://rsshub.app/meishichina/recipe/qiudongjinbu) | [xiaoshujieke](https://rsshub.app/meishichina/recipe/xiaoshujieke) |
 
-    #### 场景
+#### 场景
 
 | [早餐](https://home.meishichina.com/recipe/zaocan/)    | [下午茶](https://home.meishichina.com/recipe/xiawucha/)    | [二人世界](https://home.meishichina.com/recipe/erren/) | [野餐](https://home.meishichina.com/recipe/yecan/)   | [开胃菜](https://home.meishichina.com/recipe/kaiweicai/)     | [私房菜](https://home.meishichina.com/recipe/sifangcai/)     |
 | ------------------------------------------------------ | ---------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -281,7 +281,7 @@ export const route: Route = {
 | -------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------ |
 | [kuaican](https://rsshub.app/meishichina/recipe/kuaican) | [kuaishoucai](https://rsshub.app/meishichina/recipe/kuaishoucai) | [susheshidai](https://rsshub.app/meishichina/recipe/susheshidai) | [zhongshiyanqing](https://rsshub.app/meishichina/recipe/zhongshiyanqing) | [xishiyanqing](https://rsshub.app/meishichina/recipe/xishiyanqing) |
 
-    #### 饮食方式
+#### 饮食方式
 
 | [素食](https://home.meishichina.com/recipe/sushi/)   | [素菜](https://home.meishichina.com/recipe/sucai2/)    | [清真菜](https://home.meishichina.com/recipe/qingzhencai/)       | [春季食谱](https://home.meishichina.com/recipe/chunji/) | [夏季食谱](https://home.meishichina.com/recipe/xiaji/) | [秋季食谱](https://home.meishichina.com/recipe/qiuji/) |
 | ---------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------ |
@@ -291,7 +291,7 @@ export const route: Route = {
 | ------------------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------ |
 | [dongji](https://rsshub.app/meishichina/recipe/dongji)  | [xiaoqingxin](https://rsshub.app/meishichina/recipe/xiaoqingxin) | [gaoyanzhi](https://rsshub.app/meishichina/recipe/gaoyanzhi) |
 
-    #### 中式菜系
+#### 中式菜系
 
 | [川菜](https://home.meishichina.com/recipe/chuancai/)      | [鲁菜](https://home.meishichina.com/recipe/lucai/)   | [闽菜](https://home.meishichina.com/recipe/mincai/)    | [粤菜](https://home.meishichina.com/recipe/yuecai/)    | [苏菜](https://home.meishichina.com/recipe/sucai/)   | [浙菜](https://home.meishichina.com/recipe/zhecai/)    |
 | ---------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------ |
@@ -313,7 +313,7 @@ export const route: Route = {
 | -------------------------------------------------------------------- |
 | [zhongshicaixi](https://rsshub.app/meishichina/recipe/zhongshicaixi) |
 
-    #### 外国美食
+#### 外国美食
 
 | [日本料理](https://home.meishichina.com/recipe/ribencai/)  | [韩国料理](https://home.meishichina.com/recipe/hanguocai/)   | [泰国菜](https://home.meishichina.com/recipe/taiguocai/)     | [印度菜](https://home.meishichina.com/recipe/yiducai/)   | [法国菜](https://home.meishichina.com/recipe/faguocai/)    | [意大利菜](https://home.meishichina.com/recipe/yidalicai/)   |
 | ---------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
@@ -323,7 +323,7 @@ export const route: Route = {
 | -------------------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------------ |
 | [xibanya](https://rsshub.app/meishichina/recipe/xibanya) | [yingguocai](https://rsshub.app/meishichina/recipe/yingguocai) | [yuenancai](https://rsshub.app/meishichina/recipe/yuenancai) | [moxigecai](https://rsshub.app/meishichina/recipe/moxigecai) | [waiguomeishi](https://rsshub.app/meishichina/recipe/waiguomeishi) |
 
-    #### 烘焙
+#### 烘焙
 
 | [蛋糕](https://home.meishichina.com/recipe/dangao/)    | [面包](https://home.meishichina.com/recipe/mianbao/)     | [饼干](https://home.meishichina.com/recipe/binggan/)     | [派塔](https://home.meishichina.com/recipe/paita/)   | [吐司](https://home.meishichina.com/recipe/tusi/)  | [戚风蛋糕](https://home.meishichina.com/recipe/qifeng/) |
 | ------------------------------------------------------ | -------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------- |
@@ -337,7 +337,7 @@ export const route: Route = {
 | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------- |
 | [pisa](https://rsshub.app/meishichina/recipe/pisa) | [musi](https://rsshub.app/meishichina/recipe/musi) | [quqi](https://rsshub.app/meishichina/recipe/quqi) | [fantang](https://rsshub.app/meishichina/recipe/fantang) |
 
-    #### 传统美食
+#### 传统美食
 
 | [粽子](https://home.meishichina.com/recipe/zongzi/)    | [月饼](https://home.meishichina.com/recipe/yuebing/)     | [春饼](https://home.meishichina.com/recipe/chunbing/)      | [元宵](https://home.meishichina.com/recipe/yuanxiao/)      | [汤圆](https://home.meishichina.com/recipe/tangyuan/)      | [青团](https://home.meishichina.com/recipe/qingtuan/)      |
 | ------------------------------------------------------ | -------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
@@ -347,7 +347,7 @@ export const route: Route = {
 | ---------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------ |
 | [labazhou](https://rsshub.app/meishichina/recipe/labazhou) | [chunjuan](https://rsshub.app/meishichina/recipe/chunjuan) | [chuantongmeishi](https://rsshub.app/meishichina/recipe/chuantongmeishi) |
 
-    #### 节日食俗
+#### 节日食俗
 
 | [立冬](https://home.meishichina.com/recipe/lidong/)    | [冬至](https://home.meishichina.com/recipe/dongzhi/)     | [腊八](https://home.meishichina.com/recipe/laba/)  | [端午节](https://home.meishichina.com/recipe/duanwu/)  | [中秋](https://home.meishichina.com/recipe/zhongqiu/)      | [立春](https://home.meishichina.com/recipe/lichun/)    |
 | ------------------------------------------------------ | -------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- | ------------------------------------------------------ |
@@ -377,13 +377,13 @@ export const route: Route = {
 | ---------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------ |
 | [muqinjie](https://rsshub.app/meishichina/recipe/muqinjie) | [fuqinjie](https://rsshub.app/meishichina/recipe/fuqinjie) | [ertongjie](https://rsshub.app/meishichina/recipe/ertongjie) | [qixi](https://rsshub.app/meishichina/recipe/qixi) | [chongyangjie](https://rsshub.app/meishichina/recipe/chongyangjie) | [jierixisu](https://rsshub.app/meishichina/recipe/jierixisu) |
 
-    #### 按制作难度
+#### 按制作难度
 
 | [简单](https://home.meishichina.com/recipe-type-do-level-view-1.html)                            | [普通](https://home.meishichina.com/recipe-type-do-level-view-2.html)                            | [高级](https://home.meishichina.com/recipe-type-do-level-view-3.html)                            | [神级](https://home.meishichina.com/recipe-type-do-level-view-4.html)                            |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
 | [recipe-type-do-level-view-1](https://rsshub.app/meishichina/recipe/recipe-type-do-level-view-1) | [recipe-type-do-level-view-2](https://rsshub.app/meishichina/recipe/recipe-type-do-level-view-2) | [recipe-type-do-level-view-3](https://rsshub.app/meishichina/recipe/recipe-type-do-level-view-3) | [recipe-type-do-level-view-4](https://rsshub.app/meishichina/recipe/recipe-type-do-level-view-4) |
 
-    #### 按所需时间
+#### 按所需时间
 
 | [十分钟](https://home.meishichina.com/recipe-type-do-during-view-1.html)                           | [廿分钟](https://home.meishichina.com/recipe-type-do-during-view-2.html)                           | [半小时](https://home.meishichina.com/recipe-type-do-during-view-3.html)                           | [三刻钟](https://home.meishichina.com/recipe-type-do-during-view-4.html)                           | [一小时](https://home.meishichina.com/recipe-type-do-during-view-5.html)                           | [数小时](https://home.meishichina.com/recipe-type-do-during-view-6.html)                           |
 | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
@@ -393,7 +393,7 @@ export const route: Route = {
 | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | [recipe-type-do-during-view-7](https://rsshub.app/meishichina/recipe/recipe-type-do-during-view-7) | [recipe-type-do-during-view-8](https://rsshub.app/meishichina/recipe/recipe-type-do-during-view-8) |
 
-    #### 按菜品口味
+#### 按菜品口味
 
 | [微辣](https://home.meishichina.com/recipe-type-do-cuisine-view-1.html)                              | [中辣](https://home.meishichina.com/recipe-type-do-cuisine-view-2.html)                              | [超辣](https://home.meishichina.com/recipe-type-do-cuisine-view-3.html)                              | [麻辣](https://home.meishichina.com/recipe-type-do-cuisine-view-4.html)                              | [酸辣](https://home.meishichina.com/recipe-type-do-cuisine-view-5.html)                              | [甜辣](https://home.meishichina.com/recipe-type-do-cuisine-view-29.html)                               |
 | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -419,7 +419,7 @@ export const route: Route = {
 | ------------------------------------------------------------------------------------------------------ |
 | [recipe-type-do-cuisine-view-50](https://rsshub.app/meishichina/recipe/recipe-type-do-cuisine-view-50) |
 
-    #### 按主要工艺
+#### 按主要工艺
 
 | [烧](https://home.meishichina.com/recipe-type-do-technics-view-1.html)                                 | [炒](https://home.meishichina.com/recipe-type-do-technics-view-2.html)                                 | [爆](https://home.meishichina.com/recipe-type-do-technics-view-3.html)                                 | [焖](https://home.meishichina.com/recipe-type-do-technics-view-4.html)                                 | [炖](https://home.meishichina.com/recipe-type-do-technics-view-5.html)                                 | [蒸](https://home.meishichina.com/recipe-type-do-technics-view-6.html)                                 |
 | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |

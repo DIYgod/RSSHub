@@ -127,7 +127,7 @@ export const route: Route = {
   If you subscribe to [Latest News](https://www.accessbriefing.com/latest/news)，where the URL is \`https://www.accessbriefing.com/latest/news\`, extract the part \`https://www.accessbriefing.com/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/accessbriefing/latest/news\`](https://rsshub.app/accessbriefing/latest/news).
 :::
 
-  #### Latest
+#### Latest
 
 | Category                                                                               | ID                                                                                              |
 | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
@@ -139,7 +139,7 @@ export const route: Route = {
 | [Finance](https://www.accessbriefing.com/latest/finance)                               | [latest/finance](https://rsshub.app/target/site/latest/finance)                                 |
 | [Sustainability](https://www.accessbriefing.com/latest/sustainability)                 | [latest/sustainability](https://rsshub.app/target/site/latest/sustainability)                   |
 
-  #### Insight
+#### Insight
 
 | Category                                                                          | ID                                                                                        |
 | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |

@@ -35,7 +35,7 @@ export const route: Route = {
 | Computer Science | computer-science-4133486   |
 | Animals & Nature | animals-and-nature-4133421 |
 
-  #### Humanities
+#### Humanities
 
 | category          | id                          |
 | ----------------- | --------------------------- |
@@ -47,7 +47,7 @@ export const route: Route = {
 | Philosophy        | philosophy-4133025          |
 | Issues            | issues-4133022              |
 
-  #### Languages
+#### Languages
 
 | category                     | id               |
 | ---------------------------- | ---------------- |
@@ -60,7 +60,7 @@ export const route: Route = {
 | Mandarin                     | mandarin-4133057 |
 | Russian                      | russian-4175265  |
 
-  #### Resources
+#### Resources
 
 | category               | id                           |
 | ---------------------- | ---------------------------- |
@@ -71,7 +71,7 @@ export const route: Route = {
   <details>
     <summary>More categories</summary>
 
-    #### Science
+#### Science
 
 | category          | id                          |
 | ----------------- | --------------------------- |
@@ -82,7 +82,7 @@ export const route: Route = {
 | Astronomy         | astronomy-4133558           |
 | Weather & Climate | weather-and-climate-4133550 |
 
-    #### Math
+#### Math
 
 | category              | id                              |
 | --------------------- | ------------------------------- |
@@ -95,7 +95,7 @@ export const route: Route = {
 | Worksheets By Grade   | worksheets-by-grade-4133526     |
 | Resources             | math-resources-4133523          |
 
-    #### Social Sciences
+#### Social Sciences
 
 | category    | id                  |
 | ----------- | ------------------- |
@@ -105,7 +105,7 @@ export const route: Route = {
 | Economics   | economics-4133521   |
 | Ergonomics  | ergonomics-4133492  |
 
-    #### Computer Science
+#### Computer Science
 
 | category               | id                               |
 | ---------------------- | -------------------------------- |
@@ -119,7 +119,7 @@ export const route: Route = {
 | Ruby Programming       | ruby-programming-4133469         |
 | Visual Basic           | visual-basic-4133468             |
 
-    #### Animals and Nature
+#### Animals and Nature
 
 | category         | id                       |
 | ---------------- | ------------------------ |
@@ -134,7 +134,7 @@ export const route: Route = {
 | Dinosaurs        | dinosaurs-4133376        |
 | Evolution        | evolution-4133366        |
 
-    #### History and Culture
+#### History and Culture
 
 | category                       | id                                       |
 | ------------------------------ | ---------------------------------------- |
@@ -152,14 +152,14 @@ export const route: Route = {
 | The 20th Century               | 20th-century-4133273                     |
 | Women's History                | womens-history-4133260                   |
 
-    #### Visual Arts
+#### Visual Arts
 
 | category      | id                   |
 | ------------- | -------------------- |
 | Art & Artists | art-4132956          |
 | Architecture  | architecture-4132953 |
 
-    #### Literature
+#### Literature
 
 | category           | id                         |
 | ------------------ | -------------------------- |
@@ -172,14 +172,14 @@ export const route: Route = {
 | Short Stories      | short-stories-4133217      |
 | Children's Books   | childrens-books-4133216    |
 
-    #### English
+#### English
 
 | category        | id                      |
 | --------------- | ----------------------- |
 | English Grammar | english-grammar-4133049 |
 | Writing         | writing-4133048         |
 
-    #### Geography
+#### Geography
 
 | category                 | id                                 |
 | ------------------------ | ---------------------------------- |
@@ -192,14 +192,14 @@ export const route: Route = {
 | Maps                     | maps-4133027                       |
 | Urban Geography          | urban-geography-4133026            |
 
-    #### Philosophy
+#### Philosophy
 
 | category                       | id                                       |
 | ------------------------------ | ---------------------------------------- |
 | Philosophical Theories & Ideas | philosophical-theories-and-ideas-4133024 |
 | Major Philosophers             | major-philosophers-4133023               |
 
-    #### Issues
+#### Issues
 
 | category                          | id                               |
 | --------------------------------- | -------------------------------- |
@@ -216,7 +216,7 @@ export const route: Route = {
 | Canadian Government               | canadian-government-4132959      |
 | Understanding Types of Government | types-of-government-5179107      |
 
-    #### English as a Second Language
+#### English as a Second Language
 
 | category                     | id                                         |
 | ---------------------------- | ------------------------------------------ |
@@ -228,7 +228,7 @@ export const route: Route = {
 | Business English             | esl-business-english-4133088               |
 | Resources for Teachers       | resources-for-esl-teachers-4133087         |
 
-    #### Spanish
+#### Spanish
 
 | category          | id                                  |
 | ----------------- | ----------------------------------- |
@@ -238,7 +238,7 @@ export const route: Route = {
 | Writing Skills    | spanish-writing-skills-4133081      |
 | Grammar           | spanish-grammar-4133080             |
 
-    #### French
+#### French
 
 | category                     | id                                           |
 | ---------------------------- | -------------------------------------------- |
@@ -247,7 +247,7 @@ export const route: Route = {
 | Grammar                      | french-grammar-4133074                       |
 | Resources For Teachers       | french-resources-for-french-teachers-4133077 |
 
-    #### German
+#### German
 
 | category                     | id                                 |
 | ---------------------------- | ---------------------------------- |
@@ -256,7 +256,7 @@ export const route: Route = {
 | Vocabulary                   | german-vocabulary-4133068          |
 | Grammar                      | german-grammar-4133067             |
 
-    #### Italian
+#### Italian
 
 | category          | id                                  |
 | ----------------- | ----------------------------------- |
@@ -264,7 +264,7 @@ export const route: Route = {
 | Vocabulary        | italian-vocabulary-4133061          |
 | Grammar           | italian-grammar-4133063             |
 
-    #### Japanese
+#### Japanese
 
 | category                      | id                                   |
 | ----------------------------- | ------------------------------------ |
@@ -272,7 +272,7 @@ export const route: Route = {
 | Essential Japanese Vocabulary | japanese-vocabulary-4133060          |
 | Japanese Grammar              | japanese-grammar-4133056             |
 
-    #### Mandarin
+#### Mandarin
 
 | category                         | id                                       |
 | -------------------------------- | ---------------------------------------- |
@@ -281,13 +281,13 @@ export const route: Route = {
 | Vocabulary                       | mandarin-vocabulary-4133052              |
 | Understanding Chinese Characters | understanding-chinese-characters-4133051 |
 
-    #### Russian
+#### Russian
 
 | category | id              |
 | -------- | --------------- |
 | Russian  | russian-4175265 |
 
-    #### For Students & Parents
+#### For Students & Parents
 
 | category           | id                         |
 | ------------------ | -------------------------- |
@@ -301,7 +301,7 @@ export const route: Route = {
 | Law School         | law-school-4132527         |
 | Distance Learning  | distance-learning-4132521  |
 
-    #### For Educators
+#### For Educators
 
 | category             | id                            |
 | -------------------- | ----------------------------- |
@@ -313,7 +313,7 @@ export const route: Route = {
 | Teaching             | teaching-4132488              |
 | Homeschooling        | homeschooling-4132480         |
 
-    #### For Adult Learners
+#### For Adult Learners
 
 | category                | id                              |
 | ----------------------- | ------------------------------- |

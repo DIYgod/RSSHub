@@ -130,13 +130,13 @@ export const route: Route = {
   若订阅 [Android - 423Down](https://www.423down.com/apk)，网址为 \`https://www.423down.com/apk\`。截取 \`https://www.423down.com/\` 到末尾的部分 \`apk\` 作为参数填入，此时路由为 [\`/423down/apk\`](https://rsshub.app/423down/apk)。
 :::
 
-  #### [安卓软件](https://www.423down.com/apk)
+#### [安卓软件](https://www.423down.com/apk)
 
 | [安卓软件](https://www.423down.com/apk) |
 | --------------------------------------- |
 | [apk](https://rsshub.app/423down/apk)   |
   
-  #### 电脑软件
+#### 电脑软件
   
 | [原创软件](https://www.423down.com/zd423) | [媒体播放](https://www.423down.com/multimedia)      | [网页浏览](https://www.423down.com/browser)   | [图形图像](https://www.423down.com/image) | [聊天软件](https://www.423down.com/im) |
 | ----------------------------------------- | --------------------------------------------------- | --------------------------------------------- | ----------------------------------------- | -------------------------------------- |
@@ -150,7 +150,7 @@ export const route: Route = {
 | ----------------------------------------------- | ----------------------------------------- | ----------------------------------------------- |
 | [security](https://rsshub.app/423down/security) | [patch](https://rsshub.app/423down/patch) | [hardware](https://rsshub.app/423down/hardware) |
   
-  #### 操作系统
+#### 操作系统
   
 | [Windows 11](https://www.423down.com/win11) | [Windows 10](https://www.423down.com/win10) | [Windows 7](https://www.423down.com/win7) | [Windows XP](https://www.423down.com/win7/winxp)    | [WinPE](https://www.423down.com/pe-system)        |
 | ------------------------------------------- | ------------------------------------------- | ----------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |

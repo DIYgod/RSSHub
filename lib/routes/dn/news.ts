@@ -32,7 +32,7 @@ export const route: Route = {
 | ------- | ----- |
 | en-us   | zh-cn |
 
-  #### Category
+#### Category
 
 | English Category     | 中文分类 | Category id |
 | -------------------- | -------- | ----------- |

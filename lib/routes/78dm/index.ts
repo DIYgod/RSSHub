@@ -151,7 +151,7 @@ export const route: Route = {
   <details>
     <summary>更多分类</summary>
 
-    #### [新品速递](https://www.78dm.net/news)
+#### [新品速递](https://www.78dm.net/news)
 
 | 分类                                                           | ID                                                                     |
 | -------------------------------------------------------------- | ---------------------------------------------------------------------- |
@@ -174,7 +174,7 @@ export const route: Route = {
 | [配件](https://www.78dm.net/news/0/12/0/0/0/0/0/1.html)        | [news/0/12/0/0/0/0/0/1](https://rsshub.app/78dm/news/0/12/0/0/0/0/0/1) |
 | [工具](https://www.78dm.net/news/0/13/0/0/0/0/0/1.html)        | [news/0/13/0/0/0/0/0/1](https://rsshub.app/78dm/news/0/13/0/0/0/0/0/1) |
 
-    #### [精彩评测](https://www.78dm.net/eval_list)
+#### [精彩评测](https://www.78dm.net/eval_list)
 
 | 分类                                                      | ID                                                                 |
 | --------------------------------------------------------- | ------------------------------------------------------------------ |
@@ -191,7 +191,7 @@ export const route: Route = {
 | [GK](https://www.78dm.net/eval_list/118/0/0/1.html)       | [eval_list/118/0/0/1](https://rsshub.app/78dm/eval_list/118/0/0/1) |
 | [综合](https://www.78dm.net/eval_list/120/0/0/1.html)     | [eval_list/120/0/0/1](https://rsshub.app/78dm/eval_list/120/0/0/1) |
 
-    #### [好贴推荐](https://www.78dm.net/ht_list)
+#### [好贴推荐](https://www.78dm.net/ht_list)
 
 | 分类                                                    | ID                                                             |
 | ------------------------------------------------------- | -------------------------------------------------------------- |

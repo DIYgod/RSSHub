@@ -121,7 +121,7 @@ export const route: Route = {
 | [党建工作](http://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=7)       | [7](https://rsshub.app/ccfa/7)         |
 | [新消费论坛](http://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=10005) | [10005](https://rsshub.app/ccfa/10005) |
 
-  #### [政策/报告/标准](http://www.ccfa.org.cn/portal/cn/hybz_list.jsp?type=33)
+#### [政策/报告/标准](http://www.ccfa.org.cn/portal/cn/hybz_list.jsp?type=33)
 
 | 分类                                                                            | ID                               |
 | ------------------------------------------------------------------------------- | -------------------------------- |

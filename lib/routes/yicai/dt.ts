@@ -44,7 +44,7 @@ export const route: Route = {
 | 大公司   | article/36 |
 | 城市生活 | article/38 |
 
-  #### [报告](https://dt.yicai.com/report)
+#### [报告](https://dt.yicai.com/report)
 
 | 分类       | ID        |
 | ---------- | --------- |
@@ -60,7 +60,7 @@ export const route: Route = {
 | 消费趋势   | report/30 |
 | 生活趋势   | report/37 |
 
-  #### [可视化](https://dt.yicai.com/visualization)
+#### [可视化](https://dt.yicai.com/visualization)
 
 | 分类     | ID               |
 | -------- | ---------------- |

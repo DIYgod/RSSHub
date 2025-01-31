@@ -93,7 +93,7 @@ export const route: Route = {
   <details>
     <summary>更多分类</summary>
 
-  #### 图像处理
+#### 图像处理
 
 | 分类                                                  | ID                                                |
 | ----------------------------------------------------- | ------------------------------------------------- |
@@ -107,7 +107,7 @@ export const route: Route = {
 | [电商图片制作](https://top.aibase.com/discover/37-83) | [37-83](https://rsshub.app/aibase/discover/37-83) |
 | [Ai图像转视频](https://top.aibase.com/discover/37-86) | [37-86](https://rsshub.app/aibase/discover/37-86) |
 
-  #### 视频创作
+#### 视频创作
 
 | 分类                                                | ID                                                |
 | --------------------------------------------------- | ------------------------------------------------- |
@@ -116,7 +116,7 @@ export const route: Route = {
 | [Ai动画制作](https://top.aibase.com/discover/38-58) | [38-58](https://rsshub.app/aibase/discover/38-58) |
 | [字幕生成](https://top.aibase.com/discover/38-84)   | [38-84](https://rsshub.app/aibase/discover/38-84) |
 
-  #### 效率助手
+#### 效率助手
 
 | 分类                                                | ID                                                |
 | --------------------------------------------------- | ------------------------------------------------- |
@@ -126,14 +126,14 @@ export const route: Route = {
 | [表格处理](https://top.aibase.com/discover/39-62)   | [39-62](https://rsshub.app/aibase/discover/39-62) |
 | [Ai办公助手](https://top.aibase.com/discover/39-63) | [39-63](https://rsshub.app/aibase/discover/39-63) |
 
-  #### 写作灵感
+#### 写作灵感
 
 | 分类                                              | ID                                                |
 | ------------------------------------------------- | ------------------------------------------------- |
 | [文案写作](https://top.aibase.com/discover/40-64) | [40-64](https://rsshub.app/aibase/discover/40-64) |
 | [论文写作](https://top.aibase.com/discover/40-88) | [40-88](https://rsshub.app/aibase/discover/40-88) |
 
-  #### 艺术灵感
+#### 艺术灵感
 
 | 分类                                                | ID                                                |
 | --------------------------------------------------- | ------------------------------------------------- |
@@ -141,7 +141,7 @@ export const route: Route = {
 | [设计创作](https://top.aibase.com/discover/41-66)   | [41-66](https://rsshub.app/aibase/discover/41-66) |
 | [Ai图标生成](https://top.aibase.com/discover/41-67) | [41-67](https://rsshub.app/aibase/discover/41-67) |
 
-  #### 趣味
+#### 趣味
 
 | 分类                                                  | ID                                                |
 | ----------------------------------------------------- | ------------------------------------------------- |
@@ -149,7 +149,7 @@ export const route: Route = {
 | [游戏娱乐](https://top.aibase.com/discover/42-71)     | [42-71](https://rsshub.app/aibase/discover/42-71) |
 | [其他](https://top.aibase.com/discover/42-72)         | [42-72](https://rsshub.app/aibase/discover/42-72) |
 
-  #### 开发编程
+#### 开发编程
 
 | 分类                                                | ID                                                |
 | --------------------------------------------------- | ------------------------------------------------- |
@@ -157,32 +157,32 @@ export const route: Route = {
 | [Ai开放平台](https://top.aibase.com/discover/43-74) | [43-74](https://rsshub.app/aibase/discover/43-74) |
 | [Ai算力平台](https://top.aibase.com/discover/43-75) | [43-75](https://rsshub.app/aibase/discover/43-75) |
 
-  #### 聊天机器人
+#### 聊天机器人
 
 | 分类                                              | ID                                                |
 | ------------------------------------------------- | ------------------------------------------------- |
 | [智能聊天](https://top.aibase.com/discover/44-76) | [44-76](https://rsshub.app/aibase/discover/44-76) |
 | [智能客服](https://top.aibase.com/discover/44-77) | [44-77](https://rsshub.app/aibase/discover/44-77) |
 
-  #### 翻译
+#### 翻译
 
 | 分类                                          | ID                                                |
 | --------------------------------------------- | ------------------------------------------------- |
 | [翻译](https://top.aibase.com/discover/46-79) | [46-79](https://rsshub.app/aibase/discover/46-79) |
 
-  #### 教育学习
+#### 教育学习
 
 | 分类                                              | ID                                                |
 | ------------------------------------------------- | ------------------------------------------------- |
 | [教育学习](https://top.aibase.com/discover/47-80) | [47-80](https://rsshub.app/aibase/discover/47-80) |
 
-  #### 智能营销
+#### 智能营销
 
 | 分类                                              | ID                                                |
 | ------------------------------------------------- | ------------------------------------------------- |
 | [智能营销](https://top.aibase.com/discover/48-81) | [48-81](https://rsshub.app/aibase/discover/48-81) |
 
-  #### 法律
+#### 法律
 
 | 分类                                            | ID                                                    |
 | ----------------------------------------------- | ----------------------------------------------------- |

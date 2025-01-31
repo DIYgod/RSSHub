@@ -89,7 +89,7 @@ export const route: Route = {
   若订阅 [行政处罚决定](http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml)，网址为 \`http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml\`。截取 \`http://www.csrc.gov.cn/csrc/\` 到末尾 \`/zfxxgk_zdgk.shtml\` 的部分 \`c101971\` 作为参数填入，此时路由为 [\`/gov/csrc/zfxxgk_zdgk/c101971\`](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101971)。
 :::
 
-  #### [主动公开目录](http://www.csrc.gov.cn/csrc/c100035/zfxxgk_zdgk.shtml)
+#### [主动公开目录](http://www.csrc.gov.cn/csrc/c100035/zfxxgk_zdgk.shtml)
 
 | 频道                                                                    | ID                                                         |
 | ----------------------------------------------------------------------- | ---------------------------------------------------------- |
@@ -100,7 +100,7 @@ export const route: Route = {
   <details>
     <summary>更多频道</summary>
 
-  #### [按主题查看](http://www.csrc.gov.cn/csrc/c101793/zfxxgk_zdgk.shtml)
+#### [按主题查看](http://www.csrc.gov.cn/csrc/c101793/zfxxgk_zdgk.shtml)
 
 | 频道                                                                              | ID                                                         |
 | --------------------------------------------------------------------------------- | ---------------------------------------------------------- |
@@ -121,7 +121,7 @@ export const route: Route = {
 | [证券服务机构监管](http://www.csrc.gov.cn/csrc/c105939/zfxxgk_zdgk.shtml)         | [c105939](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c105939) |
 | [其他](http://www.csrc.gov.cn/csrc/c101950/zfxxgk_zdgk.shtml)                     | [c101950](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101950) |
 
-  #### [按体裁文种查看](http://www.csrc.gov.cn/csrc/c101951/zfxxgk_zdgk.shtml)
+#### [按体裁文种查看](http://www.csrc.gov.cn/csrc/c101951/zfxxgk_zdgk.shtml)
 
 | 频道                                                                        | ID                                                         |
 | --------------------------------------------------------------------------- | ---------------------------------------------------------- |
@@ -146,7 +146,7 @@ export const route: Route = {
 | [其他](http://www.csrc.gov.cn/csrc/c101979/zfxxgk_zdgk.shtml)               | [c101979](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101979) |
 | [备案管理](http://www.csrc.gov.cn/csrc/c106402/zfxxgk_zdgk.shtml)           | [c106402](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c106402) |
 
-  #### [按派出机构查看](http://www.csrc.gov.cn/csrc/c101985/zfxxgk_zdgk.shtml)
+#### [按派出机构查看](http://www.csrc.gov.cn/csrc/c101985/zfxxgk_zdgk.shtml)
 
 | 频道                                                                | ID                                                         |
 | ------------------------------------------------------------------- | ---------------------------------------------------------- |
@@ -189,7 +189,7 @@ export const route: Route = {
 | [上海专员办](http://www.csrc.gov.cn/csrc/c105841/zfxxgk_zdgk.shtml) | [c105841](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c105841) |
 | [深圳专员办](http://www.csrc.gov.cn/csrc/c105842/zfxxgk_zdgk.shtml) | [c105842](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c105842) |
 
-  #### [综合政务](http://www.csrc.gov.cn/csrc/c101794/zfxxgk_zdgk.shtml)
+#### [综合政务](http://www.csrc.gov.cn/csrc/c101794/zfxxgk_zdgk.shtml)
 
 | 频道                                                                                    | ID                                                         |
 | --------------------------------------------------------------------------------------- | ---------------------------------------------------------- |

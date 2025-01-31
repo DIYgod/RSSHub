@@ -55,13 +55,13 @@ export const route: Route = {
 | --------- | --------- | ---------- | --- |
 | F         | P         | C          | all |
 
-  #### \`exp_levels\` list
+#### \`exp_levels\` list
 
 | Intership | Entry Level | Associate | Mid-Senior Level | Director | All |
 | --------- | ----------- | --------- | ---------------- | -------- | --- |
 | 1         | 2           | 3         | 4                | 5        | all |
 
-  #### \`routeParams\` additional query parameters
+#### \`routeParams\` additional query parameters
 
 ##### \`f_WT\` list
 
