@@ -94,9 +94,9 @@ export const route: Route = {
     example: '/zhonglun/research/article/zh',
     parameters: { category: '语言，默认为 zh，即简体中文，可在对应分类页 URL 中找到' },
     description: `
-  | ENG | 简体中文 | 日本語 | 한국어 |
-  | --- | -------- | ------ | ------ |
-  | en  | zh       | ja     | kr     |
+| ENG | 简体中文 | 日本語 | 한국어 |
+| --- | -------- | ------ | ------ |
+| en  | zh       | ja     | kr     |
     `,
     categories: ['new-media'],
 

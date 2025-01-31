@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| 社会招聘 | 校园招聘 | 实习生招聘 |
-  | :------: | :------: | :--------: |
-  |  social  |  campus  |   intern   |`,
+| :------: | :------: | :--------: |
+|  social  |  campus  |   intern   |`,
 };
 
 async function handler(ctx) {

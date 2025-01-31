@@ -21,13 +21,13 @@ export const route: Route = {
     handler,
     description: `另外，可以通过添加额外的以下 query 参数来输出满足特定要求的工作职位：
 
-  | 参数       | 描述                                              | 举例                                                    | 默认值  |
-  | ---------- | ------------------------------------------------- | ------------------------------------------------------- | ------- |
-  | \`geo\`      | geo 编码                                          | 102890883（中国）、102772228（上海）、103873152（北京） | 空      |
-  | \`remote\`   | 是否只显示远程工作                                | \`true/false\`                                            | \`false\` |
-  | \`location\` | 工作地点                                          | \`china/shanghai/beijing\`                                | 空      |
-  | \`relevant\` | 排序方式 (true: 按相关性排序，false： 按日期排序) | \`true/false\`                                            | \`false\` |
-  | \`period\`   | 发布时间                                          | \`1/7/30\`                                                | 空      |
+| 参数       | 描述                                              | 举例                                                    | 默认值  |
+| ---------- | ------------------------------------------------- | ------------------------------------------------------- | ------- |
+| \`geo\`      | geo 编码                                          | 102890883（中国）、102772228（上海）、103873152（北京） | 空      |
+| \`remote\`   | 是否只显示远程工作                                | \`true/false\`                                            | \`false\` |
+| \`location\` | 工作地点                                          | \`china/shanghai/beijing\`                                | 空      |
+| \`relevant\` | 排序方式 (true: 按相关性排序，false： 按日期排序) | \`true/false\`                                            | \`false\` |
+| \`period\`   | 发布时间                                          | \`1/7/30\`                                                | 空      |
 
   例如：
   [\`/linkedin/cn/jobs/Software?location=shanghai&period=1\`](https://rsshub.app/linkedin/cn/jobs/Software?location=shanghai\&period=1): 查找所有在上海的今日发布的所有 Software 工作

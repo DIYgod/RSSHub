@@ -43,21 +43,21 @@ export const route: Route = {
 
   基础分类如下：
 
-  | 交流                | 电影                | 剧集                | 高清电影             |
-  | ------------------- | ------------------- | ------------------- | -------------------- |
-  | forum-index-fid-975 | forum-index-fid-951 | forum-index-fid-950 | forum-index-fid-1183 |
+| 交流                | 电影                | 剧集                | 高清电影             |
+| ------------------- | ------------------- | ------------------- | -------------------- |
+| forum-index-fid-975 | forum-index-fid-951 | forum-index-fid-950 | forum-index-fid-1183 |
 
-  | 音乐                | 动漫                | 游戏                | 综艺                 |
-  | ------------------- | ------------------- | ------------------- | -------------------- |
-  | forum-index-fid-953 | forum-index-fid-981 | forum-index-fid-955 | forum-index-fid-1106 |
+| 音乐                | 动漫                | 游戏                | 综艺                 |
+| ------------------- | ------------------- | ------------------- | -------------------- |
+| forum-index-fid-953 | forum-index-fid-981 | forum-index-fid-955 | forum-index-fid-1106 |
 
-  | 图书                 | 美图                | 站务              | 科技                |
-  | -------------------- | ------------------- | ----------------- | ------------------- |
-  | forum-index-fid-1151 | forum-index-fid-957 | forum-index-fid-2 | forum-index-fid-952 |
+| 图书                 | 美图                | 站务              | 科技                |
+| -------------------- | ------------------- | ----------------- | ------------------- |
+| forum-index-fid-1151 | forum-index-fid-957 | forum-index-fid-2 | forum-index-fid-952 |
 
-  | 求助                 | 音轨字幕             |
-  | -------------------- | -------------------- |
-  | forum-index-fid-1187 | forum-index-fid-1191 |
+| 求助                 | 音轨字幕             |
+| -------------------- | -------------------- |
+| forum-index-fid-1187 | forum-index-fid-1191 |
 
 ::: tip
   BT 之家的域名会变更，本路由以 \`https://www.btbtt20.com\` 为默认域名，若该域名无法访问，可以通过在路由后方加上 \`?domain=<域名>\` 指定路由访问的域名。如指定域名为 \`https://www.btbtt15.com\`，则在 \`/btzj\` 后加上 \`?domain=btbtt15.com\` 即可，此时路由为 [\`/btzj?domain=btbtt15.com\`](https://rsshub.app/btzj?domain=btbtt15.com)

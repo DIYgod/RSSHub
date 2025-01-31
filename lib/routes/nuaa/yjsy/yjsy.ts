@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: ['junfengP', 'Seiry', 'Xm798'],
     handler,
     description: `| 通知公告 | 新闻动态 | 学术信息 | 师生风采 |
-  | -------- | -------- | -------- | -------- |
-  | tzgg     | xwdt     | xsxx     | ssfc     |`,
+| -------- | -------- | -------- | -------- |
+| tzgg     | xwdt     | xsxx     | ssfc     |`,
 };
 
 async function handler(ctx) {

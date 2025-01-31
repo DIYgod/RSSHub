@@ -22,8 +22,8 @@ export const route: Route = {
     maintainers: ['mocusez'],
     handler,
     description: `| 学校新闻 | 砥志研思 | 立德树人 | 传道授业 | 校闻周知 |
-  | :------: | :------: | :------: | :------: | :------: |
-  |   xxxw   |   dzys   |   ldsr   |   cdsy   |   xwzz   |`,
+| :------: | :------: | :------: | :------: | :------: |
+|   xxxw   |   dzys   |   ldsr   |   cdsy   |   xwzz   |`,
 };
 
 async function handler(ctx) {

@@ -99,7 +99,7 @@ If you subscribe to [Recent petitions](https://petition.parliament.uk/petitions?
 :::
 
 <details>
-  <summary>More states</summary>
+<summary>More states</summary>
 
 | Name                            | ID                |
 | ------------------------------- | ----------------- |

@@ -23,9 +23,9 @@ export const route: Route = {
     maintainers: ['evnydd0sf'],
     handler,
     description: `| News Type | Parameters |
-  | --------- | ---------- |
-  | 公告      | 346        |
-  | 南艺要闻  | 332        |`,
+| --------- | ---------- |
+| 公告      | 346        |
+| 南艺要闻  | 332        |`,
 };
 
 async function handler(ctx) {
