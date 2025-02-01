@@ -39,8 +39,8 @@ export const route: Route = {
     handler,
     url: 'finviz.com/news.ashx',
     description: `| News | Blogs |
-  | ---- | ---- |
-  | news | blogs |`,
+| ---- | ---- |
+| news | blogs |`,
 };
 
 async function handler(ctx) {

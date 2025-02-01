@@ -83,38 +83,38 @@ export const route: Route = {
   若订阅 [行业资讯](https://www.cngold.org.cn/news-325.html)，网址为 \`https://www.cngold.org.cn/news-325.html\`。截取 \`https://www.cngold.org.cn/\` 到末尾 \`.html\` 的部分 \`news-325\` 作为参数填入，此时路由为 [\`/cngold/news-325\`](https://rsshub.app/cngold/news-325)。
 :::
 
-  #### 资讯中心
+#### 资讯中心
 
-  | [图片新闻](https://www.cngold.org.cn/news-323.html) | [通知公告](https://www.cngold.org.cn/news-324.html) | [党建工作](https://www.cngold.org.cn/news-326.html) | [行业资讯](https://www.cngold.org.cn/news-325.html) | [黄金矿业](https://www.cngold.org.cn/news-327.html) | [黄金消费](https://www.cngold.org.cn/news-328.html) |
-  | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
-  | [news-323](https://rsshub.app/cngold/news-323)      | [news-324](https://rsshub.app/cngold/news-324)      | [news-326](https://rsshub.app/cngold/news-326)      | [news-325](https://rsshub.app/cngold/news-325)      | [news-327](https://rsshub.app/cngold/news-327)      | [news-328](https://rsshub.app/cngold/news-328)      |
+| [图片新闻](https://www.cngold.org.cn/news-323.html) | [通知公告](https://www.cngold.org.cn/news-324.html) | [党建工作](https://www.cngold.org.cn/news-326.html) | [行业资讯](https://www.cngold.org.cn/news-325.html) | [黄金矿业](https://www.cngold.org.cn/news-327.html) | [黄金消费](https://www.cngold.org.cn/news-328.html) |
+| --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
+| [news-323](https://rsshub.app/cngold/news-323)      | [news-324](https://rsshub.app/cngold/news-324)      | [news-326](https://rsshub.app/cngold/news-326)      | [news-325](https://rsshub.app/cngold/news-325)      | [news-327](https://rsshub.app/cngold/news-327)      | [news-328](https://rsshub.app/cngold/news-328)      |
 
-  | [黄金市场](https://www.cngold.org.cn/news-329.html) | [社会责任](https://www.cngold.org.cn/news-330.html) | [黄金书屋](https://www.cngold.org.cn/news-331.html) | [工作交流](https://www.cngold.org.cn/news-332.html) | [黄金统计](https://www.cngold.org.cn/news-333.html) | [协会动态](https://www.cngold.org.cn/news-334.html) |
-  | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
-  | [news-329](https://rsshub.app/cngold/news-329)      | [news-330](https://rsshub.app/cngold/news-330)      | [news-331](https://rsshub.app/cngold/news-331)      | [news-332](https://rsshub.app/cngold/news-332)      | [news-333](https://rsshub.app/cngold/news-333)      | [news-334](https://rsshub.app/cngold/news-334)      |
+| [黄金市场](https://www.cngold.org.cn/news-329.html) | [社会责任](https://www.cngold.org.cn/news-330.html) | [黄金书屋](https://www.cngold.org.cn/news-331.html) | [工作交流](https://www.cngold.org.cn/news-332.html) | [黄金统计](https://www.cngold.org.cn/news-333.html) | [协会动态](https://www.cngold.org.cn/news-334.html) |
+| --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
+| [news-329](https://rsshub.app/cngold/news-329)      | [news-330](https://rsshub.app/cngold/news-330)      | [news-331](https://rsshub.app/cngold/news-331)      | [news-332](https://rsshub.app/cngold/news-332)      | [news-333](https://rsshub.app/cngold/news-333)      | [news-334](https://rsshub.app/cngold/news-334)      |
 
-  <details>
-    <summary>更多分类</summary>
+<details>
+<summary>更多分类</summary>
 
-  #### [政策法规](https://www.cngold.org.cn/policies.html)
+#### [政策法规](https://www.cngold.org.cn/policies.html)
 
-  | [法律法规](https://www.cngold.org.cn/policies-245.html) | [产业政策](https://www.cngold.org.cn/policies-262.html) | [黄金标准](https://www.cngold.org.cn/policies-281.html) |
-  | ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
-  | [policies-245](https://rsshub.app/cngold/policies-245)  | [policies-262](https://rsshub.app/cngold/policies-262)  | [policies-281](https://rsshub.app/cngold/policies-281)  |
+| [法律法规](https://www.cngold.org.cn/policies-245.html) | [产业政策](https://www.cngold.org.cn/policies-262.html) | [黄金标准](https://www.cngold.org.cn/policies-281.html) |
+| ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
+| [policies-245](https://rsshub.app/cngold/policies-245)  | [policies-262](https://rsshub.app/cngold/policies-262)  | [policies-281](https://rsshub.app/cngold/policies-281)  |
 
-  #### [行业培训](https://www.cngold.org.cn/training.html)
+#### [行业培训](https://www.cngold.org.cn/training.html)
 
-  | [黄金投资分析师](https://www.cngold.org.cn/training-242.html) | [教育部1+X](https://www.cngold.org.cn/training-246.html) | [矿业权评估师](https://www.cngold.org.cn/training-338.html) | [其他培训](https://www.cngold.org.cn/training-247.html) |
-  | ------------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------- |
-  | [training-242](https://rsshub.app/cngold/training-242)        | [training-246](https://rsshub.app/cngold/training-246)   | [training-338](https://rsshub.app/cngold/training-338)      | [training-247](https://rsshub.app/cngold/training-247)  |
+| [黄金投资分析师](https://www.cngold.org.cn/training-242.html) | [教育部1+X](https://www.cngold.org.cn/training-246.html) | [矿业权评估师](https://www.cngold.org.cn/training-338.html) | [其他培训](https://www.cngold.org.cn/training-247.html) |
+| ------------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------- |
+| [training-242](https://rsshub.app/cngold/training-242)        | [training-246](https://rsshub.app/cngold/training-246)   | [training-338](https://rsshub.app/cngold/training-338)      | [training-247](https://rsshub.app/cngold/training-247)  |
 
-  #### [黄金科技](https://www.cngold.org.cn/technology.html)
+#### [黄金科技](https://www.cngold.org.cn/technology.html)
 
-  | [黄金协会科学技术奖](https://www.cngold.org.cn/technology-318.html) | [科学成果评价](https://www.cngold.org.cn/technology-319.html) | [新技术推广](https://www.cngold.org.cn/technology-320.html) | [黄金技术大会](https://www.cngold.org.cn/technology-350.html) |
-  | ------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- |
-  | [technology-318](https://rsshub.app/cngold/technology-318)          | [technology-319](https://rsshub.app/cngold/technology-319)    | [technology-320](https://rsshub.app/cngold/technology-320)  | [technology-350](https://rsshub.app/cngold/technology-350)    |
+| [黄金协会科学技术奖](https://www.cngold.org.cn/technology-318.html) | [科学成果评价](https://www.cngold.org.cn/technology-319.html) | [新技术推广](https://www.cngold.org.cn/technology-320.html) | [黄金技术大会](https://www.cngold.org.cn/technology-350.html) |
+| ------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- |
+| [technology-318](https://rsshub.app/cngold/technology-318)          | [technology-319](https://rsshub.app/cngold/technology-319)    | [technology-320](https://rsshub.app/cngold/technology-320)  | [technology-350](https://rsshub.app/cngold/technology-350)    |
 
-  </details>
+</details>
     `,
     categories: ['new-media'],
 

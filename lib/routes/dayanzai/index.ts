@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `| 微软应用 | 安卓应用 | 教程资源 | 其他资源 |
-  | -------- | -------- | -------- | -------- |
-  | windows  | android  | tutorial | other    |`,
+| -------- | -------- | -------- | -------- |
+| windows  | android  | tutorial | other    |`,
 };
 
 async function handler(ctx) {

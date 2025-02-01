@@ -19,8 +19,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| videos with comments (by date) | everything (by date) |
-  | ------------------------------ | -------------------- |
-  | 1                              | 2                    |
+| ------------------------------ | -------------------- |
+| 1                              | 2                    |
 
 ::: tip
   See [Ranking](https://www.javlibrary.com/en/star_mostfav.php) to view stars by ranks.

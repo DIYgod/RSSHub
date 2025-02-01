@@ -22,11 +22,11 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       '@hono/node-server':
-        specifier: 1.13.7
-        version: 1.13.7(hono@4.6.19)
+        specifier: 1.13.8
+        version: 1.13.8(hono@4.6.20)
       '@hono/zod-openapi':
         specifier: 0.18.3
-        version: 0.18.3(hono@4.6.19)(zod@3.24.1)
+        version: 0.18.3(hono@4.6.20)(zod@3.24.1)
       '@notionhq/client':
         specifier: 2.2.15
         version: 2.2.15
@@ -58,8 +58,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.5.169
-        version: 0.5.169(hono@4.6.19)
+        specifier: 0.5.170
+        version: 0.5.170(hono@4.6.20)
       '@sentry/node':
         specifier: 7.119.1
         version: 7.119.1
@@ -118,8 +118,8 @@ importers:
         specifier: 144.0.0
         version: 144.0.0
       hono:
-        specifier: 4.6.19
-        version: 4.6.19
+        specifier: 4.6.20
+        version: 4.6.20
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -1415,8 +1415,8 @@ packages:
     resolution: {integrity: sha512-lB05FkqEdUg2AA0xEbUz0SnkXT1LcCTa438W4IWTUh4hdOnVbQyOJ81OrDXsJk/LSiJHubgGEFoR5EHq1NsH1A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@hono/node-server@1.13.7':
-    resolution: {integrity: sha512-kTfUMsoloVKtRA2fLiGSd9qBddmru9KadNyhJCwgKBxTiNkaAJEwkVN9KV/rS4HtmmNRtUh6P+YpmjRMl0d9vQ==}
+  '@hono/node-server@1.13.8':
+    resolution: {integrity: sha512-fsn8ucecsAXUoVxrUil0m13kOEq4mkX4/4QozCqmY+HpGfKl74OYSn8JcMA8GnG0ClfdRI4/ZSeG7zhFaVg+wg==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
@@ -1843,8 +1843,8 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/hono-api-reference@0.5.169':
-    resolution: {integrity: sha512-K6mGd1mxKXh5/jqxo0yHIOFi4N5jjQj8PL2TAJMhcUZ39qwSZ7/V7SGMBBpGtWNsGofac0bZ7q/7yoTsY3/RYg==}
+  '@scalar/hono-api-reference@0.5.170':
+    resolution: {integrity: sha512-WZsBHZutARsszArsn2jC8aPM1KrMtkyIJzt/Dhigr3KPaDMTVBZEmO/NILrYAMnLYkboAs7DedtSHt59D41dew==}
     engines: {node: '>=18'}
     peerDependencies:
       hono: ^4.0.0
@@ -1853,8 +1853,8 @@ packages:
     resolution: {integrity: sha512-V+KnESyVJqorJzEN0QFlu3tAImCHjnvPov6QcQvjfY7s0+CjrI3rRO3oVIRlXURTQrQGrnhxvK0SkXGAZ+dxvw==}
     engines: {node: '>=18'}
 
-  '@scalar/types@0.0.28':
-    resolution: {integrity: sha512-NRGWtxWE/YfpAiNKh/XCV5o9CaYlg8etwelux1q7VRAbZqbpti5c14a5/t2mCiFSrfoyh4ghAHuYC9n3uwnuXQ==}
+  '@scalar/types@0.0.29':
+    resolution: {integrity: sha512-Z5tnRVtKHV/Gx4hCPeyFsxM1Gx92KUqpZ/HhM4KexPh5StKJo6MSLSTeFXqdVM8dbsnfw+xFBoLF9yE0eEHK3Q==}
     engines: {node: '>=18'}
 
   '@sec-ant/readable-stream@0.4.1':
@@ -3475,8 +3475,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.6.19:
-    resolution: {integrity: sha512-Xw5DwU2cewEsQ1DkDCdy6aBJkEBARl5loovoL1gL3/gw81RdaPbXrNJYp3LoQpzpJ7ECC/1OFi/vn3UZTLHFEw==}
+  hono@4.6.20:
+    resolution: {integrity: sha512-5qfNQeaIptMaJKyoJ6N/q4gIq0DBp2FCRaLNuUI3LlJKL4S37DY/rLL1uAxA4wrPB39tJ3s+f7kgI79O4ScSug==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -6852,20 +6852,20 @@ snapshots:
       '@eslint/core': 0.10.0
       levn: 0.4.1
 
-  '@hono/node-server@1.13.7(hono@4.6.19)':
+  '@hono/node-server@1.13.8(hono@4.6.20)':
     dependencies:
-      hono: 4.6.19
+      hono: 4.6.20
 
-  '@hono/zod-openapi@0.18.3(hono@4.6.19)(zod@3.24.1)':
+  '@hono/zod-openapi@0.18.3(hono@4.6.20)(zod@3.24.1)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.2.0(zod@3.24.1)
-      '@hono/zod-validator': 0.4.1(hono@4.6.19)(zod@3.24.1)
-      hono: 4.6.19
+      '@hono/zod-validator': 0.4.1(hono@4.6.20)(zod@3.24.1)
+      hono: 4.6.20
       zod: 3.24.1
 
-  '@hono/zod-validator@0.4.1(hono@4.6.19)(zod@3.24.1)':
+  '@hono/zod-validator@0.4.1(hono@4.6.20)(zod@3.24.1)':
     dependencies:
-      hono: 4.6.19
+      hono: 4.6.20
       zod: 3.24.1
 
   '@humanfs/core@0.19.1': {}
@@ -7295,14 +7295,14 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/hono-api-reference@0.5.169(hono@4.6.19)':
+  '@scalar/hono-api-reference@0.5.170(hono@4.6.20)':
     dependencies:
-      '@scalar/types': 0.0.28
-      hono: 4.6.19
+      '@scalar/types': 0.0.29
+      hono: 4.6.20
 
   '@scalar/openapi-types@0.1.6': {}
 
-  '@scalar/types@0.0.28':
+  '@scalar/types@0.0.29':
     dependencies:
       '@scalar/openapi-types': 0.1.6
       '@unhead/schema': 1.11.18
@@ -9187,7 +9187,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.6.19: {}
+  hono@4.6.20: {}
 
   hookable@5.5.3: {}
 
