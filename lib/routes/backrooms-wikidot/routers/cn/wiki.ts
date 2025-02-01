@@ -56,11 +56,16 @@ const handler: Route['handler'] = async (ctx) => {
             contentLinkList.map((item) =>
                 cache.tryGet(item.link, async () => {
                     const CONTENT_SELECTOR = '#page-content';
+                    const PAGE_INFO_SELECTOR = '#page-info';
                     const { data: contentResponse } = await got(item.link);
                     const contentPage = load(contentResponse);
                     const coverImage = contentPage(CONTENT_SELECTOR).first().find('img').attr('src');
+                    const lastUpdated = contentPage(PAGE_INFO_SELECTOR)
+                        .find('span.odate')
+                        .text()
+                        .replaceAll(/\(.*?\)/g, '');
                     const content = contentPage(CONTENT_SELECTOR).html() || '';
-                    return {
+                    const dataItem: DataItem = {
                         title: item.title,
                         pubDate: item.date,
                         link: item.link,
@@ -69,10 +74,14 @@ const handler: Route['handler'] = async (ctx) => {
                         guid: item.link,
                         id: item.link,
                         image: coverImage ?? FEED_LOGO,
-                        content,
-                        updated: item.date,
+                        content: {
+                            html: content,
+                            text: content,
+                        },
+                        updated: lastUpdated,
                         language: 'zh-CN',
                     };
+                    return dataItem;
                 })
             )
         )) as DataItem[],
