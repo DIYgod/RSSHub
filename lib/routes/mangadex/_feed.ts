@@ -96,7 +96,7 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
             `mangadex:cover:${coverId}`,
             async () => {
                 const { data } = await got.get(`${constants.API.COVERS}${coverId}`);
-                return data.data.attributes.fileName;
+                return data.data.attributes.fileName + '.512.jpg';
             },
             config.cache.contentExpire
         );
