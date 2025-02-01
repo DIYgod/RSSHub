@@ -115,13 +115,14 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
  * @param lang language(s), absent for default
  * @returns chapters of the manga
  */
-const getMangaChapters = async (id: string, lang?: string | string[]) => {
+const getMangaChapters = async (id: string, lang?: string | string[], limit?: number) => {
     const languages = new Set([...(typeof lang === 'string' ? [lang] : lang || []), ...(await getFilteredLanguages())].filter(Boolean));
 
     const url = `${constants.API.MANGA_META}${id}/feed${toQueryString({
         order: {
             publishAt: 'desc',
         },
+        limit: limit || 100,
         translatedLanguage: languages,
     })}`;
 
