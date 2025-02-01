@@ -1,12 +1,17 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import EhAPI from './ehapi';
+import { queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
-    path: '/search/:params?/:page?/:routeParams?',
+    path: '/search/:params?/:page?/:bittorrent?',
     categories: ['picture'],
-    example: '/ehentai/search/f_search=artist%3Amana%24/1',
-    parameters: { params: 'Search parameters. You can copy the content after `https://e-hentai.org/?`', page: 'Page number', routeParams: 'Additional parameters, see the table above' },
+    example: '/ehentai/search/f_cats=1021/0/1',
+    parameters: {
+        params: 'Search parameters. You can copy the content after `https://e-hentai.org/?`',
+        page: 'Page number,default to 0',
+        bittorrent: 'Whether include a link to the latest torrent, default to false, , Accepted keys: 0/1/true/false',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,19 +26,12 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const page = ctx.req.param('page');
     let params = ctx.req.param('params');
-    const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
-    const bittorrent = routeParams.get('bittorrent') || false;
-    const embed_thumb = routeParams.get('embed_thumb') || false;
-    let items;
-    if (page) {
-        // 如果定义了page，就要覆盖params
-        params = params.replace(/&*next=[^&]$/, '').replace(/next=[^&]&/, '');
-        items = await EhAPI.getSearchItems(cache, params, page, bittorrent, embed_thumb);
-    } else {
-        items = await EhAPI.getSearchItems(cache, params, undefined, bittorrent, embed_thumb);
-    }
+    const { page = 0 } = ctx.req.param('page');
+    const bittorrent = queryToBoolean(ctx.req.param('bittorrent') || 'false');
+    // 如果定义了page，就要覆盖params
+    params = params.replace(/&*next=[^&]$/, '').replace(/next=[^&]&/, '');
+    const items = await EhAPI.getSearchItems(cache, params, page, bittorrent);
     let title = params;
     const match = /f_search=([^&]+)/.exec(title);
     if (match !== null) {
