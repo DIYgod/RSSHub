@@ -15,6 +15,8 @@ import constants from './_constants';
  * - One of the following:
  *   - `username` and `password`
  *   - `refresh token`
+ * @throws {FetchError} If the request fails.
+ * - 400 Bad Request: If the `refresh token` or other credentials are invalid.
  * @returns {Promise<string>} A promise that resolves to the access token.
  */
 const getToken = () => {
