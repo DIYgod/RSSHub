@@ -126,7 +126,7 @@ export const route: Route = {
         },
     },
     description: `:::tip
-If you subscribe to [Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI)，where the URL is \`https://papers.cool/arxiv/cs.AI\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/category/arxiv/cs.AI\`](https://rsshub.app/papers/category/arxiv/cs.AI).
+To subscribe to [Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI) (<https://papers.cool/arxiv/cs.AI>), extract \`arxiv/cs.AI\` from the URL as the \`category\` parameter. The resulting route will be [\`/papers/category/arxiv/cs.AI\`](https://rsshub.app/papers/category/arxiv/cs.AI).
 :::
 
 <details>
@@ -1210,10 +1210,12 @@ If you subscribe to [Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/
         handler,
         example: '/papers/arxiv/cs.AI',
         parameters: {
-            category: '期刊 id，可在对应期刊页 URL 中找到',
+            id: {
+                description: '分类 id，可在对应分类页 URL 中找到',
+            },
         },
         description: `:::tip
-若订阅 [Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI)，网址为 \`https://papers.cool/arxiv/cs.AI\`，请截取 \`https://papers.cool/\` 到末尾的部分 \`arxiv/cs.AI\` 作为 \`id\` 参数填入，此时目标路由为 [\`/papers/category/arxiv/cs.AI\`](https://rsshub.app/papers/category/arxiv/cs.AI)。
+订阅 [人工智能 (cs.AI)](https://papers.cool/arxiv/cs.AI)（<https://papers.cool/arxiv/cs.AI>），请从 URL 中提取 \`arxiv/cs.AI\` 作为 \`category\` 参数，得到的路由将是 [\`/papers/category/arxiv/cs.AI\`](https://rsshub.app/papers/category/arxiv/cs.AI)。
 :::
 `,
     },
