@@ -57,10 +57,17 @@ function toQueryString(params: Record<string, any>): string {
  * @returns title, description, and cover of the manga
  */
 const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string | string[]) => {
+    const includes = needCover ? ['cover_art'] : [];
+
     const rawMangaMeta = (await cache.tryGet(
         `mangadex:manga-meta:${id}`,
         async () => {
-            const { data } = await got.get(`${constants.API.MANGA_META}${id}`);
+            const { data } = await got.get(
+                `${constants.API.MANGA_META}${id}` +
+                    toQueryString({
+                        includes,
+                    })
+            );
 
             if (data.result === 'error') {
                 throw new Error(data.errors[0].detail);
@@ -69,6 +76,11 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
         },
         config.cache.contentExpire
     )) as any;
+
+    const relationships = (rawMangaMeta.relationships || []) as Array<{ type: string; id: string; attributes: any }>;
+
+    const coverFilename = relationships.find((relationship) => relationship.type === 'cover_art')?.attributes.fileName + '.512.jpg';
+    const cover = `${constants.API.COVER_IMAGE}${id}/${coverFilename}`;
 
     const languages = [
         ...(typeof lang === 'string' ? [lang] : lang || []),
@@ -90,21 +102,7 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
         return { title, description };
     }
 
-    const coverId = rawMangaMeta.relationships.find((relationship) => relationship.type === 'cover_art')?.id;
-    if (coverId) {
-        const coverFilename = await cache.tryGet(
-            `mangadex:cover:${coverId}`,
-            async () => {
-                const { data } = await got.get(`${constants.API.COVERS}${coverId}`);
-                return data.data.attributes.fileName + '.512.jpg';
-            },
-            config.cache.contentExpire
-        );
-        const cover = `${constants.API.COVER_IMAGE}${id}/${coverFilename}`;
-        return { title, description, cover };
-    }
-
-    return { title, description };
+    return { title, description, cover };
 };
 
 /**
