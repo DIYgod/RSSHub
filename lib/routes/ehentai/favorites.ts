@@ -2,17 +2,16 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import EhAPI from './ehapi';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
-    path: '/favorites/:favcat?/:order?/:page?/:bittorrent?',
+    path: '/favorites/:favcat?/:order?/:page?/:routeParams?',
     categories: ['picture'],
-    example: '/ehentai/favorites/0/posted/0/1',
+    example: '/ehentai/favorites/0/posted/0/bittorrent=true&embed_thumb=false',
     parameters: {
         favcat: 'Favorites folder number',
         order: '`posted`(Sort by gallery release time) , `favorited`(Sort by time added to favorites)',
-        page: 'Page number',
-        bittorrent: 'Whether include a link to the latest torrent, default to false, Accepted keys: 0/1/true/false',
+        page: 'Page number, set 0 to get latest',
+        routeParams: 'Additional parameters, see the table above',
     },
     features: {
         requireConfig: false,
@@ -33,9 +32,11 @@ async function handler(ctx) {
     }
     const favcat = ctx.req.param('favcat') ? Number.parseInt(ctx.req.param('favcat')) : 0;
     const page = ctx.req.param('page');
-    const bittorrent = queryToBoolean(ctx.req.param('bittorrent') || 'false');
+    const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
+    const bittorrent = routeParams.get('bittorrent') || false;
+    const embed_thumb = routeParams.get('embed_thumb') || false;
     const inline_set = ctx.req.param('order') === 'posted' ? 'fs_p' : 'fs_f';
-    const items = await EhAPI.getFavoritesItems(cache, favcat, inline_set, page, bittorrent);
+    const items = await EhAPI.getFavoritesItems(cache, favcat, inline_set, page, bittorrent, embed_thumb);
 
     return EhAPI.from_ex
         ? {

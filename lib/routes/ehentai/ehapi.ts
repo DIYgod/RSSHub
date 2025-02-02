@@ -1,6 +1,8 @@
 import got from '@/utils/got';
+import logger from '@/utils/logger';
 import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
+import path from 'node:path';
 import { config } from '@/config';
 
 const headers = {};
@@ -24,7 +26,21 @@ function ehgot(url) {
     return from_ex ? got({ method: 'get', url: `https://exhentai.org/${url}`, headers }) : got({ method: 'get', url: `https://e-hentai.org/${url}`, headers });
 }
 
-async function parsePage(cache, data, get_bittorrent = false) {
+function ehgot_thumb(cache, thumb_url) {
+    return cache.tryGet(thumb_url, async () => {
+        try {
+            const buffer = await got({ method: 'get', url: thumb_url, headers });
+            const data = new Buffer.from(buffer.rawBody).toString('base64');
+            const ext = path.extname(thumb_url).slice(1);
+            return `data:image/${ext};base64,${data}`;
+        } catch (error) {
+            logger.warn('Cannot download thumbnail: ' + thumb_url, error);
+            return thumb_url;
+        }
+    });
+}
+
+async function parsePage(cache, data, get_bittorrent = false, embed_thumb = false) {
     const $ = load(data);
     // "m" for Minimal
     // "p" for Minimal+
@@ -80,6 +96,9 @@ async function parsePage(cache, data, get_bittorrent = false) {
         if (config.ehentai.img_proxy && thumbnail) {
             const url = new URL(thumbnail);
             thumbnail = config.ehentai.img_proxy + url.pathname + url.search;
+        }
+        if (embed_thumb && thumbnail) {
+            thumbnail = await ehgot_thumb(cache, thumbnail);
         }
         const description = `<img src='${thumbnail}' alt='thumbnail'>`;
         if (title && link) {
@@ -165,28 +184,28 @@ function updateBittorrent_url(cache, items) {
     return items;
 }
 
-async function gatherItemsByPage(cache, url, get_bittorrent = false) {
+async function gatherItemsByPage(cache, url, get_bittorrent = false, embed_thumb = false) {
     const response = await ehgot(url);
-    const items = await parsePage(cache, response.data, get_bittorrent);
+    const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
     return updateBittorrent_url(cache, items);
 }
 
-async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent = false) {
+async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent = false, embed_thumb = false) {
     const response = await ehgot(`favorites.php?favcat=${favcat}&inline_set=${inline_set}`);
     if (page) {
-        return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&next=${page}`, get_bittorrent);
+        return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&next=${page}`, get_bittorrent, embed_thumb);
     } else {
-        const items = await parsePage(cache, response.data, get_bittorrent);
+        const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
         return updateBittorrent_url(cache, items);
     }
 }
 
-function getSearchItems(cache, params, page, get_bittorrent = false) {
-    return page ? gatherItemsByPage(cache, `?${params}&next=${page}`, get_bittorrent) : gatherItemsByPage(cache, `?${params}`, get_bittorrent);
+function getSearchItems(cache, params, page, get_bittorrent = false, embed_thumb = false) {
+    return page ? gatherItemsByPage(cache, `?${params}&next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, `?${params}`, get_bittorrent, embed_thumb);
 }
 
-function getTagItems(cache, tag, page, get_bittorrent = false) {
-    return page ? gatherItemsByPage(cache, `tag/${tag}?next=${page}`, get_bittorrent) : gatherItemsByPage(cache, `tag/${tag}`, get_bittorrent);
+function getTagItems(cache, tag, page, get_bittorrent = false, embed_thumb = false) {
+    return page ? gatherItemsByPage(cache, `tag/${tag}?next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, `tag/${tag}`, get_bittorrent, embed_thumb);
 }
 
 export default { getFavoritesItems, getSearchItems, getTagItems, has_cookie, from_ex };

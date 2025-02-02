@@ -1,13 +1,12 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import EhAPI from './ehapi';
-import { queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
-    path: '/tag/:tag/:page?/:bittorrent?',
+    path: '/tag/:tag/:page?/:routeParams?',
     categories: ['picture'],
-    example: '/ehentai/tag/language:chinese/0/1',
-    parameters: { tag: 'Tag', page: 'Page number, default to 0', bittorrent: 'Whether include a link to the latest torrent, default to false, Accepted keys: 0/1/true/false' },
+    example: '/ehentai/tag/language:chinese/0/bittorrent=true&embed_thumb=false',
+    parameters: { tag: 'Tag', page: 'Page number, set 0 to get latest', routeParams: 'Additional parameters, see the table above' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -24,8 +23,10 @@ export const route: Route = {
 async function handler(ctx) {
     const page = ctx.req.param('page');
     const tag = ctx.req.param('tag');
-    const bittorrent = queryToBoolean(ctx.req.param('bittorrent') || 'false');
-    const items = await EhAPI.getTagItems(cache, tag, page, bittorrent);
+    const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
+    const bittorrent = routeParams.get('bittorrent') || false;
+    const embed_thumb = routeParams.get('embed_thumb') || false;
+    const items = await EhAPI.getTagItems(cache, tag, page, bittorrent, embed_thumb);
 
     return EhAPI.from_ex
         ? {
