@@ -10,7 +10,7 @@ const BASE_URL = 'https://www.wohnnet.at/immobilien/' as const;
 
 export const route: Route = {
     name: 'Immobiliensuche',
-    path: ':category/:region/*',
+    path: '/:category/:region/*',
     maintainers: ['sk22'],
     categories: ['other'],
     description: `
