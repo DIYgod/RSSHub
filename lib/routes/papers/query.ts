@@ -86,10 +86,10 @@ export const route: Route = {
   If you subscibe to [arXiv Paper queryed by Detection](https://papers.cool/arxiv/search?highlight=1&query=Detection), where the URL is \`https://papers.cool/arxiv/search?highlight=1&query=Detection\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/query/Detection\`](https://rsshub.app/papers/query/Detection).
 :::
 
-  | Category                                              | id                  |
-  | ----------------------------------------------------- | ------------------- |
-  | arXiv Paper queryed by Detection                      | query/Detection     |
-  | arXiv Paper queryed by Segmentation                   | query/Segmentation  |
+| Category                                              | id                  |
+| ----------------------------------------------------- | ------------------- |
+| arXiv Paper queryed by Detection                      | query/Detection     |
+| arXiv Paper queryed by Segmentation                   | query/Segmentation  |
   `,
     categories: ['journal'],
 

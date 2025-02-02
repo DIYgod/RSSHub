@@ -28,18 +28,18 @@ export const route: Route = {
     handler,
     description: `#### Language
 
-  | English | 中文  |
-  | ------- | ----- |
-  | en-us   | zh-cn |
+| English | 中文  |
+| ------- | ----- |
+| en-us   | zh-cn |
 
-  #### Category
+#### Category
 
-  | English Category     | 中文分类 | Category id |
-  | -------------------- | -------- | ----------- |
-  | The Latest           | 最新     |             |
-  | Industry Information | 行业资讯 | category-1  |
-  | Knowledge            | 域名知识 | category-2  |
-  | Investment           | 域名投资 | category-3  |`,
+| English Category     | 中文分类 | Category id |
+| -------------------- | -------- | ----------- |
+| The Latest           | 最新     |             |
+| Industry Information | 行业资讯 | category-1  |
+| Knowledge            | 域名知识 | category-2  |
+| Investment           | 域名投资 | category-3  |`,
 };
 
 async function handler(ctx) {

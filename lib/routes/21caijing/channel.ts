@@ -192,7 +192,7 @@ export const route: Route = {
 :::
 
 <details>
-  <summary>更多分类</summary>
+<summary>更多分类</summary>
 
 #### [热点](https://m.21jingji.com/#/)
 

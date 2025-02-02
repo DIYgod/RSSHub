@@ -22,8 +22,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 新闻动态 | 通知公告 |
-  | -------- | -------- |
-  | xwdt     | tzgg     |`,
+| -------- | -------- |
+| xwdt     | tzgg     |`,
 };
 
 async function handler(ctx) {

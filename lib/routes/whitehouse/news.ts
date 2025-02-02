@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: ['nczitzk', 'hkamran80'],
     handler,
     description: `| All | Articles | Briefings and Statements | Presidential Actions | Remarks |
-  | --- | -------- | ------------------------ | -------------------- | ------- |
-  |     | articles | briefings-statements     | presidential-actions | remarks |`,
+| --- | -------- | ------------------------ | -------------------- | ------- |
+|     | articles | briefings-statements     | presidential-actions | remarks |`,
 };
 
 async function handler(ctx) {

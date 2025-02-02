@@ -19,8 +19,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| Last Month | All Time |
-  | ---------- | -------- |
-  | 1          | 2        |`,
+| ---------- | -------- |
+| 1          | 2        |`,
 };
 
 async function handler(ctx) {

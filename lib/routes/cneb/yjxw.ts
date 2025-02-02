@@ -32,8 +32,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 全部 | 国内新闻 | 国际新闻 |
-  | ---- | -------- | -------- |
-  |      | gnxw     | gjxw     |`,
+| ---- | -------- | -------- |
+|      | gnxw     | gjxw     |`,
 };
 
 async function handler(ctx) {

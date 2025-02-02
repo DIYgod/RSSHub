@@ -25,8 +25,8 @@ export const route: Route = {
     maintainers: ['shaomingbo'],
     handler,
     description: `| 精品推荐  | 技术干货 | 职场成长 | 社区动态  | 组件物料 | 行业动态 |
-  | --------- | -------- | -------- | --------- | -------- | -------- |
-  | recommend | quality  | growth   | community | material | industry |`,
+| --------- | -------- | -------- | --------- | -------- | -------- |
+| recommend | quality  | growth   | community | material | industry |`,
 };
 
 async function handler(ctx) {

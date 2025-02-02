@@ -104,9 +104,9 @@ export const route: Route = {
     handler,
     description: `#### 新闻 {#mi-ha-you-yuan-shen-xin-wen}
 
-  | 最新   | 新闻 | 公告   | 活动     |
-  | ------ | ---- | ------ | -------- |
-  | latest | news | notice | activity |`,
+| 最新   | 新闻 | 公告   | 活动     |
+| ------ | ---- | ------ | -------- |
+| latest | news | notice | activity |`,
 };
 
 async function handler(ctx) {

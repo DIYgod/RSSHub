@@ -191,7 +191,7 @@ export const route: Route = {
 :::
 
 <details>
-  <summary>更多专栏</summary>
+<summary>更多专栏</summary>
 
 | 名称            | ID  |
 | --------------- | --- |

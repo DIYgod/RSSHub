@@ -23,8 +23,8 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| Blog | News | Announcements | Reports |
-  | ---- | ---- | ------------- | ------- |
-  | blog | news | announcements | reports |`,
+| ---- | ---- | ------------- | ------- |
+| blog | news | announcements | reports |`,
 };
 
 async function handler(ctx) {

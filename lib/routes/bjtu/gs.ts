@@ -169,24 +169,24 @@ export const route: Route = {
     maintainers: ['E1nzbern'],
     handler,
     description: `
-  | 文章来源           | 参数         |
-  | ----------------- | ------------ |
-  | 通知公告_招生      | noti_zs      |
-  | 通知公告           | noti         |
-  | 新闻动态           | news         |
-  | 招生宣传           | zsxc         |
-  | 培养               | py           |
-  | 招生               | zs           |
-  | 学位               | xw           |
-  | 研工部             | ygb          |
-  | 通知公告 - 研工部   | ygbtzgg      |
-  | 新闻动态 - 研工部   | ygbnews      |
-  | 新闻封面 - 研工部   | ygbnewscover |
-  | 文章列表           | all          |
-  | 博士招生 - 招生专题 | bszs_zszt    |
-  | 硕士招生 - 招生专题 | sszs_zszt    |
-  | 招生简章 - 招生专题 | zsjz_zszt    |
-  | 政策法规 - 招生专题 | zcfg_zszt    |
+| 文章来源           | 参数         |
+| ----------------- | ------------ |
+| 通知公告_招生      | noti_zs      |
+| 通知公告           | noti         |
+| 新闻动态           | news         |
+| 招生宣传           | zsxc         |
+| 培养               | py           |
+| 招生               | zs           |
+| 学位               | xw           |
+| 研工部             | ygb          |
+| 通知公告 - 研工部   | ygbtzgg      |
+| 新闻动态 - 研工部   | ygbnews      |
+| 新闻封面 - 研工部   | ygbnewscover |
+| 文章列表           | all          |
+| 博士招生 - 招生专题 | bszs_zszt    |
+| 硕士招生 - 招生专题 | sszs_zszt    |
+| 招生简章 - 招生专题 | zsjz_zszt    |
+| 政策法规 - 招生专题 | zcfg_zszt    |
 
 ::: tip
   文章来源的命名均来自研究生院网站标题。

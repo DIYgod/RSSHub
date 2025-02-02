@@ -27,12 +27,12 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| Latest | Editor's Picks | Photos of the Day |
-  | ------ | -------------- | ----------------- |
-  | news   | editorspicks   | photos            |
+| ------ | -------------- | ----------------- |
+| news   | editorspicks   | photos            |
 
-  | Politics | Cross-strait | Business | Society | Science & Tech | Culture | Sports |
-  | -------- | ------------ | -------- | ------- | -------------- | ------- | ------ |
-  | politics | cross-strait | business | society | science & tech | culture | sports |`,
+| Politics | Cross-strait | Business | Society | Science & Tech | Culture | Sports |
+| -------- | ------------ | -------- | ------- | -------------- | ------- | ------ |
+| politics | cross-strait | business | society | science & tech | culture | sports |`,
 };
 
 async function handler(ctx) {
