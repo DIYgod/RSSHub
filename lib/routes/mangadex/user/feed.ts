@@ -80,7 +80,7 @@ async function handler(ctx) {
 
     const languagesQuery = new Set([...(typeof lang === 'string' ? [lang] : lang || []), ...(await getFilteredLanguages())].filter(Boolean));
 
-    const followedChapters = (await cache.tryGet(
+    const feed = (await cache.tryGet(
         'mangadex:user-follows',
         async () => {
             const response = await got.get(
@@ -109,7 +109,7 @@ async function handler(ctx) {
         config.cache.contentExpire
     )) as Record<string, any>[];
 
-    const mangaIds = followedChapters.map((chapter) => chapter?.relationships.find((relationship) => relationship.type === 'manga')?.id);
+    const mangaIds = feed.map((chapter) => chapter?.relationships.find((relationship) => relationship.type === 'manga')?.id);
 
     const mangaMetas = await getMangaMetaByIds(mangaIds);
 
@@ -117,7 +117,7 @@ async function handler(ctx) {
         title: 'MangaDex Follows',
         link: 'https://mangadex.org/titles/feed',
         description: 'The latest updates of all the manga you follow on MangaDex.',
-        item: followedChapters.map((chapter) => {
+        item: feed.map((chapter) => {
             const mangaId = chapter.relationships.find((relationship) => relationship.type === 'manga')?.id;
             const mangaMeta = mangaMetas.get(mangaId);
             const chapterTitile = [chapter.attributes.volume ? `Vol. ${chapter.attributes.volume}` : null, chapter.attributes.chapter ? `Ch. ${chapter.attributes.chapter}` : null, chapter.attributes.title].filter(Boolean).join(' ');
