@@ -84,14 +84,13 @@ async function handler(ctx) {
         'mangadex:user-follows',
         async () => {
             const response = await got.get(
-                userFollowUrl +
-                    toQueryString({
-                        translatedLanguage: languagesQuery,
-                        order: {
-                            publishAt: 'desc',
-                        },
-                        limit,
-                    }),
+                `${userFollowUrl}${toQueryString({
+                    translatedLanguage: languagesQuery,
+                    order: {
+                        publishAt: 'desc',
+                    },
+                    limit,
+                })}`,
                 {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
