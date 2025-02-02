@@ -95684,6 +95684,45 @@
     "url": "wnacg.org",
     "lang": "zh-TW"
   },
+  "wohnnet": {
+    "routes": {
+      "/:category/:region/*": {
+        "name": "Immobiliensuche",
+        "path": "/:category/:region/*",
+        "maintainers": [
+          "sk22"
+        ],
+        "categories": [
+          "other"
+        ],
+        "description": "\nOnly returns the first page of search results, allowing you to keep track of\nnewly added apartments. If you're looking for an apartment, make sure to also\nlook through the other pages on the website.\n\n:::tip\nNote that the parameter `&sortierung=neueste-zuerst` for chronological order\nis automatically appended.\n:::\n\n:::tip\nTo get your query URL, go to https://www.wohnnet.at/immobilien/suche, apply\nall desired filters (but at least a category and a region!) and click the\n\"… Treffer anzeigen\" link. From the resulting URL, cut off the\n`https://www.wohnnet.at/immobilien/` part at the beginning and replace only\nthe `?` (the `&`s stay as is!) after the region name with a `/`.\n\nExamples:\n\n* `https://www.wohnnet.at/immobilien/mietwohnungen/wien`\n    - → `/wohnnet/mietwohnungen/wien`\n* `https://www.wohnnet.at/immobilien/mietwohnungen/wien?unterregionen=g90101`\n    - → `/wohnnet/mietwohnungen/wien/unterregionen=g90101`\n* `https://www.wohnnet.at/immobilien/mietwohnungen/wien?unterregionen=g90101&merkmale=balkon`\n    - → `/wohnnet/mietwohnungen/wien/unterregionen=g90101&merkmale=balkon`\n:::\n",
+        "example": "/wohnnet/mietwohnungen/wien/unterregionen=g90101--g90201--g90301--g90401--g90501&flaeche=40&preis=-1000",
+        "parameters": {
+          "category": "Category (`mietwohnungen`, `eigentumswohnungen`, `grundstuecke`, …)",
+          "region": "Region (`wien`, `oesterreich`, …)",
+          "unterregionen": "Unterregionen (e.g. `g90101--g90201--g90301`)",
+          "intention": "Intention (`kauf` | `miete`)",
+          "zimmer": "Zimmer (at least number, e.g. `2`)",
+          "flaeche": "Fläche (m², `40-` = at least 40 m², `40-60` = between 40 m² and 60 m²)",
+          "preis": "Preis (€, `-1000` = at most 1,000 €, `500-1000` = between 500 € and 1,000 €)",
+          "merkmale": "Merkmale (multiple, delimited by `--`, e.g. `balkon--garten--kurzzeitmiete--moebliert--parkplatz--provisionsfrei--sofort-beziehbar`)"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "index.ts"
+      }
+    },
+    "name": "wohnnet.at",
+    "url": "wohnnet.at",
+    "description": "Austrian search engine for real estate",
+    "lang": "de"
+  },
   "wordpress": {
     "routes": {
       "/:url?/:filter{.+}?": {

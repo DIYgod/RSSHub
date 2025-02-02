@@ -7660,6 +7660,9 @@
   "/wnacg/tag/:tag": [
     "Gandum2077"
   ],
+  "/wohnnet/:category/:region/*": [
+    "sk22"
+  ],
   "/wordpress/:url?/:filter{.+}?": [
     "nczitzk"
   ],
