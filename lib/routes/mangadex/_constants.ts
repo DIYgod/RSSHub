@@ -4,6 +4,12 @@
 export default {
     API: {
         /**
+         * Base URL for the MangaDex API.
+         *
+         */
+        BASE: 'https://api.mangadex.org',
+
+        /**
          * Base URL for the fetching the manga details.
          *
          * @usage https://api.mangadex.org/manga/:id
