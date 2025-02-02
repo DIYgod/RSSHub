@@ -8,7 +8,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/timeline/home/:site/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/misskey/timeline/home/misskey.io',
     parameters: {
