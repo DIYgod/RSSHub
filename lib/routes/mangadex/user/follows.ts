@@ -136,7 +136,8 @@ async function handler(ctx) {
                 title,
                 link: chapter.link,
                 pubDate: chapter.pubDate,
-                description: `${chapter.title} <br /><br /> ${cover ? `<img src="${cover}" />` : ''}`,
+                description: chapter.title ?? '',
+                image: cover,
             }));
         })
         .flat();

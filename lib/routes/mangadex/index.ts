@@ -27,7 +27,7 @@ async function handler(ctx) {
             title: chapter.title,
             link: chapter.link,
             pubDate: chapter.pubDate,
-            description: mangaDetail.cover ? `<img src="${mangaDetail.cover}" />` : '',
+            image: mangaDetail.cover,
         })),
     };
 }
