@@ -29,6 +29,13 @@ const labelMap: Record<FollowType, LabelType> = {
 
 export const route: Route = {
     path: '/user/follow/:type?',
+    name: "Logged User's Followed Mangas Feed",
+    maintainers: ['chrisis58'],
+    example: '/mangadex/user/follow/reading',
+    description: `Fetches the feed of mangas that you follow on MangaDex whick are in the specified status.
+CAUTION: With big amount of follows, it may take a long time to load or even fail.
+It's recommended to use the \`/mangadex/mdlist/:listId?\` route instead for better performance, though it requires manual configuration.`,
+    categories: ['anime'],
     parameters: {
         type: {
             description: 'The type of follows to fetch',
@@ -84,12 +91,6 @@ export const route: Route = {
             },
         ],
     },
-    name: "Logged User's Followed Mangas Feed",
-    maintainers: ['chrisis58'],
-    example: '/mangadex/user/follow/reading',
-    description: `Fetches the feed of mangas that you follow on MangaDex whick are in the specified status.
-CAUTION: With big amount of follows, it may take a long time to load or even fail.
-It's recommended to use the \`/mangadex/mdlist/:listId?\` route instead for better performance, though it requires manual configuration.`,
     handler,
 };
 
@@ -103,7 +104,7 @@ async function handler(ctx) {
     const accessToken = await getToken();
 
     const statuses = (await cache.tryGet(
-        'mangadex:user-follow',
+        `mangadex:user-follow-${followType}`,
         async () => {
             const response = await got.get(userFollowUrl, {
                 headers: {
