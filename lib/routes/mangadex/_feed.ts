@@ -79,9 +79,6 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
 
     const relationships = (rawMangaMeta.relationships || []) as Array<{ type: string; id: string; attributes: any }>;
 
-    const coverFilename = relationships.find((relationship) => relationship.type === 'cover_art')?.attributes.fileName + '.512.jpg';
-    const cover = `${constants.API.COVER_IMAGE}${id}/${coverFilename}`;
-
     const languages = [
         ...(typeof lang === 'string' ? [lang] : lang || []),
         ...(await getFilteredLanguages()),
@@ -101,6 +98,9 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
     if (!needCover) {
         return { title, description };
     }
+
+    const coverFilename = relationships.find((relationship) => relationship.type === 'cover_art')?.attributes.fileName + '.512.jpg';
+    const cover = `${constants.API.COVER_IMAGE}${id}/${coverFilename}`;
 
     return { title, description, cover };
 };
