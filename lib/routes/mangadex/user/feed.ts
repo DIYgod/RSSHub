@@ -8,12 +8,14 @@ import { getMangaMetaByIds } from '../_feed';
 import { getFilteredLanguages } from '../_profile';
 import { toQueryString } from '../_utils';
 
+const DEFAULT_LIMIT = 25;
+
 export const route: Route = {
     path: '/user/feed/follow/:lang?',
     name: ' MangaDex Follows Feed',
     maintainers: ['chrisis58'],
     description: 'Get the latest updates of all the manga you follow on MangaDex.',
-    example: '/mangadex/user/feed/follow',
+    example: '/mangadex/user/feed/follow/zh?limit=10',
     radar: [
         {
             source: ['mangadex.org/titles/feed'],
@@ -21,6 +23,15 @@ export const route: Route = {
         },
     ],
     categories: ['anime'],
+    parameters: {
+        lang: {
+            description: 'The language of the followed manga',
+        },
+        limit: {
+            description: '(Query Parameter) The number of followed manga to display',
+            default: DEFAULT_LIMIT.toString(),
+        },
+    },
     features: {
         requireConfig: [
             {
@@ -63,7 +74,7 @@ async function handler(ctx) {
 
     const { lang } = ctx.req.param();
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : DEFAULT_LIMIT;
 
     const accessToken = await getToken();
 
