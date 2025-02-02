@@ -30,7 +30,7 @@ const parseNotes = (data: MisskeyNote[], site: string, simplifyAuthor: boolean =
         let title = '';
         if (isReply && item.reply) {
             const replyToHost = item.reply.user.host ?? site;
-            const replyToAuthor = `${item.reply.user.name} (${item.reply.user.username}@${replyToHost})`;
+            const replyToAuthor = simplifyAuthor ? item.reply.user.name : `${item.reply.user.name} (${item.reply.user.username}@${replyToHost})`;
             title = `Reply to ${replyToAuthor}: "${noteToUse.text ?? ''}"`;
         } else if (isRenote) {
             title = `Renote: ${author}: "${noteToUse.text ?? ''}"`;
