@@ -1,6 +1,7 @@
 import got from '@/utils/got';
 import { config } from '@/config';
 import cache from '@/utils/cache';
+import md5 from '@/utils/md5';
 import { getFilteredLanguages } from './_profile';
 import { toQueryString, firstMatch } from './_utils';
 import constants from './_constants';
@@ -62,6 +63,66 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
 
     return { title, description, cover };
 };
+
+/**
+ * Retrieves the title, description, and cover of multiple manga.
+ * TODO: Retrieve page by page to avoid meeting the length limit of URL.
+ *
+ * @param ids manga ids
+ * @param needCover whether to fetch cover
+ * @param lang language(s), absent for default
+ * @returns a map of manga id to title, description, and cover
+ * @usage const mangaMetaMap = await getMangaMetaByIds(['f98660a1-d2e2-461c-960d-7bd13df8b76d']);
+ */
+export async function getMangaMetaByIds(ids: string[], needCover: boolean = true, lang?: string | string[]): Promise<Map<string, { id: string; title: string; description: string; cover?: string }>> {
+    const includes = needCover ? ['cover_art'] : [];
+
+    const rawMangaMetas = (await cache.tryGet(
+        `mangadex:manga-meta:${md5(ids.join(''))}`, // shorten the key
+        async () => {
+            const { data } = await got.get(
+                constants.API.MANGA_META.slice(0, -1) +
+                    toQueryString({
+                        ids,
+                        includes,
+                    })
+            );
+
+            if (data.result === 'error') {
+                throw new Error('Failed to retrieve manga meta from MangaDex API.');
+            }
+            return data.data;
+        },
+        config.cache.contentExpire
+    )) as any;
+
+    const languages = [...(typeof lang === 'string' ? [lang] : lang || []), ...(await getFilteredLanguages())].filter(Boolean);
+
+    return rawMangaMetas.reduce((map, rawMangaMeta) => {
+        const id = rawMangaMeta.id;
+
+        const titles = {
+            ...rawMangaMeta.attributes.title,
+            ...Object.fromEntries(rawMangaMeta.attributes.altTitles.flatMap((element) => Object.entries(element))),
+        };
+
+        const title = firstMatch(titles, [...languages, rawMangaMeta.attributes.originalLanguage]) as string;
+
+        const description = firstMatch(rawMangaMeta.attributes.description, languages) as string;
+
+        let cover: string | undefined;
+        let manga = { id, title, description, cover };
+
+        if (needCover) {
+            const coverFilename = rawMangaMeta.relationships.find((relationship) => relationship.type === 'cover_art')?.attributes.fileName + '.512.jpg';
+            cover = `${constants.API.COVER_IMAGE}${rawMangaMeta.id}/${coverFilename}`;
+            manga = { ...manga, cover };
+        }
+
+        map.set(id, manga);
+        return map;
+    }, new Map<string, { id: string; title: string; description: string; cover?: string }>());
+}
 
 /**
  * Retrieves the chapters of a manga.
