@@ -21,8 +21,8 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `| Trading | Infrastructure | Tech and Data | Regulation |
-  | ------- | -------------- | ------------- | ---------- |
-  | trading | infrastructure | tech-and-data | regulation |`,
+| ------- | -------------- | ------------- | ---------- |
+| trading | infrastructure | tech-and-data | regulation |`,
 };
 
 async function handler(ctx) {

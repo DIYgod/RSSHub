@@ -31,8 +31,8 @@ export const route: Route = {
     handler,
     url: 'www.teach.ustc.edu.cn/',
     description: `| 信息 | 教学     | 考试 | 交流     |
-  | ---- | -------- | ---- | -------- |
-  | info | teaching | exam | exchange |`,
+| ---- | -------- | ---- | -------- |
+| info | teaching | exam | exchange |`,
 };
 
 async function handler(ctx) {

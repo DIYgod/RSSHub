@@ -87,13 +87,13 @@ export const route: Route = {
   If you subscribe to [arXiv Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI), where the URL is \`https://papers.cool/arxiv/cs.AI\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/arxiv/cs.AI\`](https://rsshub.app/papers/arxiv/cs.AI).
 :::
 
-  | Category                                              | id          |
-  | ----------------------------------------------------- | ----------- |
-  | arXiv Artificial Intelligence (cs.AI)                 | arxiv/cs.AI |
-  | arXiv Computation and Language (cs.CL)                | arxiv/cs.CL |
-  | arXiv Computer Vision and Pattern Recognition (cs.CV) | arxiv/cs.CV |
-  | arXiv Machine Learning (cs.LG)                        | arxiv/cs.LG |
-  | arXiv Robotics (cs.RO)                                | arxiv/cs.RO |
+| Category                                              | id          |
+| ----------------------------------------------------- | ----------- |
+| arXiv Artificial Intelligence (cs.AI)                 | arxiv/cs.AI |
+| arXiv Computation and Language (cs.CL)                | arxiv/cs.CL |
+| arXiv Computer Vision and Pattern Recognition (cs.CV) | arxiv/cs.CV |
+| arXiv Machine Learning (cs.LG)                        | arxiv/cs.LG |
+| arXiv Robotics (cs.RO)                                | arxiv/cs.RO |
   `,
     categories: ['journal'],
 

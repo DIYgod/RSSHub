@@ -33,8 +33,8 @@ export const route: Route = {
     maintainers: ['AlanZeng423', 'SuperPung'],
     handler,
     description: `| College News | Notification | TJU Forum for CIC |
-  | :----------: | :----------: | :---------------: |
-  |     news     | notification |       forum       |`,
+| :----------: | :----------: | :---------------: |
+|     news     | notification |       forum       |`,
 };
 
 async function handler(ctx) {

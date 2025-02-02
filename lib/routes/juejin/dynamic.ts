@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -28,20 +28,19 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got({
-        method: 'get',
-        url: 'https://api.juejin.cn/user_api/v1/user/dynamic',
-        searchParams: {
+    const response = await ofetch('https://api.juejin.cn/user_api/v1/user/dynamic', {
+        query: {
             user_id: id,
             cursor: 0,
         },
     });
-    const list = response.data.data.list;
+    const list = response.data.list;
 
-    const username = list[0].user.user_name;
+    const user = list[0].user;
+    const username = user.user_name;
 
     const items = list.map((e) => {
-        const { target_type, target_data, action, time } = e; // action: 0.发布文章；1.点赞文章；2.发布沸点；3.点赞沸点；4.关注用户
+        const { target_type, target_data, action, time } = e; // action: 0.发布文章；1.点赞文章；2.发布沸点；3.点赞沸点；4.关注用户；5.关注标签
         let title: string | undefined;
         let description: string | undefined;
         let pubDate: Date | undefined;
@@ -91,6 +90,16 @@ async function handler(ctx) {
                 pubDate = parseDate(time * 1000);
                 break;
             }
+            case 'tag': {
+                // 关注标签
+                const { tag_name } = target_data;
+                title = `${username} 关注了标签 ${tag_name}`;
+                description = tag_name;
+                category = [tag_name];
+                link = `https://juejin.cn/tag/${encodeURIComponent(tag_name)}`;
+                pubDate = parseDate(time * 1000);
+                break;
+            }
             default:
                 break;
         }
@@ -107,7 +116,8 @@ async function handler(ctx) {
     return {
         title: `掘金用户动态-${username}`,
         link: `https://juejin.cn/user/${id}/`,
-        description: `掘金用户动态-${username}`,
+        description: user.description || `掘金用户动态-${username}`,
+        image: user.avatar_large,
         item: items,
         author: username,
     };

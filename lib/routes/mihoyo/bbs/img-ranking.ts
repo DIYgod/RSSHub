@@ -62,43 +62,43 @@ export const route: Route = {
     maintainers: ['CaoMeiYouRen'],
     handler,
     description: `| 键          | 含义                                  | 接受的值                                                             | 默认值       |
-  | ----------- | ------------------------------------- | -------------------------------------------------------------------- | ------------ |
-  | forumType   | 主榜类型（仅原神、大别野有 cos 主榜） | tongren/cos                                                          | tongren      |
-  | cateType    | 子榜类型（仅崩坏三、原神有子榜）      | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |
-  | rankingType | 排行榜类型（崩坏二没有日榜）          | daily/weekly/monthly                                                 | daily        |
-  | lastId      | 当前页 id（用于分页）                 | 数字                                                                 | 1            |
+| ----------- | ------------------------------------- | -------------------------------------------------------------------- | ------------ |
+| forumType   | 主榜类型（仅原神、大别野有 cos 主榜） | tongren/cos                                                          | tongren      |
+| cateType    | 子榜类型（仅崩坏三、原神有子榜）      | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |
+| rankingType | 排行榜类型（崩坏二没有日榜）          | daily/weekly/monthly                                                 | daily        |
+| lastId      | 当前页 id（用于分页）                 | 数字                                                                 | 1            |
 
   游戏缩写
 
-  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 大别野 | 绝区零 |
-  | ------ | ---- | ------ | ---------- | -------- | ------ | ------ |
-  | bh3    | ys   | bh2    | wd         | sr       | dby    | zzz    |
+| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 大别野 | 绝区零 |
+| ------ | ---- | ------ | ---------- | -------- | ------ | ------ |
+| bh3    | ys   | bh2    | wd         | sr       | dby    | zzz    |
 
   主榜类型
 
-  | 同人榜  | COS 榜 |
-  | ------- | ------ |
-  | tongren | cos    |
+| 同人榜  | COS 榜 |
+| ------- | ------ |
+| tongren | cos    |
 
   子榜类型
 
   崩坏三 子榜
 
-  | 插画         | 漫画  | COS |
-  | ------------ | ----- | --- |
-  | illustration | comic | cos |
+| 插画         | 漫画  | COS |
+| ------------ | ----- | --- |
+| illustration | comic | cos |
 
   原神 子榜
 
-  | 插画         | 漫画  | Q 版 | 手工   |
-  | ------------ | ----- | ---- | ------ |
-  | illustration | comic | qute | manual |
+| 插画         | 漫画  | Q 版 | 手工   |
+| ------------ | ----- | ---- | ------ |
+| illustration | comic | qute | manual |
 
   排行榜类型
 
-  | 日榜  | 周榜   | 月榜    |
-  | ----- | ------ | ------- |
-  | daily | weekly | monthly |`,
+| 日榜  | 周榜   | 月榜    |
+| ----- | ------ | ------- |
+| daily | weekly | monthly |`,
 };
 
 async function handler(ctx) {

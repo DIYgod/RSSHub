@@ -41,8 +41,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 全部 | 精选 | 政策 | 数据 | NFT | 项目 |
-  | ---- | ---- | ---- | ---- | --- | ---- |
-  | 0    | 1    | 2    | 3    | 4   | 5    |`,
+| ---- | ---- | ---- | ---- | --- | ---- |
+| 0    | 1    | 2    | 3    | 4   | 5    |`,
 };
 
 async function handler(ctx) {

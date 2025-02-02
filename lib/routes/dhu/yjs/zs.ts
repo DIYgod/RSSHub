@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: ['fox2049'],
     handler,
     description: `| 博士招生 | 硕士招生 |
-  | -------- | -------- |
-  | doctor   | master   |`,
+| -------- | -------- |
+| doctor   | master   |`,
 };
 
 async function handler(ctx) {

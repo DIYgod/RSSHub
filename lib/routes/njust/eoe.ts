@@ -29,8 +29,8 @@ export const route: Route = {
     maintainers: ['jasongzy'],
     handler,
     description: `| 通知公告 | 新闻动态 |
-  | -------- | -------- |
-  | tzgg     | xwdt     |`,
+| -------- | -------- |
+| tzgg     | xwdt     |`,
 };
 
 async function handler(ctx) {

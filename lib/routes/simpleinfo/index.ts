@@ -33,16 +33,16 @@ export const route: Route = {
     maintainers: ['haukeng'],
     handler,
     description: `| 夥伴聊聊 | 專案設計 |
-  | -------- | -------- |
-  | work     | talk     |
+| -------- | -------- |
+| work     | talk     |
 
-  | 國內外新聞 | 政治百分百 | 社會觀察家 | 心理與哲學            |
-  | ---------- | ---------- | ---------- | --------------------- |
-  | news       | politics   | society    | psychology-philosophy |
+| 國內外新聞 | 政治百分百 | 社會觀察家 | 心理與哲學            |
+| ---------- | ---------- | ---------- | --------------------- |
+| news       | politics   | society    | psychology-philosophy |
 
-  | 科學大探索 | 環境與健康         | ACG 快樂聊 | 好書籍分享   | 其它主題     |
-  | ---------- | ------------------ | ---------- | ------------ | ------------ |
-  | science    | environment-health | acg        | book-sharing | other-topics |`,
+| 科學大探索 | 環境與健康         | ACG 快樂聊 | 好書籍分享   | 其它主題     |
+| ---------- | ------------------ | ---------- | ------------ | ------------ |
+| science    | environment-health | acg        | book-sharing | other-topics |`,
 };
 
 async function handler(ctx) {

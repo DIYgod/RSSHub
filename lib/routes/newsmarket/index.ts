@@ -26,12 +26,12 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 時事。政策  | 食安        | 新知      | 愛地方       | 種好田       | 好吃。好玩    |
-  | ----------- | ----------- | --------- | ------------ | ------------ | ------------- |
-  | news-policy | food-safety | knowledge | country-life | good-farming | good-food-fun |
+| ----------- | ----------- | --------- | ------------ | ------------ | ------------- |
+| news-policy | food-safety | knowledge | country-life | good-farming | good-food-fun |
 
-  | 食農教育       | 人物               | 漁業。畜牧           | 綠生活。國際        | 評論    |
-  | -------------- | ------------------ | -------------------- | ------------------- | ------- |
-  | food-education | people-and-history | raising-and-breeding | living-green-travel | opinion |`,
+| 食農教育       | 人物               | 漁業。畜牧           | 綠生活。國際        | 評論    |
+| -------------- | ------------------ | -------------------- | ------------------- | ------- |
+| food-education | people-and-history | raising-and-breeding | living-green-travel | opinion |`,
 };
 
 async function handler(ctx) {
