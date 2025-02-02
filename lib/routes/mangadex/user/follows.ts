@@ -29,6 +29,20 @@ const labelMap: Record<FollowType, LabelType> = {
 
 export const route: Route = {
     path: '/user/follow/:type?',
+    parameters: {
+        type: {
+            description: 'The type of follows to fetch',
+            default: 'reading',
+            options: [
+                { value: 'reading', label: 'Reading' },
+                { value: 'plan-to-read', label: 'Plan to Read' },
+                { value: 'completed', label: 'Completed' },
+                { value: 'on-hold', label: 'On Hold' },
+                { value: 're-reading', label: 'Re-reading' },
+                { value: 'dropped', label: 'Dropped' },
+            ],
+        },
+    },
     radar: [
         // TODO: how to resolve the query string?
         {
@@ -84,7 +98,7 @@ async function handler(ctx) {
 
     const { type } = ctx.req.param();
 
-    const followType = type as FollowType;
+    const followType = (type || 'reading') as FollowType;
 
     const accessToken = await getToken();
 
