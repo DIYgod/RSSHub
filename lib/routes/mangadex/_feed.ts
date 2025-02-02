@@ -22,10 +22,9 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
         `mangadex:manga-meta:${id}`,
         async () => {
             const { data } = await got.get(
-                `${constants.API.MANGA_META}${id}` +
-                    toQueryString({
-                        includes,
-                    })
+                `${constants.API.MANGA_META}${id}${toQueryString({
+                    includes,
+                })}`
             );
 
             if (data.result === 'error') {
