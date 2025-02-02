@@ -73,6 +73,9 @@ export const route: Route = {
     name: "Logged User's Followed Mangas Feed",
     maintainers: ['chrisis58'],
     example: '/mangadex/user/follow/reading',
+    description: `Fetches the feed of mangas that you follow on MangaDex whick are in the specified status.
+CAUTION: With big amount of follows, it may take a long time to load or even fail.
+It's recommended to use the \`/mangadex/mdlist/:listId?\` route instead for better performance, though it requires manual configuration.`,
     handler,
 };
 
