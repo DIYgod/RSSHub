@@ -2,50 +2,8 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import { getFilteredLanguages } from './_profile';
-
+import { toQueryString, firstMatch } from './_utils';
 import constants from './_constants';
-
-/**
- * Get the first value that matches the keys in the source object
- *
- * @param source the source object
- * @param keys the keys to search
- * @returns the first match value, or the first value as fallback
- */
-const firstMatch = (source: Map<string, string> | object, keys: string[]) => {
-    for (const key of keys) {
-        const value = source instanceof Map ? source.get(key) : source[key];
-        if (value) {
-            return value;
-        }
-    }
-    return Object.values(source)[0];
-};
-
-function toQueryString(params: Record<string, any>): string {
-    const queryParts: string[] = [];
-
-    for (const [key, value] of Object.entries(params)) {
-        if (typeof value === 'object' && !Array.isArray(value) && !(value instanceof Set)) {
-            for (const [subKey, subValue] of Object.entries(value)) {
-                if (typeof subValue === 'string' || typeof subValue === 'number' || typeof subValue === 'boolean') {
-                    queryParts.push(`${encodeURIComponent(key)}[${encodeURIComponent(subKey)}]=${encodeURIComponent(subValue)}`);
-                }
-            }
-        } else if (Array.isArray(value) || value instanceof Set) {
-            for (const item of value) {
-                queryParts.push(`${encodeURIComponent(key)}[]=${encodeURIComponent(item)}`);
-            }
-        } else {
-            queryParts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-        }
-    }
-
-    if (queryParts.length === 0) {
-        return '';
-    }
-    return '?' + queryParts.join('&');
-}
 
 /**
  * Retrieves the title, description, and cover of a manga.
