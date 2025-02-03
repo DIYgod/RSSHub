@@ -156,7 +156,7 @@ async function handler(ctx) {
                 title: mangaMeta?.title || 'Unknown',
                 link: `${constants.API.MANGA_CHAPTERS}${chapter.id}`,
                 pubDate: new Date(chapter.attributes.publishAt),
-                description: chapterTitile ?? '',
+                description: chapterTitile,
                 image: mangaMeta?.cover,
             };
         }),

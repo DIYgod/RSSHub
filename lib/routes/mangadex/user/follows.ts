@@ -152,6 +152,5 @@ async function handler(ctx) {
 
 const filterByValue = (record: Record<string, string>, value: string): string[] =>
     Object.entries(record)
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .filter(([_, v]) => v === value)
+        .filter(([, v]) => v === value)
         .map(([k]) => k);
