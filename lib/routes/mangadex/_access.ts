@@ -48,8 +48,8 @@ const getToken = () => {
 };
 
 const getAccessTokenByUserCredentials = async () => {
-    if (!config.mangadex.username || !config.mangadex.password) {
-        throw new ConfigNotFoundError('Cannot get access token since MangaDex username or password is not set.');
+    if (!config.mangadex.clientId || !config.mangadex.clientSecret) {
+        throw new ConfigNotFoundError('Cannot get access token since MangaDex client ID or secret is not set.');
     }
 
     if (!config.mangadex.username || !config.mangadex.password) {
