@@ -20,7 +20,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.wainao.me', 'www.wainao.me/wainao-reads'],
-            target: '/wainao/wainao-reads',
+            target: '/wainao-reads',
         },
     ],
     handler,
