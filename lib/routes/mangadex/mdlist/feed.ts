@@ -144,7 +144,7 @@ async function handler(ctx) {
     const mangaMetas = await getMangaMetaByIds(mangaIds);
 
     return {
-        title: `MangaDex MDList Feed - ${listName} by ${listAuthor}`,
+        title: `MangaDex MDList - ${listName} by ${listAuthor}`,
         link: `https://mangadex.org/list/${id}/demolist?tab=feed`,
         description: 'The latest updates of all the manga in a sepcific list',
         item: feed.map((chapter) => {
