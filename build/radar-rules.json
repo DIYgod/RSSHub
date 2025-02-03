@@ -23806,6 +23806,19 @@
       }
     ]
   },
+  "nautiljon.com": {
+    "_name": "Nautiljon",
+    ".": [
+      {
+        "title": "France manga releases",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/"
+        ],
+        "target": "/nautiljon/releases/manga"
+      }
+    ]
+  },
   "nbd.com.cn": {
     "_name": "每经网",
     ".": [

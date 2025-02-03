@@ -60695,6 +60695,42 @@
     "url": "nautil.us",
     "lang": "en"
   },
+  "nautiljon": {
+    "routes": {
+      "/releases/manga": {
+        "path": "/releases/manga",
+        "categories": [
+          "reading"
+        ],
+        "example": "nautiljon/releases/manga",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "nautiljon.com/"
+            ]
+          }
+        ],
+        "name": "France manga releases",
+        "maintainers": [
+          "Fafnor"
+        ],
+        "url": "nautiljon.com",
+        "location": "manga-releases.ts"
+      }
+    },
+    "name": "Nautiljon",
+    "url": "nautiljon.com",
+    "lang": "fr"
+  },
   "nbd": {
     "routes": {
       "/daily": {
