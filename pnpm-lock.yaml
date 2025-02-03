@@ -241,8 +241,8 @@ importers:
         specifier: 4.0.1
         version: 4.0.1
       tldts:
-        specifier: 6.1.75
-        version: 6.1.75
+        specifier: 6.1.76
+        version: 6.1.76
       tosource:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
@@ -253,8 +253,8 @@ importers:
         specifier: 4.19.2
         version: 4.19.2
       twitter-api-v2:
-        specifier: 1.19.0
-        version: 1.19.0
+        specifier: 1.19.1
+        version: 1.19.1
       ufo:
         specifier: 1.5.4
         version: 1.5.4
@@ -344,8 +344,8 @@ importers:
         specifier: 2.0.4
         version: 2.0.4
       '@types/node':
-        specifier: 22.12.0
-        version: 22.12.0
+        specifier: 22.13.0
+        version: 22.13.0
       '@types/sanitize-html':
         specifier: 2.13.0
         version: 2.13.0
@@ -372,10 +372,10 @@ importers:
         version: 0.29.1(rollup@4.24.4)
       '@vitest/coverage-v8':
         specifier: 2.0.5
-        version: 2.0.5(vitest@2.0.5(@types/node@22.12.0)(jsdom@26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
+        version: 2.0.5(vitest@2.0.5(@types/node@22.13.0)(jsdom@26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       discord-api-types:
-        specifier: 0.37.118
-        version: 0.37.118
+        specifier: 0.37.119
+        version: 0.37.119
       eslint:
         specifier: 9.19.0
         version: 9.19.0
@@ -441,10 +441,10 @@ importers:
         version: 11.0.5
       vite-tsconfig-paths:
         specifier: 5.1.4
-        version: 5.1.4(typescript@5.7.3)(vite@5.4.10(@types/node@22.12.0))
+        version: 5.1.4(typescript@5.7.3)(vite@5.4.10(@types/node@22.13.0))
       vitest:
         specifier: 2.0.5
-        version: 2.0.5(@types/node@22.12.0)(jsdom@26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+        version: 2.0.5(@types/node@22.13.0)(jsdom@26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       yaml-eslint-parser:
         specifier: 1.2.3
         version: 1.2.3
@@ -2011,8 +2011,8 @@ packages:
   '@types/node-fetch@2.6.11':
     resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
 
-  '@types/node@22.12.0':
-    resolution: {integrity: sha512-Fll2FZ1riMjNmlmJOdAyY5pUbkftXslB5DgEzlIuNaiWhXd00FhWxVC/r4yV/4wBb9JfImTu+jiSvXTkJ7F/gA==}
+  '@types/node@22.13.0':
+    resolution: {integrity: sha512-ClIbNe36lawluuvq3+YYhnIN2CELi+6q8NpnM7PYp4hBn/TatfboPgVSm2rwKRfnV2M+Ty9GWDFI64KEe+kysA==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -2821,8 +2821,8 @@ packages:
     resolution: {integrity: sha512-dSApZXgx29qO/6AVigdsoC6HSvaHWinJ4HTRPKrlMAxX71FgPzn/WEWbgM+aB1PlKD9IfSC3Ir2ouYYQR1uy+g==}
     engines: {node: '>=18.17.0'}
 
-  discord-api-types@0.37.118:
-    resolution: {integrity: sha512-MQkHHZcytmNQ3nQOBj6a0z38swsmHiROX7hdayfd0eWVrLxaQp/6tWBZ7FO2MCKKsc+W3QWnnfOJTbtyk8C4TQ==}
+  discord-api-types@0.37.119:
+    resolution: {integrity: sha512-WasbGFXEB+VQWXlo6IpW3oUv73Yuau1Ig4AZF/m13tXcTKnMpc/mHjpztIlz4+BM9FG9BHQkEXiPto3bKduQUg==}
 
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
@@ -5267,11 +5267,11 @@ packages:
     resolution: {integrity: sha512-tcwMRIioTcF/FcxLev8MJWxCp+GUALRhFEqbDoZrnowmKSGqPrl5pqS+Sut2m8BgJ6S4FExCSSpGffZ0Tks6Aw==}
     hasBin: true
 
-  tldts-core@6.1.75:
-    resolution: {integrity: sha512-AOvV5YYIAFFBfransBzSTyztkc3IMfz5Eq3YluaRiEu55nn43Fzaufx70UqEKYr8BoLCach4q8g/bg6e5+/aFw==}
+  tldts-core@6.1.76:
+    resolution: {integrity: sha512-uzhJ02RaMzgQR3yPoeE65DrcHI6LoM4saUqXOt/b5hmb3+mc4YWpdSeAQqVqRUlQ14q8ZuLRWyBR1ictK1dzzg==}
 
-  tldts@6.1.75:
-    resolution: {integrity: sha512-+lFzEXhpl7JXgWYaXcB6DqTYXbUArvrWAE/5ioq/X3CdWLbDjpPP4XTrQBmEJ91y3xbe4Fkw7Lxv4P3GWeJaNg==}
+  tldts@6.1.76:
+    resolution: {integrity: sha512-6U2ti64/nppsDxQs9hw8ephA3nO6nSQvVVfxwRw8wLQPFtLI1cFI1a1eP22g+LUP+1TA2pKKjUTwWB+K2coqmQ==}
     hasBin: true
 
   tmp@0.0.33:
@@ -5372,8 +5372,8 @@ packages:
   tweetnacl@0.14.5:
     resolution: {integrity: sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==}
 
-  twitter-api-v2@1.19.0:
-    resolution: {integrity: sha512-jfG4aapNPM9+4VxNxn0TXvD8Qj8NmVx6cY0hp5K626uZ41qXPaJz33Djd3y6gfHF/+W29+iZz0Y5qB869d/akA==}
+  twitter-api-v2@1.19.1:
+    resolution: {integrity: sha512-X7+j1/VBiynw443ugDtEbFspYrWN26WH117uFc89K1+FkAgcSvj2GGMF8mIWPag2K4eS1Vd5HW35zorNdTveOg==}
 
   type-check@0.3.2:
     resolution: {integrity: sha512-ZCmOJdvOWDBYJlzAoFkC+Q0+bUyEOS1ltgp1MGU03fqHG+dbi9tBFU2Rd9QKiDZFAYrhPh2JUf7rZRIuHRKtOg==}
@@ -6906,7 +6906,7 @@ snapshots:
       '@inquirer/figures': 1.0.7
       '@inquirer/type': 2.0.0
       '@types/mute-stream': 0.0.4
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
       '@types/wrap-ansi': 3.0.0
       ansi-escapes: 4.3.2
       cli-width: 4.1.0
@@ -7399,12 +7399,12 @@ snapshots:
 
   '@types/etag@1.8.3':
     dependencies:
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
 
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
 
   '@types/html-to-text@9.0.4': {}
 
@@ -7412,13 +7412,13 @@ snapshots:
 
   '@types/imapflow@1.0.19':
     dependencies:
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
 
   '@types/js-beautify@1.14.3': {}
 
   '@types/jsdom@21.1.7':
     dependencies:
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
       '@types/tough-cookie': 4.0.5
       parse5: 7.2.1
 
@@ -7428,7 +7428,7 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
 
   '@types/jsrsasign@10.5.13': {}
 
@@ -7438,7 +7438,7 @@ snapshots:
 
   '@types/mailparser@3.4.5':
     dependencies:
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
       iconv-lite: 0.6.3
 
   '@types/markdown-it@14.1.2':
@@ -7460,14 +7460,14 @@ snapshots:
 
   '@types/mute-stream@0.0.4':
     dependencies:
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
 
   '@types/node-fetch@2.6.11':
     dependencies:
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
       form-data: 4.0.1
 
-  '@types/node@22.12.0':
+  '@types/node@22.13.0':
     dependencies:
       undici-types: 6.20.0
 
@@ -7481,7 +7481,7 @@ snapshots:
   '@types/request@2.48.12':
     dependencies:
       '@types/caseless': 0.12.5
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.2
 
@@ -7495,7 +7495,7 @@ snapshots:
     dependencies:
       '@types/cookiejar': 2.1.5
       '@types/methods': 1.1.4
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
       form-data: 4.0.1
 
   '@types/supertest@6.0.2':
@@ -7519,7 +7519,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.22.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint@9.19.0)(typescript@5.7.3)':
@@ -7625,7 +7625,7 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vitest/coverage-v8@2.0.5(vitest@2.0.5(@types/node@22.12.0)(jsdom@26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
+  '@vitest/coverage-v8@2.0.5(vitest@2.0.5(@types/node@22.13.0)(jsdom@26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -7639,7 +7639,7 @@ snapshots:
       std-env: 3.7.0
       test-exclude: 7.0.1
       tinyrainbow: 1.2.0
-      vitest: 2.0.5(@types/node@22.12.0)(jsdom@26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      vitest: 2.0.5(@types/node@22.13.0)(jsdom@26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
     transitivePeerDependencies:
       - supports-color
 
@@ -8336,7 +8336,7 @@ snapshots:
 
   directory-import@3.3.2: {}
 
-  discord-api-types@0.37.118: {}
+  discord-api-types@0.37.119: {}
 
   doctrine@3.0.0:
     dependencies:
@@ -10479,7 +10479,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
       long: 5.2.3
 
   proxy-agent@6.4.0:
@@ -11171,11 +11171,11 @@ snapshots:
 
   tlds@1.255.0: {}
 
-  tldts-core@6.1.75: {}
+  tldts-core@6.1.76: {}
 
-  tldts@6.1.75:
+  tldts@6.1.76:
     dependencies:
-      tldts-core: 6.1.75
+      tldts-core: 6.1.76
 
   tmp@0.0.33:
     dependencies:
@@ -11211,7 +11211,7 @@ snapshots:
 
   tough-cookie@5.1.0:
     dependencies:
-      tldts: 6.1.75
+      tldts: 6.1.76
 
   tr46@0.0.3: {}
 
@@ -11260,7 +11260,7 @@ snapshots:
 
   tweetnacl@0.14.5: {}
 
-  twitter-api-v2@1.19.0: {}
+  twitter-api-v2@1.19.1: {}
 
   type-check@0.3.2:
     dependencies:
@@ -11410,13 +11410,13 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-node@2.0.5(@types/node@22.12.0):
+  vite-node@2.0.5(@types/node@22.13.0):
     dependencies:
       cac: 6.7.14
       debug: 4.4.0
       pathe: 1.1.2
       tinyrainbow: 1.2.0
-      vite: 5.4.10(@types/node@22.12.0)
+      vite: 5.4.10(@types/node@22.13.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -11428,27 +11428,27 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@5.4.10(@types/node@22.12.0)):
+  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@5.4.10(@types/node@22.13.0)):
     dependencies:
       debug: 4.3.7
       globrex: 0.1.2
       tsconfck: 3.1.4(typescript@5.7.3)
     optionalDependencies:
-      vite: 5.4.10(@types/node@22.12.0)
+      vite: 5.4.10(@types/node@22.13.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@5.4.10(@types/node@22.12.0):
+  vite@5.4.10(@types/node@22.13.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.47
       rollup: 4.24.4
     optionalDependencies:
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
       fsevents: 2.3.3
 
-  vitest@2.0.5(@types/node@22.12.0)(jsdom@26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
+  vitest@2.0.5(@types/node@22.13.0)(jsdom@26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@vitest/expect': 2.0.5
@@ -11466,11 +11466,11 @@ snapshots:
       tinybench: 2.9.0
       tinypool: 1.0.1
       tinyrainbow: 1.2.0
-      vite: 5.4.10(@types/node@22.12.0)
-      vite-node: 2.0.5(@types/node@22.12.0)
+      vite: 5.4.10(@types/node@22.13.0)
+      vite-node: 2.0.5(@types/node@22.13.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 22.12.0
+      '@types/node': 22.13.0
       jsdom: 26.0.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - less
