@@ -19,8 +19,8 @@ export const route: Route = {
     maintainers: ['lucky13820'],
     radar: [
         {
-            source: ['https://www.wainao.me', 'https://www.wainao.me/wainao-reads'],
-            target: '/wainao/wainao-reads',
+            source: ['www.wainao.me', 'www.wainao.me/wainao-reads'],
+            target: '/wainao-reads',
         },
     ],
     handler,
