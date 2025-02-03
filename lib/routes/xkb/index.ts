@@ -44,7 +44,7 @@ async function handler(ctx) {
         method: 'get',
         url: currentUrl,
         headers: {
-            siteId: '35',
+            siteId: 35,
         },
     });
 
