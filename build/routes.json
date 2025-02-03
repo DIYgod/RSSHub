@@ -59026,6 +59026,45 @@
         ],
         "location": "featured-notes.ts"
       },
+      "/timeline/home/:site/:routeParams?": {
+        "path": "/timeline/home/:site/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 1,
+        "example": "/misskey/timeline/home/misskey.io",
+        "parameters": {
+          "site": "instance address, domain only, without `http://` or `https://` protocol header",
+          "routeParams": "\n            | Key                  | Description                             | Accepted Values | Default |\n            | -------------------- | --------------------------------------- | --------------- | ------- |\n            | limit                | Number of notes to return               | integer         | 10      |\n            | withFiles            | Only return notes containing files      | 0/1/true/false  | false   |\n            | withRenotes          | Include renotes in the timeline         | 0/1/true/false  | true    |\n            | allowPartial         | Allow partial results                   | 0/1/true/false  | true    |\n            | simplifyAuthor       | Simplify author field in feed items     | 0/1/true/false  | true    |\n\n            Note: If `withFiles` is set to true, renotes will not be included in the timeline regardless of the value of `withRenotes`.\n\n            Examples:\n            - /misskey/timeline/home/misskey.io/limit=20&withFiles=true\n            - /misskey/timeline/home/misskey.io/withRenotes=false\n        "
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "MISSKEY_ACCESS_TOKEN",
+              "optional": false,
+              "description": "\n                    Access token for Misskey API. Requires `read:account` access.\n\n                    Visit the specified site's settings page to obtain an access token. E.g. https://misskey.io/settings/api\n                "
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "misskey.io"
+            ]
+          }
+        ],
+        "name": "Home Timeline",
+        "maintainers": [
+          "HanaokaYuzu"
+        ],
+        "description": "\n        ::: warning\n            This route is only available for self-hosted instances.\n        :::\n    ",
+        "location": "home-timeline.ts"
+      },
       "/users/notes/:username/:routeParams?": {
         "path": "/users/notes/:username/:routeParams?",
         "categories": [
@@ -59036,7 +59075,7 @@
         "example": "/misskey/users/notes/support@misskey.io",
         "parameters": {
           "username": "Misskey username in the format of username@instance.domain",
-          "routeParams": "\n| Key         | Description                        | Accepted Values | Default |\n| ----------- | ---------------------------------- | --------------- | ------- |\n| withRenotes | Include renotes in the timeline    | 0/1/true/false  | false   |\n| mediaOnly   | Only return posts containing media | 0/1/true/false  | false   |\n\nNote: `withRenotes` and `mediaOnly` are mutually exclusive and cannot both be set to true.\n\nExamples:\n- /misskey/users/notes/mttb2ccp@misskey.io/withRenotes=true\n- /misskey/users/notes/mttb2ccp@misskey.io/mediaOnly=true"
+          "routeParams": "\n| Key               | Description                             | Accepted Values | Default |\n| ----------------- | --------------------------------------- | --------------- | ------- |\n| withRenotes       | Include renotes in the timeline         | 0/1/true/false  | false   |\n| mediaOnly         | Only return posts containing media      | 0/1/true/false  | false   |\n| simplifyAuthor    | Simplify author field in feed items     | 0/1/true/false  | false   |\n\nNote: `withRenotes` and `mediaOnly` are mutually exclusive and cannot both be set to true.\n\nExamples:\n- /misskey/users/notes/mttb2ccp@misskey.io/withRenotes=true\n- /misskey/users/notes/mttb2ccp@misskey.io/mediaOnly=true"
         },
         "features": {
           "requireConfig": false,
@@ -59049,7 +59088,8 @@
         "name": "User timeline",
         "maintainers": [
           "siygle",
-          "SnowAgar25"
+          "SnowAgar25",
+          "HanaokaYuzu"
         ],
         "location": "user-timeline.ts"
       }

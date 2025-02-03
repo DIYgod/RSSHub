@@ -4617,9 +4617,13 @@
   "/misskey/notes/featured/:site": [
     "Misaka13514"
   ],
+  "/misskey/timeline/home/:site/:routeParams?": [
+    "HanaokaYuzu"
+  ],
   "/misskey/users/notes/:username/:routeParams?": [
     "siygle",
-    "SnowAgar25"
+    "SnowAgar25",
+    "HanaokaYuzu"
   ],
   "/misskon/posts/:routeParams?": [
     "Urabartin"

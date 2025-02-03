@@ -23328,6 +23328,19 @@
       }
     ]
   },
+  "misskey.io": {
+    "_name": "Misskey",
+    ".": [
+      {
+        "title": "Home Timeline",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/"
+        ],
+        "target": "/misskey/timeline/home/:site/:routeParams?"
+      }
+    ]
+  },
   "misskon.com": {
     "_name": "MissKON",
     ".": [
