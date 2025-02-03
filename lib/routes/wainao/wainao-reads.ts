@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/wainao-reads',
-    categories: ['blog'],
+    categories: ['new-media'],
     example: '/wainao/wainao-reads',
     features: {
         requireConfig: false,
@@ -14,12 +14,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    url: 'https://www.wainao.me',
+    url: 'www.wainao.me',
     name: '歪脑读',
     maintainers: ['lucky13820'],
     radar: [
         {
-            source: ['https://www.wainao.me', 'https://www.wainao.me/wainao-reads'],
+            source: ['www.wainao.me', 'www.wainao.me/wainao-reads'],
             target: '/wainao/wainao-reads',
         },
     ],
