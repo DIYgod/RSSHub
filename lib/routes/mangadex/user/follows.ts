@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import getToken from '../_access';
 import cache from '@/utils/cache';
 import { config } from '@/config';
-import { getMangaMeta, getMangaChapters } from '../_feed';
+import { getMangaChapters, getMangaMetaByIds } from '../_feed';
 
 type FollowType = 'reading' | 'plan-to-read' | 'completed' | 'on-hold' | 're-reading' | 'dropped';
 type StatusType = 'reading' | 'plan_to_read' | 'completed' | 'on_hold' | 're_reading' | 'dropped';
@@ -125,19 +125,19 @@ async function handler(ctx) {
 
     const mangaIds = filterByValue(statuses, statusMap[followType]);
 
-    const mangaMetas = await Promise.all(mangaIds.map((id) => getMangaMeta(id)));
+    const mangaMetaMap = await getMangaMetaByIds(mangaIds);
 
     const mangaChapters = await Promise.all(mangaIds.map((id) => getMangaChapters(id, undefined, 10)));
 
     const mangas = mangaChapters
         .flatMap((chapters, index) => {
-            const { title, cover } = mangaMetas[index];
+            const mangaMeta = mangaMetaMap.get(mangaIds[index]);
             return chapters.map((chapter) => ({
-                title,
+                title: mangaMeta?.title ?? 'Unknown',
                 link: chapter.link,
                 pubDate: chapter.pubDate,
                 description: chapter.title ?? '',
-                image: cover,
+                image: mangaMeta?.cover ?? '',
             }));
         })
         .flat();
