@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { DataItem } from '@/types';
 import { Context } from 'hono';
 import { Api } from 'telegram';
@@ -109,11 +108,14 @@ export default async function handler(ctx: Context) {
         let text = message.text; // must not be HTML
 
         if (message.fwdFrom?.fromId) {
+            // eslint-disable-next-line no-await-in-loop
             const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
             text = `Forwarded From: ${getDisplayName(fwdFrom)}: ${text}`;
         }
+        // eslint-disable-next-line no-await-in-loop
         const media = await unwrapMedia(message.media, message.peerId);
         if (message.media instanceof Api.MessageMediaStory && media) { // if successfully loaded the story
+            // eslint-disable-next-line no-await-in-loop
             const storyFrom = await client.getEntity(message.media.peer);
             text = `Story From: ${getDisplayName(storyFrom)}: ${text}`;
         }

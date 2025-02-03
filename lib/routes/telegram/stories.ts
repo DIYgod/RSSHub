@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import NotFoundError from '@/errors/types/not-found';
 import { configureMiddlewares, handleMedia } from '@/routes/telegram/channel-media';
 import { Data, DataItem, Route } from '@/types';
@@ -67,11 +66,11 @@ export default async function handler(ctx: Context) {
         }
         const src = `${new URL(ctx.req.url).origin}/telegram/stories/${username}/${story.id}`;
         const pubDate = new Date(story.date * 1000).toUTCString();
+        // eslint-disable-next-line no-await-in-loop
         const media = await unwrapMedia(story.media);
         if (!media) { // cannot load the story
             continue;
-        }
-        const description = getMediaLink(src, media) + getMediaAreas(story.mediaAreas);
+        }        const description = getMediaLink(src, media) + getMediaAreas(story.mediaAreas);
         item.push({
             title: story.caption ?? pubDate,
             description,

@@ -103,7 +103,7 @@ export async function* streamDocument(client: TelegramClient, obj: Api.Document,
     if (limit) {
         iterFileParams.limit = limit.valueOf();
     }
-    console.log('starting iterDownload');
+    // console.log('starting iterDownload');
     const stream = client.iterDownload(iterFileParams);
     yield* stream;
     await stream.close();
@@ -123,7 +123,7 @@ function parseRange(range: string, length: bigInt.BigInteger) {
         const range = seg
             .split('-', 2)
             .filter((v) => !!v)
-            .map(bigInt);
+            .map((v) => bigInt(v));
         if (range.length < 2) {
             if (seg.startsWith('-')) {
                 range.unshift(bigInt(0));
