@@ -1,10 +1,10 @@
-import { Route, ViewType, Data } from '@/types';
-import utils from './utils';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { Data, Route, ViewType } from '@/types';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import querystring from 'querystring';
+import utils from './utils';
 
 export const route: Route = {
     path: '/users/notes/:username/:routeParams?',
@@ -14,10 +14,11 @@ export const route: Route = {
     parameters: {
         username: 'Misskey username in the format of username@instance.domain',
         routeParams: `
-| Key         | Description                        | Accepted Values | Default |
-| ----------- | ---------------------------------- | --------------- | ------- |
-| withRenotes | Include renotes in the timeline    | 0/1/true/false  | false   |
-| mediaOnly   | Only return posts containing media | 0/1/true/false  | false   |
+| Key               | Description                             | Accepted Values | Default |
+| ----------------- | --------------------------------------- | --------------- | ------- |
+| withRenotes       | Include renotes in the timeline         | 0/1/true/false  | false   |
+| mediaOnly         | Only return posts containing media      | 0/1/true/false  | false   |
+| simplifyAuthor    | Simplify author field in feed items     | 0/1/true/false  | false   |
 
 Note: \`withRenotes\` and \`mediaOnly\` are mutually exclusive and cannot both be set to true.
 
@@ -34,7 +35,7 @@ Examples:
         supportScihub: false,
     },
     name: 'User timeline',
-    maintainers: ['siygle', 'SnowAgar25'],
+    maintainers: ['siygle', 'SnowAgar25', 'HanaokaYuzu'],
     handler,
 };
 
@@ -51,6 +52,7 @@ async function handler(ctx): Promise<Data> {
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
     const withRenotes = fallback(undefined, queryToBoolean(routeParams.withRenotes), false);
     const mediaOnly = fallback(undefined, queryToBoolean(routeParams.mediaOnly), false);
+    const simplifyAuthor = fallback(undefined, queryToBoolean(routeParams.simplifyAuthor), false);
 
     // Check for conflicting parameters
     if (withRenotes && mediaOnly) {
@@ -65,7 +67,7 @@ async function handler(ctx): Promise<Data> {
     return {
         title: `User timeline for ${username} on ${site}`,
         link: `https://${site}/@${pureUsername}`,
-        image: avatarUrl || '',
-        item: utils.parseNotes(accountData, site),
+        image: avatarUrl ?? '',
+        item: utils.parseNotes(accountData, site, simplifyAuthor),
     };
 }

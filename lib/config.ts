@@ -238,6 +238,9 @@ export type Config = {
         instance?: string;
         token?: string;
     };
+    misskey: {
+        accessToken?: string;
+    };
     mox: {
         cookie: string;
     };
@@ -668,6 +671,9 @@ const calculateValue = () => {
         miniflux: {
             instance: envs.MINIFLUX_INSTANCE || 'https://reader.miniflux.app',
             token: envs.MINIFLUX_TOKEN || '',
+        },
+        misskey: {
+            accessToken: envs.MISSKEY_ACCESS_TOKEN,
         },
         mox: {
             cookie: envs.MOX_COOKIE,
