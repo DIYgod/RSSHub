@@ -4,6 +4,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 import constants from './_constants';
+import { FetchError } from 'ofetch';
 
 /**
  * Retrieves an access token.
@@ -27,34 +28,28 @@ const getToken = () => {
     return cache.tryGet(
         'mangadex:access-token',
         async () => {
-            const refreshToken = await getRefreshToken();
-
-            const response = await got.post(constants.API.TOEKN, {
-                headers: {
-                    'User-Agent': config.trueUA,
-                },
-                form: {
-                    grant_type: 'refresh_token',
-                    refresh_token: refreshToken,
-                    client_id: config.mangadex.clientId,
-                    client_secret: config.mangadex.clientSecret,
-                },
-            });
-
-            const accessToken = response?.data?.access_token;
-            if (!accessToken) {
-                throw new Error('Failed to retrieve access token from MangaDex API.');
+            if (!config.mangadex.refreshToken) {
+                return getAccessTokenByUserCredentials();
             }
-            return accessToken;
+
+            try {
+                return await getAccessTokenByRefreshToken();
+            } catch (error) {
+                if (error instanceof FetchError && error.statusCode === 400) {
+                    // If the refresh token is invalid, try to get a new one with the user credentials
+                    return getAccessTokenByUserCredentials();
+                }
+                throw error;
+            }
         },
         constants.TOKEN_EXPIRE,
         false
     );
 };
 
-const getRefreshToken = async () => {
-    if (config.mangadex.refreshToken) {
-        return config.mangadex.refreshToken;
+const getAccessTokenByUserCredentials = async () => {
+    if (!config.mangadex.username || !config.mangadex.password) {
+        throw new ConfigNotFoundError('Cannot get access token since MangaDex username or password is not set.');
     }
 
     if (!config.mangadex.username || !config.mangadex.password) {
@@ -75,13 +70,42 @@ const getRefreshToken = async () => {
     });
 
     const refreshToken = response?.data?.refresh_token;
+    const accessToken = response?.data?.access_token;
 
-    if (!refreshToken) {
+    if (!refreshToken || !accessToken) {
         throw new Error('Failed to retrieve refresh token from MangaDex API.');
     }
 
     config.mangadex.refreshToken = refreshToken; // cache the refresh token
-    return refreshToken;
+    return accessToken;
+};
+
+const getAccessTokenByRefreshToken = async () => {
+    if (!config.mangadex.clientId || !config.mangadex.clientSecret) {
+        throw new ConfigNotFoundError('Cannot get access token since MangaDex client ID or secret is not set.');
+    }
+
+    if (!config.mangadex.refreshToken) {
+        throw new ConfigNotFoundError('Cannot get access token since MangaDex refresh token is not set.');
+    }
+
+    const response = await got.post(constants.API.TOEKN, {
+        headers: {
+            'User-Agent': config.trueUA,
+        },
+        form: {
+            grant_type: 'refresh_token',
+            refresh_token: config.mangadex.refreshToken,
+            client_id: config.mangadex.clientId,
+            client_secret: config.mangadex.clientSecret,
+        },
+    });
+
+    const accessToken = response?.data?.access_token;
+    if (!accessToken) {
+        throw new Error('Failed to retrieve access token from MangaDex API.');
+    }
+    return accessToken;
 };
 
 export default getToken;
