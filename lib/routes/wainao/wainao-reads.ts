@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/wainao-reads',
-    categories: ['blog'],
+    categories: ['new-media'],
     example: '/wainao/wainao-reads',
     features: {
         requireConfig: false,
