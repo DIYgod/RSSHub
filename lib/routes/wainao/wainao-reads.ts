@@ -14,7 +14,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    url: 'https://www.wainao.me',
+    url: 'www.wainao.me',
     name: '歪脑读',
     maintainers: ['lucky13820'],
     radar: [
