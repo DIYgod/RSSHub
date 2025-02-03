@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: '政务服务公开',
-    maintainers: ['Flynn Cao'],
+    maintainers: ['flynncao'],
     handler,
     url: 'hangzhou.gov.cn/col/col1256349/index.html',
 };
