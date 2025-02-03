@@ -59035,7 +59035,7 @@
         "example": "/misskey/timeline/home/misskey.io",
         "parameters": {
           "site": "instance address, domain only, without `http://` or `https://` protocol header",
-          "routeParams": "\n            | Key                  | Description                             | Accepted Values | Default |\n            | -------------------- | --------------------------------------- | --------------- | ------- |\n            | limit                | Number of notes to return               | integer         | 10      |\n            | withFiles            | Only return notes containing files      | 0/1/true/false  | false   |\n            | withRenotes          | Include renotes in the timeline         | 0/1/true/false  | true    |\n            | allowPartial         | Allow partial results                   | 0/1/true/false  | true    |\n            | simplifyAuthor       | Simplify author field in feed items     | 0/1/true/false  | true    |\n\n            Note: If `withFiles` is set to true, renotes will not be included in the timeline regardless of the value of `withRenotes`.\n\n            Examples:\n            - /misskey/timeline/home/misskey.io/limit=20&withFiles=true\n            - /misskey/timeline/home/misskey.io/withRenotes=false\n        "
+          "routeParams": "\n| Key                  | Description                             | Accepted Values | Default |\n| -------------------- | --------------------------------------- | --------------- | ------- |\n| limit                | Number of notes to return               | integer         | 10      |\n| withFiles            | Only return notes containing files      | 0/1/true/false  | false   |\n| withRenotes          | Include renotes in the timeline         | 0/1/true/false  | true    |\n| allowPartial         | Allow partial results                   | 0/1/true/false  | true    |\n| simplifyAuthor       | Simplify author field in feed items     | 0/1/true/false  | true    |\n\nNote: If `withFiles` is set to true, renotes will not be included in the timeline regardless of the value of `withRenotes`.\n\nExamples:\n- /misskey/timeline/home/misskey.io/limit=20&withFiles=true\n- /misskey/timeline/home/misskey.io/withRenotes=false\n        "
         },
         "features": {
           "requireConfig": [
@@ -59062,7 +59062,7 @@
         "maintainers": [
           "HanaokaYuzu"
         ],
-        "description": "\n        ::: warning\n            This route is only available for self-hosted instances.\n        :::\n    ",
+        "description": "::: warning\n    This route is only available for self-hosted instances.\n:::",
         "location": "home-timeline.ts"
       },
       "/users/notes/:username/:routeParams?": {
