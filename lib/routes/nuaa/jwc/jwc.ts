@@ -31,8 +31,8 @@ export const route: Route = {
     maintainers: ['arcosx', 'Seiry', 'qrzbing', 'Xm798'],
     handler,
     description: `| 通知公告 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
-  | -------- | -------- | -------- | -------- | -------- |
-  | tzgg     | jxfw     | jxjs     | xspy     | jxzy     |`,
+| -------- | -------- | -------- | -------- | -------- |
+| tzgg     | jxfw     | jxjs     | xspy     | jxzy     |`,
 };
 
 async function handler(ctx) {

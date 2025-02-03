@@ -68,8 +68,8 @@ export const route: Route = {
 
 此路由主要补全官方 RSS 全文输出及完善分类输出。
 
-  <details>
-    <summary>分类</summary>
+<details>
+<summary>分类</summary>
 
 | sran001  | sran008  | sran010  | sran011  | sran012  | srat006  |
 | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -122,7 +122,7 @@ export const route: Route = {
 | sraw020  | sraw020-1    | sraw020-2 | sraw020-3 | sraw020-4 |
 | -------- | ------------ | --------- | --------- | --------- |
 | ESG 主页 | ESG 趋势政策 | ESG 投资  | ESG 企业  | ESG 社会  |
-  </details>`,
+</details>`,
 };
 
 async function handler(ctx) {

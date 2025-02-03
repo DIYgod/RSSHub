@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import cache from './cache';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
+import { queryToBoolean } from '@/utils/readable-social';
 
 const notFoundData = {
     title: '此 bilibili 频道不存在',
@@ -35,7 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const uid = Number.parseInt(ctx.req.param('uid'));
     const sid = Number.parseInt(ctx.req.param('sid'));
-    const embed = !ctx.req.param('embed');
+    const embed = queryToBoolean(ctx.req.param('embed') || 'true');
     const sortReverse = Number.parseInt(ctx.req.param('sortReverse')) === 1;
     const page = ctx.req.param('page') ? Number.parseInt(ctx.req.param('page')) : 1;
     const limit = ctx.req.query('limit') ?? 25;

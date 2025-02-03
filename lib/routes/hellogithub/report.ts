@@ -20,8 +20,8 @@ export const route: Route = {
     maintainers: ['moke8', 'nczitzk'],
     handler,
     description: `| 编程语言 | 服务器   | 数据库     |
-  | -------- | -------- | ---------- |
-  | tiobe    | netcraft | db-engines |`,
+| -------- | -------- | ---------- |
+| tiobe    | netcraft | db-engines |`,
 };
 
 async function handler(ctx) {

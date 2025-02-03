@@ -140,16 +140,16 @@ export const route: Route = {
   若订阅 [综合报道](https://www.geekpark.net/column/179)，网址为 \`https://www.geekpark.net/column/179\`。截取 \`https://www.geekpark.net/column/\` 到末尾的部分 \`179\` 作为参数填入，此时路由为 [\`/geekpark/179\`](https://rsshub.app/geekpark/179)。
 :::
 
-  | 栏目                                                         | ID                                     |
-  | ------------------------------------------------------------ | -------------------------------------- |
-  | [综合报道](https://www.geekpark.net/column/179)              | [179](https://rsshub.app/geekpark/179) |
-  | [AI新浪潮观察](https://www.geekpark.net/column/304)          | [304](https://rsshub.app/geekpark/304) |
-  | [新造车观察](https://www.geekpark.net/column/305)            | [305](https://rsshub.app/geekpark/305) |
-  | [财报解读](https://www.geekpark.net/column/271)              | [271](https://rsshub.app/geekpark/271) |
-  | [底稿对话CEO系列](https://www.geekpark.net/column/308)       | [308](https://rsshub.app/geekpark/308) |
-  | [Geek Insight 特稿系列](https://www.geekpark.net/column/306) | [306](https://rsshub.app/geekpark/306) |
-  | [心科技](https://www.geekpark.net/column/307)                | [307](https://rsshub.app/geekpark/307) |
-  | [行业资讯](https://www.geekpark.net/column/2)                | [2](https://rsshub.app/geekpark/2)     |
+| 栏目                                                         | ID                                     |
+| ------------------------------------------------------------ | -------------------------------------- |
+| [综合报道](https://www.geekpark.net/column/179)              | [179](https://rsshub.app/geekpark/179) |
+| [AI新浪潮观察](https://www.geekpark.net/column/304)          | [304](https://rsshub.app/geekpark/304) |
+| [新造车观察](https://www.geekpark.net/column/305)            | [305](https://rsshub.app/geekpark/305) |
+| [财报解读](https://www.geekpark.net/column/271)              | [271](https://rsshub.app/geekpark/271) |
+| [底稿对话CEO系列](https://www.geekpark.net/column/308)       | [308](https://rsshub.app/geekpark/308) |
+| [Geek Insight 特稿系列](https://www.geekpark.net/column/306) | [306](https://rsshub.app/geekpark/306) |
+| [心科技](https://www.geekpark.net/column/307)                | [307](https://rsshub.app/geekpark/307) |
+| [行业资讯](https://www.geekpark.net/column/2)                | [2](https://rsshub.app/geekpark/2)     |
   `,
     categories: ['new-media', 'popular'],
 

@@ -126,8 +126,8 @@ export const route: Route = {
   If you subscribe to [Updates in English](https://www.counter-strike.net/news/updates?l=english)，where the URL is \`https://www.counter-strike.net/news/updates?l=english\`, extract the \`l\`, which is \`english\`, and use it as the parameter to fill in. Therefore, the route will be [\`/counter-strike/news/updates/english\`](https://rsshub.app/counter-strike/news/updates/english).
 :::
 
-  <details>
-    <summary>More languages</summary>
+<details>
+<summary>More languages</summary>
 
 | 语言代码                                          | 语言名称   |
 | ------------------------------------------------- | ---------- |
@@ -160,7 +160,7 @@ export const route: Route = {
 | Tiếng Việt (Vietnamese)                           | vietnamese |
 | Español - Latinoamérica (Spanish - Latin America) | latam      |
 
-  </details>
+</details>
     `,
     categories: ['game'],
 

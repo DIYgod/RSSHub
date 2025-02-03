@@ -68,9 +68,9 @@ export const route: Route = {
     url: 'sr.mihoyo.com/news',
     description: `#### 新闻 {#mi-ha-you-beng-huai-xing-qiong-tie-dao-xin-wen}
 
-  | 最新     | 新闻 | 公告   | 活动     |
-  | -------- | ---- | ------ | -------- |
-  | news-all | news | notice | activity |`,
+| 最新     | 新闻 | 公告   | 活动     |
+| -------- | ---- | ------ | -------- |
+| news-all | news | notice | activity |`,
 };
 
 async function handler(ctx) {

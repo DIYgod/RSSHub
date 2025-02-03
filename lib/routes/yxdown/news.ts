@@ -23,8 +23,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  |          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |`,
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+|          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |`,
 };
 
 async function handler(ctx) {
