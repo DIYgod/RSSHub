@@ -14,19 +14,19 @@ export const route: Route = {
     parameters: {
         site: 'instance address, domain only, without `http://` or `https://` protocol header',
         routeParams: `
-            | Key                  | Description                             | Accepted Values | Default |
-            | -------------------- | --------------------------------------- | --------------- | ------- |
-            | limit                | Number of notes to return               | integer         | 10      |
-            | withFiles            | Only return notes containing files      | 0/1/true/false  | false   |
-            | withRenotes          | Include renotes in the timeline         | 0/1/true/false  | true    |
-            | allowPartial         | Allow partial results                   | 0/1/true/false  | true    |
-            | simplifyAuthor       | Simplify author field in feed items     | 0/1/true/false  | true    |
+| Key                  | Description                             | Accepted Values | Default |
+| -------------------- | --------------------------------------- | --------------- | ------- |
+| limit                | Number of notes to return               | integer         | 10      |
+| withFiles            | Only return notes containing files      | 0/1/true/false  | false   |
+| withRenotes          | Include renotes in the timeline         | 0/1/true/false  | true    |
+| allowPartial         | Allow partial results                   | 0/1/true/false  | true    |
+| simplifyAuthor       | Simplify author field in feed items     | 0/1/true/false  | true    |
 
-            Note: If \`withFiles\` is set to true, renotes will not be included in the timeline regardless of the value of \`withRenotes\`.
+Note: If \`withFiles\` is set to true, renotes will not be included in the timeline regardless of the value of \`withRenotes\`.
 
-            Examples:
-            - /misskey/timeline/home/misskey.io/limit=20&withFiles=true
-            - /misskey/timeline/home/misskey.io/withRenotes=false
+Examples:
+- /misskey/timeline/home/misskey.io/limit=20&withFiles=true
+- /misskey/timeline/home/misskey.io/withRenotes=false
         `,
     },
     features: {
@@ -55,11 +55,9 @@ export const route: Route = {
     name: 'Home Timeline',
     maintainers: ['HanaokaYuzu'],
     handler,
-    description: `
-        ::: warning
-            This route is only available for self-hosted instances.
-        :::
-    `,
+    description: `::: warning
+    This route is only available for self-hosted instances.
+:::`,
 };
 
 async function handler(ctx) {
