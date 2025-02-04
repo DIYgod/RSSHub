@@ -9,7 +9,7 @@ import { getGeoLink, getMediaLink } from './tglib/channel';
 export const route: Route = {
     path: '/stories/:username/:story?',
     categories: ['social-media'],
-    example: '/stories/synchrone',
+    example: '/stories/telegram',
     parameters: { username: 'entity name', story: 'story' },
     features: {
         requireConfig: false,
@@ -70,7 +70,9 @@ export default async function handler(ctx: Context) {
         const media = await unwrapMedia(story.media);
         if (!media) { // cannot load the story
             continue;
-        }        const description = getMediaLink(src, media) + getMediaAreas(story.mediaAreas);
+        }
+
+        const description = getMediaLink(src, media) + getMediaAreas(story.mediaAreas);
         item.push({
             title: story.caption ?? pubDate,
             description,
