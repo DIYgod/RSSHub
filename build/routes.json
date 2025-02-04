@@ -93812,6 +93812,44 @@
     "description": "挖贝网专注于新三板、A股和港股报道",
     "lang": "zh-CN"
   },
+  "wainao": {
+    "routes": {
+      "/wainao-reads": {
+        "path": "/wainao-reads",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wainao/wainao-reads",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "url": "www.wainao.me",
+        "name": "歪脑读",
+        "maintainers": [
+          "lucky13820"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.wainao.me",
+              "www.wainao.me/wainao-reads"
+            ],
+            "target": "/wainao-reads"
+          }
+        ],
+        "location": "wainao-reads.ts"
+      }
+    },
+    "name": "歪脑",
+    "url": "wainao.me",
+    "description": "歪脑是为讲中文的年轻一代度身定制的新闻杂志。",
+    "lang": "zh-CN"
+  },
   "wallhaven": {
     "routes": {
       "/search/:filter?/:needDetails?": {
