@@ -104,7 +104,7 @@ RUN \
         echo 'Downloading Chromium...' && \
         unset PUPPETEER_SKIP_DOWNLOAD && \
         npm install -g corepack@latest && \
-        corepack enable pnpm && \
+        corepack use pnpm@latest-9 && \
         pnpm add puppeteer@$(cat /app/.puppeteer_version) --save-prod && \
         pnpm rb ; \
     else \
