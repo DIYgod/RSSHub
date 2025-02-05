@@ -73,24 +73,23 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'latest_sc';
     const __dirname = getCurrentPath(import.meta.url);
     const baseUrl = 'https://app.theinitium.com/';
+    const userAgent = 'PugpigBolt v4.1.8 (iPhone, iOS 18.2.1) on phone (model iPhone15,2)';
 
-    const feeds = await cache.tryGet(
-        new URL('timelines.json', baseUrl).href,
-        async () =>
-            await got({
-                method: 'get',
-                url: new URL('timelines.json', baseUrl).href,
-            }),
-        config.cache.routeExpire,
-        false
-    );
+    async function getUA(url: string) {
+        return await got({
+            method: 'get',
+            url,
+            headers: {
+                'User-Agent': userAgent,
+            },
+        });
+    }
+
+    const feeds = await cache.tryGet(new URL('timelines.json', baseUrl).href, async () => await getUA(new URL('timelines.json', baseUrl).href), config.cache.routeExpire, false);
 
     const metadata = feeds.data.timelines.find((timeline) => timeline.id === category);
 
-    const response = await got({
-        method: 'get',
-        url: new URL(metadata.feed, baseUrl).href,
-    });
+    const response = await getUA(new URL(metadata.feed, baseUrl).href);
 
     const feed = response.data.stories.filter((item) => item.type === 'article');
 
@@ -113,7 +112,7 @@ async function handler(ctx) {
                     }
                 }
                 item.category = [...new Set(item.category)];
-                const response = await got(new URL(item.url, baseUrl).href);
+                const response = await getUA(new URL(item.url, baseUrl).href);
                 const $ = load(response.data);
                 // resolve relative links with app.theinitium.com
                 // code from @/middleware/paratmeter.ts
