@@ -170,7 +170,7 @@
         "@typescript-eslint/eslint-plugin": "8.23.0",
         "@typescript-eslint/parser": "8.23.0",
         "@vercel/nft": "0.29.1",
-        "@vitest/coverage-v8": "2.0.5",
+        "@vitest/coverage-v8": "2.1.9",
         "discord-api-types": "0.37.119",
         "eslint": "9.19.0",
         "eslint-config-prettier": "10.0.1",
@@ -194,7 +194,7 @@
         "typescript": "5.7.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "5.1.4",
-        "vitest": "2.0.5",
+        "vitest": "2.1.9",
         "yaml-eslint-parser": "1.2.3"
     },
     "packageManager": "pnpm@9.15.5+sha512.845196026aab1cc3f098a0474b64dfbab2afe7a1b4e91dd86895d8e4aa32a7a6d03049e2d0ad770bbe4de023a7122fb68c1a1d6e0d033c7076085f9d5d4800d4",
@@ -203,11 +203,13 @@
     },
     "pnpm": {
         "overrides": {
+            "art-template@4.13.2>html-minifier": "~4.0.0",
             "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
-            "is-core-module": "npm:@nolyfill/is-core-module@1.0.39",
-            "safe-buffer": "npm:@nolyfill/safe-buffer@1.0.41",
-            "safer-buffer": "npm:@nolyfill/safer-buffer@1.0.41",
-            "side-channel": "npm:@nolyfill/side-channel@1.0.29"
+            "is-core-module": "npm:@nolyfill/is-core-module@^1",
+            "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
+            "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
+            "side-channel": "npm:@nolyfill/side-channel@^1",
+            "telegram@2.26.16>store2": "~2.14.4"
         }
     }
 }
