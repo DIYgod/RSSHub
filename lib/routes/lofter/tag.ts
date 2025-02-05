@@ -21,8 +21,8 @@ export const route: Route = {
     maintainers: ['hoilc', 'nczitzk', 'LucunJi'],
     handler,
     description: `| new  | date | week | month | total |
-  | ---- | ---- | ---- | ----- | ----- |
-  | 最新 | 日榜 | 周榜 | 月榜  | 总榜  |`,
+| ---- | ---- | ---- | ----- | ----- |
+| 最新 | 日榜 | 周榜 | 月榜  | 总榜  |`,
 };
 
 async function handler(ctx) {

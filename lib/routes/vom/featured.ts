@@ -28,8 +28,8 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| English | 日本語 | Монгол | Русский | 简体中文 |
-  | ------- | ------ | ------ | ------- | -------- |
-  | en      | ja     | mn     | ru      | zh       |`,
+| ------- | ------ | ------ | ------- | -------- |
+| en      | ja     | mn     | ru      | zh       |`,
 };
 
 async function handler(ctx) {

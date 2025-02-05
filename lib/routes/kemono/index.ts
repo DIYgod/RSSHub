@@ -32,9 +32,9 @@ export const route: Route = {
     handler,
     description: `Sources
 
-  | Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |
-  | ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
-  | posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
+| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |
+| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
+| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
 
 ::: tip
   When \`posts\` is selected as the value of the parameter **source**, the parameter **id** does not take effect.

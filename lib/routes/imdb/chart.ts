@@ -37,8 +37,8 @@ export const route: Route = {
     handler,
     url: 'www.imdb.com/chart/top/',
     description: `| Top 250 Movies | Most Popular Movies | Top 250 TV Shows | Most Popular TV Shows |
-  | -------------- | ------------------- | ---------------- | --------------------- |
-  | top            | moviemeter          | toptv            | tvmeter               |`,
+| -------------- | ------------------- | ---------------- | --------------------- |
+| top            | moviemeter          | toptv            | tvmeter               |`,
 };
 
 async function handler(ctx: Context) {

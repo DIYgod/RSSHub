@@ -1,12 +1,19 @@
 {{ if images }}
   {{ each images image }}
     {{ if image?.src }}
-      <img
-        {{ if image.alt }}
-          alt="{{ image.alt }}"
-        {{ /if }}
-        src="{{ image.src }}"
-      >
+      <figure>
+        <img
+          {{ if image.alt }}
+            alt="{{ image.alt }}"
+          {{ /if }}
+          {{ if image.width }}
+            width="{{ image.width }}"
+          {{ /if }}
+          {{ if image.height }}
+            height="{{ image.height }}"
+          {{ /if }}
+        src="{{ image.src }}">
+      </figure>
     {{ /if }}
   {{ /each }}
 {{ /if }}
@@ -27,18 +34,26 @@
   {{ /each }}
 {{ /if }}
 
-{{ if video }}
+{{ if videos }}
   {{ each videos video }}
     {{ if video?.src }}
-      <video
-        controls>
-        <source
+      {{ if video?.type?.endsWith('taptap') }}
+        <iframe
           src="{{ video.src }}"
-          type="{{ video.type }}">
-        <object data="{{ video.src }}">
-          <embed src="{{ video.src }}">
-        </object>
-      </video>
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
+      {{ else }}
+        <video
+          controls>
+          <source
+            src="{{ video.src }}"
+            type="{{ video.type }}">
+          <object data="{{ video.src }}">
+            <embed src="{{ video.src }}">
+          </object>
+        </video>
+      {{ /if }}
     {{ /if }}
   {{ /each }}
 {{ /if }}

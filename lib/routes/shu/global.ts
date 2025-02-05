@@ -33,8 +33,8 @@ export const route: Route = {
     handler,
     url: 'global.shu.edu.cn/',
     description: `| 通知公告 |
-  | -------- |
-  | tzgg     |`,
+| -------- |
+| tzgg     |`,
 };
 
 async function handler(ctx) {

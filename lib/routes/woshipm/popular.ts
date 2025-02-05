@@ -34,8 +34,8 @@ export const route: Route = {
     handler,
     url: 'woshipm.com/',
     description: `| 日榜  | 周榜   | 月榜    |
-  | ----- | ------ | ------- |
-  | daily | weekly | monthly |`,
+| ----- | ------ | ------- |
+| daily | weekly | monthly |`,
 };
 
 async function handler(ctx) {
