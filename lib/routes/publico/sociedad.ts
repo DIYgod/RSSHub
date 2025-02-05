@@ -6,8 +6,13 @@ import getItems from './items-processor';
 
 export const route: Route = {
     path: '/sociedad/:subsection?',
+    parameters: {
+        subsection: {
+            description: "Filter by subsection. Check the subsections available on the newspaper's website.",
+        },
+    },
     categories: ['traditional-media'],
-    example: '/sociedad',
+    example: '/publico/sociedad',
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -22,7 +27,7 @@ export const route: Route = {
             target: '/sociedad',
         },
     ],
-    name: 'Sociedad - Público',
+    name: 'Sociedad',
     maintainers: ['adrianrico97'],
     handler,
 };

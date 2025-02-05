@@ -7,7 +7,7 @@ import getItems from './items-processor';
 export const route: Route = {
     path: '/tremending',
     categories: ['traditional-media'],
-    example: '/tremending',
+    example: '/publico/tremending',
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -22,7 +22,7 @@ export const route: Route = {
             target: '/tremending',
         },
     ],
-    name: 'Tremending - Público',
+    name: 'Tremending',
     maintainers: ['adrianrico97'],
     handler,
 };

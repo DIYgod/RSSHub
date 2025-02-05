@@ -6,8 +6,13 @@ import getItems from './items-processor';
 
 export const route: Route = {
     path: '/opinion/:subsection?',
+    parameters: {
+        subsection: {
+            description: "Filter by subsection. Check the subsections available on the newspaper's website.",
+        },
+    },
     categories: ['traditional-media'],
-    example: '/opinion',
+    example: '/publico/opinion',
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -22,7 +27,7 @@ export const route: Route = {
             target: '/opinion',
         },
     ],
-    name: 'Opinión - Público',
+    name: 'Opinión',
     maintainers: ['adrianrico97'],
     handler,
 };

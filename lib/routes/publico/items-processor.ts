@@ -11,7 +11,8 @@ export default function getItems(data) {
             return {
                 title,
                 link,
-                description: `<img src="${image}" alt="${title}"><p>${author}</p>`,
+                description: `<img src="${image}" alt="${title}">`,
+                author,
             };
         });
 

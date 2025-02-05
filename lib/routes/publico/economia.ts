@@ -6,8 +6,13 @@ import getItems from './items-processor';
 
 export const route: Route = {
     path: '/economia/:subsection?',
+    parameters: {
+        subsection: {
+            description: "Filter by subsection. Check the subsections available on the newspaper's website.",
+        },
+    },
     categories: ['traditional-media'],
-    example: '/economia',
+    example: '/publico/economia',
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -22,7 +27,7 @@ export const route: Route = {
             target: '/economia',
         },
     ],
-    name: 'Economia - Público',
+    name: 'Economia',
     maintainers: ['adrianrico97'],
     handler,
 };

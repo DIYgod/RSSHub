@@ -7,7 +7,7 @@ import getItems from './items-processor';
 export const route: Route = {
     path: '/public',
     categories: ['traditional-media'],
-    example: '/public',
+    example: '/publico/public',
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -22,7 +22,7 @@ export const route: Route = {
             target: '/public',
         },
     ],
-    name: 'Public - Público',
+    name: 'Public',
     maintainers: ['adrianrico97'],
     handler,
 };
