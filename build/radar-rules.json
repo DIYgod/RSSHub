@@ -26666,6 +26666,91 @@
       }
     ]
   },
+  "publico.es": {
+    "_name": "Público",
+    ".": [
+      {
+        "title": "Ciencias",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/ciencias"
+        ],
+        "target": "/publico/ciencias"
+      },
+      {
+        "title": "Culturas",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/culturas"
+        ],
+        "target": "/publico/culturas"
+      },
+      {
+        "title": "Economia",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/economia"
+        ],
+        "target": "/publico/economia"
+      },
+      {
+        "title": "Internacional",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/internacional"
+        ],
+        "target": "/publico/internacional"
+      },
+      {
+        "title": "Mujer",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/mujer"
+        ],
+        "target": "/publico/mujer"
+      },
+      {
+        "title": "Opinión",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/opinion"
+        ],
+        "target": "/publico/opinion"
+      },
+      {
+        "title": "Política",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/politica"
+        ],
+        "target": "/publico/politica"
+      },
+      {
+        "title": "Public",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/public"
+        ],
+        "target": "/publico/public"
+      },
+      {
+        "title": "Sociedad",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/sociedad"
+        ],
+        "target": "/publico/sociedad"
+      },
+      {
+        "title": "Tremending",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/tremending"
+        ],
+        "target": "/publico/tremending"
+      }
+    ]
+  },
   "pumc.edu.cn": {
     "_name": "北京协和医学院",
     "mdadmission": [

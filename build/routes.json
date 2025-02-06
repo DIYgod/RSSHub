@@ -70674,6 +70674,332 @@
     "url": "news.pts.org.tw",
     "lang": "zh-TW"
   },
+  "publico": {
+    "routes": {
+      "/ciencias/:subsection?": {
+        "path": "/ciencias/:subsection?",
+        "parameters": {
+          "subsection": {
+            "description": "Filter by subsection. Check the subsections available on the newspaper's website."
+          }
+        },
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/publico/ciencias",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publico.es/ciencias"
+            ],
+            "target": "/ciencias"
+          }
+        ],
+        "name": "Ciencias",
+        "maintainers": [
+          "adrianrico97"
+        ],
+        "location": "ciencias.ts"
+      },
+      "/culturas/:subsection?": {
+        "path": "/culturas/:subsection?",
+        "parameters": {
+          "subsection": {
+            "description": "Filter by subsection. Check the subsections available on the newspaper's website."
+          }
+        },
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/publico/culturas",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publico.es/culturas"
+            ],
+            "target": "/culturas"
+          }
+        ],
+        "name": "Culturas",
+        "maintainers": [
+          "adrianrico97"
+        ],
+        "location": "culturas.ts"
+      },
+      "/economia/:subsection?": {
+        "path": "/economia/:subsection?",
+        "parameters": {
+          "subsection": {
+            "description": "Filter by subsection. Check the subsections available on the newspaper's website."
+          }
+        },
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/publico/economia",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publico.es/economia"
+            ],
+            "target": "/economia"
+          }
+        ],
+        "name": "Economia",
+        "maintainers": [
+          "adrianrico97"
+        ],
+        "location": "economia.ts"
+      },
+      "/internacional/:subsection?": {
+        "path": "/internacional/:subsection?",
+        "parameters": {
+          "subsection": {
+            "description": "Filter by subsection. Check the subsections available on the newspaper's website."
+          }
+        },
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/publico/internacional",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publico.es/internacional"
+            ],
+            "target": "/internacional"
+          }
+        ],
+        "name": "Internacional",
+        "maintainers": [
+          "adrianrico97"
+        ],
+        "location": "internacional.ts"
+      },
+      "/mujer/:subsection?": {
+        "path": "/mujer/:subsection?",
+        "parameters": {
+          "subsection": {
+            "description": "Filter by subsection. Check the subsections available on the newspaper's website."
+          }
+        },
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/publico/mujer",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publico.es/mujer"
+            ],
+            "target": "/mujer"
+          }
+        ],
+        "name": "Mujer",
+        "maintainers": [
+          "adrianrico97"
+        ],
+        "location": "mujer.ts"
+      },
+      "/opinion/:subsection?": {
+        "path": "/opinion/:subsection?",
+        "parameters": {
+          "subsection": {
+            "description": "Filter by subsection. Check the subsections available on the newspaper's website."
+          }
+        },
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/publico/opinion",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publico.es/opinion"
+            ],
+            "target": "/opinion"
+          }
+        ],
+        "name": "Opinión",
+        "maintainers": [
+          "adrianrico97"
+        ],
+        "location": "opinion.ts"
+      },
+      "/politica/:subsection?": {
+        "path": "/politica/:subsection?",
+        "parameters": {
+          "subsection": {
+            "description": "Filter by subsection. Check the subsections available on the newspaper's website."
+          }
+        },
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/publico/politica",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publico.es/politica"
+            ],
+            "target": "/politica"
+          }
+        ],
+        "name": "Política",
+        "maintainers": [
+          "adrianrico97"
+        ],
+        "location": "politica.ts"
+      },
+      "/public": {
+        "path": "/public",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/publico/public",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publico.es/public"
+            ],
+            "target": "/public"
+          }
+        ],
+        "name": "Public",
+        "maintainers": [
+          "adrianrico97"
+        ],
+        "location": "public.ts"
+      },
+      "/sociedad/:subsection?": {
+        "path": "/sociedad/:subsection?",
+        "parameters": {
+          "subsection": {
+            "description": "Filter by subsection. Check the subsections available on the newspaper's website."
+          }
+        },
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/publico/sociedad",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publico.es/sociedad"
+            ],
+            "target": "/sociedad"
+          }
+        ],
+        "name": "Sociedad",
+        "maintainers": [
+          "adrianrico97"
+        ],
+        "location": "sociedad.ts"
+      },
+      "/tremending": {
+        "path": "/tremending",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/publico/tremending",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "publico.es/tremending"
+            ],
+            "target": "/tremending"
+          }
+        ],
+        "name": "Tremending",
+        "maintainers": [
+          "adrianrico97"
+        ],
+        "location": "tremending.ts"
+      }
+    },
+    "name": "Público",
+    "url": "publico.es"
+  },
   "pubmed": {
     "routes": {
       "/trending/:filters?": {

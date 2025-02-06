@@ -5674,6 +5674,36 @@
   "/pts/projects": [
     "nczitzk"
   ],
+  "/publico/ciencias/:subsection?": [
+    "adrianrico97"
+  ],
+  "/publico/culturas/:subsection?": [
+    "adrianrico97"
+  ],
+  "/publico/economia/:subsection?": [
+    "adrianrico97"
+  ],
+  "/publico/internacional/:subsection?": [
+    "adrianrico97"
+  ],
+  "/publico/mujer/:subsection?": [
+    "adrianrico97"
+  ],
+  "/publico/opinion/:subsection?": [
+    "adrianrico97"
+  ],
+  "/publico/politica/:subsection?": [
+    "adrianrico97"
+  ],
+  "/publico/public": [
+    "adrianrico97"
+  ],
+  "/publico/sociedad/:subsection?": [
+    "adrianrico97"
+  ],
+  "/publico/tremending": [
+    "adrianrico97"
+  ],
   "/pubmed/trending/:filters?": [
     "nczitzk"
   ],
