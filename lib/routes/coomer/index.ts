@@ -60,11 +60,12 @@ async function handler(ctx) {
         url: currentUrl,
         headers,
     });
+    const responseData = isPosts ? response.data.posts : response.data;
 
     const author = isPosts ? '' : await getAuthor(currentUrl, headers);
     const title = isPosts ? 'Coomer Posts' : `Posts of ${author} from ${source} | Coomer`;
     const image = isPosts ? `${rootUrl}/favicon.ico` : `https://img.coomer.su/icons/${source}/${id}`;
-    const items = response.data
+    const items = responseData
         .filter((i) => i.content || i.attachments)
         .slice(0, limit)
         .map((i) => {
