@@ -24,6 +24,7 @@ function extractDateFromURL(url: string) {
 
 async function handler() {
     // The TLS cert is invalid, we are limited to use HTTP unfortunately.
+    //
     const baseUrl = 'http://0x80.pl/';
     const targetUrl = `${baseUrl}notesen.html`;
 
