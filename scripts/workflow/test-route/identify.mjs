@@ -2,15 +2,7 @@ const noFound = 'Auto: Route No Found';
 const testFailed = 'Auto: Route Test Failed';
 const allowedUser = new Set(['dependabot[bot]', 'pull[bot]']); // dependabot and downstream PR requested by pull[bot]
 
-export default async function identify({ github, context, core }, body, number, sender) {
-    core.debug(`sender: ${sender}`);
-    core.debug(`body: ${body}`);
-    // Remove all HTML comments before performing the match
-    const bodyNoCmts = body?.replaceAll(/<!--[\S\s]*?-->/g, '');
-    const m = bodyNoCmts?.match(/```routes\s+([\S\s]*?)```/);
-    core.debug(`match: ${m}`);
-    let routes = null;
-
+export default async function identify({ github, context, core }, number) {
     const issueFacts = {
         owner: context.repo.owner,
         repo: context.repo.repo,
@@ -21,6 +13,22 @@ export default async function identify({ github, context, core }, body, number, 
         repo: context.repo.repo,
         pull_number: number,
     };
+    const { data: pr } = await github.rest.issues
+        .get({
+            ...issueFacts,
+        })
+        .catch((error) => {
+            core.warning(error);
+        });
+    const sender = pr.user.login;
+    const body = pr.body;
+    core.debug(`sender: ${sender}`);
+    core.debug(`body: ${body}`);
+    // Remove all HTML comments before performing the match
+    const bodyNoCmts = body?.replaceAll(/<!--[\S\s]*?-->/g, '');
+    const m = bodyNoCmts?.match(/```routes\s+([\S\s]*?)```/);
+    core.debug(`match: ${m}`);
+    let routes = null;
 
     const addLabels = (labels) =>
         github.rest.issues
@@ -31,7 +39,6 @@ export default async function identify({ github, context, core }, body, number, 
             .catch((error) => {
                 core.warning(error);
             });
-
     const removeLabel = (labelName = noFound) =>
         github.rest.issues
             .removeLabel({
@@ -41,7 +48,6 @@ export default async function identify({ github, context, core }, body, number, 
             .catch((error) => {
                 core.warning(error);
             });
-
     const updatePrState = (state) =>
         github.rest.pulls
             .update({
@@ -51,7 +57,6 @@ export default async function identify({ github, context, core }, body, number, 
             .catch((error) => {
                 core.warning(error);
             });
-
     const createComment = (body) =>
         github.rest.issues
             .createComment({
@@ -61,7 +66,6 @@ export default async function identify({ github, context, core }, body, number, 
             .catch((error) => {
                 core.warning(error);
             });
-
     const createFailedComment = () => {
         const logUrl = `${process.env.GITHUB_SERVER_URL}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
 
@@ -74,13 +78,6 @@ export default async function identify({ github, context, core }, body, number, 
         路由测试失败，请确认评论部分符合格式规范，详情请检查 [日志](${logUrl})。`);
     };
 
-    const pr = await github.rest.issues
-        .get({
-            ...issueFacts,
-        })
-        .catch((error) => {
-            core.warning(error);
-        });
     if (pr.pull_request) {
         if (pr.state === 'closed') {
             await updatePrState('open');
