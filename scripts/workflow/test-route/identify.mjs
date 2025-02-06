@@ -81,6 +81,7 @@ export default async function identify({ github, context, core }, body, number, 
         .catch((error) => {
             core.warning(error);
         });
+    core.debug(`pr: ${JSON.stringify(pr)}`);
     if (pr.pull_request) {
         if (pr.state === 'closed') {
             await updatePrState('open');
