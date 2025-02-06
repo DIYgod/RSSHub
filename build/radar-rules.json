@@ -1944,7 +1944,7 @@
     "_name": "留园网",
     "club": [
       {
-        "title": "Unknown",
+        "title": "首页",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/:id/index.php",
@@ -1953,7 +1953,7 @@
         "target": "/6park/:id?"
       },
       {
-        "title": "Unknown",
+        "title": "新闻栏目",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/:id/index.php",
