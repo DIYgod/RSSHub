@@ -168,7 +168,6 @@ async function handler(ctx) {
                         item.description = await fetchWebPage(url);
                         break;
                     default:
-                        item.description = item.summary;
                         break;
                 }
                 return item;
