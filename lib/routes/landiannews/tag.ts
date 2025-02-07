@@ -4,7 +4,7 @@ import { fetchNewsItems, fetchTag } from './utils';
 export const handler = async (ctx): Promise<Data> => {
     const id = ctx.req.param('id');
     const rootUrl = 'https://www.landiannews.com/';
-    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?tags=${id}`;
+    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed&tags=${id}`;
 
     const items: DataItem[] = await fetchNewsItems(postApiUrl);
 

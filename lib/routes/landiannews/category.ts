@@ -4,7 +4,7 @@ import { fetchNewsItems, fetchCategory } from './utils';
 export const handler = async (ctx): Promise<Data> => {
     const id = ctx.req.param('id');
     const rootUrl = 'https://www.landiannews.com/';
-    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?categories=${id}`;
+    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed&categories=${id}`;
 
     const items: DataItem[] = await fetchNewsItems(postApiUrl);
 

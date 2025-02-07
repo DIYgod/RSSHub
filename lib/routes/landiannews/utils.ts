@@ -2,7 +2,6 @@ import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 
 const rootUrl = 'https://www.landiannews.com/';
-const authorApiUrl = `${rootUrl}wp-json/wp/v2/users/`;
 
 const fetchTaxonomy = async (ids: number[], type: 'categories' | 'tags') => {
     if (!ids || ids.length === 0) {
@@ -28,29 +27,14 @@ const fetchTag = (tagIds: number[]) => fetchTaxonomy(tagIds, 'tags');
 async function fetchNewsItems(ApiUrl: string) {
     const data = await ofetch(ApiUrl);
 
-    const fetchAuthor = async (authorId: number) => {
-        const authorUrl = `${authorApiUrl}${authorId}`;
-        const cachedAuthor = await cache.tryGet(authorUrl, async () => {
-            const authorData = await ofetch(authorUrl);
-            return {
-                name: authorData.name,
-                url: authorData.link,
-                avatar: authorData.avatar_urls[2],
-            };
-        });
-        return [cachedAuthor];
-    };
-
-    return await Promise.all(
-        data.map(async (item: any) => ({
-            title: item.title.rendered,
-            description: item.content.rendered,
-            link: item.link,
-            pubDate: new Date(item.date).toUTCString(),
-            author: await fetchAuthor(item.author),
-            category: [...(await fetchCategory(item.categories || [])), ...(await fetchTag(item.tags || []))],
-        }))
-    );
+    return data.map((item) => ({
+        title: item.title.rendered,
+        description: item.content.rendered,
+        link: item.link,
+        pubDate: new Date(item.date).toUTCString(),
+        author: item._embedded.author[0].name,
+        category: item._embedded['wp:term'].flat().map((term) => term.name),
+    }));
 }
 
 export { fetchCategory, fetchTag, fetchNewsItems };
