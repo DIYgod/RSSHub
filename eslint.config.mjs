@@ -27,6 +27,8 @@ export default [{
         'assets/build/radar-rules.js',
         'lib/routes-deprecated',
         'lib/router.js',
+        // A copy of https://github.com/golang/go/blob/master/lib/wasm/wasm_exec.js
+        'lib/routes/bilibili/wasm-exec.js',
         '**/babel.config.js',
         'scripts/docker/minify-docker.js',
     ],

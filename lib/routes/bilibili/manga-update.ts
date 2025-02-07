@@ -1,5 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
+import './wasm-exec.js';
 
 export const route: Route = {
     path: '/manga/update/:comicid',
@@ -24,18 +25,41 @@ export const route: Route = {
     handler,
 };
 
+// Based on https://github.com/SocialSisterYi/bilibili-API-collect/issues/1168#issuecomment-2620749895
+async function genReqSign(query, body) {
+    const wasm_resp = await got('https://s1.hdslb.com/bfs/manga-static/manga-pc/6732b1bf426cfc634293.wasm', {
+        responseType: 'arrayBuffer',
+    });
+
+    const go = new Go();
+    const { instance } = await WebAssembly.instantiate(wasm_resp.data, go.importObject);
+    go.run(instance);
+    if (void 0 === globalThis.genReqSign) {
+        throw new Error('WASM function not available');
+    }
+
+    const signature = globalThis.genReqSign(query, body, Date.now());
+
+    return signature.sign;
+}
+
 async function handler(ctx) {
     const comic_id = ctx.req.param('comicid').startsWith('mc') ? ctx.req.param('comicid').replace('mc', '') : ctx.req.param('comicid');
     const link = `https://manga.bilibili.com/detail/mc${comic_id}`;
 
     const spi_response = await got('https://api.bilibili.com/x/frontend/finger/spi');
 
+    const query = 'device=pc&platform=web&nov=25';
+    const body = JSON.stringify({
+        comic_id: Number(comic_id),
+    });
+
+    const ultra_sign = await genReqSign(query, body);
+
     const response = await got({
         method: 'POST',
-        url: `https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web`,
-        json: {
-            comic_id: Number(comic_id),
-        },
+        url: `https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?${query}&ultra_sign=${ultra_sign}`,
+        body,
         headers: {
             Referer: link,
             Cookie: `buvid3=${spi_response.data.data.b_3}; buvid4=${spi_response.data.data.b_4}`,
