@@ -3,26 +3,20 @@ import cache from '@/utils/cache';
 
 const rootUrl = 'https://www.landiannews.com/';
 
-const fetchTaxonomy = async (ids: number[], type: 'categories' | 'tags') => {
-    if (!ids || ids.length === 0) {
-        return [];
-    }
-
-    const taxonomies = await Promise.all(
-        ids.map(async (id) => {
-            const taxonomyUrl = `${rootUrl}wp-json/wp/v2/${type}/${id}`;
-            const cachedTaxonomy = await cache.tryGet(taxonomyUrl, async () => {
-                const taxonomyData = await ofetch(taxonomyUrl);
-                return taxonomyData.name;
-            });
-            return cachedTaxonomy;
-        })
-    );
-    return taxonomies;
+const fetchTaxonomy = async (slug: string, type: 'categories' | 'tags') => {
+    const taxonomyUrl = `${rootUrl}wp-json/wp/v2/${type}?slug=${slug}`;
+    const cachedTaxonomy = await cache.tryGet(taxonomyUrl, async () => {
+        const taxonomyData = await ofetch(taxonomyUrl);
+        if (!taxonomyData[0] || !taxonomyData[0].id || !taxonomyData[0].name) {
+            throw new Error(`${type} ${slug} not found`);
+        }
+        return { id: taxonomyData[0].id, name: taxonomyData[0].name };
+    });
+    return cachedTaxonomy;
 };
 
-const fetchCategory = (categoryIds: number[]) => fetchTaxonomy(categoryIds, 'categories');
-const fetchTag = (tagIds: number[]) => fetchTaxonomy(tagIds, 'tags');
+const fetchCategory = async (categorySlug: string) => await fetchTaxonomy(categorySlug, 'categories');
+const fetchTag = async (tagSlug: string) => await fetchTaxonomy(tagSlug, 'tags');
 
 async function fetchNewsItems(ApiUrl: string) {
     const data = await ofetch(ApiUrl);

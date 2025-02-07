@@ -2,13 +2,14 @@ import { Data, DataItem, Route, ViewType } from '@/types';
 import { fetchNewsItems, fetchTag } from './utils';
 
 export const handler = async (ctx): Promise<Data> => {
-    const id = ctx.req.param('id');
+    const slug = ctx.req.param('slug');
+
+    const { id, name } = await fetchTag(slug);
+
     const rootUrl = 'https://www.landiannews.com/';
     const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed&tags=${id}`;
 
     const items: DataItem[] = await fetchNewsItems(postApiUrl);
-
-    const name = (await fetchTag([id]))[0];
 
     return {
         title: `${name} - 蓝点网`,
@@ -19,23 +20,29 @@ export const handler = async (ctx): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/tag/:id',
+    path: '/tag/:slug',
     name: '标签',
     url: 'www.landiannews.com',
     maintainers: ['cscnk52'],
     handler,
-    example: '/landiannews/tag/118',
-    parameters: { id: '标签 id' },
+    example: '/landiannews/tag/linux-kernel',
+    parameters: { slug: '标签名称' },
     description: undefined,
     categories: ['new-media'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
-        supportRadar: false,
+        supportRadar: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['www.landiannews.com/archives/tag/:slug'],
+            target: '/tag/:slug',
+        },
+    ],
     view: ViewType.Articles,
 };
