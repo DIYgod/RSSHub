@@ -70438,7 +70438,6 @@
           "other"
         ],
         "example": "/producthunt/today",
-        "parameters": {},
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
