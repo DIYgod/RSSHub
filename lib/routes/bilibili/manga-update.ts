@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
-import './wasm-exec.js';
+import { Go } from './wasm-exec.js';
 
 export const route: Route = {
     path: '/manga/update/:comicid',
