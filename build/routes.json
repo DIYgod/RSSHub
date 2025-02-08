@@ -60761,7 +60761,7 @@
         "categories": [
           "reading"
         ],
-        "example": "nautiljon/releases/manga",
+        "example": "/nautiljon/releases/manga",
         "parameters": {},
         "features": {
           "requireConfig": false,
