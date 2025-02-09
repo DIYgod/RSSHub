@@ -37,7 +37,7 @@ async function handler() {
             title: $(item).find('a').attr('title'),
             link: `${rootUrl}${$(item).find('a').attr('href')}`,
         }))
-        .get();
+        .toArray();
 
     const items = await Promise.all(
         list.map((item) =>
