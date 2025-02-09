@@ -14,7 +14,7 @@ export const handler = async (ctx): Promise<Data> => {
     return {
         title: `${name} - 蓝点网`,
         description: '给你感兴趣的内容!',
-        link: String(rootUrl),
+        link: `${rootUrl}${slug}`,
         item: items,
     };
 };

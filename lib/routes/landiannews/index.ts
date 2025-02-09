@@ -10,13 +10,13 @@ export const handler = async (): Promise<Data> => {
     return {
         title: '蓝点网',
         description: '给你感兴趣的内容!',
-        link: String(rootUrl),
+        link: rootUrl,
         item: items,
     };
 };
 
 export const route: Route = {
-    path: '/index',
+    path: '/',
     name: '首页',
     url: 'www.landiannews.com',
     maintainers: ['nczitzk', 'cscnk52'],
