@@ -18,8 +18,8 @@ const fetchTaxonomy = async (slug: string, type: 'categories' | 'tags') => {
 const fetchCategory = async (categorySlug: string) => await fetchTaxonomy(categorySlug, 'categories');
 const fetchTag = async (tagSlug: string) => await fetchTaxonomy(tagSlug, 'tags');
 
-async function fetchNewsItems(ApiUrl: string) {
-    const data = await ofetch(ApiUrl);
+async function fetchNewsItems(apiUrl: string) {
+    const data = await ofetch(apiUrl);
 
     return data.map((item) => ({
         title: item.title.rendered,
