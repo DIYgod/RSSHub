@@ -74,7 +74,7 @@ async function handler(ctx) {
         description: art(path.join(__dirname, 'templates/telegraph.art'), {
             item,
         }),
-        pubDate: parseDate(item.ctime * 1000),
+        pubDate: parseDate(item.ctime * 1),
         category: item.subjects?.map((s) => s.subject_name),
     }));
 
