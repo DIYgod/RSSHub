@@ -21171,14 +21171,15 @@
   },
   "coomer": {
     "routes": {
-      "/artist/:id": {
-        "path": "/artist/:id",
+      "/:source?/:id?": {
+        "path": "/:source?/:id?",
         "categories": [
           "multimedia"
         ],
-        "example": "/coomer/artist/belledelphine",
+        "example": "/coomer",
         "parameters": {
-          "id": "Artist id, can be found in URL"
+          "source": "Source, see below, Posts by default",
+          "id": "User id, can be found in URL"
         },
         "features": {
           "requireConfig": false,
@@ -21191,46 +21192,18 @@
         "radar": [
           {
             "source": [
-              "coomer.su/onlyfans/user/:id",
+              "coomer.su/:source/user/:id",
               "coomer.su/"
             ]
           }
         ],
-        "name": "Artist",
+        "name": "Posts",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "AiraNadih"
         ],
-        "location": "artist.ts"
-      },
-      "/posts": {
-        "path": "/posts",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/coomer/posts",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "coomer.su/posts",
-              "coomer.su/"
-            ]
-          }
-        ],
-        "name": "Recent Posts",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "coomer.su/posts",
-        "location": "posts.ts"
+        "description": "Sources\n\n| Posts | OnlyFans | Fansly | CandFans |\n| ----- | -------- | ------- | -------- |\n| posts | onlyfans | fansly   | candfans |\n\n::: tip\n  When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.\n  There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.\n:::",
+        "location": "index.ts"
       }
     },
     "name": "Coomer",
