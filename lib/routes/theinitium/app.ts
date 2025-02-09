@@ -7,6 +7,10 @@ import path from 'node:path';
 import { config } from '@/config';
 import { getCurrentPath } from '@/utils/helpers';
 
+const __dirname = getCurrentPath(import.meta.url);
+const appUrl = 'https://app.theinitium.com/';
+const userAgent = 'PugpigBolt v4.1.8 (iPhone, iOS 18.2.1) on phone (model iPhone15,2)';
+
 export const route: Route = {
     path: '/app/:category?',
     categories: ['new-media', 'popular'],
@@ -52,16 +56,16 @@ Category 栏目：
 | 播客   | article_audio_sc | article_audio_tc |`,
 };
 
-const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl?: string) => {
+const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, appUrl?: string) => {
     // code from @/middleware/paratmeter.ts
     const $elem = $(elem);
 
-    if (baseUrl) {
+    if (appUrl) {
         try {
             const oldAttr = $elem.attr(attr);
             if (oldAttr) {
                 // e.g. <video><source src="https://example.com"></video> should leave <video> unchanged
-                $elem.attr(attr, new URL(oldAttr, baseUrl).href);
+                $elem.attr(attr, new URL(oldAttr, appUrl).href);
             }
         } catch {
             // no-empty
@@ -69,34 +73,79 @@ const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl
     }
 };
 
+async function getUA(url: string) {
+    return await got({
+        method: 'get',
+        url,
+        headers: {
+            'User-Agent': userAgent,
+        },
+    });
+}
+
+async function fetchAppPage(url: URL) {
+    const response = await getUA(url.href);
+    const $ = load(response.data);
+    // resolve relative links with app.theinitium.com
+    // code from @/middleware/paratmeter.ts
+    $('a, area').each((_, elem) => {
+        resolveRelativeLink($, elem, 'href', appUrl);
+        // $(elem).attr('rel', 'noreferrer');  // currently no such a need
+    });
+    // https://www.w3schools.com/tags/att_src.asp
+    $('img, video, audio, source, iframe, embed, track').each((_, elem) => {
+        resolveRelativeLink($, elem, 'src', appUrl);
+        $(elem).removeAttr('srcset');
+    });
+    $('video[poster]').each((_, elem) => {
+        resolveRelativeLink($, elem, 'poster', appUrl);
+    });
+    const article = $('.pp-article__body');
+    article.find('.block-related-articles').remove();
+    article.find('figure.wp-block-pullquote').children().unwrap();
+    article.find('div.block-explanation-note').wrapInner('<blockquote></blockquote>');
+    article.find('div.wp-block-tcc-author-note').wrapInner('<em></em>').after('<hr>');
+    article.find('p.has-small-font-size').wrapInner('<small></small>');
+    return art(path.join(__dirname, 'templates/description.art'), {
+        standfirst: $('.pp-header-group__standfirst').html(),
+        coverImage: $('.pp-media__image').attr('src'),
+        coverCaption: $('.pp-media__caption').html(),
+        article: article.html(),
+        copyright: $('.copyright').html(),
+    });
+}
+
+async function fetchWebPage(url: URL) {
+    const response = await got(url.href);
+    const $ = load(response.data);
+    const article = $('.wkwp-post-content');
+    article.find('.block-related-articles').remove();
+    article.find('figure.wp-block-pullquote').children().unwrap();
+    article.find('div.block-explanation-note').wrapInner('<blockquote></blockquote>');
+    article.find('div.wp-block-tcc-author-note').wrapInner('<em></em>').after('<hr>');
+    article.find('p.has-small-font-size').wrapInner('<small></small>');
+    return art(path.join(__dirname, 'templates/description.art'), {
+        standfirst: $('span.caption1').html(),
+        coverImage: $('.wp-post-image').attr('src'),
+        coverCaption: $('.image-caption').html(),
+        article: article.html(),
+        copyright: $('.entry-copyright').html(),
+    });
+}
+
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'latest_sc';
-    const __dirname = getCurrentPath(import.meta.url);
-    const baseUrl = 'https://app.theinitium.com/';
-    const userAgent = 'PugpigBolt v4.1.8 (iPhone, iOS 18.2.1) on phone (model iPhone15,2)';
 
-    async function getUA(url: string) {
-        return await got({
-            method: 'get',
-            url,
-            headers: {
-                'User-Agent': userAgent,
-            },
-        });
-    }
-
-    const feeds = await cache.tryGet(new URL('timelines.json', baseUrl).href, async () => await getUA(new URL('timelines.json', baseUrl).href), config.cache.routeExpire, false);
-
+    const feeds = await cache.tryGet(new URL('timelines.json', appUrl).href, async () => await getUA(new URL('timelines.json', appUrl).href), config.cache.routeExpire, false);
     const metadata = feeds.data.timelines.find((timeline) => timeline.id === category);
-
-    const response = await getUA(new URL(metadata.feed, baseUrl).href);
-
+    const response = await getUA(new URL(metadata.feed, appUrl).href);
     const feed = response.data.stories.filter((item) => item.type === 'article');
 
     const items = await Promise.all(
         feed.map((item) =>
-            cache.tryGet(new URL(item.url, baseUrl).href, async () => {
-                item.link = item.shareurl ?? new URL(item.url, baseUrl).href;
+            cache.tryGet(item.shareurl, async () => {
+                const url = new URL(item.shareurl);
+                item.link = url.href;
                 item.description = item.summary;
                 item.pubDate = item.published;
                 item.category = [];
@@ -112,35 +161,16 @@ async function handler(ctx) {
                     }
                 }
                 item.category = [...new Set(item.category)];
-                const response = await getUA(new URL(item.url, baseUrl).href);
-                const $ = load(response.data);
-                // resolve relative links with app.theinitium.com
-                // code from @/middleware/paratmeter.ts
-                $('a, area').each((_, elem) => {
-                    resolveRelativeLink($, elem, 'href', baseUrl);
-                    // $(elem).attr('rel', 'noreferrer');  // currently no such a need
-                });
-                // https://www.w3schools.com/tags/att_src.asp
-                $('img, video, audio, source, iframe, embed, track').each((_, elem) => {
-                    resolveRelativeLink($, elem, 'src', baseUrl);
-                    $(elem).removeAttr('srcset');
-                });
-                $('video[poster]').each((_, elem) => {
-                    resolveRelativeLink($, elem, 'poster', baseUrl);
-                });
-                const article = $('.pp-article__body');
-                article.find('.block-related-articles').remove();
-                article.find('figure.wp-block-pullquote').children().unwrap();
-                article.find('div.block-explanation-note').wrapInner('<blockquote></blockquote>');
-                article.find('div.wp-block-tcc-author-note').wrapInner('<em></em>').after('<hr>');
-                article.find('p.has-small-font-size').wrapInner('<small></small>');
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
-                    standfirst: $('.pp-header-group__standfirst').html(),
-                    coverImage: $('.pp-media__image').attr('src'),
-                    coverCaption: $('.pp-media__caption').html(),
-                    article: article.html(),
-                    copyright: $('.copyright').html(),
-                });
+                switch (url.hostname) {
+                    case 'app.theinitium.com':
+                        item.description = await fetchAppPage(url);
+                        break;
+                    case 'theinitium.com':
+                        item.description = await fetchWebPage(url);
+                        break;
+                    default:
+                        break;
+                }
                 return item;
             })
         )
