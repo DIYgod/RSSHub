@@ -5414,7 +5414,7 @@
   "/panewslab/topic/:id": [
     "nczitzk"
   ],
-  "/papers/arxiv/:category{.+}?": [
+  "/papers/category/:id{.+}?": [
     "nczitzk",
     "Muyun99"
   ],

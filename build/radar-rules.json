@@ -25789,44 +25789,1340 @@
     "_name": "Cool Papers",
     ".": [
       {
-        "title": "arXiv Artificial Intelligence (cs.AI)",
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/:id%7B.+%7D"
+        ],
+        "target": "/papers/category/:id"
+      },
+      {
+        "title": "Astrophysics (astro-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/astro-ph"
+        ],
+        "target": "/papers/category/arxiv/astro-ph"
+      },
+      {
+        "title": "Astrophysics of Galaxies (astro-ph.GA)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/astro-ph.GA"
+        ],
+        "target": "/papers/category/arxiv/astro-ph.GA"
+      },
+      {
+        "title": "Cosmology and Nongalactic Astrophysics (astro-ph.CO)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/astro-ph.CO"
+        ],
+        "target": "/papers/category/arxiv/astro-ph.CO"
+      },
+      {
+        "title": "Earth and Planetary Astrophysics (astro-ph.EP)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/astro-ph.EP"
+        ],
+        "target": "/papers/category/arxiv/astro-ph.EP"
+      },
+      {
+        "title": "High Energy Astrophysical Phenomena (astro-ph.HE)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/astro-ph.HE"
+        ],
+        "target": "/papers/category/arxiv/astro-ph.HE"
+      },
+      {
+        "title": "Instrumentation and Methods for Astrophysics (astro-ph.IM)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/astro-ph.IM"
+        ],
+        "target": "/papers/category/arxiv/astro-ph.IM"
+      },
+      {
+        "title": "Solar and Stellar Astrophysics (astro-ph.SR)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/astro-ph.SR"
+        ],
+        "target": "/papers/category/arxiv/astro-ph.SR"
+      },
+      {
+        "title": "Condensed Matter (cond-mat)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cond-mat"
+        ],
+        "target": "/papers/category/arxiv/cond-mat"
+      },
+      {
+        "title": "Disordered Systems and Neural Networks (cond-mat.dis-nn)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cond-mat.dis-nn"
+        ],
+        "target": "/papers/category/arxiv/cond-mat.dis-nn"
+      },
+      {
+        "title": "Materials Science (cond-mat.mtrl-sci)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cond-mat.mtrl-sci"
+        ],
+        "target": "/papers/category/arxiv/cond-mat.mtrl-sci"
+      },
+      {
+        "title": "Mesoscale and Nanoscale Physics (cond-mat.mes-hall)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cond-mat.mes-hall"
+        ],
+        "target": "/papers/category/arxiv/cond-mat.mes-hall"
+      },
+      {
+        "title": "Other Condensed Matter (cond-mat.other)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cond-mat.other"
+        ],
+        "target": "/papers/category/arxiv/cond-mat.other"
+      },
+      {
+        "title": "Quantum Gases (cond-mat.quant-gas)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cond-mat.quant-gas"
+        ],
+        "target": "/papers/category/arxiv/cond-mat.quant-gas"
+      },
+      {
+        "title": "Soft Condensed Matter (cond-mat.soft)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cond-mat.soft"
+        ],
+        "target": "/papers/category/arxiv/cond-mat.soft"
+      },
+      {
+        "title": "Statistical Mechanics (cond-mat.stat-mech)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cond-mat.stat-mech"
+        ],
+        "target": "/papers/category/arxiv/cond-mat.stat-mech"
+      },
+      {
+        "title": "Strongly Correlated Electrons (cond-mat.str-el)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cond-mat.str-el"
+        ],
+        "target": "/papers/category/arxiv/cond-mat.str-el"
+      },
+      {
+        "title": "Superconductivity (cond-mat.supr-con)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cond-mat.supr-con"
+        ],
+        "target": "/papers/category/arxiv/cond-mat.supr-con"
+      },
+      {
+        "title": "General Relativity and Quantum Cosmology (gr-qc)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/gr-qc"
+        ],
+        "target": "/papers/category/arxiv/gr-qc"
+      },
+      {
+        "title": "High Energy Physics - Experiment (hep-ex)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/hep-ex"
+        ],
+        "target": "/papers/category/arxiv/hep-ex"
+      },
+      {
+        "title": "High Energy Physics - Lattice (hep-lat)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/hep-lat"
+        ],
+        "target": "/papers/category/arxiv/hep-lat"
+      },
+      {
+        "title": "High Energy Physics - Phenomenology (hep-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/hep-ph"
+        ],
+        "target": "/papers/category/arxiv/hep-ph"
+      },
+      {
+        "title": "High Energy Physics - Theory (hep-th)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/hep-th"
+        ],
+        "target": "/papers/category/arxiv/hep-th"
+      },
+      {
+        "title": "Mathematical Physics (math-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math-ph"
+        ],
+        "target": "/papers/category/arxiv/math-ph"
+      },
+      {
+        "title": "Nonlinear Sciences (nlin)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/nlin"
+        ],
+        "target": "/papers/category/arxiv/nlin"
+      },
+      {
+        "title": "Adaptation and Self-Organizing Systems (nlin.AO)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/nlin.AO"
+        ],
+        "target": "/papers/category/arxiv/nlin.AO"
+      },
+      {
+        "title": "Cellular Automata and Lattice Gases (nlin.CG)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/nlin.CG"
+        ],
+        "target": "/papers/category/arxiv/nlin.CG"
+      },
+      {
+        "title": "Chaotic Dynamics (nlin.CD)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/nlin.CD"
+        ],
+        "target": "/papers/category/arxiv/nlin.CD"
+      },
+      {
+        "title": "Exactly Solvable and Integrable Systems (nlin.SI)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/nlin.SI"
+        ],
+        "target": "/papers/category/arxiv/nlin.SI"
+      },
+      {
+        "title": "Pattern Formation and Solitons (nlin.PS)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/nlin.PS"
+        ],
+        "target": "/papers/category/arxiv/nlin.PS"
+      },
+      {
+        "title": "Nuclear Experiment (nucl-ex)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/nucl-ex"
+        ],
+        "target": "/papers/category/arxiv/nucl-ex"
+      },
+      {
+        "title": "Nuclear Theory (nucl-th)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/nucl-th"
+        ],
+        "target": "/papers/category/arxiv/nucl-th"
+      },
+      {
+        "title": "Physics (physics)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics"
+        ],
+        "target": "/papers/category/arxiv/physics"
+      },
+      {
+        "title": "Accelerator Physics (physics.acc-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.acc-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.acc-ph"
+      },
+      {
+        "title": "Applied Physics (physics.app-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.app-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.app-ph"
+      },
+      {
+        "title": "Atmospheric and Oceanic Physics (physics.ao-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.ao-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.ao-ph"
+      },
+      {
+        "title": "Atomic and Molecular Clusters (physics.atm-clus)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.atm-clus"
+        ],
+        "target": "/papers/category/arxiv/physics.atm-clus"
+      },
+      {
+        "title": "Atomic Physics (physics.atom-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.atom-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.atom-ph"
+      },
+      {
+        "title": "Biological Physics (physics.bio-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.bio-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.bio-ph"
+      },
+      {
+        "title": "Chemical Physics (physics.chem-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.chem-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.chem-ph"
+      },
+      {
+        "title": "Classical Physics (physics.class-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.class-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.class-ph"
+      },
+      {
+        "title": "Computational Physics (physics.comp-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.comp-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.comp-ph"
+      },
+      {
+        "title": "Data Analysis, Statistics and Probability (physics.data-an)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.data-an"
+        ],
+        "target": "/papers/category/arxiv/physics.data-an"
+      },
+      {
+        "title": "Fluid Dynamics (physics.flu-dyn)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.flu-dyn"
+        ],
+        "target": "/papers/category/arxiv/physics.flu-dyn"
+      },
+      {
+        "title": "General Physics (physics.gen-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.gen-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.gen-ph"
+      },
+      {
+        "title": "Geophysics (physics.geo-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.geo-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.geo-ph"
+      },
+      {
+        "title": "History and Philosophy of Physics (physics.hist-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.hist-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.hist-ph"
+      },
+      {
+        "title": "Instrumentation and Detectors (physics.ins-det)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.ins-det"
+        ],
+        "target": "/papers/category/arxiv/physics.ins-det"
+      },
+      {
+        "title": "Medical Physics (physics.med-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.med-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.med-ph"
+      },
+      {
+        "title": "Optics (physics.optics)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.optics"
+        ],
+        "target": "/papers/category/arxiv/physics.optics"
+      },
+      {
+        "title": "Physics and Society (physics.soc-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.soc-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.soc-ph"
+      },
+      {
+        "title": "Physics Education (physics.ed-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.ed-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.ed-ph"
+      },
+      {
+        "title": "Plasma Physics (physics.plasm-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.plasm-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.plasm-ph"
+      },
+      {
+        "title": "Popular Physics (physics.pop-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.pop-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.pop-ph"
+      },
+      {
+        "title": "Space Physics (physics.space-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/physics.space-ph"
+        ],
+        "target": "/papers/category/arxiv/physics.space-ph"
+      },
+      {
+        "title": "Quantum Physics (quant-ph)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/quant-ph"
+        ],
+        "target": "/papers/category/arxiv/quant-ph"
+      },
+      {
+        "title": "Mathematics (math)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math"
+        ],
+        "target": "/papers/category/arxiv/math"
+      },
+      {
+        "title": "Algebraic Geometry (math.AG)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.AG"
+        ],
+        "target": "/papers/category/arxiv/math.AG"
+      },
+      {
+        "title": "Algebraic Topology (math.AT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.AT"
+        ],
+        "target": "/papers/category/arxiv/math.AT"
+      },
+      {
+        "title": "Analysis of PDEs (math.AP)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.AP"
+        ],
+        "target": "/papers/category/arxiv/math.AP"
+      },
+      {
+        "title": "Category Theory (math.CT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.CT"
+        ],
+        "target": "/papers/category/arxiv/math.CT"
+      },
+      {
+        "title": "Classical Analysis and ODEs (math.CA)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.CA"
+        ],
+        "target": "/papers/category/arxiv/math.CA"
+      },
+      {
+        "title": "Combinatorics (math.CO)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.CO"
+        ],
+        "target": "/papers/category/arxiv/math.CO"
+      },
+      {
+        "title": "Commutative Algebra (math.AC)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.AC"
+        ],
+        "target": "/papers/category/arxiv/math.AC"
+      },
+      {
+        "title": "Complex Variables (math.CV)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.CV"
+        ],
+        "target": "/papers/category/arxiv/math.CV"
+      },
+      {
+        "title": "Differential Geometry (math.DG)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.DG"
+        ],
+        "target": "/papers/category/arxiv/math.DG"
+      },
+      {
+        "title": "Dynamical Systems (math.DS)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.DS"
+        ],
+        "target": "/papers/category/arxiv/math.DS"
+      },
+      {
+        "title": "Functional Analysis (math.FA)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.FA"
+        ],
+        "target": "/papers/category/arxiv/math.FA"
+      },
+      {
+        "title": "General Mathematics (math.GM)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.GM"
+        ],
+        "target": "/papers/category/arxiv/math.GM"
+      },
+      {
+        "title": "General Topology (math.GN)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.GN"
+        ],
+        "target": "/papers/category/arxiv/math.GN"
+      },
+      {
+        "title": "Geometric Topology (math.GT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.GT"
+        ],
+        "target": "/papers/category/arxiv/math.GT"
+      },
+      {
+        "title": "Group Theory (math.GR)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.GR"
+        ],
+        "target": "/papers/category/arxiv/math.GR"
+      },
+      {
+        "title": "History and Overview (math.HO)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.HO"
+        ],
+        "target": "/papers/category/arxiv/math.HO"
+      },
+      {
+        "title": "Information Theory (math.IT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.IT"
+        ],
+        "target": "/papers/category/arxiv/math.IT"
+      },
+      {
+        "title": "K-Theory and Homology (math.KT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.KT"
+        ],
+        "target": "/papers/category/arxiv/math.KT"
+      },
+      {
+        "title": "Logic (math.LO)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.LO"
+        ],
+        "target": "/papers/category/arxiv/math.LO"
+      },
+      {
+        "title": "Mathematical Physics (math.MP)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.MP"
+        ],
+        "target": "/papers/category/arxiv/math.MP"
+      },
+      {
+        "title": "Metric Geometry (math.MG)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.MG"
+        ],
+        "target": "/papers/category/arxiv/math.MG"
+      },
+      {
+        "title": "Number Theory (math.NT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.NT"
+        ],
+        "target": "/papers/category/arxiv/math.NT"
+      },
+      {
+        "title": "Numerical Analysis (math.NA)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.NA"
+        ],
+        "target": "/papers/category/arxiv/math.NA"
+      },
+      {
+        "title": "Operator Algebras (math.OA)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.OA"
+        ],
+        "target": "/papers/category/arxiv/math.OA"
+      },
+      {
+        "title": "Optimization and Control (math.OC)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.OC"
+        ],
+        "target": "/papers/category/arxiv/math.OC"
+      },
+      {
+        "title": "Probability (math.PR)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.PR"
+        ],
+        "target": "/papers/category/arxiv/math.PR"
+      },
+      {
+        "title": "Quantum Algebra (math.QA)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.QA"
+        ],
+        "target": "/papers/category/arxiv/math.QA"
+      },
+      {
+        "title": "Representation Theory (math.RT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.RT"
+        ],
+        "target": "/papers/category/arxiv/math.RT"
+      },
+      {
+        "title": "Rings and Algebras (math.RA)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.RA"
+        ],
+        "target": "/papers/category/arxiv/math.RA"
+      },
+      {
+        "title": "Spectral Theory (math.SP)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.SP"
+        ],
+        "target": "/papers/category/arxiv/math.SP"
+      },
+      {
+        "title": "Statistics Theory (math.ST)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.ST"
+        ],
+        "target": "/papers/category/arxiv/math.ST"
+      },
+      {
+        "title": "Symplectic Geometry (math.SG)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/math.SG"
+        ],
+        "target": "/papers/category/arxiv/math.SG"
+      },
+      {
+        "title": "Computer Science (cs)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs"
+        ],
+        "target": "/papers/category/arxiv/cs"
+      },
+      {
+        "title": "Artificial Intelligence (cs.AI)",
         "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/arxiv/cs.AI"
         ],
-        "target": "/papers/arxiv/cs.AI"
+        "target": "/papers/category/arxiv/cs.AI"
       },
       {
-        "title": "arXiv Computation and Language (cs.CL)",
+        "title": "Computation and Language (cs.CL)",
         "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/arxiv/cs.CL"
         ],
-        "target": "/papers/arxiv/cs.CL"
+        "target": "/papers/category/arxiv/cs.CL"
       },
       {
-        "title": "arXiv Computer Vision and Pattern Recognition (cs.CV)",
+        "title": "Computational Complexity (cs.CC)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.CC"
+        ],
+        "target": "/papers/category/arxiv/cs.CC"
+      },
+      {
+        "title": "Computational Engineering, Finance, and Science (cs.CE)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.CE"
+        ],
+        "target": "/papers/category/arxiv/cs.CE"
+      },
+      {
+        "title": "Computational Geometry (cs.CG)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.CG"
+        ],
+        "target": "/papers/category/arxiv/cs.CG"
+      },
+      {
+        "title": "Computer Science and Game Theory (cs.GT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.GT"
+        ],
+        "target": "/papers/category/arxiv/cs.GT"
+      },
+      {
+        "title": "Computer Vision and Pattern Recognition (cs.CV)",
         "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/arxiv/cs.CV"
         ],
-        "target": "/papers/arxiv/cs.CV"
+        "target": "/papers/category/arxiv/cs.CV"
       },
       {
-        "title": "arXiv Machine Learning (cs.LG)",
+        "title": "Computers and Society (cs.CY)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.CY"
+        ],
+        "target": "/papers/category/arxiv/cs.CY"
+      },
+      {
+        "title": "Cryptography and Security (cs.CR)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.CR"
+        ],
+        "target": "/papers/category/arxiv/cs.CR"
+      },
+      {
+        "title": "Data Structures and Algorithms (cs.DS)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.DS"
+        ],
+        "target": "/papers/category/arxiv/cs.DS"
+      },
+      {
+        "title": "Databases (cs.DB)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.DB"
+        ],
+        "target": "/papers/category/arxiv/cs.DB"
+      },
+      {
+        "title": "Digital Libraries (cs.DL)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.DL"
+        ],
+        "target": "/papers/category/arxiv/cs.DL"
+      },
+      {
+        "title": "Discrete Mathematics (cs.DM)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.DM"
+        ],
+        "target": "/papers/category/arxiv/cs.DM"
+      },
+      {
+        "title": "Distributed, Parallel, and Cluster Computing (cs.DC)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.DC"
+        ],
+        "target": "/papers/category/arxiv/cs.DC"
+      },
+      {
+        "title": "Emerging Technologies (cs.ET)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.ET"
+        ],
+        "target": "/papers/category/arxiv/cs.ET"
+      },
+      {
+        "title": "Formal Languages and Automata Theory (cs.FL)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.FL"
+        ],
+        "target": "/papers/category/arxiv/cs.FL"
+      },
+      {
+        "title": "General Literature (cs.GL)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.GL"
+        ],
+        "target": "/papers/category/arxiv/cs.GL"
+      },
+      {
+        "title": "Graphics (cs.GR)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.GR"
+        ],
+        "target": "/papers/category/arxiv/cs.GR"
+      },
+      {
+        "title": "Hardware Architecture (cs.AR)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.AR"
+        ],
+        "target": "/papers/category/arxiv/cs.AR"
+      },
+      {
+        "title": "Human-Computer Interaction (cs.HC)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.HC"
+        ],
+        "target": "/papers/category/arxiv/cs.HC"
+      },
+      {
+        "title": "Information Retrieval (cs.IR)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.IR"
+        ],
+        "target": "/papers/category/arxiv/cs.IR"
+      },
+      {
+        "title": "Information Theory (cs.IT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.IT"
+        ],
+        "target": "/papers/category/arxiv/cs.IT"
+      },
+      {
+        "title": "Logic in Computer Science (cs.LO)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.LO"
+        ],
+        "target": "/papers/category/arxiv/cs.LO"
+      },
+      {
+        "title": "Machine Learning (cs.LG)",
         "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/arxiv/cs.LG"
         ],
-        "target": "/papers/arxiv/cs.LG"
+        "target": "/papers/category/arxiv/cs.LG"
       },
       {
-        "title": "arXiv Robotics (cs.RO)",
+        "title": "Mathematical Software (cs.MS)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.MS"
+        ],
+        "target": "/papers/category/arxiv/cs.MS"
+      },
+      {
+        "title": "Multiagent Systems (cs.MA)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.MA"
+        ],
+        "target": "/papers/category/arxiv/cs.MA"
+      },
+      {
+        "title": "Multimedia (cs.MM)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.MM"
+        ],
+        "target": "/papers/category/arxiv/cs.MM"
+      },
+      {
+        "title": "Networking and Internet Architecture (cs.NI)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.NI"
+        ],
+        "target": "/papers/category/arxiv/cs.NI"
+      },
+      {
+        "title": "Neural and Evolutionary Computing (cs.NE)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.NE"
+        ],
+        "target": "/papers/category/arxiv/cs.NE"
+      },
+      {
+        "title": "Numerical Analysis (cs.NA)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.NA"
+        ],
+        "target": "/papers/category/arxiv/cs.NA"
+      },
+      {
+        "title": "Operating Systems (cs.OS)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.OS"
+        ],
+        "target": "/papers/category/arxiv/cs.OS"
+      },
+      {
+        "title": "Other Computer Science (cs.OH)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.OH"
+        ],
+        "target": "/papers/category/arxiv/cs.OH"
+      },
+      {
+        "title": "Performance (cs.PF)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.PF"
+        ],
+        "target": "/papers/category/arxiv/cs.PF"
+      },
+      {
+        "title": "Programming Languages (cs.PL)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.PL"
+        ],
+        "target": "/papers/category/arxiv/cs.PL"
+      },
+      {
+        "title": "Robotics (cs.RO)",
         "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/arxiv/cs.RO"
         ],
-        "target": "/papers/arxiv/cs.RO"
+        "target": "/papers/category/arxiv/cs.RO"
+      },
+      {
+        "title": "Social and Information Networks (cs.SI)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.SI"
+        ],
+        "target": "/papers/category/arxiv/cs.SI"
+      },
+      {
+        "title": "Software Engineering (cs.SE)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.SE"
+        ],
+        "target": "/papers/category/arxiv/cs.SE"
+      },
+      {
+        "title": "Sound (cs.SD)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.SD"
+        ],
+        "target": "/papers/category/arxiv/cs.SD"
+      },
+      {
+        "title": "Symbolic Computation (cs.SC)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.SC"
+        ],
+        "target": "/papers/category/arxiv/cs.SC"
+      },
+      {
+        "title": "Systems and Control (cs.SY)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/cs.SY"
+        ],
+        "target": "/papers/category/arxiv/cs.SY"
+      },
+      {
+        "title": "Quantitative Biology (q-bio)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio"
+        ],
+        "target": "/papers/category/arxiv/q-bio"
+      },
+      {
+        "title": "Biomolecules (q-bio.BM)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio.BM"
+        ],
+        "target": "/papers/category/arxiv/q-bio.BM"
+      },
+      {
+        "title": "Cell Behavior (q-bio.CB)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio.CB"
+        ],
+        "target": "/papers/category/arxiv/q-bio.CB"
+      },
+      {
+        "title": "Genomics (q-bio.GN)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio.GN"
+        ],
+        "target": "/papers/category/arxiv/q-bio.GN"
+      },
+      {
+        "title": "Molecular Networks (q-bio.MN)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio.MN"
+        ],
+        "target": "/papers/category/arxiv/q-bio.MN"
+      },
+      {
+        "title": "Neurons and Cognition (q-bio.NC)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio.NC"
+        ],
+        "target": "/papers/category/arxiv/q-bio.NC"
+      },
+      {
+        "title": "Other Quantitative Biology (q-bio.OT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio.OT"
+        ],
+        "target": "/papers/category/arxiv/q-bio.OT"
+      },
+      {
+        "title": "Populations and Evolution (q-bio.PE)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio.PE"
+        ],
+        "target": "/papers/category/arxiv/q-bio.PE"
+      },
+      {
+        "title": "Quantitative Methods (q-bio.QM)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio.QM"
+        ],
+        "target": "/papers/category/arxiv/q-bio.QM"
+      },
+      {
+        "title": "Subcellular Processes (q-bio.SC)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio.SC"
+        ],
+        "target": "/papers/category/arxiv/q-bio.SC"
+      },
+      {
+        "title": "Tissues and Organs (q-bio.TO)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-bio.TO"
+        ],
+        "target": "/papers/category/arxiv/q-bio.TO"
+      },
+      {
+        "title": "Quantitative Finance (q-fin)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-fin"
+        ],
+        "target": "/papers/category/arxiv/q-fin"
+      },
+      {
+        "title": "Computational Finance (q-fin.CP)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-fin.CP"
+        ],
+        "target": "/papers/category/arxiv/q-fin.CP"
+      },
+      {
+        "title": "Economics (q-fin.EC)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-fin.EC"
+        ],
+        "target": "/papers/category/arxiv/q-fin.EC"
+      },
+      {
+        "title": "General Finance (q-fin.GN)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-fin.GN"
+        ],
+        "target": "/papers/category/arxiv/q-fin.GN"
+      },
+      {
+        "title": "Mathematical Finance (q-fin.MF)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-fin.MF"
+        ],
+        "target": "/papers/category/arxiv/q-fin.MF"
+      },
+      {
+        "title": "Portfolio Management (q-fin.PM)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-fin.PM"
+        ],
+        "target": "/papers/category/arxiv/q-fin.PM"
+      },
+      {
+        "title": "Pricing of Securities (q-fin.PR)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-fin.PR"
+        ],
+        "target": "/papers/category/arxiv/q-fin.PR"
+      },
+      {
+        "title": "Risk Management (q-fin.RM)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-fin.RM"
+        ],
+        "target": "/papers/category/arxiv/q-fin.RM"
+      },
+      {
+        "title": "Statistical Finance (q-fin.ST)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-fin.ST"
+        ],
+        "target": "/papers/category/arxiv/q-fin.ST"
+      },
+      {
+        "title": "Trading and Market Microstructure (q-fin.TR)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/q-fin.TR"
+        ],
+        "target": "/papers/category/arxiv/q-fin.TR"
+      },
+      {
+        "title": "Statistics (stat)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/stat"
+        ],
+        "target": "/papers/category/arxiv/stat"
+      },
+      {
+        "title": "Applications (stat.AP)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/stat.AP"
+        ],
+        "target": "/papers/category/arxiv/stat.AP"
+      },
+      {
+        "title": "Computation (stat.CO)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/stat.CO"
+        ],
+        "target": "/papers/category/arxiv/stat.CO"
+      },
+      {
+        "title": "Machine Learning (stat.ML)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/stat.ML"
+        ],
+        "target": "/papers/category/arxiv/stat.ML"
+      },
+      {
+        "title": "Methodology (stat.ME)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/stat.ME"
+        ],
+        "target": "/papers/category/arxiv/stat.ME"
+      },
+      {
+        "title": "Other Statistics (stat.OT)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/stat.OT"
+        ],
+        "target": "/papers/category/arxiv/stat.OT"
+      },
+      {
+        "title": "Statistics Theory (stat.TH)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/stat.TH"
+        ],
+        "target": "/papers/category/arxiv/stat.TH"
+      },
+      {
+        "title": "Electrical Engineering and Systems Science (eess)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/eess"
+        ],
+        "target": "/papers/category/arxiv/eess"
+      },
+      {
+        "title": "Audio and Speech Processing (eess.AS)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/eess.AS"
+        ],
+        "target": "/papers/category/arxiv/eess.AS"
+      },
+      {
+        "title": "Image and Video Processing (eess.IV)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/eess.IV"
+        ],
+        "target": "/papers/category/arxiv/eess.IV"
+      },
+      {
+        "title": "Signal Processing (eess.SP)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/eess.SP"
+        ],
+        "target": "/papers/category/arxiv/eess.SP"
+      },
+      {
+        "title": "Systems and Control (eess.SY)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/eess.SY"
+        ],
+        "target": "/papers/category/arxiv/eess.SY"
+      },
+      {
+        "title": "Economics (econ)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/econ"
+        ],
+        "target": "/papers/category/arxiv/econ"
+      },
+      {
+        "title": "Econometrics (econ.EM)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/econ.EM"
+        ],
+        "target": "/papers/category/arxiv/econ.EM"
+      },
+      {
+        "title": "General Economics (econ.GN)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/econ.GN"
+        ],
+        "target": "/papers/category/arxiv/econ.GN"
+      },
+      {
+        "title": "Theoretical Economics (econ.TH)",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/arxiv/econ.TH"
+        ],
+        "target": "/papers/category/arxiv/econ.TH"
       },
       {
         "title": "arXiv Paper queryed by Keyword",
