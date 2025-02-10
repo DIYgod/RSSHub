@@ -47,6 +47,7 @@ async function handler(ctx) {
     let displayVideo = '1';
     let displayArticle = '0';
     let displayComments = '0';
+    let showBloggerIcons = '0';
     if (routeParams) {
         if (routeParams === '1' || routeParams === '0') {
             displayVideo = routeParams;
@@ -55,6 +56,7 @@ async function handler(ctx) {
             displayVideo = fallback(undefined, queryToBoolean(routeParams.displayVideo), true) ? '1' : '0';
             displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false) ? '1' : '0';
             displayComments = fallback(undefined, queryToBoolean(routeParams.displayComments), false) ? '1' : '0';
+            showBloggerIcons = fallback(undefined, queryToBoolean(routeParams.showBloggerIcons), false) ? '1' : '0';
         }
     }
 
@@ -133,7 +135,7 @@ async function handler(ctx) {
 
                 // 评论的处理
                 if (displayComments === '1') {
-                    description = await weiboUtils.formatComments(ctx, description, item);
+                    description = await weiboUtils.formatComments(ctx, description, item, showBloggerIcons);
                 }
 
                 // 文章的处理

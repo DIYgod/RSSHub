@@ -167,7 +167,7 @@ async function handler(ctx) {
 
                 // 评论的处理
                 if (displayComments === '1') {
-                    description = await weiboUtils.formatComments(ctx, description, item.mblog);
+                    description = await weiboUtils.formatComments(ctx, description, item.mblog, '0');
                 }
 
                 // 文章的处理
