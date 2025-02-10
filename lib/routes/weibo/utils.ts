@@ -399,7 +399,7 @@ const weiboUtils = {
         }
         return itemDesc;
     },
-    formatComments: async (ctx, itemDesc, status) => {
+    formatComments: async (ctx, itemDesc, status, showBloggerIcons) => {
         if (status && status.comments_count && status.id && status.mid) {
             const id = status.id;
             const mid = status.mid;
@@ -421,7 +421,11 @@ const weiboUtils = {
                 itemDesc += '<h3>热门评论</h3>';
                 for (const comment of comments) {
                     itemDesc += '<p style="margin-bottom: 0.5em;margin-top: 0.5em">';
-                    itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${comment.user.screen_name}</a>: ${comment.text}`;
+                    let name = comment.user.screen_name;
+                    if (showBloggerIcons === '1' && comment.blogger_icons) {
+                        name += comment.blogger_icons[0].name;
+                    }
+                    itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${name}</a>: ${comment.text}`;
                     // 带有图片的评论直接输出图片
                     if ('pic' in comment) {
                         itemDesc += `<br><img src="${comment.pic.url}">`;
@@ -445,7 +449,11 @@ const weiboUtils = {
                                 }
                             }
                             itemDesc += '<div style="font-size: 0.9em">';
-                            itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${com.user.screen_name}</a>: ${com.text}`;
+                            let name = com.user.screen_name;
+                            if (showBloggerIcons === '1' && com.blogger_icons) {
+                                name += com.blogger_icons[0].name;
+                            }
+                            itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${name}</a>: ${com.text}`;
                             itemDesc += '</div>';
                         }
                         itemDesc += '</blockquote>';

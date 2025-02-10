@@ -96,7 +96,7 @@ async function handler(ctx) {
             }
 
             if (displayComments === '1') {
-                description = await weiboUtils.formatComments(ctx, description, item);
+                description = await weiboUtils.formatComments(ctx, description, item, '0');
             }
 
             if (displayArticle === '1') {
