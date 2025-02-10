@@ -72,7 +72,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
         let processedItem: DataItem = {
             title,
             pubDate: pubDate ? parseDate(pubDate) : undefined,
-            link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
+            link: new URL(linkUrl, baseUrl).href,
             category: categories,
             author: authors,
             guid,
