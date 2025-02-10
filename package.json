@@ -91,7 +91,7 @@
         "iconv-lite": "0.6.3",
         "imapflow": "1.0.181",
         "instagram-private-api": "1.46.1",
-        "ioredis": "5.4.2",
+        "ioredis": "5.5.0",
         "ip-regex": "5.0.0",
         "jsdom": "26.0.0",
         "json-bigint": "1.0.0",
