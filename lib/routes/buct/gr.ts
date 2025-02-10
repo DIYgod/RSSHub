@@ -10,9 +10,12 @@ export const route: Route = {
     example: '/buct/gr/jzml',
     parameters: {
         type: {
-            type: 'string',
-            optional: false,
             description: '信息类型，可选值：tzgg（通知公告），jzml（简章目录），xgzc（相关政策）',
+            options: [
+                { value: 'tzgg', label: '通知公告' },
+                { value: 'jzml', label: '简章目录' },
+                { value: 'xgzc', label: '相关政策' },
+            ],
         },
     },
     features: {
@@ -24,12 +27,12 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: [
-        { source: ['graduate.buct.edu.cn/1392/list.htm'], target: '/buct/gr/tzgg' },
-        { source: ['graduate.buct.edu.cn/jzml/list.htm'], target: '/buct/gr/jzml' },
-        { source: ['graduate.buct.edu.cn/1393/list.htm'], target: '/buct/gr/xgzc' },
+        { source: ['graduate.buct.edu.cn/1392/list.htm'], target: '/gr/tzgg' },
+        { source: ['graduate.buct.edu.cn/jzml/list.htm'], target: '/gr/jzml' },
+        { source: ['graduate.buct.edu.cn/1393/list.htm'], target: '/gr/xgzc' },
     ],
     name: '研究生院',
-    maintainers: ['Epic_Creeper'],
+    maintainers: ['Epic-Creeper'],
     handler,
     url: 'buct.edu.cn/',
 };

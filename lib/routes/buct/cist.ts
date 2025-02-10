@@ -16,9 +16,9 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [{ source: ['cist.buct.edu.cn/xygg/list.htm', 'cist.buct.edu.cn/xygg/main.htm'], target: '/buct/cist' }],
+    radar: [{ source: ['cist.buct.edu.cn/xygg/list.htm', 'cist.buct.edu.cn/xygg/main.htm'], target: '/cist' }],
     name: '信息学院',
-    maintainers: ['Epic_Creeper'],
+    maintainers: ['Epic-Creeper'],
     handler,
     url: 'buct.edu.cn/',
 };

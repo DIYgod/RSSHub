@@ -16,9 +16,9 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [{ source: ['jiaowuchu.buct.edu.cn/610/list.htm', 'jiaowuchu.buct.edu.cn/611/main.htm'], target: '/buct/jwc' }],
+    radar: [{ source: ['jiaowuchu.buct.edu.cn/610/list.htm', 'jiaowuchu.buct.edu.cn/611/main.htm'], target: '/jwc' }],
     name: '教务处',
-    maintainers: ['Epic_Creeper'],
+    maintainers: ['Epic-Creeper'],
     handler,
     url: 'buct.edu.cn/',
 };
