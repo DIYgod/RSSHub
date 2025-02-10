@@ -16,30 +16,28 @@ const baseUrl: string = 'https://www.gcores.com';
 const imageBaseUrl: string = 'https://image.gcores.com';
 const audioBaseUrl: string = 'https://alioss.gcores.com';
 
-const baseQuery = {
-    sort: '-published-at',
-    include: 'category,user,media',
-    'filter[list-all]': 1,
-    'filter[is-news]': 1,
-};
+const types: Set<string> = new Set(['radios', 'articles', 'news', 'videos', 'talks']);
 
 const processItems = async (limit: number, query: any, apiUrl: string, targetUrl: string): Promise<Data> => {
     const response = await ofetch(apiUrl, {
-        query: {
-            ...baseQuery,
-            query,
+        query: query ?? {
+            'page[limit]': limit,
+            sort: '-published-at',
+            include: 'category,user,media',
+            'filter[list-all]': 1,
         },
     });
-
-    const included = response.included;
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
+    const included = response.included;
+    const data = [...response.data, ...included].filter((item) => types.has(item.type));
+
     let items: DataItem[] = [];
 
-    items = response.data?.slice(0, limit).map((item): DataItem => {
+    items = data?.slice(0, limit).map((item): DataItem => {
         const attributes = item.attributes;
         const relationships = item.relationships;
 
@@ -47,11 +45,16 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
         const pubDate: number | string = attributes['published-at'];
         const linkUrl: string | undefined = `${item.type}/${item.id}`;
 
-        const categoryObj = relationships?.category?.data;
-        const categories: string[] = categoryObj ? [included.find((i) => i.type === categoryObj.type && i.id === categoryObj.id)?.attributes?.name].filter(Boolean) : [];
+        const categoryObjs = [relationships?.category?.data, relationships?.tag?.data, relationships?.topic?.data].filter(Boolean);
+        const categories: string[] = categoryObjs
+            .map((obj) => {
+                const attributes = included.find((i) => i.type === obj.type && i.id === obj.id)?.attributes;
+                return attributes?.name ?? attributes?.title;
+            })
+            .filter(Boolean);
 
         const authorObj = relationships?.user?.data;
-        const authorIncluded = included.find((i) => i.type === authorObj.type && i.id === authorObj.id);
+        const authorIncluded = authorObj ? included.find((i) => i.type === authorObj.type && i.id === authorObj.id) : undefined;
         const authors: DataItem['author'] = authorIncluded
             ? [
                   {
@@ -69,7 +72,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
         let processedItem: DataItem = {
             title,
             pubDate: pubDate ? parseDate(pubDate) : undefined,
-            link: linkUrl,
+            link: new URL(linkUrl, baseUrl).href,
             category: categories,
             author: authors,
             guid,
@@ -94,7 +97,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
                 enclosureType = `audio/${enclosureUrl?.split(/\./).pop()}`;
             } else if (mediaAttrs['original-src']) {
                 enclosureUrl = mediaAttrs['original-src'];
-                enclosureType = 'video/mpeg';
+                enclosureType = `video/${enclosureUrl?.split(/\?/).pop() ? (/^id=\d+$/.test(enclosureUrl?.split(/\?/).pop() as string) ? 'taptap' : enclosureUrl?.split(/\./).pop()) : ''}`;
             }
         }
 
@@ -145,6 +148,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
 
         processedItem = {
             ...processedItem,
+            title: title ?? $(description).text(),
             description,
             content: {
                 html: description,
