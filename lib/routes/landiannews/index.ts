@@ -21,7 +21,7 @@ export const route: Route = {
     url: 'www.landiannews.com',
     maintainers: ['nczitzk', 'cscnk52'],
     handler,
-    example: '/landiannews/index',
+    example: '/landiannews',
     parameters: undefined,
     description: undefined,
     categories: ['new-media'],
@@ -37,7 +37,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.landiannews.com'],
-            target: '/index',
+            target: '/',
         },
     ],
     view: ViewType.Articles,
