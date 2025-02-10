@@ -4207,8 +4207,15 @@
   "/lala/": [
     "cnkmmk"
   ],
+  "/landiannews/category/:slug": [
+    "cscnk52"
+  ],
   "/landiannews/": [
-    "nczitzk"
+    "nczitzk",
+    "cscnk52"
+  ],
+  "/landiannews/tag/:slug": [
+    "cscnk52"
   ],
   "/lang/live/room/:id": [
     "MittWillson"

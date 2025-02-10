@@ -19604,12 +19604,28 @@
     "_name": "蓝点网",
     "www": [
       {
-        "title": "资讯",
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:slug"
+        ],
+        "target": "/landiannews/category/:slug"
+      },
+      {
+        "title": "首页",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
         "target": "/landiannews/"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/tag/:slug"
+        ],
+        "target": "/landiannews/tag/:slug"
       }
     ]
   },

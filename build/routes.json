@@ -52250,12 +52250,47 @@
   },
   "landiannews": {
     "routes": {
-      "/": {
-        "path": "/",
-        "name": "资讯",
+      "/category/:slug": {
+        "path": "/category/:slug",
+        "name": "分类",
         "url": "www.landiannews.com",
         "maintainers": [
-          "nczitzk"
+          "cscnk52"
+        ],
+        "example": "/landiannews/category/sells",
+        "parameters": {
+          "slug": "分类名称"
+        },
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.landiannews.com/:slug"
+            ],
+            "target": "/category/:slug"
+          }
+        ],
+        "view": 0,
+        "location": "category.ts"
+      },
+      "/": {
+        "path": "/",
+        "name": "首页",
+        "url": "www.landiannews.com",
+        "maintainers": [
+          "nczitzk",
+          "cscnk52"
         ],
         "example": "/landiannews",
         "categories": [
@@ -52280,6 +52315,40 @@
         ],
         "view": 0,
         "location": "index.ts"
+      },
+      "/tag/:slug": {
+        "path": "/tag/:slug",
+        "name": "标签",
+        "url": "www.landiannews.com",
+        "maintainers": [
+          "cscnk52"
+        ],
+        "example": "/landiannews/tag/linux-kernel",
+        "parameters": {
+          "slug": "标签名称"
+        },
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.landiannews.com/archives/tag/:slug"
+            ],
+            "target": "/tag/:slug"
+          }
+        ],
+        "view": 0,
+        "location": "tag.ts"
       }
     },
     "name": "蓝点网",
