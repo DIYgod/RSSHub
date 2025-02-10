@@ -47,8 +47,8 @@ e.g.: \`/gelbooru/post?limit=20&apiKey=xx&userId=xx&imgQuality=orig\`
 function generatePostDescription(post, link, quality: 'sample' | 'orig') {
     const { id, source, owner, file_url: fileUrl, tags, score } = post;
     const isHttp = /^https?:\/\//.test(source);
-    const sourceHtml = isHttp ? `<a href=${source}>Source</a>` : `<span>${source}</span>`;
-    const sourceHost = isHttp ? new URL(source).host : source;
+    const sourceHtml = isHttp ? `<a href=${source}>Source</a>` : `<span>Source: ${source || '-'}</span>`;
+    const sourceHost = isHttp ? new URL(source).host : source || 'unknown';
     const postHtml = `<a href="${link}">#${id}</a>`;
     const uploadByHtml = `Upload by: <a href="https://gelbooru.com/index.php?page=post&s=list&tags=user:${owner}">${owner}</a>`;
     const imgQualityMap = { sample: 'sample_url', orig: 'file_url' };
