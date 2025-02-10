@@ -406,8 +406,8 @@ importers:
         specifier: 15.14.0
         version: 15.14.0
       got:
-        specifier: 14.4.5
-        version: 14.4.5
+        specifier: 14.4.6
+        version: 14.4.6
       husky:
         specifier: 9.1.7
         version: 9.1.7
@@ -980,6 +980,10 @@ packages:
 
   '@babel/runtime@7.26.7':
     resolution: {integrity: sha512-AOPI3D+a8dXnja+iwsUqGRjr1BbZIe771sXdapOtYI531gSqpi92vXivKcq2asu/DFpdl1ceFAKZyRzK2PCVcQ==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/template@7.26.8':
+    resolution: {integrity: sha512-iNKaX3ZebKIsCvJ+0jd6embf+Aulaa3vNBqZ41kM7iTWjx5qzWKXGHiJUW3+nTpQ18SG11hdF8OAzKrpXkb96Q==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.26.8':
@@ -3411,8 +3415,8 @@ packages:
     resolution: {integrity: sha512-mThBblvlAF1d4O5oqyvN+ZxLAYwIJK7bpMxgYqPD9okW0C3qm5FFn7k811QrcuEBwaogR3ngOFoCfs6mRv7teQ==}
     engines: {node: '>=14.16'}
 
-  got@14.4.5:
-    resolution: {integrity: sha512-sq+uET8TnNKRNnjEOPJzMcxeI0irT8BBNmf+GtZcJpmhYsQM1DSKmCROUjPWKsXZ5HzwD5Cf5/RV+QD9BSTxJg==}
+  got@14.4.6:
+    resolution: {integrity: sha512-rnhwfM/PhMNJ1i17k3DuDqgj0cKx3IHxBKVv/WX1uDKqrhi2Gv3l7rhPThR/Cc6uU++dD97W9c8Y0qyw9x0jag==}
     engines: {node: '>=20'}
 
   graceful-fs@4.2.11:
@@ -5396,6 +5400,10 @@ packages:
     resolution: {integrity: sha512-s6zVrxuyKbbAsSAD5ZPTB77q4YIdRctkTbJ2/Dqlinwz+8ooH2gd+YA7VA6Pa93KML9GockVvoxjZ2vHP+mu8g==}
     engines: {node: '>=16'}
 
+  type-fest@4.34.1:
+    resolution: {integrity: sha512-6kSc32kT0rbwxD6QL1CYe8IqdzN/J/ILMrNK+HMQCKH3insCDRY/3ITb0vcBss0a3t72fzh2YSzj8ko1HgwT3g==}
+    engines: {node: '>=16'}
+
   type@2.7.3:
     resolution: {integrity: sha512-8j+1QmAbPvLZow5Qpi6NCaN8FB60p/6x8/vfNqOk/hC+HuvFZhL4+WfekuhQLiqFZXOgQdrs3B+XxEmCc6b3FQ==}
 
@@ -5860,6 +5868,14 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.25
       jsesc: 3.1.0
 
+  '@babel/generator@7.26.8':
+    dependencies:
+      '@babel/parser': 7.26.8
+      '@babel/types': 7.26.8
+      '@jridgewell/gen-mapping': 0.3.8
+      '@jridgewell/trace-mapping': 0.3.25
+      jsesc: 3.1.0
+
   '@babel/helper-annotate-as-pure@7.25.9':
     dependencies:
       '@babel/types': 7.26.7
@@ -5984,6 +6000,10 @@ snapshots:
       picocolors: 1.1.1
 
   '@babel/parser@7.26.7':
+    dependencies:
+      '@babel/types': 7.26.8
+
+  '@babel/parser@7.26.8':
     dependencies:
       '@babel/types': 7.26.8
 
@@ -6504,11 +6524,29 @@ snapshots:
       '@babel/parser': 7.26.8
       '@babel/types': 7.26.8
 
+  '@babel/template@7.26.8':
+    dependencies:
+      '@babel/code-frame': 7.26.2
+      '@babel/parser': 7.26.8
+      '@babel/types': 7.26.8
+
   '@babel/traverse@7.26.7':
     dependencies:
       '@babel/code-frame': 7.26.2
       '@babel/generator': 7.26.5
       '@babel/parser': 7.26.7
+      '@babel/template': 7.26.8
+      '@babel/types': 7.26.8
+      debug: 4.4.0
+      globals: 11.12.0
+    transitivePeerDependencies:
+      - supports-color
+
+  '@babel/traverse@7.26.8':
+    dependencies:
+      '@babel/code-frame': 7.26.2
+      '@babel/generator': 7.26.8
+      '@babel/parser': 7.26.8
       '@babel/template': 7.26.8
       '@babel/types': 7.26.8
       debug: 4.4.0
@@ -7265,7 +7303,7 @@ snapshots:
     dependencies:
       openapi-fetch: 0.11.3
       ts-case-convert: 2.1.0
-      type-fest: 4.33.0
+      type-fest: 4.34.1
 
   '@rss3/api-utils@0.0.25':
     dependencies:
@@ -9106,7 +9144,7 @@ snapshots:
       p-cancelable: 3.0.0
       responselike: 3.0.0
 
-  got@14.4.5:
+  got@14.4.6:
     dependencies:
       '@sindresorhus/is': 7.0.1
       '@szmarczak/http-timer': 5.0.1
@@ -9118,7 +9156,7 @@ snapshots:
       lowercase-keys: 3.0.0
       p-cancelable: 4.0.1
       responselike: 3.0.0
-      type-fest: 4.33.0
+      type-fest: 4.34.1
 
   graceful-fs@4.2.11: {}
 
@@ -11259,6 +11297,8 @@ snapshots:
   type-fest@1.4.0: {}
 
   type-fest@4.33.0: {}
+
+  type-fest@4.34.1: {}
 
   type@2.7.3: {}
 
