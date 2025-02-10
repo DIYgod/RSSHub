@@ -1053,6 +1053,15 @@
   "/buaa/news/:type": [
     "AlanDecode"
   ],
+  "/buct/cist": [
+    "Epic-Creeper"
+  ],
+  "/buct/gr/:type": [
+    "Epic-Creeper"
+  ],
+  "/buct/jwc": [
+    "Epic-Creeper"
+  ],
   "/bugzilla/bug/:site/:bugId": [
     "FranklinYu"
   ],
